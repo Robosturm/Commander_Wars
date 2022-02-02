@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-	this.getBonusLuck = function(co, unit, posX, posY)
+	this.getBonusLuck = function(co, unit, posX, posY, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -17,7 +17,7 @@ var Constructor = function()
 		}
         return 0;
     };
-	this.getBonusMisfortune = function(co, unit, posX, posY)
+	this.getBonusMisfortune = function(co, unit, posX, posY, map)
     {
         if (CO_PERK.isActive(co))
 		{
@@ -39,7 +39,7 @@ var Constructor = function()
     {
         return qsTr("+15%/+10% Max/Min Luck Roll, 2x Effect during COP, 3x Effect during SCOP");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "enflakenator";
     };

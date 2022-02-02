@@ -10,7 +10,7 @@ class TargetedUnitPathFindingSystem : public UnitPathFindingSystem
 {
     Q_OBJECT
 public:
-    explicit TargetedUnitPathFindingSystem(Unit* pUnit, QVector<QVector3D>& targets, QVector<QVector<std::tuple<qint32, bool>>>* pMoveCostMap);
+    explicit TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, QVector<QVector3D>& targets, QVector<QVector<std::tuple<qint32, bool>>>* pMoveCostMap);
     virtual ~TargetedUnitPathFindingSystem() = default;
     /**
      * @brief getRemainingCost
@@ -71,6 +71,7 @@ public:
 
 private:
     bool m_useBasecosts{false};
+    bool m_supportsBasecosts{true};
     bool m_abortOnCostExceed{true};
     QVector<QVector3D> m_Targets;
     QVector<std::tuple<qint32, qint32, qint32, float>> m_FinishNodes;

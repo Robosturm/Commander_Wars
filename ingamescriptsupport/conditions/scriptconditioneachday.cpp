@@ -11,8 +11,8 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
-ScriptConditionEachDay::ScriptConditionEachDay()
-    : ScriptCondition (ConditionType::eachDay)
+ScriptConditionEachDay::ScriptConditionEachDay(GameMap* pMap)
+    : ScriptCondition(pMap, ConditionType::eachDay)
 {
 
 }
@@ -62,11 +62,11 @@ void ScriptConditionEachDay::readCondition(QTextStream& rStream, QString line)
         player = items[2].toInt();
         while (!rStream.atEnd())
         {
-            if (readSubCondition(rStream, ConditionEachDay, line))
+            if (readSubCondition(m_pMap, rStream, ConditionEachDay, line))
             {
                 break;
             }
-            spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
+            spScriptEvent event = ScriptEvent::createReadEvent(m_pMap, rStream, line);
             if (event.get() != nullptr)
             {
                 events.append(event);

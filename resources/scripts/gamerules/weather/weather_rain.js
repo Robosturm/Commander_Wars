@@ -23,7 +23,7 @@ var Constructor = function()
         return -1;
     };
 
-    this.activate = function(weather)
+    this.activate = function(weather, map)
     {
         var animationCount = GameAnimationFactory.getAnimationCount();
         var queueAnimation = null;
@@ -31,7 +31,7 @@ var Constructor = function()
         {
             queueAnimation = GameAnimationFactory.getAnimation(animationCount - 1);
         }
-        var animation = GameAnimationFactory.createAnimation(0, 0);
+        var animation = GameAnimationFactory.createAnimation(map, 0, 0);
         animation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         animation.setStartOfAnimationCall("ANIMATION", "preOnAnimationChangedAnimation");
@@ -50,7 +50,7 @@ var Constructor = function()
         }
     };
 
-    this.deactivate = function(weather)
+    this.deactivate = function(weather, map)
     {
         var variable = weather.getVariables().getVariable("FOGMODE");
         var mode = variable.readDataInt32();

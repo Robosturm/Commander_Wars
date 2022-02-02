@@ -1,9 +1,9 @@
 CO_OLAF.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             switch (co.getPowerMode())
             {
@@ -41,7 +41,7 @@ CO_OLAF.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_OLAF.getWeatherImmune = function(co)
+CO_OLAF.getWeatherImmune = function(co, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -54,7 +54,7 @@ CO_OLAF.getWeatherImmune = function(co)
 };
 
 CO_OLAF.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action)
+                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

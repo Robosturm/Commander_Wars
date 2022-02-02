@@ -3,7 +3,6 @@ var Constructor = function()
     this.getCOStyles = function()
     {
         // string array containing the endings of the alternate co style
-
         return ["+alt", "+alt2", "+alt3"];
     };
 
@@ -23,13 +22,13 @@ var Constructor = function()
         }
     };
 
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(3);
         co.setSuperpowerStars(3);
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
@@ -43,7 +42,7 @@ var Constructor = function()
         {
             var unit = units.at(i);
 
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
             animation.writeDataInt32(2);
@@ -75,7 +74,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -89,7 +88,7 @@ var Constructor = function()
         {
             var unit = units.at(i);
 
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
             animation.writeDataInt32(5);
@@ -128,7 +127,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -148,7 +147,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 4;
     };
@@ -158,7 +157,7 @@ var Constructor = function()
     };
     this.coZoneBonus = 20;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         switch (co.getPowerMode())
         {
@@ -177,7 +176,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isAttacker, action)
+                                 defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
             co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -186,7 +185,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getMovementpointModifier = function(co, unit, posX, posY)
+    this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
             co.getPowerMode() === GameEnums.PowerMode_Tagpower)
@@ -196,7 +195,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||
@@ -207,7 +206,7 @@ var Constructor = function()
         }
         return [];
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };

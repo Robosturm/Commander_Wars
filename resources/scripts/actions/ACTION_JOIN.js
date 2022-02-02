@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -30,29 +30,29 @@ var Constructor = function()
         return false;
         
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Join");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "join";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };
     this.postAnimationTargetUnit = null;
     this.postAnimationUnit = null;
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         ACTION_JOIN.postAnimationUnit = action.getTargetUnit();
         ACTION_JOIN.postAnimationTargetUnit = action.getMovementTarget();
-        var animation = Global[ACTION_JOIN.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[ACTION_JOIN.postAnimationUnit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_JOIN", "performPostAnimation");
     };
-    this.performPostAnimation = function(postAnimation)
+    this.performPostAnimation = function(postAnimation, map)
     {
         var ammo1 = ACTION_JOIN.postAnimationUnit.getAmmo1() + ACTION_JOIN.postAnimationTargetUnit.getAmmo1();
         var maxValue = ACTION_JOIN.postAnimationUnit.getMaxAmmo1();

@@ -11,47 +11,50 @@ var Constructor = function()
                      ["bm", "bm"],
                      ["dm", "dm"],
                      ["ge", "ge"],
+                     ["gs", "gs"],
                      ["ma", "ma"],
                      ["os", "os"],
                      ["pf", "pf"],
                      ["ti", "ti"],
                      ["yc", "yc"],];
-    this.animationData = [["ac", [2, 900, 1,  ""]],
+    this.animationData = [["ac", [1, 800, 1,  ""]],
                           ["bd", [4, 900, 2, "+single"]],
                           ["bh", [2, 900, 1,  ""]],
                           ["bm", [2, 900, 1,  ""]],
                           ["dm", [2, 900, 1,  ""]],
                           ["ge", [2, 900, 1,  ""]],
+                          ["gs", [2, 900, 1,  ""]],
                           ["ma", [2, 900, 1,  ""]],
                           ["os", [2, 900, 1,  ""]],
                           ["pf", [2, 900, 1,  ""]],
                           ["ti", [1, 800, 1,  ""]],
                           ["yc", [1, 800, 1,  ""]],];
 
-    this.animationMgDataAir = [["ac", [0, Qt.point(39, 32), 0, Qt.point(41, 34)]],
+    this.animationMgDataAir = [["ac", [0, Qt.point(28, 43)]],
                                ["bd", [0, Qt.point(17, 44), 0, Qt.point(17, 35), 0, Qt.point(22, 47), -1, Qt.point(23, 41)]],
                                ["bh", [0, Qt.point(31, 43), 0, Qt.point(35, 47)]],
                                ["bm", [0, Qt.point(30, 38), 0, Qt.point(34, 42)]],
                                ["dm", [0, Qt.point(35, 35), 0, Qt.point(44, 45)]],
                                ["ge", [0, Qt.point(32, 43), 0, Qt.point(35, 47)]],
+                               ["gs", [0, Qt.point(39, 32), 0, Qt.point(41, 34)]],
                                ["ma", [0, Qt.point(25, 50), 0, Qt.point(30, 54)]],
                                ["os", [0, Qt.point(31, 41), 0, Qt.point(35, 45)]],
                                ["pf", [0, Qt.point(33, 50), 0, Qt.point(31, 46)]],
                                ["ti", [0, Qt.point(30, 46)]],
                                ["yc", [0, Qt.point(34, 46)]]];
 
-    this.animationMgData    = [["ac", [0, Qt.point(39, 20), 0, Qt.point(41, 22)]],
+    this.animationMgData    = [["ac", [0, Qt.point(27, 30)]],
                                ["bd", [0, Qt.point(19, 32), -1, Qt.point(26, 36), 0, Qt.point(21, 24), -1, Qt.point(26, 28)]],
                                ["bh", [0, Qt.point(33, 29), 0, Qt.point(36, 32)]],
                                ["bm", [0, Qt.point(31, 24), 0, Qt.point(34, 27)]],
                                ["dm", [0, Qt.point(37, 20), 0, Qt.point(43, 28)]],
                                ["ge", [0, Qt.point(33, 29), 0, Qt.point(36, 32)]],
+                               ["gs", [0, Qt.point(39, 20), 0, Qt.point(41, 22)]],
                                ["ma", [0, Qt.point(25, 45), 0, Qt.point(30, 49)]],
                                ["os", [0, Qt.point(31, 26), 0, Qt.point(34, 29)]],
                                ["pf", [0, Qt.point(29, 31), 0, Qt.point(33, 34)]],
                                ["ti", [0, Qt.point(33, 33)]],
                                ["yc", [0, Qt.point(34, 30)]],];
-
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
@@ -120,7 +123,7 @@ var Constructor = function()
             for (var i2 = 0; i2 < mgCount; ++i2)
             {
                 sprite.loadSprite("mg_shot_air+flak" + data[3],  false, sprite.getMaxUnitCount(),
-                                        mgData[1 + i2 * 2],
+                                  mgData[1 + i2 * 2],
                                   data[2], 1, mgData[0 + i2 * 2], 100 * i2);
             }
         }
@@ -130,7 +133,7 @@ var Constructor = function()
             for (var i2 = 0; i2 < mgCount; ++i2)
             {
                 sprite.loadSprite("mg_shot+flak" + data[3],  false, sprite.getMaxUnitCount(),
-                                        mgData[1 + i2 * 2],
+                                  mgData[1 + i2 * 2],
                                   data[2], 1, mgData[0 + i2 * 2], 100 * i2);
             }
         }

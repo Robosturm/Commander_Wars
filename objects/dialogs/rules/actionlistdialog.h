@@ -10,14 +10,15 @@
 #include "objects/base/checkbox.h"
 #include "objects/base/dropdownmenu.h"
 
+class GameMap;
 class ActionListDialog;
-typedef oxygine::intrusive_ptr<ActionListDialog> spActionListDialog;
+using spActionListDialog = oxygine::intrusive_ptr<ActionListDialog>;
 
 class ActionListDialog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit ActionListDialog(QStringList bannlist);
+    explicit ActionListDialog(QStringList bannlist, GameMap* pMap);
     virtual ~ActionListDialog() = default;
 signals:
     void editFinished(QStringList actionList);
@@ -53,6 +54,7 @@ private:
     QVector<spCheckbox> m_Checkboxes;
     bool m_toggle{true};
     QStringList m_CurrentActionList;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // ACTIONLISTDIALOG_H

@@ -62,3 +62,8 @@ Gamepad::DeviceState Gamepad::getDeviceState() const
 {
     return m_deviceState;
 }
+
+bool Gamepad::isSupported()
+{
+    return true;
+}

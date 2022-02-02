@@ -18,7 +18,7 @@ var Constructor = function()
     {
         return 1;
     };
-    this.loadBaseSprite = function(terrain, currentTerrainID)
+    this.loadBaseSprite = function(terrain, currentTerrainID, map)
     {
         var random = globals.randInt(0, 140);
         if (random >= 8)
@@ -39,7 +39,7 @@ var Constructor = function()
     {
         return "minimap_desert";
     };
-    this.loadOverlaySprite = function(terrain)
+    this.loadOverlaySprite = function(terrain, map)
     {
         var surroundingsPlains = terrain.getSurroundings("PLAINS", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsPlains.includes("+N"))
@@ -95,14 +95,14 @@ var Constructor = function()
                 "desert+7"];
     };
 
-    this.getTerrainAnimationForeground = function(unit, terrain, defender)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
-        return TERRAIN.getFactoryForeground(terrain);
+        return TERRAIN.getFactoryForeground(terrain, map);
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var id = TERRAIN.getTerrainAnimationId(terrain);
+        var id = TERRAIN.getTerrainAnimationId(terrain, map);
         switch (id)
         {
         case "SEA":

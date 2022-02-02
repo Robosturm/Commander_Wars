@@ -22,7 +22,7 @@ var Constructor = function()
     {
         return 0;
     };
-    this.startOfTurn = function(building)
+    this.startOfTurn = function(building, map)
     {
         building.setFireCount(7);
     };
@@ -47,9 +47,9 @@ var Constructor = function()
         // one field heigth default for most buildings
         return 4;
     };
-    this.canBuildingBePlaced = function(terrain, building)
+    this.canBuildingBePlaced = function(terrain, building, map)
     {
-        return BUILDING.canLargeBuildingPlaced(terrain, building, ZBLACKHOLE_FACTORY.getBuildingWidth(), ZBLACKHOLE_FACTORY.getBuildingHeigth());
+        return BUILDING.canLargeBuildingPlaced(terrain, building, ZBLACKHOLE_FACTORY.getBuildingWidth(), ZBLACKHOLE_FACTORY.getBuildingHeigth(), map);
     };
     this.getMiniMapIcon = function()
     {

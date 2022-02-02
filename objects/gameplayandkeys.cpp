@@ -2,6 +2,7 @@
 
 #include "coreengine/mainapp.h"
 #include "resource_management/fontmanager.h"
+#include "resource_management/objectmanager.h"
 
 #include "game/gamemap.h"
 
@@ -11,6 +12,7 @@
 #include "objects/base/checkbox.h"
 #include "objects/base/spinbox.h"
 #include "objects/base/selectkey.h"
+#include "objects/dialogs/filedialog.h"
 
 GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 {
@@ -291,6 +293,22 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Supply Warning: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSlider pSupplyWarning = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 0, 100, "%");
+    pSupplyWarning->setTooltipText(tr("Selects when the supply warnings for ammo and fuel appear."));
+    pSupplyWarning->setPosition(sliderOffset - 130, y);
+    pSupplyWarning->setCurrentValue(static_cast<qint32>(Settings::getSupplyWarning() * 100.0f));
+    m_pOptions->addItem(pSupplyWarning);
+    connect(pSupplyWarning.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setSupplyWarning(value / 100.0f);
+    });
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Show PC Cursor: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
@@ -467,6 +485,31 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     }
     pCheckbox->setPosition(sliderOffset - 130, y);
     m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    spLabel textField = spLabel::create(sliderOffset - 140);
+    textField->setStyle(style);
+    textField->setHtmlText(tr("Default rules:"));
+    textField->setPosition(10, y);
+    m_pOptions->addItem(textField);
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::spButton pScriptButton = pObjectManager->createButton(tr("Select File"), 160);
+    pScriptButton->setPosition(Settings::getWidth() - pScriptButton->getWidth() - 100, y);
+    m_pOptions->addItem(pScriptButton);
+    m_pDefaultRuleFile = spTextbox::create(pScriptButton->getX() - textField->getX() - textField->getWidth() - 20);
+    m_pDefaultRuleFile->setTooltipText(tr("The relative path from the exe to the default ruleset."));
+    m_pDefaultRuleFile->setPosition(sliderOffset - 130, textField->getY());
+    m_pDefaultRuleFile->setCurrentText(Settings::getDefaultRuleset());
+    connect(m_pDefaultRuleFile.get(), &Textbox::sigTextChanged, this, [=](QString text)
+    {
+        Settings::setDefaultRuleset(text);
+    });
+    m_pOptions->addItem(m_pDefaultRuleFile);
+    pScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    {
+        emit sigShowSelectDefaultRules();
+    });
+    connect(this, &GameplayAndKeys::sigShowSelectDefaultRules, this, &GameplayAndKeys::showSelectDefaultRules, Qt::QueuedConnection);
     y += 40;
 
     pTextfield = spLabel::create(sliderOffset - 140);
@@ -819,9 +862,21 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pSelectKey = spSelectKey::create(Settings::getKey_screenshot());
-    pSelectKey->setTooltipText(tr("Key for taking an screenshot."));
+    pSelectKey->setTooltipText(tr("Key for taking a screenshot."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_screenshot, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Mapshot: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSelectKey = spSelectKey::create(Settings::getKey_mapshot());
+    pSelectKey->setTooltipText(tr("Key for taking a mapshot. Saving the current map in an image."));
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_mapshot, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
@@ -918,4 +973,23 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     m_pOptions->setContentHeigth(20 + y);
     
+}
+
+void GameplayAndKeys::showSelectDefaultRules()
+{
+    QStringList wildcards;
+    wildcards.append("*.grl");
+    QString path = Settings::getUserPath() + "data/gamerules";
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
+    oxygine::Stage::getStage()->addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &GameplayAndKeys::selectDefaultRules, Qt::QueuedConnection);
+}
+
+void GameplayAndKeys::selectDefaultRules(QString filename)
+{
+    if (filename.endsWith(".grl") && QFile::exists(filename))
+    {
+        Settings::setDefaultRuleset(filename);
+        m_pDefaultRuleFile->setCurrentText(filename);
+    }
 }

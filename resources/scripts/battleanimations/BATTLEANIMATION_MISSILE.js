@@ -4,7 +4,8 @@ var Constructor = function()
     {
         return 5;
     };
-    this.armyData = [["bd", "bd"],
+    this.armyData = [["ac", "ac"],
+                     ["bd", "bd"],
                      ["bm", "bm"],
                      ["bh", "bh"],
                      ["bg", "bh"],
@@ -16,7 +17,8 @@ var Constructor = function()
                      ["ti", "ti"],
                      ["yc", "yc"],];
 
-    this.animationData = [["bd", [Qt.point(-10, 5), Qt.point(-1, 26), "rocket_launch+2", Qt.point(20, 10)]],
+    this.animationData = [["ac", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
+                          ["bd", [Qt.point(-10, 5), Qt.point(-1, 26), "rocket_launch+2", Qt.point(20, 10)]],
                           ["bm", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
                           ["bh", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
                           ["ge", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],

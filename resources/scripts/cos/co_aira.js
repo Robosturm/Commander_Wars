@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(4);
         co.setSuperpowerStars(4);
@@ -18,7 +18,7 @@ var Constructor = function()
         return CO.getAiUsePowerAlways(co, powerSurplus, turnMode);
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
 
         var dialogAnimation = co.createPowerSentence();
@@ -41,7 +41,7 @@ var Constructor = function()
                 for (i = 0; i < units.size(); i++)
                 {
                     var unit = units.at(i);
-                    animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     var delay = globals.randInt(135, 265);
                     if (animations.length < 5)
                     {
@@ -81,16 +81,16 @@ var Constructor = function()
         }
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_AIRA.airaDamage(co, 3, powerNameAnimation);
+        CO_AIRA.airaDamage(co, 3, powerNameAnimation, map);
     };
 
-    this.airaDamage = function(co, value, animation2)
+    this.airaDamage = function(co, value, animation2, map)
     {
         var player = co.getOwner();
         var counter = 0;
@@ -111,7 +111,7 @@ var Constructor = function()
                     var unit = units.at(i);
                     if (i >= size / 2 || unit.useTerrainDefense() === false)
                     {
-                        animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                        animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                         var delay = globals.randInt(135, 265);
                         if (animations.length < 5)
                         {
@@ -149,7 +149,7 @@ var Constructor = function()
         }
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -168,12 +168,12 @@ var Constructor = function()
                 break;
         }
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
@@ -183,7 +183,7 @@ var Constructor = function()
     };
     this.coZoneBonus = 20;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         switch (co.getPowerMode())
         {
@@ -202,7 +202,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.getMovementFuelCostModifier = function(co, unit, fuelCost)
+    this.getMovementFuelCostModifier = function(co, unit, fuelCost, map)
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Power &&
             co.getOwner().isEnemyUnit(unit) === true)
@@ -213,7 +213,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isAttacker, action)
+                                     defender, defPosX, defPosY, isAttacker, action, luckmode, map)
         {
             if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -223,7 +223,7 @@ var Constructor = function()
             return 0;
         };
 
-    this.getMovementcostModifier = function(co, unit, posX, posY)
+    this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
         if ((co.getPowerMode() === GameEnums.PowerMode_Superpower ||
             co.getPowerMode() === GameEnums.PowerMode_Tagpower) &&

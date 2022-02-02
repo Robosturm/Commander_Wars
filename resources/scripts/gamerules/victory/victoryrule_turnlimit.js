@@ -44,7 +44,7 @@ var Constructor = function()
     {
     };
     // checks if the selected player is declared defeated by this rule
-    this.checkDefeat = function(rule, player)
+    this.checkDefeat = function(rule, player, map)
     {
         var turn = map.getCurrentDay();
 		var turnLimit = VICTORYRULE_TURNLIMIT.getRuleValue(rule);
@@ -57,7 +57,7 @@ var Constructor = function()
 		// all players loose if the time limit is exceeded
 		return GameEnums.DefeatType_Defeated;
     };
-    this.getRuleProgress = function(rule, player)
+    this.getRuleProgress = function(rule, player, map)
     {
         return map.getCurrentDay();
     };

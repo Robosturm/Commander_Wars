@@ -6,70 +6,70 @@ var WEATHER =
         return "";
     },
 
-    getWeatherTerrainSprite : function()
+    getWeatherTerrainSprite : function(weather, map)
     {
         // only called when the weather is active
         return "";
     },
 
-    getWeatherSymbol : function()
+    getWeatherSymbol : function(weather, map)
     {
         return "";
     },
 
-    getOffensiveModifier : function(weather)
+    getOffensiveModifier : function(weather, map)
     {
         // only called when the weather is active
         return 0;
     },
 
-    getDefensiveModifier : function(weather)
+    getDefensiveModifier : function(weather, map)
     {
         // only called when the weather is active
         return 0;
     },
 
-    getMovementCostModifier : function(weather, unit, terrain)
+    getMovementCostModifier : function(weather, unit, terrain, map)
     {
         // only called when the weather is active
         return 0;
     },
 
-    getFirerangeModifier : function(weather)
+    getFirerangeModifier : function(weather, map)
     {
         // only called when the weather is active
         return 0;
     },
 
-    getMinFirerangeModifier : function(weather)
+    getMinFirerangeModifier : function(weather, map)
     {
         // only called when the weather is active
         return 0;
     },
 
-    getMovementpointModifier : function(weather, unit, terrain)
+    getMovementpointModifier : function(weather, unit, terrain, map)
     {
         return 0;
     },
 
-    getVisionrangeModifier : function(weather)
-    {
-        // only called when the weather is active
-        return 0;
-    },
-
-    getMovementFuelCostModifier: function(weather, unit, fuelCost)
+    getVisionrangeModifier : function(weather, map)
     {
         // only called when the weather is active
         return 0;
     },
 
-    activate : function(weather)
+    getMovementFuelCostModifier: function(weather, unit, fuelCost, map)
+    {
+        // only called when the weather is active
+        return 0;
+    },
+
+    activate : function(weather, map)
     {
         // called when the weather starts
     },
 
-    deactivate : function(weather)
+    deactivate : function(weather, map)
     {
         // called when the weather ends
     },

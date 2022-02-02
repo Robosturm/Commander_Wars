@@ -1,9 +1,9 @@
-CO_ADAM.init = function(co)
+CO_ADAM.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(4);
 };
-CO_ADAM.activateSuperpower = function(co, powerMode)
+CO_ADAM.activateSuperpower = function(co, powerMode, map)
 {
     CO_ADAM.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_ADAM.getSuperPowerName = function()
     return CO_ADAM.getPowerName();
 };
 CO_ADAM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     var ret = 0;
     if (co.getIsCO0() === true)
@@ -47,7 +47,7 @@ CO_ADAM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_ADAM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action)
+                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     var ret = 0;
     if (co.getIsCO0() === true)
@@ -71,7 +71,7 @@ CO_ADAM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return ret;
 };
 
-CO_ADAM.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_ADAM.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -116,7 +116,7 @@ CO_ADAM.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
 };
 
 
-CO_ADAM.getMovementpointModifier = function(co, unit, posX, posY)
+CO_ADAM.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -129,7 +129,7 @@ CO_ADAM.getMovementpointModifier = function(co, unit, posX, posY)
 };
 
 CO_ADAM.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

@@ -28,7 +28,7 @@ var Constructor = function()
     {
         return GameEnums.BuildingTarget_Own;
     };
-    this.startOfTurn = function(building)
+    this.startOfTurn = function(building, map)
     {
         building.setFireCount(1);
     };
@@ -44,14 +44,14 @@ var Constructor = function()
     {
         return "minimap_blackholebuilding";
     };
-    this.onDestroyed = function(building)
+    this.onDestroyed = function(building, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = building.getX();
         var y = building.getY();
         map.replaceTerrainOnly("PLAINS_DESTROYED", x, y);
         map.getTerrain(x, y).loadSprites();
-        var animation = GameAnimationFactory.createAnimation(x, y);
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2, 100);
         animation.addScreenshake(30, 0.95, 1000, 200);
         animation.addSound("crystal_explode_2.wav");

@@ -6,8 +6,9 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "objects/minimap.h"
 
+class GameMap;
 class IngameInfoBar;
-typedef oxygine::intrusive_ptr<IngameInfoBar> spIngameInfoBar;
+using spIngameInfoBar = oxygine::intrusive_ptr<IngameInfoBar>;
 
 class IngameInfoBar : public QObject, public oxygine::Actor
 {
@@ -16,7 +17,7 @@ public:
     static constexpr qint32 spriteWidth = 127;
     static constexpr qint32 spriteHeigth = 192;
 
-    explicit IngameInfoBar();
+    explicit IngameInfoBar(GameMap* pMap);
     virtual ~IngameInfoBar() = default;
     Minimap* getMinimap()
     {
@@ -26,8 +27,10 @@ public:
     void updateTerrainInfo(qint32 x, qint32 y, bool update);
 
     oxygine::spBox9Sprite getDetailedViewBox() const;
+    void setMap(GameMap *newMap);
 
 public slots:
+    GameMap *getMap() const;
     void updateMinimap();
     void updatePlayerInfo();
     void updateCursorInfo(qint32 x, qint32 y);
@@ -44,6 +47,7 @@ private:
     oxygine::spBox9Sprite m_pDetailedViewBox;
     qint32 m_LastX{-1};
     qint32 m_LastY{-1};
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // INGAMEINFOBAR_H

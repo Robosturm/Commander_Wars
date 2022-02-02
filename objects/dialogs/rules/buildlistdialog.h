@@ -10,8 +10,9 @@
 #include "objects/base/checkbox.h"
 #include "objects/base/dropdownmenu.h"
 
+class GameMap;
 class BuildListDialog;
-typedef oxygine::intrusive_ptr<BuildListDialog> spBuildListDialog;
+using spBuildListDialog = oxygine::intrusive_ptr<BuildListDialog>;
 
 class BuildListDialog : public QObject, public oxygine::Actor
 {
@@ -22,7 +23,7 @@ class BuildListDialog : public QObject, public oxygine::Actor
         QStringList units;
     };
 public:
-    explicit BuildListDialog(qint32 player, QStringList buildList);
+    explicit BuildListDialog(GameMap* pMap, qint32 player, QStringList buildList);
     virtual ~BuildListDialog() = default;
 signals:
     void editFinished(qint32 player, QStringList buildList);
@@ -58,6 +59,7 @@ private:
     bool m_toggle{true};
     QStringList m_CurrentBuildList;
     qint32 m_Player;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // BUILDLISTDIALOG_H

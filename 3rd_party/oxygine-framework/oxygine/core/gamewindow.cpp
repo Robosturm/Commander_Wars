@@ -40,9 +40,6 @@ namespace oxygine
         connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
         connect(this, &GameWindow::sigQuit, this, &GameWindow::quit, Qt::QueuedConnection);
         connect(QApplication::instance(), &QApplication::aboutToQuit, this, &GameWindow::quitApp);
-
-        connect(this, &GameWindow::sigStopUpdateTimer, this, &GameWindow::stopUpdateTimer);
-        connect(this, &GameWindow::sigStartUpdateTimer, this, &GameWindow::startUpdateTimer);
         connect(this, &GameWindow::sigShowKeyboard, this, &GameWindow::showKeyboard, Qt::QueuedConnection);
     }
 
@@ -96,6 +93,21 @@ namespace oxygine
 
     void GameWindow::paintGL()
     {
+        static qint32 fps = 0;
+        static auto lastUpdate = std::chrono::system_clock::now().time_since_epoch();
+        auto now = std::chrono::system_clock::now().time_since_epoch();
+        ++fps;
+        if (now - lastUpdate > std::chrono::milliseconds(1000))
+        {
+            lastUpdate = now;
+
+            if (fps < 30)
+            {
+                qint32 a = 0;
+            }
+            fps = 0;
+        }
+
         updateData();
         if (m_pauseMutex.tryLock())
         {
@@ -110,6 +122,10 @@ namespace oxygine
                 swapDisplayBuffers();
             }
             m_pauseMutex.unlock();
+        }
+        else
+        {
+            update();
         }
         // check for termination
         if (m_quit)
@@ -199,18 +215,24 @@ namespace oxygine
 
         STDRenderer::initialize();
 
-        registerResourceTypes();
-
         STDRenderer::instance = spSTDRenderer::create();
         RenderDelegate::instance = spRenderDelegate::create();
         Material::null = spMaterial::create();
         Material::current = Material::null;
 
         STDRenderer::current = STDRenderer::instance;
+        launchGame();
+    }
 
-        // Create the stage. Stage is a root node for all updateable and drawable objects
-        oxygine::Stage::instance = oxygine::spStage::create();
-        emit sigLoadRessources();
+    void GameWindow::launchGame()
+    {
+        if (!m_launched)
+        {
+            registerResourceTypes();
+            // Create the stage. Stage is a root node for all updateable and drawable objects
+            oxygine::Stage::instance = oxygine::spStage::create();
+            emit sigLoadRessources();
+        }
     }
 
     void GameWindow::resizeGL(qint32 w, qint32 h)
@@ -218,13 +240,12 @@ namespace oxygine
         CONSOLE_PRINT("core::restore()", Console::eDEBUG);
         VideoDriver::instance->restore();
         STDRenderer::restore();
-        oxygine::Stage::instance->setSize(w, h);
         CONSOLE_PRINT("core::restore() done", Console::eDEBUG);
     }
 
     void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
-        if (!m_shuttingDown)
+        if (!m_shuttingDown && !m_noUi)
         {
             if (isMainThread())
             {
@@ -305,6 +326,7 @@ namespace oxygine
     {
         emit sigWheelEvent(event->angleDelta().x(), event->angleDelta().y());
     }
+
     void GameWindow::mouseMoveEvent(QMouseEvent *event)
     {
         emit sigMouseMoveEvent(event->position().x(), event->position().y());
@@ -377,6 +399,11 @@ namespace oxygine
     bool GameWindow::sameTouchpoint(QPointF pos1, QPointF pos2) const
     {
         return qAbs(pos1.x() - pos2.x()) + qAbs(pos1.y() - pos2.y()) <= Settings::getTouchPointSensitivity();
+    }
+
+    void GameWindow::setTimerCycle(qint32 newTimerCycle)
+    {
+        m_timerCycle = newTimerCycle;
     }
 
     void GameWindow::handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints)

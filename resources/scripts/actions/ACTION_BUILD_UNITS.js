@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var building = action.getTargetBuilding();
@@ -13,22 +13,22 @@ var Constructor = function()
             var unitCount = building.getOwner().getUnitCount();
             if ((unitLimit <= 0 ||
                 unitCount < unitLimit) &&
-                ACTION_BUILD_UNITS.canBuildUnits(building))
+                ACTION_BUILD_UNITS.canBuildUnits(building, map))
             {
                 return true;
             }
 		}
         return false;
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Build");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "build";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         if (action.getInputStep() === 0)
         {
@@ -41,12 +41,13 @@ var Constructor = function()
     };
 
 
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         action.startReading();
         var unitID = action.readDataString();
         var player = map.getCurrentPlayer();
-        var unit = map.spawnUnit(action.getTarget().x, action.getTarget().y, unitID, player);
+        var target = action.getTarget();
+        var unit = map.spawnUnit(target.x, target.y, unitID, player);
         // pay for the unit
         map.getCurrentPlayer().addFunds(-action.getCosts());
         map.getGameRecorder().buildUnit(player.getPlayerID(), unitID);
@@ -59,7 +60,7 @@ var Constructor = function()
         }
     };
 
-    this.getStepInputType = function(action)
+    this.getStepInputType = function(action, map)
     {
         // supported types are MENU and FIELD
         if (action.getInputStep() === 0)
@@ -69,13 +70,13 @@ var Constructor = function()
         return "";
     };
 
-    this.canBuildUnits = function(building)
+    this.canBuildUnits = function(building, map)
     {
         var units = building.getConstructionList();
         var unitData = [];
         for (i = 0; i < units.length; i++)
         {
-            var cost = map.getCurrentPlayer().getCosts(units[i]);
+            var cost = map.getCurrentPlayer().getCosts(units[i], building.getPosition());
             unitData.push([cost, units[i]]);
         }
         var funds = map.getCurrentPlayer().getFunds();
@@ -89,17 +90,17 @@ var Constructor = function()
         return false;
     };
 
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var building = action.getTargetBuilding();
         var units = building.getConstructionList();
         var unitData = [];
         for (i = 0; i < units.length; i++)
         {
-            var cost = map.getCurrentPlayer().getCosts(units[i]);
+            var cost = map.getCurrentPlayer().getCosts(units[i], building.getPosition());
             unitData.push([cost, units[i]]);
         }
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             // only sort for humans player to maintain ai speed
             if (map.getCurrentPlayer().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)

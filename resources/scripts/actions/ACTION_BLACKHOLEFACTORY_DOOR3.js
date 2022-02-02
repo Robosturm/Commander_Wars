@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var building = action.getTargetBuilding();
         var x = building.getX();
@@ -8,7 +8,7 @@ var Constructor = function()
 		var firecount = building.getFireCount();
         if ((firecount === 4 || firecount === 5 || firecount === 6 || firecount === 7) &&
             map.onMap(x, y) && map.getTerrain(x, y).getUnit() === null &&
-            ACTION_BLACKHOLEFACTORY_DOOR3.canBuildUnit(action))
+            ACTION_BLACKHOLEFACTORY_DOOR3.canBuildUnit(action, map))
         {
             return true;
         }
@@ -17,15 +17,15 @@ var Constructor = function()
             return false;
         }
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Build Door 3");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "build";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
 		if (action.getInputStep() === 0)
         {
@@ -37,7 +37,7 @@ var Constructor = function()
         }
     };
 	
-	this.getStepInputType = function(action)
+	this.getStepInputType = function(action, map)
     {
         // supported types are MENU and FIELD
         if (action.getInputStep() === 0)
@@ -47,12 +47,12 @@ var Constructor = function()
         return "";
     };
 
-    this.canBuildUnit = function(action)
+    this.canBuildUnit = function(action, map)
     {
         var building = action.getTargetBuilding();
         var owner = building.getOwner();
         var unitLimit = map.getGameRules().getUnitLimit();
-        var unitCount = unit.getOwner().getUnitCount();
+        var unitCount = owner.getUnitCount();
         if ((unitLimit <= 0 ||
             unitCount < unitLimit))
         {
@@ -74,7 +74,7 @@ var Constructor = function()
         return false;
     };
 
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var building = action.getTargetBuilding();
         var x = building.getX();
@@ -94,7 +94,7 @@ var Constructor = function()
         }
     }
 	
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
 		action.startReading();
         var unitID = action.readDataString();

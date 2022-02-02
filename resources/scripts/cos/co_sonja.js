@@ -7,13 +7,13 @@ var Constructor = function()
         return ["+alt", "+alt2", "+alt3", "+alt4", "+alt5", "+alt6"];
     };
 
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(3);
         co.setSuperpowerStars(2);
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -33,33 +33,33 @@ var Constructor = function()
         }
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
+        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         animation2.setSound("power_clear.wav");
         powerNameAnimation.queueAnimation(animation2);
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
+        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         animation2.setSound("power_clear.wav");
         powerNameAnimation.queueAnimation(animation2);
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 2;
     };
@@ -68,12 +68,12 @@ var Constructor = function()
         return "YC";
     };
 	
-    this.getBonusMisfortune = function(co, unit, posX, posY)
+    this.getBonusMisfortune = function(co, unit, posX, posY, map)
     {
         return 5;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -84,7 +84,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -93,7 +93,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getVisionrangeModifier = function(co, unit, posX, posY)
+    this.getVisionrangeModifier = function(co, unit, posX, posY, map)
     {
         switch (co.getPowerMode())
         {
@@ -105,7 +105,7 @@ var Constructor = function()
                 return 1;
         }
     };
-    this.getEnemyTerrainDefenseModifier = function(co, unit, posX, posY)
+    this.getEnemyTerrainDefenseModifier = function(co, unit, posX, posY, map)
     {
         switch (co.getPowerMode())
         {
@@ -119,7 +119,7 @@ var Constructor = function()
         }
     };
 
-    this.getPerfectVision = function(co)
+    this.getPerfectVision = function(co, map)
     {
         switch (co.getPowerMode())
         {
@@ -132,7 +132,7 @@ var Constructor = function()
         }
     };
 
-    this.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender)
+    this.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map)
     {
         if(unit !== null)
         {
@@ -157,16 +157,16 @@ var Constructor = function()
         return false;
     };
 
-    this.getHpHidden = function(co, unit, posX, posY)
+    this.getHpHidden = function(co, unit, posX, posY, map)
     {
         // are the hp hidden of this unit?
         return true;
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||

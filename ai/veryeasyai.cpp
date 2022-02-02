@@ -18,8 +18,8 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/console.h"
 
-VeryEasyAI::VeryEasyAI()
-    : CoreAI(GameEnums::AiTypes_VeryEasy),
+VeryEasyAI::VeryEasyAI(GameMap* pMap)
+    : CoreAI(pMap, GameEnums::AiTypes_VeryEasy),
       m_GeneralBuildingTree("resources/aidata/very_easy/generalbuilding.tree", "resources/aidata/very_easy/generalbuilding.txt"),
       m_AirportBuildingTree("resources/aidata/very_easy/airportbuilding.tree", "resources/aidata/very_easy/airportbuilding.txt"),
       m_HarbourBuildingTree("resources/aidata/very_easy/harbourbuilding.tree", "resources/aidata/very_easy/harbourbuilding.txt")
@@ -28,99 +28,30 @@ VeryEasyAI::VeryEasyAI()
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-    loadIni("very_easy/very_easy.ini");
-}
 
-void VeryEasyAI::readIni(QString name)
-{
-    if (QFile::exists(name))
+    m_iniData = { // General
+                  {"OwnUnitValue", "General", &m_ownUnitValue, 1.0f, -10.0f, 10.0f},
+                  {"BuildingValue", "General", &m_buildingValue, 1.0f, 1.0f, 1.0f},
+                  {"MinDamage", "General", &m_minDamage, -500, -5000.0f, 5000.0f},
+                  {"MinSiloDamage", "General", &m_minDamage, 4000, 1000.0f, 4000.0f},
+                  {"OwnUnitDamageDivider", "General", &m_ownUnitDamageDivider, 4, 0.0f, 10.0f},
+                  {"MinAllBuildingFunds", "General", &m_minAllBuildingFunds, 8000, 8000.0f, 8000.0f},
+                  {"MaxTreeDecisionTries", "General", &m_maxTreeDecisionTries, 10, 1.0f, 20.0f},
+                  {"FuelResupply", "General", &m_fuelResupply, 0.33f, 0.33f, 0.33f},
+                  {"AmmoResupply", "General", &m_ammoResupply, 0.25f, 0.25f, 0.25f},                  // CO Unit
+                  {"CoUnitValue", "CoUnit", &m_coUnitValue, 6000.0f, 5000.0f, 10000.0f},
+                  {"MinCoUnitScore", "CoUnit", &m_minCoUnitScore, 5000.0f, 3000.0f, 10000.0f},
+                  {"CoUnitRankReduction", "CoUnit", &m_coUnitRankReduction, 1000.0f, 0.0f, 5000.0f},
+                  {"CoUnitScoreMultiplier", "CoUnit", &m_coUnitScoreMultiplier, 1.1f, 1.0f, 3.0f},
+                  {"MinCoUnitCount", "CoUnit", &m_minCoUnitCount, 5.0f, 1.0f, 10.0f},
+                  {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
+                  {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
+                };
+    
+    if (m_pMap != nullptr &&
+        !m_pMap->getSavegame())
     {
-        QSettings settings(name, QSettings::IniFormat);
-        settings.beginGroup("General");
-        bool ok = false;
-        m_ownUnitValue = settings.value("OwnUnitValue", 1.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_ownUnitValue = 1.0f;
-        }
-        m_buildingValue = settings.value("BuildingValue", 1.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_buildingValue = 1.0f;
-        }
-        m_minDamage = settings.value("MinDamage", -500).toInt(&ok);
-        if(!ok)
-        {
-            m_minDamage = -500;
-        }
-        m_minSiloDamage = settings.value("MinSiloDamage", 4000).toInt(&ok);
-        if(!ok)
-        {
-            m_minSiloDamage = 4000;
-        }
-        m_ownUnitDamageDivider = settings.value("OwnUnitDamageDivider", 4).toFloat(&ok);
-        if(!ok || m_ownUnitDamageDivider < 0.0f)
-        {
-            m_ownUnitDamageDivider = 4;
-        }
-        m_minAllBuildingFunds = settings.value("MinAllBuildingFunds", 8000).toInt(&ok);
-        if(!ok)
-        {
-            m_minAllBuildingFunds = 8000;
-        }
-        m_maxTreeDecisionTries = settings.value("MaxTreeDecisionTries", 10).toInt(&ok);
-        if(!ok)
-        {
-            m_maxTreeDecisionTries = 8000;
-        }
-        m_fuelResupply = settings.value("FuelResupply", 0.33f).toFloat(&ok);
-        if(!ok)
-        {
-            m_fuelResupply = 0.33f;
-        }
-        m_ammoResupply = settings.value("AmmoResupply", 0.25f).toFloat(&ok);
-        if(!ok)
-        {
-            m_ammoResupply = 0.25f;
-        }
-        settings.endGroup();
-        settings.beginGroup("CoUnit");
-        m_coUnitValue = settings.value("CoUnitValue", 6000).toInt(&ok);
-        if(!ok)
-        {
-            m_coUnitValue = 6000;
-        }
-        m_minCoUnitScore = settings.value("MinCoUnitScore", 5000).toFloat(&ok);
-        if(!ok)
-        {
-            m_minCoUnitScore = 5000;
-        }
-        m_coUnitRankReduction = settings.value("CoUnitRankReduction", 1000).toFloat(&ok);
-        if(!ok)
-        {
-            m_coUnitRankReduction = 1000;
-        }
-        m_coUnitScoreMultiplier = settings.value("CoUnitScoreMultiplier", 1.1f).toFloat(&ok);
-        if(!ok)
-        {
-            m_coUnitScoreMultiplier = 1.1f;
-        }
-        m_minCoUnitCount = settings.value("MinCoUnitCount", 5).toInt(&ok);
-        if(!ok)
-        {
-            m_minCoUnitCount = 5;
-        }
-        m_minSameIslandDistance = settings.value("MinSameIslandDistance", 3.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_minSameIslandDistance = 3.0f;
-        }
-        m_slowUnitSpeed = settings.value("SlowUnitSpeed", 2).toInt(&ok);
-        if(!ok)
-        {
-            m_slowUnitSpeed = 2;
-        }
-        settings.endGroup();
+        loadIni("very_easy/very_easy.ini");
     }
 }
 
@@ -234,7 +165,7 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
             {
                 if (pUnit->getCapturePoints() > 0)
                 {
-                    spGameAction pAction = spGameAction::create(ACTION_CAPTURE);
+                    spGameAction pAction = spGameAction::create(ACTION_CAPTURE, m_pMap);
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     if (pAction->canBePerformed())
                     {
@@ -244,9 +175,9 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
                 }
                 else
                 {
-                    spGameAction pAction = spGameAction::create(ACTION_CAPTURE);
+                    spGameAction pAction = spGameAction::create(ACTION_CAPTURE, m_pMap);
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                    UnitPathFindingSystem pfs(pUnit);
+                    UnitPathFindingSystem pfs(m_pMap, pUnit);
                     pfs.explore();
                     QVector<QPoint> targets = pfs.getAllNodePoints();
                     for (qint32 i2 = 0; i2 < targets.size(); i2++)
@@ -343,9 +274,9 @@ bool VeryEasyAI::attack(Unit* pUnit)
     if (pUnit->hasAction(CoreAI::ACTION_FIRE))
     {
         // try to perform an attack
-        spGameAction pAction = spGameAction::create(ACTION_FIRE);
+        spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
         pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-        UnitPathFindingSystem pfs(pUnit);
+        UnitPathFindingSystem pfs(m_pMap, pUnit);
         pfs.explore();
         QVector<QVector3D> ret;
         QVector<QVector3D> moveTargetFields;
@@ -373,7 +304,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
             }
             CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()), static_cast<qint32>(target.y())));
             // attacing none unit targets may modify the islands for a unit -> rebuild all for the love of god
-            if (GameMap::getInstance()->getTerrain(static_cast<qint32>(target.x()), static_cast<qint32>(target.y()))->getUnit() == nullptr)
+            if (m_pMap->getTerrain(static_cast<qint32>(target.x()), static_cast<qint32>(target.y()))->getUnit() == nullptr)
             {
                 rebuildIslandMaps = true;
             }
@@ -406,7 +337,7 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
         {
             QVector<QVector3D> targets;
             QVector<QVector3D> transporterTargets;
-            spGameAction pAction = spGameAction::create(ACTION_WAIT);
+            spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
             QStringList actions = pUnit->getActionList();
             // find possible targets for this unit
             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -463,7 +394,7 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
             // wooohooo it's a transporter
             if (pUnit->getLoadedUnitCount() > 0)
             {
-                spGameAction pAction = spGameAction::create(ACTION_WAIT);
+                spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
                 QStringList actions = pUnit->getActionList();
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 // find possible targets for this unit
@@ -490,7 +421,7 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
             }
             else
             {
-                spGameAction pAction = spGameAction::create(ACTION_WAIT);
+                spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
                 QStringList actions = pUnit->getActionList();
                 // find possible targets for this unit
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -525,7 +456,7 @@ bool VeryEasyAI::loadUnits(spQmlVectorUnit & pUnits)
         {
             QVector<QVector3D> targets;
             QVector<QVector3D> transporterTargets;
-            spGameAction pAction = spGameAction::create(ACTION_LOAD);
+            spGameAction pAction = spGameAction::create(ACTION_LOAD, m_pMap);
             QStringList actions = pUnit->getActionList();
             // find possible targets for this unit
             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -548,13 +479,13 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
                           QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets, bool unload)
 {
     CONSOLE_PRINT("VeryEasyAI::moveUnit()", Console::eDEBUG);
-    TargetedUnitPathFindingSystem pfs(pUnit, targets, &m_MoveCostMap);
+    TargetedUnitPathFindingSystem pfs(m_pMap, pUnit, targets, &m_MoveCostMap);
     pfs.explore();
     qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
     QPoint targetFields = pfs.getReachableTargetField(movepoints);
     if (targetFields.x() >= 0)
     {
-        UnitPathFindingSystem turnPfs(pUnit);
+        UnitPathFindingSystem turnPfs(m_pMap, pUnit);
         turnPfs.explore();
 
         if (CoreAI::contains(transporterTargets, targetFields))
@@ -672,8 +603,8 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
 bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits)
 {
     CONSOLE_PRINT("VeryEasyAI::buildUnits()", Console::eDEBUG);
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
         QVector<float> data;
         qint32 productionBuildings = 0;
@@ -681,7 +612,7 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
         {
             Building* pBuilding = pBuildings->at(i);
             if (pBuilding->isProductionBuilding() &&
-                pMap->getTerrain(pBuilding->Building::getX(), pBuilding->Building::getY())->getUnit() == nullptr)
+                m_pMap->getTerrain(pBuilding->Building::getX(), pBuilding->Building::getY())->getUnit() == nullptr)
             {
                 productionBuildings++;
             }
@@ -737,7 +668,7 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
                     if (pBuilding->isProductionBuilding() &&
                         pBuilding->getTerrain()->getUnit() == nullptr)
                     {
-                        spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS);
+                        spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS, m_pMap);
                         pAction->setTarget(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY()));
                         if (pAction->canBePerformed())
                         {

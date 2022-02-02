@@ -17,9 +17,9 @@
 #include "objects/dialogs/dialogtextinput.h"
 #include "objects/base/label.h"
 
-ActionListDialog::ActionListDialog(QStringList bannlist)
-    : QObject(),
-      m_CurrentActionList(bannlist)
+ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
+    : m_CurrentActionList(bannlist),
+      m_pMap(pMap)
 {
     setObjectName("ActionListDialog");
     Mainapp* pApp = Mainapp::getInstance();
@@ -111,8 +111,8 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
 
     qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
     qint32 x = 10;
-    spGameMap pMap = GameMap::getInstance();
-    m_CurrentActionList = pMap->getGameRules()->getAllowedActions();
+    
+    m_CurrentActionList = m_pMap->getGameRules()->getAllowedActions();
 
     for (qint32 i = 0; i < actionList.size(); i++)
     {
@@ -128,7 +128,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
 
             spTooltip pTooltip = spTooltip::create();
 
-            oxygine::spSprite pSprite = pGameManager->getIcon(icon);
+            oxygine::spSprite pSprite = pGameManager->getIcon(pMap, icon);
             pSprite->setScale(1.25f * pSprite->getScaleX());
             pTooltip->addChild(pSprite);
             pTooltip->setPosition(x + 45, y);

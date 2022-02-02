@@ -120,7 +120,7 @@ namespace oxygine
         {
             if (value.toBool())
             {
-                m_linearFilter = GL_LINEAR_MIPMAP_LINEAR;
+                m_linearFilter = GL_LINEAR;
             }
             else
             {
@@ -140,7 +140,7 @@ namespace oxygine
         }
         else
         {
-            m_clamp2edge = true;
+            m_clamp2edge = false;
         }
     }
 

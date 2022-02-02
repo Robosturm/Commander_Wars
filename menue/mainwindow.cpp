@@ -36,6 +36,8 @@
 
 #include "ui_reader/uifactory.h"
 
+static constexpr qint32 buttonCount = 7;
+
 Mainwindow::Mainwindow()
     : m_cheatTimeout(this)
 {
@@ -63,169 +65,6 @@ Mainwindow::Mainwindow()
     pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
     pApp->getAudioThread()->playRandom();
 
-    qint32 buttonWidth = 170;
-    qint32 btnI = 0;
-    QString lastSaveGame = Settings::getLastSaveGame();
-
-    // create the ui for the main menue here :)
-    oxygine::spButton pButtonLastSaveGame = ObjectManager::createButton(tr("Continue"), buttonWidth);
-    setButtonPosition(pButtonLastSaveGame, btnI);
-    addChild(pButtonLastSaveGame);
-    pButtonLastSaveGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigLastSaveGame();
-    });
-    connect(this, &Mainwindow::sigLastSaveGame, this, &Mainwindow::lastSaveGame, Qt::QueuedConnection);
-    btnI++;
-    if (!QFile::exists(lastSaveGame) ||
-        !lastSaveGame.endsWith(".sav"))
-    {
-        pButtonLastSaveGame->setEnabled(false);
-    }
-
-    // create the ui for the main menue here :)
-    oxygine::spButton pButtonSingleplayer = ObjectManager::createButton(tr("Singleplayer"), buttonWidth);
-    setButtonPosition(pButtonSingleplayer, btnI);
-    addChild(pButtonSingleplayer);
-    pButtonSingleplayer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigEnterSingleplayer();
-    });
-    connect(this, &Mainwindow::sigEnterSingleplayer, this, &Mainwindow::enterSingleplayer, Qt::QueuedConnection);
-    btnI++;
-
-    // create the ui for the main menue here :)
-    oxygine::spButton pButtonMultiplayer = ObjectManager::createButton(tr("Multiplayer"), buttonWidth);
-    setButtonPosition(pButtonMultiplayer, btnI);
-    addChild(pButtonMultiplayer);
-    pButtonMultiplayer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigEnterMultiplayer();
-    });
-    connect(this, &Mainwindow::sigEnterMultiplayer, this, &Mainwindow::enterMultiplayer, Qt::QueuedConnection);
-    btnI++;
-
-    // load button
-    oxygine::spButton pButtonLoadGame = ObjectManager::createButton(tr("Load Game"), buttonWidth);
-    addChild(pButtonLoadGame);
-    setButtonPosition(pButtonLoadGame, btnI);
-    pButtonLoadGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigEnterLoadGame();
-    });
-    connect(this, &Mainwindow::sigEnterLoadGame, this, &Mainwindow::enterLoadGame, Qt::QueuedConnection);
-    btnI++;
-
-    // load button
-    oxygine::spButton pButtonLoadCampaign = ObjectManager::createButton(tr("Load Campaign"), buttonWidth);
-    addChild(pButtonLoadCampaign);
-    setButtonPosition(pButtonLoadCampaign, btnI);
-    pButtonLoadCampaign->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigEnterLoadCampaign();
-    });
-    connect(this, &Mainwindow::sigEnterLoadCampaign, this, &Mainwindow::enterLoadCampaign, Qt::QueuedConnection);
-    btnI++;
-
-    // replay button
-    oxygine::spButton pButtonReplay = ObjectManager::createButton(tr("Replay Game"), buttonWidth);
-    addChild(pButtonReplay);
-    setButtonPosition(pButtonReplay, btnI);
-    pButtonReplay->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigEnterReplayGame();
-    });
-    connect(this, &Mainwindow::sigEnterReplayGame, this, &Mainwindow::enterReplayGame, Qt::QueuedConnection);
-    btnI++;
-
-    // editor button
-    oxygine::spButton pButtonEditor = ObjectManager::createButton(tr("Map Editor"), buttonWidth);
-    addChild(pButtonEditor);
-    setButtonPosition(pButtonEditor, btnI);
-    pButtonEditor->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigEnterEditor();
-    });
-    connect(this, &Mainwindow::sigEnterEditor, this, &Mainwindow::enterEditor, Qt::QueuedConnection);
-    btnI++;
-
-    // option button
-    oxygine::spButton pButtonOptions = ObjectManager::createButton(tr("Options"), buttonWidth);
-    addChild(pButtonOptions);
-    setButtonPosition(pButtonOptions, btnI);
-    pButtonOptions->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigEnterOptionmenue();
-    });
-    connect(this, &Mainwindow::sigEnterOptionmenue, this, &Mainwindow::enterOptionmenue, Qt::QueuedConnection);
-    btnI++;
-
-    // co style button
-    oxygine::spButton pButtonCOStyle = ObjectManager::createButton(tr("CO Style"), buttonWidth);
-    addChild(pButtonCOStyle);
-    setButtonPosition(pButtonCOStyle, btnI);
-    pButtonCOStyle->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigEnterCOStyleMenu();
-    });
-    connect(this, &Mainwindow::sigEnterCOStyleMenu, this, &Mainwindow::enterCOStyleMenu, Qt::QueuedConnection);
-    btnI++;
-
-    // co style button
-    oxygine::spButton pButtonShop = ObjectManager::createButton(tr("Shop"), buttonWidth);
-    addChild(pButtonShop);
-    setButtonPosition(pButtonShop, btnI);
-    pButtonShop->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigEnterShopMenu();
-    });
-    connect(this, &Mainwindow::sigEnterShopMenu, this, &Mainwindow::enterShopMenu, Qt::QueuedConnection);
-    btnI++;
-
-    // wiki button
-    oxygine::spButton pButtonWiki = ObjectManager::createButton(tr("Wiki"), buttonWidth);
-    addChild(pButtonWiki);
-    setButtonPosition(pButtonWiki, btnI);
-    pButtonWiki->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigEnterWikimenue();
-    });
-    connect(this, &Mainwindow::sigEnterWikimenue, this, &Mainwindow::enterWikimenue, Qt::QueuedConnection);
-    btnI++;
-
-    // wiki button
-    oxygine::spButton pButtonAchievement = ObjectManager::createButton(tr("Achievements"), buttonWidth);
-    addChild(pButtonAchievement);
-    setButtonPosition(pButtonAchievement, btnI);
-    pButtonAchievement->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigEnterAchievementmenue();
-    });
-    connect(this, &Mainwindow::sigEnterAchievementmenue, this, &Mainwindow::enterAchievementmenue, Qt::QueuedConnection);
-    btnI++;
-
-    // credits button
-    oxygine::spButton pButtonCredtis = ObjectManager::createButton(tr("Credits"), buttonWidth);
-    addChild(pButtonCredtis);
-    setButtonPosition(pButtonCredtis, btnI);
-    pButtonCredtis->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigEnterCreditsmenue();
-    });
-    connect(this, &Mainwindow::sigEnterCreditsmenue, this, &Mainwindow::enterCreditsmenue, Qt::QueuedConnection);
-    btnI++;
-
-    // quit button
-    oxygine::spButton pQuit = ObjectManager::createButton(tr("Quit"), buttonWidth);
-    addChild(pQuit);
-    setButtonPosition(pQuit, btnI);
-    pQuit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigQuit();
-    });
-    connect(this, &Mainwindow::sigQuit, this, &Mainwindow::quitGame, Qt::QueuedConnection);
-    btnI++;
-
     if (Settings::getUsername().isEmpty())
     {
         spDialogTextInput pDialogTextInput = spDialogTextInput::create(tr("Select Username"), false, "");
@@ -252,7 +91,7 @@ Mainwindow::Mainwindow()
     if (!Settings::getSmallScreenDevice())
     {
         // import
-        oxygine::spButton pImport = ObjectManager::createButton(tr("Import"), buttonWidth, tr("Imports all data from an other Commander Wars release to the current release."));
+        oxygine::spButton pImport = ObjectManager::createButton(tr("Import"), 170, tr("Imports all data from an other Commander Wars release to the current release."));
         addChild(pImport);
         pImport->setPosition(10, Settings::getHeight() - 10 - pImport->getHeight());
         pImport->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -320,25 +159,42 @@ void Mainwindow::changeUsername(QString name)
     Settings::saveSettings();
 }
 
-void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
+qint32 Mainwindow::getButtonX(qint32 btnI) const
 {
-    static const qint32 buttonCount = 7;
-    float buttonHeigth = pButton->getHeight() + 5;
     qint32 col = btnI % 3;
+    qint32 x = 0;
+    const qint32 width = 170;
     if (col == 0)
     {
-        pButton->setX(Settings::getWidth() / 2.0f - pButton->getWidth() * 1.5f - 10);
+        x = (Settings::getWidth() / 2.0f - width * 1.5f - 10);
     }
     else if (col == 1)
     {
-        pButton->setX(Settings::getWidth() / 2.0f - pButton->getWidth() * 0.5f);
+        x = (Settings::getWidth() / 2.0f - width * 0.5f);
     }
     else if (col == 2)
     {
-        pButton->setX(Settings::getWidth() / 2.0f + pButton->getWidth() * 0.5f + 10);
+        x = (Settings::getWidth() / 2.0f + width * 0.5f + 10);
     }
+    return x;
+}
+
+qint32 Mainwindow::getButtonY(qint32 btnI) const
+{
+    float buttonHeigth = 45;
     btnI = btnI / 3;
-    pButton->setY(Settings::getHeight() / 2.0f - buttonCount  / 2 * buttonHeigth + buttonHeigth * btnI);
+    return Settings::getHeight() / 2.0f - buttonCount  / 2 * buttonHeigth + buttonHeigth * btnI;
+}
+
+bool Mainwindow::isValidSavegame() const
+{
+    QString lastSaveGame = Settings::getLastSaveGame();
+    if (!QFile::exists(lastSaveGame) ||
+        !lastSaveGame.endsWith(".sav"))
+    {
+        return false;
+    }
+    return true;
 }
 
 void Mainwindow::enterSingleplayer()

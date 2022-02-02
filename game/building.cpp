@@ -12,10 +12,11 @@
 
 #include "ai/coreai.h"
 
-Building::Building(QString BuildingID)
+Building::Building(QString BuildingID, GameMap* pMap)
     : m_BuildingID(BuildingID),
       m_pOwner(nullptr),
-      m_pTerrain(nullptr)
+      m_pTerrain(nullptr),
+      m_pMap(pMap)
 {
     setObjectName("Building");
     Mainapp* pApp = Mainapp::getInstance();
@@ -36,6 +37,8 @@ void Building::init()
     QJSValueList args;
     QJSValue objArg = pInterpreter->newQObject(this);
     args << objArg;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
     pInterpreter->doFunction(m_BuildingID, function, args);
 }
 
@@ -64,6 +67,8 @@ QStringList Building::getBaseTerrain()
     QString function = "getBaseTerrain";
     QJSValue objArg = pInterpreter->newQObject(this);
     args << objArg;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function, args);
     QStringList retList = ret.toVariant().toStringList();
     if (retList.size() == 0)
@@ -93,6 +98,8 @@ QString Building::getDescription()
     QJSValueList args;
     QJSValue objArg = pInterpreter->newQObject(this);
     args << objArg;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function, args);
     if (ret.isString())
     {
@@ -111,6 +118,8 @@ bool Building::getVisionHide()
     QJSValueList args;
     QJSValue objArg = pInterpreter->newQObject(this);
     args << objArg;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isBool())
     {
@@ -134,15 +143,15 @@ void Building::setOwner(Player* pOwner)
     m_pOwner = pOwner;
     // update sprites :)
     bool visible = true;
-    spGameMap pMap = GameMap::getInstance();
+    
     qint32 x = Building::getX();
     qint32 y = Building::getY();
 
-    if (pMap.get() != nullptr &&
-        pMap->getCurrentViewPlayer() != nullptr &&
-        pMap->onMap(x, y))
+    if (m_pMap != nullptr &&
+        m_pMap->getCurrentViewPlayer() != nullptr &&
+        m_pMap->onMap(x, y))
     {
-        visible = pMap->getCurrentViewPlayer()->getFieldVisible(x, y);
+        visible = m_pMap->getCurrentViewPlayer()->getFieldVisible(x, y);
     }
     if (m_pBuildingSprites.size() == 0 ||
         prevOwner == nullptr)
@@ -244,7 +253,7 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
     }
     else
     {
-        CONSOLE_PRINT("Unable to load building sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load building sprite: " + spriteID, Console::eDEBUG);
     }
 }
 
@@ -265,6 +274,8 @@ void Building::onWeatherChanged(Weather* pWeather)
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(pWeather);
     args1 << obj2;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     pInterpreter->doFunction(m_BuildingID, function1, args1);
 }
 
@@ -325,8 +336,13 @@ void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::R
     }
     else
     {
-        CONSOLE_PRINT("Unable to load weather overlay sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load weather overlay sprite: " + spriteID, Console::eDEBUG);
     }
+}
+
+GameMap *Building::getMap() const
+{
+    return m_pMap;
 }
 
 void Building::syncAnimation(oxygine::timeMS syncTime)
@@ -395,6 +411,8 @@ qint32 Building::getVision()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -421,12 +439,14 @@ void Building::updateBuildingSprites(bool neutral)
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
     args1 << neutral;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     pInterpreter->doFunction(m_BuildingID, function1, args1);
     m_neutralLoaded = neutral;
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        auto* pWeather = pMap->getGameRules()->getCurrentWeather();
+        auto* pWeather = m_pMap->getGameRules()->getCurrentWeather();
         if (pWeather != nullptr)
         {
             onWeatherChanged(pWeather);
@@ -443,6 +463,8 @@ bool Building::canBuildingBePlaced(Terrain* pTerrain)
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (ret.isBool())
     {
@@ -463,6 +485,8 @@ QString Building::getName()
         QJSValueList args1;
         QJSValue obj = pInterpreter->newQObject(this);
         args1 << obj;
+        QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+        args1 << objArg5;
         QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
         if (ret.isString())
         {
@@ -481,6 +505,8 @@ quint32 Building::getBaseIncome() const
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBaseIncome";
     QJSValueList args1;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (ret.isNumber())
     {
@@ -512,10 +538,10 @@ qint32 Building::getIncome()
         income = static_cast<qint32>(income) + modifier;
 
         modifier = 0;
-        spGameMap pMap = GameMap::getInstance();
-        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            Player* pPlayer = pMap->getPlayer(i);
+            Player* pPlayer = m_pMap->getPlayer(i);
             if (pPlayer != nullptr &&
                 m_pOwner->isEnemy(pPlayer) &&
                 !pPlayer->getIsDefeated())
@@ -539,6 +565,8 @@ QString Building::getMinimapIcon()
     QJSValueList args1;
     QJSValue obj = pInterpreter->newQObject(this);
     args1 << obj;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (ret.isString())
     {
@@ -581,6 +609,8 @@ QStringList Building::getActionList()
     QJSValueList args1;
     QJSValue obj = pInterpreter->newQObject(this);
     args1 << obj;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     QStringList retList;
     if (ret.isString())
@@ -612,10 +642,10 @@ QStringList Building::getActionList()
                 actionModifierList += result.split(",");
             }
         }
-        spGameMap pMap = GameMap::getInstance();
-        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            Player* pPlayer = pMap->getPlayer(i);
+            Player* pPlayer = m_pMap->getPlayer(i);
             if (pPlayer != nullptr &&
                 m_pOwner->isEnemy(pPlayer) &&
                 !pPlayer->getIsDefeated())
@@ -675,6 +705,8 @@ QList<qint32> Building::getRepairTypes()
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     auto list = ret.toVariant().toList();
     QList<qint32> retList;
@@ -692,6 +724,8 @@ QStringList Building::getConstructionList()
     QJSValueList args;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args << obj1;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     QVariant var = ret.toVariant();
     QStringList buildList = var.toStringList();
@@ -715,11 +749,11 @@ QStringList Building::getConstructionList()
         }
     }
 
-    spGameMap pMap = GameMap::getInstance();
+    
     QStringList returnList;
-    if (m_pOwner != nullptr && pMap.get() != nullptr)
+    if (m_pOwner != nullptr && m_pMap != nullptr)
     {
-     bool coUnits = pMap->getGameRules()->getCoUnits();
+     bool coUnits = m_pMap->getGameRules()->getCoUnits();
         QStringList playerBuildList = m_pOwner->getBuildList();
         for (qint32 i = 0; i < buildList.size(); i++)
         {
@@ -749,6 +783,8 @@ void Building::startOfTurn()
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     pInterpreter->doFunction(m_BuildingID, function1, args1);
 }
 
@@ -759,6 +795,8 @@ qint32 Building::getOffensiveBonus()
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (ret.isNumber())
     {
@@ -777,6 +815,8 @@ qint32 Building::getDefensiveBonus()
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (ret.isNumber())
     {
@@ -795,6 +835,8 @@ qint32 Building::getVisionBonus()
     QJSValueList args1;
     QJSValue obj = pInterpreter->newQObject(this);
     args1 << obj;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (ret.isNumber())
     {
@@ -825,6 +867,8 @@ qint32 Building::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QP
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     args1 << luckMode;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     qint32 ergValue = 0;
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (erg.isNumber())
@@ -853,6 +897,8 @@ qint32 Building::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, Q
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     args1 << luckMode;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     qint32 ergValue = 0;
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (erg.isNumber())
@@ -865,7 +911,10 @@ qint32 Building::getBuildingWidth()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBuildingWidth";
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1);
+    QJSValueList args;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -880,7 +929,10 @@ qint32 Building::getBuildingHeigth()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBuildingHeigth";
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1);
+    QJSValueList args;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -900,6 +952,8 @@ bool Building::getIsAttackable(qint32 x, qint32 y)
     args1 << obj1;
     args1 << x;
     args1 << y;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (ret.isBool())
     {
@@ -917,6 +971,8 @@ QmlVectorPoint* Building::getActionTargetFields()
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (ret.isQObject())
     {
@@ -934,6 +990,8 @@ QPoint Building::getActionTargetOffset()
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     return ret.toVariant().toPoint();
 }
@@ -947,6 +1005,8 @@ float Building::getDamage(Unit* pUnit)
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(pUnit);
     args1 << obj2;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (ret.isNumber())
     {
@@ -962,6 +1022,8 @@ GameEnums::BuildingTarget Building::getBuildingTargets()
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (ret.isNumber())
     {
@@ -1019,6 +1081,10 @@ QString Building::getTerrainAnimationBase()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(nullptr);
+    args1 << obj3;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (erg.isString())
     {
@@ -1039,6 +1105,10 @@ QString Building::getTerrainAnimationForeground()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(nullptr);
+    args1 << obj3;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (erg.isString())
     {
@@ -1055,6 +1125,8 @@ float Building::getTerrainAnimationMoveSpeed()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationMoveSpeed";
     QJSValueList args;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isNumber())
     {
@@ -1070,7 +1142,10 @@ bool Building::canRepair(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getConstructionList";
-    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1);
+    QJSValueList args;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
+    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     return erg.toVariant().toStringList().contains(pUnit->getUnitID());
 }
 
@@ -1087,8 +1162,10 @@ bool Building::isCaptureOrMissileBuilding(bool hasSiloTarget)
 bool Building::isCaptureBuilding()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = "getCapturableBuildings";
-    QJSValue erg = pInterpreter->doFunction(CoreAI::ACTION_CAPTURE, function1);
+    QString function1 = "getCapturableBuildings"; QJSValueList args;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
+    QJSValue erg = pInterpreter->doFunction(CoreAI::ACTION_CAPTURE, function1, args);
     bool capturable = erg.toVariant().toStringList().contains(m_BuildingID);
     return capturable;
 }
@@ -1096,8 +1173,10 @@ bool Building::isCaptureBuilding()
 bool Building::isMissile()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = "getMissileBuildings";
-    QJSValue erg = pInterpreter->doFunction(CoreAI::ACTION_MISSILE, function1);
+    QString function1 = "getMissileBuildings"; QJSValueList args;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
+    QJSValue erg = pInterpreter->doFunction(CoreAI::ACTION_MISSILE, function1, args);
     bool capturable = erg.toVariant().toStringList().contains(m_BuildingID);
     return capturable;
 }
@@ -1120,6 +1199,10 @@ QString Building::getTerrainAnimationBackground()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(nullptr);
+    args1 << obj3;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (erg.isString())
     {
@@ -1205,7 +1288,7 @@ void Building::deserializer(QDataStream& pStream, bool fast)
     }
     qint32 playerID = -1;
     pStream >> playerID;
-    m_pOwner = GameMap::getInstance()->getPlayer(playerID);
+    m_pOwner = m_pMap->getPlayer(playerID);
     if (version > 1)
     {
         qint32 newHp = 0;

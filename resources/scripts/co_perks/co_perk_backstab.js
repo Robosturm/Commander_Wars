@@ -1,7 +1,7 @@
 var Constructor = function()
 {
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -17,7 +17,7 @@ var Constructor = function()
     {
         return qsTr("Increases the dive/hide attack by 15%.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "seamanship";
     };

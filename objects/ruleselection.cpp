@@ -24,10 +24,11 @@
 
 constexpr qint32 textWidth = 300;
 
-RuleSelection::RuleSelection(qint32 width, Mode mode, bool enabled)
+RuleSelection::RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enabled)
     : QObject(),
       m_mode(mode),
-      m_ruleChangeEabled(enabled)
+      m_ruleChangeEabled(enabled),
+      m_pMap(pMap)
 {
     setObjectName("RuleSelection");
     setWidth(width);
@@ -40,11 +41,11 @@ void RuleSelection::confirmRuleSelectionSetup()
     {
         CONSOLE_PRINT("Confirming rule selection and enabling/disabling rules for the map.", Console::eDEBUG);
         GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
-        spGameMap pMap = GameMap::getInstance();
+        
         for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
         {
             QString ruleID = pGameRuleManager->getVictoryRuleID(i);
-            spVictoryRule pRule = spVictoryRule(pMap->getGameRules()->getVictoryRule(ruleID));
+            spVictoryRule pRule = spVictoryRule(m_pMap->getGameRules()->getVictoryRule(ruleID));
             if (pRule.get() != nullptr)
             {
                 QStringList inputTypes = pRule->getRuleType();
@@ -54,7 +55,7 @@ void RuleSelection::confirmRuleSelectionSetup()
                     if (ruleValue == 0)
                     {
                         CONSOLE_PRINT("Removing rule cause it's disabled: " + ruleID, Console::eDEBUG);
-                        pMap->getGameRules()->removeVictoryRule(ruleID);
+                        m_pMap->getGameRules()->removeVictoryRule(ruleID);
                     }
                     else
                     {
@@ -68,7 +69,7 @@ void RuleSelection::confirmRuleSelectionSetup()
                     if (ruleValue <= infiniteValue)
                     {
                         CONSOLE_PRINT("Removing rule cause it's disabled: " + ruleID, Console::eDEBUG);
-                        pMap->getGameRules()->removeVictoryRule(ruleID);
+                        m_pMap->getGameRules()->removeVictoryRule(ruleID);
                     }
                     else
                     {
@@ -78,7 +79,7 @@ void RuleSelection::confirmRuleSelectionSetup()
                 else
                 {
                     CONSOLE_PRINT("Removing rule cause it's in unsupported format: " + ruleID, Console::eERROR);
-                    pMap->getGameRules()->removeVictoryRule(ruleID);
+                    m_pMap->getGameRules()->removeVictoryRule(ruleID);
                 }
             }
         }
@@ -86,7 +87,7 @@ void RuleSelection::confirmRuleSelectionSetup()
         for (qint32 i = 0; i < pGameRuleManager->getGameRuleCount(); i++)
         {
             QString ruleID = pGameRuleManager->getGameRuleID(i);
-            spGameRule pRule = spGameRule(pMap->getGameRules()->getGameRule(ruleID));
+            spGameRule pRule = spGameRule(m_pMap->getGameRules()->getGameRule(ruleID));
             if (pRule.get() != nullptr)
             {
                 QStringList inputTypes = pRule->getRuleType();
@@ -96,7 +97,7 @@ void RuleSelection::confirmRuleSelectionSetup()
                     if (ruleValue == 0)
                     {
                         CONSOLE_PRINT("Removing rule cause it's disabled: " + ruleID, Console::eDEBUG);
-                        pMap->getGameRules()->removeGameRule(ruleID);
+                        m_pMap->getGameRules()->removeGameRule(ruleID);
                     }
                     else
                     {
@@ -110,7 +111,7 @@ void RuleSelection::confirmRuleSelectionSetup()
                     if (ruleValue <= infiniteValue)
                     {
                         CONSOLE_PRINT("Removing rule cause it's disabled: " + ruleID, Console::eDEBUG);
-                        pMap->getGameRules()->removeGameRule(ruleID);
+                        m_pMap->getGameRules()->removeGameRule(ruleID);
                     }
                     else
                     {
@@ -120,7 +121,7 @@ void RuleSelection::confirmRuleSelectionSetup()
                 else
                 {
                     CONSOLE_PRINT("Removing rule cause it's in unsupported format: " + ruleID, Console::eERROR);
-                    pMap->getGameRules()->removeGameRule(ruleID);
+                    m_pMap->getGameRules()->removeGameRule(ruleID);
                 }
             }
         }
@@ -145,7 +146,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
     QColor headerColor(0, 255, 0, 255);
-    spGameMap pMap = GameMap::getInstance();
+    
 
     spLabel textField = spLabel::create(textWidth - 40);
     textField->setStyle(style);
@@ -172,7 +173,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         pTexbox->setCurrentText("");
         pTexbox->setTooltipText(tr("Map description shown for players who want to join. Keep it short here."));
         pTexbox->setEnabled(m_ruleChangeEabled);
-        connect(pTexbox.get(), &Textbox::sigTextChanged, pMap->getGameRules(), &GameRules::setDescription, Qt::QueuedConnection);
+        connect(pTexbox.get(), &Textbox::sigTextChanged, m_pMap->getGameRules(), &GameRules::setDescription, Qt::QueuedConnection);
         addChild(pTexbox);
         y += 40;
 
@@ -187,7 +188,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         pPasswordbox->setCurrentText("");
         pPasswordbox->setTooltipText(tr("Map description shown for players who want to join. Keep it short here."));
         pPasswordbox->setEnabled(m_ruleChangeEabled);
-        connect(pPasswordbox.get(), &Passwordbox::sigTextChanged, pMap->getGameRules(), &GameRules::setPassword, Qt::QueuedConnection);
+        connect(pPasswordbox.get(), &Passwordbox::sigTextChanged, m_pMap->getGameRules(), &GameRules::setPassword, Qt::QueuedConnection);
         addChild(pPasswordbox);
         y += 40;
 
@@ -201,7 +202,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox->setChecked(false);
         pCheckbox->setTooltipText(tr("If checked cosmetic mods can be different on host and client site.\nWarning this may lead to asynchron games or crashes in case one of the mods is not a pure cosmetic mod."));
         pCheckbox->setEnabled(m_ruleChangeEabled);
-        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setCosmeticModsAllowed, Qt::QueuedConnection);
+        connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setCosmeticModsAllowed, Qt::QueuedConnection);
         addChild(pCheckbox);
         y += 40;
     }
@@ -218,11 +219,11 @@ void RuleSelection::showRuleSelection(bool advanced)
 
     QStringList weatherStrings;
     QVector<qint32> weatherChances;
-    for (qint32 i = 0; i < pMap->getGameRules()->getWeatherCount(); i++)
+    for (qint32 i = 0; i < m_pMap->getGameRules()->getWeatherCount(); i++)
     {
-        Weather* pWeather = pMap->getGameRules()->getWeather(i);
+        Weather* pWeather = m_pMap->getGameRules()->getWeather(i);
         weatherStrings.append(pWeather->getWeatherName());
-        weatherChances.append(pMap->getGameRules()->getWeatherChance(pWeather->getWeatherId()));
+        weatherChances.append(m_pMap->getGameRules()->getWeatherChance(pWeather->getWeatherId()));
     }
     m_pWeatherSlider = spMultislider::create(weatherStrings, Settings::getWidth() - 100, weatherChances);
     m_pWeatherSlider->setTooltipText(tr("The chance each weather can appear if random weather is active."));
@@ -242,8 +243,8 @@ void RuleSelection::showRuleSelection(bool advanced)
     pCheckbox->setPosition(textWidth, textField->getY());
     pCheckbox->setEnabled(m_ruleChangeEabled);
     addChild(pCheckbox);
-    pCheckbox->setChecked(pMap->getGameRules()->getRandomWeather());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setRandomWeather, Qt::QueuedConnection);
+    pCheckbox->setChecked(m_pMap->getGameRules()->getRandomWeather());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setRandomWeather, Qt::QueuedConnection);
     y += 40;
 
     textField = spLabel::create(textWidth - 40);
@@ -255,11 +256,11 @@ void RuleSelection::showRuleSelection(bool advanced)
     spDropDownmenu startWeather = spDropDownmenu::create(400, weatherStrings);
     startWeather->setTooltipText(tr("The weather at the start of the game."));
     startWeather->setPosition(textWidth, textField->getY());
-    startWeather->setCurrentItem(pMap->getGameRules()->getStartWeather());
+    startWeather->setCurrentItem(m_pMap->getGameRules()->getStartWeather());
     startWeather->setEnabled(m_ruleChangeEabled);
     connect(startWeather.get(), &DropDownmenu::sigItemChanged, this, &RuleSelection::startWeatherChanged, Qt::QueuedConnection);
     addChild(startWeather);
-    startWeatherChanged(pMap->getGameRules()->getStartWeather());
+    startWeatherChanged(m_pMap->getGameRules()->getStartWeather());
     y += 50;
     if (advanced)
     {
@@ -273,8 +274,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
-        pCheckbox->setChecked(pMap->getGameRules()->getWeatherPrediction());
-        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setWeatherPrediction, Qt::QueuedConnection);
+        pCheckbox->setChecked(m_pMap->getGameRules()->getWeatherPrediction());
+        connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setWeatherPrediction, Qt::QueuedConnection);
     }
     y = textField->getY() + 50;
     textField = spLabel::create(800);
@@ -296,8 +297,8 @@ void RuleSelection::showRuleSelection(bool advanced)
     pCheckbox->setPosition(textWidth, textField->getY());
     pCheckbox->setEnabled(m_ruleChangeEabled);
     addChild(pCheckbox);
-    pCheckbox->setChecked(pMap->getGameRules()->getRankingSystem());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setRankingSystem, Qt::QueuedConnection);
+    pCheckbox->setChecked(m_pMap->getGameRules()->getRankingSystem());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setRankingSystem, Qt::QueuedConnection);
     y += 40;
 
     textField = spLabel::create(textWidth - 40);
@@ -310,8 +311,8 @@ void RuleSelection::showRuleSelection(bool advanced)
     pCheckbox->setPosition(textWidth, textField->getY());
     pCheckbox->setEnabled(m_ruleChangeEabled);
     addChild(pCheckbox);
-    pCheckbox->setChecked(pMap->getGameRules()->getNoPower());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setNoPower, Qt::QueuedConnection);
+    pCheckbox->setChecked(m_pMap->getGameRules()->getNoPower());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setNoPower, Qt::QueuedConnection);
     y += 40;
 
     textField = spLabel::create(textWidth - 40);
@@ -324,8 +325,8 @@ void RuleSelection::showRuleSelection(bool advanced)
     pCheckbox->setPosition(textWidth, textField->getY());
     pCheckbox->setEnabled(m_ruleChangeEabled);
     addChild(pCheckbox);
-    pCheckbox->setChecked(pMap->getGameRules()->getEnableDayToDayCoAbilities());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setEnableDayToDayCoAbilities, Qt::QueuedConnection);
+    pCheckbox->setChecked(m_pMap->getGameRules()->getEnableDayToDayCoAbilities());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setEnableDayToDayCoAbilities, Qt::QueuedConnection);
     y += 40;
 
     if (advanced)
@@ -341,8 +342,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
-        pCheckbox->setChecked(pMap->getGameRules()->getSingleCo());
-        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setSingleCo, Qt::QueuedConnection);
+        pCheckbox->setChecked(m_pMap->getGameRules()->getSingleCo());
+        connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setSingleCo, Qt::QueuedConnection);
         y += 40;
     }
 
@@ -358,8 +359,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
-        pCheckbox->setChecked(pMap->getGameRules()->getCoUnits());
-        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setCoUnits, Qt::QueuedConnection);
+        pCheckbox->setChecked(m_pMap->getGameRules()->getCoUnits());
+        connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setCoUnits, Qt::QueuedConnection);
         y += 40;
 
         textField = spLabel::create(textWidth - 40);
@@ -373,8 +374,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pSpinbox->setInfinityValue(-1);
         pSpinbox->setEnabled(m_ruleChangeEabled);
         addChild(pSpinbox);
-        pSpinbox->setCurrentValue(pMap->getGameRules()->getMaxPerkCount());
-        connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setMaxPerkCount, Qt::QueuedConnection);
+        pSpinbox->setCurrentValue(m_pMap->getGameRules()->getMaxPerkCount());
+        connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pMap->getGameRules(), &GameRules::setMaxPerkCount, Qt::QueuedConnection);
         y += 40;
 
         textField = spLabel::create(textWidth - 40);
@@ -388,8 +389,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pSpinbox->setPosition(textWidth, textField->getY());
         pSpinbox->setEnabled(m_ruleChangeEabled);
         addChild(pSpinbox);
-        pSpinbox->setCurrentValue(pMap->getGameRules()->getUnitLimit());
-        connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setUnitLimit, Qt::QueuedConnection);
+        pSpinbox->setCurrentValue(m_pMap->getGameRules()->getUnitLimit());
+        connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pMap->getGameRules(), &GameRules::setUnitLimit, Qt::QueuedConnection);
         y += 40;
     }
 
@@ -415,8 +416,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pDropDownmenu->setPosition(textWidth, textField->getY());
         pDropDownmenu->setEnabled(m_ruleChangeEabled);
         addChild(pDropDownmenu);
-        pDropDownmenu->setCurrentItem(static_cast<qint32>(pMap->getGameRules()->getPowerGainZone()));
-        GameMap* pPtrMap = pMap.get();
+        pDropDownmenu->setCurrentItem(static_cast<qint32>(m_pMap->getGameRules()->getPowerGainZone()));
+        GameMap* pPtrMap = m_pMap;
         connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
         {
             pPtrMap->getGameRules()->setPowerGainZone(static_cast<GameEnums::PowerGainZone>(value));
@@ -434,7 +435,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         pDropDownmenu->setPosition(textWidth, textField->getY());
         pDropDownmenu->setEnabled(m_ruleChangeEabled);
         addChild(pDropDownmenu);
-        pDropDownmenu->setCurrentItem(static_cast<qint32>(pMap->getGameRules()->getPowerGainMode()));
+        pDropDownmenu->setCurrentItem(static_cast<qint32>(m_pMap->getGameRules()->getPowerGainMode()));
         connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
         {
             pPtrMap->getGameRules()->setPowerGainMode(static_cast<GameEnums::PowerGainMode>(value));
@@ -453,8 +454,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pSpinbox->setPosition(textWidth, textField->getY());
         pSpinbox->setEnabled(m_ruleChangeEabled);
         addChild(pSpinbox);
-        pSpinbox->setCurrentValue(pMap->getGameRules()->getPowerUsageReduction());
-        connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setPowerUsageReduction, Qt::QueuedConnection);
+        pSpinbox->setCurrentValue(m_pMap->getGameRules()->getPowerUsageReduction());
+        connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pMap->getGameRules(), &GameRules::setPowerUsageReduction, Qt::QueuedConnection);
         y += 40;
 
         textField = spLabel::create(textWidth - 40);
@@ -469,13 +470,13 @@ void RuleSelection::showRuleSelection(bool advanced)
         pSpinbox->setPosition(textWidth, textField->getY());
         pSpinbox->setEnabled(m_ruleChangeEabled);
         addChild(pSpinbox);
-        pSpinbox->setCurrentValue(pMap->getGameRules()->getPowerGainSpeed());
-        connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setPowerGainSpeed, Qt::QueuedConnection);
+        pSpinbox->setCurrentValue(m_pMap->getGameRules()->getPowerGainSpeed());
+        connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pMap->getGameRules(), &GameRules::setPowerGainSpeed, Qt::QueuedConnection);
         y += 40;
 
         textField = spLabel::create(textWidth - 40);
         textField->setStyle(style);
-        textField->setHtmlText(tr("CO Power loose: "));
+        textField->setHtmlText(tr("CO Power loss: "));
         textField->setPosition(30, y);
         addChild(textField);
         pSpinbox = spSpinBox::create(400, 0, 1, SpinBox::Mode::Float);
@@ -485,8 +486,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pSpinbox->setPosition(textWidth, textField->getY());
         pSpinbox->setEnabled(m_ruleChangeEabled);
         addChild(pSpinbox);
-        pSpinbox->setCurrentValue(pMap->getGameRules()->getPowerLoose());
-        connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setPowerLoose, Qt::QueuedConnection);
+        pSpinbox->setCurrentValue(m_pMap->getGameRules()->getPowerLoose());
+        connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pMap->getGameRules(), &GameRules::setPowerLoose, Qt::QueuedConnection);
         y += 40;
     }
     textField = spLabel::create(800);
@@ -507,10 +508,22 @@ void RuleSelection::showRuleSelection(bool advanced)
     spDropDownmenu fogOfWar = spDropDownmenu::create(400, fogModes);
     fogOfWar->setTooltipText(tr("Select the fog of war rule for the current game."));
     fogOfWar->setPosition(textWidth, textField->getY());
-    fogOfWar->setCurrentItem(pMap->getGameRules()->getFogMode());
+    auto fogMode = m_pMap->getGameRules()->getFogMode();
+    if (fogMode == GameEnums::Fog_OfMist)
+    {
+        fogOfWar->setCurrentItem(1);
+    }
+    else if (fogMode == GameEnums::Fog_Off)
+    {
+        fogOfWar->setCurrentItem(0);
+    }
+    else
+    {
+        fogOfWar->setCurrentItem(fogMode + 1);
+    }
     fogOfWar->setEnabled(m_ruleChangeEabled);
-    GameMap* pPtrMap = pMap.get();
-    connect(fogOfWar.get(), &DropDownmenu::sigItemChanged, pMap->getGameRules(), [=](qint32 value)
+    GameMap* pPtrMap = m_pMap;
+    connect(fogOfWar.get(), &DropDownmenu::sigItemChanged, m_pMap->getGameRules(), [=](qint32 value)
     {
         if (value == 1)
         {
@@ -540,8 +553,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
-        pCheckbox->setChecked(pMap->getGameRules()->getVisionBlock());
-        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setVisionBlock, Qt::QueuedConnection);
+        pCheckbox->setChecked(m_pMap->getGameRules()->getVisionBlock());
+        connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setVisionBlock, Qt::QueuedConnection);
         y += 40;
 
         textField = spLabel::create(textWidth - 40);
@@ -554,8 +567,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
-        pCheckbox->setChecked(pMap->getGameRules()->getBuildingVisionHide());
-        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setBuildingVisionHide, Qt::QueuedConnection);
+        pCheckbox->setChecked(m_pMap->getGameRules()->getBuildingVisionHide());
+        connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setBuildingVisionHide, Qt::QueuedConnection);
         y += 40;
 
         textField = spLabel::create(textWidth - 40);
@@ -569,7 +582,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         pDropDownmenu->setPosition(textWidth, textField->getY());
         pDropDownmenu->setEnabled(m_ruleChangeEabled);
         addChild(pDropDownmenu);
-        pDropDownmenu->setCurrentItem(static_cast<qint32>(pMap->getGameRules()->getDayToDayScreen()));
+        pDropDownmenu->setCurrentItem(static_cast<qint32>(m_pMap->getGameRules()->getDayToDayScreen()));
         connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
         {
             pPtrMap->getGameRules()->setDayToDayScreen(static_cast<GameRules::DayToDayScreen>(item));
@@ -647,8 +660,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pSpinbox->setPosition(textWidth, textField->getY());
         pSpinbox->setEnabled(m_ruleChangeEabled);
         addChild(pSpinbox);
-        pSpinbox->setCurrentValue(pMap->getGameRules()->getTerrainDefense());
-        connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setTerrainDefense, Qt::QueuedConnection);
+        pSpinbox->setCurrentValue(m_pMap->getGameRules()->getTerrainDefense());
+        connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pMap->getGameRules(), &GameRules::setTerrainDefense, Qt::QueuedConnection);
         y += 40;
 
         textField = spLabel::create(textWidth - 40);
@@ -661,8 +674,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
-        pCheckbox->setChecked(pMap->getGameRules()->getHpDefenseReduction());
-        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setHpDefenseReduction, Qt::QueuedConnection);
+        pCheckbox->setChecked(m_pMap->getGameRules()->getHpDefenseReduction());
+        connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setHpDefenseReduction, Qt::QueuedConnection);
         y += 40;
 
         textField = spLabel::create(textWidth - 40);
@@ -675,8 +688,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
-        pCheckbox->setChecked(pMap->getGameRules()->getShipBridges());
-        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setShipBridges, Qt::QueuedConnection);
+        pCheckbox->setChecked(m_pMap->getGameRules()->getShipBridges());
+        connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setShipBridges, Qt::QueuedConnection);
         y += 40;
 
         textField = spLabel::create(textWidth - 40);
@@ -689,8 +702,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
-        pCheckbox->setChecked(pMap->getGameRules()->getTransporterRefresh());
-        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setTransporterRefresh, Qt::QueuedConnection);
+        pCheckbox->setChecked(m_pMap->getGameRules()->getTransporterRefresh());
+        connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setTransporterRefresh, Qt::QueuedConnection);
         y += 40;
 
         textField = spLabel::create(textWidth - 40);
@@ -703,8 +716,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pTimeSpinbox->setPosition(textWidth, textField->getY());
         pTimeSpinbox->setEnabled(m_ruleChangeEabled);
         addChild(pTimeSpinbox);
-        pTimeSpinbox->setCurrentValue(pMap->getGameRules()->getRoundTimeMs());
-        connect(pTimeSpinbox.get(), &TimeSpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setRoundTimeMs, Qt::QueuedConnection);
+        pTimeSpinbox->setCurrentValue(m_pMap->getGameRules()->getRoundTimeMs());
+        connect(pTimeSpinbox.get(), &TimeSpinBox::sigValueChanged, m_pMap->getGameRules(), &GameRules::setRoundTimeMs, Qt::QueuedConnection);
         y += 40;
 
         // Label
@@ -721,7 +734,7 @@ void RuleSelection::showRuleSelection(bool advanced)
             m_MapScriptFile = spTextbox::create(pScriptButton->getX() - textField->getX() - textWidth);
             m_MapScriptFile->setTooltipText(tr("The relative path from the exe to the script associated with this map."));
             m_MapScriptFile->setPosition(textWidth, textField->getY());
-            m_MapScriptFile->setCurrentText(pMap->getGameScript()->getScriptFile());
+            m_MapScriptFile->setCurrentText(m_pMap->getGameScript()->getScriptFile());
             m_MapScriptFile->setEnabled(m_ruleChangeEabled);
             addChild(m_MapScriptFile);
             pScriptButton->setEnabled(m_ruleChangeEabled);
@@ -754,8 +767,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
-        pCheckbox->setChecked(pMap->getGameRules()->getSingleRandomCO());
-        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setSingleRandomCO, Qt::QueuedConnection);
+        pCheckbox->setChecked(m_pMap->getGameRules()->getSingleRandomCO());
+        connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setSingleRandomCO, Qt::QueuedConnection);
         y += 40;
 
         textField = spLabel::create(textWidth - 40);
@@ -768,8 +781,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
-        pCheckbox->setChecked(pMap->getGameRules()->getAiAttackTerrain());
-        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setAiAttackTerrain, Qt::QueuedConnection);
+        pCheckbox->setChecked(m_pMap->getGameRules()->getAiAttackTerrain());
+        connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setAiAttackTerrain, Qt::QueuedConnection);
         y += 40;
 
         textField = spLabel::create(textWidth - 40);
@@ -785,8 +798,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pSpinbox->setPosition(textWidth, textField->getY());
         pSpinbox->setEnabled(m_ruleChangeEabled);
         addChild(pSpinbox);
-        pSpinbox->setCurrentValue(pMap->getGameRules()->getResellValue());
-        connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setResellValue, Qt::QueuedConnection);
+        pSpinbox->setCurrentValue(m_pMap->getGameRules()->getResellValue());
+        connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pMap->getGameRules(), &GameRules::setResellValue, Qt::QueuedConnection);
         y += 40;
 
         textField = spLabel::create(textWidth - 40);
@@ -799,8 +812,8 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
-        pCheckbox->setChecked(pMap->getGameRules()->getTeamFacingUnits());
-        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setTeamFacingUnits, Qt::QueuedConnection);
+        pCheckbox->setChecked(m_pMap->getGameRules()->getTeamFacingUnits());
+        connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setTeamFacingUnits, Qt::QueuedConnection);
         y += 50;
         addCustomGamerules(y);
     }
@@ -814,17 +827,17 @@ void RuleSelection::showRuleSelection(bool advanced)
     addChild(textField);
     y += 60;
 
-    qint32 initCount = pMap->getGameRules()->getVictoryRuleSize();
+    qint32 initCount = m_pMap->getGameRules()->getVictoryRuleSize();
     CONSOLE_PRINT("Creating ruleset number of initial rules " + QString::number(initCount), Console::eDEBUG);
     for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
     {
         qint32 xPos = 0;
         QString ruleID = pGameRuleManager->getVictoryRuleID(i);
-        spVictoryRule pRule = spVictoryRule(pMap->getGameRules()->getVictoryRule(ruleID));
+        spVictoryRule pRule = spVictoryRule(m_pMap->getGameRules()->getVictoryRule(ruleID));
         if (pRule.get() == nullptr && m_ruleChangeEabled)
         {
             CONSOLE_PRINT("Creating default ruleset for " + ruleID, Console::eDEBUG);
-            pRule = spVictoryRule::create(ruleID);
+            pRule = spVictoryRule::create(ruleID, m_pMap);
             QStringList types = pRule->getRuleType();
             for (qint32 i2 = 0; i2 < types.size(); i2++)
             {
@@ -844,7 +857,7 @@ void RuleSelection::showRuleSelection(bool advanced)
                     pRule->setRuleValue(pRule->getDefaultValue(i2), i2);
                 }
             }
-            pMap->getGameRules()->addVictoryRule(pRule);
+            m_pMap->getGameRules()->addVictoryRule(pRule);
         }
         if (pRule.get() != nullptr)
         {
@@ -911,14 +924,14 @@ void RuleSelection::addCustomGamerules(qint32 & y)
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    spGameMap pMap = GameMap::getInstance();
+    
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
-    qint32 initCount = pMap->getGameRules()->getGameRuleSize();
+    qint32 initCount = m_pMap->getGameRules()->getGameRuleSize();
     for (qint32 i = 0; i < pGameRuleManager->getGameRuleCount(); i++)
     {
         qint32 xPos = 0;
         QString ruleID = pGameRuleManager->getGameRuleID(i);
-        spGameRule pRule = spGameRule(pMap->getGameRules()->getGameRule(ruleID));
+        spGameRule pRule = spGameRule(m_pMap->getGameRules()->getGameRule(ruleID));
         if (pRule.get() == nullptr)
         {
             pRule = spGameRule::create(ruleID);
@@ -943,7 +956,7 @@ void RuleSelection::addCustomGamerules(qint32 & y)
             }
         }
         QStringList inputTypes = pRule->getRuleType();
-        pMap->getGameRules()->addGameRule(pRule);
+        m_pMap->getGameRules()->addGameRule(pRule);
         GameRule* pPtrRule = pRule.get();
         for (qint32 i2 = 0; i2 < inputTypes.size(); i2++)
         {
@@ -997,6 +1010,11 @@ void RuleSelection::addCustomGamerules(qint32 & y)
     y += pGameRuleManager->getGameRuleCount() * 50;
 }
 
+GameMap *RuleSelection::getMap() const
+{
+    return m_pMap;
+}
+
 RuleSelection::Mode RuleSelection::getMode() const
 {
     return m_mode;
@@ -1004,41 +1022,41 @@ RuleSelection::Mode RuleSelection::getMode() const
 
 void RuleSelection::startWeatherChanged(qint32 value)
 {
-    GameMap::getInstance()->getGameRules()->setStartWeather(value);
+    m_pMap->getGameRules()->setStartWeather(value);
 }
 
 void RuleSelection::weatherChancesChanged()
 {
-    for (qint32 i = 0; i < GameMap::getInstance()->getGameRules()->getWeatherCount(); i++)
+    for (qint32 i = 0; i < m_pMap->getGameRules()->getWeatherCount(); i++)
     {
-        GameMap::getInstance()->getGameRules()->changeWeatherChance(i, m_pWeatherSlider->getSliderValue(i));
+        m_pMap->getGameRules()->changeWeatherChance(i, m_pWeatherSlider->getSliderValue(i));
     }
 }
 
 void RuleSelection::showCOBannlist()
 {
     
-    spGameMap pMap = GameMap::getInstance();
-    spCOBannListDialog pBannlist = spCOBannListDialog::create(pMap->getGameRules()->getCOBannlist());
+    
+    spCOBannListDialog pBannlist = spCOBannListDialog::create(m_pMap->getGameRules()->getCOBannlist());
     oxygine::Stage::getStage()->addChild(pBannlist);
-    connect(pBannlist.get(), &COBannListDialog::editFinished, pMap->getGameRules(), &GameRules::setCOBannlist, Qt::QueuedConnection);
+    connect(pBannlist.get(), &COBannListDialog::editFinished, m_pMap->getGameRules(), &GameRules::setCOBannlist, Qt::QueuedConnection);
     
 }
 
 void RuleSelection::showPerkBannlist()
 {
-    spGameMap pMap = GameMap::getInstance();
-    spPerkSelectionDialog pBannlist = spPerkSelectionDialog::create(nullptr, -1, true, QStringList());
+    
+    spPerkSelectionDialog pBannlist = spPerkSelectionDialog::create(m_pMap, nullptr, -1, true, QStringList());
     oxygine::Stage::getStage()->addChild(pBannlist);
-    connect(pBannlist.get(), &PerkSelectionDialog::editFinished, pMap->getGameRules(), &GameRules::setAllowedPerks, Qt::QueuedConnection);
+    connect(pBannlist.get(), &PerkSelectionDialog::editFinished, m_pMap->getGameRules(), &GameRules::setAllowedPerks, Qt::QueuedConnection);
 }
 
 void RuleSelection::showActionBannlist()
 {
-    spGameMap pMap = GameMap::getInstance();
-    spActionListDialog pBannlist = spActionListDialog::create(pMap->getGameRules()->getAllowedActions());
+    
+    spActionListDialog pBannlist = spActionListDialog::create(m_pMap->getGameRules()->getAllowedActions(), m_pMap);
     oxygine::Stage::getStage()->addChild(pBannlist);
-    connect(pBannlist.get(), &ActionListDialog::editFinished, pMap->getGameRules(), &GameRules::setAllowedActions, Qt::QueuedConnection);
+    connect(pBannlist.get(), &ActionListDialog::editFinished, m_pMap->getGameRules(), &GameRules::setAllowedActions, Qt::QueuedConnection);
     
 }
 
@@ -1057,8 +1075,8 @@ void RuleSelection::scriptFileChanged(QString file)
 {
     file = GlobalUtils::makePathRelative(file);
     m_MapScriptFile->setCurrentText(file);
-    spGameMap pMap = GameMap::getInstance();
-    pMap->getGameScript()->setScriptFile(file);
-    pMap->getGameScript()->init();
+    
+    m_pMap->getGameScript()->setScriptFile(file);
+    m_pMap->getGameScript()->init();
     
 }

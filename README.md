@@ -8,11 +8,12 @@ The project is seperated in three parts.
 * The ressource folder containing the javascript default data and images and sounds or music
 * The mod folder containing mods for the coreengine
 * refer to the [wiki page](https://github.com/Robosturm/Commander_Wars/wiki) for more information about the game and it's features
+* [Commander Wars Wiki](https://www.commanderwars.com/mediawiki/Main_Page/)
 
 If you need help with modding or have a question concerning the game contact me!
 E-Mail-Contact: commanderwars@gmx.de ask for help here. :)
 
-Latest Release is Beta 20 which can be found here: [CoW Beta 20](https://github.com/Robosturm/Commander_Wars/releases/tag/Beta_20)
+Latest Release is Beta 21 which can be found here: [CoW Beta 21](https://github.com/Robosturm/Commander_Wars/releases/tag/Beta_21_4_Hotfix)
 
 Videos of the game can be found on [Youtube](https://www.youtube.com/user/Robosturm)
 

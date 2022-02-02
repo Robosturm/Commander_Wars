@@ -18,7 +18,7 @@ class ProxyAi : public CoreAI
 {
     Q_OBJECT
 public:
-    explicit ProxyAi();
+    explicit ProxyAi(GameMap* pMap);
     virtual ~ProxyAi() = default;
     virtual void init() override;
     /**

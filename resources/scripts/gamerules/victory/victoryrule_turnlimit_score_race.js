@@ -43,7 +43,7 @@ var Constructor = function()
     this.init = function(rule)
     {
     };
-    this.getWinnerTeam = function(rule, player)
+    this.getWinnerTeam = function(rule, player, map)
     {
         var winnerTeam = -1;
         var maxScore = 0;
@@ -53,7 +53,7 @@ var Constructor = function()
             var curPlayer = map.getPlayer(i);
             if (!curPlayer.getIsDefeated())
             {
-                var count = VICTORYRULE_TURNLIMIT_SCORE_RACE.getScore(rule, curPlayer);
+                var count = VICTORYRULE_TURNLIMIT_SCORE_RACE.getScore(rule, curPlayer, map);
                 if (count > maxScore)
                 {
                     winnerTeam = curPlayer.getTeam();
@@ -67,7 +67,7 @@ var Constructor = function()
         }
         return winnerTeam;
     };
-    this.getScore = function(rule, player)
+    this.getScore = function(rule, player, map)
     {
         var recorder = map.getGameRecorder();
         var score = recorder.getScoreValues(player.getPlayerID());
@@ -94,11 +94,11 @@ var Constructor = function()
     };
 
     // checks if the selected player is declared defeated by this rule
-    this.checkDefeat = function(rule, player)
+    this.checkDefeat = function(rule, player, map)
     {
         var turn = map.getCurrentDay();
-        var turnLimit = VICTORYRULE_TURNLIMIT_SCORE_RACE.getRuleValue(rule);
-        var victoryTeam = VICTORYRULE_TURNLIMIT_SCORE_RACE.getWinnerTeam(rule, player);
+        var turnLimit = VICTORYRULE_TURNLIMIT_SCORE_RACE.getRuleValue(rule, map);
+        var victoryTeam = VICTORYRULE_TURNLIMIT_SCORE_RACE.getWinnerTeam(rule, player, map);
         if (turn <= turnLimit ||
             player.getTeam() === victoryTeam)
         {
@@ -107,9 +107,9 @@ var Constructor = function()
         // all players loose if the time limit is exceeded
         return GameEnums.DefeatType_Defeated;
     };
-    this.getRuleProgress = function(rule, player)
+    this.getRuleProgress = function(rule, player, map)
     {
-        return VICTORYRULE_TURNLIMIT_SCORE_RACE.getScore(rule, player);
+        return VICTORYRULE_TURNLIMIT_SCORE_RACE.getScore(rule, player, map);
     };
 };
 

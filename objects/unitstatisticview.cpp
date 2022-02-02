@@ -10,6 +10,8 @@
 #include "wiki/unitinfo.h"
 #include "wiki/wikidatabase.h"
 
+#include "game/player.h"
+
 UnitStatisticView::UnitStatisticView(const GameRecorder::PlayerData & data, qint32 width, qint32 heigth, Player* pPlayer)
 {
     setObjectName("UnitStatisticView");
@@ -58,7 +60,7 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
     while (iter != view.constEnd())
     {
         QString unitId = iter.key();
-        spUnit pDummy = spUnit::create(unitId, pPlayer, false);
+        spUnit pDummy = spUnit::create(unitId, pPlayer, false, pPlayer->getMap());
         pDummy->setPosition(x, y);
         pDummy->addClickListener([=](oxygine::Event*)
         {

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<font>
+  <info face="CommanderWarsAlphabet" size="-7"/>
+  <common pages="1" />
+  <pages linearFilter="false">
+    <page id="0" file="logoFont.png" />
+  </pages>
+  <chars count="26">
+    <char id="32" x="85"  y="7" width="7"  height="6" xoffset="0" yoffset="0" xadvance="8"  page="0" />
+    <char id="65" x="0"   y="0" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="66" x="10"  y="0" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="67" x="20"  y="0" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="68" x="30"  y="0" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="69" x="40"  y="0" width="8"  height="6" xoffset="0" yoffset="0" xadvance="9"  page="0" />
+    <char id="70" x="49"  y="0" width="8"  height="6" xoffset="0" yoffset="0" xadvance="9"  page="0" />
+    <char id="71" x="58"  y="0" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="72" x="68"  y="0" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="73" x="78"  y="0" width="3"  height="6" xoffset="0" yoffset="0" xadvance="3"  page="0" />
+    <char id="74" x="82"  y="0" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="75" x="92"  y="0" width="10" height="6" xoffset="0" yoffset="0" xadvance="11" page="0" />
+    <char id="76" x="103" y="0" width="7"  height="6" xoffset="0" yoffset="0" xadvance="9"  page="0" />
+    <char id="77" x="111" y="0" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="78" x="0"   y="7" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="79" x="10"  y="7" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="80" x="20"  y="7" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="81" x="30"  y="7" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="82" x="40"  y="7" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="83" x="50"  y="7" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="84" x="60"  y="7" width="7"  height="6" xoffset="0" yoffset="0" xadvance="8"  page="0" />
+    <char id="85" x="68"  y="7" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+    <char id="86" x="78"  y="7" width="7"  height="6" xoffset="0" yoffset="0" xadvance="8"  page="0" />    
+    <!-- w x y -->
+    <char id="90" x="110" y="7" width="9"  height="6" xoffset="0" yoffset="0" xadvance="10" page="0" />
+  </chars>
+</font>

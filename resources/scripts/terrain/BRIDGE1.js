@@ -1,8 +1,8 @@
 var Constructor = function()
 {
-    this.loadBaseSprite = function(terrain, currentTerrainID)
+    this.loadBaseSprite = function(terrain, currentTerrainID, map)
     {
-        __BASEBRIDGE.loadSprite(terrain, "bridge+style0")
+        __BASEBRIDGE.loadSprite(terrain, "bridge+style0", map)
     };
     this.getTerrainSprites = function()
     {

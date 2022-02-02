@@ -17,10 +17,10 @@
 #include "objects/dialogs/dialogtextinput.h"
 #include "objects/base/label.h"
 
-BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
-    : QObject(),
-      m_CurrentBuildList(buildList),
-      m_Player(player)
+BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList buildList)
+    : m_CurrentBuildList(buildList),
+      m_Player(player),
+      m_pMap(pMap)
 {
     setObjectName("BuildListDialog");
     Mainapp* pApp = Mainapp::getInstance();
@@ -114,7 +114,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     pPanel->addItem(pLabel);
     qint32 y = 40 + pLabel->getTextRect().getHeight();
     qint32 x = 10;
-    spGameMap pMap = GameMap::getInstance();
+    
 
     auto unitGroups = getUnitGroups();
 
@@ -130,7 +130,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         for (qint32 i = 0; i < group.units.size(); ++i)
         {
             QString unitID = group.units[i];
-            spUnit pUnit = spUnit::create(unitID, pMap->getPlayer(player), false);
+            spUnit pUnit = spUnit::create(unitID, m_pMap->getPlayer(player), false, m_pMap);
             pLabel = spLabel::create(250);
             pLabel->setStyle(style);
             pLabel->setHtmlText(pUnit->getName());

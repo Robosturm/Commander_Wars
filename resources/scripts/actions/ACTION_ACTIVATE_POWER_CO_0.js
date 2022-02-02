@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var co = map.getCurrentPlayer().getCO(0);
         if ((co !== null) && co.canUsePower())
@@ -12,7 +12,7 @@ var Constructor = function()
             return false;
         }
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         var text = qsTr("Power of ");
         if (map !== null &&
@@ -23,11 +23,11 @@ var Constructor = function()
         }
         return text;
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "power";
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         var player = map.getCurrentPlayer();
         var co = player.getCO(0);
@@ -41,7 +41,7 @@ var Constructor = function()
             ACHIEVEMENT_POWERS.powerUsed("POWER");
         }
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };

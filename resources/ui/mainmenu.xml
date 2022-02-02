@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<ui>
+    <Sprite>
+        <x>settings.getWidth() / 2 - 134 * 2</x>
+        <y>currentMenu.getButtonY(0) - 60 * 2</y>
+        <scale>2</scale>
+        <sprite>"logo"</sprite>
+    </Sprite>
+    <TextField>
+        <x>settings.getWidth() / 2 - 134 * 2 + 70 * 2</x>
+        <y>currentMenu.getButtonY(0) - 60 * 2 + 24 * 2</y>
+        <text>"DARK HORIZONS"</text>
+        <font>"logoFont"</font>
+        <fontScale>2</fontScale>
+        <fontColor>"#FFFFFF"</fontColor>
+    </TextField>
+    <Button>
+        <x>currentMenu.getButtonX(0)</x>
+        <y>currentMenu.getButtonY(0)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Continue")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Continue")</tooltip>
+        <enabled>currentMenu.isValidSavegame()</enabled>
+        <onEvent>currentMenu.lastSaveGame();</onEvent>
+    </Button>
+    <Button>
+        <x>currentMenu.getButtonX(1)</x>
+        <y>currentMenu.getButtonY(1)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Singleplayer")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Singleplayer")</tooltip>
+        <onEvent>currentMenu.enterSingleplayer();</onEvent>
+    </Button>
+    <Button>
+        <x>currentMenu.getButtonX(2)</x>
+        <y>currentMenu.getButtonY(2)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Multiplayer")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Multiplayer")</tooltip>
+        <onEvent>currentMenu.enterMultiplayer();</onEvent>
+    </Button>
+    <Button>
+        <x>currentMenu.getButtonX(3)</x>
+        <y>currentMenu.getButtonY(3)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Load Game")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Load Game")</tooltip>
+        <onEvent>currentMenu.enterLoadGame();</onEvent>
+    </Button>
+    <Button>
+        <x>currentMenu.getButtonX(4)</x>
+        <y>currentMenu.getButtonY(4)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Load Campaign")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Load Campaign")</tooltip>
+        <onEvent>currentMenu.enterLoadCampaign();</onEvent>
+    </Button>
+    <Button>
+        <x>currentMenu.getButtonX(5)</x>
+        <y>currentMenu.getButtonY(5)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Replay Game")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Replay Game")</tooltip>
+        <onEvent>currentMenu.enterReplayGame();</onEvent>
+    </Button>
+    <Button>
+        <x>currentMenu.getButtonX(6)</x>
+        <y>currentMenu.getButtonY(6)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Map Editor")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Map Editor")</tooltip>
+        <onEvent>currentMenu.enterEditor();</onEvent>
+    </Button>
+    <Button>
+        <x>currentMenu.getButtonX(7)</x>
+        <y>currentMenu.getButtonY(7)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Options")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Options")</tooltip>
+        <onEvent>currentMenu.enterOptionmenue();</onEvent>
+    </Button>
+    <Button>
+        <x>currentMenu.getButtonX(8)</x>
+        <y>currentMenu.getButtonY(8)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","CO Style")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","CO Style")</tooltip>
+        <onEvent>currentMenu.enterCOStyleMenu();</onEvent>
+    </Button>
+    <Button>
+        <x>currentMenu.getButtonX(9)</x>
+        <y>currentMenu.getButtonY(9)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Shop")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Shop")</tooltip>
+        <onEvent>currentMenu.enterShopMenu();</onEvent>
+    </Button>
+    <Button>
+        <x>currentMenu.getButtonX(10)</x>
+        <y>currentMenu.getButtonY(10)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Wiki")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Wiki")</tooltip>
+        <onEvent>currentMenu.enterWikimenue();</onEvent>
+    </Button>
+    <Button>
+        <x>currentMenu.getButtonX(11)</x>
+        <y>currentMenu.getButtonY(11)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Achievements")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Achievements")</tooltip>
+        <onEvent>currentMenu.enterAchievementmenue();</onEvent>
+    </Button>
+    <Button>
+        <x>currentMenu.getButtonX(12)</x>
+        <y>currentMenu.getButtonY(12)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Credits")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Credits")</tooltip>
+        <onEvent>currentMenu.enterCreditsmenue();</onEvent>
+    </Button>
+    <Button>
+        <x>currentMenu.getButtonX(13)</x>
+        <y>currentMenu.getButtonY(13)</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Quit")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Quit")</tooltip>
+        <onEvent>currentMenu.quitGame();</onEvent>
+    </Button>
+</ui>

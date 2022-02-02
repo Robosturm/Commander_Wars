@@ -12,14 +12,15 @@
 
 #include "ingamescriptsupport/scriptdata.h"
 
+class GameMap;
 class ScriptEditor;
-typedef oxygine::intrusive_ptr<ScriptEditor> spScriptEditor;
+using spScriptEditor = oxygine::intrusive_ptr<ScriptEditor>;
 
 class ScriptEditor : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit ScriptEditor();
+    explicit ScriptEditor(GameMap* pMap);
     virtual ~ScriptEditor() = default;
 signals:
     /**
@@ -153,14 +154,19 @@ public slots:
      */
     void addConditionToData(spScriptCondition pCondition);
 private:
+    void selectCondition(oxygine::Box9Sprite* pPtrSpritebox, ScriptCondition* pCondition);
+
+private:
     spPanel m_ConditionPanel;
     spPanel m_EventPanel;
     spCheckbox m_ImmediateStart;
     spScriptData m_Data;
     spDropDownmenu m_Conditions;
     spDropDownmenu m_Events;
+    oxygine::spButton m_pEventButton;
     ScriptCondition* m_CurrentCondition{nullptr};
     QVector<oxygine::spBox9Sprite> m_ConditionBoxes;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // SCRIPTEDITOR_H

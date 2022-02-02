@@ -1,5 +1,5 @@
 CO_VARLOT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -28,7 +28,7 @@ CO_VARLOT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_VARLOT.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isAttacker, action)
+                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -40,7 +40,7 @@ CO_VARLOT.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_VARLOT.getCaptureBonus = function(co, unit, posX, posY)
+CO_VARLOT.getCaptureBonus = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -52,7 +52,7 @@ CO_VARLOT.getCaptureBonus = function(co, unit, posX, posY)
     return 0;
 };
 
-CO_VARLOT.getIncomeReduction = function(co, building, income)
+CO_VARLOT.getIncomeReduction = function(co, building, income, map)
 {
     if (co.getIsCO0() === true)
     {

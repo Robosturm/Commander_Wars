@@ -1,9 +1,9 @@
-CO_NAPOLEON.init = function(co)
+CO_NAPOLEON.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_NAPOLEON.activateSuperpower = function(co, powerMode)
+CO_NAPOLEON.activateSuperpower = function(co, powerMode, map)
 {
     CO_NAPOLEON.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_NAPOLEON.getSuperPowerName = function()
     return CO_NAPOLEON.getPowerName();
 };
 CO_NAPOLEON.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isDefender, action)
+                                         defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {
@@ -34,12 +34,12 @@ CO_NAPOLEON.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_NAPOLEON.getAttackHpBonus = function(co, unit, posX, posY)
+CO_NAPOLEON.getAttackHpBonus = function(co, unit, posX, posY, map)
 {
     return 0;
 };
 CO_NAPOLEON.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                          defender, defPosX, defPosY, isDefender, luckMode)
+                                          defender, defPosX, defPosY, isDefender, luckMode, map)
 {
     switch (co.getPowerMode())
     {
@@ -59,7 +59,7 @@ CO_NAPOLEON.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY
 };
 
 CO_NAPOLEON.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isAttacker, action)
+                                          defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

@@ -208,7 +208,7 @@ QString Userdata::getActiveCoStyle(QString coid)
     return "";
 }
 
-void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QString description, QString icon, bool hide)
+void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QString description, QString icon, bool hide, QString group)
 {
     bool found = false;
     for (auto & achievement : m_achievements)
@@ -221,6 +221,7 @@ void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QStr
             achievement.description = description;
             achievement.hide = hide;
             achievement.icon = icon;
+            achievement.group = group;
             achievement.loaded = true;
             break;
         }
@@ -234,6 +235,7 @@ void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QStr
         achievement.description = description;
         achievement.hide = hide;
         achievement.icon = icon;
+        achievement.group = group;
         achievement.loaded = true;
         m_achievements.append(achievement);
     }

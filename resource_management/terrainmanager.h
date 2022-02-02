@@ -25,6 +25,12 @@ public:
      * @return
      */
     QString getTerrainGroupName(qint32 group);
+    /**
+     * @brief getName
+     * @param id
+     * @return
+     */
+    QString getName(const QString & id);
 public slots:
     void removeRessource(QString id);
     /**

@@ -27,9 +27,9 @@ bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
         {
             if (pUnit->getActionList().contains(ACTION_FLARE))
             {
-                UnitPathFindingSystem turnPfs(pUnit);
+                UnitPathFindingSystem turnPfs(m_pMap, pUnit);
                 turnPfs.explore();
-                spGameAction pAction = spGameAction::create(ACTION_FLARE);
+                spGameAction pAction = spGameAction::create(ACTION_FLARE, m_pMap);
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 QPoint moveTarget;
                 QPoint flareTarget;
@@ -69,15 +69,15 @@ bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits
         {
             if (pUnit->getActionList().contains(ACTION_HOELLIUM_WAIT))
             {
-                TargetedUnitPathFindingSystem pfs(pUnit, targets, &m_MoveCostMap);
+                TargetedUnitPathFindingSystem pfs(m_pMap, pUnit, targets, &m_MoveCostMap);
                 pfs.explore();
                 qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 QPoint targetFields = pfs.getReachableTargetField(movepoints);
                 if (targetFields.x() >= 0)
                 {
-                    UnitPathFindingSystem turnPfs(pUnit);
+                    UnitPathFindingSystem turnPfs(m_pMap, pUnit);
                     turnPfs.explore();
-                    spGameAction pAction = spGameAction::create(ACTION_HOELLIUM_WAIT);
+                    spGameAction pAction = spGameAction::create(ACTION_HOELLIUM_WAIT, m_pMap);
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     QVector<QPoint> path = turnPfs.getClosestReachableMovePath(targetFields);
                     pAction->setMovepath(path, turnPfs.getCosts(path));
@@ -96,8 +96,8 @@ bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits
 bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
 {
     CONSOLE_PRINT("moveBlackBombs()", Console::eDEBUG);
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
         QVector<QVector3D> enemyTargets;
         spQmlVectorPoint enemyFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
@@ -106,7 +106,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
             Unit* pUnit = pEnemyUnits->at(i);
             for (qint32 i2 = 0; i2 < enemyFields->size(); i2++)
             {
-                if (pMap->onMap(pUnit->Unit::getX() + enemyFields->at(i2).x(), pUnit->Unit::getY() + enemyFields->at(i2).y()))
+                if (m_pMap->onMap(pUnit->Unit::getX() + enemyFields->at(i2).x(), pUnit->Unit::getY() + enemyFields->at(i2).y()))
                 {
                     QVector3D point = QVector3D(pUnit->Unit::getX() + enemyFields->at(i2).x(), pUnit->Unit::getY() + enemyFields->at(i2).y(), 1);
                     if (!enemyTargets.contains(point))
@@ -123,13 +123,13 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
             {
                 if (pUnit->getActionList().contains(ACTION_EXPLODE))
                 {
-                    UnitPathFindingSystem turnPfs(pUnit);
+                    UnitPathFindingSystem turnPfs(m_pMap, pUnit);
                     turnPfs.explore();
                     spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(1, 3));
                     QVector<QPoint> targets = turnPfs.getAllNodePoints();
                     qint32 maxDamage = 0;
                     QVector<QPoint> bestTargets;
-                    spGameAction pAction = spGameAction::create(ACTION_EXPLODE);
+                    spGameAction pAction = spGameAction::create(ACTION_EXPLODE, m_pMap);
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     for (qint32 i2 = 0; i2 < targets.size(); i2++)
                     {
@@ -160,7 +160,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
                     }
                     else
                     {
-                        TargetedUnitPathFindingSystem pfs(pUnit, enemyTargets, &m_MoveCostMap);
+                        TargetedUnitPathFindingSystem pfs(m_pMap, pUnit, enemyTargets, &m_MoveCostMap);
                         pfs.explore();
                         qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                         QPoint targetFields = pfs.getReachableTargetField(movepoints);
@@ -187,8 +187,8 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
 {
     CONSOLE_PRINT("CoreAI::moveSupport", Console::eDEBUG);
     m_aiStep = step;
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
         QVector<QVector3D> unitTargets;
         QVector<QPoint> unitPos;
@@ -200,8 +200,8 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
             {
                 for (qint32 i2 = 0; i2 < unitFields->size(); i2++)
                 {
-                    if (pMap->onMap(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y()) &&
-                        pMap->getTerrain(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y())->getUnit() == nullptr)
+                    if (m_pMap->onMap(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y()) &&
+                        m_pMap->getTerrain(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y())->getUnit() == nullptr)
                     {
                         QVector3D point = QVector3D(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y(), 1);
                         if (!unitTargets.contains(point) )
@@ -218,8 +218,8 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
             Unit* pUnit = pUnits->at(i);
             for (qint32 i2 = 0; i2 < unitFields->size(); i2++)
             {
-                if (pMap->onMap(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y()) &&
-                    pMap->getTerrain(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y())->getUnit() == nullptr)
+                if (m_pMap->onMap(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y()) &&
+                    m_pMap->getTerrain(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y())->getUnit() == nullptr)
                 {
                     QVector3D point = QVector3D(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y(), 1);
                     if (!unitTargets.contains(point) )
@@ -240,11 +240,11 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
                 QStringList actions = pUnit->getActionList();
                 for (const auto& action : actions)
                 {
-                    spGameAction pAction = spGameAction::create(action);
+                    spGameAction pAction = spGameAction::create(action, m_pMap);
                     if (action.startsWith(ACTION_SUPPORTSINGLE) ||
                         action.startsWith(ACTION_SUPPORTALL))
                     {
-                        UnitPathFindingSystem turnPfs(pUnit);
+                        UnitPathFindingSystem turnPfs(m_pMap, pUnit);
                         turnPfs.explore();
                         QVector<QPoint> targets = turnPfs.getAllNodePoints();
                         pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -322,7 +322,7 @@ bool CoreAI::processPredefinedAi()
 void CoreAI::processPredefinedAiHold(Unit* pUnit)
 {
     CONSOLE_PRINT("CoreAI::processPredefinedAiHold", Console::eDEBUG);
-    spGameAction pAction = spGameAction::create(ACTION_FIRE);
+    spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
     QVector<QVector3D> ret;
     QVector<QVector3D> moveTargetFields;
@@ -354,9 +354,9 @@ void CoreAI::processPredefinedAiHold(Unit* pUnit)
 void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 {
     CONSOLE_PRINT("CoreAI::processPredefinedAiDefensive", Console::eDEBUG);
-    spGameAction pAction = spGameAction::create(ACTION_FIRE);
+    spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-    UnitPathFindingSystem pfs(pUnit);
+    UnitPathFindingSystem pfs(m_pMap, pUnit);
     pfs.explore();
     QVector<QVector3D> ret;
     QVector<QVector3D> moveTargetFields;
@@ -401,8 +401,8 @@ void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 void CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyUnits)
 {
     CONSOLE_PRINT("CoreAI::processPredefinedAiOffensive", Console::eDEBUG);
-    spGameAction pAction = spGameAction::create(ACTION_FIRE);
-    UnitPathFindingSystem pfs(pUnit);
+    spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
+    UnitPathFindingSystem pfs(m_pMap, pUnit);
     pfs.explore();
     bool performed = processPredefinedAiAttack(pUnit, pAction,  pfs);
     if (!performed)
@@ -411,7 +411,7 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyU
         QVector<QVector3D> targets;
         pAction->setActionID(ACTION_WAIT);
         appendAttackTargets(pUnit, pEnemyUnits, targets);
-        TargetedUnitPathFindingSystem targetPfs(pUnit, targets, &m_MoveCostMap);
+        TargetedUnitPathFindingSystem targetPfs(m_pMap, pUnit, targets, &m_MoveCostMap);
         targetPfs.explore();
         qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
         QPoint targetFields = targetPfs.getReachableTargetField(movepoints);
@@ -464,8 +464,8 @@ bool CoreAI::processPredefinedAiAttack(Unit* pUnit, spGameAction & pAction, Unit
 void CoreAI::processPredefinedAiPatrol(Unit* pUnit)
 {
     CONSOLE_PRINT("CoreAI::processPredefinedAiPatrol", Console::eDEBUG);
-    spGameAction pAction = spGameAction::create(ACTION_FIRE);
-    UnitPathFindingSystem pfs(pUnit);
+    spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
+    UnitPathFindingSystem pfs(m_pMap, pUnit);
     pfs.explore();
     bool performed = processPredefinedAiAttack(pUnit, pAction,  pfs);
     if (!performed)
@@ -477,7 +477,7 @@ void CoreAI::processPredefinedAiPatrol(Unit* pUnit)
         {
             QPoint nextTarget = path[0];
             targets.append(QVector3D(nextTarget.x(), nextTarget.y(), 1));
-            TargetedUnitPathFindingSystem targetPfs(pUnit, targets, &m_MoveCostMap);
+            TargetedUnitPathFindingSystem targetPfs(m_pMap, pUnit, targets, &m_MoveCostMap);
             targetPfs.explore();
             qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
             QPoint targetFields = targetPfs.getReachableTargetField(movepoints);

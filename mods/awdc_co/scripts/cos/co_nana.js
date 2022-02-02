@@ -1,9 +1,9 @@
-CO_NANA.init = function(co)
+CO_NANA.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_NANA.activateSuperpower = function(co, powerMode)
+CO_NANA.activateSuperpower = function(co, powerMode, map)
 {
 	CO_NANA.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_NANA.getSuperPowerName = function()
 {
     return CO_NANA.getPowerName();
 };
-CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (!gotAttacked && attacker.getOwner() === co.getOwner())
     {

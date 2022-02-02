@@ -13,8 +13,8 @@
 #include "objects/base/checkbox.h"
 #include "objects/base/label.h"
 
-ScriptEventChangeBuildlist::ScriptEventChangeBuildlist()
-    : ScriptEvent (EventType::changeBuildlist)
+ScriptEventChangeBuildlist::ScriptEventChangeBuildlist(GameMap* pMap)
+    : ScriptEvent(pMap, EventType::changeBuildlist)
 {
 
 }

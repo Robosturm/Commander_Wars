@@ -36,6 +36,7 @@ signals:
                         QStringList compatibleMods, QStringList incompatibleMods, QStringList requiredMods,
                         bool isComsetic, QStringList modTags, QString thumbnail);
     void sigShowGamepadInfo();
+    void sigShowResetBox();
 public slots:
     void exitMenue();
     void showMods();
@@ -46,6 +47,8 @@ public slots:
     void reloadSettings();
     void updateModCheckboxes();
     void updateModFilter(QString tag);
+    void onReset();
+    void showResetBox();
 protected slots:
     virtual void onEnter() override;
 private slots:
@@ -82,9 +85,9 @@ private:
     oxygine::spResAnim m_modThumbnailAnim;
     oxygine::spSprite m_modThumbnail;
 
-    QStringList languages;
+    QStringList m_languages;
 
-    bool restartNeeded{false};
+    bool m_restartNeeded{false};
 };
 
 #endif // OPTIONMENUE_H

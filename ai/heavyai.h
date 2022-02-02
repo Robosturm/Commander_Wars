@@ -36,7 +36,6 @@ class HeavyAi : public CoreAI
         LocalUnitData           ,
         BasicAttackRange = LocalUnitData,
         CaptureUnit             ,
-        CoUnitValue             ,
         Movementpoints          ,
         MapMovementpoints,
         FondsUsage              ,
@@ -196,21 +195,16 @@ public:
         QVector<UnitBuildData> buildingDataInput;
     };
 
-    explicit HeavyAi(QString type, GameEnums::AiTypes aiType);
+    explicit HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType);
     virtual ~HeavyAi() = default;
 
     void loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, bool randomize, qint32 outputSize = 1);
+
 public slots:
     /**
      * @brief process
      */
     virtual void process() override;
-    /**
-     * @brief readIni
-     * @param name
-     */
-    virtual void readIni(QString name) override;
-
 
     /*******************************************************************/
     // training section
@@ -241,6 +235,22 @@ public slots:
      * @return
      */
     void mutateNeuralNetwork(qint32 network, double mutationChance, double mutationRate = 0.1f);
+    /**
+     * @brief getMinActionScore
+     * @return
+     */
+    double getMinActionScore() const;
+    /**
+     * @brief setMinActionScore
+     * @param newMinActionScore
+     */
+    void setMinActionScore(double newMinActionScore);
+    /**
+     * @brief setDisabled
+     * @param network
+     * @param disabled
+     */
+    void setDisabled(qint32 network, bool disabled);
     /**
      * @brief getAiName
      * @return
@@ -592,7 +602,6 @@ private:
     spTargetedUnitPathFindingSystem m_currentTargetedfPfs;
     QVector<QPoint> m_possibleCaptureTargets;
 
-    QVector<IniData> m_iniData;
     double m_minActionScore{0.2};
     double m_actionScoreVariant{0.05};
     double m_stealthDistanceMultiplier{2.0};

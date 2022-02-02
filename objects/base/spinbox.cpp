@@ -157,7 +157,7 @@ void SpinBox::setCurrentValue(qreal value)
 void SpinBox::update(const oxygine::UpdateState& us)
 {
     // no need to calculate more than we need if we're invisible
-    QString drawText = getDrawText(getCurrentText());
+    QString drawText = getDrawText(getCurrentText() + m_unit);
     if(m_focused)
     {
         qint32 curmsgpos = getCursorPosition();        
@@ -202,7 +202,7 @@ void SpinBox::update(const oxygine::UpdateState& us)
             }
             checkInput();
         }
-        m_Textfield->setHtmlText(drawText + m_unit);
+        m_Textfield->setHtmlText(drawText);
     }
     oxygine::Actor::update(us);
 }

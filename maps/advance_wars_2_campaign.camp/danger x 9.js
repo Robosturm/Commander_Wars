@@ -12,36 +12,36 @@ var Constructor = function()
         return qsTr("Capture the enemy Labor.");
     };
 
-    this.victory = function(team)
+    this.victory = function(team, map)
     {
         if (team === 0)
         {
             // called when a player wins
-            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Well? Did you find the plans for the new tank? "),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("I heard that they'd just been found. "),
                         "co_drake", GameEnums.COMood_Sad, PLAYER.getDefaultColor(2));
-            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("This brings us one step closer to matching the enemy's strength. "),
                         "co_jess", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Uh-huh. I'm looking forward to trying out those new tanks. "),
                         "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("At last, a chance to demonstrate my specialty. "),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Excuse me? Eagle, you're just a glorified flyboy, right? Leave those new tanks to the ground-combat expert. That's me! "),
                         "co_jess", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Who's a glorified flyboy?! If we leave these new tanks in your hands, Red, they'll be wasted! "),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("What did you say?! I dare you say that again, Eagle!"),
                         "co_jess", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Stop it, you two! Whew... And it all comes back to an argument. I wish this were more than just an excuse for you two to fight"),
                         "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             dialog1.queueAnimation(dialog2);
@@ -59,7 +59,7 @@ var Constructor = function()
             geNeotanks.writeDataBool(true);
         }
     };
-    this.gameStart = function()
+    this.gameStart = function(map)
     {
         // called before a game starts
         //we're going to set the game rules here.
@@ -77,7 +77,7 @@ var Constructor = function()
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(1).setBuildList(bhList);
     };
-    this.actionDone = function(action)
+    this.actionDone = function(action, map)
     {
         var labor = map.getTerrain(15, 1).getBuilding();
         if (labor.getOwner().getPlayerID() === 0)
@@ -86,69 +86,69 @@ var Constructor = function()
         }
     };
 
-    this.turnStart = function(turn, player)
+    this.turnStart = function(turn, player, map)
     {
         if (turn === 1 && player === 0)
         {
-            gameScript.initDialog();
+            gameScript.initDialog(map);
         }
         else if (turn === 9 && player === 0)
         {
-            GameAnimationFactory.createGameAnimationDialog(
+            GameAnimationFactory.createGameAnimationDialog(map, 
                                 qsTr("The enemy battalion arrives tomorrow. I must complete this mission today. "),
                                 "co_jess", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         }
     };
 
-    this.initDialog = function()
+    this.initDialog = function(map)
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("According to the map we recovered, the lab should be in this area. "),
                     "co_jess", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("So the freebooters are working on some sort of new tank? "),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Perhaps. "),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("From what we know, the contingent guarding the place is fairly small. "),
                     "co_jess", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("So if we're going to attack, we should do it now. "),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("I agree. "),
                     "co_jess", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Hmmm... "),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr(" What is it? "),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("You two can agree on something. "),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog10 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("We're both trying to come up with a plan to save Green Earth. It seems to me that sharing some of the same opinions is only natural. "),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog11 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("That's right. Eagle's exactly right. "),
                     "co_jess", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog12 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog12 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("OK. Say no more. "),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog13 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog13 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("There is one thing that concerns me, though. The enemy has a large force heading this way. "),
                     "co_jess", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog14 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog14 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("When will they arrive? "),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog15 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog15 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("According to our intel, in 10 days. "),
                     "co_jess", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog16 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog16 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("So we must capture the lab by then. It's going to be a hectic 9 days."),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         dialog1.queueAnimation(dialog2);

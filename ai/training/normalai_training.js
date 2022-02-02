@@ -1,5 +1,5 @@
 var Init =
-{
+        {
     // training setup data
     trainingFolder  = "maps/2_player/",             // map folder used
     trainingMap     = "Amber Valley.map",           // map that will be used for training
@@ -12,16 +12,22 @@ var Init =
     logLevel        = 1,
     // ai's and names that will be used for training
     topAis          = 4,
-    trainingAis     =  [["heavy_ai",    5],
-                        ["heavy_ai1",   6],
-                        ["heavy_ai2",   7],
-                        ["heavy_ai3",   8],
-                        ["heavy_ai4",   9],
-                        ["heavy_ai5",   10],
-                        //                        ["heavy_ai6",   11],
-                        //                        ["heavy_ai7",   12],
-                        //                        ["heavy_ai8",   13],
-                        //                        ["heavy_ai9",   14],
+    trainingAis     =  [["normal1.ini",   2],
+                        ["normal2.ini",   2],
+                        ["normal3.ini",   2],
+                        ["normal4.ini",   2],
+                        ["normal5.ini",   2],
+                        ["normal6.ini",   2],
+                        ["normal7.ini",   2],
+                        ["normal8.ini",   2],
+                        ["normal9.ini",   2],
+                        ["normal10.ini",  2],
+                        ["normal11.ini",  2],
+                        ["normal12.ini",  2],
+                        ["normal13.ini",  2],
+                        ["normal14.ini",  2],
+                        ["normal15.ini",  2],
+                        ["normal16.ini",  2],
     ],
     cores = 5, // amount of games started at the same time
     // internal data
@@ -34,6 +40,7 @@ var Init =
     cos = ["CO_ANDY", "CO_JESS"],
     start = false,
     coreData = [],
+    // enum states for remote game triggering
     runNextBattle = 0,
     sleep = 1,
     nextRun = 2,
@@ -121,8 +128,8 @@ var Init =
                     "menu.buttonNext();\n" +
                     "menu.buttonNext();\n" +
                     "var gameRules = map.getGameRules();\n" +
-                    "gameRules.addVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");\n" +
-                    "var victoryRule = gameRules.getVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");\n" +
+                    "gameRules.addVictoryRule(\"VICTORYRULE_TURNLIMIT\");\n" +
+                    "var victoryRule = gameRules.getVictoryRule(\"VICTORYRULE_TURNLIMIT\");\n" +
                     "victoryRule.setRuleValue(" + Init.turnLimit + ", 0);\n" +
                     "gameRules.setFogMode(" + Init.fogOfWar.toString() + ");\n" +
                     "gameRules.setRandomWeather(false);\n" +
@@ -209,6 +216,10 @@ var Init =
                 }
             }
         }
+        else
+        {
+            GameConsole.print("No player won the match", Init.logLevel);
+        }
 
         if (Init.startAi > Init.trainingAis.length - playerCount)
         {
@@ -262,31 +273,34 @@ var Init =
 
     prepareNextRun = function()
     {
-        GameConsole.print("Evaluating current run: " + Init.runCount, Init.logLevel);
+        GameConsole.print("Preparing next run", Init.logLevel);
         var bestAis = [];
         for (var i = 0; i < Init.matchData.length; ++i)
         {
             GameConsole.print("AI " + i + " got a score of " + Init.matchData[i] + " points", Init.logLevel);
             var aiScore = Init.matchData[i];
-            if (bestAis.length < Init.topAis)
+            if (aiScore > 0)
             {
-                bestAis.push([Init.trainingAis[i], aiScore]);
-            }
-            else
-            {
-                var lowestScore = aiScore;
-                var lowestIndex = -1;
-                for (var i2 = 0; i2 < bestAis.length; ++i2)
+                if (bestAis.length < Init.topAis)
                 {
-                    if (bestAis[i2][1] < lowestScore)
-                    {
-                        lowestScore = bestAis[i2][1];
-                        lowestIndex = i2;
-                    }
+                    bestAis.push([Init.trainingAis[i], aiScore]);
                 }
-                if (lowestIndex >= 0)
+                else
                 {
-                    bestAis[lowestIndex] = [trainingAis[i], aiScore];
+                    var lowestScore = aiScore;
+                    var lowestIndex = -1;
+                    for (var i2 = 0; i2 < bestAis.length; ++i2)
+                    {
+                        if (bestAis[i2][1] < lowestScore)
+                        {
+                            lowestScore = bestAis[i2][1];
+                            lowestIndex = i2;
+                        }
+                    }
+                    if (lowestIndex >= 0)
+                    {
+                        bestAis[lowestIndex] = [Init.trainingAis[i], aiScore];
+                    }
                 }
             }
         }
@@ -317,12 +331,15 @@ var Init =
         Init.runCount = Init.runCount + 1;
         GameConsole.print("Starting run: " + Init.runCount, Init.logLevel);
         // reset data
-        Init.startAi = 0;
-        Init.rotationStartAi = 0;
-        Init.rotationCount = 0;
-        Init.matchData = [];
-        Init.battleData = [];
-        Init.selectCos();
+        if (Init.runCount < Init.maxRuns)
+        {
+            Init.startAi = 0;
+            Init.rotationStartAi = 0;
+            Init.rotationCount = 0;
+            Init.matchData = [];
+            Init.battleData = [];
+            Init.selectCos();
+        }
     },
 
     selectCos = function()
@@ -346,30 +363,12 @@ var Init =
 
     mutate = function(mutateCount, i, aiNames)
     {
-        GameConsole.print("Mutating ai: " + Init.trainingAis[i][0], Init.logLevel);
+        var ai = mutateCount % Init.topAis;
+        GameConsole.print("Mutating ai: " + Init.trainingAis[i][0] + " using ai: " + aiNames[ai], Init.logLevel);
         var dummyAi = map.getPlayer(0).getBaseGameInput();
-        var ai = globals.randInt(0, aiNames.length + 1);
-        if (ai < aiNames.length)
-        {
-            ai = mutateCount % Init.topAis;
-            var aiName = [aiNames[ai]];
-            dummyAi.combineAi(aiName);
-        }
-        else
-        {
-            dummyAi.combineAi(aiNames);
-        }
-        dummyAi.setAiName(Init.trainingAis[i][0]);
-        var neuralNetworkCount = dummyAi.getMaxNeuralNetworks();
-        for (i2 = 0; i2 < neuralNetworkCount; ++i2)
-        {
-            if (globals.randInt(0, 30) < 20)
-            {
-                dummyAi.mutateNeuralNetwork(i2, Init.mutationRate);
-            }
-        }
+        dummyAi.readIni(aiNames[ai]);
+        dummyAi.randomizeIni(Init.trainingAis[i][0], Init.mutationChance, Init.mutationRate);
         ++mutateCount;
         return mutateCount;
     },
 }
-

@@ -1,6 +1,6 @@
 CO_COLIN.globalBoost = 10;
 CO_COLIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -18,7 +18,7 @@ CO_COLIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_COLIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -29,7 +29,7 @@ CO_COLIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-this.getCostModifier = function(co, id, baseCost)
+this.getCostModifier = function(co, id, baseCost, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

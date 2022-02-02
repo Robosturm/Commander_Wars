@@ -7,8 +7,9 @@ TextInput::TextInput()
 {
     Mainapp* pApp = Mainapp::getInstance();
     emit pApp->sigCreateLineEdit();
-    m_lineEdit = pApp->getLastCreateLineEdit();
+    m_lineEdit = pApp->getLastCreateLineEdit();    
     connect(m_lineEdit, &QLineEdit::returnPressed, this, &TextInput::editFinished, Qt::QueuedConnection);
+    connect(m_lineEdit, &QLineEdit::cursorPositionChanged, pApp, &Mainapp::slotCursorPositionChanged);
     m_toggle.start();
 }
 
@@ -24,6 +25,11 @@ void TextInput::editFinished()
         looseFocusInternal();
         Tooltip::setEnabled(true);
     }
+}
+
+void TextInput::inputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
+{
+    m_lineEdit->inputMethodQuery(query, arg);
 }
 
 QString TextInput::getCurrentText() const
@@ -46,29 +52,33 @@ void TextInput::setCursorPosition(qint32 position)
     m_lineEdit->setCursorPosition(position);
 }
 
-void TextInput::doHandleEvent(std::shared_ptr<QEvent> event)
+bool TextInput::doHandleEvent(QEvent *event)
 {
+    bool ret = false;
     if (m_focused)
     {
-        restartTooltiptimer();
+        emit sigStartTooltip();
         switch (event->type())
         {
             case QEvent::KeyPress:
             case QEvent::InputMethodQuery:
             case QEvent::InputMethod:
             case QEvent::KeyRelease:
+            case QEvent::Shortcut:
+            case QEvent::ShortcutOverride:
             {
-                // CONSOLE_PRINT("Handling event: " + QString::number(event->type()), Console::eDEBUG);
-                m_lineEdit->event(event.get());
+                CONSOLE_PRINT("Handling event: " + QString::number(event->type()), Console::eDEBUG);
+                ret = m_lineEdit->event(event);
                 break;
             }
             default:
             {
-                // do nothing
+                CONSOLE_PRINT("Ignoring event: " + QString::number(event->type()), Console::eDEBUG);
                 break;
             }
         }
     }
+    return ret;
 }
 
 void TextInput::focused()

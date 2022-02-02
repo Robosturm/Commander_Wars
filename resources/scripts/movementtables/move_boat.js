@@ -15,10 +15,10 @@ var Constructor = function()
                                 ["REAF", 2],
                                 ["TELEPORTTILE", 0]];
 
-    this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)
+    this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false, map)
     {
         var shipBridges = true;
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             shipBridges = map.getGameRules().getShipBridges();
         }

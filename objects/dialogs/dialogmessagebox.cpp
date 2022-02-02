@@ -5,7 +5,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-DialogMessageBox::DialogMessageBox(QString text, bool withCancel)
+DialogMessageBox::DialogMessageBox(QString text, bool withCancel, QString confirmText, QString cancelText)
     : QObject(),
       m_Message(text)
 {
@@ -35,7 +35,7 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel)
     m_Text->setPosition(Settings::getWidth() / 2 - m_Text->getTextRect().getWidth() / 2, Settings::getHeight() / 2 - m_Text->getTextRect().getHeight());
     pSpriteBox->addChild(m_Text);
 
-    m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
+    m_OkButton = pObjectManager->createButton(confirmText, 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2,
                             m_Text->getY() + m_Text->getTextRect().getHeight() + 20);
     pSpriteBox->addChild(m_OkButton);
@@ -46,7 +46,7 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel)
 
     if (withCancel)
     {
-        m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
+        m_CancelButton = pObjectManager->createButton(cancelText, 150);
         m_CancelButton->setPosition(Settings::getWidth() / 2 + 10,
                                 m_Text->getY() + m_Text->getTextRect().getHeight() + 20);
         pSpriteBox->addChild(m_CancelButton);

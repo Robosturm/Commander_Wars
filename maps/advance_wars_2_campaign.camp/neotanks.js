@@ -12,18 +12,18 @@ var Constructor = function()
         return qsTr("Capture the enemy labor.");
     };
 
-    this.victory = function(team)
+    this.victory = function(team, map)
     {
         if (team === 0)
         {
             // called when a player wins
-            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Got'em! We found the weapon plans!"),
                         "co_colin", GameEnums.COMood_Happy, PLAYER.getDefaultColor(1));
-            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("With these plans, we'll be able to use this new weapon in the next battle."),
                         "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Start building new weapons! I'll be waiting at the next battlefield."),
                         "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
             dialog1.queueAnimation(dialog2);
@@ -34,7 +34,7 @@ var Constructor = function()
             bmNeotanks.writeDataBool(true);
         }
     };
-    this.gameStart = function()
+    this.gameStart = function(map)
     {
         // called before a game starts
         //we're going to set the game rules here.
@@ -51,7 +51,7 @@ var Constructor = function()
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(1).setBuildList(bhList);
     };
-    this.actionDone = function(action)
+    this.actionDone = function(action, map)
     {
         var variables = map.getGameScript().getVariables();
         // check if the buildings changed there owner to a certain player and call a dialog on it
@@ -62,42 +62,42 @@ var Constructor = function()
         }
     };
 
-    this.turnStart = function(turn, player)
+    this.turnStart = function(turn, player, map)
     {
         if (turn === 1 && player === 0)
         {
-            gameScript.initDialog();
+            gameScript.initDialog(map);
         }
     };
 
-    this.initDialog = function()
+    this.initDialog = function(map)
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("This is absolutely inexcusable!"),
                     "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("What's wrong now? Getting all worked up like that ain't good for you, Boss."),
                     "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Doesn't this bother you at all, Grit? These Black Hole mercenaries! They trespass on our land and have the gall to build wherever they like! This land is ours! More than anything else, it belongs to our people! We cannot allow these fools to invade it and divide it amongst themselves!"),
                     "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("The man's got a point..."),
                     "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Commander Olaf! There's a base or something up ahead!"),
                     "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Just like the map said. Which means we've found their research laboratory."),
                     "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Troops! Prepare for battle!"),
                     "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("You've gone too far!"),
                     "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Intruders detected. Defensive system Backlash initiated... Taking damage from intruders. Initiate document-destruct sequence. Research lab will self-destruct in 15 days."),
                     "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
         dialog1.queueAnimation(dialog2);

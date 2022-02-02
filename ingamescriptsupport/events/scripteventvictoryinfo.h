@@ -11,7 +11,7 @@ class ScriptEventVictoryInfo : public ScriptEvent
 {
     Q_OBJECT
 public:
-    ScriptEventVictoryInfo();
+    explicit ScriptEventVictoryInfo(GameMap* pMap);
     /**
      * @brief readEvent
      * @param rStream

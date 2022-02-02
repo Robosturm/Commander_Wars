@@ -1,9 +1,9 @@
-CO_ROBOSTURM.init = function(co)
+CO_ROBOSTURM.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_ROBOSTURM.activateSuperpower = function(co, powerMode)
+CO_ROBOSTURM.activateSuperpower = function(co, powerMode, map)
 {
 	CO_ROBOSTURM.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_ROBOSTURM.getSuperPowerName = function()
     return CO_ROBOSTURM.getPowerName();
 };
 CO_ROBOSTURM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action)
+                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {
@@ -34,7 +34,7 @@ CO_ROBOSTURM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_ROBOSTURM.getMovementpointModifier = function(co, unit, posX, posY)
+CO_ROBOSTURM.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getPowerMode() > GameEnums.PowerMode_Off)
     {

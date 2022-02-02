@@ -6,9 +6,13 @@ var Constructor = function()
         terrain.setTerrainName(__BASESTREET.getName(terrain));
     };
     this.baseTerrainId = "PLAINS";
-    this.getName = function(terrain)
+    this.getName = function(terrain = null)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return qsTr("Waste Street");
@@ -29,7 +33,11 @@ var Constructor = function()
     this.getOffensiveFieldBonus = function(terrain, attacker, atkPosX, atkPosY,
                                            defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "DESERT")
         {
             return -20;
@@ -38,7 +46,11 @@ var Constructor = function()
     };
     this.getBonusVision = function(unit, terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return 1;
@@ -46,7 +58,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SNOW")
         {
@@ -66,20 +78,28 @@ var Constructor = function()
         }
         else
         {
-            var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+            var baseTerrainId = ""
+            if (terrain !== null)
+            {
+                baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+            }
             terrain.loadBaseTerrain(baseTerrainId);
         }
     };
 
-    this.loadBase = function(terrain, spriteId)
+    this.loadBase = function(terrain, spriteId, map)
     {
-        var surroundings = terrain.getSurroundings("STREET,STREET1,BRIDGE,BRIDGE1,DESERT_PATH,DESERT_PATH1,WASTE_PATH",
+        var surroundings = terrain.getSurroundings("STREET,STREET1,BRIDGE,BRIDGE1,SNOW_STREET,DESERT_PATH,DESERT_PATH1,WASTE_PATH",
                                                 false, false, GameEnums.Directions_Direct, false, true);
         terrain.loadBaseSprite(spriteId + surroundings);
     };
     this.getMiniMapIcon = function(terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return "minimap_street";
@@ -99,7 +119,11 @@ var Constructor = function()
     };
     this.getDescription = function(terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return qsTr("Well-surfaced roads provides optimum mobility but little cover.");
@@ -137,7 +161,7 @@ var Constructor = function()
                 spriteId + "+S+W",
                 spriteId + "+W"];
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         var variables = terrain.getVariables();
         var variable = variables.getVariable("FOREGROUND_ID");
@@ -152,7 +176,11 @@ var Constructor = function()
         {
             rand = variable.readDataInt32();
         }
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return "fore_street+" + rand.toString();
@@ -167,11 +195,11 @@ var Constructor = function()
         }
         else
         {
-            var weatherModifier = TERRAIN.getWeatherModifier();
+            var weatherModifier = TERRAIN.getWeatherModifier(map);
             return "fore_" + weatherModifier + "street+" + rand.toString();
         }
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         var variables = terrain.getVariables();
         var variable = variables.getVariable("BACKGROUND_ID");
@@ -186,11 +214,15 @@ var Constructor = function()
         {
             rand = variable.readDataInt32();
         }
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
-        var id = TERRAIN.getTerrainAnimationId(terrain);
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
+        var id = TERRAIN.getTerrainAnimationId(terrain, map);
         if (baseTerrainId === "WASTE")
         {
-            var weatherModifier = TERRAIN.getWeatherModifier();
+            var weatherModifier = TERRAIN.getWeatherModifier(map);
             return __BASESTREET.getStreetAnimationBackground(id, weatherModifier);
         }
         else if (baseTerrainId === "SNOW")
@@ -203,7 +235,7 @@ var Constructor = function()
         }
         else
         {
-            var weatherModifier = TERRAIN.getWeatherModifier();
+            var weatherModifier = TERRAIN.getWeatherModifier(map);
             return __BASESTREET.getStreetAnimationBackground(id, weatherModifier);
         }        
     };

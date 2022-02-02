@@ -20,9 +20,11 @@ var Constructor = function()
                                 ["ZSNOWWELD_E_W", 2],
                                 ["ZDESERTWELD_N_S", 1],
                                 ["ZDESERTWELD_E_W", 1],
+                                ["ZWASTEWELD_N_S", 1],
+                                ["ZWASTEWELD_E_W", 1],
                                 ["TELEPORTTILE", 0]];
 
-    this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)
+    this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false, map)
     {
         return MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_PIPERUNNER.movementpointsTable);
     };

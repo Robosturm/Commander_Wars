@@ -10,7 +10,7 @@ class ScriptConditionStartOfTurn : public ScriptCondition
 {
     Q_OBJECT
 public:
-    ScriptConditionStartOfTurn();
+    explicit ScriptConditionStartOfTurn(GameMap* pMap);
     /**
      * @brief getDay
      * @return

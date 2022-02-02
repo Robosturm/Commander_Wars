@@ -11,6 +11,7 @@
 
 #include "game/GameEnums.h"
 
+class GameMap;
 class Player;
 class GameAction;
 
@@ -21,7 +22,7 @@ class BaseGameInputIF : public QObject, public FileSerializable, public oxygine:
 {
     Q_OBJECT
 public:
-    explicit BaseGameInputIF(GameEnums::AiTypes aiType);
+    explicit BaseGameInputIF(GameMap* pMap, GameEnums::AiTypes aiType);
     virtual ~BaseGameInputIF() = default;
     void setPlayer(Player* pPlayer);
 
@@ -29,9 +30,9 @@ public:
 
     static void serializeInterface(QDataStream& pStream, BaseGameInputIF* input);
 
-    static spBaseGameInputIF deserializeInterface(QDataStream& pStream, qint32 version);
+    static spBaseGameInputIF deserializeInterface(GameMap* pMap, QDataStream& pStream, qint32 version);
 
-    static spBaseGameInputIF createAi(GameEnums::AiTypes type);
+    static spBaseGameInputIF createAi(GameMap* pMap, GameEnums::AiTypes type);
 
     virtual void centerCameraOnAction(GameAction* pAction);
 signals:
@@ -86,6 +87,7 @@ protected:
      * @brief m_MoveCostMap move cost modifier map for the ai
      */
     QVector<QVector<std::tuple<qint32, bool>>> m_MoveCostMap;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // BASEGAMEINPUTIF_H

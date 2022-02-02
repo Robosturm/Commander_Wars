@@ -39,10 +39,10 @@ var Constructor = function()
     {
         return qsTr("Intel Truck");
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         var unitID = unit.getUnitID().toLowerCase();
         animation.loadSpriteV2("intel_truck+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("movetank.wav", -2);

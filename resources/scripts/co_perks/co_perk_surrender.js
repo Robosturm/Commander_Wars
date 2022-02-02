@@ -1,7 +1,7 @@
 var Constructor = function()
 {
 	this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
 		if (isDefender)
 		{
@@ -13,7 +13,7 @@ var Constructor = function()
     {
         return qsTr("Decreases the counter attack by 25%.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "surrender";
     };

@@ -14,7 +14,7 @@ var Constructor = function()
     {
         return qsTr("Sea");
     };
-    this.loadBaseSprite = function(terrain, currentTerrainID)
+    this.loadBaseSprite = function(terrain, currentTerrainID, map)
     {
         var surroundingsPlains = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
         var surroundingsBride = terrain.getSurroundings("BRIDGE1", false, false, GameEnums.Directions_North, false, true);
@@ -64,7 +64,7 @@ var Constructor = function()
         }
         terrain.loadBaseSprite("sea" + surroundingsPlains);
     };
-    this.loadOverlaySprite = function(terrain)
+    this.loadOverlaySprite = function(terrain, map)
     {
         var surroundingsSnow = terrain.getSurroundings("SNOW", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsSnow !== "")
@@ -91,13 +91,13 @@ var Constructor = function()
     {
         return "minimap_sea";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "back_" + weatherModifier +"sea";
     };
     this.getTerrainAnimationMoveSpeed = function()

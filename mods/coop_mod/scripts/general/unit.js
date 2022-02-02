@@ -1,4 +1,4 @@
-UNIT.repairUnit = function (unit, repairAmount)
+UNIT.repairUnit = function (unit, repairAmount, map)
 {
     // repair it
     var costs = unit.getUnitCosts();

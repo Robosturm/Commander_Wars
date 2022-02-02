@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.getBonusLuck = function(co, unit, posX, posY)
+    this.getBonusLuck = function(co, unit, posX, posY, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -13,7 +13,7 @@ var Constructor = function()
     {
         return qsTr("Decreases the maximum luck of units by 10%.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "null_luck";
     };

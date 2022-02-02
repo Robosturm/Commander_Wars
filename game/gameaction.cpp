@@ -8,8 +8,9 @@
 #include "game/player.h"
 #include "game/co.h"
 
-GameAction::GameAction()
-    : m_target(-1, -1)
+GameAction::GameAction(GameMap* pMap)
+    : m_target(-1, -1),
+      m_pMap{pMap}
 {
     setObjectName("GameAction");
     Mainapp* pApp = Mainapp::getInstance();
@@ -19,9 +20,10 @@ GameAction::GameAction()
     m_seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
 
-GameAction::GameAction(const QString & actionID)
+GameAction::GameAction(const QString & actionID, GameMap* pMap)
     : m_actionID(actionID),
-      m_target(-1, -1)
+      m_target(-1, -1),
+      m_pMap{pMap}
 {
     setObjectName("GameAction");
     Mainapp* pApp = Mainapp::getInstance();
@@ -92,6 +94,8 @@ void GameAction::perform()
     QString function1 = "perform";
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     pInterpreter->doFunction(m_actionID, function1, args1);
 }
 
@@ -126,6 +130,11 @@ void GameAction::printAction()
     CONSOLE_PRINT("Data " + data, Console::eINFO);
 }
 
+GameMap *GameAction::getMap() const
+{
+    return m_pMap;
+}
+
 qint32 GameAction::getPlayer() const
 {
     return m_player;
@@ -157,26 +166,24 @@ QString GameAction::getActionID()
 }
 
 Unit* GameAction::getTargetUnit()
-{
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+{    
+    if (m_pMap != nullptr)
     {
-        if (m_pTargetUnit == nullptr && pMap->onMap(m_target.x(), m_target.y()))
+        if (m_pTargetUnit == nullptr && m_pMap->onMap(m_target.x(), m_target.y()))
         {
-            return pMap->getTerrain(m_target.x(), m_target.y())->getUnit();
+            return m_pMap->getTerrain(m_target.x(), m_target.y())->getUnit();
         }
     }
     return m_pTargetUnit;
 }
 
 Building* GameAction::getTargetBuilding()
-{
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+{    
+    if (m_pMap != nullptr)
     {
-        if (pMap->onMap(m_target.x(), m_target.y()))
+        if (m_pMap->onMap(m_target.x(), m_target.y()))
         {
-            return pMap->getTerrain(m_target.x(), m_target.y())->getBuilding();
+            return m_pMap->getTerrain(m_target.x(), m_target.y())->getBuilding();
         }
     }
     return nullptr;
@@ -206,10 +213,9 @@ qint32 GameAction::getMovePathLength()
 bool GameAction::canBePerformed(const QString & actionID, bool emptyField)
 {
     if (!actionID.isEmpty())
-    {
-        spGameMap pMap = GameMap::getInstance();
-        if (pMap.get() != nullptr &&
-            pMap->getGameRules()->getAllowedActions().contains(actionID))
+    {        
+        if (m_pMap != nullptr &&
+            m_pMap->getGameRules()->getAllowedActions().contains(actionID))
         {
             Unit* pUnit = getTargetUnit();
             Building* pBuilding = getTargetBuilding();
@@ -221,7 +227,7 @@ bool GameAction::canBePerformed(const QString & actionID, bool emptyField)
                     {
                         return false;
                     }
-                    if ((pUnit->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()) &&
+                    if ((pUnit->getOwner()->getPlayerID() != m_pMap->getCurrentPlayer()->getPlayerID()) &&
                         (!pUnit->getHasMoved()))
                     {
                         return false;
@@ -230,7 +236,7 @@ bool GameAction::canBePerformed(const QString & actionID, bool emptyField)
                 if ((pBuilding != nullptr) && (pUnit == nullptr))
                 {
                     if ((pBuilding->getOwner() == nullptr) ||
-                        (pBuilding->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()))
+                        (pBuilding->getOwner()->getPlayerID() != m_pMap->getCurrentPlayer()->getPlayerID()))
                     {
                         return false;
                     }
@@ -240,6 +246,8 @@ bool GameAction::canBePerformed(const QString & actionID, bool emptyField)
             QString function1 = "canBePerformed";
             QJSValueList args1;
             args1 << pInterpreter->newQObject(this);
+            QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+            args1 << objArg5;
             QJSValue ret = pInterpreter->doFunction(actionID, function1, args1);
             if (ret.isBool())
             {
@@ -261,6 +269,8 @@ bool GameAction::isFinalStep(const QString & actionID)
     QString function1 = "isFinalStep";
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(actionID, function1, args1);
     if (ret.isBool())
     {
@@ -269,11 +279,13 @@ bool GameAction::isFinalStep(const QString & actionID)
     return false;
 }
 
-QString GameAction::getActionText(const QString & actionID)
+QString GameAction::getActionText(GameMap* pMap, const QString & actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActionText";
     QJSValueList args1;
+    QJSValue objArg5 = pInterpreter->newQObject(pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(actionID, function1, args1);
     if (ret.isString())
     {
@@ -282,11 +294,13 @@ QString GameAction::getActionText(const QString & actionID)
     return "";
 }
 
-QString GameAction::getActionIcon(const QString & actionID)
+QString GameAction::getActionIcon(GameMap* pMap, const QString & actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getIcon";
     QJSValueList args1;
+    QJSValue objArg5 = pInterpreter->newQObject(pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(actionID, function1, args1);
     if (ret.isString())
     {
@@ -301,6 +315,8 @@ QString GameAction::getStepInputType()
     QString function1 = "getStepInputType";
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
     if (ret.isString())
     {
@@ -315,6 +331,8 @@ bool GameAction::getRequiresEmptyField()
     QString function1 = "getRequiresEmptyField";
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
     if (ret.isBool())
     {
@@ -331,6 +349,8 @@ spCursorData GameAction::getStepCursor()
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);
     args1 << pInterpreter->newQObject(data.get());
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
     if (ret.isString())
     {
@@ -342,11 +362,13 @@ spCursorData GameAction::getStepCursor()
 spMenuData GameAction::getMenuStepData()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    spMenuData data = spMenuData::create();
+    spMenuData data = spMenuData::create(m_pMap);
     QString function1 = "getStepData";
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);
     args1 << pInterpreter->newQObject(data.get());
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     pInterpreter->doFunction(m_actionID, function1, args1);
     return data;
 }
@@ -359,6 +381,8 @@ spMarkedFieldData GameAction::getMarkedFieldStepData()
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);
     args1 << pInterpreter->newQObject(data.get());
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     pInterpreter->doFunction(m_actionID, function1, args1);
     return data;
 }
@@ -391,17 +415,16 @@ QPoint GameAction::getActionTarget()
 }
 
 Unit* GameAction::getMovementTarget()
-{
-    spGameMap pMap = GameMap::getInstance();
+{    
     QPoint actionTarget = getActionTarget();
     Unit* pUnit = nullptr;
-    if (pMap->onMap(actionTarget.x(), actionTarget.y()))
+    if (m_pMap->onMap(actionTarget.x(), actionTarget.y()))
     {
-        pUnit = pMap->getTerrain(actionTarget.x(), actionTarget.y())->getUnit();
+        pUnit = m_pMap->getTerrain(actionTarget.x(), actionTarget.y())->getUnit();
         // ignore stealthed units
         if (pUnit != nullptr)
         {
-            if (pUnit->isStealthed(pMap->getCurrentPlayer()))
+            if (pUnit->isStealthed(m_pMap->getCurrentPlayer()))
             {
                 return nullptr;
             }
@@ -411,25 +434,23 @@ Unit* GameAction::getMovementTarget()
 }
 
 Building* GameAction::getMovementBuilding()
-{
-    spGameMap pMap = GameMap::getInstance();
+{    
     Building* pBuilding = nullptr;
-    if (pMap.get() != nullptr)
+    if (m_pMap != nullptr)
     {
         QPoint actionTarget = getActionTarget();
-        pBuilding = pMap->getTerrain(actionTarget.x(), actionTarget.y())->getBuilding();
+        pBuilding = m_pMap->getTerrain(actionTarget.x(), actionTarget.y())->getBuilding();
     }
     return pBuilding;
 }
 
 Terrain* GameAction::getMovementTerrain()
-{
-    spGameMap pMap = GameMap::getInstance();
+{    
     Terrain* pTerrain = nullptr;
-    if (pMap.get() != nullptr)
+    if (m_pMap != nullptr)
     {
         QPoint actionTarget = getActionTarget();
-        pTerrain = pMap->getTerrain(actionTarget.x(), actionTarget.y());
+        pTerrain = m_pMap->getTerrain(actionTarget.x(), actionTarget.y());
     }
     return pTerrain;
 }

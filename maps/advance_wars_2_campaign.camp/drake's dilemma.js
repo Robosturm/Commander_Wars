@@ -12,41 +12,41 @@ var Constructor = function()
         return qsTr("Destroy both Black Cannons.");
     };
 
-    this.victory = function(team)
+    this.victory = function(team, map)
     {
         if (team === 0)
         {
-            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("The Black Cannons were destroyed. Useless hunks of--"),
                         "co_hawke", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
-            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("We'll withdraw for the moment. Adjust our preparations."),
                         "co_hawke", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
-            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Commander Kanbei!"),
                         "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Ah, Commander Drake. I am pleased to see you unharmed."),
                         "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("You have our gratitude for the reinforcements. I believe we might have gone down with our ships if you hadn't come."),
                         "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Nonsense. Even surrounded, I believe you would have turned the tables and emerged victorious. We simply sped the process up a bit."),
                         "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Thanks for the vote of confidence."),
                         "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("I would like to battle at your side again someday."),
                         "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("The feeling's mutual. Maybe when we're storming Black Hole's fortress..."),
                         "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog10 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("May that day come soon. Until then, good-bye."),
                         "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog11 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Good-bye!"),
                         "co_drake", GameEnums.COMood_Happy, PLAYER.getDefaultColor(2));
             dialog1.queueAnimation(dialog2);
@@ -61,7 +61,7 @@ var Constructor = function()
             dialog10.queueAnimation(dialog11);
         }
     };
-    this.gameStart = function()
+    this.gameStart = function(map)
     {
         // called before a game starts
         //we're going to set the game rules here.
@@ -78,7 +78,7 @@ var Constructor = function()
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(2).setBuildList(bhList);
     };
-    this.actionDone = function(action)
+    this.actionDone = function(action, map)
     {
         var blackCannon1 = map.getTerrain(2, 23).getBuilding();
         var blackCannon2 = map.getTerrain(6, 23).getBuilding();
@@ -89,92 +89,92 @@ var Constructor = function()
         }
     };
 
-    this.turnStart = function(turn, player)
+    this.turnStart = function(turn, player, map)
     {
         if (turn === 1 && player === 0)
         {
-            gameScript.initDialog();
+            gameScript.initDialog(map);
         }
         else if (turn === 2 && player === 2)
         {
-            gameScript.initDialog();
+            gameScript.initDialog(map);
         }
     };
 
-    this.initDialog = function()
+    this.initDialog = function(map)
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("What are the enemy troops doing? "),
                     "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("They appear to be gathering on a small island on the inland sea. "),
                     "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("And our troops have surrounded the sea?"),
                     "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Yes, sir. A complete wall encircles them. All that remains is to destroy them unit by unit with the Black Cannon. "),
                     "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("It's too early to relax. Much could happen before they are annihilated. Tell the troops to keep on their toes. "),
                     "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
 
-        var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Enemy troops everywhere. I've got to find a way to turn the tides, or we'll all be swept away. Should I weather that cannon's fire in the reefs or transport troops to the HQ with landers? "),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Commander! Incoming call from Commander Eagle! "),
                     "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("From Eagle? Patch him through. "),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Drake, are you OK? "),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
 
-        var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog10 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Eagle? We've hit a patch of rough sea here. The enemy's surrounded us. We've got to find a way to save the troops... "),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog11 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Hold on. I've got some good news for you. "),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog12 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog12 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("What is it? "),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog13 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog13 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr(" I've received a communique from Yellow Comet. They've sent reinforcements! And that's not all. They're being led by the emperor himself, Kanbei! "),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog14 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog14 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("That IS good news! OK, I'll launch a counteroffensive timed with Kanbei's attack. "),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
 
-        var dialog15 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog15 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("You'll be aiming to take out those 2 Black Cannons, right? "),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog16 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog16 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Yep. We can mop up the rest of the enemy once that's done. "),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog17 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog17 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Understood. I'll request that Kanbei's troops target the Black Cannons, too. "),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog18 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog18 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Thanks, Eagle. You have this old sailor's gratitude. "),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog19 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog19 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Save it for the victory celebration. Good luck to you, Drake. "),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
 
-        var dialog20 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog20 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Commander. Black Hole appears to have the inland sea surrounded. "),
                     "co_officier_yc", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog21 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog21 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("What do we know of Green Earth's Commander Drake? "),
                     "co_kanbei", GameEnums.COMood_Happy, PLAYER.getDefaultColor(3));
-        var dialog22 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog22 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("He's unharmed, sir. "),
                     "co_officier_yc", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog23 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog23 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Let's establish the field HQ. When that's done, we'll send out the troops. Our mission is to eradicate the 2 Black Cannons. You think you've got Drake where you want him, Black Hole? Prepare to taste steel from both sides! "),
                     "co_kanbei", GameEnums.COMood_Happy, PLAYER.getDefaultColor(3));
         dialog1.queueAnimation(dialog2);
@@ -201,16 +201,16 @@ var Constructor = function()
         dialog22.queueAnimation(dialog23);
     };
 
-    this.day2Dialog = function()
+    this.day2Dialog = function(map)
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("So now the Yellow Comet Army has arrived. If they use those missile silos, it may prove problematic. Can the cannons withstand direct missile fire? "),
                     "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Yes, sir. Mistress Lash says the missiles won't even leave scratches. "),
                     "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("If that's true, we're safe. They don't have many troops deployed yet, do they? Attack immediately. An ounce of prevention as they say. "),
                     "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         dialog1.queueAnimation(dialog2);

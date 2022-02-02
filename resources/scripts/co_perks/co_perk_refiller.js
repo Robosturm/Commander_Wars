@@ -1,11 +1,11 @@
 var Constructor = function()
 {
-	this.activatePower = function(co)
+	this.activatePower = function(co, map)
     {
 		CO_PERK_REFILLER.refill(co);
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
 		CO_PERK_REFILLER.refill(co);
     };
@@ -28,7 +28,7 @@ var Constructor = function()
     {
         return qsTr("Refills ammo and fuel for all your units during Power and Superpower.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "ration";
     };

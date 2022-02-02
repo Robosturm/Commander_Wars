@@ -12,7 +12,7 @@ class ScriptEventAnimation : public ScriptEvent
 {
     Q_OBJECT
 public:
-    ScriptEventAnimation();
+    ScriptEventAnimation(GameMap* pMap);
     /**
      * @brief readEvent
      * @param rStream

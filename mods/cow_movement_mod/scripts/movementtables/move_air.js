@@ -1,4 +1,4 @@
-MOVE_AIR.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)
+MOVE_AIR.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false, map)
 {
     var id = terrain.getID();
     var currentUnit = terrain.getUnit();

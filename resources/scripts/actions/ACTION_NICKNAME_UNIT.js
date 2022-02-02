@@ -1,7 +1,7 @@
 var Constructor = function()
 {
     
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
 		var units = map.getCurrentPlayer().getUnits();
 		var ret = (units.size() > 0);
@@ -9,15 +9,15 @@ var Constructor = function()
         return ret;
     };
     
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Nickname Unit");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "nickname";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
 		action.setIsLocal(true);
         if (action.getInputStep() === 1)
@@ -29,7 +29,7 @@ var Constructor = function()
             return false;
         }
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         action.startReading();
         // read action data
@@ -41,7 +41,7 @@ var Constructor = function()
             map.nicknameUnit(x, y);
         }
     };
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var units = map.getCurrentPlayer().getUnits();
         for (var i = 0; i < units.size(); i++)
@@ -53,7 +53,7 @@ var Constructor = function()
         data.setColor("#C8FF0000");
         units.remove();
     };
-    this.getStepInputType = function(action)
+    this.getStepInputType = function(action, map)
     {
         return "FIELD";
     };

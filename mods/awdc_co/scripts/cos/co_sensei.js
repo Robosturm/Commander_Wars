@@ -1,9 +1,9 @@
-CO_SENSEI.init = function(co)
+CO_SENSEI.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_SENSEI.activateSuperpower = function(co, powerMode)
+CO_SENSEI.activateSuperpower = function(co, powerMode, map)
 {
 	CO_SENSEI.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_SENSEI.getSuperPowerName = function()
     return CO_SENSEI.getPowerName();
 };
 CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

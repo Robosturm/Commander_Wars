@@ -1,9 +1,9 @@
-CO_MINA.init = function(co)
+CO_MINA.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_MINA.activateSuperpower = function(co, powerMode)
+CO_MINA.activateSuperpower = function(co, powerMode, map)
 {
 	CO_MINA.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_MINA.getSuperPowerName = function()
     return CO_MINA.getPowerName();
 };
 CO_MINA.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                              defender, defPosX, defPosY, isDefender, luckMode)
+                              defender, defPosX, defPosY, isDefender, luckMode, map)
 {
     switch (co.getPowerMode())
     {

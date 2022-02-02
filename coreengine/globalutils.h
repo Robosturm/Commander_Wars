@@ -72,6 +72,15 @@ public slots:
      */
     static qint32 getDistance(const QPoint & p1, const QPoint & p2);
     /**
+     * @brief getDistance
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @return
+     */
+    static qint32 getDistance(qint32 x1, qint32 y1, qint32 x2, qint32 y2);
+    /**
      * @brief getEmptyPointArray
      * @return
      */

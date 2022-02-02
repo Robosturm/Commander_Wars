@@ -7,13 +7,13 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(2);
         co.setSuperpowerStars(4);
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -33,13 +33,13 @@ var Constructor = function()
         }
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
+        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         animation2.setSound("power_sasha.wav");
@@ -69,7 +69,7 @@ var Constructor = function()
         }
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -82,7 +82,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             var delay = globals.randInt(135, 265);
             if (animations.length < 7)
             {
@@ -117,7 +117,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 2;
     };
@@ -126,13 +126,13 @@ var Constructor = function()
         return "BM";
     };
 
-    this.getBonusIncome = function(co, building, income)
+    this.getBonusIncome = function(co, building, income, map)
     {
         return income * 0.1;
     };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -142,7 +142,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -151,7 +151,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
         if (gotAttacked === false && attacker.getOwner() === co.getOwner())
         {
@@ -173,11 +173,11 @@ var Constructor = function()
             }
         }
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||
@@ -251,6 +251,20 @@ var Constructor = function()
     this.getName = function()
     {
         return qsTr("Sasha");
+    };
+
+    this.getAiUsePower = function(co, powerSurplus, turnMode)
+    {
+        // cop spam
+        if (co.canUseSuperpower())
+        {
+            return GameEnums.PowerMode_Superpower;
+        }
+        else if (co.canUsePower())
+        {
+            return GameEnums.PowerMode_Power;
+        }
+        return GameEnums.PowerMode_Off;
     };
 }
 

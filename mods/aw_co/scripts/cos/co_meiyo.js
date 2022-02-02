@@ -1,9 +1,9 @@
-CO_MEIYO.init = function(co)
+CO_MEIYO.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_MEIYO.activateSuperpower = function(co, powerMode)
+CO_MEIYO.activateSuperpower = function(co, powerMode, map)
 {
     CO_MEIYO.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_MEIYO.getSuperPowerName = function()
     return CO_MEIYO.getPowerName();
 };
 CO_MEIYO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -54,7 +54,7 @@ CO_MEIYO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_MEIYO.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

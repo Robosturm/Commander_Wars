@@ -7,9 +7,13 @@ var Constructor = function()
         terrain.setHp(100);
     };
     this.baseTerrainId = "PLAINS";
-    this.getName = function(terrain)
+    this.getName = function(terrain = null)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = "";
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        }
         if (baseTerrainId === "WASTE")
         {
             return qsTr("Waste Weld");
@@ -30,23 +34,31 @@ var Constructor = function()
     this.getOffensiveFieldBonus = function(terrain, attacker, atkPosX, atkPosY,
                                            defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "DESERT")
         {
             return -20;
         }
         return 0;
     };
-    this.getBonusVision = function(unit, terrain)
+    this.getBonusVision = function(unit, terrain, map)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return 1;
         }
         return 0;
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SNOW")
         {
@@ -66,16 +78,20 @@ var Constructor = function()
         }
         else
         {
-            var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+            var baseTerrainId = ""
+            if (terrain !== null)
+            {
+                baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+            }
             terrain.loadBaseTerrain(baseTerrainId);
         }
     };
-    this.loadBase = function(terrain, spriteId)
+    this.loadBase = function(terrain, spriteId, map)
     {
         var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE,WASTE_PIPELINE", false, false, GameEnums.Directions_Direct, true);
         var x = terrain.getX();
         var y = terrain.getY();
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.onMap(x, y + 1))
             {
@@ -113,10 +129,10 @@ var Constructor = function()
             terrain.loadBaseSprite(spriteId + "+E+W");
         }
     };
-    this.canBePlaced = function(x, y)
+    this.canBePlaced = function(x, y, map)
     {
         var terrain = map.getTerrain(x, y);
-        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE", false, false, GameEnums.Directions_Direct, true);
+        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE,WASTE_PIPELINE", false, false, GameEnums.Directions_Direct, true);
         if ((surroundings === "+E+W") || (surroundings === "+N+S"))
         {
             return true;
@@ -126,14 +142,14 @@ var Constructor = function()
             return false;
         }
     };
-    this.onBaseDestroyed = function(terrain, spriteId)
+    this.onBaseDestroyed = function(terrain, spriteId, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = terrain.getX();
         var y = terrain.getY();
         map.replaceTerrainOnly(spriteId, x, y);
         map.getTerrain(x, y).loadSprites();
-        var animation = GameAnimationFactory.createAnimation(x, y);
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.addScreenshake(30, 0.95, 1000, 200);
         animation.setSound("pipe_destroyed.wav");
@@ -142,15 +158,19 @@ var Constructor = function()
     {
         return "minimap_weld";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "fore_pipeline";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var id = TERRAIN.getTerrainAnimationId(terrain);
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var id = TERRAIN.getTerrainAnimationId(terrain, map);
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return "back_wasteplains";
@@ -165,14 +185,18 @@ var Constructor = function()
         }
         else
         {
-            var weatherModifier = TERRAIN.getWeatherModifier();
+            var weatherModifier = TERRAIN.getWeatherModifier(map);
             return TERRAIN.getTerrainBackgroundId(id, weatherModifier, true);
         }
     };
 
-    this.getDescription = function()
+    this.getDescription = function(terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline.");

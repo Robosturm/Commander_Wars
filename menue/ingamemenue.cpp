@@ -11,9 +11,12 @@
 
 #include "game/gamemap.h"
 
-InGameMenue* InGameMenue::m_pInstance = nullptr;
+spInGameMenue InGameMenue::m_pInstance(nullptr);
 
-InGameMenue::InGameMenue()
+const char* const JS_GAME_NAME = "game";
+
+InGameMenue::InGameMenue(spGameMap & pMap)
+    : m_pMap(pMap)
 {
     m_MapMoveThread.setObjectName("MapMoveThread");
     Mainapp* pApp = Mainapp::getInstance();
@@ -25,7 +28,11 @@ InGameMenue::InGameMenue()
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
+    m_Cursor = spCursor::create(m_pMap.get());
     loadBackground();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue globals = pInterpreter->newQObject(this);
+    pInterpreter->setGlobal(JS_GAME_NAME, globals);
 }
 
 InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame)
@@ -43,24 +50,33 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame
     // check for map creation
     if ((width > 0) && (heigth > 0))
     {
-        spGameMap::create(width, heigth, 4);
+        m_pMap = spGameMap::create(width, heigth, 4);
     }
     else
     {
-        spGameMap::create(map, false, false, savegame);
+        m_pMap = spGameMap::create(map, false, false, savegame);
     }
+    m_Cursor = spCursor::create(m_pMap.get());
     loadHandling();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue globals = pInterpreter->newQObject(this);
+    pInterpreter->setGlobal(JS_GAME_NAME, globals);
 }
 
 InGameMenue::~InGameMenue()
 {
+    CONSOLE_PRINT("Deleting In Game Menue", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     QCursor cursor = pApp->cursor();
     cursor.setShape(Qt::CursorShape::ArrowCursor);
     m_MapMover = nullptr;
-    m_MapMoveThread.exit();
-    m_MapMoveThread.wait();
-    m_pInstance = nullptr;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    pInterpreter->deleteObject(JS_GAME_NAME);
+    if (m_MapMoveThread.isRunning())
+    {
+        m_MapMoveThread.quit();
+        m_MapMoveThread.wait();
+    }
 }
 
 void InGameMenue::loadBackground()
@@ -84,6 +100,12 @@ void InGameMenue::changeBackground(QString background)
         m_backgroundSprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
         m_backgroundSprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
+}
+
+void InGameMenue::deleteMenu()
+{
+    oxygine::Actor::detach();
+    m_pInstance = nullptr;
 }
 
 void InGameMenue::loadHandling()
@@ -115,9 +137,9 @@ void InGameMenue::loadHandling()
 void InGameMenue::connectMapCursor()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    spGameMap pMap = GameMap::getInstance();
+    
     Cursor* pCursor = m_Cursor.get();
-    pMap->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
+    m_pMap->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -135,7 +157,7 @@ void InGameMenue::connectMapCursor()
             }
         }
     });
-    pMap->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
+    m_pMap->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -151,7 +173,7 @@ void InGameMenue::connectMapCursor()
             }
         }
     });
-    pMap->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event *pEvent )->void
+    m_pMap->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -166,7 +188,7 @@ void InGameMenue::connectMapCursor()
             }
         }
     });
-    pMap->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event *pEvent )->void
+    m_pMap->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -181,12 +203,12 @@ void InGameMenue::connectMapCursor()
             }
         }
     });
-    pMap->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event *)->void
+    m_pMap->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event *)->void
     {
         QCursor cursor = pApp->cursor();
         cursor.setShape(Qt::CursorShape::BlankCursor);
     });
-    pMap->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *)->void
+    m_pMap->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *)->void
     {
         if (!Settings::getShowCursor())
         {
@@ -194,7 +216,12 @@ void InGameMenue::connectMapCursor()
             cursor.setShape(Qt::CursorShape::ArrowCursor);
         }
     });
-    pMap->addChild(m_Cursor);
+    m_pMap->addChild(m_Cursor);
+}
+
+GameMap* InGameMenue::getMap() const
+{
+    return m_pMap.get();
 }
 
 oxygine::spSlidingActorNoClipRect InGameMenue::getMapSliding() const
@@ -214,36 +241,36 @@ void InGameMenue::autoScroll(QPoint cursorPosition)
         m_Focused &&
         Settings::getAutoScrolling())
     {
-        spGameMap pMap = GameMap::getInstance();
-        if (pMap.get() != nullptr &&
+        
+        if (m_pMap.get() != nullptr &&
             m_mapSliding.get() != nullptr &&
             m_mapSlidingActor.get() != nullptr)
         {
             qint32 moveX = 0;
             qint32 moveY = 0;
-            qint32 mapX = pMap->getX() + m_mapSliding->getX() + m_mapSlidingActor->getX();
-            qint32 mapY = pMap->getY() + m_mapSliding->getY() + m_mapSlidingActor->getY();
+            qint32 mapX = m_pMap->getX() + m_mapSliding->getX() + m_mapSlidingActor->getX();
+            qint32 mapY = m_pMap->getY() + m_mapSliding->getY() + m_mapSlidingActor->getY();
             if ((cursorPosition.x() < m_autoScrollBorder.x()) &&
                 (mapX < m_autoScrollBorder.x()))
             {
-                moveX = GameMap::getImageSize() * pMap->getZoom();
+                moveX = GameMap::getImageSize() * m_pMap->getZoom();
             }
             else if ((cursorPosition.x() < Settings::getWidth() - m_autoScrollBorder.width()) &&
                      (cursorPosition.x() > Settings::getWidth() - m_autoScrollBorder.width() - 50) &&
-                     (mapX + pMap->getMapWidth() * pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - m_autoScrollBorder.width() - 50))
+                     (mapX + m_pMap->getMapWidth() * m_pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - m_autoScrollBorder.width() - 50))
             {
-                moveX = -GameMap::getImageSize() * pMap->getZoom();
+                moveX = -GameMap::getImageSize() * m_pMap->getZoom();
             }
 
             if ((cursorPosition.y() < m_autoScrollBorder.y()) &&
                 (mapY < m_autoScrollBorder.y()))
             {
-                moveY = GameMap::getImageSize() * pMap->getZoom();
+                moveY = GameMap::getImageSize() * m_pMap->getZoom();
             }
             else if ((cursorPosition.y() > Settings::getHeight() - m_autoScrollBorder.height()) &&
-                     (mapY + pMap->getMapHeight() * pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - m_autoScrollBorder.height()))
+                     (mapY + m_pMap->getMapHeight() * m_pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - m_autoScrollBorder.height()))
             {
-                moveY = -GameMap::getImageSize() * pMap->getZoom();
+                moveY = -GameMap::getImageSize() * m_pMap->getZoom();
             }
 
             if (moveX != 0 || moveY != 0)
@@ -256,10 +283,10 @@ void InGameMenue::autoScroll(QPoint cursorPosition)
 
 void InGameMenue::MoveMap(qint32 x, qint32 y)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap.get() != nullptr)
     {
-        pMap->moveMap(x, y);
+        m_pMap->moveMap(x, y);
     }
 }
 
@@ -324,14 +351,14 @@ void InGameMenue::keyUp(oxygine::KeyEvent event)
 
 QPoint InGameMenue::getMousePos(qint32 x, qint32 y)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap.get() != nullptr)
     {
-        qint32 mapX = pMap->getX() + m_mapSliding->getX() + m_mapSlidingActor->getX();
-        qint32 mapY = pMap->getY() + m_mapSliding->getY() + m_mapSlidingActor->getY();
+        qint32 mapX = m_pMap->getX() + m_mapSliding->getX() + m_mapSlidingActor->getX();
+        qint32 mapY = m_pMap->getY() + m_mapSliding->getY() + m_mapSlidingActor->getY();
 
-        qint32 MousePosX = x * (GameMap::getImageSize() * pMap->getZoom()) + mapX + (GameMap::getImageSize() * pMap->getZoom()) / 2;
-        qint32 MousePosY = y * (GameMap::getImageSize() * pMap->getZoom()) + mapY + (GameMap::getImageSize() * pMap->getZoom()) / 2;
+        qint32 MousePosX = x * (GameMap::getImageSize() * m_pMap->getZoom()) + mapX + (GameMap::getImageSize() * m_pMap->getZoom()) / 2;
+        qint32 MousePosY = y * (GameMap::getImageSize() * m_pMap->getZoom()) + mapY + (GameMap::getImageSize() * m_pMap->getZoom()) / 2;
         return QPoint(MousePosX, MousePosY);
     }
     return QPoint(0, 0);
@@ -340,35 +367,37 @@ QPoint InGameMenue::getMousePos(qint32 x, qint32 y)
 void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr && pMap->onMap(x, y) && pApp->hasCursor())
+    
+    if (m_pMap.get() != nullptr &&
+        m_pMap->onMap(x, y) &&
+        pApp->hasCursor())
     {
         QPoint mousePos = getMousePos(x, y);
         qint32 MousePosX = mousePos.x();
         qint32 MousePosY = mousePos.y();
         if (MousePosX < m_autoScrollBorder.x())
         {
-            qint32 moveX = GameMap::getImageSize() * pMap->getZoom();
-            pMap->moveMap(moveX, 0);
+            qint32 moveX = GameMap::getImageSize() * m_pMap->getZoom();
+            m_pMap->moveMap(moveX, 0);
             MousePosX += moveX;
         }
         if (MousePosX > Settings::getWidth() - m_autoScrollBorder.width())
         {
-            qint32 moveX = -GameMap::getImageSize() * pMap->getZoom();
-            pMap->moveMap(moveX, 0);
+            qint32 moveX = -GameMap::getImageSize() * m_pMap->getZoom();
+            m_pMap->moveMap(moveX, 0);
             MousePosX += moveX;
         }
 
         if (MousePosY < m_autoScrollBorder.y())
         {
-            qint32 moveY = GameMap::getImageSize() * pMap->getZoom();
-            pMap->moveMap(0, moveY);
+            qint32 moveY = GameMap::getImageSize() * m_pMap->getZoom();
+            m_pMap->moveMap(0, moveY);
             MousePosY += moveY;
         }
         if (MousePosY > Settings::getHeight() - m_autoScrollBorder.height())
         {
-            qint32 moveY = -GameMap::getImageSize() * pMap->getZoom();
-            pMap->moveMap(0, moveY);
+            qint32 moveY = -GameMap::getImageSize() * m_pMap->getZoom();
+            m_pMap->moveMap(0, moveY);
             MousePosY += moveY;
         }
         if (Settings::getAutoMoveCursor())
@@ -382,10 +411,10 @@ void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
 
 void InGameMenue::centerMapOnCursor()
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap.get() != nullptr)
     {
-        pMap->centerMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+        m_pMap->centerMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
     }
 }
 
@@ -400,11 +429,11 @@ void InGameMenue::initSlidingActor(qint32 x, qint32 y, qint32 width, qint32 heig
         m_mapSliding->setContent(m_mapSlidingActor);
         m_mapSlidingActor->addEventListener(oxygine::Draggable::DragMoveEvent, [=](oxygine::Event*)
         {
-            emit GameMap::getInstance()->sigMovedMap();
+            emit m_pMap->sigMovedMap();
         });
         m_mapSliding->addEventListener(oxygine::SlidingEvent::SLIDING, [=](oxygine::Event*)
         {
-            emit GameMap::getInstance()->sigMovedMap();
+            emit m_pMap->sigMovedMap();
         });
     }
 
@@ -420,34 +449,34 @@ void InGameMenue::updateSlidingActorSize()
     if (m_mapSlidingActor.get() != nullptr &&
         m_mapSliding.get() != nullptr)
     {
-        spGameMap pMap = GameMap::getInstance();
-        qint32 mapWidth = pMap->getScaledWidth();
-        qint32 mapHeight = pMap->getScaledHeight();
+        
+        qint32 mapWidth = m_pMap->getScaledWidth();
+        qint32 mapHeight = m_pMap->getScaledHeight();
         CONSOLE_PRINT("InGameMenue::updateSlidingActorSize() width " + QString::number(mapWidth) + " height "  + QString::number(mapHeight), Console::eDEBUG);
         if (mapWidth < m_mapSliding->getWidth())
         {
             m_mapSlidingActor->setWidth(m_mapSliding->getWidth());
-            pMap->setX((m_mapSliding->getWidth() -  mapWidth) / 2);
+            m_pMap->setX((m_mapSliding->getWidth() -  mapWidth) / 2);
         }
         else
         {
-            pMap->setX(0);
+            m_pMap->setX(0);
             m_mapSlidingActor->setWidth(mapWidth);
         }
         if (mapHeight < m_mapSliding->getHeight())
         {
-            pMap->setY((m_mapSliding->getHeight() -  mapHeight) / 2);
+            m_pMap->setY((m_mapSliding->getHeight() -  mapHeight) / 2);
             m_mapSlidingActor->setHeight(m_mapSliding->getHeight());
         }
         else
         {
-            pMap->setY(0);
+            m_pMap->setY(0);
             m_mapSlidingActor->setHeight(mapHeight);
         }
         m_mapSliding->updateDragBounds();
         qint32 x = m_mapSlidingActor->getX();
         qint32 y = m_mapSlidingActor->getY();
-        pMap->limitPosition(this, x, y);
+        m_pMap->limitPosition(this, x, y);
         m_mapSlidingActor->setPosition(x, y);
     }
 }

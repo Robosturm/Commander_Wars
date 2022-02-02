@@ -101,6 +101,9 @@ public:
     {
         return m_configuration[0][Layer::LAYER_PARAMETER_SIZE];
     }
+    bool getDisabled() const;
+    void setDisabled(bool newDisabled);
+
 private:
     void setInput(const QVector<double> & in);
     void trigger();
@@ -113,6 +116,7 @@ private:
     QVector<QMap<QString, double>> m_configuration;
     double m_maxWeight = 1;
     QString m_networkName;
+    bool m_disabled{false};
 };
 
 #endif // NEURALNETWORK_H

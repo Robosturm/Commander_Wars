@@ -10,7 +10,7 @@ class ScriptEventSpawnBuilding : public ScriptEventGeneric
 {
     Q_OBJECT
 public:
-    ScriptEventSpawnBuilding();
+    explicit ScriptEventSpawnBuilding(GameMap* pMap);
 };
 
 #endif // SCRIPTEVENTSPAWNBUILDING_H

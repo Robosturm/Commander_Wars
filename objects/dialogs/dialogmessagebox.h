@@ -13,7 +13,7 @@ class DialogMessageBox : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit DialogMessageBox(QString text, bool withCancel = false);
+    explicit DialogMessageBox(QString text, bool withCancel = false, QString confirmText = tr("Ok"), QString cancelText = tr("Cancel"));
     virtual ~DialogMessageBox() = default;
 signals:
     void sigOk();

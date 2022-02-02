@@ -1,9 +1,9 @@
-CO_DRAKE.init = function(co)
+CO_DRAKE.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(4);
 };
-CO_DRAKE.activateSuperpower = function(co, powerMode)
+CO_DRAKE.activateSuperpower = function(co, powerMode, map)
 {
     CO_DRAKE.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_DRAKE.getSuperPowerName = function()
     return CO_DRAKE.getPowerName();
 };
 CO_DRAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -29,7 +29,7 @@ CO_DRAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_DRAKE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -49,7 +49,7 @@ CO_DRAKE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_DRAKE.getMovementpointModifier = function(co, unit, posX, posY)
+CO_DRAKE.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

@@ -1,9 +1,9 @@
 CO_PENNY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             switch (co.getPowerMode())
             {
@@ -20,7 +20,7 @@ CO_PENNY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_PENNY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action)
+                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -31,7 +31,7 @@ CO_PENNY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_PENNY.getFirerangeModifier = function(co, unit, posX, posY)
+CO_PENNY.getFirerangeModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -49,7 +49,7 @@ CO_PENNY.getFirerangeModifier = function(co, unit, posX, posY)
     return 0;
 };
 
-CO_PENNY.getWeatherImmune = function(co)
+CO_PENNY.getWeatherImmune = function(co, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -58,7 +58,7 @@ CO_PENNY.getWeatherImmune = function(co)
     return false;
 };
 
-CO_PENNY.getMovementpointModifier = function(co, unit, posX, posY)
+CO_PENNY.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -74,7 +74,7 @@ CO_PENNY.getMovementpointModifier = function(co, unit, posX, posY)
     return 0;
 };
 
-CO_PENNY.getVisionrangeModifier = function(co, unit, posX, posY)
+CO_PENNY.getVisionrangeModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -91,7 +91,7 @@ CO_PENNY.getVisionrangeModifier = function(co, unit, posX, posY)
     return 0;
 };
 
-CO_PENNY.getPerfectVision = function(co)
+CO_PENNY.getPerfectVision = function(co, map)
 {
     if (co.getIsCO0() === true)
     {

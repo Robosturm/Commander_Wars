@@ -55,7 +55,6 @@ namespace oxygine
             if (m_pausedCounter == 0)
             {
                 m_pauseMutex.lock();
-                emit sigStopUpdateTimer();
             }
             ++m_pausedCounter;
         }
@@ -72,10 +71,6 @@ namespace oxygine
             if (m_pausedCounter == 0)
             {
                 m_pauseMutex.unlock();
-                if (m_timerCycle > 0)
-                {
-                    emit sigStartUpdateTimer();
-                }
             }
         }
         /**
@@ -84,9 +79,11 @@ namespace oxygine
          */
         bool hasCursor();
         virtual void shutdown();
+        void setTimerCycle(qint32 newTimerCycle);
         qint32 getTimerCycle() const;
         bool getShuttingDown() const;
         void setShuttingDown(bool newShuttingDown);
+
 
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
@@ -125,20 +122,12 @@ namespace oxygine
         {
             return QThread::currentThreadId() == m_mainHandle;
         }
+        void launchGame();
+
     protected slots:
         void loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         virtual void loadRessources(){}
-        void stopUpdateTimer()
-        {
-            m_Timer.stop();
-        }
-        void startUpdateTimer()
-        {
-            if (!m_noUi)
-            {
-                m_Timer.start(m_timerCycle, this);
-            }
-        }
+
         void quitApp();
         virtual void onQuit() = 0;
         void quit(qint32 exitCode);
@@ -187,5 +176,6 @@ namespace oxygine
 
         bool m_shuttingDown{false};
         bool m_noUi{false};
+        bool m_launched{false};
     };
 }

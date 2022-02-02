@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(3);
         co.setSuperpowerStars(3);
@@ -13,20 +13,20 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
 
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var animation = GameAnimationFactory.createAnimation(0, 0);
+        var animation = GameAnimationFactory.createAnimation(map, 0, 0);
         animation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation);
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -39,7 +39,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             var delay = globals.randInt(135, 265);
             if (animations.length < 7)
             {
@@ -74,7 +74,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -94,7 +94,7 @@ var Constructor = function()
         }
     };
 
-    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
         var destroyed = false;
         var x = -1;
@@ -168,7 +168,7 @@ var Constructor = function()
         }
     };
 
-    this.startOfTurn = function(co)
+    this.startOfTurn = function(co, map)
     {
         // reset repair stop
         var variables = co.getVariables();
@@ -177,7 +177,7 @@ var Constructor = function()
         repairVariable.writeDataListInt32(empty);
     };
 
-    this.canBeRepaired = function(co, unit, posX, posY)
+    this.canBeRepaired = function(co, unit, posX, posY, map)
     {
         // disable enemy repairs
         switch (co.getPowerMode())
@@ -200,7 +200,7 @@ var Constructor = function()
     };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         // get cop and scop offensive bonus
         switch (co.getPowerMode())
@@ -219,7 +219,7 @@ var Constructor = function()
         }
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -229,7 +229,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveReduction = function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isAttacker, action)
+                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         // reduce enemy defense
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
@@ -244,7 +244,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.getAdditionalBuildingActions = function(co, building)
+    this.getAdditionalBuildingActions = function(co, building, map)
     {
         switch (co.getPowerMode())
         {
@@ -264,7 +264,7 @@ var Constructor = function()
         return "";
     };
 
-    this.getCaptureBonus = function(co, unit, posX, posY)
+    this.getCaptureBonus = function(co, unit, posX, posY, map)
     {
         var applyBonus = false;
         // store capture bonus
@@ -299,11 +299,11 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 2;
     };
@@ -311,7 +311,7 @@ var Constructor = function()
     {
         return "AC";
     };
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||

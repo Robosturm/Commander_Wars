@@ -27,10 +27,10 @@ var Constructor = function()
     {
         unit.loadSpriteV2("tank_hunter+mask", GameEnums.Recoloring_Matrix);
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("tank_hunter+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("moveheavytank.wav", -2);
         return animation;

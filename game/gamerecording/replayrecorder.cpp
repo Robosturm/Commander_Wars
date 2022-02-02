@@ -14,8 +14,8 @@
 #include "gameinput/basegameinputif.h"
 
 
-ReplayRecorder::ReplayRecorder()
-    : QObject()
+ReplayRecorder::ReplayRecorder(GameMap* pMap)
+    : m_pMap(pMap)
 {
     setObjectName("ReplayRecorder");
 }
@@ -35,24 +35,19 @@ ReplayRecorder::~ReplayRecorder()
         m_recordFile.flush();
     }
     m_recordFile.close();
-    if (m_playing)
-    {
-        CONSOLE_PRINT("Restoring interpreter after record replay", Console::eDEBUG);
-        Interpreter::reloadInterpreter(Interpreter::getRuntimeData());
-    }
 }
 
 void ReplayRecorder::startRecording()
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (Settings::getRecord() && pMap.get() != nullptr)
+    
+    if (Settings::getRecord() && m_pMap != nullptr)
     {
         CONSOLE_PRINT("Starting recording", Console::eDEBUG);
         // compress script enviroment
         QByteArray data = Interpreter::getRuntimeData().toUtf8();
         data = qCompress(data);
         QString currentDate = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");
-        QString fileName = "data/records/" + pMap->getMapName() + "-" + currentDate + ".rec";
+        QString fileName = "data/records/" + m_pMap->getMapName() + "-" + currentDate + ".rec";
         m_recordFile.setFileName(fileName);
         m_recordFile.open(QIODevice::WriteOnly);
         m_dailyBuffer.open(QIODevice::ReadWrite);
@@ -67,30 +62,30 @@ void ReplayRecorder::startRecording()
         m_stream << m_count;
         m_posOfDailyMapPos = m_recordFile.pos();
         m_stream << m_dailyMapPos;
-        pMap->serializeObject(m_stream);
+        m_pMap->serializeObject(m_stream);
         m_recordFile.flush();
         m_recording = true;
-        m_currentDay = pMap->getCurrentDay();
+        m_currentDay = m_pMap->getCurrentDay();
     }
 }
 
 void ReplayRecorder::recordAction(spGameAction pAction)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (m_recording && !pAction->getIsLocal() && pMap.get() != nullptr)
+    
+    if (m_recording && !pAction->getIsLocal() && m_pMap != nullptr)
     {
-        qint32 curDay = pMap->getCurrentDay();
+        qint32 curDay = m_pMap->getCurrentDay();
         if (m_currentDay != curDay && curDay > 1)
         {
             m_currentDay = curDay;
             qint64 curPos = m_dailyBuffer.pos();
             qint64 size = 0;
             m_dailyStream << size;
-            m_dailyStream << pMap->getCurrentDay();
+            m_dailyStream << m_pMap->getCurrentDay();
             m_dailyStream << m_count;
             m_dailyStream << m_recordFile.pos();
-            spGameMap pMap = GameMap::getInstance();
-            pMap->serializeObject(m_dailyStream);
+            
+            m_pMap->serializeObject(m_dailyStream);
             qint64 seekPos = m_dailyBuffer.pos();
             m_dailyBuffer.seek(curPos);
             size = (seekPos - curPos);
@@ -128,12 +123,14 @@ bool ReplayRecorder::loadRecord(const QString & filename)
             m_stream >> m_dailyMapPos;
             // load map
             m_mapPos = m_recordFile.pos();
-            spGameMap pMap = spGameMap::create<QDataStream &, bool>(m_stream, true);
+            m_pMap->clearMap();
+            m_pMap->deserializeObject(m_stream);
+            m_pMap->setIsHumanMatch(false);
             m_progress = 0;
             // swap out all ai's / or players with a proxy ai.
-            for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+            for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
-                pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes::AiTypes_ProxyAi));
+                m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes::AiTypes_ProxyAi));
             }
             m_playing = true;
         }
@@ -150,7 +147,7 @@ spGameAction ReplayRecorder::nextAction()
             m_progress < m_count)
         {
             m_progress++;
-            spGameAction pAction = spGameAction::create();
+            spGameAction pAction = spGameAction::create(m_pMap);
             pAction->deserializeObject(m_stream);
             return pAction;
         }
@@ -165,10 +162,8 @@ void ReplayRecorder::seekToDay(qint32 day)
         seekToStart();
     }
     else
-    {
-        spGameMap pMap = GameMap::getInstance();
-        pMap->deleteMap();
-
+    {        
+        m_pMap->clearMap();
         m_recordFile.seek(m_dailyMapPos);
         // not needed size of the buffer array
         qint32 bufferSize = 0;
@@ -188,10 +183,11 @@ void ReplayRecorder::seekToDay(qint32 day)
                 qint64 seekPos = 0;
                 m_stream >> seekPos;
                 m_progress = curCount;
-                pMap = spGameMap::create<QDataStream &, bool>(m_stream, true);
-                for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+                m_pMap->deserializeObject(m_stream);
+                m_pMap->setIsHumanMatch(false);
+                for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
                 {
-                    pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes::AiTypes_ProxyAi));
+                    m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes::AiTypes_ProxyAi));
                 }
                 m_recordFile.seek(seekPos);
                 found = true;
@@ -206,19 +202,19 @@ void ReplayRecorder::seekToDay(qint32 day)
 }
 
 void ReplayRecorder::seekToStart()
-{
-    
+{    
     m_recordFile.seek(m_mapPos);
-    spGameMap pMap = GameMap::getInstance();
-    pMap->deleteMap();
-    spGameMap::create<QDataStream &, bool>(m_stream, true);
+    
+    m_pMap->detach();
+    m_pMap->clearMap();
+    m_pMap->deserializeObject(m_stream);
+    m_pMap->setIsHumanMatch(false);
     m_progress = 0;
     // swap out all ai's / or players with a proxy ai.
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes::AiTypes_ProxyAi));
-    }
-    
+        m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes::AiTypes_ProxyAi));
+    }    
 }
 
 qint32 ReplayRecorder::getDayFromPosition(qint32 count)

@@ -1,9 +1,9 @@
-CO_WALTER.init = function(co)
+CO_WALTER.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(5);
 };
-CO_WALTER.activateSuperpower = function(co, powerMode)
+CO_WALTER.activateSuperpower = function(co, powerMode, map)
 {
     CO_WALTER.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_WALTER.getSuperPowerName = function()
     return CO_WALTER.getPowerName();
 };
 CO_WALTER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isAttacker, action)
+                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -33,7 +33,7 @@ CO_WALTER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_WALTER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };

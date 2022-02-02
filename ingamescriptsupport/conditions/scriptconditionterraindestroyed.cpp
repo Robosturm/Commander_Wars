@@ -12,8 +12,8 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
-ScriptConditionTerrainDestroyed::ScriptConditionTerrainDestroyed()
-    : ScriptCondition(ConditionType::terrainDestroyed)
+ScriptConditionTerrainDestroyed::ScriptConditionTerrainDestroyed(GameMap* pMap)
+    : ScriptCondition(pMap, ConditionType::terrainDestroyed)
 {
 
 }
@@ -33,11 +33,11 @@ void ScriptConditionTerrainDestroyed::readCondition(QTextStream& rStream, QStrin
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(rStream, ConditionBuildingDestroyed, line))
+        if (readSubCondition(m_pMap, rStream, ConditionBuildingDestroyed, line))
         {
             break;
         }
-        spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
+        spScriptEvent event = ScriptEvent::createReadEvent(m_pMap, rStream, line);
         if (event.get() != nullptr)
         {
             events.append(event);

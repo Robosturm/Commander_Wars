@@ -1,191 +1,202 @@
 var CO =
 {
-    init : function(co)
+    init : function(co, map)
     {
         co.setPowerStars(3);
         co.setSuperpowerStars(3);
     },
 
-    onCOUnitLost : function(co)
+    onCOUnitLost : function(co, map)
     {
         // called when a co unit got destroyed
         var gamerules = map.getGameRules();
         co.setPowerFilled(co.getPowerFilled() * (1 - gamerules.getPowerLoose()));
     },
 
-    loadCOMusic : function(co)
+    loadCOMusic : function(co, map)
     {
         // put the co music in here.
     },
 
-    getMovementpointModifier : function(co, unit, posX, posY)
+    getMovementpointModifier : function(co, unit, posX, posY, map)
     {
         return 0;
     },
 
-    buildedUnit : function(co, unit)
+    buildedUnit : function(co, unit, map)
     {
         // called when someone builded a unit -> ACTION_BUILD_UNITS was performed
     },
 
-    getFirerangeModifier : function(co, unit, posX, posY)
+    getFirerangeModifier : function(co, unit, posX, posY, map)
     {
         return 0;
     },
 
-    getMinFirerangeModifier : function(co, unit, posX, posY)
+    getMinFirerangeModifier : function(co, unit, posX, posY, map)
     {
         return 0;
     },
 
-    getCaptureBonus : function(co, unit, posX, posY)
+    getCaptureBonus : function(co, unit, posX, posY, map)
     {
         return 0;
     },
 
-    getAttackHpBonus : function(co, unit, posX, posY)
+    getAttackHpBonus : function(co, unit, posX, posY, map)
     {
         return 0;
     },
 
-    getVisionrangeModifier: function(co, unit, posX, posY)
+    getVisionrangeModifier: function(co, unit, posX, posY, map)
     {
         return 0;
     },
 
-    getTerrainDefenseModifier : function(co, unit, posX, posY)
+    getTerrainDefenseModifier : function(co, unit, posX, posY, map)
     {
         return 0;
     },
 
-    getFirstStrike : function(co, unit, posX, posY, attacker, isDefender)
+    getFirstStrike : function(co, unit, posX, posY, attacker, isDefender, map)
     {
         return false;
     },
 
-    getEnemyTerrainDefenseModifier : function(co, unit, posX, posY)
+    getEnemyTerrainDefenseModifier : function(co, unit, posX, posY, map)
     {
         return 0;
     },
 
     getDamageReduction : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                  defender, defPosX, defPosY, isDefender, luckMode)
+                                  defender, defPosX, defPosY, isDefender, luckMode, map)
     {
         return 0;
     },
 
     canCounterAttack : function(co, attacker, atkPosX, atkPosY,
-                                defender, defPosX, defPosY, luckMode)
+                                defender, defPosX, defPosY, luckMode, map)
     {
         return GameEnums.CounterAttackMode_Undefined;
     },
 
     getTrueDamage : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                             defender, defPosX, defPosY, isDefender, action, luckMode)
+                             defender, defPosX, defPosY, isDefender, action, luckMode, map)
     {
         return 0;
     },
 
-    getPerfectVision : function(co)
+    getPerfectVision : function(co, map)
     {
         return false;
     },
 
-    getWeatherImmune : function(co)
+    getWeatherImmune : function(co, map)
     {
         // return true if a weather has no effect for the co
         return false;
     },
 
-    getHpHidden : function(co, unit, posX, posY)
+    getHpHidden : function(co, unit, posX, posY, map)
     {
         // are the hp hidden of this unit?
         return false;
     },
 
-    getPerfectHpView : function(co, unit, posX, posY)
+    getRankInfoHidden : function(co, unit, posX, posY, map)
     {
         // are the hp hidden of this unit?
         return false;
     },
 
-    getRepairBonus : function(co, unit, posX, posY)
+    getPerfectHpView : function(co, unit, posX, posY, map)
+    {
+        // are the co zone and rank hidden?
+        return false;
+    },
+
+    getRepairBonus : function(co, unit, posX, posY, map)
     {
         return 0;
     },
 
-    getBonusLuck : function(co, unit, posX, posY)
+    getBonusLuck : function(co, unit, posX, posY, map)
     {
         return 0;
     },
 
-    getBonusMisfortune : function(co, unit, posX, posY)
+    getBonusMisfortune : function(co, unit, posX, posY, map)
     {
         return 0;
     },
 
-    getActionModifierList : function(co, unit)
+    getActionModifierList : function(co, unit, map)
     {
         // return empty list as default
         return [];
     },
 
-    activatePower : function(co)
+    activatePower : function(co, map)
     {
     },
 
-    activateSuperpower : function(co)
+    activateSuperpower : function(co, map)
     {
     },
 
-    getFuelCostModifier : function(co, unit, posX, posY, costs)
+    getFuelCostModifier : function(co, unit, posX, posY, costs, map)
     {
         // modifies the fuel cost at the start of a turn
         return 0;
     },
 
     getOffensiveBonus : function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action, luckMode)
+                                 defender, defPosX, defPosY, isDefender, action, luckMode, map)
     {
         return 0;
     },
 
     getOffensiveReduction : function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action, luckMode)
+                                 defender, defPosX, defPosY, isDefender, action, luckMode, map)
     {
         return 0;
     },
 
     getDeffensiveBonus : function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isAttacker, action, luckMode)
+                                  defender, defPosX, defPosY, isAttacker, action, luckMode, map)
     {
         return 0;
     },
 
     getDeffensiveReduction : function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isAttacker, action, luckMode)
+                                  defender, defPosX, defPosY, isAttacker, action, luckMode, map)
     {
         return 0;
     },
 
-    canBeRepaired : function(co, unit, posX, posY)
+    canBeRepaired : function(co, unit, posX, posY, map)
     {
         // called from all co's for a unit -> so you can apply boni from own co and mali from enemy co's here
         return true;
     },
 
-    getCostModifier : function(co, id, baseCost)
+    getCostModifier : function(co, id, baseCost, posX, posY, map)
     {
         return 0;
     },
 
-    getMovementcostModifier : function(co, unit, posX, posY)
+    getEnemyCostModifier : function(co, id, baseCost, posX, posY, map)
+    {
+        return 0;
+    },
+
+    getMovementcostModifier : function(co, unit, posX, posY, map)
     {
         // called from all co's for a unit -> so you can apply boni from own co and mali from enemy co's here
         return 0;
     },
 
-    getMovementFuelCostModifier : function(co, unit, fuelCost)
+    getMovementFuelCostModifier : function(co, unit, fuelCost, map)
     {
         // modifies the fuel cost when moving
         // called from all co's for a unit -> so you can apply boni from own co and mali from enemy co's here
@@ -193,22 +204,17 @@ var CO =
         return 0;
     },
 
-    getCanMoveAndFire : function(co, unit, posX, posY)
+    getCanMoveAndFire : function(co, unit, posX, posY, map)
     {
         return false;
     },
 
-    getCostModifier : function(co, id, baseCost)
-    {
-        return 0;
-    },
-
-    getCOArmy : function()
+    getCOArmy : function(map)
     {
         return "OS";
     },
 
-    getStarGain : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
+    getStarGain : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
     {
         var gamerules = map.getGameRules();
         var powerCostIncrease = gamerules.getPowerUsageReduction();
@@ -275,134 +281,165 @@ var CO =
         return powerGain;
     },
 
-    gainPowerstar : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
+    gainPowerstar : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
     {
-        var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
+        var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
         co.setPowerFilled(co.getPowerFilled() + powerGain)
     },
 
-    getCOUnitRange : function(co)
+    getCOUnitRange : function(co, map)
     {
         return 0;
     },
 
-    getCOUnits : function(co, building)
+    getCOUnits : function(co, building, map)
     {
         return [];
     },
 
-    getAdditionalBuildingActions : function(co, building)
+    getEnemyVisionBonus : function (co, unit, x, y, map)
+    {
+        return 0;
+    },
+
+    getEnemyMinFirerangeModifier : function (co, unit, x, y, map)
+    {
+        return 0;
+    },
+
+    getEnemyFirerangeModifier : function (co, unit, x, y, map)
+    {
+        return 0;
+    },
+
+    getBonusLoadingPlace : function (co, unit, x, y, map)
+    {
+        return 0;
+    },
+
+    getAdditionalBuildingActions : function(co, building, map)
     {
         // called from all co's for a building -> so you can boni from own co and mali from enemy co's here
         // - before an action id will disable the action -> see Mary
         return "";
     },
 
-    getBonusIncome : function(co, building, income)
+    getTransportUnits : function(co, unit, map)
+    {
+        // called to check for additional loading units for a transporter
+        // - before an unit id will remove the unit from the loading list
+        return [];
+    },
+
+    getBonusIncome : function(co, building, income, map)
     {
         return 0;
     },
 
-    getIncomeReduction : function(co, building, income)
+    getIncomeReduction : function(co, building, income, map)
     {
         return 0;
     },
 
-    postBattleActions : function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+    postBattleActions : function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
         // called after damage was dealt to the defender unit.
         // the damage given is the damage was dealt to the unit.
         // gotAttacked means we own the unit which got damage dealt.
     },
 
-    startOfTurn : function(co)
+    startOfTurn : function(co, map)
     {
         // called at the start of the turn use it to do cool co stuff like caulder's healing :)
     },
 
-    postAction: function(co, action)
+    postAction: function(co, action, map)
     {
         // called after the action was performed
     },
 
+    onUnitDeath : function(co, unit, map)
+    {
+    },
+
     // CO - Intel
-    getBio : function(co)
+    getBio : function(co, map)
     {
         return "";
     },
-    getLongBio : function(co)
+    getLongBio : function(co, map)
     {
         return "";
     },
-    getHits : function(co)
+    getHits : function(co, map)
     {
         return "";
     },
-    getMiss : function(co)
+    getMiss : function(co, map)
     {
         return "";
     },
-    getCODescription : function(co)
+    getCODescription : function(co, map)
     {
         return "";
     },
-    getLongCODescription : function(co)
+    getLongCODescription : function(co, map)
     {
         return "";
     },
-    getPowerDescription : function(co)
+    getPowerDescription : function(co, map)
     {
         return "";
     },
-    getPowerName : function(co)
+    getPowerName : function(co, map)
     {
         return "";
     },
-    getSuperPowerDescription : function(co)
+    getSuperPowerDescription : function(co, map)
     {
         return "";
     },
-    getSuperPowerName : function(co)
+    getSuperPowerName : function(co, map)
     {
         return "";
     },
-    getPowerSentences : function(co)
+    getPowerSentences : function(co, map)
     {
         return [];
     },
-    getVictorySentences : function(co)
+    getVictorySentences : function(co, map)
     {
         return [];
     },
-    getDefeatSentences : function(co)
+    getDefeatSentences : function(co, map)
     {
         return [];
     },
-    getName : function(co)
+    getName : function(co, map)
     {
         return "";
     },
 
-    showDefaultUnitGlobalBoost : function(co)
+    showDefaultUnitGlobalBoost : function(co, map)
     {
         return true;
     },
-    getCustomUnitGlobalBoostCount : function(co)
+    getCustomUnitGlobalBoostCount : function(co, map)
     {
         return 0;
     },
-    getCustomUnitGlobalBoost : function(co, index, info)
+    getCustomUnitGlobalBoost : function(co, index, info, map)
     {
     },
-    showDefaultUnitZoneBoost : function(co)
+    showDefaultUnitZoneBoost : function(co, map)
     {
         return true;
     },
-    getCustomUnitZoneBoostCount : function(co)
+    getCustomUnitZoneBoostCount : function(co, map)
     {
         return 0;
     },
-    getCustomUnitZoneBoost : function(co, index, info)
+    getCustomUnitZoneBoost : function(co, index, info, map)
     {
     },
 
@@ -425,9 +462,9 @@ var CO =
       * turnMode        : see GameEnums.h AiTurnMode describes the current turn mode on the ai
       * return          : see GameEnums PowerMode return unknown for default fallback -> not recommended
       */
-    getAiUsePower(co, powerSurplus, unitCount, repairUnits, indirectUnits, directUnits, enemyUnits, turnMode)
+    getAiUsePower(co, powerSurplus, unitCount, repairUnits, indirectUnits, directUnits, enemyUnits, turnMode, map)
     {
-        return CO.getAiUsePowerAtStart(co, powerSurplus, turnMode);
+        return CO.getAiUsePowerAtStart(co, powerSurplus, turnMode, map);
     },
 
 //    getAiCoUnitBonus : function(co, unit)
@@ -437,7 +474,13 @@ var CO =
 //        return 0;
 //    },
 
-    getAiUsePowerAlways : function(co, powerSurplus)
+    getAiCoBuildRatioModifier : function(co, map)
+    {
+        // multiplier shifting the general indirect to direct unit ratio the ai tries to maintain.
+        return 1.0;
+    },
+
+    getAiUsePowerAlways : function(co, powerSurplus, map)
     {
         if (co.canUseSuperpower())
         {
@@ -451,7 +494,7 @@ var CO =
         return GameEnums.PowerMode_Off;
     },
 
-    getAiUsePowerAtStart : function(co, powerSurplus, turnMode)
+    getAiUsePowerAtStart : function(co, powerSurplus, turnMode, map)
     {
         if (turnMode === GameEnums.AiTurnMode_StartOfDay)
         {
@@ -468,7 +511,7 @@ var CO =
         return GameEnums.PowerMode_Off;
     },
 
-    getAiUsePowerAtEnd : function(co, powerSurplus, turnMode)
+    getAiUsePowerAtEnd : function(co, powerSurplus, turnMode, map)
     {
         if (turnMode === GameEnums.AiTurnMode_EndOfDay)
         {
@@ -485,7 +528,7 @@ var CO =
         return GameEnums.PowerMode_Off;
     },
 
-    getAiUsePowerAtUnitCount : function(co, powerSurplus, turnMode, unitCount, count)
+    getAiUsePowerAtUnitCount : function(co, powerSurplus, turnMode, unitCount, count, map)
     {
         if (turnMode === GameEnums.AiTurnMode_StartOfDay &&
             unitCount >= 5)
@@ -503,7 +546,7 @@ var CO =
         return GameEnums.PowerMode_Off;
     },
 
-    getUnitBuildValue : function(co, unitID)
+    getUnitBuildValue : function(co, unitID, map)
     {
         return 0.0;
     },

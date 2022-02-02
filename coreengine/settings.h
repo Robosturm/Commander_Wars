@@ -1,10 +1,18 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <type_traits>
+
 #include <Qt>
 #include <QObject>
 #include <QTranslator>
+#include <QSettings>
+#ifdef AUDIOSUPPORT
+#include <QMediaDevices>
+#include <QAudioDevice>
+#endif
 
+#include "coreengine/console.h"
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -17,6 +25,190 @@ using spSettings = oxygine::intrusive_ptr<Settings>;
 class Settings : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
+
+    struct ValueBase
+    {
+        virtual void readValue(QSettings & settings) = 0;
+        virtual void saveValue(QSettings & settings) = 0;
+        virtual void resetValue() = 0;
+    };
+
+    template<typename TType>
+    struct Value : public ValueBase
+    {
+        Value(const char* const group, const char* const name, TType* value, TType defaultValue, TType minValue, TType maxValue, bool excludeFromReset = false)
+            : m_group{group},
+              m_name{name},
+              m_defaultValue{defaultValue},
+              m_value{value},
+              m_minValue{minValue},
+              m_maxValue{maxValue},
+              m_excludeFromReset{excludeFromReset}
+        {
+        }
+        virtual void readValue(QSettings & settings) override
+        {
+            settings.beginGroup(m_group);
+            if constexpr(std::is_floating_point<TType>::value)
+            {
+                bool ok = false;
+                *m_value = settings.value(m_name, m_defaultValue).toFloat(&ok);
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
+                {
+                    QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
+                    CONSOLE_PRINT(error, Console::eERROR);
+                    *m_value = m_defaultValue;
+                }
+            }
+            else if constexpr (std::is_same<TType, bool>::value)
+            {
+                *m_value = settings.value(m_name, m_defaultValue).toBool();
+            }
+            else if constexpr (std::is_same<TType, QString>::value)
+            {
+                *m_value = settings.value(m_name, m_defaultValue).toString();
+            }
+            else if constexpr (std::is_same<TType, quint32>::value ||
+                               std::is_same<TType, quint16>::value)
+            {
+                bool ok = false;
+                *m_value = settings.value(m_name, m_defaultValue).toUInt(&ok);
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
+                {
+                    QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
+                    CONSOLE_PRINT(error, Console::eERROR);
+                    *m_value = m_defaultValue;
+                }
+            }
+            else if constexpr (std::is_same<TType, qint32>::value)
+            {
+                bool ok = false;
+                *m_value = settings.value(m_name, m_defaultValue).toInt(&ok);
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
+                {
+                    QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
+                    CONSOLE_PRINT(error, Console::eERROR);
+                    *m_value = m_defaultValue;
+                }
+            }
+            else if constexpr (std::is_enum<TType>::value)
+            {
+                bool ok = false;
+                *m_value = static_cast<TType>(settings.value(m_name, m_defaultValue).toInt(&ok));
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
+                {
+                    QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
+                    CONSOLE_PRINT(error, Console::eERROR);
+                    *m_value = m_defaultValue;
+                }
+            }
+            else if constexpr (std::is_same<TType, QStringList>::value)
+            {
+                QString list = settings.value(m_name, m_defaultValue).toString();
+                if (!list.isEmpty())
+                {
+                    *m_value = list.split(",");
+                }
+            }
+            else if constexpr (std::is_same<TType, std::chrono::seconds>::value)
+            {
+                bool ok = false;
+                *m_value = std::chrono::seconds(settings.value(m_name, static_cast<qint64>(m_defaultValue.count())).toUInt(&ok));
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
+                {
+                    QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
+                    CONSOLE_PRINT(error, Console::eERROR);
+                    *m_value = m_defaultValue;
+                }
+            }
+            else
+            {
+                // not implemented data type
+                Q_ASSERT(false);
+            }
+
+            settings.endGroup();
+        }
+        virtual void saveValue(QSettings & settings) override
+        {
+            settings.beginGroup(m_group);
+            if constexpr (std::is_same<TType, std::chrono::seconds>::value)
+            {
+                settings.setValue(m_name, static_cast<qint64>((*m_value).count()));
+            }
+            else if constexpr (std::is_same<TType, QStringList>::value)
+            {
+                settings.setValue(m_name, Settings::getConfigString(*m_value));
+            }
+            else
+            {
+                settings.setValue(m_name, *m_value);
+            }
+            settings.endGroup();
+        }
+        virtual void resetValue()  override
+        {
+            if (!m_excludeFromReset)
+            {
+                *m_value = m_defaultValue;
+            }
+        }
+    private:
+        const char* const m_group;
+        const char* const m_name;
+        TType m_defaultValue;
+        TType m_minValue;
+        TType m_maxValue;
+        TType* m_value;
+        bool m_excludeFromReset;
+    };
+#ifdef AUDIOSUPPORT
+    struct AudioDeviceValue : public ValueBase
+    {
+        AudioDeviceValue(const char* const group, const char* const name, QVariant* value)
+            : m_group{group},
+              m_name{name},
+              m_value{value}
+        {
+        }
+        virtual void readValue(QSettings & settings)
+        {
+            settings.beginGroup(m_group);
+            const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
+            QString description = settings.value(m_name, "").toString();
+            const auto audioDevices = QMediaDevices::audioOutputs();
+            for (const auto & device : audioDevices)
+            {
+                if (device.description() == description)
+                {
+                    *m_value = QVariant::fromValue(device);
+                    break;
+                }
+            }
+            if (m_audioOutput.value<QAudioDevice>().isNull())
+            {
+                *m_value = QVariant::fromValue(defaultDeviceInfo);
+            }
+            settings.endGroup();
+        }
+        virtual void saveValue(QSettings & settings)
+        {
+            settings.beginGroup(m_group);
+            auto device = (*m_value).value<QAudioDevice>();
+            settings.setValue(m_name, device.description());
+            settings.endGroup();
+        }
+        virtual void resetValue()
+        {
+            const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
+            *m_value = QVariant::fromValue(defaultDeviceInfo);
+        }
+    private:
+        const char* const m_group;
+        const char* const m_name;
+        QVariant* m_value;
+    };
+#endif
 public:
     virtual ~Settings() = default;
     static Settings* getInstance();
@@ -24,6 +216,7 @@ public:
 
     static void loadSettings();
     static void saveSettings();
+    static void resetSettings();
 
     static quint16 getServerPort();
     static void setServerPort(const quint16 &ServerPort);
@@ -38,6 +231,18 @@ public:
 
     static void setUsername(const QString &Username);
 
+public slots:
+    static Qt::Key getKey_mapshot();
+    static void setKey_mapshot(Qt::Key newKey_mapshot);
+
+    static qint32 getFramesPerSecond();
+    static void setFramesPerSecond(qint32 newFramesPerSecond);
+
+    static bool getMuted();
+    static void setMuted(bool newMuted);
+
+    static float getSupplyWarning();
+    static void setSupplyWarning(float newSupplyWarning);
 
     static bool getGamepadEnabled();
     static void setGamepadEnabled(bool newGamepadEnabled);
@@ -45,7 +250,9 @@ public:
     static float getGamepadSensitivity();
     static void setGamepadSensitivity(float newGamepadSensitivity);
 
-public slots:
+    static const QString &getDefaultRuleset();
+    static void setDefaultRuleset(const QString &newDefaultRuleset);
+
     static bool getUseCoMinis();
     static void setUseCoMinis(bool newUseCoMinis);
 
@@ -226,8 +433,8 @@ public slots:
     static qint32 getMenuItemCount();
     static void setMenuItemCount(const qint32 &MenuItemCount);
 
-    static QString getModConfigString();
-    static QString getModConfigString(QStringList mods);
+    static QString getModString();
+    static QString getConfigString(QStringList mods);
 
     static quint32 getMultiTurnCounter();
     static void setMultiTurnCounter(const quint32 &value);
@@ -445,6 +652,8 @@ private:
     explicit Settings();
 
 private:
+    static QVector<ValueBase*> m_SettingValues;
+
     // setting variables
     static qint32 m_x;
     static qint32 m_y;
@@ -457,6 +666,7 @@ private:
     static qint32 m_touchPointSensitivity;
     static bool m_gamepadEnabled;
     static float m_gamepadSensitivity;
+    static qint32 m_framesPerSecond;
 
     static bool m_borderless;
     static bool m_fullscreen;
@@ -464,6 +674,7 @@ private:
     static Qt::Key m_key_escape;
     static Qt::Key m_key_console;
     static Qt::Key m_key_screenshot;
+    static Qt::Key m_key_mapshot;
     static Qt::Key m_key_up;
     static Qt::Key m_key_down;
     static Qt::Key m_key_right;
@@ -520,6 +731,7 @@ private:
     static qint32 m_MusicVolume;
     static qint32 m_SoundVolume;
     static QVariant m_audioOutput;
+    static bool m_muted;
     // Network
     static quint16 m_GamePort;
     static quint16 m_ServerPort;
@@ -528,7 +740,8 @@ private:
     static QString m_slaveServerName;
     static bool m_Server;
     // auto saving
-    static std::chrono::seconds autoSavingCylceTime;    static qint32 autoSavingCycle;
+    static std::chrono::seconds m_autoSavingCylceTime;
+    static qint32 m_autoSavingCycle;
 
 
     // ingame options
@@ -537,13 +750,14 @@ private:
     static GameEnums::BattleAnimationType m_battleAnimationType;
     static quint32 m_animationSpeed;
     static quint32 m_walkAnimationSpeed;
-    static quint32 battleAnimationSpeed;
+    static quint32 m_battleAnimationSpeed;
     static quint32 m_dialogAnimationSpeed;
     static quint32 m_captureAnimationSpeed;
     static bool m_useCoMinis;
     static bool m_dialogAnimation;
     static quint32 multiTurnCounter;
     static QString m_LastSaveGame;
+    static QString m_defaultRuleset;
     static bool m_ShowCursor;
     static bool m_AutoEndTurn;
     static qint32 m_MenuItemCount;
@@ -553,7 +767,7 @@ private:
     static bool m_record;
     static qint32 m_showCoCount;
     static bool m_showIngameCoordinates;
-    static GameEnums::COInfoPosition coInfoPosition;
+    static GameEnums::COInfoPosition m_coInfoPosition;
     static bool m_autoScrolling;
     static bool m_autoCamera;
     static GameEnums::AutoFocusing m_autoFocusing;
@@ -562,6 +776,7 @@ private:
     static bool m_simpleDeselect;
     static bool m_showDetailedBattleForcast;
     static bool m_autoMoveCursor;
+    static float m_supplyWarning;
 
     // internal members
     static spSettings m_pInstance;
@@ -573,6 +788,7 @@ private:
 
     // logging
     static bool m_LogActions;
+    static Console::eLogLevels m_defaultLogLevel;
 };
 
 #endif // SETTINGS_H

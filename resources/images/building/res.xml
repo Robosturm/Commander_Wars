@@ -96,6 +96,10 @@
         <image file="snow_weld+E+W+mask.png" />
         <image file="snow_weld+N+S.png" />
         <image file="snow_weld+N+S+mask.png" />
+        <image file="waste_weld+E+W.png" />
+        <image file="waste_weld+E+W+mask.png" />
+        <image file="waste_weld+N+S.png" />
+        <image file="waste_weld+N+S+mask.png" />
         
         <!-- hq -->
         <image file="hq+ac.png" cols = "2" />

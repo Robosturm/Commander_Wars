@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var building = action.getTargetBuilding();
         if (building.getFireCount() >= 7)
@@ -12,19 +12,19 @@ var Constructor = function()
             return false;
         }
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Fire");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "icon_fire";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var building = action.getTargetBuilding();
@@ -35,7 +35,7 @@ var Constructor = function()
 
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
 
-        var animation = Global[building.getBuildingID()].createRayAnimation(building, x, y, fields);
+        var animation = Global[building.getBuildingID()].createRayAnimation(building, x, y, fields, map);
         animation.setEndOfAnimationCall("ACTION_DEATHRAY_FIRE", "performPostAnimation");
         ACTION_DEATHRAY_FIRE.postAnimationFields = fields;
         ACTION_DEATHRAY_FIRE.postAnimationX = x;
@@ -46,7 +46,7 @@ var Constructor = function()
     this.postAnimationX = null;
     this.postAnimationY = null;
     this.postAnimationBuilding = null;
-    this.performPostAnimation = function(postAnimation)
+    this.performPostAnimation = function(postAnimation, map)
     {
         var x = ACTION_DEATHRAY_FIRE.postAnimationX;
         var y = ACTION_DEATHRAY_FIRE.postAnimationY;

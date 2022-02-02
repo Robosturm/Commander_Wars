@@ -31,10 +31,10 @@ var Constructor = function()
     {
         return "MOVE_TIRE_A";
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("hot_tank+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("movetire.wav", -2);
         return animation;
@@ -60,7 +60,7 @@ var Constructor = function()
     {
         return true;
     };
-    this.getBonusOffensive = function(attacker, atkX, atkY, defender, defX, defY, isDefender, action)
+    this.getBonusOffensive = function(attacker, atkX, atkY, defender, defX, defY, isDefender, action, luckmode, map)
     {
         var bonus = 0;
         var tileBonus = 7;

@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -18,7 +18,7 @@ var Constructor = function()
     {
         return qsTr("2% of Damage is lost as funds");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "reparations";
     };

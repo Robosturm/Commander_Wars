@@ -14,11 +14,11 @@ var Constructor = function()
     {
         return qsTr("Lake");
     };
-    this.loadBaseSprite = function(terrain, currentTerrainID)
+    this.loadBaseSprite = function(terrain, currentTerrainID, map)
     {
         terrain.loadBaseSprite("lake");
     };
-    this.loadOverlaySprite = function(terrain)
+    this.loadOverlaySprite = function(terrain, map)
     {
         var surroundings = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_Direct, false);
         if (surroundings !== "")
@@ -111,11 +111,11 @@ var Constructor = function()
     {
         return "minimap_sea";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "fore_sea";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         return "back_sea";
     };

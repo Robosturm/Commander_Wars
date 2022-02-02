@@ -4,7 +4,6 @@
 #include "menue/mainwindow.h"
 #include "menue/campaignmenu.h"
 
-#include "game/gamemap.h"
 #include "game/gamerecording/gamerecorder.h"
 #include "game/player.h"
 #include "game/co.h"
@@ -25,10 +24,10 @@
 #include "objects/base/moveinbutton.h"
 
 
-VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
-    : Basemenu(),
-      m_ProgressTimer(this),
-      m_pNetworkInterface(pNetworkInterface)
+VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface)
+    : m_ProgressTimer(this),
+      m_pNetworkInterface(pNetworkInterface),
+      m_pMap(pMap)
 {
     setObjectName("VictoryMenue");
     Mainapp* pApp = Mainapp::getInstance();
@@ -36,7 +35,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     CONSOLE_PRINT("Entering Victory Menue", Console::eDEBUG);
-    spGameMap pMap = GameMap::getInstance();
+    
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -115,7 +114,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
         pDayText->setY(m_pGraphBackground->getHeight());
         pDayText->setX(i * 100);
         pDayText->setStyle(style);
-        qint32 day = static_cast<qint32>((i * pMap->getCurrentDay()) / graphDays) + 1;
+        qint32 day = static_cast<qint32>((i * m_pMap->getCurrentDay()) / graphDays) + 1;
         pDayText->setHtmlText(QString::number(day));
         m_pGraphBackground->addChild(pDayText);
     }
@@ -141,13 +140,13 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     connect(this, &VictoryMenue::sigShowGraph, this, &VictoryMenue::showGraph, Qt::QueuedConnection);
     // initialize graph data
 
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         m_VisiblePlayers.append(true);
     }
     for (qint32 i = 0; i < m_PlayerGraphs.size(); i++)
     {
-        for (qint32 i2 = 0; i2 < pMap->getPlayerCount(); i2++)
+        for (qint32 i2 = 0; i2 < m_pMap->getPlayerCount(); i2++)
         {
             m_PlayerGraphs[i].append(oxygine::spActor::create());
             m_pGraphBackground->addChild(m_PlayerGraphs[i][i2]);
@@ -161,12 +160,12 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
         m_pGraphBackground->addChild(pProgressLine);
     }
     // find max values for each graph here
-    for (qint32 i = 0; i < pMap->getCurrentDay(); i++)
+    for (qint32 i = 0; i < m_pMap->getCurrentDay(); i++)
     {
-        DayToDayRecord* pDayRecord = pMap->getGameRecorder()->getDayRecord(i);
+        DayToDayRecord* pDayRecord = m_pMap->getGameRecorder()->getDayRecord(i);
         if (pDayRecord != nullptr)
         {
-            for (qint32 i2 = 0; i2 < pMap->getPlayerCount(); i2++)
+            for (qint32 i2 = 0; i2 < m_pMap->getPlayerCount(); i2++)
             {
                 qint32 funds = pDayRecord->getPlayerRecord(i2)->getFunds();
                 qint32 income = pDayRecord->getPlayerRecord(i2)->getIncome();
@@ -197,9 +196,9 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
         }
     }
 
-    if (pMap->getCurrentDay() > 1)
+    if (m_pMap->getCurrentDay() > 1)
     {
-        m_lineLength = m_pGraphBackground->getWidth() / static_cast<float>(pMap->getCurrentDay() - 1);
+        m_lineLength = m_pGraphBackground->getWidth() / static_cast<float>(m_pMap->getCurrentDay() - 1);
     }
     else
     {
@@ -276,7 +275,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     });
     panel->addItem(pButtonPlayerStatistic);
 
-    if (pMap->getWinnerTeam() >= 0)
+    if (m_pMap->getWinnerTeam() >= 0)
     {
         oxygine::spButton pButtonVictoryRanking = ObjectManager::createButton(tr("Ranking"));
         addChild(pButtonVictoryRanking);
@@ -312,7 +311,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     }
     addChild(m_PlayerSelectPanel);
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         oxygine::spTextField pTextfield = oxygine::spTextField::create();
         pTextfield->setStyle(style);
@@ -332,7 +331,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     }
     createStatisticsView();
     // victory score
-    qint32 winnerTeam = pMap->getWinnerTeam();
+    qint32 winnerTeam = m_pMap->getWinnerTeam();
     if (winnerTeam >= 0)
     {
         oxygine::TextStyle style48 = oxygine::TextStyle(FontManager::getMainFont48());
@@ -372,10 +371,10 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
         m_VictoryPanel->setContentWidth(startX + 200 * 4 + 10);
         qint32 y = 50;
         float scale = 2.0f;
-        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
             QVector3D score;
-            pMap->getGameRecorder()->calculateRang(i, score);
+            m_pMap->getGameRecorder()->calculateRang(i, score);
             if (score.x() < 0)
             {
                 score.setX(0);
@@ -390,7 +389,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
             }
             m_VictoryScores.append(score);
 
-            Player* pPlayer = pMap->getPlayer(i);
+            Player* pPlayer = m_pMap->getPlayer(i);
             for (quint8 i2 = 0; i2 < 2; i2++)
             {
                 CO* pCO = pPlayer->getCO(i2);
@@ -505,7 +504,16 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     {
         // despawn slave process on finish
         CONSOLE_PRINT("Closing slave cause the game is finished.", Console::eDEBUG);
-        QCoreApplication::exit(pMap->getWinnerTeam() + 1);
+        qint32 ret = m_pMap->getWinnerTeam() + 1;
+        QString object = "Init";
+        QString func = "onMasterValue";
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        if (pInterpreter->exists(object, func))
+        {
+            QJSValue erg = pInterpreter->doFunction(object, func);
+            ret = erg.toInt();
+        }
+        QCoreApplication::exit(ret);
     }
     else
     {
@@ -515,7 +523,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
 
 void VictoryMenue::createStatisticsView()
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_statisticsBox = oxygine::spBox9Sprite::create();
     if (Settings::getSmallScreenDevice())
@@ -533,7 +541,7 @@ void VictoryMenue::createStatisticsView()
     m_statisticsBox->setVisible(false);
     addChild(m_statisticsBox);
     QStringList items;
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         items.append(tr("Player ") + QString::number(i + 1));
     }
@@ -550,14 +558,14 @@ void VictoryMenue::createStatisticsView()
 
 void VictoryMenue::addShopMoney()
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     qint32 highestScore = 0;
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        auto* inputType = pMap->getPlayer(i)->getBaseGameInput();
+        auto* inputType = m_pMap->getPlayer(i)->getBaseGameInput();
         if (inputType != nullptr &&
             inputType->getAiType() == GameEnums::AiTypes_Human &&
-            pMap->getPlayer(i)->getTeam() == pMap->getWinnerTeam())
+            m_pMap->getPlayer(i)->getTeam() == m_pMap->getWinnerTeam())
         {
             qint32 score = m_VictoryScores[i].x() + m_VictoryScores[i].y() + m_VictoryScores[i].z();
             if (score > highestScore)
@@ -718,16 +726,16 @@ void VictoryMenue::exitMenue()
     {
         m_pNetworkInterface = nullptr;
     }
-    spCampaign campaign = GameMap::getInstance()->getSpCampaign();
+    spCampaign campaign = m_pMap->getSpCampaign();
     if (campaign.get() != nullptr && campaign->getCampaignFinished() == false)
     {
-        GameMap::deleteMap();
+        m_pMap->detach();
         bool multiplayer = m_pNetworkInterface.get() != nullptr;
         oxygine::Stage::getStage()->addChild(spCampaignMenu::create(campaign, multiplayer, true));
     }
     else
     {
-        GameMap::deleteMap();
+        m_pMap->detach();
         auto window = spMainwindow::create();
         oxygine::Stage::getStage()->addChild(window);
     }
@@ -787,14 +795,14 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
 
 void VictoryMenue::updateGraph()
 {    
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap.get() != nullptr)
     {
         if (m_CurrentGraphMode < GraphModes::Max)
         {
             // make sure we have some graph data to be added :)
             qint32 progress = m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)];
-            if (progress < pMap->getCurrentDay())
+            if (progress < m_pMap->getCurrentDay())
             {
                 qint32 nextStep = drawGraphStep(progress);
                 m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)] = nextStep;
@@ -822,8 +830,8 @@ void VictoryMenue::updateGraph()
                     {
                         oxygine::ResAnim* pAnim = nullptr;
                         qint32 sum = static_cast<qint32>(m_VictoryScores[i].x() + m_VictoryScores[i].y() +m_VictoryScores[i].z());
-                        GameRecorder::Rang rang = pMap->getGameRecorder()->getRank(sum);
-                        pAnim = pMap->getGameRecorder()->getRankAnim(rang);
+                        GameRecorder::Rang rang = m_pMap->getGameRecorder()->getRank(sum);
+                        pAnim = m_pMap->getGameRecorder()->getRankAnim(rang);
                         oxygine::spSprite pRankSprite = oxygine::spSprite::create();
                         pRankSprite->setResAnim(pAnim);
                         pRankSprite->setScale(1.5f);
@@ -838,9 +846,9 @@ void VictoryMenue::updateGraph()
 
 void VictoryMenue::finishGraph()
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     qint32 progress = m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)];
-    while (progress < pMap->getCurrentDay())
+    while (progress < m_pMap->getCurrentDay())
     {
         drawGraphStep(progress);
         m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)]++;
@@ -851,7 +859,7 @@ void VictoryMenue::finishGraph()
 qint32 VictoryMenue::drawGraphStep(qint32 progress)
 {
     constexpr qint32 lineWidth = 5;
-    spGameMap pMap = GameMap::getInstance();
+    
     DayToDayRecord* pStartRecord = nullptr;
     DayToDayRecord* pEndRecord = nullptr;
     qint32 endProgress = progress + 1;
@@ -859,22 +867,22 @@ qint32 VictoryMenue::drawGraphStep(qint32 progress)
     {
         endProgress = progress + qCeil(lineWidth * 2.5f / m_lineLength);
     }
-    if (pMap->getCurrentDay() == 1)
+    if (m_pMap->getCurrentDay() == 1)
     {
-        pStartRecord = pMap->getGameRecorder()->getDayRecord(0);
-        pEndRecord = pMap->getGameRecorder()->getDayRecord(0);
+        pStartRecord = m_pMap->getGameRecorder()->getDayRecord(0);
+        pEndRecord = m_pMap->getGameRecorder()->getDayRecord(0);
     }
-    else if (progress < pMap->getCurrentDay() - 1)
+    else if (progress < m_pMap->getCurrentDay() - 1)
     {
-        pStartRecord = pMap->getGameRecorder()->getDayRecord(progress);
-        pEndRecord = pMap->getGameRecorder()->getDayRecord(endProgress);
+        pStartRecord = m_pMap->getGameRecorder()->getDayRecord(progress);
+        pEndRecord = m_pMap->getGameRecorder()->getDayRecord(endProgress);
     }
     if (pStartRecord != nullptr &&
         pEndRecord != nullptr)
     {
         m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->setX(endProgress * m_lineLength - m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->getWidth() / 2);
         // add player lines
-        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
             QPointF startPoint(-1, -1);
             QPointF endPoint(-1, -1);
@@ -934,7 +942,7 @@ qint32 VictoryMenue::drawGraphStep(qint32 progress)
             {
                 startPoint.setY(m_pGraphBackground->getHeight() - startPoint.y() * m_pGraphBackground->getHeight());
                 endPoint.setY(m_pGraphBackground->getHeight() - endPoint.y() * m_pGraphBackground->getHeight());
-                oxygine::spActor line = createLine(endPoint - startPoint, lineWidth, pMap->getPlayer(i)->getColor());
+                oxygine::spActor line = createLine(endPoint - startPoint, lineWidth, m_pMap->getPlayer(i)->getColor());
                 line->setPosition(startPoint.x(), startPoint.y() - lineWidth / 2);
                 m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][i]->addChild(line);
             }
@@ -947,7 +955,7 @@ qint32 VictoryMenue::drawGraphStep(qint32 progress)
 void VictoryMenue::drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
                               QPointF startPoint, qint32 progress)
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     GameManager* pGameManager = GameManager::getInstance();
     for (qint32 event = 0; event < pStartRecord->getEventRecordCount(); event++)
     {
@@ -971,14 +979,14 @@ void VictoryMenue::drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
                 case GameEnums::GameRecord_SpecialEvents_HQCaptured:
                 {
                     pAnim = pGameManager->getResAnim("hq+captured");
-                    QColor color = pMap->getPlayer(player)->getColor();
+                    QColor color = m_pMap->getPlayer(player)->getColor();
                     pSprite->setColor(color.red(), color.green(), color.blue(), color.alpha());
                     break;
                 }
                 case GameEnums::GameRecord_SpecialEvents_HQLost:
                 {
                     pAnim = pGameManager->getResAnim("hq+lost");
-                    QColor color = pMap->getPlayer(player)->getColor();
+                    QColor color = m_pMap->getPlayer(player)->getColor();
                     pSprite->setColor(color.red(), color.green(), color.blue(), color.alpha());
                     break;
                 }
@@ -1007,9 +1015,9 @@ void VictoryMenue::drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
 
 qint32 VictoryMenue::getStepTime()
 {
-    spGameMap pMap = GameMap::getInstance();
-    qint32 stepTime = static_cast<qint32>(15.0 * (20.0 - qExp(pMap->getCurrentDay() / 10.0)));
-    if (pMap->getCurrentDay() < 5)
+    
+    qint32 stepTime = static_cast<qint32>(15.0 * (20.0 - qExp(m_pMap->getCurrentDay() / 10.0)));
+    if (m_pMap->getCurrentDay() < 5)
     {
         stepTime = 400;
     }
@@ -1023,20 +1031,20 @@ qint32 VictoryMenue::getStepTime()
 void VictoryMenue::AddScoreToUserdata()
 {
     CONSOLE_PRINT("VictoryMenue::AddScoreToUserdata", Console::eDEBUG);
-    spGameMap pMap = GameMap::getInstance();
-    QString path = pMap->getMapPath();
-    if (!path.isEmpty() && pMap->getWinnerTeam() >= 0)
+    
+    QString path = m_pMap->getMapPath();
+    if (!path.isEmpty() && m_pMap->getWinnerTeam() >= 0)
     {
-        qint32 playerCount = pMap->getPlayerCount();
+        qint32 playerCount = m_pMap->getPlayerCount();
         qint32 bestPlayer = -1;
         qint32 bestScore = -1;
         for (qint32 i = 0; i < playerCount; ++i)
         {
-            Player* pPlayer = pMap->getPlayer(i);
+            Player* pPlayer = m_pMap->getPlayer(i);
             auto* input = pPlayer->getBaseGameInput();
             if (input != nullptr &&
                 input->getAiType() == GameEnums::AiTypes::AiTypes_Human &&
-                pPlayer->getTeam() == pMap->getWinnerTeam())
+                pPlayer->getTeam() == m_pMap->getWinnerTeam())
             {
                 qint32 score = m_VictoryScores[i].x() + m_VictoryScores[i].y() + m_VictoryScores[i].z();
                 if (bestScore < score)
@@ -1048,7 +1056,7 @@ void VictoryMenue::AddScoreToUserdata()
         }
         if (bestPlayer >= 0)
         {
-            Player* pPlayer = pMap->getPlayer(bestPlayer);
+            Player* pPlayer = m_pMap->getPlayer(bestPlayer);
             QString co1;
             QString co2;
             if (pPlayer->getCO(0) != nullptr)
@@ -1087,18 +1095,18 @@ void VictoryMenue::showPlayerStatistic(qint32 player)
     {
         m_statisticsView->detach();
     }
-    spGameMap pMap = GameMap::getInstance();
-    const auto & data = pMap->getGameRecorder()->getPlayerDataRecords();
+    
+    const auto & data = m_pMap->getGameRecorder()->getPlayerDataRecords();
     if (player >= 0 && player < data.size())
     {
         const auto & playerdata = data[player];
         if (Settings::getSmallScreenDevice())
         {
-            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 180, pMap->getPlayer(player));
+            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 180, m_pMap->getPlayer(player));
         }
         else
         {
-            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 280, pMap->getPlayer(player));
+            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 280, m_pMap->getPlayer(player));
         }
         m_statisticsView->setPosition(10, 60);
         m_statisticsBox->addChild(m_statisticsView);

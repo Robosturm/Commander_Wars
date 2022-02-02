@@ -36,7 +36,7 @@ var UNITRANKINGSYSTEM =
             if (rang > UNITRANKINGSYSTEM.getMaxRang())
 			{
                 rang = UNITRANKINGSYSTEM.getMaxRang();
-			}			
+			}
 		}
 		unit.setUnitRank(rang);
 	},
@@ -47,6 +47,8 @@ var UNITRANKINGSYSTEM =
         {
             unit.unloadIcon(UNITRANKINGSYSTEM.icons[i]);
         }
+        unit.unloadIcon("co0")
+        unit.unloadIcon("co1")
 	},
     getName : function(rang)
     {

@@ -1,19 +1,19 @@
 var Constructor = function()
 {
     
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         return true;
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return "unknown";
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "";
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
 		 action.startReading();
 		var name = action.readDataString()
@@ -23,7 +23,7 @@ var Constructor = function()
            unit.setCustomName(name);
         }
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };

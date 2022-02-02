@@ -1,9 +1,9 @@
-CO_NANA.init = function(co)
+CO_NANA.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(5);
 };
-CO_NANA.activateSuperpower = function(co, powerMode)
+CO_NANA.activateSuperpower = function(co, powerMode, map)
 {
     CO_NANA.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_NANA.getSuperPowerName = function()
 {
     return CO_NANA.getPowerName();
 };
-CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -129,7 +129,7 @@ CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
 };
 
 CO_NANA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -141,7 +141,7 @@ CO_NANA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
 };
 CO_NANA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

@@ -35,7 +35,7 @@ var Constructor = function()
         return qsTr("<r>In Fog of War, Radars make a </r><div c='#00ff00'>5 square </div><r>area around them visible.</r>");
     };
 
-    this.getVision = function(building)
+    this.getVision = function(building, map)
     {
         return 5;
     };
@@ -45,11 +45,11 @@ var Constructor = function()
         return true;
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         return "back_radar";
     };
-	this.onWeatherChanged = function(building, weather)
+	this.onWeatherChanged = function(building, weather, map)
 	{	
 		var weatherId = weather.getWeatherId();
 		if (weatherId === "WEATHER_SNOW")

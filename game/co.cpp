@@ -17,9 +17,10 @@
 
 #include "spritingsupport/spritecreator.h"
 
-CO::CO(QString coID, Player* owner)
+CO::CO(QString coID, Player* owner, GameMap* pMap)
     : m_Owner(owner),
-      m_coID(coID)
+      m_coID(coID),
+      m_pMap{pMap}
 {
     setObjectName("CO");
     Mainapp* pApp = Mainapp::getInstance();
@@ -39,6 +40,8 @@ void CO::init()
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
+        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+        args1 << obj4;
         pInterpreter->doFunction(m_coID, function1, args1);
     }
 }
@@ -56,7 +59,8 @@ float CO::getUnitBuildValue(const QString & unitID)
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
     args1 << unitID;
-
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     float ergValue = 0.0f;
     QJSValue erg = pInterpreter->doFunction(m_coID, function1, args1);
     if (erg.isNumber())
@@ -68,11 +72,16 @@ float CO::getUnitBuildValue(const QString & unitID)
 
 bool CO::isJsFunctionEnabled(QString perk) const
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     return perk != m_coID || // perks are always enabled
            m_PowerMode != GameEnums::PowerMode_Off || // d2d is active during if no power is active
-           pMap.get() == nullptr || // no map means no rules
-           pMap->getGameRules()->getEnableDayToDayCoAbilities(); // or if d2d is active
+           m_pMap == nullptr || // no map means no rules
+                          m_pMap->getGameRules()->getEnableDayToDayCoAbilities(); // or if d2d is active
+}
+
+GameMap *CO::getMap() const
+{
+    return m_pMap;
 }
 
 void CO::setCOUnit(Unit* pUnit)
@@ -87,6 +96,8 @@ void CO::setCOUnit(Unit* pUnit)
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
+        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+        args1 << obj4;
         for (const auto & perk : qAsConst(m_perkList))
         {
             if (isJsFunctionEnabled(perk))
@@ -115,7 +126,9 @@ void CO::startOfTurn()
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    spGameMap pMap = GameMap::getInstance();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
+    
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -125,9 +138,32 @@ void CO::startOfTurn()
     }
 }
 
+void CO::onUnitDeath(Unit* pUnit)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "onUnitDeath";
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue obj1 = pInterpreter->newQObject(pUnit);
+    args << obj1;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args << obj4;
+
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            pInterpreter->doFunction(perk, function1, args);
+        }
+    }
+}
+
 void CO::setPowerFilled(const double &value)
 {
-    if (!GameMap::getInstance()->getGameRules()->getNoPower())
+
+    if (m_pMap != nullptr &&
+        !m_pMap->getGameRules()->getNoPower())
     {
         float currentValue = m_powerFilled;
         m_powerFilled = value;
@@ -226,6 +262,8 @@ qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -255,6 +293,8 @@ bool CO::getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDe
     QJSValue obj3 = pInterpreter->newQObject(pAttacker);
     args1 << obj3;
     args1 << isDefender;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -280,6 +320,8 @@ qint32 CO::getEnemyTerrainDefenseModifier(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -306,6 +348,8 @@ qint32 CO::getVisionrangeModifier(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -345,6 +389,28 @@ QStringList CO::getCOUnits(Building* pBuilding)
     args1 << obj2;
     QJSValue obj1 = pInterpreter->newQObject(pBuilding);
     args1 << obj1;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
+    QStringList ret;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        ret.append(erg.toVariant().toStringList());
+    }
+    return ret;
+}
+
+QStringList CO::getTransportUnits(Unit* pUnit)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getTransportUnits";
+    QJSValueList args1;
+    QJSValue obj2 = pInterpreter->newQObject(this);
+    args1 << obj2;
+    QJSValue obj1 = pInterpreter->newQObject(pUnit);
+    args1 << obj1;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QStringList ret;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -365,6 +431,8 @@ qint32 CO::getMovementpointModifier(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -391,6 +459,8 @@ qint32 CO::getFirerangeModifier(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -417,6 +487,8 @@ qint32 CO::getMinFirerangeModifier(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -443,6 +515,35 @@ bool CO::getHpHidden(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+            if (erg.isBool() && erg.toBool())
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool CO::getRankInfoHidden(Unit* pUnit, QPoint position)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getRankInfoHidden";
+    QJSValueList args1;
+    QJSValue obj2 = pInterpreter->newQObject(this);
+    args1 << obj2;
+    QJSValue obj1 = pInterpreter->newQObject(pUnit);
+    args1 << obj1;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -468,6 +569,8 @@ bool CO::getPerfectHpView(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -493,6 +596,8 @@ qint32 CO::getAttackHpBonus(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -519,6 +624,8 @@ qint32 CO::getBonusLuck(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -545,6 +652,8 @@ qint32 CO::getBonusMisfortune(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -569,6 +678,8 @@ QString CO::getAdditionalBuildingActions(Building* pBuilding)
     args1 << obj2;
     QJSValue obj1 = pInterpreter->newQObject(pBuilding);
     args1 << obj1;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QString ret;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -596,6 +707,8 @@ qint32 CO::getFuelCostModifier(Unit* pUnit, QPoint position, qint32 costs)
     args1 << position.x();
     args1 << position.y();
     args1 << costs;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -622,6 +735,8 @@ qint32 CO::getMovementcostModifier(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -647,6 +762,8 @@ qint32 CO::getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost)
     QJSValue obj2 = pInterpreter->newQObject(pUnit);
     args1 << obj2;
     args1 << fuelCost;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -671,6 +788,8 @@ void CO::buildedUnit(Unit* pUnit)
     args1 << obj2;
     QJSValue obj1 = pInterpreter->newQObject(pUnit);
     args1 << obj1;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -680,7 +799,7 @@ void CO::buildedUnit(Unit* pUnit)
     }
 }
 
-qint32 CO::getCostModifier(const QString & id, qint32 baseCost)
+qint32 CO::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCostModifier";
@@ -689,6 +808,38 @@ qint32 CO::getCostModifier(const QString & id, qint32 baseCost)
     args1 << obj2;
     args1 << id;
     args1 << baseCost;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
+    qint32 ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toInt();
+            }
+        }
+    }
+    return ergValue;
+}
+
+qint32 CO::getEnemyCostModifier(const QString & id, qint32 baseCost, QPoint position)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getEnemyCostModifier";
+    QJSValueList args1;
+    QJSValue obj2 = pInterpreter->newQObject(this);
+    args1 << obj2;
+    args1 << id;
+    args1 << baseCost;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -709,6 +860,8 @@ QString CO::getCOArmy()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCOArmy";
     QJSValueList args1;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_coID, function1, args1);
     if (erg.isString())
     {
@@ -731,6 +884,8 @@ bool CO::getCanMoveAndFire(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -756,6 +911,8 @@ qint32 CO::getRepairBonus(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -782,6 +939,8 @@ bool CO::canBeRepaired(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -807,6 +966,8 @@ qint32 CO::getCaptureBonus(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -833,6 +994,8 @@ void CO::activatePower()
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     for (const auto & perk : qAsConst(m_perkList))
     {
         pInterpreter->doFunction(perk, function1, args1);
@@ -857,6 +1020,8 @@ void CO::activateSuperpower(GameEnums::PowerMode powerMode)
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
     args1 << powerMode;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     for (const auto & perk : qAsConst(m_perkList))
     {
         pInterpreter->doFunction(perk, function1, args1);
@@ -871,16 +1036,16 @@ void CO::activateSuperpower(GameEnums::PowerMode powerMode)
 
 void CO::addUnitShines()
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        qint32 heigth = pMap->getMapHeight();
-        qint32 width = pMap->getMapWidth();
+        qint32 heigth = m_pMap->getMapHeight();
+        qint32 width = m_pMap->getMapWidth();
         for (qint32 y = 0; y < heigth; y++)
         {
             for (qint32 x = 0; x < width; x++)
             {
-                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
                 if (pUnit != nullptr &&
                     pUnit->getOwner() == m_Owner)
                 {
@@ -910,6 +1075,8 @@ qint32 CO::getOffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPos
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     args1 << luckMode;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -944,12 +1111,41 @@ qint32 CO::getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint at
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     args1 << luckMode;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
             QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toInt();
+            }
+        }
+    }
+    return ergValue;
+}
+
+qint32 CO::getCoBonus(QPoint position, Unit* pUnit, const QString & function)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pUnit);
+    args1 << obj2;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
+    qint32 ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function, args1);
             if (erg.isNumber())
             {
                 ergValue += erg.toInt();
@@ -978,6 +1174,8 @@ qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPo
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     args1 << luckMode;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -1012,6 +1210,8 @@ qint32 CO::getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint a
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     args1 << luckMode;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -1049,6 +1249,8 @@ float CO::getDamageReduction(GameAction* pAction, float damage, Unit* pAttacker,
     args1 << luckMode;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     float ergValue = 0.0f;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -1086,6 +1288,8 @@ float CO::getTrueDamage(GameAction* pAction, float damage, Unit* pAttacker, QPoi
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     args1 << luckMode;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     float ergValue = 0.0f;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -1119,6 +1323,8 @@ GameEnums::CounterAttackMode CO::canCounterAttack(GameAction* pAction, Unit* pAt
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     args1 << luckMode;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     auto ergValue = GameEnums::CounterAttackMode_Undefined;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -1168,6 +1374,8 @@ void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, boo
         args1 << hpDamage;
         args1 << defender;
         args1 << counterAttack;
+        QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+        args1 << obj5;
         // call co bonus
         QString function1 = "gainPowerstar";
         for (const auto & perk : qAsConst(m_perkList))
@@ -1193,6 +1401,8 @@ QStringList CO::getActionModifierList(Unit* pUnit)
     args1 << obj3;
     QJSValue obj1 = pInterpreter->newQObject(pUnit);
     args1 << obj1;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     QStringList ret;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -1215,6 +1425,8 @@ qint32 CO::getCORange()
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
+        QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+        args1 << obj5;
         for (const auto & perk : qAsConst(m_perkList))
         {
             if (isJsFunctionEnabled(perk))
@@ -1274,6 +1486,8 @@ qint32 CO::getIncomeReduction(Building* pBuilding, qint32 income)
     QJSValue obj1 = pInterpreter->newQObject(pBuilding);
     args1 << obj1;
     args1 << income;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -1299,6 +1513,8 @@ qint32 CO::getBonusIncome(Building* pBuilding, qint32 income)
     QJSValue obj1 = pInterpreter->newQObject(pBuilding);
     args1 << obj1;
     args1 << income;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -1321,6 +1537,8 @@ bool CO::getPerfectVision()
     QJSValueList args1;
     QJSValue obj3 = pInterpreter->newQObject(this);
     args1 << obj3;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -1342,6 +1560,8 @@ bool CO::getWeatherImmune()
     QJSValueList args1;
     QJSValue obj3 = pInterpreter->newQObject(this);
     args1 << obj3;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -1365,6 +1585,8 @@ void CO::postAction(GameAction* pAction)
     args1 << obj3;
     QJSValue obj2 = pInterpreter->newQObject(pAction);
     args1 << obj2;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -1390,6 +1612,8 @@ GameEnums::PowerMode CO::getAiUsePower(double powerSurplus, qint32 unitCount, qi
     args1 << directUnits;
     args1 << enemyUnits;
     args1 << turnMode;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     QJSValue erg = pInterpreter->doFunction(m_coID, function1, args1);
     if (erg.isNumber())
     {
@@ -1415,6 +1639,8 @@ float CO::getAiCoUnitBonus(Unit* pUnit, bool & valid)
         args << obj;
         QJSValue obj1 = pInterpreter->newQObject(pUnit);
         args << obj1;
+        QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+        args << obj5;
         QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
         if (erg.isNumber())
         {
@@ -1427,6 +1653,35 @@ float CO::getAiCoUnitBonus(Unit* pUnit, bool & valid)
         else if (value < -MAX_CO_UNIT_VALUE)
         {
             value = -MAX_CO_UNIT_VALUE;
+        }
+    }
+    return value;
+}
+
+float CO::getAiCoBuildRatioModifier()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    float value = 1.0f;
+    QString function1 = "getAiCoBuildRatioModifier";
+    if (pInterpreter->exists(m_coID, function1))
+    {
+        QJSValueList args;
+        QJSValue obj = pInterpreter->newQObject(this);
+        args << obj;
+        QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+        args << obj5;
+        QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
+        if (erg.isNumber())
+        {
+            value = erg.toNumber();
+        }
+        if (value > MAX_CO_UNIT_VALUE)
+        {
+            value = MAX_CO_UNIT_VALUE;
+        }
+        else if (value < 0.0001f)
+        {
+            value = 0.0001f;
         }
     }
     return value;
@@ -1478,6 +1733,8 @@ void CO::loadCOMusic()
     QJSValueList args1;
     QJSValue obj3 = pInterpreter->newQObject(this);
     args1 << obj3;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     pInterpreter->doFunction(m_coID, function1, args1);
 }
 
@@ -1487,10 +1744,12 @@ GameAnimationDialog* CO::createPowerSentence()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QStringList sentences = pInterpreter->doFunction(m_coID, "getPowerSentences", args).toVariant().toStringList();
     QString sentence = sentences[GlobalUtils::randInt(0, sentences.size() - 1)];
 
-    GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(sentence, m_coID, GameEnums::COMood_Normal, m_Owner->getColor());
+    GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(m_pMap, sentence, m_coID, GameEnums::COMood_Normal, m_Owner->getColor());
     pGameAnimationDialog->setFinishDelay(500);
 
     return pGameAnimationDialog;
@@ -1502,6 +1761,8 @@ QString CO::getDefeatSentence()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QStringList sentences = pInterpreter->doFunction(m_coID, "getDefeatSentences", args).toVariant().toStringList();
     QString sentence = "";
     if (sentences.size() > 0)
@@ -1517,6 +1778,8 @@ QString CO::getVictorySentence()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QStringList sentences = pInterpreter->doFunction(m_coID, "getVictorySentences", args).toVariant().toStringList();
     QString sentence = "";
     if (sentences.size() > 0)
@@ -1528,7 +1791,7 @@ QString CO::getVictorySentence()
 
 GameAnimationPower* CO::createPowerScreen(GameEnums::PowerMode powerMode, quint32 frameTime)
 {
-    GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_Owner->getColor(), powerMode, this, frameTime);
+    GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_pMap, m_Owner->getColor(), powerMode, this, frameTime);
     return pGameAnimationPower;
 }
 
@@ -1548,6 +1811,8 @@ QString CO::getBio()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "getBio", args);
     if (value.isString())
     {
@@ -1563,6 +1828,8 @@ QString CO::getLongBio()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "getLongBio", args);
     if (value.isString())
     {
@@ -1578,6 +1845,8 @@ QString CO::getHits()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "getHits", args);
     if (value.isString())
     {
@@ -1593,6 +1862,8 @@ QString CO::getMiss()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "getMiss", args);
     if (value.isString())
     {
@@ -1608,6 +1879,8 @@ QString CO::getCODescription()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "getCODescription", args);
     if (value.isString())
     {
@@ -1623,6 +1896,8 @@ QString CO::getLongCODescription()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "getLongCODescription", args);
     if (value.isString())
     {
@@ -1638,6 +1913,8 @@ QString CO::getPowerDescription()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "getPowerDescription", args);
     if (value.isString())
     {
@@ -1653,6 +1930,8 @@ QString CO::getPowerName()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "getPowerName", args);
     if (value.isString())
     {
@@ -1668,6 +1947,8 @@ QString CO::getSuperPowerDescription()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "getSuperPowerDescription", args);
     if (value.isString())
     {
@@ -1683,6 +1964,8 @@ QString CO::getSuperPowerName()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "getSuperPowerName", args);
     if (value.isString())
     {
@@ -1707,6 +1990,8 @@ void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bo
     args1 << weapon;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -1724,6 +2009,8 @@ bool CO::showDefaultUnitGlobalBoost()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "showDefaultUnitGlobalBoost", args);
     if (value.isBool())
     {
@@ -1739,6 +2026,8 @@ qint32 CO::getCustomUnitGlobalBoostCount()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "getCustomUnitGlobalBoostCount", args);
     if (value.isNumber())
     {
@@ -1757,6 +2046,8 @@ void CO::getCustomUnitGlobalBoost(qint32 index, CustomCoBoostInfo& info)
     args << index;
     QJSValue obj1 = pInterpreter->newQObject(&info);
     args << obj1;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     pInterpreter->doFunction(m_coID, "getCustomUnitGlobalBoost", args);
 }
 
@@ -1767,6 +2058,8 @@ bool CO::showDefaultUnitZoneBoost()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "showDefaultUnitZoneBoost", args);
     if (value.isBool())
     {
@@ -1782,6 +2075,8 @@ qint32 CO::getCustomUnitZoneBoostCount()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     QJSValue value = pInterpreter->doFunction(m_coID, "getCustomUnitZoneBoostCount", args);
     if (value.isNumber())
     {
@@ -1800,6 +2095,8 @@ void CO::getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info)
     args << index;
     QJSValue obj1 = pInterpreter->newQObject(&info);
     args << obj1;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args << obj5;
     pInterpreter->doFunction(m_coID, "getCustomUnitZoneBoost", args);
 }
 
@@ -1965,8 +2262,12 @@ void CO::setCoStyleFromUserdata()
     else
     {
         COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-        file = pCOSpriteManager->getResAnim(m_coID + "+nrm")->getResPath();
-        file.replace("+nrm.png", "");
+        auto* pAnim = pCOSpriteManager->getResAnim(m_coID + "+nrm");
+        if (pAnim != nullptr)
+        {
+            file = pAnim->getResPath();
+            file.replace("+nrm.png", "");
+        }
     }
     if (m_coID != CO_RANDOM)
     {

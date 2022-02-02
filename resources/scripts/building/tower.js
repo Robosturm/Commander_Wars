@@ -45,11 +45,11 @@ var Constructor = function()
         return true;
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         return "back_tower";
     };
-	this.onWeatherChanged = function(building, weather)
+	this.onWeatherChanged = function(building, weather, map)
 	{	
 		var weatherId = weather.getWeatherId();
 		if (weatherId === "WEATHER_SNOW")

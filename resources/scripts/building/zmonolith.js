@@ -20,7 +20,7 @@ var Constructor = function()
         return 0;
     };
     this.actionList = ["ACTION_CRYSTALL_HEAL"];
-    this.startOfTurn = function(building)
+    this.startOfTurn = function(building, map)
     {
         building.setFireCount(1);
     };
@@ -55,9 +55,9 @@ var Constructor = function()
         // one field heigth default for most buildings
         return 3;
     };
-    this.canBuildingBePlaced = function(terrain, building)
+    this.canBuildingBePlaced = function(terrain, building, map)
     {
-        return BUILDING.canLargeBuildingPlaced(terrain, building, ZMONOLITH.getBuildingWidth(), ZMONOLITH.getBuildingHeigth());
+        return BUILDING.canLargeBuildingPlaced(terrain, building, ZMONOLITH.getBuildingWidth(), ZMONOLITH.getBuildingHeigth(), map);
     };
     this.getMiniMapIcon = function()
     {
@@ -73,12 +73,12 @@ var Constructor = function()
         }
         return false;
     };
-    this.onDestroyed = function(building)
+    this.onDestroyed = function(building, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = building.getX();
         var y = building.getY();
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
+        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         animation2.addScreenshake(45, 0.98, 3000, 200);

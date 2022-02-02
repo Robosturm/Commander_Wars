@@ -29,6 +29,11 @@ void HeavyAi::mutateNeuralNetwork(qint32 network, double mutationChance, double 
     }
 }
 
+void HeavyAi::setDisabled(qint32 network, bool disabled)
+{
+    m_neuralNetworks[network]->setDisabled(disabled);
+}
+
 void HeavyAi::combineAi(QStringList aisToUse)
 {
     CONSOLE_PRINT("HeavyAi::combineAi", Console::eDEBUG);
@@ -93,4 +98,15 @@ void HeavyAi::showUnitPfs(bool enemy, qint32 index)
 void HeavyAi::hideFrontMap()
 {
     m_InfluenceFrontMap.hide();
+}
+
+
+double HeavyAi::getMinActionScore() const
+{
+    return m_minActionScore;
+}
+
+void HeavyAi::setMinActionScore(double newMinActionScore)
+{
+    m_minActionScore = newMinActionScore;
 }

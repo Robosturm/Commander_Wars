@@ -16,8 +16,6 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     : QObject()
 {
     setObjectName("DialogUnitInfo");
-    spGameMap pMap = GameMap::getInstance();
-
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -79,6 +77,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     y += 40;
     spQmlVectorUnit pUnits = spQmlVectorUnit(pPlayer->getUnits());
 
+    GameMap* pMap = pPlayer->getMap();
     y = 10;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -89,18 +88,18 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
         pPanel->addItem(pText);
         Unit* pUnit = pUnits->at(i);
         Terrain* pTerrain = pMap->getTerrain(pUnit->Unit::getX(), pUnit->Unit::getY());
-        spTerrain pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "");
+        spTerrain pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "", pMap);
         pActor->loadSprites();
         Building* pBuilding = pTerrain->getBuilding();
         if (pBuilding != nullptr)
         {
-            spBuilding pTerrainBuilding = spBuilding::create(pBuilding->getBuildingID());
+            spBuilding pTerrainBuilding = spBuilding::create(pBuilding->getBuildingID(), pMap);
             pTerrainBuilding->setOwner(pBuilding->getOwner());
             pTerrainBuilding->scaleAndShowOnSingleTile();
             pActor->addChild(pTerrainBuilding);
         }
 
-        spUnit pDummy = spUnit::create(pUnit->getUnitID(), pUnit->getOwner(), false);
+        spUnit pDummy = spUnit::create(pUnit->getUnitID(), pUnit->getOwner(), false, pMap);
         pDummy->setHasMoved(pUnit->getHasMoved());
         pActor->addChild(pDummy);
         pActor->setPosition(100, y + 8);

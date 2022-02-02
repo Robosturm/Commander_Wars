@@ -40,10 +40,10 @@ var Constructor = function()
     {
         return qsTr("Iron Shield Gen.");
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("iron_shield_generator+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("movetank.wav", -2);
         return animation;

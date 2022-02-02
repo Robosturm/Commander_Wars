@@ -1,4 +1,4 @@
-CO_HACHI.getCostModifier = function(co, id, baseCost)
+CO_HACHI.getCostModifier = function(co, id, baseCost, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -16,7 +16,7 @@ CO_HACHI.getCostModifier = function(co, id, baseCost)
     return 0;
 };
 
-CO_HACHI.getAdditionalBuildingActions = function(co, building)
+CO_HACHI.getAdditionalBuildingActions = function(co, building, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -40,7 +40,7 @@ CO_HACHI.getAdditionalBuildingActions = function(co, building)
 };
 
 CO_HACHI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -53,7 +53,7 @@ CO_HACHI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_HACHI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

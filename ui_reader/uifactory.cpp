@@ -29,6 +29,7 @@ static const char* const itemIconButton = "IconButton";
 static const char* const itemSlider = "Slider";
 static const char* const itemMoveInButton = "MoveInButton";
 static const char* const itemSprite = "Sprite";
+static const char* const itemTextField = "TextField";
 
 static const char* const attrX = "x";
 static const char* const attrY = "y";
@@ -41,6 +42,8 @@ static const char* const attrStartValue = "startValue";
 static const char* const attrText = "text";
 static const char* const attrOnUpdate = "onUpdate";
 static const char* const attrFont = "font";
+static const char* const attrFontColor = "fontColor";
+static const char* const attrFontScale = "fontScale";
 static const char* const attrInfinite = "infinite";
 static const char* const attrMin = "min";
 static const char* const attrMax = "max";
@@ -79,6 +82,7 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemSlider), std::bind(&UiFactory::createSlider, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemMoveInButton), std::bind(&UiFactory::createMoveInButton, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemSprite), std::bind(&UiFactory::createSprite, this, _1, _2, _3, _4)});
+    m_factoryItems.append({QString(itemTextField), std::bind(&UiFactory::createTextfield, this, _1, _2, _3, _4)});
 
     connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
@@ -186,14 +190,21 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         qint32 height = getIntValue(getAttribute(childs, attrHeight));
         QString text = translate(getAttribute(childs, attrText));
         QString tooltip = translate(getAttribute(childs, attrTooltip));
-        auto style = getStyle(getAttribute(childs, attrFont));
-        QString id = getId(getAttribute(childs, attrId));
+        QString fontColor = getStringValue(getAttribute(childs, attrFontColor));
+        if (fontColor.isEmpty())
+        {
+            fontColor = FontManager::getFontColor().name();
+        }
+        auto style = getStyle(getStringValue(getAttribute(childs, attrFont)), fontColor);
+        float fontScale = getFloatValue(getAttribute(childs, attrFontScale), 1.0f);
+        QString id = getId(getStringValue(getAttribute(childs, attrId)));
         spLabel pLabel = spLabel::create(width);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), true);
         pLabel->setHeight(height);
         pLabel->setX(x);
         pLabel->setY(y);
         pLabel->setStyle(style);
+        pLabel->setScale(fontScale);
         pLabel->setHtmlText(text);
         pLabel->setTooltipText(tooltip);
         pLabel->setObjectName(id);
@@ -211,6 +222,37 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         item = pLabel;
 
         m_lastCoordinates = QRect(x, y, width, height);
+    }
+    return success;
+}
+
+bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrText, attrFont});
+    if (success)
+    {
+        qint32 x = getIntValue(getAttribute(childs, attrX));
+        qint32 y = getIntValue(getAttribute(childs, attrY));
+        QString text = translate(getAttribute(childs, attrText));
+        QString fontColor = getStringValue(getAttribute(childs, attrFontColor));
+        if (fontColor.isEmpty())
+        {
+            fontColor = FontManager::getFontColor().name();
+        }
+        auto style = getStyle(getStringValue(getAttribute(childs, attrFont)), fontColor);
+        float fontScale = getFloatValue(getAttribute(childs, attrFontScale), 1.0f);
+        oxygine::spTextField pLabel = oxygine::spTextField::create();
+        pLabel->setX(x);
+        pLabel->setY(y);
+        pLabel->setStyle(style);
+        pLabel->setScale(fontScale);
+        pLabel->setHtmlText(text);
+        parent->addChild(pLabel);
+        item = pLabel;
+
+        const auto & textRect = pLabel->getTextRect();
+        m_lastCoordinates = QRect(x, y, textRect.getWidth(), textRect.getHeight());
     }
     return success;
 }
@@ -340,7 +382,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
         qint32 x = getIntValue(getAttribute(childs, attrX));
         qint32 y = getIntValue(getAttribute(childs, attrY));
         QString tooltip = translate(getAttribute(childs, attrTooltip));
-        QString id = getId(getAttribute(childs, attrId));
+        QString id = getId(getStringValue(getAttribute(childs, attrId)));
         QString onEventLine = getAttribute(childs, attrOnEvent);
         bool value = getBoolValue(getAttribute(childs, attrStartValue));
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), true);
@@ -378,7 +420,7 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
         QString tooltip = translate(getAttribute(childs,attrTooltip));
         QString onEventLine = getAttribute(childs,attrOnEvent);
         qint32 value = getIntValue(getAttribute(childs,attrStartValue));
-        QString id = getId(getAttribute(childs, attrId));
+        QString id = getId(getStringValue(getAttribute(childs, attrId)));
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), true);
         spSpinBox pSpinBox = spSpinBox::create(width, min, max, SpinBox::Mode::Int);
         pSpinBox->setX(x);
@@ -406,7 +448,7 @@ bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygi
                                           attrMax, attrOnEvent, attrStartValue});
     if (success)
     {
-        QString id = getId(getAttribute(childs, attrId));
+        QString id = getId(getStringValue(getAttribute(childs, attrId)));
         qint32 x = getIntValue(getAttribute(childs,attrX));
         qint32 y = getIntValue(getAttribute(childs,attrY));
         qint32 width = getIntValue(getAttribute(childs,attrWidth));
@@ -446,7 +488,7 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrOnEvent, attrStartValue});
     if (success)
     {
-        QString id = getId(getAttribute(childs, attrId));
+        QString id = getId(getStringValue(getAttribute(childs, attrId)));
         qint32 x = getIntValue(getAttribute(childs,attrX));
         qint32 y = getIntValue(getAttribute(childs,attrY));
         qint32 width = getIntValue(getAttribute(childs,attrWidth));
@@ -486,7 +528,7 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrOnEvent, attrStartValue});
     if (success)
     {
-        QString id = getId(getAttribute(childs, attrId));
+        QString id = getId(getStringValue(getAttribute(childs, attrId)));
         qint32 x = getIntValue(getAttribute(childs,attrX));
         qint32 y = getIntValue(getAttribute(childs,attrY));
         qint32 width = getIntValue(getAttribute(childs,attrWidth));
@@ -524,7 +566,7 @@ bool UiFactory::createIcon(oxygine::spActor parent, QDomElement element, oxygine
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), true);
         QString icon = getStringValue(getAttribute(childs, attrStartValue));
         WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-        oxygine::spSprite pIcon = pWikiDatabase->getIcon(icon, size);
+        oxygine::spSprite pIcon = pWikiDatabase->getIcon(nullptr, icon, size);
         pIcon->setPosition(x, y);
         parent->addChild(pIcon);
         pIcon->setEnabled(enabled);
@@ -771,10 +813,10 @@ QString UiFactory::getStringValue(QString line)
     return value;
 }
 
-oxygine::TextStyle UiFactory::getStyle(QString styleName)
+oxygine::TextStyle UiFactory::getStyle(QString styleName, QColor fontColor)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getInstance()->getResFont(styleName));
-    style.color = FontManager::getFontColor();
+    style.color = fontColor;
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -784,7 +826,7 @@ oxygine::TextStyle UiFactory::getStyle(QString styleName)
 QString UiFactory::getId(QString attribute)
 {
     QString ret = "object" + QString::number(m_creationCount);
-    if (attribute.isEmpty())
+    if (!attribute.isEmpty())
     {
         ret = attribute;
     }

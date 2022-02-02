@@ -12,7 +12,7 @@ class ScriptEventDefeatPlayer : public ScriptEvent
 {
     Q_OBJECT
 public:
-    ScriptEventDefeatPlayer();
+    explicit ScriptEventDefeatPlayer(GameMap* pMap);
     /**
      * @brief readEvent
      * @param rStream

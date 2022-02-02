@@ -4,7 +4,7 @@ CO_CAULDER.powerBonus = 30;
 CO_CAULDER.superPowerBonus = 50;
 CO_CAULDER.coHealing = 1;
 CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isDefender, action)
+                                         defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -22,7 +22,7 @@ CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_CAULDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isAttacker, action)
+                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -39,7 +39,7 @@ CO_CAULDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
 };
 
-CO_CAULDER.startOfTurn = function(co)
+CO_CAULDER.startOfTurn = function(co, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -54,13 +54,13 @@ CO_CAULDER.startOfTurn = function(co)
             for (var i = 0; i < units.size(); i++)
             {
                 var unit = units.at(i);
-                UNIT.repairUnit(unit, 1);
+                UNIT.repairUnit(unit, 1, map);
                 var delay = globals.randInt(135, 265);
                 if (animations.length < 5)
                 {
                     delay *= i;
                 }
-                var animation = GameAnimationFactory.createAnimation(unitX, unitY);
+                var animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
                 animation.setSound("power0.wav", 1, delay);
                 if (animations.length < 5)
                 {

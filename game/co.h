@@ -20,6 +20,7 @@ class Building;
 class GameAnimationDialog;
 class GameAnimationPower;
 class GameAction;
+class GameMap;
 
 class CO;
 typedef oxygine::intrusive_ptr<CO> spCO;
@@ -31,7 +32,7 @@ public:
     static constexpr const char* const CO_RANDOM = "CO_RANDOM";
     static constexpr qint32 MAX_CO_UNIT_VALUE = 10;
 
-    explicit CO(QString coID, Player* owner);
+    explicit CO(QString coID, Player* owner, GameMap* pMap);
     virtual ~CO() = default;
     /**
      * @brief serialize stores the object
@@ -83,12 +84,23 @@ public:
      * @param ep
      * @return
      */
-    oxygine::ResAnim* getResAnim(const QString & id, oxygine::error_policy ep = oxygine::ep_show_error) const;
+    oxygine::ResAnim* getResAnim(const QString & id, oxygine::error_policy ep = oxygine::ep_ignore_error) const;
 
-
-signals:
 
 public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
+    /**
+     * @brief getCoBonus
+     * @param position
+     * @param pUnit
+     * @param function
+     * @return
+     */
+    qint32 getCoBonus(QPoint position, Unit* pUnit, const QString & function);
     /**
      * @brief getCoRangeEnabled
      * @return
@@ -127,6 +139,12 @@ public slots:
      */
     QStringList getCOUnits(Building* pBuilding);
     /**
+     * @brief getTransportUnits
+     * @param pUnit
+     * @return
+     */
+    QStringList getTransportUnits(Unit* pUnit);
+    /**
      * @brief getMovementpointModifier the bonus movementpoints of this co
      * @param pUnit
      * @param position
@@ -158,6 +176,13 @@ public slots:
      * @return
      */
     bool getHpHidden(Unit* pUnit, QPoint position);
+    /**
+     * @brief getRankInfoHidden
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    bool getRankInfoHidden(Unit* pUnit, QPoint position);
     /**
      * @brief getPerfectHpView
      * @param pUnit
@@ -384,7 +409,15 @@ public slots:
      * @param baseCost
      * @return
      */
-    qint32 getCostModifier(const QString & id, qint32 baseCost);
+    qint32 getCostModifier(const QString & id, qint32 baseCost, QPoint position);
+    /**
+     * @brief getEnemyCostModifier
+     * @param id
+     * @param baseCost
+     * @param position
+     * @return
+     */
+    qint32 getEnemyCostModifier(const QString & id, qint32 baseCost, QPoint position);
     /**
      * @brief getCOArmy
      */
@@ -409,6 +442,11 @@ public slots:
      * @brief startOfTurn called at the start of our turn
      */
     void startOfTurn();
+    /**
+     * @brief onUnitDeath
+     * @param pUnit
+     */
+    void onUnitDeath(Unit* pUnit);
     /**
      * @brief getPlayer
      * @return
@@ -549,6 +587,13 @@ public slots:
      * @return
      */
     float getAiCoUnitBonus(Unit* pUnit, bool & valid);
+    /**
+     * @brief getAiCoBuildRatioModifier
+     * @param pUnit
+     * @param valid
+     * @return
+     */
+    float getAiCoBuildRatioModifier();
     /**
      * @brief getPerkList
      * @return
@@ -700,6 +745,7 @@ private:
     qint32 m_powerUsed{0};
     bool m_powerCharging{false};
     bool m_coRangeEnabled{true};
+    GameMap* m_pMap{nullptr};
 
     QStringList m_perkList;
     struct CustomCoStyle

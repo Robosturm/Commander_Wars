@@ -10,7 +10,7 @@ class ScriptEventChangeBuildingOwner : public ScriptEventGeneric
 {
     Q_OBJECT
 public:
-    ScriptEventChangeBuildingOwner();
+    explicit ScriptEventChangeBuildingOwner(GameMap* pMap);
     /**
      * @brief removeCustomStart
      * @param text

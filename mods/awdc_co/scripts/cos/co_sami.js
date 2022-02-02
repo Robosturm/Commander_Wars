@@ -1,9 +1,9 @@
-CO_SAMI.init = function(co)
+CO_SAMI.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_SAMI.activateSuperpower = function(co, powerMode)
+CO_SAMI.activateSuperpower = function(co, powerMode, map)
 {
     CO_SAMI.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_SAMI.getSuperPowerName = function()
     return CO_SAMI.getPowerName();
 };
 CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {
@@ -58,13 +58,13 @@ CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_SAMI.getCaptureBonus = function(co, unit, posX, posY)
+CO_SAMI.getCaptureBonus = function(co, unit, posX, posY, map)
 {
     var hp = unit.getHpRounded();
     return hp / 2;
 };
 
-CO_SAMI.getMovementpointModifier = function(co, unit, posX, posY)
+CO_SAMI.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (unit.isTransporter())
     {

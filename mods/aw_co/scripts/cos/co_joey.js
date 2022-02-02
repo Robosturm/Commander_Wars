@@ -1,9 +1,9 @@
-CO_JOEY.init = function(co)
+CO_JOEY.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(4);
 };
-CO_JOEY.activateSuperpower = function(co, powerMode)
+CO_JOEY.activateSuperpower = function(co, powerMode, map)
 {
     CO_JOEY.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_JOEY.getSuperPowerName = function()
     return CO_JOEY.getPowerName();
 };
 CO_JOEY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -61,7 +61,7 @@ CO_JOEY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_JOEY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action)
+                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -86,12 +86,12 @@ CO_JOEY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender)
+CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map)
 {
     return false;
 };
 
-CO_JOEY.getCostModifier = function(co, id, baseCost)
+CO_JOEY.getCostModifier = function(co, id, baseCost, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

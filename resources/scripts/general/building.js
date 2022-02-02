@@ -2,64 +2,64 @@
 var BUILDING =
 {
     // loader for stuff which needs C++ Support
-    init : function (building)
+    init : function (building, map)
     {
         building.setVisionHigh(1);
     },
-    getName : function(building)
+    getName : function(building, map)
     {
         return "";
     },
     // returns the defense of this terrain
-    getDefense : function(building)
+    getDefense : function(building, map)
     {
         return 3;
     },
 
     // vision bonus for units created by this building
-    getVisionBonus : function(building)
+    getVisionBonus : function(building, map)
     {
         return 0;
     },
     // additional offensive bonus for a unit on this field
     getOffensiveFieldBonus : function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckMode)
+                                      defender, defPosX, defPosY, isDefender, action, luckMode, map)
     {
         return 0;
     },
     //  additional deffensive bonus for a unit on this field
     getDeffensiveFieldBonus : function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action, luckMode)
+                                       defender, defPosX, defPosY, isDefender, action, luckMode, map)
     {
         return 0;
     },
-    getBuildingWidth : function()
+    getBuildingWidth : function(map)
     {
         // one field width default for most buildings
         return 1;
     },
-    getBuildingHeigth : function()
+    getBuildingHeigth : function(map)
     {
         // one field heigth default for most buildings
         return 1;
     },
-    loadSprites : function(building, neutral)
+    loadSprites : function(building, neutral, map)
     {
     },
     // the terrain on which a building can be placed
     // if the current terrain isn't in the list. it'll be replaced by the first :)
     baseTerrains : ["PLAINS", "STREET", "STREET1", "SNOW", "SNOW_STREET", "DESERT", "DESERT_PATH", "DESERT_PATH1", "WASTE", "WASTE_PATH1"],
-    getBaseTerrain : function(building)
+    getBaseTerrain : function(building, map)
     {
         return Global[building.getBuildingID()].baseTerrains;
     },
 
-    addCaptureAnimationBuilding : function(animation, building, startPlayer, capturedPlayer)
+    addCaptureAnimationBuilding : function(animation, building, startPlayer, capturedPlayer, map)
     {
         animation.addBuildingSprite("town+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Matrix);
     },
 
-    canLargeBuildingPlaced : function(terrain, building, width, heigth)
+    canLargeBuildingPlaced : function(terrain, building, width, heigth, map)
     {
         var placeX = terrain.getX();
         var placeY = terrain.getY();
@@ -84,7 +84,7 @@ var BUILDING =
         return true;
     },
 
-    canBuildingBePlaced : function(terrain, building)
+    canBuildingBePlaced : function(terrain, building, map)
     {
         var baseTerrains = building.getBaseTerrain();
         if (baseTerrains.indexOf(terrain.getTerrainID()) >= 0)
@@ -97,63 +97,63 @@ var BUILDING =
         }
     },
 
-    getBaseIncome : function(building)
+    getBaseIncome : function(building, map)
     {
         return 1000;
     },
 
-    getConstructionList : function(building)
+    getConstructionList : function(building, map)
     {
         return [];
     },
     actionList : [],
-    getActions : function(building)
+    getActions : function(building, map)
     {
         return Global[building.getBuildingID()].actionList;
     },
-    startOfTurn : function(building)
+    startOfTurn : function(building, map)
     {
         var owner = building.getOwner();
         if (owner !== null)
         {
             if (!owner.getIsDefeated())
             {
-                BUILDING.replenishUnit(building);
+                BUILDING.replenishUnit(building, map);
             }
         }
     },
 
-    getOffensiveBonus : function(building)
+    getOffensiveBonus : function(building, map)
     {
         return 0;
     },
 
-    getDefensiveBonus : function(building)
+    getDefensiveBonus : function(building, map)
     {
         return 0;
     },
-    getActionTargetFields : function(building)
+    getActionTargetFields : function(building, map)
     {
         // targets of a building. For most things this is a null pointer
         // return must be null or a QmlVectorPoint
         return null;
     },
-    getActionTargetOffset : function(building)
+    getActionTargetOffset : function(building, map)
     {
         // offset for large buildings since there reference point is bound to the lower right corner.
         return Qt.point(0, 0);
     },
-    getIsAttackable : function(building, x, y)
+    getIsAttackable : function(building, x, y, map)
     {
         return true;
     },
 
-    getRepairTypes : function(building)
+    getRepairTypes : function(building, map)
     {
         return[];
     },
 
-    replenishUnit : function(building)
+    replenishUnit : function(building, map)
     {
         // default impl replenishes our units
         // gets called at the start of a turn
@@ -169,12 +169,12 @@ var BUILDING =
             var y = unit.getY();
             if (unit.canBeRepaired(Qt.point(x, y)))
             {
-                BUILDING.repairUnit(unit, x, y);
+                BUILDING.repairUnit(unit, x, y, map);
             }
         }
     },
 
-    repairUnit : function(unit, x, y)
+    repairUnit : function(unit, x, y, map)
     {
         // our unit and a repairable one
         // replenish it
@@ -182,11 +182,11 @@ var BUILDING =
         var refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set
         unit.refill(refillMaterial);
         var repairAmount = 2 + unit.getRepairBonus(Qt.point(x, y));
-        UNIT.repairUnit(unit, repairAmount);
+        UNIT.repairUnit(unit, repairAmount, map);
         if (!unit.isStealthed(map.getCurrentViewPlayer()))
         {
             var animationCount = GameAnimationFactory.getAnimationCount();
-            var animation = GameAnimationFactory.createAnimation(x, y);
+            var animation = GameAnimationFactory.createAnimation(map, x, y);
             var width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, 2, 1);
             animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
             animation.addSprite("repair", map.getImageSize() / 2 + 4, 4, 400, 2);
@@ -198,39 +198,39 @@ var BUILDING =
         }
     },
 
-    getMiniMapIcon : function(building)
+    getMiniMapIcon : function(building, map)
     {
         return "minimap_building";
     },
 
-    onDestroyed : function(building)
+    onDestroyed : function(building, map)
     {
         // called when the building is destroyed and replacing of this building starts
     },
 
-    getDamage : function(building, unit)
+    getDamage : function(building, unit, map)
     {
         return 0;
     },
 
-    getBuildingTargets : function(building)
+    getBuildingTargets : function(building, map)
     {
         // hint for the ai
         return GameEnums.BuildingTarget_Own;
     },
 
-    getTerrainAnimationMoveSpeed : function()
+    getTerrainAnimationMoveSpeed : function(map)
     {
         return 0;
     },
 
-    getTerrainAnimationBase : function(unit, terrain)
+    getTerrainAnimationBase : function(unit, terrain, defender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "base_" + weatherModifier + "air";
     },
 
-    getTerrainAnimationForeground : function(unit, terrain)
+    getTerrainAnimationForeground : function(unit, terrain, defender, map)
     {
         return "";
     },
@@ -247,7 +247,7 @@ var BUILDING =
                 ["pf", "os"],
                 ["bd", "bm"],],
 
-    getTerrainAnimationBackground : function(unit, terrain)
+    getTerrainAnimationBackground : function(unit, terrain, defender, map)
     {
         var variables = terrain.getVariables();
         var variable = variables.getVariable("BACKGROUND_ID");
@@ -277,7 +277,7 @@ var BUILDING =
         {
             army = Global.getArmyNameFromPlayerTable(player, BUILDING.armyData);
         }
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         if (baseId === "DESERT" ||
             weatherModifier === "desert")
         {

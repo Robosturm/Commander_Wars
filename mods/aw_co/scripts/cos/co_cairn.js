@@ -1,14 +1,14 @@
 CO_CAIRN.globalRules = true;
-CO_CAIRN.init = function(co)
+CO_CAIRN.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(4);
 };
-CO_CAIRN.getTerrainDefenseModifier = function(co, unit, posX, posY)
+CO_CAIRN.getTerrainDefenseModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
-        if (CO_CAIRN.isWildernessTile(posX, posY))
+        if (CO_CAIRN.isWildernessTile(posX, posY, map))
         {
             return CO_CAIRN.coZoneStarBonus;
         }
@@ -16,11 +16,11 @@ CO_CAIRN.getTerrainDefenseModifier = function(co, unit, posX, posY)
     return 0;
 };
 CO_CAIRN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.onMap(atkPosX, atkPosY))
             {
@@ -44,14 +44,7 @@ CO_CAIRN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                         return 10 + startpower;
                     }
                 case GameEnums.PowerMode_Power:
-                    if (CO_CAIRN.isWildernessTile(atkPosX, atkPosY))
-                    {
-                        return 10 + CO_CAIRN.defaultModifier;
-                    }
-                    else
-                    {
-                        return 10 + startpower;
-                    }
+                    return 10 + startpower;
                 default:
                     return startpower;
                 }
@@ -60,11 +53,11 @@ CO_CAIRN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_CAIRN.getFirerangeModifier = function(co, unit, posX, posY)
+CO_CAIRN.getFirerangeModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
-        if (CO_CAIRN.isWildernessTile(posX, posY))
+        if (CO_CAIRN.isWildernessTile(posX, posY, map))
         {
             switch (co.getPowerMode())
             {
@@ -86,7 +79,7 @@ CO_CAIRN.getFirerangeModifier = function(co, unit, posX, posY)
     return 0;
 };
 CO_CAIRN.getDeffensiveReduction = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isAttacker, action, luckMode)
+                                           defender, defPosX, defPosY, isAttacker, action, luckMode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -109,7 +102,7 @@ CO_CAIRN.getDeffensiveReduction = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_CAIRN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -120,7 +113,7 @@ CO_CAIRN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_CAIRN.getMovementcostModifier = function(co, unit, posX, posY)
+CO_CAIRN.getMovementcostModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -132,7 +125,7 @@ CO_CAIRN.getMovementcostModifier = function(co, unit, posX, posY)
             case GameEnums.PowerMode_Superpower:
                 break;
             case GameEnums.PowerMode_Power:
-                if (CO_CAIRN.isWildernessTile(posX, posY))
+                if (CO_CAIRN.isWildernessTile(posX, posY, map))
                 {
                     return -1;
                 }
@@ -143,7 +136,7 @@ CO_CAIRN.getMovementcostModifier = function(co, unit, posX, posY)
     }
     return 0;
 };
-CO_CAIRN.getVisionrangeModifier = function(co, unit, posX, posY)
+CO_CAIRN.getVisionrangeModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -155,7 +148,7 @@ CO_CAIRN.getVisionrangeModifier = function(co, unit, posX, posY)
             case GameEnums.PowerMode_Superpower:
                 break;
             case GameEnums.PowerMode_Power:
-                if (CO_CAIRN.isWildernessTile(posX, posY))
+                if (CO_CAIRN.isWildernessTile(posX, posY, map))
                 {
                     return -1;
                 }
@@ -166,7 +159,7 @@ CO_CAIRN.getVisionrangeModifier = function(co, unit, posX, posY)
     }
     return 0;
 };
-CO_CAIRN.postAction = function(co, action)
+CO_CAIRN.postAction = function(co, action, map)
 {
     if (co.getIsCO0() === true)
     {

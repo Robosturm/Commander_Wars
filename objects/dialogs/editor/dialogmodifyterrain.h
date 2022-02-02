@@ -10,6 +10,7 @@
 
 #include "objects/base/textbox.h"
 
+class GameMap;
 class Terrain;
 
 class DialogModifyTerrain;
@@ -19,7 +20,7 @@ class DialogModifyTerrain : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit DialogModifyTerrain(Terrain* pTerrain);
+    explicit DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain);
     virtual ~DialogModifyTerrain() = default;
 signals:
     void sigFinished();
@@ -35,6 +36,7 @@ private:
     spPanel m_pPanel;
     spTextbox m_pTextbox;
     oxygine::spButton m_OkButton;
+    GameMap* m_pMap{nullptr};
 
 };
 

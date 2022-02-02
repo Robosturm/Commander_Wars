@@ -1,22 +1,22 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         return true;
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Save Game");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "savegame";
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         map.saveGame();
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         action.setIsLocal(true);
         return true;

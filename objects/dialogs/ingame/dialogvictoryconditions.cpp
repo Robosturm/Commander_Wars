@@ -17,8 +17,8 @@
 #include "game/player.h"
 #include "game/co.h"
 
-DialogVictoryConditions::DialogVictoryConditions()
-    : QObject()
+DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
+    : m_pMap(pMap)
 {
     setObjectName("DialogVictoryConditions");
     Mainapp* pApp = Mainapp::getInstance();
@@ -59,7 +59,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
 
-    spGameMap pMap = GameMap::getInstance();
+    
     GameRules* pRules = pMap->getGameRules();
 
     qint32 y = 10;
@@ -106,7 +106,7 @@ DialogVictoryConditions::DialogVictoryConditions()
                 }
                 qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
                 info = tr("Player ") + QString::number(i2 + 1) + ": " + QString::number(playerValue) + "/" + QString::number(ruleValue);
-                spBuilding building = spBuilding::create("HQ");
+                spBuilding building = spBuilding::create("HQ", pMap);
                 building->setOwner(pPlayer);
                 building->setPosition(x, y);
                 pPanel->addItem(building);
@@ -150,7 +150,7 @@ void DialogVictoryConditions::showPopup(QString rule)
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr && !VictoryRulePopup::exists(rule))
     {
-        spVictoryRulePopup pPopup = spVictoryRulePopup::create(rule, 180, 250);
+        spVictoryRulePopup pPopup = spVictoryRulePopup::create(m_pMap, rule, 180, 250);
         pPopup->setY(Settings::getHeight() - pPopup->getHeight());
         pMenu->addChild(pPopup);
     }

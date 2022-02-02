@@ -1,5 +1,5 @@
 CO_SANJURO.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isAttacker, action)
+                                         defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -31,7 +31,7 @@ CO_SANJURO.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_SANJURO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isDefender, action)
+                                        defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -65,7 +65,7 @@ CO_SANJURO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_SANJURO.getCostModifier = function(co, id, baseCost)
+CO_SANJURO.getCostModifier = function(co, id, baseCost, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -93,7 +93,7 @@ CO_SANJURO.getCostModifier = function(co, id, baseCost)
     return 0;
 };
 
-CO_SANJURO.getMovementcostModifier = function(co, unit, posX, posY)
+CO_SANJURO.getMovementcostModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -112,7 +112,7 @@ CO_SANJURO.getMovementcostModifier = function(co, unit, posX, posY)
     return 0;
 };
 
-CO_SANJURO.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_SANJURO.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (co.getIsCO0() === true)
     {

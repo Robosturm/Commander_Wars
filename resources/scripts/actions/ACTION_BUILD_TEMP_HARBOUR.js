@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -23,21 +23,21 @@ var Constructor = function()
         return false;
     };
 
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Build Harbour");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "build";
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         var maxCapturePoints = 20;
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
-        var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[unit.getUnitID()].doWalkingAnimation(action, map);
         // move unit to target position
         unit.moveUnitAction(action);
         // capture the building
@@ -53,7 +53,7 @@ var Constructor = function()
         }
         var x = action.getActionTarget().x * map.getImageSize() - 10;
         var y = action.getActionTarget().y * map.getImageSize() - 30;
-        var captureAnimation = GameAnimationFactory.createGameAnimationCapture(x , y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
+        var captureAnimation = GameAnimationFactory.createGameAnimationCapture(map, x , y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
         captureAnimation.addBackgroundSprite("capture_background");
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), ACTION_CAPTURE.armyData);
         Global["TEMPORARY_HARBOUR"].addCaptureAnimationBuilding(captureAnimation, building, null, unit.getOwner());
@@ -72,7 +72,7 @@ var Constructor = function()
         // disable unit commandments for this turn
         unit.setHasMoved(true);
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
 
         return true;

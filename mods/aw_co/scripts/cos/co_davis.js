@@ -1,9 +1,9 @@
-CO_DAVIS.init = function(co)
+CO_DAVIS.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_DAVIS.activateSuperpower = function(co, powerMode)
+CO_DAVIS.activateSuperpower = function(co, powerMode, map)
 {
     CO_DAVIS.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_DAVIS.getSuperPowerName = function()
 {
     return CO_DAVIS.getPowerName();
 };
-CO_DAVIS.getBonusLuck = function(co, unit, posX, posY)
+CO_DAVIS.getBonusLuck = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -45,7 +45,7 @@ CO_DAVIS.getBonusLuck = function(co, unit, posX, posY)
     return 0;
 };
 
-CO_DAVIS.getBonusMisfortune = function(co, unit, posX, posY)
+CO_DAVIS.getBonusMisfortune = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -87,13 +87,13 @@ CO_DAVIS.getBonusMisfortune = function(co, unit, posX, posY)
 };
 
 CO_DAVIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };
 
 CO_DAVIS.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

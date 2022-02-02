@@ -4,9 +4,9 @@
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 
-CoPowermeter::CoPowermeter(CO* pCO)
-    : QObject(),
-      m_pCO(pCO)
+CoPowermeter::CoPowermeter(GameMap* pMap, CO* pCO)
+    : m_pCO(pCO),
+      m_pMap(pMap)
 {
     setObjectName("CoPowermeter");
 }
@@ -14,9 +14,9 @@ CoPowermeter::CoPowermeter(CO* pCO)
 void CoPowermeter::drawPowerMeter()
 {
     removeChildren();
-    spGameMap pMap = GameMap::getInstance();
-    if ((pMap.get() == nullptr ||
-        !pMap->getGameRules()->getNoPower()) &&
+    
+    if ((m_pMap == nullptr ||
+        !m_pMap->getGameRules()->getNoPower()) &&
         m_pCO != nullptr)
     {
         GameManager* pGameManager = GameManager::getInstance();

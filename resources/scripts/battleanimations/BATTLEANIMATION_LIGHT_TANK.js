@@ -11,24 +11,29 @@ var Constructor = function()
                      ["bm", "bm"],
                      ["dm", "dm"],
                      ["ge", "ge"],
+                     ["gs", "gs"],
                      ["ma", "ma"],
                      ["os", "os"],
                      ["pf", "pf"],
                      ["ti", "ti"],
                      ["yc", "yc"],];
 
-    this.animationData = [["ac", [Qt.point(33, 21), Qt.point(30, 27), Qt.point(30, 22), -80]],
+    this.animationData = [["ac", [Qt.point(23, 22), Qt.point(26, 42), Qt.point(26, 37), -80]],
                           ["bd", [Qt.point(21, 22), Qt.point(23, 42), Qt.point(23, 37), -80]],
                           ["bh", [Qt.point(27, 24), Qt.point(28, 41), Qt.point(28, 36), -80]],
                           ["bm", [Qt.point(27, 20), Qt.point(30, 41), Qt.point(30, 36), -80]],
                           ["dm", [Qt.point(27, 21), Qt.point(28, 41), Qt.point(28, 36), -80]],
                           ["ge", [Qt.point(26, 23), Qt.point(30, 42), Qt.point(30, 37), -80]],
+                          ["gs", [Qt.point(33, 21), Qt.point(30, 27), Qt.point(30, 22), -80]],
                           ["ma", [Qt.point(18, 34), Qt.point(37, 27), Qt.point(37, 22), -90]],
                           ["os", [Qt.point(21, 24), Qt.point(23, 44), Qt.point(23, 39), -80]],
                           ["pf", [Qt.point(22, 24), Qt.point(26, 47), Qt.point(26, 42), -80]],
                           ["ti", [Qt.point(25, 30), Qt.point(31, 46), Qt.point(31, 41), -80]],
                           ["yc", [Qt.point(26, 20), Qt.point(32, 40), Qt.point(32, 35), -80]],];
 
+    // -15 5
+    //  41 25
+    //  3  8
     this.getArmyName = function(unit)
     {
         var player = unit.getOwner();

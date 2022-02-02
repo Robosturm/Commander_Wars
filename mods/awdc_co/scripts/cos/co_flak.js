@@ -1,9 +1,9 @@
-CO_FLAK.init = function(co)
+CO_FLAK.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_FLAK.activateSuperpower = function(co, powerMode)
+CO_FLAK.activateSuperpower = function(co, powerMode, map)
 {
 	CO_FLAK.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_FLAK.getSuperPowerName = function()
 {
     return CO_FLAK.getPowerName();
 };
-CO_FLAK.getBonusLuck = function(co, unit, posX, posY)
+CO_FLAK.getBonusLuck = function(co, unit, posX, posY, map)
 {
     switch (co.getPowerMode())
     {
@@ -33,7 +33,7 @@ CO_FLAK.getBonusLuck = function(co, unit, posX, posY)
     return 10;
 };
 
-CO_FLAK.getBonusMisfortune = function(co, unit, posX, posY)
+CO_FLAK.getBonusMisfortune = function(co, unit, posX, posY, map)
 {
     switch (co.getPowerMode())
     {

@@ -28,13 +28,13 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 20000;
+        return 24000;
     };
     this.getName = function()
     {
         return qsTr("Battleship");
     };
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         if (unit.getTerrain() !== null)
         {
@@ -47,17 +47,17 @@ var Constructor = function()
             unit.setFuel(unit.getFuel() - fuelCosts);
         }
     };
-    this.createExplosionAnimation = function(x, y, unit)
+    this.createExplosionAnimation = function(x, y, unit, map)
     {
-        var animation = GameAnimationFactory.createAnimation(x, y);
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.setSound("explosion+water.wav");
         return animation;
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         var unitID = unit.getUnitID().toLowerCase();
         animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("moveship.wav", -2);
@@ -67,21 +67,21 @@ var Constructor = function()
     {
         return true;
     };
-    this.getTerrainAnimationBase = function(unit, terrain)
+    this.getTerrainAnimationBase = function(unit, terrain, defender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "base_" + weatherModifier + "air";
     };
 
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
-        return "back_" + weatherModifier +"sea";
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
+        return "back_" + weatherModifier + "sea";
     };
 
     this.getTerrainAnimationMoveSpeed = function()
@@ -96,6 +96,10 @@ var Constructor = function()
     this.getUnitType = function()
     {
         return GameEnums.UnitType_Naval;
+    };
+    this.getTypeOfWeapon1 = function(unit)
+    {
+        return GameEnums.WeaponType_Indirect;
     };
 }
 

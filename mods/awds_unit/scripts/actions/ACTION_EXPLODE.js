@@ -1,4 +1,4 @@
-ACTION_EXPLODE.getStepCursor = function(action, cursorData)
+ACTION_EXPLODE.getStepCursor = function(action, cursorData, map)
 {
     cursorData.setCursor("cursor+radius_3");
     cursorData.setXOffset(- map.getImageSize() * 3);
@@ -6,7 +6,7 @@ ACTION_EXPLODE.getStepCursor = function(action, cursorData)
     cursorData.setScale(2);
 };
 
-ACTION_EXPLODE.performPostAnimation = function(postAnimation)
+ACTION_EXPLODE.performPostAnimation = function(postAnimation, map)
 {
     var owner = ACTION_EXPLODE.postAnimationUnit.getOwner();
     var x = ACTION_EXPLODE.postAnimationTargetX;
@@ -28,7 +28,7 @@ ACTION_EXPLODE.performPostAnimation = function(postAnimation)
                     unit.killUnit();
                 }
             }
-            var animation = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
+            var animation = GameAnimationFactory.createAnimation(map, x + point.x, y + point.y);
             animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
             audio.playSound("explosion+land.wav");
         }

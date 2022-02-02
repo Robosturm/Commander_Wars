@@ -7,10 +7,10 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
-        terrain.setTerrainName(BRIDGE.getName(terrain));
+        terrain.setTerrainName(__BASEBRIDGE.getName(terrain));
     };
 
-    this.canBePlaced = function(x, y)
+    this.canBePlaced = function(x, y, map)
     {
         var terrain = map.getTerrain(x, y);
         if ((terrain.getTerrainID() === "SEA") ||
@@ -31,7 +31,7 @@ var Constructor = function()
     {
         return qsTr("Bridge");
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SEA")
         {
@@ -50,7 +50,7 @@ var Constructor = function()
             terrain.loadBaseTerrain("RIVER");
         }
     };
-    this.loadSprite = function(terrain, style)
+    this.loadSprite = function(terrain, style, map)
     {
         var surroundings = terrain.getSurroundings("RIVER,LAKE,SEA,ROUGH_SEA,REAF,BEACH,FOG,DESERT_TRY_RIVER", false, false, GameEnums.Directions_Direct, false);
         terrain.loadBaseSprite(style + surroundings);
@@ -64,15 +64,15 @@ var Constructor = function()
         return "minimap_bridge";
     };
 
-    this.getTerrainAnimationForeground = function(unit, terrain, defender)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
-        return TERRAIN.getFactoryForeground(terrain);
+        return TERRAIN.getFactoryForeground(terrain, map);
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
-        var id = TERRAIN.getTerrainAnimationId(terrain);
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var id = TERRAIN.getTerrainAnimationId(terrain, map);
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         switch (id)
         {
             case "LAKE":

@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var player = map.getCurrentPlayer();
         var co0 = player.getCO(0);
@@ -13,19 +13,19 @@ var Constructor = function()
         }
         return true;
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Next Player");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "next_player";
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         map.nextTurn();
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };

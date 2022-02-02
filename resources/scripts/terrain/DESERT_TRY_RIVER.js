@@ -13,7 +13,7 @@ var Constructor = function()
     {
         return qsTr("Try River");
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SNOW")
         {
@@ -37,7 +37,7 @@ var Constructor = function()
     {
         return -20;
     };
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
         var surroundings = terrain.getSurroundings("DESERT_TRY_RIVER,BRIDGE,BRIDGE1", false, false, GameEnums.Directions_Direct);
         terrain.loadBaseSprite("desert_try_river" + surroundings);
@@ -46,11 +46,11 @@ var Constructor = function()
     {
         return "minimap_desert_try_river";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "fore_river";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         return "back_river";
     };
@@ -80,12 +80,12 @@ var Constructor = function()
                 "desert_try_river+S+W",
                 "desert_try_river+W"];
     };
-    this.getTerrainAnimationForeground = function(unit, terrain, defender)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         var variables = terrain.getVariables();
         var variable = variables.getVariable("BACKGROUND_ID");

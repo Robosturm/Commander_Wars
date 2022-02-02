@@ -19,6 +19,7 @@
 
 class Player;
 class TerrainFindingSystem;
+class GameMap;
 using spTerrainFindingSystem = oxygine::intrusive_ptr<TerrainFindingSystem>;
 
 class Terrain;
@@ -54,7 +55,7 @@ public:
         MarkedField,
         Arrow
     };
-    static spTerrain createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID);
+    static spTerrain createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap);
 
     virtual ~Terrain() = default;
 
@@ -146,6 +147,11 @@ public:
     void setTest(QPoint newTest);
 
 public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
     /**
      * @brief getHasFlowDirection
      * @return
@@ -514,8 +520,14 @@ protected:
      */
     void removeDownstream();
 private:
+    /**
+     * @brief customSpriteExists
+     * @return
+     */
+    bool customSpriteExists() const;
+
     friend class oxygine::intrusive_ptr<Terrain>;
-    explicit Terrain(QString terrainID, qint32 x, qint32 y);
+    explicit Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap);
 
 private:
     /**
@@ -583,6 +595,7 @@ private:
     QVector<TerrainOverlay> m_terrainOverlay;
 
     QPoint m_test;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // TERRAIN_H

@@ -17,11 +17,12 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/unitspritemanager.h"
 
-HumanPlayerInputMenu::HumanPlayerInputMenu(const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
+HumanPlayerInputMenu::HumanPlayerInputMenu(GameMap* pMap, const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
                                            const QVector<qint32> & costList, const QVector<bool> & enabledList)
     : m_ActionIDs(actionIDs),
       m_CostList(costList),
-      m_EnabledList(enabledList)
+      m_EnabledList(enabledList),
+      m_pMap(pMap)
 {
     setObjectName("HumanPlayerInputMenu");
     Mainapp* pApp = Mainapp::getInstance();
@@ -48,8 +49,8 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(const QStringList & texts, const QStr
     width += GameMap::getImageSize() + GameMap::getImageSize() * 3 / 4 ;
     m_itemWidth = width;
     m_itemHeigth = GameMap::getImageSize();
-    spGameMap pMap = GameMap::getInstance();
-    Player* pPlayer = pMap->getCurrentViewPlayer();
+    
+    Player* pPlayer = m_pMap->getCurrentViewPlayer();
 
     GameManager* pGameManager = GameManager::getInstance();
     qint32 heigth = createTopSprite(0, width, pPlayer);
@@ -408,19 +409,19 @@ qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width, Player* pPl
 
 void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
 {
-    spGameMap pMap = GameMap::getInstance();
+    
 
-    if (x + getWidth() + GameMap::getImageSize() / 2 > pMap->getMapWidth() * GameMap::getImageSize())
+    if (x + getWidth() + GameMap::getImageSize() / 2 > m_pMap->getMapWidth() * GameMap::getImageSize())
     {
-        x = pMap->getMapWidth() * GameMap::getImageSize() - getWidth() - GameMap::getImageSize() / 2;
+        x = m_pMap->getMapWidth() * GameMap::getImageSize() - getWidth() - GameMap::getImageSize() / 2;
         if (x < 0)
         {
             x = 0;
         }
     }
-    if (y + getHeight() + GameMap::getImageSize() / 2 > pMap->getMapHeight() * GameMap::getImageSize())
+    if (y + getHeight() + GameMap::getImageSize() / 2 > m_pMap->getMapHeight() * GameMap::getImageSize())
     {
-        y = pMap->getMapHeight() * GameMap::getImageSize() - getHeight() - GameMap::getImageSize() / 2;
+        y = m_pMap->getMapHeight() * GameMap::getImageSize() - getHeight() - GameMap::getImageSize() / 2;
         if (y < 0)
         {
             y = 0;
@@ -563,7 +564,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
                     if (pUnitSpriteManager->exists(id))
                     {
-                        spUnit pDummy = spUnit::create(id, GameMap::getInstance()->getCurrentPlayer(), false);
+                        spUnit pDummy = spUnit::create(id, m_pMap->getCurrentPlayer(), false, m_pMap);
                         spFieldInfo fieldinfo = spFieldInfo::create(nullptr, pDummy.get());
                         pMenu->addChild(fieldinfo);
                         connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]

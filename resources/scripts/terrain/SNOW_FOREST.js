@@ -5,13 +5,13 @@ var Constructor = function()
         return 3;
     };
     this.baseTerrainId = "SNOW";
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
-        __BASEFOREST.loadBase(terrain, "SNOW_FOREST", "snow_forest+style1")
+        __BASEFOREST.loadBase(terrain, "SNOW_FOREST", "snow_forest+style1", map)
     };
-    this.loadOverlaySprite = function(terrain)
+    this.loadOverlaySprite = function(terrain, map)
     {
-        __BASEFOREST.loadOverlay(terrain, "SNOW_FOREST", "snow_forest+style1");
+        __BASEFOREST.loadOverlay(terrain, "SNOW_FOREST", "snow_forest+style1", map);
     };
 
     this.getTerrainSprites = function()

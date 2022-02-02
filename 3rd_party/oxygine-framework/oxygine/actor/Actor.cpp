@@ -761,7 +761,6 @@ namespace oxygine
         }
     }
 
-
     Actor* Actor::detach()
     {
         Actor* parent = getParent();
@@ -861,7 +860,6 @@ namespace oxygine
         return convert_stage2local(this, Vector2(x, y), stage);
     }
 
-
     bool Actor::prepareRender(RenderState& rs, const RenderState& parentRS)
     {
         if (!(m_flags & flag_visible))
@@ -904,14 +902,15 @@ namespace oxygine
 
     bool Actor::onScreen(RenderState& rs)
     {
-        float width = oxygine::Stage::getStage()->getScaledWidth();
-        float height = oxygine::Stage::getStage()->getScaledHeight();
+        constexpr float safetyArea = 10;
+        float width = oxygine::Stage::getStage()->getScaledWidth() + safetyArea;
+        float height = oxygine::Stage::getStage()->getScaledHeight() + safetyArea;
         auto scaledWidth = m_size.x * rs.transform.a;
         auto scaledHeight = m_size.y * rs.transform.d;
         if (rs.transform.x > width ||
             rs.transform.y > height ||
-            rs.transform.x + scaledWidth < 0 ||
-            rs.transform.y + scaledHeight < 0)
+            rs.transform.x + scaledWidth < -safetyArea ||
+            rs.transform.y + scaledHeight < -safetyArea)
         {
             return false;
         }

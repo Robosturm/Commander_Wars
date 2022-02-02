@@ -39,10 +39,10 @@ var Constructor = function()
     {
         return qsTr("Logistic Truck");
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("logi_truck+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("movetank.wav", -2);
         return animation;
@@ -55,12 +55,12 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Ground;
     };
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         // pay unit upkeep
         if (unit.getTerrain() !== null)
         {
-            ACTION_SUPPORTALL_RATION_MONEY.giveRation(unit);
+            ACTION_SUPPORTALL_RATION_MONEY.giveRation(unit, map);
         }
     };
     this.getCOSpecificUnit = function(building)

@@ -207,6 +207,10 @@ namespace oxygine
 
     Resource* Resources::get(const QString & id_, error_policy ep) const
     {
+        if (id_.isEmpty())
+        {
+            return nullptr;
+        }
         QString id = id_.toLower();
         resourcesMap::const_iterator it = m_resourcesMap.find(id);
         if (it != m_resourcesMap.end())

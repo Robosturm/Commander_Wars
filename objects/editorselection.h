@@ -43,7 +43,7 @@ public:
         Fill
     };
 
-    explicit EditorSelection(qint32 width, bool smallScreen);
+    explicit EditorSelection(qint32 width, bool smallScreen, GameMap* pMap);
     virtual ~EditorSelection() = default;
     inline EditorMode getCurrentMode() const
     {
@@ -217,6 +217,7 @@ private:
     spPlayer m_currentPlayer{nullptr};
     qint32 m_playerStartIndex{0};
     QVector<spBuilding> m_Players;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // EDITORSELECTION_H

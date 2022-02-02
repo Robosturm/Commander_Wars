@@ -19,10 +19,11 @@
 
 #include "gameinput/basegameinputif.h"
 
+#include "game/gamemap.h"
 #include "game/campaign.h"
 
 class PlayerSelection;
-typedef oxygine::intrusive_ptr<PlayerSelection> spPlayerSelection;
+using spPlayerSelection = oxygine::intrusive_ptr<PlayerSelection>;
 
 class PlayerSelection : public QObject, public oxygine::Actor
 {
@@ -78,6 +79,9 @@ public:
     void setIsServerGame(bool isServerGame);
     bool getIsCampaign();
     bool getIsArmyCustomizationAllowed();
+
+    GameMap *getMap() const;
+    void setMap(GameMap *newPMap);
 
 signals:
     void sigCOsRandom(qint32 mode);
@@ -280,6 +284,7 @@ private:
     bool m_saveGame{false};
     bool m_PlayerReady{false};
     bool m_isServerGame{false};
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // PLAYERSELECTION_H

@@ -1,9 +1,9 @@
-CO_LIN.init = function(co)
+CO_LIN.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_LIN.activateSuperpower = function(co, powerMode)
+CO_LIN.activateSuperpower = function(co, powerMode, map)
 {
 	CO_LIN.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_LIN.getSuperPowerName = function()
 {
     return CO_LIN.getPowerName();
 };
-CO_LIN.getVisionrangeModifier = function(co, unit, posX, posY)
+CO_LIN.getVisionrangeModifier = function(co, unit, posX, posY, map)
 {
     switch (co.getPowerMode())
     {
@@ -29,7 +29,7 @@ CO_LIN.getVisionrangeModifier = function(co, unit, posX, posY)
 };
 
 CO_LIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     var seaAirUnit = (attacker.getUnitType() === GameEnums.UnitType_Air) ||
                      (attacker.getUnitType() === GameEnums.UnitType_Naval);
@@ -58,7 +58,7 @@ CO_LIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_LIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action)
+                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     var seaAirUnit = (defender.getUnitType() === GameEnums.UnitType_Air) ||
                      (defender.getUnitType() === GameEnums.UnitType_Naval);

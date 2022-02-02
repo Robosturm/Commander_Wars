@@ -66,7 +66,6 @@ namespace oxygine
 
     void Stage::renderStage(const QColor* clearColor, const Rect& viewport, const QMatrix4x4 & viewProjection)
     {
-
         spVideoDriver driver = VideoDriver::instance;
         driver->setViewport(viewport);
 
@@ -75,13 +74,9 @@ namespace oxygine
             driver->clear(*clearColor);
         }
         STDRenderer::instance->setViewProj(viewProjection);
-
+        setSize(viewport.getWidth(), viewport.getHeight());
         RenderState rs;
-
-        QSize ds = oxygine::GameWindow::getWindow()->size();
-
-
-        RectF clip(0.0f, 0.0f, (float)ds.width(), (float)ds.height());
+        RectF clip(0.0f, 0.0f, viewport.getWidth(), viewport.getHeight());
         rs.clip = &clip;
 
         Actor::render(rs);
@@ -91,6 +86,12 @@ namespace oxygine
     }
 
     void Stage::renderStage(const QColor& clearColor, const Rect& viewport)
+    {
+        auto viewProjection = getViewProjectionMatrix(viewport);
+        renderStage(&clearColor, viewport, viewProjection);
+    }
+
+    QMatrix4x4 Stage::getViewProjectionMatrix(const Rect& viewport)
     {
         //initialize projection and view matrix
         static constexpr float zNear = 0.2f;
@@ -103,7 +104,7 @@ namespace oxygine
                                   0, -2.0f / height, 0, 1,
                                   0, 0, m33, m34,
                                   0, 0, 0, 1);
-        renderStage(&clearColor, viewport, viewProjection);
+        return viewProjection;
     }
 
     void Stage::cleanup()

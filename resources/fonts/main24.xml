@@ -2,7 +2,7 @@
 <font>
   <info face="Consolas" size="-24" bold="1" italic="0" charset="" unicode="1" stretchH="100" smooth="1" aa="4" padding="0,0,0,0" spacing="1,1" outline="2"/>
   <common lineHeight="28" base="22" scaleW="1024" scaleH="600" pages="1" packed="0" alphaChnl="2" redChnl="0" greenChnl="0" blueChnl="0"/>
-  <pages>
+  <pages linearFilter="false">
     <page id="0" file="main24_0.png" />
   </pages>
   <chars count="1425">

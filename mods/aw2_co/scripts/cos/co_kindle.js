@@ -1,9 +1,9 @@
 CO_KINDLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.onMap(atkPosX, atkPosY))
             {
@@ -39,7 +39,7 @@ CO_KINDLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_KINDLE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

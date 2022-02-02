@@ -33,6 +33,13 @@ void CreateOutline::createOuterLeftRightOutline(oxygine::spActor pOutlineSprite,
     oxygine::ResAnim* pAnimTop = pObjectManager->getResAnim(prefix + "+top");
     oxygine::ResAnim* pAnimLeft = pObjectManager->getResAnim(prefix + "+left");
     oxygine::ResAnim* pAnimRight = pObjectManager->getResAnim(prefix + "+right");
+    if (pAnimBottom == nullptr ||
+        pAnimTop == nullptr ||
+        pAnimLeft == nullptr ||
+        pAnimRight == nullptr)
+    {
+        return;
+    }
 
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     if (pAnimLeft->getTotalFrames() > 1)
@@ -130,6 +137,13 @@ void CreateOutline::createOuterTopBottomOutline(oxygine::spActor pOutlineSprite,
     oxygine::ResAnim* pAnimTop = pObjectManager->getResAnim(prefix + "+top");
     oxygine::ResAnim* pAnimLeft = pObjectManager->getResAnim(prefix + "+left");
     oxygine::ResAnim* pAnimRight = pObjectManager->getResAnim(prefix + "+right");
+    if (pAnimBottom == nullptr ||
+        pAnimTop == nullptr ||
+        pAnimLeft == nullptr ||
+        pAnimRight == nullptr)
+    {
+        return;
+    }
 
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     if (pAnimTop->getTotalFrames() > 1)
@@ -227,6 +241,13 @@ void CreateOutline::createOutline(oxygine::spActor pOutlineSprite, const QString
     oxygine::ResAnim* pAnimTop = pObjectManager->getResAnim(prefix + "+top");
     oxygine::ResAnim* pAnimLeft = pObjectManager->getResAnim(prefix + "+left");
     oxygine::ResAnim* pAnimRight = pObjectManager->getResAnim(prefix + "+right");
+    if (pAnimBottom == nullptr ||
+        pAnimTop == nullptr ||
+        pAnimLeft == nullptr ||
+        pAnimRight == nullptr)
+    {
+        return;
+    }
 
     // left top
     oxygine::spSprite pSprite = oxygine::spSprite::create();

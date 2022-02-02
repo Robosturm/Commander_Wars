@@ -11,6 +11,7 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class Player;
+class GameMap;
 
 class VictoryRule;
 typedef oxygine::intrusive_ptr<VictoryRule> spVictoryRule;
@@ -22,8 +23,8 @@ public:
     static const QString checkbox;
     static const QString spinbox;
 
-    explicit VictoryRule();
-    explicit VictoryRule(QString ruleID);
+    explicit VictoryRule(GameMap* pMap);
+    explicit VictoryRule(QString ruleID, GameMap* pMap);
     virtual ~VictoryRule() = default;
 
     /**
@@ -48,7 +49,13 @@ public:
      * @brief init
      */
     void init();
-public slots:    
+
+public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
     void setRuleValue(qint32 value, qint32 itemNumber);
     qint32 getInfiniteValue(qint32 itemNumber = 0);
     qint32 getDefaultValue(qint32 itemNumber = 0);
@@ -66,6 +73,7 @@ public slots:
 private:
     QString m_RuleID;
     ScriptVariables m_Variables;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // VICTORYRULE_H

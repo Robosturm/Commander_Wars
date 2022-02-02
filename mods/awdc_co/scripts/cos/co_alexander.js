@@ -1,9 +1,9 @@
-CO_ALEXANDER.init = function(co)
+CO_ALEXANDER.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_ALEXANDER.activateSuperpower = function(co, powerMode)
+CO_ALEXANDER.activateSuperpower = function(co, powerMode, map)
 {
 	CO_ALEXANDER.activatePower(co, powerMode);
 };
@@ -15,12 +15,12 @@ CO_ALEXANDER.getSuperPowerName = function()
 {
     return CO_ALEXANDER.getPowerName();
 };
-CO_ALEXANDER.getIncomeReduction = function(co, building, income)
+CO_ALEXANDER.getIncomeReduction = function(co, building, income, map)
 {
     return 0;
 };
 CO_ALEXANDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action)
+                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {
@@ -38,7 +38,7 @@ CO_ALEXANDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_ALEXANDER.getCaptureBonus = function(co, unit, posX, posY)
+CO_ALEXANDER.getCaptureBonus = function(co, unit, posX, posY, map)
 {
     if (co.getPowerMode() > GameEnums.PowerMode_Off)
     {

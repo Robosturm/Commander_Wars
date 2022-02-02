@@ -129,7 +129,7 @@ void GameMap::importTxtMap(QString file)
             else if (line.startsWith("SPIELER|"))
             {
                 QStringList data = line.split("|");
-                m_players.append(spPlayer::create());
+                m_players.append(spPlayer::create(this));
                 qint32 idx = m_players.size() - 1;
                 m_players[idx]->setFundsModifier(static_cast<float>(data[1].toInt()) / 1000.0f);
                 m_players[idx]->setFunds(data[2].toInt());
@@ -145,7 +145,7 @@ void GameMap::importTxtMap(QString file)
                     m_fields.push_back(std::vector<spTerrain>());
                     for (qint32 x = 0; x < width; x++)
                     {
-                        spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
+                        spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "", this);
                         addChild(pTerrain);
                         m_fields[y].push_back(pTerrain);
                         pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
@@ -185,7 +185,7 @@ void GameMap::importTxtMap(QString file)
                     {
                         if (buildingIdMapping[i][0] == buildingID)
                         {
-                            spBuilding pBuilding = spBuilding::create(buildingIdMapping[i][1]);
+                            spBuilding pBuilding = spBuilding::create(buildingIdMapping[i][1], this);
                             qint32 player = data[5].toInt();
                             if (player > 0)
                             {
@@ -233,7 +233,7 @@ void GameMap::importTxtMap(QString file)
                         if (unitIdMapping[i][0] == unitID)
                         {
                             qint32 player = data[8].toInt();
-                            spUnit pUnit = spUnit::create(unitIdMapping[i][1], getPlayer(player - 1), false);
+                            spUnit pUnit = spUnit::create(unitIdMapping[i][1], getPlayer(player - 1), false, this);
                             pUnit->setFuel(data[6].toInt());
                             pUnit->setHp(data[7].toInt());
                             pTerrain->setUnit(pUnit);

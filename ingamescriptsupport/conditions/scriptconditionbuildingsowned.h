@@ -11,7 +11,7 @@ class ScriptConditionBuildingsOwned : public ScriptCondition
 {
     Q_OBJECT
 public:
-    ScriptConditionBuildingsOwned();
+    explicit ScriptConditionBuildingsOwned(GameMap* pMap);
 
     /**
      * @brief readCondition

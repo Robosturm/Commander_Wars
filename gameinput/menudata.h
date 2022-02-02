@@ -8,14 +8,15 @@
 #include <QVector>
 
 class Unit;
-
+class GameMap;
 class MenuData;
-typedef oxygine::intrusive_ptr<MenuData> spMenuData;
+using spMenuData = oxygine::intrusive_ptr<MenuData>;
+
 class MenuData : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
-    explicit MenuData();
+    explicit MenuData(GameMap* pMap);
     virtual ~MenuData() = default;
 
     QStringList getTexts()
@@ -38,9 +39,13 @@ public:
     {
         return m_iconList;
     }
-signals:
 
 public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
     /**
      * @brief addData adds data to a later shown menu
      * @param text the text shown in the menu
@@ -71,6 +76,7 @@ private:
     QVector<qint32> m_costList;
     QVector<oxygine::spActor> m_iconList;
     QVector<bool> m_enabledList;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // MENUDATA_H

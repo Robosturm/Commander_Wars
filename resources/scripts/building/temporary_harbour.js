@@ -34,12 +34,12 @@ var Constructor = function()
     {
         return TEMPORARY_HARBOUR.constructionList;
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         return "back_harbour";
     };
@@ -61,7 +61,7 @@ var Constructor = function()
     {
         return [GameEnums.UnitType_Hovercraft, GameEnums.UnitType_Naval];
     };
-	this.onWeatherChanged = function(building, weather)
+	this.onWeatherChanged = function(building, weather, map)
 	{	
 		var weatherId = weather.getWeatherId();
 		if (weatherId === "WEATHER_SNOW")

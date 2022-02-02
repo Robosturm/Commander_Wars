@@ -32,7 +32,7 @@ var Constructor = function()
     {
         return qsTr("Lander");
     };
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         if (unit.getTerrain() !== null)
         {
@@ -43,20 +43,20 @@ var Constructor = function()
                 fuelCosts = 0;
             }
             unit.setFuel(unit.getFuel() - fuelCosts);
-            UNIT.transporterRefilling(unit);
+            UNIT.transporterRefilling(unit, map);
         }
     };
-    this.createExplosionAnimation = function(x, y, unit)
+    this.createExplosionAnimation = function(x, y, unit, map)
     {
-        var animation = GameAnimationFactory.createAnimation(x, y);
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.setSound("explosion+water.wav");
         return animation;
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         var unitID = unit.getUnitID().toLowerCase();
         animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("moveship.wav", -2);
@@ -78,20 +78,20 @@ var Constructor = function()
                           "ZCOUNIT_TANK_HUNTER", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN",
                           "ZCOUNIT_LOGIC_TRUCK", "ZCOUNIT_CHAPERON", "ZCOUNIT_HOT_TANK",
                           "ZCOUNIT_AUTO_TANK"];
-    this.getTerrainAnimationBase = function(unit, terrain)
+    this.getTerrainAnimationBase = function(unit, terrain, defender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "base_" + weatherModifier + "air";
     };
 
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "back_" + weatherModifier +"sea";
     };
 

@@ -10,9 +10,10 @@
 
 QStringList VictoryRulePopup::m_popUps;
 
-VictoryRulePopup::VictoryRulePopup(QString rule, qint32 width, qint32 heigth)
+VictoryRulePopup::VictoryRulePopup(GameMap* pMap, QString rule, qint32 width, qint32 heigth)
     : CloseablePopUp(width, heigth),
-      m_rule(rule)
+      m_rule(rule),
+      m_pMap(pMap)
 {
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr)
@@ -30,11 +31,11 @@ VictoryRulePopup::~VictoryRulePopup()
 
 void VictoryRulePopup::updateInfo()
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     clearContent();
-    if (pMap.get() != nullptr)
+    if (m_pMap != nullptr)
     {
-        GameRules* pRules = pMap->getGameRules();
+        GameRules* pRules = m_pMap->getGameRules();
         VictoryRule* pVictoryRule = pRules->getVictoryRule(m_rule);
         qint32 x = 10;
         qint32 y = 10;
@@ -58,9 +59,9 @@ void VictoryRulePopup::updateInfo()
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = true;
 
-        for (qint32 i2 = 0; i2 < pMap->getPlayerCount(); i2++)
+        for (qint32 i2 = 0; i2 < m_pMap->getPlayerCount(); i2++)
         {
-            Player* pPlayer = pMap->getPlayer(i2);
+            Player* pPlayer = m_pMap->getPlayer(i2);
             if (pPlayer->getIsDefeated() == false)
             {
                 qint32 ruleValue = pVictoryRule->getRuleValue(0);
@@ -70,7 +71,7 @@ void VictoryRulePopup::updateInfo()
                     ruleValue = 0;
                 }
                 qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
-                spBuilding building = spBuilding::create("HQ");
+                spBuilding building = spBuilding::create("HQ", m_pMap);
                 building->setOwner(pPlayer);
                 building->setPosition(x, y);
                 addItem(building);

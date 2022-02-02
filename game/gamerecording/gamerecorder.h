@@ -11,11 +11,13 @@
 
 #include "coreengine/LUPDATE_MACROS.h"
 
+class GameMap;
+
 class GameRecorder;
-typedef oxygine::intrusive_ptr<GameRecorder> spGameRecorder;
+using spGameRecorder = oxygine::intrusive_ptr<GameRecorder>;
 
 class AttackReport;
-typedef oxygine::intrusive_ptr<AttackReport> spAttackReport;
+using spAttackReport = oxygine::intrusive_ptr<AttackReport>;
 
 /**
  * @brief The AttackReport struct
@@ -95,7 +97,7 @@ public:
         D
     };
 
-    explicit GameRecorder();
+    explicit GameRecorder(GameMap* pMap);
     virtual ~GameRecorder() = default;
     /**
      * @brief serialize stores the object
@@ -269,6 +271,7 @@ private:
     qint32 m_mapTime{0};
     quint32 m_deployLimit{0};
     QVector<PlayerData> m_playerDataRecords;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // GAMERECORDER_H

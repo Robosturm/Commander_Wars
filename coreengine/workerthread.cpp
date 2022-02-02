@@ -9,8 +9,7 @@
 #include "coreengine/userdata.h"
 
 #include "menue/mainwindow.h"
-#include "menue/editormenue.h"
-#include "menue/gamemenue.h"
+#include "menue/ingamemenue.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
 
@@ -48,6 +47,7 @@ WorkerThread::WorkerThread()
 
 void WorkerThread::start()
 {
+    Console::print("Loading worker thread", Console::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
     spConsole pConsole = Console::getInstance();
@@ -198,17 +198,9 @@ void WorkerThread::onQuit()
     {
         oxygine::Stage::instance->cleanup();
     }
-    if (GameMenue::getInstance().get() != nullptr)
+    if (InGameMenue::getMenuInstance() != nullptr)
     {
-        GameMenue::getInstance()->deleteMenu();
-    }
-    if (EditorMenue::getInstance() != nullptr)
-    {
-        EditorMenue::getInstance()->deleteMenu();
-    }
-    if (GameMap::getInstance().get() != nullptr)
-    {
-        GameMap::getInstance()->deleteMap();
+        InGameMenue::getMenuInstance()->deleteMenu();
     }
     GameAnimationFactory::getInstance()->release();
     Interpreter::release();

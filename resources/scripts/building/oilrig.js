@@ -20,7 +20,7 @@ var Constructor = function()
     {
         return OILRIG.baseTerrain;
     };
-	this.canBuildingBePlaced = function(terrain, building)
+	this.canBuildingBePlaced = function(terrain, building, map)
     {
         var id = terrain.getTerrainID();
         return OILRIG.baseTerrain.includes(id);
@@ -43,7 +43,7 @@ var Constructor = function()
     {
         return true;
     };
-	this.onWeatherChanged = function(building, weather)
+	this.onWeatherChanged = function(building, weather, map)
 	{	
 		var weatherId = weather.getWeatherId();
 		if (weatherId === "WEATHER_SNOW")

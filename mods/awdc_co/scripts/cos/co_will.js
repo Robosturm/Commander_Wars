@@ -1,9 +1,9 @@
-CO_WILL.init = function(co)
+CO_WILL.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_WILL.activateSuperpower = function(co, powerMode)
+CO_WILL.activateSuperpower = function(co, powerMode, map)
 {
 	CO_WILL.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_WILL.getSuperPowerName = function()
 {
     return CO_WILL.getPowerName();
 };
-CO_WILL.getMovementpointModifier = function(co, unit, posX, posY)
+CO_WILL.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     var seaAirUnit = (unit.getUnitType() === GameEnums.UnitType_Air) ||
                      (unit.getUnitType() === GameEnums.UnitType_Naval);
@@ -34,7 +34,7 @@ CO_WILL.getMovementpointModifier = function(co, unit, posX, posY)
     }
 };
 CO_WILL.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     var seaAirUnit = (attacker.getUnitType() === GameEnums.UnitType_Air) ||
                      (attacker.getUnitType() === GameEnums.UnitType_Naval);

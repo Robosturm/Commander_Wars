@@ -4,15 +4,16 @@
 #include "game/player.h"
 #include "game/co.h"
 
-DayToDayRecord::DayToDayRecord()
-    : QObject()
+DayToDayRecord::DayToDayRecord(GameMap* pMap)
+    : m_pMap(pMap)
 {
     setObjectName("DayToDayRecord");
     moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
-DayToDayRecord::DayToDayRecord(qint32 playerCount)
+DayToDayRecord::DayToDayRecord(GameMap* pMap, qint32 playerCount)
+    : m_pMap(pMap)
 {
     setObjectName("DayToDayRecord");
     moveToThread(Mainapp::getInstance()->getWorkerthread());
@@ -84,9 +85,8 @@ SpecialEvent* DayToDayRecord::getSpecialEvent(qint32 index)
 }
 
 void DayToDayRecord::addPlayerRecord(qint32 player, qint32 day)
-{
-    spGameMap pMap = GameMap::getInstance();
-    Player* pPlayer = pMap->getPlayer(player);
+{    
+    Player* pPlayer = m_pMap->getPlayer(player);
     if (!pPlayer->getIsDefeated())
     {
         m_PlayerRecords[player] = spPlayerRecord::create(day, player, pPlayer->getFunds(), pPlayer->calcIncome(),

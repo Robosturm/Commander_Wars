@@ -11,7 +11,7 @@ class ScriptConditionBuildingCaptured : public ScriptCondition
 {
     Q_OBJECT
 public:
-    ScriptConditionBuildingCaptured();
+    explicit ScriptConditionBuildingCaptured(GameMap* pMap);
 
     /**
      * @brief readCondition

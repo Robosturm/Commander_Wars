@@ -22,6 +22,7 @@
 
 #include "objects/dialogs/editor/dialograndommap.h"
 #include "objects/dialogs/filedialog.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 #include "multiplayer/multiplayermenu.h"
 #include "multiplayer/networkcommands.h"
@@ -151,8 +152,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     {
         heigth = Settings::getHeight() - 40 * 2;
     }
-    m_pPlayerSelection = spPlayerSelection::create(Settings::getWidth() - 20,
-                                                   heigth);
+    m_pPlayerSelection = spPlayerSelection::create(Settings::getWidth() - 20, heigth);
     m_pPlayerSelection->setPosition(10, yPos);
     addChild(m_pPlayerSelection);
 
@@ -160,7 +160,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     m_pRuleSelection = spPanel::create(true,  size, size);
     m_pRuleSelection->setPosition(10, 20);
     addChild(m_pRuleSelection);
-    if (m_pMapSelectionView->getCurrentSetCampaign().get() == nullptr)
+    if (m_pMapSelectionView->getCurrentCampaign().get() == nullptr)
     {
         hidePlayerSelection();
         hideRuleSelection();
@@ -169,7 +169,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     {
         MapSelectionMapsMenue::hideMapSelection();
         hideRuleSelection();
-        m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentSetCampaign());
+        m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentCampaign());
         showPlayerSelection();
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
     }
@@ -203,7 +203,7 @@ void MapSelectionMapsMenue::buttonBack()
         }
         case MapSelectionStep::selectPlayer:
         {
-            if (m_pMapSelectionView->getCurrentSetCampaign().get() == nullptr)
+            if (m_pMapSelectionView->getCurrentCampaign().get() == nullptr)
             {
                 showRuleSelection();
                 hidePlayerSelection();
@@ -214,11 +214,11 @@ void MapSelectionMapsMenue::buttonBack()
                 CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
                 if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                 {
-                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentSetCampaign(), true));
+                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), true));
                 }
                 else
                 {
-                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentSetCampaign(), false));
+                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), false));
                 }
                 oxygine::Actor::detach();
             }
@@ -237,25 +237,29 @@ void MapSelectionMapsMenue::buttonNext()
         case MapSelectionStep::selectMap:
         {
             QString mapFile = m_pMapSelectionView->getCurrentFile().filePath();
-            if (QFile::exists(mapFile) ||
-                mapFile == NetworkCommands::RANDOMMAPIDENTIFIER ||
-                mapFile == NetworkCommands::SERVERMAPIDENTIFIER)
+            bool isExternal = (mapFile == NetworkCommands::RANDOMMAPIDENTIFIER ||
+                               mapFile == NetworkCommands::SERVERMAPIDENTIFIER);
+            if (QFile::exists(mapFile) || isExternal)
             {
-                m_pMapSelectionView->loadCurrentMap();
+                if (!isExternal)
+                {
+                    m_pMapSelectionView->loadCurrentMap();
+                }
                 QString file = m_pMapSelectionView->getMapSelection()->getCurrentFile();
 
-                if ((m_pMapSelectionView->getCurrentMap() != nullptr && file.endsWith(".map")) ||
-                    (mapFile == NetworkCommands::RANDOMMAPIDENTIFIER) ||
-                    (mapFile == NetworkCommands::SERVERMAPIDENTIFIER))
+                if ((m_pMapSelectionView->getCurrentMap().get() != nullptr && file.endsWith(".map")) ||
+                    isExternal)
                 {
-                    m_pMapSelectionView->getCurrentMap()->setCampaign(m_pMapSelectionView->getCurrentSetCampaign());
-                    if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
+                    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+                    pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
+                    if (pMap->getGameScript()->immediateStart())
                     {
                         startGame();
                     }
                     else
                     {
                         hideMapSelection();
+                        loadRules(Settings::getDefaultRuleset());
                         showRuleSelection();
                         m_MapSelectionStep = MapSelectionStep::selectRules;
                     }
@@ -307,8 +311,15 @@ void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
 
 void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
 {    
-    QFileInfo info = QFileInfo(item);
-    m_pMapSelectionView->loadMap(info);    
+    if (m_pMapSelectionView->getVisible())
+    {
+        QFileInfo info = QFileInfo(item);
+        m_pMapSelectionView->loadMap(info);
+    }
+    else
+    {
+        CONSOLE_PRINT("Ignoring map selection change", Console::eDEBUG);
+    }
 }
 
 void MapSelectionMapsMenue::hideMapSelection()
@@ -344,7 +355,8 @@ void MapSelectionMapsMenue::showRuleSelection()
     m_pButtonSaveRules->setVisible(true);
     m_pButtonLoadRules->setVisible(true);
     m_pRuleSelection->clearContent();
-    m_pRuleSelectionView = spRuleSelection::create(Settings::getWidth() - 80, RuleSelection::Mode::Singleplayer);
+    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+    m_pRuleSelectionView = spRuleSelection::create(pMap.get(), Settings::getWidth() - 80, RuleSelection::Mode::Singleplayer);
     connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &MapSelectionMapsMenue::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
@@ -356,13 +368,13 @@ void MapSelectionMapsMenue::ruleSelectionSizeChanged()
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
 }
 
-
 void MapSelectionMapsMenue::showPlayerSelection()
 {
     m_pButtonStart->setVisible(true);
     m_pButtonNext->setVisible(false);
     m_pButtonSaveMap->setVisible(true);
     m_pPlayerSelection->setVisible(true);
+    m_pPlayerSelection->setMap(m_pMapSelectionView->getCurrentMap().get());
     m_pPlayerSelection->showPlayerSelection();
 }
 
@@ -378,22 +390,23 @@ void MapSelectionMapsMenue::startGame()
 {    
     CONSOLE_PRINT("Start game", Console::eDEBUG);
     defeatClosedPlayers();
-    spGameMap pMap = GameMap::getInstance();
+
+    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     pMap->setVisible(false);
     pMap->initPlayersAndSelectCOs();
-    pMap->setCampaign(m_pMapSelectionView->getCurrentSetCampaign());
+    pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
     pMap->getGameScript()->gameStart();
     pMap->updateSprites(-1, -1, false, true);
     // start game
     CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
-    auto window = spGameMenue::create(false, spNetworkInterface());
+    auto window = spGameMenue::create(pMap, false, spNetworkInterface());
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
 
 void MapSelectionMapsMenue::defeatClosedPlayers()
-{
-    spGameMap pMap = GameMap::getInstance();
+{    
+    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     if(!pMap->getGameScript()->immediateStart())
     {
         for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
@@ -430,20 +443,20 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
                                             bool mirrored)
 {
     
-    spGameMap pGameMap = spGameMap::create(width, heigth, playerCount);
-    RandomMapGenerator::randomMap(width, heigth, playerCount, roadSupport, seed,
+    spGameMap pMap = spGameMap::create(width, heigth, playerCount);
+    RandomMapGenerator::randomMap(pMap.get(), width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize,
                         startBaseSize / 100.0f,
                         units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed, mirrored);
-    pGameMap->setMapName(mapName);
+    pMap->setMapName(mapName);
     if (mapName.isEmpty())
     {
-        pGameMap->setMapName("Random Map");
+        pMap->setMapName("Random Map");
     }
-    pGameMap->setMapAuthor(author);
-    pGameMap->setMapDescription(description);
+    pMap->setMapAuthor(author);
+    pMap->setMapDescription(description);
+    m_pMapSelectionView->setCurrentMap(pMap);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::RANDOMMAPIDENTIFIER);
-    m_pMapSelectionView->setCurrentMap(pGameMap);
     emit sigButtonNext();
     
 }
@@ -477,10 +490,11 @@ void MapSelectionMapsMenue::loadRules(QString filename)
         QFile file(filename);
         if (file.exists())
         {
+            spGameMap pMap = m_pMapSelectionView->getCurrentMap();
             QFile file(filename);
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
-            GameMap::getInstance()->getGameRules()->deserializeObject(stream);
+            pMap->getGameRules()->deserializeObject(stream);
             file.close();
             hideRuleSelection();
             showRuleSelection();
@@ -495,9 +509,15 @@ void MapSelectionMapsMenue::saveRules(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        spGameMap pMap = GameMap::getInstance();
+        spGameMap pMap = m_pMapSelectionView->getCurrentMap();
         pMap->getGameRules()->serializeObject(stream);
         file.close();
+        spDialogMessageBox pMessageBox = spDialogMessageBox::create(tr("Do you want to make the saved ruleset as default ruleset?"), true, tr("Yes"), tr("No"));
+        addChild(pMessageBox);
+        connect(pMessageBox.get(),  &DialogMessageBox::sigOk, this, [=]()
+        {
+            Settings::setDefaultRuleset(filename);
+        }, Qt::QueuedConnection);
     }
 }
 
@@ -526,7 +546,7 @@ void MapSelectionMapsMenue::saveMap(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        spGameMap pMap = GameMap::getInstance();
+        spGameMap pMap = m_pMapSelectionView->getCurrentMap();
         pMap->serializeObject(stream);
         file.close();
     }

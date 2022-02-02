@@ -20,7 +20,7 @@ var Constructor = function()
         return 1;
     };
     // create and initialize the variables for this rule
-    this.init = function(rule)
+    this.init = function(rule, map)
     {
         var playerCount = map.getPlayerCount();
         for (var i = 0; i < playerCount; i++)
@@ -40,7 +40,7 @@ var Constructor = function()
             }
         }
     };
-    this.checkHQCount = function(rule, player)
+    this.checkHQCount = function(rule, player, map)
     {
         var playerID = player.getPlayerID();
         var variableName = "Active" + playerID.toString();
@@ -58,9 +58,9 @@ var Constructor = function()
         return value;
     };
     // checks if the selected player is declared defeated by this rule
-    this.checkDefeat = function(rule, player)
+    this.checkDefeat = function(rule, player, map)
     {
-        if (VICTORYRULE_NOHQ.checkHQCount(rule, player))
+        if (VICTORYRULE_NOHQ.checkHQCount(rule, player, map))
         {
             if (player.getBuildingCount("HQ") <= 0)
             {
@@ -69,7 +69,7 @@ var Constructor = function()
         }
         return GameEnums.DefeatType_Alive;
     };
-    this.getRuleProgress = function(rule, player)
+    this.getRuleProgress = function(rule, player, map)
     {
         return player.getBuildingCount("HQ");
     };

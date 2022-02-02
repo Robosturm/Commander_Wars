@@ -12,37 +12,37 @@ var Constructor = function()
         return CO.getAiUsePowerAlways(co, powerSurplus);
     };
 
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(4);
         co.setSuperpowerStars(3);
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_DRAKE.drakeDamage(co, 1, powerNameAnimation);
+        CO_DRAKE.drakeDamage(co, 1, powerNameAnimation, map);
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        var animation = GameAnimationFactory.createAnimation(0, 0);
+        var animation = GameAnimationFactory.createAnimation(map, 0, 0);
         animation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation);
 
         map.getGameRules().changeWeather("WEATHER_RAIN", map.getPlayerCount() * 2);
-        CO_DRAKE.drakeDamage(co, 2, animation);
+        CO_DRAKE.drakeDamage(co, 2, animation, map);
     };
 
-    this.drakeDamage = function(co, value, animation2)
+    this.drakeDamage = function(co, value, animation2, map)
     {
         var player = co.getOwner();
         var counter = 0;
@@ -62,7 +62,7 @@ var Constructor = function()
                 {
                     var unit = units.at(i);
 
-                    animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     var delay = globals.randInt(135, 265);
                     if (animations.length < 5)
                     {
@@ -100,7 +100,7 @@ var Constructor = function()
         }
     };
 
-    this.postAnimationDamage = function(postAnimation)
+    this.postAnimationDamage = function(postAnimation, map)
     {
         postAnimation.seekBuffer();
         var x = postAnimation.readDataInt32();
@@ -128,7 +128,7 @@ var Constructor = function()
         }
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -148,7 +148,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 2;
     };
@@ -157,7 +157,7 @@ var Constructor = function()
         return "GE";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         switch (co.getPowerMode())
         {
@@ -207,7 +207,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getMovementpointModifier = function(co, unit, posX, posY)
+    this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
         if (unit.getUnitType() === GameEnums.UnitType_Naval)
         {
@@ -216,7 +216,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -226,7 +226,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "HARBOUR" ||
@@ -237,7 +237,7 @@ var Constructor = function()
         return [];
     };
 
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         if (unit.getUnitType() === GameEnums.UnitType_Naval)
         {

@@ -7,7 +7,7 @@ WEAPON_TORPEDO.damageTable[idx][1] = 95;
 idx = getIndexOf1(WEAPON_TORPEDO.damageTable, "CRUISER");
 WEAPON_TORPEDO.damageTable[idx][1] = 25;
 idx = getIndexOf1(WEAPON_TORPEDO.damageTable, "DESTROYER");
-WEAPON_TORPEDO.damageTable[idx][1] = 55;
+WEAPON_TORPEDO.damageTable[idx][1] = 95;
 idx = getIndexOf1(WEAPON_TORPEDO.damageTable, "SUBMARINE");
 WEAPON_TORPEDO.damageTable[idx][1] = 55;
 

@@ -1,9 +1,9 @@
-CO_ROBOANDY.init = function(co)
+CO_ROBOANDY.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_ROBOANDY.activateSuperpower = function(co, powerMode)
+CO_ROBOANDY.activateSuperpower = function(co, powerMode, map)
 {
 	CO_ROBOANDY.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_ROBOANDY.getSuperPowerName = function()
     return CO_ROBOANDY.getPowerName();
 };
 
-CO_ROBOANDY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_ROBOANDY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     switch (co.getPowerMode())
     {

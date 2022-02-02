@@ -55,11 +55,12 @@ public slots:
     void importFromDirectory(QString file);
     virtual void onEnter() override;
     void versionClicked();
+    qint32 getButtonX(qint32 btnI) const;
+    qint32 getButtonY(qint32 btnI) const;
+    bool isValidSavegame() const;
 protected slots:
     void cheatTimeout();
     void unlockAllShopItems();
-protected:
-    void setButtonPosition(oxygine::spButton pButton, qint32 btnI);
 protected:
     oxygine::spResAnim test;
     QTimer m_cheatTimeout;

@@ -8,8 +8,8 @@
 
 #include "objects/dialogs/filedialog.h"
 
-RuleSelectionDialog::RuleSelectionDialog(RuleSelection::Mode mode, bool enabled)
-    : QObject()
+RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode, bool enabled)
+    : m_pMap(pMap)
 {
     setObjectName("RuleSelectionDialog");
     Mainapp* pApp = Mainapp::getInstance();
@@ -54,7 +54,7 @@ RuleSelectionDialog::RuleSelectionDialog(RuleSelection::Mode mode, bool enabled)
         pSpriteBox->addChild(m_pButtonSaveRules);
         connect(this, &RuleSelectionDialog::sigShowSaveRules, this, &RuleSelectionDialog::showSaveRules, Qt::QueuedConnection);
     }
-    m_pRuleSelection = spRuleSelection::create(Settings::getWidth() - 80, mode, enabled);
+    m_pRuleSelection = spRuleSelection::create(m_pMap, Settings::getWidth() - 80, mode, enabled);
     connect(m_pRuleSelection.get(), &RuleSelection::sigSizeChanged, this, &RuleSelectionDialog::ruleSelectionSizeChanged, Qt::QueuedConnection);
     QSize size(Settings::getWidth() - 20, Settings::getHeight() - 40 * 2 - m_OkButton->getHeight());
     m_pPanel = spPanel::create(true,  size, size);
@@ -100,11 +100,11 @@ void RuleSelectionDialog::loadRules(QString filename)
             QFile file(filename);
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
-            GameMap::getInstance()->getGameRules()->deserializeObject(stream);
+            m_pMap->getGameRules()->deserializeObject(stream);
             file.close();
             auto mode = m_pRuleSelection->getMode();
             m_pRuleSelection->detach();
-            m_pRuleSelection = spRuleSelection::create(Settings::getWidth() - 80, mode);
+            m_pRuleSelection = spRuleSelection::create(m_pMap, Settings::getWidth() - 80, mode);
             m_pPanel->addItem(m_pRuleSelection);
             m_pPanel->setContentHeigth(m_pRuleSelection->getHeight() + 40);
             m_pPanel->setContentWidth(m_pRuleSelection->getWidth());
@@ -119,8 +119,8 @@ void RuleSelectionDialog::saveRules(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        spGameMap pMap = GameMap::getInstance();
-        pMap->getGameRules()->serializeObject(stream);
+        
+        m_pMap->getGameRules()->serializeObject(stream);
         file.close();
     }    
 }

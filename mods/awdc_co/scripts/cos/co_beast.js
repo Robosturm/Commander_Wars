@@ -1,9 +1,9 @@
-CO_BEAST.init = function(co)
+CO_BEAST.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_BEAST.activateSuperpower = function(co, powerMode)
+CO_BEAST.activateSuperpower = function(co, powerMode, map)
 {
     CO_BEAST.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_BEAST.getSuperPowerName = function()
 {
     return CO_BEAST.getPowerName();
 };
-CO_BEAST.getMovementpointModifier = function(co, unit, posX, posY)
+CO_BEAST.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     return 0;
 };

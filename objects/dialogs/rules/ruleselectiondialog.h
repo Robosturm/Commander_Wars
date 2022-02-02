@@ -9,14 +9,15 @@
 #include "objects/ruleselection.h"
 #include "objects/base/panel.h"
 
+class GameMap;
 class RuleSelectionDialog;
-typedef oxygine::intrusive_ptr<RuleSelectionDialog> spRuleSelectionDialog;
+using spRuleSelectionDialog = oxygine::intrusive_ptr<RuleSelectionDialog>;
 
 class RuleSelectionDialog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit RuleSelectionDialog(RuleSelection::Mode mode, bool enabled = true);
+    explicit RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode, bool enabled = true);
     virtual ~RuleSelectionDialog() = default;
 signals:
     void sigRulesChanged();
@@ -37,6 +38,7 @@ private:
     oxygine::spButton m_pButtonSaveRules;
     spRuleSelection m_pRuleSelection;
     spPanel m_pPanel;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // RULESELECTIONDIALOG_H
