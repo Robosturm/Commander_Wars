@@ -47,6 +47,7 @@ WorkerThread::WorkerThread()
 
 void WorkerThread::start()
 {
+    Console::print("Loading worker thread", Console::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
     spConsole pConsole = Console::getInstance();

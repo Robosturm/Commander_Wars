@@ -122,6 +122,7 @@ void Mainapp::loadRessources()
 
 void Mainapp::nextStartUpStep(StartupPhase step)
 {
+    Console::print("Loading startup phase: " + QString::number(step), Console::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->moveToThread(&m_Workerthread);
     switch (step)
