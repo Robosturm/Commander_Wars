@@ -25,8 +25,6 @@ AudioThread::AudioThread(bool noAudio)
 {
     setObjectName("AudioThread");
     Interpreter::setCppOwnerShip(this);
-    // move signals and slots to Audio Thread
-    moveToThread(Mainapp::getAudioWorker());
     if (!m_noAudio)
     {
         connect(this, &AudioThread::sigPlayMusic,         this, &AudioThread::SlotPlayMusic, Qt::QueuedConnection);
@@ -38,8 +36,6 @@ AudioThread::AudioThread(bool noAudio)
         connect(this, &AudioThread::sigPlaySound,         this, &AudioThread::SlotPlaySound, Qt::QueuedConnection);
         connect(this, &AudioThread::sigStopSound,         this, &AudioThread::SlotStopSound, Qt::QueuedConnection);
         connect(this, &AudioThread::sigStopAllSounds,     this, &AudioThread::SlotStopAllSounds, Qt::QueuedConnection);
-        connect(this, &AudioThread::sigInitAudio,         this, &AudioThread::initAudio, Qt::BlockingQueuedConnection);
-        connect(this, &AudioThread::sigCreateSoundCache,  this, &AudioThread::createSoundCache, Qt::BlockingQueuedConnection);
         connect(this, &AudioThread::sigChangeAudioDevice, this, &AudioThread::SlotChangeAudioDevice, Qt::BlockingQueuedConnection);
         connect(this, &AudioThread::sigLoadNextAudioFile, this, &AudioThread::loadNextAudioFile, Qt::QueuedConnection);
     }
@@ -236,7 +232,14 @@ qint32 AudioThread::getSoundsBuffered()
 
 void AudioThread::changeAudioDevice(const QVariant& value)
 {
-    emit sigChangeAudioDevice(value);
+    if (Mainapp::getInstance()->isMainThread())
+    {
+        SlotChangeAudioDevice(value);
+    }
+    else
+    {
+        emit sigChangeAudioDevice(value);
+    }
 }
 
 void AudioThread::SlotChangeAudioDevice(const QVariant& value)
@@ -280,7 +283,14 @@ void AudioThread::addMusic(QString File, qint64 startPointMs, qint64 endPointMs)
 
 void AudioThread::clearPlayList()
 {
-    emit sigClearPlayList();
+    if (Mainapp::getInstance()->isMainThread())
+    {
+        SlotClearPlayList();
+    }
+    else
+    {
+        emit sigClearPlayList();
+    }
 }
 
 void AudioThread::playRandom()
@@ -305,7 +315,14 @@ void AudioThread::stopAllSounds()
 
 void AudioThread::loadFolder(QString folder)
 {
-    emit sigLoadFolder(folder);
+    if (Mainapp::getInstance()->isMainThread())
+    {
+        SlotLoadFolder(folder);
+    }
+    else
+    {
+        emit sigLoadFolder(folder);
+    }
 }
 
 void AudioThread::SlotClearPlayList()

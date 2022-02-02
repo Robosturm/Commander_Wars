@@ -39,11 +39,11 @@
 #include "resource_management/shoploader.h"
 #include "resource_management/movementtablemanager.h"
 #include "resource_management/weaponmanager.h"
+
 #include "wiki/wikidatabase.h"
 
 Mainapp* Mainapp::m_pMainapp;
 QThread Mainapp::m_Workerthread;
-QThread Mainapp::m_AudioWorker;
 QThread Mainapp::m_Networkthread;
 QThread Mainapp::m_GameServerThread;
 WorkerThread* Mainapp::m_Worker = new WorkerThread();
@@ -61,7 +61,6 @@ Mainapp::Mainapp()
     createBaseDirs();
     m_pMainThread->setObjectName("Mainthread");
     m_Workerthread.setObjectName("Workerthread");
-    m_AudioWorker.setObjectName("AudioWorker");
     m_Networkthread.setObjectName("Networkthread");
     m_GameServerThread.setObjectName("GameServerThread");
 
@@ -130,9 +129,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::General:
         {
             m_Audiothread = new AudioThread(m_noAudio);
-            m_AudioWorker.start(QThread::Priority::HighPriority);
-            m_Audiothread->moveToThread(&m_AudioWorker);
-            emit m_Audiothread->sigInitAudio();
+            m_Audiothread->initAudio();
             m_Audiothread->clearPlayList();
             m_Audiothread->loadFolder("resources/music/hauptmenue");
             FontManager::getInstance();
@@ -289,10 +286,10 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case StartupPhase::Sound:
         {
-            if (!m_noUi)
+            if (!m_noAudio)
             {
                 update();
-                emit m_Audiothread->sigCreateSoundCache();
+                m_Audiothread->createSoundCache();
             }
             pLoadingScreen->setProgress(tr("Loading Scripts ..."), SCRIPT_PROCESS);
             break;
@@ -742,12 +739,7 @@ void Mainapp::onQuit()
         m_Workerthread.wait();
     }
     QApplication::processEvents();
-    if (m_AudioWorker.isRunning())
-    {
-        m_Audiothread->deleteLater();
-        m_AudioWorker.quit();
-        m_AudioWorker.wait();
-    }
+    delete m_Audiothread;
     QApplication::processEvents();
     if (m_Networkthread.isRunning())
     {

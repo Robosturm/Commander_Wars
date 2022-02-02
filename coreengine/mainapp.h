@@ -97,10 +97,6 @@ public:
     {
         return &m_Networkthread;
     }
-    inline static QThread* getAudioWorker()
-    {
-        return &m_AudioWorker;
-    }
     /**
      * @brief loadRessources
      */
@@ -262,7 +258,6 @@ private:
     static Mainapp* m_pMainapp;
     static QMutex m_crashMutex;
     static QThread m_Workerthread;
-    static QThread m_AudioWorker;
     static QThread m_Networkthread;
     static QThread m_GameServerThread;
     static WorkerThread* m_Worker;
