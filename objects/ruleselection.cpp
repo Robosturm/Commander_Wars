@@ -476,7 +476,7 @@ void RuleSelection::showRuleSelection(bool advanced)
 
         textField = spLabel::create(textWidth - 40);
         textField->setStyle(style);
-        textField->setHtmlText(tr("CO Power loose: "));
+        textField->setHtmlText(tr("CO Power loss: "));
         textField->setPosition(30, y);
         addChild(textField);
         pSpinbox = spSpinBox::create(400, 0, 1, SpinBox::Mode::Float);
