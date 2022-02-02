@@ -95,11 +95,11 @@ var Constructor = function()
                     if (baseId === "SEA" ||
                         baseId === "LAKE")
                     {
-                        var animation = GameAnimationFactory.createAnimation(map, x + point.x, y + point.y);
+                        var animation = GameAnimationFactory.createAnimation(map, xPos, yPos);
                         animation.writeDataInt32(xPos);
                         animation.writeDataInt32(yPos);
                         animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
-                        animation.setSound("explosion+water.wav");
+                        animation.setEndOfAnimationCall("WATERMINE", "postAnimationMineDamge")
                         if (queueAnimation !== null)
                         {
                             queueAnimation.queueAnimation(animation);
@@ -109,14 +109,38 @@ var Constructor = function()
                 }
             }
             // we destroyed a unit
-            map.getGameRecorder().destroyedUnit(owner.getPlayerID(), unit.getUnitID());
-            unit.killUnit();
+            var animation = GameAnimationFactory.createAnimation(map, x, y);
+            animation.writeDataInt32(x);
+            animation.writeDataInt32(y);
+            animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
+            animation.setSound("explosion+water.wav");
+            animation.setEndOfAnimationCall("WATERMINE", "postAnimationSelfKill")
+            if (queueAnimation !== null)
+            {
+                queueAnimation.queueAnimation(animation);
+            }
         }
         fields.remove();
     };
 
+    this.postAnimationSelfKill = function(postAnimation, map)
+    {
+        postAnimation.seekBuffer();
+        var xPos = postAnimation.readDataInt32();
+        var yPos = postAnimation.readDataInt32();
+        var terrain = map.getTerrain(xPos, yPos);
+        var unit = terrain.getUnit();
+        if (unit !== null)
+        {
+            var owner = unit.getOwner();
+            map.getGameRecorder().destroyedUnit(owner.getPlayerID(), unit.getUnitID());
+            unit.removeUnit();
+        }
+    }
+
     this.postAnimationMineDamge = function(postAnimation, map)
     {
+        postAnimation.seekBuffer();
         var xPos = postAnimation.readDataInt32();
         var yPos = postAnimation.readDataInt32();
         var terrain = map.getTerrain(xPos, yPos);
