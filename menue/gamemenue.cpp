@@ -513,7 +513,7 @@ void GameMenue::loadUIButtons()
         pButtonBox->addChild(m_ChatButton);
     }
 
-    m_humanQuickButtons = spHumanQuickButtons::create();
+    m_humanQuickButtons = spHumanQuickButtons::create(this);
     m_humanQuickButtons->setEnabled(false);
     addChild(m_humanQuickButtons);
 }

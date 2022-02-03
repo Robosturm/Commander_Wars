@@ -6226,5 +6226,6 @@
         <file>resources/images/battleanimations/recon/recon+gs+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+gs+move+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+gs+stop+mask.png</file>
+        <file>resources/objects/cancel.png</file>
     </qresource>
 </RCC>

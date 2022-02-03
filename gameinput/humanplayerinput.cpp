@@ -71,10 +71,6 @@ void HumanPlayerInput::rightClickUp(qint32, qint32)
 
 void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
 {
-    if (!m_pMap->onMap(x, y))
-    {
-        return;
-    }
     bool isViewPlayer = (m_pMap->getCurrentViewPlayer() == m_pPlayer);
 
     if (m_pMap->getCurrentPlayer() == m_pPlayer ||
@@ -107,7 +103,7 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             }
             
         }
-        else
+        else if (!m_pMap->onMap(x, y))
         {
             if (m_FieldPoints.size() == 0 && m_pGameAction.get() == nullptr)
             {
@@ -121,6 +117,10 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             {
                 cleanUpInput();
             }
+        }
+        else
+        {
+            cleanUpInput();
         }
     }
     else if (isViewPlayer)
@@ -185,7 +185,8 @@ void HumanPlayerInput::cancelSelection(qint32 x, qint32 y)
     CONSOLE_PRINT("HumanPlayerInput::cancelSelection", Console::eDEBUG);
     Unit* pUnit = m_pGameAction->getTargetUnit();
     if (pUnit != nullptr && !pUnit->getHasMoved() &&
-        m_pUnitPathFindingSystem.get() != nullptr)
+        m_pUnitPathFindingSystem.get() != nullptr &&
+        !m_pMap->onMap(x, y))
     {
         qint32 costs = m_pUnitPathFindingSystem->getTargetCosts(x, y);
         if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) != costs &&
