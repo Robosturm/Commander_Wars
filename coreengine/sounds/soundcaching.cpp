@@ -5,6 +5,8 @@
 #include <QAudioDevice>
 #endif
 
+// code precaches sounds for faster replay but may be incompatible with certain os's
+
 void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
 {
 #ifdef AUDIOSUPPORT

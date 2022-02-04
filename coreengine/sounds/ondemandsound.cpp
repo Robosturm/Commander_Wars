@@ -5,6 +5,10 @@
 #include <QAudioDevice>
 #endif
 
+// code loads and plays sounds on demand slower replay but compatible with os's
+// which create a sound pipe during the sound effect creation which only allow
+// a limited amount of parallel open sound pipes.
+
 void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
 {
 #ifdef AUDIOSUPPORT
