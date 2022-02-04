@@ -28,6 +28,7 @@ private:
         std::shared_ptr<QSoundEffect> sound[MAX_SAME_SOUNDS];
         std::shared_ptr<QTimer> timer[MAX_SAME_SOUNDS];
         qint32 nextSoundToUse = 0;
+        QUrl cacheUrl;
     };
     struct Player
     {

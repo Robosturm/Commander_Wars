@@ -560,21 +560,25 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/windows/crashreporter_os.cpp
         coreengine/windows/Gamepad.cpp
+        coreengine/sounds/soundcaching.cpp
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/android/crashreporter_os.cpp
         coreengine/android/Gamepad.cpp
+        coreengine/sounds/ondemandsound.cpp
     )
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/ios/crashreporter_os.cpp
         coreengine/ios/Gamepad.cpp
+        coreengine/sounds/ondemandsound.cpp
     )
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/linux/crashreporter_os.cpp
         coreengine/linux/Gamepad.cpp
+        coreengine/sounds/ondemandsound.cpp
     )
 else()
     message(FATAL_ERROR "Unsupported OS found")
