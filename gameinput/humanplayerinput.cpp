@@ -103,7 +103,7 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             }
             
         }
-        else if (!m_pMap->onMap(x, y))
+        else if (m_pMap->onMap(x, y))
         {
             if (m_FieldPoints.size() == 0 && m_pGameAction.get() == nullptr)
             {
