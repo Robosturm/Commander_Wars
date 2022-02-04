@@ -614,9 +614,10 @@ void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<Da
     if (pAction->canBePerformed())
     {
         spMarkedFieldData pMarkedFieldData = pAction->getMarkedFieldStepData();
-        for (qint32 i = 0; i < pMarkedFieldData->getPoints()->size(); i++)
+        const auto * points = pMarkedFieldData->getPoints();
+        for (qint32 i = 0; i < points->size(); i++)
         {
-            QPoint target = pMarkedFieldData->getPoints()->at(i);
+            QPoint target = points->at(i);
             QRectF damage = calcUnitDamage(pAction, target);
             Terrain* pTerrain = m_pMap->getTerrain(target.x(), target.y());
             Unit* pDef = pTerrain->getUnit();
