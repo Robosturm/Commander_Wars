@@ -19,12 +19,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/achievementmenu.cpp" line="76"/>
+        <location filename="../menue/achievementmenu.cpp" line="79"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/achievementmenu.cpp" line="107"/>
+        <location filename="../menue/achievementmenu.cpp" line="92"/>
+        <source>Group: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/achievementmenu.cpp" line="97"/>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/achievementmenu.cpp" line="118"/>
+        <source>Sort: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/achievementmenu.cpp" line="122"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/achievementmenu.cpp" line="122"/>
+        <source>Ascending</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/achievementmenu.cpp" line="122"/>
+        <source>Descending</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/achievementmenu.cpp" line="151"/>
         <source>Achievement Progress: </source>
         <translation type="unfinished"></translation>
     </message>

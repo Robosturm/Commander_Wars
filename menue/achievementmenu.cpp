@@ -71,7 +71,10 @@ Achievementmenu::Achievementmenu()
     m_SearchString = spTextbox::create(Settings::getWidth() - 380);
     m_SearchString->setTooltipText(tr("Text that will be searched for in the title of each wikipage."));
     m_SearchString->setPosition(150, y);
-    connect(m_SearchString.get(), &Textbox::sigTextChanged, this, &Achievementmenu::searchChanged, Qt::QueuedConnection);
+    connect(m_SearchString.get(), &Textbox::sigTextChanged, this, [=](QString)
+    {
+        search();
+    }, Qt::QueuedConnection);
     addChild(m_SearchString);
     oxygine::spButton pButton = ObjectManager::createButton(tr("Search"));
     addChild(pButton);
@@ -83,14 +86,55 @@ Achievementmenu::Achievementmenu()
     connect(this, &Achievementmenu::sigSearch, this, &Achievementmenu::search, Qt::QueuedConnection);
     y += 50;
 
-    QSize size(Settings::getWidth() - 20, Settings::getHeight() - 150);
+    qint32 x = 10;
+    pTextfield = spLabel::create(100);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Group: "));
+    pTextfield->setPosition(x, y);
+    addChild(pTextfield);
+    x += 10 + pTextfield->getWidth();
+
+    QStringList groups{tr("All")};
+    Userdata* pUserdata = Userdata::getInstance();
+    const auto* achievements = pUserdata->getAchievements();
+    for (const auto & achievement : qAsConst(*achievements))
+    {
+        if (achievement.loaded && !groups.contains(achievement.group))
+        {
+            groups.append(achievement.group);
+        }
+    }
+    m_group = spDropDownmenu::create(200, groups);
+    m_group->setPosition(x, y);
+    addChild(m_group);
+    connect(m_group.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
+    {
+        search();
+    }, Qt::QueuedConnection);
+    x += 10 + m_group->getWidth();
+
+    pTextfield = spLabel::create(100);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Sort: "));
+    pTextfield->setPosition(x, y);
+    addChild(pTextfield);
+    x += 10 + pTextfield->getWidth();
+    m_sort = spDropDownmenu::create(200, QStringList{tr("None"), tr("Ascending"), tr("Descending")});
+    m_sort->setPosition(x, y);
+    addChild(m_sort);
+    connect(m_sort.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
+    {
+        search();
+    }, Qt::QueuedConnection);
+    x += 10 + m_sort->getWidth();
+    y += 50;
+
+    QSize size(Settings::getWidth() - 20, Settings::getHeight() - 210);
     m_MainPanel = spPanel::create(true, size, size);
-    m_MainPanel->setPosition(10, 90);
+    m_MainPanel->setPosition(10, 150);
     addChild(m_MainPanel);
 
     qint32 singleWidth = Settings::getWidth() - 80;
-    Userdata* pUserdata = Userdata::getInstance();
-    const auto achievements = pUserdata->getAchievements();
     qint32 achieveCount = 0;
     for (const auto & achievement : qAsConst(*achievements))
     {
@@ -105,10 +149,10 @@ Achievementmenu::Achievementmenu()
     pTextfield = spLabel::create(singleWidth);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Achievement Progress: ") + QString::number(achieveCount) + " / " + QString::number(achievements->length()));
-    pTextfield->setPosition(10, 50);
+    pTextfield->setPosition(10, 100);
     addChild(pTextfield);
 
-    searchChanged("");
+    search();
     pApp->continueRendering();
 }
 
@@ -137,14 +181,20 @@ void Achievementmenu::exitMenue()
 
 void Achievementmenu::search()
 {
-    searchChanged(m_SearchString->getCurrentText());
+    QString group;
+    if (m_group->getCurrentItem()  > 0)
+    {
+        group = m_group->getCurrentItemText();
+    }
+
+    searchChanged(m_SearchString->getCurrentText(), group, static_cast<SortDirection>(m_sort->getCurrentItem()));
 }
 
-void Achievementmenu::searchChanged(QString text)
+void Achievementmenu::searchChanged(QString searchText, QString group, SortDirection sortDirection)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    CONSOLE_PRINT("Achievementmenu::searchChanged " + text, Console::eDEBUG);
+    CONSOLE_PRINT("Achievementmenu::searchChanged " + searchText + " group " + group + " sorting direction " + QString::number(static_cast<qint32>(sortDirection)), Console::eDEBUG);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -158,23 +208,63 @@ void Achievementmenu::searchChanged(QString text)
     styleLarge.multiline = false;
 
     m_MainPanel->clearContent();
-    text = text.toLower();
+    searchText = searchText.toLower();
 
     Userdata* pUserdata = Userdata::getInstance();
-    const auto achievements = pUserdata->getAchievements();
+    auto achievements = *pUserdata->getAchievements();
+    // remove unrelated achievements
+    if (!group.isEmpty())
+    {
+        qint32 i = 0;
+        while (i < achievements.size())
+        {
+            if (achievements[i].group == group)
+            {
+                ++i;
+            }
+            else
+            {
+                achievements.removeAt(i);
+            }
+        }
+    }
+    // sort achievements
+    switch (sortDirection)
+    {
+        case SortDirection::Ascending:
+        {
+            std::sort(achievements.begin(), achievements.end(), [](const Userdata::Achievement& lhs, const Userdata::Achievement& rhs)
+            {
+                return lhs.progress < rhs.progress;
+            });
+            break;
+        }
+        case SortDirection::Descending:
+        {
+            std::sort(achievements.begin(), achievements.end(), [](const Userdata::Achievement& lhs, const Userdata::Achievement& rhs)
+            {
+                return lhs.progress > rhs.progress;
+            });
+            break;
+        }
+        case SortDirection::None:
+        {
+            break;
+        }
+    }
     qint32 x = 10;
     qint32 y = 10;
     qint32 singleWidth = Settings::getWidth() - 80;
-    for (const auto & achievement : qAsConst(*achievements))
+    for (const auto & achievement : qAsConst(achievements))
     {
         if (achievement.loaded)
         {
             bool achieved = achievement.progress >= achievement.targetValue;
             QString lowerName = achievement.name.toLower();
             QString lowerDescription = achievement.description.toLower();
-            if (text.isEmpty() ||
-                ((lowerName.contains(text) ||
-                  lowerDescription.contains(text)) &&
+            if (searchText.isEmpty() ||
+                ((lowerName.contains(searchText) ||
+                  lowerDescription.contains(searchText)) &&
                  (!achievement.hide || achieved)))
             {
                 oxygine::spActor pParent = oxygine::spActor::create();
