@@ -87,7 +87,18 @@ public:
     oxygine::ResAnim* getResAnim(const QString & id, oxygine::error_policy ep = oxygine::ep_ignore_error) const;
 
 
+
 public slots:
+    /**
+     * @brief getGlobalCoZone
+     * @return
+     */
+    bool getGlobalCoZone() const;
+    /**
+     * @brief setGlobalCoZone if set to true all units are always inside the co-zone
+     * @param newGlobalCoZone
+     */
+    void setGlobalCoZone(bool newGlobalCoZone);
     /**
      * @brief getMap
      * @return
@@ -745,6 +756,7 @@ private:
     qint32 m_powerUsed{0};
     bool m_powerCharging{false};
     bool m_coRangeEnabled{true};
+    bool m_globalCoZone{false};
     GameMap* m_pMap{nullptr};
 
     QStringList m_perkList;

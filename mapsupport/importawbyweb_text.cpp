@@ -58,7 +58,7 @@ void GameMap::importAWByWebMap(QString file)
             m_fields.push_back(std::vector<spTerrain>());
             for (qint32 x = 0; x < mapIDs[y].size(); x++)
             {
-                spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "", this);
+                spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, x, y, "", this);
                 addChild(pTerrain);
                 m_fields[y].push_back(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
@@ -83,7 +83,7 @@ void GameMap::importAWByWebMap(QString file)
                         // plains
                     case 1:
                     {
-                        replaceTerrain("PLAINS", x, y, false, false, false);
+                        replaceTerrain(GameMap::PLAINS, x, y, false, false, false);
                         break;
                     }
                     case 2:

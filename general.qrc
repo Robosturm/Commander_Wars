@@ -6227,5 +6227,8 @@
         <file>resources/images/battleanimations/recon/recon+gs+move+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+gs+stop+mask.png</file>
         <file>resources/objects/cancel.png</file>
+        <file>resources/images/game/no_power.png</file>
+        <file>resources/images/units/icons/no_rank.png</file>
+        <file>resources/images/game/calculator.png</file>
     </qresource>
 </RCC>

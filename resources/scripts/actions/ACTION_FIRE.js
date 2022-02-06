@@ -320,12 +320,12 @@ var Constructor = function()
 
     this.calcBattleDamage2 = function(map, action, attacker, atkPos, x, y, luckMode)
     {
-        return ACTION_FIRE.calcBattleDamage3(map, action, attacker, 0, atkPos.x, atkPos.y, null, x, y, 0, luckMode);
+        return ACTION_FIRE.calcBattleDamage3(map, action, attacker, 0, atkPos.x, atkPos.y, null, x, y, 0, luckMode, luckMode);
     };
 
-    this.calcBattleDamage3 = function(map, action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, ignoreOutOfVisionRange = false)
+    this.calcBattleDamage3 = function(map, action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckModeAtk, luckModeDef, ignoreOutOfVisionRange = false)
     {
-        return ACTION_FIRE.calcBattleDamage4(map, action, attacker, 0, atkPosX, atkPosY, defender, x, y, 0, luckMode, luckMode, ignoreOutOfVisionRange);
+        return ACTION_FIRE.calcBattleDamage4(map, action, attacker, 0, atkPosX, atkPosY, defender, x, y, 0, luckModeAtk, luckModeDef, ignoreOutOfVisionRange);
     }
 
     this.calcBattleDamage4 = function(map, action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, luckModeDefender, ignoreOutOfVisionRange = false, fast = false)
@@ -553,7 +553,7 @@ var Constructor = function()
         var currentPlayer = map.getCurrentPlayer();
         var currentViewPlayer = map.getCurrentViewPlayer();
         if (currentViewPlayer.getFieldVisible(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY) &&
-                currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
+            currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
         {
             var animation2 = GameAnimationFactory.createAnimation(map, ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY, 70);
             animation2.addSprite("cursor+attack", -map.getImageSize() / 3, -map.getImageSize() / 3, 0, 2, 0, 2);
@@ -606,7 +606,7 @@ var Constructor = function()
     };
     this.battle = function(map, attacker, attackerDamage, attackerWeapon,
                            defenderX, defenderY, defenderDamage, defenderWeapon,
-                           dontKillUnits)
+                           dontKillUnits, simulation = false)
     {
         var defTerrain = map.getTerrain(defenderX, defenderY);
         var defBuilding = defTerrain.getBuilding();
@@ -628,8 +628,10 @@ var Constructor = function()
             var power = 0;
 
             // we're attacking do recording
-            map.getGameRecorder().attacked(attacker.getOwner().getPlayerID(), attackerDamage);
-
+            if (!simulation)
+            {
+                map.getGameRecorder().attacked(attacker.getOwner().getPlayerID(), attackerDamage);
+            }
             // gain power based on damage
             if (damage > defUnit.getHp())
             {
@@ -644,16 +646,20 @@ var Constructor = function()
                 defUnit.getOwner().gainPowerstar(power, Qt.point(defUnit.getX(), defUnit.getY()), damage, true, false);
                 attacker.getOwner().gainPowerstar(power, Qt.point(attacker.getX(), attacker.getY()), damage, false, false);
             }
+
             // deal damage
             defUnit.setHp(defUnit.getHp() - attackerDamage / 10.0);
             // reduce attacker ammo
-            if (attackerWeapon === 0)
+            if (!simulation)
             {
-                attacker.reduceAmmo1(1);
-            }
-            else
-            {
-                attacker.reduceAmmo2(1);
+                if (attackerWeapon === 0)
+                {
+                    attacker.reduceAmmo1(1);
+                }
+                else
+                {
+                    attacker.reduceAmmo2(1);
+                }
             }
             // set counter damage
             if (counterdamage > 0)
@@ -676,13 +682,16 @@ var Constructor = function()
                 // deal damage
                 attacker.setHp(attacker.getHp() - defenderDamage / 10.0);
                 // reduce ammo
-                if (defenderWeapon === 0)
+                if (!simulation)
                 {
-                    defUnit.reduceAmmo1(1);
-                }
-                else
-                {
-                    defUnit.reduceAmmo2(1);
+                    if (defenderWeapon === 0)
+                    {
+                        defUnit.reduceAmmo1(1);
+                    }
+                    else
+                    {
+                        defUnit.reduceAmmo2(1);
+                    }
                 }
             }
 
@@ -699,7 +708,7 @@ var Constructor = function()
             defUnit.postBattleActions(counterdamage, attacker, false, defenderWeapon, ACTION_FIRE.postAnimationAction);
 
             // only kill units if we should else we stop here
-            if (dontKillUnits === false)
+            if (dontKillUnits === false && !simulation)
             {
                 var defFirststrike = defUnit.getFirstStrike(defUnit.getPosition(), attacker, true);
                 var atkFirststrike = attacker.getFirstStrike(attacker.getPosition(), defUnit, false);

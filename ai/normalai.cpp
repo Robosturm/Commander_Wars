@@ -1584,7 +1584,9 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                     if (distance >= minFireRange && distance <= maxFireRange)
                     {
                         // indirect attack
-                        damageData = CoreAI::calcVirtuelUnitDamage(pNextEnemy.get(), enemyDamage, enemyPos, pUnit, 0, newPosition, ignoreOutOfVisionRange);
+                        damageData = CoreAI::calcVirtuelUnitDamage(m_pMap, pNextEnemy.get(), enemyDamage, enemyPos, GameEnums::LuckDamageMode_Average,
+                                                                   pUnit, 0, newPosition, GameEnums::LuckDamageMode_Average,
+                                                                   ignoreOutOfVisionRange);
                         if (damageData.x() >= m_notAttackableDamage)
                         {
                             for (qint32 i3 = 0; i3 < pUnits->size(); i3++)
@@ -1621,7 +1623,9 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                                  pTerrainUnit == pNextEnemy ||
                                  pTerrainUnit == pUnit))
                             {
-                                damageData = CoreAI::calcVirtuelUnitDamage(pNextEnemy.get(), enemyDamage, targets[i2], pUnit, 0, newPosition, ignoreOutOfVisionRange);
+                                damageData = CoreAI::calcVirtuelUnitDamage(m_pMap, pNextEnemy.get(), enemyDamage, targets[i2], GameEnums::LuckDamageMode_Average,
+                                                                           pUnit, 0, newPosition, GameEnums::LuckDamageMode_Average,
+                                                                           ignoreOutOfVisionRange);
                                 found = true;
                                 break;
                             }
@@ -2211,7 +2215,7 @@ void NormalAi::createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuild
     Unit dummy(unitBuildData.unitId, m_pPlayer, false, m_pMap);
     dummy.setVirtuellX(x);
     dummy.setVirtuellY(y);
-    spTerrain pDummyTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", m_pMap);
+    spTerrain pDummyTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", m_pMap);
     qint32 baseMovementCost = pMovementTableManager->getBaseMovementPoints(dummy.getMovementType(), pDummyTerrain.get(), pDummyTerrain.get(), &dummy);
     if (baseMovementCost < 0)
     {

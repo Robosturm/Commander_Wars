@@ -321,7 +321,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     }
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", pUnit->getMap());
+        spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", pUnit->getMap());
         pTerrain->loadSprites();
         spBuilding pBuilding = spBuilding::create(pBuildingSpriteManager->getID(i), pUnit->getMap());
         // pBuilding->setOwner(pUnit->getOwner());

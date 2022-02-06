@@ -153,7 +153,7 @@
 <context>
     <name>CO</name>
     <message>
-        <location filename="../game/co.cpp" line="379"/>
+        <location filename="../game/co.cpp" line="389"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -161,63 +161,57 @@
 <context>
     <name>COBannListDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="38"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="39"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="48"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="49"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="56"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="57"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="65"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="66"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="112"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="113"/>
         <source>CO Bann List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="211"/>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="242"/>
-        <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="339"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="268"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="347"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="276"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="348"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="277"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="349"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="278"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="350"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="279"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="351"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="280"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -265,7 +259,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="248"/>
+        <location filename="../objects/coinfoactor.cpp" line="251"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -303,6 +297,15 @@
     <message>
         <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="60"/>
         <source>Show CO Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>COSpriteManager</name>
+    <message>
+        <location filename="../resource_management/cospritemanager.cpp" line="262"/>
+        <location filename="../resource_management/cospritemanager.cpp" line="293"/>
+        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -628,6 +631,119 @@
     <message>
         <location filename="../menue/creditsmenue.cpp" line="44"/>
         <source>Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DamageCalculator</name>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="30"/>
+        <source>Damage calculator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="87"/>
+        <source>Calculate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="291"/>
+        <source>Min:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="295"/>
+        <source>Avg:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="299"/>
+        <source>Max:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="142"/>
+        <source>CO for the player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="147"/>
+        <source>Power level of the co.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="153"/>
+        <source>Zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="158"/>
+        <source>If the unit is in the co-zone of this co.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="180"/>
+        <source>Unit to be used.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="207"/>
+        <source>Terrain the unit is currently sitting on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="230"/>
+        <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="238"/>
+        <source>HP:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="242"/>
+        <source>HP of the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="248"/>
+        <source>Towers:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="252"/>
+        <source>Amount of towers owned by the player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="258"/>
+        <source>Towns:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="262"/>
+        <source>Amount of towns owned by the player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="268"/>
+        <source>Funds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="272"/>
+        <source>Amount of funds owned by the player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="285"/>
+        <source>Battle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/damagecalculator.cpp" line="320"/>
+        <source>Post battle</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1736,9 +1852,9 @@ Distributed for units beeing spawned at the given rate.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="57"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="71"/>
-        <location filename="../game/gamemap.cpp" line="463"/>
-        <location filename="../game/gamemap.cpp" line="588"/>
-        <location filename="../game/gamemap.cpp" line="1329"/>
+        <location filename="../game/gamemap.cpp" line="464"/>
+        <location filename="../game/gamemap.cpp" line="589"/>
+        <location filename="../game/gamemap.cpp" line="1330"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1753,43 +1869,43 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="463"/>
-        <location filename="../game/gamemap.cpp" line="1329"/>
+        <location filename="../game/gamemap.cpp" line="464"/>
+        <location filename="../game/gamemap.cpp" line="1330"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="560"/>
+        <location filename="../game/gamemap.cpp" line="561"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="588"/>
+        <location filename="../game/gamemap.cpp" line="589"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1306"/>
+        <location filename="../game/gamemap.cpp" line="1307"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1356"/>
+        <location filename="../game/gamemap.cpp" line="1357"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1366"/>
+        <location filename="../game/gamemap.cpp" line="1367"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1374"/>
+        <location filename="../game/gamemap.cpp" line="1375"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1386"/>
+        <location filename="../game/gamemap.cpp" line="1387"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1797,97 +1913,97 @@ Distributed for units beeing spawned at the given rate.</source>
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="88"/>
+        <location filename="../menue/gamemenue.cpp" line="90"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="330"/>
+        <location filename="../menue/gamemenue.cpp" line="332"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="463"/>
+        <location filename="../menue/gamemenue.cpp" line="466"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="471"/>
+        <location filename="../menue/gamemenue.cpp" line="474"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="507"/>
+        <location filename="../menue/gamemenue.cpp" line="510"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="656"/>
+        <location filename="../menue/gamemenue.cpp" line="659"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1387"/>
+        <location filename="../menue/gamemenue.cpp" line="1390"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1388"/>
+        <location filename="../menue/gamemenue.cpp" line="1391"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1389"/>
+        <location filename="../menue/gamemenue.cpp" line="1392"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1390"/>
+        <location filename="../menue/gamemenue.cpp" line="1393"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1391"/>
+        <location filename="../menue/gamemenue.cpp" line="1394"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1392"/>
+        <location filename="../menue/gamemenue.cpp" line="1395"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1393"/>
+        <location filename="../menue/gamemenue.cpp" line="1396"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1394"/>
+        <location filename="../menue/gamemenue.cpp" line="1397"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1418"/>
+        <location filename="../menue/gamemenue.cpp" line="1421"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1428"/>
+        <location filename="../menue/gamemenue.cpp" line="1431"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1819"/>
+        <location filename="../menue/gamemenue.cpp" line="1822"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1850"/>
+        <location filename="../menue/gamemenue.cpp" line="1853"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1876"/>
+        <location filename="../menue/gamemenue.cpp" line="1879"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4775,18 +4891,18 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="184"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="182"/>
         <source>The ID of the CO that should talk.
 Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="207"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="205"/>
         <source>The background color of the dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="216"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="214"/>
         <source>Background</source>
         <translation type="unfinished"></translation>
     </message>

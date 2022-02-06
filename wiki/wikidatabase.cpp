@@ -227,7 +227,7 @@ spWikipage WikiDatabase::getPage(PageData data)
     }
     else if (pBuildingSpriteManager->exists(id))
     {
-        spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", nullptr);
+        spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", nullptr);
         spBuilding pBuilding = spBuilding::create(id, nullptr);
         pTerrain->setBuilding(pBuilding);
         ret = spFieldInfo::create(pTerrain.get(), nullptr);

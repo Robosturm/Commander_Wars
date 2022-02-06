@@ -274,9 +274,10 @@ public slots:
      * @param defenderTakenDamage
      * @return
      */
-    QRectF calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage, const QPoint & atkPos,
-                                 Unit* pDefender, float defenderTakenDamage, const QPoint & defPos,
-                                 bool ignoreOutOfVisionRange = false) const;
+    static QRectF calcVirtuelUnitDamage(GameMap* pMap,
+                                        Unit* pAttacker, float attackerTakenDamage, const QPoint & atkPos, GameEnums::LuckDamageMode luckModeAtk,
+                                        Unit* pDefender, float defenderTakenDamage, const QPoint & defPos, GameEnums::LuckDamageMode luckModeDef,
+                                        bool ignoreOutOfVisionRange = false);
     /**
      * @brief getBestTarget
      * @param pUnit

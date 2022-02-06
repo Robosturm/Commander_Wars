@@ -40,6 +40,9 @@ public:
      * @return
      */
     bool getFlippedX() const;
+    GameMap *getMap() const;
+    void setMap(GameMap *newPMap);
+
 signals:
 
 private:

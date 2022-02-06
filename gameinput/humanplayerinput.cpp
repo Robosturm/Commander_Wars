@@ -841,8 +841,7 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
 }
 
 void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::DrawPriority drawPriority)
-{
-    
+{    
     if (m_pMap->onMap(point.x(), point.y()))
     {
         oxygine::spSprite pSprite = createMarkedFieldActor(point, color, drawPriority);
@@ -859,8 +858,7 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
 }
 
 oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor color, Terrain::DrawPriority drawPriority)
-{
-    
+{    
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("marked+field");

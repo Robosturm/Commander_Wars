@@ -35,6 +35,7 @@
 
 const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
 const qint32 GameMap::frameTime = 100;
+const char* const GameMap::PLAINS = "PLAINS";
 static constexpr qint32 loadingScreenSize = 900;
 qint32 GameMap::m_imagesize = GameMap::defaultImageSize;
 
@@ -1345,7 +1346,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
             }
             else
             {
-                replaceTerrain("PLAINS", x, y, false, false, false);
+                replaceTerrain(GameMap::PLAINS, x, y, false, false, false);
             }
         }
     }
@@ -1489,6 +1490,11 @@ void GameMap::showRules()
 void GameMap::showUnitStatistics()
 {
     emit sigShowUnitStatistics();
+}
+
+void GameMap::showDamageCalculator()
+{
+    emit sigShowDamageCalculator();
 }
 
 void GameMap::startGame()

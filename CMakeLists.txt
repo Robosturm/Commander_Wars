@@ -438,6 +438,8 @@ set(${PROJECT_NAME}_SRCS
     game/ui/copowermeter.cpp
     game/ui/customcoboostinfo.cpp
     game/ui/humanquickbuttons.cpp
+    game/ui/damagecalculator.h
+    game/ui/damagecalculator.cpp
 
     # game input
     gameinput/basegameinputif.cpp
@@ -550,7 +552,8 @@ set(${PROJECT_NAME}_SRCS
 
     # ui
     ui_reader/uifactory.cpp
-    ui_reader/createdgui.h ui_reader/createdgui.cpp
+    ui_reader/createdgui.h
+    ui_reader/createdgui.cpp
 )
 
 ##############################################################################

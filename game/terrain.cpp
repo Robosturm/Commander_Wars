@@ -166,7 +166,7 @@ void Terrain::init()
     }
     else
     {
-        createBaseTerrain("PLAINS");
+        createBaseTerrain(GameMap::PLAINS);
     }
     QString function = "init";
     QJSValueList args;

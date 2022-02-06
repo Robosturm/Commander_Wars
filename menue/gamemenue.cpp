@@ -53,6 +53,8 @@
 
 #include "ui_reader/uifactory.h"
 
+#include "game/ui/damagecalculator.h"
+
 GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface)
     : InGameMenue(pMap),
       m_ReplayRecorder(m_pMap.get()),
@@ -427,6 +429,7 @@ void GameMenue::connectMap()
     connect(m_pMap.get(), &GameMap::sigShowWiki, this, &GameMenue::showWiki, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowRules, this, &GameMenue::showRules, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowUnitStatistics, this, &GameMenue::showUnitStatistics, Qt::QueuedConnection);
+    connect(m_pMap.get(), &GameMap::sigShowDamageCalculator, this, &GameMenue::showDamageCalculator, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigMovedMap, m_IngameInfoBar.get(), &IngameInfoBar::syncMinimapPosition, Qt::QueuedConnection);
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, m_pMap.get(), &GameMap::centerMap, Qt::QueuedConnection);
 }
@@ -1896,4 +1899,9 @@ void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
     pAction->writeDataString(name);
     performAction(pAction);
     m_Focused = true;
+}
+
+void GameMenue::showDamageCalculator()
+{
+    addChild(spDamageCalculator::create());
 }

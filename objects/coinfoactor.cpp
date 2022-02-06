@@ -183,15 +183,18 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = nullptr;
     QString coid = "";
+    m_pMap = nullptr;
     if (pCO.get() != nullptr)
     {
+        m_pMap = pCO->getMap();
         coid = pCO->getCoID();
         pAnim = pCO->getResAnim((coid + "+nrm"));
     }
     else if (!coid.isEmpty())
     {
-        pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));
+        pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));        
     }
+    m_pCoPowermeter->setMap(m_pMap);
     m_pCurrentCO->setResAnim(pAnim);
 
     QString coName = "";

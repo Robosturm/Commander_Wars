@@ -712,14 +712,15 @@ QRectF CoreAI::calcUnitDamage(spGameAction & pAction, const QPoint & target) con
     return erg.toVariant().toRectF();
 }
 
-QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage, const QPoint & atkPos,
-                                     Unit* pDefender, float defenderTakenDamage, const QPoint & defPos,
-                                     bool ignoreOutOfVisionRange) const
+QRectF CoreAI::calcVirtuelUnitDamage(GameMap* pMap,
+                                     Unit* pAttacker, float attackerTakenDamage, const QPoint & atkPos, GameEnums::LuckDamageMode luckModeAtk,
+                                     Unit* pDefender, float defenderTakenDamage, const QPoint & defPos, GameEnums::LuckDamageMode luckModeDef,
+                                     bool ignoreOutOfVisionRange)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage3";
     QJSValueList args1;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    QJSValue obj5 = pInterpreter->newQObject(pMap);
     args1 << obj5;
     QJSValue obj3 = pInterpreter->newQObject(nullptr);
     args1 << obj3;
@@ -733,7 +734,8 @@ QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage,
     args1 << defPos.x();
     args1 << defPos.y();
     args1 << defenderTakenDamage;
-    args1 << static_cast<qint32>(GameEnums::LuckDamageMode_Average);
+    args1 << static_cast<qint32>(luckModeAtk);
+    args1 << static_cast<qint32>(luckModeDef);
     args1 << ignoreOutOfVisionRange;
     QJSValue erg = pInterpreter->doFunction(ACTION_FIRE, function1, args1);
     return erg.toVariant().toRectF();

@@ -58,7 +58,7 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
     QString baseTerrain = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "getBaseTerrainID").toString();
     if (!TerrainManager::getInstance()->exists(baseTerrain))
     {
-        baseTerrain = "PLAINS";
+        baseTerrain = GameMap::PLAINS;
     }
     // seed map generator
     QRandomGenerator randInt(static_cast<quint32>(startSeed));

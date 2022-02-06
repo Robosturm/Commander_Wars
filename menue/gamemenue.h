@@ -270,6 +270,10 @@ public slots:
      * @brief showWiki
      */
     void showWiki();
+    /**
+     * @brief showDamageCalculator
+     */
+    void showDamageCalculator();
 protected slots:
     /**
      * @brief updateTimer

@@ -46,7 +46,7 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
         {
             for (qint32 x = currentWidth; x < width; x++)
             {
-                spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "", this);
+                spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, x, y, "", this);
                 addChild(pTerrain);
                 m_fields[y].push_back(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
@@ -73,7 +73,7 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
             m_fields.push_back(std::vector<spTerrain>());
             for (qint32 x = 0; x < width; x++)
             {
-                spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "", this);
+                spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, x, y, "", this);
                 addChild(pTerrain);
                 m_fields[y].push_back(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
@@ -127,7 +127,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 y = 0; y < currentHeigth; y++)
                 {
-                    spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", this);
+                    spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", this);
                     addChild(pTerrain);
                     m_fields[y].insert(m_fields[y].begin(), pTerrain);
                 }
@@ -154,7 +154,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 y = 0; y < currentHeigth; y++)
                 {
-                    spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", this);
+                    spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", this);
                     addChild(pTerrain);
                     m_fields[y].push_back(pTerrain);
                 }
@@ -183,7 +183,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
                 m_fields.insert(m_fields.begin(), std::vector<spTerrain>());
                 for (qint32 x = 0; x < currentWidth; x++)
                 {
-                    spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", this);
+                    spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", this);
                     addChild(pTerrain);
                     m_fields[0].push_back(pTerrain);
                 }
@@ -211,7 +211,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
                 m_fields.push_back(std::vector<spTerrain>());
                 for (qint32 x = 0; x < currentWidth; x++)
                 {
-                    spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", this);
+                    spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", this);
                     addChild(pTerrain);
                     m_fields.back().push_back(pTerrain);
                 }

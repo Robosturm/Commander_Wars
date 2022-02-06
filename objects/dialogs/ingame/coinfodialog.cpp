@@ -72,7 +72,12 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
                          QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
-    m_COInfo = spCOInfoActor::create(pCO->getMap(), m_pPanel->getWidth());
+    GameMap* pMap = nullptr;
+    if (pCO.get() != nullptr)
+    {
+        pMap = pCO->getMap();
+    }
+    m_COInfo = spCOInfoActor::create(pMap, m_pPanel->getWidth());
     m_pPanel->addItem(m_COInfo);
     showCO();
     connect(this, &COInfoDialog::quit, this, &COInfoDialog::remove, Qt::QueuedConnection);

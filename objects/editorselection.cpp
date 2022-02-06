@@ -163,8 +163,8 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
         spTerrain pSprite = Terrain::createTerrain(building->getBaseTerrain()[0], -1, -1, "", m_pMap);
         pSprite->loadSprites();
         pSprite->setPriority(-100);
-        pSprite->setScaleX(1 / building->getScaleX()); //  * GameMap::getImageSize() / pAnim->getWidth()
-        pSprite->setScaleY(1 / building->getScaleY()); //  * GameMap::getImageSize() / pAnim->getHeight()
+        pSprite->setScaleX(1 / building->getScaleX());
+        pSprite->setScaleY(1 / building->getScaleY());
         if (width > 1)
         {
             pSprite->oxygine::Actor::setX(-GameMap::getImageSize() * (width - 1));
@@ -182,7 +182,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
 
-    spTerrain plains = Terrain::createTerrain("PLAINS", -1, -1, "", m_pMap);
+    spTerrain plains = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", m_pMap);
     spTerrain sea = Terrain::createTerrain("SEA", -1, -1, "", m_pMap);
 
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();

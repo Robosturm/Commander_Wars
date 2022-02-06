@@ -79,6 +79,16 @@ bool CO::isJsFunctionEnabled(QString perk) const
                           m_pMap->getGameRules()->getEnableDayToDayCoAbilities(); // or if d2d is active
 }
 
+bool CO::getGlobalCoZone() const
+{
+    return m_globalCoZone;
+}
+
+void CO::setGlobalCoZone(bool newGlobalCoZone)
+{
+    m_globalCoZone = newGlobalCoZone;
+}
+
 GameMap *CO::getMap() const
 {
     return m_pMap;
@@ -1457,7 +1467,8 @@ bool CO::inCORange(QPoint position, Unit* pUnit)
         // return false for intel information
         return false;
     }
-    else if (position.x() < 0 && position.y() < 0)
+    else if ((position.x() < 0 && position.y() < 0) ||
+             m_globalCoZone)
     {
         // return true for intel information
         return true;

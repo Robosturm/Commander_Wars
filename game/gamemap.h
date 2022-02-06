@@ -37,6 +37,7 @@ class GameMap : public QObject, public FileSerializable, public oxygine::Actor
 public:
     static const qint32 frameTime;
     static constexpr qint32 defaultImageSize = 32;
+    static const char* const PLAINS;
     /**
      * @brief The MapHeaderInfo struct read from the filesystem
      */
@@ -255,6 +256,7 @@ signals:
     void sigShowUnitStatistics();
     void sigMovedMap();
     void sigZoomChanged(float zoom);
+    void sigShowDamageCalculator();
 public slots:
     /**
      * @brief getIsHumanMatch
@@ -760,6 +762,10 @@ public slots:
      * @brief onWeatherChanged
      */
     void onWeatherChanged(Weather* pWeather);
+    /**
+     * @brief showDamageCalculator
+     */
+    void showDamageCalculator();
 private slots:
     void zoomChanged();
 private:

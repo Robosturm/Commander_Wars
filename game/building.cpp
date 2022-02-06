@@ -73,7 +73,7 @@ QStringList Building::getBaseTerrain()
     QStringList retList = ret.toVariant().toStringList();
     if (retList.size() == 0)
     {
-        retList.append("PLAINS");
+        retList.append(GameMap::PLAINS);
     }
     return retList;
 }
