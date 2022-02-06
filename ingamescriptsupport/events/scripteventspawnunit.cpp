@@ -167,11 +167,12 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     {
         items.append(curUnitId);
     }
+    spPlayer player = spPlayer::create(m_pMap);
+    player->init();
+    Player* pPlayer = player.get();
     auto creator = [=](QString id)
     {
-        spPlayer pPlayer = spPlayer::create(m_pMap);
-        pPlayer->init();
-        spUnit pSprite = spUnit::create(id, pPlayer.get(), false, m_pMap);
+        spUnit pSprite = spUnit::create(id, pPlayer, false, m_pMap);
         pSprite->setOwner(nullptr);
         return pSprite;
     };

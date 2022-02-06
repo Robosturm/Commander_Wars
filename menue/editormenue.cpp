@@ -52,9 +52,9 @@ EditorMenue::EditorMenue()
     {
         selectionWidth = Settings::getWidth() * 3 / 4;
     }
-    if (selectionWidth < 200)
+    if (selectionWidth < 255)
     {
-        selectionWidth = 200;
+        selectionWidth = 255;
     }
     if (smallScreen)
     {
@@ -1324,6 +1324,17 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
     return ret;
 }
 
+void EditorMenue::getSquareTiles(QVector<QPoint> & points, QPoint start, QPoint end, QPoint currentPos)
+{
+    for (qint32 x = start.x(); x <= end.x(); ++x)
+    {
+        for (qint32 y = start.y(); y <= end.y(); ++y)
+        {
+            points.append(QPoint(x, y) + currentPos);
+        }
+    }
+}
+
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::placeTerrain", Console::eDEBUG);
@@ -1343,6 +1354,11 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
         case EditorSelection::PlacementSize::Medium:
         {
             points = PathFindingSystem::getFields(x, y, 0, 1);
+            break;
+        }
+        case EditorSelection::PlacementSize::BigSquare:
+        {
+            getSquareTiles(points, QPoint(-1, -1), QPoint(1, 1), QPoint(x, y));
             break;
         }
         case EditorSelection::PlacementSize::Big:
@@ -1405,6 +1421,11 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         case EditorSelection::PlacementSize::Medium:
         {
             points = PathFindingSystem::getFields(x, y, 0, 1);
+            break;
+        }
+        case EditorSelection::PlacementSize::BigSquare:
+        {
+            getSquareTiles(points, QPoint(-1, -1), QPoint(1, 1), QPoint(x, y));
             break;
         }
         case EditorSelection::PlacementSize::Big:
@@ -1484,6 +1505,11 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         case EditorSelection::PlacementSize::Medium:
         {
             points = PathFindingSystem::getFields(x, y, 0, 1);
+            break;
+        }
+        case EditorSelection::PlacementSize::BigSquare:
+        {
+            getSquareTiles(points, QPoint(-1, -1), QPoint(1, 1), QPoint(x, y));
             break;
         }
         case EditorSelection::PlacementSize::Big:
@@ -1704,6 +1730,11 @@ void EditorMenue::selectionChanged()
             case EditorSelection::PlacementSize::Medium:
             {
                 createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(1, -1), CursorModes::Circle);
+                break;
+            }
+            case EditorSelection::PlacementSize::BigSquare:
+            {
+                createMarkedArea(m_cursorActor, QPoint(-1, -1), QPoint(1, 1), CursorModes::Rect);
                 break;
             }
             case EditorSelection::PlacementSize::Big:

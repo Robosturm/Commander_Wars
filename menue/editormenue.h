@@ -381,6 +381,7 @@ protected slots:
     virtual void onEnter() override;
 private:
     void updateGrids();
+    void getSquareTiles(QVector<QPoint> & points, QPoint start, QPoint end, QPoint currentPos);
 private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};

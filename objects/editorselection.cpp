@@ -310,27 +310,39 @@ void EditorSelection::createBoxPlacementSize()
         emit sigSelectionChanged();
     });
 
+    oxygine::spSprite pSpriteBigSquare = oxygine::spSprite::create();
+    pAnim = pObjectManager->getResAnim("editor+big+square");
+    pSpriteBigSquare->setResAnim(pAnim);
+    pSpriteBigSquare->setPosition(m_frameSize + xChange * 3, yStartPos );
+    m_BoxPlacementSize->addChild(pSpriteBigSquare);
+    pSpriteBigSquare->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)
+    {
+        m_SizeMode = PlacementSize::BigSquare;
+        pCurrentSelectorSize->setPosition(m_frameSize + xChange * 3, yStartPos);
+        emit sigSelectionChanged();
+    });
+
     oxygine::spSprite pSpriteBig = oxygine::spSprite::create();
     pAnim = pObjectManager->getResAnim("editor+big");
     pSpriteBig->setResAnim(pAnim);
-    pSpriteBig->setPosition(m_frameSize + xChange * 3, yStartPos );
+    pSpriteBig->setPosition(m_frameSize + xChange * 4, yStartPos );
     m_BoxPlacementSize->addChild(pSpriteBig);
     pSpriteBig->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)
     {
         m_SizeMode = PlacementSize::Big;
-        pCurrentSelectorSize->setPosition(m_frameSize + xChange * 3, yStartPos);
+        pCurrentSelectorSize->setPosition(m_frameSize + xChange * 4, yStartPos);
         emit sigSelectionChanged();
     });
 
     oxygine::spSprite pSpriteFill = oxygine::spSprite::create();
     pAnim = pObjectManager->getResAnim("editor+fill");
     pSpriteFill->setResAnim(pAnim);
-    pSpriteFill->setPosition(m_frameSize + xChange * 4, yStartPos );
+    pSpriteFill->setPosition(m_frameSize + xChange * 5, yStartPos );
     m_BoxPlacementSize->addChild(pSpriteFill);
     pSpriteFill->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)
     {
         m_SizeMode = PlacementSize::Fill;
-        pCurrentSelectorSize->setPosition(m_frameSize + xChange * 4, yStartPos);
+        pCurrentSelectorSize->setPosition(m_frameSize + xChange * 5, yStartPos);
         emit sigSelectionChanged();
     });
 }
