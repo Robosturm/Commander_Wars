@@ -6,7 +6,7 @@ var Constructor = function()
         if (building.getOwnerID() >= 0 && !neutral)
         {
             // none neutral player
-            building.loadSprite("factory", false);
+            building.loadSprite("factory", false, 200);
             building.loadSpriteV2("factory+mask", GameEnums.Recoloring_Matrix);
         }
         else
