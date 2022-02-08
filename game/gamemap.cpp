@@ -590,7 +590,10 @@ void GameMap::syncTerrainAnimations(bool showLoadingScreen)
         }
         for (qint32 x = 0; x < width; x++)
         {
-            m_fields[y][x]->syncAnimation(timeMs);
+            spTerrain pTerrain = m_fields[y][x];
+            pTerrain->syncAnimation(timeMs);
+            pTerrain->detach();
+            addChild(pTerrain);
         }
     }
 }
@@ -1089,7 +1092,15 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
             if (!removeUnit)
             {
                 pTerrain->setUnit(pUnit);
-            }            
+            }
+            // force consistent rendering order for terrains
+            qint32 mapWidth = getMapWidth();
+            for (qint32 xPos = x + 1; xPos < mapWidth; xPos++)
+            {
+                spTerrain pTerrain = m_fields[y][xPos];
+                pTerrain->detach();
+                addChild(pTerrain);
+            }
         }
         else
         {

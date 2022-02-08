@@ -6,6 +6,18 @@ var BUILDING =
     {
         building.setVisionHigh(1);
     },
+
+    getBuildingBaseTerrain : function(building, map)
+    {
+        var terrain = building.getTerrain();
+        var baseId = "plains";
+        if (terrain !== null)
+        {
+            baseId = terrain.getBaseTerrainID().toLowerCase();
+        }
+        return baseId;
+    },
+
     getName : function(building, map)
     {
         return "";

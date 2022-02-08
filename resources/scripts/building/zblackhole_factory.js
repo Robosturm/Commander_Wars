@@ -6,7 +6,7 @@ var Constructor = function()
         building.setAlwaysVisble(true);
     };
     
-    this.loadSprites = function(building, neutral)
+    this.loadSprites = function(building, neutral, map)
     {
         if (building.getOwnerID() >= 0 && !neutral)
         {
@@ -17,6 +17,7 @@ var Constructor = function()
         {
             building.loadSprite("blackhole+factory+neutral", false);
         }
+        building.loadSprite("blackhole+factory+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.getDefense = function(building)
     {

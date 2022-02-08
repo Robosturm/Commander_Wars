@@ -67,7 +67,6 @@ bool TextInput::doHandleEvent(QEvent *event)
             case QEvent::Shortcut:
             case QEvent::ShortcutOverride:
             {
-                CONSOLE_PRINT("Handling event: " + QString::number(event->type()), Console::eDEBUG);
                 ret = m_lineEdit->event(event);
                 break;
             }

@@ -3,27 +3,43 @@
     <set path = "resources/images/building/" />
     <atlas linearFilter = "false">
         <!-- factory -->
-        <image file="factory.png" cols = "4" />
+        <image file="factory.png" cols = "8" />
         <image file="factory+mask.png" cols = "4" />
         <image file="factory+snow.png" cols = "4" />
         <image file="factory+neutral.png" />
+        <image file="factory+shadow+desert.png" />
+        <image file="factory+shadow+snow.png" />
+        <image file="factory+shadow+plains.png" />
+        <image file="factory+shadow+waste.png" />
         
         <!-- harbour -->
         <image file="harbour.png" cols = "2" />
         <image file="harbour+mask.png" cols = "2" />
         <image file="harbour+snow.png" cols = "2" />
         <image file="harbour+neutral.png" />
+        <image file="harbour+shadow+desert.png" />
+        <image file="harbour+shadow+snow.png" />
+        <image file="harbour+shadow+plains.png" />
+        <image file="harbour+shadow+waste.png" />
         
         <!-- temporary harbour -->
         <image file="temporary_harbour.png" cols = "2" />
         <image file="temporary_harbour+mask.png" cols = "2" />
         <image file="temporary_harbour+snow.png" cols = "2" />
         <image file="temporary_harbour+neutral.png" />
+        <image file="temporary_harbour+shadow+desert.png" />
+        <image file="temporary_harbour+shadow+snow.png" />
+        <image file="temporary_harbour+shadow+plains.png" />
+        <image file="temporary_harbour+shadow+waste.png" />
         
         <!-- mine -->
         <image file="mine.png" cols = "2" />
         <image file="mine+mask.png" cols = "2" />
         <image file="mine+neutral.png" />
+        <image file="mine+shadow+desert.png" />
+        <image file="mine+shadow+snow.png" />
+        <image file="mine+shadow+plains.png" />
+        <image file="mine+shadow+waste.png" />
         
         <!-- oilrig -->
         <image file="oilrig.png" cols = "2" />
@@ -36,52 +52,96 @@
         <image file="pipestation+mask.png" cols = "2" />
         <image file="pipestation+snow.png" cols = "2" />
         <image file="pipestation+neutral.png" />
+        <image file="pipestation+shadow+desert.png" />
+        <image file="pipestation+shadow+snow.png" />
+        <image file="pipestation+shadow+plains.png" />
+        <image file="pipestation+shadow+waste.png" />
         
         <!-- radar -->
         <image file="radar.png" cols = "2" />
         <image file="radar+mask.png" cols = "2" />
         <image file="radar+snow.png" cols = "2" />
         <image file="radar+neutral.png" />
+        <image file="radar+shadow+desert.png" />
+        <image file="radar+shadow+snow.png" />
+        <image file="radar+shadow+plains.png" />
+        <image file="radar+shadow+waste.png" />
         
         <!-- tower -->
         <image file="tower.png" cols = "2" />
         <image file="tower+mask.png" cols = "2" />
         <image file="tower+snow.png" cols = "2" />
         <image file="tower+neutral.png" />
+        <image file="tower+shadow+desert.png" />
+        <image file="tower+shadow+snow.png" />
+        <image file="tower+shadow+plains.png" />
+        <image file="tower+shadow+waste.png" />
         
         <!-- town -->
         <image file="town.png" cols = "2" />
         <image file="town+mask.png" cols = "2" />
         <image file="town+snow.png" cols = "2" />
         <image file="town+neutral.png" />
+        <image file="town+shadow+desert.png" />
+        <image file="town+shadow+snow.png" />
+        <image file="town+shadow+plains.png" />
+        <image file="town+shadow+waste.png" />
         
         <!-- airport -->
         <image file="airport.png" cols = "2" />
         <image file="airport+mask.png" cols = "2" />
         <image file="airport+snow.png" cols = "2" />
         <image file="airport+neutral.png" />
+        <image file="airport+shadow+desert.png" />
+        <image file="airport+shadow+snow.png" />
+        <image file="airport+shadow+plains.png" />
+        <image file="airport+shadow+waste.png" />
         
         <!-- temporary airport -->
         <image file="temporary_airport.png" cols = "2" />
         <image file="temporary_airport+mask.png" cols = "2" />
         <image file="temporary_airport+snow.png" cols = "2" />
         <image file="temporary_airport+neutral.png" />
+        <image file="temporary_airport+shadow+desert.png" />
+        <image file="temporary_airport+shadow+snow.png" />
+        <image file="temporary_airport+shadow+plains.png" />
+        <image file="temporary_airport+shadow+waste.png" />
         
         <!-- labor -->
         <image file="labor.png" cols = "2" />
         <image file="labor+mask.png" cols = "2" />
         <image file="labor+snow.png" cols = "2" />
         <image file="labor+neutral.png" />
+        <image file="labor+shadow+desert.png" />
+        <image file="labor+shadow+snow.png" />
+        <image file="labor+shadow+plains.png" />
+        <image file="labor+shadow+waste.png" />
         
         <!-- labor -->
         <image file="silo.png" />
+        <image file="silo+shadow+desert.png" />
+        <image file="silo+shadow+snow.png" />
+        <image file="silo+shadow+plains.png" />
+        <image file="silo+shadow+waste.png" />
         <image file="silo+rocket.png" />
+        <image file="silo+rocket+shadow+desert.png" />
+        <image file="silo+rocket+shadow+snow.png" />
+        <image file="silo+rocket+shadow+plains.png" />
+        <image file="silo+rocket+shadow+waste.png" />
         
         <!-- gate -->
         <image file="gate+e+w.png" />
         <image file="gate+e+w+mask.png" />
+        <image file="gate+e+w+shadow+desert.png" />
+        <image file="gate+e+w+shadow+snow.png" />
+        <image file="gate+e+w+shadow+plains.png" />
+        <image file="gate+e+w+shadow+waste.png" />
         <image file="gate+n+s.png" />
         <image file="gate+n+s+mask.png" />
+        <image file="gate+n+s+shadow+desert.png" />
+        <image file="gate+n+s+shadow+snow.png" />
+        <image file="gate+n+s+shadow+plains.png" />
+        <image file="gate+n+s+shadow+waste.png" />
         
         <!-- weld -->
         <image file="weld+E+W.png" />
@@ -105,54 +165,106 @@
         <image file="hq+ac.png" cols = "2" />
         <image file="hq+ac+mask.png" cols = "2" />
         <image file="hq+ac+snow.png" cols = "2" />
+        <image file="hq+ac+shadow+desert.png" />
+        <image file="hq+ac+shadow+snow.png" />
+        <image file="hq+ac+shadow+plains.png" />
+        <image file="hq+ac+shadow+waste.png" />
 		
         <image file="hq+bd.png" cols = "2" />
         <image file="hq+bd+mask.png" cols = "2" />
-		<image file="hq+bd+snow.png" cols = "2" />
+        <image file="hq+bd+snow.png" cols = "2" />
+        <image file="hq+bd+shadow+desert.png" />
+        <image file="hq+bd+shadow+snow.png" />
+        <image file="hq+bd+shadow+plains.png" />
+        <image file="hq+bd+shadow+waste.png" />
 		
         <image file="hq+bg.png" cols = "2" />
         <image file="hq+bg+mask.png" cols = "2" />
-		<image file="hq+bg+snow.png" cols = "2" />
+        <image file="hq+bg+snow.png" cols = "2" />
+        <image file="hq+bg+shadow+desert.png" />
+        <image file="hq+bg+shadow+snow.png" />
+        <image file="hq+bg+shadow+plains.png" />
+        <image file="hq+bg+shadow+waste.png" />
 		
         <image file="hq+bh.png" cols = "2" />
         <image file="hq+bh+mask.png" cols = "2" />
-		<image file="hq+bh+snow.png" cols = "2" />
+        <image file="hq+bh+snow.png" cols = "2" />
+        <image file="hq+bh+shadow+desert.png" />
+        <image file="hq+bh+shadow+snow.png" />
+        <image file="hq+bh+shadow+plains.png" />
+        <image file="hq+bh+shadow+waste.png" />
 		
         <image file="hq+bm.png" cols = "2" />
         <image file="hq+bm+mask.png" cols = "2" />
-		<image file="hq+bm+snow.png" cols = "2" />
+        <image file="hq+bm+snow.png" cols = "2" />
+        <image file="hq+bm+shadow+desert.png" />
+        <image file="hq+bm+shadow+snow.png" />
+        <image file="hq+bm+shadow+plains.png" />
+        <image file="hq+bm+shadow+waste.png" />
 		
         <image file="hq+dm.png" cols = "2" />
         <image file="hq+dm+mask.png" cols = "2" />
-		<image file="hq+dm+snow.png" cols = "2" />
+        <image file="hq+dm+snow.png" cols = "2" />
+        <image file="hq+dm+shadow+desert.png" />
+        <image file="hq+dm+shadow+snow.png" />
+        <image file="hq+dm+shadow+plains.png" />
+        <image file="hq+dm+shadow+waste.png" />
 		
         <image file="hq+ge.png" cols = "2" />
         <image file="hq+ge+mask.png" cols = "2" />
-		<image file="hq+ge+snow.png" cols = "2" />
+        <image file="hq+ge+snow.png" cols = "2" />
+        <image file="hq+ge+shadow+desert.png" />
+        <image file="hq+ge+shadow+snow.png" />
+        <image file="hq+ge+shadow+plains.png" />
+        <image file="hq+ge+shadow+waste.png" />
 		
         <image file="hq+gs.png" cols = "2" />
         <image file="hq+gs+mask.png" cols = "2" />
-		<image file="hq+gs+snow.png" cols = "2" />
+        <image file="hq+gs+snow.png" cols = "2" />
+        <image file="hq+gs+shadow+desert.png" />
+        <image file="hq+gs+shadow+snow.png" />
+        <image file="hq+gs+shadow+plains.png" />
+        <image file="hq+gs+shadow+waste.png" />
 		
         <image file="hq+ma.png" cols = "2" />
         <image file="hq+ma+mask.png" cols = "2" />
-		<image file="hq+ma+snow.png" cols = "2" />
+        <image file="hq+ma+snow.png" cols = "2" />
+        <image file="hq+ma+shadow+desert.png" />
+        <image file="hq+ma+shadow+snow.png" />
+        <image file="hq+ma+shadow+plains.png" />
+        <image file="hq+ma+shadow+waste.png" />
 		
         <image file="hq+os.png" cols = "2" />
         <image file="hq+os+mask.png" cols = "2" />
-		<image file="hq+os+snow.png" cols = "2" />
+        <image file="hq+os+snow.png" cols = "2" />
+        <image file="hq+os+shadow+desert.png" />
+        <image file="hq+os+shadow+snow.png" />
+        <image file="hq+os+shadow+plains.png" />
+        <image file="hq+os+shadow+waste.png" />
 		
         <image file="hq+pf.png" cols = "2" />
         <image file="hq+pf+mask.png" cols = "2" />
-		<image file="hq+pf+snow.png" cols = "2" />
+        <image file="hq+pf+snow.png" cols = "2" />
+        <image file="hq+pf+shadow+desert.png" />
+        <image file="hq+pf+shadow+snow.png" />
+        <image file="hq+pf+shadow+plains.png" />
+        <image file="hq+pf+shadow+waste.png" />
 		
         <image file="hq+ti.png" cols = "2" />
         <image file="hq+ti+mask.png" cols = "2" />
-		<image file="hq+ti+snow.png" cols = "2" />
+        <image file="hq+ti+snow.png" cols = "2" />
+        <image file="hq+ti+shadow+desert.png" />
+        <image file="hq+ti+shadow+snow.png" />
+        <image file="hq+ti+shadow+plains.png" />
+        <image file="hq+ti+shadow+waste.png" />
 		
         <image file="hq+yc.png" cols = "2" />
         <image file="hq+yc+mask.png" cols = "2" />
-		<image file="hq+yc+snow.png" cols = "2" />
+        <image file="hq+yc+snow.png" cols = "2" />
+        <image file="hq+yc+shadow+desert.png" />
+        <image file="hq+yc+shadow+snow.png" />
+        <image file="hq+yc+shadow+plains.png" />
+        <image file="hq+yc+shadow+waste.png" />
 		
         <image file="hq+neutral.png" />
         <image file="hq+neutral+snow.png" />
@@ -160,27 +272,84 @@
         <!-- Block Hole Stuff -->
         <image file="black_cannon+E.png" cols = "2" />
         <image file="black_cannon+E+mask.png" cols = "2" />
+        <image file="black_cannon+E+shadow+desert.png" />
+        <image file="black_cannon+E+shadow+snow.png" />
+        <image file="black_cannon+E+shadow+plains.png" />
+        <image file="black_cannon+E+shadow+waste.png" />
+
         <image file="black_cannon+S.png" cols = "2" />
         <image file="black_cannon+S+mask.png" cols = "2" />
+        <image file="black_cannon+S+shadow+desert.png" />
+        <image file="black_cannon+S+shadow+snow.png" />
+        <image file="black_cannon+S+shadow+plains.png" />
+        <image file="black_cannon+S+shadow+waste.png" />
+
         <image file="black_cannon+N.png" cols = "2" />
         <image file="black_cannon+N+mask.png" cols = "2" />
+        <image file="black_cannon+N+shadow+desert.png" />
+        <image file="black_cannon+N+shadow+snow.png" />
+        <image file="black_cannon+N+shadow+plains.png" />
+        <image file="black_cannon+N+shadow+waste.png" />
+
         <image file="black_cannon+W.png" cols = "2" />
         <image file="black_cannon+W+mask.png" cols = "2" />
+        <image file="black_cannon+W+shadow+desert.png" />
+        <image file="black_cannon+W+shadow+snow.png" />
+        <image file="black_cannon+W+shadow+plains.png" />
+        <image file="black_cannon+W+shadow+waste.png" />
+
         <image file="crystall.png" />
         <image file="crystall+mask.png" />
+        <!--
+        <image file="crystall+shadow+desert.png" />
+        <image file="crystall+shadow+snow.png" />
+        <image file="crystall+shadow+waste.png" />
+        -->
+        <image file="crystall+shadow+plains.png" />
+
         <image file="laser.png" cols = "2" />
         <image file="laser+mask.png" cols = "2" />
+        <image file="laser+shadow+desert.png" />
+        <image file="laser+shadow+snow.png" />
+        <image file="laser+shadow+plains.png" />
+        <image file="laser+shadow+waste.png" />
+
         <image file="deathray+E.png" cols = "2" />
         <image file="deathray+E+mask.png" cols = "2" />
+        <image file="deathray+E+shadow+desert.png" />
+        <image file="deathray+E+shadow+snow.png" />
+        <image file="deathray+E+shadow+plains.png" />
+        <image file="deathray+E+shadow+waste.png" />
+
         <image file="deathray+S.png" cols = "2" />
         <image file="deathray+S+mask.png" cols = "2" />
+        <image file="deathray+S+shadow+desert.png" />
+        <image file="deathray+S+shadow+snow.png" />
+        <image file="deathray+S+shadow+plains.png" />
+        <image file="deathray+S+shadow+waste.png" />
+
         <image file="deathray+N.png" cols = "2" />
         <image file="deathray+N+mask.png" cols = "2" />
+        <image file="deathray+N+shadow+desert.png" />
+        <image file="deathray+N+shadow+snow.png" />
+        <image file="deathray+N+shadow+plains.png" />
+        <image file="deathray+N+shadow+waste.png" />
+
         <image file="deathray+W.png" cols = "2" />
         <image file="deathray+W+mask.png" cols = "2" />
+        <image file="deathray+W+shadow+desert.png" />
+        <image file="deathray+W+shadow+snow.png" />
+        <image file="deathray+W+shadow+plains.png" />
+        <image file="deathray+W+shadow+waste.png" />
+
         <image file="fortress.png" cols = "2" />
         <image file="fortress+mask.png" cols = "2" />
-        <image file="fortress+neutral.png" />        
+        <image file="fortress+neutral.png" />
+        <image file="fortress+shadow+desert.png" />
+        <image file="fortress+shadow+snow.png" />
+        <image file="fortress+shadow+plains.png" />
+        <image file="fortress+shadow+waste.png" />
+
         <image file="minicannon+E.png" />
         <image file="minicannon+E+mask.png" />
         <image file="minicannon+S.png" />
@@ -188,17 +357,46 @@
         <image file="minicannon+W.png" />
         <image file="minicannon+W+mask.png" />
         <image file="minicannon+N.png" />
-        <image file="minicannon+N+mask.png" />        
+        <image file="minicannon+N+mask.png" />
+        <image file="minicannon+shadow+desert.png" />
+        <image file="minicannon+shadow+snow.png" />
+        <image file="minicannon+shadow+plains.png" />
+        <image file="minicannon+shadow+waste.png" />
+
         <image file="monolith.png" cols = "2" />
         <image file="monolith+mask.png" cols = "2" />
+        <image file="monolith+shadow+desert.png" />
+        <image file="monolith+shadow+snow.png" />
+        <image file="monolith+shadow+plains.png" />
+        <image file="monolith+shadow+waste.png" />
+
         <image file="omega+base.png" cols = "2" />
         <image file="omega+base+mask.png" cols = "2" />
-        <image file="omega+base+neutral.png" />    
+        <image file="omega+base+neutral.png" />
+        <image file="omega+base+shadow+desert.png" />
+        <image file="omega+base+shadow+snow.png" />
+        <image file="omega+base+shadow+plains.png" />
+        <image file="omega+base+shadow+waste.png" />
+
         <image file="blackhole+factory.png" cols = "2" />
         <image file="blackhole+factory+mask.png" cols = "2" />        
         <image file="blackhole+factory+neutral.png" />
+        <image file="blackhole+factory+shadow+desert.png" />
+        <image file="blackhole+factory+shadow+snow.png" />
+        <image file="blackhole+factory+shadow+plains.png" />
+        <image file="blackhole+factory+shadow+waste.png" />
+
         <image file="volcan.png" />
-        <image file="black_building_destroyed.png" />        
+        <image file="volcan+desert.png" />
+        <image file="volcan+snow.png" />
+        <image file="volcan+waste.png" />
+
+        <image file="black_building_destroyed.png" />
+        <image file="black_building_destroyed+shadow+desert.png" />
+        <image file="black_building_destroyed+shadow+snow.png" />
+        <image file="black_building_destroyed+shadow+plains.png" />
+        <image file="black_building_destroyed+shadow+waste.png" />
+
         <image file="talon+gun.png" cols = "2" />        
         <image file="talon+gun+mask.png" cols = "2" />        
         <image file="talon+gun+destroyed.png" />        

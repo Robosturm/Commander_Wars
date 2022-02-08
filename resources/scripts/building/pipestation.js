@@ -1,7 +1,7 @@
 var Constructor = function()
 {
     
-    this.loadSprites = function(building, neutral)
+    this.loadSprites = function(building, neutral, map)
     {
         if (building.getOwnerID() >= 0 && !neutral)
         {
@@ -14,6 +14,7 @@ var Constructor = function()
             // neutral player
             building.loadSprite("pipestation+neutral", false);
         }
+        building.loadSprite("pipestation+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.actionList = ["ACTION_BUILD_UNITS"];
     this.constructionList = ["PIPERUNNER"];

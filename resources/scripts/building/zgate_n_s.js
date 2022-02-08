@@ -6,10 +6,11 @@ var Constructor = function()
         building.setAlwaysVisble(true);
     };
     
-    this.loadSprites = function(building)
+    this.loadSprites = function(building, neutral, map)
     {
         building.loadSprite("gate+N+S", false);
         building.loadSpriteV2("gate+N+S+mask", GameEnums.Recoloring_Matrix);
+        building.loadSprite("gate+N+S+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.getBaseIncome = function()
     {

@@ -1,7 +1,7 @@
 var Constructor = function()
 {
     
-    this.loadSprites = function(building, neutral)
+    this.loadSprites = function(building, neutral, map)
     {
         if (building.getOwnerID() >= 0 && !neutral)
         {
@@ -14,6 +14,7 @@ var Constructor = function()
             // neutral player
             building.loadSprite("factory+neutral", false);
         }
+        building.loadSprite("factory+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.getName = function()
     {
