@@ -164,6 +164,11 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_PerkText->setX(10);
     addChild(m_PerkText);
 
+    m_powerProgress = oxygine::spTextField::create();
+    m_powerProgress->setStyle(style);
+    m_powerProgress->setX(10);
+    addChild(m_powerProgress);
+
     m_GlobalBoosts = oxygine::spTextField::create();
     m_GlobalBoosts->setStyle(style);
     m_GlobalBoosts->setHtmlText(tr("Global Boosts"));
@@ -197,15 +202,16 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_pCoPowermeter->setMap(m_pMap);
     m_pCurrentCO->setResAnim(pAnim);
 
-    QString coName = "";
-    QString coBio = "";
-    QString coHits = "";
-    QString coMiss = "";
-    QString coDesc = "";
-    QString coPower = "";
-    QString coPowerDesc = "";
-    QString coSuperpower = "";
-    QString coSuperpowerDesc = "";
+    QString coName = "Unknown";
+    QString coBio = "Unknown";
+    QString coHits = "Unknown";
+    QString coMiss = "Unknown";
+    QString coDesc = "Unknown";
+    QString coPower = "Unknown";
+    QString coPowerDesc = "Unknown";
+    QString coSuperpower = "Unknown";
+    QString coSuperpowerDesc = "Unknown";
+    QString powerProgress = "-/-";
     qint32 corange = 0;
     if (pCO.get() != nullptr)
     {
@@ -256,7 +262,27 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_pCoPowermeter->drawPowerMeter();
     m_pCoPowermeter->setY(m_InfoText->getY() + m_InfoText->getTextRect().getHeight() + 20);
     m_pCoPowermeter->setX(20);
-    m_PowerSprite->setY(m_pCoPowermeter->getY() + 40);
+
+    if (pCO.get() != nullptr)
+    {
+        float starCost = pCO->getStarCost();
+        float powerStars = pCO->getPowerFilled();
+        powerProgress = QString::number(static_cast<qint32>(powerStars * starCost));
+        powerProgress += " / ";
+        qint32 powerCost = pCO->getPowerStars();
+        if (powerStars > powerCost)
+        {
+            powerProgress += QString::number(static_cast<qint32>((powerCost + pCO->getSuperpowerStars()) * starCost));
+        }
+        else
+        {
+            powerProgress += QString::number(static_cast<qint32>(powerCost * starCost));
+        }
+    }
+    m_powerProgress->setText(tr("Progress: ") + powerProgress);
+    m_powerProgress->setY(m_pCoPowermeter->getY() + 40);
+
+    m_PowerSprite->setY(m_powerProgress->getY() + 40);
     m_Powername->setY(m_PowerSprite->getY());
     m_PowerDesc->setY(m_Powername->getY() + 40);
     m_Powername->setHtmlText(coPower);
@@ -339,6 +365,11 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             }
         }
     }
+    else
+    {
+        m_SynergyText->setY(y);
+        y += 40;
+    }
 
     m_PerkText->setPosition(10, y);
     y += 40;
@@ -403,6 +434,11 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
                 showCOBoost(pUnit, pCO, x, y);
             }
         }
+    }
+    else
+    {
+        m_CoBoost->setPosition(10, y);
+        y += GameMap::getImageSize() * 2 + textAdvance;
     }
     setHeight(y + 100);
     connect(this, &COInfoActor::sigShowLink, this, &COInfoActor::showLink, Qt::QueuedConnection);    

@@ -732,6 +732,11 @@ public slots:
      * @param info
      */
     void getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info);
+    /**
+     * @brief getStarCost
+     * @return
+     */
+    float getStarCost();
 
 protected:
     void limitPowerbar(float previousValue);

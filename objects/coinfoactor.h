@@ -88,6 +88,8 @@ protected:
     oxygine::spSprite m_InfoSprite;
     oxygine::spTextField m_InfoText;
 
+    oxygine::spTextField m_powerProgress;
+
     oxygine::spSprite m_PowerSprite;
     oxygine::spTextField m_Powername;
     oxygine::spTextField m_PowerDesc;

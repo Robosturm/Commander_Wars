@@ -18,10 +18,10 @@ var Constructor = function()
         var data = Global.getDataFromTable(armyName, BATTLEANIMATION_NEOTANK.animationData);
         sprite.loadMovingSpriteV2("neotank+" + armyName + "+move+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(data[0], 5),
                                   data[1], data[2], false,
-                                  1, 1);
+                                  -1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(data[0] - 20, 7),
                                 data[1], data[2], false,
-                                1, 1);
+                                -1, 1);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("neotank_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);

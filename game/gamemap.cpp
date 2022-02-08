@@ -687,7 +687,7 @@ void GameMap::removePlayer(qint32 index)
     m_players.removeAt(index);
 }
 
-Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* owner, qint32 range)
+Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* owner, qint32 range, bool ignoreMovement)
 {
     CONSOLE_PRINT("spawning Unit", Console::eDEBUG);
     if (owner != nullptr)
@@ -729,7 +729,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* own
             spTerrain pTerrain = spTerrain(getTerrain(x, y));
             if (pTerrain.get() != nullptr &&
                 (pTerrain->getUnit() == nullptr) &&
-                (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
+                (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
             {
                 pTerrain->setUnit(pUnit);
                 return pUnit.get();
@@ -754,7 +754,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* own
                     spTerrain pTerrain = spTerrain(getTerrain(x + x2 - currentRadius, y + y2));
                     if (pTerrain.get() != nullptr &&
                         (pTerrain->getUnit() == nullptr) &&
-                        (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
+                        (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
                     {
                         pTerrain->setUnit(pUnit);
                         return pUnit.get();
@@ -770,7 +770,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* own
                     spTerrain pTerrain = spTerrain(getTerrain(x + x2, y + y2));
                     if ((pTerrain.get() != nullptr &&
                          pTerrain->getUnit() == nullptr) &&
-                        (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
+                        (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
                     {
                         pTerrain->setUnit(pUnit);
                         return pUnit.get();
@@ -786,7 +786,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* own
                     spTerrain pTerrain = spTerrain(getTerrain(x + x2, y + y2));
                     if ((pTerrain.get() != nullptr &&
                          pTerrain->getUnit() == nullptr) &&
-                        (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
+                        (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
                     {
                         pTerrain->setUnit(pUnit);
                         return pUnit.get();
@@ -802,7 +802,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* own
                     spTerrain pTerrain = spTerrain(getTerrain(x + x2, y + y2));
                     if ((pTerrain.get() != nullptr &&
                          pTerrain->getUnit() == nullptr) &&
-                        (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
+                        (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
                     {
                         pTerrain->setUnit(pUnit);
                         return pUnit.get();

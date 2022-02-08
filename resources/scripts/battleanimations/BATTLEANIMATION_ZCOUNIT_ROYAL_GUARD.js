@@ -10,10 +10,10 @@ var Constructor = function()
         var startX = -105;
         sprite.loadMovingSpriteV2("royal_guard+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(startX, 5),
                                   Qt.point(65, 0), 600, false,
-                                  1, 1);
+                                  -1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(startX - 20, 7),
                                 Qt.point(65, 0), 600, false,
-                                1, 1);
+                                -1, 1);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("heavy_tank_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);

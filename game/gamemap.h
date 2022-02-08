@@ -454,7 +454,7 @@ public slots:
      * @param range the unit will be spawned on an empty field that can be crossed by the unit. This range is the test range where the game tries to spawn the unit. From 0 to anything
      * @return the spawned unit
      */
-    Unit* spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* owner, qint32 range = 0);
+    Unit* spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* owner, qint32 range = 0, bool ignoreMovement = false);
     /**
      * @brief refillAll refills all units ammo and fuel
      */

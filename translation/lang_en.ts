@@ -249,18 +249,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="169"/>
+        <location filename="../objects/coinfoactor.cpp" line="174"/>
         <source>Global Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="175"/>
+        <location filename="../objects/coinfoactor.cpp" line="180"/>
         <source>CO Zone Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="251"/>
+        <location filename="../objects/coinfoactor.cpp" line="257"/>
         <source>CO-Zone-Range: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfoactor.cpp" line="282"/>
+        <source>Progress: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

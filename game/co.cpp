@@ -1397,6 +1397,24 @@ void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, boo
     }
 }
 
+float CO::getStarCost()
+{
+    float starCost = 1.0f;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(m_pMap);
+    args1 << obj2;
+    QString function1 = "getStarCost";
+    QJSValue ret = pInterpreter->doFunction(m_coID, function1, args1);
+    if (ret.isNumber())
+    {
+        starCost = ret.toNumber();
+    }
+    return starCost;
+}
+
 Unit* CO::getCOUnit()
 {
     return m_pCOUnit.get();

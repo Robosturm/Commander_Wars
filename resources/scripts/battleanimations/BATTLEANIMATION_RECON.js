@@ -44,9 +44,9 @@ var Constructor = function()
         var data = Global.getDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
         var movement = 65;
         sprite.loadMovingSpriteV2("recon+" + armyName + "+move+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(data[0].x - movement, 5),
-                                  Qt.point(movement, 0), 600, false, 1, 1);
+                                  Qt.point(movement, 0), 600, false, -1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(data[0].x - movement - 25, 7),
-                                Qt.point(movement, 0), 600, false, 1, 1);
+                                Qt.point(movement, 0), 600, false, -1, 1);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("recon_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);

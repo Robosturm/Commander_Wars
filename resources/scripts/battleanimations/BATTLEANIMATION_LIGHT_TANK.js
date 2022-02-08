@@ -49,7 +49,7 @@ var Constructor = function()
         BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "+move", -1, Qt.point(startX, 5), Qt.point(65, 0), 600);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(startX - 25, 7),
                                 Qt.point(65, 0), 600, false,
-                                1, 1);
+                                -1, 1);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("tank_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
