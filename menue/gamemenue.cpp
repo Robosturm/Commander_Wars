@@ -445,14 +445,15 @@ void GameMenue::loadUIButtons()
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
     m_CurrentRoundTime = oxygine::spTextField::create();
+    m_CurrentRoundTime->setSize(120, 30);
     m_CurrentRoundTime->setStyle(style);
     if (roundTime > 0)
     {
-        pButtonBox->setSize(286 + 70, 50);
-        m_CurrentRoundTime->setPosition(108 + 4, 10);
+        pButtonBox->setSize(286 + 120, 50);
+        m_CurrentRoundTime->setPosition(138 + 5, 10);
         pButtonBox->addChild(m_CurrentRoundTime);
         updateTimer();
     }
@@ -460,7 +461,9 @@ void GameMenue::loadUIButtons()
     {
         pButtonBox->setSize(286, 50);
     }
-    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, Settings::getHeight() - pButtonBox->getHeight() + 6);
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+
+    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) / 2 - pButtonBox->getWidth() / 2, Settings::getHeight() - pButtonBox->getHeight() + 6);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
     oxygine::spButton saveGame = pObjectManager->createButton(tr("Save"), 130);
@@ -1297,7 +1300,7 @@ void GameMenue::showAttackLog(qint32 player)
     m_Focused = false;
     CONSOLE_PRINT("showAttackLog() for player " + QString::number(player), Console::eDEBUG);
     spDialogAttackLog pAttackLog = spDialogAttackLog::create(m_pMap.get(), m_pMap->getPlayer(player));
-    connect(pAttackLog.get(), &DialogAttackLog::sigFinished, [=]()
+    connect(pAttackLog.get(), &DialogAttackLog::sigFinished, this, [=]()
     {
         m_Focused = true;
     });
@@ -1309,7 +1312,7 @@ void GameMenue::showRules()
     m_Focused = false;
     CONSOLE_PRINT("showRuleSelection()", Console::eDEBUG);
     spRuleSelectionDialog pRuleSelection = spRuleSelectionDialog::create(m_pMap.get(), RuleSelection::Mode::Singleplayer, false);
-    connect(pRuleSelection.get(), &RuleSelectionDialog::sigOk, [=]()
+    connect(pRuleSelection.get(), &RuleSelectionDialog::sigOk, this, [=]()
     {
         m_Focused = true;
     });
@@ -1321,7 +1324,7 @@ void GameMenue::showUnitInfo(qint32 player)
     m_Focused = false;
     CONSOLE_PRINT("showUnitInfo() for player " + QString::number(player), Console::eDEBUG);
     spDialogUnitInfo pDialogUnitInfo = spDialogUnitInfo::create(m_pMap->getPlayer(player));
-    connect(pDialogUnitInfo.get(), &DialogUnitInfo::sigFinished, [=]()
+    connect(pDialogUnitInfo.get(), &DialogUnitInfo::sigFinished, this, [=]()
     {
         m_Focused = true;
     });
@@ -1339,7 +1342,7 @@ void GameMenue::showUnitStatistics()
             Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer);
     view->setPosition(30, 30);
     pBox->addItem(view);
-    connect(pBox.get(), &GenericBox::sigFinished, [=]()
+    connect(pBox.get(), &GenericBox::sigFinished, this, [=]()
     {
         m_Focused = true;
     });
@@ -1354,7 +1357,7 @@ void GameMenue::showOptions()
     spGameplayAndKeys pGameplayAndKeys = spGameplayAndKeys::create(Settings::getHeight() - 80);
     pGameplayAndKeys->setY(0);
     pDialogOptions->addItem(pGameplayAndKeys);
-    connect(pDialogOptions.get(), &GenericBox::sigFinished, [=]()
+    connect(pDialogOptions.get(), &GenericBox::sigFinished, this, [=]()
     {
         Settings::saveSettings();
         m_Focused = true;
@@ -1376,7 +1379,7 @@ void GameMenue::showChangeSound()
     pPanel->setContentHeigth(y + 40);
     pPanel->setPosition(10, 10);
     pDialogOptions->addItem(pPanel);
-    connect(pDialogOptions.get(), &GenericBox::sigFinished, [=]()
+    connect(pDialogOptions.get(), &GenericBox::sigFinished, this, [=]()
     {
         Settings::saveSettings();
         m_Focused = true;
@@ -1451,7 +1454,7 @@ void GameMenue::showGameInfo(qint32 player)
         pPanel->setContentHeigth(pTableView->getHeight() + 40);
         pGenericBox->addItem(pPanel);
         addChild(pGenericBox);
-        connect(pGenericBox.get(), &GenericBox::sigFinished, [=]()
+        connect(pGenericBox.get(), &GenericBox::sigFinished, this, [=]()
         {
             m_Focused = true;
         });
@@ -1795,7 +1798,7 @@ void GameMenue::keyInputAll(Qt::Key cur)
             }
             spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pUnit);
             addChild(fieldinfo);
-            connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
+            connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [=]
             {
                 setFocused(true);
             });
@@ -1821,7 +1824,7 @@ void GameMenue::showExitGame()
     m_Focused = false;
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the current game?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &GameMenue::exitGame, Qt::QueuedConnection);
-    connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
+    connect(pExit.get(), &DialogMessageBox::sigCancel, this, [=]()
     {
         m_Focused = true;
     });
@@ -1836,7 +1839,7 @@ void GameMenue::showWiki()
     spWikiView pView = spWikiView::create(Settings::getWidth() - 40, Settings::getHeight() - 60);
     pView->setPosition(20, 20);
     pBox->addItem(pView);
-    connect(pBox.get(), &GenericBox::sigFinished, [=]()
+    connect(pBox.get(), &GenericBox::sigFinished, this, [=]()
     {
         m_Focused = true;
     });
@@ -1852,7 +1855,7 @@ void GameMenue::showSurrenderGame()
         m_Focused = false;
         spDialogMessageBox pSurrender = spDialogMessageBox::create(tr("Do you want to surrender the current game?"), true);
         connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &GameMenue::surrenderGame, Qt::QueuedConnection);
-        connect(pSurrender.get(), &DialogMessageBox::sigCancel, [=]()
+        connect(pSurrender.get(), &DialogMessageBox::sigCancel, this, [=]()
         {
             m_Focused = true;
         });
@@ -1877,11 +1880,11 @@ void GameMenue::showNicknameUnit(qint32 x, qint32 y)
     {
         CONSOLE_PRINT("showNicknameUnit()", Console::eDEBUG);
         spDialogTextInput pDialogTextInput = spDialogTextInput::create(tr("Nickname for the Unit:"), true, pUnit->getName());
-        connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, [=](QString value)
+        connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, this, [=](QString value)
         {
             emit sigNicknameUnit(x, y, value);
         });
-        connect(pDialogTextInput.get(), &DialogTextInput::sigCancel, [=]()
+        connect(pDialogTextInput.get(), &DialogTextInput::sigCancel, this, [=]()
         {
             m_Focused = true;
         });
