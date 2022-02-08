@@ -6459,5 +6459,9 @@
         <file>resources/images/terrain/street+style0+S+W+shadow.png</file>
         <file>resources/images/terrain/street+style0+shadow.png</file>
         <file>resources/images/terrain/street+style0+W+shadow.png</file>
+        <file>resources/scripts/building/zvolcandesert.js</file>
+        <file>resources/scripts/building/zvolcansnow.js</file>
+        <file>resources/scripts/building/zvolcanwaste.js</file>
+        <file>resources/scripts/building/__zvolcanbase.js</file>
     </qresource>
 </RCC>
