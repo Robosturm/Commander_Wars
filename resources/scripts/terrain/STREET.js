@@ -13,7 +13,6 @@ var Constructor = function()
     {
         return __BASESTREET.getSprites("street+style1")
     };
-
 };
 Constructor.prototype = __BASESTREET;
 var STREET = new Constructor();

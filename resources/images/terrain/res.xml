@@ -378,6 +378,23 @@
         <image file="street+style0+S+W.png" />
         <image file="street+style0+W.png" />
 
+        <image file="street+style0+shadow.png" />
+        <image file="street+style0+E+shadow.png" />
+        <image file="street+style0+E+S+shadow.png" />
+        <image file="street+style0+E+S+W+shadow.png" />
+        <image file="street+style0+E+W+shadow.png" />
+        <image file="street+style0+N+shadow.png" />
+        <image file="street+style0+N+E+shadow.png" />
+        <image file="street+style0+N+E+S+shadow.png" />
+        <image file="street+style0+N+E+S+W+shadow.png" />
+        <image file="street+style0+N+E+W+shadow.png" />
+        <image file="street+style0+N+S+shadow.png" />
+        <image file="street+style0+N+S+W+shadow.png" />
+        <image file="street+style0+N+W+shadow.png" />
+        <image file="street+style0+S+shadow.png" />
+        <image file="street+style0+S+W+shadow.png" />
+        <image file="street+style0+W+shadow.png" />
+
         <image file="street+style1.png" />
         <image file="street+style1+E.png" />
         <image file="street+style1+E+S.png" />
@@ -734,6 +751,22 @@
         <image file="snow_street+style0+S.png" />
         <image file="snow_street+style0+S+W.png" />
         <image file="snow_street+style0+W.png" />
+        <image file="snow_street+style0+shadow.png" />
+        <image file="snow_street+style0+E+shadow.png" />
+        <image file="snow_street+style0+E+S+shadow.png" />
+        <image file="snow_street+style0+E+S+W+shadow.png" />
+        <image file="snow_street+style0+E+W+shadow.png" />
+        <image file="snow_street+style0+N+shadow.png" />
+        <image file="snow_street+style0+N+E+shadow.png" />
+        <image file="snow_street+style0+N+E+S+shadow.png" />
+        <image file="snow_street+style0+N+E+S+W+shadow.png" />
+        <image file="snow_street+style0+N+E+W+shadow.png" />
+        <image file="snow_street+style0+N+S+shadow.png" />
+        <image file="snow_street+style0+N+S+W+shadow.png" />
+        <image file="snow_street+style0+N+W+shadow.png" />
+        <image file="snow_street+style0+S+shadow.png" />
+        <image file="snow_street+style0+S+W+shadow.png" />
+        <image file="snow_street+style0+W+shadow.png" />
 
         <!-- desert stuff here comes zandra -->
         <image file="desert+0.png" />

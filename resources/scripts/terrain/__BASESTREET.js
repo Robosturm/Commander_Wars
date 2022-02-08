@@ -89,10 +89,17 @@ var Constructor = function()
 
     this.loadBase = function(terrain, spriteId, map)
     {
-        var surroundings = terrain.getSurroundings("STREET,STREET1,BRIDGE,BRIDGE1,SNOW_STREET,DESERT_PATH,DESERT_PATH1,WASTE_PATH",
-                                                false, false, GameEnums.Directions_Direct, false, true);
+        var surroundings = __BASESTREET.getStreetSurrounding(terrain);
         terrain.loadBaseSprite(spriteId + surroundings);
     };
+
+    this.getStreetSurrounding = function(terrain)
+    {
+        var surroundings = terrain.getSurroundings("STREET,STREET1,BRIDGE,BRIDGE1,SNOW_STREET,DESERT_PATH,DESERT_PATH1,WASTE_PATH",
+                                                false, false, GameEnums.Directions_Direct, false, true);
+        return surroundings;
+    };
+
     this.getMiniMapIcon = function(terrain)
     {
         var baseTerrainId = ""
