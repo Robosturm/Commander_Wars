@@ -10,7 +10,7 @@ var Constructor = function()
     {
         building.loadSprite("crystall", false);
         building.loadSpriteV2("crystall+mask", GameEnums.Recoloring_Matrix);
-        building.loadSprite("crystall+shadow+plains"); // +" + BUILDING.getBuildingBaseTerrain(building, map), false);
+        building.loadSprite("crystall+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.getDefense = function(building)
     {

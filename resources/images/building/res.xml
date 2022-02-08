@@ -300,11 +300,9 @@
 
         <image file="crystall.png" />
         <image file="crystall+mask.png" />
-        <!--
         <image file="crystall+shadow+desert.png" />
         <image file="crystall+shadow+snow.png" />
         <image file="crystall+shadow+waste.png" />
-        -->
         <image file="crystall+shadow+plains.png" />
 
         <image file="laser.png" cols = "2" />

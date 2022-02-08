@@ -6420,5 +6420,44 @@
         <file>resources/images/building/hq+pf+shadow+snow.png</file>
         <file>resources/images/building/hq+pf+shadow+waste.png</file>
         <file>resources/images/building/crystall+shadow+plains.png</file>
+        <file>resources/images/building/crystall+shadow+desert.png</file>
+        <file>resources/images/building/crystall+shadow+snow.png</file>
+        <file>resources/images/building/crystall+shadow+waste.png</file>
+        <file>resources/images/terrain/shadow_desert.png</file>
+        <file>resources/images/terrain/shadow_plains.png</file>
+        <file>resources/images/terrain/shadow_snow.png</file>
+        <file>resources/images/terrain/shadow_waste.png</file>
+        <file>resources/images/terrain/snow_street+style0+E+S+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+E+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+E+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+E+S+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+E+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+E+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+S+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+S+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+S+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+S+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+E+S+shadow.png</file>
+        <file>resources/images/terrain/street+style0+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+E+shadow.png</file>
+        <file>resources/images/terrain/street+style0+E+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+E+S+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+E+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+E+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+S+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+S+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+S+shadow.png</file>
+        <file>resources/images/terrain/street+style0+S+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+shadow.png</file>
+        <file>resources/images/terrain/street+style0+W+shadow.png</file>
     </qresource>
 </RCC>
