@@ -14,12 +14,16 @@ var Constructor = function()
     };
     this.getActionText = function(map)
     {
-        var text = qsTr("Superpower of ");
+        var text = "";
         if (map !== null &&
             map.getCurrentPlayer() !== null &&
-            map.getCurrentPlayer().getCO(0) !== null)
+            map.getCurrentPlayer().getCO(1) !== null)
         {
-            text = text + map.getCurrentPlayer().getCO(1).getCOName();
+            text = replaceTextArgs("Superpower of %0", [map.getCurrentPlayer().getCO(1).getCOName()]);
+        }
+        else
+        {
+            text = qsTr("Superpower of CO 1");
         }
         return text;
     };
