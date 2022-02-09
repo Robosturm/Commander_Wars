@@ -42,6 +42,11 @@ void Building::init()
     pInterpreter->doFunction(m_BuildingID, function, args);
 }
 
+void Building::setTerrain(Terrain* pTerrain)
+{
+    m_pTerrain = pTerrain;
+}
+
 bool Building::isValid()
 {
     return BuildingSpriteManager::getInstance()->exists(m_BuildingID);
@@ -213,7 +218,7 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
         }
         // repaint the building?
         bool matrixMode = mode == GameEnums::Recoloring_Matrix;
-        pSprite->setPriority(static_cast<qint16>(DrawPriority::Mask));
+        pSprite->setPriority(static_cast<qint32>(DrawPriority::Mask));
         if (mode == GameEnums::Recoloring_Mask && m_pOwner != nullptr)
         {
             QColor color = m_pOwner->getColor();
@@ -233,7 +238,7 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
         }
         else
         {
-            pSprite->setPriority(static_cast<qint16>(DrawPriority::NoneMask));
+            pSprite->setPriority(static_cast<qint32>(DrawPriority::NoneMask));
         }
         qint32 width = getBuildingWidth();
         qint32 heigth = getBuildingHeigth();
@@ -297,7 +302,7 @@ void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::R
         }
         // repaint the building?
         bool matrixMode = mode == GameEnums::Recoloring_Matrix;
-        pSprite->setPriority(static_cast<qint16>(DrawPriority::Overlay));
+        pSprite->setPriority(static_cast<qint32>(DrawPriority::Overlay));
         if (mode == GameEnums::Recoloring_Mask && m_pOwner != nullptr)
         {
             QColor color = m_pOwner->getColor();
@@ -317,7 +322,7 @@ void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::R
         }
         else
         {
-            pSprite->setPriority(static_cast<qint16>(DrawPriority::OverlayNoneMask));
+            pSprite->setPriority(static_cast<qint32>(DrawPriority::OverlayNoneMask));
         }
         qint32 width = getBuildingWidth();
         qint32 heigth = getBuildingHeigth();

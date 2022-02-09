@@ -72,7 +72,7 @@ public:
      * @param y field
      * @param color of the marked field
      */
-    void createMarkedField(QPoint point, QColor color, Terrain::DrawPriority drawPriority);
+    void createMarkedField(QPoint point, QColor color, Terrain::ExtraDrawPriority drawPriority);
     /**
      * @brief createCursorPath creates the arrow showing the current unit path
      * @param x
@@ -190,7 +190,7 @@ protected:
      * @param drawPriority
      * @return
      */
-    oxygine::spSprite createMarkedFieldActor(QPoint point, QColor color, Terrain::DrawPriority drawPriority);
+    oxygine::spSprite createMarkedFieldActor(QPoint point, QColor color, Terrain::ExtraDrawPriority drawPriority);
     /**
      * @brief createSimpleZInformation
      * @param pData

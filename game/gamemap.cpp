@@ -1064,7 +1064,6 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
         {
             pTerrainOld->removeBuilding();
             spUnit pUnit = spUnit(pTerrainOld->getUnit());
-            pTerrainOld->setUnit(spUnit());
 
             spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID(), this);
 
@@ -1079,7 +1078,6 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
                 m_fields[y][x] = pTerrain;
                 addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
-                pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
             }
             else
             {
@@ -1087,7 +1085,6 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
                 m_fields[y][x] = pTerrain;
                 addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
-                pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
             }
             if (!removeUnit)
             {
@@ -1352,7 +1349,6 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
                 {
                     addChild(pTerrain);
                     pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
-                    pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
                 }
             }
             else
@@ -1568,7 +1564,6 @@ void GameMap::clearMap()
     {
         for (qint32 x = 0; x < m_fields[y].size(); x++)
         {
-            m_fields[y][x]->setUnit(spUnit());
             m_fields[y][x]->detach();
         }
         m_fields[y].clear();

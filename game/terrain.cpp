@@ -55,9 +55,21 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
+    setPriority(getMapTerrainDrawPriority());
     setSize(GameMap::getImageSize(),
             GameMap::getImageSize());
+}
+
+Terrain::~Terrain()
+{
+    if (m_Unit.get())
+    {
+        m_Unit->detach();
+    }
+    if (m_Building.get())
+    {
+        m_Building->detach();
+    }
 }
 
 GameMap *Terrain::getMap() const
@@ -330,7 +342,7 @@ void Terrain::setBaseTerrain(spTerrain terrain)
         m_pBaseTerrain = nullptr;
     }
     m_pBaseTerrain = terrain;
-    m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
+    m_pBaseTerrain->setPriority(static_cast<qint32>(DrawPriority::Terrain));
     m_pBaseTerrain->setPosition(0, 0);
     addChild(m_pBaseTerrain);
 }
@@ -398,7 +410,7 @@ void Terrain::loadSprites()
 void Terrain::loadBaseTerrain(const QString & terrainID)
 {
     m_pBaseTerrain = spTerrain::create(terrainID, m_x, m_y, m_pMap);
-    m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
+    m_pBaseTerrain->setPriority(static_cast<qint32>(DrawPriority::Terrain));
     m_pBaseTerrain->setPosition(0, 0);
     addChild(m_pBaseTerrain);
 }
@@ -917,19 +929,25 @@ void Terrain::setBuilding(spBuilding pBuilding)
     if (pBuilding.get() != nullptr)
     {
         m_Building = pBuilding;
-        pBuilding->setPriority(static_cast<qint16>(DrawPriority::Building));
+        m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
+        m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
         if (m_x >= 0 && m_y >= 0)
         {
             pBuilding->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
         }
-        addChild(pBuilding);
+        if (m_pMap != nullptr)
+        {
+            m_pMap->addChild(m_Building);
+        }
+        else
+        {
+            addChild(m_Building);
+        }
         if (m_x >= 0 && m_y >= 0)
         {
             createBuildingDownStream();
         }
     }
-    // remove current unit to avoid strange impact :)
-    setUnit(spUnit());
 }
 
 void Terrain::removeBuilding()
@@ -975,15 +993,26 @@ void Terrain::setSpBuilding(spBuilding pBuilding, bool OnlyDownStream)
     if (pBuilding.get() != nullptr)
     {
         m_Building = pBuilding;
-        pBuilding->setPriority(static_cast<qint16>(DrawPriority::Building));
         if (!OnlyDownStream)
         {
-            pBuilding->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
-            addChild(pBuilding);
+            m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
+            m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
+            m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
+            if (m_pMap != nullptr)
+            {
+                m_pMap->addChild(m_Building);
+            }
+            else
+            {
+                addChild(m_Building);
+            }
         }
     }
-    // remove current unit to avoid strange impact :)
-    setUnit(spUnit());
+}
+
+qint32 Terrain::getMapTerrainDrawPriority()
+{
+    return static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(Terrain::m_y);
 }
 
 void Terrain::loadBuilding(const QString & buildingID)
@@ -994,9 +1023,18 @@ void Terrain::loadBuilding(const QString & buildingID)
     }
     m_Building = spBuilding::create(buildingID, m_pMap);
     m_Building->updateBuildingSprites(false);
-    m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
+    m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
+    m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
     m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
-    addChild(m_Building);
+
+    if (m_pMap != nullptr)
+    {
+        m_pMap->addChild(m_Building);
+    }
+    else
+    {
+        addChild(m_Building);
+    }
     createBuildingDownStream();
 }
 
@@ -1020,7 +1058,7 @@ void Terrain::setUnit(spUnit pUnit)
             pTerrain->setUnit(spUnit());
         }
         // add Terrain to unit and unit to drawing actor
-        pUnit->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(Terrain::m_y) + 2);
+        pUnit->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::UnitLayer));
         pUnit->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
         pUnit->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
 
@@ -1552,7 +1590,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
         m_pBaseTerrain->deserializer(pStream, fast);
         if (!fast)
         {
-            m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
+            m_pBaseTerrain->setPriority(static_cast<qint32>(DrawPriority::Terrain));
             m_pBaseTerrain->setPosition(0, 0);
             if (m_pBaseTerrain->isValid())
             {
@@ -1575,8 +1613,9 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
         {
             if (!fast)
             {
-                m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
-                addChild(m_Building);
+                m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
+                m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
+                m_pMap->addChild(m_Building);
             }
             m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
             createBuildingDownStream();

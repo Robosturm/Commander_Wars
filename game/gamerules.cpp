@@ -731,7 +731,7 @@ void GameRules::createFieldFogMist(qint32 x, qint32 y, Player* pPlayer, QColor f
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfMistColor);
-            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
+            sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             m_pMap->addChild(sprite);
             m_FogSprites[x][y] = sprite;
@@ -770,7 +770,7 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fo
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfWarColor);
-            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
+            sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             m_pMap->addChild(sprite);
             m_FogSprites[x][y] = sprite;
@@ -827,7 +827,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfWarColor);
-            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
+            sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             m_pMap->addChild(sprite);
             m_FogSprites[x][y] = sprite;
@@ -845,7 +845,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(0, 0, 0, 255);
-            sprite->setPriority(static_cast<qint16>(Terrain::DrawPriority::Shroud));
+            sprite->setPriority(static_cast<qint32>(Terrain::DrawPriority::Shroud));
             pTerrain->addChild(sprite);
             pTerrain->setSpriteVisibility(false);
             m_FogSprites[x][y] = sprite;
@@ -857,7 +857,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfMistColor);
-            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
+            sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             m_pMap->addChild(sprite);
             m_FogSprites[x][y] = sprite;

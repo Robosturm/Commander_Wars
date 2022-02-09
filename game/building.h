@@ -52,10 +52,7 @@ public:
      * @brief setTerrain
      * @param pTerrain smart pointer to the terrain this building is placed on
      */
-    inline void setTerrain(Terrain* pTerrain)
-    {
-        m_pTerrain = pTerrain;
-    }
+    void setTerrain(Terrain* pTerrain);
     /**
      * @brief canBuildingBePlaced
      * @param terrainID

@@ -45,19 +45,22 @@ public:
      */
     ENUM_CLASS DrawPriority
     {
-        MarkedFieldMap,
         Terrain = 0,
         TerrainOverlay,
         Shroud,
-        Building,
-        Fog,
-        TerrainMarker,
-        MarkedField,
-        Arrow
+        TerrainMarker,                
+
+    };
+    ENUM_CLASS ExtraDrawPriority
+    {
+        MarkedFieldMap = -10, // used for marking an extra map layer
+        BuildingLayer = 2,
+        MarkedField = 19,
+        UnitLayer,
     };
     static spTerrain createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap);
 
-    virtual ~Terrain() = default;
+    virtual ~Terrain();
 
     void init();
     /**
@@ -145,7 +148,11 @@ public:
 
     QPoint getTest() const;
     void setTest(QPoint newTest);
-
+    /**
+     * @brief getMapTerrainDrawPriority
+     * @return
+     */
+    qint32 getMapTerrainDrawPriority();
 public slots:
     /**
      * @brief getMap

@@ -46,7 +46,6 @@ void GameMap::importAWDSMap(QString file)
                 addChild(pTerrain);
                 m_fields[y].push_back(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
-                pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             }
         }
         quint8 terrainChar1 = 0;
