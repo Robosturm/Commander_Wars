@@ -13,6 +13,10 @@ var Constructor = function()
     {
         return __BASESTREET.getSprites("waste_path+style0")
     };
+    this.loadOverlaySprite = function(terrain, map)
+    {
+        __BASESTREET.loadBaseOverlaySprite("waste_path+style0", terrain, map);
+    };
 };
 Constructor.prototype = __BASESTREET;
 var WASTE_PATH = new Constructor();

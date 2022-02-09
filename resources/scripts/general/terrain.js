@@ -138,7 +138,10 @@ var TERRAIN =
             var upTerrain = map.getTerrain(x, y);
             var upBuilding = upTerrain.getBuilding();
             if (upBuilding !== null &&
-                upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORY")
+               (upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORY" ||
+                upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORYDESERT" ||
+                upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORYWASTE" ||
+                upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORYSNOW"))
             {
                 var variables = terrain.getVariables();
                 var variable = variables.getVariable("FOREGROUND_ID");

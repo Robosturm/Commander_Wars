@@ -12,9 +12,9 @@ var Constructor = function()
             building.loadSprite("blackhole+factory+neutral", false);
         }
         building.loadSprite("blackhole+factory+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
-        building.loadSprite("blackhole+factory+pipe", false);
+        building.loadSprite("blackhole+factory+desert_pipe", false);
     };
 };
 
 Constructor.prototype = __ZBLACKHOLE_FACTORYBASE;
-var ZBLACKHOLE_FACTORY = new Constructor();
+var ZBLACKHOLE_FACTORYDESERT = new Constructor();

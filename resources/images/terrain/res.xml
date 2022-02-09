@@ -153,32 +153,32 @@
         
         <image file="rough_sea+N+E+S+W.png" cols = "4" />
         
-		<image file="lake.png" cols = "8" />
-		<image file="lake+NE.png" cols = "8" />
-		<image file="lake+NW.png" cols = "8" />
-		<image file="lake+SE.png" cols = "8" />
-		<image file="lake+SW.png" cols = "8" />
-		<image file="lake+E.png" cols = "8" />
-		<image file="lake+E+S.png" cols = "8" />
-		<image file="lake+E+S+W.png" cols = "8" />
-		<image file="lake+E+W.png" cols = "8" />
-		<image file="lake+N.png" cols = "8" />
-		<image file="lake+N+E.png" cols = "8" />
-		<image file="lake+N+E+S.png" cols = "8" />
-		<image file="lake+N+E+S+W.png" cols = "8" />
-		<image file="lake+N+E+W.png" cols = "8" />
-		<image file="lake+N+S.png" cols = "8" />
-		<image file="lake+N+S+W.png" cols = "8" />
-		<image file="lake+N+W.png" cols = "8" />
-		<image file="lake+S.png" cols = "8" />
-		<image file="lake+S+W.png" cols = "8" />
-		<image file="lake+W.png" cols = "8" />
-		
-		<image file="riverend_lake+E.png" cols = "8" />
-		<image file="riverend_lake+S.png" cols = "8" />
-		<image file="riverend_lake+W.png" cols = "8" />
-		<image file="riverend_lake+N.png" cols = "8" />
-		
+        <image file="lake.png" cols = "8" />
+        <image file="lake+NE.png" cols = "8" />
+        <image file="lake+NW.png" cols = "8" />
+        <image file="lake+SE.png" cols = "8" />
+        <image file="lake+SW.png" cols = "8" />
+        <image file="lake+E.png" cols = "8" />
+        <image file="lake+E+S.png" cols = "8" />
+        <image file="lake+E+S+W.png" cols = "8" />
+        <image file="lake+E+W.png" cols = "8" />
+        <image file="lake+N.png" cols = "8" />
+        <image file="lake+N+E.png" cols = "8" />
+        <image file="lake+N+E+S.png" cols = "8" />
+        <image file="lake+N+E+S+W.png" cols = "8" />
+        <image file="lake+N+E+W.png" cols = "8" />
+        <image file="lake+N+S.png" cols = "8" />
+        <image file="lake+N+S+W.png" cols = "8" />
+        <image file="lake+N+W.png" cols = "8" />
+        <image file="lake+S.png" cols = "8" />
+        <image file="lake+S+W.png" cols = "8" />
+        <image file="lake+W.png" cols = "8" />
+
+        <image file="riverend_lake+E.png" cols = "8" />
+        <image file="riverend_lake+S.png" cols = "8" />
+        <image file="riverend_lake+W.png" cols = "8" />
+        <image file="riverend_lake+N.png" cols = "8" />
+
         <image file="lake+snow+E+S.png" />
         <image file="lake+snow+E+S+W.png" />
         <image file="lake+snow+N+E.png" />
@@ -206,7 +206,7 @@
         <image file="lake+waste+N+S+W.png" />
         <image file="lake+waste+N+W.png" />
         <image file="lake+waste+S+W.png" />
-		
+
         <image file="fire.png" cols = "6" />
 
         <image file="reaf+0+N+E+S+W.png" cols = "8" />
@@ -411,7 +411,24 @@
         <image file="street+style1+S.png" />
         <image file="street+style1+S+W.png" />
         <image file="street+style1+W.png" />
-        
+
+        <image file="street+style1+shadow.png" />
+        <image file="street+style1+E+shadow.png" />
+        <image file="street+style1+E+S+shadow.png" />
+        <image file="street+style1+E+S+W+shadow.png" />
+        <image file="street+style1+E+W+shadow.png" />
+        <image file="street+style1+N+shadow.png" />
+        <image file="street+style1+N+E+shadow.png" />
+        <image file="street+style1+N+E+S+shadow.png" />
+        <image file="street+style1+N+E+S+W+shadow.png" />
+        <image file="street+style1+N+E+W+shadow.png" />
+        <image file="street+style1+N+S+shadow.png" />
+        <image file="street+style1+N+S+W+shadow.png" />
+        <image file="street+style1+N+W+shadow.png" />
+        <image file="street+style1+S+shadow.png" />
+        <image file="street+style1+S+W+shadow.png" />
+        <image file="street+style1+W+shadow.png" />
+
         <!-- creeper -->
         <image file="creeper.png" />
         <image file="creeper+E.png" />
@@ -705,7 +722,7 @@
         <image file="snow_wasteland+3.png" />
         <image file="snow_wasteland+4.png" />
         <image file="snow_wasteland+5.png" />
-		
+
         <image file="snow_mountain.png" />
         <image file="snow_mountain+short.png" />
         
@@ -867,6 +884,23 @@
         <image file="desert_path+style0+S+W.png" />
         <image file="desert_path+style0+W.png" />
 
+        <image file="desert_path+style0+shadow.png" />
+        <image file="desert_path+style0+E+shadow.png" />
+        <image file="desert_path+style0+E+S+shadow.png" />
+        <image file="desert_path+style0+E+S+W+shadow.png" />
+        <image file="desert_path+style0+E+W+shadow.png" />
+        <image file="desert_path+style0+N+shadow.png" />
+        <image file="desert_path+style0+N+E+shadow.png" />
+        <image file="desert_path+style0+N+E+S+shadow.png" />
+        <image file="desert_path+style0+N+E+S+W+shadow.png" />
+        <image file="desert_path+style0+N+E+W+shadow.png" />
+        <image file="desert_path+style0+N+S+shadow.png" />
+        <image file="desert_path+style0+N+S+W+shadow.png" />
+        <image file="desert_path+style0+N+W+shadow.png" />
+        <image file="desert_path+style0+S+shadow.png" />
+        <image file="desert_path+style0+S+W+shadow.png" />
+        <image file="desert_path+style0+W+shadow.png" />
+
         <image file="desert_path+style1.png" />
         <image file="desert_path+style1+E.png" />
         <image file="desert_path+style1+E+S.png" />
@@ -941,6 +975,23 @@
         <image file="waste_path+style0+S.png" />
         <image file="waste_path+style0+S+W.png" />
         <image file="waste_path+style0+W.png" />
+
+        <image file="waste_path+style0+shadow.png" />
+        <image file="waste_path+style0+E+shadow.png" />
+        <image file="waste_path+style0+E+S+shadow.png" />
+        <image file="waste_path+style0+E+S+W+shadow.png" />
+        <image file="waste_path+style0+E+W+shadow.png" />
+        <image file="waste_path+style0+N+shadow.png" />
+        <image file="waste_path+style0+N+E+shadow.png" />
+        <image file="waste_path+style0+N+E+S+shadow.png" />
+        <image file="waste_path+style0+N+E+S+W+shadow.png" />
+        <image file="waste_path+style0+N+E+W+shadow.png" />
+        <image file="waste_path+style0+N+S+shadow.png" />
+        <image file="waste_path+style0+N+S+W+shadow.png" />
+        <image file="waste_path+style0+N+W+shadow.png" />
+        <image file="waste_path+style0+S+shadow.png" />
+        <image file="waste_path+style0+S+W+shadow.png" />
+        <image file="waste_path+style0+W+shadow.png" />
 
         <image file="waste_Pipeline+E.png" />
         <image file="waste_Pipeline+E+S.png" />

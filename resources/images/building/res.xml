@@ -383,6 +383,10 @@
         <image file="blackhole+factory+shadow+snow.png" />
         <image file="blackhole+factory+shadow+plains.png" />
         <image file="blackhole+factory+shadow+waste.png" />
+        <image file="blackhole+factory+pipe.png" />
+        <image file="blackhole+factory+snow_pipe.png" />
+        <image file="blackhole+factory+waste_pipe.png" />
+        <image file="blackhole+factory+desert_pipe.png" />
 
         <image file="volcan.png" />
         <image file="volcan+desert.png" />
@@ -397,7 +401,19 @@
 
         <image file="talon+gun.png" cols = "2" />        
         <image file="talon+gun+mask.png" cols = "2" />        
-        <image file="talon+gun+destroyed.png" />        
+        <image file="talon+gun+destroyed.png" />
+        
+        <!-- nest -->
+        <image file="nest_center.png" />
+        <image file="nest_center_laser_left.png" />
+        <image file="nest_center_laser_middle.png" />
+        <image file="nest_center_laser_right.png" />
+        <image file="nest_laser+S.png" />
+        <image file="nest_laser+SE.png" />
+        <image file="nest_laser+SW.png" />
+        <image file="nest_mortar_left.png" />
+        <image file="nest_mortar_right.png" />
+        <image file="nest_factory.png" />
         
     </atlas>
 </resources>

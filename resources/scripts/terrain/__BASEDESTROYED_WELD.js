@@ -114,8 +114,11 @@ var Constructor = function()
             {
                 var building = map.getTerrain(x, y + 1).getBuilding();
                 if (building !== null &&
-                        building.getBuildingID() === "ZBLACKHOLE_FACTORY" &&
-                        building.getX() - 1 === x && building.getY() - 4 === y)
+                   (building.getBuildingID() === "ZBLACKHOLE_FACTORY" ||
+                    building.getBuildingID() === "ZBLACKHOLE_FACTORYDESERT" ||
+                    building.getBuildingID() === "ZBLACKHOLE_FACTORYWASTE" ||
+                    building.getBuildingID() === "ZBLACKHOLE_FACTORYSNOW") &&
+                    building.getX() - 1 === x && building.getY() - 4 === y)
                 {
                     if (surroundings.indexOf("+W") >= 0)
                     {
