@@ -225,19 +225,19 @@ var Constructor = function()
         }
         if (baseTerrainId === "WASTE")
         {
-            return WASTE.getTerrainAnimationForeground(unit, terrain)
+            return WASTE.getTerrainAnimationForeground(unit, terrain, defender, map)
         }
         else if (baseTerrainId === "SNOW")
         {
-            return SNOW.getTerrainAnimationForeground(unit, terrain)
+            return SNOW.getTerrainAnimationForeground(unit, terrain, defender, map)
         }
         else if (baseTerrainId === "DESERT")
         {
-            return DESERT.getTerrainAnimationForeground(unit, terrain)
+            return DESERT.getTerrainAnimationForeground(unit, terrain, defender, map)
         }
         else
         {
-            return TERRAIN.getTerrainAnimationForeground(unit, terrain);
+            return TERRAIN.getTerrainAnimationForeground(unit, terrain, defender, map);
         }
     };
     this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)

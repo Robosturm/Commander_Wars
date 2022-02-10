@@ -815,7 +815,7 @@ var Constructor = function()
                 {
                     ACHIEVEMENT_KILL_NEUTRAL_BUILDING.killed(defBuilding.getBuildingID());
                 }
-                Global[defBuilding.getBuildingID()].onDestroyed(defBuilding);
+                Global[defBuilding.getBuildingID()].onDestroyed(defBuilding, map);
             }
         }
         else if (ACTION_FIRE.postBuildingAnimationTerrain.getHp() <= 0)
@@ -825,7 +825,7 @@ var Constructor = function()
             {
                 ACHIEVEMENT_KILL_NEUTRAL_BUILDING.killed(ACTION_FIRE.postBuildingAnimationTerrain.getID());
             }
-            Global[ACTION_FIRE.postBuildingAnimationTerrain.getID()].onDestroyed(ACTION_FIRE.postBuildingAnimationTerrain);
+            Global[ACTION_FIRE.postBuildingAnimationTerrain.getID()].onDestroyed(ACTION_FIRE.postBuildingAnimationTerrain, map);
         }
         ACTION_FIRE.postBuildingAnimationTerrain = null;
         ACTION_FIRE.postAnimationAction = null;

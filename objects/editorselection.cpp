@@ -138,6 +138,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
         pTerrain->setTooltipText(pTerrain->getTerrainName());
         m_Terrains.append(pTerrain);
         m_Terrains[m_Terrains.size() - 1]->loadSprites();
+        pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
         m_PlacementActor->addChild(m_Terrains[m_Terrains.size() - 1]);
     }
 
@@ -162,7 +163,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
         m_Buildings[i]->updateBuildingSprites(false);
         spTerrain pSprite = Terrain::createTerrain(building->getBaseTerrain()[0], -1, -1, "", m_pMap);
         pSprite->loadSprites();
-        pSprite->setPriority(-100);
+        pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
         pSprite->setScaleX(1 / building->getScaleX());
         pSprite->setScaleY(1 / building->getScaleY());
         if (width > 1)

@@ -60,11 +60,12 @@ var Constructor = function()
             var y = building.getY() + 1;
             var units = map.getAllUnitIDs();
             var buildlist = owner.getBuildList();
+            var terrain = map.getTerrain(x, y);
             for (var i = 0; i < units.length; i++)
             {
                 // check all units if they can move over this terrain
                 if (buildlist.includes(units[i]) &&
-                        Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y), true) > 0 &&
+                        Global[Global[units[i]].getMovementType()].getMovementpoints(terrain, null, terrain, true, map) > 0 &&
                         Global[units[i]].getCOSpecificUnit() === false)
                 {
                     return true;
@@ -81,11 +82,12 @@ var Constructor = function()
         var y = building.getY() + 1;
         var units = map.getAllUnitIDs();
         var buildlist = building.getOwner().getBuildList();
+        var terrain = map.getTerrain(x, y);
         for (var i = 0; i < units.length; i++)
         {
             // check all units if they can move over this terrain
             if (buildlist.includes(units[i]) &&
-                Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y), true) > 0 &&
+                Global[Global[units[i]].getMovementType()].getMovementpoints(terrain, null, terrain, true, map) > 0 &&
                 Global[units[i]].getCOSpecificUnit() === false)
             {
                 var name = Global[units[i]].getName();
