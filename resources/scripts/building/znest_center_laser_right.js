@@ -7,7 +7,7 @@ var Constructor = function()
     };
     this.loadSprites = function(building, neutral, map)
     {
-        building.loadSprite("nest_center_laser_left", false);
+        building.loadSprite("nest_center_laser_right", false, 400, Qt.point(0, map.getImageSize()));
     };
     this.getBaseIncome = function()
     {
@@ -32,4 +32,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = BUILDING;
-var ZNEST_CENTER_LASER_LEFT = new Constructor();
+var ZNEST_CENTER_LASER_RIGHT = new Constructor();

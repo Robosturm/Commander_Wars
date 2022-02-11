@@ -188,19 +188,19 @@ qint32 Building::getOwnerID()
     return -1;
 }
 
-void Building::loadSprite(const QString & spriteID, bool addPlayerColor, qint32 frameTime)
+void Building::loadSprite(const QString & spriteID, bool addPlayerColor, qint32 frameTime, QPoint pos)
 {
     if (addPlayerColor)
     {
-        loadSpriteV2(spriteID, GameEnums::Recoloring_Mask, frameTime);
+        loadSpriteV2(spriteID, GameEnums::Recoloring_Mask, frameTime, pos);
     }
     else
     {
-        loadSpriteV2(spriteID, GameEnums::Recoloring_None, frameTime);
+        loadSpriteV2(spriteID, GameEnums::Recoloring_None, frameTime, pos);
     }
 }
 
-void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime)
+void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime, QPoint pos)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
@@ -245,12 +245,12 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
         if (width == 1 && heigth == 1)
         {
             pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
-            pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
+            pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2 + pos.x(), -(pSprite->getScaledHeight() - GameMap::getImageSize()) + pos.y());
         }
         else
         {
             pSprite->setScale(((GameMap::getImageSize() ) * width) / pAnim->getWidth());
-            pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::getImageSize(), -pSprite->getScaledHeight() + GameMap::getImageSize());
+            pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::getImageSize() + pos.x(), -pSprite->getScaledHeight() + GameMap::getImageSize() + pos.y());
         }
         addChild(pSprite);
         m_pBuildingSprites.append(pSprite);
@@ -260,6 +260,15 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
     {
         CONSOLE_PRINT("Unable to load building sprite: " + spriteID, Console::eDEBUG);
     }
+}
+
+void Building::unloadSprites()
+{
+    for (auto & sprite : m_pBuildingSprites)
+    {
+        sprite->detach();
+    }
+    m_pBuildingSprites.clear();
 }
 
 /**

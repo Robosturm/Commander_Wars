@@ -6537,5 +6537,13 @@
         <file>resources/images/terrain/waste_path+style0+shadow.png</file>
         <file>resources/images/terrain/waste_path+style0+style0+shadow.png</file>
         <file>resources/images/terrain/waste_path+style0+W+shadow.png</file>
+        <file>resources/scripts/building/znest_center.js</file>
+        <file>resources/scripts/building/znest_center_laser_left.js</file>
+        <file>resources/scripts/building/znest_center_laser_middle.js</file>
+        <file>resources/scripts/building/znest_center_laser_right.js</file>
+        <file>resources/scripts/building/znest_factory.js</file>
+        <file>resources/scripts/building/znest_left_mortar.js</file>
+        <file>resources/scripts/building/znest_nest_laser.js</file>
+        <file>resources/scripts/building/znest_right_mortar.js</file>
     </qresource>
 </RCC>

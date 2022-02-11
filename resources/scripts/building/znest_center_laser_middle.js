@@ -1,12 +1,13 @@
 var Constructor = function()
-{    
+{
     this.init = function (building)
     {
+        building.setHp(100);
         building.setAlwaysVisble(true);
     };
     this.loadSprites = function(building, neutral, map)
     {
-        building.loadSprite("nest_laser+S", false);
+        building.loadSprite("nest_center_laser_middle", false, 400, Qt.point(0, map.getImageSize()));
     };
     this.getBaseIncome = function()
     {
@@ -28,19 +29,7 @@ var Constructor = function()
     {
         return qsTr("Nest of Dark Matter.");
     };
-    this.getBuildingWidth = function()
-    {
-        return 3;
-    };
-    this.getBuildingHeigth = function()
-    {
-        return 2;
-    };
-    this.canBuildingBePlaced = function(terrain, building, map)
-    {
-        return BUILDING.canLargeBuildingPlaced(terrain, building, ZNEST_NEST_LASER.getBuildingWidth(), ZNEST_NEST_LASER.getBuildingHeigth(), map);
-    };
 }
 
 Constructor.prototype = BUILDING;
-var ZNEST_NEST_LASER = new Constructor();
+var ZNEST_CENTER_LASER_MIDDLE = new Constructor();
