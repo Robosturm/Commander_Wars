@@ -40,6 +40,7 @@
         <file>resources/objects/colordialogcursor_2.png</file>
         <file>resources/objects/dropdownmenu.png</file>
         <file>resources/objects/editor+big.png</file>
+		<file>resources/objects/editor+big+square.png</file>
         <file>resources/objects/editor+building.png</file>
         <file>resources/objects/editor+fill.png</file>
         <file>resources/objects/editor+medium.png</file>
