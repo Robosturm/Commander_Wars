@@ -146,10 +146,13 @@ void CoreAI::readIni(QString name)
                 settings.beginGroup(entry.m_group);
                 lastGroup = entry.m_group;
             }
-            *entry.m_value = settings.value(entry.m_name, entry.m_defaultValue).toDouble(&ok);
-            if (!ok)
+            if (settings.contains(entry.m_name))
             {
-                *entry.m_value = entry.m_defaultValue;
+                *entry.m_value = settings.value(entry.m_name, entry.m_defaultValue).toDouble(&ok);
+                if (!ok)
+                {
+                    *entry.m_value = entry.m_defaultValue;
+                }
             }
         }
         settings.endGroup();
