@@ -160,3 +160,16 @@ spTCPClient TCPServer::getClient(quint64 socketID)
     }
     return spTCPClient();
 }
+
+qint32 TCPServer::getObserverCount()
+{
+    qint32 count = 0;
+    for (auto & client : m_pClients)
+    {
+        if (client->getIsObserver())
+        {
+            ++count;
+        }
+    }
+    return count;
+}

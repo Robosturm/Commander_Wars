@@ -24,6 +24,7 @@
 #include "coreengine/userdata.h"
 
 #include "network/localserver.h"
+#include "network/tcpserver.h"
 
 constexpr const char* const CO_ARMY = "CO_ARMY";
 
@@ -1475,6 +1476,10 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             playerAccessDenied();
         }
+        else if (messageType == NetworkCommands::JOINASOBSERVER)
+        {
+            joinObserver(socketID);
+        }
         else
         {
             CONSOLE_PRINT("Command not handled in playerselection", Console::eDEBUG);
@@ -1493,6 +1498,25 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
         else
         {
             CONSOLE_PRINT("Command not handled in playerselection", Console::eDEBUG);
+        }
+    }
+}
+
+void PlayerSelection::joinObserver(quint64 socketID)
+{
+    auto* gameRules = m_pMap->getGameRules();
+    auto & observer = gameRules->getObserverList();
+    if (observer.size() < gameRules->getMultiplayerObserver())
+    {
+        observer.append(socketID);
+        if (m_pNetworkInterface->getIsServer())
+        {
+            auto server = oxygine::dynamic_pointer_cast<TCPServer>(m_pNetworkInterface);
+            if (server.get())
+            {
+                auto client = server->getClient(socketID);
+                client->setIsObserver(true);
+            }
         }
     }
 }
@@ -1921,6 +1945,10 @@ void PlayerSelection::disconnected(quint64 socketID)
 
             }
         }
+        CONSOLE_PRINT("Removing socket " + QString::number(socketID) + " from observer list", Console::eLogLevels::eDEBUG);
+        auto* gameRules = m_pMap->getGameRules();
+        auto & observer = gameRules->getObserverList();
+        observer.removeAll(socketID);
         if (Mainapp::getSlave())
         {
             dynamic_cast<LocalServer*>(m_pNetworkInterface.get())->removeSocket(socketID);

@@ -485,7 +485,11 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
             }
             if (m_networkMode == NetworkMode::Observer)
             {
-                // m_pPlayerSelection->sendPlayerRequest(socketID, -1, GameEnums::AiTypes_Human);
+                QString command = NetworkCommands::JOINASOBSERVER;
+                QByteArray sendData;
+                QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+                sendStream << command;
+                emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
             }
             else
             {

@@ -947,6 +947,11 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+QVector<quint64> &GameRules::getObserverList()
+{
+    return m_observerList;
+}
+
 qint32 GameRules::getMultiplayerObserver() const
 {
     return m_multiplayerObserver;

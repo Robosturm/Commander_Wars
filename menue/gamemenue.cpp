@@ -310,32 +310,41 @@ void GameMenue::disconnected(quint64 socketID)
     {
         CONSOLE_PRINT("Handling player GameMenue::disconnect()", Console::eDEBUG);
         bool showDisconnect = !m_pNetworkInterface->getIsServer();
-        
-        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+
+        auto & observer = m_pMap->getGameRules()->getObserverList();
+        bool observerDisconnect = observer.contains(socketID);
+        if (observerDisconnect)
         {
-            Player* pPlayer = m_pMap->getPlayer(i);
-            quint64 playerSocketID = pPlayer->getSocketId();
-            if (socketID == playerSocketID &&
-                !pPlayer->getIsDefeated())
+            observer.removeAll(socketID);
+        }
+        else
+        {
+            for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
-                showDisconnect = true;
-                break;
+                Player* pPlayer = m_pMap->getPlayer(i);
+                quint64 playerSocketID = pPlayer->getSocketId();
+                if (socketID == playerSocketID &&
+                    !pPlayer->getIsDefeated())
+                {
+                    showDisconnect = true;
+                    break;
+                }
             }
-        }
-        if (m_pNetworkInterface.get() != nullptr)
-        {
-            m_pNetworkInterface = nullptr;
-        }
-        if (showDisconnect)
-        {
-            m_gameStarted = false;
-            spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
-            addChild(pDialogMessageBox);
-        }
-        if (Mainapp::getSlave())
-        {
-            CONSOLE_PRINT("Closing slave cause a player has disconnected.", Console::eDEBUG);
-            QCoreApplication::exit(0);
+            if (m_pNetworkInterface.get() != nullptr)
+            {
+                m_pNetworkInterface = nullptr;
+            }
+            if (showDisconnect)
+            {
+                m_gameStarted = false;
+                spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
+                addChild(pDialogMessageBox);
+            }
+            if (Mainapp::getSlave())
+            {
+                CONSOLE_PRINT("Closing slave cause a player has disconnected.", Console::eDEBUG);
+                QCoreApplication::exit(0);
+            }
         }
     }
 }

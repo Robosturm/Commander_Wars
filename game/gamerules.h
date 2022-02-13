@@ -84,7 +84,11 @@ public:
 
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
-
+    /**
+     * @brief getObserverList
+     * @return
+     */
+    QVector<quint64> &getObserverList();
 
 signals:
     void sigVictory(qint32 team);
@@ -649,6 +653,7 @@ private:
     QString m_description;
     bool m_cosmeticModsAllowed{false};
     qint32 m_multiplayerObserver{0};
+    QVector<quint64> m_observerList;
 };
 
 #endif // GAMERULES_H

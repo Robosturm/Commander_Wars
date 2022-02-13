@@ -261,6 +261,11 @@ protected:
      * @brief playerAccessDenied
      */
     void playerAccessDenied();
+    /**
+     * @brief joinObserver
+     */
+    void joinObserver(quint64 socketID);
+
 private:
     // player selection
     spPanel m_pPlayerSelection;
