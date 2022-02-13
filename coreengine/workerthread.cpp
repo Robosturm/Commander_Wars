@@ -217,7 +217,7 @@ void WorkerThread::startSlaveGame()
     pLoadingScreen->hide();
     spLocalServer pServer = spLocalServer::create(nullptr);
     pServer->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", true);
+    spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", Multiplayermenu::NetworkMode::Host);
     pMenu->connectNetworkSlots();
     oxygine::Stage::getStage()->addChild(pMenu);
     emit pServer->sig_connect(Settings::getSlaveServerName(), 0);

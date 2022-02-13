@@ -23,8 +23,15 @@ class Multiplayermenu : public MapSelectionMapsMenue
 {
     Q_OBJECT
 public:
-    explicit Multiplayermenu(QString adress, QString password, bool host);
-    explicit Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, bool host);
+    enum class NetworkMode
+    {
+        Client,
+        Host,
+        Observer,
+    };
+
+    explicit Multiplayermenu(QString adress, QString password, NetworkMode host);
+    explicit Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, NetworkMode host);
     virtual ~Multiplayermenu() = default;
 
     /**
@@ -138,7 +145,7 @@ private:
      */
     void changeButtonText();
 private:
-    bool m_Host{false};
+    NetworkMode m_networkMode{NetworkMode::Client};
     spNetworkInterface m_NetworkInterface;
     oxygine::spButton m_pHostAdresse;
     spChat m_Chat;

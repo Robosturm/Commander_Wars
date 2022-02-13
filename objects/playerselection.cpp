@@ -59,7 +59,6 @@ PlayerSelection::~PlayerSelection()
     m_playerColors.clear();
 }
 
-
 void PlayerSelection::attachNetworkInterface(spNetworkInterface pNetworkInterface)
 {
     m_pNetworkInterface = pNetworkInterface;
@@ -124,6 +123,18 @@ bool PlayerSelection::hasOpenPlayer()
     for (qint32 i = 0; i < m_playerAIs.size(); i++)
     {
         if (isOpenPlayer(i))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool PlayerSelection::hasHumanPlayer()
+{
+    for (qint32 i = 0; i < m_playerAIs.size(); i++)
+    {
+        if (m_pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
         {
             return true;
         }
@@ -242,10 +253,8 @@ bool PlayerSelection::getIsCampaign()
 }
 
 bool PlayerSelection::getIsArmyCustomizationAllowed()
-{
-    
-    return (m_pCampaign.get() == nullptr || m_pCampaign->getAllowArmyCustomization(m_pMap) || Console::getDeveloperMode());
-}
+{    
+    return (m_pCampaign.get() == nullptr || m_pCampaign->getAllowArmyCustomization(m_pMap) || Console::getDeveloperMode());}
 
 qint32 PlayerSelection::getDefaultColorCount()
 {
@@ -1057,16 +1066,13 @@ void PlayerSelection::playerDataChanged()
 }
 
 void PlayerSelection::playerColorChanged(QColor displayColor, qint32 playerIdx, qint32 item)
-{    
-    
+{
     QColor tableColor = displayColorToTableColor(displayColor);
     m_pMap->getPlayer(playerIdx)->setColor(tableColor, item);
     if (m_pNetworkInterface.get() != nullptr)
     {
         QString command = QString(NetworkCommands::COLORDATA);
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-        
-        Player* pPlayer = m_pMap->getPlayer(playerIdx);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);        
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << command;
@@ -1419,8 +1425,7 @@ void PlayerSelection::selectAI(qint32 player)
 }
 
 void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type)
-{
-    
+{    
     if(m_pMap != nullptr)
     {
         Player* pPlayer = m_pMap->getPlayer(player);
@@ -1466,6 +1471,10 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             recievePlayerArmy(socketID, stream);
         }
+        else if (messageType == NetworkCommands::PLAYERACCESSDENIED)
+        {
+            playerAccessDenied();
+        }
         else
         {
             CONSOLE_PRINT("Command not handled in playerselection", Console::eDEBUG);
@@ -1485,6 +1494,16 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             CONSOLE_PRINT("Command not handled in playerselection", Console::eDEBUG);
         }
+    }
+}
+
+void PlayerSelection::playerAccessDenied()
+{
+    if (!m_pNetworkInterface->getIsServer() &&
+        !m_pNetworkInterface->getIsObserver() &&
+        !hasHumanPlayer())
+    {
+        emit m_pNetworkInterface->sigDisconnected(-1);
     }
 }
 
@@ -1601,8 +1620,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
 {
     if (m_pNetworkInterface->getIsServer() ||
         m_isServerGame)
-    {
-        
+    {        
         qint32 player = 0;
         QString username;
         stream >> player;
@@ -1623,7 +1641,8 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             }
         }
         // opening a player is always valid changing to an human with an open player is also valid
-        if (isOpenPlayer(player) || eAiType == GameEnums::AiTypes_Open)
+        if (isOpenPlayer(player) ||
+            eAiType == GameEnums::AiTypes_Open)
         {
             CONSOLE_PRINT("Player change " + QString::number(player) + " changed locally to ai-type " + QString::number(eAiType), Console::eDEBUG);
             // valid request
@@ -1675,8 +1694,12 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
         else
         {
             CONSOLE_PRINT("Player change rejected. Cause player isn't open anymore", Console::eDEBUG);
+            QString command = NetworkCommands::PLAYERACCESSDENIED;
+            QByteArray accessDenied;
+            QDataStream sendStream(&accessDenied, QIODevice::WriteOnly);
+            sendStream << command;
+            emit m_pNetworkInterface->sig_sendData(socketID, accessDenied, NetworkInterface::NetworkSerives::Multiplayer, false);
         }
-
     }
 }
 
@@ -1794,8 +1817,7 @@ void PlayerSelection::recievedPlayerData(quint64, QDataStream& stream)
 {
     if (!m_pNetworkInterface->getIsServer() ||
         m_isServerGame)
-    {
-        
+    {        
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = m_pMap->getPlayer(i);
@@ -1824,8 +1846,7 @@ void PlayerSelection::recievedPlayerData(quint64, QDataStream& stream)
 }
 
 void PlayerSelection::recievedCOData(quint64, QDataStream& stream)
-{
-    
+{    
     qint32 playerIdx;
     QString coid;
     stream >> playerIdx;
@@ -1848,13 +1869,11 @@ void PlayerSelection::recievedCOData(quint64, QDataStream& stream)
         pCO->setPerkList(perks);
         pCO->readCoStyleFromStream(stream);
     }
-    updateCO2Sprite(coid, playerIdx);
-    
+    updateCO2Sprite(coid, playerIdx);    
 }
 
 void PlayerSelection::recievedColorData(quint64, QDataStream& stream)
-{
-    
+{    
     qint32 playerIdx = 0;
     QColor displayColor;
     stream >> playerIdx;
@@ -1866,8 +1885,7 @@ void PlayerSelection::recievedColorData(quint64, QDataStream& stream)
 }
 
 void PlayerSelection::recievePlayerArmy(quint64, QDataStream& stream)
-{
-    
+{    
     qint32 playerIdx = 0;
     QString army;
     stream >> playerIdx;
@@ -1882,8 +1900,7 @@ void PlayerSelection::recievePlayerArmy(quint64, QDataStream& stream)
         pPlayer->setPlayerArmy(army);
         pPlayer->setPlayerArmySelected(true);
     }
-    m_playerArmy[playerIdx]->setCurrentItem(army);
-    
+    m_playerArmy[playerIdx]->setCurrentItem(army);    
 }
 
 void PlayerSelection::disconnected(quint64 socketID)
@@ -1912,8 +1929,7 @@ void PlayerSelection::disconnected(quint64 socketID)
 }
 
 void PlayerSelection::updatePlayerData(qint32 player)
-{
-    
+{    
     if (player < 0)
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -1948,12 +1964,19 @@ void PlayerSelection::updatePlayerData(qint32 player)
         {
             notServerChangeAblePlayer = (m_pNetworkInterface->getIsServer() && pPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi);
         }
-        if (pPlayer->getBaseGameInput() == nullptr ||
-            pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human ||
-            notServerChangeAblePlayer)
+        if (m_pNetworkInterface->getIsObserver())
         {
-
-
+            m_playerAIs[player]->setEnabled(false);
+            m_playerColors[player]->setEnabled(false);
+            m_playerCO1[player]->setEnabled(false);
+            m_playerCO2[player]->setEnabled(false);
+            m_playerPerks[player]->setEnabled(false);
+            m_playerArmy[player]->setEnabled(false);
+        }
+        else if (pPlayer->getBaseGameInput() == nullptr ||
+                 pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human ||
+                 notServerChangeAblePlayer)
+        {
             if (((pPlayer->getBaseGameInput() != nullptr &&
                   pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human) ||
                  notServerChangeAblePlayer) &&
@@ -2041,8 +2064,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
             }
             m_playerColors[player]->setEnabled(false);
         }
-    }
-    
+    }    
 }
 
 bool PlayerSelection::getReady(qint32 playerIdx)
@@ -2073,8 +2095,7 @@ bool PlayerSelection::getPlayerReady()
 }
 
 void PlayerSelection::changeAllTeams(qint32 value)
-{
-    
+{    
     qint32 playersPerTeam = m_pMap->getPlayerCount() / value;
     qint32 freePlayer = m_pMap->getPlayerCount() - value * playersPerTeam;
     qint32 upCountPlayers = playersPerTeam / 2;
@@ -2104,5 +2125,4 @@ void PlayerSelection::changeAllTeams(qint32 value)
             ++player;
         }
     }
-
 }

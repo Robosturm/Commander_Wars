@@ -88,7 +88,7 @@ namespace NetworkCommands
     /**
      * @brief PLAYERJOINEDGAMEONSERVER
      */
-    const char* const PLAYERJOINEDGAMEONSERVER = "PLAYERJOINEDGAMEONSERVER";
+    const char* const PLAYERJOINEDGAMEONSERVER = "PLAYERJOINEDGAMEONSERVER";    
     /**
      * @brief PLAYERJOINEDGAMEONSERVER
      */
@@ -117,6 +117,14 @@ namespace NetworkCommands
      * @brief STARTSERVERGAME
      */
     const char* const STARTSERVERGAME = "STARTSERVERGAME";
+    /**
+     * @brief JOINASOBSERVER
+     */
+    const char* const JOINASOBSERVER = "JOINASOBSERVER";
+    /**
+     * @brief PLAYERACCESSDENIED
+     */
+    const char* const PLAYERACCESSDENIED = "PLAYERACCESSDENIED";
 }
 
 #endif // NETWORKCOMMANDS_H

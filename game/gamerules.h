@@ -63,7 +63,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 22;
+        return 23;
     }
     void addVictoryRule(spVictoryRule rule);
 
@@ -89,6 +89,16 @@ public:
 signals:
     void sigVictory(qint32 team);
 public slots:
+    /**
+     * @brief getMultiplayerObserver
+     * @return
+     */
+    qint32 getMultiplayerObserver() const;
+    /**
+     * @brief setMultiplayerObserver
+     * @param newMultiplayerObserver
+     */
+    void setMultiplayerObserver(qint32 newMultiplayerObserver);
     /**
      * @brief getMap
      * @return
@@ -634,9 +644,11 @@ private:
     float m_powerLoose{0.0f};
     GameMap* m_pMap{nullptr};
 
+    // multiplayer rule section
     Password m_password;
     QString m_description;
     bool m_cosmeticModsAllowed{false};
+    qint32 m_multiplayerObserver{0};
 };
 
 #endif // GAMERULES_H

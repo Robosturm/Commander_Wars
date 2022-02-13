@@ -46,8 +46,8 @@ public:
 
     explicit NetworkInterface(QObject* pParent)
         : QObject(pParent),
-          isServer(false),
-          isConnected(false)
+          m_isServer(false),
+          m_isConnected(false)
 
     {
         connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
@@ -93,17 +93,17 @@ public:
 
     bool getIsServer()
     {
-        return isServer;
+        return m_isServer;
     }
 
     bool getIsConnected()
     {
-        return isConnected;
+        return m_isConnected;
     }
 
     void setIsServer(bool value)
     {
-        isServer = value;
+        m_isServer = value;
     }
     quint64 getSocketID() const
     {
@@ -113,6 +113,19 @@ public:
     {
         m_socketID = socketID;
     }
+    /**
+     * @brief getIsObserver if the client is primarly observing the game and data stream
+     * @return
+     */
+    bool getIsObserver() const
+    {
+        return m_isObserver;
+    }
+    void setIsObserver(bool newIsObserver)
+    {
+        m_isObserver = newIsObserver;
+    }
+
 signals:
     /**
      * @brief recieveData emitted when Data is recieved
@@ -219,9 +232,10 @@ public slots:
         }
     }
 protected:
-    bool isServer;
-    bool isConnected;
     quint64 m_socketID{0};
+    bool m_isServer{false};
+    bool m_isConnected{false};
+    bool m_isObserver{false};
 };
 
 #endif // NETWORKINTERFACE_H

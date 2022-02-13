@@ -205,6 +205,22 @@ void RuleSelection::showRuleSelection(bool advanced)
         connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setCosmeticModsAllowed, Qt::QueuedConnection);
         addChild(pCheckbox);
         y += 40;
+
+        textField = spLabel::create(textWidth - 40);
+        textField->setStyle(style);
+        textField->setHtmlText(tr("Observer: "));
+        textField->setPosition(30, y);
+        addChild(textField);
+        spSpinBox pSpinbox = spSpinBox::create(400, 0, 40, SpinBox::Mode::Int);
+        pSpinbox->setTooltipText(tr("The amount of observers allowed to watch the game. No players can join a fog/shroud of war match"));
+        pSpinbox->setInfinityValue(-1.0);
+        pSpinbox->setSpinSpeed(1.0f);
+        pSpinbox->setPosition(textWidth, textField->getY());
+        pSpinbox->setEnabled(m_ruleChangeEabled);
+        addChild(pSpinbox);
+        pSpinbox->setCurrentValue(m_pMap->getGameRules()->getMultiplayerObserver());
+        connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pMap->getGameRules(), &GameRules::setMultiplayerObserver, Qt::QueuedConnection);
+        y += 40;
     }
 
     textField = spLabel::create(800);

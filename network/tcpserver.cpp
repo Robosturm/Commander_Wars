@@ -9,8 +9,8 @@ TCPServer::TCPServer(QObject* pParent)
     : NetworkInterface(pParent)
 {
     setObjectName("TCPServer");
-    isServer = true;
-    isConnected = true;
+    m_isServer = true;
+    m_isConnected = true;
 }
 
 TCPServer::~TCPServer()

@@ -947,6 +947,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+qint32 GameRules::getMultiplayerObserver() const
+{
+    return m_multiplayerObserver;
+}
+
+void GameRules::setMultiplayerObserver(qint32 newMultiplayerObserver)
+{
+    m_multiplayerObserver = newMultiplayerObserver;
+}
+
 GameMap *GameRules::getMap() const
 {
     return m_pMap;
@@ -1305,6 +1315,7 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_powerUsageReduction;
     pStream << m_powerLoose;
     pStream << m_hpDefenseReduction;
+    pStream << m_multiplayerObserver;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1595,5 +1606,9 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     if (version > 21)
     {
         pStream >> m_hpDefenseReduction;
+    }
+    if (version > 22)
+    {
+        pStream >> m_multiplayerObserver;
     }
 }

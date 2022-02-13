@@ -12,7 +12,7 @@ LocalClient::LocalClient(QObject* pParent)
       m_pSocket(nullptr)
 {
     setObjectName("LocalClient");
-    isServer = false;
+    m_isServer = false;
 }
 
 LocalClient::~LocalClient()
@@ -74,6 +74,6 @@ void LocalClient::changeThread(quint64, QThread* pThread)
 void LocalClient::connected()
 {
     CONSOLE_PRINT("Client is connected", Console::eLogLevels::eDEBUG);
-    isConnected = true;
+    m_isConnected = true;
     emit sigConnected(0);
 }

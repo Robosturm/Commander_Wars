@@ -28,6 +28,8 @@ signals:
     void sigHostLocal();
     void sigJoinGame();
     void sigJoinAdress();
+    void sigObserveGame();
+    void sigObserveAdress();
     void sigUpdateGamesView();
 public slots:
     void exitMenue();    
@@ -40,6 +42,10 @@ public slots:
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     void updateGamesView();
     void selectGame();
+    void observe(QString adress, QString password);
+    void observeAdress();
+    void observeGame();
+    void observeGamePassword(QString password);
 private:
     spPanel m_pGamesPanel;
     spNetworkInterface m_pTCPClient{nullptr};

@@ -14,7 +14,7 @@ TCPClient::TCPClient(QObject* pParent)
       m_pSocket(nullptr)
 {
     setObjectName("TCPClient");
-    isServer = false;
+    m_isServer = false;
 }
 
 TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, QTcpSocket* pSocket, quint64 socketId)
@@ -99,7 +99,7 @@ void TCPClient::changeThread(quint64, QThread* pThread)
 void TCPClient::connected()
 {
     CONSOLE_PRINT("Client is connected", Console::eLogLevels::eDEBUG);
-    isConnected = true;
+    m_isConnected = true;
     emit sigConnected(0);
 }
 

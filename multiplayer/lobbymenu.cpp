@@ -93,6 +93,15 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigJoinGame, this, &LobbyMenu::joinGame, Qt::QueuedConnection);
 
+    oxygine::spButton pButtonObserve = ObjectManager::createButton(tr("Observe Game"));
+    addChild(pButtonObserve);
+    pButtonObserve->setPosition(Settings::getWidth() / 2 + 10, pButtonJoin->getY() - pButtonJoin->getHeight());
+    pButtonObserve->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigObserveGame();
+    });
+    connect(this, &LobbyMenu::sigObserveGame, this, &LobbyMenu::observeGame, Qt::QueuedConnection);
+
     oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Adress"));
     addChild(pButtonJoinAdress);
     pButtonJoinAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getWidth(), Settings::getHeight() - pButtonExit->getHeight() - 10);
@@ -101,12 +110,22 @@ LobbyMenu::LobbyMenu()
         emit sigJoinAdress();
     });
     connect(this, &LobbyMenu::sigJoinAdress, this, &LobbyMenu::joinAdress, Qt::QueuedConnection);
+
+    oxygine::spButton pButtonObserveAdress = ObjectManager::createButton(tr("Observe Adress"));
+    addChild(pButtonObserveAdress);
+    pButtonObserveAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getWidth(), pButtonJoinAdress->getY() - pButtonJoinAdress->getHeight());
+    pButtonObserveAdress->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigObserveAdress();
+    });
+    connect(this, &LobbyMenu::sigObserveAdress, this, &LobbyMenu::observeAdress, Qt::QueuedConnection);
+
+
     qint32 height = Settings::getHeight() - 420;
     if (Settings::getSmallScreenDevice())
     {
         height = Settings::getHeight() - 120;
     }
-
     m_pGamesPanel = spPanel::create(true, QSize(Settings::getWidth() - 20, height),
                               QSize(Settings::getWidth() - 20, height));
     m_pGamesPanel->setPosition(10, 10);
@@ -143,7 +162,7 @@ void LobbyMenu::exitMenue()
 void LobbyMenu::hostLocal()
 {    
     CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create("", "", true));
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create("", "", Multiplayermenu::NetworkMode::Host));
     oxygine::Actor::detach();    
 }
 
@@ -154,7 +173,7 @@ void LobbyMenu::hostServer()
     {
         m_usedForHosting = true;
         CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
-        oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, "", true));
+        oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, "",  Multiplayermenu::NetworkMode::Host));
         oxygine::Actor::detach();        
     }
 }
@@ -197,7 +216,7 @@ void LobbyMenu::joinGamePassword(QString password)
         QString command = QString(NetworkCommands::SERVERJOINGAME);
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
         m_usedForHosting = true;
-        oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, password, false));
+        oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, password, Multiplayermenu::NetworkMode::Client));
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
         stream << command;
@@ -217,8 +236,71 @@ void LobbyMenu::joinAdress()
 void LobbyMenu::join(QString adress, QString password)
 {    
     CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), password, false));
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), password, Multiplayermenu::NetworkMode::Client));
     oxygine::Actor::detach();    
+}
+
+void LobbyMenu::observeAdress()
+{
+    spDialogPasswordAndAdress pDialogTextInput = spDialogPasswordAndAdress::create(tr("Enter Host Adress"));
+    addChild(pDialogTextInput);
+    connect(pDialogTextInput.get(), &DialogPasswordAndAdress::sigTextChanged, this, &LobbyMenu::observe, Qt::QueuedConnection);
+}
+
+void LobbyMenu::observe(QString adress, QString password)
+{
+    CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
+    // oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), password, Multiplayermenu::NetworkMode::Observer));
+    oxygine::Actor::detach();
+}
+
+void LobbyMenu::observeGame()
+{
+    if (m_currentGame.get() && m_currentGame->hasOpenPlayers())
+    {
+        if (m_currentGame->getLocked())
+        {
+            spDialogPassword pDialogTextInput = spDialogPassword::create(tr("Enter Password"), true, "");
+            addChild(pDialogTextInput);
+            connect(pDialogTextInput.get(), &DialogPassword::sigTextChanged, this, &LobbyMenu::observeGamePassword, Qt::QueuedConnection);
+
+        }
+        else
+        {
+            observeGamePassword("");
+        }
+    }
+}
+
+void LobbyMenu::observeGamePassword(QString password)
+{
+    bool exists = false;
+    if (m_currentGame.get() != nullptr)
+    {
+        for (const auto & game : qAsConst(m_games))
+        {
+            if (m_currentGame.get() == game.get())
+            {
+                exists = true;
+                break;
+            }
+        }
+    }
+    if (exists)
+    {
+//        CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
+//        QString command = QString(NetworkCommands::SERVERJOINGAME);
+//        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+//        m_usedForHosting = true;
+//        m_pTCPClient->setIsObserver(true);
+//        oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, password, Multiplayermenu::NetworkMode::Observer));
+//        QByteArray data;
+//        QDataStream stream(&data, QIODevice::WriteOnly);
+//        stream << command;
+//        stream << m_currentGame->getSlaveName();
+//        emit m_pTCPClient->sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
+//        oxygine::Actor::detach();
+    }
 }
 
 void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)

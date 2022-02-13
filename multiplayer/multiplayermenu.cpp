@@ -31,16 +31,17 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-Multiplayermenu::Multiplayermenu(QString adress, QString password, bool host)
+Multiplayermenu::Multiplayermenu(QString adress, QString password, NetworkMode networkMode)
     : MapSelectionMapsMenue(Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 380),
-      m_Host(host),
+      m_networkMode(networkMode),
       m_local(true),
       m_password(password)
 {
     init();
-    if (!host)
+    if (m_networkMode != NetworkMode::Host)
     {
         m_NetworkInterface = spTCPClient::create(nullptr);
+        m_NetworkInterface->setIsObserver(m_networkMode == NetworkMode::Observer);
         m_NetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
         m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
         initClientAndWaitForConnection();
@@ -61,15 +62,15 @@ Multiplayermenu::Multiplayermenu(QString adress, QString password, bool host)
     }
 }
 
-Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, bool host)
+Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, NetworkMode networkMode)
     : MapSelectionMapsMenue(Settings::getHeight() - 380),
-      m_Host(host),
+      m_networkMode(networkMode),
       m_local(false),
       m_password(password)
 {
     m_NetworkInterface = pNetworkInterface.get();
     init();
-    if (!host)
+    if (m_networkMode != NetworkMode::Host)
     {
         initClientAndWaitForConnection();
     }
@@ -87,7 +88,14 @@ void Multiplayermenu::initClientAndWaitForConnection()
     Multiplayermenu::hideMapSelection();
     m_MapSelectionStep = MapSelectionStep::selectPlayer;
     // change the name of the start button
-    dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
+    if (m_networkMode == NetworkMode::Client)
+    {
+        dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
+    }
+    else if (m_networkMode == NetworkMode::Observer)
+    {
+        m_pButtonStart->setVisible(false);
+    }
     // quit on host connection lost
     connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
     connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
@@ -203,15 +211,7 @@ void Multiplayermenu::playerJoined(quint64 socketID)
     }
     else if (m_NetworkInterface->getIsServer() && m_local)
     {
-        if (m_pPlayerSelection->hasOpenPlayer())
-        {
-            acceptNewConnection(socketID);
-        }
-        else
-        {
-            // reject connection by disconnecting
-            emit m_NetworkInterface.get()->sigDisconnectClient(socketID);
-        }
+        acceptNewConnection(socketID);
     }
 }
 
@@ -458,7 +458,6 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
         }
         else
         {
-
             bool campaign = false;
             stream >> campaign;
             if (campaign)
@@ -484,7 +483,14 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
                 m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(pMap.get(), static_cast<GameEnums::AiTypes>(aiType)));
                 m_pPlayerSelection->updatePlayerData(i);
             }
-            m_pPlayerSelection->sendPlayerRequest(socketID, -1, GameEnums::AiTypes_Human);
+            if (m_networkMode == NetworkMode::Observer)
+            {
+                // m_pPlayerSelection->sendPlayerRequest(socketID, -1, GameEnums::AiTypes_Human);
+            }
+            else
+            {
+                m_pPlayerSelection->sendPlayerRequest(socketID, -1, GameEnums::AiTypes_Human);
+            }
             emit sigConnected();
             emit sigHostGameLaunched();
         }
@@ -915,7 +921,6 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     sendStream << command;
     sendStream << m_NetworkInterface->getSocketID();
     emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
-    
 }
 
 bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& scriptFileName, QByteArray& scriptHash)
@@ -1009,7 +1014,7 @@ void Multiplayermenu::showRuleSelection()
 
 void Multiplayermenu::disconnected(quint64)
 {
-    if (m_Host)
+    if (m_networkMode == NetworkMode::Host)
     {
         // handled in player selection
     }
@@ -1024,7 +1029,7 @@ void Multiplayermenu::disconnected(quint64)
 
 void Multiplayermenu::buttonBack()
 {
-    if (!m_Host ||
+    if (m_networkMode != NetworkMode::Host ||
         m_MapSelectionStep == MapSelectionStep::selectMap ||
         !m_local)
     {
@@ -1033,7 +1038,7 @@ void Multiplayermenu::buttonBack()
         oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
         oxygine::Actor::detach();
     }
-    else if (m_Host)
+    else if (m_networkMode == NetworkMode::Host)
     {
         m_pHostAdresse->setVisible(false);
         if (m_Chat.get() != nullptr)
@@ -1054,7 +1059,7 @@ void Multiplayermenu::buttonBack()
 
 void Multiplayermenu::buttonNext()
 {
-    if (m_Host && m_MapSelectionStep == MapSelectionStep::selectRules)
+    if (m_networkMode == NetworkMode::Host && m_MapSelectionStep == MapSelectionStep::selectRules)
     {
         spGameMap pMap = m_pMapSelectionView->getCurrentMap();
         m_password.setPassword(pMap->getGameRules()->getPassword());
@@ -1173,7 +1178,7 @@ bool Multiplayermenu::getGameReady()
 
 void Multiplayermenu::startGame()
 {
-    if (!m_Host)
+    if (m_networkMode != NetworkMode::Host)
     {
         markGameReady();
         changeButtonText();

@@ -9,8 +9,8 @@ LocalServer::LocalServer(QObject* pParent)
     : NetworkInterface(pParent)
 {
     setObjectName("LocalServer");
-    isServer = true;
-    isConnected = true;
+    m_isServer = true;
+    m_isConnected = true;
 }
 
 LocalServer::~LocalServer()

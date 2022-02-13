@@ -43,6 +43,7 @@ public:
     bool isOpenPlayer(qint32 player);
     bool isClosedPlayer(qint32 player);
     bool hasOpenPlayer();
+    bool hasHumanPlayer();
     QString getPlayerAiName(qint32 player);
     void setPlayerAiName(qint32 player, QString name);
     GameEnums::AiTypes getPlayerAiType(qint32 player);
@@ -256,6 +257,10 @@ protected:
      * @brief autoSelectPlayerColors
      */
     void autoSelectPlayerColors();
+    /**
+     * @brief playerAccessDenied
+     */
+    void playerAccessDenied();
 private:
     // player selection
     spPanel m_pPlayerSelection;
