@@ -666,6 +666,9 @@
         <image file="bh/co_sturm+alt+info.png" />
         <image file="bh/co_sturm+alt+mini.png" />
         <image file="bh/co_sturm+alt+face.png" cols = "3" rows = "2" />
+        <image file="bh/co_sturm+alt2+nrm.png" />
+        <image file="bh/co_sturm+alt2+info.png" />
+        <image file="bh/co_sturm+alt2+face.png" cols = "3" />
         <image file="bh/co_flak+nrm.png" />
         <image file="bh/co_flak+info.png" />
         <image file="bh/co_flak+mini.png" />
