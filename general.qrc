@@ -40,7 +40,7 @@
         <file>resources/objects/colordialogcursor_2.png</file>
         <file>resources/objects/dropdownmenu.png</file>
         <file>resources/objects/editor+big.png</file>
-		<file>resources/objects/editor+big+square.png</file>
+        <file>resources/objects/editor+big+square.png</file>
         <file>resources/objects/editor+building.png</file>
         <file>resources/objects/editor+fill.png</file>
         <file>resources/objects/editor+medium.png</file>
@@ -6546,5 +6546,8 @@
         <file>resources/scripts/building/znest_left_mortar.js</file>
         <file>resources/scripts/building/znest_nest_laser.js</file>
         <file>resources/scripts/building/znest_right_mortar.js</file>
+        <file>resources/images/co/bh/co_sturm+alt2+face.png</file>
+        <file>resources/images/co/bh/co_sturm+alt2+info.png</file>
+        <file>resources/images/co/bh/co_sturm+alt2+nrm.png</file>
     </qresource>
 </RCC>
