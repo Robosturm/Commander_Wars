@@ -56,6 +56,7 @@ public:
      * @brief showRuleSelection
      */
     virtual void showRuleSelection() override;
+    virtual void showPlayerSelection() override;
 signals:
     void sigConnected();
     void sigHostGameLaunched();

@@ -43,7 +43,7 @@ public:
     void hideRuleSelection();
     virtual void showRuleSelection();
     void hidePlayerSelection();
-    void showPlayerSelection();
+    virtual void showPlayerSelection();
 
 signals:
     void sigButtonBack();

@@ -1016,6 +1016,15 @@ void Multiplayermenu::showRuleSelection()
     m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getWidth());    
 }
 
+void Multiplayermenu::showPlayerSelection()
+{
+    MapSelectionMapsMenue::showPlayerSelection();
+    if (m_networkMode == NetworkMode::Observer)
+    {
+        m_pButtonStart->setVisible(false);
+    }
+}
+
 void Multiplayermenu::disconnected(quint64)
 {
     if (m_networkMode == NetworkMode::Host)

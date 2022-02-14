@@ -212,7 +212,7 @@ void LobbyMenu::joinGamePassword(QString password)
     }
     if (exists)
     {
-        CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
+        CONSOLE_PRINT("Leaving Lobby Menue to join server game", Console::eDEBUG);
         QString command = QString(NetworkCommands::SERVERJOINGAME);
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
         m_usedForHosting = true;
@@ -235,7 +235,7 @@ void LobbyMenu::joinAdress()
 
 void LobbyMenu::join(QString adress, QString password)
 {    
-    CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", Console::eDEBUG);
     oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), password, Multiplayermenu::NetworkMode::Client));
     oxygine::Actor::detach();    
 }
@@ -249,14 +249,14 @@ void LobbyMenu::observeAdress()
 
 void LobbyMenu::observe(QString adress, QString password)
 {
-    CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
-    // oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), password, Multiplayermenu::NetworkMode::Observer));
+    CONSOLE_PRINT("Leaving Lobby Menue to observe game by adress", Console::eDEBUG);
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), password, Multiplayermenu::NetworkMode::Observer));
     oxygine::Actor::detach();
 }
 
 void LobbyMenu::observeGame()
 {
-    if (m_currentGame.get() && m_currentGame->hasOpenPlayers())
+    if (m_currentGame.get())
     {
         if (m_currentGame->getLocked())
         {
@@ -288,7 +288,7 @@ void LobbyMenu::observeGamePassword(QString password)
     }
     if (exists)
     {
-//        CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
+//        CONSOLE_PRINT("Leaving Lobby Menue to observe server game", Console::eDEBUG);
 //        QString command = QString(NetworkCommands::SERVERJOINGAME);
 //        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
 //        m_usedForHosting = true;
@@ -326,8 +326,7 @@ void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkS
 }
 
 void LobbyMenu::updateGamesView()
-{
-    
+{    
     if (m_Gamesview.get() != nullptr)
     {
         m_Gamesview->detach();
