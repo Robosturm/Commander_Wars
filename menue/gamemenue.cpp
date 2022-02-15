@@ -1283,7 +1283,7 @@ void GameMenue::victory(qint32 team)
                 exit = false;
             }
         }
-        if (exit == true)
+        if (exit == true && !m_isReplay)
         {
             if (m_pNetworkInterface.get() != nullptr)
             {
@@ -1916,4 +1916,14 @@ void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
 void GameMenue::showDamageCalculator()
 {
     addChild(spDamageCalculator::create());
+}
+
+bool GameMenue::getIsReplay() const
+{
+    return m_isReplay;
+}
+
+void GameMenue::setIsReplay(bool isReplay)
+{
+    m_isReplay = isReplay;
 }

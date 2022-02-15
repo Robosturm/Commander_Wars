@@ -171,7 +171,6 @@ void LobbyMenu::hostServer()
     if (m_pTCPClient.get() != nullptr &&
         m_pTCPClient->getIsConnected())
     {
-        m_usedForHosting = true;
         CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
         oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, "",  Multiplayermenu::NetworkMode::Host));
         oxygine::Actor::detach();        
@@ -213,10 +212,9 @@ void LobbyMenu::joinGamePassword(QString password)
     if (exists)
     {
         CONSOLE_PRINT("Leaving Lobby Menue to join server game", Console::eDEBUG);
+        oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, password, Multiplayermenu::NetworkMode::Client));
         QString command = QString(NetworkCommands::SERVERJOINGAME);
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-        m_usedForHosting = true;
-        oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, password, Multiplayermenu::NetworkMode::Client));
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
         stream << command;
@@ -288,18 +286,17 @@ void LobbyMenu::observeGamePassword(QString password)
     }
     if (exists)
     {
-//        CONSOLE_PRINT("Leaving Lobby Menue to observe server game", Console::eDEBUG);
-//        QString command = QString(NetworkCommands::SERVERJOINGAME);
-//        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-//        m_usedForHosting = true;
-//        m_pTCPClient->setIsObserver(true);
-//        oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, password, Multiplayermenu::NetworkMode::Observer));
-//        QByteArray data;
-//        QDataStream stream(&data, QIODevice::WriteOnly);
-//        stream << command;
-//        stream << m_currentGame->getSlaveName();
-//        emit m_pTCPClient->sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
-//        oxygine::Actor::detach();
+        CONSOLE_PRINT("Leaving Lobby Menue to observe server game", Console::eDEBUG);
+        m_pTCPClient->setIsObserver(true);
+        oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, password, Multiplayermenu::NetworkMode::Observer));
+        QString command = QString(NetworkCommands::SERVERJOINGAME);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QByteArray data;
+        QDataStream stream(&data, QIODevice::WriteOnly);
+        stream << command;
+        stream << m_currentGame->getSlaveName();
+        emit m_pTCPClient->sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
+        oxygine::Actor::detach();
     }
 }
 

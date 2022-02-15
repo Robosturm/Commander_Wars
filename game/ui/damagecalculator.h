@@ -69,5 +69,7 @@ private:
 
     UnitData m_defUnit;
     CosData m_defCos;
+
+    spPlayer m_dropDownPlayer;
 };
 

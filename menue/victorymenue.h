@@ -47,7 +47,7 @@ public:
         Lost
     };
 
-    explicit VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface);
+    explicit VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface, bool isReplay = false);
     virtual ~VictoryMenue() = default;
 
     /**
@@ -170,6 +170,8 @@ private:
 
     spNetworkInterface m_pNetworkInterface;
     spGameMap m_pMap;
+
+    bool m_isReplay{false};
 };
 
 #endif // VICTORYMENUE_H

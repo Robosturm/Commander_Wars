@@ -19,7 +19,8 @@
 ScriptEventSpawnUnit::ScriptEventSpawnUnit(GameMap* pMap)
     : ScriptEvent(pMap, ScriptEvent::EventType::spawnUnit)
 {
-
+    m_dropDownPlayer = spPlayer::create(m_pMap);
+    m_dropDownPlayer->init();
 }
 
 void ScriptEventSpawnUnit::readEvent(QTextStream& rStream, QString line)
@@ -167,9 +168,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     {
         items.append(curUnitId);
     }
-    spPlayer player = spPlayer::create(m_pMap);
-    player->init();
-    Player* pPlayer = player.get();
+    Player* pPlayer = m_dropDownPlayer.get();
     auto creator = [=](QString id)
     {
         spUnit pSprite = spUnit::create(id, pPlayer, false, m_pMap);

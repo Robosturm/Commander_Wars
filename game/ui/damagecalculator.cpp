@@ -35,10 +35,12 @@ DamageCalculator::DamageCalculator()
     pCOSpriteManager->getCoGroups(coIds);
     coIds.push_front("");
 
-    Player pPlayer(&m_map);
+    m_dropDownPlayer = spPlayer::create(&m_map);
+    m_dropDownPlayer->init();
+
     QStringList rankItems;
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    Unit pUnit(pUnitSpriteManager->getID(0), &pPlayer, false, &m_map);
+    Unit pUnit(pUnitSpriteManager->getID(0), m_dropDownPlayer.get(), false, &m_map);
     qint32 maxRang = pUnit.getMaxUnitRang();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getIcon";
@@ -167,9 +169,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
                                     const QStringList & terrainIds, const QStringList & buildingIds)
 {
     qint32 startX = x;
-    spPlayer player = spPlayer::create(&m_map);
-    player->init();
-    Player* pPlayer = player.get();
+    Player* pPlayer = m_dropDownPlayer.get();
     auto unitCreator = [=](QString id)
     {
         spUnit pSprite = spUnit::create(id, pPlayer, false, &m_map);
@@ -397,7 +397,7 @@ void DamageCalculator::updateMapData(QPoint & defPos)
     // defender
     pPlayer = m_map.getPlayer(1);
     pPlayer->setFunds(m_defUnit.m_funds->getCurrentValue());
-    for (qint32 i = 0; i < pPlayer->getCoCount(); ++i)
+    for (qint32 i = 0; i < pPlayer->getMaxCoCount(); ++i)
     {
         pPlayer->setCO(m_defCos[i].m_co->getCurrentItemText(), i);
         CO* pCO = pPlayer->getCO(i);

@@ -77,6 +77,9 @@ public:
      * @param pGameAction
      */
     void doTrapping(spGameAction & pGameAction);
+    bool getIsReplay() const;
+    void setIsReplay(bool isReplay);
+
 signals:
     void sigActionPerformed();
     void sigGameStarted();
@@ -324,6 +327,7 @@ protected:
     bool m_saveMap{false};
     bool m_exitAfterSave{false};
     bool m_saveAllowed{false};
+    bool m_isReplay{false};
 };
 
 #endif // GAMEMENUE_H

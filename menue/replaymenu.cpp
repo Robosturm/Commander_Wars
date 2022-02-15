@@ -1,7 +1,7 @@
 #include <QMutexLocker>
 
 #include "menue/replaymenu.h"
-#include "menue/mainwindow.h"
+#include "menue/victorymenue.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
 
@@ -20,6 +20,7 @@ ReplayMenu::ReplayMenu(QString filename)
 {
     Interpreter::setCppOwnerShip(this);
     setObjectName("ReplayMenu");
+    setIsReplay(true);
     connect(this, &ReplayMenu::sigExitReplay, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigShowRecordInvalid, this, &ReplayMenu::showRecordInvalid, Qt::QueuedConnection);
     connect(this, &GameMenue::sigActionPerformed, this, &ReplayMenu::nextReplayAction, Qt::QueuedConnection);
@@ -119,7 +120,7 @@ void ReplayMenu::exitReplay()
     CONSOLE_PRINT("Restoring interpreter after record replay", Console::eDEBUG);
     Interpreter::reloadInterpreter(Interpreter::getRuntimeData());
     CONSOLE_PRINT("Leaving Replay Menue", Console::eDEBUG);
-    auto window = spMainwindow::create();
+    auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface, true);
     oxygine::Stage::getStage()->addChild(window);
     deleteMenu();
 }
@@ -159,8 +160,7 @@ void ReplayMenu::nextReplayAction()
 }
 
 void ReplayMenu::showExitGame()
-{
-    
+{    
     m_Focused = false;
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the current replay?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
@@ -168,8 +168,7 @@ void ReplayMenu::showExitGame()
     {
         m_Focused = true;
     });
-    addChild(pExit);
-    
+    addChild(pExit);    
 }
 
 Player* ReplayMenu::getCurrentViewPlayer()

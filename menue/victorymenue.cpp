@@ -24,10 +24,11 @@
 #include "objects/base/moveinbutton.h"
 
 
-VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface)
+VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface, bool isReplay)
     : m_ProgressTimer(this),
       m_pNetworkInterface(pNetworkInterface),
-      m_pMap(pMap)
+      m_pMap(pMap),
+      m_isReplay(isReplay)
 {
     setObjectName("VictoryMenue");
     Mainapp* pApp = Mainapp::getInstance();
@@ -558,7 +559,6 @@ void VictoryMenue::createStatisticsView()
 
 void VictoryMenue::addShopMoney()
 {
-    
     qint32 highestScore = 0;
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
@@ -574,7 +574,7 @@ void VictoryMenue::addShopMoney()
             }
         }
     }
-    if (highestScore > 0)
+    if (highestScore > 0 && !m_isReplay)
     {
         CONSOLE_PRINT("Adding points to userdata.", Console::eDEBUG);
         Userdata* pUserdata = Userdata::getInstance();
@@ -727,7 +727,7 @@ void VictoryMenue::exitMenue()
         m_pNetworkInterface = nullptr;
     }
     spCampaign campaign = m_pMap->getSpCampaign();
-    if (campaign.get() != nullptr && campaign->getCampaignFinished() == false)
+    if (campaign.get() != nullptr && campaign->getCampaignFinished() == false && !m_isReplay)
     {
         m_pMap->detach();
         bool multiplayer = m_pNetworkInterface.get() != nullptr;
@@ -845,8 +845,7 @@ void VictoryMenue::updateGraph()
 }
 
 void VictoryMenue::finishGraph()
-{
-    
+{    
     qint32 progress = m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)];
     while (progress < m_pMap->getCurrentDay())
     {
@@ -1033,7 +1032,7 @@ void VictoryMenue::AddScoreToUserdata()
     CONSOLE_PRINT("VictoryMenue::AddScoreToUserdata", Console::eDEBUG);
     
     QString path = m_pMap->getMapPath();
-    if (!path.isEmpty() && m_pMap->getWinnerTeam() >= 0)
+    if (!path.isEmpty() && m_pMap->getWinnerTeam() >= 0 && !m_isReplay)
     {
         qint32 playerCount = m_pMap->getPlayerCount();
         qint32 bestPlayer = -1;

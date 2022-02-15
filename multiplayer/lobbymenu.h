@@ -52,7 +52,6 @@ private:
     QVector<spNetworkGameData> m_games;
     spNetworkGameData m_currentGame;
     spTableView m_Gamesview;
-    bool m_usedForHosting{false};
 };
 
 #endif // LOBBYMENU_H
