@@ -188,6 +188,16 @@ qint32 BaseGameInputIF::getMoveCostMapValue(qint32 x, qint32 y)
     return 0.0f;
 }
 
+const QString &BaseGameInputIF::getUniqueIdentifier() const
+{
+    return m_uniqueIdentifier;
+}
+
+void BaseGameInputIF::setUniqueIdentifier(const QString &newUniqueIdentifier)
+{
+    m_uniqueIdentifier = newUniqueIdentifier;
+}
+
 void BaseGameInputIF::centerCameraOnAction(GameAction* pAction)
 {
     if (Settings::getAutoCamera())

@@ -127,6 +127,11 @@ var Constructor = function()
     {
         return qsTr("A calm inland body of water. Naval and air forces have good mobility while hovercraft can freely move on and off.");
     };
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["lake"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var LAKE = new Constructor();

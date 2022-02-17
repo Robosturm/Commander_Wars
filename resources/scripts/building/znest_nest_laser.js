@@ -2,12 +2,12 @@ var Constructor = function()
 {    
     this.init = function (building)
     {
-        building.setHp(100);
+        building.setHp(-1);
         building.setAlwaysVisble(true);
     };
     this.loadSprites = function(building, neutral, map)
     {
-        building.loadSprite("nest_laser+S", false, 400, Qt.point(0, map.getImageSize()));
+        building.loadSprite("nest_laser+S", false, 400, Qt.point(0, building.getImageSize()));
     };
     this.getBaseIncome = function()
     {
@@ -27,7 +27,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Nest of Dark Matter.");
+        return qsTr("Nest of Dark Matter. Currently only a visual.");
     };
     this.getBuildingWidth = function()
     {
@@ -48,15 +48,15 @@ var Constructor = function()
         var day = map.getCurrentDay();
         if (day % 3 === 1)
         {
-            building.loadSprite("nest_laser+S", false, 400, Qt.point(0, map.getImageSize()));
+            building.loadSprite("nest_laser+S", false, 400, Qt.point(0, building.getImageSize()));
         }
         else if (day % 3 === 2)
         {
-            building.loadSprite("nest_laser+SE", false, 400, Qt.point(0, map.getImageSize()));
+            building.loadSprite("nest_laser+SE", false, 400, Qt.point(0, building.getImageSize()));
         }
         else if (day % 3 === 0)
         {
-            building.loadSprite("nest_laser+SW", false, 400, Qt.point(0, map.getImageSize()));
+            building.loadSprite("nest_laser+SW", false, 400, Qt.point(0, building.getImageSize()));
         }
     };
 }

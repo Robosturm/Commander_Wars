@@ -311,7 +311,7 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
                 pPlayer = pMap->getCurrentPlayer();
             }
             spBuilding pBuilding = spBuilding::create(file, pMap);
-            pBuilding->setOwner(pPlayer.get());
+            pBuilding->setOwner(pPlayer.get());            
             pBuilding->scaleAndShowOnSingleTile();
             return pBuilding;
         }

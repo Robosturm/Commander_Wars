@@ -2,12 +2,12 @@ var Constructor = function()
 {    
     this.init = function (building)
     {
-        building.setHp(100);
+        building.setHp(-1);
         building.setAlwaysVisble(true);
     };
     this.loadSprites = function(building, neutral, map)
     {
-        building.loadSprite("nest_center_laser_left", false, 400, Qt.point(0, map.getImageSize()));
+        building.loadSprite("nest_center_laser_left", false, 400, Qt.point(0, building.getImageSize()));
     };
     this.getBaseIncome = function()
     {
@@ -27,7 +27,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Nest of Dark Matter.");
+        return qsTr("Nest of Dark Matter. Currently only a visual.");
     };
 }
 

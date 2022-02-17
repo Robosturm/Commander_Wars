@@ -41,6 +41,10 @@
 #include "game/campaign.h"
 #include "game/gamescript.h"
 #include "game/GameEnums.h"
+#include "game/gamerecording/gamerecorder.h"
+#include "game/gamerecording/playerrecord.h"
+#include "game/gamerecording/specialevent.h"
+#include "game/gamerecording/daytodayrecord.h"
 
 #include "game/ui/customcoboostinfo.h"
 #include "game/jsData/terrainflowdata.h"
@@ -177,4 +181,10 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<TerrainFlowData>("TerrainFlowData", 1);
     qmlRegisterInterface<CampaignMapData>("CampaignMapData", 1);
     qmlRegisterInterface<GamepadInfo>("GamepadInfo", 1);
+
+    qmlRegisterInterface<GameRecorder>("GameRecorder", 1);
+    qmlRegisterInterface<PlayerRecord>("PlayerRecord", 1);
+    qmlRegisterInterface<SpecialEvent>("SpecialEvent", 1);
+    qmlRegisterInterface<DayToDayRecord>("DayToDayRecord", 1);
+
 }

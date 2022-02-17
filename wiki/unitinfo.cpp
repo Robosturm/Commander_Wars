@@ -321,31 +321,36 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     }
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", pUnit->getMap());
-        pTerrain->loadSprites();
-        spBuilding pBuilding = spBuilding::create(pBuildingSpriteManager->getID(i), pUnit->getMap());
-        // pBuilding->setOwner(pUnit->getOwner());
-        pBuilding->updateBuildingSprites(false);
+        spBuilding pBuilding = spBuilding::create(pBuildingSpriteManager->getID(i), pUnit->getMap());        
         qint32 buildingWidth = pBuilding->getBuildingWidth();
         qint32 buildingHeigth = pBuilding->getBuildingHeigth();
         pBuilding->setScaleX(1.0f / static_cast<float>(buildingWidth));
         pBuilding->setScaleY(1.0f / static_cast<float>(buildingHeigth));
+        pBuilding->updateBuildingSprites(false);
+
+        spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", pUnit->getMap());
+        pTerrain->loadSprites();
+        pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
+        pTerrain->setScaleX(1 / pBuilding->getScaleX());
+        pTerrain->setScaleY(1 / pBuilding->getScaleY());
         if (buildingWidth > 1)
         {
-            pBuilding->setX(GameMap::getImageSize() * (buildingWidth - 1) / (buildingWidth));
+            pTerrain->oxygine::Actor::setX(-GameMap::getImageSize() * (buildingWidth - 1));
         }
         if (buildingHeigth > 1)
         {
-            pBuilding->setY(GameMap::getImageSize() * (buildingHeigth - 1) / (buildingHeigth));
+            pTerrain->oxygine::Actor::setY(-GameMap::getImageSize() * (buildingHeigth - 1));
         }
-        pTerrain->setBuilding(pBuilding);
+        pBuilding->addChild(pTerrain);
+        pBuilding->oxygine::Actor::setX(x + GameMap::getImageSize() * (buildingWidth - 1) / (buildingWidth));
+        pBuilding->oxygine::Actor::setY(y + GameMap::getImageSize() * (buildingHeigth - 1) / (buildingHeigth));
+
         qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);
-        pTerrain->setPosition(x, y);
-        pTerrain->addClickListener([=](oxygine::Event*)
+        pBuilding->addClickListener([=](oxygine::Event*)
         {
             emit sigShowLink(pBuildingSpriteManager->getID(i));
         });
-        addChild(pTerrain);
+        addChild(pBuilding);
         pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width);
         pLabel->setStyle(style);

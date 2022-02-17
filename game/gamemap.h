@@ -145,7 +145,11 @@ public:
      * @param fast
      */
     void deserializer(QDataStream& pStream, bool fast);
-
+    /**
+     * @brief readMapHeader
+     * @param pStream
+     * @param headerInfo
+     */
     static void readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo);
     /**
      * @brief readMapName
@@ -214,7 +218,15 @@ public:
      * @brief registerMapAtInterpreter
      */
     void registerMapAtInterpreter();
+    /**
+     * @brief getMapPath
+     * @return
+     */
     QString getMapPath() const;
+    /**
+     * @brief setMapPath
+     * @param mapPath
+     */
     void setMapPath(const QString &mapPath);
     /**
      * @brief playMusic

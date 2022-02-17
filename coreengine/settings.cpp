@@ -1,6 +1,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/userdata.h"
 
 #include "game/gamemap.h"
 
@@ -1083,6 +1084,7 @@ void Settings::loadSettings()
         m_simpleDeselect = true;
         m_showDetailedBattleForcast = false;
     }
+    Userdata::getInstance()->setUniqueIdentifier(getUsername());
 }
 
 void Settings::resetSettings()
@@ -1501,6 +1503,7 @@ QString Settings::getUsername()
 void Settings::setUsername(const QString &Username)
 {
     m_Username = Username;
+    Userdata::getInstance()->setUniqueIdentifier(getUsername());
 }
 
 QString Settings::getLastSaveGame()

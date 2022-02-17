@@ -40,6 +40,7 @@ public:
     {
         return 1;
     }
+public slots:
     /**
      * @brief addSpecialEvent
      * @param player

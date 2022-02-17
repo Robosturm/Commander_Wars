@@ -40,6 +40,7 @@ public:
     {
         return 1;
     }
+public slots:
     qint32 getDay() const;
     qint32 getOwner() const;
     qint32 getFunds() const;

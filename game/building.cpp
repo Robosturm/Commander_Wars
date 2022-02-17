@@ -359,6 +359,12 @@ GameMap *Building::getMap() const
     return m_pMap;
 }
 
+
+qint32 Building::getImageSize()
+{
+    return GameMap::getImageSize();
+}
+
 void Building::syncAnimation(oxygine::timeMS syncTime)
 {
     for (auto & sprite : m_pBuildingSprites)

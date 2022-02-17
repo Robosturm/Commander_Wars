@@ -108,6 +108,11 @@ signals:
 
 public slots:
     /**
+     * @brief getImageSize
+     * @return the size of an field in pixel
+     */
+    static qint32 getImageSize();
+    /**
      * @brief getPMap
      * @return
      */

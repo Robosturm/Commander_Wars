@@ -35,9 +35,18 @@ public:
     static spBaseGameInputIF createAi(GameMap* pMap, GameEnums::AiTypes type);
 
     virtual void centerCameraOnAction(GameAction* pAction);
-signals:
 
 public slots:
+    /**
+     * @brief getUniqueIdentifier
+     * @return
+     */
+    const QString &getUniqueIdentifier() const;
+    /**
+     * @brief setUniqueIdentifier
+     * @param newUniqueIdentifier
+     */
+    void setUniqueIdentifier(const QString &newUniqueIdentifier);
     /**
      * @brief getAiType
      * @return
@@ -88,6 +97,10 @@ protected:
      */
     QVector<QVector<std::tuple<qint32, bool>>> m_MoveCostMap;
     GameMap* m_pMap{nullptr};
+    /**
+     * @brief m_uniqueIdentifier
+     */
+    QString m_uniqueIdentifier;
 };
 
 #endif // BASEGAMEINPUTIF_H

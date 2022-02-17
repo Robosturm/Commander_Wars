@@ -137,14 +137,6 @@ public:
      */
     static oxygine::ResAnim* getRankAnim(GameRecorder::Rang rang);
 
-    DayToDayRecord* getDayRecord(qint32 index)
-    {
-        if (index >= 0 && index < m_Record.size())
-        {
-            return m_Record[index].get();
-        }
-        return nullptr;
-    }
     /**
      * @brief getPlayerDataRecords
      * @return
@@ -154,6 +146,19 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief getDayRecord
+     * @param index
+     * @return
+     */
+    DayToDayRecord* getDayRecord(qint32 index)
+    {
+        if (index >= 0 && index < m_Record.size())
+        {
+            return m_Record[index].get();
+        }
+        return nullptr;
+    }
     /**
      * @brief getScoreValues
      * @param player
