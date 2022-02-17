@@ -714,7 +714,10 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
         stream >> scriptFile;
 
         spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-        pMap->detach();
+        if (pMap.get() != nullptr)
+        {
+            pMap->detach();
+        }
         if (mapFile.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER) ||
             mapFile.startsWith(NetworkCommands::SERVERMAPIDENTIFIER))
         {

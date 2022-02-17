@@ -3145,7 +3145,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="79"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="93"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1240"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1243"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3191,12 +3191,12 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1123"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1126"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1236"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1239"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
