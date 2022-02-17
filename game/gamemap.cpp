@@ -2150,6 +2150,11 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
             pMenu->updateMinimap();
         }
         playMusic();
+        if (baseGameInput->getAiType() == GameEnums::AiTypes_Human)
+        {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->getAudioThread()->playSound("player_turn.wav");
+        }
     }
 }
 

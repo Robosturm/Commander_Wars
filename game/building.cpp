@@ -359,7 +359,6 @@ GameMap *Building::getMap() const
     return m_pMap;
 }
 
-
 qint32 Building::getImageSize()
 {
     return GameMap::getImageSize();

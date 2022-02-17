@@ -143,5 +143,6 @@
         <file>resources/sounds/meteorImpact.wav</file>
         <file>resources/sounds/minimapOpen.wav</file>
         <file>resources/sounds/moveOut.wav</file>
+        <file>resources/sounds/player_turn.wav</file>
     </qresource>
 </RCC>
