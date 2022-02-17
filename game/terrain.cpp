@@ -979,7 +979,11 @@ void Terrain::removeBuilding()
         else
         {
             // remove building from base terrain instead of us
-            m_Building->getTerrain()->removeBuilding();
+            Terrain* pTerrain = m_Building->getTerrain();
+            if (pTerrain != nullptr)
+            {
+                pTerrain->removeBuilding();
+            }
         }
     }
 }

@@ -6035,12 +6035,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="380"/>
+        <location filename="../wiki/unitinfo.cpp" line="384"/>
         <source>Weapon 1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="391"/>
+        <location filename="../wiki/unitinfo.cpp" line="395"/>
         <source>Weapon 2 </source>
         <translation type="unfinished"></translation>
     </message>

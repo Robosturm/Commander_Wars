@@ -321,14 +321,19 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     }
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        spBuilding pBuilding = spBuilding::create(pBuildingSpriteManager->getID(i), pUnit->getMap());        
+        id = pBuildingSpriteManager->getID(i);
+        spBuilding pBuilding = spBuilding::create(id, pUnit->getMap());
+        spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", pUnit->getMap());
+        pTerrain->setBuilding(pBuilding);
+        qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);
+        pTerrain->removeBuilding();
+
         qint32 buildingWidth = pBuilding->getBuildingWidth();
         qint32 buildingHeigth = pBuilding->getBuildingHeigth();
         pBuilding->setScaleX(1.0f / static_cast<float>(buildingWidth));
         pBuilding->setScaleY(1.0f / static_cast<float>(buildingHeigth));
         pBuilding->updateBuildingSprites(false);
 
-        spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", pUnit->getMap());
         pTerrain->loadSprites();
         pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
         pTerrain->setScaleX(1 / pBuilding->getScaleX());
@@ -345,7 +350,6 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pBuilding->oxygine::Actor::setX(x + GameMap::getImageSize() * (buildingWidth - 1) / (buildingWidth));
         pBuilding->oxygine::Actor::setY(y + GameMap::getImageSize() * (buildingHeigth - 1) / (buildingHeigth));
 
-        qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);
         pBuilding->addClickListener([=](oxygine::Event*)
         {
             emit sigShowLink(pBuildingSpriteManager->getID(i));
