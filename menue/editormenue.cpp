@@ -723,7 +723,7 @@ void EditorMenue::showExit()
     m_Focused = false;
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the map editor?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &EditorMenue::exitEditor, Qt::QueuedConnection);
-    connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
+    connect(pExit.get(), &DialogMessageBox::sigCancel, this, [=]()
     {
         m_Focused = true;
     });
@@ -911,7 +911,7 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                     Terrain* pTerrain = m_pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
                     spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pTerrain->getUnit());
                     addChild(fieldinfo);
-                    connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
+                    connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [=]
                     {
                         setFocused(true);
                     });

@@ -192,7 +192,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     spinBox->setTooltipText(tr("Target Area X Position which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_x);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setX(static_cast<qint32>(value));
@@ -209,7 +209,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     spinBox->setTooltipText(tr("Target Area Y Position which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_y);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setY(static_cast<qint32>(value));
@@ -226,7 +226,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     spinBox->setTooltipText(tr("Target Area width which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_width);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setWidth(static_cast<qint32>(value));
@@ -243,7 +243,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     spinBox->setTooltipText(tr("Target Area heigth which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_heigth);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setHeigth(static_cast<qint32>(value));

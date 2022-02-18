@@ -69,8 +69,7 @@ void GameAnimationFactory::release()
 }
 
 GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, quint32 x, quint32 y, quint32 frameTime, bool mapPosition)
-{
-    
+{    
     spGameAnimation animation = spGameAnimation::create(frameTime, pMap);
     if (mapPosition)
     {
@@ -81,9 +80,11 @@ GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, quint32 x, q
         animation->setPosition(x, y);
     }
     animation->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
-    pMap->addChild(animation);
+    if (pMap != nullptr)
+    {
+        pMap->addChild(animation);
+    }
     m_Animations.append(animation);
-    
     return animation.get();
 }
 
@@ -91,7 +92,10 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(GameMap* pMap, U
 {    
     spGameAnimationWalk pGameAnimationWalk = spGameAnimationWalk::create(pUnit, pAction->getMovePath(), pMap);
     pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
-    pMap->addChild(pGameAnimationWalk);
+    if (pMap != nullptr)
+    {
+        pMap->addChild(pGameAnimationWalk);
+    }
     m_Animations.append(pGameAnimationWalk);
     return pGameAnimationWalk.get();
 }

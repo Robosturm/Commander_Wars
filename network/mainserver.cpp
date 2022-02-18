@@ -161,8 +161,6 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
     args << Settings::getConfigString(mods);
     args << "-initScript";
     args << initScript;
-    args << "-initScript";
-    args << initScript;
     if (Mainapp::getInstance()->getCreateSlaveLogs())
     {
         args << "-createSlaveLogs";
@@ -259,7 +257,7 @@ void MainServer::closeGame(NetworkGame* pGame)
             m_games[i]->process->kill();
             delete m_games[i]->process;
             m_games[i]->game = nullptr;
-            connect(&m_games[i]->m_runner, &QThread::finished, [=]()
+            connect(&m_games[i]->m_runner, &QThread::finished, this, [=]()
             {
                 emit sigRemoveGame(pGame);
             });

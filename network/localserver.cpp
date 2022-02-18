@@ -101,7 +101,7 @@ void LocalServer::onConnect()
         m_pTXTasks.append(pTXTask);
         connect(this, &LocalServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
         quint64 socket = m_idCounter;
-        connect(nextSocket, &QLocalSocket::disconnected, [=]()
+        connect(nextSocket, &QLocalSocket::disconnected, this, [=]()
         {
             emit sigDisconnectClient(socket);
         });

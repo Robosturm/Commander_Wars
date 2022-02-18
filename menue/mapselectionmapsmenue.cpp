@@ -170,7 +170,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
         MapSelectionMapsMenue::hideMapSelection();
         hideRuleSelection();
         m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentCampaign());
-        showPlayerSelection();
+        MapSelectionMapsMenue::showPlayerSelection();
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
     }
     Interpreter* pInterpreter = Interpreter::getInstance();

@@ -322,7 +322,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         spCheckbox pCheckbox = spCheckbox::create();
         pCheckbox->setChecked(true);
         pCheckbox->setPosition(15 + pTextfield->getTextRect().getWidth(), pTextfield->getY());
-        connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
         {
             m_VisiblePlayers[i] = value;
             emit sigShowGraph(m_CurrentGraphMode);
@@ -550,7 +550,7 @@ void VictoryMenue::createStatisticsView()
     m_pStatisticPlayer->setTooltipText(tr("The player for which the statistics should be shown."));
     m_pStatisticPlayer->setPosition(10, 10);
     m_statisticsBox->addChild(m_pStatisticPlayer);
-    connect(m_pStatisticPlayer.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
+    connect(m_pStatisticPlayer.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 item)
     {
         showPlayerStatistic(item);
     });

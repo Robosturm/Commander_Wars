@@ -92,7 +92,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("Player who's buildlist will be modified."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setPlayer(static_cast<qint32>(value) - 1);
@@ -137,7 +137,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     checkBox->setTooltipText(tr("If the checked the unit will be forbidden to be build, else it gets allowed to be build."));
     checkBox->setPosition(width, 110);
     checkBox->setChecked(remove);
-    connect(checkBox.get(), &Checkbox::checkChanged,
+    connect(checkBox.get(), &Checkbox::checkChanged, this,
             [=](bool value)
     {
         setRemove(value);

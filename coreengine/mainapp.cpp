@@ -649,7 +649,6 @@ void Mainapp::loadArgs(const QStringList & args)
         Settings::setBattleAnimationSpeed(100);
         Settings::setDialogAnimation(false);
         Settings::setDialogAnimationSpeed(100);
-        Settings::setTotalVolume(0);
         m_Timer.stop();
     }
     m_noAudio = args.contains("-noaudio");

@@ -49,7 +49,7 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
         }
         totalSliderValue += m_Slider[i]->getCurrentValue();
 
-        connect(m_Slider[i].get(), &Slider::sliderValueChanged, [=](qint32)
+        connect(m_Slider[i].get(), &Slider::sliderValueChanged, this, [=](qint32)
         {
             emit signalSliderValueChanged(i);
         });

@@ -135,7 +135,7 @@ void ScriptConditionUnitsDestroyed::showEditCondition(spScriptEditor pScriptEdit
     spinBox->setTooltipText(tr("Amount of units that has to be killed."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_count);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setCount(static_cast<qint32>(value));
@@ -151,7 +151,7 @@ void ScriptConditionUnitsDestroyed::showEditCondition(spScriptEditor pScriptEdit
     spinBox = spSpinBox::create(300, 1, 99999);
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_player + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setPlayer(static_cast<qint32>(value) - 1);

@@ -112,7 +112,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     {
         m_endTimer.setSingleShot(true);
         m_endTimer.setInterval(uptimeMs / Settings::getAnimationSpeed());
-        connect(&m_endTimer, &QTimer::timeout, [=]()
+        connect(&m_endTimer, &QTimer::timeout, this, [=]()
         {
             emitFinished();
         });

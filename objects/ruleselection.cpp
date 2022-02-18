@@ -599,7 +599,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         pDropDownmenu->setEnabled(m_ruleChangeEabled);
         addChild(pDropDownmenu);
         pDropDownmenu->setCurrentItem(static_cast<qint32>(m_pMap->getGameRules()->getDayToDayScreen()));
-        connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
+        connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 item)
         {
             pPtrMap->getGameRules()->setDayToDayScreen(static_cast<GameRules::DayToDayScreen>(item));
         });
@@ -899,7 +899,7 @@ void RuleSelection::showRuleSelection(bool advanced)
                     pCheckbox->setEnabled(m_ruleChangeEabled);
                     addChild(pCheckbox);
                     pCheckbox->setChecked(defaultValue);
-                    connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+                    connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
                     {
                         pPtrRule->setRuleValue(value, i2);
                     });
@@ -915,7 +915,7 @@ void RuleSelection::showRuleSelection(bool advanced)
                     pSpinbox->setEnabled(m_ruleChangeEabled);
                     addChild(pSpinbox);
                     pSpinbox->setCurrentValue(defaultValue);
-                    connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
+                    connect(pSpinbox.get(), &SpinBox::sigValueChanged, this, [=](float value)
                     {
                         qint32 newValue = static_cast<qint32>(value);
                         pPtrRule->setRuleValue(newValue, i2);
@@ -994,7 +994,7 @@ void RuleSelection::addCustomGamerules(qint32 & y)
                 pCheckbox->setEnabled(m_ruleChangeEabled);
                 addChild(pCheckbox);
                 pCheckbox->setChecked(defaultValue);
-                connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+                connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
                 {
                     pPtrRule->setRuleValue(value, i2);
                 });
@@ -1010,7 +1010,7 @@ void RuleSelection::addCustomGamerules(qint32 & y)
                 pSpinbox->setEnabled(m_ruleChangeEabled);
                 addChild(pSpinbox);
                 pSpinbox->setCurrentValue(defaultValue);
-                connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
+                connect(pSpinbox.get(), &SpinBox::sigValueChanged, this, [=](float value)
                 {
                     qint32 newValue = static_cast<qint32>(value);
                     pPtrRule->setRuleValue(newValue, i2);

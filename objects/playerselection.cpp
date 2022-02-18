@@ -1340,7 +1340,7 @@ void PlayerSelection::showSelectCOPerks(qint32 player)
         auto hiddenList = pUserdata->getShopItemsList(GameEnums::ShopItemType_Perk, false);
         spPerkSelectionDialog pPerkSelectionDialog = spPerkSelectionDialog::create(m_pMap, pPlayer, m_pMap->getGameRules()->getMaxPerkCount(), false, hiddenList);
         oxygine::Stage::getStage()->addChild(pPerkSelectionDialog);
-        connect(pPerkSelectionDialog.get(), &PerkSelectionDialog::sigFinished, [=]()
+        connect(pPerkSelectionDialog.get(), &PerkSelectionDialog::sigFinished, this, [=]()
         {
             updateCOData(player);
         });

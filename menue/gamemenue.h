@@ -328,6 +328,14 @@ protected:
     bool m_exitAfterSave{false};
     bool m_saveAllowed{false};
     bool m_isReplay{false};
+
+    struct
+    {
+        bool m_waitingForSyncFinished{false};
+        spGameAction m_postSyncAction;
+        QVector<bool> m_lockedPlayers;
+        QVector<quint64> m_connectingSockets;
+    } m_multiplayerSyncData;
 };
 
 #endif // GAMEMENUE_H

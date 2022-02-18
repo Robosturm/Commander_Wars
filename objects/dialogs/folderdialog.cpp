@@ -223,7 +223,7 @@ void FolderDialog::KeyInput(oxygine::KeyEvent event)
                     m_focused = false;
                     spDialogMessageBox pSurrender = spDialogMessageBox::create(tr("Do you want to delete the folder ") + m_CurrentFolder->getCurrentText() + "?", true);
                     connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &FolderDialog::deleteItem, Qt::QueuedConnection);
-                    connect(pSurrender.get(), &DialogMessageBox::sigCancel, [=]()
+                    connect(pSurrender.get(), &DialogMessageBox::sigCancel, this, [=]()
                     {
                         m_focused = true;
                     });

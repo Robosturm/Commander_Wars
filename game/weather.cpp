@@ -58,6 +58,7 @@ QString Weather::getWeatherTerrainSprite()
     QString function1 = "getWeatherTerrainSprite";
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
     QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
     args1 << objArg5;
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);
@@ -77,6 +78,7 @@ QString Weather::getWeatherSymbol()
     QString function1 = "getWeatherSymbol";
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
     QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
     args1 << objArg5;
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);

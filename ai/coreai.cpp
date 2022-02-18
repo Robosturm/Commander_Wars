@@ -1176,11 +1176,13 @@ void CoreAI::appendTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits, QVe
 
 void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pEnemyBuildings, QVector<QVector3D>& targets)
 {
+    if (pUnit == nullptr)
+    {
+        return;
+    }
     qint32 unitIslandIdx = getIslandIndex(pUnit);
-    qint32 unitIsland = getIsland(pUnit);
-    
+    qint32 unitIsland = getIsland(pUnit);    
     bool missileTarget = hasMissileTarget();
-    qint32 transporterMovement = pUnit->getMovementpoints(pUnit->Unit::getPosition());
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pTransporterUnit = pUnits->at(i);

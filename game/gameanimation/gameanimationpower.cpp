@@ -207,7 +207,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         time = static_cast<qint32>(m_frameTime) * 30;
     }
     m_endTimer.setInterval(time);
-    connect(&m_endTimer, &QTimer::timeout, [=]()
+    connect(&m_endTimer, &QTimer::timeout, this, [=]()
     {
         emitFinished();
     });

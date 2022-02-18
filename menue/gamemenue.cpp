@@ -935,15 +935,22 @@ void GameMenue::skipAllAnimations()
     while (i < GameAnimationFactory::getAnimationCount())
     {
         GameAnimation* pAnimation = GameAnimationFactory::getAnimation(i);
-        GameAnimationDialog* pDialogAnimation = dynamic_cast<GameAnimationDialog*>(pAnimation);
-        BattleAnimation* pBattleAnimation = dynamic_cast<BattleAnimation*>(pAnimation);
-        if (shouldSkipDialog(pDialogAnimation) ||
-            shouldSkipBattleAnimation(pBattleAnimation) ||
-            (pDialogAnimation == nullptr &&
-             pBattleAnimation == nullptr &&
-             shouldSkipOtherAnimation(pAnimation)))
+        if (pAnimation != nullptr)
         {
-            while (!pAnimation->onFinished(true));
+            GameAnimationDialog* pDialogAnimation = dynamic_cast<GameAnimationDialog*>(pAnimation);
+            BattleAnimation* pBattleAnimation = dynamic_cast<BattleAnimation*>(pAnimation);
+            if (shouldSkipDialog(pDialogAnimation) ||
+                shouldSkipBattleAnimation(pBattleAnimation) ||
+                (pDialogAnimation == nullptr &&
+                 pBattleAnimation == nullptr &&
+                 shouldSkipOtherAnimation(pAnimation)))
+            {
+                while (!pAnimation->onFinished(true));
+            }
+            else
+            {
+                i++;
+            }
         }
         else
         {

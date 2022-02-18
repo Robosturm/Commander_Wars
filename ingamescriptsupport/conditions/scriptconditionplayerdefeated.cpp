@@ -123,7 +123,7 @@ void ScriptConditionPlayerDefeated::showEditCondition(spScriptEditor pScriptEdit
     spinBox->setTooltipText(tr("The player that has to be defeated in order to executed the events."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_player + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setPlayer(static_cast<qint32>(value) - 1);

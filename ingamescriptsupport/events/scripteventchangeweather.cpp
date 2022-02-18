@@ -79,7 +79,7 @@ void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("The amount of days the new weather appears."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(turns);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setTurns(static_cast<qint32>(value));
@@ -104,7 +104,7 @@ void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)
     startWeather->setTooltipText(tr("The new weather that appears."));
     startWeather->setPosition(150, 70);
     startWeather->setCurrentItem(weatherID);
-    connect(startWeather.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
+    connect(startWeather.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 item)
     {
         weatherID = item;
     });

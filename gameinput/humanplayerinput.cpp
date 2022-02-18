@@ -1172,7 +1172,10 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
         oxygine::spColorRectSprite pRect = oxygine::spColorRectSprite::create();
         pRect->setPosition(7, 4);
         pRect->setSize(baseWidth, pBox->getHeight() - 10);
-        pRect->setColor(m_pPlayer->getColor());
+        if (m_pPlayer != nullptr)
+        {
+            pRect->setColor(m_pPlayer->getColor());
+        }
         pRect->setAlpha(200);
         pBox->addChild(pRect);
         for (qint32 i = 0; i < pData->valueNames.size(); ++i)

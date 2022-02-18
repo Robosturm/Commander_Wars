@@ -899,7 +899,7 @@ void Player::onUnitDeath(Unit* pUnit)
     args << obj1;
     QJSValue obj4 = pInterpreter->newQObject(m_pMap);
     args << obj4;
-    QJSValue ret = pInterpreter->doFunction("PLAYER", function1, args);
+    pInterpreter->doFunction("PLAYER", function1, args);
     for(auto & pCO : m_playerCOs)
     {
         if (pCO.get() != nullptr)

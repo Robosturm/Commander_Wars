@@ -960,7 +960,7 @@ void RandomMapGenerator::randomMapPlaceBuildings(GameMap* pMap, qint32 width, qi
     qint32 maximumBuildingTry = 1000;
     // number of factorys at start
     qint32 playerCount = pMap->getPlayerCount();
-    qint32 mirrorPlacing = 0;
+    qint32 mirrorPlacing = 1;
     if (mirrorX != MirrorMode::none)
     {
         mirrorPlacing += 2;
