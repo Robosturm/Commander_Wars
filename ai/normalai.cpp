@@ -168,9 +168,9 @@ void NormalAi::process()
     else
     {
         pUnits = m_pPlayer->getUnits();
-        pUnits->sortShortestMovementRange(true);
         pEnemyUnits = m_pPlayer->getEnemyUnits();
         pEnemyUnits->randomize();
+        pUnits->sortUnitsFarFromEnemyFirst(pEnemyUnits);
         pEnemyBuildings = m_pPlayer->getEnemyBuildings();
         pEnemyBuildings->randomize();
         updateAllUnitData(pUnits);

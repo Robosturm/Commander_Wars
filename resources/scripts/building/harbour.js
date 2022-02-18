@@ -64,6 +64,11 @@ var Constructor = function()
 			building.loadWeatherOverlaySpriteV2("harbour+snow", false);
 		};
 	};
+    this.baseTerrain = ["LAKE", "SEA", "PLAINS", "SNOW", "WASTE", "DESERT"];
+    this.getBaseTerrain = function(building)
+    {
+        return HARBOUR.baseTerrain;
+    };
 }
 
 Constructor.prototype = BUILDING;

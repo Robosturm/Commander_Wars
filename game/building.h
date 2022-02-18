@@ -103,8 +103,22 @@ public:
      * @param syncTime
      */
     void syncAnimation(oxygine::timeMS syncTime);
-
-signals:
+    /**
+     * @brief Unit::getSortValues
+     * @return
+     */
+    inline const QVector<qint32> &getSortValues() const
+    {
+        return m_sortValues;
+    }
+    /**
+     * @brief Unit::setSortValues
+     * @param newSortValues
+     */
+    inline void setSortValues(const QVector<qint32> &newSortValues)
+    {
+        m_sortValues = newSortValues;
+    }
 
 public slots:
     /**
@@ -475,6 +489,10 @@ private:
     qint32 m_VisionHigh{0};
     ScriptVariables m_Variables;
     GameMap* m_pMap{nullptr};
+    /**
+     * @brief m_sortValues values sto
+     */
+    QVector<qint32> m_sortValues;
 };
 
 #endif // BUILDING_H

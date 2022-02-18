@@ -272,17 +272,17 @@ void HeavyAi::setupTurn(const spQmlVectorBuilding & buildings)
     m_pPlayer->getSiloRockettarget(2, 3, cost);
     m_missileTarget = (cost >= minSiloDamage);
     bool startOfTurn = (m_pUnits.get() == nullptr);
-    if (m_pUnits.get() == nullptr)
-    {
-        m_pUnits = m_pPlayer->getUnits();
-        m_pUnits->sortShortestMovementRange(true);
-        initUnits(m_pUnits, m_ownUnits, false);
-    }
     if (m_pEnemyUnits.get() == nullptr)
     {
         m_pEnemyUnits = m_pPlayer->getEnemyUnits();
         m_pEnemyUnits->randomize();
         initUnits(m_pEnemyUnits, m_enemyUnits, true);
+    }
+    if (m_pUnits.get() == nullptr)
+    {
+        m_pUnits = m_pPlayer->getUnits();
+        m_pUnits->sortUnitsFarFromEnemyFirst(m_pEnemyUnits);
+        initUnits(m_pUnits, m_ownUnits, false);
     }
     if (startOfTurn)
     {
