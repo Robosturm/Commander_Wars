@@ -515,8 +515,7 @@ oxygine::spResAnim Player::getNeutralTableAnim()
 }
 
 qint32 Player::getPlayerID() const
-{
-    
+{    
     if (m_pMap != nullptr)
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)

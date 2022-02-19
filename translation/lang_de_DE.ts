@@ -841,12 +841,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="100"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="109"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="103"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="112"/>
         <source>Custom Name of the Terrain. Empty name equals the default name.</source>
         <translation type="unfinished"></translation>
     </message>

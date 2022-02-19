@@ -107,6 +107,28 @@ var Constructor = function()
     {
         return qsTr("Bridge over river and seas which allows ground units to cross. Bridges over sea also allows naval units to cross the field.");
     };
+
+    this.getSprites = function(spriteId)
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return [spriteId + "",
+                spriteId + "+E",
+                spriteId + "+E+S",
+                spriteId + "+E+S+W",
+                spriteId + "+E+W",
+                spriteId + "+N",
+                spriteId + "+N+E",
+                spriteId + "+N+E+S",
+                spriteId + "+N+E+S+W",
+                spriteId + "+N+E+W",
+                spriteId + "+N+S",
+                spriteId + "+N+S+W",
+                spriteId + "+N+W",
+                spriteId + "+S",
+                spriteId + "+S+W",
+                spriteId + "+W",];
+    };
+
 };
 Constructor.prototype = TERRAIN;
 var __BASEBRIDGE = new Constructor();
