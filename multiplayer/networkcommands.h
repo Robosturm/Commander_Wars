@@ -125,6 +125,34 @@ namespace NetworkCommands
      * @brief PLAYERACCESSDENIED
      */
     const char* const PLAYERACCESSDENIED = "PLAYERACCESSDENIED";
+    /**
+     * @brief REQUESTJOINREASON
+     */
+    const char* const REQUESTJOINREASON = "REQUESTJOINREASON";
+    /**
+     * @brief JOINASPLAYER
+     */
+    const char* const JOINASPLAYER = "JOINASPLAYER";
+    /**
+     * @brief WAITFORPLAYERJOINSYNCFINISHED
+     */
+    const char* const WAITFORPLAYERJOINSYNCFINISHED = "WAITFORPLAYERJOINSYNCFINISHED";
+    /**
+     * @brief WAITINGFORSYNCFINISHED
+     */
+    const char* const WAITINGFORPLAYERJOINSYNCFINISHED = "WAITINGFORPLAYERJOINSYNCFINISHED";
+    /**
+     * @brief SENDCURRENTGAMESTATE
+     */
+    const char* const SENDCURRENTGAMESTATE = "SENDCURRENTGAMESTATE";
+    /**
+     * @brief RECEIVEDCURRENTGAMESTATE
+     */
+    const char* const RECEIVEDCURRENTGAMESTATE = "RECEIVEDCURRENTGAMESTATE";
+    /**
+     * @brief PLAYERJOINEDFINISHED
+     */
+    const char* const PLAYERJOINEDFINISHED = "PLAYERJOINEDFINISHED";
 }
 
 #endif // NETWORKCOMMANDS_H

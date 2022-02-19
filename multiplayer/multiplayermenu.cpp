@@ -347,6 +347,14 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 startCountdown();
             }
         }
+        else if (messageType == NetworkCommands::REQUESTJOINREASON)
+        {
+            sendJoinReason(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::SENDCURRENTGAMESTATE)
+        {
+            receiveCurrentGameState(stream, socketID);
+        }
     }
     else if (service == NetworkInterface::NetworkSerives::ServerHosting)
     {
@@ -368,6 +376,47 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             stream >> socket;
             m_pPlayerSelection->disconnected(socket);
         }
+    }
+}
+
+void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 socketID)
+{
+    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+    if (pMap.get() != nullptr)
+    {
+        pMap->detach();
+    }
+    pMap = spGameMap::create<QDataStream &, bool>(stream, true);
+    pMap->updateSprites(-1, -1, false, true);
+    // start game
+    CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+    auto window = spGameMenue::create(pMap, true, m_NetworkInterface);
+    oxygine::Stage::getStage()->addChild(window);
+
+    QString command = NetworkCommands::RECEIVEDCURRENTGAMESTATE;
+    QByteArray sendData;
+    QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+    sendStream << command;
+    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+    oxygine::Actor::detach();
+}
+
+void Multiplayermenu::sendJoinReason(QDataStream & stream, quint64 socketID)
+{
+    if (m_networkMode == NetworkMode::Observer)
+    {
+        QString command = NetworkCommands::JOINASOBSERVER;
+        QByteArray sendData;
+        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream << command;
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+    }
+    else
+    {
+
+        // todo gather join data --> currently we get denied
     }
 }
 
@@ -465,7 +514,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
                 m_pMapSelectionView->getCurrentMap()->setCampaign(spCampaign::create());
                 m_pMapSelectionView->getCurrentMap()->getCampaign()->deserializeObject(stream);
             }
-            CONSOLE_PRINT(("Reading players count: " + QString::number(m_pMapSelectionView->getCurrentMap()->getPlayerCount())), Console::eDEBUG);
+            CONSOLE_PRINT("Reading players count: " + QString::number(m_pMapSelectionView->getCurrentMap()->getPlayerCount()), Console::eDEBUG);
             for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
             {
                 QString name;
@@ -489,6 +538,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
                 QByteArray sendData;
                 QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                 sendStream << command;
+                CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
                 emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
             }
             else

@@ -234,7 +234,24 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                 emit sigGameStarted();
             }
         }
-    }
+        else if (messageType == NetworkCommands::JOINASOBSERVER)
+        {
+            joinAsObserver(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::JOINASPLAYER)
+        {
+            // todo receive join data and go from there
+            emit m_pNetworkInterface.get()->sigDisconnectClient(socketID);
+        }
+        else if (messageType == NetworkCommands::WAITFORPLAYERJOINSYNCFINISHED)
+        {
+            waitForPlayerJoinSyncFinished(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::WAITINGFORPLAYERJOINSYNCFINISHED)
+        {
+            waitingForPlayerJoinSyncFinished(stream, socketID);
+        }
+    }    
     else if (service == NetworkInterface::NetworkSerives::GameChat)
     {
         if (m_pChat->getVisible() == false)
@@ -292,15 +309,116 @@ Player* GameMenue::getCurrentViewPlayer()
     return nullptr;
 }
 
+void GameMenue::joinAsObserver(QDataStream & stream, quint64 socketID)
+{
+    if (m_pNetworkInterface->getIsServer())
+    {
+        auto* gameRules = m_pMap->getGameRules();
+        auto & observer = gameRules->getObserverList();
+        if (observer.size() < gameRules->getMultiplayerObserver())
+        {
+            observer.append(socketID);
+            auto server = oxygine::dynamic_pointer_cast<TCPServer>(m_pNetworkInterface);
+            if (server.get())
+            {
+                auto client = server->getClient(socketID);
+                client->setIsObserver(true);
+            }
+            m_multiplayerSyncData.m_connectingSockets.append(socketID);
+            for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+            {
+                Player* pPlayer = m_pMap->getPlayer(i);
+                BaseGameInputIF* pInput = pPlayer->getBaseGameInput();
+                bool locked = pPlayer->getIsDefeated() ||
+                              pInput == nullptr ||
+                              pInput->getAiType() != GameEnums::AiTypes_ProxyAi;
+                if (i < m_multiplayerSyncData.m_lockedPlayers.size())
+                {
+                    m_multiplayerSyncData.m_lockedPlayers[i] = locked;
+                }
+                else
+                {
+                    m_multiplayerSyncData.m_lockedPlayers.append(locked);
+                }
+            }
+            QString command = NetworkCommands::WAITFORPLAYERJOINSYNCFINISHED;
+            QByteArray sendData;
+            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+            sendStream << command;
+            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+            m_multiplayerSyncData.m_waitingForSyncFinished = true;
+        }
+        else
+        {
+            emit m_pNetworkInterface.get()->sigDisconnectClient(socketID);
+        }
+    }
+}
+
+void GameMenue::waitForPlayerJoinSyncFinished(QDataStream & stream, quint64 socketID)
+{
+    if (!m_pNetworkInterface->getIsServer() &&
+        !m_pNetworkInterface->getIsObserver())
+    {
+        QString command = NetworkCommands::WAITINGFORPLAYERJOINSYNCFINISHED;
+        QByteArray sendData;
+        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream << command;
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        m_multiplayerSyncData.m_waitingForSyncFinished = true;
+    }
+}
+
+void GameMenue::waitingForPlayerJoinSyncFinished(QDataStream & stream, quint64 socketID)
+{
+    if (m_pNetworkInterface->getIsServer())
+    {
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            quint64 playerSocketID = pPlayer->getSocketId();
+             if (socketID == playerSocketID)
+             {
+                 m_multiplayerSyncData.m_lockedPlayers[i] = true;
+             }
+        }
+        bool ready = true;
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            if (!m_multiplayerSyncData.m_lockedPlayers[i])
+            {
+                ready = false;
+            }
+        }
+        if (ready)
+        {
+            QString command = NetworkCommands::SENDCURRENTGAMESTATE;
+            QByteArray sendData;
+            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+            sendStream << command;
+            m_pMap->serializeObject(sendStream);
+            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            for (auto & socketId : m_multiplayerSyncData.m_connectingSockets)
+            {
+                emit m_pNetworkInterface->sig_sendData(socketId, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+            }
+        }
+    }
+}
+
 void GameMenue::playerJoined(quint64 socketID)
 {
     if (m_pNetworkInterface->getIsServer())
     {
-        if (m_PlayerSockets.contains(socketID))
-        {
-            // reject connection by disconnecting
-            emit m_pNetworkInterface.get()->sigDisconnectClient(socketID);
-        }
+        CONSOLE_PRINT("Player joined with socket: " + QString::number(socketID), Console::eDEBUG);
+        QString command = QString(NetworkCommands::REQUESTJOINREASON);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QByteArray data;
+        QDataStream stream(&data, QIODevice::WriteOnly);
+        stream << command;
+        emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
@@ -419,8 +537,7 @@ void GameMenue::loadGameMenue()
 }
 
 void GameMenue::connectMap()
-{
-    
+{    
     connect(m_pMap->getGameRules(), &GameRules::sigVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(m_pMap->getGameRules()->getRoundTimer(), &Timer::timeout, m_pMap.get(), &GameMap::nextTurnPlayerTimeout, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
@@ -648,19 +765,38 @@ spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
     return pGameAction;
 }
 
+bool GameMenue::getIsMultiplayer(const spGameAction & pGameAction) const
+{
+    return !pGameAction->getIsLocal() &&
+            m_pNetworkInterface.get() != nullptr &&
+            m_gameStarted;
+}
+
+bool GameMenue::requiresForwarding(const spGameAction & pGameAction) const
+{
+    Player* pCurrentPlayer = m_pMap->getCurrentPlayer();
+    auto* baseGameInput = pCurrentPlayer->getBaseGameInput();
+    return getIsMultiplayer(pGameAction) &&
+           baseGameInput != nullptr &&
+           baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi;
+}
+
 void GameMenue::performAction(spGameAction pGameAction)
 {
     m_saveAllowed = false;
-    if (pGameAction.get() != nullptr)
+    if (m_multiplayerSyncData.m_waitingForSyncFinished)
+    {
+        m_multiplayerSyncData.m_postSyncAction = pGameAction;
+        // todo show popup
+    }
+    else if (pGameAction.get() != nullptr)
     {
         CONSOLE_PRINT("GameMenue::performAction " + pGameAction->getActionID() + " at X: " + QString::number(pGameAction->getTarget().x())
                        + " at Y: " + QString::number(pGameAction->getTarget().y()), Console::eDEBUG);
         
         Mainapp::getInstance()->pauseRendering();
-        bool multiplayer = !pGameAction->getIsLocal() &&
-                           m_pNetworkInterface.get() != nullptr &&
-                                                        m_gameStarted;
-        spPlayer pCurrentPlayer = spPlayer(m_pMap->getCurrentPlayer());
+        bool multiplayer = getIsMultiplayer(pGameAction);
+        Player* pCurrentPlayer = m_pMap->getCurrentPlayer();
         auto* baseGameInput = pCurrentPlayer->getBaseGameInput();
         if (multiplayer &&
             baseGameInput != nullptr &&
@@ -690,9 +826,7 @@ void GameMenue::performAction(spGameAction pGameAction)
             Unit * pMoveUnit = pGameAction->getTargetUnit();
             doTrapping(pGameAction);
             // send action to other players if needed
-            if (multiplayer &&
-                baseGameInput != nullptr &&
-                baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi)
+            if (requiresForwarding(pGameAction))
             {
                 CONSOLE_PRINT("Sending action to other players", Console::eDEBUG);
                 m_syncCounter++;
@@ -751,7 +885,6 @@ void GameMenue::performAction(spGameAction pGameAction)
         }
         Mainapp::getInstance()->continueRendering();
     }
-    
 }
 
 void GameMenue::doTrapping(spGameAction & pGameAction)

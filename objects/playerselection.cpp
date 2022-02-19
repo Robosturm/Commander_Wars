@@ -1508,19 +1508,23 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
 
 void PlayerSelection::joinObserver(quint64 socketID)
 {
-    auto* gameRules = m_pMap->getGameRules();
-    auto & observer = gameRules->getObserverList();
-    if (observer.size() < gameRules->getMultiplayerObserver())
+    if (m_pNetworkInterface->getIsServer())
     {
-        observer.append(socketID);
-        if (m_pNetworkInterface->getIsServer())
+        auto* gameRules = m_pMap->getGameRules();
+        auto & observer = gameRules->getObserverList();
+        if (observer.size() < gameRules->getMultiplayerObserver())
         {
+            observer.append(socketID);
             auto server = oxygine::dynamic_pointer_cast<TCPServer>(m_pNetworkInterface);
             if (server.get())
             {
                 auto client = server->getClient(socketID);
                 client->setIsObserver(true);
             }
+        }
+        else
+        {
+            emit m_pNetworkInterface.get()->sigDisconnectClient(socketID);
         }
     }
 }

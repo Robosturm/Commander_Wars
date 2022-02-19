@@ -231,18 +231,6 @@ public slots:
      */
     void editFinishedCanceled();
     /**
-     * @brief recieveData
-     * @param socketID
-     * @param data
-     * @param service
-     */
-    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
-    /**
-     * @brief disconnected
-     * @param socketID
-     */
-    void disconnected(quint64 socketID);
-    /**
      * @brief isNetworkGame
      * @return
      */
@@ -279,6 +267,34 @@ public slots:
     void showDamageCalculator();
 protected slots:
     /**
+     * @brief recieveData
+     * @param socketID
+     * @param data
+     * @param service
+     */
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    /**
+     * @brief disconnected
+     * @param socketID
+     */
+    void disconnected(quint64 socketID);
+    /**
+     * @brief joinAsObserver
+     * @param stream
+     * @param socketID
+     */
+    void joinAsObserver(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief waitForPlayerJoinSyncFinished
+     * @param stream
+     * @param socketID
+     */
+    void waitForPlayerJoinSyncFinished(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief waitingForPlayerJoinSyncFinished
+     */
+    void waitingForPlayerJoinSyncFinished(QDataStream & stream, quint64 socketID);
+    /**
      * @brief updateTimer
      */
     void updateTimer();
@@ -298,6 +314,8 @@ protected:
     bool shouldSkipOtherAnimation(GameAnimation* pBattleAnimation) const;
     void showChat();
     void doSaveMap();
+    bool getIsMultiplayer(const spGameAction & pGameAction) const;
+    bool requiresForwarding(const spGameAction & pGameAction) const;
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;

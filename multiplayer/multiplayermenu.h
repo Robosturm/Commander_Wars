@@ -106,6 +106,8 @@ protected:
     void recieveMap(QDataStream & stream, quint64 socketID);
     void playerJoinedServer(QDataStream & stream, quint64 socketID);
     bool findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, bool m_saveGame);
+    void sendJoinReason(QDataStream & stream, quint64 socketID);
+    void receiveCurrentGameState(QDataStream & stream, quint64 socketID);
 private:
     /**
      * @brief init

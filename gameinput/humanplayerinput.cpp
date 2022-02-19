@@ -1467,30 +1467,30 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
     if (!event.getContinousPress())
     {
         spGameMenue pMenu = GameMenue::getInstance();
-        if (inputAllowed())
+        bool canInput = inputAllowed();
+        // for debugging
+        Qt::Key cur = event.getKey();
+        if ((cur == Settings::getKey_next() ||
+             cur == Settings::getKey_next2()) &&
+            canInput)
         {
-            // for debugging
-            Qt::Key cur = event.getKey();
-            if (cur == Settings::getKey_next() ||
-                cur == Settings::getKey_next2())
-            {
-                gotoNext();
-            }
-            else if (cur == Settings::getKey_previous() ||
-                     cur == Settings::getKey_previous2())
-            {
-                gotoPrevious();
-            }
-            else if (cur == Settings::getKey_ShowAttackFields() ||
-                     cur == Settings::getKey_ShowAttackFields2())
-            {
-                showSelectedUnitAttackableFields(true);
-            }
-            else if (cur == Settings::getKey_ShowIndirectAttackFields() ||
-                     cur == Settings::getKey_ShowIndirectAttackFields2())
-            {
-                showSelectedUnitAttackableFields(false);
-            }
+            gotoNext();
+        }
+        else if ((cur == Settings::getKey_previous() ||
+                  cur == Settings::getKey_previous2()) &&
+                 canInput)
+        {
+            gotoPrevious();
+        }
+        else if (cur == Settings::getKey_ShowAttackFields() ||
+                 cur == Settings::getKey_ShowAttackFields2())
+        {
+            showSelectedUnitAttackableFields(true);
+        }
+        else if (cur == Settings::getKey_ShowIndirectAttackFields() ||
+                 cur == Settings::getKey_ShowIndirectAttackFields2())
+        {
+            showSelectedUnitAttackableFields(false);
         }
     }
 }
@@ -1498,9 +1498,14 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
 void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
 {
     CONSOLE_PRINT("HumanPlayerInput::showSelectedUnitAttackableFields", Console::eDEBUG);
+    spGameMenue pMenu = GameMenue::getInstance();
     if (m_pUnitPathFindingSystem.get() != nullptr &&
         m_pGameAction.get() != nullptr &&
-        m_CurrentMenu.get() == nullptr)
+        m_CurrentMenu.get() == nullptr &&
+        m_pMap->getCurrentPlayer() == m_pPlayer &&
+        pMenu.get() != nullptr &&
+        GameAnimationFactory::getAnimationCount() == 0 &&
+        pMenu->getFocused())
     {
         if (m_InfoFields.size() > 0)
         {
