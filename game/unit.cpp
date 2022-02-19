@@ -3526,6 +3526,19 @@ float Unit::getBaseDamage(Unit* pEnemyUnit)
     return dmg;
 }
 
+bool Unit::getShowInEditor(QString unitId)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getShowInEditor";
+
+    QJSValue ret = pInterpreter->doFunction(unitId, function1);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    return true;
+}
+
 void Unit::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();

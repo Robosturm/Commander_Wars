@@ -42,6 +42,19 @@ void Building::init()
     pInterpreter->doFunction(m_BuildingID, function, args);
 }
 
+bool Building::getShowInEditor(QString buildingId)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getShowInEditor";
+
+    QJSValue ret = pInterpreter->doFunction(buildingId, function1);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    return true;
+}
+
 void Building::setTerrain(Terrain* pTerrain)
 {
     m_pTerrain = pTerrain;

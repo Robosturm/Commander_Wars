@@ -392,5 +392,10 @@ var TERRAIN =
                "FOREST,FOREST1,FOREST2,FOREST3,MOUNTAIN," +
                "SNOW_FOREST,SNOW_FOREST1,SNOW_FOREST2,SNOW_MOUNTAIN," +
                "WASTE_FOREST,WASTE_MOUNTAIN";
-    }
+    },
+
+    getShowInEditor : function()
+    {
+        return true;
+    },
 };

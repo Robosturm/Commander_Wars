@@ -72,6 +72,19 @@ Terrain::~Terrain()
     }
 }
 
+bool Terrain::getShowInEditor(QString terrainId)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getShowInEditor";
+
+    QJSValue ret = pInterpreter->doFunction(terrainId, function1);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    return true;
+}
+
 GameMap *Terrain::getMap() const
 {
     return m_pMap;

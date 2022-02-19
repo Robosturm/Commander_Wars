@@ -170,6 +170,12 @@ public:
 
 public slots:
     /**
+     * @brief getShowInEditor
+     * @param unitId
+     * @return if the given unit should be shown in the editor
+     */
+    static bool getShowInEditor(QString unitId);
+    /**
      * @brief getWeatherImmune
      * @return
      */

@@ -328,4 +328,9 @@ var BUILDING =
         // called when the weather changes
         // call loadWeatherOverlaySpriteV2 to load an sprite overlay
     },
+
+    getShowInEditor : function()
+    {
+        return true;
+    },
 };

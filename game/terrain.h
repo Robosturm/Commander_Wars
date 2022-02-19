@@ -154,6 +154,13 @@ public:
      */
     qint32 getMapTerrainDrawPriority();
 public slots:
+
+    /**
+     * @brief getShowInEditor
+     * @param unitId
+     * @return if the given terrain should be shown in the editor
+     */
+    static bool getShowInEditor(QString terrainId);
     /**
      * @brief getMap
      * @return

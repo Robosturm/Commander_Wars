@@ -134,12 +134,15 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     QStringList sortedTerrainIDs = pTerrainManager->getTerrainsSorted();
     for (const auto& terrainId : sortedTerrainIDs)
     {
-        spTerrain pTerrain = Terrain::createTerrain(terrainId, -10, -10, "", m_pMap);
-        pTerrain->setTooltipText(pTerrain->getTerrainName());
-        m_Terrains.append(pTerrain);
-        m_Terrains[m_Terrains.size() - 1]->loadSprites();
-        pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
-        m_PlacementActor->addChild(m_Terrains[m_Terrains.size() - 1]);
+        if (Terrain::getShowInEditor(terrainId))
+        {
+            spTerrain pTerrain = Terrain::createTerrain(terrainId, -10, -10, "", m_pMap);
+            pTerrain->setTooltipText(pTerrain->getTerrainName());
+            m_Terrains.append(pTerrain);
+            m_Terrains[m_Terrains.size() - 1]->loadSprites();
+            pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
+            m_PlacementActor->addChild(m_Terrains[m_Terrains.size() - 1]);
+        }
     }
 
     connect(this, &EditorSelection::sigUpdateSelectedPlayer, this, &EditorSelection::updateSelectedPlayer, Qt::QueuedConnection);
@@ -153,30 +156,35 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        spBuilding building = spBuilding::create(pBuildingSpriteManager->getID(i), m_pMap);
-        building->setTooltipText(building->getName());
-        qint32 width = building->getBuildingWidth();
-        qint32 heigth = building->getBuildingHeigth();
-        building->setScaleX(1.0f / static_cast<float>(width));
-        building->setScaleY(1.0f / static_cast<float>(heigth));
-        m_Buildings.append(building);
-        m_Buildings[i]->updateBuildingSprites(false);
-        spTerrain pSprite = Terrain::createTerrain(building->getBaseTerrain()[0], -1, -1, "", m_pMap);
-        pSprite->loadSprites();
-        pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
-        pSprite->setScaleX(1 / building->getScaleX());
-        pSprite->setScaleY(1 / building->getScaleY());
-        if (width > 1)
+        QString buildingId = pBuildingSpriteManager->getID(i);
+        if (Building::getShowInEditor(buildingId))
         {
-            pSprite->oxygine::Actor::setX(-GameMap::getImageSize() * (width - 1));
+            spBuilding building = spBuilding::create(buildingId, m_pMap);
+            building->setTooltipText(building->getName());
+            qint32 width = building->getBuildingWidth();
+            qint32 heigth = building->getBuildingHeigth();
+            building->setScaleX(1.0f / static_cast<float>(width));
+            building->setScaleY(1.0f / static_cast<float>(heigth));
+            m_Buildings.append(building);
+            qint32 index = m_Buildings.size() - 1;
+            m_Buildings[index]->updateBuildingSprites(false);
+            spTerrain pSprite = Terrain::createTerrain(building->getBaseTerrain()[0], -1, -1, "", m_pMap);
+            pSprite->loadSprites();
+            pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
+            pSprite->setScaleX(1 / building->getScaleX());
+            pSprite->setScaleY(1 / building->getScaleY());
+            if (width > 1)
+            {
+                pSprite->oxygine::Actor::setX(-GameMap::getImageSize() * (width - 1));
+            }
+            if (heigth > 1)
+            {
+                pSprite->oxygine::Actor::setY(-GameMap::getImageSize() * (heigth - 1));
+            }
+            m_Buildings[index]->addChild(pSprite);
+            m_Buildings[index]->setVisible(false);
+            m_PlacementActor->addChild(m_Buildings[index]);
         }
-        if (heigth > 1)
-        {
-            pSprite->oxygine::Actor::setY(-GameMap::getImageSize() * (heigth - 1));
-        }
-        m_Buildings[i]->addChild(pSprite);
-        m_Buildings[i]->setVisible(false);
-        m_PlacementActor->addChild(m_Buildings[i]);
     }
 
     // load other sprites not shown in the starting screen
@@ -189,31 +197,34 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     for (const auto& unitId : sortedUnits)
     {
-        spUnit unit = spUnit::create(unitId, m_Players.at(1)->getOwner(), false, m_pMap);
-        unit->setTooltipText(unit->getName());
-        m_Units.append(unit);
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
-        QString movementType = unit->getMovementType();
-        if (pMovementTableManager->getBaseMovementPoints(movementType, plains.get(), plains.get(), unit.get()) > 0)
+        if (Unit::getShowInEditor(unitId))
         {
-            pAnim = pTerrainManager->getResAnim("plains+0");
-            pSprite->setResAnim(pAnim);
+            spUnit unit = spUnit::create(unitId, m_Players.at(1)->getOwner(), false, m_pMap);
+            unit->setTooltipText(unit->getName());
+            m_Units.append(unit);
+            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            QString movementType = unit->getMovementType();
+            if (pMovementTableManager->getBaseMovementPoints(movementType, plains.get(), plains.get(), unit.get()) > 0)
+            {
+                pAnim = pTerrainManager->getResAnim("plains+0");
+                pSprite->setResAnim(pAnim);
+            }
+            else if (pMovementTableManager->getBaseMovementPoints(movementType, sea.get(), sea.get(), unit.get()) > 0)
+            {
+                pAnim = pTerrainManager->getResAnim("SEA");
+                pSprite->setResAnim(pAnim);
+            }
+            else
+            {
+                pAnim = pTerrainManager->getResAnim("plains+0");
+                pSprite->setResAnim(pAnim);
+            }
+            pSprite->setPriority(-100);
+            pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
+            unit->addChild(pSprite);
+            unit->setVisible(false);
+            m_PlacementActor->addChild(unit);
         }
-        else if (pMovementTableManager->getBaseMovementPoints(movementType, sea.get(), sea.get(), unit.get()) > 0)
-        {
-            pAnim = pTerrainManager->getResAnim("SEA");
-            pSprite->setResAnim(pAnim);
-        }
-        else
-        {
-            pAnim = pTerrainManager->getResAnim("plains+0");
-            pSprite->setResAnim(pAnim);
-        }
-        pSprite->setPriority(-100);
-        pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
-        unit->addChild(pSprite);
-        unit->setVisible(false);
-        m_PlacementActor->addChild(unit);
     }
 
     initSelection();
@@ -579,10 +590,9 @@ oxygine::spSprite EditorSelection::createV9Box(qint32 x, qint32 y, qint32 width,
 void EditorSelection::updateTerrainView()
 {    
     hideSelection();
-    TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    for (qint32 i = m_StartIndex; i < pTerrainManager->getCount(); i++)
+    for (auto & terrain : m_Terrains)
     {
-        m_Terrains[i]->setVisible(true);
+        terrain->setVisible(true);
     }
     for (auto & item : m_terrainActors)
     {
@@ -597,9 +607,9 @@ void EditorSelection::updateTerrainView()
 void EditorSelection::updateBuildingView()
 {    
     hideSelection();
-    for (qint32 i = m_StartIndex; i < m_Buildings.size(); i++)
+    for (auto & building : m_Buildings)
     {
-        m_Buildings[i]->setVisible(true);
+        building->setVisible(true);
     }
     m_PlacementActor->setHeight(m_Buildings[m_Buildings.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
     m_PlacementActor->setY(-GameMap::getImageSize());
@@ -610,9 +620,9 @@ void EditorSelection::updateBuildingView()
 void EditorSelection::updateUnitView()
 {    
     hideSelection();
-    for (qint32 i = m_StartIndex; i < m_Units.size(); i++)
+    for (auto & unit : m_Units)
     {
-        m_Units[i]->setVisible(true);
+        unit->setVisible(true);
     }
     for (auto & item : m_unitActors)
     {

@@ -121,6 +121,13 @@ public:
     }
 
 public slots:
+
+    /**
+     * @brief getShowInEditor
+     * @param unitId
+     * @return if the given building should be shown in the editor
+     */
+    static bool getShowInEditor(QString building);
     /**
      * @brief getImageSize
      * @return the size of an field in pixel

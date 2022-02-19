@@ -67,7 +67,7 @@ var Constructor = function()
 		{
 			building.loadWeatherOverlaySpriteV2("factory+snow", false);
 		};
-	};
+    };
 }
 
 Constructor.prototype = BUILDING;
