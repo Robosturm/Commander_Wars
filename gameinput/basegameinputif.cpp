@@ -79,7 +79,7 @@ spBaseGameInputIF BaseGameInputIF::deserializeInterface(GameMap* pMap, QDataStre
     return ret;
 }
 
-spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes type)
+spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes type, QString displayName)
 {
     CONSOLE_PRINT("Creating AI " + QString::number(type), Console::eDEBUG);
     spBaseGameInputIF ret;
@@ -132,6 +132,10 @@ spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes ty
             ret = spHeavyAi::create(pMap, id, type);
             break;
         }
+    }
+    if (ret.get() != nullptr)
+    {
+        ret->setDisplayName(displayName);
     }
     return ret;
 }
@@ -186,6 +190,16 @@ qint32 BaseGameInputIF::getMoveCostMapValue(qint32 x, qint32 y)
         return std::get<0>(m_MoveCostMap[x][y]);
     }
     return 0.0f;
+}
+
+QString BaseGameInputIF::getDisplayName() const
+{
+    return m_displayName;
+}
+
+void BaseGameInputIF::setDisplayName(const QString &newDisplayName)
+{
+    m_displayName = newDisplayName;
 }
 
 const QString &BaseGameInputIF::getUniqueIdentifier() const

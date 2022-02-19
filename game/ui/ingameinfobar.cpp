@@ -63,7 +63,6 @@ IngameInfoBar::IngameInfoBar(GameMap* pMap)
     m_pGameInfoBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(m_pGameInfoBox);
 
-
     m_pCursorInfoBox = oxygine::spBox9Sprite::create();
     m_pCursorInfoBox->setResAnim(pAnim);
     m_pCursorInfoBox->setPosition(0, pMiniMapBox->getHeight() + gameInfoHeigth);
@@ -105,6 +104,18 @@ void IngameInfoBar::updatePlayerInfo()
             Player* pPlayer = m_pMap->getCurrentPlayer();
             if (pPlayer != nullptr)
             {
+                qint32 y = 12;
+                qint32 x1 = 10;
+                qint32 x2 = 110;
+                spLabel pName = spLabel::create(260);
+                auto style = pName->getStyle();
+                style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+                pName->setStyle(style);
+                pName->setPosition(x1, y - 5);
+                pName->setHtmlText(pPlayer->getBaseGameInput()->getDisplayName());
+                m_pGameInfoBox->addChild(pName);
+                y += 30;
+
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
                 CO* pCO = pPlayer->getCO(0);
                 oxygine::ResAnim* pAnim = nullptr;
@@ -116,9 +127,9 @@ void IngameInfoBar::updatePlayerInfo()
                 {
                     pAnim = pCOSpriteManager->getResAnim("no_co+face");
                 }
-                pSprite->setScale(1.8f);
+                pSprite->setScale(87 / pAnim->getHeight());
                 pSprite->setResAnim(pAnim);
-                pSprite->setPosition(9, 12);
+                pSprite->setPosition(12, y);
                 m_pGameInfoBox->addChild(pSprite);
                 pSprite = oxygine::spSprite::create();
                 pCO = pPlayer->getCO(1);
@@ -131,8 +142,8 @@ void IngameInfoBar::updatePlayerInfo()
                     pAnim = pCOSpriteManager->getResAnim("no_co+face");
                 }
                 pSprite->setResAnim(pAnim);
-                pSprite->setPosition(106, 12);
-                pSprite->setScale(1.8f);
+                pSprite->setPosition(103, y);
+                pSprite->setScale(87 / pAnim->getHeight());
                 m_pGameInfoBox->addChild(pSprite);
 
                 pSprite = oxygine::spSprite::create();
@@ -140,11 +151,12 @@ void IngameInfoBar::updatePlayerInfo()
                 if (pAnim != nullptr)
                 {
                     pSprite->setResAnim(pAnim);
-                    pSprite->setPosition(202, 12);
+                    pSprite->setPosition(202, y);
                     pSprite->setScale(85 / pAnim->getWidth());
                 }
                 m_pGameInfoBox->addChild(pSprite);
 
+                y -= 4;
                 // boxes for co's and weather
                 ObjectManager* pObjectManager = ObjectManager::getInstance();
                 pAnim = pObjectManager->getResAnim("panel_transparent+mask");
@@ -152,24 +164,25 @@ void IngameInfoBar::updatePlayerInfo()
                 pBox->setResAnim(pAnim);
                 pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
                 pBox->setSize(91, 95);
-                pBox->setPosition(101, 8);
+                pBox->setPosition(101, y);
                 m_pGameInfoBox->addChild(pBox);
                 pBox = oxygine::spBox9Sprite::create();
                 pBox->setResAnim(pAnim);
                 pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
                 pBox->setSize(91, 95);
-                pBox->setPosition(10, 8);
+                pBox->setPosition(10, y);
                 m_pGameInfoBox->addChild(pBox);
                 // weather box
                 pBox = oxygine::spBox9Sprite::create();
                 pBox->setResAnim(pAnim);
                 pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
                 pBox->setSize(91, 95);
-                pBox->setPosition(198, 8);
+                pBox->setPosition(198, y);
                 m_pGameInfoBox->addChild(pBox);
 
                 if (m_pMap->getGameRules()->getWeatherPrediction())
                 {
+                    y += 100;
                     pSprite = oxygine::spSprite::create();
                     Weather* pWeather = m_pMap->getGameRules()->getWeatherAtDay(1, m_pMap->getCurrentPlayer()->getPlayerID());
                     if (pWeather != nullptr)
@@ -178,7 +191,7 @@ void IngameInfoBar::updatePlayerInfo()
                         if (pAnim != nullptr)
                         {
                             pSprite->setResAnim(pAnim);
-                            pSprite->setPosition(202, 108);
+                            pSprite->setPosition(202, y);
                             pSprite->setScale(37 / pAnim->getWidth());
                         }
                     }
@@ -188,7 +201,7 @@ void IngameInfoBar::updatePlayerInfo()
                     pBox->setResAnim(pAnim);
                     pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
                     pBox->setSize(45, 47);
-                    pBox->setPosition(198, 104);
+                    pBox->setPosition(198, y - 4);
                     m_pGameInfoBox->addChild(pBox);
 
                     pSprite = oxygine::spSprite::create();
@@ -199,7 +212,7 @@ void IngameInfoBar::updatePlayerInfo()
                         if (pAnim != nullptr)
                         {
                             pSprite->setResAnim(pAnim);
-                            pSprite->setPosition(247, 108);
+                            pSprite->setPosition(247, y);
                             pSprite->setScale(37 / pAnim->getWidth());
                         }
                     }
@@ -209,12 +222,12 @@ void IngameInfoBar::updatePlayerInfo()
                     pBox->setResAnim(pAnim);
                     pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
                     pBox->setSize(45, 47);
-                    pBox->setPosition(243, 104);
+                    pBox->setPosition(243, y - 4);
                     m_pGameInfoBox->addChild(pBox);
                 }
 
 
-                oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16());
+                style = oxygine::TextStyle(FontManager::getMainFont16());
                 style.color = FontManager::getFontColor();
                 style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
                 style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -222,9 +235,7 @@ void IngameInfoBar::updatePlayerInfo()
 
                 qint32 count = pPlayer->getBuildingCount();
                 qint32 width = 95;
-                qint32 y = 110;
-                qint32 x1 = 10;
-                qint32 x2 = 110;
+                y += 2;
 
                 spLabel pTextfield = spLabel::create(width);
                 pTextfield->setStyle(style);

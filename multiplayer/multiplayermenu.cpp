@@ -480,7 +480,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
                     aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
                 }
                 spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-                m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(pMap.get(), static_cast<GameEnums::AiTypes>(aiType)));
+                m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(pMap.get(), static_cast<GameEnums::AiTypes>(aiType), name));
                 m_pPlayerSelection->updatePlayerData(i);
             }
             if (m_networkMode == NetworkMode::Observer)
@@ -898,14 +898,16 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     {
         GameEnums::AiTypes aiType = GameEnums::AiTypes::AiTypes_Closed;
         auto* baseGameInput = m_pMapSelectionView->getCurrentMap()->getPlayer(i)->getBaseGameInput();
+        QString displayName = "";
         if (baseGameInput != nullptr)
         {
             aiType = baseGameInput->getAiType();
+            displayName = baseGameInput->getDisplayName();
         }
         CONSOLE_PRINT("Creating AI for player " + QString::number(i) + " of type " + QString::number(aiType), Console::eDEBUG);
         spGameMap pMap = m_pMapSelectionView->getCurrentMap();
         pMap->getPlayer(i)->deserializeObject(stream);
-        pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(pMap.get(), aiType));
+        pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(pMap.get(), aiType, displayName));
     }
     GlobalUtils::seed(seed);
     GlobalUtils::setUseSeed(true);

@@ -153,7 +153,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 6;
+        return 7;
     }
 signals:
     /**

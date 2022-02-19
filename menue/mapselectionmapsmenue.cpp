@@ -539,8 +539,7 @@ void MapSelectionMapsMenue::showMapFilter()
 }
 
 void MapSelectionMapsMenue::saveMap(QString filename)
-{
-    
+{    
     if (filename.endsWith(".map"))
     {
         QFile file(filename);
@@ -549,8 +548,7 @@ void MapSelectionMapsMenue::saveMap(QString filename)
         spGameMap pMap = m_pMapSelectionView->getCurrentMap();
         pMap->serializeObject(stream);
         file.close();
-    }
-    
+    }    
 }
 
 void MapSelectionMapsMenue::selectMap(QString folder, QString filename)

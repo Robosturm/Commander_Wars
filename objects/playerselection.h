@@ -171,7 +171,7 @@ protected:
      * @param player
      * @param type
      */
-    void createAi(qint32 player, GameEnums::AiTypes type);
+    void createAi(qint32 player, GameEnums::AiTypes type, QString displayName);
     /**
      * @brief requestPlayer a client requested to get control of a player. We check the request and execute it if it's valid
      * @param socketID

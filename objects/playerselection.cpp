@@ -874,7 +874,7 @@ void PlayerSelection::showPlayerSelection()
         }
         if (isCampaign && ai > 0)
         {
-            createAi(i, static_cast<GameEnums::AiTypes>(ai));
+            createAi(i, static_cast<GameEnums::AiTypes>(ai), playerAi->getCurrentItemText());
         }
         else if ((m_pNetworkInterface.get() == nullptr ||
             m_pNetworkInterface->getIsServer() ||
@@ -884,7 +884,7 @@ void PlayerSelection::showPlayerSelection()
         }
         else
         {
-            createAi(i, static_cast<GameEnums::AiTypes>(ai));
+            createAi(i, static_cast<GameEnums::AiTypes>(ai), playerAi->getCurrentItemText());
         }
         y += 15 + playerIncomeSpinBox->getHeight();
     }
@@ -1374,8 +1374,6 @@ void PlayerSelection::selectAI(qint32 player)
             CONSOLE_PRINT("AI " + QString::number(type) + " selected for player " + QString::number(player) + " sending data.", Console::eDEBUG);
             quint64 socket = m_pNetworkInterface->getSocketID();
             m_PlayerSockets[player] = socket;
-            
-            createAi(player, type);
             QString name;
             if (type == GameEnums::AiTypes_Human)
             {
@@ -1385,6 +1383,8 @@ void PlayerSelection::selectAI(qint32 player)
             {
                 name = m_playerAIs[player]->getCurrentItemText();
             }
+            createAi(player, type, name);
+
             qint32 ai = type;
             if (type == GameEnums::AiTypes_Open)
             {
@@ -1395,7 +1395,7 @@ void PlayerSelection::selectAI(qint32 player)
                      type != GameEnums::AiTypes_Human)
             {
                 ai = type;
-                createAi(player, GameEnums::AiTypes_ProxyAi);
+                createAi(player, GameEnums::AiTypes_ProxyAi, name);
             }
             else if (Mainapp::getSlave())
             {
@@ -1416,21 +1416,25 @@ void PlayerSelection::selectAI(qint32 player)
     {
         if (isClosedPlayer(player))
         {
-            createAi(player, GameEnums::AiTypes_Closed);
+            createAi(player, GameEnums::AiTypes_Closed, "");
         }
         else
         {
-            createAi(player, static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem()));
+            createAi(player, static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem()), m_playerAIs[player]->getCurrentItemText());
         }
     }
 }
 
-void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type)
+void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type, QString displayName)
 {    
     if(m_pMap != nullptr)
     {
+        if (type == GameEnums::AiTypes_Human)
+        {
+            displayName = Settings::getUsername();
+        }
         Player* pPlayer = m_pMap->getPlayer(player);
-        pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, type));
+        pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, type, displayName));
         if (pPlayer->getBaseGameInput() != nullptr)
         {
             pPlayer->getBaseGameInput()->setEnableNeutralTerrainAttack(m_pMap->getGameRules()->getAiAttackTerrain());
@@ -1681,7 +1685,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             }
             else
             {
-                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes_ProxyAi));
+                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes_ProxyAi, username));
                 pPlayer->setSocketId(socketID);
                 m_playerAIs[player]->setCurrentItemText(username);
                 m_PlayerSockets[player] = socketID;
@@ -1769,7 +1773,12 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
             GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
             setPlayerAi(player, eAiType, name);
             m_pMap->getPlayer(player)->deserializeObject(stream);
-            m_pMap->getPlayer(player)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, eAiType));
+            m_pMap->getPlayer(player)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, eAiType, name));
+            auto* baseInput = m_pMap->getPlayer(player)->getBaseGameInput();
+            if (eAiType == GameEnums::AiTypes_Human)
+            {
+                baseInput->setDisplayName(Settings::getUsername());
+            }
 
             bool humanFound = false;
             for (qint32 i = 0; i < m_playerAIs.size(); i++)
@@ -1781,7 +1790,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                 }
             }
             updatePlayerData(player);
-            if (!humanFound)
+            if (!humanFound && !m_pNetworkInterface->getIsObserver())
             {
                 emit sigDisconnect();
             }
