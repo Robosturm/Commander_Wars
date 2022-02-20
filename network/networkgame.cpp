@@ -184,11 +184,8 @@ void NetworkGame::checkServerRunning()
 
 void NetworkGame::onConnectToLocalServer(quint64)
 {
-    emit m_gameConnection.sigChangeThread(0, thread());
-    emit m_gameConnection.sig_sendData(0, m_dataBuffer, NetworkInterface::NetworkSerives::ServerHosting, false);
-
+    CONSOLE_PRINT("onConnectToLocalServer reading game data", Console::eDEBUG);
     m_data.setSlaveName(m_serverName);
-
     QDataStream stream(&m_dataBuffer, QIODevice::ReadOnly);
     QString messageType;
     stream >> messageType;
@@ -199,6 +196,9 @@ void NetworkGame::onConnectToLocalServer(quint64)
     GameMap::readMapHeader(stream, headerInfo);
     m_data.setMapName(headerInfo.m_mapName);
     m_data.setMaxPlayers(headerInfo.m_playerCount);
+    CONSOLE_PRINT("Forwarding command " + messageType, Console::eDEBUG);
+    emit m_gameConnection.sigChangeThread(0, thread());
+    emit m_gameConnection.sig_sendData(0, m_dataBuffer, NetworkInterface::NetworkSerives::ServerHosting, false);
     // free buffer after it has been send to the server
     m_dataBuffer.clear();
 }

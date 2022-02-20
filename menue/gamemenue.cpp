@@ -617,8 +617,7 @@ void GameMenue::connectMap()
 }
 
 void GameMenue::loadUIButtons()
-{
-    
+{    
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
@@ -723,8 +722,7 @@ void GameMenue::showChat()
 }
 
 void GameMenue::updateTimer()
-{    
-    
+{
     if (m_pMap.get() != nullptr)
     {
         QTimer* pTimer = m_pMap->getGameRules()->getRoundTimer();
@@ -759,7 +757,7 @@ spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
     {
         CONSOLE_PRINT("Check and update multiTurnMovement", Console::eDEBUG);
         
-        // check for units that have a multi turn avaible
+        // check for units that have a multi turn available
         qint32 heigth = m_pMap->getMapHeight();
         qint32 width = m_pMap->getMapWidth();
         Player* pPlayer = m_pMap->getCurrentPlayer();

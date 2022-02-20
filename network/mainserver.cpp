@@ -172,7 +172,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
     }
     m_games[pos]->game = spNetworkGame::create(nullptr);
     m_games[pos]->game->setDataBuffer(data);
-    m_games[pos]->game->setServerName(slaveName + "Game");
+    m_games[pos]->game->setServerName(slaveName);
     m_games[pos]->game->moveToThread(&m_games[pos]->m_runner);
     m_games[pos]->m_runner.setObjectName(slaveName + "Runner");
     m_games[pos]->m_runner.start();
@@ -279,7 +279,7 @@ void MainServer::removeGame(NetworkGame* pGame)
                 QApplication::processEvents();
                 m_games[i2]->m_runner.wait(1);
             }
-            CONSOLE_PRINT("Game has been despawned " + pGame->getServerName(), Console::eDEBUG);
+            CONSOLE_PRINT("Game has been despawned.", Console::eDEBUG);
             m_games.removeAt(i2);
             break;
         }

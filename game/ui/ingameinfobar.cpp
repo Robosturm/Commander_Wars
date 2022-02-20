@@ -127,7 +127,10 @@ void IngameInfoBar::updatePlayerInfo()
                 {
                     pAnim = pCOSpriteManager->getResAnim("no_co+face");
                 }
-                pSprite->setScale(87 / pAnim->getHeight());
+                if (pAnim != nullptr)
+                {
+                    pSprite->setScale(87 / pAnim->getHeight());
+                }
                 pSprite->setResAnim(pAnim);
                 pSprite->setPosition(12, y);
                 m_pGameInfoBox->addChild(pSprite);
@@ -143,7 +146,10 @@ void IngameInfoBar::updatePlayerInfo()
                 }
                 pSprite->setResAnim(pAnim);
                 pSprite->setPosition(103, y);
-                pSprite->setScale(87 / pAnim->getHeight());
+                if (pAnim != nullptr)
+                {
+                    pSprite->setScale(87 / pAnim->getHeight());
+                }
                 m_pGameInfoBox->addChild(pSprite);
 
                 pSprite = oxygine::spSprite::create();

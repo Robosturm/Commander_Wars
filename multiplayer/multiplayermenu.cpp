@@ -475,27 +475,28 @@ void Multiplayermenu::requestRule(quint64 socketID)
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << command;
-        m_pMapSelectionView->getCurrentMap()->getGameRules()->serializeObject(sendStream);
-        if (m_pMapSelectionView->getCurrentMap()->getCampaign() != nullptr)
+        spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+        pMap->getGameRules()->serializeObject(sendStream);
+        if (pMap->getCampaign() != nullptr)
         {
             sendStream << true;
-            m_pMapSelectionView->getCurrentMap()->getCampaign()->serializeObject(sendStream);
+            pMap->getCampaign()->serializeObject(sendStream);
         }
         else
         {
             sendStream << false;
         }
-        for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             GameEnums::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
-            if (aiType == GameEnums::AiTypes_Human)
+            if (aiType == GameEnums::AiTypes_Human && !m_saveGame)
             {
-                sendStream << Settings::getUsername();
+                sendStream << pMap->getPlayer(i)->getDisplayName();
                 sendStream << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
             }
             else
             {
-                sendStream << m_pPlayerSelection->getPlayerAiName(i);
+                sendStream << pMap->getPlayer(i)->getDisplayName();
                 if (m_pPlayerSelection->isOpenPlayer(i))
                 {
                     sendStream << static_cast<qint32>(GameEnums::AiTypes_Open);

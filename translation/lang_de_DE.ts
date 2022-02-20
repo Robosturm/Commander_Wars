@@ -1923,7 +1923,7 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="512"/>
+        <location filename="../menue/gamemenue.cpp" line="513"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1938,82 +1938,82 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="694"/>
+        <location filename="../menue/gamemenue.cpp" line="695"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="845"/>
+        <location filename="../menue/gamemenue.cpp" line="848"/>
         <source>Waiting for Players/Observers to join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="865"/>
+        <location filename="../menue/gamemenue.cpp" line="868"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1600"/>
+        <location filename="../menue/gamemenue.cpp" line="1603"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1601"/>
+        <location filename="../menue/gamemenue.cpp" line="1604"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1602"/>
+        <location filename="../menue/gamemenue.cpp" line="1605"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1603"/>
+        <location filename="../menue/gamemenue.cpp" line="1606"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1604"/>
+        <location filename="../menue/gamemenue.cpp" line="1607"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1605"/>
+        <location filename="../menue/gamemenue.cpp" line="1608"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1606"/>
+        <location filename="../menue/gamemenue.cpp" line="1609"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1607"/>
+        <location filename="../menue/gamemenue.cpp" line="1610"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1631"/>
+        <location filename="../menue/gamemenue.cpp" line="1634"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1641"/>
+        <location filename="../menue/gamemenue.cpp" line="1644"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2032"/>
+        <location filename="../menue/gamemenue.cpp" line="2035"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2063"/>
+        <location filename="../menue/gamemenue.cpp" line="2066"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2089"/>
+        <location filename="../menue/gamemenue.cpp" line="2092"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2751,117 +2751,117 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>IngameInfoBar</name>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="242"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="248"/>
         <source>Day:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="258"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="264"/>
         <source>Buildings:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="280"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="286"/>
         <source>Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="303"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="309"/>
         <source>Funds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="326"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="332"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="339"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="345"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="576"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="582"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="586"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="839"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="588"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="592"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="845"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="598"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="604"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="604"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="610"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="617"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="623"/>
         <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="623"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="629"/>
         <source>Ammo 1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="635"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="641"/>
         <source>Ammo 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="640"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="646"/>
         <source>Ammo 2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="651"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="878"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="657"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="884"/>
         <source>Owner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="656"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="873"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="662"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="879"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="665"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="671"/>
         <source>Weapon 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="679"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="685"/>
         <source>Weapon 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="692"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="698"/>
         <source>Move:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="704"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="710"/>
         <source>Movepoints:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="716"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="722"/>
         <source>Vision:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="856"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="862"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="869"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="875"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3150,7 +3150,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="79"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="93"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1319"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1318"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3180,28 +3180,28 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="667"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="666"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="671"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="670"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="686"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="685"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1202"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1201"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1315"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1314"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
