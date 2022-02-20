@@ -101,6 +101,7 @@ LobbyMenu::LobbyMenu()
         emit sigObserveGame();
     });
     connect(this, &LobbyMenu::sigObserveGame, this, &LobbyMenu::observeGame, Qt::QueuedConnection);
+    pButtonObserve->setEnabled(false);
 
     oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Adress"));
     addChild(pButtonJoinAdress);

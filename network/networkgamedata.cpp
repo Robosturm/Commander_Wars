@@ -2,12 +2,6 @@
 
 #include "coreengine/filesupport.h"
 
-NetworkGameData::NetworkGameData()
-    : QObject()
-{
-
-}
-
 bool NetworkGameData::hasOpenPlayers()
 {
     return (m_players < m_maxPlayers);

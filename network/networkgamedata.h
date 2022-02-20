@@ -14,7 +14,7 @@ class NetworkGameData : public QObject, public FileSerializable, public oxygine:
 {
     Q_OBJECT
 public:
-    explicit NetworkGameData();
+    explicit NetworkGameData() = default;
     virtual ~NetworkGameData() = default;
     /**
      * @brief serialize stores the object
