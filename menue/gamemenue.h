@@ -305,6 +305,10 @@ protected slots:
      */
     void removePlayerFromSyncWaitList(quint64 socketID);
     /**
+     * @brief playerJoinedFinished
+     */
+    void playerJoinedFinished();
+    /**
      * @brief updateTimer
      */
     void updateTimer();

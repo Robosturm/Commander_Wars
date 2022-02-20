@@ -158,8 +158,7 @@ void Multiplayermenu::showIPs()
 }
 
 void Multiplayermenu::showLoadSaveGameDialog()
-{
-    
+{    
     // dummy impl for loading
     QStringList wildcards;
     wildcards.append("*.msav");
@@ -167,7 +166,6 @@ void Multiplayermenu::showLoadSaveGameDialog()
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Multiplayermenu::loadSaveGame, Qt::QueuedConnection);
-    
 }
 
 void Multiplayermenu::loadSaveGame(QString filename)
@@ -388,6 +386,25 @@ void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 sock
     }
     pMap = spGameMap::create<QDataStream &, bool>(stream, true);
     pMap->updateSprites(-1, -1, false, true);
+    if (m_networkMode == NetworkMode::Observer)
+    {
+        for (qint32 i = 0; i < pMap->getPlayerCount(); ++i)
+        {
+            Player* pPlayer = pMap->getPlayer(i);
+            BaseGameInputIF* pInput = pPlayer->getBaseGameInput();
+            if (pInput != nullptr &&
+                pInput->getAiType() != GameEnums::AiTypes_ProxyAi &&
+                pInput->getAiType() != GameEnums::AiTypes_Closed &&
+                pInput->getAiType() != GameEnums::AiTypes_Open)
+            {
+                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(pMap.get(), GameEnums::AiTypes_ProxyAi));
+            }
+        }
+    }
+    else
+    {
+        // todo aquire players based on join data
+    }
     // start game
     CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
     auto window = spGameMenue::create(pMap, true, m_NetworkInterface);
@@ -415,8 +432,13 @@ void Multiplayermenu::sendJoinReason(QDataStream & stream, quint64 socketID)
     }
     else
     {
-
+        QString command = NetworkCommands::JOINASPLAYER;
+        QByteArray sendData;
+        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream << command;
         // todo gather join data --> currently we get denied
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
@@ -1324,6 +1346,14 @@ void Multiplayermenu::sendServerReady(bool value)
 {
     if (m_NetworkInterface->getIsServer())
     {
+        if (value)
+        {
+            emit m_NetworkInterface->sigPauseListening();
+        }
+        else
+        {
+            emit m_NetworkInterface->sigContinueListening();
+        }
         QVector<qint32> player;
         for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
         {

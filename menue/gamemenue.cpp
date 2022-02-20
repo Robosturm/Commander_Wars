@@ -90,13 +90,21 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
         spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players"), 1000 * 60 * 5);
         addChild(pDialogConnecting);
         connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
-        connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
-        connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
+        if (pNetworkInterface->getIsObserver())
+        {
+            connect(this, &GameMenue::sigSyncFinished, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+        }
+        else
+        {
+            connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+            connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
+        }
 
         m_pChat = spChat::create(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100), NetworkInterface::NetworkSerives::GameChat);
         m_pChat->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
         m_pChat->setVisible(false);
         addChild(m_pChat);
+        emit m_pNetworkInterface->sigContinueListening();
     }
     else
     {
@@ -257,7 +265,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         }
         else if (messageType == NetworkCommands::PLAYERJOINEDFINISHED)
         {
-            emit sigSyncFinished();
+            playerJoinedFinished();
         }
     }    
     else if (service == NetworkInterface::NetworkSerives::GameChat)
@@ -425,19 +433,28 @@ void GameMenue::removePlayerFromSyncWaitList(quint64 socketID)
     }
 }
 
+void GameMenue::playerJoinedFinished()
+{
+    emit sigSyncFinished();
+    continueAfterSyncGame();
+}
+
 void GameMenue::continueAfterSyncGame()
 {
-    if (m_pNetworkInterface->getIsServer() &&
+    if (m_pNetworkInterface.get() != nullptr &&
         m_multiplayerSyncData.m_connectingSockets.size() <= 0 &&
         m_multiplayerSyncData.m_waitingForSyncFinished)
     {
         m_multiplayerSyncData.m_waitingForSyncFinished = false;
-        QString command = NetworkCommands::PLAYERJOINEDFINISHED;
-        QByteArray sendData;
-        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-        sendStream << command;
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        if (m_pNetworkInterface->getIsServer())
+        {
+            QString command = NetworkCommands::PLAYERJOINEDFINISHED;
+            QByteArray sendData;
+            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+            sendStream << command;
+            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+        }
         if (m_multiplayerSyncData.m_postSyncAction.get() != nullptr)
         {
             performAction(m_multiplayerSyncData.m_postSyncAction);
@@ -667,6 +684,7 @@ void GameMenue::loadUIButtons()
     m_UpdateTimer.setInterval(500);
     m_UpdateTimer.setSingleShot(false);
     m_UpdateTimer.start();
+    bool loadQuickButtons = true;
     if (m_pNetworkInterface.get() != nullptr)
     {
         pButtonBox = oxygine::spBox9Sprite::create();
@@ -682,11 +700,14 @@ void GameMenue::loadUIButtons()
             showChat();
         });
         pButtonBox->addChild(m_ChatButton);
+        loadQuickButtons = !m_pNetworkInterface->getIsObserver();
     }
-
-    m_humanQuickButtons = spHumanQuickButtons::create(this);
-    m_humanQuickButtons->setEnabled(false);
-    addChild(m_humanQuickButtons);
+    if (loadQuickButtons)
+    {
+        m_humanQuickButtons = spHumanQuickButtons::create(this);
+        m_humanQuickButtons->setEnabled(false);
+        addChild(m_humanQuickButtons);
+    }
 }
 
 void GameMenue::showChat()
