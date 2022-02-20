@@ -6549,5 +6549,6 @@
         <file>resources/images/co/bh/co_sturm+alt2+face.png</file>
         <file>resources/images/co/bh/co_sturm+alt2+info.png</file>
         <file>resources/images/co/bh/co_sturm+alt2+nrm.png</file>
+        <file>resources/scripts/weapons/weapon_tankhunter_gun.js</file>
     </qresource>
 </RCC>

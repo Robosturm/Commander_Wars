@@ -1434,7 +1434,8 @@ void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type, QString d
             displayName = Settings::getUsername();
         }
         Player* pPlayer = m_pMap->getPlayer(player);
-        pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, type, displayName));
+        pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, type));
+        pPlayer->setDisplayName(displayName);
         if (pPlayer->getBaseGameInput() != nullptr)
         {
             pPlayer->getBaseGameInput()->setEnableNeutralTerrainAttack(m_pMap->getGameRules()->getAiAttackTerrain());
@@ -1689,7 +1690,8 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             }
             else
             {
-                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes_ProxyAi, username));
+                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes_ProxyAi));
+                pPlayer->setDisplayName(username);
                 pPlayer->setSocketId(socketID);
                 m_playerAIs[player]->setCurrentItemText(username);
                 m_PlayerSockets[player] = socketID;
@@ -1777,11 +1779,11 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
             GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
             setPlayerAi(player, eAiType, name);
             m_pMap->getPlayer(player)->deserializeObject(stream);
-            m_pMap->getPlayer(player)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, eAiType, name));
+            m_pMap->getPlayer(player)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, eAiType));
             auto* baseInput = m_pMap->getPlayer(player)->getBaseGameInput();
             if (eAiType == GameEnums::AiTypes_Human)
             {
-                baseInput->setDisplayName(Settings::getUsername());
+                m_pMap->getPlayer(player)->setDisplayName(Settings::getUsername());
             }
 
             bool humanFound = false;

@@ -2135,7 +2135,6 @@ void CoreAI::serializeObject(QDataStream& stream) const
         stream << item.m_name;
         stream << *item.m_value;
     }
-    stream << m_displayName;
 }
 
 void CoreAI::deserializeObject(QDataStream& stream)
@@ -2216,8 +2215,9 @@ void CoreAI::deserializeObjectVersion(QDataStream &stream, qint32 version)
             }
         }
     }
-    if (version > 6)
+    if (version == 7)
     {
-        stream >> m_displayName;
+        QString dummy;
+        stream >> dummy;
     }
 }

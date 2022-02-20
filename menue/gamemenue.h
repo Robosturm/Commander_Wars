@@ -83,6 +83,7 @@ public:
 signals:
     void sigActionPerformed();
     void sigGameStarted();
+    void sigSyncFinished();
     void sigSaveGame();
     void sigExitGame();
     void sigShowExitGame();
@@ -241,6 +242,10 @@ public slots:
      */
     void playerJoined(quint64 socketID);
     /**
+     * @brief continueAfterSyncGame
+     */
+    void continueAfterSyncGame();
+    /**
      * @brief showExitGame
      */
     virtual void showExitGame();
@@ -294,6 +299,11 @@ protected slots:
      * @brief waitingForPlayerJoinSyncFinished
      */
     void waitingForPlayerJoinSyncFinished(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief removePlayerFromSyncWaitList
+     * @param socketID
+     */
+    void removePlayerFromSyncWaitList(quint64 socketID);
     /**
      * @brief updateTimer
      */

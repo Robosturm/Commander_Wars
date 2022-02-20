@@ -2014,16 +2014,16 @@ void HumanPlayerInput::autoEndTurn()
 void HumanPlayerInput::serializeObject(QDataStream& stream) const
 {
     stream << getVersion();
-    stream << m_displayName;
 }
 
 void HumanPlayerInput::deserializeObject(QDataStream& stream)
 {
     qint32 version;
     stream >> version;
-    if (version > 1)
+    if (version == 2)
     {
-        stream >> m_displayName;
+        QString dummy;
+        stream >> dummy;
     }
 }
 

@@ -38,7 +38,6 @@ void ProxyAi::serializeObject(QDataStream& stream) const
     {
         action->serializeObject(stream);
     }
-    stream << m_displayName;
 }
 void ProxyAi::deserializeObject(QDataStream& stream)
 {
@@ -55,9 +54,10 @@ void ProxyAi::deserializeObject(QDataStream& stream)
             m_ActionBuffer.append(pAction);
         }
     }
-    if (version > 2)
+    if (version == 3)
     {
-        stream >> m_displayName;
+        QString dummy;
+        stream >> dummy;
     }
 }
 

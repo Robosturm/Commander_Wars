@@ -60,6 +60,26 @@ BaseGameInputIF* Player::getBaseGameInput()
     return m_pBaseGameInput.get();
 }
 
+QString Player::getDisplayName() const
+{
+    return m_displayName;
+}
+
+void Player::setDisplayName(const QString &newDisplayName)
+{
+    m_displayName = newDisplayName;
+}
+
+const QString Player::getUniqueIdentifier() const
+{
+    return m_uniqueIdentifier;
+}
+
+void Player::setUniqueIdentifier(const QString &newUniqueIdentifier)
+{
+    m_uniqueIdentifier = newUniqueIdentifier;
+}
+
 float Player::getUnitBuildValue(const QString & unitID)
 {
     float modifier = 0.0f;
@@ -1948,6 +1968,7 @@ void Player::serializeObject(QDataStream& pStream) const
     pStream << m_BuildlistChanged;
     m_Variables.serializeObject(pStream);
     pStream << m_playerArmySelected;
+    pStream << m_displayName;
 }
 
 void Player::deserializeObject(QDataStream& pStream)
@@ -2140,5 +2161,8 @@ void Player::deserializer(QDataStream& pStream, bool fast)
     {
         pStream >> m_playerArmySelected;
     }
-
+    if (version > 15)
+    {
+        pStream >> m_displayName;
+    }
 }

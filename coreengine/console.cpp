@@ -52,6 +52,7 @@ const QString Console::functions[] =
     QString("setDeveloperMode"),
     QString("extractResources"),
     QString("memoryUsage"),
+    QString("printObjectDetails"),
     QString("")
 };
 const char* const Console::compileTime = __TIME__;

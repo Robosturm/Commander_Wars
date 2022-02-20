@@ -112,7 +112,7 @@ void IngameInfoBar::updatePlayerInfo()
                 style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
                 pName->setStyle(style);
                 pName->setPosition(x1, y - 5);
-                pName->setHtmlText(pPlayer->getBaseGameInput()->getDisplayName());
+                pName->setHtmlText(pPlayer->getDisplayName());
                 m_pGameInfoBox->addChild(pName);
                 y += 30;
 

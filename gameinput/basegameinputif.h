@@ -32,28 +32,11 @@ public:
 
     static spBaseGameInputIF deserializeInterface(GameMap* pMap, QDataStream& pStream, qint32 version);
 
-    static spBaseGameInputIF createAi(GameMap* pMap, GameEnums::AiTypes type, QString displayName = "");
+    static spBaseGameInputIF createAi(GameMap* pMap, GameEnums::AiTypes type);
 
     virtual void centerCameraOnAction(GameAction* pAction);
 
-    void setDisplayName(const QString &newDisplayName);
-
 public slots:
-    /**
-     * @brief getDisplayName
-     * @return
-     */
-    QString getDisplayName() const;
-    /**
-     * @brief getUniqueIdentifier
-     * @return
-     */
-    const QString &getUniqueIdentifier() const;
-    /**
-     * @brief setUniqueIdentifier
-     * @param newUniqueIdentifier
-     */
-    void setUniqueIdentifier(const QString &newUniqueIdentifier);
     /**
      * @brief getAiType
      * @return
@@ -104,11 +87,6 @@ protected:
      */
     QVector<QVector<std::tuple<qint32, bool>>> m_MoveCostMap;
     GameMap* m_pMap{nullptr};
-    /**
-     * @brief m_uniqueIdentifier
-     */
-    QString m_uniqueIdentifier;
-    QString m_displayName;
 };
 
 #endif // BASEGAMEINPUTIF_H

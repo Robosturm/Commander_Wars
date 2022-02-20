@@ -84,7 +84,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
         connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &GameMenue::recieveData, Qt::QueuedConnection);
         if (m_pNetworkInterface->getIsServer())
         {
-            m_PlayerSockets = m_pNetworkInterface.get()->getConnectedSockets();
+            m_PlayerSockets = m_pNetworkInterface->getConnectedSockets();
             connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &GameMenue::playerJoined, Qt::QueuedConnection);
         }
         spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players"), 1000 * 60 * 5);
@@ -251,6 +251,14 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             waitingForPlayerJoinSyncFinished(stream, socketID);
         }
+        else if (messageType == NetworkCommands::RECEIVEDCURRENTGAMESTATE)
+        {
+            removePlayerFromSyncWaitList(socketID);
+        }
+        else if (messageType == NetworkCommands::PLAYERJOINEDFINISHED)
+        {
+            emit sigSyncFinished();
+        }
     }    
     else if (service == NetworkInterface::NetworkSerives::GameChat)
     {
@@ -408,6 +416,36 @@ void GameMenue::waitingForPlayerJoinSyncFinished(QDataStream & stream, quint64 s
     }
 }
 
+void GameMenue::removePlayerFromSyncWaitList(quint64 socketID)
+{
+    if (m_pNetworkInterface->getIsServer())
+    {
+        m_multiplayerSyncData.m_connectingSockets.removeAll(socketID);
+        continueAfterSyncGame();
+    }
+}
+
+void GameMenue::continueAfterSyncGame()
+{
+    if (m_pNetworkInterface->getIsServer() &&
+        m_multiplayerSyncData.m_connectingSockets.size() <= 0 &&
+        m_multiplayerSyncData.m_waitingForSyncFinished)
+    {
+        m_multiplayerSyncData.m_waitingForSyncFinished = false;
+        QString command = NetworkCommands::PLAYERJOINEDFINISHED;
+        QByteArray sendData;
+        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream << command;
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        if (m_multiplayerSyncData.m_postSyncAction.get() != nullptr)
+        {
+            performAction(m_multiplayerSyncData.m_postSyncAction);
+            m_multiplayerSyncData.m_postSyncAction = nullptr;
+        }
+    }
+}
+
 void GameMenue::playerJoined(quint64 socketID)
 {
     if (m_pNetworkInterface->getIsServer())
@@ -428,7 +466,7 @@ void GameMenue::disconnected(quint64 socketID)
     {
         CONSOLE_PRINT("Handling player GameMenue::disconnect()", Console::eDEBUG);
         bool showDisconnect = !m_pNetworkInterface->getIsServer();
-
+        m_multiplayerSyncData.m_connectingSockets.removeAll(socketID);
         auto & observer = m_pMap->getGameRules()->getObserverList();
         bool observerDisconnect = observer.contains(socketID);
         if (observerDisconnect)
@@ -464,6 +502,7 @@ void GameMenue::disconnected(quint64 socketID)
                 QCoreApplication::exit(0);
             }
         }
+        continueAfterSyncGame();
     }
 }
 
@@ -787,7 +826,10 @@ void GameMenue::performAction(spGameAction pGameAction)
     if (m_multiplayerSyncData.m_waitingForSyncFinished)
     {
         m_multiplayerSyncData.m_postSyncAction = pGameAction;
-        // todo show popup
+        spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players/Observers to join"), 1000 * 60 * 5);
+        addChild(pDialogConnecting);
+        connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
+        connect(this, &GameMenue::sigSyncFinished, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
     }
     else if (pGameAction.get() != nullptr)
     {

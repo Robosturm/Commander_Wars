@@ -146,7 +146,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 2;
+        return 3;
     }
 
     virtual void centerCameraOnAction(GameAction* pAction) override;
