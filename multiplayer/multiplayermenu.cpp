@@ -1244,8 +1244,10 @@ void Multiplayermenu::disconnectNetwork()
 bool Multiplayermenu::getGameReady()
 {
     bool gameReady = true;
-    for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
+    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
+        auto* pInput = pMap->getPlayer(i)->getBaseGameInput();
         GameEnums::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
         if (aiType == GameEnums::AiTypes_Open)
         {
@@ -1253,7 +1255,9 @@ bool Multiplayermenu::getGameReady()
             gameReady = false;
             break;
         }
-        else if (aiType == GameEnums::AiTypes_ProxyAi)
+        else if (aiType == GameEnums::AiTypes_ProxyAi ||
+                 (pInput != nullptr &&
+                  pInput->getAiType() == GameEnums::AiTypes_ProxyAi))
         {
             if (m_pPlayerSelection->getReady(i) == false)
             {

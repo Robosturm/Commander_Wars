@@ -1757,14 +1757,23 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
             aiType != GameEnums::AiTypes::AiTypes_ProxyAi)
         {
             m_PlayerSockets[player] = socket;
-            if (m_isServerGame)
+            if (Mainapp::getSlave())
+            {
+                if (aiType != GameEnums::AiTypes::AiTypes_Open &&
+                    aiType != GameEnums::AiTypes::AiTypes_Closed)
+                {
+                    aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                }
+                CONSOLE_PRINT("Slave remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
+            }
+            else if (m_isServerGame)
             {
                 if (aiType != GameEnums::AiTypes::AiTypes_Open &&
                     aiType != GameEnums::AiTypes::AiTypes_Human)
                 {
                     aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
                 }
-                CONSOLE_PRINT("Remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
+                CONSOLE_PRINT("Server remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
             }
             else if (!clientRequest)
             {
