@@ -146,10 +146,17 @@ var Constructor = function()
             }
             for (var i2 = 0; i2 < soundCount; ++i2)
             {
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 * i2 +       i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 * i2 + 200 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 * i2 + 400 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 * i2 + 600 + i * BATTLEANIMATION.defaultFrameDelay);
+                if (i2 == 0)
+                {
+                    sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 * i2 +       i * BATTLEANIMATION.defaultFrameDelay);
+                }
+                else
+                {
+                    sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 * i2 +       i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+                }
+                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 * i2 + 200 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 * i2 + 400 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 * i2 + 600 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
             }
         }
     };

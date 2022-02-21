@@ -92,11 +92,11 @@ var Constructor = function()
                                   1, 1, 0, 0, false, true);
             }
             sprite.loadSound("anti_air_gun_fire.wav", 1, 0);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, 100);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, 200);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, 300);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, 400);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, 500);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 100, 1, true);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 200, 1, true);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 300, 1, true);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 400, 1, true);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 500, 1, true);
         }
     };
 

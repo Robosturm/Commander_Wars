@@ -564,6 +564,7 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         coreengine/windows/crashreporter_os.cpp
         coreengine/windows/Gamepad.cpp
         coreengine/sounds/soundcaching.cpp
+        #coreengine/sounds/ondemandsound.cpp
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     set(${PROJECT_NAME}_OS_SRCS

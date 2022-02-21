@@ -29,8 +29,7 @@ GameAnimation::GameAnimation(quint32 frameTime, GameMap* pMap)
 }
 
 void GameAnimation::restart()
-{
-    
+{    
     if (m_pMap != nullptr)
     {
         m_stopped = false;
@@ -55,7 +54,7 @@ void GameAnimation::start()
         AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
         for (auto & data : m_SoundData)
         {
-            pAudioThread->playSound(data.soundFile, data.loops, data.delayMs / Settings::getAnimationSpeed(), data.volume);
+            pAudioThread->playSound(data.soundFile, data.loops, data.delayMs / Settings::getAnimationSpeed(), data.volume, data.stopOldestSound);
         }
     }
 }
@@ -397,7 +396,7 @@ bool GameAnimation::onFinished(bool skipping)
     return true;
 }
 
-void GameAnimation::setSound(QString soundFile, qint32 loops, qint32 delayMs, float volume)
+void GameAnimation::setSound(QString soundFile, qint32 loops, qint32 delayMs, float volume, bool stopOldestSound)
 {
     if (m_SoundData.size() == 0)
     {
@@ -410,17 +409,19 @@ void GameAnimation::setSound(QString soundFile, qint32 loops, qint32 delayMs, fl
         data.loops = loops;
         data.volume = volume;
         data.delayMs = delayMs;
+        data.stopOldestSound = stopOldestSound;
         m_SoundData[0] = data;
     }
 }
 
-void GameAnimation::addSound(QString soundFile, qint32 loops, qint32 delayMs, float volume)
+void GameAnimation::addSound(QString soundFile, qint32 loops, qint32 delayMs, float volume, bool stopOldestSound)
 {
     SoundData data;
     data.soundFile = soundFile;
     data.loops = loops;
     data.volume = volume;
     data.delayMs = delayMs;
+    data.stopOldestSound = stopOldestSound;
     m_SoundData.append(data);
 }
 

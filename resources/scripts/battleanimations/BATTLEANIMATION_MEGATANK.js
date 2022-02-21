@@ -89,8 +89,8 @@ var Constructor = function()
                                   1, 1, 0, 0, false, true);
             }
             sprite.loadSound("mg_weapon_fire.wav", 1, 0);
-            sprite.loadSound("mg_weapon_fire.wav", 1, 200);
-            sprite.loadSound("mg_weapon_fire.wav", 1, 400);
+            sprite.loadSound("mg_weapon_fire.wav", 1, 200, 1, true);
+            sprite.loadSound("mg_weapon_fire.wav", 1, 400, 1, true);
         }
     };
 

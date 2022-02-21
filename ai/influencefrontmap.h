@@ -54,7 +54,7 @@ public:
      */
     void showPfs(UnitPathFindingSystem* pPfs);
     /**
-     * @brief show for debugging purpose
+     * @brief hide for debugging purpose
      */
     void hide();
 

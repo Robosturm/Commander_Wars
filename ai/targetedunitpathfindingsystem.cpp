@@ -19,7 +19,6 @@ TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit
             m_Targets[i].setZ(1.0f);
         }
     }
-    m_supportsBasecosts = MovementTableManager::getInstance()->getSupportsFastPfs(pUnit->getMovementType());
     setMovepoints(m_pUnit->getFuel() * 2);
 }
 
@@ -49,30 +48,7 @@ qint32 TargetedUnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint3
 qint32 TargetedUnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY)
 {
     qint32 costs = -1;
-    if (m_useBasecosts && m_supportsBasecosts)
-    {        
-        if (m_pMap != nullptr && m_pMap->onMap(x, y))
-        {
-            qint32 direction = getMoveDirection(curX, curY, x, y);
-            QString id = m_pMap->getTerrain(curX, curY)->getID() + m_pMap->getTerrain(x, y)->getID() + "Base";
-            bool found = m_costInfo.contains(id);
-            if (found)
-            {
-                costs = m_costInfo[id];
-                m_movecosts[index][direction] = costs;
-            }
-            else
-            {
-                costs = m_pUnit->getBaseMovementCosts(x, y, curX, curY);
-                m_costInfo.insert(id, costs);
-                m_movecosts[index][direction] = costs;
-            }
-        }
-    }
-    else
-    {
-        costs = UnitPathFindingSystem::getCosts(index, x, y, curX, curY);
-    }
+    costs = UnitPathFindingSystem::getCosts(index, x, y, curX, curY);
     if (costs < 0) // not crossable
     {
         return -1;
@@ -92,16 +68,6 @@ qint32 TargetedUnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y,
         costs = 0;
     }
     return costs;
-}
-
-bool TargetedUnitPathFindingSystem::getUseBasecosts() const
-{
-    return m_useBasecosts;
-}
-
-void TargetedUnitPathFindingSystem::setUseBasecosts(bool useBasecosts)
-{
-    m_useBasecosts = useBasecosts;
 }
 
 bool TargetedUnitPathFindingSystem::getAbortOnCostExceed() const

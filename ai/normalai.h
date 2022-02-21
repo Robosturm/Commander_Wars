@@ -111,6 +111,23 @@ signals:
 
 public slots:
     virtual void process() override;
+    /*******************************************************************/
+    // debugging section
+    /*******************************************************************/
+    /**
+     * @brief toggleAiPause for debugging
+     */
+    void toggleAiPause();
+    /**
+     * @brief showIslandMap
+     * @param unitId
+     */
+    void showIslandMap(QString unitId);
+    /**
+     * @brief showIslandMap
+     * @param unitId
+     */
+    void hideIslandMap(QString unitId);
 protected:
     static constexpr float maxDayDistance = 6.0f;
 
@@ -565,6 +582,10 @@ private:
     double m_ProducingTransportMinLoadingTransportRatio{7.0f};
     double m_maxProductionBuildings{5};
 
-    float m_currentDirectIndirectRatio{1.0f};};
+    float m_currentDirectIndirectRatio{1.0f};
+
+    QTimer m_timer;
+    bool m_pause{false};
+};
 
 #endif // NORMALAI_H

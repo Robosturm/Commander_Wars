@@ -271,9 +271,9 @@ void AudioThread::playRandom()
     emit sigPlayRandom();
 }
 
-void AudioThread::playSound(QString file, qint32 loops, qint32 delay, float volume)
+void AudioThread::playSound(QString file, qint32 loops, qint32 delay, float volume, bool stopOldestSound)
 {
-    emit sigPlaySound(file, loops, delay, volume);
+    emit sigPlaySound(file, loops, delay, volume, stopOldestSound);
 }
 
 void AudioThread::stopSound(QString file)
@@ -604,7 +604,7 @@ void AudioThread::reportReplayError(QMediaPlayer::Error error, const QString &er
 }
 #endif
 
-void AudioThread::SlotPlaySound(QString file, qint32 loops, qint32 delay, float volume)
+void AudioThread::SlotPlaySound(QString file, qint32 loops, qint32 delay, float volume, bool stopOldestSound)
 {
 #ifdef AUDIOSUPPORT
     if (Settings::getMuted() || m_noAudio)
@@ -627,7 +627,8 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, qint32 delay, float 
                     break;
                 }
                 else if (tryPlaySoundAtCachePosition(soundCache, i,
-                                                     file, loops, delay, sound))
+                                                     file, loops, delay, sound,
+                                                     stopOldestSound))
                 {
                     started = true;
                     break;
@@ -638,7 +639,8 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, qint32 delay, float 
                 for (qint32 i = 0; i < soundCache->nextSoundToUse; ++i)
                 {
                     if (tryPlaySoundAtCachePosition(soundCache, i,
-                                                    file, loops, delay, sound))
+                                                    file, loops, delay, sound,
+                                                    stopOldestSound))
                     {
                         started = true;
                         break;
@@ -665,16 +667,7 @@ void AudioThread::SlotStopAllSounds()
     {
         for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
         {
-            if (soundCache->sound[i].get() != nullptr &&
-                soundCache->sound[i]->isPlaying())
-            {
-                stopSound(soundCache, i);
-            }
-            if (soundCache->timer[i].get() != nullptr &&
-                soundCache->timer[i]->isActive())
-            {
-                soundCache->timer[i]->stop();
-            }
+            stopSoundAtIndex(soundCache.get(), i);
         }
     }
 #endif
@@ -689,17 +682,52 @@ void AudioThread::SlotStopSound(QString file)
         auto & soundCache = m_soundCaches[file];
         for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
         {
-            if (soundCache->sound[i].get() != nullptr &&
-                soundCache->sound[i]->isPlaying())
-            {
-                stopSound(soundCache, i);
-            }
-            if (soundCache->timer[i].get() != nullptr &&
-                soundCache->timer[i]->isActive())
-            {
-                soundCache->timer[i]->stop();
-            }
+            stopSoundAtIndex(soundCache.get(), i);
         }
     }
 #endif
 }
+
+#ifdef AUDIOSUPPORT
+bool AudioThread::stopSoundAtIndex(SoundData* soundData, qint32 index)
+{
+    bool stopped = false;
+    if (soundData->sound[index].get() != nullptr &&
+        soundData->sound[index]->isPlaying())
+    {
+        stopSound(soundData, index);
+        stopped = true;
+    }
+    if (soundData->timer[index].get() != nullptr &&
+        soundData->timer[index]->isActive())
+    {
+        soundData->timer[index]->stop();
+        stopped = true;
+    }
+    return stopped;
+}
+
+void AudioThread::stopOldestSound(SoundData* soundData)
+{
+    bool stopped = false;
+    for (qint32 i = soundData->nextSoundToUse; i < SoundData::MAX_SAME_SOUNDS; ++i)
+    {
+        stopped = stopSoundAtIndex(soundData, i);
+        if (stopped)
+        {
+            break;
+        }
+    }
+    if (!stopped)
+    {
+        for (qint32 i = 0; i < soundData->nextSoundToUse; ++i)
+        {
+            stopped = stopSoundAtIndex(soundData, i);
+            if (stopped)
+            {
+                break;
+            }
+        }
+    }
+}
+#endif

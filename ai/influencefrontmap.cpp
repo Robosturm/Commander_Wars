@@ -234,7 +234,6 @@ void InfluenceFrontMap::updateOwners()
 
 void InfluenceFrontMap::show()
 {
-    
     for (qint32 x = 0; x < m_InfluenceMap.size(); ++x)
     {
         for (qint32 y = 0; y < m_InfluenceMap[x].size(); ++y)

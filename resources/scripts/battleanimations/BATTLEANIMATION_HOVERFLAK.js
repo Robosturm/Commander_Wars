@@ -87,19 +87,19 @@ var Constructor = function()
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("vulcan_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("vulcan_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("vulcan_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("vulcan_weapon_fire.wav", 1, 600 + i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("vulcan_weapon_fire.wav", 1, 800 + i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("vulcan_weapon_fire.wav", 1, 1000 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("vulcan_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+            sprite.loadSound("vulcan_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+            sprite.loadSound("vulcan_weapon_fire.wav", 1, 600 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+            sprite.loadSound("vulcan_weapon_fire.wav", 1, 800 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+            sprite.loadSound("vulcan_weapon_fire.wav", 1, 1000 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
             if (mgCount === 2)
             {
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 300 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 500 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 700 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 900 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 1100 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+                sprite.loadSound("vulcan_weapon_fire.wav", 1, 300 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+                sprite.loadSound("vulcan_weapon_fire.wav", 1, 500 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+                sprite.loadSound("vulcan_weapon_fire.wav", 1, 700 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+                sprite.loadSound("vulcan_weapon_fire.wav", 1, 900 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+                sprite.loadSound("vulcan_weapon_fire.wav", 1, 1100 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
             }
         }
     };

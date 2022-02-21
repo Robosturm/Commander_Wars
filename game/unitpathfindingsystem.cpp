@@ -26,11 +26,11 @@ UnitPathFindingSystem::UnitPathFindingSystem(GameMap* pMap, Unit* pUnit, Player*
         m_pPlayer = m_pUnit->getOwner();
     }
     setMovepoints(m_pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())));
+    m_supportsShortCuts = MovementTableManager::getInstance()->getSupportsFastPfs(pUnit->getMovementType());
 }
 
 qint32 UnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 currentCost)
-{
-    
+{    
     if (m_pMap != nullptr && m_pMap->onMap(x, y) && m_Movepoints > 0)
     {
         return m_Movepoints - currentCost;
@@ -62,25 +62,31 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
         
         if (m_pMap != nullptr && m_pMap->onMap(x, y))
         {
-            Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-            // check for an enemy on the field
-            if (pUnit != nullptr)
+            Terrain* pTerrain = m_pMap->getTerrain(x, y);
+            Unit* pUnit = pTerrain->getUnit();
+            if (!m_useBasecosts)
             {
-                // ignore unit if it's not an enemy unit or if it's stealthed
-                if (m_pUnit->getOwner()->isEnemyUnit(pUnit) &&
-                    (!pUnit->isStealthed(m_pPlayer)))
+                // check for an enemy on the field
+                if (pUnit != nullptr)
                 {
-                    if (!m_pUnit->getIgnoreUnitCollision() &&
-                        (m_ignoreEnemies == CollisionIgnore::Off ||
-                        (m_ignoreEnemies == CollisionIgnore::OnlyNotMovedEnemies && !pUnit->getHasMoved())))
+                    // ignore unit if it's not an enemy unit or if it's stealthed
+                    if (m_pUnit->getOwner()->isEnemyUnit(pUnit) &&
+                        (!pUnit->isStealthed(m_pPlayer)))
                     {
-                        m_movecosts[index][direction] = -1;
-                        return m_movecosts[index][direction];
+                        if (!m_pUnit->getIgnoreUnitCollision() &&
+                            (m_ignoreEnemies == CollisionIgnore::Off ||
+                             (m_ignoreEnemies == CollisionIgnore::OnlyNotMovedEnemies && !pUnit->getHasMoved())))
+                        {
+                            m_movecosts[index][direction] = -1;
+                            return m_movecosts[index][direction];
+                        }
                     }
                 }
             }
             bool found = false;
-            if (m_fast)
+            if (m_fast &&
+                m_supportsShortCuts &&
+                pTerrain->getBuilding() != nullptr)
             {
                 QString id = m_pMap->getTerrain(curX, curY)->getID() + m_pMap->getTerrain(x, y)->getID();
                 found = m_costInfo.contains(id);
@@ -123,8 +129,7 @@ qint32 UnitPathFindingSystem::getCosts(const QVector<QPoint> & path)
 }
 
 QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target, qint32 movepoints, bool direct)
-{
-    
+{    
     if (m_pMap != nullptr)
     {
         QVector<QVector4D> usedNodes;
@@ -318,4 +323,14 @@ void UnitPathFindingSystem::setMovepoints(const qint32 &movepoints)
             }
         }
     }
+}
+
+bool UnitPathFindingSystem::getUseBasecosts() const
+{
+    return m_useBasecosts;
+}
+
+void UnitPathFindingSystem::setUseBasecosts(bool useBasecosts)
+{
+    m_useBasecosts = useBasecosts;
 }

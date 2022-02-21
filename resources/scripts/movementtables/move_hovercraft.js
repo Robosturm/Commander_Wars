@@ -95,7 +95,6 @@ var Constructor = function()
             {
                 var x = fields.at(i).x + terrain.getX();
                 var y = fields.at(i).y + terrain.getY();
-                // check with which weapon we can attack and if we could deal damage with this weapon
                 if (map.onMap(x, y))
                 {
                     if (map.getTerrain(x, y).getTerrainGroup() > 0)

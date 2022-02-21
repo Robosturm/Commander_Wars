@@ -51,6 +51,15 @@ AudioThread* Mainapp::m_Audiothread = nullptr;
 bool Mainapp::m_slave{false};
 QMutex Mainapp::m_crashMutex;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
+const char* const Mainapp::ARG_MODS = "-mods";
+const char* const Mainapp::ARG_SLAVE = "-slave";
+const char* const Mainapp::ARG_SLAVENAME = "-slaveServer";
+const char* const Mainapp::ARG_NOUI = "-noui";
+const char* const Mainapp::ARG_NOAUDIO = "-noaudio";
+const char* const Mainapp::ARG_INITSCRIPT = "-initScript";
+const char* const Mainapp::ARG_CREATESLAVELOGS = "-createSlaveLogs";
+const char* const Mainapp::ARG_SLAVEPORT = "-slavePort";
+const char* const Mainapp::ARG_SLAVEADDRESS = "-slaveAdress";
 
 Mainapp::Mainapp()
 {
@@ -615,9 +624,9 @@ void Mainapp::showCrashReport(const QString & log)
 
 void Mainapp::loadArgs(const QStringList & args)
 {
-    if (args.contains("-mods"))
+    if (args.contains(ARG_MODS))
     {
-        QStringList modList = args[args.indexOf("-mods") + 1].split(",");
+        QStringList modList = args[args.indexOf(ARG_MODS) + 1].split(",");
         qint32 i= 0;
         while (i < modList.size())
         {
@@ -632,13 +641,13 @@ void Mainapp::loadArgs(const QStringList & args)
         }
         Settings::setActiveMods(modList);
     }
-    if (args.contains("-slave"))
+    if (args.contains(ARG_SLAVE))
     {
         setSlave(true);
         Settings::setServer(false);
         Settings::setUsername("Server");
     }
-    if (args.contains("-noui"))
+    if (args.contains(ARG_NOUI))
     {
         m_noUi = true;
         Settings::setOverworldAnimations(false);
@@ -651,16 +660,16 @@ void Mainapp::loadArgs(const QStringList & args)
         Settings::setDialogAnimationSpeed(100);
         m_Timer.stop();
     }
-    m_noAudio = args.contains("-noaudio");
-    if (args.contains("-slaveServer"))
+    m_noAudio = args.contains(ARG_NOAUDIO);
+    if (args.contains(ARG_SLAVENAME))
     {
-        Settings::setSlaveServerName(args[args.indexOf("-slaveServer") + 1]);
+        Settings::setSlaveServerName(args[args.indexOf(ARG_SLAVENAME) + 1]);
     }
-    if (args.contains("-initScript"))
+    if (args.contains(ARG_INITSCRIPT))
     {
-        m_initScript = args[args.indexOf("-initScript") + 1];
+        m_initScript = args[args.indexOf(ARG_INITSCRIPT) + 1];
     }
-    if (args.contains("-createSlaveLogs"))
+    if (args.contains(ARG_CREATESLAVELOGS))
     {
         m_createSlaveLogs = true;
     }

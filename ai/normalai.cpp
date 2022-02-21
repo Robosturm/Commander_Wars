@@ -26,6 +26,8 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    m_timer.setSingleShot(false);
+    connect(&m_timer, &QTimer::timeout, this, &NormalAi::process, Qt::QueuedConnection);
     m_iniData = { // General
                   {"MinMovementDamage", "General", &m_minMovementDamage, 0.3f, 0.0f, 1.0f},
                   {"MinAttackFunds", "General", &m_minAttackFunds, 0.0f, -1.0f, 1.0f},
@@ -155,6 +157,15 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
 
 void NormalAi::process()
 {
+    if (m_pause)
+    {
+        m_timer.start(1000);
+        return;
+    }
+    else
+    {
+        m_timer.stop();
+    }
     spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
     pBuildings->randomize();
     spQmlVectorUnit pUnits;
@@ -211,6 +222,31 @@ void NormalAi::process()
                 }
             }
         }
+    }
+}
+
+void NormalAi::toggleAiPause()
+{
+    m_pause = !m_pause;
+}
+
+void NormalAi::showIslandMap(QString unitId)
+{
+    Unit unit(unitId, m_pPlayer, false, m_pMap);
+    qint32 unitIslandIdx = getIslandIndex(&unit);
+    if (unitIslandIdx >= 0 && unitIslandIdx < m_IslandMaps.size())
+    {
+        m_IslandMaps[unitIslandIdx]->show();
+    }
+}
+
+void NormalAi::hideIslandMap(QString unitId)
+{
+    Unit unit(unitId, m_pPlayer, false, m_pMap);
+    qint32 unitIslandIdx = getIslandIndex(&unit);
+    if (unitIslandIdx >= 0 && unitIslandIdx < m_IslandMaps.size())
+    {
+        m_IslandMaps[unitIslandIdx]->hide();
     }
 }
 

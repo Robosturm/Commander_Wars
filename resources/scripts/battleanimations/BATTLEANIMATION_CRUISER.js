@@ -130,8 +130,8 @@ var Constructor = function()
             }
 
             sprite.loadSound("anti_air_gun_fire.wav", 1, 0);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, 200);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, 400);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 200, 1, true);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 400, 1, true);
         }
     };
 

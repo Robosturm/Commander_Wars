@@ -23,6 +23,15 @@ class Mainapp : public oxygine::GameWindow
     Q_OBJECT
 public:
     static const char* const GAME_CONTEXT;
+    static const char* const ARG_MODS;
+    static const char* const ARG_SLAVE;
+    static const char* const ARG_SLAVENAME;
+    static const char* const ARG_NOUI;
+    static const char* const ARG_NOAUDIO;
+    static const char* const ARG_INITSCRIPT;
+    static const char* const ARG_CREATESLAVELOGS;
+    static const char* const ARG_SLAVEPORT;
+    static const char* const ARG_SLAVEADDRESS;
     static constexpr qint32 stepProgress = 4;
     enum StartupPhase
     {

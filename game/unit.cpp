@@ -864,7 +864,6 @@ float Unit::getTerrainAnimationMoveSpeed()
 
 bool Unit::canMoveOver(qint32 x, qint32 y)
 {
-
     if (MovementTableManager::getInstance()->getBaseMovementPoints(getMovementType(), m_pMap->getTerrain(x, y), m_pMap->getTerrain(x, y), this) > 0)
     {
         return true;

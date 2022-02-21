@@ -109,3 +109,35 @@ void IslandMap::getValueOnIsland(qint32 island, qint32 &ownValue, qint32 & enemy
         }
     }
 }
+
+void IslandMap::show()
+{
+    for (qint32 x = 0; x < m_Islands.size(); ++x)
+    {
+        for (qint32 y = 0; y < m_Islands[x].size(); ++y)
+        {
+            if (m_Islands[x][y] > UNKNOWN)
+            {
+                oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
+                sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
+                QColor color = Qt::red;
+                color.setAlphaF(0.5f);
+                sprite->setColor(color);
+                sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
+                sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
+                m_pMap->addChild(sprite);
+                m_info.append(sprite);
+            }
+        }
+    }
+}
+
+void IslandMap::hide()
+{
+    for (auto & field : m_info)
+    {
+        field->detach();
+    }
+    m_info.clear();
+}
+

@@ -152,18 +152,18 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
     m_games[pos]->process = new QProcess();
     m_games[pos]->process->setObjectName(slaveName + "Slaveprocess");
     QStringList args;
-    args << "-slave";
-    args << "-slaveServer";
+    args << Mainapp::ARG_SLAVE;
+    args << Mainapp::ARG_SLAVENAME;
     args << slaveName;
-    args << "-noui"; // comment out for debugging
-    args << "-noaudio";
-    args << "-mods";
+    args << Mainapp::ARG_NOUI; // comment out for debugging
+    args << Mainapp::ARG_NOAUDIO;
+    args << Mainapp::ARG_MODS;
     args << Settings::getConfigString(mods);
-    args << "-initScript";
+    args << Mainapp::ARG_INITSCRIPT;
     args << initScript;
     if (Mainapp::getInstance()->getCreateSlaveLogs())
     {
-        args << "-createSlaveLogs";
+        args << Mainapp::ARG_SLAVENAME;
     }
     QString markername = "temp/" + slaveName + ".marker";
     if (QFile::exists(markername))
