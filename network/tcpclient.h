@@ -8,7 +8,7 @@
 class QTcpSocket;
 
 class TCPClient;
-typedef oxygine::intrusive_ptr<TCPClient> spTCPClient;
+using spTCPClient = oxygine::intrusive_ptr<TCPClient>;
 
 class TCPClient : public NetworkInterface
 {

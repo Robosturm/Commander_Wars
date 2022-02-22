@@ -56,14 +56,6 @@ signals:
     void sigClose(NetworkGame* pGame);
     void sigDisconnectSocket(quint64 socketID);
 public slots:
-    void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
-    /**
-     * @brief recieveData
-     * @param socket
-     * @param data
-     * @param service
-     */
-    void recieveClientData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
      * @brief recieveSlaveData
      * @param socket
@@ -79,11 +71,6 @@ public slots:
      * @brief onConnectToLocalServer
      */
     void onConnectToLocalServer(quint64);
-    /**
-     * @brief addClient
-     * @param pClient
-     */
-    void addClient(spTCPClient pClient);
     /**
      * @brief clientDisconnect
      * @param socketId
@@ -102,13 +89,12 @@ public slots:
     void slaveRunning(QDataStream &stream);
 protected slots:
     void checkServerRunning();
-    void sendPlayerJoined(qint32 player);
 private:
     void closeGame();
 private:
-    QVector<spTCPClient> m_Clients;
-    LocalClient m_gameConnection;
     QByteArray m_dataBuffer;
+    spNetworkInterface m_hostingClient;
+
     QString m_serverName;
     QTimer m_timer;
     bool m_slaveRunning{false};

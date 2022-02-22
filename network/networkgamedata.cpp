@@ -7,6 +7,26 @@ bool NetworkGameData::hasOpenPlayers()
     return (m_players < m_maxPlayers);
 }
 
+const QString &NetworkGameData::getAddress() const
+{
+    return m_address;
+}
+
+void NetworkGameData::setAddress(const QString &newAddress)
+{
+    m_address = newAddress;
+}
+
+quint16 NetworkGameData::getPort() const
+{
+    return m_port;
+}
+
+void NetworkGameData::setPort(quint16 newPort)
+{
+    m_port = newPort;
+}
+
 void NetworkGameData::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();

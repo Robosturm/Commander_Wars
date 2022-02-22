@@ -22,6 +22,7 @@
 #include "objects/loadingscreen.h"
 
 #include "network/mainserver.h"
+#include "network/tcpclient.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/buildingspritemanager.h"
@@ -48,6 +49,8 @@ QThread Mainapp::m_Networkthread;
 QThread Mainapp::m_GameServerThread;
 WorkerThread* Mainapp::m_Worker = new WorkerThread();
 AudioThread* Mainapp::m_Audiothread = nullptr;
+spTCPClient Mainapp::m_slaveClient;
+
 bool Mainapp::m_slave{false};
 QMutex Mainapp::m_crashMutex;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
@@ -58,8 +61,8 @@ const char* const Mainapp::ARG_NOUI = "-noui";
 const char* const Mainapp::ARG_NOAUDIO = "-noaudio";
 const char* const Mainapp::ARG_INITSCRIPT = "-initScript";
 const char* const Mainapp::ARG_CREATESLAVELOGS = "-createSlaveLogs";
-const char* const Mainapp::ARG_SLAVEPORT = "-slavePort";
 const char* const Mainapp::ARG_SLAVEADDRESS = "-slaveAdress";
+const char* const Mainapp::ARG_MASTERADDRESS = "-masterAdress";
 
 Mainapp::Mainapp()
 {
@@ -646,6 +649,24 @@ void Mainapp::loadArgs(const QStringList & args)
         setSlave(true);
         Settings::setServer(false);
         Settings::setUsername("Server");
+        QString address;
+        quint16 port = 0;
+        if (args.contains(ARG_MASTERADDRESS))
+        {
+            bool ok = false;
+            address = args[args.indexOf(ARG_MASTERADDRESS) + 1];
+            port = args[args.indexOf(ARG_MASTERADDRESS) + 2].toInt(&ok);
+            if (!ok)
+            {
+                port = 0;
+            }
+        }
+        if (!address.isEmpty())
+        {
+            m_slaveClient = spTCPClient::create(nullptr);
+            m_slaveClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
+            emit m_slaveClient->sig_connect(address, port);
+        }
     }
     if (args.contains(ARG_NOUI))
     {

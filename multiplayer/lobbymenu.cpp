@@ -21,7 +21,6 @@
 
 
 LobbyMenu::LobbyMenu()
-    : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

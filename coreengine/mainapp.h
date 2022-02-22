@@ -18,6 +18,9 @@ using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
 class AudioThread;
 using spAudioThread = oxygine::intrusive_ptr<AudioThread>;
 
+class TCPClient;
+using spTCPClient = oxygine::intrusive_ptr<TCPClient>;
+
 class Mainapp : public oxygine::GameWindow
 {
     Q_OBJECT
@@ -30,8 +33,8 @@ public:
     static const char* const ARG_NOAUDIO;
     static const char* const ARG_INITSCRIPT;
     static const char* const ARG_CREATESLAVELOGS;
-    static const char* const ARG_SLAVEPORT;
     static const char* const ARG_SLAVEADDRESS;
+    static const char* const ARG_MASTERADDRESS;
     static constexpr qint32 stepProgress = 4;
     enum StartupPhase
     {
@@ -264,6 +267,7 @@ protected:
     virtual void onQuit() override;
 private:
     QLineEdit* m_pLineEdit{nullptr};
+
     static Mainapp* m_pMainapp;
     static QMutex m_crashMutex;
     static QThread m_Workerthread;
@@ -273,6 +277,7 @@ private:
     static AudioThread* m_Audiothread;
     QThread* m_pMainThread{nullptr};
     static bool m_slave;
+    static spTCPClient m_slaveClient;
     QString m_initScript;
     bool m_createSlaveLogs{false};
     Gamepad m_gamepad{0};

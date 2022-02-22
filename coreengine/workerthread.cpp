@@ -14,7 +14,7 @@
 #include "game/gameanimation/gameanimationfactory.h"
 
 #include "multiplayer/multiplayermenu.h"
-#include "network/localserver.h"
+#include "network/tcpserver.h"
 
 #include "resource_management/terrainmanager.h"
 #include "resource_management/buildingspritemanager.h"
@@ -215,10 +215,33 @@ void WorkerThread::startSlaveGame()
 {
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
-    spLocalServer pServer = spLocalServer::create(nullptr);
-    pServer->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", Multiplayermenu::NetworkMode::Host);
-    pMenu->connectNetworkSlots();
-    oxygine::Stage::getStage()->addChild(pMenu);
-    emit pServer->sig_connect(Settings::getSlaveServerName(), 0);
+
+    QStringList args = QCoreApplication::arguments();
+    QString address;
+    quint16 port = 0;
+    if (args.contains(Mainapp::ARG_SLAVEADDRESS))
+    {
+        bool ok = false;
+        address = args[args.indexOf(Mainapp::ARG_SLAVEADDRESS) + 1];
+        port = args[args.indexOf(Mainapp::ARG_SLAVEADDRESS) + 2].toInt(&ok);
+        if (!ok)
+        {
+            port = 0;
+        }
+    }
+    if (!address.isEmpty())
+    {
+        spTCPServer pServer = spTCPServer::create(nullptr);
+        pServer->moveToThread(Mainapp::getInstance()->getNetworkThread());
+        spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", Multiplayermenu::NetworkMode::Host);
+        pMenu->connectNetworkSlots();
+        oxygine::Stage::getStage()->addChild(pMenu);
+        emit pServer->sig_connect(address, port);
+        QString slaveName = Settings::getSlaveServerName();
+        QString markername = "temp/" + slaveName + ".marker";
+    }
+    else
+    {
+        QApplication::exit(-3);
+    }
 }
