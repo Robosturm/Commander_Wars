@@ -42,23 +42,23 @@ TCPClient::~TCPClient()
 void TCPClient::connectTCP(QString adress, quint16 port)
 {
     // Launch Socket
-    m_pSocket = new QTcpSocket(this);
-    connect(m_pSocket, &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
-    connect(m_pSocket, &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
-    connect(m_pSocket, &QAbstractSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
-    connect(m_pSocket, &QAbstractSocket::stateChanged, this, &TCPClient::displayStateChange, Qt::QueuedConnection);
+    m_pSocket = std::make_shared<QTcpSocket>(this);
+    connect(m_pSocket.get(), &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
+    connect(m_pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
+    connect(m_pSocket.get(), &QAbstractSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
+    connect(m_pSocket.get(), &QAbstractSocket::stateChanged, this, &TCPClient::displayStateChange, Qt::QueuedConnection);
 
     m_pSocket->connectToHost(adress, port);
 
     // Start RX-Task
     m_pRXTask = spRxTask::create(m_pSocket, 0, this, false);
-    connect(m_pSocket, &QTcpSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
+    connect(m_pSocket.get(), &QTcpSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
     // start TX-Task
     m_pTXTask = spTxTask::create(m_pSocket, 0, this, false);
     connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 
-    CONSOLE_PRINT("Client is running", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client is running and connecting to " + adress + " and port " + QString(port), Console::eLogLevels::eDEBUG);
 }
 
 void TCPClient::disconnectTCP()

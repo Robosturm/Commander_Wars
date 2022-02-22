@@ -44,7 +44,6 @@
 #include "multiplayer/networkcommands.h"
 
 #include "network/tcpserver.h"
-#include "network/localserver.h"
 
 #include "wiki/fieldinfo.h"
 #include "wiki/wikiview.h"
@@ -197,10 +196,6 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                 {
                     sockets = dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->getConnectedSockets();
                 }
-                else
-                {
-                    sockets = dynamic_cast<LocalServer*>(m_pNetworkInterface.get())->getConnectedSockets();
-                }
                 bool ready = true;
                 for (qint32 i = 0; i < sockets.size(); i++)
                 {
@@ -278,19 +273,6 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             }
             m_chatButtonShineTween = oxygine::createTween(oxygine::VStyleActor::TweenAddColor(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
             m_ChatButton->addTween(m_chatButtonShineTween);
-        }
-    }
-    else if (service == NetworkInterface::NetworkSerives::ServerHosting)
-    {
-        QDataStream stream(&data, QIODevice::ReadOnly);
-        QString messageType;
-        stream >> messageType;
-        CONSOLE_PRINT("Server Network Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
-        if (messageType == NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER)
-        {
-            quint64 socketId;
-            stream >> socketId;
-            disconnected(socketID);
         }
     }
 }

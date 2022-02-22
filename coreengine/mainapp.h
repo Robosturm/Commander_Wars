@@ -180,6 +180,8 @@ public:
     {
         return m_gamepad;
     }
+    static spTCPClient getSlaveClient();
+
 public slots:
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);

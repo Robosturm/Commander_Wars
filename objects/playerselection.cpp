@@ -23,7 +23,6 @@
 #include "coreengine/filesupport.h"
 #include "coreengine/userdata.h"
 
-#include "network/localserver.h"
 #include "network/tcpserver.h"
 
 constexpr const char* const CO_ARMY = "CO_ARMY";
@@ -1968,10 +1967,6 @@ void PlayerSelection::disconnected(quint64 socketID)
         auto* gameRules = m_pMap->getGameRules();
         auto & observer = gameRules->getObserverList();
         observer.removeAll(socketID);
-        if (Mainapp::getSlave())
-        {
-            dynamic_cast<LocalServer*>(m_pNetworkInterface.get())->removeSocket(socketID);
-        }
     }
 }
 

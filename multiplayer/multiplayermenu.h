@@ -52,6 +52,7 @@ public:
      * @brief connectNetworkSlots
      */
     void connectNetworkSlots();
+    void disconnectNetworkSlots();
     /**
      * @brief showRuleSelection
      */
@@ -72,7 +73,20 @@ public slots:
     // network slots
     void playerJoined(quint64 socketID);
     void disconnected(quint64 socketID);
+    /**
+     * @brief recieveData receive data from an client
+     * @param socketID
+     * @param data
+     * @param service
+     */
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    /**
+     * @brief recieveServerData receive data from the server hosting this slave
+     * @param socketID
+     * @param data
+     * @param service
+     */
+    void recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
 
     virtual void hideMapSelection() override;
     virtual void showMapSelection() override;
@@ -82,6 +96,12 @@ public slots:
 
     void slotCancelHostConnection();
     void slotHostGameLaunched();
+    /**
+     * @brief onSlaveConnectedToMaster
+     * @param socketID
+     */
+    void onSlaveConnectedToMaster(quint64 socketID);
+
 protected slots:
     void countdown();
 protected:
@@ -108,6 +128,7 @@ protected:
     bool findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, bool m_saveGame);
     void sendJoinReason(QDataStream & stream, quint64 socketID);
     void receiveCurrentGameState(QDataStream & stream, quint64 socketID);
+    void connectToSlave(QDataStream & stream, quint64 socketID);
 private:
     /**
      * @brief init

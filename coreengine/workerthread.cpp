@@ -236,9 +236,9 @@ void WorkerThread::startSlaveGame()
         spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", Multiplayermenu::NetworkMode::Host);
         pMenu->connectNetworkSlots();
         oxygine::Stage::getStage()->addChild(pMenu);
-        emit pServer->sig_connect(address, port);
-        QString slaveName = Settings::getSlaveServerName();
-        QString markername = "temp/" + slaveName + ".marker";
+        spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
+        connect(pSlaveMasterConnection.get(), &TCPClient::sigConnected, pMenu.get(), &Multiplayermenu::onSlaveConnectedToMaster, Qt::QueuedConnection);
+        emit pSlaveMasterConnection->sig_connect(address, port);
     }
     else
     {

@@ -10,13 +10,11 @@
 #include "game/gamemap.h"
 
 NetworkGame::NetworkGame(QObject* pParent)
-    : QObject(pParent),
-      m_timer(this)
+    : QObject(pParent)
 {
-    connect(&m_timer, &QTimer::timeout, this, &NetworkGame::checkServerRunning, Qt::QueuedConnection);
 }
 
-void NetworkGame::slaveRunning(QDataStream &stream)
+void NetworkGame::slaveRunning(QDataStream &stream, spTCPServer & pGameServer)
 {
     QString description;
     stream >> description;
@@ -24,20 +22,24 @@ void NetworkGame::slaveRunning(QDataStream &stream)
     stream >> hasPassword;
     m_data.setDescription(description);
     m_data.setLocked(hasPassword);
-    if (m_Clients.size() == 1)
+    auto pClient = pGameServer->getClient(m_hostingSocket);
+    if (pClient.get() != nullptr)
     {
-        sendPlayerJoined(0);
+        // send data
+        QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QByteArray sendData;
+        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream << command;
+        sendStream << m_data.getAddress();
+        sendStream << m_data.getPort();
+        emit pClient->sig_sendData(m_hostingSocket, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
         m_slaveRunning = true;
     }
     else
     {
         closeGame();
     }
-}
-
-void NetworkGame::setSlaveRunning(bool slaveRunning)
-{
-    m_slaveRunning = slaveRunning;
 }
 
 const QString & NetworkGame::getId() const
@@ -60,26 +62,7 @@ const NetworkGameData & NetworkGame::getData() const
     return m_data;
 }
 
-void NetworkGame::startAndWaitForInit()
-{
-    m_timer.setSingleShot(false);
-    m_timer.start(200);
-}
-
-void NetworkGame::checkServerRunning()
-{
-    QString markername = "temp/" + m_serverName + ".marker";
-    if (QFile::exists(markername))
-    {
-        //
-
-        emit m_gameConnection.sig_connect(m_serverName, 0);
-
-        m_timer.stop();
-    }
-}
-
-void NetworkGame::onConnectToLocalServer(quint64)
+void NetworkGame::onConnectToLocalServer(quint64 socketId, spTCPServer & pTcpServer)
 {
     CONSOLE_PRINT("onConnectToLocalServer reading game data", Console::eDEBUG);
     m_data.setSlaveName(m_serverName);
@@ -93,8 +76,7 @@ void NetworkGame::onConnectToLocalServer(quint64)
     GameMap::readMapHeader(stream, headerInfo);
     m_data.setMapName(headerInfo.m_mapName);
     m_data.setMaxPlayers(headerInfo.m_playerCount);
-
-    emit m_gameConnection.sig_sendData(0, m_dataBuffer, NetworkInterface::NetworkSerives::ServerHosting, false);
+    emit pTcpServer->sig_sendData(socketId, m_dataBuffer, NetworkInterface::NetworkSerives::ServerHosting, false);
     // free buffer after it has been send to the server
     m_dataBuffer.clear();
 }
@@ -134,4 +116,14 @@ void NetworkGame::closeGame()
         m_closing = true;
         emit sigClose(this);
     }
+}
+
+quint64 NetworkGame::getHostingSocket() const
+{
+    return m_hostingSocket;
+}
+
+void NetworkGame::setHostingSocket(quint64 newHostingSocket)
+{
+    m_hostingSocket = newHostingSocket;
 }

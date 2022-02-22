@@ -37,7 +37,7 @@ protected slots:
 private:
     spRxTask m_pRXTask;
     spTxTask m_pTXTask;
-    QTcpSocket* m_pSocket;
+    std::shared_ptr<QTcpSocket> m_pSocket;
     bool m_onServer{false};
 };
 

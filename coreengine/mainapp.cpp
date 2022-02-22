@@ -789,6 +789,11 @@ void Mainapp::onQuit()
     QApplication::processEvents();
 }
 
+spTCPClient Mainapp::getSlaveClient()
+{
+    return m_slaveClient;
+}
+
 const QString &Mainapp::getInitScript() const
 {
     return m_initScript;

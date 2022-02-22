@@ -74,49 +74,7 @@ namespace NetworkCommands
     /**
      * @brief STARTGAME the host has started the game. the client is allowed to start the game as well.
      */
-    const char* const STARTGAME = "STARTGAME";
-
-    // dedicated server commands
-    /**
-     * @brief LAUNCHGAMEONSERVER
-     */
-    const char* const LAUNCHGAMEONSERVER = "LAUNCHGAMEONSERVER";
-    /**
-      * @brief LAUNCHGAMEONSERVER
-      */
-    const char* const GAMERUNNINGONSERVER = "GAMERUNNINGONSERVER";
-    /**
-     * @brief PLAYERJOINEDGAMEONSERVER
-     */
-    const char* const PLAYERJOINEDGAMEONSERVER = "PLAYERJOINEDGAMEONSERVER";    
-    /**
-     * @brief PLAYERJOINEDGAMEONSERVER
-     */
-    const char* const PLAYERDISCONNECTEDGAMEONSERVER = "PLAYERDISCONNECTEDGAMEONSERVER";
-    /**
-     * @brief PLAYERREJECTEDONSERVER
-     */
-    const char* const PLAYERREJECTEDONSERVER = "PLAYERREJECTEDONSERVER";
-    /**
-     * @brief SERVERREQUESTOPENPLAYERCOUNT
-     */
-    const char* const SERVERREQUESTOPENPLAYERCOUNT = "SERVERREQUESTOPENPLAYERCOUNT";
-    /**
-     * @brief SERVEROPENPLAYERCOUNT
-     */
-    const char* const SERVEROPENPLAYERCOUNT = "SERVEROPENPLAYERCOUNT";
-    /**
-     * @brief SERVERGAMEDATA
-     */
-    const char* const SERVERGAMEDATA = "SERVERGAMEDATA";
-    /**
-     * @brief SERVERJOINGAME
-     */
-    const char* const SERVERJOINGAME = "SERVERJOINGAME";
-    /**
-     * @brief STARTSERVERGAME
-     */
-    const char* const STARTSERVERGAME = "STARTSERVERGAME";
+    const char* const STARTGAME = "STARTGAME";    
     /**
      * @brief JOINASOBSERVER
      */
@@ -153,6 +111,44 @@ namespace NetworkCommands
      * @brief PLAYERJOINEDFINISHED
      */
     const char* const PLAYERJOINEDFINISHED = "PLAYERJOINEDFINISHED";
+
+    // dedicated server commands
+    /**
+     * @brief LAUNCHGAMEONSERVER
+     */
+    const char* const LAUNCHGAMEONSERVER = "LAUNCHGAMEONSERVER";
+    /**
+      * @brief LAUNCHGAMEONSERVER
+      */
+    const char* const GAMERUNNINGONSERVER = "GAMERUNNINGONSERVER";
+    /**
+     * @brief SERVERREQUESTOPENPLAYERCOUNT
+     */
+    const char* const SERVERREQUESTOPENPLAYERCOUNT = "SERVERREQUESTOPENPLAYERCOUNT";
+    /**
+     * @brief SERVEROPENPLAYERCOUNT
+     */
+    const char* const SERVEROPENPLAYERCOUNT = "SERVEROPENPLAYERCOUNT";
+    /**
+     * @brief SERVERGAMEDATA
+     */
+    const char* const SERVERGAMEDATA = "SERVERGAMEDATA";
+    /**
+     * @brief SERVERJOINGAME
+     */
+    const char* const SERVERJOINGAME = "SERVERJOINGAME";
+    /**
+     * @brief SLAVEREADY
+     */
+    const char* const SLAVEREADY = "SLAVEREADY";
+    /**
+     * @brief SLAVEADDRESSINFO
+     */
+    const char* const SLAVEADDRESSINFO = "SLAVEADDRESSINFO";
+    /**
+     * @brief STARTSERVERGAME
+     */
+    const char* const STARTSERVERGAME = "STARTSERVERGAME";
 }
 
 #endif // NETWORKCOMMANDS_H
