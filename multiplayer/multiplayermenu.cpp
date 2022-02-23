@@ -67,7 +67,7 @@ Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, QString p
       m_local(false),
       m_password(password)
 {
-    m_NetworkInterface = pNetworkInterface.get();
+    m_NetworkInterface = pNetworkInterface;
     init();
     if (m_networkMode != NetworkMode::Host)
     {
@@ -108,10 +108,10 @@ void Multiplayermenu::initClientAndWaitForConnection()
 
 void Multiplayermenu::init()
 {
+    CONSOLE_PRINT("Entering Multiplayer Menue", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    CONSOLE_PRINT("Entering Multiplayer Menue", Console::eDEBUG);
     m_pButtonLoadSavegame = ObjectManager::createButton(tr("Load Savegame"));
     m_pButtonLoadSavegame->setPosition(Settings::getWidth() - m_pButtonLoadSavegame->getWidth() - m_pButtonNext->getWidth() - 20, Settings::getHeight() - 10 - m_pButtonLoadSavegame->getHeight());
     addChild(m_pButtonLoadSavegame);
@@ -199,14 +199,9 @@ void Multiplayermenu::showMapSelection()
 
 void Multiplayermenu::playerJoined(quint64 socketID)
 {
-    if (m_NetworkInterface->getIsServer() && Mainapp::getSlave())
-    {
-        if (m_slaveGameReady)
-        {
-            sendSlaveReady();
-        }
-    }
-    else if (m_NetworkInterface->getIsServer() && m_local)
+    CONSOLE_PRINT("Multiplayermenu::playerJoined", Console::eDEBUG);
+    if (m_NetworkInterface->getIsServer() &&
+       (m_local || Mainapp::getSlave()))
     {
         acceptNewConnection(socketID);
     }
@@ -383,6 +378,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
 
 void Multiplayermenu::connectToSlave(QDataStream & stream, quint64 socketID)
 {
+    CONSOLE_PRINT("Connected to slave", Console::eDEBUG);
     QString address;
     stream >> address;
     quint16 port;
@@ -394,11 +390,11 @@ void Multiplayermenu::connectToSlave(QDataStream & stream, quint64 socketID)
     createChat();
     connectNetworkSlots();
     emit m_NetworkInterface->sig_connect(address, port);
-    // MapSelectionMapsMenue::buttonNext();
 }
 
 void Multiplayermenu::onSlaveConnectedToMaster(quint64 socketID)
 {
+    CONSOLE_PRINT("Connected to master", Console::eDEBUG);
     spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
     QString command = NetworkCommands::SLAVEREADY;
     QByteArray sendData;
@@ -1115,6 +1111,7 @@ void Multiplayermenu::showPlayerSelection()
 
 void Multiplayermenu::disconnected(quint64)
 {
+    CONSOLE_PRINT("Multiplayermenu::disconnected", Console::eDEBUG);
     if (m_networkMode == NetworkMode::Host)
     {
         // handled in player selection

@@ -648,25 +648,9 @@ void Mainapp::loadArgs(const QStringList & args)
     {
         setSlave(true);
         Settings::setServer(false);
-        Settings::setUsername("Server");
-        QString address;
-        quint16 port = 0;
-        if (args.contains(ARG_MASTERADDRESS))
-        {
-            bool ok = false;
-            address = args[args.indexOf(ARG_MASTERADDRESS) + 1];
-            port = args[args.indexOf(ARG_MASTERADDRESS) + 2].toInt(&ok);
-            if (!ok)
-            {
-                port = 0;
-            }
-        }
-        if (!address.isEmpty())
-        {
-            m_slaveClient = spTCPClient::create(nullptr);
-            m_slaveClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
-            emit m_slaveClient->sig_connect(address, port);
-        }
+        Settings::setUsername("Server");                    
+        m_slaveClient = spTCPClient::create(nullptr);
+        m_slaveClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
     }
     if (args.contains(ARG_NOUI))
     {

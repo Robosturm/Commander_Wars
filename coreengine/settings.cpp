@@ -307,7 +307,7 @@ Settings::Settings()
         new Value<quint16>{"Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()},
         new Value<quint16>{"Network", "SlaveServerPort", &m_slaveServerPort, 9003, 0, std::numeric_limits<quint16>::max()},
         new Value<bool>{"Network", "Server", &m_Server, false, false, true},
-        new Value<QString>{"Network", "ServerAdress", &m_ServerAdress, "", "", ""},
+        new Value<QString>{"Network", "SlaveServerName", &m_slaveServerName, "", "", ""},
         new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&10000&20000;::1&50000&65535", "", ""},
         // auto saving
         new Value<std::chrono::seconds>{"Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)},

@@ -31,6 +31,7 @@ public:
     void setServerName(const QString &serverName);
 
     const NetworkGameData & getData() const;
+    NetworkGameData & getData();
     /**
      * @brief getSlaveRunning
      * @return

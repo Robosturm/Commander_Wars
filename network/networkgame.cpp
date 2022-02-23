@@ -16,29 +16,32 @@ NetworkGame::NetworkGame(QObject* pParent)
 
 void NetworkGame::slaveRunning(QDataStream &stream, spTCPServer & pGameServer)
 {
-    QString description;
-    stream >> description;
-    bool hasPassword = false;
-    stream >> hasPassword;
-    m_data.setDescription(description);
-    m_data.setLocked(hasPassword);
-    auto pClient = pGameServer->getClient(m_hostingSocket);
-    if (pClient.get() != nullptr)
+    if (!m_slaveRunning)
     {
-        // send data
-        QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-        QByteArray sendData;
-        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-        sendStream << command;
-        sendStream << m_data.getAddress();
-        sendStream << m_data.getPort();
-        emit pClient->sig_sendData(m_hostingSocket, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
-        m_slaveRunning = true;
-    }
-    else
-    {
-        closeGame();
+        QString description;
+        stream >> description;
+        bool hasPassword = false;
+        stream >> hasPassword;
+        m_data.setDescription(description);
+        m_data.setLocked(hasPassword);
+        auto pClient = pGameServer->getClient(m_hostingSocket);
+        if (pClient.get() != nullptr)
+        {
+            // send data
+            QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
+            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            QByteArray sendData;
+            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+            sendStream << command;
+            sendStream << m_data.getSlaveAddress();
+            sendStream << m_data.getSlavePort();
+            emit pClient->sig_sendData(m_hostingSocket, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
+            m_slaveRunning = true;
+        }
+        else
+        {
+            closeGame();
+        }
     }
 }
 
@@ -58,6 +61,11 @@ bool NetworkGame::getSlaveRunning() const
 }
 
 const NetworkGameData & NetworkGame::getData() const
+{
+    return m_data;
+}
+
+NetworkGameData & NetworkGame::getData()
 {
     return m_data;
 }

@@ -46,11 +46,13 @@ public slots:
     void observeAdress();
     void observeGame();
     void observeGamePassword(QString password);
+    void connected(quint64 socket);
 private:
     spPanel m_pGamesPanel;
     spNetworkInterface m_pTCPClient{nullptr};
     QVector<spNetworkGameData> m_games;
     spNetworkGameData m_currentGame;
+    oxygine::spButton m_pButtonHostOnServer;
     spTableView m_Gamesview;
 };
 

@@ -60,11 +60,11 @@ public:
 
     bool hasOpenPlayers();
 
-    const QString &getAddress() const;
-    void setAddress(const QString &newAddress);
+    const QString &getSlaveAddress() const;
+    void setSlaveAddress(const QString &newAddress);
 
-    quint16 getPort() const;
-    void setPort(quint16 newPort);
+    quint16 getSlavePort() const;
+    void setSlavePort(quint16 newPort);
 
 private:
     qint32 m_players{0};
@@ -75,8 +75,8 @@ private:
     QString m_slaveName;
     bool m_locked{false};
     bool m_launched{false};
-    QString m_address;
-    quint16 m_port{0};
+    QString m_slaveAddress;
+    quint16 m_slavePort{0};
 };
 
 #endif // NETWORKGAMEDATA_H

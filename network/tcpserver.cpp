@@ -22,21 +22,28 @@ TCPServer::~TCPServer()
 
 void TCPServer::connectTCP(QString adress, quint16 port)
 {
-    m_pTCPServer = std::make_shared<QTcpServer>(this);
-    if (adress.isEmpty())
+    if (m_pTCPServer.get() == nullptr)
     {
-        m_pTCPServer->listen(QHostAddress::Any, port);
+        m_pTCPServer = std::make_shared<QTcpServer>(this);
+        if (adress.isEmpty())
+        {
+            m_pTCPServer->listen(QHostAddress::Any, port);
+        }
+        else
+        {
+            m_pTCPServer->listen(QHostAddress(adress), port);
+        }
+        connect(m_pTCPServer.get(), &QTcpServer::newConnection, this, &TCPServer::onConnect, Qt::QueuedConnection);
+        connect(this, &TCPServer::sigDisconnectClient, this, &TCPServer::disconnectClient, Qt::QueuedConnection);
+        connect(this, &TCPServer::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
+        connect(this, &TCPServer::sigContinueListening, this, &TCPServer::continueListening, Qt::QueuedConnection);
+        connect(this, &TCPServer::sigPauseListening, this, &TCPServer::pauseListening, Qt::QueuedConnection);
+        CONSOLE_PRINT("TCP Server is running on adress " + adress + " and port " + QString::number(port), Console::eLogLevels::eDEBUG);
     }
     else
     {
-        m_pTCPServer->listen(QHostAddress(adress), port);
+        CONSOLE_PRINT("TCP Server launched ignored on adress " + adress + " and port " + QString::number(port) + " cause the server is already running.", Console::eLogLevels::eFATAL);
     }
-    connect(m_pTCPServer.get(), &QTcpServer::newConnection, this, &TCPServer::onConnect, Qt::QueuedConnection);
-    connect(this, &TCPServer::sigDisconnectClient, this, &TCPServer::disconnectClient, Qt::QueuedConnection);
-    connect(this, &TCPServer::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
-    connect(this, &TCPServer::sigContinueListening, this, &TCPServer::continueListening, Qt::QueuedConnection);
-    connect(this, &TCPServer::sigPauseListening, this, &TCPServer::pauseListening, Qt::QueuedConnection);
-    CONSOLE_PRINT("TCP Server is running on adress " + adress + " and port " + QString::number(port), Console::eLogLevels::eDEBUG);
 }
 
 void TCPServer::disconnectTCP()

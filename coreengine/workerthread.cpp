@@ -217,28 +217,49 @@ void WorkerThread::startSlaveGame()
     pLoadingScreen->hide();
 
     QStringList args = QCoreApplication::arguments();
-    QString address;
-    quint16 port = 0;
+    QString slaveAddress;
+    quint16 slavePort = 0;
     if (args.contains(Mainapp::ARG_SLAVEADDRESS))
     {
         bool ok = false;
-        address = args[args.indexOf(Mainapp::ARG_SLAVEADDRESS) + 1];
-        port = args[args.indexOf(Mainapp::ARG_SLAVEADDRESS) + 2].toInt(&ok);
+        slaveAddress = args[args.indexOf(Mainapp::ARG_SLAVEADDRESS) + 1];
+        slavePort = args[args.indexOf(Mainapp::ARG_SLAVEADDRESS) + 2].toInt(&ok);
         if (!ok)
         {
-            port = 0;
+            slaveAddress = "";
         }
     }
-    if (!address.isEmpty())
+    QString masterAddress;
+    quint16 masterPort = 0;
+    if (args.contains(Mainapp::ARG_MASTERADDRESS))
     {
+        bool ok = false;
+        masterAddress = args[args.indexOf(Mainapp::ARG_MASTERADDRESS) + 1];
+        masterPort = args[args.indexOf(Mainapp::ARG_MASTERADDRESS) + 2].toInt(&ok);
+        if (!ok)
+        {
+            masterPort = 0;
+        }
+        if (masterAddress.isEmpty())
+        {
+            masterAddress = "::1";
+        }
+    }
+    if (!slaveAddress.isEmpty() && masterPort > 0 && slavePort > 0 && !masterAddress.isEmpty())
+    {
+        // init multiplayer menu
         spTCPServer pServer = spTCPServer::create(nullptr);
         pServer->moveToThread(Mainapp::getInstance()->getNetworkThread());
         spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", Multiplayermenu::NetworkMode::Host);
         pMenu->connectNetworkSlots();
         oxygine::Stage::getStage()->addChild(pMenu);
+        emit pServer->sig_connect(slaveAddress, slavePort);
+        // connect to server
         spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
         connect(pSlaveMasterConnection.get(), &TCPClient::sigConnected, pMenu.get(), &Multiplayermenu::onSlaveConnectedToMaster, Qt::QueuedConnection);
-        emit pSlaveMasterConnection->sig_connect(address, port);
+        connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, pMenu.get(), &Multiplayermenu::recieveServerData, Qt::QueuedConnection);
+        emit pSlaveMasterConnection->sig_connect(masterAddress, masterPort);
+
     }
     else
     {

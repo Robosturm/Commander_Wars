@@ -51,14 +51,14 @@ void TCPClient::connectTCP(QString adress, quint16 port)
     m_pSocket->connectToHost(adress, port);
 
     // Start RX-Task
-    m_pRXTask = spRxTask::create(m_pSocket, 0, this, false);
+    m_pRXTask = spRxTask::create(m_pSocket.get(), 0, this, false);
     connect(m_pSocket.get(), &QTcpSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
     // start TX-Task
-    m_pTXTask = spTxTask::create(m_pSocket, 0, this, false);
+    m_pTXTask = spTxTask::create(m_pSocket.get(), 0, this, false);
     connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 
-    CONSOLE_PRINT("Client is running and connecting to " + adress + " and port " + QString(port), Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client is running and connecting to " + adress + " and port " + QString::number(port), Console::eLogLevels::eDEBUG);
 }
 
 void TCPClient::disconnectTCP()

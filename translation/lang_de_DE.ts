@@ -2869,74 +2869,74 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>LobbyMenu</name>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="54"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="55"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="63"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="64"/>
         <source>Direct Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="72"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="73"/>
         <source>Server Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="86"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="87"/>
         <source>Join Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="95"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="96"/>
         <source>Observe Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="105"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="106"/>
         <source>Join Adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="114"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="115"/>
         <source>Observe Adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="186"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="261"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="187"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="262"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="229"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="243"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="230"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="244"/>
         <source>Enter Host Adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="332"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="333"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="332"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="333"/>
         <source>Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="332"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="333"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="332"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="333"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="332"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="333"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3150,7 +3150,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="78"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="92"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1340"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1337"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3180,28 +3180,28 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="675"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="671"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="679"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="675"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="694"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="690"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1219"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1216"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1336"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1333"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

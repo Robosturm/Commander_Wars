@@ -53,12 +53,14 @@ MainServer::MainServer()
     connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, Qt::QueuedConnection);
     connect(m_pGameServer.get(), &TCPServer::sigConnected, this, &MainServer::playerJoined, Qt::QueuedConnection);
     // connect signals for tcp slave events
-    connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, Qt::QueuedConnection);
+    connect(m_pSlaveServer.get(), &TCPServer::recieveData, this, &MainServer::receivedSlaveData, Qt::QueuedConnection);
     // internal updates
     connect(this, &MainServer::sigStartRemoteGame, this, &MainServer::slotStartRemoteGame, Qt::QueuedConnection);
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
+    parseSlaveAddressOptions();
+
     emit m_pGameServer->sig_connect("", Settings::getServerPort());
-    emit m_pGameServer->sig_connect("", Settings::getSlaveServerPort());
+    emit m_pSlaveServer->sig_connect("", Settings::getSlaveServerPort());
 }
 
 MainServer::~MainServer()
@@ -70,6 +72,32 @@ MainServer::~MainServer()
         game->process->kill();
     }
     m_games.clear();
+}
+
+void MainServer::parseSlaveAddressOptions()
+{
+    QStringList addressOptions = Settings::getSlaveHostOptions().split(";");
+    for (auto & option : addressOptions)
+    {
+        QStringList values = option.split("&");
+        if (values.size() == 3)
+        {
+            bool ok = false;
+            AddressInfo info;
+            info.address = values[0];
+            info.minPort = values[1].toUInt(&ok);
+            if (info.minPort == 0)
+            {
+                info.minPort = 1;
+            }
+            info.maxPort = values[2].toUInt(&ok);
+            m_slaveAddressOptions.append(info);
+            if (m_slaveAddressOptions.size() == 1)
+            {
+                m_lastUsedPort = info.minPort -1;
+            }
+        }
+    }
 }
 
 void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -150,13 +178,22 @@ void MainServer::joinSlaveGame(quint64 socketID, QDataStream & stream)
             game->game->getSlaveRunning() &&
             !game->game->getData().getLaunched())
         {
-            // todo send slave adress and port
+            // send data
+            QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
+            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            QByteArray sendData;
+            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+            sendStream << command;
+            sendStream << game->game->getData().getSlaveAddress();
+            sendStream << game->game->getData().getSlavePort();
+            emit m_pGameServer->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
             found = true;
         }
     }
     if (!found)
     {
         CONSOLE_PRINT("Failed to find game " + slave + " for socket " + QString::number(socketID) + " to join game. Forcing a disconnection.", Console::eDEBUG);
+        // todo send an actual error messge to client
         m_pGameServer->disconnectClient(socketID);
     }
 }
@@ -183,42 +220,63 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
     else
     {
         CONSOLE_PRINT("Requested invalid mod configuration.", Console::eDEBUG);
-        // todo send request denial
+        // todo send an actual error messge to client
+        m_pGameServer->disconnectClient(socketID);
     }
 }
 
 void MainServer::spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data)
 {
     m_slaveGameIterator++;
-    QString slaveName = "Commander_Wars_Slave_" + QString::number(m_slaveGameIterator);
-    auto game = spInternNetworkGame::create();
-    qint32 pos = m_games.size() - 1;
-    QString program = "Commander_Wars.exe";
-    game->process = std::make_shared<QProcess>();
-    game->process->setObjectName(slaveName + "Slaveprocess");
-    QStringList args;
-    args << Mainapp::ARG_SLAVE;
-    args << Mainapp::ARG_SLAVENAME;
-    args << slaveName;
-    args << Mainapp::ARG_NOUI; // comment out for debugging
-    args << Mainapp::ARG_NOAUDIO;
-    args << Mainapp::ARG_MODS;
-    args << Settings::getConfigString(mods);
-    args << Mainapp::ARG_INITSCRIPT;
-    args << initScript;
-    if (Mainapp::getInstance()->getCreateSlaveLogs())
+
+    QString slaveAddress;
+    quint16 slavePort;
+    if (getNextFreeSlaveAddress(slaveAddress, slavePort))
     {
+        QString slaveName = "Commander_Wars_Slave_" + QString::number(m_slaveGameIterator);
+        auto game = spInternNetworkGame::create();
+        QString program = "Commander_Wars.exe";
+        game->process = std::make_shared<QProcess>();
+        game->process->setObjectName(slaveName + "Slaveprocess");
+        QStringList args;
+        args << Mainapp::ARG_SLAVE;
         args << Mainapp::ARG_SLAVENAME;
-    }   
-    game->game = spNetworkGame::create(nullptr);
-    game->game->setDataBuffer(data);
-    game->game->setServerName(slaveName);
-    connect(game->process.get(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), game->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
-    connect(game->game.get(), &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);
-    connect(game->game.get(), &NetworkGame::sigClose, this, &MainServer::closeGame, Qt::QueuedConnection);
-    game->process->start(program, args);
-    game->game->setId(id);
-    m_games.insert(slaveName, game);
+        args << slaveName;
+        args << Mainapp::ARG_NOUI; // comment out for debugging
+        args << Mainapp::ARG_NOAUDIO;
+        args << Mainapp::ARG_MODS;
+        args << Settings::getConfigString(mods);
+        args << Mainapp::ARG_SLAVEADDRESS;
+        args << slaveAddress;
+        args << QString::number(slavePort);
+        args << Mainapp::ARG_MASTERADDRESS;
+        args << Settings::getSlaveServerName();
+        args << QString::number(Settings::getSlaveServerPort());
+        args << Mainapp::ARG_INITSCRIPT;
+        args << initScript;
+        if (Mainapp::getInstance()->getCreateSlaveLogs())
+        {
+            args << Mainapp::ARG_CREATESLAVELOGS;
+        }
+        game->game = spNetworkGame::create(nullptr);
+        game->game->setDataBuffer(data);
+        game->game->setServerName(slaveName);
+        game->game->setHostingSocket(socketID);
+        game->game->getData().setSlaveAddress(slaveAddress);
+        game->game->getData().setSlavePort(slavePort);
+        connect(game->process.get(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), game->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
+        connect(game->game.get(), &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);
+        connect(game->game.get(), &NetworkGame::sigClose, this, &MainServer::closeGame, Qt::QueuedConnection);
+        game->process->start(program, args);
+        game->game->setId(id);
+        m_games.insert(slaveName, game);
+    }
+    else
+    {
+        CONSOLE_PRINT("No free slots available.", Console::eDEBUG);
+        // todo send an actual error messge to client
+        m_pGameServer->disconnectClient(socketID);
+    }
 }
 
 bool MainServer::validHostRequest(QStringList mods)
@@ -285,13 +343,55 @@ void MainServer::sendGameDataToClient(qint64 socketId)
 void MainServer::closeGame(NetworkGame* pGame)
 {
     CONSOLE_PRINT("Despawning games", Console::eDEBUG);
-    auto iter = m_games.find(pGame->getServerName());
+    QString slaveName = pGame->getServerName();
+    auto iter = m_games.find(slaveName);
     if (iter != m_games.end())
     {
         const auto & game = iter.value();
+        SlaveAddress freeAddress;
+        freeAddress.address = game->game->getData().getSlaveAddress();
+        freeAddress.port = game->game->getData().getSlavePort();
+        m_freeAddresses.append(freeAddress);
         game->process->kill();
         game->game = nullptr;
-        m_games.remove(pGame->getServerName());
+        m_games.remove(slaveName);
         m_updateGameData = true;
     }
+}
+
+bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port)
+{
+    bool success = false;
+    if (m_freeAddresses.size() > 0)
+    {
+        auto & newAddress = m_freeAddresses.constLast();
+        address = newAddress.address;
+        port = newAddress.port;
+        m_freeAddresses.removeLast();
+        success = true;
+    }
+    else
+    {
+        if (m_lastUsedAddressIndex < m_slaveAddressOptions.size())
+        {
+            auto & options = m_slaveAddressOptions[m_lastUsedAddressIndex];
+            if (m_lastUsedPort < options.maxPort)
+            {
+                address = options.address;
+                ++m_lastUsedPort;
+                port = m_lastUsedPort;
+                success = true;
+            }
+            else
+            {
+                m_lastUsedAddressIndex++;
+                if (m_lastUsedAddressIndex < m_slaveAddressOptions.size())
+                {
+                    m_lastUsedPort = m_slaveAddressOptions[m_lastUsedAddressIndex].minPort - 1;
+                    success = getNextFreeSlaveAddress(address, port);
+                }
+            }
+        }
+    }
+    return success;
 }

@@ -32,6 +32,7 @@ LobbyMenu::LobbyMenu()
         m_pTCPClient = spTCPClient::create(nullptr);
         m_pTCPClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
         connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, Qt::QueuedConnection);
+        connect(m_pTCPClient.get(), &TCPClient::sigConnected, this, &LobbyMenu::connected, Qt::QueuedConnection);
         emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort());
     }
 
@@ -69,10 +70,10 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigHostLocal, this, &LobbyMenu::hostLocal, Qt::QueuedConnection);
 
-    oxygine::spButton pButtonHostOnServer = ObjectManager::createButton(tr("Server Host"));
-    addChild(pButtonHostOnServer);
-    pButtonHostOnServer->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() * 2 - 10);
-    pButtonHostOnServer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_pButtonHostOnServer = ObjectManager::createButton(tr("Server Host"));
+    addChild(m_pButtonHostOnServer);
+    m_pButtonHostOnServer->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() * 2 - 10);
+    m_pButtonHostOnServer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigHostServer();
     });
@@ -80,7 +81,7 @@ LobbyMenu::LobbyMenu()
     if (m_pTCPClient.get() == nullptr ||
         !m_pTCPClient->getIsConnected())
     {
-        pButtonHostOnServer->setEnabled(false);
+        m_pButtonHostOnServer->setEnabled(false);
     }
 
     oxygine::spButton pButtonJoin = ObjectManager::createButton(tr("Join Game"));
@@ -369,4 +370,9 @@ void LobbyMenu::selectGame()
     {
         m_currentGame = m_games[game];
     }
+}
+
+void LobbyMenu::connected(quint64 socket)
+{
+    m_pButtonHostOnServer->setEnabled(true);
 }

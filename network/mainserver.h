@@ -21,6 +21,18 @@ using spMainServer = oxygine::intrusive_ptr<MainServer>;
 class MainServer : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
+    struct AddressInfo
+    {
+        QString address;
+        quint16 minPort;
+        quint16 maxPort;
+    };
+    struct SlaveAddress
+    {
+        QString address;
+        quint16 port;
+    };
+
 public:
     static MainServer* getInstance();
     static bool exists();
@@ -129,7 +141,16 @@ private:
      * @param stream
      */
     void onGameRunningOnServer(quint64 socketID, QDataStream &stream);
-
+    /**
+     * @brief getNextFreeSlaveAddress
+     * @param address
+     * @param port
+     */
+    bool getNextFreeSlaveAddress(QString & address, quint16 & port);
+    /**
+     * @brief parseSlaveAddressOptions
+     */
+    void parseSlaveAddressOptions();
 private:
     class InternNetworkGame;
     using spInternNetworkGame = oxygine::intrusive_ptr<InternNetworkGame>;
@@ -171,6 +192,23 @@ private:
      * guard marking if new lobby data is available or not.
      */
     bool m_updateGameData{false};
+
+    /**
+     * @brief m_slaveAddressOptions address/port combination that can used for spawning a slave
+     */
+    QVector<AddressInfo> m_slaveAddressOptions;
+    /**
+     * @brief m_lastUsedAddressIndex last used index in the m_slaveAddressOptions
+     */
+    qint32 m_lastUsedAddressIndex{0};
+    /**
+     * @brief m_lastUsedPort last used port in the m_slaveAddressOptions
+     */
+    quint16 m_lastUsedPort{0};
+    /**
+     * @brief m_freeAddresses addresses of slaves that have been used and are now free again
+     */
+    QVector<SlaveAddress> m_freeAddresses;
 };
 
 #endif // MAINSERVER_H
