@@ -99,12 +99,6 @@ public:
      * @brief initUnit loads all default unit value
      */
     void initUnit();
-
-    /**
-     * @brief getActionList
-     * @return the string id list of actions this units can perform
-     */
-    QStringList getActionList();
     /**
      * @brief hasAction
      * @param action
@@ -169,6 +163,16 @@ public:
     }
 
 public slots:
+    /**
+     * @brief getActionList
+     * @return the string id list of actions this units can perform
+     */
+    QStringList getActionList();
+    /**
+     * @brief getBaseActionList
+     * @return
+     */
+    QStringList getBaseActionList();
     /**
      * @brief getShowInEditor
      * @param unitId
@@ -445,6 +449,7 @@ public slots:
 
     qint32 getCapturePoints() const;
     void setCapturePoints(const qint32 &value);
+    bool canCapture();
 
     qint32 getCosts() const;
 

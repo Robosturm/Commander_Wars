@@ -240,10 +240,7 @@ var Constructor = function()
             }
             sprite.loadSprite("flak_hit",  false, 5, Qt.point(xOffset, yOffset),
                               1, 1.0, 0, 0);
-            for (i = 0; i < count; i++)
-            {
-                sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-            }
+            BATTLEANIMATION.playMgImpactSound(sprite, unit, defender, weapon, count);
         }
     };
 

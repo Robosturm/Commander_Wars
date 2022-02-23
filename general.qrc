@@ -6550,5 +6550,17 @@
         <file>resources/images/co/bh/co_sturm+alt2+info.png</file>
         <file>resources/images/co/bh/co_sturm+alt2+nrm.png</file>
         <file>resources/scripts/weapons/weapon_tankhunter_gun.js</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ac+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bd+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bh+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bm+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+dm+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ge+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+gs+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ma+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+os+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+pf+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ti+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+yc+mg+fire+air+mask.png</file>
     </qresource>
 </RCC>

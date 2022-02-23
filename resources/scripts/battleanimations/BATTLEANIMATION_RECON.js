@@ -132,10 +132,7 @@ var Constructor = function()
         }
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, yOffset),
                           1, 1.0, 0, 0, true);
-        for (var i = 0; i < count; i++)
-        {
-            sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-        }
+        BATTLEANIMATION.playMgImpactSound(sprite, unit, defender, weapon, count);
     };
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
