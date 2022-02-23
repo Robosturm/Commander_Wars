@@ -2139,6 +2139,10 @@ void Unit::setFuel(const qint32 &value)
     {
         m_fuel = value;
     }
+    if (m_fuel < 0 && m_maxFuel >= 0)
+    {
+        m_fuel = 0;
+    }
     if (m_maxFuel > 0 && static_cast<float>(m_fuel) / static_cast<float>(m_maxFuel) <= Settings::getSupplyWarning())
     {
         loadIcon("fuel", GameMap::getImageSize() / 2, 0);
