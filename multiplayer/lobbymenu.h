@@ -51,6 +51,7 @@ private:
     spNetworkInterface m_pTCPClient{nullptr};
     QVector<spNetworkGameData> m_games;
     spNetworkGameData m_currentGame;
+    oxygine::spButton m_pButtonHostOnServer;
     spTableView m_Gamesview;
 };
 
