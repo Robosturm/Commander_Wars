@@ -426,7 +426,7 @@ void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoin
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        QString currentPath = file;
+        QString currentPath = Settings::getUserPath() + file;
         if (!QFile::exists(currentPath))
         {
             currentPath = oxygine::Resource::RCC_PREFIX_PATH + file;
