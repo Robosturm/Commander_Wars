@@ -141,9 +141,18 @@ var BATTLEANIMATION =
             }
             sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, yOffset),
                               1, 1.0, 0, 0, true);
-            for (i = 0; i < count; i++)
+            BATTLEANIMATION.playMgImpactSound(sprite, unit, defender, weapon, count);
+        }
+    },
+
+    playMgImpactSound : function(sprite, unit, defender, weapon, count)
+    {
+        for (i = 0; i < count; i++)
+        {
+            sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
+            if (!defender.canCapture())
             {
-                sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("tank_hit.wav", 1, 300 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
     },

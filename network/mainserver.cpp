@@ -135,6 +135,10 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         {
             onGameRunningOnServer(socketID, stream);
         }
+        else  if (messageType == NetworkCommands::SERVEROPENPLAYERCOUNT)
+        {
+            onOpenPlayerCount(socketID, stream);
+        }
     }
 }
 
@@ -159,6 +163,22 @@ void MainServer::onGameRunningOnServer(quint64 socketID, QDataStream &stream)
     {
         auto & internGame = iter.value();
         internGame->game->slaveRunning(stream, m_pGameServer);
+    }
+}
+
+void MainServer::onOpenPlayerCount(quint64 socketID, QDataStream &stream)
+{
+    QString slaveName;
+    stream >> slaveName;
+    qint32 openPlayerCount = 0;
+    stream >> openPlayerCount;
+    auto iter = m_games.find(slaveName);
+    if (iter != m_games.end())
+    {
+        auto & internGame = iter.value();
+        auto & data = internGame->game->getData();
+        data.setPlayers(data.getMaxPlayers() - openPlayerCount);
+        m_updateGameData = true;
     }
 }
 

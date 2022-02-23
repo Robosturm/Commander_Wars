@@ -4,6 +4,8 @@
 #include "resource_management/weaponmanager.h"
 #include "resource_management/movementtablemanager.h"
 
+#include "ai/coreai.h"
+
 #include "coreengine/console.h"
 #include "coreengine/globalutils.h"
 
@@ -2023,6 +2025,11 @@ void Unit::setCapturePoints(const qint32 &value)
     }
 }
 
+bool Unit::canCapture()
+{
+    return getBaseActionList().contains(CoreAI::ACTION_CAPTURE);
+}
+
 qint32 Unit::getBaseMovementPoints() const
 {
     return m_baseMovementPoints;
@@ -2131,6 +2138,10 @@ void Unit::setFuel(const qint32 &value)
     if (m_maxFuel > 0)
     {
         m_fuel = value;
+    }
+    if (m_fuel < 0)
+    {
+        m_fuel = 0;
     }
     if (m_maxFuel > 0 && static_cast<float>(m_fuel) / static_cast<float>(m_maxFuel) <= Settings::getSupplyWarning())
     {
@@ -2701,7 +2712,7 @@ qint32 Unit::getMovementpoints(QPoint position)
     return points;
 }
 
-QStringList Unit::getActionList()
+QStringList Unit::getBaseActionList()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActions";
@@ -2720,7 +2731,12 @@ QStringList Unit::getActionList()
     {
         actionList = ret.toVariant().toStringList();
     }
+    return actionList;
+}
 
+QStringList Unit::getActionList()
+{
+    QStringList actionList = getBaseActionList();
     CO* pCO = m_pOwner->getCO(0);
     QStringList actionModifierList;
     if (pCO != nullptr)

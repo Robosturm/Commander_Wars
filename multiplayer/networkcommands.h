@@ -112,7 +112,9 @@ namespace NetworkCommands
      */
     const char* const PLAYERJOINEDFINISHED = "PLAYERJOINEDFINISHED";
 
+    /*****************************************************************************************************************************/
     // dedicated server commands
+    /*****************************************************************************************************************************/
     /**
      * @brief LAUNCHGAMEONSERVER
      */

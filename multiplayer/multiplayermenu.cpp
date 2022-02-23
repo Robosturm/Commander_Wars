@@ -30,7 +30,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-Multiplayermenu::Multiplayermenu(QString adress, QString password, NetworkMode networkMode)
+Multiplayermenu::Multiplayermenu(QString adress, quint16 port, QString password, NetworkMode networkMode)
     : MapSelectionMapsMenue(Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 380),
       m_networkMode(networkMode),
       m_local(true),
@@ -44,7 +44,7 @@ Multiplayermenu::Multiplayermenu(QString adress, QString password, NetworkMode n
         m_NetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
         m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
         initClientAndWaitForConnection();
-        emit m_NetworkInterface->sig_connect(adress, Settings::getGamePort());
+        emit m_NetworkInterface->sig_connect(adress, port);
     }
     else
     {

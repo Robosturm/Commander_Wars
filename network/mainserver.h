@@ -142,6 +142,12 @@ private:
      */
     void onGameRunningOnServer(quint64 socketID, QDataStream &stream);
     /**
+     * @brief onOpenPlayerCount
+     * @param socketID
+     * @param stream
+     */
+    void onOpenPlayerCount(quint64 socketID, QDataStream &stream);
+    /**
      * @brief getNextFreeSlaveAddress
      * @param address
      * @param port

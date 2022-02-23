@@ -48,12 +48,16 @@ public slots:
     void observeGamePassword(QString password);
     void connected(quint64 socket);
 private:
+    void updateGameData(QDataStream & stream);
+    void joinSlaveGame(QDataStream & stream);
+private:
     spPanel m_pGamesPanel;
     spNetworkInterface m_pTCPClient{nullptr};
     QVector<spNetworkGameData> m_games;
     spNetworkGameData m_currentGame;
     oxygine::spButton m_pButtonHostOnServer;
     spTableView m_Gamesview;
+    QString m_password;
 };
 
 #endif // LOBBYMENU_H

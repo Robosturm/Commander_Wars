@@ -2905,38 +2905,38 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="187"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="262"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="261"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="230"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="244"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="229"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="243"/>
         <source>Enter Host Adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="333"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="353"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="333"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="353"/>
         <source>Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="333"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="353"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="333"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="353"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="333"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="353"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>

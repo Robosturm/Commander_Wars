@@ -1541,21 +1541,25 @@ void PlayerSelection::playerAccessDenied()
 
 void PlayerSelection::sendOpenPlayerCount()
 {
-    QString command = QString(NetworkCommands::SERVEROPENPLAYERCOUNT);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-    QByteArray sendData;
-    QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-    sendStream << command;
-    qint32 openPlayerCount = 0;
-    for (const auto & playerAI : qAsConst(m_playerAIs))
+    if (Mainapp::getSlaveClient().get() != nullptr)
     {
-        if (playerAI->getCurrentItem() == playerAI->getItemCount() - 1)
+        QString command = QString(NetworkCommands::SERVEROPENPLAYERCOUNT);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QByteArray sendData;
+        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream << command;
+        sendStream << Settings::getSlaveServerName();
+        qint32 openPlayerCount = 0;
+        for (const auto & playerAI : qAsConst(m_playerAIs))
         {
-            openPlayerCount++;
+            if (playerAI->getCurrentItem() == playerAI->getItemCount() - 1)
+            {
+                openPlayerCount++;
+            }
         }
+        sendStream << openPlayerCount;
+        emit Mainapp::getSlaveClient()->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
     }
-    sendStream << openPlayerCount;
-    emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
 }
 
 bool PlayerSelection::getIsServerGame() const
