@@ -1112,7 +1112,7 @@ void Multiplayermenu::showPlayerSelection()
 void Multiplayermenu::disconnected(quint64)
 {
     CONSOLE_PRINT("Multiplayermenu::disconnected", Console::eDEBUG);
-    if (m_networkMode == NetworkMode::Host)
+    if (m_networkMode == NetworkMode::Host && m_local)
     {
         // handled in player selection
     }
