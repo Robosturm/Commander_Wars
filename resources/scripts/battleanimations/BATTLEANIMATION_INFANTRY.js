@@ -148,20 +148,21 @@ var Constructor = function()
         {
             BATTLEANIMATION_INFANTRY.loadSprite(sprite, unit, defender, weapon, "+fire+up", 3);            
             offset = data[2];
-            sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset);
+            sprite.loadSprite("mg_shot_air", false, sprite.getMaxUnitCount(), offset);
         }
         else if (position < 0)
         {
             BATTLEANIMATION_INFANTRY.loadSprite(sprite, unit, defender, weapon, "+fire+down", 3);
             offset = data[3];
-            sprite.loadSprite("mg_shot_down",  false, sprite.getMaxUnitCount(), offset);
+            sprite.loadSprite("mg_shot_down", false, sprite.getMaxUnitCount(), offset);
         }
         else
         {
             BATTLEANIMATION_INFANTRY.loadSprite(sprite, unit, defender, weapon, "+fire", 3);
             offset = data[4];
-            sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset);
+            sprite.loadSprite("mg_shot", false, sprite.getMaxUnitCount(), offset);
         }
+        BATTLEANIMATION.showMgBullets(sprite, offset);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);

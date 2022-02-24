@@ -85,18 +85,20 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ARTILLERY.getMaxUnitCount());
         var i = 0;
+        sprite.loadSprite("bullet_artillery",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+                          1, 1.0, 0, 0, true, true, 50);
         sprite.loadSprite("artillery_hit", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                          1, 1.0, 0, 0, true);
-        sprite.addSpriteScreenshake(8, 0.98, 800, 200);
+                          1, 1.0, 0, 100, true);
+        sprite.addSpriteScreenshake(8, 0.98, 800, 300);
         for (i = 0; i < count; i++)
         {
-            sprite.loadSound("artillery_explode.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("artillery_explode.wav", 1, 100 + i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ARTILLERY.getMaxUnitCount());
+        return 500 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ARTILLERY.getMaxUnitCount());
     };
 };
 

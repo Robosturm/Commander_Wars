@@ -170,6 +170,7 @@ var Constructor = function()
                 offset = data[4];
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset);
             }
+            BATTLEANIMATION.showMgBullets(sprite, offset);
             for (var i = 0; i < count; i++)
             {
                 sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);

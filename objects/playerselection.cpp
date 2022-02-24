@@ -1484,6 +1484,10 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             joinObserver(socketID);
         }
+        else if (messageType == NetworkCommands::SERVERREADY)
+        {
+            recievePlayerServerReady(socketID, stream);
+        }
         else
         {
             CONSOLE_PRINT("Command not handled in playerselection", Console::eDEBUG);
@@ -1612,19 +1616,15 @@ void PlayerSelection::sendPlayerReady(quint64 socketID, const QVector<qint32> & 
 
 void PlayerSelection::recievePlayerServerReady(quint64, QDataStream& stream)
 {
-    if (!m_pNetworkInterface->getIsServer() ||
-        m_isServerGame)
+    bool value = false;
+    stream >> value;
+    qint32 size = 0;
+    stream >> size;
+    for  (qint32 i = 0; i < size; i++)
     {
-        bool value = false;
-        stream >> value;
-        qint32 size = 0;
-        stream >> size;
-        for  (qint32 i = 0; i < size; i++)
-        {
-            qint32 player = 0;
-            stream >> player;
-            m_pReadyBoxes[player]->setChecked(value);
-        }
+        qint32 player = 0;
+        stream >> player;
+        m_pReadyBoxes[player]->setChecked(value);
     }
 }
 

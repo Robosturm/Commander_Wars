@@ -53,6 +53,10 @@
         <image file="GeneralSprites/designator_shot.png" cols = "4" />
         <image file="GeneralSprites/designator_shot+up.png" cols = "4" />
         <image file="GeneralSprites/designator_shot+down.png" cols = "4" />
+        <image file="GeneralSprites/bullet_casing.png" cols = "3" />
+        <image file="GeneralSprites/bullet_artillery.png" cols = "2" />
+        <image file="GeneralSprites/bullet_tank.png" cols = "2" />
+        <image file="GeneralSprites/bullet_megatank.png" cols = "2" />
 
         <!-- spotters -->
         <image file="spotter/spotter+ac+mask.png" />

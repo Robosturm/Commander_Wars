@@ -1506,6 +1506,7 @@ void GameMap::showDamageCalculator()
 
 void GameMap::startGame()
 {
+    CONSOLE_PRINT("GameMap::startGame()", Console::eDEBUG);
     m_Recorder = spGameRecorder::create(this);
     for (qint32 y = 0; y < m_fields.size(); y++)
     {
@@ -1527,12 +1528,13 @@ void GameMap::startGame()
         m_players[i]->setBuildlistChanged(true);
 
         CoreAI* pAI = dynamic_cast<CoreAI*>(m_players[i]->getBaseGameInput());
+        HumanPlayerInput* pHuman = dynamic_cast<HumanPlayerInput*>(m_players[i]->getBaseGameInput());
         if (pAI != nullptr)
         {
             pAI->setEnableNeutralTerrainAttack(m_Rules->getAiAttackTerrain());
+            CONSOLE_PRINT("Player " + QString::number(i) + " uses ai " + QString::number(m_players[i]->getBaseGameInput()->getAiType()), Console::eDEBUG);
         }
-        HumanPlayerInput* pHuman = dynamic_cast<HumanPlayerInput*>(m_players[i]->getBaseGameInput());
-        if (pHuman != nullptr)
+        else if (pHuman != nullptr)
         {
             auto buildList = m_players[i]->getBuildList();
             for (const auto & unitId : lockedUnits)
@@ -1540,6 +1542,7 @@ void GameMap::startGame()
                 buildList.removeAll(unitId);
             }
             m_players[i]->setBuildList(buildList);
+            CONSOLE_PRINT("Player " + QString::number(i) + " uses ai " + QString::number(m_players[i]->getBaseGameInput()->getAiType()), Console::eDEBUG);
         }
     }
     QStringList mods = Settings::getMods();

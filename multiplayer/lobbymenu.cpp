@@ -312,7 +312,7 @@ void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkS
         {
             updateGameData(stream);
         }
-        else if (messageType == NetworkCommands::SERVERGAMEDATA)
+        else if (messageType == NetworkCommands::SLAVEADDRESSINFO)
         {
             joinSlaveGame(stream);
         }

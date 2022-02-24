@@ -530,7 +530,6 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
         if (!m_password.areEqualPassword(m_pMapSelectionView->getCurrentMap()->getGameRules()->getPassword()))
         {
             CONSOLE_PRINT("Incorrect Password found.", Console::eDEBUG);
-            // quit game with wrong version
             buttonBack();
         }
         else

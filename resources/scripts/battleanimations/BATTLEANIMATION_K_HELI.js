@@ -80,6 +80,7 @@ var Constructor = function()
             offset = data[1];
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);
+            BATTLEANIMATION.showMgBullets(sprite, offset);
             sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
             for (var i = 0; i < count; i++)
             {
