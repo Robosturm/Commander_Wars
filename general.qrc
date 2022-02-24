@@ -6562,5 +6562,11 @@
         <file>resources/images/battleanimations/light_tank/light_tank+pf+mg+fire+air+mask.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+ti+mg+fire+air+mask.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+yc+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/bullet_artillery.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/bullet_casing.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/bullet_casing+loop.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/bullet_casing+x3burst.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/bullet_megatank.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/bullet_tank.png</file>
     </qresource>
 </RCC>

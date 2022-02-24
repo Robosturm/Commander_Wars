@@ -131,12 +131,15 @@ var Constructor = function()
         var i = 0;
         if (weapon === 0)
         {
+            sprite.loadSprite("bullet_megatank",  false, sprite.getMaxUnitCount(), Qt.point(10, 30),
+                              1, 1.0, 0, 0, true, true, 50);
             sprite.loadSprite("cannon_heavy_hit",  false, 5, Qt.point(0, 20),
-                              1, 1.0, 0, 0, true);
-            sprite.addSpriteScreenshake(8, 0.95, 800, 200);
+                              1, 1.0, 0, 100, true);
+            sprite.addSpriteScreenshake(8, 0.95, 800, 300);
             for (i = 0; i < count; i++)
             {
-                sprite.loadSound("impact_explosion.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("tank_hit.wav", 1, 50 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("impact_explosion.wav", 1, 100 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -158,7 +161,7 @@ var Constructor = function()
         var count = sprite.getUnitCount(5);
         if (weapon === 0)
         {
-            return 50 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
+            return 150 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
         }
         else
         {
