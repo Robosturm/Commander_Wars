@@ -30,17 +30,16 @@ var PLAYER =
                      ["#2342ba", "#2342ba", ""], // cobalt_ice
                      ["#85927b", "#85927b", ""], // silver
                      ["#6b01db", "#6b01db", ""], // purple
-                     ["#aa003f", "#aa003f", "cherrystone"],
-                     ["#366eca", "#366eca", "felheim"],
-                     ["#77aa08", "#77aa08", "gloomwood"],
-                     ["#d39c36", "#d39c36", "heavensong"],
-                     ["#8227b4", "#8227b4", "requiem"],
-                     ["#20918b", "#20918b", "aurania"],
-                     ["#bd00a4", "#bd00a4", "cacophany"],
-                     ["#f97727", "#f97727", "silmor"],
-                     ["#6048a0", "#6048a0", "fumomance"],
+                     ["#aa003f", "#aa003f", ""], // cherrystone
+                     ["#366eca", "#366eca", ""], // felheim
+                     ["#77aa08", "#77aa08", ""], // gloomwood
+                     ["#d39c36", "#d39c36", ""], // heavensong
+                     ["#8227b4", "#8227b4", ""], // requiem
+                     ["#20918b", "#20918b", ""], // aurani
+                     ["#bd00a4", "#bd00a4", ""], // cacophany
+                     ["#f97727", "#f97727", ""], // silmor
+                     ["#6048a0", "#6048a0", ""], // fumomance
                      ["#908890", "#908890", "neutral"], // neutral
-                     ["#ffffff", "#ffffff", ""], // dummy
                     ],
 
     getDefaultColor : function(index)
@@ -116,6 +115,15 @@ var PLAYER =
                     "cobalt_ice",
                     "silver",
                     "purple",
+                    "cherrystone",
+                    "felheim",
+                    "gloomwood",
+                    "heavensong",
+                    "requiem",
+                    "aurania",
+                    "cacophany",
+                    "silmor",
+                    "fumomance",
                     "neutral"],
     getColorTable : function(index)
     {

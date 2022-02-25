@@ -1944,7 +1944,7 @@ float NormalAi::getMapInfluenceModifier(Unit* pUnit, qint32 x, qint32 y) const
     float ownInfluence = m_InfluenceFrontMap.getInfluenceInfo(x, y).ownInfluence;
     float influence = 0.0f;
     float influenceDamage = 0.0f;
-    if (ownInfluence > enemyInfluence)
+    if (enemyInfluence > ownInfluence)
     {
         influence = enemyInfluence / ownInfluence - 1.0f;
         if (qAbs(influence) > m_influenceIgnoreValue)
