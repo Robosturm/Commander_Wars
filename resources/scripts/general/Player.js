@@ -40,7 +40,6 @@ var PLAYER =
                      ["#f97727", "#f97727", "silmor"],
                      ["#6048a0", "#6048a0", "fumomance"],
                      ["#908890", "#908890", "neutral"], // neutral
-                     ["#ffffff", "#ffffff", ""], // dummy
                     ],
 
     getDefaultColor : function(index)
