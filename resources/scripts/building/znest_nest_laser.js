@@ -59,6 +59,10 @@ var Constructor = function()
             building.loadSprite("nest_laser+SW", false, 400, Qt.point(0, building.getImageSize()));
         }
     };
+    this.usesMapLayer = function()
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = BUILDING;

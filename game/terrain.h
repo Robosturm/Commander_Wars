@@ -48,6 +48,7 @@ public:
         Terrain = 0,
         TerrainOverlay,
         Shroud,
+        Building,
         TerrainMarker,                
 
     };
@@ -523,7 +524,7 @@ public slots:
      * @param curY
      * @return
      */
-    qint32 getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY);
+    qint32 getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY);    
 protected:
     /**
      * @brief createBuildingDownStream
@@ -533,6 +534,11 @@ protected:
      * @brief removeDownstream
      */
     void removeDownstream();
+    /**
+     * @brief addBuildingSprite
+     * @param pBuilding
+     */
+    void addBuildingSprite(spBuilding pBuilding);
 private:
     /**
      * @brief customSpriteExists

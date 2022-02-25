@@ -333,4 +333,9 @@ var BUILDING =
     {
         return true;
     },
+
+    usesMapLayer : function()
+    {
+        return false;
+    },
 };

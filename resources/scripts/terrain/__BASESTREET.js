@@ -244,7 +244,7 @@ var Constructor = function()
         {
             var weatherModifier = TERRAIN.getWeatherModifier(map);
             return __BASESTREET.getStreetAnimationBackground(id, weatherModifier);
-        }        
+        }
     };
     this.getStreetAnimationBackground = function(id, weatherModifier)
     {
@@ -309,8 +309,8 @@ var Constructor = function()
         }
         if (highTerrain !== "")
         {
-            var surroundings = __BASESTREET.getStreetSurrounding(terrain);
-            terrain.loadOverlaySprite(spriteId + surroundings + "+shadow");
+            var surroundings = terrain.getTerrainSpriteName();
+            terrain.loadOverlaySprite(surroundings + "+shadow");
         }
     };
 };

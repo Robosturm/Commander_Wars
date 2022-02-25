@@ -29,6 +29,10 @@ var Constructor = function()
     {
         return qsTr("Nest of Dark Matter. Currently only a visual.");
     };
+    this.usesMapLayer = function()
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = BUILDING;

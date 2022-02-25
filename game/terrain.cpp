@@ -942,24 +942,30 @@ void Terrain::setBuilding(spBuilding pBuilding)
     if (pBuilding.get() != nullptr)
     {
         m_Building = pBuilding;
-        m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
-        m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
         if (m_x >= 0 && m_y >= 0)
         {
             pBuilding->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
         }
-        if (m_pMap != nullptr)
-        {
-            m_pMap->addChild(m_Building);
-        }
-        else
-        {
-            addChild(m_Building);
-        }
+        addBuildingSprite(m_Building);
         if (m_x >= 0 && m_y >= 0)
         {
             createBuildingDownStream();
         }
+    }
+}
+
+void Terrain::addBuildingSprite(spBuilding pBuilding)
+{
+    if (m_pMap != nullptr && m_Building->usesMapLayer())
+    {
+        m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
+        m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
+        m_pMap->addChild(m_Building);
+    }
+    else
+    {
+        m_Building->setPriority(static_cast<qint32>(DrawPriority::Building));
+        addChild(m_Building);
     }
 }
 
@@ -1012,17 +1018,8 @@ void Terrain::setSpBuilding(spBuilding pBuilding, bool OnlyDownStream)
         m_Building = pBuilding;
         if (!OnlyDownStream)
         {
-            m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
-            m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
             m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
-            if (m_pMap != nullptr)
-            {
-                m_pMap->addChild(m_Building);
-            }
-            else
-            {
-                addChild(m_Building);
-            }
+            addBuildingSprite(m_Building);
         }
     }
 }
@@ -1040,18 +1037,8 @@ void Terrain::loadBuilding(const QString & buildingID)
     }
     m_Building = spBuilding::create(buildingID, m_pMap);
     m_Building->updateBuildingSprites(false);
-    m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
-    m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
     m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
-
-    if (m_pMap != nullptr)
-    {
-        m_pMap->addChild(m_Building);
-    }
-    else
-    {
-        addChild(m_Building);
-    }
+    addBuildingSprite(m_Building);
     createBuildingDownStream();
 }
 

@@ -121,7 +121,11 @@ public:
     }
 
 public slots:
-
+    /**
+     * @brief usesMapLayer
+     * @return
+     */
+    bool usesMapLayer();
     /**
      * @brief getShowInEditor
      * @param unitId

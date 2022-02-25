@@ -96,6 +96,20 @@ QStringList Building::getBaseTerrain()
     return retList;
 }
 
+bool Building::usesMapLayer()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args;
+    QString function = "usesMapLayer";
+
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function, args);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    return false;
+}
+
 void Building::scaleAndShowOnSingleTile()
 {
     qint32 width = getBuildingWidth();
