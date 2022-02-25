@@ -70,7 +70,7 @@ var Constructor = function()
     this.getBuildingCount = function(rule, player, map)
     {
         var count = player.getBuildingListCount(["TEMPORARY_AIRPORT", "TEMPORARY_HARBOUR"], false);
-        var teamVictory = VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getRuleValue(rule, 1);
+        var teamVictory = VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getRuleValue(rule, 1, map);
         if (teamVictory === 1)
         {
             var players = map.getPlayerCount();
@@ -92,7 +92,7 @@ var Constructor = function()
     this.checkDefeat = function(rule, player, map)
     {
         var turn = map.getCurrentDay();
-        var turnLimit = VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getRuleValue(rule, map);
+        var turnLimit = VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getRuleValue(rule, 0, map);
         var victoryTeam = VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getWinnerTeam(rule, player, map);
         if (turn <= turnLimit ||
             player.getTeam() === victoryTeam)
