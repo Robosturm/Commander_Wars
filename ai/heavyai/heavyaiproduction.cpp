@@ -296,7 +296,7 @@ void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBui
         data.unitBuildingDataInput[BuildingEntry::Flying] = (pUnit->useTerrainDefense() == false) ? 1 : -1;
         data.unitBuildingDataInput[BuildingEntry::LoadingPotential] = static_cast<double>(pUnit->getLoadingPlace()) / 4.0;
         data.unitBuildingDataInput[BuildingEntry::OwnInfluence] = static_cast<double>(influenceInfo.ownInfluence) / highestInfluence;
-        data.unitBuildingDataInput[BuildingEntry::HighestEnemyInfluence] = static_cast<double>(influenceInfo.highestEnemyInfluence) / highestInfluence;
+        data.unitBuildingDataInput[BuildingEntry::HighestEnemyInfluence] = static_cast<double>(influenceInfo.enemyInfluence) / highestInfluence;
         qint32 islandIdx = getIslandIndex(pUnit);
         qint32 island = m_IslandMaps[islandIdx]->getIsland(position.x(), position.y());
         qint32 islandSize =  m_IslandMaps[islandIdx]->getIslandSize(island);

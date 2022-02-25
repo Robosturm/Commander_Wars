@@ -29,7 +29,7 @@ public:
         bool frontLineCreated{false};
         qint32 highestInfluence{0};
         qint32 ownInfluence{0};
-        qint32 highestEnemyInfluence{0};        
+        qint32 enemyInfluence{0};
     private:
         QVector<qint32> playerValues;
         GameMap* m_pMap{nullptr};

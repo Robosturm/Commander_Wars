@@ -1024,6 +1024,7 @@
         <image file="mech/mech+bd+stop+mask.png" cols = "2" />
         <image file="mech/mech+bh+stop+mask.png" cols = "2" />
         <image file="mech/mech+bg+stop+mask.png" cols = "2" />
+        <image file="mech/mech+bm+stop+mask.png" cols = "2" />
         <image file="mech/mech+dm+stop+mask.png" />
         <image file="mech/mech+ge+stop+mask.png" cols = "2" />
         <image file="mech/mech+gs+stop+mask.png" cols = "2" />

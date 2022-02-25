@@ -863,7 +863,7 @@ void HeavyAi::getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, dou
             }
         }
         data[BasicFieldInfo::OwnInfluenceValue] = static_cast<double>(info.ownInfluence) / highestInfluece;
-        data[BasicFieldInfo::EnemyInfluenceValue] = static_cast<double>(info.highestEnemyInfluence) / highestInfluece;
+        data[BasicFieldInfo::EnemyInfluenceValue] = static_cast<double>(info.enemyInfluence) / highestInfluece;
         data[BasicFieldInfo::MoveTurnProgress] = notMovedUnitCount / static_cast<double>(m_ownUnits.size());
         spQmlVectorPoint pCircle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
         double wallCount = 0;

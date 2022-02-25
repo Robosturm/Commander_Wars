@@ -403,14 +403,20 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
                 for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
                 {
                     Unit* pLoaded = pUnit->getLoadedUnit(i);
-                    if (pLoaded->getActionList().contains(ACTION_CAPTURE))
+                    QStringList actions = pLoaded->getActionList();
+                    if (actions.contains(ACTION_CAPTURE))
                     {
                         appendUnloadTargetsForCapturing(pUnit, pEnemyBuildings, targets);
                         break;
                     }
+                    else if (actions.contains(ACTION_FIRE))
+                    {
+                        appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets);
+                        break;
+                    }
                 }
                 // if not find closest unloading field
-                if (targets.size() == 0 || pUnit->getLoadedUnitCount() > 1)
+                if (targets.size() == 0)
                 {
                     appendNearestUnloadTargets(pUnit, pEnemyUnits, pEnemyBuildings, targets);
                 }

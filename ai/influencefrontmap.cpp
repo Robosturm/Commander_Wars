@@ -39,7 +39,7 @@ void InfluenceFrontMap::addBuildingInfluence()
     
     qint32 width = m_pMap->getMapWidth();
     qint32 heigth = m_pMap->getMapHeight();
-    qint32 maxScore = width * heigth;
+    qint32 maxScore = width * heigth * 10;
     for (qint32 x = 0; x < width; x++)
     {
         for (qint32 y = 0; y < heigth; y++)
@@ -125,7 +125,8 @@ void InfluenceFrontMap::InfluenceInfo::updateOwner(Player* pOwner)
 {
     owners.clear();
     qint32 highestValue = 0;
-    qint32 highestEnemy = 0;
+    enemyInfluence = 0;
+    ownInfluence = 0;
     qint32 playerId = pOwner->getPlayerID();
     for (qint32 player = 0; player < playerValues.size(); ++player)
     {
@@ -133,10 +134,11 @@ void InfluenceFrontMap::InfluenceInfo::updateOwner(Player* pOwner)
         if (playerId != player &&
             pOwner->isPlayerIdEnemy(player))
         {
-            if (highestEnemy < influence)
-            {
-                highestEnemy = influence;
-            }
+            enemyInfluence += influence;
+        }
+        else if (pOwner->isPlayerIdAlly(player))
+        {
+            ownInfluence += influence;
         }
         if (influence > highestValue)
         {
@@ -150,7 +152,6 @@ void InfluenceFrontMap::InfluenceInfo::updateOwner(Player* pOwner)
             owners.append(player);
         }
     }
-    ownInfluence = getPlayerInfluence(playerId);
     highestInfluence = highestValue;
 }
 
@@ -210,7 +211,7 @@ void InfluenceFrontMap::addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPf
     {
         float multiplier = 1.0f;
         qint32 fieldCost = pPfs->getTargetCosts(point.x(), point.y());
-        if (movePoints > 0 && fieldCost > 0)
+        if (movePoints > 0 && fieldCost > 0 && fieldCost > movePoints)
         {
             multiplier = GlobalUtils::roundUp(static_cast<float>(movePoints) / static_cast<float>(fieldCost));
         }
@@ -219,8 +220,7 @@ void InfluenceFrontMap::addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPf
 }
 
 void InfluenceFrontMap::updateOwners()
-{
-    
+{    
     qint32 width = m_pMap->getMapWidth();
     qint32 heigth = m_pMap->getMapHeight();
     for (qint32 x = 0; x < width; x++)

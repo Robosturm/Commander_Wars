@@ -20,7 +20,8 @@
 
 
 NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType)
-    : CoreAI(pMap, aiType)
+    : CoreAI(pMap, aiType),
+    m_InfluenceFrontMap(pMap, m_IslandMaps)
 {
     setObjectName("NormalAi");
     Interpreter::setCppOwnerShip(this);
@@ -71,6 +72,8 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"EnemyUnitCountDamageReductionMultiplier", "Attacking", &m_enemyUnitCountDamageReductionMultiplier, 0.5f, 0.01f, 10.0f},
                   {"OwnProdctionMalus", "Attacking", &m_ownProdctionMalus, 5000.0f, 5000.0f, 5000.0f},
                   {"SupportDamageBonus", "Attacking", &m_supportDamageBonus, 1.0f, 0.1f, 10.0f},
+                  {"InfluenceIgnoreValue", "Attacking", &m_influenceIgnoreValue, 0.2f, 0.01f, 1.0f},
+                  {"InfluenceMultiplier", "Attacking", &m_influenceMultiplier, 2.0f, 0.1f, 10.0f},
                   // Production
                   {"FundsPerBuildingFactorA", "Production", &m_fundsPerBuildingFactorA, 1.85f, 0.5f, 10.0f},
                   {"FundsPerBuildingFactorB", "Production", &m_fundsPerBuildingFactorB, 2.0f, 0.5f, 10.0f},
@@ -174,7 +177,6 @@ void NormalAi::process()
     qint32 cost = 0;
     m_pPlayer->getSiloRockettarget(2, 3, cost);
     m_missileTarget = (cost >= m_minSiloDamage);
-
     if (useBuilding(pBuildings)){}
     else
     {
@@ -248,6 +250,21 @@ void NormalAi::hideIslandMap(QString unitId)
     {
         m_IslandMaps[unitIslandIdx]->hide();
     }
+}
+
+void NormalAi::showFrontMap()
+{
+    m_InfluenceFrontMap.show();
+}
+
+void NormalAi::showFrontLines()
+{
+    m_InfluenceFrontMap.showFrontlines();
+}
+
+void NormalAi::hideFrontMap()
+{
+    m_InfluenceFrontMap.hide();
 }
 
 void NormalAi::finishTurn()
@@ -859,17 +876,29 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
                 // find possible targets for this unit
                 QVector<QVector3D> targets;
                 // can one of our units can capture buildings?
+                bool captureFound = false;
+                bool attackFound = false;
                 for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
                 {
                     Unit* pLoaded = pUnit->getLoadedUnit(i);
-                    if (pLoaded->getActionList().contains(ACTION_CAPTURE))
+                    QStringList actions = pLoaded->getActionList();
+                    if (!captureFound && actions.contains(ACTION_CAPTURE))
                     {
                         appendUnloadTargetsForCapturing(pUnit, pEnemyBuildings, targets);
+                        captureFound = true;
+                    }
+                    if (!attackFound && actions.contains(ACTION_FIRE))
+                    {
+                        appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets);
+                        attackFound = true;
+                    }
+                    if (attackFound && captureFound)
+                    {
                         break;
                     }
                 }
                 // if not find closest unloading field
-                if (targets.size() == 0 || pUnit->getLoadedUnitCount() > 1)
+                if (targets.size() == 0)
                 {
                     appendNearestUnloadTargets(pUnit, pEnemyUnits, pEnemyBuildings, targets);
                 }
@@ -918,7 +947,7 @@ bool NormalAi::moveToUnloadArea(spGameAction & pAction, Unit* pUnit, spQmlVector
         QVector<QPoint> path = turnPfs.getPath(targetFields.x(), targetFields.y());
         pAction->setMovepath(path, turnPfs.getCosts(path));
         pAction->setActionID(ACTION_UNLOAD);
-        if (pAction->canBePerformed())
+        if (pAction->canBePerformed() && targetFields == pfs.getTarget())
         {
             return unloadUnits(pAction, pUnit);
         }
@@ -961,7 +990,8 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit)
             {
                 for (qint32 i = 0; i < unloadFields.size(); i++)
                 {
-                    if (!needsRefuel(pUnit->getLoadedUnit(i)))
+                    Unit* pLoadedUnit = pUnit->getLoadedUnit(i);
+                    if (!needsRefuel(pLoadedUnit))
                     {
                         if (!unloadedUnits.contains(unitIDx[i]))
                         {
@@ -1182,19 +1212,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & p
             if (pAction->getMovePath().size() > 0)
             {
                 m_updatePoints.append(pUnit->getPosition());
-                m_updatePoints.append(pAction->getActionTarget());
-                if (actions.contains(ACTION_UNLOAD))
-                {
-                    pAction->setActionID(ACTION_UNLOAD);
-                    if (pAction->canBePerformed())
-                    {
-                        bool performed = unloadUnits(pAction, pUnit);
-                        if (performed)
-                        {
-                            return true;
-                        }
-                    }
-                }
+                m_updatePoints.append(pAction->getActionTarget());                
                 for (const auto & action : actions)
                 {
                     if (action.startsWith(ACTION_SUPPORTALL))
@@ -1361,7 +1379,9 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, spQmlVectorU
 qint32 NormalAi::getMoveTargetField(Unit* pUnit, spQmlVectorUnit & pUnits, UnitPathFindingSystem& turnPfs,
                                     QVector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const
 {
-    
+    const float minDamage = pUnit->getCoUnitValue() * m_minMovementDamage;
+    float bestMinDamge = minDamage;
+    qint32 bestIdx = -1;
     for (qint32 i = 0; i < movePath.size(); i++)
     {
         // empty or own field
@@ -1376,14 +1396,15 @@ qint32 NormalAi::getMoveTargetField(Unit* pUnit, spQmlVectorUnit & pUnits, UnitP
             if (isMoveableTile(pBuilding))
             {
                 float counterDamage = calculateCounterDamage(pUnit, pUnits, movePath[i], nullptr, 0.0f, pBuildings, pEnemyBuildings);
-                if (counterDamage < pUnit->getCoUnitValue() * m_minMovementDamage)
+                if (counterDamage < bestMinDamge)
                 {
-                    return i;
+                    bestIdx = i;
+                    bestMinDamge = counterDamage;
                 }
             }
         }
     }
-    return -1;
+    return bestIdx;
 }
 
 qint32 NormalAi::getBestAttackTarget(Unit* pUnit, spQmlVectorUnit & pUnits, QVector<CoreAI::DamageData>& ret,
@@ -1471,7 +1492,8 @@ float NormalAi::getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy
     hpDamage = 0;
     for (auto & pUnitData : m_OwnUnits)
     {
-        if (pUnitData.pUnit != pUnit)
+        if (pUnitData.pUnit != pUnit &&
+            !pUnitData.pUnit->getHasMoved())
         {
             auto position = pUnitData.pUnit->getPosition();
             qint32 movepoints = pUnitData.pUnit->getMovementpoints(position);
@@ -1607,7 +1629,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
             if (distance <= moveRange + maxFireRange &&
                 pNextEnemy->isAttackable(pUnit, true))
             {
-                float enemyDamage = static_cast<float>(m_VirtualEnemyData[i].x());
+                float enemyDamage = m_VirtualEnemyData[i];
                 if (pNextEnemy.get() == pEnemyUnit)
                 {
                     enemyDamage += enemyTakenDamage;
@@ -1616,7 +1638,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                 if (enemyDamage < pNextEnemy->getHp() * Unit::MAX_UNIT_HP)
                 {
                     QRectF damageData;
-                    QVector<QPoint> targets = m_EnemyUnits[i].pUnitPfs->getAllNodePoints();
+                    QVector<QPoint> targets = m_EnemyUnits[i].pUnitPfs->getAllNodePoints(m_EnemyUnits[i].movementPoints);
                     if (distance >= minFireRange && distance <= maxFireRange)
                     {
                         // indirect attack
@@ -1725,6 +1747,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
     {
         max = counterDamage;
     }
+    counterDamage = getMapInfluenceModifier(pUnit, newPosition.x(), newPosition.y());
     return counterDamage;
 }
 
@@ -1765,22 +1788,39 @@ void NormalAi::updateAllUnitData(spQmlVectorUnit & pUnits)
     bool initial = m_EnemyUnits.size() == 0;
     rebuildIsland(pUnits);
 
-
     spQmlVectorUnit units = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
 
     updateUnitData(pUnits, m_OwnUnits, false);
     updateUnitData(units, m_EnemyUnits, true);
     if (initial)
     {
-
         calcVirtualDamage(pUnits);
     }
     m_updatePoints.clear();
+
+    if (initial)
+    {
+        // create influence map at the start of the turn
+        m_InfluenceFrontMap.reset();
+        m_InfluenceFrontMap.setOwner(m_pPlayer);
+        m_InfluenceFrontMap.addBuildingInfluence();
+        for (auto & unit : m_OwnUnits)
+        {
+            m_InfluenceFrontMap.addUnitInfluence(unit.pUnit.get(), unit.pUnitPfs.get(), unit.pUnit->getMovementpoints(unit.pUnit->Unit::getPosition()));
+        }
+        for (auto & unit : m_EnemyUnits)
+        {
+            m_InfluenceFrontMap.addUnitInfluence(unit.pUnit.get(), unit.pUnitPfs.get(), unit.pUnit->getMovementpoints(unit.pUnit->Unit::getPosition()));
+        }
+        m_InfluenceFrontMap.updateOwners();
+        m_InfluenceFrontMap.calculateGlobalData();
+    }
 }
 
 void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & pUnitData, bool enemy)
 {    
     CONSOLE_PRINT("NormalAi::updateEnemyData", Console::eDEBUG);
+    const qint32 multiplier = 3;
     if (pUnitData.size() == 0)
     {
         for (qint32 i = 0; i < pUnits->size(); i++)
@@ -1790,15 +1830,17 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & 
             {
                 MoveUnitData data;
                 data.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
+                data.movementPoints = pUnit->getMovementpoints(pUnit->Unit::getPosition());
                 if (enemy)
                 {
                     data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
                 }
+                data.pUnitPfs->setMovepoints(multiplier * data.movementPoints);
                 data.pUnitPfs->explore();
                 data.pUnit = pUnit;
                 if (enemy)
                 {
-                    m_VirtualEnemyData.append(QPointF(0, 0));
+                    m_VirtualEnemyData.append(0.0f);
                 }
                 pUnitData.append(data);
             }
@@ -1832,17 +1874,20 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & 
         {
             if (!updated.contains(i2))
             {
-                if (pUnitData[i2].pUnit->getHp() > 0 && pUnitData[i2].pUnit->getTerrain() != nullptr)
+                Unit* pUnit = pUnitData[i2].pUnit.get();
+                if (pUnit->getHp() > 0 && pUnit->getTerrain() != nullptr)
                 {
-                    if (qAbs(m_updatePoints[i].x() - pUnitData[i2].pUnit->Unit::getX()) +
-                        qAbs(m_updatePoints[i].y() - pUnitData[i2].pUnit->Unit::getY()) <=
-                        pUnitData[i2].pUnit->getMovementpoints(QPoint(pUnitData[i2].pUnit->Unit::getX(), pUnitData[i2].pUnit->Unit::getY())) + 2)
+                    if (qAbs(m_updatePoints[i].x() - pUnit->Unit::getX()) +
+                        qAbs(m_updatePoints[i].y() - pUnit->Unit::getY()) <=
+                        pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())) * multiplier + 2)
                     {
+                        pUnitData[i2].movementPoints = pUnit->getMovementpoints(pUnit->Unit::getPosition());
                         pUnitData[i2].pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnitData[i2].pUnit.get());
                         if (enemy)
                         {
                             pUnitData[i2].pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
                         }
+                        pUnitData[i2].pUnitPfs->setMovepoints(multiplier * pUnitData[i2].movementPoints);
                         pUnitData[i2].pUnitPfs->explore();
                     }
                     updated.push_back(i2);
@@ -1885,12 +1930,29 @@ void NormalAi::calcVirtualDamage(spQmlVectorUnit & pUnits)
                 if (m_EnemyUnits[i3].pUnit->Unit::getX() == attackedUnits[i2].x() &&
                     m_EnemyUnits[i3].pUnit->Unit::getY() == attackedUnits[i2].y())
                 {
-                    m_VirtualEnemyData[i3].setX(m_VirtualEnemyData[i3].x() + m_enemyUnitCountDamageReductionMultiplier * static_cast<double>(damage[i2]) / (damage.size()));
+                    m_VirtualEnemyData[i3] += (m_enemyUnitCountDamageReductionMultiplier * static_cast<double>(damage[i2]) / (damage.size()));
                     break;
                 }
             }
         }
     }
+}
+
+float NormalAi::getMapInfluenceModifier(Unit* pUnit, qint32 x, qint32 y) const
+{
+    float enemyInfluence = m_InfluenceFrontMap.getInfluenceInfo(x, y).enemyInfluence;
+    float ownInfluence = m_InfluenceFrontMap.getInfluenceInfo(x, y).ownInfluence;
+    float influence = 0.0f;
+    float influenceDamage = 0.0f;
+    if (ownInfluence > enemyInfluence)
+    {
+        influence = enemyInfluence / ownInfluence - 1.0f;
+        if (qAbs(influence) > m_influenceIgnoreValue)
+        {
+            influenceDamage = influence * pUnit->getCoUnitValue() * m_influenceMultiplier;
+        }
+    }
+    return influenceDamage;
 }
 
 void NormalAi::clearEnemyData()

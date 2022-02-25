@@ -1227,6 +1227,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
 
 void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings, QVector<QVector3D>& targets)
 {
+    CONSOLE_PRINT("CoreAI::appendNearestUnloadTargets", Console::eDEBUG);
     QVector<QVector<qint32>> checkedIslands;
     QVector<qint32> loadedUnitIslandIdx;
 
@@ -1474,7 +1475,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
         {
             Building* pBuilding = pEnemyBuildings->at(i);
             QPoint point(pBuilding->Building::getX(), pBuilding->Building::getY());
-            if (capturUnits[0]->canMoveOver(pBuilding->Building::getX(), pBuilding->Building::getY()))
+            if (capturUnits[0]->canMoveOver(point.x(), point.y()))
             {
                 // we can capture it :)
                 if (pBuilding->isCaptureOrMissileBuilding(missileTarget) &&
@@ -1510,6 +1511,79 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
             }
         }
         capturUnits[0]->setHasMoved(hasMoved);
+    }
+}
+
+void CoreAI::appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets)
+{
+    qint32 unitIslandIdx = getIslandIndex(pUnit);
+    qint32 unitIsland = getIsland(pUnit);
+    QVector<Unit*> attackUnits;
+    qint32 averageMovepoints = 0;
+    for (qint32 i2 = 0; i2 < pUnit->getLoadedUnitCount(); i2++)
+    {
+        Unit* pLoadedUnit = pUnit->getLoadedUnit(i2);
+        if (pLoadedUnit->getActionList().contains(ACTION_FIRE))
+        {
+            attackUnits.append(pLoadedUnit);
+            averageMovepoints += pLoadedUnit->getBaseMovementPoints();
+        }
+    }
+    if (attackUnits.size() > 0)
+    {
+        averageMovepoints = averageMovepoints / attackUnits.size();
+        spQmlVectorPoint pUnloadArea = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+        spQmlVectorPoint range = spQmlVectorPoint(GlobalUtils::getCircle(1, averageMovepoints + 1));
+        for (qint32 i = 0; i < pEnemyUnits->size(); i++)
+        {
+            Unit* pEnemyUnit = pEnemyUnits->at(i);
+            qint32 enemyX = pEnemyUnit->Unit::getX();
+            qint32 enemyY = pEnemyUnit->Unit::getY();
+            QVector<Unit*> attackingUnits;
+            for (qint32 i4 = 0; i4 < attackUnits.size(); i4++)
+            {
+                auto* pAttacker = attackUnits[i4];
+                if (pAttacker->getBaseDamage(pEnemyUnit) > 0)
+                {
+                    attackingUnits.append(pAttacker);
+                }
+            }
+            if (attackingUnits.size() > 0)
+            {
+                for (qint32 i2 = 0; i2 < range->size(); ++i2)
+                {
+                    for (qint32 i3 = 0; i3 < pUnloadArea->size(); ++i3)
+                    {
+                        qint32 x = enemyX + range->at(i2).x() + pUnloadArea->at(i3).x();
+                        qint32 y = enemyY + range->at(i2).y() + pUnloadArea->at(i3).y();
+                        if (m_pMap->onMap(x, y) &&
+                            m_pMap->getTerrain(x, y)->getUnit() == nullptr &&
+                            !targets.contains(QVector3D(x, y, 1)))
+                        {
+                            if (isUnloadTerrain(pUnit, m_pMap->getTerrain(x, y)))
+                            {
+                                // we can reach this unload field?
+                                if (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland)
+                                {
+                                    for (qint32 i4 = 0; i4 < attackingUnits.size(); i4++)
+                                    {
+                                        auto* pAttacker = attackingUnits[i4];
+                                        qint32 attackerIslandIdx = getIslandIndex(pAttacker);
+                                        if (pAttacker->canMoveOver(x, y) &&
+                                            m_IslandMaps[attackerIslandIdx]->getIsland(x, y) ==
+                                            m_IslandMaps[attackerIslandIdx]->getIsland(enemyX, enemyY))
+                                        {
+                                            targets.append(QVector3D(x, y, 1));
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

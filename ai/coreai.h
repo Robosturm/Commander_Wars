@@ -402,6 +402,13 @@ protected:
      */
     void appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, QVector<QVector3D>& targets);
     /**
+     * @brief appendUnloadTargetsForAttacking
+     * @param pUnit
+     * @param pEnemyUnits
+     * @param targets
+     */
+    void appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets);
+    /**
      * @brief appendTerrainBuildingAttackTargets
      * @param pUnit
      * @param pEnemyBuildings

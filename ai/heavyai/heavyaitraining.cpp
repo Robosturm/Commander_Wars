@@ -77,6 +77,11 @@ void HeavyAi::showFrontLines()
     m_InfluenceFrontMap.showFrontlines();
 }
 
+void HeavyAi::hideFrontMap()
+{
+    m_InfluenceFrontMap.hide();
+}
+
 void HeavyAi::showUnitPfs(bool enemy, qint32 index)
 {
     if (enemy)
@@ -108,12 +113,6 @@ void HeavyAi::hideIslandMap(QString unitId)
     qint32 unitIslandIdx = getIslandIndex(&unit);
     m_IslandMaps[unitIslandIdx]->show();
 }
-
-void HeavyAi::hideFrontMap()
-{
-    m_InfluenceFrontMap.hide();
-}
-
 
 double HeavyAi::getMinActionScore() const
 {

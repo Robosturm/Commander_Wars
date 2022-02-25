@@ -6,6 +6,7 @@
 #include "ai/coreai.h"
 
 #include "game/unitpathfindingsystem.h"
+#include "ai/influencefrontmap.h"
 
 class QmlVectorUnit;
 class QmlVectorBuilding;
@@ -65,6 +66,7 @@ class NormalAi : public CoreAI
     {
         spUnit pUnit;
         spUnitPathFindingSystem pUnitPfs;
+        qint32 movementPoints{0};
     };
     struct ExpectedFundsData
     {
@@ -128,6 +130,18 @@ public slots:
      * @param unitId
      */
     void hideIslandMap(QString unitId);
+    /**
+     * @brief showFrontMap for debugging visualization
+     */
+    void showFrontMap();
+    /**
+     * @brief showFrontLines for debugging visualization
+     */
+    void showFrontLines();
+    /**
+     * @brief hideFrontMap  for debugging visualization
+     */
+    void hideFrontMap();
 protected:
     static constexpr float maxDayDistance = 6.0f;
 
@@ -455,6 +469,14 @@ protected:
      * @return
      */
     float calcSameFundsMatchUpScore(Unit& dummy, const QStringList & buildList);
+    /**
+     * @brief getMapInfluenceModifier
+     * @param pUnit
+     * @param x
+     * @param y
+     * @return
+     */
+    float getMapInfluenceModifier(Unit* pUnit, qint32 x, qint32 y) const;
 private:
     /**
      * @brief m_EnemyUnits all enemy units that exists at the start of turn
@@ -472,11 +494,12 @@ private:
     /**
      * @brief m_VirtualEnemyData
      */
-    QVector<QPointF> m_VirtualEnemyData;
+    QVector<float> m_VirtualEnemyData;
     /**
      * @brief m_productionData
      */
     QVector<ProductionData> m_productionData;
+    InfluenceFrontMap m_InfluenceFrontMap;
 
 
     double m_notAttackableDamage{25.0f};
@@ -574,6 +597,8 @@ private:
     double m_counterDamageBonus{25.0f};
     double m_attackCountBonus{25.0f};
     double m_maxOverkillBonus{2.0f};
+    double m_influenceIgnoreValue{0.2};
+    double m_influenceMultiplier{2};
 
     double m_ProducingTransportSearchrange{6};
     double m_ProducingTransportSizeBonus{10};
