@@ -605,10 +605,8 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         bool sameMods = checkMods(mods, versions, filter);
         bool differentHash = false;
         QByteArray hostRuntime = Filesupport::readByteArray(stream);
-        if (hostRuntime != Filesupport::getRuntimeHash(mods))
-        {
-            differentHash = false;
-        }
+        QByteArray ownRuntime = Filesupport::getRuntimeHash(mods);
+        differentHash = (hostRuntime != ownRuntime);
         if (version == Mainapp::getGameVersion() && sameMods && !differentHash)
         {
             stream >> m_saveGame;

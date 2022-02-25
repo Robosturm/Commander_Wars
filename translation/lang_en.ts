@@ -3150,7 +3150,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="78"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="92"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1336"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1334"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3180,28 +3180,28 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="670"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="668"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="674"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="672"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="689"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="687"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1215"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1213"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1332"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1330"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
