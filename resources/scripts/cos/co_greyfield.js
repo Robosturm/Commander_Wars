@@ -284,7 +284,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nMissile Submarine\n") +
-               qsTr("\nSpecial Unit:\nMissile Submarine\n\nGlobal Effect: \nNo Effects.") +
+               qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \n Sea Units have 20% offensive and 50% defensive bonus.");
     };
     this.getPowerDescription = function(co)
