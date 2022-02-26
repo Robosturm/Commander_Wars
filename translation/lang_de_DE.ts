@@ -3181,12 +3181,12 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="668"/>
-        <source>Host has a different game version. Leaving the game again.</source>
+        <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="672"/>
-        <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
+        <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

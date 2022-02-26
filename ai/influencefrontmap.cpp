@@ -37,9 +37,14 @@ void InfluenceFrontMap::addBuildingInfluence()
     QVector<QStringList> buildLists;
     QMap<QString, qint32> unitIdToIsland;
     
+    QVector<qint32> income;
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+    {
+        income.append(m_pMap->getPlayer(i)->calcIncome());
+    }
+
     qint32 width = m_pMap->getMapWidth();
     qint32 heigth = m_pMap->getMapHeight();
-    qint32 maxScore = width * heigth * 10;
     for (qint32 x = 0; x < width; x++)
     {
         for (qint32 y = 0; y < heigth; y++)
@@ -73,11 +78,11 @@ void InfluenceFrontMap::addBuildingInfluence()
                         qint32 dis = GlobalUtils::getDistance(curPos, pos);
                         if (dis > 0)
                         {
-                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], maxScore / dis);
+                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], income[buildingOwners[building]] / dis);
                         }
                         else
                         {
-                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], maxScore);
+                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], income[buildingOwners[building]]);
                         }
                     }
                 }
@@ -204,18 +209,21 @@ void InfluenceFrontMap::reset()
 
 void InfluenceFrontMap::addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPfs, qint32 movePoints)
 {
-    qint32 value = pUnit->getCoUnitValue();
-    qint32 owner = pUnit->getOwner()->getPlayerID();
-    auto points = pPfs->getAllNodePoints();
-    for (const auto & point : points)
+    if (pUnit->hasWeapons() || pUnit->getLoadedUnitCount() > 0)
     {
-        float multiplier = 1.0f;
-        qint32 fieldCost = pPfs->getTargetCosts(point.x(), point.y());
-        if (movePoints > 0 && fieldCost > 0 && fieldCost > movePoints)
+        qint32 value = pUnit->getCoUnitValue();
+        qint32 owner = pUnit->getOwner()->getPlayerID();
+        auto points = pPfs->getAllNodePoints();
+        for (const auto & point : points)
         {
-            multiplier = GlobalUtils::roundUp(static_cast<float>(movePoints) / static_cast<float>(fieldCost));
+            float multiplier = 1.0f;
+            qint32 fieldCost = pPfs->getTargetCosts(point.x(), point.y());
+            if (movePoints > 0 && fieldCost > 0 && fieldCost > movePoints)
+            {
+                multiplier = GlobalUtils::roundUp(static_cast<float>(movePoints) / static_cast<float>(fieldCost));
+            }
+            m_InfluenceMap[point.x()][point.y()].increaseInfluence(owner, value * multiplier);
         }
-        m_InfluenceMap[point.x()][point.y()].increaseInfluence(owner, value * multiplier);
     }
 }
 

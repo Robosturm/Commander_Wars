@@ -663,13 +663,13 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         {
             // quit game with wrong version
             spDialogMessageBox pDialogMessageBox;
-            if (sameMods)
-            {
-                pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different game version. Leaving the game again."));
-            }
-            else if (differentHash)
+            if (differentHash && sameMods)
             {
                 pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different version of a mod or the game resource folder has been modified by one of the games."));
+            }
+            else  if (sameMods)
+            {
+                pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different game version. Leaving the game again."));
             }
             else
             {

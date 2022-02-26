@@ -599,6 +599,7 @@ private:
     double m_maxOverkillBonus{2.0f};
     double m_influenceIgnoreValue{0.2};
     double m_influenceMultiplier{2};
+    double m_lowThreadDamage{10};
 
     double m_ProducingTransportSearchrange{6};
     double m_ProducingTransportSizeBonus{10};

@@ -148,9 +148,9 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"MaxOverkillBonus", "Production", &m_maxOverkillBonus, 2.0f, 1.5f, 10.0f},
                   {"CounterDamageBonus", "Production", &m_counterDamageBonus, 25.0f, 1.0f, 100.0f},
                   {"EarlyGame", "Production", &m_earlyGame, 5.0f, 2.f, 10.0f},
-                  {"MaxProductionBuildings", "Production", &m_maxProductionBuildings, 5.0f, 2.f, 10.0f},};
+                  {"MaxProductionBuildings", "Production", &m_maxProductionBuildings, 5.0f, 2.f, 10.0f},
+                  {"LowThreadDamage", "Production", &m_lowThreadDamage, 10.0f, 1.f, 20.0f},};
 
-    
     if (m_pMap != nullptr &&
         !m_pMap->getSavegame())
     {
@@ -2493,15 +2493,23 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
         }
         float distance = GlobalUtils::getDistance(position, enemyPosition);
         float dmg = dummy.getBaseDamage(pEnemyUnit);
+        float counterDmg = 0.0f;
+        float baseCounterDmg = 0.0f;
+        if (pEnemyUnit->hasWeapons())
+        {
+            baseCounterDmg = pEnemyUnit->getBaseDamage(&dummy);
+        }
+        if (baseCounterDmg < m_lowThreadDamage && dmg >= m_midDamage)
+        {
+            dmg = pEnemyUnit->getHp() * Unit::MAX_UNIT_HP;
+        }
         if (dmg > pEnemyUnit->getHp() * Unit::MAX_UNIT_HP)
         {
             dmg = pEnemyUnit->getHp() * Unit::MAX_UNIT_HP;
         }
-        float counterDmg = -1.0f;
-        if (pEnemyUnit->hasWeapons())
-        {
-            counterDmg = pEnemyUnit->getBaseDamage(&dummy) * pEnemyUnit->getHp() / Unit::MAX_UNIT_HP;
-        }
+
+        counterDmg = baseCounterDmg * pEnemyUnit->getHp() / Unit::MAX_UNIT_HP;
+
         if (dmg > 0.0f)
         {
             bool firstStrikes = ownRange >= enemyRange || counterDmg <= m_notAttackableDamage;
