@@ -576,10 +576,13 @@ void GameRules::createWeatherSprites()
 
 void GameRules::resetWeatherSprites()
 {
-    for (qint32 i = 0; i < m_WeatherSprites.size(); i++)
+    for (auto & sprite : m_WeatherSprites)
     {
-        m_WeatherSprites[i]->detach();
-        m_WeatherSprites[i] = nullptr;
+        if (sprite.get() != nullptr)
+        {
+            sprite->detach();
+            sprite = nullptr;
+        }
     }
     m_WeatherSprites.clear();
 }
@@ -590,8 +593,11 @@ void GameRules::resetFogSprites()
     {
         for (auto & sprite : sprites)
         {
-            sprite->detach();
-            sprite = nullptr;
+            if (sprite.get() != nullptr)
+            {
+                sprite->detach();
+                sprite = nullptr;
+            }
         }
     }
     m_FogSprites.clear();
