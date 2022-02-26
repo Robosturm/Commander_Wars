@@ -230,14 +230,15 @@ protected:
      */
     bool moveToUnloadArea(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & pUnits, QStringList& actions,
                           QVector<QVector3D>& targets,
-                          spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
+                          spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
+                          spQmlVectorUnit & pEnemyUnits);
     /**
      * @brief unloadUnits
      * @param pAction
      * @param pUnit
      * @return
      */
-    bool unloadUnits(spGameAction & pAction, Unit* pUnit);
+    bool unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & pEnemyUnits);
     /**
      * @brief repairUnits
      * @param pUnits

@@ -1201,13 +1201,29 @@ bool Unit::canMoveAndFire(QPoint position)
     return false;
 }
 
-void Unit::loadUnit(Unit* pUnit)
+void Unit::loadUnit(Unit* pUnit, qint32 index)
 {
-    if (m_TransportUnits.size() < getLoadingPlace())
+    bool loaded = false;
+    if (m_TransportUnits.size() < getLoadingPlace() && index < 0)
     {
         m_TransportUnits.append(spUnit(pUnit));
+        loaded = true;
+    }
+    else if (index < getLoadingPlace())
+    {
+        if (index < m_TransportUnits.size())
+        {
+            m_TransportUnits[index] = spUnit(pUnit);
+        }
+        else
+        {
+            m_TransportUnits.append(spUnit(pUnit));
+        }
+        loaded = true;
+    }
+    if (loaded)
+    {
         pUnit->removeUnit(false);
-
         if (m_pMap != nullptr)
         {
             updateIcons(m_pMap->getCurrentViewPlayer());

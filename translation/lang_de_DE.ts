@@ -902,119 +902,119 @@
 <context>
     <name>DialogModifyUnit</name>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="43"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="46"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="88"/>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="95"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="91"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="98"/>
         <source>Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="101"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="104"/>
         <source>Selects the custom name of the unit shown instead of the actual unit name. An empty name equals the actual unit name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="111"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="114"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="114"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="117"/>
         <source>HP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="115"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="118"/>
         <source>Selects the HP of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="128"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="131"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="131"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="134"/>
         <source>Fuel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="132"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="135"/>
         <source>Selects the Fuel of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="154"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="157"/>
         <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="157"/>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="183"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="160"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="186"/>
         <source>Ammo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="158"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="161"/>
         <source>Selects the Ammo 1 of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="180"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="183"/>
         <source>Ammo 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="184"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="187"/>
         <source>Selects the Ammo 2 of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="205"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="208"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="212"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="215"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="215"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="218"/>
         <source>Selects the Owner of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="228"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="231"/>
         <source>AI-Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="231"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="234"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="231"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="234"/>
         <source>Offensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="231"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="234"/>
         <source>Defensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="231"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="234"/>
         <source>Hold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="233"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="236"/>
         <source>Selects how the AI uses this unit
 Normal AI uses the unit like always.
 Offensive AI the ai moves the unit to the closest enemy and attacks
@@ -1026,47 +1026,47 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="254"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="257"/>
         <source>Unit Rank: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="263"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="266"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="264"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="267"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="266"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="269"/>
         <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="310"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="313"/>
         <source>Loaded Unit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="324"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="345"/>
         <source>Selects the unit loaded by the transporter. - for no unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="371"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="392"/>
         <source>Move Point: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="403"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="424"/>
         <source>Add Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="411"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="432"/>
         <source>Remove last Point</source>
         <translation type="unfinished"></translation>
     </message>

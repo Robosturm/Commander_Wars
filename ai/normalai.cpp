@@ -889,7 +889,7 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
                     }
                     if (!attackFound && actions.contains(ACTION_FIRE))
                     {
-                        appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets);
+                        appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets, 1);
                         attackFound = true;
                     }
                     if (attackFound && captureFound)
@@ -900,9 +900,13 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
                 // if not find closest unloading field
                 if (targets.size() == 0)
                 {
+                    appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets, 3);
+                }
+                if (targets.size() == 0)
+                {
                     appendNearestUnloadTargets(pUnit, pEnemyUnits, pEnemyBuildings, targets);
                 }
-                if (moveToUnloadArea(pAction, pUnit, pUnits, actions, targets, pBuildings, pEnemyBuildings))
+                if (moveToUnloadArea(pAction, pUnit, pUnits, actions, targets, pBuildings, pEnemyBuildings, pEnemyUnits))
                 {
                     return true;
                 }
@@ -933,7 +937,8 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
 
 bool NormalAi::moveToUnloadArea(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & pUnits, QStringList& actions,
                                 QVector<QVector3D>& targets,
-                                spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
+                                spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
+                                spQmlVectorUnit & pEnemyUnits)
 {
     CONSOLE_PRINT("NormalAi::moveToUnloadArea()", Console::eDEBUG);
     TargetedUnitPathFindingSystem pfs(m_pMap, pUnit, targets, &m_MoveCostMap);
@@ -949,7 +954,7 @@ bool NormalAi::moveToUnloadArea(spGameAction & pAction, Unit* pUnit, spQmlVector
         pAction->setActionID(ACTION_UNLOAD);
         if (pAction->canBePerformed() && targetFields == pfs.getTarget())
         {
-            return unloadUnits(pAction, pUnit);
+            return unloadUnits(pAction, pUnit, pEnemyUnits);
         }
         else
         {
@@ -959,7 +964,7 @@ bool NormalAi::moveToUnloadArea(spGameAction & pAction, Unit* pUnit, spQmlVector
     return false;
 }
 
-bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit)
+bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & pEnemyUnits)
 {
     
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -1033,7 +1038,27 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit)
                     addMenuItemData(pAction, actions[0], costs);
                     unloaded = true;
                     spMarkedFieldData pFields = pAction->getMarkedFieldStepData();
-                    qint32 field = GlobalUtils::randIntBase(0, pFields->getPoints()->size() - 1);
+                    qint32 field = 0;
+                    qint32 bestDistance = std::numeric_limits<qint32>::max();
+                    for (qint32 i = 0; i < pFields->getPoints()->size(); ++i)
+                    {
+                        QPoint unloadPos = pFields->getPoints()->at(i);
+                        qint32 currentBestDistance = std::numeric_limits<qint32>::max();
+                        for (qint32 i2 = 0; i2 < pEnemyUnits->size(); ++i2)
+                        {
+                            qint32 distance = GlobalUtils::getDistance(unloadPos, pEnemyUnits->at(i2)->Unit::getPosition());
+                            if (distance < currentBestDistance)
+                            {
+                                currentBestDistance = distance;
+                            }
+                        }
+                        if (currentBestDistance < bestDistance ||
+                            (currentBestDistance == bestDistance && GlobalUtils::randInt(0, 1) == 1))
+                        {
+                            bestDistance = currentBestDistance;
+                            field = i;
+                        }
+                    }
                     addSelectedFieldData(pAction, pFields->getPoints()->at(field));
                 }
             }

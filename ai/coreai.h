@@ -407,7 +407,7 @@ protected:
      * @param pEnemyUnits
      * @param targets
      */
-    void appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets);
+    void appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets, qint32 rangeMultiplier);
     /**
      * @brief appendTerrainBuildingAttackTargets
      * @param pUnit

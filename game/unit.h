@@ -712,7 +712,7 @@ public slots:
      * @brief loadUnit adds a unit to the transport list
      * @param pUnit
      */
-    void loadUnit(Unit* pUnit);
+    void loadUnit(Unit* pUnit, qint32 index = -1);
     /**
      * @brief loadUnit adds a unit to the transport list
      * @param pUnit

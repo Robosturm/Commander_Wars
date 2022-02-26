@@ -1514,7 +1514,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
     }
 }
 
-void CoreAI::appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets)
+void CoreAI::appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets, qint32 rangeMultiplier)
 {
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
@@ -1533,7 +1533,7 @@ void CoreAI::appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEne
     {
         averageMovepoints = averageMovepoints / attackUnits.size();
         spQmlVectorPoint pUnloadArea = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
-        spQmlVectorPoint range = spQmlVectorPoint(GlobalUtils::getCircle(1, averageMovepoints + 1));
+        spQmlVectorPoint range = spQmlVectorPoint(GlobalUtils::getCircle(1, averageMovepoints * rangeMultiplier + 1));
         for (qint32 i = 0; i < pEnemyUnits->size(); i++)
         {
             Unit* pEnemyUnit = pEnemyUnits->at(i);

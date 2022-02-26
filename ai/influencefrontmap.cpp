@@ -61,6 +61,7 @@ void InfluenceFrontMap::addBuildingInfluence()
             }
         }
     }
+    qint32 fullInfluenceRange = 6;
     for (qint32 x = 0; x < width; x++)
     {
         for (qint32 y = 0; y < heigth; y++)
@@ -73,16 +74,17 @@ void InfluenceFrontMap::addBuildingInfluence()
                 {
                     QString unitId = buildLists[building][unitIdx];
                     qint32 island = getIslandFromUnitId(unitId, unitIdToIsland);
+
                     if (island >= 0 && m_islands[island]->sameIsland(x, y, pos.x(), pos.y()))
                     {
                         qint32 dis = GlobalUtils::getDistance(curPos, pos);
-                        if (dis > 0)
+                        if (dis > fullInfluenceRange)
                         {
-                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], income[buildingOwners[building]] / dis);
+                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], income[buildingOwners[building]] * fullInfluenceRange / dis / buildLists[building].size());
                         }
                         else
                         {
-                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], income[buildingOwners[building]]);
+                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], income[buildingOwners[building]] / buildLists[building].size());
                         }
                     }
                 }
