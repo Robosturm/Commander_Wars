@@ -10,6 +10,7 @@
         <image file="settings.png" />
         <image file="pause.png" />
         <image file="play.png" />
+        <image file="rewind.png" />        
         <image file="fastforward.png" />
         <image file="one_step.png" />
         <image file="perk.png" />

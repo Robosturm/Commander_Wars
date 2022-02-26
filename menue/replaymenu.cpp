@@ -29,6 +29,7 @@ ReplayMenu::ReplayMenu(QString filename)
     connect(this, &ReplayMenu::sigStopFastForward, this, &ReplayMenu::stopFastForward, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigShowConfig, this, &ReplayMenu::showConfig, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigOneStep, this, &ReplayMenu::oneStep, Qt::QueuedConnection);
+    connect(this, &ReplayMenu::sigRewindDay, this, &ReplayMenu::rewindDay, Qt::QueuedConnection);
     changeBackground("replaymenu");
     m_valid = m_ReplayRecorder.loadRecord(filename);
     if (m_valid)
@@ -243,8 +244,16 @@ void ReplayMenu::loadUIButtons()
     {
         emit sigStopFastForward();
     });
+    m_rewindDayButton = ObjectManager::createIconButton("rewind", 36);
+    m_rewindDayButton->setPosition(m_fastForwardButton->getX() - 4 - m_rewindDayButton->getWidth(), y);
+    m_rewindDayButton->addClickListener([=](oxygine::Event*)
+    {
+        emit sigRewindDay();
+    });
+    pButtonBox->addChild(m_rewindDayButton);
+
     m_configButton = ObjectManager::createIconButton("settings", 36);
-    m_configButton->setPosition(m_fastForwardButton->getX() - 4 - m_configButton->getWidth(), y);
+    m_configButton->setPosition(m_rewindDayButton->getX() - 4 - m_configButton->getWidth(), y);
     m_configButton->addClickListener([=](oxygine::Event*)
     {
         emit sigShowConfig();
@@ -373,6 +382,26 @@ void ReplayMenu::seekRecord(float value)
     seekToDay(day);
     m_seekActor->setVisible(false);
     m_seeking = false;    
+}
+
+void ReplayMenu::rewindDay()
+{
+    startSeeking();
+    QMutexLocker locker(&m_replayMutex);
+    qint32 day = m_pMap->getCurrentDay();
+    auto currentTimestamp = QDateTime::currentMSecsSinceEpoch();
+    constexpr auto msPerSec = 1000;
+    if (currentTimestamp - m_lastRewind <= msPerSec * 10)
+    {
+        day -= 1;
+    }
+    m_lastRewind = currentTimestamp;
+    if (day < 0)
+    {
+        day = 0;
+    }
+    seekToDay(day);
+    m_seeking = false;
 }
 
 void ReplayMenu::seekToDay(qint32 day)

@@ -974,7 +974,7 @@ float Settings::getWalkAnimationSpeed()
 {
     if (m_walkAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - m_walkAnimationSpeed);
+        return 100.0f / (101.0f - static_cast<float>(m_walkAnimationSpeed));
     }
     return 100;
 }
@@ -1203,7 +1203,7 @@ float Settings::getAnimationSpeed()
 {
     if (m_animationSpeed <= 100)
     {
-        return 100.0f / (101.0f - m_animationSpeed);
+        return 100.0f / (101.0f - static_cast<float>(m_animationSpeed));
     }
     return 100;
 }
@@ -1222,7 +1222,7 @@ float Settings::getBattleAnimationSpeed()
 {
     if (m_battleAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - m_battleAnimationSpeed);
+        return 100.0f / (101.0f - static_cast<float>(m_battleAnimationSpeed));
     }
     return 100;
 }
@@ -1241,7 +1241,7 @@ float Settings::getDialogAnimationSpeed()
 {
     if (m_dialogAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - m_dialogAnimationSpeed);
+        return 100.0f / (101.0f - static_cast<float>(m_dialogAnimationSpeed));
     }
     return 100;
 }
@@ -1260,7 +1260,7 @@ float Settings::getCaptureAnimationSpeed()
 {
     if (m_captureAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - m_captureAnimationSpeed);
+        return 100.0f / (101.0f - static_cast<float>(m_captureAnimationSpeed));
     }
     return 100;
 }

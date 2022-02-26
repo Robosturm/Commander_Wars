@@ -536,13 +536,7 @@ void GameRules::createWeatherSprites()
     {
         m_CurrentWeather = 0;
     }
-    
-    for (qint32 i = 0; i < m_WeatherSprites.size(); i++)
-    {
-        m_WeatherSprites[i]->detach();
-        m_WeatherSprites[i] = nullptr;
-    }
-    m_WeatherSprites.clear();
+    resetWeatherSprites();
     if (m_Weathers.size() > 0)
     {
         qint32 width = m_pMap->getMapWidth();
@@ -578,6 +572,29 @@ void GameRules::createWeatherSprites()
         }
     }
     
+}
+
+void GameRules::resetWeatherSprites()
+{
+    for (qint32 i = 0; i < m_WeatherSprites.size(); i++)
+    {
+        m_WeatherSprites[i]->detach();
+        m_WeatherSprites[i] = nullptr;
+    }
+    m_WeatherSprites.clear();
+}
+
+void GameRules::resetFogSprites()
+{
+    for (auto & sprites : m_FogSprites)
+    {
+        for (auto & sprite : sprites)
+        {
+            sprite->detach();
+            sprite = nullptr;
+        }
+    }
+    m_FogSprites.clear();
 }
 
 qint32 GameRules::getUnitLimit() const

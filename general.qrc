@@ -6568,5 +6568,6 @@
         <file>resources/images/battleanimations/GeneralSprites/bullet_casing+x3burst.png</file>
         <file>resources/images/battleanimations/GeneralSprites/bullet_megatank.png</file>
         <file>resources/images/battleanimations/GeneralSprites/bullet_tank.png</file>
+        <file>resources/objects/rewind.png</file>
     </qresource>
 </RCC>

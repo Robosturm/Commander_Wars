@@ -94,6 +94,14 @@ signals:
     void sigVictory(qint32 team);
 public slots:
     /**
+     * @brief resetWeatherSprites
+     */
+    void resetWeatherSprites();
+    /**
+     * @brief resetFogSprites
+     */
+    void resetFogSprites();
+    /**
      * @brief getMultiplayerObserver
      * @return
      */

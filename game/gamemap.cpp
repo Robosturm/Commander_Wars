@@ -1573,6 +1573,9 @@ void GameMap::clearMap()
     }
     m_fields.clear();
     m_players.clear();
+    m_Rules->resetWeatherSprites();
+    m_Rules->resetFogSprites();
+    removeChildren();
 }
 
 QString GameMap::readMapName(QDataStream& pStream)
