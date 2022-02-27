@@ -1367,7 +1367,6 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, spQmlVectorU
     
     QVector<QPoint> targets = turnPfs.getAllNodePoints();
     QPoint ret(pUnit->Unit::getX(), pUnit->Unit::getY());
-    const float minDamage = pUnit->getCoUnitValue() * m_minMovementDamage;
     float leastDamageField = std::numeric_limits<float>::max();
     qint32 shortestDistance = std::numeric_limits<qint32>::max();
     bool allFieldsEqual = true;
@@ -1978,13 +1977,17 @@ float NormalAi::getMapInfluenceModifier(Unit* pUnit, qint32 x, qint32 y) const
     float ownInfluence = m_InfluenceFrontMap.getInfluenceInfo(x, y).ownInfluence;
     float influence = 0.0f;
     float influenceDamage = 0.0f;
-    if (ownInfluence > 0)
+    if (enemyInfluence > ownInfluence && ownInfluence > 0)
     {
         influence = enemyInfluence / ownInfluence - 1.0f;
-        if (qAbs(influence) > m_influenceIgnoreValue)
-        {
-            influenceDamage = influence * pUnit->getCoUnitValue() * m_influenceMultiplier;
-        }        
+    }
+    else if (enemyInfluence > 0)
+    {
+        influence = -ownInfluence / enemyInfluence - 1.0f;
+    }
+    if (qAbs(influence) > m_influenceIgnoreValue)
+    {
+        influenceDamage = influence * pUnit->getCoUnitValue() * m_influenceMultiplier;
     }
     return influenceDamage;
 }
