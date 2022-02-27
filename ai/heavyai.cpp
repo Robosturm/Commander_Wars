@@ -344,10 +344,7 @@ void HeavyAi::addNewUnitToUnitData(QVector<UnitData> & units, Unit* pUnit, bool 
     data.m_pPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
     data.m_movepoints = data.m_pUnit->getMovementpoints(data.m_pUnit->getPosition());
     data.m_pPfs->setMovepoints(data.m_movepoints * 2);
-    if (enemyUnits)
-    {
-        data.m_pPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
-    }
+    data.m_pPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
     data.m_pPfs->explore();
     if (!enemyUnits)
     {
@@ -415,10 +412,7 @@ void HeavyAi::updateUnits(QVector<UnitData> & units, spQmlVectorUnit & pUnits, b
                     units[i2].m_pUnit->getMovementpoints(QPoint(units[i2].m_pUnit->Unit::getX(), units[i2].m_pUnit->Unit::getY())) + 2)
                 {
                     units[i2].m_pPfs = spUnitPathFindingSystem::create(m_pMap, units[i2].m_pUnit);
-                    if (enemyUnits)
-                    {
-                        units[i2].m_pPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
-                    }
+                    units[i2].m_pPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
                     units[i2].m_pPfs->explore();
                     if (!enemyUnits)
                     {

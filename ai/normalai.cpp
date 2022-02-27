@@ -291,7 +291,7 @@ bool NormalAi::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
     else if (m_aiStep <= AISteps::moveUnits && repairUnits(pUnits, pBuildings, pEnemyBuildings)){}
     else if (m_aiStep <= AISteps::moveToTargets && refillUnits(pUnits, pBuildings, pEnemyBuildings)){}
     else if (m_aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
-    else if (m_aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
+    else if (m_aiStep <= AISteps::moveIndirectsToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
     else if (m_aiStep <= AISteps::loadUnits && !m_usedTransportSystem && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
     else if (m_aiStep <= AISteps::moveTransporters && !m_usedTransportSystem && moveTransporters(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
     else
@@ -823,6 +823,13 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
             }
         }
     }
+
+    if (m_aiStep == AISteps::moveToTargets)
+    {
+        m_aiStep = AISteps::moveIndirectsToTargets;
+        m_EnemyUnits.clear();
+        m_OwnUnits.clear();
+    }
     return false;
 }
 
@@ -1140,6 +1147,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & p
         UnitPathFindingSystem turnPfs(m_pMap, pUnit);
         turnPfs.explore();
         if (CoreAI::contains(transporterTargets, targetFields) &&
+            pTargetUnit != nullptr &&
             pTargetUnit->getHasMoved() == false)
         {
             QVector<QPoint> path = turnPfs.getPath(targetFields.x(), targetFields.y());
@@ -1394,7 +1402,9 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, spQmlVectorU
                 leastDamageField = currentDamage;
                 shortestDistance = distance;
             }
-            else if (static_cast<qint32>(currentDamage) == static_cast<qint32>(leastDamageField) && distance < shortestDistance && distance > 0)
+            else if (static_cast<qint32>(currentDamage) == static_cast<qint32>(leastDamageField) &&
+                     distance < shortestDistance &&
+                     distance > 0)
             {
                 ret = targets[i];
                 leastDamageField = currentDamage;
@@ -1857,10 +1867,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & 
                 MoveUnitData data;
                 data.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
                 data.movementPoints = pUnit->getMovementpoints(pUnit->Unit::getPosition());
-                if (enemy)
-                {
-                    data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
-                }
+                data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
                 data.pUnitPfs->setMovepoints(multiplier * data.movementPoints);
                 data.pUnitPfs->explore();
                 data.pUnit = pUnit;
@@ -1909,10 +1916,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & 
                     {
                         pUnitData[i2].movementPoints = pUnit->getMovementpoints(pUnit->Unit::getPosition());
                         pUnitData[i2].pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnitData[i2].pUnit.get());
-                        if (enemy)
-                        {
-                            pUnitData[i2].pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
-                        }
+                        pUnitData[i2].pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
                         pUnitData[i2].pUnitPfs->setMovepoints(multiplier * pUnitData[i2].movementPoints);
                         pUnitData[i2].pUnitPfs->explore();
                     }
@@ -1983,7 +1987,7 @@ float NormalAi::getMapInfluenceModifier(Unit* pUnit, qint32 x, qint32 y) const
     }
     else if (enemyInfluence > 0)
     {
-        influence = -ownInfluence / enemyInfluence - 1.0f;
+        influence = -ownInfluence / enemyInfluence + 1.0f;
     }
     if (qAbs(influence) > m_influenceIgnoreValue)
     {
