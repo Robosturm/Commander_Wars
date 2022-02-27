@@ -139,13 +139,15 @@ void InfluenceFrontMap::InfluenceInfo::updateOwner(Player* pOwner)
     {
         qint32 influence = getPlayerInfluence(player);
         if (playerId != player &&
-            pOwner->isPlayerIdEnemy(player))
+            pOwner->isPlayerIdEnemy(player) &&
+            influence > enemyInfluence)
         {
-            enemyInfluence += influence;
+            enemyInfluence = influence;
         }
-        else if (pOwner->isPlayerIdAlly(player))
+        else if (pOwner->isPlayerIdAlly(player) &&
+                 ownInfluence > influence)
         {
-            ownInfluence += influence;
+            ownInfluence = influence;
         }
         if (influence > highestValue)
         {
