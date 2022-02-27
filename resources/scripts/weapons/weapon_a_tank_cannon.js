@@ -22,7 +22,7 @@ var Constructor = function()
                         ["LIGHT_TANK", 75],
                         ["HOVERCRAFT", 75],
                         ["HEAVY_HOVERCRAFT", 65],
-                        ["HEAVY_TANK", 65],
+                        ["HEAVY_TANK", 45],
                         ["NEOTANK", 65],
                         ["MEGATANK", 55],
                         ["HOELLIUM", 15],

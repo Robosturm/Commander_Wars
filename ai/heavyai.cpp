@@ -474,7 +474,7 @@ void HeavyAi::updateCaptureBuildings(UnitData & unitData)
         unitData.m_capturePoints.clear();
         GameAction action(ACTION_CAPTURE, m_pMap);
         action.setTarget(QPoint(unitData.m_pUnit->Unit::getX(), unitData.m_pUnit->Unit::getY()));
-        QVector<QPoint> targets = unitData.m_pPfs->getAllNodePoints(unitData.m_movepoints);
+        QVector<QPoint> targets = unitData.m_pPfs->getAllNodePoints(unitData.m_movepoints + 1);
         for (const auto & target : targets)
         {
             action.setMovepath(QVector<QPoint>(1, target), 0);

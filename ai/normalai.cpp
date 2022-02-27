@@ -1174,7 +1174,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & p
                 movePath.append(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
             }
             qint32 idx = getMoveTargetField(pUnit, pUnits, turnPfs, movePath, pBuildings, pEnemyBuildings);
-            if (idx < 0)
+            if (idx < 0 || idx == movePath.size() - 1)
             {
                 std::tuple<QPoint, float, bool> target = moveToSafety(pUnit, pUnits, turnPfs, movePath[0], pBuildings, pEnemyBuildings);
                 QPoint ret = std::get<0>(target);
@@ -1367,6 +1367,7 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, spQmlVectorU
     
     QVector<QPoint> targets = turnPfs.getAllNodePoints();
     QPoint ret(pUnit->Unit::getX(), pUnit->Unit::getY());
+    const float minDamage = pUnit->getCoUnitValue() * m_minMovementDamage;
     float leastDamageField = std::numeric_limits<float>::max();
     qint32 shortestDistance = std::numeric_limits<qint32>::max();
     bool allFieldsEqual = true;
@@ -1378,6 +1379,10 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, spQmlVectorU
             turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y) > 0)
         {
             float currentDamage = calculateCounterDamage(pUnit, pUnits, targets[i], nullptr, 0.0f, pBuildings, pEnemyBuildings);
+            if (currentDamage < 0)
+            {
+                currentDamage = 0;
+            }
             if (leastDamageField < std::numeric_limits<float>::max() &&
                 static_cast<qint32>(leastDamageField) != static_cast<qint32>(currentDamage))
             {
@@ -1390,7 +1395,7 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, spQmlVectorU
                 leastDamageField = currentDamage;
                 shortestDistance = distance;
             }
-            else if (static_cast<qint32>(currentDamage) == static_cast<qint32>(leastDamageField) && distance < shortestDistance)
+            else if (static_cast<qint32>(currentDamage) == static_cast<qint32>(leastDamageField) && distance < shortestDistance && distance > 0)
             {
                 ret = targets[i];
                 leastDamageField = currentDamage;
@@ -1421,9 +1426,13 @@ qint32 NormalAi::getMoveTargetField(Unit* pUnit, spQmlVectorUnit & pUnits, UnitP
             if (isMoveableTile(pBuilding))
             {
                 float counterDamage = calculateCounterDamage(pUnit, pUnits, movePath[i], nullptr, 0.0f, pBuildings, pEnemyBuildings);
-                if (counterDamage < bestMinDamge)
+                if (counterDamage <= bestMinDamge)
                 {
                     bestIdx = i;
+                    if (counterDamage <= 0)
+                    {
+                        return bestIdx;
+                    }
                     bestMinDamge = counterDamage;
                 }
             }
@@ -1518,7 +1527,8 @@ float NormalAi::getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy
     for (auto & pUnitData : m_OwnUnits)
     {
         if (pUnitData.pUnit != pUnit &&
-            !pUnitData.pUnit->getHasMoved())
+            !pUnitData.pUnit->getHasMoved() &&
+            pUnitData.pUnit->hasWeapons())
         {
             auto position = pUnitData.pUnit->getPosition();
             qint32 movepoints = pUnitData.pUnit->getMovementpoints(position);
@@ -1530,6 +1540,7 @@ float NormalAi::getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy
                 QVector<CoreAI::DamageData> ret;
                 QVector<QVector3D> moveTargetFields;
                 CoreAI::getAttackTargets(pUnitData.pUnit.get(), pAction, pUnitData.pUnitPfs.get(), ret, moveTargetFields);
+
                 QVector<Unit*> pUsedUnits;
                 float newFundsDamage = std::numeric_limits<float>::lowest();
                 float newHpDamage = std::numeric_limits<float>::lowest();
@@ -1663,7 +1674,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                 if (enemyDamage < pNextEnemy->getHp() * Unit::MAX_UNIT_HP)
                 {
                     QRectF damageData;
-                    QVector<QPoint> targets = m_EnemyUnits[i].pUnitPfs->getAllNodePoints(m_EnemyUnits[i].movementPoints);
+                    QVector<QPoint> targets = m_EnemyUnits[i].pUnitPfs->getAllNodePoints(m_EnemyUnits[i].movementPoints + 1);
                     if (distance >= minFireRange && distance <= maxFireRange)
                     {
                         // indirect attack
@@ -1761,19 +1772,10 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
             }
         }
     }
-    counterDamage += calculateCounteBuildingDamage(pUnit, newPosition, pBuildings, pEnemyBuildings);
-    static qint32 min = std::numeric_limits<qint32>::max();
-    static qint32 max = std::numeric_limits<qint32>::min();
-    if (counterDamage < min)
-    {
-        min = counterDamage;
-    }
-    if (counterDamage > max)
-    {
-        max = counterDamage;
-    }
-    counterDamage = getMapInfluenceModifier(pUnit, newPosition.x(), newPosition.y());
-    return counterDamage;
+    float buildingCounterDamage = calculateCounteBuildingDamage(pUnit, newPosition, pBuildings, pEnemyBuildings);
+    float influenceCounterDamage = getMapInfluenceModifier(pUnit, newPosition.x(), newPosition.y());
+    float totalCounterDamage = counterDamage + influenceCounterDamage + buildingCounterDamage;
+    return totalCounterDamage;
 }
 
 float NormalAi::calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const
@@ -1819,7 +1821,7 @@ void NormalAi::updateAllUnitData(spQmlVectorUnit & pUnits)
     updateUnitData(units, m_EnemyUnits, true);
     if (initial)
     {
-        calcVirtualDamage(pUnits);
+        calcVirtualDamage();
     }
     m_updatePoints.clear();
 
@@ -1922,29 +1924,36 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & 
     }
 }
 
-void NormalAi::calcVirtualDamage(spQmlVectorUnit & pUnits)
+void NormalAi::calcVirtualDamage()
 {
-    for (qint32 i = 0; i < pUnits->size(); i++)
+    for (auto & ownUnit : m_OwnUnits)
     {
-        Unit* pUnit = pUnits->at(i);
+        Unit* pUnit = ownUnit.pUnit.get();
         QVector<QPoint> attackedUnits;
         QVector<float> damage;
         if (isUsingUnit(pUnit))
         {
+            static constexpr float maxDistance = 2;
             spGameAction action = spGameAction::create(ACTION_FIRE, m_pMap);
             action->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-            UnitPathFindingSystem pfs(m_pMap, pUnit);
-            pfs.explore();
             QVector<CoreAI::DamageData> ret;
             QVector<QVector3D> moveTargetFields;
-            CoreAI::getAttackTargets(pUnit, action, &pfs, ret, moveTargetFields);
+            CoreAI::getAttackTargets(pUnit, action, ownUnit.pUnitPfs.get(), ret, moveTargetFields, ownUnit.movementPoints * maxDistance + 1);
+            QPoint ownPos = pUnit->Unit::getPosition();
             for (qint32 i2 = 0; i2 < ret.size(); i2++)
             {
                 QPoint pos(static_cast<qint32>(ret[i2].x), static_cast<qint32>(ret[i2].y));
                 if (!attackedUnits.contains(pos))
                 {
                     attackedUnits.append(pos);
-                    damage.append(ret[i2].hpDamage);
+                    if (GlobalUtils::getDistance(ownPos, pos) > ownUnit.movementPoints)
+                    {
+                        damage.append(ret[i2].hpDamage / (maxDistance));
+                    }
+                    else
+                    {
+                        damage.append(ret[i2].hpDamage);
+                    }
                 }
             }
         }
@@ -1969,13 +1978,13 @@ float NormalAi::getMapInfluenceModifier(Unit* pUnit, qint32 x, qint32 y) const
     float ownInfluence = m_InfluenceFrontMap.getInfluenceInfo(x, y).ownInfluence;
     float influence = 0.0f;
     float influenceDamage = 0.0f;
-    if (enemyInfluence > ownInfluence)
+    if (ownInfluence > 0)
     {
         influence = enemyInfluence / ownInfluence - 1.0f;
         if (qAbs(influence) > m_influenceIgnoreValue)
         {
             influenceDamage = influence * pUnit->getCoUnitValue() * m_influenceMultiplier;
-        }
+        }        
     }
     return influenceDamage;
 }

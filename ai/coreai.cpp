@@ -585,16 +585,15 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, spGameAction & pAction, QVecto
     }
 }
 
-void CoreAI::getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<DamageData>& ret, QVector<QVector3D>& moveTargetFields) const
+void CoreAI::getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<DamageData>& ret, QVector<QVector3D>& moveTargetFields, qint32 maxDistance) const
 {
     pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())), 0);
     getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
     if (pUnit->canMoveAndFire(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())))
-    {
-        
+    {        
         if (m_pMap != nullptr)
         {
-            QVector<QPoint> targets = pPfs->getAllNodePoints();
+            QVector<QPoint> targets = pPfs->getAllNodePoints(maxDistance);
             for (qint32 i2 = 0; i2 < targets.size(); i2++)
             {
                 Terrain* pTerrain = m_pMap->getTerrain(targets[i2].x(), targets[i2].y());

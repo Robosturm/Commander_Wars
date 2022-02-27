@@ -311,7 +311,7 @@ protected:
     /**
      * @brief calcVirtualDamage
      */
-    void calcVirtualDamage(spQmlVectorUnit & pUnits);
+    void calcVirtualDamage();
     /**
      * @brief calculateCaptureBonus
      * @param pUnit

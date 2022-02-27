@@ -14,6 +14,7 @@
 
 #include "coreengine/qmlvector.h"
 #include "coreengine/LUPDATE_MACROS.h"
+#include "coreengine/pathfindingsystem.h"
 
 class GameMap;
 class Unit;
@@ -301,7 +302,7 @@ public slots:
      * @param ret
      * @param moveTargetFields
      */
-    void getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<CoreAI::DamageData>& ret, QVector<QVector3D>& moveTargetFields) const;
+    void getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<CoreAI::DamageData>& ret, QVector<QVector3D>& moveTargetFields, qint32 maxDistance = PathFindingSystem::infinite) const;
     /**
      * @brief getAttacksFromField
      * @param pUnit
