@@ -76,7 +76,6 @@ public:
     {
         moveUnits = 0,
         moveToTargets,
-        moveIndirectsToTargets,
         loadUnits,
         moveTransporters,
         moveSupportUnits,

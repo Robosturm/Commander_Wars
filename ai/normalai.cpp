@@ -291,7 +291,7 @@ bool NormalAi::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
     else if (m_aiStep <= AISteps::moveUnits && repairUnits(pUnits, pBuildings, pEnemyBuildings)){}
     else if (m_aiStep <= AISteps::moveToTargets && refillUnits(pUnits, pBuildings, pEnemyBuildings)){}
     else if (m_aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
-    else if (m_aiStep <= AISteps::moveIndirectsToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
+    else if (m_aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
     else if (m_aiStep <= AISteps::loadUnits && !m_usedTransportSystem && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
     else if (m_aiStep <= AISteps::moveTransporters && !m_usedTransportSystem && moveTransporters(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
     else
@@ -822,13 +822,6 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
                 return true;
             }
         }
-    }
-
-    if (m_aiStep == AISteps::moveToTargets)
-    {
-        m_aiStep = AISteps::moveIndirectsToTargets;
-        m_EnemyUnits.clear();
-        m_OwnUnits.clear();
     }
     return false;
 }
@@ -1862,21 +1855,25 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & 
         for (qint32 i = 0; i < pUnits->size(); i++)
         {
             auto pUnit = pUnits->at(i);
-            if (!pUnit->getHasMoved())
+            MoveUnitData data;
+            data.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
+            data.movementPoints = pUnit->getMovementpoints(pUnit->Unit::getPosition());
+            data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
+            if (pUnit->getHasMoved())
             {
-                MoveUnitData data;
-                data.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
-                data.movementPoints = pUnit->getMovementpoints(pUnit->Unit::getPosition());
-                data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
-                data.pUnitPfs->setMovepoints(multiplier * data.movementPoints);
-                data.pUnitPfs->explore();
-                data.pUnit = pUnit;
-                if (enemy)
-                {
-                    m_VirtualEnemyData.append(0.0f);
-                }
-                pUnitData.append(data);
+                data.pUnitPfs->setMovepoints(data.movementPoints);
             }
+            else
+            {
+                data.pUnitPfs->setMovepoints(multiplier * data.movementPoints);
+            }
+            data.pUnitPfs->explore();
+            data.pUnit = pUnit;
+            if (enemy)
+            {
+                m_VirtualEnemyData.append(0.0f);
+            }
+            pUnitData.append(data);
         }
     }
     else
@@ -1885,8 +1882,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & 
         while (i < pUnitData.size())
         {
             if (pUnitData[i].pUnit->getHp() <= 0 ||
-                pUnitData[i].pUnit->getTerrain() == nullptr ||
-                pUnitData[i].pUnit->getHasMoved())
+                pUnitData[i].pUnit->getTerrain() == nullptr)
             {
                 pUnitData.removeAt(i);
                 if (enemy)
@@ -1914,11 +1910,20 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & 
                         qAbs(m_updatePoints[i].y() - pUnit->Unit::getY()) <=
                         pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())) * multiplier + 2)
                     {
+                        auto & unitData = pUnitData[i2];
                         pUnitData[i2].movementPoints = pUnit->getMovementpoints(pUnit->Unit::getPosition());
-                        pUnitData[i2].pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnitData[i2].pUnit.get());
+                        pUnitData[i2].pUnitPfs = spUnitPathFindingSystem::create(m_pMap, unitData.pUnit.get());
                         pUnitData[i2].pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
-                        pUnitData[i2].pUnitPfs->setMovepoints(multiplier * pUnitData[i2].movementPoints);
-                        pUnitData[i2].pUnitPfs->explore();
+                        if (pUnit->getHasMoved())
+                        {
+                            unitData.pUnitPfs->setMovepoints(unitData.movementPoints);
+                        }
+                        else
+                        {
+                            unitData.pUnitPfs->setMovepoints(multiplier * unitData.movementPoints);
+                        }
+                        unitData.pUnitPfs->setMovepoints(multiplier * unitData.movementPoints);
+                        unitData.pUnitPfs->explore();
                     }
                     updated.push_back(i2);
                 }
