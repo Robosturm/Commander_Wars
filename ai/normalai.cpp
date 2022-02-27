@@ -1849,7 +1849,7 @@ void NormalAi::updateAllUnitData(spQmlVectorUnit & pUnits)
 void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & pUnitData, bool enemy)
 {    
     CONSOLE_PRINT("NormalAi::updateEnemyData", Console::eDEBUG);
-    const qint32 multiplier = 3;
+    const qint32 multiplier = 2;
     if (pUnitData.size() == 0)
     {
         for (qint32 i = 0; i < pUnits->size(); i++)
