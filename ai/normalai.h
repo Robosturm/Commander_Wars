@@ -461,6 +461,10 @@ protected:
      */
     void updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & pUnitData, bool enemy);
     /**
+     * @brief createUnitInfluenceMap
+     */
+    void createUnitInfluenceMap();
+    /**
      * @brief getOwnSupportDamage
      * @param moveTarget
      * @param pEnemy
