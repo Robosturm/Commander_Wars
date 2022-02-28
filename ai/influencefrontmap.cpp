@@ -80,7 +80,8 @@ void InfluenceFrontMap::addBuildingInfluence()
                         qint32 dis = GlobalUtils::getDistance(curPos, pos);
                         if (dis > fullInfluenceRange)
                         {
-                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], income[buildingOwners[building]] * fullInfluenceRange / dis / buildLists[building].size());
+                            qint32 dayDivider = fullInfluenceRange / dis + 1;
+                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], income[buildingOwners[building]] / dayDivider / buildLists[building].size());
                         }
                         else
                         {
@@ -138,14 +139,13 @@ void InfluenceFrontMap::InfluenceInfo::updateOwner(Player* pOwner)
     for (qint32 player = 0; player < playerValues.size(); ++player)
     {
         qint32 influence = getPlayerInfluence(player);
-        if (playerId != player &&
-            pOwner->isPlayerIdEnemy(player) &&
+        if (pOwner->isPlayerIdEnemy(player) &&
             influence > enemyInfluence)
         {
             enemyInfluence = influence;
         }
         else if (pOwner->isPlayerIdAlly(player) &&
-                 ownInfluence > influence)
+                 influence > ownInfluence)
         {
             ownInfluence = influence;
         }
@@ -223,8 +223,8 @@ void InfluenceFrontMap::addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPf
             float multiplier = 1.0f;
             qint32 fieldCost = pPfs->getTargetCosts(point.x(), point.y());
             if (movePoints > 0 && fieldCost > 0 && fieldCost > movePoints)
-            {
-                multiplier = GlobalUtils::roundUp(static_cast<float>(movePoints) / static_cast<float>(fieldCost));
+            {                
+                multiplier = movePoints / fieldCost + 1;
             }
             m_InfluenceMap[point.x()][point.y()].increaseInfluence(owner, value * multiplier);
         }

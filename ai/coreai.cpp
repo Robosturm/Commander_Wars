@@ -494,7 +494,7 @@ void CoreAI::addMovementMap(Building* pBuilding, float damage)
     }
 }
 
-void CoreAI::getBestTarget(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields)
+void CoreAI::getBestTarget(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields, qint32 maxDistance)
 {
     pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())), 0);
     getBestAttacksFromField(pUnit, pAction, ret, moveTargetFields);
@@ -503,7 +503,7 @@ void CoreAI::getBestTarget(Unit* pUnit, spGameAction & pAction, UnitPathFindingS
         
         if (m_pMap != nullptr)
         {
-            QVector<QPoint> targets = pPfs->getAllNodePoints();
+            QVector<QPoint> targets = pPfs->getAllNodePoints(maxDistance);
             for (qint32 i2 = 0; i2 < targets.size(); i2++)
             {
                 if (m_pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr)

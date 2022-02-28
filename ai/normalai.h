@@ -67,6 +67,8 @@ class NormalAi : public CoreAI
         spUnit pUnit;
         spUnitPathFindingSystem pUnitPfs;
         qint32 movementPoints{0};
+        qint32 minFireRange{0};
+        qint32 maxFireRange{0};
     };
     struct ExpectedFundsData
     {
@@ -184,7 +186,7 @@ protected:
      * @param refillTarget
      * @return
      */
-    bool getBestRefillTarget(UnitPathFindingSystem & pfs, qint32 maxRefillCount, QPoint & moveTarget, QPoint & refillTarget)const;
+    bool getBestRefillTarget(UnitPathFindingSystem & pfs, qint32 maxRefillCount, QPoint & moveTarget, QPoint & refillTarget, qint32 movepoints)const;
     /**
      * @brief appendRefillTargets
      * @param actions
@@ -202,7 +204,7 @@ protected:
      * @param transporterTargets
      * @return
      */
-    bool moveUnit(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & pUnits, QStringList& actions,
+    bool moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVectorUnit & pUnits, QStringList& actions,
                   QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets,
                   bool shortenPathForTarget,
                   spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
@@ -228,7 +230,7 @@ protected:
      * @param targets
      * @return
      */
-    bool moveToUnloadArea(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & pUnits, QStringList& actions,
+    bool moveToUnloadArea(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVectorUnit & pUnits, QStringList& actions,
                           QVector<QVector3D>& targets,
                           spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
                           spQmlVectorUnit & pEnemyUnits);
@@ -253,7 +255,8 @@ protected:
      * @return
      */
     qint32 getMoveTargetField(Unit* pUnit, spQmlVectorUnit & pUnits, UnitPathFindingSystem& turnPfs,
-                              QVector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const;
+                              QVector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
+                              qint32 movePoints) const;
     /**
      * @brief moveToSafety
      * @param pUnit
@@ -262,7 +265,8 @@ protected:
      */
     std::tuple<QPoint, float, bool> moveToSafety(Unit* pUnit, spQmlVectorUnit & pUnits,
                                                  UnitPathFindingSystem& turnPfs, QPoint target,
-                                                 spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
+                                                 spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
+                                                 qint32 movePoints);
     /**
      * @brief captureBuildings
      * @param pUnits
@@ -289,7 +293,7 @@ protected:
      * @param turnPfs
      * @return
      */
-    bool suicide(spGameAction & pAction, Unit* pUnit, UnitPathFindingSystem& turnPfs);
+    bool suicide(spGameAction & pAction, Unit* pUnit, UnitPathFindingSystem& turnPfs, qint32 movepoints);
     /**
      * @brief getIndirectTarget
      * @param pUnit
@@ -341,7 +345,7 @@ protected:
     /**
      * @brief clearEnemyData
      */
-    void clearEnemyData();
+    void clearUnitData();
     /**
      * @brief buildUnits
      * @param pBuildings
@@ -613,6 +617,7 @@ private:
 
     QTimer m_timer;
     bool m_pause{false};
+    bool m_secondMoveRound{false};
 };
 
 #endif // NORMALAI_H

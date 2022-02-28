@@ -76,6 +76,7 @@ public:
     {
         moveUnits = 0,
         moveToTargets,
+        moveIndirectsToTargets,
         loadUnits,
         moveTransporters,
         moveSupportUnits,
@@ -286,7 +287,7 @@ public slots:
      * @param pPfs
      * @return target unit x, y and z = fonddamage
      */
-    void getBestTarget(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
+    void getBestTarget(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields, qint32 maxDistance = PathFindingSystem::infinite);
     /**
      * @brief getAttacksFromField
      * @param pUnit

@@ -1826,7 +1826,7 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
                     case GameEnums::RocketTarget_Money:
                     {
                         // calc funds damage
-                        damageDone += damagePoints / Unit::MAX_UNIT_HP * modifier * pUnit->getCosts();
+                        damageDone += damagePoints / Unit::MAX_UNIT_HP * modifier * pUnit->getCoUnitValue();
                         break;
                     }
                     case GameEnums::RocketTarget_HpHighMoney:
