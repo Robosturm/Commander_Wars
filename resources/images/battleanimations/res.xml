@@ -304,7 +304,7 @@
         <image file="flak/flak+ti+move+air+mask.png" />
         <image file="flak/flak+pf+move+air+mask.png" />
         <image file="flak/flak+ac+stop+air+mask.png" cols = "4" />
-        <image file="flak/flak+bd+stop+air+mask.png" />
+        <image file="flak/flak+bd+stop+air+mask.png" cols = "4" />
         <image file="flak/flak+bh+stop+air+mask.png" cols = "4" />
         <image file="flak/flak+bm+stop+air+mask.png" cols = "4" />
         <image file="flak/flak+dm+stop+air+mask.png" />

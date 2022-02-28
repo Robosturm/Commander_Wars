@@ -8,38 +8,38 @@ var PLAYER =
         return PLAYER.defaultColors.length - 1;
     },
     // mapping table for table color to display color
-    defaultColors : [["#f00008", "#f05038", "os"], // os
-                     ["#0098f8", "#6058f0", "bm"], // bm
-                     ["#00c010", "#60e058", "ge"], // ge
-                     ["#d08000", "#d8d008", "yc"], // yc
-                     ["#6038a0", "#978e97", "bh"], // bh
-                     ["#5c5663", "#b552c6", "bg"], // bg
-                     ["#797b78", "#4a424a", "ma"], // ma
-                     ["#e88613", "#e88613", "ac"], // ac
-                     ["#bc8248", "#8f541a", "bd"], // bd
-                     ["#bf901c", "#a58c31", "gs"], // gs
-                     ["#ff33cc", "#ff33cc", "pf"], // pf
-                     ["#17a195", "#17a195", "ti"], // ti
-                     ["#800080", "#474370", "dm"], // dm
-                     ["#01cbff", "#01cbff", ""], // cyan
-                     ["#006400", "#006400", ""], // dark_green
-                     ["#ff0000", "#ff0000", ""], // red
-                     ["#c4443d", "#943142", ""], // red_fire
-                     ["#a29db9", "#7d798e", ""], // light_grey
-                     ["#617c0e", "#617c0e", ""], // olive
-                     ["#2342ba", "#2342ba", ""], // cobalt_ice
-                     ["#85927b", "#85927b", ""], // silver
-                     ["#6b01db", "#6b01db", ""], // purple
-                     ["#aa003f", "#aa003f", "cherrystone"],
-                     ["#366eca", "#366eca", "felheim"],
-                     ["#77aa08", "#77aa08", "gloomwood"],
-                     ["#d39c36", "#d39c36", "heavensong"],
-                     ["#8227b4", "#8227b4", "requiem"],
-                     ["#20918b", "#20918b", "aurania"],
-                     ["#bd00a4", "#bd00a4", "cacophany"],
-                     ["#f97727", "#f97727", "silmor"],
-                     ["#6048a0", "#6048a0", "fumomance"],
-                     ["#908890", "#908890", "neutral"], // neutral
+    defaultColors : [["#f00008", "#f05038", "os", "orange_star",], // os
+                     ["#0098f8", "#6058f0", "bm", "blue_moon",], // bm
+                     ["#00c010", "#60e058", "ge", "green_earth",], // ge
+                     ["#d08000", "#d8d008", "yc", "yellow_comet",], // yc
+                     ["#6038a0", "#978e97", "bh", "black_hole",], // bh
+                     ["#5c5663", "#b552c6", "bg", "bolt_guard",], // bg
+                     ["#797b78", "#4a424a", "ma", "metal_army",], // ma
+                     ["#e88613", "#e88613", "ac", "amber_corona",], // ac
+                     ["#bc8248", "#8f541a", "bd", "brown_desert",], // bd
+                     ["#bf901c", "#a58c31", "gs", "golden_sun",], // gs
+                     ["#ff33cc", "#ff33cc", "pf", "pink_frontier",], // pf
+                     ["#17a195", "#17a195", "ti", "teal_isle",], // ti
+                     ["#800080", "#474370", "dm", "dark_matter",], // dm
+                     ["#01cbff", "#01cbff", "",   "cyan",], // cyan
+                     ["#006400", "#006400", "",   "dark_green",], // dark_green
+                     ["#ff0000", "#ff0000", "",   "red",], // red
+                     ["#c4443d", "#943142", "",   "red_fire",], // red_fire
+                     ["#a29db9", "#7d798e", "",   "light_grey",], // light_grey
+                     ["#617c0e", "#617c0e", "",   "olive",], // olive
+                     ["#2342ba", "#2342ba", "",   "cobalt_ice",], // cobalt_ice
+                     ["#85927b", "#85927b", "",   "silver",], // silver
+                     ["#6b01db", "#6b01db", "",   "purple",], // purple
+                     ["#aa003f", "#aa003f", "",   "cherrystone",], // cherrystone
+                     ["#366eca", "#366eca", "",   "felheim",], // felheim
+                     ["#77aa08", "#77aa08", "",   "gloomwood",], // gloomwood
+                     ["#d39c36", "#d39c36", "",   "heavensong",], // heavensong
+                     ["#8227b4", "#8227b4", "",   "requiem",], // requiem
+                     ["#20918b", "#20918b", "",   "aurania",], // aurania
+                     ["#bd00a4", "#bd00a4", "",   "cacophany",], // cacophany
+                     ["#f97727", "#f97727", "",   "silmor",], // silmor
+                     ["#6048a0", "#6048a0", "",   "fumomance",], // fumomance
+                     ["#908890", "#908890", "",   "neutral"], // neutral
                     ],
 
     getDefaultColor : function(index)
@@ -93,34 +93,11 @@ var PLAYER =
         return -1;
     },
 
-    colorTables : [ "orange_star",
-                    "blue_moon",
-                    "green_earth",
-                    "yellow_comet",
-                    "black_hole",
-                    "bolt_guard",
-                    "metal_army",
-                    "amber_corona",
-                    "brown_desert",
-                    "golden_sun",
-                    "pink_frontier",
-                    "teal_isle",
-                    "dark_matter",
-                    "cyan",
-                    "dark_green",
-                    "red",
-                    "red_fire",
-                    "light_grey",
-                    "olive",
-                    "cobalt_ice",
-                    "silver",
-                    "purple",
-                    "neutral"],
     getColorTable : function(index)
     {
-        if (index < PLAYER.colorTables.length)
+        if (index < PLAYER.defaultColors.length)
         {
-            return PLAYER.colorTables[index];
+            return PLAYER.defaultColors[index][3];
         }
         return "";
     },
