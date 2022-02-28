@@ -760,11 +760,11 @@
         <image file="lander/lander+ma.png" />
         <image file="lander/lander+ma+mask.png" />        
         <!-- light_tank -->
-        <image file="light_tank/light_tank+ac+fire+mask.png" />
+        <image file="light_tank/light_tank+ac+fire+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bd+fire+mask.png" />
         <image file="light_tank/light_tank+bh+fire+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bm+fire+mask.png" cols = "4" />
-        <image file="light_tank/light_tank+dm+fire+mask.png" />
+        <image file="light_tank/light_tank+dm+fire+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ge+fire+mask.png" cols = "4" />
         <image file="light_tank/light_tank+gs+fire+mask.png" cols = "4" />
         <image file="light_tank/light_tank+os+fire+mask.png" cols = "4" />
@@ -796,11 +796,11 @@
         <image file="light_tank/light_tank+ma+mg+mask.png" />
         <image file="light_tank/light_tank+pf+mg+mask.png" />
         <image file="light_tank/light_tank+ti+mg+mask.png" />
-        <image file="light_tank/light_tank+ac+mg+fire+mask.png" />
+        <image file="light_tank/light_tank+ac+mg+fire+mask.png" cols = "2" />
         <image file="light_tank/light_tank+bd+mg+fire+mask.png" />
         <image file="light_tank/light_tank+bh+mg+fire+mask.png" cols = "2" />
         <image file="light_tank/light_tank+bm+mg+fire+mask.png" cols = "2" />
-        <image file="light_tank/light_tank+dm+mg+fire+mask.png" />
+        <image file="light_tank/light_tank+dm+mg+fire+mask.png" cols = "2" />
         <image file="light_tank/light_tank+ge+mg+fire+mask.png" cols = "2" />
         <image file="light_tank/light_tank+gs+mg+fire+mask.png" cols = "2" />
         <image file="light_tank/light_tank+os+mg+fire+mask.png" cols = "2" />
@@ -808,11 +808,11 @@
         <image file="light_tank/light_tank+ma+mg+fire+mask.png" cols = "2" />
         <image file="light_tank/light_tank+pf+mg+fire+mask.png" cols = "2" />
         <image file="light_tank/light_tank+ti+mg+fire+mask.png" />
-        <image file="light_tank/light_tank+ac+mg+fire+air+mask.png" />
+        <image file="light_tank/light_tank+ac+mg+fire+air+mask.png" cols = "2" />
         <image file="light_tank/light_tank+bd+mg+fire+air+mask.png" />
         <image file="light_tank/light_tank+bh+mg+fire+air+mask.png" cols = "2" />
         <image file="light_tank/light_tank+bm+mg+fire+air+mask.png" cols = "2" />
-        <image file="light_tank/light_tank+dm+mg+fire+air+mask.png" />
+        <image file="light_tank/light_tank+dm+mg+fire+air+mask.png" cols = "2" />
         <image file="light_tank/light_tank+ge+mg+fire+air+mask.png" cols = "2" />
         <image file="light_tank/light_tank+gs+mg+fire+air+mask.png" cols = "2" />
         <image file="light_tank/light_tank+os+mg+fire+air+mask.png" cols = "2" />
@@ -820,53 +820,53 @@
         <image file="light_tank/light_tank+ma+mg+fire+air+mask.png" cols = "2" />
         <image file="light_tank/light_tank+pf+mg+fire+air+mask.png" cols = "2" />
         <image file="light_tank/light_tank+ti+mg+fire+air+mask.png" />
-        <image file="light_tank/light_tank+ac+mg+move+mask.png" />
+        <image file="light_tank/light_tank+ac+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bd+mg+move+mask.png" />
         <image file="light_tank/light_tank+bh+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bm+mg+move+mask.png" cols = "4" />
-        <image file="light_tank/light_tank+dm+mg+move+mask.png" />
+        <image file="light_tank/light_tank+dm+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ge+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+gs+mg+move+mask.png" cols = "3" />
         <image file="light_tank/light_tank+os+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ma+mg+move+mask.png" />
-        <image file="light_tank/light_tank+pf+mg+move+mask.png" />
+        <image file="light_tank/light_tank+pf+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ti+mg+move+mask.png" />
-        <image file="light_tank/light_tank+ac+mg+stop+mask.png" />
+        <image file="light_tank/light_tank+ac+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bd+mg+stop+mask.png" />
         <image file="light_tank/light_tank+bh+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bm+mg+stop+mask.png" cols = "4" />
-        <image file="light_tank/light_tank+dm+mg+stop+mask.png" />
+        <image file="light_tank/light_tank+dm+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ge+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+gs+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+os+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ma+mg+stop+mask.png" />
-        <image file="light_tank/light_tank+pf+mg+stop+mask.png" />
+        <image file="light_tank/light_tank+pf+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ti+mg+stop+mask.png" />
-        <image file="light_tank/light_tank+ac+move+mask.png" />
+        <image file="light_tank/light_tank+ac+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bd+move+mask.png" />
         <image file="light_tank/light_tank+bh+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bm+move+mask.png" cols = "4" />
-        <image file="light_tank/light_tank+dm+move+mask.png" />
+        <image file="light_tank/light_tank+dm+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ge+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+gs+move+mask.png" cols = "3" />
         <image file="light_tank/light_tank+os+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ma+move+mask.png" />
-        <image file="light_tank/light_tank+pf+move+mask.png" />
+        <image file="light_tank/light_tank+pf+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ti+move+mask.png" />
-        <image file="light_tank/light_tank+ac+stop+mask.png" />
+        <image file="light_tank/light_tank+ac+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bd+stop+mask.png" />
         <image file="light_tank/light_tank+bh+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bm+stop+mask.png" cols = "4" />
-        <image file="light_tank/light_tank+dm+stop+mask.png" />
+        <image file="light_tank/light_tank+dm+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ge+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+gs+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+os+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ma+stop+mask.png" />
-        <image file="light_tank/light_tank+pf+stop+mask.png" />
+        <image file="light_tank/light_tank+pf+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ti+stop+mask.png" />
         <!-- mech -->
         <image file="mech/mech+gs.png" />
