@@ -37,7 +37,7 @@ var PLAYER =
                      ["#8227b4", "#8227b4", "",   "requiem",], // requiem
                      ["#20918b", "#20918b", "",   "aurania",], // aurania
                      ["#bd00a4", "#bd00a4", "",   "cacophany",], // cacophany
-                     ["#f97727", "#f97727", "",   "silmor",], // silmor
+                     ["#cd4c18", "#cd4c18", "",   "silmor",], // silmor
                      ["#46324c", "#46324c", "",   "fumomance",], // fumomance
                      ["#908890", "#908890", "",   "neutral"], // neutral
                     ],
