@@ -1024,10 +1024,10 @@ void GameMap::setZoom(float zoom)
     }
     // limit zoom
 
-    float minLimit = 1.0f;
+    float minLimit = 1.0f / 4.0f;
     if (Mainapp::getInstance()->devicePixelRatio() >= 2.0f)
     {
-        minLimit = 0.5f;
+        minLimit = 1.0f / 8.0f;
     }
     if (curZoom > 16.0f)
     {
@@ -1573,7 +1573,6 @@ void GameMap::clearMap()
     m_players.clear();
     m_Rules->resetWeatherSprites();
     m_Rules->resetFogSprites();
-    removeChildren();
 }
 
 QString GameMap::readMapName(QDataStream& pStream)

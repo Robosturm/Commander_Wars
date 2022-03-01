@@ -144,6 +144,7 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"MaxCloseDistanceDamageBonus", "Production", &m_maxCloseDistanceDamageBonus, 1.0f, 1.1f, 10.0f},
                   {"MinCloseDistanceDamageBonus", "Production", &m_minCloseDistanceDamageBonus, 1.0f, 1.1f, 10.0f},
                   {"SameFundsMatchUpBonus", "Production", &m_sameFundsMatchUpBonus, 16.0f, 10.0f, 60.0f},
+                  {"SameFundsMatchUpMovementMalus", "Production", &m_sameFundsMatchUpMovementMalus, 0.3f, 0.1f, 1.0f},
                   {"AttackCountBonus", "Production", &m_attackCountBonus, 25.0f, 5.0f, 60.0f},
                   {"MaxOverkillBonus", "Production", &m_maxOverkillBonus, 2.0f, 1.5f, 10.0f},
                   {"CounterDamageBonus", "Production", &m_counterDamageBonus, 25.0f, 1.0f, 100.0f},
@@ -156,6 +157,7 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
     {
         loadIni( "normal/" + configurationFile);
     }
+    m_BuildingChanceModifier.insert("MOTORBIKE", 0.75f);
 }
 
 void NormalAi::process()
@@ -1874,42 +1876,22 @@ void NormalAi::createUnitInfluenceMap()
 
 void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & pUnitData, bool enemy)
 {    
-    CONSOLE_PRINT("NormalAi::updateEnemyData", Console::eDEBUG);
     const qint32 multiplier = 3;
+    CONSOLE_PRINT("NormalAi::updateEnemyData", Console::eDEBUG);
     if (pUnitData.size() == 0)
     {
         for (qint32 i = 0; i < pUnits->size(); i++)
         {
-            auto pUnit = pUnits->at(i);
+            auto* pUnit = pUnits->at(i);
             MoveUnitData data;
-            data.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
-            data.movementPoints = pUnit->getMovementpoints(pUnit->Unit::getPosition());
-            data.minFireRange = pUnit->getMinRange(pUnit->Unit::getPosition());
-            data.maxFireRange = pUnit->getMaxRange(pUnit->Unit::getPosition());
-            if (enemy)
-            {
-                data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
-            }
-            if (pUnit->getHasMoved())
-            {
-                data.pUnitPfs->setMovepoints(multiplier * data.movementPoints - 1);
-            }
-            else
-            {
-                data.pUnitPfs->setMovepoints(multiplier * data.movementPoints);
-            }
-            data.pUnitPfs->explore();
-            data.pUnit = pUnit;
-            if (enemy)
-            {
-                m_VirtualEnemyData.append(0.0f);
-            }
+            createUnitData(pUnit, data, enemy, multiplier);
             pUnitData.append(data);
         }
     }
     else
     {
         qint32 i = 0;
+
         while (i < pUnitData.size())
         {
             if (pUnitData[i].pUnit->getHp() <= 0 ||
@@ -1927,6 +1909,29 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & 
             }
         }
     }
+    if (!enemy && m_aiStep >= AISteps::moveTransporters)
+    {
+        for (qint32 i = 0; i < pUnits->size(); i++)
+        {
+            auto* pUnit = pUnits->at(i);
+            bool found = false;
+            for (auto & unitData : pUnitData)
+            {
+                if (unitData.pUnit == pUnit)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                MoveUnitData data;
+                createUnitData(pUnit, data, enemy, multiplier);
+                pUnitData.append(data);
+            }
+        }
+    }
+
     QVector<qint32> updated;
     for (qint32 i = 0; i < m_updatePoints.size(); i++)
     {
@@ -1942,31 +1947,38 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & 
                         qAbs(m_updatePoints[i].y() - pUnit->Unit::getY()) <=
                         unitData.movementPoints * multiplier + 2)
                     {
-                        qint32 movePoints = pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-
-                        unitData.movementPoints = movePoints;
-                        unitData.minFireRange = pUnit->getMinRange(pUnit->Unit::getPosition());
-                        unitData.maxFireRange = pUnit->getMaxRange(pUnit->Unit::getPosition());
-                        unitData.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, unitData.pUnit.get());
-                        if (enemy)
-                        {
-                            unitData.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
-                        }
-                        if (pUnit->getHasMoved())
-                        {
-                            unitData.pUnitPfs->setMovepoints(multiplier * unitData.movementPoints - 1);
-                        }
-                        else
-                        {
-                            unitData.pUnitPfs->setMovepoints(multiplier * unitData.movementPoints);
-                        }
-                        unitData.pUnitPfs->setMovepoints(multiplier * unitData.movementPoints);
-                        unitData.pUnitPfs->explore();
+                        createUnitData(pUnit, unitData, enemy, multiplier);
                     }
                     updated.push_back(i2);
                 }
             }
         }
+    }
+}
+
+void NormalAi::createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, qint32 moveMultiplier)
+{
+    data.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
+    data.movementPoints = pUnit->getMovementpoints(pUnit->Unit::getPosition());
+    data.minFireRange = pUnit->getMinRange(pUnit->Unit::getPosition());
+    data.maxFireRange = pUnit->getMaxRange(pUnit->Unit::getPosition());
+    if (enemy)
+    {
+        data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
+    }
+    if (pUnit->getHasMoved())
+    {
+        data.pUnitPfs->setMovepoints(moveMultiplier * data.movementPoints - 1);
+    }
+    else
+    {
+        data.pUnitPfs->setMovepoints(moveMultiplier * data.movementPoints);
+    }
+    data.pUnitPfs->explore();
+    data.pUnit = pUnit;
+    if (enemy)
+    {
+        m_VirtualEnemyData.append(0.0f);
     }
 }
 
@@ -2801,7 +2813,7 @@ float NormalAi::calcSameFundsMatchUpScore(Unit& dummy, const QStringList & build
                 }
                 else if (matchUpMovepoints > movepoints)
                 {
-                    dmg *= 0.5f;
+                    dmg *= m_sameFundsMatchUpMovementMalus;
                 }
                 resultScore += dmg;
                 ++count;

@@ -202,6 +202,14 @@ var Constructor = function()
     {
         if (unit.getUnitID() === "K_HELI")
         {
+            return 8;
+        }
+        else if (unit.getUnitType() === GameEnums.UnitType_Infantry)
+        {
+            return 5;
+        }
+        else if (unit.getUnitType() === GameEnums.UnitType_Air)
+        {
             return 3;
         }
         return 0;

@@ -79,6 +79,10 @@ namespace oxygine
         }
 
         v = calcEase(m_ease, v);
+        if (v > 1.0f)
+        {
+            v = 1.0f;
+        }
         return v;
     }
 

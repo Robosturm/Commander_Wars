@@ -6569,5 +6569,18 @@
         <file>resources/images/battleanimations/GeneralSprites/bullet_megatank.png</file>
         <file>resources/images/battleanimations/GeneralSprites/bullet_tank.png</file>
         <file>resources/objects/rewind.png</file>
+        <file>resources/images/building/nest_center_laser_left+destroyed.png</file>
+        <file>resources/images/building/nest_center_laser_middle+destroyed.png</file>
+        <file>resources/images/building/nest_center_laser_right+destroyed.png</file>
+        <file>resources/images/building/nest_laser+destroyed.png</file>
+        <file>resources/images/building/nest_wall+0.png</file>
+        <file>resources/images/building/nest_wall+1.png</file>
+        <file>resources/images/building/nest_wall+2.png</file>
+        <file>resources/images/building/nest_wall+3.png</file>
+        <file>resources/images/battleanimations/sniper/sniper+yc.png</file>
+        <file>resources/scripts/building/znest_center_laser_left_destroyed.js</file>
+        <file>resources/scripts/building/znest_center_laser_middle_destroyed.js</file>
+        <file>resources/scripts/building/znest_center_laser_right_destroyed.js</file>
+        <file>resources/scripts/building/znest_nest_laser_destroyed.js</file>
     </qresource>
 </RCC>

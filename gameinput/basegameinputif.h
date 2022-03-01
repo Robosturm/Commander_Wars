@@ -81,7 +81,7 @@ protected:
     Player* m_pPlayer{nullptr};
     GameEnums::AiTypes m_AiType{GameEnums::AiTypes_Human};
     bool m_enableNeutralTerrainAttack{true};
-    QVector<std::tuple<QString, float>> m_BuildingChanceModifier;
+    QMap<QString, float> m_BuildingChanceModifier;
     /**
      * @brief m_MoveCostMap move cost modifier map for the ai
      */
