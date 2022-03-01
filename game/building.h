@@ -52,10 +52,7 @@ public:
      * @brief setTerrain
      * @param pTerrain smart pointer to the terrain this building is placed on
      */
-    inline void setTerrain(Terrain* pTerrain)
-    {
-        m_pTerrain = pTerrain;
-    }
+    void setTerrain(Terrain* pTerrain);
     /**
      * @brief canBuildingBePlaced
      * @param terrainID
@@ -106,10 +103,40 @@ public:
      * @param syncTime
      */
     void syncAnimation(oxygine::timeMS syncTime);
-
-signals:
+    /**
+     * @brief Unit::getSortValues
+     * @return
+     */
+    inline const QVector<qint32> &getSortValues() const
+    {
+        return m_sortValues;
+    }
+    /**
+     * @brief Unit::setSortValues
+     * @param newSortValues
+     */
+    inline void setSortValues(const QVector<qint32> &newSortValues)
+    {
+        m_sortValues = newSortValues;
+    }
 
 public slots:
+    /**
+     * @brief usesMapLayer
+     * @return
+     */
+    bool usesMapLayer();
+    /**
+     * @brief getShowInEditor
+     * @param unitId
+     * @return if the given building should be shown in the editor
+     */
+    static bool getShowInEditor(QString building);
+    /**
+     * @brief getImageSize
+     * @return the size of an field in pixel
+     */
+    static qint32 getImageSize();
     /**
      * @brief getPMap
      * @return
@@ -200,13 +227,17 @@ public slots:
      * @param sprite the sprite id
      * @param addPlayerColor true for adding player color to the sprite
      */
-    void loadSprite(const QString & sprite, bool addPlayerColor, qint32 frameTime = 400);
+    void loadSprite(const QString & sprite, bool addPlayerColor, qint32 frameTime = 400, QPoint pos = QPoint(0, 0));
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      */
-    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime = 400);
+    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime = 400, QPoint pos = QPoint(0, 0));
+    /**
+     * @brief unloadSprites
+     */
+    void unloadSprites();
     /**
      * @brief updatePlayerColor
      * @param visible
@@ -469,6 +500,10 @@ private:
     qint32 m_VisionHigh{0};
     ScriptVariables m_Variables;
     GameMap* m_pMap{nullptr};
+    /**
+     * @brief m_sortValues values sto
+     */
+    QVector<qint32> m_sortValues;
 };
 
 #endif // BUILDING_H

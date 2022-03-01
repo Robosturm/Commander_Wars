@@ -123,17 +123,20 @@ var Constructor = function()
                                               1, 1.0, 2, i * BATTLEANIMATION.defaultFrameDelay * 2, true,
                                               100, -1, 0, 0, 180);
             }
+            sprite.addSpriteScreenshake(8, 0.95, 800, 200);
         }
         else
         {
+            sprite.loadSprite("bullet_artillery",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+                              1, 1.0, 0, 0, true, true, 50);
             sprite.loadSprite("artillery_heavy_hit",  false, 5, Qt.point(-16, 20),
-                              1, 1.0, 0, 0, true);
+                              1, 1.0, 0, 100, true);
+            sprite.addSpriteScreenshake(8, 0.95, 800, 300);
         }
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("impact_explosion.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
-        sprite.addSpriteScreenshake(8, 0.95, 800, 200);
 
     };
 
@@ -145,7 +148,7 @@ var Constructor = function()
         }
         else
         {
-            return 200 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+            return 300 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
         }
     };
 

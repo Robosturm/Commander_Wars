@@ -4,6 +4,7 @@ BuildingSpriteManager::BuildingSpriteManager()
     : RessourceManagement<BuildingSpriteManager>("/images/building/res.xml",
                                                   "/scripts/building")
 {
+    Interpreter::setCppOwnerShip(this);
     setObjectName("BuildingSpriteManager");
 }
 

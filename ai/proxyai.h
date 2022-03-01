@@ -37,7 +37,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 1;
+        return 4;
     }
     /**
      * @brief process empty impl

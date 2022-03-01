@@ -188,6 +188,7 @@ qint32 BaseGameInputIF::getMoveCostMapValue(qint32 x, qint32 y)
     return 0.0f;
 }
 
+
 void BaseGameInputIF::centerCameraOnAction(GameAction* pAction)
 {
     if (Settings::getAutoCamera())

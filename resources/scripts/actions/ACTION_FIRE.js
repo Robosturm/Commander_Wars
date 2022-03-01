@@ -108,7 +108,7 @@ var Constructor = function()
     };
 
     this.calcAttackerWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField,
-                                             defUnit, x, y, defenderTakenDamage, luckMode, result, rangeCheck = 0)
+                                             defUnit, x, y, defenderTakenDamage, luckMode, result, rangeCheck = 0, fast)
     {
         var baseDamage1 = -1;
         var baseDamage2 = -1;
@@ -129,12 +129,26 @@ var Constructor = function()
         {
             if (baseDamage1 >= baseDamage2)
             {
-                result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID1, attackerTakenDamage, actionTargetField, defUnit, luckMode);
+                if (fast)
+                {
+                    result.x = baseDamage1;
+                }
+                else
+                {
+                    result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID1, attackerTakenDamage, actionTargetField, defUnit, luckMode);
+                }
                 result.y = 0;
             }
             else
             {
-                result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID2, attackerTakenDamage, actionTargetField, defUnit, luckMode);
+                if (fast)
+                {
+                    result.x = baseDamage2;
+                }
+                else
+                {
+                    result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID2, attackerTakenDamage, actionTargetField, defUnit, luckMode);
+                }
                 result.y = 1;
             }
         }
@@ -306,15 +320,15 @@ var Constructor = function()
 
     this.calcBattleDamage2 = function(map, action, attacker, atkPos, x, y, luckMode)
     {
-        return ACTION_FIRE.calcBattleDamage3(map, action, attacker, 0, atkPos.x, atkPos.y, null, x, y, 0, luckMode);
+        return ACTION_FIRE.calcBattleDamage3(map, action, attacker, 0, atkPos.x, atkPos.y, null, x, y, 0, luckMode, luckMode);
     };
 
-    this.calcBattleDamage3 = function(map, action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, ignoreOutOfVisionRange = false)
+    this.calcBattleDamage3 = function(map, action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckModeAtk, luckModeDef, ignoreOutOfVisionRange = false)
     {
-        return ACTION_FIRE.calcBattleDamage4(map, action, attacker, 0, atkPosX, atkPosY, defender, x, y, 0, luckMode, luckMode, ignoreOutOfVisionRange);
+        return ACTION_FIRE.calcBattleDamage4(map, action, attacker, 0, atkPosX, atkPosY, defender, x, y, 0, luckModeAtk, luckModeDef, ignoreOutOfVisionRange);
     }
 
-    this.calcBattleDamage4 = function(map, action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, luckModeDefender, ignoreOutOfVisionRange = false)
+    this.calcBattleDamage4 = function(map, action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, luckModeDefender, ignoreOutOfVisionRange = false, fast = false)
     {
         var result = Qt.rect(-1, -1, -1, -1);
         if (map.onMap(x, y))
@@ -340,13 +354,19 @@ var Constructor = function()
                         var atkFirststrike = attacker.getFirstStrike(actionTargetField, defUnit, false);
                         if (defFirststrike && !atkFirststrike)
                         {
-                            result = ACTION_FIRE.calcDefenderWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckModeDefender, result);
-                            result = ACTION_FIRE.calcAttackerWeaponDamage(action, unit, result.width + attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result);
+                            if (!fast)
+                            {
+                                result = ACTION_FIRE.calcDefenderWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckModeDefender, result);
+                            }
+                            result = ACTION_FIRE.calcAttackerWeaponDamage(action, unit, result.width + attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result, 0, fast);
                         }
                         else
                         {
-                            result = ACTION_FIRE.calcAttackerWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result);
-                            result = ACTION_FIRE.calcDefenderWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, result.x + defenderTakenDamage, luckModeDefender, result);
+                            result = ACTION_FIRE.calcAttackerWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result, 0, fast);
+                            if (!fast)
+                            {
+                                result = ACTION_FIRE.calcDefenderWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, result.x + defenderTakenDamage, luckModeDefender, result);
+                            }
                         }
                     }
                     else
@@ -413,6 +433,10 @@ var Constructor = function()
         data.setZLabelColor("#ff4500");
         data.setZLabelText(qsTr("Damage"))
         data.setShowZData(true);
+        var aiType = map.getCurrentPlayer().getBaseGameInput().getAiType();
+        var detailedForecast = settings.getShowDetailedBattleForcast();
+        var result = Qt.rect(-1, -1, -1, -1);
+        var owner = unit.getOwner();
         // check all fields we can attack
         for (var i = 0; i < fields.size(); i++)
         {
@@ -420,23 +444,22 @@ var Constructor = function()
             var x = field.x + actionTargetField.x;
             var y = field.y + actionTargetField.y;
             // generally attacks on shrouded fields are forbidden
-            if (map.onMap(x, y) && unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
+            if (map.onMap(x, y) && owner.getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {
-                if (map.getCurrentPlayer().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human &&
-                        settings.getShowDetailedBattleForcast())
+                if (aiType === GameEnums.AiTypes_Human && detailedForecast)
                 {
                     var defUnit = map.getTerrain(x, y).getUnit();
                     if (defUnit !== null)
                     {
-                        var resultNoLuckDmg = ACTION_FIRE.calcBattleDamage4(map, action, action.getTargetUnit(), 0,
+                        var resultNoLuckDmg = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
                                                                             actionTargetField.x, actionTargetField.y, null, x, y, 0,
                                                                             GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off);
                         if (resultNoLuckDmg.x >= 0.0)
                         {
-                            var resultMaxDmg = ACTION_FIRE.calcBattleDamage4(map, action, action.getTargetUnit(), 0,
+                            var resultMaxDmg = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
                                                                              actionTargetField.x, actionTargetField.y, null, x, y, 0,
                                                                              GameEnums.LuckDamageMode_Max, GameEnums.LuckDamageMode_Min);
-                            var resultMinDmg = ACTION_FIRE.calcBattleDamage4(map, action, action.getTargetUnit(), 0,
+                            var resultMinDmg = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
                                                                              actionTargetField.x, actionTargetField.y, null, x, y, 0,
                                                                              GameEnums.LuckDamageMode_Min, GameEnums.LuckDamageMode_Max);
 
@@ -449,7 +472,7 @@ var Constructor = function()
                     }
                     else
                     {
-                        var result = ACTION_FIRE.calcBattleDamage(map, action, x, y, GameEnums.LuckDamageMode_Off);
+                        result = ACTION_FIRE.calcBattleDamage(map, action, x, y, GameEnums.LuckDamageMode_Off);
                         if (result.x >= 0.0)
                         {
                             data.addPoint(Qt.point(x, y));
@@ -459,7 +482,19 @@ var Constructor = function()
                 }
                 else
                 {
-                    var result = ACTION_FIRE.calcBattleDamage(map, action, x, y, GameEnums.LuckDamageMode_Off);
+                    if (aiType === GameEnums.AiTypes_Human)
+                    {
+                        result = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
+                                                                   actionTargetField.x, actionTargetField.y, null, x, y, 0,
+                                                                   GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off);
+                    }
+                    else
+                    {
+                        result = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
+                                                               actionTargetField.x, actionTargetField.y, null, x, y, 0,
+                                                               GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off,
+                                                               false, true);
+                    }
                     if (result.x >= 0.0)
                     {
                         data.addPoint(Qt.point(x, y));
@@ -518,7 +553,7 @@ var Constructor = function()
         var currentPlayer = map.getCurrentPlayer();
         var currentViewPlayer = map.getCurrentViewPlayer();
         if (currentViewPlayer.getFieldVisible(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY) &&
-                currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
+            currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
         {
             var animation2 = GameAnimationFactory.createAnimation(map, ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY, 70);
             animation2.addSprite("cursor+attack", -map.getImageSize() / 3, -map.getImageSize() / 3, 0, 2, 0, 2);
@@ -571,7 +606,7 @@ var Constructor = function()
     };
     this.battle = function(map, attacker, attackerDamage, attackerWeapon,
                            defenderX, defenderY, defenderDamage, defenderWeapon,
-                           dontKillUnits)
+                           dontKillUnits, simulation = false)
     {
         var defTerrain = map.getTerrain(defenderX, defenderY);
         var defBuilding = defTerrain.getBuilding();
@@ -593,8 +628,10 @@ var Constructor = function()
             var power = 0;
 
             // we're attacking do recording
-            map.getGameRecorder().attacked(attacker.getOwner().getPlayerID(), attackerDamage);
-
+            if (!simulation)
+            {
+                map.getGameRecorder().attacked(attacker.getOwner().getPlayerID(), attackerDamage);
+            }
             // gain power based on damage
             if (damage > defUnit.getHp())
             {
@@ -609,16 +646,20 @@ var Constructor = function()
                 defUnit.getOwner().gainPowerstar(power, Qt.point(defUnit.getX(), defUnit.getY()), damage, true, false);
                 attacker.getOwner().gainPowerstar(power, Qt.point(attacker.getX(), attacker.getY()), damage, false, false);
             }
+
             // deal damage
             defUnit.setHp(defUnit.getHp() - attackerDamage / 10.0);
             // reduce attacker ammo
-            if (attackerWeapon === 0)
+            if (!simulation)
             {
-                attacker.reduceAmmo1(1);
-            }
-            else
-            {
-                attacker.reduceAmmo2(1);
+                if (attackerWeapon === 0)
+                {
+                    attacker.reduceAmmo1(1);
+                }
+                else
+                {
+                    attacker.reduceAmmo2(1);
+                }
             }
             // set counter damage
             if (counterdamage > 0)
@@ -641,13 +682,16 @@ var Constructor = function()
                 // deal damage
                 attacker.setHp(attacker.getHp() - defenderDamage / 10.0);
                 // reduce ammo
-                if (defenderWeapon === 0)
+                if (!simulation)
                 {
-                    defUnit.reduceAmmo1(1);
-                }
-                else
-                {
-                    defUnit.reduceAmmo2(1);
+                    if (defenderWeapon === 0)
+                    {
+                        defUnit.reduceAmmo1(1);
+                    }
+                    else
+                    {
+                        defUnit.reduceAmmo2(1);
+                    }
                 }
             }
 
@@ -664,7 +708,7 @@ var Constructor = function()
             defUnit.postBattleActions(counterdamage, attacker, false, defenderWeapon, ACTION_FIRE.postAnimationAction);
 
             // only kill units if we should else we stop here
-            if (dontKillUnits === false)
+            if (dontKillUnits === false && !simulation)
             {
                 var defFirststrike = defUnit.getFirstStrike(defUnit.getPosition(), attacker, true);
                 var atkFirststrike = attacker.getFirstStrike(attacker.getPosition(), defUnit, false);
@@ -771,7 +815,7 @@ var Constructor = function()
                 {
                     ACHIEVEMENT_KILL_NEUTRAL_BUILDING.killed(defBuilding.getBuildingID());
                 }
-                Global[defBuilding.getBuildingID()].onDestroyed(defBuilding);
+                Global[defBuilding.getBuildingID()].onDestroyed(defBuilding, map);
             }
         }
         else if (ACTION_FIRE.postBuildingAnimationTerrain.getHp() <= 0)
@@ -781,7 +825,7 @@ var Constructor = function()
             {
                 ACHIEVEMENT_KILL_NEUTRAL_BUILDING.killed(ACTION_FIRE.postBuildingAnimationTerrain.getID());
             }
-            Global[ACTION_FIRE.postBuildingAnimationTerrain.getID()].onDestroyed(ACTION_FIRE.postBuildingAnimationTerrain);
+            Global[ACTION_FIRE.postBuildingAnimationTerrain.getID()].onDestroyed(ACTION_FIRE.postBuildingAnimationTerrain, map);
         }
         ACTION_FIRE.postBuildingAnimationTerrain = null;
         ACTION_FIRE.postAnimationAction = null;

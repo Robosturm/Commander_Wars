@@ -21,6 +21,18 @@ using spMainServer = oxygine::intrusive_ptr<MainServer>;
 class MainServer : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
+    struct AddressInfo
+    {
+        QString address;
+        quint16 minPort;
+        quint16 maxPort;
+    };
+    struct SlaveAddress
+    {
+        QString address;
+        quint16 port;
+    };
+
 public:
     static MainServer* getInstance();
     static bool exists();
@@ -35,63 +47,174 @@ signals:
     void sigRemoveGame(NetworkGame* pGame);
     void sigStartRemoteGame(QString initScript, QString id);
 public slots:
+    /**
+     * @brief recieveData we received data from
+     * @param socketID
+     * @param data
+     * @param service
+     */
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
-     * @brief updateGameData
+     * @brief receivedSlaveData
+     * @param socketID
+     * @param data
+     * @param service
+     */
+    void receivedSlaveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    /**
+     * @brief updateGameData marks the lobby data as changed
      */
     void updateGameData();
     /**
-     * @brief sendGameDataUpdate
+     * @brief sendGameDataUpdate sends the lobby data to all clients if needed
      */
     void sendGameDataUpdate();
     /**
-     * @brief playerJoined
+     * @brief playerJoined a new player connected to server. Send him the initial lobby data
      * @param socketId
      */
     void playerJoined(qint64 socketId);
     /**
-     * @brief startRemoteGame
+     * @brief startRemoteGame used for ai training and to move data from one thread context to this one
      * @param map
      * @param configuration
      */
     void startRemoteGame(const QString & initScript, const QString & id);
+
 private slots:
-    void removeGame(NetworkGame* pGame);
     /**
-     * @brief startRemoteGame
+     * @brief startRemoteGame used for ai training and to move data from one thread context to this one
      * @param map
      * @param configuration
      */
     void slotStartRemoteGame(QString initScript, QString id);
 private:
+    /**
+     * @brief spawnSlaveGame checks if a slave game can be spawned and spawns a slave game on the server
+     * @param stream
+     * @param socketID
+     * @param data
+     * @param configuration
+     * @param id
+     */
     void spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArray& data, QString configuration = "", QString id = "");
+    /**
+     * @brief validHostRequest checks if all requested mods are installed on the server
+     * @param mods
+     * @return
+     */
     bool validHostRequest(QStringList mods);
+    /**
+     * @brief sendGameDataToClient sends the lobby-data to the client
+     * @param socketId 0 for all clients
+     */
     void sendGameDataToClient(qint64 socketId);
+    /**
+     * @brief joinSlaveGame request of a client to join a specific slave game
+     * @param socketID
+     * @param stream
+     */
     void joinSlaveGame(quint64 socketID, QDataStream & stream);
+    /**
+     * @brief closeGame
+     * @param pGame
+     */
     void closeGame(NetworkGame* pGame);
+    /**
+     * @brief spawnSlave starts a new slave game on the server
+     * @param initScript
+     * @param mods
+     * @param id
+     * @param socketID
+     * @param data
+     */
     void spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data);
+    /**
+     * @brief onSlaveReady called once a slave is in a state for receiving the data of the game that should be hosted
+     * @param socketID
+     * @param stream
+     */
+    void onSlaveReady(quint64 socketID, QDataStream &stream);
+    /**
+     * @brief onGameRunningOnServer called once the game has loaded all data needed for hosting a game and players can join
+     * @param socketID
+     * @param stream
+     */
+    void onGameRunningOnServer(quint64 socketID, QDataStream &stream);
+    /**
+     * @brief onOpenPlayerCount
+     * @param socketID
+     * @param stream
+     */
+    void onOpenPlayerCount(quint64 socketID, QDataStream &stream);
+    /**
+     * @brief getNextFreeSlaveAddress
+     * @param address
+     * @param port
+     */
+    bool getNextFreeSlaveAddress(QString & address, quint16 & port);
+    /**
+     * @brief parseSlaveAddressOptions
+     */
+    void parseSlaveAddressOptions();
 private:
     class InternNetworkGame;
-    typedef oxygine::intrusive_ptr<InternNetworkGame> spInternNetworkGame;
+    using spInternNetworkGame = oxygine::intrusive_ptr<InternNetworkGame>;
+    /**
+     * @brief The InternNetworkGame class information about the process running a slave game
+     */
     class InternNetworkGame : public oxygine::ref_counter
     {
     public:
-        QProcess* process{nullptr};
+        std::shared_ptr<QProcess> process;
         spNetworkGame game;
-        QThread m_runner;
     };
     explicit MainServer();
-
-private:
     friend spMainServer;
     static spMainServer m_pInstance;
 private:
+    /**
+     *  TCP-Server used for clients to connect to the server
+     */
     spTCPServer m_pGameServer{nullptr};
+    /**
+     * TCP-Server used to receive information about the slave games and
+     * to forward the initial package about the game that should be hosted on the slave
+     */
+    spTCPServer m_pSlaveServer{nullptr};
+    /**
+     * iterator for naming each slave with a unique identifier
+     */
     quint64 m_slaveGameIterator{0};
-    // data for games currently run on the server
-    QVector<spInternNetworkGame> m_games;
+    /**
+     * @brief m_games data of games currently run on the server as slaves
+     */
+    QMap<QString, spInternNetworkGame> m_games;
+    /**
+     * @brief m_updateTimer update timer to send lobby data to clients if needed
+     */
     QTimer m_updateTimer;
+    /**
+     * guard marking if new lobby data is available or not.
+     */
     bool m_updateGameData{false};
+
+    /**
+     * @brief m_slaveAddressOptions address/port combination that can used for spawning a slave
+     */
+    QVector<AddressInfo> m_slaveAddressOptions;
+    /**
+     * @brief m_lastUsedAddressIndex last used index in the m_slaveAddressOptions
+     */
+    qint32 m_lastUsedAddressIndex{0};
+    /**
+     * @brief m_lastUsedPort last used port in the m_slaveAddressOptions
+     */
+    quint16 m_lastUsedPort{0};
+    /**
+     * @brief m_freeAddresses addresses of slaves that have been used and are now free again
+     */
+    QVector<SlaveAddress> m_freeAddresses;
 };
 
 #endif // MAINSERVER_H

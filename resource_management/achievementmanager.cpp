@@ -8,6 +8,7 @@ AchievementManager::AchievementManager()
     : RessourceManagement<AchievementManager>("/images/achievements/res.xml",
                                               "/scripts/achievements")
 {
+    Interpreter::setCppOwnerShip(this);
     setObjectName("AchievementManager");
 }
 
@@ -25,11 +26,9 @@ void AchievementManager::loadAll()
 void AchievementManager::onVictory(qint32 team, bool humanWin, GameMap* pMap)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    args << team;
-    args << humanWin;
-    QJSValue value1 = pInterpreter->newQObject(pMap);
-    args << value1;
+    QJSValueList args({team,
+                       humanWin,
+                       pInterpreter->newQObject(pMap)});
     for (const auto & achievement : qAsConst(m_loadedRessources))
     {
         pInterpreter->doFunction(achievement, "onVictory", args);

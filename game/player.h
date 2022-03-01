@@ -61,7 +61,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 15;
+        return 16;
     }
     /**
      * @brief setBaseGameInput sets the player input
@@ -120,8 +120,23 @@ public:
      * @return
      */
     static const QImage &getNeutralTableImage();
-
+    /**
+     * @brief setUniqueIdentifier
+     * @param newUniqueIdentifier
+     */
+    void setUniqueIdentifier(const QString &newUniqueIdentifier);
+    void setDisplayName(const QString &newDisplayName);
 public slots:
+    /**
+     * @brief getDisplayName
+     * @return
+     */
+    QString getDisplayName() const;
+    /**
+     * @brief getUniqueIdentifier
+     * @return
+     */
+    const QString getUniqueIdentifier() const;
     /**
      * @brief getMap
      * @return
@@ -644,6 +659,11 @@ private:
     quint64 m_socketId{0};
     bool m_playerArmySelected{false};
     qint32 m_averageCosts{-1};
+    /**
+     * @brief m_uniqueIdentifier
+     */
+    QString m_uniqueIdentifier;
+    QString m_displayName;
     static oxygine::spResAnim m_neutralTableAnim;
     static QImage m_neutralTableImage;
 };

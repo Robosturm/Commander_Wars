@@ -40,6 +40,7 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
       m_aiName(type)
 {
     setObjectName("HeavyAi");
+    Interpreter::setCppOwnerShip(this);
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
 
@@ -272,17 +273,17 @@ void HeavyAi::setupTurn(const spQmlVectorBuilding & buildings)
     m_pPlayer->getSiloRockettarget(2, 3, cost);
     m_missileTarget = (cost >= minSiloDamage);
     bool startOfTurn = (m_pUnits.get() == nullptr);
-    if (m_pUnits.get() == nullptr)
-    {
-        m_pUnits = m_pPlayer->getUnits();
-        m_pUnits->sortShortestMovementRange(true);
-        initUnits(m_pUnits, m_ownUnits, false);
-    }
     if (m_pEnemyUnits.get() == nullptr)
     {
         m_pEnemyUnits = m_pPlayer->getEnemyUnits();
         m_pEnemyUnits->randomize();
         initUnits(m_pEnemyUnits, m_enemyUnits, true);
+    }
+    if (m_pUnits.get() == nullptr)
+    {
+        m_pUnits = m_pPlayer->getUnits();
+        m_pUnits->sortUnitsFarFromEnemyFirst(m_pEnemyUnits);
+        initUnits(m_pUnits, m_ownUnits, false);
     }
     if (startOfTurn)
     {
@@ -344,10 +345,7 @@ void HeavyAi::addNewUnitToUnitData(QVector<UnitData> & units, Unit* pUnit, bool 
     data.m_pPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
     data.m_movepoints = data.m_pUnit->getMovementpoints(data.m_pUnit->getPosition());
     data.m_pPfs->setMovepoints(data.m_movepoints * 2);
-    if (enemyUnits)
-    {
-        data.m_pPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
-    }
+    data.m_pPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
     data.m_pPfs->explore();
     if (!enemyUnits)
     {
@@ -415,10 +413,7 @@ void HeavyAi::updateUnits(QVector<UnitData> & units, spQmlVectorUnit & pUnits, b
                     units[i2].m_pUnit->getMovementpoints(QPoint(units[i2].m_pUnit->Unit::getX(), units[i2].m_pUnit->Unit::getY())) + 2)
                 {
                     units[i2].m_pPfs = spUnitPathFindingSystem::create(m_pMap, units[i2].m_pUnit);
-                    if (enemyUnits)
-                    {
-                        units[i2].m_pPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
-                    }
+                    units[i2].m_pPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
                     units[i2].m_pPfs->explore();
                     if (!enemyUnits)
                     {
@@ -474,7 +469,7 @@ void HeavyAi::updateCaptureBuildings(UnitData & unitData)
         unitData.m_capturePoints.clear();
         GameAction action(ACTION_CAPTURE, m_pMap);
         action.setTarget(QPoint(unitData.m_pUnit->Unit::getX(), unitData.m_pUnit->Unit::getY()));
-        QVector<QPoint> targets = unitData.m_pPfs->getAllNodePoints(unitData.m_movepoints);
+        QVector<QPoint> targets = unitData.m_pPfs->getAllNodePoints(unitData.m_movepoints + 1);
         for (const auto & target : targets)
         {
             action.setMovepath(QVector<QPoint>(1, target), 0);
@@ -699,9 +694,7 @@ bool HeavyAi::mutateAction(ScoreData & data, UnitData & unitData, QVector<double
             case FunctionType::JavaScript:
             {
                 Interpreter* pInterpreter = Interpreter::getInstance();
-                QJSValueList args;
-                QJSValue obj = pInterpreter->newQObject(data.m_gameAction.get());
-                args << obj;
+                QJSValueList args({pInterpreter->newQObject(data.m_gameAction.get())});
                 QJSValue erg = pInterpreter->doFunction(m_aiName, data.m_gameAction->getActionID(), args);
                 if (erg.isNumber())
                 {
@@ -863,7 +856,7 @@ void HeavyAi::getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, dou
             }
         }
         data[BasicFieldInfo::OwnInfluenceValue] = static_cast<double>(info.ownInfluence) / highestInfluece;
-        data[BasicFieldInfo::EnemyInfluenceValue] = static_cast<double>(info.highestEnemyInfluence) / highestInfluece;
+        data[BasicFieldInfo::EnemyInfluenceValue] = static_cast<double>(info.enemyInfluence) / highestInfluece;
         data[BasicFieldInfo::MoveTurnProgress] = notMovedUnitCount / static_cast<double>(m_ownUnits.size());
         spQmlVectorPoint pCircle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
         double wallCount = 0;

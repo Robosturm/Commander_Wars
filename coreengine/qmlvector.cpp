@@ -36,101 +36,102 @@ QmlVectorUnit::~QmlVectorUnit()
 
 void QmlVectorUnit::randomize()
 {
-    QVector<spUnit> randVector;
-    while (m_Vector.size() > 0)
+    for (auto & unit : m_Vector)
     {
-        qint32 value = GlobalUtils::randInt(0, m_Vector.size() - 1);
-        randVector.push_back(m_Vector[value]);
-        m_Vector.removeAt(value);
+        unit->setSortValues({GlobalUtils::randInt(0, std::numeric_limits<qint32>::max() - 3)});
     }
-    m_Vector.swap(randVector);
+    std::sort(m_Vector.begin(), m_Vector.end(), [](const spUnit& lhs, const spUnit& rhs)
+    {
+        return lhs->getSortValues()[0] > rhs->getSortValues()[0];
+    });
 }
 
 void QmlVectorUnit::sortExpensive()
 {
-    QVector<spUnit> sortedVector;
-    QVector<qint32> costs;
-    for (qint32 i = 0; i < m_Vector.size(); i++)
+    for (auto & unit : m_Vector)
     {
-        costs.append(m_Vector[i]->getCoUnitValue());
+        unit->setSortValues({unit->getCoUnitValue()});
     }
-    while (m_Vector.size() > 0)
+    std::sort(m_Vector.begin(), m_Vector.end(), [](const spUnit& lhs, const spUnit& rhs)
     {
-        qint32 item = 0;
-        qint32 value = std::numeric_limits<qint32>::lowest();
-        for (qint32 i = 0; i < m_Vector.size(); i++)
-        {
-            if (costs[i] > value)
-            {
-                item = i;
-                value = costs[i];
-            }
-        }
-        sortedVector.append(m_Vector[item]);
-        m_Vector.removeAt(item);
-        costs.removeAt(item);
-    }
-    m_Vector.swap(sortedVector);
+        return lhs->getSortValues()[0] > rhs->getSortValues()[0];
+    });
 }
 
 void QmlVectorUnit::sortShortestMovementRange(bool infantriesLast)
 {
-    QVector<spUnit> sortedVector;
-
-
-    QVector<QVector<spUnit>> units;
-    QVector<QVector<qint32>> costs;
     if (infantriesLast)
     {
-        units.append(QVector<spUnit>());
-        costs.append(QVector<qint32>());
-        units.append(QVector<spUnit>());
-        costs.append(QVector<qint32>());
-        for (qint32 i = 0; i < m_Vector.size(); i++)
+        for (auto & unit : m_Vector)
         {
-            if (m_Vector[i]->getActionList().contains(CoreAI::ACTION_CAPTURE))
+            unit->setSortValues({unit->getMovementpoints(QPoint(unit->Unit::getX(), unit->Unit::getY())),
+                                 unit->getActionList().contains(CoreAI::ACTION_CAPTURE)});
+        }
+        std::sort(m_Vector.begin(), m_Vector.end(), [](const spUnit& lhs, const spUnit& rhs)
+        {
+            auto & lhsVec = lhs->getSortValues();
+            auto & rhsVec = rhs->getSortValues();
+            if (rhsVec[1] == lhsVec[1])
             {
-                costs[1].append(m_Vector[i]->getMovementpoints(QPoint(m_Vector[i]->Unit::getX(), m_Vector[i]->Unit::getY())));
-                units[1].append(m_Vector[i]);
+                return lhsVec[0] < rhsVec[0];
             }
             else
             {
-                costs[0].append(m_Vector[i]->getMovementpoints(QPoint(m_Vector[i]->Unit::getX(), m_Vector[i]->Unit::getY())));
-                units[0].append(m_Vector[i]);
+                return lhsVec[1] < rhsVec[1];
             }
-        }
+        });
     }
     else
     {
-        units.append(QVector<spUnit>());
-        costs.append(QVector<qint32>());
-        for (qint32 i = 0; i < m_Vector.size(); i++)
+        for (auto & unit : m_Vector)
         {
-            costs[0].append(m_Vector[i]->getMovementpoints(QPoint(m_Vector[i]->Unit::getX(), m_Vector[i]->Unit::getY())));
-            units[0].append(m_Vector[i]);
+            unit->setSortValues({unit->getMovementpoints(QPoint(unit->Unit::getX(), unit->Unit::getY()))});
         }
+        std::sort(m_Vector.begin(), m_Vector.end(), [](const spUnit& lhs, const spUnit& rhs)
+        {
+            return lhs->getSortValues()[0] < rhs->getSortValues()[0];
+        });
     }
+}
 
-    for (qint32 i2 = 0; i2 < units.size(); i2++)
+void QmlVectorUnit::sortUnitsFarFromEnemyFirst(spQmlVectorUnit & pEnemyUnits)
+{
+    auto & pEnemyUnitsVec = pEnemyUnits->getUnits();
+    for (auto & pUnit : m_Vector)
     {
-        while (units[i2].size() > 0)
+        qint32 distance = std::numeric_limits<qint32>::max();
+        for (auto & pEnemy : pEnemyUnitsVec)
         {
-            qint32 item = 0;
-            qint32 value = std::numeric_limits<qint32>::max();
-            for (qint32 i = 0; i < units[i2].size(); i++)
+            qint32 newDistance = GlobalUtils::getDistance(pEnemy->getPosition(), pUnit->getPosition());
+            if (newDistance < distance)
             {
-                if (costs[i2][i] < value)
-                {
-                    item = i;
-                    value = costs[i2][i];
-                }
+                distance = newDistance;
             }
-            sortedVector.append(units[i2][item]);
-            units[i2].removeAt(item);
-            costs[i2].removeAt(item);
         }
+        pUnit->setSortValues({pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())),
+                             pUnit->getActionList().contains(CoreAI::ACTION_CAPTURE),
+                             distance});
     }
-    m_Vector.swap(sortedVector);
+    std::sort(m_Vector.begin(), m_Vector.end(), [](const spUnit& lhs, const spUnit& rhs)
+    {
+        auto & lhsVec = lhs->getSortValues();
+        auto & rhsVec = rhs->getSortValues();
+        if (rhsVec[1] == lhsVec[1])
+        {
+            if (lhsVec[2] == rhsVec[2])
+            {
+                return lhsVec[0] < rhsVec[0];
+            }
+            else
+            {
+                return lhsVec[2] > rhsVec[2];
+            }
+        }
+        else
+        {
+            return lhsVec[1] < rhsVec[1];
+        }
+    });
 }
 
 QmlVectorBuilding::QmlVectorBuilding()
@@ -150,12 +151,12 @@ QmlVectorBuilding::~QmlVectorBuilding()
 
 void QmlVectorBuilding::randomize()
 {
-    QVector<spBuilding> randVector;
-    while (m_Vector.size() > 0)
+    for (auto & building : m_Vector)
     {
-        qint32 value = GlobalUtils::randInt(0, m_Vector.size() - 1);
-        randVector.push_back(m_Vector[value]);
-        m_Vector.removeAt(value);
+        building->setSortValues({GlobalUtils::randInt(0, std::numeric_limits<qint32>::max() - 3)});
     }
-    m_Vector.swap(randVector);
+    std::sort(m_Vector.begin(), m_Vector.end(), [](const spBuilding& lhs, const spBuilding& rhs)
+    {
+        return lhs->getSortValues()[0] > rhs->getSortValues()[0];
+    });
 }

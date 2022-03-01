@@ -83,7 +83,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 spinBox->setTooltipText(m_Items[i].tooltip);
                 spinBox->setPosition(width, y);
                 spinBox->setCurrentValue(m_Items[i].item.toFloat());
-                connect(spinBox.get(), &SpinBox::sigValueChanged,
+                connect(spinBox.get(), &SpinBox::sigValueChanged, this,
                         [=](qreal value)
                 {
                     m_Items[i].item = QString::number(value);
@@ -99,7 +99,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 spinBox->setTooltipText(m_Items[i].tooltip);
                 spinBox->setPosition(width, y);
                 spinBox->setCurrentValue(m_Items[i].item.toInt());
-                connect(spinBox.get(), &SpinBox::sigValueChanged,
+                connect(spinBox.get(), &SpinBox::sigValueChanged, this,
                         [=](qreal value)
                 {
                     m_Items[i].item = QString::number(value);
@@ -113,7 +113,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 textBox->setTooltipText(m_Items[i].tooltip);
                 textBox->setPosition(width, y);
                 textBox->setCurrentText(m_Items[i].item);
-                connect(textBox.get(), &Textbox::sigTextChanged,
+                connect(textBox.get(), &Textbox::sigTextChanged, this,
                         [=](QString value)
                 {
                     m_Items[i].item = value;
@@ -128,7 +128,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 checkBox->setPosition(width, y);
                 QVariant var = m_Items[i].item;
                 checkBox->setChecked(var.toBool());
-                connect(checkBox.get(), &Checkbox::checkChanged,
+                connect(checkBox.get(), &Checkbox::checkChanged, this,
                         [=](bool value)
                 {
                     QVariant var;
@@ -150,7 +150,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                         dropDown->setCurrentItem(i2);
                     }
                 }
-                connect(dropDown.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
+                connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 item)
                 {
                     m_Items[i].item = m_Items[i].data[item];
                 });
@@ -163,7 +163,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 pTextbox->setTooltipText(m_Items[i].tooltip);
                 pTextbox->setCurrentText(m_Items[i].item);
                 pTextbox->setPosition(width, y);
-                connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString item)
+                connect(pTextbox.get(), &Textbox::sigTextChanged, this, [=](QString item)
                 {
                     m_Items[i].item = item;
                 });
@@ -192,7 +192,7 @@ void ScriptEventGeneric::showSelectFile(QString filter, QString startFolder, QSt
     QString path = Settings::getUserPath() + startFolder;
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, currentFile);
     Textbox* pBox = pTextbox.get();
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, [=](QString id)
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, [=](QString id)
     {
         QString file = GlobalUtils::makePathRelative(id);
         pBox->setCurrentText(file);

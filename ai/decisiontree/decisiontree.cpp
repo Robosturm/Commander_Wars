@@ -16,11 +16,13 @@ DecisionTree::DecisionTree(spDecisionNode & pRootNode)
 	: m_pRootNode(pRootNode)
 {
     setObjectName("DecisionTree");
+    Interpreter::setCppOwnerShip(this);
 }
 
 DecisionTree::DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
 {
     setObjectName("DecisionTree");
+    Interpreter::setCppOwnerShip(this);
 	m_pRootNode = train(trainingData, questions);
 }
 
@@ -32,6 +34,7 @@ DecisionTree::DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVecto
 DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDataFile)
 {
     setObjectName("DecisionTree");
+    Interpreter::setCppOwnerShip(this);
     QFile file(treeFile);
     QFile trainingFile(trainingDataFile);
     if (!trainingFile.exists())

@@ -7,13 +7,14 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "objects/base/checkbox.h"
-
 #include "objects/base/panel.h"
 
 class Unit;
 class GameMap;
+class Player;
+using spPlayer = oxygine::intrusive_ptr<Player>;
 class DialogModifyUnit;
-typedef oxygine::intrusive_ptr<DialogModifyUnit> spDialogModifyUnit;
+using spDialogModifyUnit = oxygine::intrusive_ptr<DialogModifyUnit>;
 
 class DialogModifyUnit : public QObject, public oxygine::Actor
 {
@@ -36,6 +37,7 @@ private:
     Unit* m_pUnit{nullptr};
     oxygine::spButton m_OkButton;
     GameMap* m_pMap{nullptr};
+    spPlayer m_dropDownPlayer;
 };
 
 #endif // DIALOGMODIFYUNIT_H

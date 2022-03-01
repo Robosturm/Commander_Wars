@@ -6,6 +6,18 @@ var BUILDING =
     {
         building.setVisionHigh(1);
     },
+
+    getBuildingBaseTerrain : function(building, map)
+    {
+        var terrain = building.getTerrain();
+        var baseId = "plains";
+        if (terrain !== null)
+        {
+            baseId = terrain.getBaseTerrainID().toLowerCase();
+        }
+        return baseId;
+    },
+
     getName : function(building, map)
     {
         return "";
@@ -315,5 +327,15 @@ var BUILDING =
     {
         // called when the weather changes
         // call loadWeatherOverlaySpriteV2 to load an sprite overlay
+    },
+
+    getShowInEditor : function()
+    {
+        return true;
+    },
+
+    usesMapLayer : function()
+    {
+        return false;
     },
 };

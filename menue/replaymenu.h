@@ -40,6 +40,7 @@ signals:
     void sigStopFastForward();
     void sigShowConfig();
     void sigOneStep();
+    void sigRewindDay();
 public slots:
     void showRecordInvalid();
     void exitReplay();
@@ -72,6 +73,10 @@ public slots:
      * @brief oneStep
      */
     void oneStep();
+    /**
+     * @brief rewind
+     */
+    void rewindDay();
 protected slots:
     virtual void onEnter() override;
 protected:
@@ -99,6 +104,7 @@ private:
     oxygine::spButton m_pauseButton;
     oxygine::spButton m_fastForwardButton;
     oxygine::spButton m_oneStepButton;
+    oxygine::spButton m_rewindDayButton;
     oxygine::spButton m_configButton;
 
     bool m_seekingOverworldAnimations = false;
@@ -116,6 +122,7 @@ private:
     quint32 m_storedAnimationSpeed = 1;
     quint32 m_storedBattleAnimationSpeed = 1;
     quint32 m_storedCaptureAnimationSpeed = 1;
+    qint64 m_lastRewind = 0;
 
     bool m_seeking{false};
     bool m_valid{false};

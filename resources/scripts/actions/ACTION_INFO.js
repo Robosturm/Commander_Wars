@@ -48,6 +48,10 @@ var Constructor = function()
         {
             map.showUnitStatistics();
         }
+        else if (id === "CALCULATOR")
+        {
+            map.showDamageCalculator();
+        }
     };
     this.isFinalStep = function(action, map)
     {
@@ -77,6 +81,7 @@ var Constructor = function()
         data.addData(qsTr("Attack Log"), "ATTACK", "icon_fire");
         data.addData(qsTr("Rules"), "RULES", "wiki");
         data.addData(qsTr("Wiki"), "WIKI", "wiki");
+        data.addData(qsTr("Calculator"), "CALCULATOR", "calculator");
     };
 }
 

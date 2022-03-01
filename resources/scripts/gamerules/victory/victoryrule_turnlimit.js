@@ -47,8 +47,8 @@ var Constructor = function()
     this.checkDefeat = function(rule, player, map)
     {
         var turn = map.getCurrentDay();
-		var turnLimit = VICTORYRULE_TURNLIMIT.getRuleValue(rule);
-        var victoryTeam = VICTORYRULE_TURNLIMIT.getRuleValue(rule, 1);
+        var turnLimit = VICTORYRULE_TURNLIMIT.getRuleValue(rule, 0, map);
+        var victoryTeam = VICTORYRULE_TURNLIMIT.getRuleValue(rule, 1, map);
         if (turn <= turnLimit ||
             player.getTeam() === victoryTeam - 1)
 		{

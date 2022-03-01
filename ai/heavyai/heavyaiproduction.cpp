@@ -161,7 +161,7 @@ void HeavyAi::createUnitBuildData(BuildingData & building, QVector<double> & dat
 {
     // create new
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
-    spTerrain pDummyTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", m_pMap);
+    spTerrain pDummyTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", m_pMap);
     spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS, m_pMap);
     qint32 x = building.m_pBuilding->Building::getX();
     qint32 y = building.m_pBuilding->Building::getY();
@@ -185,7 +185,7 @@ void HeavyAi::createUnitBuildData(BuildingData & building, QVector<double> & dat
                     Unit dummy(unitData.unitId, m_pPlayer, false, m_pMap);
                     dummy.setVirtuellX(x);
                     dummy.setVirtuellY(y);
-                    spTerrain pDummyTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", m_pMap);
+                    spTerrain pDummyTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", m_pMap);
                     qint32 baseMovementCost = pMovementTableManager->getBaseMovementPoints(dummy.getMovementType(), pDummyTerrain.get(), pDummyTerrain.get(), &dummy);
                     if (baseMovementCost < 0)
                     {
@@ -296,7 +296,7 @@ void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBui
         data.unitBuildingDataInput[BuildingEntry::Flying] = (pUnit->useTerrainDefense() == false) ? 1 : -1;
         data.unitBuildingDataInput[BuildingEntry::LoadingPotential] = static_cast<double>(pUnit->getLoadingPlace()) / 4.0;
         data.unitBuildingDataInput[BuildingEntry::OwnInfluence] = static_cast<double>(influenceInfo.ownInfluence) / highestInfluence;
-        data.unitBuildingDataInput[BuildingEntry::HighestEnemyInfluence] = static_cast<double>(influenceInfo.highestEnemyInfluence) / highestInfluence;
+        data.unitBuildingDataInput[BuildingEntry::HighestEnemyInfluence] = static_cast<double>(influenceInfo.enemyInfluence) / highestInfluence;
         qint32 islandIdx = getIslandIndex(pUnit);
         qint32 island = m_IslandMaps[islandIdx]->getIsland(position.x(), position.y());
         qint32 islandSize =  m_IslandMaps[islandIdx]->getIslandSize(island);

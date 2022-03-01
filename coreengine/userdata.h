@@ -150,6 +150,7 @@ public:
      * @brief release
      */
     void release();
+
 signals:
 
 public slots:
@@ -247,6 +248,16 @@ public slots:
      * @return
      */
     ScriptVariableFile* getScriptVariableFile(const QString & filename);
+    /**
+     * @brief getUniqueIdentifier
+     * @return
+     */
+    const QString &getUniqueIdentifier() const;
+    /**
+     * @brief setUniqueIdentifier
+     * @param newUniqueIdentifier
+     */
+    void setUniqueIdentifier(const QString &newUniqueIdentifier);
 private:
     void showAchieved();
     void reset();
@@ -263,6 +274,7 @@ private:
      * @brief m_credtis money available to spend in the shop
      */
     qint32 m_credtis{0};
+    QString m_uniqueIdentifier;
     QVector<spScriptVariableFile> m_scriptVariableFiles;
 };
 

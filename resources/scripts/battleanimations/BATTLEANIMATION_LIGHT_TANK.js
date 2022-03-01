@@ -20,20 +20,17 @@ var Constructor = function()
 
     this.animationData = [["ac", [Qt.point(23, 22), Qt.point(26, 42), Qt.point(26, 37), -80]],
                           ["bd", [Qt.point(21, 22), Qt.point(23, 42), Qt.point(23, 37), -80]],
-                          ["bh", [Qt.point(27, 24), Qt.point(28, 41), Qt.point(28, 36), -80]],
-                          ["bm", [Qt.point(27, 20), Qt.point(30, 41), Qt.point(30, 36), -80]],
+                          ["bh", [Qt.point(22, 24), Qt.point(22, 42), Qt.point(22, 36), -80]],
+                          ["bm", [Qt.point(22, 20), Qt.point(25, 43), Qt.point(25, 36), -80]],
                           ["dm", [Qt.point(27, 21), Qt.point(28, 41), Qt.point(28, 36), -80]],
-                          ["ge", [Qt.point(26, 23), Qt.point(30, 42), Qt.point(30, 37), -80]],
-                          ["gs", [Qt.point(33, 21), Qt.point(30, 27), Qt.point(30, 22), -80]],
+                          ["ge", [Qt.point(22, 23), Qt.point(26, 44), Qt.point(26, 37), -80]],
+                          ["gs", [Qt.point(32, 21), Qt.point(30, 27), Qt.point(30, 22), -80]],
                           ["ma", [Qt.point(18, 34), Qt.point(37, 27), Qt.point(37, 22), -90]],
-                          ["os", [Qt.point(21, 24), Qt.point(23, 44), Qt.point(23, 39), -80]],
-                          ["pf", [Qt.point(22, 24), Qt.point(26, 47), Qt.point(26, 42), -80]],
+                          ["os", [Qt.point(13, 24), Qt.point(15, 46), Qt.point(15, 39), -80]],
+                          ["pf", [Qt.point(22, 24), Qt.point(26, 48), Qt.point(26, 43), -80]],
                           ["ti", [Qt.point(25, 30), Qt.point(31, 46), Qt.point(31, 41), -80]],
-                          ["yc", [Qt.point(26, 20), Qt.point(32, 40), Qt.point(32, 35), -80]],];
+                          ["yc", [Qt.point(18, 20), Qt.point(25, 42), Qt.point(25, 35), -80]],];
 
-    // -15 5
-    //  41 25
-    //  3  8
     this.getArmyName = function(unit)
     {
         var player = unit.getOwner();
@@ -49,7 +46,7 @@ var Constructor = function()
         BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "+move", -1, Qt.point(startX, 5), Qt.point(65, 0), 600);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(startX - 25, 7),
                                 Qt.point(65, 0), 600, false,
-                                1, 1);
+                                -1, 1);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("tank_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
@@ -107,24 +104,26 @@ var Constructor = function()
         }
         else
         {
-            BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "+fire", 3, startPos);
             if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
             {
+                BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "+fire+air", 3, startPos);
                 offset = data[1];
                 sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 0);
             }
             else
             {
+                BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "+fire", 3, startPos);
                 offset = data[2];
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 0);
             }
+            BATTLEANIMATION.showMgBullets(sprite, offset);
             for (var i = 0; i < count; i++)
             {
                 sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+                sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
             }
         }
     };

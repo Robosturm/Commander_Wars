@@ -153,7 +153,7 @@ void ScriptConditionBuildingCaptured::showEditCondition(spScriptEditor pScriptEd
     spinBox->setTooltipText(tr("X Location of the Building that has to be captured."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_x);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setX(static_cast<qint32>(value));
@@ -169,7 +169,7 @@ void ScriptConditionBuildingCaptured::showEditCondition(spScriptEditor pScriptEd
     spinBox->setTooltipText(tr("Y Location of the Building that has to be captured."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_y);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setY(static_cast<qint32>(value));
@@ -185,7 +185,7 @@ void ScriptConditionBuildingCaptured::showEditCondition(spScriptEditor pScriptEd
     spinBox->setTooltipText(tr("Player that has to capture the building."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(m_player + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setPlayer(static_cast<qint32>(value) - 1);

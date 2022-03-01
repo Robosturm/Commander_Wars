@@ -159,7 +159,8 @@ namespace oxygine
     {
         if (m_frames.empty())
         {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "ResAnim::getSize no frames found");
+            static Vector2 dummy;
+            return dummy;
         }
         return m_frames[0].getSize();
     }

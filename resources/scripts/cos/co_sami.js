@@ -244,13 +244,17 @@ var Constructor = function()
     {
         if (unit.getUnitType() === GameEnums.UnitType_Infantry)
         {
-            return 3;
+            return 6;
         }
         else if (unit.getBaseMaxRange() === 1)
         {
-            return 0;
+            return -1;
         }
-        return 1;
+        return 2;
+    };
+    this.getAiCoBuildRatioModifier = function(co, map)
+    {
+        return 0.5;
     };
     this.getCOUnits = function(co, building, map)
     {
@@ -297,7 +301,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("All foot soldiers capturing rate is doubled. Their movement is increased by two spaces and their attack increases greatly. ");
+        return qsTr("All foot soldiers can capture buildings instantly. Their movement is increased by two spaces and their attack increases greatly. ");
     };
     this.getSuperPowerName = function(co)
     {

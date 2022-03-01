@@ -138,7 +138,10 @@ var TERRAIN =
             var upTerrain = map.getTerrain(x, y);
             var upBuilding = upTerrain.getBuilding();
             if (upBuilding !== null &&
-                upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORY")
+               (upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORY" ||
+                upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORYDESERT" ||
+                upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORYWASTE" ||
+                upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORYSNOW"))
             {
                 var variables = terrain.getVariables();
                 var variable = variables.getVariable("FOREGROUND_ID");
@@ -381,5 +384,18 @@ var TERRAIN =
     {
         // hint for the ai to try to move away if it can't do anything with a unit
         return false;
+    },
+
+    getHighTerrains()
+    {
+        return "DESERT_FOREST,DESERT_FOREST1,DESERT_ROCK," +
+               "FOREST,FOREST1,FOREST2,FOREST3,MOUNTAIN," +
+               "SNOW_FOREST,SNOW_FOREST1,SNOW_FOREST2,SNOW_MOUNTAIN," +
+               "WASTE_FOREST,WASTE_MOUNTAIN";
+    },
+
+    getShowInEditor : function()
+    {
+        return true;
     },
 };

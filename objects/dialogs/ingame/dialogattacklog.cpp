@@ -282,8 +282,8 @@ void DialogAttackLog::showAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAt
     HumanPlayerInput* pInput = dynamic_cast<HumanPlayerInput*>(m_pMap->getCurrentPlayer()->getBaseGameInput());
     if (pInput != nullptr)
     {
-        pInput->createMarkedField(QPoint(posAtkX, posAtkY), m_pMap->getPlayer(playerAtk)->getColor(), Terrain::DrawPriority::MarkedFieldMap);
-        pInput->createMarkedField(QPoint(posDefX, posDefY), m_pMap->getPlayer(playerDef)->getColor(), Terrain::DrawPriority::MarkedFieldMap);
+        pInput->createMarkedField(QPoint(posAtkX, posAtkY), m_pMap->getPlayer(playerAtk)->getColor(), Terrain::ExtraDrawPriority::MarkedFieldMap);
+        pInput->createMarkedField(QPoint(posDefX, posDefY), m_pMap->getPlayer(playerDef)->getColor(), Terrain::ExtraDrawPriority::MarkedFieldMap);
     }
     emit sigFinished();
     oxygine::Actor::detach();

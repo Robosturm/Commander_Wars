@@ -73,7 +73,7 @@ endif()
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     message("Compiling as Debug")
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-        set(DEPLOY_RESOURCES_AS_FOLDER 0)
+        set(DEPLOY_RESOURCES_AS_FOLDER false)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
@@ -82,7 +82,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        set(DEPLOY_RESOURCES_AS_FOLDER 1)
+        set(DEPLOY_RESOURCES_AS_FOLDER true)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
@@ -91,7 +91,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     else()
-        set(DEPLOY_RESOURCES_AS_FOLDER 0)
+        set(DEPLOY_RESOURCES_AS_FOLDER false)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
@@ -102,9 +102,9 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     endif()
 else("Release")
     message("Compiling as Release")
-    set(DEPLOY_RESOURCES_AS_FOLDER 0)    
+    set(DEPLOY_RESOURCES_AS_FOLDER false)
     add_definitions(
-        -DDEBUG_LEVEL=1             # default console log level
+        -DDEBUG_LEVEL=0             # default console log level
     )
 endif()
 
@@ -383,9 +383,7 @@ set(${PROJECT_NAME}_SRCS
     network/NetworkInterface.h
     network/networkgamedata.cpp
     network/mainserver.cpp
-    network/localserver.cpp
     network/networkgame.cpp
-    network/localclient.cpp
 
     # game
     game/gamemap.cpp
@@ -438,6 +436,8 @@ set(${PROJECT_NAME}_SRCS
     game/ui/copowermeter.cpp
     game/ui/customcoboostinfo.cpp
     game/ui/humanquickbuttons.cpp
+    game/ui/damagecalculator.h
+    game/ui/damagecalculator.cpp
 
     # game input
     gameinput/basegameinputif.cpp
@@ -550,7 +550,8 @@ set(${PROJECT_NAME}_SRCS
 
     # ui
     ui_reader/uifactory.cpp
-    ui_reader/createdgui.h ui_reader/createdgui.cpp
+    ui_reader/createdgui.h
+    ui_reader/createdgui.cpp
 )
 
 ##############################################################################
@@ -560,21 +561,26 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/windows/crashreporter_os.cpp
         coreengine/windows/Gamepad.cpp
+        coreengine/sounds/soundcaching.cpp
+        #coreengine/sounds/ondemandsound.cpp
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/android/crashreporter_os.cpp
         coreengine/android/Gamepad.cpp
+        coreengine/sounds/ondemandsound.cpp
     )
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/ios/crashreporter_os.cpp
         coreengine/ios/Gamepad.cpp
+        coreengine/sounds/ondemandsound.cpp
     )
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/linux/crashreporter_os.cpp
         coreengine/linux/Gamepad.cpp
+        coreengine/sounds/ondemandsound.cpp
     )
 else()
     message(FATAL_ERROR "Unsupported OS found")

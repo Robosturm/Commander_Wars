@@ -53,3 +53,8 @@ void Label::setStyle(const oxygine::TextStyle& st)
     m_textField->setStyle(st);
     m_clipRect->setHeight(getTextRect().getHeight() * 1.4f);    
 }
+
+oxygine::TextStyle Label::getStyle()
+{
+    return m_textField->getStyle();
+}

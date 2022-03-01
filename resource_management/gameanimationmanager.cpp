@@ -3,5 +3,6 @@
 GameAnimationManager::GameAnimationManager()
     : RessourceManagement<GameAnimationManager>("/images/animations/res.xml", "")
 {
+    Interpreter::setCppOwnerShip(this);
     setObjectName("GameAnimationManager");
 }

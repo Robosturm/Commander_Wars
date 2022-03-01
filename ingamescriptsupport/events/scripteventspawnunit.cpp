@@ -19,7 +19,8 @@
 ScriptEventSpawnUnit::ScriptEventSpawnUnit(GameMap* pMap)
     : ScriptEvent(pMap, ScriptEvent::EventType::spawnUnit)
 {
-
+    m_dropDownPlayer = spPlayer::create(m_pMap);
+    m_dropDownPlayer->init();
 }
 
 void ScriptEventSpawnUnit::readEvent(QTextStream& rStream, QString line)
@@ -143,7 +144,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("Player for which the unit gets spawned."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(player + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setPlayer(static_cast<qint32>(value) - 1);
@@ -167,11 +168,10 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     {
         items.append(curUnitId);
     }
+    Player* pPlayer = m_dropDownPlayer.get();
     auto creator = [=](QString id)
     {
-        spPlayer pPlayer = spPlayer::create(m_pMap);
-        pPlayer->init();
-        spUnit pSprite = spUnit::create(id, pPlayer.get(), false, m_pMap);
+        spUnit pSprite = spUnit::create(id, pPlayer, false, m_pMap);
         pSprite->setOwner(nullptr);
         return pSprite;
     };

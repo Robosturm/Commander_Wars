@@ -44,7 +44,6 @@
 #include "multiplayer/networkcommands.h"
 
 #include "network/tcpserver.h"
-#include "network/localserver.h"
 
 #include "wiki/fieldinfo.h"
 #include "wiki/wikiview.h"
@@ -52,6 +51,8 @@
 #include "ingamescriptsupport/genericbox.h"
 
 #include "ui_reader/uifactory.h"
+
+#include "game/ui/damagecalculator.h"
 
 GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface)
     : InGameMenue(pMap),
@@ -82,19 +83,27 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
         connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &GameMenue::recieveData, Qt::QueuedConnection);
         if (m_pNetworkInterface->getIsServer())
         {
-            m_PlayerSockets = m_pNetworkInterface.get()->getConnectedSockets();
+            m_PlayerSockets = m_pNetworkInterface->getConnectedSockets();
             connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &GameMenue::playerJoined, Qt::QueuedConnection);
         }
         spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players"), 1000 * 60 * 5);
         addChild(pDialogConnecting);
         connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
-        connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
-        connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
+        if (pNetworkInterface->getIsObserver())
+        {
+            connect(this, &GameMenue::sigSyncFinished, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+        }
+        else
+        {
+            connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+            connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
+        }
 
         m_pChat = spChat::create(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100), NetworkInterface::NetworkSerives::GameChat);
         m_pChat->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
         m_pChat->setVisible(false);
         addChild(m_pChat);
+        emit m_pNetworkInterface->sigContinueListening();
     }
     else
     {
@@ -152,9 +161,7 @@ void GameMenue::onEnter()
     if (pInterpreter->exists(object, func))
     {
         CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
-        QJSValueList args;
-        QJSValue value = pInterpreter->newQObject(this);
-        args << value;
+        QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
     
@@ -186,10 +193,6 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                 if (dynamic_cast<TCPServer*>(m_pNetworkInterface.get()))
                 {
                     sockets = dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->getConnectedSockets();
-                }
-                else
-                {
-                    sockets = dynamic_cast<LocalServer*>(m_pNetworkInterface.get())->getConnectedSockets();
                 }
                 bool ready = true;
                 for (qint32 i = 0; i < sockets.size(); i++)
@@ -232,7 +235,32 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                 emit sigGameStarted();
             }
         }
-    }
+        else if (messageType == NetworkCommands::JOINASOBSERVER)
+        {
+            joinAsObserver(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::JOINASPLAYER)
+        {
+            // todo receive join data and go from there
+            emit m_pNetworkInterface.get()->sigDisconnectClient(socketID);
+        }
+        else if (messageType == NetworkCommands::WAITFORPLAYERJOINSYNCFINISHED)
+        {
+            waitForPlayerJoinSyncFinished(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::WAITINGFORPLAYERJOINSYNCFINISHED)
+        {
+            waitingForPlayerJoinSyncFinished(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::RECEIVEDCURRENTGAMESTATE)
+        {
+            removePlayerFromSyncWaitList(socketID);
+        }
+        else if (messageType == NetworkCommands::PLAYERJOINEDFINISHED)
+        {
+            playerJoinedFinished();
+        }
+    }    
     else if (service == NetworkInterface::NetworkSerives::GameChat)
     {
         if (m_pChat->getVisible() == false)
@@ -243,19 +271,6 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             }
             m_chatButtonShineTween = oxygine::createTween(oxygine::VStyleActor::TweenAddColor(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
             m_ChatButton->addTween(m_chatButtonShineTween);
-        }
-    }
-    else if (service == NetworkInterface::NetworkSerives::ServerHosting)
-    {
-        QDataStream stream(&data, QIODevice::ReadOnly);
-        QString messageType;
-        stream >> messageType;
-        CONSOLE_PRINT("Server Network Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
-        if (messageType == NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER)
-        {
-            quint64 socketId;
-            stream >> socketId;
-            disconnected(socketID);
         }
     }
 }
@@ -290,15 +305,155 @@ Player* GameMenue::getCurrentViewPlayer()
     return nullptr;
 }
 
+void GameMenue::joinAsObserver(QDataStream & stream, quint64 socketID)
+{
+    if (m_pNetworkInterface->getIsServer())
+    {
+        auto* gameRules = m_pMap->getGameRules();
+        auto & observer = gameRules->getObserverList();
+        if (observer.size() < gameRules->getMultiplayerObserver())
+        {
+            observer.append(socketID);
+            auto server = oxygine::dynamic_pointer_cast<TCPServer>(m_pNetworkInterface);
+            if (server.get())
+            {
+                auto client = server->getClient(socketID);
+                client->setIsObserver(true);
+            }
+            m_multiplayerSyncData.m_connectingSockets.append(socketID);
+            for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+            {
+                Player* pPlayer = m_pMap->getPlayer(i);
+                BaseGameInputIF* pInput = pPlayer->getBaseGameInput();
+                bool locked = pPlayer->getIsDefeated() ||
+                              pInput == nullptr ||
+                              pInput->getAiType() != GameEnums::AiTypes_ProxyAi;
+                if (i < m_multiplayerSyncData.m_lockedPlayers.size())
+                {
+                    m_multiplayerSyncData.m_lockedPlayers[i] = locked;
+                }
+                else
+                {
+                    m_multiplayerSyncData.m_lockedPlayers.append(locked);
+                }
+            }
+            QString command = NetworkCommands::WAITFORPLAYERJOINSYNCFINISHED;
+            QByteArray sendData;
+            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+            sendStream << command;
+            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+            m_multiplayerSyncData.m_waitingForSyncFinished = true;
+        }
+        else
+        {
+            emit m_pNetworkInterface.get()->sigDisconnectClient(socketID);
+        }
+    }
+}
+
+void GameMenue::waitForPlayerJoinSyncFinished(QDataStream & stream, quint64 socketID)
+{
+    if (!m_pNetworkInterface->getIsServer() &&
+        !m_pNetworkInterface->getIsObserver())
+    {
+        QString command = NetworkCommands::WAITINGFORPLAYERJOINSYNCFINISHED;
+        QByteArray sendData;
+        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream << command;
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        m_multiplayerSyncData.m_waitingForSyncFinished = true;
+    }
+}
+
+void GameMenue::waitingForPlayerJoinSyncFinished(QDataStream & stream, quint64 socketID)
+{
+    if (m_pNetworkInterface->getIsServer())
+    {
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            quint64 playerSocketID = pPlayer->getSocketId();
+             if (socketID == playerSocketID)
+             {
+                 m_multiplayerSyncData.m_lockedPlayers[i] = true;
+             }
+        }
+        bool ready = true;
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            if (!m_multiplayerSyncData.m_lockedPlayers[i])
+            {
+                ready = false;
+            }
+        }
+        if (ready)
+        {
+            QString command = NetworkCommands::SENDCURRENTGAMESTATE;
+            QByteArray sendData;
+            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+            sendStream << command;
+            m_pMap->serializeObject(sendStream);
+            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            for (auto & socketId : m_multiplayerSyncData.m_connectingSockets)
+            {
+                emit m_pNetworkInterface->sig_sendData(socketId, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+            }
+        }
+    }
+}
+
+void GameMenue::removePlayerFromSyncWaitList(quint64 socketID)
+{
+    if (m_pNetworkInterface->getIsServer())
+    {
+        m_multiplayerSyncData.m_connectingSockets.removeAll(socketID);
+        continueAfterSyncGame();
+    }
+}
+
+void GameMenue::playerJoinedFinished()
+{
+    emit sigSyncFinished();
+    continueAfterSyncGame();
+}
+
+void GameMenue::continueAfterSyncGame()
+{
+    if (m_pNetworkInterface.get() != nullptr &&
+        m_multiplayerSyncData.m_connectingSockets.size() <= 0 &&
+        m_multiplayerSyncData.m_waitingForSyncFinished)
+    {
+        m_multiplayerSyncData.m_waitingForSyncFinished = false;
+        if (m_pNetworkInterface->getIsServer())
+        {
+            QString command = NetworkCommands::PLAYERJOINEDFINISHED;
+            QByteArray sendData;
+            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+            sendStream << command;
+            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+        }
+        if (m_multiplayerSyncData.m_postSyncAction.get() != nullptr)
+        {
+            performAction(m_multiplayerSyncData.m_postSyncAction);
+            m_multiplayerSyncData.m_postSyncAction = nullptr;
+        }
+    }
+}
+
 void GameMenue::playerJoined(quint64 socketID)
 {
     if (m_pNetworkInterface->getIsServer())
     {
-        if (m_PlayerSockets.contains(socketID))
-        {
-            // reject connection by disconnecting
-            emit m_pNetworkInterface.get()->sigDisconnectClient(socketID);
-        }
+        CONSOLE_PRINT("Player joined with socket: " + QString::number(socketID), Console::eDEBUG);
+        QString command = QString(NetworkCommands::REQUESTJOINREASON);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QByteArray data;
+        QDataStream stream(&data, QIODevice::WriteOnly);
+        stream << command;
+        emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
@@ -308,33 +463,43 @@ void GameMenue::disconnected(quint64 socketID)
     {
         CONSOLE_PRINT("Handling player GameMenue::disconnect()", Console::eDEBUG);
         bool showDisconnect = !m_pNetworkInterface->getIsServer();
-        
-        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        m_multiplayerSyncData.m_connectingSockets.removeAll(socketID);
+        auto & observer = m_pMap->getGameRules()->getObserverList();
+        bool observerDisconnect = observer.contains(socketID);
+        if (observerDisconnect)
         {
-            Player* pPlayer = m_pMap->getPlayer(i);
-            quint64 playerSocketID = pPlayer->getSocketId();
-            if (socketID == playerSocketID &&
-                !pPlayer->getIsDefeated())
+            observer.removeAll(socketID);
+        }
+        else
+        {
+            for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
-                showDisconnect = true;
-                break;
+                Player* pPlayer = m_pMap->getPlayer(i);
+                quint64 playerSocketID = pPlayer->getSocketId();
+                if (socketID == playerSocketID &&
+                    !pPlayer->getIsDefeated())
+                {
+                    showDisconnect = true;
+                    break;
+                }
+            }
+            if (m_pNetworkInterface.get() != nullptr)
+            {
+                m_pNetworkInterface = nullptr;
+            }
+            if (showDisconnect)
+            {
+                m_gameStarted = false;
+                spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
+                addChild(pDialogMessageBox);
+            }
+            if (Mainapp::getSlave())
+            {
+                CONSOLE_PRINT("Closing slave cause a player has disconnected.", Console::eDEBUG);
+                QCoreApplication::exit(0);
             }
         }
-        if (m_pNetworkInterface.get() != nullptr)
-        {
-            m_pNetworkInterface = nullptr;
-        }
-        if (showDisconnect)
-        {
-            m_gameStarted = false;
-            spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
-            addChild(pDialogMessageBox);
-        }
-        if (Mainapp::getSlave())
-        {
-            CONSOLE_PRINT("Closing slave cause a player has disconnected.", Console::eDEBUG);
-            QCoreApplication::exit(0);
-        }
+        continueAfterSyncGame();
     }
 }
 
@@ -408,8 +573,7 @@ void GameMenue::loadGameMenue()
 }
 
 void GameMenue::connectMap()
-{
-    
+{    
     connect(m_pMap->getGameRules(), &GameRules::sigVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(m_pMap->getGameRules()->getRoundTimer(), &Timer::timeout, m_pMap.get(), &GameMap::nextTurnPlayerTimeout, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
@@ -427,13 +591,13 @@ void GameMenue::connectMap()
     connect(m_pMap.get(), &GameMap::sigShowWiki, this, &GameMenue::showWiki, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowRules, this, &GameMenue::showRules, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowUnitStatistics, this, &GameMenue::showUnitStatistics, Qt::QueuedConnection);
+    connect(m_pMap.get(), &GameMap::sigShowDamageCalculator, this, &GameMenue::showDamageCalculator, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigMovedMap, m_IngameInfoBar.get(), &IngameInfoBar::syncMinimapPosition, Qt::QueuedConnection);
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, m_pMap.get(), &GameMap::centerMap, Qt::QueuedConnection);
 }
 
 void GameMenue::loadUIButtons()
-{
-    
+{    
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
@@ -442,14 +606,15 @@ void GameMenue::loadUIButtons()
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
     m_CurrentRoundTime = oxygine::spTextField::create();
+    m_CurrentRoundTime->setSize(120, 30);
     m_CurrentRoundTime->setStyle(style);
     if (roundTime > 0)
     {
-        pButtonBox->setSize(286 + 70, 50);
-        m_CurrentRoundTime->setPosition(108 + 4, 10);
+        pButtonBox->setSize(286 + 120, 50);
+        m_CurrentRoundTime->setPosition(138 + 5, 10);
         pButtonBox->addChild(m_CurrentRoundTime);
         updateTimer();
     }
@@ -457,7 +622,9 @@ void GameMenue::loadUIButtons()
     {
         pButtonBox->setSize(286, 50);
     }
-    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, Settings::getHeight() - pButtonBox->getHeight() + 6);
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+
+    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) / 2 - pButtonBox->getWidth() / 2, Settings::getHeight() - pButtonBox->getHeight() + 6);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
     oxygine::spButton saveGame = pObjectManager->createButton(tr("Save"), 130);
@@ -496,6 +663,7 @@ void GameMenue::loadUIButtons()
     m_UpdateTimer.setInterval(500);
     m_UpdateTimer.setSingleShot(false);
     m_UpdateTimer.start();
+    bool loadQuickButtons = true;
     if (m_pNetworkInterface.get() != nullptr)
     {
         pButtonBox = oxygine::spBox9Sprite::create();
@@ -511,11 +679,14 @@ void GameMenue::loadUIButtons()
             showChat();
         });
         pButtonBox->addChild(m_ChatButton);
+        loadQuickButtons = !m_pNetworkInterface->getIsObserver();
     }
-
-    m_humanQuickButtons = spHumanQuickButtons::create();
-    m_humanQuickButtons->setEnabled(false);
-    addChild(m_humanQuickButtons);
+    if (loadQuickButtons)
+    {
+        m_humanQuickButtons = spHumanQuickButtons::create(this);
+        m_humanQuickButtons->setEnabled(false);
+        addChild(m_humanQuickButtons);
+    }
 }
 
 void GameMenue::showChat()
@@ -531,8 +702,7 @@ void GameMenue::showChat()
 }
 
 void GameMenue::updateTimer()
-{    
-    
+{
     if (m_pMap.get() != nullptr)
     {
         QTimer* pTimer = m_pMap->getGameRules()->getRoundTimer();
@@ -567,7 +737,7 @@ spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
     {
         CONSOLE_PRINT("Check and update multiTurnMovement", Console::eDEBUG);
         
-        // check for units that have a multi turn avaible
+        // check for units that have a multi turn available
         qint32 heigth = m_pMap->getMapHeight();
         qint32 width = m_pMap->getMapWidth();
         Player* pPlayer = m_pMap->getCurrentPlayer();
@@ -633,19 +803,41 @@ spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
     return pGameAction;
 }
 
+bool GameMenue::getIsMultiplayer(const spGameAction & pGameAction) const
+{
+    return !pGameAction->getIsLocal() &&
+            m_pNetworkInterface.get() != nullptr &&
+            m_gameStarted;
+}
+
+bool GameMenue::requiresForwarding(const spGameAction & pGameAction) const
+{
+    Player* pCurrentPlayer = m_pMap->getCurrentPlayer();
+    auto* baseGameInput = pCurrentPlayer->getBaseGameInput();
+    return getIsMultiplayer(pGameAction) &&
+           baseGameInput != nullptr &&
+           baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi;
+}
+
 void GameMenue::performAction(spGameAction pGameAction)
 {
     m_saveAllowed = false;
-    if (pGameAction.get() != nullptr)
+    if (m_multiplayerSyncData.m_waitingForSyncFinished)
+    {
+        m_multiplayerSyncData.m_postSyncAction = pGameAction;
+        spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players/Observers to join"), 1000 * 60 * 5);
+        addChild(pDialogConnecting);
+        connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
+        connect(this, &GameMenue::sigSyncFinished, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+    }
+    else if (pGameAction.get() != nullptr)
     {
         CONSOLE_PRINT("GameMenue::performAction " + pGameAction->getActionID() + " at X: " + QString::number(pGameAction->getTarget().x())
                        + " at Y: " + QString::number(pGameAction->getTarget().y()), Console::eDEBUG);
         
         Mainapp::getInstance()->pauseRendering();
-        bool multiplayer = !pGameAction->getIsLocal() &&
-                           m_pNetworkInterface.get() != nullptr &&
-                                                        m_gameStarted;
-        spPlayer pCurrentPlayer = spPlayer(m_pMap->getCurrentPlayer());
+        bool multiplayer = getIsMultiplayer(pGameAction);
+        Player* pCurrentPlayer = m_pMap->getCurrentPlayer();
         auto* baseGameInput = pCurrentPlayer->getBaseGameInput();
         if (multiplayer &&
             baseGameInput != nullptr &&
@@ -675,9 +867,7 @@ void GameMenue::performAction(spGameAction pGameAction)
             Unit * pMoveUnit = pGameAction->getTargetUnit();
             doTrapping(pGameAction);
             // send action to other players if needed
-            if (multiplayer &&
-                baseGameInput != nullptr &&
-                baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi)
+            if (requiresForwarding(pGameAction))
             {
                 CONSOLE_PRINT("Sending action to other players", Console::eDEBUG);
                 m_syncCounter++;
@@ -736,7 +926,6 @@ void GameMenue::performAction(spGameAction pGameAction)
         }
         Mainapp::getInstance()->continueRendering();
     }
-    
 }
 
 void GameMenue::doTrapping(spGameAction & pGameAction)
@@ -847,20 +1036,16 @@ bool GameMenue::isTrap(const QString & function, spGameAction pAction, Unit* pMo
     Unit* pUnit = m_pMap->getTerrain(currentPoint.x(), currentPoint.y())->getUnit();
 
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj1 = pInterpreter->newQObject(pAction.get());
-    args << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pMoveUnit);
-    args << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pUnit);
-    args << obj3;
-    args << currentPoint.x();
-    args << currentPoint.y();
-    args << previousPoint.x();
-    args << previousPoint.y();
-    args << moveCost;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap.get());
-    args << obj5;
+    QJSValueList args({pInterpreter->newQObject(pAction.get()),
+                       pInterpreter->newQObject(pMoveUnit),
+                       pInterpreter->newQObject(pUnit),
+                       currentPoint.x(),
+                       currentPoint.y(),
+                       previousPoint.x(),
+                       previousPoint.y(),
+                       moveCost,
+                       pInterpreter->newQObject(m_pMap.get()),
+                      });
     QJSValue erg = pInterpreter->doFunction("ACTION_TRAP", function, args);
     if (erg.isBool())
     {
@@ -920,15 +1105,22 @@ void GameMenue::skipAllAnimations()
     while (i < GameAnimationFactory::getAnimationCount())
     {
         GameAnimation* pAnimation = GameAnimationFactory::getAnimation(i);
-        GameAnimationDialog* pDialogAnimation = dynamic_cast<GameAnimationDialog*>(pAnimation);
-        BattleAnimation* pBattleAnimation = dynamic_cast<BattleAnimation*>(pAnimation);
-        if (shouldSkipDialog(pDialogAnimation) ||
-            shouldSkipBattleAnimation(pBattleAnimation) ||
-            (pDialogAnimation == nullptr &&
-             pBattleAnimation == nullptr &&
-             shouldSkipOtherAnimation(pAnimation)))
+        if (pAnimation != nullptr)
         {
-            while (!pAnimation->onFinished(true));
+            GameAnimationDialog* pDialogAnimation = dynamic_cast<GameAnimationDialog*>(pAnimation);
+            BattleAnimation* pBattleAnimation = dynamic_cast<BattleAnimation*>(pAnimation);
+            if (shouldSkipDialog(pDialogAnimation) ||
+                shouldSkipBattleAnimation(pBattleAnimation) ||
+                (pDialogAnimation == nullptr &&
+                 pBattleAnimation == nullptr &&
+                 shouldSkipOtherAnimation(pAnimation)))
+            {
+                while (!pAnimation->onFinished(true));
+            }
+            else
+            {
+                i++;
+            }
         }
         else
         {
@@ -1268,7 +1460,7 @@ void GameMenue::victory(qint32 team)
                 exit = false;
             }
         }
-        if (exit == true)
+        if (exit == true && !m_isReplay)
         {
             if (m_pNetworkInterface.get() != nullptr)
             {
@@ -1294,7 +1486,7 @@ void GameMenue::showAttackLog(qint32 player)
     m_Focused = false;
     CONSOLE_PRINT("showAttackLog() for player " + QString::number(player), Console::eDEBUG);
     spDialogAttackLog pAttackLog = spDialogAttackLog::create(m_pMap.get(), m_pMap->getPlayer(player));
-    connect(pAttackLog.get(), &DialogAttackLog::sigFinished, [=]()
+    connect(pAttackLog.get(), &DialogAttackLog::sigFinished, this, [=]()
     {
         m_Focused = true;
     });
@@ -1306,7 +1498,7 @@ void GameMenue::showRules()
     m_Focused = false;
     CONSOLE_PRINT("showRuleSelection()", Console::eDEBUG);
     spRuleSelectionDialog pRuleSelection = spRuleSelectionDialog::create(m_pMap.get(), RuleSelection::Mode::Singleplayer, false);
-    connect(pRuleSelection.get(), &RuleSelectionDialog::sigOk, [=]()
+    connect(pRuleSelection.get(), &RuleSelectionDialog::sigOk, this, [=]()
     {
         m_Focused = true;
     });
@@ -1318,7 +1510,7 @@ void GameMenue::showUnitInfo(qint32 player)
     m_Focused = false;
     CONSOLE_PRINT("showUnitInfo() for player " + QString::number(player), Console::eDEBUG);
     spDialogUnitInfo pDialogUnitInfo = spDialogUnitInfo::create(m_pMap->getPlayer(player));
-    connect(pDialogUnitInfo.get(), &DialogUnitInfo::sigFinished, [=]()
+    connect(pDialogUnitInfo.get(), &DialogUnitInfo::sigFinished, this, [=]()
     {
         m_Focused = true;
     });
@@ -1336,7 +1528,7 @@ void GameMenue::showUnitStatistics()
             Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer);
     view->setPosition(30, 30);
     pBox->addItem(view);
-    connect(pBox.get(), &GenericBox::sigFinished, [=]()
+    connect(pBox.get(), &GenericBox::sigFinished, this, [=]()
     {
         m_Focused = true;
     });
@@ -1351,7 +1543,7 @@ void GameMenue::showOptions()
     spGameplayAndKeys pGameplayAndKeys = spGameplayAndKeys::create(Settings::getHeight() - 80);
     pGameplayAndKeys->setY(0);
     pDialogOptions->addItem(pGameplayAndKeys);
-    connect(pDialogOptions.get(), &GenericBox::sigFinished, [=]()
+    connect(pDialogOptions.get(), &GenericBox::sigFinished, this, [=]()
     {
         Settings::saveSettings();
         m_Focused = true;
@@ -1373,7 +1565,7 @@ void GameMenue::showChangeSound()
     pPanel->setContentHeigth(y + 40);
     pPanel->setPosition(10, 10);
     pDialogOptions->addItem(pPanel);
-    connect(pDialogOptions.get(), &GenericBox::sigFinished, [=]()
+    connect(pDialogOptions.get(), &GenericBox::sigFinished, this, [=]()
     {
         Settings::saveSettings();
         m_Focused = true;
@@ -1448,7 +1640,7 @@ void GameMenue::showGameInfo(qint32 player)
         pPanel->setContentHeigth(pTableView->getHeight() + 40);
         pGenericBox->addItem(pPanel);
         addChild(pGenericBox);
-        connect(pGenericBox.get(), &GenericBox::sigFinished, [=]()
+        connect(pGenericBox.get(), &GenericBox::sigFinished, this, [=]()
         {
             m_Focused = true;
         });
@@ -1792,7 +1984,7 @@ void GameMenue::keyInputAll(Qt::Key cur)
             }
             spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pUnit);
             addChild(fieldinfo);
-            connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
+            connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [=]
             {
                 setFocused(true);
             });
@@ -1818,7 +2010,7 @@ void GameMenue::showExitGame()
     m_Focused = false;
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the current game?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &GameMenue::exitGame, Qt::QueuedConnection);
-    connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
+    connect(pExit.get(), &DialogMessageBox::sigCancel, this, [=]()
     {
         m_Focused = true;
     });
@@ -1833,7 +2025,7 @@ void GameMenue::showWiki()
     spWikiView pView = spWikiView::create(Settings::getWidth() - 40, Settings::getHeight() - 60);
     pView->setPosition(20, 20);
     pBox->addItem(pView);
-    connect(pBox.get(), &GenericBox::sigFinished, [=]()
+    connect(pBox.get(), &GenericBox::sigFinished, this, [=]()
     {
         m_Focused = true;
     });
@@ -1849,7 +2041,7 @@ void GameMenue::showSurrenderGame()
         m_Focused = false;
         spDialogMessageBox pSurrender = spDialogMessageBox::create(tr("Do you want to surrender the current game?"), true);
         connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &GameMenue::surrenderGame, Qt::QueuedConnection);
-        connect(pSurrender.get(), &DialogMessageBox::sigCancel, [=]()
+        connect(pSurrender.get(), &DialogMessageBox::sigCancel, this, [=]()
         {
             m_Focused = true;
         });
@@ -1874,11 +2066,11 @@ void GameMenue::showNicknameUnit(qint32 x, qint32 y)
     {
         CONSOLE_PRINT("showNicknameUnit()", Console::eDEBUG);
         spDialogTextInput pDialogTextInput = spDialogTextInput::create(tr("Nickname for the Unit:"), true, pUnit->getName());
-        connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, [=](QString value)
+        connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, this, [=](QString value)
         {
             emit sigNicknameUnit(x, y, value);
         });
-        connect(pDialogTextInput.get(), &DialogTextInput::sigCancel, [=]()
+        connect(pDialogTextInput.get(), &DialogTextInput::sigCancel, this, [=]()
         {
             m_Focused = true;
         });
@@ -1896,4 +2088,19 @@ void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
     pAction->writeDataString(name);
     performAction(pAction);
     m_Focused = true;
+}
+
+void GameMenue::showDamageCalculator()
+{
+    addChild(spDamageCalculator::create());
+}
+
+bool GameMenue::getIsReplay() const
+{
+    return m_isReplay;
+}
+
+void GameMenue::setIsReplay(bool isReplay)
+{
+    m_isReplay = isReplay;
 }

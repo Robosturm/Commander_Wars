@@ -75,6 +75,25 @@ var Constructor = function()
         {
             terrain.loadOverlaySprite("snow+W");
         }
+
+        var x = terrain.getX();
+        var y = terrain.getY();
+        var highTerrain = terrain.getSurroundings(TERRAIN.getHighTerrains(), true, false, GameEnums.Directions_West, false);
+        if (map.onMap(x - 1, y))
+        {
+            var building = map.getTerrain(x - 1, y).getBuilding();
+            if (building !== null &&
+                    building.getBuildingWidth() === 1 &&
+                    building.getBuildingHeigth() === 1)
+            {
+                highTerrain = "+W";
+            }
+        }
+
+        if (highTerrain !== "")
+        {
+            terrain.loadOverlaySprite("shadow_desert");
+        }
     };
 
     this.getDescription = function()

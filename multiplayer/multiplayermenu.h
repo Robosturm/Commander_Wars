@@ -23,8 +23,15 @@ class Multiplayermenu : public MapSelectionMapsMenue
 {
     Q_OBJECT
 public:
-    explicit Multiplayermenu(QString adress, QString password, bool host);
-    explicit Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, bool host);
+    enum class NetworkMode
+    {
+        Client,
+        Host,
+        Observer,
+    };
+
+    explicit Multiplayermenu(QString adress, quint16 port, QString password, NetworkMode host);
+    explicit Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, NetworkMode host);
     virtual ~Multiplayermenu() = default;
 
     /**
@@ -45,10 +52,12 @@ public:
      * @brief connectNetworkSlots
      */
     void connectNetworkSlots();
+    void disconnectNetworkSlots();
     /**
      * @brief showRuleSelection
      */
     virtual void showRuleSelection() override;
+    virtual void showPlayerSelection() override;
 signals:
     void sigConnected();
     void sigHostGameLaunched();
@@ -64,7 +73,20 @@ public slots:
     // network slots
     void playerJoined(quint64 socketID);
     void disconnected(quint64 socketID);
+    /**
+     * @brief recieveData receive data from an client
+     * @param socketID
+     * @param data
+     * @param service
+     */
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    /**
+     * @brief recieveServerData receive data from the server hosting this slave
+     * @param socketID
+     * @param data
+     * @param service
+     */
+    void recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
 
     virtual void hideMapSelection() override;
     virtual void showMapSelection() override;
@@ -74,6 +96,12 @@ public slots:
 
     void slotCancelHostConnection();
     void slotHostGameLaunched();
+    /**
+     * @brief onSlaveConnectedToMaster
+     * @param socketID
+     */
+    void onSlaveConnectedToMaster(quint64 socketID);
+
 protected slots:
     void countdown();
 protected:
@@ -98,6 +126,9 @@ protected:
     void recieveMap(QDataStream & stream, quint64 socketID);
     void playerJoinedServer(QDataStream & stream, quint64 socketID);
     bool findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, bool m_saveGame);
+    void sendJoinReason(QDataStream & stream, quint64 socketID);
+    void receiveCurrentGameState(QDataStream & stream, quint64 socketID);
+    void connectToSlave(QDataStream & stream, quint64 socketID);
 private:
     /**
      * @brief init
@@ -138,7 +169,7 @@ private:
      */
     void changeButtonText();
 private:
-    bool m_Host{false};
+    NetworkMode m_networkMode{NetworkMode::Client};
     spNetworkInterface m_NetworkInterface;
     oxygine::spButton m_pHostAdresse;
     spChat m_Chat;

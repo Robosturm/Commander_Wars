@@ -16,6 +16,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     : m_pMap(pMap)
 {
     setObjectName("ScriptEditor");
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

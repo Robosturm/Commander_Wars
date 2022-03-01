@@ -22,6 +22,7 @@
 #include "objects/loadingscreen.h"
 
 #include "network/mainserver.h"
+#include "network/tcpclient.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/buildingspritemanager.h"
@@ -39,18 +40,29 @@
 #include "resource_management/shoploader.h"
 #include "resource_management/movementtablemanager.h"
 #include "resource_management/weaponmanager.h"
+
 #include "wiki/wikidatabase.h"
 
 Mainapp* Mainapp::m_pMainapp;
 QThread Mainapp::m_Workerthread;
-QThread Mainapp::m_AudioWorker;
 QThread Mainapp::m_Networkthread;
 QThread Mainapp::m_GameServerThread;
 WorkerThread* Mainapp::m_Worker = new WorkerThread();
 AudioThread* Mainapp::m_Audiothread = nullptr;
+spTCPClient Mainapp::m_slaveClient;
+
 bool Mainapp::m_slave{false};
 QMutex Mainapp::m_crashMutex;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
+const char* const Mainapp::ARG_MODS = "-mods";
+const char* const Mainapp::ARG_SLAVE = "-slave";
+const char* const Mainapp::ARG_SLAVENAME = "-slaveServer";
+const char* const Mainapp::ARG_NOUI = "-noui";
+const char* const Mainapp::ARG_NOAUDIO = "-noaudio";
+const char* const Mainapp::ARG_INITSCRIPT = "-initScript";
+const char* const Mainapp::ARG_CREATESLAVELOGS = "-createSlaveLogs";
+const char* const Mainapp::ARG_SLAVEADDRESS = "-slaveAdress";
+const char* const Mainapp::ARG_MASTERADDRESS = "-masterAdress";
 
 Mainapp::Mainapp()
 {
@@ -61,7 +73,6 @@ Mainapp::Mainapp()
     createBaseDirs();
     m_pMainThread->setObjectName("Mainthread");
     m_Workerthread.setObjectName("Workerthread");
-    m_AudioWorker.setObjectName("AudioWorker");
     m_Networkthread.setObjectName("Networkthread");
     m_GameServerThread.setObjectName("GameServerThread");
 
@@ -130,9 +141,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::General:
         {
             m_Audiothread = new AudioThread(m_noAudio);
-            m_AudioWorker.start(QThread::Priority::HighPriority);
-            m_Audiothread->moveToThread(&m_AudioWorker);
-            emit m_Audiothread->sigInitAudio();
+            m_Audiothread->initAudio();
             m_Audiothread->clearPlayList();
             m_Audiothread->loadFolder("resources/music/hauptmenue");
             FontManager::getInstance();
@@ -289,10 +298,10 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case StartupPhase::Sound:
         {
-            if (!m_noUi)
+            if (!m_noAudio)
             {
                 update();
-                emit m_Audiothread->sigCreateSoundCache();
+                m_Audiothread->createSoundCache();
             }
             pLoadingScreen->setProgress(tr("Loading Scripts ..."), SCRIPT_PROCESS);
             break;
@@ -618,9 +627,9 @@ void Mainapp::showCrashReport(const QString & log)
 
 void Mainapp::loadArgs(const QStringList & args)
 {
-    if (args.contains("-mods"))
+    if (args.contains(ARG_MODS))
     {
-        QStringList modList = args[args.indexOf("-mods") + 1].split(",");
+        QStringList modList = args[args.indexOf(ARG_MODS) + 1].split(",");
         qint32 i= 0;
         while (i < modList.size())
         {
@@ -635,13 +644,15 @@ void Mainapp::loadArgs(const QStringList & args)
         }
         Settings::setActiveMods(modList);
     }
-    if (args.contains("-slave"))
+    if (args.contains(ARG_SLAVE))
     {
         setSlave(true);
         Settings::setServer(false);
-        Settings::setUsername("Server");
+        Settings::setUsername("Server");                    
+        m_slaveClient = spTCPClient::create(nullptr);
+        m_slaveClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
     }
-    if (args.contains("-noui"))
+    if (args.contains(ARG_NOUI))
     {
         m_noUi = true;
         Settings::setOverworldAnimations(false);
@@ -652,19 +663,18 @@ void Mainapp::loadArgs(const QStringList & args)
         Settings::setBattleAnimationSpeed(100);
         Settings::setDialogAnimation(false);
         Settings::setDialogAnimationSpeed(100);
-        Settings::setTotalVolume(0);
         m_Timer.stop();
     }
-    m_noAudio = args.contains("-noaudio");
-    if (args.contains("-slaveServer"))
+    m_noAudio = args.contains(ARG_NOAUDIO);
+    if (args.contains(ARG_SLAVENAME))
     {
-        Settings::setSlaveServerName(args[args.indexOf("-slaveServer") + 1]);
+        Settings::setSlaveServerName(args[args.indexOf(ARG_SLAVENAME) + 1]);
     }
-    if (args.contains("-initScript"))
+    if (args.contains(ARG_INITSCRIPT))
     {
-        m_initScript = args[args.indexOf("-initScript") + 1];
+        m_initScript = args[args.indexOf(ARG_INITSCRIPT) + 1];
     }
-    if (args.contains("-createSlaveLogs"))
+    if (args.contains(ARG_CREATESLAVELOGS))
     {
         m_createSlaveLogs = true;
     }
@@ -742,12 +752,7 @@ void Mainapp::onQuit()
         m_Workerthread.wait();
     }
     QApplication::processEvents();
-    if (m_AudioWorker.isRunning())
-    {
-        m_Audiothread->deleteLater();
-        m_AudioWorker.quit();
-        m_AudioWorker.wait();
-    }
+    delete m_Audiothread;
     QApplication::processEvents();
     if (m_Networkthread.isRunning())
     {
@@ -766,6 +771,11 @@ void Mainapp::onQuit()
         m_GameServerThread.wait();
     }
     QApplication::processEvents();
+}
+
+spTCPClient Mainapp::getSlaveClient()
+{
+    return m_slaveClient;
 }
 
 const QString &Mainapp::getInitScript() const

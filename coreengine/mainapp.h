@@ -18,11 +18,23 @@ using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
 class AudioThread;
 using spAudioThread = oxygine::intrusive_ptr<AudioThread>;
 
+class TCPClient;
+using spTCPClient = oxygine::intrusive_ptr<TCPClient>;
+
 class Mainapp : public oxygine::GameWindow
 {
     Q_OBJECT
 public:
     static const char* const GAME_CONTEXT;
+    static const char* const ARG_MODS;
+    static const char* const ARG_SLAVE;
+    static const char* const ARG_SLAVENAME;
+    static const char* const ARG_NOUI;
+    static const char* const ARG_NOAUDIO;
+    static const char* const ARG_INITSCRIPT;
+    static const char* const ARG_CREATESLAVELOGS;
+    static const char* const ARG_SLAVEADDRESS;
+    static const char* const ARG_MASTERADDRESS;
     static constexpr qint32 stepProgress = 4;
     enum StartupPhase
     {
@@ -97,10 +109,6 @@ public:
     {
         return &m_Networkthread;
     }
-    inline static QThread* getAudioWorker()
-    {
-        return &m_AudioWorker;
-    }
     /**
      * @brief loadRessources
      */
@@ -172,6 +180,8 @@ public:
     {
         return m_gamepad;
     }
+    static spTCPClient getSlaveClient();
+
 public slots:
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);
@@ -259,16 +269,17 @@ protected:
     virtual void onQuit() override;
 private:
     QLineEdit* m_pLineEdit{nullptr};
+
     static Mainapp* m_pMainapp;
     static QMutex m_crashMutex;
     static QThread m_Workerthread;
-    static QThread m_AudioWorker;
     static QThread m_Networkthread;
     static QThread m_GameServerThread;
     static WorkerThread* m_Worker;
     static AudioThread* m_Audiothread;
     QThread* m_pMainThread{nullptr};
     static bool m_slave;
+    static spTCPClient m_slaveClient;
     QString m_initScript;
     bool m_createSlaveLogs{false};
     Gamepad m_gamepad{0};

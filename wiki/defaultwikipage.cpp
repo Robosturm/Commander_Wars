@@ -4,9 +4,9 @@
 
 DefaultWikipage::DefaultWikipage(QString item)
 {
+    Interpreter::setCppOwnerShip(this);
     setObjectName("DefaultWikipage");
-    QJSValueList args;
-    args << item;
+    QJSValueList args({item});
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue icon = pInterpreter->doFunction(item, "getIcon");
     QJSValue name = pInterpreter->doFunction(item, "getName", args);

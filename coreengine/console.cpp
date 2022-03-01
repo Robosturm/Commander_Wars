@@ -52,6 +52,7 @@ const QString Console::functions[] =
     QString("setDeveloperMode"),
     QString("extractResources"),
     QString("memoryUsage"),
+    QString("printObjectDetails"),
     QString("")
 };
 const char* const Console::compileTime = __TIME__;
@@ -1523,14 +1524,14 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
     if (!file.isOpen())
     {
         QStringList args = QCoreApplication::arguments();
-        bool slave = args.contains("-slave");
+        bool slave = args.contains(Mainapp::ARG_SLAVE);
         if (slave &&
-            args.contains("-createSlaveLogs"))
+            args.contains(Mainapp::ARG_CREATESLAVELOGS))
         {
             QString slaveName = "slave";
-            if (args.contains("-slaveServer"))
+            if (args.contains(Mainapp::ARG_SLAVENAME))
             {
-                slaveName = args[args.indexOf("-slaveServer") + 1];
+                slaveName = args[args.indexOf(Mainapp::ARG_SLAVENAME) + 1];
             }
             file.setFileName(Settings::getUserPath() + slaveName + ".log");
             file.open(QIODevice::WriteOnly);

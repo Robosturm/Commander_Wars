@@ -232,6 +232,12 @@ public:
     static void setUsername(const QString &Username);
 
 public slots:
+    static quint16 getSlaveServerPort();
+    static void setSlaveServerPort(quint16 newSlaveServerPort);
+
+    static QString getSlaveHostOptions();
+    static void setSlaveHostOptions(const QString &newSlaveHostOptions);
+
     static Qt::Key getKey_mapshot();
     static void setKey_mapshot(Qt::Key newKey_mapshot);
 
@@ -734,11 +740,15 @@ private:
     static bool m_muted;
     // Network
     static quint16 m_GamePort;
-    static quint16 m_ServerPort;
-    static QString m_ServerAdress;
     static QString m_Username;
     static QString m_slaveServerName;
+
     static bool m_Server;
+    static quint16 m_ServerPort;
+    static quint16 m_slaveServerPort;
+    static QString m_ServerAdress;
+    static QString m_slaveHostOptions;
+
     // auto saving
     static std::chrono::seconds m_autoSavingCylceTime;
     static qint32 m_autoSavingCycle;

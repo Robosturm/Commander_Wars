@@ -138,13 +138,13 @@ var Constructor = function()
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                baseDamage = 80;
+                baseDamage = 90;
                 fixedDamage = true;
                 break;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    baseDamage = 80;
+                    baseDamage = 90;
                     fixedDamage = true;
                 }
                 break;

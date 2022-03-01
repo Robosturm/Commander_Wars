@@ -77,6 +77,11 @@ void HeavyAi::showFrontLines()
     m_InfluenceFrontMap.showFrontlines();
 }
 
+void HeavyAi::hideFrontMap()
+{
+    m_InfluenceFrontMap.hide();
+}
+
 void HeavyAi::showUnitPfs(bool enemy, qint32 index)
 {
     if (enemy)
@@ -95,11 +100,19 @@ void HeavyAi::showUnitPfs(bool enemy, qint32 index)
     }
 }
 
-void HeavyAi::hideFrontMap()
+void HeavyAi::showIslandMap(QString unitId)
 {
-    m_InfluenceFrontMap.hide();
+    Unit unit(unitId, m_pPlayer, false, m_pMap);
+    qint32 unitIslandIdx = getIslandIndex(&unit);
+    m_IslandMaps[unitIslandIdx]->show();
 }
 
+void HeavyAi::hideIslandMap(QString unitId)
+{
+    Unit unit(unitId, m_pPlayer, false, m_pMap);
+    qint32 unitIslandIdx = getIslandIndex(&unit);
+    m_IslandMaps[unitIslandIdx]->show();
+}
 
 double HeavyAi::getMinActionScore() const
 {

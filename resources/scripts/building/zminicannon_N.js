@@ -6,10 +6,11 @@ var Constructor = function()
         building.setAlwaysVisble(true);
     };
     
-    this.loadSprites = function(building)
+    this.loadSprites = function(building, neutral, map)
     {
         building.loadSprite("minicannon+N", false);
         building.loadSpriteV2("minicannon+N+mask", GameEnums.Recoloring_Matrix);
+        building.loadSprite("minicannon+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.getBaseIncome = function()
     {

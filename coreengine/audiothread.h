@@ -28,6 +28,7 @@ private:
         std::shared_ptr<QSoundEffect> sound[MAX_SAME_SOUNDS];
         std::shared_ptr<QTimer> timer[MAX_SAME_SOUNDS];
         qint32 nextSoundToUse = 0;
+        QUrl cacheUrl;
     };
     struct Player
     {
@@ -50,20 +51,23 @@ public:
     void createSoundCache();
 
 signals:
-    void sigInitAudio();
-    void sigCreateSoundCache();
     void sigPlayMusic(qint32 File);
     void sigSetVolume(qint32 value);
     void sigAddMusic(QString File, qint64 startPointMs = -1, qint64 endPointMs = -1);
     void sigClearPlayList();
     void sigPlayRandom();
     void sigLoadFolder(QString folder);
-    void sigPlaySound(QString file, qint32 loops, qint32 delay, float volume = 1.0f);
+    void sigPlaySound(QString file, qint32 loops, qint32 delay, float volume = 1.0f,
+                      bool stopOldestSound = false);
     void sigStopSound(QString file);
     void sigStopAllSounds();
     void sigChangeAudioDevice(const QVariant& value);
     void sigLoadNextAudioFile();
 public slots:
+    /**
+     * @brief initAudio
+     */
+    void initAudio();
     /**
      * @brief getLoadBaseGameFolders
      * @return
@@ -114,7 +118,8 @@ public slots:
      * @param file
      * @param loops
      */
-    void playSound(QString file, qint32 loops = 1, qint32 delay = 0, float volume = 1.0f);
+    void playSound(QString file, qint32 loops = 1, qint32 delay = 0, float volume = 1.0f,
+                   bool stopOldestSound = false);
     /**
      * @brief stopSound
      * @param file
@@ -139,10 +144,10 @@ protected slots:
     void SlotLoadFolder(QString folder);
     void SlotCheckMusicEnded(qint64 duration);
     // audio stuff
-    void SlotPlaySound(QString file, qint32 loops,qint32 delay, float volume = 1.0f);
+    void SlotPlaySound(QString file, qint32 loops,qint32 delay, float volume = 1.0f,
+                       bool stopOldestSound = false);
     void SlotStopSound(QString file);
     void SlotStopAllSounds();
-    void initAudio();
     void SlotChangeAudioDevice(const QVariant& value);
     /**
      * @brief loadNextAudioFile
@@ -209,13 +214,25 @@ protected:
      * @return
      */
     bool tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soundCache, qint32 i,
-                                     QString & file, qint32 loops, qint32 delay, qreal sound);
+                                     QString & file, qint32 loops, qint32 delay, qreal sound,
+                                     bool stopOldestSound);
     /**
      * @brief stopSound
      * @param soundData
      * @param soundIndex
      */
-    void stopSound(std::shared_ptr<SoundData> & soundData, qint32 soundIndex);
+    void stopSound(SoundData* soundData, qint32 soundIndex);
+    /**
+     * @brief stopOldestSound
+     * @param soundData
+     */
+    void stopOldestSound(SoundData* soundData);
+    /**
+     * @brief stopSoundAtIndex
+     * @param soundData
+     * @param index
+     */
+    bool stopSoundAtIndex(SoundData* soundData, qint32 index);
 #endif
     void loadMediaForFile(QString filePath);
 

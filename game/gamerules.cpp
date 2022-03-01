@@ -536,13 +536,7 @@ void GameRules::createWeatherSprites()
     {
         m_CurrentWeather = 0;
     }
-    
-    for (qint32 i = 0; i < m_WeatherSprites.size(); i++)
-    {
-        m_WeatherSprites[i]->detach();
-        m_WeatherSprites[i] = nullptr;
-    }
-    m_WeatherSprites.clear();
+    resetWeatherSprites();
     if (m_Weathers.size() > 0)
     {
         qint32 width = m_pMap->getMapWidth();
@@ -578,6 +572,35 @@ void GameRules::createWeatherSprites()
         }
     }
     
+}
+
+void GameRules::resetWeatherSprites()
+{
+    for (auto & sprite : m_WeatherSprites)
+    {
+        if (sprite.get() != nullptr)
+        {
+            sprite->detach();
+            sprite = nullptr;
+        }
+    }
+    m_WeatherSprites.clear();
+}
+
+void GameRules::resetFogSprites()
+{
+    for (auto & sprites : m_FogSprites)
+    {
+        for (auto & sprite : sprites)
+        {
+            if (sprite.get() != nullptr)
+            {
+                sprite->detach();
+                sprite = nullptr;
+            }
+        }
+    }
+    m_FogSprites.clear();
 }
 
 qint32 GameRules::getUnitLimit() const
@@ -731,7 +754,7 @@ void GameRules::createFieldFogMist(qint32 x, qint32 y, Player* pPlayer, QColor f
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfMistColor);
-            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
+            sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             m_pMap->addChild(sprite);
             m_FogSprites[x][y] = sprite;
@@ -770,7 +793,7 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fo
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfWarColor);
-            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
+            sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             m_pMap->addChild(sprite);
             m_FogSprites[x][y] = sprite;
@@ -827,7 +850,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfWarColor);
-            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
+            sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             m_pMap->addChild(sprite);
             m_FogSprites[x][y] = sprite;
@@ -845,7 +868,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(0, 0, 0, 255);
-            sprite->setPriority(static_cast<qint16>(Terrain::DrawPriority::Shroud));
+            sprite->setPriority(static_cast<qint32>(Terrain::DrawPriority::Shroud));
             pTerrain->addChild(sprite);
             pTerrain->setSpriteVisibility(false);
             m_FogSprites[x][y] = sprite;
@@ -857,7 +880,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfMistColor);
-            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
+            sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             m_pMap->addChild(sprite);
             m_FogSprites[x][y] = sprite;
@@ -945,6 +968,21 @@ bool GameRules::getCoUnits() const
 void GameRules::setCoUnits(bool coUnits)
 {
     m_coUnits = coUnits;
+}
+
+QVector<quint64> &GameRules::getObserverList()
+{
+    return m_observerList;
+}
+
+qint32 GameRules::getMultiplayerObserver() const
+{
+    return m_multiplayerObserver;
+}
+
+void GameRules::setMultiplayerObserver(qint32 newMultiplayerObserver)
+{
+    m_multiplayerObserver = newMultiplayerObserver;
 }
 
 GameMap *GameRules::getMap() const
@@ -1305,6 +1343,7 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_powerUsageReduction;
     pStream << m_powerLoose;
     pStream << m_hpDefenseReduction;
+    pStream << m_multiplayerObserver;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1595,5 +1634,9 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     if (version > 21)
     {
         pStream >> m_hpDefenseReduction;
+    }
+    if (version > 22)
+    {
+        pStream >> m_multiplayerObserver;
     }
 }

@@ -6,6 +6,7 @@
 #include "ai/coreai.h"
 
 #include "game/unitpathfindingsystem.h"
+#include "ai/influencefrontmap.h"
 
 class QmlVectorUnit;
 class QmlVectorBuilding;
@@ -65,6 +66,9 @@ class NormalAi : public CoreAI
     {
         spUnit pUnit;
         spUnitPathFindingSystem pUnitPfs;
+        qint32 movementPoints{0};
+        qint32 minFireRange{0};
+        qint32 maxFireRange{0};
     };
     struct ExpectedFundsData
     {
@@ -111,6 +115,35 @@ signals:
 
 public slots:
     virtual void process() override;
+    /*******************************************************************/
+    // debugging section
+    /*******************************************************************/
+    /**
+     * @brief toggleAiPause for debugging
+     */
+    void toggleAiPause();
+    /**
+     * @brief showIslandMap
+     * @param unitId
+     */
+    void showIslandMap(QString unitId);
+    /**
+     * @brief showIslandMap
+     * @param unitId
+     */
+    void hideIslandMap(QString unitId);
+    /**
+     * @brief showFrontMap for debugging visualization
+     */
+    void showFrontMap();
+    /**
+     * @brief showFrontLines for debugging visualization
+     */
+    void showFrontLines();
+    /**
+     * @brief hideFrontMap  for debugging visualization
+     */
+    void hideFrontMap();
 protected:
     static constexpr float maxDayDistance = 6.0f;
 
@@ -153,7 +186,7 @@ protected:
      * @param refillTarget
      * @return
      */
-    bool getBestRefillTarget(UnitPathFindingSystem & pfs, qint32 maxRefillCount, QPoint & moveTarget, QPoint & refillTarget)const;
+    bool getBestRefillTarget(UnitPathFindingSystem & pfs, qint32 maxRefillCount, QPoint & moveTarget, QPoint & refillTarget, qint32 movepoints)const;
     /**
      * @brief appendRefillTargets
      * @param actions
@@ -171,7 +204,7 @@ protected:
      * @param transporterTargets
      * @return
      */
-    bool moveUnit(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & pUnits, QStringList& actions,
+    bool moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVectorUnit & pUnits, QStringList& actions,
                   QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets,
                   bool shortenPathForTarget,
                   spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
@@ -197,16 +230,17 @@ protected:
      * @param targets
      * @return
      */
-    bool moveToUnloadArea(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & pUnits, QStringList& actions,
+    bool moveToUnloadArea(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVectorUnit & pUnits, QStringList& actions,
                           QVector<QVector3D>& targets,
-                          spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
+                          spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
+                          spQmlVectorUnit & pEnemyUnits);
     /**
      * @brief unloadUnits
      * @param pAction
      * @param pUnit
      * @return
      */
-    bool unloadUnits(spGameAction & pAction, Unit* pUnit);
+    bool unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & pEnemyUnits);
     /**
      * @brief repairUnits
      * @param pUnits
@@ -221,7 +255,8 @@ protected:
      * @return
      */
     qint32 getMoveTargetField(Unit* pUnit, spQmlVectorUnit & pUnits, UnitPathFindingSystem& turnPfs,
-                              QVector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const;
+                              QVector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
+                              qint32 movePoints) const;
     /**
      * @brief moveToSafety
      * @param pUnit
@@ -230,7 +265,8 @@ protected:
      */
     std::tuple<QPoint, float, bool> moveToSafety(Unit* pUnit, spQmlVectorUnit & pUnits,
                                                  UnitPathFindingSystem& turnPfs, QPoint target,
-                                                 spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
+                                                 spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
+                                                 qint32 movePoints);
     /**
      * @brief captureBuildings
      * @param pUnits
@@ -257,7 +293,7 @@ protected:
      * @param turnPfs
      * @return
      */
-    bool suicide(spGameAction & pAction, Unit* pUnit, UnitPathFindingSystem& turnPfs);
+    bool suicide(spGameAction & pAction, Unit* pUnit, UnitPathFindingSystem& turnPfs, qint32 movepoints);
     /**
      * @brief getIndirectTarget
      * @param pUnit
@@ -279,7 +315,7 @@ protected:
     /**
      * @brief calcVirtualDamage
      */
-    void calcVirtualDamage(spQmlVectorUnit & pUnits);
+    void calcVirtualDamage();
     /**
      * @brief calculateCaptureBonus
      * @param pUnit
@@ -309,7 +345,7 @@ protected:
     /**
      * @brief clearEnemyData
      */
-    void clearEnemyData();
+    void clearUnitData();
     /**
      * @brief buildUnits
      * @param pBuildings
@@ -425,6 +461,10 @@ protected:
      */
     void updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & pUnitData, bool enemy);
     /**
+     * @brief createUnitInfluenceMap
+     */
+    void createUnitInfluenceMap();
+    /**
      * @brief getOwnSupportDamage
      * @param moveTarget
      * @param pEnemy
@@ -438,6 +478,14 @@ protected:
      * @return
      */
     float calcSameFundsMatchUpScore(Unit& dummy, const QStringList & buildList);
+    /**
+     * @brief getMapInfluenceModifier
+     * @param pUnit
+     * @param x
+     * @param y
+     * @return
+     */
+    float getMapInfluenceModifier(Unit* pUnit, qint32 x, qint32 y) const;
 private:
     /**
      * @brief m_EnemyUnits all enemy units that exists at the start of turn
@@ -455,11 +503,12 @@ private:
     /**
      * @brief m_VirtualEnemyData
      */
-    QVector<QPointF> m_VirtualEnemyData;
+    QVector<float> m_VirtualEnemyData;
     /**
      * @brief m_productionData
      */
     QVector<ProductionData> m_productionData;
+    InfluenceFrontMap m_InfluenceFrontMap;
 
 
     double m_notAttackableDamage{25.0f};
@@ -557,6 +606,9 @@ private:
     double m_counterDamageBonus{25.0f};
     double m_attackCountBonus{25.0f};
     double m_maxOverkillBonus{2.0f};
+    double m_influenceIgnoreValue{0.2};
+    double m_influenceMultiplier{2};
+    double m_lowThreadDamage{10};
 
     double m_ProducingTransportSearchrange{6};
     double m_ProducingTransportSizeBonus{10};
@@ -565,6 +617,11 @@ private:
     double m_ProducingTransportMinLoadingTransportRatio{7.0f};
     double m_maxProductionBuildings{5};
 
-    float m_currentDirectIndirectRatio{1.0f};};
+    float m_currentDirectIndirectRatio{1.0f};
+
+    QTimer m_timer;
+    bool m_pause{false};
+    bool m_secondMoveRound{false};
+};
 
 #endif // NORMALAI_H

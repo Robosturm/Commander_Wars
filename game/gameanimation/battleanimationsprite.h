@@ -486,7 +486,7 @@ public slots:
      * @param folder resource folder of the sound
      * @param delay before this sound is played after this function was called
      */
-    void loadSound(QString file, qint32 loops, qint32 delay = 0, float volume = 1.0f);
+    void loadSound(QString file, qint32 loops, qint32 delay = 0, float volume = 1.0f, bool stopOldestSound = false);
     /**
      * @brief stopSound
      */

@@ -3,6 +3,8 @@
 
 #include "ingamescriptsupport/events/scriptevent.h"
 
+#include "game/player.h"
+
 class ScriptEventSpawnUnit;
 using spScriptEventSpawnUnit = oxygine::intrusive_ptr<ScriptEventSpawnUnit>;
 
@@ -97,6 +99,7 @@ private:
     QString unitID{"INFANTRY"};
     qint32 player{0};
     qint32 radius{0};
+    spPlayer m_dropDownPlayer;
 };
 
 #endif // SCRIPTEVENTSPAWNUNIT_H

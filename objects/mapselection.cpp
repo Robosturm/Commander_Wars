@@ -16,6 +16,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
       m_itemChangedTimer(this)
 {
     setObjectName("MapSelection");
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     m_itemChangedTimer.setSingleShot(true);

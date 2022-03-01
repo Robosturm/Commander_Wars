@@ -99,12 +99,6 @@ public:
      * @brief initUnit loads all default unit value
      */
     void initUnit();
-
-    /**
-     * @brief getActionList
-     * @return the string id list of actions this units can perform
-     */
-    QStringList getActionList();
     /**
      * @brief hasAction
      * @param action
@@ -151,8 +145,40 @@ public:
      * @param syncTime
      */
     void syncAnimation(oxygine::timeMS syncTime);
+    /**
+     * @brief Unit::getSortValues
+     * @return
+     */
+    inline const QVector<qint32> &getSortValues() const
+    {
+        return m_sortValues;
+    }
+    /**
+     * @brief Unit::setSortValues
+     * @param newSortValues
+     */
+    inline void setSortValues(const QVector<qint32> &newSortValues)
+    {
+        m_sortValues = newSortValues;
+    }
 
 public slots:
+    /**
+     * @brief getActionList
+     * @return the string id list of actions this units can perform
+     */
+    QStringList getActionList();
+    /**
+     * @brief getBaseActionList
+     * @return
+     */
+    QStringList getBaseActionList();
+    /**
+     * @brief getShowInEditor
+     * @param unitId
+     * @return if the given unit should be shown in the editor
+     */
+    static bool getShowInEditor(QString unitId);
     /**
      * @brief getWeatherImmune
      * @return
@@ -423,6 +449,7 @@ public slots:
 
     qint32 getCapturePoints() const;
     void setCapturePoints(const qint32 &value);
+    bool canCapture();
 
     qint32 getCosts() const;
 
@@ -685,7 +712,7 @@ public slots:
      * @brief loadUnit adds a unit to the transport list
      * @param pUnit
      */
-    void loadUnit(Unit* pUnit);
+    void loadUnit(Unit* pUnit, qint32 index = -1);
     /**
      * @brief loadUnit adds a unit to the transport list
      * @param pUnit
@@ -1146,6 +1173,10 @@ private:
 
     QVector<IconDuration> m_IconDurations;
     GameMap* m_pMap{nullptr};
+    /**
+     * @brief m_sortValues values sto
+     */
+    QVector<qint32> m_sortValues;
 };
 
 #endif // UNIT_H

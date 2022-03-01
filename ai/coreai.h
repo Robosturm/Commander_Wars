@@ -14,6 +14,7 @@
 
 #include "coreengine/qmlvector.h"
 #include "coreengine/LUPDATE_MACROS.h"
+#include "coreengine/pathfindingsystem.h"
 
 class GameMap;
 class Unit;
@@ -75,6 +76,7 @@ public:
     {
         moveUnits = 0,
         moveToTargets,
+        moveIndirectsToTargets,
         loadUnits,
         moveTransporters,
         moveSupportUnits,
@@ -153,7 +155,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 6;
+        return 8;
     }
 signals:
     /**
@@ -274,9 +276,10 @@ public slots:
      * @param defenderTakenDamage
      * @return
      */
-    QRectF calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage, const QPoint & atkPos,
-                                 Unit* pDefender, float defenderTakenDamage, const QPoint & defPos,
-                                 bool ignoreOutOfVisionRange = false) const;
+    static QRectF calcVirtuelUnitDamage(GameMap* pMap,
+                                        Unit* pAttacker, float attackerTakenDamage, const QPoint & atkPos, GameEnums::LuckDamageMode luckModeAtk,
+                                        Unit* pDefender, float defenderTakenDamage, const QPoint & defPos, GameEnums::LuckDamageMode luckModeDef,
+                                        bool ignoreOutOfVisionRange = false);
     /**
      * @brief getBestTarget
      * @param pUnit
@@ -284,7 +287,7 @@ public slots:
      * @param pPfs
      * @return target unit x, y and z = fonddamage
      */
-    void getBestTarget(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
+    void getBestTarget(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields, qint32 maxDistance = PathFindingSystem::infinite);
     /**
      * @brief getAttacksFromField
      * @param pUnit
@@ -300,7 +303,7 @@ public slots:
      * @param ret
      * @param moveTargetFields
      */
-    void getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<CoreAI::DamageData>& ret, QVector<QVector3D>& moveTargetFields) const;
+    void getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<CoreAI::DamageData>& ret, QVector<QVector3D>& moveTargetFields, qint32 maxDistance = PathFindingSystem::infinite) const;
     /**
      * @brief getAttacksFromField
      * @param pUnit
@@ -400,6 +403,13 @@ protected:
      * @param pEnemyBuildings
      */
     void appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, QVector<QVector3D>& targets);
+    /**
+     * @brief appendUnloadTargetsForAttacking
+     * @param pUnit
+     * @param pEnemyUnits
+     * @param targets
+     */
+    void appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets, qint32 rangeMultiplier);
     /**
      * @brief appendTerrainBuildingAttackTargets
      * @param pUnit

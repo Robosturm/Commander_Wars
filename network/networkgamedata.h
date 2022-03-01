@@ -14,7 +14,7 @@ class NetworkGameData : public QObject, public FileSerializable, public oxygine:
 {
     Q_OBJECT
 public:
-    explicit NetworkGameData();
+    explicit NetworkGameData() = default;
     virtual ~NetworkGameData() = default;
     /**
      * @brief serialize stores the object
@@ -60,7 +60,11 @@ public:
 
     bool hasOpenPlayers();
 
-signals:
+    const QString &getSlaveAddress() const;
+    void setSlaveAddress(const QString &newAddress);
+
+    quint16 getSlavePort() const;
+    void setSlavePort(quint16 newPort);
 
 private:
     qint32 m_players{0};
@@ -71,6 +75,8 @@ private:
     QString m_slaveName;
     bool m_locked{false};
     bool m_launched{false};
+    QString m_slaveAddress;
+    quint16 m_slavePort{0};
 };
 
 #endif // NETWORKGAMEDATA_H

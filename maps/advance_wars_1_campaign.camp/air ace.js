@@ -114,7 +114,6 @@ var Constructor = function()
         dialog6.queueAnimation(dialog7);
     };
 
-
     this.day4Dialog = function(map)
     {
         var playername = settings.getUsername();

@@ -6,7 +6,7 @@ var Constructor = function()
         building.setAlwaysVisble(true);
     };
     
-    this.loadSprites = function(building)
+    this.loadSprites = function(building, neutral, map)
     {
         building.loadSprite("waste_weld+E+W", false);
         building.loadSpriteV2("waste_weld+E+W+mask", GameEnums.Recoloring_Matrix);

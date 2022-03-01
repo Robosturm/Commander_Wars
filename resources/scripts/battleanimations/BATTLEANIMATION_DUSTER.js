@@ -21,12 +21,13 @@ var Constructor = function()
         var offset = Qt.point(26, 28);
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1, 0, 0);
+        BATTLEANIMATION.showMgBullets(sprite, offset);
         sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+            sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
         }
     };
 
@@ -50,10 +51,7 @@ var Constructor = function()
         }
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, yOffset),
                           1, 1.0, 0, 0, true);
-        for (var i = 0; i < count; i++)
-        {
-            sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-        }
+        BATTLEANIMATION.playMgImpactSound(sprite, unit, defender, weapon, count);
     };
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)

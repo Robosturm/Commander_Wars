@@ -129,9 +129,7 @@ void Shopmenu::onEnter()
     if (pInterpreter->exists(object, func))
     {
         CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
-        QJSValueList args;
-        QJSValue value = pInterpreter->newQObject(this);
-        args << value;
+        QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
 }
@@ -167,7 +165,7 @@ void Shopmenu::filterChanged(qint32 item)
         pCheckbox->setTooltipText(tr("Check to but the item on the buy list. Afterwards click buy to confirm your shopping."));
         qint32 costs = item.price;
         qint32 itemPos = m_shoppingList.size() - 1;
-        connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool checked)
+        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool checked)
         {
             m_shoppingList[itemPos] = checked;
             if (checked)

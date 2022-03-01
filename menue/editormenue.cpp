@@ -52,9 +52,9 @@ EditorMenue::EditorMenue()
     {
         selectionWidth = Settings::getWidth() * 3 / 4;
     }
-    if (selectionWidth < 200)
+    if (selectionWidth < 255)
     {
-        selectionWidth = 200;
+        selectionWidth = 255;
     }
     if (smallScreen)
     {
@@ -212,9 +212,7 @@ void EditorMenue::onEnter()
     if (pInterpreter->exists(object, func))
     {
         CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
-        QJSValueList args;
-        QJSValue value = pInterpreter->newQObject(this);
-        args << value;
+        QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
 }
@@ -723,7 +721,7 @@ void EditorMenue::showExit()
     m_Focused = false;
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the map editor?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &EditorMenue::exitEditor, Qt::QueuedConnection);
-    connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
+    connect(pExit.get(), &DialogMessageBox::sigCancel, this, [=]()
     {
         m_Focused = true;
     });
@@ -911,7 +909,7 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                     Terrain* pTerrain = m_pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
                     spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pTerrain->getUnit());
                     addChild(fieldinfo);
-                    connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
+                    connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [=]
                     {
                         setFocused(true);
                     });
@@ -1324,6 +1322,17 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
     return ret;
 }
 
+void EditorMenue::getSquareTiles(QVector<QPoint> & points, QPoint start, QPoint end, QPoint currentPos)
+{
+    for (qint32 x = start.x(); x <= end.x(); ++x)
+    {
+        for (qint32 y = start.y(); y <= end.y(); ++y)
+        {
+            points.append(QPoint(x, y) + currentPos);
+        }
+    }
+}
+
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::placeTerrain", Console::eDEBUG);
@@ -1343,6 +1352,11 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
         case EditorSelection::PlacementSize::Medium:
         {
             points = PathFindingSystem::getFields(x, y, 0, 1);
+            break;
+        }
+        case EditorSelection::PlacementSize::BigSquare:
+        {
+            getSquareTiles(points, QPoint(-1, -1), QPoint(1, 1), QPoint(x, y));
             break;
         }
         case EditorSelection::PlacementSize::Big:
@@ -1370,8 +1384,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             m_pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(pUnit);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
-            QJSValueList args1;
-            QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1, args1);
+            QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
             m_pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), false);
         }
     }
@@ -1405,6 +1418,11 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         case EditorSelection::PlacementSize::Medium:
         {
             points = PathFindingSystem::getFields(x, y, 0, 1);
+            break;
+        }
+        case EditorSelection::PlacementSize::BigSquare:
+        {
+            getSquareTiles(points, QPoint(-1, -1), QPoint(1, 1), QPoint(x, y));
             break;
         }
         case EditorSelection::PlacementSize::Big:
@@ -1484,6 +1502,11 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         case EditorSelection::PlacementSize::Medium:
         {
             points = PathFindingSystem::getFields(x, y, 0, 1);
+            break;
+        }
+        case EditorSelection::PlacementSize::BigSquare:
+        {
+            getSquareTiles(points, QPoint(-1, -1), QPoint(1, 1), QPoint(x, y));
             break;
         }
         case EditorSelection::PlacementSize::Big:
@@ -1704,6 +1727,11 @@ void EditorMenue::selectionChanged()
             case EditorSelection::PlacementSize::Medium:
             {
                 createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(1, -1), CursorModes::Circle);
+                break;
+            }
+            case EditorSelection::PlacementSize::BigSquare:
+            {
+                createMarkedArea(m_cursorActor, QPoint(-1, -1), QPoint(1, 1), CursorModes::Rect);
                 break;
             }
             case EditorSelection::PlacementSize::Big:

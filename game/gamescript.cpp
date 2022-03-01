@@ -112,9 +112,7 @@ bool GameScript::immediateStart()
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "immediateStart";
-        QJSValueList args;
-        QJSValue obj3 = pInterpreter->newQObject(m_pMap);
-        args << obj3;
+        QJSValueList args({pInterpreter->newQObject(m_pMap)});
         QJSValue ret = pInterpreter->doFunction(m_scriptName, function1, args);
         if (ret.isBool())
         {
@@ -129,10 +127,8 @@ bool GameScript::victory(qint32 team)
     if (m_loaded && !m_victoryCalled)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValueList args;
-        args << team;
-        QJSValue obj3 = pInterpreter->newQObject(m_pMap);
-        args << obj3;
+        QJSValueList args({team,
+                           pInterpreter->newQObject(m_pMap)});
         QString function1 = "victory";
         pInterpreter->doFunction(m_scriptName, function1, args);
         m_victoryCalled = true;
@@ -150,9 +146,7 @@ void GameScript::gameStart()
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "gameStart";
-        QJSValueList args;
-        QJSValue obj3 = pInterpreter->newQObject(m_pMap);
-        args << obj3;
+        QJSValueList args({pInterpreter->newQObject(m_pMap)});
         pInterpreter->doFunction(m_scriptName, function1, args);
     }
 }
@@ -163,11 +157,8 @@ void GameScript::actionDone(spGameAction & pAction)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "actionDone";
-        QJSValueList args;
-        QJSValue obj2 = pInterpreter->newQObject(pAction.get());
-        args << obj2;
-        QJSValue obj3 = pInterpreter->newQObject(m_pMap);
-        args << obj3;
+        QJSValueList args({pInterpreter->newQObject(pAction.get()),
+                           pInterpreter->newQObject(m_pMap)});
         pInterpreter->doFunction(m_scriptName, function1, args);
     }
 }
@@ -178,11 +169,9 @@ void GameScript::turnStart(qint32 turn, qint32 player)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "turnStart";
-        QJSValueList args;
-        args << turn;
-        args << player;
-        QJSValue obj3 = pInterpreter->newQObject(m_pMap);
-        args << obj3;
+        QJSValueList args({turn,
+                           player,
+                           pInterpreter->newQObject(m_pMap)});
         pInterpreter->doFunction(m_scriptName, function1, args);
     }
 }
@@ -193,11 +182,8 @@ void GameScript::onGameLoaded(InGameMenue* pMenu)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "onGameLoaded";
-        QJSValueList args;
-        QJSValue obj2 = pInterpreter->newQObject(pMenu);
-        args << obj2;
-        QJSValue obj3 = pInterpreter->newQObject(m_pMap);
-        args << obj3;
+        QJSValueList args({pInterpreter->newQObject(pMenu),
+                           pInterpreter->newQObject(m_pMap)});
         pInterpreter->doFunction(m_scriptName, function1, args);
     }
 }

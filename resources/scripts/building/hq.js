@@ -15,7 +15,7 @@ var Constructor = function()
                          ["ti", "ti"],
                          ["yc", "yc"],];
     
-    this.loadSprites = function(building, neutral)
+    this.loadSprites = function(building, neutral, map)
     {
         if (building.getOwnerID() >= 0 && !neutral)
         {
@@ -23,11 +23,13 @@ var Constructor = function()
             var armyName = Global.getArmyNameFromPlayerTable(player, HQ.buildingData);
             building.loadSprite("hq+" + armyName, false);
             building.loadSpriteV2("hq+" + armyName + "+mask", GameEnums.Recoloring_Matrix);
+            building.loadSprite("hq+" + armyName + "+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
         }
         else
         {
             // neutral player
             building.loadSprite("hq+neutral", false);
+            building.loadSprite("hq+os+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
         }
     };
     this.getName = function()

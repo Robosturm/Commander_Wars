@@ -9,6 +9,7 @@ GameManager::GameManager()
     : RessourceManagement<GameManager>("/images/game/res.xml",
                                        "")
 {
+    Interpreter::setCppOwnerShip(this);
     setObjectName("GameManager");
 }
 
@@ -31,8 +32,7 @@ QString GameManager::getActionIcon(const QString & actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getIcon";
-    QJSValueList args1;
-    QJSValue ret = pInterpreter->doFunction(actionID, function1, args1);
+    QJSValue ret = pInterpreter->doFunction(actionID, function1);
     if (ret.isString())
     {
         return ret.toString();
@@ -114,8 +114,7 @@ QString GameManager::getDescription(qint32 position)
     if ((position >= 0) && (position < m_loadedRessources.size()))
     {
         QString name = m_loadedRessources[position];
-        QJSValueList args;
-        args << name;
+        QJSValueList args({name});
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValue value = pInterpreter->doFunction(name, "getDescription", args);
         if (value.isString())

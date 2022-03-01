@@ -15,6 +15,7 @@ MovementTableManager::MovementTableManager()
     : RessourceManagement<MovementTableManager>("",
                                                 "/scripts/movementtables")
 {
+    Interpreter::setCppOwnerShip(this);
     setObjectName("MovementTableManager");
 }
 
@@ -52,17 +53,12 @@ qint32 MovementTableManager::getBaseMovementPoints(const QString & movementID, T
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMovementpoints";
-    QJSValueList args1;
-    QJSValue obj3 = pInterpreter->newQObject(pTerrain);
-    args1 << obj3;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj4 = pInterpreter->newQObject(pCurrentTerrain);
-    args1 << obj4;
-    args1 << trapChecking;
-    QJSValue obj5 = pInterpreter->newQObject(pCurrentTerrain->getMap());
-    args1 << obj5;
-    QJSValue ret = pInterpreter->doFunction(movementID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(pTerrain),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(pCurrentTerrain),
+                       trapChecking,
+                       pInterpreter->newQObject(pCurrentTerrain->getMap())});
+    QJSValue ret = pInterpreter->doFunction(movementID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();

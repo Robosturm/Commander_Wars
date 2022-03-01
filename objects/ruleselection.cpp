@@ -31,6 +31,7 @@ RuleSelection::RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enable
       m_pMap(pMap)
 {
     setObjectName("RuleSelection");
+    Interpreter::setCppOwnerShip(this);
     setWidth(width);
     showRuleSelection();
 }
@@ -204,6 +205,22 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox->setEnabled(m_ruleChangeEabled);
         connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setCosmeticModsAllowed, Qt::QueuedConnection);
         addChild(pCheckbox);
+        y += 40;
+
+        textField = spLabel::create(textWidth - 40);
+        textField->setStyle(style);
+        textField->setHtmlText(tr("Observer: "));
+        textField->setPosition(30, y);
+        addChild(textField);
+        spSpinBox pSpinbox = spSpinBox::create(400, 0, 40, SpinBox::Mode::Int);
+        pSpinbox->setTooltipText(tr("The amount of observers allowed to watch the game. No players can join a fog/shroud of war match"));
+        pSpinbox->setInfinityValue(-1.0);
+        pSpinbox->setSpinSpeed(1.0f);
+        pSpinbox->setPosition(textWidth, textField->getY());
+        pSpinbox->setEnabled(m_ruleChangeEabled);
+        addChild(pSpinbox);
+        pSpinbox->setCurrentValue(m_pMap->getGameRules()->getMultiplayerObserver());
+        connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pMap->getGameRules(), &GameRules::setMultiplayerObserver, Qt::QueuedConnection);
         y += 40;
     }
 
@@ -583,7 +600,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         pDropDownmenu->setEnabled(m_ruleChangeEabled);
         addChild(pDropDownmenu);
         pDropDownmenu->setCurrentItem(static_cast<qint32>(m_pMap->getGameRules()->getDayToDayScreen()));
-        connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
+        connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 item)
         {
             pPtrMap->getGameRules()->setDayToDayScreen(static_cast<GameRules::DayToDayScreen>(item));
         });
@@ -883,7 +900,7 @@ void RuleSelection::showRuleSelection(bool advanced)
                     pCheckbox->setEnabled(m_ruleChangeEabled);
                     addChild(pCheckbox);
                     pCheckbox->setChecked(defaultValue);
-                    connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+                    connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
                     {
                         pPtrRule->setRuleValue(value, i2);
                     });
@@ -899,7 +916,7 @@ void RuleSelection::showRuleSelection(bool advanced)
                     pSpinbox->setEnabled(m_ruleChangeEabled);
                     addChild(pSpinbox);
                     pSpinbox->setCurrentValue(defaultValue);
-                    connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
+                    connect(pSpinbox.get(), &SpinBox::sigValueChanged, this, [=](float value)
                     {
                         qint32 newValue = static_cast<qint32>(value);
                         pPtrRule->setRuleValue(newValue, i2);
@@ -978,7 +995,7 @@ void RuleSelection::addCustomGamerules(qint32 & y)
                 pCheckbox->setEnabled(m_ruleChangeEabled);
                 addChild(pCheckbox);
                 pCheckbox->setChecked(defaultValue);
-                connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+                connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
                 {
                     pPtrRule->setRuleValue(value, i2);
                 });
@@ -994,7 +1011,7 @@ void RuleSelection::addCustomGamerules(qint32 & y)
                 pSpinbox->setEnabled(m_ruleChangeEabled);
                 addChild(pSpinbox);
                 pSpinbox->setCurrentValue(defaultValue);
-                connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
+                connect(pSpinbox.get(), &SpinBox::sigValueChanged, this, [=](float value)
                 {
                     qint32 newValue = static_cast<qint32>(value);
                     pPtrRule->setRuleValue(newValue, i2);

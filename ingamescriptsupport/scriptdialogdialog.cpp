@@ -136,13 +136,11 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
 
     QStringList ids;
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    ids.append(ScriptEventDialog::m_CurrentPlayerCO0);
-    ids.append(ScriptEventDialog::m_CurrentPlayerCO1);
-    for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
-    {
-        ids.append(pCOSpriteManager->getID(i));
-    }
+    pCOSpriteManager->getCoGroups(ids);
+    ids.push_front(ScriptEventDialog::m_CurrentPlayerCO0);
+    ids.push_front(ScriptEventDialog::m_CurrentPlayerCO1);
     Interpreter* pInterpreter = Interpreter::getInstance();
+
     QString function = "getAddtionalCoFaces";
     QJSValue ret = pInterpreter->doFunction("CO", function);
     auto additionalFaces = ret.toVariant().toStringList();
@@ -198,8 +196,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     for (qint32 i = 0; i < colorCount; i++)
     {
         QString function = "getDefaultColor";
-        QJSValueList args;
-        args << i;
+        QJSValueList args({QJSValue(i)});
         ret = pInterpreter->doFunction("PLAYER", function, args);
         playerColors.append(QColor(ret.toString()));
     }

@@ -24,7 +24,7 @@ InGameMenue::InGameMenue(spGameMap & pMap)
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     pApp->getAudioThread()->clearPlayList();
-    m_pInstance = this;
+    m_pInstance = spInGameMenue(this, true);
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
@@ -42,7 +42,7 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     pApp->getAudioThread()->clearPlayList();
-    m_pInstance = this;
+    m_pInstance = spInGameMenue(this, true);
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
@@ -69,6 +69,8 @@ InGameMenue::~InGameMenue()
     Mainapp* pApp = Mainapp::getInstance();
     QCursor cursor = pApp->cursor();
     cursor.setShape(Qt::CursorShape::ArrowCursor);
+    m_pMap->detach();
+    m_pMap = nullptr;
     m_MapMover = nullptr;
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->deleteObject(JS_GAME_NAME);

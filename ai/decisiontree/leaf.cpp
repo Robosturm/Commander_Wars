@@ -7,12 +7,14 @@
 Leaf::Leaf()
 {
     setObjectName("Leaf");
+    Interpreter::setCppOwnerShip(this);
 }
 
 Leaf::Leaf(QVector<QVector<float>>& trainingData)
     : m_AnswersChances(DecisionTree::countClassItems(trainingData))
 {
     setObjectName("Leaf");
+    Interpreter::setCppOwnerShip(this);
     for (qint32 i = 0; i < trainingData.size(); i++)
 	{
         float answer = trainingData[i][trainingData[i].size() - 1];

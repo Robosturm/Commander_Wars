@@ -2,15 +2,29 @@
 
 #include "coreengine/filesupport.h"
 
-NetworkGameData::NetworkGameData()
-    : QObject()
-{
-
-}
-
 bool NetworkGameData::hasOpenPlayers()
 {
     return (m_players < m_maxPlayers);
+}
+
+const QString &NetworkGameData::getSlaveAddress() const
+{
+    return m_slaveAddress;
+}
+
+void NetworkGameData::setSlaveAddress(const QString &newAddress)
+{
+    m_slaveAddress = newAddress;
+}
+
+quint16 NetworkGameData::getSlavePort() const
+{
+    return m_slavePort;
+}
+
+void NetworkGameData::setSlavePort(quint16 newPort)
+{
+    m_slavePort = newPort;
 }
 
 void NetworkGameData::serializeObject(QDataStream& pStream) const

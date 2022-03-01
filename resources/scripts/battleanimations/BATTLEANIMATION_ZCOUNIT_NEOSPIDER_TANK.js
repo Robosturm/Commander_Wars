@@ -33,11 +33,12 @@ var Constructor = function()
             offset = Qt.point(32, 17);
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0, false, true);
+            BATTLEANIMATION.showMgBullets(sprite, offset);
             for (var i = 0; i < count; i++)
             {
                 sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+                sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
             }
         }
     };
@@ -53,12 +54,15 @@ var Constructor = function()
         var i = 0;
         if (weapon === 0)
         {
+            sprite.loadSprite("bullet_megatank",  false, sprite.getMaxUnitCount(), Qt.point(10, 30),
+                              1, 1.0, 0, 0, true, true, 50);
             sprite.loadSprite("cannon_heavy_hit",  false, 5, Qt.point(0, 20),
-                              1, 1.0, 0, 0, true);
-            sprite.addSpriteScreenshake(8, 0.95, 800, 200);
+                              1, 1.0, 0, 100, true);
+            sprite.addSpriteScreenshake(8, 0.95, 800, 300);
             for (i = 0; i < count; i++)
             {
-                sprite.loadSound("impact_explosion.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("tank_hit.wav", 1, 50 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("impact_explosion.wav", 1, 100 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -70,10 +74,7 @@ var Constructor = function()
             }
             sprite.loadSprite("mg_hit",  false, 5, Qt.point(0, yOffset),
                               1, 1.0, 0, 0, true);
-            for (i = 0; i < count; i++)
-            {
-                sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-            }
+            BATTLEANIMATION.playMgImpactSound(sprite, unit, defender, weapon, count);
         }
     };
 };

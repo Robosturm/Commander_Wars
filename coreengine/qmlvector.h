@@ -56,7 +56,20 @@ class QmlVectorUnit : public QObject, public oxygine::ref_counter
 public:
     explicit QmlVectorUnit();
     virtual ~QmlVectorUnit();
-signals:
+    /**
+     * @brief getUnits
+     * @return
+     */
+    QVector<spUnit> & getUnits()
+    {
+        return m_Vector;
+    }
+    /**
+     * @brief sortOwnUnits
+     * @param pUnits
+     * @param pEnemyUnits
+     */
+    void sortUnitsFarFromEnemyFirst(spQmlVectorUnit & pEnemyUnits);
 
 public slots:
     inline Unit* at(qint32 i) const

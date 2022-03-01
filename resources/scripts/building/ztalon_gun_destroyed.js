@@ -6,7 +6,7 @@ var Constructor = function()
         building.setAlwaysVisble(true);
     };
     
-    this.loadSprites = function(building)
+    this.loadSprites = function(building, neutral, map)
     {
          building.loadSpriteV2("talon+gun+destroyed", GameEnums.Recoloring_Matrix);
     };

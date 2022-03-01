@@ -5,6 +5,7 @@ Viewplayer::Viewplayer(GameMap* pMap)
     : Player(pMap)
 {
     setObjectName("Viewplayer");
+    Interpreter::setCppOwnerShip(this);
 }
 
 bool Viewplayer::getFieldVisible(qint32 x, qint32 y)

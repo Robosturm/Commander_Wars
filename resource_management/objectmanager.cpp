@@ -9,6 +9,7 @@ ObjectManager::ObjectManager()
     : RessourceManagement<ObjectManager>("/objects/res.xml", "")
 {
     setObjectName("ObjectManager");
+    Interpreter::setCppOwnerShip(this);
     loadRessources("/cursor/res.xml");
 }
 
@@ -73,12 +74,14 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
 oxygine::spButton ObjectManager::createIconButton(QString icon, qint32 size)
 {
     oxygine::spButton pButton = oxygine::spButton::create();
-    pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button_square"));
+    oxygine::ResAnim* pAnim = ObjectManager::getInstance()->getResAnim("button_square");
+    pButton->setResAnim(pAnim);
     pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pButton->setSize(size, size);
 
     oxygine::spSprite pSprite = oxygine::spSprite::create();
-    pSprite->setResAnim(ObjectManager::getInstance()->getResAnim(icon));
+    pAnim = ObjectManager::getInstance()->getResAnim(icon);
+    pSprite->setResAnim(pAnim);
     pSprite->setPosition((size - pSprite->getWidth()) / 2,
                          (size - pSprite->getHeight()) / 2);
     pButton->addChild(pSprite);

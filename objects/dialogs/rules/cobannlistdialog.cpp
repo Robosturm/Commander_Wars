@@ -22,9 +22,11 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
       m_CurrentCOBannList(cobannlist)
 {
     setObjectName("COBannListDialog");
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
+
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
@@ -120,7 +122,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     qint32 x = 10;
 
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    auto coGroups = getCoGroups();
+    auto coGroups = pCOSpriteManager->getCoGroups(m_COIDs);
     for (const auto & group : coGroups)
     {
         spLabel textField = spLabel::create(pPanel->getWidth() - 40);
@@ -186,78 +188,6 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     connect(this, &COBannListDialog::sigFinished, this, &COBannListDialog::remove, Qt::QueuedConnection);
 }
 
-QVector<COBannListDialog::CoGroup> COBannListDialog::getCoGroups()
-{
-    QVector<COBannListDialog::CoGroup> retCoGroups;
-    // load default army and co sets
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    QJSValue ret = pInterpreter->doFunction("PLAYER", "getArmies");
-    QStringList armies = ret.toVariant().toStringList();
-    ret = pInterpreter->doFunction("PLAYER", "getArmyNames");
-    QStringList armyNames = ret.toVariant().toStringList();
-
-    QStringList coids;
-    // go through armies
-    for (qint32 i = 0; i < armies.size(); ++i)
-    {
-        CoGroup newGroup;
-        if (i < armyNames.size())
-        {
-            newGroup.name = armyNames[i];
-        }
-        else
-        {
-            newGroup.name = tr("Unknown");
-        }
-        // add default co order
-        ret = pInterpreter->doFunction("PLAYER", "getArmyCOs" + armies[i]);
-        auto coList = ret.toVariant().toStringList();
-        coList.removeAll(CO::CO_RANDOM);
-        coids.append(coList);
-        newGroup.cos.append(coList);
-
-        // add unadded co's of this army
-        for (qint32 i2 = 0; i2 < pCOSpriteManager->getCount(); i2++)
-        {
-            QString coID = pCOSpriteManager->getID(i2);
-            if (coID != CO::CO_RANDOM)
-            {
-                QString function1 = "getCOArmy";
-                QJSValue ret = pInterpreter->doFunction(coID, function1);
-                if (ret.isString())
-                {
-                    QString COArmy = ret.toString();
-                    if (COArmy == armies[i] && !coids.contains(coID))
-                    {
-                        coids.append(coID);
-                        newGroup.cos.append(coID);
-                    }
-                }
-            }
-        }
-        retCoGroups.append(newGroup);
-    }
-    CoGroup unknownGroup;
-    unknownGroup.name = tr("Unknown");
-    // add unadded co's
-    for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
-    {
-        QString coID = pCOSpriteManager->getID(i);
-        if (!coids.contains(coID) &&
-            coID != CO::CO_RANDOM)
-        {
-            coids.append(coID);
-            unknownGroup.cos.append(coids);
-        }
-    }
-    m_COIDs = coids;
-    if (unknownGroup.cos.length() > 0)
-    {
-        retCoGroups.append(unknownGroup);
-    }
-    return retCoGroups;
-}
 
 void COBannListDialog::remove()
 {

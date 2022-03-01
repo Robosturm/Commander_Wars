@@ -13,6 +13,10 @@ var Constructor = function()
     {
         return __BASESTREET.getSprites("snow_street+style0")
     };
+    this.loadOverlaySprite = function(terrain, map)
+    {
+        __BASESTREET.loadBaseOverlaySprite("snow_street+style0", terrain, map);
+    };
 };
 Constructor.prototype = __BASESTREET;
 var SNOW_STREET = new Constructor();

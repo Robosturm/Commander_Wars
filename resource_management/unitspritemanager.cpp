@@ -5,6 +5,7 @@ UnitSpriteManager::UnitSpriteManager()
                                              "/scripts/units")
 {
     setObjectName("UnitSpriteManager");
+    Interpreter::setCppOwnerShip(this);
 }
 
 qint32 UnitSpriteManager::getUnitType(qint32 i)
@@ -95,8 +96,7 @@ QString UnitSpriteManager::getUnitTypeText(qint32 type)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitTypeText";
-    QJSValueList args;
-    args << type;
+    QJSValueList args({QJSValue(type)});
     QJSValue ret = pInterpreter->doFunction("UNIT", function1, args);
     if (ret.isString())
     {

@@ -42,17 +42,7 @@ public:
      * @param y
      * @return the exact costs needed to get onto the given field. -1 = unreachable
      */
-    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY)  override;
-    /**
-     * @brief getUseBasecosts
-     * @return
-     */
-    bool getUseBasecosts() const;
-    /**
-     * @brief setUseBasecosts
-     * @param useBasecosts
-     */
-    void setUseBasecosts(bool useBasecosts);
+    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY)  override;    
     /**
      * @brief getAbortOnCostExceed
      * @return
@@ -70,8 +60,6 @@ public:
     const QVector<QVector3D> &getTargets() const;
 
 private:
-    bool m_useBasecosts{false};
-    bool m_supportsBasecosts{true};
     bool m_abortOnCostExceed{true};
     QVector<QVector3D> m_Targets;
     QVector<std::tuple<qint32, qint32, qint32, float>> m_FinishNodes;

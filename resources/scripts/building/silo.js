@@ -1,10 +1,11 @@
 var Constructor = function()
 {
     
-    this.loadSprites = function(building)
+    this.loadSprites = function(building, neutral, map)
     {
         // neutral player
         building.loadSprite("silo", false);
+        building.loadSprite("silo+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.getBaseIncome = function()
     {

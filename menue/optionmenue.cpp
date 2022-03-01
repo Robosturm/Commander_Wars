@@ -202,9 +202,7 @@ void OptionMenue::onEnter()
     if (pInterpreter->exists(object, func))
     {
         CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
-        QJSValueList args;
-        QJSValue value = pInterpreter->newQObject(this);
-        args << value;
+        QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
 }
@@ -453,7 +451,7 @@ void OptionMenue::showSettings()
     pSlider->setTooltipText(tr("Selects the brightness for the game"));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(Settings::getBrightness());
-    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    connect(pSlider.get(), &Slider::sliderValueChanged, this, [=](qint32 value)
     {
         Settings::setBrightness(-value);
         pApp->setBrightness(-value);
@@ -470,7 +468,7 @@ void OptionMenue::showSettings()
     pSlider->setTooltipText(tr("Selects the gamma factor for the game"));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(Settings::getGamma() * 30.0f);
-    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    connect(pSlider.get(), &Slider::sliderValueChanged, this, [=](qint32 value)
     {
         Settings::setGamma(value / 30.0f);
         pApp->setGamma(value / 30.0f);
@@ -743,7 +741,7 @@ void OptionMenue::showSettings()
     pCheckbox = spCheckbox::create();
     pCheckbox->setTooltipText(tr("Enables this game as global server."));
     pCheckbox->setChecked(Settings::getServer());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+    connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
     {
         CONSOLE_PRINT("Marking restart cause server settings changed.", Console::eDEBUG);
         Settings::setServer(value);
@@ -847,7 +845,7 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pSlider->setTooltipText(tr("Selects the global volume for the game"));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(Settings::getTotalVolume());
-    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    connect(pSlider.get(), &Slider::sliderValueChanged, pSignalOwner, [=](qint32 value)
     {
         Settings::setTotalVolume(value);
         pAudio->setVolume(Settings::getMusicVolume());
@@ -864,7 +862,7 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pSlider->setTooltipText(tr("Selects the music volume for the game"));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(Settings::getMusicVolume());
-    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    connect(pSlider.get(), &Slider::sliderValueChanged, pSignalOwner, [=](qint32 value)
     {
         Settings::setMusicVolume(value);
         pAudio->setVolume(value);

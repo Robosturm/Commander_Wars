@@ -1,6 +1,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/userdata.h"
 
 #include "game/gamemap.h"
 
@@ -93,8 +94,10 @@ bool Settings::m_muted = false;
 // Network
 quint16 Settings::m_GamePort          = 9001;
 quint16 Settings::m_ServerPort        = 9002;
+quint16 Settings::m_slaveServerPort   = 9003;
 QString Settings::m_ServerAdress      = "";
 QString Settings::m_slaveServerName   = "";
+QString Settings::m_slaveHostOptions      = "::1&10000&20000;::1&50000&65535";
 bool Settings::m_Server               = false;
 bool Settings::m_record               = true;
 // auto saving
@@ -302,7 +305,10 @@ Settings::Settings()
         new Value<QString>{"Network", "ServerAdress", &m_ServerAdress, "", "", ""},
         new Value<quint16>{"Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()},
         new Value<quint16>{"Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()},
+        new Value<quint16>{"Network", "SlaveServerPort", &m_slaveServerPort, 9003, 0, std::numeric_limits<quint16>::max()},
         new Value<bool>{"Network", "Server", &m_Server, false, false, true},
+        new Value<QString>{"Network", "SlaveServerName", &m_slaveServerName, "", "", ""},
+        new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&10000&20000;::1&50000&65535", "", ""},
         // auto saving
         new Value<std::chrono::seconds>{"Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)},
         new Value<qint32>{"Autosaving", "AutoSavingCycle", &m_autoSavingCycle, 3, 1, 100},
@@ -312,6 +318,26 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+QString Settings::getSlaveHostOptions()
+{
+    return m_slaveHostOptions;
+}
+
+void Settings::setSlaveHostOptions(const QString &newSlaveHostOptions)
+{
+    m_slaveHostOptions = newSlaveHostOptions;
+}
+
+quint16 Settings::getSlaveServerPort()
+{
+    return m_slaveServerPort;
+}
+
+void Settings::setSlaveServerPort(quint16 newSlaveServerPort)
+{
+    m_slaveServerPort = newSlaveServerPort;
 }
 
 void Settings::setKey_mapshot(Qt::Key newKey_mapshot)
@@ -948,7 +974,7 @@ float Settings::getWalkAnimationSpeed()
 {
     if (m_walkAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - m_walkAnimationSpeed);
+        return 100.0f / (101.0f - static_cast<float>(m_walkAnimationSpeed));
     }
     return 100;
 }
@@ -1083,6 +1109,7 @@ void Settings::loadSettings()
         m_simpleDeselect = true;
         m_showDetailedBattleForcast = false;
     }
+    Userdata::getInstance()->setUniqueIdentifier(getUsername());
 }
 
 void Settings::resetSettings()
@@ -1176,7 +1203,7 @@ float Settings::getAnimationSpeed()
 {
     if (m_animationSpeed <= 100)
     {
-        return 100.0f / (101.0f - m_animationSpeed);
+        return 100.0f / (101.0f - static_cast<float>(m_animationSpeed));
     }
     return 100;
 }
@@ -1195,7 +1222,7 @@ float Settings::getBattleAnimationSpeed()
 {
     if (m_battleAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - m_battleAnimationSpeed);
+        return 100.0f / (101.0f - static_cast<float>(m_battleAnimationSpeed));
     }
     return 100;
 }
@@ -1214,7 +1241,7 @@ float Settings::getDialogAnimationSpeed()
 {
     if (m_dialogAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - m_dialogAnimationSpeed);
+        return 100.0f / (101.0f - static_cast<float>(m_dialogAnimationSpeed));
     }
     return 100;
 }
@@ -1233,7 +1260,7 @@ float Settings::getCaptureAnimationSpeed()
 {
     if (m_captureAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - m_captureAnimationSpeed);
+        return 100.0f / (101.0f - static_cast<float>(m_captureAnimationSpeed));
     }
     return 100;
 }
@@ -1501,6 +1528,7 @@ QString Settings::getUsername()
 void Settings::setUsername(const QString &Username)
 {
     m_Username = Username;
+    Userdata::getInstance()->setUniqueIdentifier(getUsername());
 }
 
 QString Settings::getLastSaveGame()

@@ -35,7 +35,6 @@ public:
     static spBaseGameInputIF createAi(GameMap* pMap, GameEnums::AiTypes type);
 
     virtual void centerCameraOnAction(GameAction* pAction);
-signals:
 
 public slots:
     /**

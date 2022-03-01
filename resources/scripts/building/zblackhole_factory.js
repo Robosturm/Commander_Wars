@@ -1,12 +1,6 @@
 var Constructor = function()
 {
-    this.init = function (building)
-    {
-        building.setHp(-1);
-        building.setAlwaysVisble(true);
-    };
-    
-    this.loadSprites = function(building, neutral)
+    this.loadSprites = function(building, neutral, map)
     {
         if (building.getOwnerID() >= 0 && !neutral)
         {
@@ -17,50 +11,10 @@ var Constructor = function()
         {
             building.loadSprite("blackhole+factory+neutral", false);
         }
+        building.loadSprite("blackhole+factory+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
+        building.loadSprite("blackhole+factory+pipe", false);
     };
-    this.getDefense = function(building)
-    {
-        return 0;
-    };
-    this.startOfTurn = function(building, map)
-    {
-        building.setFireCount(7);
-    };
-    this.getBaseIncome = function()
-    {
-        return 0;
-    };
-    this.getName = function()
-    {
-        return qsTr("Black Hole Factory");
-    };
+};
 
-    this.actionList = ["ACTION_BLACKHOLEFACTORY_DOOR1", "ACTION_BLACKHOLEFACTORY_DOOR2", "ACTION_BLACKHOLEFACTORY_DOOR3"];
-
-    this.getBuildingWidth = function()
-    {
-        // one field width default for most buildings
-        return 3;
-    };
-    this.getBuildingHeigth = function()
-    {
-        // one field heigth default for most buildings
-        return 4;
-    };
-    this.canBuildingBePlaced = function(terrain, building, map)
-    {
-        return BUILDING.canLargeBuildingPlaced(terrain, building, ZBLACKHOLE_FACTORY.getBuildingWidth(), ZBLACKHOLE_FACTORY.getBuildingHeigth(), map);
-    };
-    this.getMiniMapIcon = function()
-    {
-        return "minimap_blackholebuilding";
-    };
-
-    this.getDescription = function()
-    {
-        return qsTr("Black Hole Factory that can build 3 units each turn which can immediatly move.");
-    };
-}
-
-Constructor.prototype = BUILDING;
+Constructor.prototype = __ZBLACKHOLE_FACTORYBASE;
 var ZBLACKHOLE_FACTORY = new Constructor();

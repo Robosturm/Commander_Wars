@@ -7,7 +7,7 @@
 #include <QProcess>
 
 #include "network/tcpclient.h"
-#include "network/localclient.h"
+#include "network/tcpserver.h"
 #include "network/networkgamedata.h"
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -31,16 +31,12 @@ public:
     void setServerName(const QString &serverName);
 
     const NetworkGameData & getData() const;
+    NetworkGameData & getData();
     /**
      * @brief getSlaveRunning
      * @return
      */
     bool getSlaveRunning() const;
-    /**
-     * @brief setSlaveRunning
-     * @param slaveRunning
-     */
-    void setSlaveRunning(bool slaveRunning);
     /**
      * @brief getId
      * @return
@@ -51,66 +47,42 @@ public:
      * @param id
      */
     void setId(QString & id);
-signals:
-    void sigDataChanged();
-    void sigClose(NetworkGame* pGame);
-    void sigDisconnectSocket(quint64 socketID);
-public slots:
-    void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
-    /**
-     * @brief recieveData
-     * @param socket
-     * @param data
-     * @param service
-     */
-    void recieveClientData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
-    /**
-     * @brief recieveSlaveData
-     * @param socket
-     * @param data
-     * @param service
-     */
-    void recieveSlaveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
-    /**
-     * @brief startAndWaitForInit
-     */
-    void startAndWaitForInit();
     /**
      * @brief onConnectToLocalServer
      */
-    void onConnectToLocalServer(quint64);
+    void onConnectToLocalServer(quint64 socketId, spTCPServer & pTcpServer);
     /**
-     * @brief addClient
-     * @param pClient
+     * @brief getHostingSocket socket id of the socket hosting the game
+     * @return
      */
-    void addClient(spTCPClient pClient);
+    quint64 getHostingSocket() const;
     /**
-     * @brief clientDisconnect
-     * @param socketId
+     * @brief setHostingSocket socket id of the socket hosting the game
+     * @param newHostingSocket
      */
-    void clientDisconnect(quint64 socketId);
+    void setHostingSocket(quint64 newHostingSocket);
+    /**
+     * @brief slaveRunning
+     * @param stream
+     */
+    void slaveRunning(QDataStream &stream, spTCPServer & pGameServer);
+signals:
+    void sigDataChanged();
+    void sigClose(NetworkGame* pGame);
+public slots:
     /**
      * @brief finished
      * @param exitCode
      * @param exitStatus
      */
     void processFinished(qint32 exitCode, QProcess::ExitStatus exitStatus);
-    /**
-     * @brief slaveRunning
-     * @param stream
-     */
-    void slaveRunning(QDataStream &stream);
-protected slots:
-    void checkServerRunning();
-    void sendPlayerJoined(qint32 player);
 private:
     void closeGame();
 private:
-    QVector<spTCPClient> m_Clients;
-    LocalClient m_gameConnection;
     QByteArray m_dataBuffer;
+    spNetworkInterface m_hostingClient;
+    quint64 m_hostingSocket;
     QString m_serverName;
-    QTimer m_timer;
     bool m_slaveRunning{false};
     bool m_closing{false};
     NetworkGameData m_data;

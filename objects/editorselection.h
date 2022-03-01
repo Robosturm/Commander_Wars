@@ -39,6 +39,7 @@ public:
         None = 0,
         Small,
         Medium,
+        BigSquare,
         Big,
         Fill
     };
