@@ -73,7 +73,7 @@ endif()
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     message("Compiling as Debug")
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-        set(DEPLOY_RESOURCES_AS_FOLDER 0)
+        set(DEPLOY_RESOURCES_AS_FOLDER false)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
@@ -82,7 +82,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        set(DEPLOY_RESOURCES_AS_FOLDER 1)
+        set(DEPLOY_RESOURCES_AS_FOLDER true)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
@@ -91,7 +91,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     else()
-        set(DEPLOY_RESOURCES_AS_FOLDER 0)
+        set(DEPLOY_RESOURCES_AS_FOLDER false)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
@@ -102,7 +102,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     endif()
 else("Release")
     message("Compiling as Release")
-    set(DEPLOY_RESOURCES_AS_FOLDER 0)    
+    set(DEPLOY_RESOURCES_AS_FOLDER false)
     add_definitions(
         -DDEBUG_LEVEL=0             # default console log level
     )

@@ -19,6 +19,7 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
 
 {
     setObjectName("COSelectionDialog");
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

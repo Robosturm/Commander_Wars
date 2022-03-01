@@ -7,6 +7,7 @@
 PlayerSelectionDialog::PlayerSelectionDialog(GameMap* pMap)
 {
     setObjectName("PlayerSelectionDialog");
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

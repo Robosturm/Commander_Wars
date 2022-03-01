@@ -9,6 +9,7 @@ ObjectManager::ObjectManager()
     : RessourceManagement<ObjectManager>("/objects/res.xml", "")
 {
     setObjectName("ObjectManager");
+    Interpreter::setCppOwnerShip(this);
     loadRessources("/cursor/res.xml");
 }
 

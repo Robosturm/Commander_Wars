@@ -34,11 +34,8 @@ void Building::init()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "init";
-    QJSValueList args;
-    QJSValue objArg = pInterpreter->newQObject(this);
-    args << objArg;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args << objArg5;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
     pInterpreter->doFunction(m_BuildingID, function, args);
 }
 
@@ -81,12 +78,9 @@ QPoint Building::getOffset(Terrain* pTerrain)
 QStringList Building::getBaseTerrain()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
     QString function = "getBaseTerrain";
-    QJSValue objArg = pInterpreter->newQObject(this);
-    args << objArg;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args << objArg5;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function, args);
     QStringList retList = ret.toVariant().toStringList();
     if (retList.size() == 0)
@@ -127,11 +121,8 @@ QString Building::getDescription()
     Interpreter* pInterpreter = Interpreter::getInstance();
     // load sprite of the base terrain
     QString function = "getDescription";
-    QJSValueList args;
-    QJSValue objArg = pInterpreter->newQObject(this);
-    args << objArg;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args << objArg5;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function, args);
     if (ret.isString())
     {
@@ -147,11 +138,8 @@ bool Building::getVisionHide()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVisionHide";
-    QJSValueList args;
-    QJSValue objArg = pInterpreter->newQObject(this);
-    args << objArg;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args << objArg5;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isBool())
     {
@@ -310,14 +298,10 @@ void Building::onWeatherChanged(Weather* pWeather)
     m_pWeatherOverlaySprites.clear();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "onWeatherChanged";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pWeather);
-    args1 << obj2;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pWeather),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(m_BuildingID, function1, args);
 }
 
 void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime)
@@ -454,11 +438,8 @@ qint32 Building::getVision()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVision";
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args << obj;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args << objArg5;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -481,13 +462,10 @@ void Building::updateBuildingSprites(bool neutral)
     m_pBuildingSprites.clear();
     m_addPlayerColor.clear();
     QString function1 = "loadSprites";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    args1 << neutral;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       neutral,
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(m_BuildingID, function1, args);
     m_neutralLoaded = neutral;
     
     if (m_pMap != nullptr)
@@ -504,14 +482,10 @@ bool Building::canBuildingBePlaced(Terrain* pTerrain)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "canBuildingBePlaced";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(pTerrain);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(this);
-    args1 << obj2;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(pTerrain),
+                       pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isBool())
     {
         return ret.toBool();
@@ -528,12 +502,9 @@ QString Building::getName()
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "getName";
-        QJSValueList args1;
-        QJSValue obj = pInterpreter->newQObject(this);
-        args1 << obj;
-        QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-        args1 << objArg5;
-        QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+        QJSValueList args({pInterpreter->newQObject(this),
+                           pInterpreter->newQObject(m_pMap)});
+        QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
         if (ret.isString())
         {
             return ret.toString();
@@ -550,10 +521,8 @@ quint32 Building::getBaseIncome() const
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBaseIncome";
-    QJSValueList args1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
         return ret.toUInt();
@@ -608,12 +577,9 @@ QString Building::getMinimapIcon()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMiniMapIcon";
-    QJSValueList args1;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args1 << obj;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isString())
     {
         return ret.toString();
@@ -652,12 +618,9 @@ QStringList Building::getActionList()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActions";
-    QJSValueList args1;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args1 << obj;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     QStringList retList;
     if (ret.isString())
     {
@@ -748,12 +711,9 @@ QList<qint32> Building::getRepairTypes()
 
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRepairTypes";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     auto list = ret.toVariant().toList();
     QList<qint32> retList;
     for (auto & item : list)
@@ -767,11 +727,8 @@ QStringList Building::getConstructionList()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getConstructionList";
-    QJSValueList args;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args << objArg5;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     QVariant var = ret.toVariant();
     QStringList buildList = var.toStringList();
@@ -826,24 +783,18 @@ void Building::startOfTurn()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "startOfTurn";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(m_BuildingID, function1, args);
 }
 
 qint32 Building::getOffensiveBonus()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveBonus";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -858,12 +809,9 @@ qint32 Building::getDefensiveBonus()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDefensiveBonus";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -878,12 +826,9 @@ qint32 Building::getVisionBonus()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVisionBonus";
-    QJSValueList args1;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args1 << obj;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -898,25 +843,19 @@ qint32 Building::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QP
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveFieldBonus";
-    QJSValueList args1;
-    QJSValue obj3 = pInterpreter->newQObject(this);
-    args1 << obj3;
-    QJSValue obj1 = pInterpreter->newQObject(pAttacker);
-    args1 << obj1;
-    args1 << atkPosition.x();
-    args1 << atkPosition.y();
-    QJSValue obj2 = pInterpreter->newQObject(pDefender);
-    args1 << obj2;
-    args1 << defPosition.x();
-    args1 << defPosition.y();
-    args1 << isDefender;
-    QJSValue obj4 = pInterpreter->newQObject(pAction);
-    args1 << obj4;
-    args1 << luckMode;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pAttacker),
+                       atkPosition.x(),
+                       atkPosition.y(),
+                       pInterpreter->newQObject(pDefender),
+                       defPosition.x(),
+                       defPosition.y(),
+                       isDefender,
+                       pInterpreter->newQObject(pAction),
+                       luckMode,
+                       pInterpreter->newQObject(m_pMap)});
     qint32 ergValue = 0;
-    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isNumber())
     {
         ergValue += erg.toInt();
@@ -928,25 +867,19 @@ qint32 Building::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, Q
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDeffensiveFieldBonus";
-    QJSValueList args1;
-    QJSValue obj3 = pInterpreter->newQObject(this);
-    args1 << obj3;
-    QJSValue obj1 = pInterpreter->newQObject(pAttacker);
-    args1 << obj1;
-    args1 << atkPosition.x();
-    args1 << atkPosition.y();
-    QJSValue obj2 = pInterpreter->newQObject(pDefender);
-    args1 << obj2;
-    args1 << defPosition.x();
-    args1 << defPosition.y();
-    args1 << isDefender;
-    QJSValue obj4 = pInterpreter->newQObject(pAction);
-    args1 << obj4;
-    args1 << luckMode;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pAttacker),
+                       atkPosition.x(),
+                       atkPosition.y(),
+                       pInterpreter->newQObject(pDefender),
+                       defPosition.x(),
+                       defPosition.y(),
+                       isDefender,
+                       pInterpreter->newQObject(pAction),
+                       luckMode,
+                       pInterpreter->newQObject(m_pMap)});
     qint32 ergValue = 0;
-    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isNumber())
     {
         ergValue += erg.toInt();
@@ -957,9 +890,7 @@ qint32 Building::getBuildingWidth()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBuildingWidth";
-    QJSValueList args;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args << objArg5;
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -975,9 +906,7 @@ qint32 Building::getBuildingHeigth()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBuildingHeigth";
-    QJSValueList args;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args << objArg5;
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -993,14 +922,11 @@ bool Building::getIsAttackable(qint32 x, qint32 y)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getIsAttackable";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    args1 << x;
-    args1 << y;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       x,
+                       y,
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isBool())
     {
         return ret.toBool();
@@ -1014,12 +940,9 @@ QmlVectorPoint* Building::getActionTargetFields()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActionTargetFields";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isQObject())
     {
         return dynamic_cast<QmlVectorPoint*>(ret.toQObject());
@@ -1033,12 +956,9 @@ QPoint Building::getActionTargetOffset()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActionTargetOffset";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     return ret.toVariant().toPoint();
 }
 
@@ -1046,14 +966,10 @@ float Building::getDamage(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDamage";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
         return ret.toNumber();
@@ -1065,12 +981,9 @@ GameEnums::BuildingTarget Building::getBuildingTargets()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBuildingTargets";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
         return static_cast<GameEnums::BuildingTarget>(ret.toInt());
@@ -1122,16 +1035,11 @@ QString Building::getTerrainAnimationBase()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationBase";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(nullptr);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(nullptr);
-    args1 << obj3;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(nullptr),
+                       pInterpreter->newQObject(m_pTerrain),
+                       pInterpreter->newQObject(nullptr),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isString())
     {
         return erg.toString();
@@ -1146,16 +1054,11 @@ QString Building::getTerrainAnimationForeground()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationForeground";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(nullptr);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(nullptr);
-    args1 << obj3;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(nullptr),
+                       pInterpreter->newQObject(m_pTerrain),
+                       pInterpreter->newQObject(nullptr),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isString())
     {
         return erg.toString();
@@ -1170,9 +1073,7 @@ float Building::getTerrainAnimationMoveSpeed()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationMoveSpeed";
-    QJSValueList args;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args << objArg5;
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isNumber())
     {
@@ -1188,9 +1089,7 @@ bool Building::canRepair(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getConstructionList";
-    QJSValueList args;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args << objArg5;
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     return erg.toVariant().toStringList().contains(pUnit->getUnitID());
 }
@@ -1208,9 +1107,8 @@ bool Building::isCaptureOrMissileBuilding(bool hasSiloTarget)
 bool Building::isCaptureBuilding()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = "getCapturableBuildings"; QJSValueList args;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args << objArg5;
+    QString function1 = "getCapturableBuildings";
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(CoreAI::ACTION_CAPTURE, function1, args);
     bool capturable = erg.toVariant().toStringList().contains(m_BuildingID);
     return capturable;
@@ -1219,9 +1117,8 @@ bool Building::isCaptureBuilding()
 bool Building::isMissile()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = "getMissileBuildings"; QJSValueList args;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args << objArg5;
+    QString function1 = "getMissileBuildings";
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(CoreAI::ACTION_MISSILE, function1, args);
     bool capturable = erg.toVariant().toStringList().contains(m_BuildingID);
     return capturable;
@@ -1240,16 +1137,11 @@ QString Building::getTerrainAnimationBackground()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationBackground";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(nullptr);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(nullptr);
-    args1 << obj3;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(nullptr),
+                      pInterpreter->newQObject(m_pTerrain),
+                      pInterpreter->newQObject(nullptr),
+                      pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isString())
     {
         return erg.toString();

@@ -31,6 +31,7 @@ RuleSelection::RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enable
       m_pMap(pMap)
 {
     setObjectName("RuleSelection");
+    Interpreter::setCppOwnerShip(this);
     setWidth(width);
     showRuleSelection();
 }

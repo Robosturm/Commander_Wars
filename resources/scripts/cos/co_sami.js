@@ -244,13 +244,17 @@ var Constructor = function()
     {
         if (unit.getUnitType() === GameEnums.UnitType_Infantry)
         {
-            return 3;
+            return 6;
         }
         else if (unit.getBaseMaxRange() === 1)
         {
-            return 0;
+            return -1;
         }
-        return 1;
+        return 2;
+    };
+    this.getAiCoBuildRatioModifier = function(co, map)
+    {
+        return 0.5;
     };
     this.getCOUnits = function(co, building, map)
     {

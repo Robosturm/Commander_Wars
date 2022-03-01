@@ -212,9 +212,7 @@ void EditorMenue::onEnter()
     if (pInterpreter->exists(object, func))
     {
         CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
-        QJSValueList args;
-        QJSValue value = pInterpreter->newQObject(this);
-        args << value;
+        QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
 }
@@ -1386,8 +1384,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             m_pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(pUnit);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
-            QJSValueList args1;
-            QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1, args1);
+            QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
             m_pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), false);
         }
     }

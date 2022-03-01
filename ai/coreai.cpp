@@ -702,15 +702,12 @@ QRectF CoreAI::calcUnitDamage(spGameAction & pAction, const QPoint & target) con
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage";
-    QJSValueList args1;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
-    args1 << obj5;
-    QJSValue obj1 = pInterpreter->newQObject(pAction.get());
-    args1 << obj1;
-    args1 << target.x();
-    args1 << target.y();
-    args1 << static_cast<qint32>(GameEnums::LuckDamageMode_Average);
-    QJSValue erg = pInterpreter->doFunction(ACTION_FIRE, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(m_pMap),
+                       pInterpreter->newQObject(pAction.get()),
+                       target.x(),
+                       target.y(),
+                       static_cast<qint32>(GameEnums::LuckDamageMode_Average)});
+    QJSValue erg = pInterpreter->doFunction(ACTION_FIRE, function1, args);
     return erg.toVariant().toRectF();
 }
 
@@ -721,25 +718,20 @@ QRectF CoreAI::calcVirtuelUnitDamage(GameMap* pMap,
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage3";
-    QJSValueList args1;
-    QJSValue obj5 = pInterpreter->newQObject(pMap);
-    args1 << obj5;
-    QJSValue obj3 = pInterpreter->newQObject(nullptr);
-    args1 << obj3;
-    QJSValue obj1 = pInterpreter->newQObject(pAttacker);
-    args1 << obj1;
-    args1 << attackerTakenDamage;
-    args1 << atkPos.x();
-    args1 << atkPos.y();
-    QJSValue obj2 = pInterpreter->newQObject(pDefender);
-    args1 << obj2;
-    args1 << defPos.x();
-    args1 << defPos.y();
-    args1 << defenderTakenDamage;
-    args1 << static_cast<qint32>(luckModeAtk);
-    args1 << static_cast<qint32>(luckModeDef);
-    args1 << ignoreOutOfVisionRange;
-    QJSValue erg = pInterpreter->doFunction(ACTION_FIRE, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(pMap),
+                       pInterpreter->newQObject(nullptr),
+                       pInterpreter->newQObject(pAttacker),
+                       attackerTakenDamage,
+                       atkPos.x(),
+                       atkPos.y(),
+                       pInterpreter->newQObject(pDefender),
+                       defPos.x(),
+                       defPos.y(),
+                       defenderTakenDamage,
+                       static_cast<qint32>(luckModeAtk),
+                       static_cast<qint32>(luckModeDef),
+                       ignoreOutOfVisionRange});
+    QJSValue erg = pInterpreter->doFunction(ACTION_FIRE, function1, args);
     return erg.toVariant().toRectF();
 }
 
@@ -1296,11 +1288,9 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUni
 bool CoreAI::isUnloadTerrain(Unit* pUnit, Terrain* pTerrain)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(pUnit);
-    args << obj;
-    QJSValue obj1 = pInterpreter->newQObject(pTerrain);
-    args << obj1;
+    QJSValueList args({pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(pTerrain),
+                      });
     QJSValue ret = pInterpreter->doFunction(ACTION_UNLOAD, "isUnloadTerrain", args);
     if (ret.isBool())
     {

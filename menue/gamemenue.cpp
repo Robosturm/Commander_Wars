@@ -161,9 +161,7 @@ void GameMenue::onEnter()
     if (pInterpreter->exists(object, func))
     {
         CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
-        QJSValueList args;
-        QJSValue value = pInterpreter->newQObject(this);
-        args << value;
+        QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
     
@@ -1038,20 +1036,16 @@ bool GameMenue::isTrap(const QString & function, spGameAction pAction, Unit* pMo
     Unit* pUnit = m_pMap->getTerrain(currentPoint.x(), currentPoint.y())->getUnit();
 
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj1 = pInterpreter->newQObject(pAction.get());
-    args << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pMoveUnit);
-    args << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pUnit);
-    args << obj3;
-    args << currentPoint.x();
-    args << currentPoint.y();
-    args << previousPoint.x();
-    args << previousPoint.y();
-    args << moveCost;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap.get());
-    args << obj5;
+    QJSValueList args({pInterpreter->newQObject(pAction.get()),
+                       pInterpreter->newQObject(pMoveUnit),
+                       pInterpreter->newQObject(pUnit),
+                       currentPoint.x(),
+                       currentPoint.y(),
+                       previousPoint.x(),
+                       previousPoint.y(),
+                       moveCost,
+                       pInterpreter->newQObject(m_pMap.get()),
+                      });
     QJSValue erg = pInterpreter->doFunction("ACTION_TRAP", function, args);
     if (erg.isBool())
     {

@@ -56,12 +56,9 @@ QString Weather::getWeatherTerrainSprite()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getWeatherTerrainSprite";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isString())
     {
         return erg.toString();
@@ -76,12 +73,9 @@ QString Weather::getWeatherSymbol()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getWeatherSymbol";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isString())
     {
         return erg.toString();
@@ -96,12 +90,9 @@ qint32 Weather::getOffensiveModifier()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveModifier";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -116,12 +107,9 @@ qint32 Weather::getDefensiveModifier()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDefensiveModifier";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -136,16 +124,11 @@ qint32 Weather::getMovementCostModifier(Unit* pUnit, Terrain* pTerrain)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMovementCostModifier";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pTerrain);
-    args1 << obj3;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(pTerrain),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -160,16 +143,11 @@ qint32 Weather::getMovementpointModifier(Unit* pUnit, Terrain* pTerrain)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMovementpointModifier";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pTerrain);
-    args1 << obj3;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(pTerrain),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -184,15 +162,11 @@ qint32 Weather::getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMovementFuelCostModifier";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    args1 << fuelCost;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       fuelCost,
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -207,12 +181,9 @@ qint32 Weather::getVisionrangeModifier()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVisionrangeModifier";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -227,12 +198,9 @@ qint32 Weather::getFirerangeModifier()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFirerangeModifier";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -247,12 +215,9 @@ qint32 Weather::getMinFirerangeModifier()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMinFirerangeModifier";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -267,24 +232,18 @@ void Weather::activate()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "activate";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    pInterpreter->doFunction(m_WeatherId, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(m_WeatherId, function1, args);
 }
 
 void Weather::deactivate()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "deactivate";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
-    pInterpreter->doFunction(m_WeatherId, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(m_WeatherId, function1, args);
 }
 
 QString Weather::getWeatherId() const

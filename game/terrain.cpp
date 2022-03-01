@@ -194,11 +194,8 @@ void Terrain::init()
         createBaseTerrain(GameMap::PLAINS);
     }
     QString function = "init";
-    QJSValueList args;
-    QJSValue objArg = pInterpreter->newQObject(this);
-    args << objArg;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args << obj4;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
     pInterpreter->doFunction(m_terrainID, function, args);
 }
 
@@ -264,12 +261,9 @@ spBuilding Terrain::getSpBuilding()
 void Terrain::createBaseTerrain(const QString & currentTerrainID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args << obj;
-    args << currentTerrainID;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args << obj4;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       currentTerrainID,
+                       pInterpreter->newQObject(m_pMap)});
     // load sprite of the base terrain
     QString function = "loadBaseTerrain";
     pInterpreter->doFunction(m_terrainID, function, args);
@@ -283,9 +277,7 @@ qint32 Terrain::getTerrainGroup()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainGroup";
-    QJSValueList args;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args << obj4;
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args);
     if (ret.isNumber())
     {
@@ -299,12 +291,9 @@ QString Terrain::getWeatherOverlayId()
     Interpreter* pInterpreter = Interpreter::getInstance();
     // load sprite of the base terrain
     QString function = "getWeatherOverlayId";
-    QJSValueList args1;
-    QJSValue obj2 = pInterpreter->newQObject(this);
-    args1 << obj2;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue ret = pInterpreter->doFunction(m_terrainID, function, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function, args);
     if (ret.isString())
     {
         return ret.toString();
@@ -317,12 +306,9 @@ QPoint Terrain::getWeatherOverlaySpeed()
     Interpreter* pInterpreter = Interpreter::getInstance();
     // load sprite of the base terrain
     QString function = "getWeatherOverlaySpeed";
-    QJSValueList args1;
-    QJSValue obj2 = pInterpreter->newQObject(this);
-    args1 << obj2;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue ret = pInterpreter->doFunction(m_terrainID, function, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function, args);
     return ret.toVariant().toPoint();
 }
 
@@ -333,12 +319,9 @@ QString Terrain::getDescription()
         Interpreter* pInterpreter = Interpreter::getInstance();
         // load sprite of the base terrain
         QString function = "getDescription";
-        QJSValueList args1;
-        QJSValue obj2 = pInterpreter->newQObject(this);
-        args1 << obj2;
-        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-        args1 << obj4;
-        QJSValue ret = pInterpreter->doFunction(m_terrainID, function, args1);
+        QJSValueList args({pInterpreter->newQObject(this),
+                          pInterpreter->newQObject(m_pMap)});
+        QJSValue ret = pInterpreter->doFunction(m_terrainID, function, args);
         if (ret.isString())
         {
             return ret.toString();
@@ -399,24 +382,18 @@ void Terrain::loadSprites()
     else
     {
         QString function1 = "loadBaseSprite";
-        QJSValueList args1;
-        QJSValue obj1 = pInterpreter->newQObject(this);
-        args1 << obj1;
-        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-        args1 << obj4;
-        pInterpreter->doFunction(m_terrainID, function1, args1);
+        QJSValueList args({pInterpreter->newQObject(this),
+                           pInterpreter->newQObject(m_pMap)});
+        pInterpreter->doFunction(m_terrainID, function1, args);
     }
     // ony load this for valid positions
     if (m_x >= 0 && m_y >= 0)
     {
         // next call starting by 0 again
         QString function2 = "loadOverlaySprite";
-        QJSValueList args2;
-        QJSValue obj2 = pInterpreter->newQObject(this);
-        args2 << obj2;
-        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-        args2 << obj4;
-        pInterpreter->doFunction(m_terrainID, function2, args2);
+        QJSValueList args({pInterpreter->newQObject(this),
+                           pInterpreter->newQObject(m_pMap)});
+        pInterpreter->doFunction(m_terrainID, function2, args);
     }
 }
 
@@ -497,24 +474,18 @@ void Terrain::updateFlowSprites(TerrainFindingSystem* pPfs)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "updateFlowSprites";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pPfs);
-    args1 << obj2;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pPfs),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(m_terrainID, function1, args);
 }
 
 QStringList Terrain::getFlowTiles()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFlowTiles";
-    QJSValueList args1;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1);
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args);
     return ret.toVariant().toStringList();
 }
 
@@ -777,15 +748,12 @@ qint32 Terrain::getBaseDefense()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDefense";
-    QJSValueList args1;
     qint32 defense = 0;
     if (m_Building.get() == nullptr)
     {
-        QJSValue obj = pInterpreter->newQObject(this);
-        args1 << obj;
-        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-        args1 << obj4;
-        QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args1);
+        QJSValueList args({pInterpreter->newQObject(this),
+                          pInterpreter->newQObject(m_pMap)});
+        QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args);
         if (ret.isNumber())
         {
             defense = ret.toInt();
@@ -793,11 +761,9 @@ qint32 Terrain::getBaseDefense()
     }
     else
     {
-        QJSValue obj = pInterpreter->newQObject(m_Building.get());
-        args1 << obj;
-        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-        args1 << obj4;
-        QJSValue ret = pInterpreter->doFunction(m_Building->getBuildingID(), function1, args1);
+        QJSValueList args({pInterpreter->newQObject(m_Building.get()),
+                           pInterpreter->newQObject(m_pMap)});
+        QJSValue ret = pInterpreter->doFunction(m_Building->getBuildingID(), function1, args);
         if (ret.isNumber())
         {
             defense = ret.toInt();
@@ -810,12 +776,9 @@ QString Terrain::getMinimapIcon()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMiniMapIcon";
-    QJSValueList args1;
-    QJSValue obj2 = pInterpreter->newQObject(this);
-    args1 << obj2;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                      pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args);
     if (ret.isString())
     {
         return ret.toString();
@@ -830,18 +793,14 @@ qint32 Terrain::getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMovementcostModifier";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    args1 << x;
-    args1 << y;
-    args1 << curX;
-    args1 << curY;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       x,
+                       y,
+                       curX,
+                       curY,
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -856,14 +815,10 @@ qint32 Terrain::getFirerangeModifier(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFirerangeModifier";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -878,14 +833,10 @@ qint32 Terrain::getMinFirerangeModifier(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMinFirerangeModifier";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -1104,16 +1055,11 @@ QString Terrain::getTerrainAnimationBase()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationBase";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(nullptr);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(this);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(nullptr);
-    args1 << obj3;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(nullptr),
+                       pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(nullptr),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
     if (erg.isString())
     {
         return erg.toString();
@@ -1128,16 +1074,11 @@ QString Terrain::getTerrainAnimationForeground()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationForeground";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(nullptr);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(this);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(nullptr);
-    args1 << obj3;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(nullptr),
+                       pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(nullptr),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
     if (erg.isString())
     {
         return erg.toString();
@@ -1152,16 +1093,11 @@ QString Terrain::getTerrainAnimationBackground()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationBackground";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(nullptr);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(this);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(nullptr);
-    args1 << obj3;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(nullptr),
+                       pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(nullptr),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
     if (erg.isString())
     {
         return erg.toString();
@@ -1176,12 +1112,9 @@ float Terrain::getTerrainAnimationMoveSpeed()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationMoveSpeed";
-    QJSValueList args1;
-    QJSValue obj2 = pInterpreter->newQObject(this);
-    args1 << obj2;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
     if (erg.isNumber())
     {
         return erg.toNumber();
@@ -1196,10 +1129,8 @@ QStringList Terrain::getTerrainSprites()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainSprites";
-    QJSValueList args1;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1);
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
     return erg.toVariant().toStringList();
 }
 
@@ -1232,14 +1163,10 @@ qint32 Terrain::getVision(Player* pPlayer)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVision";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(pPlayer);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(this);
-    args1 << obj2;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(pPlayer),
+                       pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -1261,14 +1188,10 @@ bool Terrain::getVisionHide(Player* pPlayer)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVisionHide";
-    QJSValueList args1;
-    QJSValue obj2 = pInterpreter->newQObject(this);
-    args1 << obj2;
-    QJSValue obj1 = pInterpreter->newQObject(pPlayer);
-    args1 << obj1;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                      pInterpreter->newQObject(pPlayer),
+                      pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args);
     
     if (ret.isBool() && m_pMap != nullptr)
     {
@@ -1312,14 +1235,10 @@ qint32 Terrain::getBonusVision(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBonusVision";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(pUnit);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(this);
-    args1 << obj2;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -1334,12 +1253,9 @@ bool Terrain::isLoadingTile()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "isLoadingTile";
-    QJSValueList args1;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args1 << obj;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args);
     if (ret.isBool())
     {
         return ret.toBool();
@@ -1356,12 +1272,9 @@ void Terrain::startOfTurn()
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "startOfTurn";
-        QJSValueList args1;
-        QJSValue obj1 = pInterpreter->newQObject(this);
-        args1 << obj1;
-        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-        args1 << obj4;
-        pInterpreter->doFunction(m_terrainID, function1, args1);
+        QJSValueList args({pInterpreter->newQObject(this),
+                          pInterpreter->newQObject(m_pMap)});
+        pInterpreter->doFunction(m_terrainID, function1, args);
     }
     for (auto & item : m_terrainOverlay)
     {
@@ -1380,25 +1293,19 @@ qint32 Terrain::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPo
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveFieldBonus";
-    QJSValueList args1;
-    QJSValue obj3 = pInterpreter->newQObject(this);
-    args1 << obj3;
-    QJSValue obj1 = pInterpreter->newQObject(pAttacker);
-    args1 << obj1;
-    args1 << atkPosition.x();
-    args1 << atkPosition.y();
-    QJSValue obj2 = pInterpreter->newQObject(pDefender);
-    args1 << obj2;
-    args1 << defPosition.x();
-    args1 << defPosition.y();
-    args1 << isDefender;
-    QJSValue obj4 = pInterpreter->newQObject(pAction);
-    args1 << obj4;
-    args1 << luckMode;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
-    args1 << obj5;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pAttacker),
+                       atkPosition.x(),
+                       atkPosition.y(),
+                       pInterpreter->newQObject(pDefender),
+                       defPosition.x(),
+                       defPosition.y(),
+                       isDefender,
+                       pInterpreter->newQObject(pAction),
+                       luckMode,
+                       pInterpreter->newQObject(m_pMap)});
     qint32 ergValue = 0;
-    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
     if (erg.isNumber())
     {
         ergValue += erg.toInt();
@@ -1410,25 +1317,19 @@ qint32 Terrain::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QP
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDeffensiveFieldBonus";
-    QJSValueList args1;
-    QJSValue obj3 = pInterpreter->newQObject(this);
-    args1 << obj3;
-    QJSValue obj1 = pInterpreter->newQObject(pAttacker);
-    args1 << obj1;
-    args1 << atkPosition.x();
-    args1 << atkPosition.y();
-    QJSValue obj2 = pInterpreter->newQObject(pDefender);
-    args1 << obj2;
-    args1 << defPosition.x();
-    args1 << defPosition.y();
-    args1 << isAttacker;
-    QJSValue obj4 = pInterpreter->newQObject(pAction);
-    args1 << obj4;
-    args1 << luckMode;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
-    args1 << obj5;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pAttacker),
+                       atkPosition.x(),
+                       atkPosition.y(),
+                       pInterpreter->newQObject(pDefender),
+                       defPosition.x(),
+                       defPosition.y(),
+                       isAttacker,
+                       pInterpreter->newQObject(pAction),
+                       luckMode,
+                       pInterpreter->newQObject(m_pMap)});
     qint32 ergValue = 0;
-    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
     if (erg.isNumber())
     {
         ergValue += erg.toInt();

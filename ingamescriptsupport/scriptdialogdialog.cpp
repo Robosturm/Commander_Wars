@@ -196,8 +196,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     for (qint32 i = 0; i < colorCount; i++)
     {
         QString function = "getDefaultColor";
-        QJSValueList args;
-        args << i;
+        QJSValueList args({QJSValue(i)});
         ret = pInterpreter->doFunction("PLAYER", function, args);
         playerColors.append(QColor(ret.toString()));
     }

@@ -13,6 +13,7 @@ Cursor::Cursor(GameMap* pMap)
     : m_pMap{pMap}
 {
     setObjectName("Cursor");
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     changeCursor("cursor+default");

@@ -15,6 +15,7 @@ COSpriteManager::COSpriteManager()
                                            "/scripts/cos")
 {
     setObjectName("COSpriteManager");
+    Interpreter::setCppOwnerShip(this);
     connect(this, &COSpriteManager::sigLoadResAnim, this, &COSpriteManager::loadResAnim, Qt::QueuedConnection);
 }
 
@@ -199,8 +200,7 @@ QStringList COSpriteManager::getArmyList(const QStringList & coids) const
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getArmies";
-    QJSValueList args1;
-    QJSValue ret = pInterpreter->doFunction("PLAYER", function1, args1);
+    QJSValue ret = pInterpreter->doFunction("PLAYER", function1);
     QStringList armies = ret.toVariant().toStringList();
     QStringList allowedArmies;
     // remove unused armies

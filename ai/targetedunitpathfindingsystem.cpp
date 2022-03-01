@@ -11,6 +11,7 @@ TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit
       m_pMoveCostMap(pMoveCostMap)
 {
     setObjectName("TargetedUnitPathFindingSystem");
+    Interpreter::setCppOwnerShip(this);
     setFast(true);
     for (qint32 i = 0; i < m_Targets.size(); i++)
     {

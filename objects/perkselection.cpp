@@ -16,6 +16,7 @@ PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool bannin
       m_pMap(pMap)
 {
     setObjectName("PerkSelection");
+    Interpreter::setCppOwnerShip(this);
     setWidth(width);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -196,9 +197,7 @@ void PerkSelection::updatePerkCount()
 bool PerkSelection::getPerkEnabled(QString perkId)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(m_pCO);
-    args << obj;
+    QJSValueList args({pInterpreter->newQObject(m_pCO)});
     QJSValue value = pInterpreter->doFunction(perkId, "getPerkEnabled", args);
     if (value.isBool())
     {

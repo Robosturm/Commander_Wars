@@ -245,9 +245,7 @@ spWikipage WikiDatabase::getPage(PageData data)
         ret = spWikipage::create();
         Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->openScript(id, false);
-        QJSValueList args;
-        QJSValue obj1 = pInterpreter->newQObject(ret.get());
-        args << obj1;
+        QJSValueList args({pInterpreter->newQObject(ret.get())});
         pInterpreter->doFunction("LOADEDWIKIPAGE", "loadPage", args);
     }
     else

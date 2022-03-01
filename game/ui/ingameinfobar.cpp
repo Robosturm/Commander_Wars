@@ -22,6 +22,7 @@ IngameInfoBar::IngameInfoBar(GameMap* pMap)
     : m_pMap(pMap)
 {
     setObjectName("IngameInfoBar");
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 

@@ -5,6 +5,7 @@ ShopLoader::ShopLoader()
                                               "/scripts/shop")
 {
     setObjectName("ShopLoader");
+    Interpreter::setCppOwnerShip(this);
 }
 
 void ShopLoader::loadAll()
@@ -20,9 +21,7 @@ void ShopLoader::loadAll()
 void ShopLoader::onItemBought(qint32 itemType, QString key)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    args << itemType;
-    args << key;
+    QJSValueList args({itemType, key});
     for (const auto &  shopLoader : qAsConst(m_loadedRessources))
     {
         pInterpreter->doFunction(shopLoader, "itemBought", args);

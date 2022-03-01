@@ -11,6 +11,7 @@ MapMover::MapMover(InGameMenue* pOwner)
       m_scrollTimer(this)
 {
     setObjectName("MapMover");
+    Interpreter::setCppOwnerShip(this);
     connect(&m_scrollTimer, &QTimer::timeout, this, &MapMover::autoScroll, Qt::QueuedConnection);
     m_scrollTimer.setSingleShot(false);
     m_scrollTimer.start(100);

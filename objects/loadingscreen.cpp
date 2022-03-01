@@ -18,9 +18,9 @@ spLoadingScreen LoadingScreen::getInstance()
 }
 
 LoadingScreen::LoadingScreen()
-    : QObject()
 {
     setObjectName("LoadingScreen");
+    Interpreter::setCppOwnerShip(this);
     setPriority(static_cast<quint16>(Mainapp::ZOrder::Loadingscreen));
 }
 

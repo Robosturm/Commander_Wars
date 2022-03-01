@@ -323,11 +323,8 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             QString coid = pCOSpriteManager->getID(i);
             spCO testCO = spCO::create(coid, pPlayer.get(), pPlayer->getMap());
 
-            QJSValueList args;
-            QJSValue obj1 = pInterpreter->newQObject(pCO.get());
-            QJSValue obj2 = pInterpreter->newQObject(testCO.get());
-            args << obj1;
-            args << obj2;
+            QJSValueList args({pInterpreter->newQObject(pCO.get()),
+                               pInterpreter->newQObject(testCO.get())});
             value = pInterpreter->doFunction("TAGPOWER", "getTagstars", args);
             if (value.isNumber())
             {

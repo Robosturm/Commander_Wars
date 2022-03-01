@@ -1,8 +1,10 @@
 #include "ai/decisiontree/question.h"
+#include "coreengine/interpreter.h"
 
 Question::Question()
 {
     setObjectName("Question");
+    Interpreter::setCppOwnerShip(this);
 }
 
 Question::Question(float value, qint32 index, GameEnums::AIQuestionType QuestionType)
@@ -12,6 +14,7 @@ Question::Question(float value, qint32 index, GameEnums::AIQuestionType Question
       m_QuestionType(QuestionType)
 {
     setObjectName("Question");
+    Interpreter::setCppOwnerShip(this);
 }
 
 Question::Question(float minValue, float maxValue, qint32 index, GameEnums::AIQuestionType QuestionType)
@@ -21,6 +24,7 @@ Question::Question(float minValue, float maxValue, qint32 index, GameEnums::AIQu
       m_QuestionType(QuestionType)
 {
     setObjectName("Question");
+    Interpreter::setCppOwnerShip(this);
 }
 
 bool Question::matches(float value)

@@ -983,13 +983,10 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit 
             for (qint32 i = 0; i < unitIDx.size() - 1; i++)
             {
                 QString function1 = "getUnloadFields";
-                QJSValueList args1;
-                QJSValue obj1 = pInterpreter->newQObject(pAction.get());
-                args1 << obj1;
-                args1 << unitIDx[i];
-                QJSValue obj2 = pInterpreter->newQObject(m_pMap);
-                args1 << obj2;
-                QJSValue ret = pInterpreter->doFunction(ACTION_UNLOAD, function1, args1);
+                QJSValueList args({pInterpreter->newQObject(pAction.get()),
+                                   unitIDx[i],
+                                   pInterpreter->newQObject(m_pMap),});
+                QJSValue ret = pInterpreter->doFunction(ACTION_UNLOAD, function1, args);
                 unloadFields.append(ret.toVariant().toList());
             }
             if (actions.size() > 1)
@@ -1681,7 +1678,6 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                 if (enemyDamage < pNextEnemy->getHp() * Unit::MAX_UNIT_HP)
                 {
                     QRectF damageData;
-                    float unitDamage = 0;
                     if (distance >= minFireRange && distance <= maxFireRange)
                     {
                         // indirect attack
@@ -1696,7 +1692,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                                                                        ignoreOutOfVisionRange);
                             unitDamageData.insert(pNextEnemy->getUnitID(), damageData.x() * Unit::MAX_UNIT_HP / pNextEnemy->getHp());
                         }
-                        if (unitDamage >= m_notAttackableDamage)
+                        if (damageData.x() >= m_notAttackableDamage)
                         {
                             for (qint32 i3 = 0; i3 < pUnits->size(); i3++)
                             {
@@ -1750,7 +1746,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                         qint32 enemyIslandIdx = getIslandIndex(pNextEnemy.get());
                         qint32 enemyIsland = getIsland(pNextEnemy.get());
                         if (found &&
-                            unitDamage >= m_notAttackableDamage)
+                            damageData.x() >= m_notAttackableDamage)
                         {
                             for (qint32 i3 = 0; i3 < pUnits->size(); i3++)
                             {

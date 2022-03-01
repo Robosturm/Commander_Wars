@@ -40,6 +40,7 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
       m_aiName(type)
 {
     setObjectName("HeavyAi");
+    Interpreter::setCppOwnerShip(this);
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
 
@@ -693,9 +694,7 @@ bool HeavyAi::mutateAction(ScoreData & data, UnitData & unitData, QVector<double
             case FunctionType::JavaScript:
             {
                 Interpreter* pInterpreter = Interpreter::getInstance();
-                QJSValueList args;
-                QJSValue obj = pInterpreter->newQObject(data.m_gameAction.get());
-                args << obj;
+                QJSValueList args({pInterpreter->newQObject(data.m_gameAction.get())});
                 QJSValue erg = pInterpreter->doFunction(m_aiName, data.m_gameAction->getActionID(), args);
                 if (erg.isNumber())
                 {

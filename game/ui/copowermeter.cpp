@@ -9,6 +9,7 @@ CoPowermeter::CoPowermeter(GameMap* pMap, CO* pCO)
       m_pMap(pMap)
 {
     setObjectName("CoPowermeter");
+    Interpreter::setCppOwnerShip(this);
 }
 
 void CoPowermeter::drawPowerMeter()

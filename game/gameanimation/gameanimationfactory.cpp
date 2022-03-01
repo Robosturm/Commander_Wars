@@ -266,24 +266,18 @@ GameAnimation* GameAnimationFactory::createOverworldBattleAnimation(GameMap* pMa
                                                                     Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(pAtkTerrain);
-    args << obj;
-    QJSValue obj1 = pInterpreter->newQObject(pAtkUnit);
-    args << obj1;
-    args << atkStartHp;
-    args << atkEndHp;
-    args << atkWeapon;
-    QJSValue obj2 = pInterpreter->newQObject(pDefTerrain);
-    args << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pDefUnit);
-    args << obj3;
-    args << defStartHp;
-    args << defEndHp;
-    args << defWeapon;
-    args << defenderDamage;
-    QJSValue obj5 = pInterpreter->newQObject(pMap);
-    args << obj5;
+    QJSValueList args({pInterpreter->newQObject(pAtkTerrain),
+                       pInterpreter->newQObject(pAtkUnit),
+                       atkStartHp,
+                       atkEndHp,
+                       atkWeapon,
+                       pInterpreter->newQObject(pDefTerrain),
+                       pInterpreter->newQObject(pDefUnit),
+                       defStartHp,
+                       defEndHp,
+                       defWeapon,
+                       defenderDamage,
+                       pInterpreter->newQObject(pMap)});
     QJSValue ret = pInterpreter->doFunction("ACTION_FIRE", "createOverworldBattleAnimation", args);
     return dynamic_cast<GameAnimation*>(ret.toQObject());
 }

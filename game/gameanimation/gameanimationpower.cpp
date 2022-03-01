@@ -96,17 +96,13 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     // cool text incoming
     QString text;
     if (powerMode == GameEnums::PowerMode_Tagpower)
-    {
-        
-        QJSValueList args;
+    {        
         CO* pCO0 = m_pMap->getCurrentPlayer()->getCO(0);
-        createPowerDescription(pCO0, powerMode, true);
-        QJSValue obj1 = pInterpreter->newQObject(pCO0);
-        args << obj1;
         CO* pCO1 = m_pMap->getCurrentPlayer()->getCO(1);
+        createPowerDescription(pCO0, powerMode, true);
         createPowerDescription(pCO1, powerMode, false);
-        QJSValue obj2 = pInterpreter->newQObject(pCO1);
-        args << obj2;
+        QJSValueList args({pInterpreter->newQObject(pCO0),
+                           pInterpreter->newQObject(pCO1)});
         QJSValue ret = pInterpreter->doFunction("TAGPOWER", "getTagname", args);
         if (ret.isString())
         {

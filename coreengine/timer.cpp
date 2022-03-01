@@ -1,9 +1,11 @@
 #include "coreengine/timer.h"
+#include "coreengine/interpreter.h"
 
 Timer::Timer(QObject* pParent)
     : QTimer(pParent)
 {
     setObjectName("Timer");
+    Interpreter::setCppOwnerShip(this);
 }
 
 void Timer::pause()

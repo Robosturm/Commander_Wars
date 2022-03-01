@@ -71,7 +71,10 @@ public slots:
     void pushDouble(const QString & name, double value);
     void pushString(const QString & name, const QString & value);
     void pushObject(const QString & name, QObject* object);
-    QJSValue newQObject(QObject* object);
+    inline QJSValue newQObject(QObject* object)
+    {
+        return QQmlEngine::newQObject(object);
+    }
     void deleteObject(const QString & name);
 
     qint32 getGlobalInt(const QString & var);

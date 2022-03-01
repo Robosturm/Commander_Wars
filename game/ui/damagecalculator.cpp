@@ -46,10 +46,8 @@ DamageCalculator::DamageCalculator()
     QString function1 = "getIcon";
     for (qint32 i = GameEnums::UnitRank_CO1; i <= maxRang; i++)
     {
-        QJSValueList args;
-        args << i;
-        QJSValue obj4 = pInterpreter->newQObject(&m_map);
-        args << obj4;
+        QJSValueList args({i,
+                           pInterpreter->newQObject(&m_map)});
         QJSValue ret = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
         rankItems.append(ret.toString());
     }
@@ -499,21 +497,17 @@ QRectF DamageCalculator::calculatePostBattleDamage(spUnit pAttacker, spUnit pDef
     auto defenderPos = pDefender->Unit::getPosition();
 
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj1 = pInterpreter->newQObject(&m_map);
-    args << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pAttacker.get());
-    args << obj2;
-    args << info.x();
-    args << info.y();
-    args << defenderPos.x();
-    args << defenderPos.y();
-    args << info.width();
-    args << info.height();
-    args << true;
-    args << true;
+    QJSValueList args({pInterpreter->newQObject(&m_map),
+                       pInterpreter->newQObject(pAttacker.get()),
+                       info.x(),
+                       info.y(),
+                       defenderPos.x(),
+                       defenderPos.y(),
+                       info.width(),
+                       info.height(),
+                       true,
+                       true});
     pInterpreter->doFunction(CoreAI::ACTION_FIRE, "battle", args);
-
 
     float counterDmg = (m_atkUnit.m_hp->getCurrentValue() - pAttacker->getHp()) * Unit::MAX_UNIT_HP;
     float dmg = (m_defUnit.m_hp->getCurrentValue() - pDefender->getHp()) * Unit::MAX_UNIT_HP;

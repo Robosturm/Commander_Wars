@@ -14,6 +14,7 @@ ScriptConditionUnitReachedArea::ScriptConditionUnitReachedArea(GameMap* pMap)
     : ScriptCondition(pMap, ConditionType::unitReachedArea)
 {
     setObjectName("ScriptConditionUnitReachedArea");
+    Interpreter::setCppOwnerShip(this);
 }
 
 qint32 ScriptConditionUnitReachedArea::getUnitX() const

@@ -1,16 +1,19 @@
 #include "ai/decisiontree/decisionnode.h"
 #include "ai/decisiontree/leaf.h"
+#include "coreengine/interpreter.h"
 
 DecisionNode::DecisionNode(spDecisionQuestion & pQuestion, const QVector<spDecisionNode> & pNodes)
 	: m_pQuestion(pQuestion),
       m_pNodes(pNodes)
 {
     setObjectName("DecisionNode");
+    Interpreter::setCppOwnerShip(this);
 }
 
 DecisionNode::DecisionNode()
 {
     setObjectName("DecisionNode");
+    Interpreter::setCppOwnerShip(this);
 }
 
 float DecisionNode::getDecision(QVector<float>& input)

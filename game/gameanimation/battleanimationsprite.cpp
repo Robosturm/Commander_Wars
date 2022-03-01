@@ -35,13 +35,13 @@ BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrai
       m_playSound(playSound)
 {
     setObjectName("BattleAnimationSprite");
+    Interpreter::setCppOwnerShip(this);
     if (m_hpRounded < 0.0f)
     {
         m_hpRounded = pUnit->getHpRounded();
     }
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-    Interpreter::setCppOwnerShip(this);
     // setup next frame timer
     m_nextFrameTimer.setSingleShot(true);
     setUnitFrameDelay(75);
@@ -143,17 +143,12 @@ void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Un
     }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = animationType;
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pDefender);
-    args1 << obj3;
-    args1 << attackerWeapon;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
-    args1 << obj5;
-    pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(pDefender),
+                       attackerWeapon,
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (m_nextFrames.length() > 0 && !clearSprite)
     {
         for (qint32 i = m_currentFrame.length() - 1; i >= 0; --i)
@@ -214,17 +209,12 @@ QPoint BattleAnimationSprite::getUnitPositionOffset(qint32 unitIdx)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getPositionOffset";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(m_pUnit.get());
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(m_pTerrain);
-    args1 << obj3;
-    args1 << unitIdx;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
-    args1 << obj5;
-    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pUnit.get()),
+                       pInterpreter->newQObject(m_pTerrain),
+                       unitIdx,
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args);
     return erg.toVariant().toPoint();
 }
 
@@ -256,17 +246,12 @@ qint32 BattleAnimationSprite::getImpactDurationMS(Unit* pUnit, Unit* pDefender, 
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getImpactDurationMS";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pDefender);
-    args1 << obj3;
-    args1 << attackerWeapon;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
-    args1 << obj5;
-    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(pDefender),
+                       attackerWeapon,
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -281,17 +266,12 @@ bool BattleAnimationSprite::hasMoveInAnimation(Unit* pUnit, Unit* pDefender, qin
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "hasMoveInAnimation";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pDefender);
-    args1 << obj3;
-    args1 << attackerWeapon;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
-    args1 << obj5;
-    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(pDefender),
+                       attackerWeapon,
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args);
     if (erg.isBool())
     {
         return erg.toBool();
@@ -306,17 +286,12 @@ qint32 BattleAnimationSprite::getDyingDurationMS(Unit* pUnit, Unit* pDefender, q
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDyingDurationMS";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pDefender);
-    args1 << obj3;
-    args1 << attackerWeapon;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
-    args1 << obj5;
-    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(pDefender),
+                       attackerWeapon,
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -351,17 +326,12 @@ qint32 BattleAnimationSprite::getFireDurationMS(Unit* pUnit, Unit* pDefender, qi
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFireDurationMS";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pDefender);
-    args1 << obj3;
-    args1 << attackerWeapon;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
-    args1 << obj5;
-    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                          pInterpreter->newQObject(pUnit),
+                          pInterpreter->newQObject(pDefender),
+                          attackerWeapon,
+                          pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -376,17 +346,12 @@ qint32 BattleAnimationSprite::getFiredDurationMS(Unit* pUnit, Unit* pDefender, q
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFiredDurationMS";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pDefender);
-    args1 << obj3;
-    args1 << attackerWeapon;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
-    args1 << obj5;
-    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(pDefender),
+                       attackerWeapon,
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -401,17 +366,12 @@ qint32 BattleAnimationSprite::getMoveInDurationMS(Unit* pUnit, Unit* pDefender, 
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMoveInDurationMS";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pDefender);
-    args1 << obj3;
-    args1 << attackerWeapon;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
-    args1 << obj5;
-    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(pDefender),
+                       attackerWeapon,
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -426,17 +386,12 @@ qint32 BattleAnimationSprite::getStopDurationMS(Unit* pUnit, Unit* pDefender, qi
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStopDurationMS";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pDefender);
-    args1 << obj3;
-    args1 << attackerWeapon;
-    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
-    args1 << obj5;
-    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(pDefender),
+                       attackerWeapon,
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();

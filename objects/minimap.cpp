@@ -10,9 +10,9 @@
 #include "menue/gamemenue.h"
 
 Minimap::Minimap()
-    : QObject()
 {
     setObjectName("Minimap");
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* pEvent)

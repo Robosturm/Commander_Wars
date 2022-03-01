@@ -258,22 +258,21 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         QString program = "Commander_Wars.exe";
         game->process = std::make_shared<QProcess>();
         game->process->setObjectName(slaveName + "Slaveprocess");
-        QStringList args;
-        args << Mainapp::ARG_SLAVE;
-        args << Mainapp::ARG_SLAVENAME;
-        args << slaveName;
-        args << Mainapp::ARG_NOUI; // comment out for debugging
-        args << Mainapp::ARG_NOAUDIO;
-        args << Mainapp::ARG_MODS;
-        args << Settings::getConfigString(mods);
-        args << Mainapp::ARG_SLAVEADDRESS;
-        args << slaveAddress;
-        args << QString::number(slavePort);
-        args << Mainapp::ARG_MASTERADDRESS;
-        args << Settings::getSlaveServerName();
-        args << QString::number(Settings::getSlaveServerPort());
-        args << Mainapp::ARG_INITSCRIPT;
-        args << initScript;
+        QStringList args({Mainapp::ARG_SLAVE,
+                          Mainapp::ARG_SLAVENAME,
+                          slaveName,
+                          Mainapp::ARG_NOUI, // comment out for debugging
+                          Mainapp::ARG_NOAUDIO,
+                          Mainapp::ARG_MODS,
+                          Settings::getConfigString(mods),
+                          Mainapp::ARG_SLAVEADDRESS,
+                          slaveAddress,
+                          QString::number(slavePort),
+                          Mainapp::ARG_MASTERADDRESS,
+                          Settings::getSlaveServerName(),
+                          QString::number(Settings::getSlaveServerPort()),
+                          Mainapp::ARG_INITSCRIPT,
+                          initScript});
         if (Mainapp::getInstance()->getCreateSlaveLogs())
         {
             args << Mainapp::ARG_CREATESLAVELOGS;

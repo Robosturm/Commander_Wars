@@ -69,9 +69,7 @@ void Campaign::init()
 Campaign::CampaignMapInfo Campaign::getCampaignMaps()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args << obj;
+    QJSValueList args({pInterpreter->newQObject(this)});
     QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getCurrentCampaignMaps", args);
     QStringList files = value.toVariant().toStringList();
     QString folder = "";
@@ -124,13 +122,10 @@ QStringList Campaign::getSelectableCOs(GameMap* pMap, qint32 player, quint8 coId
     if (!Console::getDeveloperMode())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValueList args;
-        QJSValue obj = pInterpreter->newQObject(this);
-        args << obj;
-        QJSValue obj1 = pInterpreter->newQObject(pMap);
-        args << obj1;
-        args << player;
-        args << coIdx;
+        QJSValueList args({pInterpreter->newQObject(this),
+                           pInterpreter->newQObject(pMap),
+                           player,
+                           coIdx,});
         QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getSelectableCOs", args);
         ret = value.toVariant().toStringList();
     }
@@ -140,11 +135,8 @@ QStringList Campaign::getSelectableCOs(GameMap* pMap, qint32 player, quint8 coId
 bool Campaign::getAllowArmyCustomization(GameMap* pMap)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args << obj;
-    QJSValue obj1 = pInterpreter->newQObject(pMap);
-    args << obj1;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pMap)});
     QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getAllowArmyCustomization", args);
     if (value.isBool())
     {
@@ -156,9 +148,7 @@ bool Campaign::getAllowArmyCustomization(GameMap* pMap)
 bool Campaign::getCampaignFinished()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args << obj;
+    QJSValueList args({pInterpreter->newQObject(this)});
     QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getCampaignFinished", args);
     if (value.isBool())
     {
@@ -173,12 +163,9 @@ bool Campaign::getCampaignFinished()
 void Campaign::mapFinished(GameMap* pMap, bool result)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args << obj;
-    QJSValue obj1 = pInterpreter->newQObject(pMap);
-    args << obj1;
-    args << result;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pMap),
+                       result});
     pInterpreter->doFunction(Campaign::scriptName, "mapFinished", args);
 }
 
@@ -215,11 +202,8 @@ QString Campaign::getDescription()
 bool Campaign::getAutoSelectPlayerColors(GameMap* pMap)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args << obj;
-    QJSValue obj1 = pInterpreter->newQObject(pMap);
-    args << obj1;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pMap)});
     QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getAutoSelectPlayerColors", args);
     if (value.isBool())
     {
@@ -231,9 +215,7 @@ bool Campaign::getAutoSelectPlayerColors(GameMap* pMap)
 bool Campaign::getUsesCampaignMap()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args << obj;
+    QJSValueList args({pInterpreter->newQObject(this)});
     QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getUsesCampaignMap", args);
     if (value.isBool())
     {
@@ -245,11 +227,8 @@ bool Campaign::getUsesCampaignMap()
 void Campaign::getCampaignMapData(CampaignMapData & pCampaignMapData)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args << obj;
-    QJSValue obj1 = pInterpreter->newQObject(&pCampaignMapData);
-    args << obj1;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(&pCampaignMapData)});
     pInterpreter->doFunction(Campaign::scriptName, "getCampaignMapData", args);
 }
 

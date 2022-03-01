@@ -17,6 +17,7 @@
 GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 {
     setObjectName("GameplayAndKeys");
+    Interpreter::setCppOwnerShip(this);
     QSize size(Settings::getWidth() - 20,
                heigth);
     m_pOptions = spPanel::create(true,  size, size);

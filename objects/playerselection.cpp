@@ -30,6 +30,7 @@ constexpr const char* const CO_ARMY = "CO_ARMY";
 PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
 {
     setObjectName("PlayerSelection");
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 
@@ -274,8 +275,7 @@ QColor PlayerSelection::getDefaultColor(qint32 index)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "getDefaultColor";
-    QJSValueList args;
-    args << index;
+    QJSValueList args({QJSValue(index)});
     QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
     QColor color(ret.toString());
     return color;
@@ -286,8 +286,7 @@ QColor PlayerSelection::getDisplayColor(qint32 index, bool & exists)
     exists = false;
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "getDisplayColor";
-    QJSValueList args;
-    args << index;
+    QJSValueList args({QJSValue(index)});
     QColor displayColor;
     QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
     if (ret.isString())
@@ -1132,8 +1131,7 @@ void PlayerSelection::autoSelectPlayerColors()
             if (pCO != nullptr)
             {
                 Interpreter* pInterpreter = Interpreter::getInstance();
-                QJSValueList args;
-                args << pCO->getCOArmy().toLower();
+                QJSValueList args({pCO->getCOArmy().toLower()});
                 QJSValue erg = pInterpreter->doFunction("PLAYER", "getDisplayColorFromArmy", args);
                 if (erg.isNumber())
                 {

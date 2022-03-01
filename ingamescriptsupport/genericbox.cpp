@@ -9,6 +9,7 @@ GenericBox::GenericBox(bool cancel)
     : QObject()
 {
     setObjectName("GenericBox");
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

@@ -65,12 +65,9 @@ void GameAnimation::doPreAnimationCall()
     {
         CONSOLE_PRINT("Calling post Animation function " + m_jsPreActionObject + "." + m_jsPreActionFunction, Console::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValueList args1;
-        QJSValue obj1 = pInterpreter->newQObject(this);
-        args1 << obj1;
-        QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-        args1 << objArg5;
-        pInterpreter->doFunction(m_jsPreActionObject, m_jsPreActionFunction, args1);
+        QJSValueList args({pInterpreter->newQObject(this),
+                           pInterpreter->newQObject(m_pMap)});
+        pInterpreter->doFunction(m_jsPreActionObject, m_jsPreActionFunction, args);
     }
 }
 
@@ -379,12 +376,9 @@ bool GameAnimation::onFinished(bool skipping)
         {
             CONSOLE_PRINT("Calling post Animation function " + m_jsPostActionObject + "." + m_jsPostActionFunction, Console::eDEBUG);
             Interpreter* pInterpreter = Interpreter::getInstance();
-            QJSValueList args1;
-            QJSValue obj1 = pInterpreter->newQObject(this);
-            args1 << obj1;
-            QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-            args1 << objArg5;
-            pInterpreter->doFunction(m_jsPostActionObject, m_jsPostActionFunction, args1);
+            QJSValueList args({pInterpreter->newQObject(this),
+                               pInterpreter->newQObject(m_pMap)});
+            pInterpreter->doFunction(m_jsPostActionObject, m_jsPostActionFunction, args);
         }
     }
     for (auto & tween : m_stageTweens)
