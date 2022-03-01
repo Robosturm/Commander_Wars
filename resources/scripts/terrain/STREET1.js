@@ -13,6 +13,11 @@ var Constructor = function()
     {
         return __BASESTREET.getSprites("street+style0")
     };
+
+    this.loadOverlaySprite = function(terrain, map)
+    {
+        __BASESTREET.loadBaseOverlaySprite("street+style0", terrain, map);
+    };
 };
 Constructor.prototype = __BASESTREET;
 var STREET1 = new Constructor();

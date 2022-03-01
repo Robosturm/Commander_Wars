@@ -213,7 +213,8 @@ var CO =
     {
         return "OS";
     },
-
+    starFundsCost = 10000,
+    starHpCost = 10.0,
     getStarGain : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
     {
         var gamerules = map.getGameRules();
@@ -225,7 +226,7 @@ var CO =
         // select gain value
         if (gainMode === GameEnums.PowerGainMode_Money)
         {
-            baseValue = fundsDamage / 9000;
+            baseValue = fundsDamage / CO.starFundsCost;
             if (!defender)
             {
                 // reduce damage for attacker
@@ -237,12 +238,12 @@ var CO =
             if (!defender)
             {
                 // only charge for attacker
-                baseValue = fundsDamage / 9000;
+                baseValue = fundsDamage / CO.starFundsCost;
             }
         }
         else if (gainMode === GameEnums.PowerGainMode_Hp)
         {
-            baseValue = hpDamage / 10.0;
+            baseValue = hpDamage / CO.starHpCost;
             if (!defender)
             {
                 // reduce damage for attacker
@@ -254,7 +255,7 @@ var CO =
             if (!defender)
             {
                 // only charge for attacker
-                baseValue = hpDamage / 10.0;
+                baseValue = hpDamage / CO.starHpCost;
             }
         }
         var powerGain = baseValue * multiplier;
@@ -279,6 +280,26 @@ var CO =
             }
         }
         return powerGain;
+    },
+
+    getStarCost : function(co, map)
+    {
+        var startCost = 0;
+        var gamerules = map.getGameRules();
+        var powerCostIncrease = gamerules.getPowerUsageReduction();
+        var costIncrease = 1.0 + co.getPowerUsed() * powerCostIncrease;
+        var gainMode = gamerules.getPowerGainMode();
+        if (gainMode === GameEnums.PowerGainMode_Money ||
+            gainMode === GameEnums.PowerGainMode_Money_OnlyAttacker)
+        {
+            startCost = costIncrease * CO.starFundsCost;
+        }
+        else if (gainMode === GameEnums.PowerGainMode_Hp ||
+                 gainMode === GameEnums.PowerGainMode_Hp_OnlyAttacker)
+        {
+            startCost = costIncrease * CO.starHpCost;
+        }
+        return startCost;
     },
 
     gainPowerstar : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)

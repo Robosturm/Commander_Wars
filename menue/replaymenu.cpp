@@ -1,7 +1,7 @@
 #include <QMutexLocker>
 
 #include "menue/replaymenu.h"
-#include "menue/mainwindow.h"
+#include "menue/victorymenue.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
 
@@ -20,6 +20,7 @@ ReplayMenu::ReplayMenu(QString filename)
 {
     Interpreter::setCppOwnerShip(this);
     setObjectName("ReplayMenu");
+    setIsReplay(true);
     connect(this, &ReplayMenu::sigExitReplay, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigShowRecordInvalid, this, &ReplayMenu::showRecordInvalid, Qt::QueuedConnection);
     connect(this, &GameMenue::sigActionPerformed, this, &ReplayMenu::nextReplayAction, Qt::QueuedConnection);
@@ -28,6 +29,7 @@ ReplayMenu::ReplayMenu(QString filename)
     connect(this, &ReplayMenu::sigStopFastForward, this, &ReplayMenu::stopFastForward, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigShowConfig, this, &ReplayMenu::showConfig, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigOneStep, this, &ReplayMenu::oneStep, Qt::QueuedConnection);
+    connect(this, &ReplayMenu::sigRewindDay, this, &ReplayMenu::rewindDay, Qt::QueuedConnection);
     changeBackground("replaymenu");
     m_valid = m_ReplayRecorder.loadRecord(filename);
     if (m_valid)
@@ -64,9 +66,7 @@ void ReplayMenu::onEnter()
     if (pInterpreter->exists(object, func))
     {
         CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
-        QJSValueList args;
-        QJSValue value = pInterpreter->newQObject(this);
-        args << value;
+        QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
     
@@ -119,7 +119,7 @@ void ReplayMenu::exitReplay()
     CONSOLE_PRINT("Restoring interpreter after record replay", Console::eDEBUG);
     Interpreter::reloadInterpreter(Interpreter::getRuntimeData());
     CONSOLE_PRINT("Leaving Replay Menue", Console::eDEBUG);
-    auto window = spMainwindow::create();
+    auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface, true);
     oxygine::Stage::getStage()->addChild(window);
     deleteMenu();
 }
@@ -159,17 +159,15 @@ void ReplayMenu::nextReplayAction()
 }
 
 void ReplayMenu::showExitGame()
-{
-    
+{    
     m_Focused = false;
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the current replay?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
-    connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
+    connect(pExit.get(), &DialogMessageBox::sigCancel, this, [=]()
     {
         m_Focused = true;
     });
-    addChild(pExit);
-    
+    addChild(pExit);    
 }
 
 Player* ReplayMenu::getCurrentViewPlayer()
@@ -244,8 +242,16 @@ void ReplayMenu::loadUIButtons()
     {
         emit sigStopFastForward();
     });
+    m_rewindDayButton = ObjectManager::createIconButton("rewind", 36);
+    m_rewindDayButton->setPosition(m_fastForwardButton->getX() - 4 - m_rewindDayButton->getWidth(), y);
+    m_rewindDayButton->addClickListener([=](oxygine::Event*)
+    {
+        emit sigRewindDay();
+    });
+    pButtonBox->addChild(m_rewindDayButton);
+
     m_configButton = ObjectManager::createIconButton("settings", 36);
-    m_configButton->setPosition(m_fastForwardButton->getX() - 4 - m_configButton->getWidth(), y);
+    m_configButton->setPosition(m_rewindDayButton->getX() - 4 - m_configButton->getWidth(), y);
     m_configButton->addClickListener([=](oxygine::Event*)
     {
         emit sigShowConfig();
@@ -374,6 +380,26 @@ void ReplayMenu::seekRecord(float value)
     seekToDay(day);
     m_seekActor->setVisible(false);
     m_seeking = false;    
+}
+
+void ReplayMenu::rewindDay()
+{
+    startSeeking();
+    QMutexLocker locker(&m_replayMutex);
+    qint32 day = m_pMap->getCurrentDay();
+    auto currentTimestamp = QDateTime::currentMSecsSinceEpoch();
+    constexpr auto msPerSec = 1000;
+    if (currentTimestamp - m_lastRewind <= msPerSec * 10)
+    {
+        day -= 1;
+    }
+    m_lastRewind = currentTimestamp;
+    if (day < 0)
+    {
+        day = 0;
+    }
+    seekToDay(day);
+    m_seeking = false;
 }
 
 void ReplayMenu::seekToDay(qint32 day)

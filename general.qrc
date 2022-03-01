@@ -40,6 +40,7 @@
         <file>resources/objects/colordialogcursor_2.png</file>
         <file>resources/objects/dropdownmenu.png</file>
         <file>resources/objects/editor+big.png</file>
+        <file>resources/objects/editor+big+square.png</file>
         <file>resources/objects/editor+building.png</file>
         <file>resources/objects/editor+fill.png</file>
         <file>resources/objects/editor+medium.png</file>
@@ -5429,7 +5430,6 @@
         <file>resources/images/co/ti/co_greyfield+mini.png</file>
         <file>resources/images/co/yc/co_grimm+alt.png</file>
         <file>resources/images/co/yc/co_grimm.png</file>
-        <file>resources/images/co/co_davis.png</file>
         <file>resources/images/co/dm/co_beast+mini.png</file>
         <file>resources/images/co/dm/co_caulder+mini.png</file>
         <file>resources/images/co/dm/co_penny+mini.png</file>
@@ -5485,7 +5485,6 @@
         <file>resources/images/terrain/riverend+E+3+land+SE.png</file>
         <file>resources/images/co/ac/co_mary+alt+table.png</file>
         <file>resources/images/co/ac/co_mary+table.png</file>
-        <file>resources/images/co/ac/co_officier_ac+nrm.png</file>
         <file>resources/images/co/ac/co_ozzy+alt+table.png</file>
         <file>resources/images/co/ac/co_ozzy+table.png</file>
         <file>resources/images/co/ac/co_sabaki+alt+table.png</file>
@@ -5495,7 +5494,6 @@
         <file>resources/images/co/bd/co_adam+alt+table.png</file>
         <file>resources/images/co/bd/co_adam+table.png</file>
         <file>resources/images/co/bd/co_artemis+table.png</file>
-        <file>resources/images/co/bd/co_officier_bd+nrm.png</file>
         <file>resources/images/co/bd/co_tempest+table.png</file>
         <file>resources/images/co/bd/co_zandra+alt+table.png</file>
         <file>resources/images/co/bd/co_zandra+table.png</file>
@@ -5532,7 +5530,6 @@
         <file>resources/images/co/dm/co_julia+table.png</file>
         <file>resources/images/co/dm/co_melanthe+alt+table.png</file>
         <file>resources/images/co/dm/co_melanthe+table.png</file>
-        <file>resources/images/co/dm/co_officier_dm+nrm.png</file>
         <file>resources/images/co/dm/co_varlot+alt+table.png</file>
         <file>resources/images/co/dm/co_varlot+table.png</file>
         <file>resources/images/co/dm/co_yukio+alt+table.png</file>
@@ -5604,7 +5601,6 @@
         <file>resources/images/co/ti/co_joey+alt+table.png</file>
         <file>resources/images/co/ti/co_joey+table.png</file>
         <file>resources/images/co/ti/co_koshi+table.png</file>
-        <file>resources/images/co/ti/co_officier_ti+nrm.png</file>
         <file>resources/images/co/ti/co_walter+alt+table.png</file>
         <file>resources/images/co/ti/co_walter+table.png</file>
         <file>resources/images/co/yc/co_kanbei+alt4+nrm.png</file>
@@ -6230,5 +6226,348 @@
         <file>resources/images/battleanimations/recon/recon+gs+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+gs+move+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+gs+stop+mask.png</file>
+        <file>resources/objects/cancel.png</file>
+        <file>resources/images/game/no_power.png</file>
+        <file>resources/images/units/icons/no_rank.png</file>
+        <file>resources/images/game/calculator.png</file>
+        <file>resources/images/building/airport+shadow+desert.png</file>
+        <file>resources/images/building/airport+shadow+plains.png</file>
+        <file>resources/images/building/airport+shadow+snow.png</file>
+        <file>resources/images/building/airport+shadow+waste.png</file>
+        <file>resources/images/building/black_building_destroyed+shadow+desert.png</file>
+        <file>resources/images/building/black_building_destroyed+shadow+plains.png</file>
+        <file>resources/images/building/black_building_destroyed+shadow+snow.png</file>
+        <file>resources/images/building/black_building_destroyed+shadow+waste.png</file>
+        <file>resources/images/building/black_cannon+E+shadow+desert.png</file>
+        <file>resources/images/building/black_cannon+E+shadow+plains.png</file>
+        <file>resources/images/building/black_cannon+E+shadow+snow.png</file>
+        <file>resources/images/building/black_cannon+E+shadow+waste.png</file>
+        <file>resources/images/building/black_cannon+N+shadow+desert.png</file>
+        <file>resources/images/building/black_cannon+N+shadow+plains.png</file>
+        <file>resources/images/building/black_cannon+N+shadow+snow.png</file>
+        <file>resources/images/building/black_cannon+N+shadow+waste.png</file>
+        <file>resources/images/building/black_cannon+S+shadow+desert.png</file>
+        <file>resources/images/building/black_cannon+S+shadow+plains.png</file>
+        <file>resources/images/building/black_cannon+S+shadow+snow.png</file>
+        <file>resources/images/building/black_cannon+S+shadow+waste.png</file>
+        <file>resources/images/building/black_cannon+W+shadow+desert.png</file>
+        <file>resources/images/building/black_cannon+W+shadow+plains.png</file>
+        <file>resources/images/building/black_cannon+W+shadow+snow.png</file>
+        <file>resources/images/building/black_cannon+W+shadow+waste.png</file>
+        <file>resources/images/building/blackhole+factory+shadow+desert.png</file>
+        <file>resources/images/building/blackhole+factory+shadow+plains.png</file>
+        <file>resources/images/building/blackhole+factory+shadow+snow.png</file>
+        <file>resources/images/building/blackhole+factory+shadow+waste.png</file>
+        <file>resources/images/building/deathray+E+shadow+desert.png</file>
+        <file>resources/images/building/deathray+E+shadow+plains.png</file>
+        <file>resources/images/building/deathray+E+shadow+snow.png</file>
+        <file>resources/images/building/deathray+E+shadow+waste.png</file>
+        <file>resources/images/building/deathray+N+shadow+desert.png</file>
+        <file>resources/images/building/deathray+N+shadow+plains.png</file>
+        <file>resources/images/building/deathray+N+shadow+snow.png</file>
+        <file>resources/images/building/deathray+N+shadow+waste.png</file>
+        <file>resources/images/building/deathray+S+shadow+desert.png</file>
+        <file>resources/images/building/deathray+S+shadow+plains.png</file>
+        <file>resources/images/building/deathray+S+shadow+snow.png</file>
+        <file>resources/images/building/deathray+S+shadow+waste.png</file>
+        <file>resources/images/building/deathray+W+shadow+desert.png</file>
+        <file>resources/images/building/deathray+W+shadow+plains.png</file>
+        <file>resources/images/building/deathray+W+shadow+snow.png</file>
+        <file>resources/images/building/deathray+W+shadow+waste.png</file>
+        <file>resources/images/building/factory+shadow+desert.png</file>
+        <file>resources/images/building/factory+shadow+plains.png</file>
+        <file>resources/images/building/factory+shadow+snow.png</file>
+        <file>resources/images/building/factory+shadow+waste.png</file>
+        <file>resources/images/building/fortress+shadow+desert.png</file>
+        <file>resources/images/building/fortress+shadow+plains.png</file>
+        <file>resources/images/building/fortress+shadow+snow.png</file>
+        <file>resources/images/building/fortress+shadow+waste.png</file>
+        <file>resources/images/building/gate+e+w+shadow+desert.png</file>
+        <file>resources/images/building/gate+e+w+shadow+plains.png</file>
+        <file>resources/images/building/gate+e+w+shadow+snow.png</file>
+        <file>resources/images/building/gate+e+w+shadow+waste.png</file>
+        <file>resources/images/building/gate+n+s+shadow+desert.png</file>
+        <file>resources/images/building/gate+n+s+shadow+plains.png</file>
+        <file>resources/images/building/gate+n+s+shadow+snow.png</file>
+        <file>resources/images/building/gate+n+s+shadow+waste.png</file>
+        <file>resources/images/building/harbour+shadow+desert.png</file>
+        <file>resources/images/building/harbour+shadow+plains.png</file>
+        <file>resources/images/building/harbour+shadow+snow.png</file>
+        <file>resources/images/building/harbour+shadow+waste.png</file>
+        <file>resources/images/building/hq+ac+shadow+desert.png</file>
+        <file>resources/images/building/hq+ac+shadow+plains.png</file>
+        <file>resources/images/building/hq+ac+shadow+snow.png</file>
+        <file>resources/images/building/hq+ac+shadow+waste.png</file>
+        <file>resources/images/building/hq+bd+shadow+desert.png</file>
+        <file>resources/images/building/hq+bd+shadow+plains.png</file>
+        <file>resources/images/building/hq+bd+shadow+snow.png</file>
+        <file>resources/images/building/hq+bd+shadow+waste.png</file>
+        <file>resources/images/building/hq+bg+shadow+desert.png</file>
+        <file>resources/images/building/hq+bg+shadow+plains.png</file>
+        <file>resources/images/building/hq+bg+shadow+snow.png</file>
+        <file>resources/images/building/hq+bg+shadow+waste.png</file>
+        <file>resources/images/building/hq+bh+shadow+desert.png</file>
+        <file>resources/images/building/hq+bh+shadow+plains.png</file>
+        <file>resources/images/building/hq+bh+shadow+snow.png</file>
+        <file>resources/images/building/hq+bh+shadow+waste.png</file>
+        <file>resources/images/building/hq+ge+shadow+desert.png</file>
+        <file>resources/images/building/hq+ge+shadow+plains.png</file>
+        <file>resources/images/building/hq+ge+shadow+snow.png</file>
+        <file>resources/images/building/hq+ge+shadow+waste.png</file>
+        <file>resources/images/building/hq+gs+shadow+desert.png</file>
+        <file>resources/images/building/hq+gs+shadow+plains.png</file>
+        <file>resources/images/building/hq+gs+shadow+snow.png</file>
+        <file>resources/images/building/hq+gs+shadow+waste.png</file>
+        <file>resources/images/building/hq+ma+shadow+desert.png</file>
+        <file>resources/images/building/hq+ma+shadow+plains.png</file>
+        <file>resources/images/building/hq+ma+shadow+snow.png</file>
+        <file>resources/images/building/hq+ma+shadow+waste.png</file>
+        <file>resources/images/building/hq+neutral+shadow+desert.png</file>
+        <file>resources/images/building/hq+neutral+shadow+plains.png</file>
+        <file>resources/images/building/hq+neutral+shadow+snow.png</file>
+        <file>resources/images/building/hq+neutral+shadow+waste.png</file>
+        <file>resources/images/building/hq+os+shadow+desert.png</file>
+        <file>resources/images/building/hq+os+shadow+plains.png</file>
+        <file>resources/images/building/hq+os+shadow+snow.png</file>
+        <file>resources/images/building/hq+os+shadow+waste.png</file>
+        <file>resources/images/building/hq+ti+shadow+desert.png</file>
+        <file>resources/images/building/hq+ti+shadow+plains.png</file>
+        <file>resources/images/building/hq+ti+shadow+snow.png</file>
+        <file>resources/images/building/hq+ti+shadow+waste.png</file>
+        <file>resources/images/building/hq+yc+shadow+desert.png</file>
+        <file>resources/images/building/hq+yc+shadow+plains.png</file>
+        <file>resources/images/building/hq+yc+shadow+snow.png</file>
+        <file>resources/images/building/hq+yc+shadow+waste.png</file>
+        <file>resources/images/building/labor+shadow+desert.png</file>
+        <file>resources/images/building/labor+shadow+plains.png</file>
+        <file>resources/images/building/labor+shadow+snow.png</file>
+        <file>resources/images/building/labor+shadow+waste.png</file>
+        <file>resources/images/building/laser+shadow+desert.png</file>
+        <file>resources/images/building/laser+shadow+plains.png</file>
+        <file>resources/images/building/laser+shadow+snow.png</file>
+        <file>resources/images/building/laser+shadow+waste.png</file>
+        <file>resources/images/building/mine+shadow+desert.png</file>
+        <file>resources/images/building/mine+shadow+plains.png</file>
+        <file>resources/images/building/mine+shadow+snow.png</file>
+        <file>resources/images/building/mine+shadow+waste.png</file>
+        <file>resources/images/building/minicannon+shadow+desert.png</file>
+        <file>resources/images/building/minicannon+shadow+plains.png</file>
+        <file>resources/images/building/minicannon+shadow+snow.png</file>
+        <file>resources/images/building/minicannon+shadow+waste.png</file>
+        <file>resources/images/building/monolith+shadow+desert.png</file>
+        <file>resources/images/building/monolith+shadow+plains.png</file>
+        <file>resources/images/building/monolith+shadow+snow.png</file>
+        <file>resources/images/building/monolith+shadow+waste.png</file>
+        <file>resources/images/building/nest_center.png</file>
+        <file>resources/images/building/nest_center_laser_left.png</file>
+        <file>resources/images/building/nest_center_laser_middle.png</file>
+        <file>resources/images/building/nest_center_laser_right.png</file>
+        <file>resources/images/building/nest_factory.png</file>
+        <file>resources/images/building/nest_laser+S.png</file>
+        <file>resources/images/building/nest_laser+SE.png</file>
+        <file>resources/images/building/nest_laser+SW.png</file>
+        <file>resources/images/building/nest_mortar_left.png</file>
+        <file>resources/images/building/nest_mortar_right.png</file>
+        <file>resources/images/building/nest_wall.png</file>
+        <file>resources/images/building/omega+base+shadow+desert.png</file>
+        <file>resources/images/building/omega+base+shadow+plains.png</file>
+        <file>resources/images/building/omega+base+shadow+snow.png</file>
+        <file>resources/images/building/omega+base+shadow+waste.png</file>
+        <file>resources/images/building/pipestation+shadow+desert.png</file>
+        <file>resources/images/building/pipestation+shadow+plains.png</file>
+        <file>resources/images/building/pipestation+shadow+snow.png</file>
+        <file>resources/images/building/pipestation+shadow+waste.png</file>
+        <file>resources/images/building/radar+shadow+desert.png</file>
+        <file>resources/images/building/radar+shadow+plains.png</file>
+        <file>resources/images/building/radar+shadow+snow.png</file>
+        <file>resources/images/building/radar+shadow+waste.png</file>
+        <file>resources/images/building/silo+rocket+shadow+desert.png</file>
+        <file>resources/images/building/silo+rocket+shadow+plains.png</file>
+        <file>resources/images/building/silo+rocket+shadow+snow.png</file>
+        <file>resources/images/building/silo+rocket+shadow+waste.png</file>
+        <file>resources/images/building/silo+shadow+desert.png</file>
+        <file>resources/images/building/silo+shadow+plains.png</file>
+        <file>resources/images/building/silo+shadow+snow.png</file>
+        <file>resources/images/building/silo+shadow+waste.png</file>
+        <file>resources/images/building/temporary_airport+shadow+desert.png</file>
+        <file>resources/images/building/temporary_airport+shadow+plains.png</file>
+        <file>resources/images/building/temporary_airport+shadow+snow.png</file>
+        <file>resources/images/building/temporary_airport+shadow+waste.png</file>
+        <file>resources/images/building/temporary_harbour+shadow+desert.png</file>
+        <file>resources/images/building/temporary_harbour+shadow+plains.png</file>
+        <file>resources/images/building/temporary_harbour+shadow+snow.png</file>
+        <file>resources/images/building/temporary_harbour+shadow+waste.png</file>
+        <file>resources/images/building/tower+shadow+desert.png</file>
+        <file>resources/images/building/tower+shadow+plains.png</file>
+        <file>resources/images/building/tower+shadow+snow.png</file>
+        <file>resources/images/building/tower+shadow+waste.png</file>
+        <file>resources/images/building/town+shadow+desert.png</file>
+        <file>resources/images/building/town+shadow+plains.png</file>
+        <file>resources/images/building/town+shadow+snow.png</file>
+        <file>resources/images/building/town+shadow+waste.png</file>
+        <file>resources/images/building/volcan+desert.png</file>
+        <file>resources/images/building/volcan+snow.png</file>
+        <file>resources/images/building/volcan+waste.png</file>
+        <file>resources/images/building/hq+bm+shadow+desert.png</file>
+        <file>resources/images/building/hq+bm+shadow+plains.png</file>
+        <file>resources/images/building/hq+bm+shadow+snow.png</file>
+        <file>resources/images/building/hq+bm+shadow+waste.png</file>
+        <file>resources/images/building/hq+dm+shadow+desert.png</file>
+        <file>resources/images/building/hq+dm+shadow+plains.png</file>
+        <file>resources/images/building/hq+dm+shadow+snow.png</file>
+        <file>resources/images/building/hq+dm+shadow+waste.png</file>
+        <file>resources/images/building/hq+pf+shadow+desert.png</file>
+        <file>resources/images/building/hq+pf+shadow+plains.png</file>
+        <file>resources/images/building/hq+pf+shadow+snow.png</file>
+        <file>resources/images/building/hq+pf+shadow+waste.png</file>
+        <file>resources/images/building/crystall+shadow+plains.png</file>
+        <file>resources/images/building/crystall+shadow+desert.png</file>
+        <file>resources/images/building/crystall+shadow+snow.png</file>
+        <file>resources/images/building/crystall+shadow+waste.png</file>
+        <file>resources/images/terrain/shadow_desert.png</file>
+        <file>resources/images/terrain/shadow_plains.png</file>
+        <file>resources/images/terrain/shadow_snow.png</file>
+        <file>resources/images/terrain/shadow_waste.png</file>
+        <file>resources/images/terrain/snow_street+style0+E+S+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+E+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+E+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+E+S+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+E+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+E+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+S+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+S+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+S+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+S+W+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+shadow.png</file>
+        <file>resources/images/terrain/snow_street+style0+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+E+S+shadow.png</file>
+        <file>resources/images/terrain/street+style0+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+E+shadow.png</file>
+        <file>resources/images/terrain/street+style0+E+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+E+S+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+E+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+E+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+S+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+S+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+shadow.png</file>
+        <file>resources/images/terrain/street+style0+N+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+S+shadow.png</file>
+        <file>resources/images/terrain/street+style0+S+W+shadow.png</file>
+        <file>resources/images/terrain/street+style0+shadow.png</file>
+        <file>resources/images/terrain/street+style0+W+shadow.png</file>
+        <file>resources/scripts/building/zvolcandesert.js</file>
+        <file>resources/scripts/building/zvolcansnow.js</file>
+        <file>resources/scripts/building/zvolcanwaste.js</file>
+        <file>resources/scripts/building/__zvolcanbase.js</file>
+        <file>resources/scripts/building/__zblackhole_factorybase.js</file>
+        <file>resources/images/building/blackhole+factory+desert_pipe.png</file>
+        <file>resources/images/building/blackhole+factory+pipe.png</file>
+        <file>resources/images/building/blackhole+factory+snow_pipe.png</file>
+        <file>resources/images/building/blackhole+factory+waste_pipe.png</file>
+        <file>resources/scripts/building/zblackhole_factorydesert.js</file>
+        <file>resources/scripts/building/zblackhole_factorysnow.js</file>
+        <file>resources/scripts/building/zblackhole_factorywaste.js</file>
+        <file>resources/images/terrain/desert_path+style0+E+S+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+E+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+E+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+E+S+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+E+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+E+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+S+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+S+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+S+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+S+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+style0+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style0+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+E+S+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+E+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+E+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+E+S+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+E+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+E+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+S+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+S+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+S+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+S+W+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+shadow.png</file>
+        <file>resources/images/terrain/desert_path+style1+W+shadow.png</file>
+        <file>resources/images/terrain/street+style1+E+S+shadow.png</file>
+        <file>resources/images/terrain/street+style1+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/street+style1+E+shadow.png</file>
+        <file>resources/images/terrain/street+style1+E+W+shadow.png</file>
+        <file>resources/images/terrain/street+style1+N+E+S+shadow.png</file>
+        <file>resources/images/terrain/street+style1+N+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/street+style1+N+E+shadow.png</file>
+        <file>resources/images/terrain/street+style1+N+E+W+shadow.png</file>
+        <file>resources/images/terrain/street+style1+N+S+shadow.png</file>
+        <file>resources/images/terrain/street+style1+N+S+W+shadow.png</file>
+        <file>resources/images/terrain/street+style1+N+shadow.png</file>
+        <file>resources/images/terrain/street+style1+N+W+shadow.png</file>
+        <file>resources/images/terrain/street+style1+S+shadow.png</file>
+        <file>resources/images/terrain/street+style1+S+W+shadow.png</file>
+        <file>resources/images/terrain/street+style1+shadow.png</file>
+        <file>resources/images/terrain/street+style1+W+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+E+S+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+E+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+E+W+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+E+S+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+E+S+W+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+E+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+E+W+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+S+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+S+W+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+W+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+S+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+S+W+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+style0+shadow.png</file>
+        <file>resources/images/terrain/waste_path+style0+W+shadow.png</file>
+        <file>resources/scripts/building/znest_center.js</file>
+        <file>resources/scripts/building/znest_center_laser_left.js</file>
+        <file>resources/scripts/building/znest_center_laser_middle.js</file>
+        <file>resources/scripts/building/znest_center_laser_right.js</file>
+        <file>resources/scripts/building/znest_factory.js</file>
+        <file>resources/scripts/building/znest_left_mortar.js</file>
+        <file>resources/scripts/building/znest_nest_laser.js</file>
+        <file>resources/scripts/building/znest_right_mortar.js</file>
+        <file>resources/images/co/bh/co_sturm+alt2+face.png</file>
+        <file>resources/images/co/bh/co_sturm+alt2+info.png</file>
+        <file>resources/images/co/bh/co_sturm+alt2+nrm.png</file>
+        <file>resources/scripts/weapons/weapon_tankhunter_gun.js</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ac+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bd+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bh+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bm+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+dm+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ge+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+gs+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ma+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+os+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+pf+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ti+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+yc+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/bullet_artillery.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/bullet_casing.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/bullet_casing+loop.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/bullet_casing+x3burst.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/bullet_megatank.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/bullet_tank.png</file>
+        <file>resources/objects/rewind.png</file>
     </qresource>
 </RCC>

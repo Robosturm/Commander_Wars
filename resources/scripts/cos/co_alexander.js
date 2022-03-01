@@ -208,7 +208,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nPartisan\n") +
-                   qsTr("\nGlobal Effect: \nBuildings that Alexander owns put up a fight when being captured by enemy soldiers. Each building recovers 1 capture point each day while under siege.")
+                   qsTr("\nGlobal Effect: \nBuildings that Alexander owns put up a fight when being captured by enemy soldiers. Each building recovers 1 capture point each day while under siege.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
         text = replaceTextArgs(text, [CO_ALEXANDER.coZoneBonus]);
         return text;

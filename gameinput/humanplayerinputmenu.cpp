@@ -567,7 +567,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                         spUnit pDummy = spUnit::create(id, m_pMap->getCurrentPlayer(), false, m_pMap);
                         spFieldInfo fieldinfo = spFieldInfo::create(nullptr, pDummy.get());
                         pMenu->addChild(fieldinfo);
-                        connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
+                        connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [=]
                         {
                             m_Focused = true;
                         });

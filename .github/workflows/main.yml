@@ -2,7 +2,7 @@ name: Commnader_Wars
 on: [push]
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.2.2'
+  QT_Version: '6.2.3'
   
 jobs:
   install:

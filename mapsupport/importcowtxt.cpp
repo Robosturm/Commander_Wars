@@ -13,7 +13,7 @@
 // some local constants to map old cow stuff to this cool version
 static const qint32 terrainCount = 19;
 static const QString terrainIdMapping[terrainCount][2] = {{"SEE", "SEA"},
-                                              {"EBENE", "PLAINS"},
+                                              {"EBENE", GameMap::PLAINS},
                                               {"WALD", "FOREST"},
                                               {"STRAND", "BEACH"},
                                               {"RIFF", "REAF"},
@@ -145,11 +145,10 @@ void GameMap::importTxtMap(QString file)
                     m_fields.push_back(std::vector<spTerrain>());
                     for (qint32 x = 0; x < width; x++)
                     {
-                        spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "", this);
+                        spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, x, y, "", this);
                         addChild(pTerrain);
                         m_fields[y].push_back(pTerrain);
                         pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
-                        pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
                     }
                 }
             }

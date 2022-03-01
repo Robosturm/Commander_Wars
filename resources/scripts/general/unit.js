@@ -345,4 +345,9 @@ var UNIT =
     onDeath : function(unit, map)
     {
     },
+
+    getShowInEditor : function()
+    {
+        return true;
+    },
 };

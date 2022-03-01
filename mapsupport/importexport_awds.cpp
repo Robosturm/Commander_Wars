@@ -42,11 +42,10 @@ void GameMap::importAWDSMap(QString file)
             m_fields.push_back(std::vector<spTerrain>());
             for (qint32 x = 0; x < width; x++)
             {
-                spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "", this);
+                spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, x, y, "", this);
                 addChild(pTerrain);
                 m_fields[y].push_back(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
-                pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             }
         }
         quint8 terrainChar1 = 0;
@@ -2591,7 +2590,7 @@ void GameMap::exportAWDSMap(QString file)
                         stream << static_cast<uchar>(10 * 16 + 7);
                         stream << static_cast<uchar>(0);
                     }
-                    else if (pTerrain->getTerrainID() == "PLAINS")
+                    else if (pTerrain->getTerrainID() == GameMap::PLAINS)
                     {
                         stream << static_cast<uchar>(0);
                         stream << static_cast<uchar>(0);

@@ -238,7 +238,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         {
             m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() -  10 - m_pOkButton->getHeight());
         }
-        connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
+        connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 item)
         {
             m_maskTable = m_baseColorTable.copy(0, item, m_baseColorTable.width(), 1);
             if (!Settings::getSmallScreenDevice())

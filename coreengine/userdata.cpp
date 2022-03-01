@@ -30,6 +30,16 @@ Userdata::Userdata()
     Interpreter::setCppOwnerShip(this);
 }
 
+const QString &Userdata::getUniqueIdentifier() const
+{
+    return m_uniqueIdentifier;
+}
+
+void Userdata::setUniqueIdentifier(const QString &newUniqueIdentifier)
+{
+    m_uniqueIdentifier = newUniqueIdentifier;
+}
+
 void Userdata::release()
 {
     m_customCOStyles.clear();

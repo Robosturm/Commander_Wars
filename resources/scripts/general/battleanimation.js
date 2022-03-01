@@ -124,12 +124,15 @@ var BATTLEANIMATION =
         var i = 0;
         if (weapon === 0)
         {
+            sprite.loadSprite("bullet_tank",  false, sprite.getMaxUnitCount(), Qt.point(10, 30),
+                              1, 1.0, 0, 0, true, true, 50);
             sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                              1, 1.0, 0, 0, true);
-            sprite.addSpriteScreenshake(8, 0.98, 800, 200);
+                              1, 1.0, 0, 100, true);
+            sprite.addSpriteScreenshake(8, 0.98, 800, 300);
             for (i = 0; i < count; i++)
             {
-                sprite.loadSound("impact_explosion.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("tank_hit.wav", 1, 50 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("impact_explosion.wav", 1, 100 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -141,10 +144,25 @@ var BATTLEANIMATION =
             }
             sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, yOffset),
                               1, 1.0, 0, 0, true);
-            for (i = 0; i < count; i++)
-            {
-                sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-            }
+            BATTLEANIMATION.playMgImpactSound(sprite, unit, defender, weapon, count);
+        }
+    },
+
+    playMgImpactSound : function(sprite, unit, defender, weapon, count)
+    {
+        for (i = 0; i < count; i++)
+        {
+            sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
+        }
+    },
+
+    showMgBullets : function(sprite, offset)
+    {
+        var mgFrames = 3;
+        for (i = 0; i < mgFrames; ++i)
+        {
+            sprite.loadSprite("bullet_casing", false, sprite.getMaxUnitCount(), Qt.point(offset.x - 15, offset.y + 2),
+                              1, 1, 0, mgFrames * BATTLEANIMATION.defaultFrameDelay, false, true);
         }
     },
 
@@ -155,7 +173,7 @@ var BATTLEANIMATION =
         var count = sprite.getUnitCount(BATTLEANIMATION.getMaxUnitCount());
         if (weapon === 0)
         {
-            return 50 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
+            return 150 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
         }
         else
         {

@@ -7,11 +7,15 @@
 
 #include "spritingsupport/spritecreator.h"
 
+#include "game/unit.h"
+#include "game/co.h"
+
 COSpriteManager::COSpriteManager()
     : RessourceManagement<COSpriteManager>("/images/co/res.xml",
                                            "/scripts/cos")
 {
     setObjectName("COSpriteManager");
+    Interpreter::setCppOwnerShip(this);
     connect(this, &COSpriteManager::sigLoadResAnim, this, &COSpriteManager::loadResAnim, Qt::QueuedConnection);
 }
 
@@ -196,8 +200,7 @@ QStringList COSpriteManager::getArmyList(const QStringList & coids) const
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getArmies";
-    QJSValueList args1;
-    QJSValue ret = pInterpreter->doFunction("PLAYER", function1, args1);
+    QJSValue ret = pInterpreter->doFunction("PLAYER", function1);
     QStringList armies = ret.toVariant().toStringList();
     QStringList allowedArmies;
     // remove unused armies
@@ -233,4 +236,75 @@ QStringList COSpriteManager::getArmyList(const QStringList & coids) const
         }
     }
     return armies;
+}
+
+QVector<COSpriteManager::CoGroup> COSpriteManager::getCoGroups(QStringList & coids)
+{
+    QVector<CoGroup> retCoGroups;
+    // load default army and co sets
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    QJSValue ret = pInterpreter->doFunction("PLAYER", "getArmies");
+    QStringList armies = ret.toVariant().toStringList();
+    ret = pInterpreter->doFunction("PLAYER", "getArmyNames");
+    QStringList armyNames = ret.toVariant().toStringList();
+    coids.clear();
+    // go through armies
+    for (qint32 i = 0; i < armies.size(); ++i)
+    {
+        CoGroup newGroup;
+        if (i < armyNames.size())
+        {
+            newGroup.name = armyNames[i];
+        }
+        else
+        {
+            newGroup.name = tr("Unknown");
+        }
+        // add default co order
+        ret = pInterpreter->doFunction("PLAYER", "getArmyCOs" + armies[i]);
+        auto coList = ret.toVariant().toStringList();
+        coList.removeAll(CO::CO_RANDOM);
+        coids.append(coList);
+        newGroup.cos.append(coList);
+
+        // add unadded co's of this army
+        for (qint32 i2 = 0; i2 < pCOSpriteManager->getCount(); i2++)
+        {
+            QString coID = pCOSpriteManager->getID(i2);
+            if (coID != CO::CO_RANDOM)
+            {
+                QString function1 = "getCOArmy";
+                QJSValue ret = pInterpreter->doFunction(coID, function1);
+                if (ret.isString())
+                {
+                    QString COArmy = ret.toString();
+                    if (COArmy == armies[i] && !coids.contains(coID))
+                    {
+                        coids.append(coID);
+                        newGroup.cos.append(coID);
+                    }
+                }
+            }
+        }
+        retCoGroups.append(newGroup);
+    }
+    CoGroup unknownGroup;
+    unknownGroup.name = tr("Unknown");
+    // add unadded co's
+    for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
+    {
+        QString coID = pCOSpriteManager->getID(i);
+        if (!coids.contains(coID) &&
+            coID != CO::CO_RANDOM)
+        {
+            coids.append(coID);
+            unknownGroup.cos.append(coids);
+        }
+    }
+    if (unknownGroup.cos.length() > 0)
+    {
+        retCoGroups.append(unknownGroup);
+    }
+    return retCoGroups;
 }

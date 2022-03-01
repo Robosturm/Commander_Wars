@@ -18,10 +18,10 @@ var Constructor = function()
         var data = Global.getDataFromTable(armyName, BATTLEANIMATION_NEOTANK.animationData);
         sprite.loadMovingSpriteV2("neotank+" + armyName + "+move+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(data[0], 5),
                                   data[1], data[2], false,
-                                  1, 1);
+                                  -1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(data[0] - 20, 7),
                                 data[1], data[2], false,
-                                1, 1);
+                                -1, 1);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("neotank_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
@@ -85,11 +85,12 @@ var Constructor = function()
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), data[5],
                                   1, 1, 0, 0);
             }
+            BATTLEANIMATION.showMgBullets(sprite, offset);
             for (var i = 0; i < count; i++)
             {
                 sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+                sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
             }
         }
     };

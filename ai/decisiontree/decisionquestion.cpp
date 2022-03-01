@@ -1,8 +1,11 @@
 #include "ai/decisiontree/decisionquestion.h"
 
+#include "coreengine/interpreter.h"
+
 DecisionQuestion::DecisionQuestion()
 {
     setObjectName("DecisionQuestion");
+    Interpreter::setCppOwnerShip(this);
 }
 
 void DecisionQuestion::appendQuestion(spQuestion pQuestions)

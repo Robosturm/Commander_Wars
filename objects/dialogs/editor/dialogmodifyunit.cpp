@@ -18,6 +18,7 @@
 
 #include "objects/base/slider.h"
 #include "objects/base/dropdownmenu.h"
+#include "objects/base/dropdownmenusprite.h"
 #include "objects/base/label.h"
 #include "objects/base/textbox.h"
 #include "objects/base/spinbox.h"
@@ -29,6 +30,8 @@ DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
     setObjectName("DialogModifyUnit");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    m_dropDownPlayer = spPlayer::create(m_pMap);
+    m_dropDownPlayer->init();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
@@ -319,7 +322,25 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
             items.append(units[i]);
         }
     }
-    spDropDownmenu pDropdownmenu = spDropDownmenu::create(300, items);
+    Player* pPlayer = m_dropDownPlayer.get();
+    auto unitCreator = [=](QString id)
+    {
+        oxygine::spActor ret;
+        if (id != "-")
+        {
+            spUnit pSprite = spUnit::create(id, pPlayer, false, m_pMap);
+            pSprite->setOwner(nullptr);
+            ret = pSprite;
+        }
+        else
+        {
+            spLabel pText = spLabel::create(30);
+            pText->setHtmlText("-");
+            ret = pText;
+        }
+        return ret;
+    };
+    spDropDownmenuSprite pDropdownmenu = spDropDownmenuSprite::create(105, items, unitCreator, 30);
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setTooltipText(tr("Selects the unit loaded by the transporter. - for no unit. This is immediatly applied."));
     Unit* pLoadedUnit = m_pUnit->getLoadedUnit(index);
@@ -332,7 +353,7 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
         pDropdownmenu->setCurrentItem("-");
     }
     auto* pPtrDropdownmenu = pDropdownmenu.get();
-    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
+    connect(pDropdownmenu.get(), &DropDownmenuSprite::sigItemChanged, this, [=](qint32)
     {
         emit sigLoadUnit(pPtrDropdownmenu->getCurrentItemText(), index);
     });
@@ -350,7 +371,7 @@ void DialogModifyUnit::loadUnit(QString unitID, qint32 index)
     else
     {
         spUnit pUnit = spUnit::create(unitID, m_pUnit->getOwner(), false, m_pMap);
-        m_pUnit->loadUnit(pUnit.get());
+        m_pUnit->loadUnit(pUnit.get(), index);
     }
     emit sigUpdateData();
     

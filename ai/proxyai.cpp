@@ -33,11 +33,32 @@ void ProxyAi::connectInterface(NetworkInterface* pNetworkInterface)
 void ProxyAi::serializeObject(QDataStream& stream) const
 {
     stream << getVersion();
+    stream << static_cast<qint32>(m_ActionBuffer.size());
+    for (const auto & action : qAsConst(m_ActionBuffer))
+    {
+        action->serializeObject(stream);
+    }
 }
 void ProxyAi::deserializeObject(QDataStream& stream)
 {
     qint32 version;
     stream >> version;
+    if (version > 1)
+    {
+        qint32 size = 0;
+        stream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            spGameAction pAction = spGameAction::create(m_pMap);
+            pAction->deserializeObject(stream);
+            m_ActionBuffer.append(pAction);
+        }
+    }
+    if (version == 3)
+    {
+        QString dummy;
+        stream >> dummy;
+    }
 }
 
 void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)

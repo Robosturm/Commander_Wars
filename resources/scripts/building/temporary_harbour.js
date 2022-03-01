@@ -1,7 +1,7 @@
 var Constructor = function()
 {
     
-    this.loadSprites = function(building, neutral)
+    this.loadSprites = function(building, neutral, map)
     {
         if (building.getOwnerID() >= 0 && !neutral)
         {
@@ -14,6 +14,7 @@ var Constructor = function()
             // neutral player
             building.loadSprite("temporary_harbour+neutral", false);
         }
+        building.loadSprite("temporary_harbour+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
     {
@@ -69,6 +70,11 @@ var Constructor = function()
 			building.loadWeatherOverlaySpriteV2("temporary_harbour+snow", false);
 		};
 	};
+    this.baseTerrain = ["LAKE", "SEA", "PLAINS", "SNOW", "WASTE", "DESERT"];
+    this.getBaseTerrain = function(building)
+    {
+        return TEMPORARY_HARBOUR.baseTerrain;
+    };
 }
 
 Constructor.prototype = BUILDING;

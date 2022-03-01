@@ -171,37 +171,52 @@ var Constructor = function()
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
+        var healing = 0;
+        var damage = 0;
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (gotAttacked && defender.getOwner() === co.getOwner())
-                {
-                    if (defender.getHp() <= 0)
-                    {
-                        attacker.setHp(attacker.getHp() - 3);
-                    }
-                }
-                else if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
-                {
-                    attacker.setHp(attacker.getHp() + 3);
-                }
+                healing = 3;
+                damage = 3;
                 break;
             case GameEnums.PowerMode_Power:
-                if (gotAttacked && defender.getOwner() === co.getOwner())
-                {
-                    if (defender.getHp() <= 0)
-                    {
-                        attacker.setHp(attacker.getHp() - 1);
-                    }
-                }
-                else if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
-                {
-                    attacker.setHp(attacker.getHp() + 1);
-                }
+                healing = 1;
+                damage = 1;
                 break;
             default:
                 break;
+        }
+        if (healing > 0 || damage > 0)
+        {
+            if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
+            {
+                attacker.setHp(attacker.getHp() + healing);
+            }
+            else if (!gotAttacked && attacker.getOwner() === co.getOwner() && attacker.getHp() <= 0)
+            {
+                var hp = defender.getHp();
+                if (hp > damage)
+                {
+                    defender.setHp(hp - damage);
+                }
+                else
+                {
+                    defender.setHp(0.00001);
+                }
+            }
+            else if (gotAttacked && defender.getOwner() === co.getOwner() && defender.getHp() <= 0)
+            {
+                var hp = attacker.getHp();
+                if (hp > damage)
+                {
+                    attacker.setHp(hp - damage);
+                }
+                else
+                {
+                    attacker.setHp(0.00001);
+                }
+            }
         }
     };
     this.getAiCoUnitBonus = function(co, unit, map)

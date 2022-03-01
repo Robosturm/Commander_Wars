@@ -302,7 +302,7 @@ void FileDialog::KeyInput(oxygine::KeyEvent event)
                     spDialogMessageBox pSurrender = spDialogMessageBox::create(tr("Do you want to delete the item ") + m_CurrentFolder->getCurrentText() + "/" +
                                                                                m_CurrentFile->getCurrentText() + "?", true);
                     connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &FileDialog::deleteItem, Qt::QueuedConnection);
-                    connect(pSurrender.get(), &DialogMessageBox::sigCancel, [=]()
+                    connect(pSurrender.get(), &DialogMessageBox::sigCancel, this, [=]()
                     {
                         m_focused = true;
                     });

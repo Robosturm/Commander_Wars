@@ -36,6 +36,7 @@ CampaignEditor::CampaignEditor()
     : QObject()
 {
     setObjectName("CampaignEditor");
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

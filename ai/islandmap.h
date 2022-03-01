@@ -20,6 +20,14 @@ public:
 
 public slots:
     /**
+     * @brief show for debugging purpose
+     */
+    void show();
+    /**
+     * @brief hide for debugging purpose
+     */
+    void hide();
+    /**
      * @brief sameIsland
      * @param x1
      * @param y1
@@ -66,4 +74,5 @@ private:
     QString m_MovementType;
     Player* m_pOwner;
     GameMap* m_pMap{nullptr};
+    QVector<oxygine::spActor> m_info;
 };

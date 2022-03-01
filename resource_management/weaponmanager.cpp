@@ -13,10 +13,8 @@ float WeaponManager::getBaseDamage(const QString & weaponID, Unit* pDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBaseDamage";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(pDefender);
-    args1 << obj1;
-    QJSValue erg = pInterpreter->doFunction(weaponID, function1, args1);
+    QJSValueList args({pInterpreter->newQObject(pDefender)});
+    QJSValue erg = pInterpreter->doFunction(weaponID, function1, args);
     if (erg.isNumber())
     {
         return erg.toNumber();
@@ -31,9 +29,8 @@ float WeaponManager::getEnviromentDamage(const QString & weaponID, const QString
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getEnviromentDamage";
-    QJSValueList args1;
-    args1 << terrainID;
-    QJSValue erg = pInterpreter->doFunction(weaponID, function1, args1);
+    QJSValueList args({terrainID});
+    QJSValue erg = pInterpreter->doFunction(weaponID, function1, args);
     if (erg.isNumber())
     {
         return erg.toNumber();

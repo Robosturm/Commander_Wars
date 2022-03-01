@@ -6,10 +6,11 @@ var Constructor = function()
         building.setAlwaysVisble(true);
     };
     
-    this.loadSprites = function(building)
+    this.loadSprites = function(building, neutral, map)
     {
         building.loadSprite("deathray+N", false);
         building.loadSpriteV2("deathray+N+mask", GameEnums.Recoloring_Matrix);
+        building.loadSprite("deathray+N+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.getDefense = function(building)
     {

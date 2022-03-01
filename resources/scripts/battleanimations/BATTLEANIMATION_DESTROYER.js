@@ -92,11 +92,11 @@ var Constructor = function()
                                   1, 1, 0, 0, false, true);
             }
             sprite.loadSound("anti_air_gun_fire.wav", 1, 0);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, 100);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, 200);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, 300);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, 400);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, 500);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 100, 1, true);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 200, 1, true);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 300, 1, true);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 400, 1, true);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 500, 1, true);
         }
     };
 
@@ -162,10 +162,7 @@ var Constructor = function()
             }
             sprite.loadSprite("mg_hit",  false, 5, Qt.point(0, yOffset),
                               1, 1.0, 0, 0);
-            for (i = 0; i < count; i++)
-            {
-                sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-            }
+            BATTLEANIMATION.playMgImpactSound(sprite, unit, defender, weapon, count);
         }
     };
 

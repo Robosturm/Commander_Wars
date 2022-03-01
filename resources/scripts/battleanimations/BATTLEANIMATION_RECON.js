@@ -44,9 +44,9 @@ var Constructor = function()
         var data = Global.getDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
         var movement = 65;
         sprite.loadMovingSpriteV2("recon+" + armyName + "+move+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(data[0].x - movement, 5),
-                                  Qt.point(movement, 0), 600, false, 1, 1);
+                                  Qt.point(movement, 0), 600, false, -1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(data[0].x - movement - 25, 7),
-                                Qt.point(movement, 0), 600, false, 1, 1);
+                                Qt.point(movement, 0), 600, false, -1, 1);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("recon_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
@@ -99,11 +99,12 @@ var Constructor = function()
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);
         }
+        BATTLEANIMATION.showMgBullets(sprite, offset);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
+            sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay, 1, true);
         }
     };
 
@@ -132,10 +133,7 @@ var Constructor = function()
         }
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, yOffset),
                           1, 1.0, 0, 0, true);
-        for (var i = 0; i < count; i++)
-        {
-            sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-        }
+        BATTLEANIMATION.playMgImpactSound(sprite, unit, defender, weapon, count);
     };
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)

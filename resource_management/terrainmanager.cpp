@@ -6,6 +6,7 @@ TerrainManager::TerrainManager()
                                           "/scripts/terrain", false)
 {
     setObjectName("TerrainManager");
+    Interpreter::setCppOwnerShip(this);
 }
 
 qint32 TerrainManager::getTerrainGroup(qint32 i)
@@ -63,8 +64,7 @@ QString TerrainManager::getTerrainGroupName(qint32 group)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainGroupName";
-    QJSValueList args;
-    args << group;
+    QJSValueList args({QJSValue(group)});
     QJSValue ret = pInterpreter->doFunction("TERRAIN", function1, args);
     if (ret.isString())
     {

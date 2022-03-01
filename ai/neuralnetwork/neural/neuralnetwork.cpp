@@ -68,7 +68,7 @@ QVector<double> NeuralNetwork::output()
     auto ret = (m_layers.back())->output();
     if (m_disabled)
     {
-        for (auto item : ret)
+        for (auto & item : ret)
         {
             item = 0;
         }

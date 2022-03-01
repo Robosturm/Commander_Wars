@@ -241,14 +241,6 @@ void Interpreter::pushObject(const QString & name, QObject* object)
     globalObject().setProperty(name, newQObj);
 }
 
-QJSValue Interpreter::newQObject(QObject* object)
-{
-    QJSValue newQObj = QQmlEngine::newQObject(object);
-    // make sure js never deletes our qobject since that's kinda not what we want
-    QQmlEngine::setObjectOwnership(object, QQmlEngine::ObjectOwnership::CppOwnership);
-    return newQObj;
-}
-
 void Interpreter::setCppOwnerShip(QObject* object)
 {
     QQmlEngine::setObjectOwnership(object, QQmlEngine::ObjectOwnership::CppOwnership);
@@ -371,9 +363,8 @@ void Interpreter::networkGameFinished(qint32 value, QString id)
     QString func = "onRemoteGameFinished";
     if (exists(obj, func))
     {
-        QJSValueList args;
-        args << value;
-        args << id;
+        QJSValueList args({value,
+                           id,});
         doFunction(obj, func, args);
     }
 }

@@ -89,10 +89,17 @@ var Constructor = function()
 
     this.loadBase = function(terrain, spriteId, map)
     {
-        var surroundings = terrain.getSurroundings("STREET,STREET1,BRIDGE,BRIDGE1,SNOW_STREET,DESERT_PATH,DESERT_PATH1,WASTE_PATH",
-                                                false, false, GameEnums.Directions_Direct, false, true);
+        var surroundings = __BASESTREET.getStreetSurrounding(terrain);
         terrain.loadBaseSprite(spriteId + surroundings);
     };
+
+    this.getStreetSurrounding = function(terrain)
+    {
+        var surroundings = terrain.getSurroundings("STREET,STREET1,BRIDGE,BRIDGE1,SNOW_STREET,DESERT_PATH,DESERT_PATH1,WASTE_PATH",
+                                                false, false, GameEnums.Directions_Direct, false, true);
+        return surroundings;
+    };
+
     this.getMiniMapIcon = function(terrain)
     {
         var baseTerrainId = ""
@@ -237,7 +244,7 @@ var Constructor = function()
         {
             var weatherModifier = TERRAIN.getWeatherModifier(map);
             return __BASESTREET.getStreetAnimationBackground(id, weatherModifier);
-        }        
+        }
     };
     this.getStreetAnimationBackground = function(id, weatherModifier)
     {
@@ -282,6 +289,28 @@ var Constructor = function()
             return "back_" + weatherModifier + "street+forest";
         default:
             return "back_" + weatherModifier + "street";
+        }
+    };
+
+    this.loadBaseOverlaySprite = function(spriteId, terrain, map)
+    {
+        var x = terrain.getX();
+        var y = terrain.getY();
+        var highTerrain = terrain.getSurroundings(TERRAIN.getHighTerrains(), true, false, GameEnums.Directions_West, false);
+        if (map.onMap(x - 1, y))
+        {
+            var building = map.getTerrain(x - 1, y).getBuilding();
+            if (building !== null &&
+                building.getBuildingWidth() === 1 &&
+                building.getBuildingHeigth() === 1)
+            {
+                highTerrain = "+W";
+            }
+        }
+        if (highTerrain !== "")
+        {
+            var surroundings = terrain.getTerrainSpriteName();
+            terrain.loadOverlaySprite(surroundings + "+shadow");
         }
     };
 };

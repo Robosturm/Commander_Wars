@@ -11,6 +11,7 @@
 WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
 {
     setObjectName("WikiView");
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

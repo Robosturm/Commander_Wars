@@ -170,7 +170,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
         MapSelectionMapsMenue::hideMapSelection();
         hideRuleSelection();
         m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentCampaign());
-        showPlayerSelection();
+        MapSelectionMapsMenue::showPlayerSelection();
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
     }
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -539,8 +539,7 @@ void MapSelectionMapsMenue::showMapFilter()
 }
 
 void MapSelectionMapsMenue::saveMap(QString filename)
-{
-    
+{    
     if (filename.endsWith(".map"))
     {
         QFile file(filename);
@@ -549,8 +548,7 @@ void MapSelectionMapsMenue::saveMap(QString filename)
         spGameMap pMap = m_pMapSelectionView->getCurrentMap();
         pMap->serializeObject(stream);
         file.close();
-    }
-    
+    }    
 }
 
 void MapSelectionMapsMenue::selectMap(QString folder, QString filename)
@@ -578,9 +576,7 @@ void MapSelectionMapsMenue::onEnter()
     if (pInterpreter->exists(object, func))
     {
         CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
-        QJSValueList args;
-        QJSValue value = pInterpreter->newQObject(this);
-        args << value;
+        QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
 }

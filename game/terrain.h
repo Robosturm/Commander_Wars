@@ -45,19 +45,23 @@ public:
      */
     ENUM_CLASS DrawPriority
     {
-        MarkedFieldMap,
         Terrain = 0,
         TerrainOverlay,
         Shroud,
         Building,
-        Fog,
-        TerrainMarker,
-        MarkedField,
-        Arrow
+        TerrainMarker,                
+
+    };
+    ENUM_CLASS ExtraDrawPriority
+    {
+        MarkedFieldMap = -10, // used for marking an extra map layer
+        BuildingLayer = 2,
+        MarkedField = 19,
+        UnitLayer,
     };
     static spTerrain createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap);
 
-    virtual ~Terrain() = default;
+    virtual ~Terrain();
 
     void init();
     /**
@@ -145,8 +149,19 @@ public:
 
     QPoint getTest() const;
     void setTest(QPoint newTest);
-
+    /**
+     * @brief getMapTerrainDrawPriority
+     * @return
+     */
+    qint32 getMapTerrainDrawPriority();
 public slots:
+
+    /**
+     * @brief getShowInEditor
+     * @param unitId
+     * @return if the given terrain should be shown in the editor
+     */
+    static bool getShowInEditor(QString terrainId);
     /**
      * @brief getMap
      * @return
@@ -509,7 +524,7 @@ public slots:
      * @param curY
      * @return
      */
-    qint32 getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY);
+    qint32 getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY);    
 protected:
     /**
      * @brief createBuildingDownStream
@@ -519,6 +534,11 @@ protected:
      * @brief removeDownstream
      */
     void removeDownstream();
+    /**
+     * @brief addBuildingSprite
+     * @param pBuilding
+     */
+    void addBuildingSprite(spBuilding pBuilding);
 private:
     /**
      * @brief customSpriteExists

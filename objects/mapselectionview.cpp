@@ -20,6 +20,7 @@
 MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
 {
     setObjectName("MapSelectionView");
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
 

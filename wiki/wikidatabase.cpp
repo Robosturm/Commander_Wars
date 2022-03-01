@@ -227,7 +227,7 @@ spWikipage WikiDatabase::getPage(PageData data)
     }
     else if (pBuildingSpriteManager->exists(id))
     {
-        spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", nullptr);
+        spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", nullptr);
         spBuilding pBuilding = spBuilding::create(id, nullptr);
         pTerrain->setBuilding(pBuilding);
         ret = spFieldInfo::create(pTerrain.get(), nullptr);
@@ -245,9 +245,7 @@ spWikipage WikiDatabase::getPage(PageData data)
         ret = spWikipage::create();
         Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->openScript(id, false);
-        QJSValueList args;
-        QJSValue obj1 = pInterpreter->newQObject(ret.get());
-        args << obj1;
+        QJSValueList args({pInterpreter->newQObject(ret.get())});
         pInterpreter->doFunction("LOADEDWIKIPAGE", "loadPage", args);
     }
     else
@@ -311,7 +309,7 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
                 pPlayer = pMap->getCurrentPlayer();
             }
             spBuilding pBuilding = spBuilding::create(file, pMap);
-            pBuilding->setOwner(pPlayer.get());
+            pBuilding->setOwner(pPlayer.get());            
             pBuilding->scaleAndShowOnSingleTile();
             return pBuilding;
         }

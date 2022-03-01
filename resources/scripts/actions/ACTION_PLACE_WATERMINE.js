@@ -45,7 +45,7 @@ var Constructor = function()
                     terrainId !== "BRIDGE1" &&
                     terrainId !== "BEACH")
                 {
-                    if ((Global[unit.getMovementType()].getMovementpoints(terrain, unit, terrain, false) > 0) &&
+                    if ((Global[unit.getMovementType()].getMovementpoints(terrain, unit, terrain, false, map) > 0) &&
                         (defUnit === null))
                     {
                         ret.push(targetFields[i]);

@@ -97,7 +97,7 @@ var Constructor = function()
     this.checkDefeat = function(rule, player, map)
     {
         var buildings = VICTORYRULE_BUILDINGLIMIT.getBuildings(rule, player, map);
-        var buildingLimit = VICTORYRULE_BUILDINGLIMIT.getRuleValue(rule, map);
+        var buildingLimit = VICTORYRULE_BUILDINGLIMIT.getRuleValue(rule, 0, map);
         if (buildings >= buildingLimit)
 		{
             // defeat all other player

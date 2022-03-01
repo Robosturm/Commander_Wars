@@ -7,6 +7,12 @@ class COSpriteManager : public QObject, public RessourceManagement<COSpriteManag
 {
     Q_OBJECT
 public:
+    struct CoGroup
+    {
+        QString name;
+        QStringList cos;
+    };
+
     QStringList getSpriteCOIDs();
     /**
      * @brief getCOStyles
@@ -31,6 +37,11 @@ public:
      * @brief release
      */
     void release();
+    /**
+     * @brief getCoGroups
+     * @return
+     */
+    QVector<CoGroup> getCoGroups(QStringList & coids);
 signals:
     void sigLoadResAnim(const QString & coid, const QString & file, QImage colorTable, QImage maskTable, bool useColorBox);
 public slots:

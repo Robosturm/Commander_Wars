@@ -77,7 +77,7 @@ void ScriptEventAddFunds::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("Player that earns the given amount of funds."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setPlayer(static_cast<qint32>(value) - 1);
@@ -93,7 +93,7 @@ void ScriptEventAddFunds::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("The funds the given player will earn."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(funds);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setFunds(static_cast<qint32>(value));

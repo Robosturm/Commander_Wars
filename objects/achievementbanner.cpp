@@ -14,6 +14,7 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     : m_showTimer(this)
 {
     setObjectName("AchievementBanner");
+    Interpreter::setCppOwnerShip(this);
     qint32 bannerWidth = 350;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");

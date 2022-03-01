@@ -241,7 +241,7 @@ var Constructor = function()
     {
         if (unit.getUnitType() === GameEnums.UnitType_Naval)
         {
-            return 2;
+            return 6;
         }
         else if (unit.getUnitType() === GameEnums.UnitType_Air)
         {

@@ -135,7 +135,7 @@ void ScriptConditionEachDay::showEditCondition(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("The first day at which the events get executed."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(player + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         setPlayer(static_cast<qint32>(value) - 1);

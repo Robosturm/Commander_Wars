@@ -339,8 +339,9 @@
         <image file="dive.png" />
         <image file="heal.png" />
         <image file="load.png" />
-        <image file="power.png" />
         <image file="ration.png" />
+        <image file="no_power.png" />
+        <image file="power.png" />
         <image file="superpower.png" />
         <image file="tagpower.png" />
         <image file="unhide.png" />
@@ -364,7 +365,8 @@
         <image file="nickname.png" />
         <image file="music.png" />
         <image file="wiki.png" />
-        <image file="statistics.png" />   
+        <image file="statistics.png" />
+        <image file="calculator.png" />        
         
         <!-- z information label -->
         <image file="z_information_label.png" cols = "8" />

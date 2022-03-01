@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <ui>
     <Box>
-        <x>settings.getWidth() / 2 - 136 / 2</x>
+        <x>settings.getWidth() / 2 - 176 / 2</x>
         <y>-45</y>
-        <width>136</width>
+        <width>176</width>
         <height>46</height>
         <sprite>"panel"</sprite>
         <childs>
@@ -19,6 +19,7 @@
                 <y>5</y>
                 <sprite>"previous_unit"</sprite>
                 <onEvent>
+                    var map = quickButtonsMenu.getMap()
                     var input = map.getCurrentPlayer().getBaseGameInput();
                     if (input.getAiType() === GameEnums.AiTypes_Human)
                     {
@@ -31,6 +32,7 @@
                 <y>5</y>
                 <sprite>"next_player"</sprite>
                 <onEvent>
+                    var map = quickButtonsMenu.getMap()
                     var input = map.getCurrentPlayer().getBaseGameInput();
                     if (input.getAiType() === GameEnums.AiTypes_Human)
                     {
@@ -43,10 +45,24 @@
                 <y>5</y>
                 <sprite>"next_unit"</sprite>
                 <onEvent>
+                    var map = quickButtonsMenu.getMap()
                     var input = map.getCurrentPlayer().getBaseGameInput();
                     if (input.getAiType() === GameEnums.AiTypes_Human)
                     {
                         input.gotoNext();
+                    }
+                </onEvent>
+            </IconButton>
+            <IconButton>
+                <x>lastX + 40</x>
+                <y>5</y>
+                <sprite>"cancel"</sprite>
+                <onEvent>
+                    var map = quickButtonsMenu.getMap()
+                    var input = map.getCurrentPlayer().getBaseGameInput();
+                    if (input.getAiType() === GameEnums.AiTypes_Human)
+                    {
+                        input.rightClickDown(-1, -1);
                     }
                 </onEvent>
             </IconButton>

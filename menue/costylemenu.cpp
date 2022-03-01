@@ -85,9 +85,7 @@ void COStyleMenu::onEnter()
     if (pInterpreter->exists(object, func))
     {
         CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
-        QJSValueList args;
-        QJSValue value = pInterpreter->newQObject(this);
-        args << value;
+        QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
 }

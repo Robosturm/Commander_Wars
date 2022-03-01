@@ -72,7 +72,7 @@ var Constructor = function()
         var recorder = map.getGameRecorder();
         var score = recorder.getScoreValues(player.getPlayerID());
         var count = score.y + score.width;
-        var teamVictory = VICTORYRULE_TURNLIMIT_SCORE_RACE.getRuleValue(rule, 1);
+        var teamVictory = VICTORYRULE_TURNLIMIT_SCORE_RACE.getRuleValue(rule, 1, map);
         var teamCount = 1;
         if (teamVictory === 1)
         {
@@ -97,7 +97,7 @@ var Constructor = function()
     this.checkDefeat = function(rule, player, map)
     {
         var turn = map.getCurrentDay();
-        var turnLimit = VICTORYRULE_TURNLIMIT_SCORE_RACE.getRuleValue(rule, map);
+        var turnLimit = VICTORYRULE_TURNLIMIT_SCORE_RACE.getRuleValue(rule, 0, map);
         var victoryTeam = VICTORYRULE_TURNLIMIT_SCORE_RACE.getWinnerTeam(rule, player, map);
         if (turn <= turnLimit ||
             player.getTeam() === victoryTeam)

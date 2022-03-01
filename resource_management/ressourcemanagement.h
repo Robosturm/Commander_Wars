@@ -102,8 +102,8 @@ TClass* RessourceManagement<TClass>::getInstance()
 {
     if (m_pInstance == nullptr)
     {
-        Interpreter::setCppOwnerShip(m_pInstance);
         m_pInstance = new TClass();
+        Interpreter::setCppOwnerShip(m_pInstance);
     }
     return m_pInstance;
 }

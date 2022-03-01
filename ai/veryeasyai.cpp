@@ -400,17 +400,33 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
                 // find possible targets for this unit
                 QVector<QVector3D> targets;
                 // can one of our units can capture buildings?
+                bool captureFound = false;
+                bool attackFound = false;
                 for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
                 {
                     Unit* pLoaded = pUnit->getLoadedUnit(i);
-                    if (pLoaded->getActionList().contains(ACTION_CAPTURE))
+                    QStringList actions = pLoaded->getActionList();
+                    if (!captureFound && actions.contains(ACTION_CAPTURE))
                     {
                         appendUnloadTargetsForCapturing(pUnit, pEnemyBuildings, targets);
+                        captureFound = true;
+                    }
+                    if (!attackFound && actions.contains(ACTION_FIRE))
+                    {
+                        appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets, 1);
+                        attackFound = true;
+                    }
+                    if (attackFound && captureFound)
+                    {
                         break;
                     }
                 }
                 // if not find closest unloading field
-                if (targets.size() == 0 || pUnit->getLoadedUnitCount() > 1)
+                if (targets.size() == 0)
+                {
+                    appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets, 3);
+                }
+                if (targets.size() == 0)
                 {
                     appendNearestUnloadTargets(pUnit, pEnemyUnits, pEnemyBuildings, targets);
                 }

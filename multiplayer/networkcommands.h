@@ -74,9 +74,47 @@ namespace NetworkCommands
     /**
      * @brief STARTGAME the host has started the game. the client is allowed to start the game as well.
      */
-    const char* const STARTGAME = "STARTGAME";
+    const char* const STARTGAME = "STARTGAME";    
+    /**
+     * @brief JOINASOBSERVER
+     */
+    const char* const JOINASOBSERVER = "JOINASOBSERVER";
+    /**
+     * @brief PLAYERACCESSDENIED
+     */
+    const char* const PLAYERACCESSDENIED = "PLAYERACCESSDENIED";
+    /**
+     * @brief REQUESTJOINREASON
+     */
+    const char* const REQUESTJOINREASON = "REQUESTJOINREASON";
+    /**
+     * @brief JOINASPLAYER
+     */
+    const char* const JOINASPLAYER = "JOINASPLAYER";
+    /**
+     * @brief WAITFORPLAYERJOINSYNCFINISHED
+     */
+    const char* const WAITFORPLAYERJOINSYNCFINISHED = "WAITFORPLAYERJOINSYNCFINISHED";
+    /**
+     * @brief WAITINGFORSYNCFINISHED
+     */
+    const char* const WAITINGFORPLAYERJOINSYNCFINISHED = "WAITINGFORPLAYERJOINSYNCFINISHED";
+    /**
+     * @brief SENDCURRENTGAMESTATE
+     */
+    const char* const SENDCURRENTGAMESTATE = "SENDCURRENTGAMESTATE";
+    /**
+     * @brief RECEIVEDCURRENTGAMESTATE
+     */
+    const char* const RECEIVEDCURRENTGAMESTATE = "RECEIVEDCURRENTGAMESTATE";
+    /**
+     * @brief PLAYERJOINEDFINISHED
+     */
+    const char* const PLAYERJOINEDFINISHED = "PLAYERJOINEDFINISHED";
 
+    /*****************************************************************************************************************************/
     // dedicated server commands
+    /*****************************************************************************************************************************/
     /**
      * @brief LAUNCHGAMEONSERVER
      */
@@ -85,18 +123,6 @@ namespace NetworkCommands
       * @brief LAUNCHGAMEONSERVER
       */
     const char* const GAMERUNNINGONSERVER = "GAMERUNNINGONSERVER";
-    /**
-     * @brief PLAYERJOINEDGAMEONSERVER
-     */
-    const char* const PLAYERJOINEDGAMEONSERVER = "PLAYERJOINEDGAMEONSERVER";
-    /**
-     * @brief PLAYERJOINEDGAMEONSERVER
-     */
-    const char* const PLAYERDISCONNECTEDGAMEONSERVER = "PLAYERDISCONNECTEDGAMEONSERVER";
-    /**
-     * @brief PLAYERREJECTEDONSERVER
-     */
-    const char* const PLAYERREJECTEDONSERVER = "PLAYERREJECTEDONSERVER";
     /**
      * @brief SERVERREQUESTOPENPLAYERCOUNT
      */
@@ -113,6 +139,14 @@ namespace NetworkCommands
      * @brief SERVERJOINGAME
      */
     const char* const SERVERJOINGAME = "SERVERJOINGAME";
+    /**
+     * @brief SLAVEREADY
+     */
+    const char* const SLAVEREADY = "SLAVEREADY";
+    /**
+     * @brief SLAVEADDRESSINFO
+     */
+    const char* const SLAVEADDRESSINFO = "SLAVEADDRESSINFO";
     /**
      * @brief STARTSERVERGAME
      */

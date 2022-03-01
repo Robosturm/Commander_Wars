@@ -114,7 +114,7 @@ var Constructor = function()
     this.checkDefeat = function(rule, player, map)
     {
         // get co unit limit
-        var coUnitLimit = VICTORYRULE_COUNITLOST.getRuleValue(rule, map);
+        var coUnitLimit = VICTORYRULE_COUNITLOST.getRuleValue(rule, 0, map);
         // check limit against current lost count
         if (VICTORYRULE_COUNITLOST.checkCOUnitCount(rule, player, map) >= coUnitLimit &&
             coUnitLimit > 0)

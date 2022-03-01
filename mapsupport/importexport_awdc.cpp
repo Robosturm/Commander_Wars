@@ -38,11 +38,10 @@ void GameMap::importAWDCMap(QString file)
             m_fields.push_back(std::vector<spTerrain>());
             for (qint32 x = 0; x < width; x++)
             {
-                spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "", this);
+                spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, x, y, "", this);
                 addChild(pTerrain);
                 m_fields[y].push_back(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
-                pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             }
         }
         // read map start byte
@@ -198,7 +197,7 @@ void GameMap::importAWDCMap(QString file)
                     // terrain
                     case 0:
                     {
-                        replaceTerrain("PLAINS", x, y);
+                        replaceTerrain(GameMap::PLAINS, x, y);
                         break;
                     }
                     case 1:
@@ -278,7 +277,7 @@ void GameMap::importAWDCMap(QString file)
                     }
                     default:
                     {
-                        replaceTerrain("PLAINS", x, y);
+                        replaceTerrain(GameMap::PLAINS, x, y);
                         break;
                     }
                 }

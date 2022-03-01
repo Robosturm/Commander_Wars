@@ -77,9 +77,13 @@ public:
      * @param pGameAction
      */
     void doTrapping(spGameAction & pGameAction);
+    bool getIsReplay() const;
+    void setIsReplay(bool isReplay);
+
 signals:
     void sigActionPerformed();
     void sigGameStarted();
+    void sigSyncFinished();
     void sigSaveGame();
     void sigExitGame();
     void sigShowExitGame();
@@ -228,18 +232,6 @@ public slots:
      */
     void editFinishedCanceled();
     /**
-     * @brief recieveData
-     * @param socketID
-     * @param data
-     * @param service
-     */
-    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
-    /**
-     * @brief disconnected
-     * @param socketID
-     */
-    void disconnected(quint64 socketID);
-    /**
      * @brief isNetworkGame
      * @return
      */
@@ -249,6 +241,10 @@ public slots:
      * @param socketID
      */
     void playerJoined(quint64 socketID);
+    /**
+     * @brief continueAfterSyncGame
+     */
+    void continueAfterSyncGame();
     /**
      * @brief showExitGame
      */
@@ -270,7 +266,48 @@ public slots:
      * @brief showWiki
      */
     void showWiki();
+    /**
+     * @brief showDamageCalculator
+     */
+    void showDamageCalculator();
 protected slots:
+    /**
+     * @brief recieveData
+     * @param socketID
+     * @param data
+     * @param service
+     */
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    /**
+     * @brief disconnected
+     * @param socketID
+     */
+    void disconnected(quint64 socketID);
+    /**
+     * @brief joinAsObserver
+     * @param stream
+     * @param socketID
+     */
+    void joinAsObserver(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief waitForPlayerJoinSyncFinished
+     * @param stream
+     * @param socketID
+     */
+    void waitForPlayerJoinSyncFinished(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief waitingForPlayerJoinSyncFinished
+     */
+    void waitingForPlayerJoinSyncFinished(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief removePlayerFromSyncWaitList
+     * @param socketID
+     */
+    void removePlayerFromSyncWaitList(quint64 socketID);
+    /**
+     * @brief playerJoinedFinished
+     */
+    void playerJoinedFinished();
     /**
      * @brief updateTimer
      */
@@ -291,6 +328,8 @@ protected:
     bool shouldSkipOtherAnimation(GameAnimation* pBattleAnimation) const;
     void showChat();
     void doSaveMap();
+    bool getIsMultiplayer(const spGameAction & pGameAction) const;
+    bool requiresForwarding(const spGameAction & pGameAction) const;
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;
@@ -320,6 +359,15 @@ protected:
     bool m_saveMap{false};
     bool m_exitAfterSave{false};
     bool m_saveAllowed{false};
+    bool m_isReplay{false};
+
+    struct
+    {
+        bool m_waitingForSyncFinished{false};
+        spGameAction m_postSyncAction;
+        QVector<bool> m_lockedPlayers;
+        QVector<quint64> m_connectingSockets;
+    } m_multiplayerSyncData;
 };
 
 #endif // GAMEMENUE_H

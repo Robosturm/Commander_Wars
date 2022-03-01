@@ -96,7 +96,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     textBox->setTooltipText(tr("Name of the Variable that should be changed. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, 30);
     textBox->setCurrentText(m_variable);
-    connect(textBox.get(), &Textbox::sigTextChanged,
+    connect(textBox.get(), &Textbox::sigTextChanged, this,
             [=](QString value)
     {
         m_variable = value;
@@ -129,7 +129,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("The value modifying the variable."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(m_value);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [=](qreal value)
     {
         m_value = value;
@@ -145,7 +145,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     checkBox->setTooltipText(tr("If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign."));
     checkBox->setPosition(width, 150);
     checkBox->setChecked(m_CampaignVariable);
-    connect(checkBox.get(), &Checkbox::checkChanged,
+    connect(checkBox.get(), &Checkbox::checkChanged, this,
             [=](bool value)
     {
         m_CampaignVariable = value;

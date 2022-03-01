@@ -111,12 +111,23 @@ public:
      * @param ignoreEnemies
      */
     void setIgnoreEnemies(CollisionIgnore ignoreEnemies);
-
+    /**
+     * @brief getUseBasecosts
+     * @return
+     */
+    bool getUseBasecosts() const;
+    /**
+     * @brief setUseBasecosts
+     * @param useBasecosts
+     */
+    void setUseBasecosts(bool useBasecosts);
 protected:
     Unit* m_pUnit;
     Player* m_pPlayer{nullptr};
     qint32 m_Movepoints{-2};
     bool m_fast{false};
+    bool m_supportsShortCuts{true};
+    bool m_useBasecosts{false};
     CollisionIgnore m_ignoreEnemies{CollisionIgnore::Off};
     QMap<QString, qint32> m_costInfo;
     GameMap* m_pMap{nullptr};

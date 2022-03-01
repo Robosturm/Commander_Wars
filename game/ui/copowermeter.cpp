@@ -9,6 +9,7 @@ CoPowermeter::CoPowermeter(GameMap* pMap, CO* pCO)
       m_pMap(pMap)
 {
     setObjectName("CoPowermeter");
+    Interpreter::setCppOwnerShip(this);
 }
 
 void CoPowermeter::drawPowerMeter()
@@ -242,6 +243,16 @@ void CoPowermeter::setCO(CO *pCO)
 bool CoPowermeter::getFlippedX() const
 {
     return m_flippedX;
+}
+
+GameMap *CoPowermeter::getMap() const
+{
+    return m_pMap;
+}
+
+void CoPowermeter::setMap(GameMap *newPMap)
+{
+    m_pMap = newPMap;
 }
 
 void CoPowermeter::setFlippedX(bool value)

@@ -28,6 +28,11 @@ public:
      */
     void setStyle(const oxygine::TextStyle& st);
     /**
+     * @brief setStyle
+     * @param st
+     */
+    oxygine::TextStyle getStyle();
+    /**
      * @brief getTextRect
      * @param localScale
      * @return

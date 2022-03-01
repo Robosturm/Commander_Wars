@@ -111,8 +111,8 @@ void MapFilter::setFlagOptional(GameEnums::MapFilterFlags flag, bool isOptional)
 
 bool MapFilter::MinMaxFilter::matches(qint32 value) const
 {
-    return (value > minValue || minValue == 0) &&
-           (value < maxValue || maxValue == 0);
+    return (value >= minValue || minValue == 0) &&
+           (value <= maxValue || maxValue == 0);
 }
 
 bool MapFilter::FlagFilter::matches(GameEnums::MapFilterFlags flags) const

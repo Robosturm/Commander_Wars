@@ -215,7 +215,7 @@ var Constructor = function()
     {
         if (unit.getUnitType() === GameEnums.UnitType_Air)
         {
-            return 2;
+            return 6;
         }
         return 0;
     };

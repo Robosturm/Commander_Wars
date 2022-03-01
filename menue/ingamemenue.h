@@ -53,7 +53,7 @@ signals:
     void sigLeftClickUp(qint32 x, qint32 y);
     void sigMouseMove(qint32 x, qint32 y);
 public slots:
-    GameMap* getMap() const;
+    virtual GameMap* getMap() const;
     virtual void keyInput(oxygine::KeyEvent event);
     virtual void keyUp(oxygine::KeyEvent event);
     void centerMapOnCursor();

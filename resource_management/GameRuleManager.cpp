@@ -3,6 +3,7 @@
 GameRuleManager::GameRuleManager()
     : RessourceManagement<GameRuleManager>("", "")
 {
+    Interpreter::setCppOwnerShip(this);
     setObjectName("GameRuleManager");
 }
 
@@ -31,8 +32,7 @@ qint32 GameRuleManager::getDefaultWeatherChance(QString weatherId)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDefaultWeatherChance";
-    QJSValueList args1;
-    QJSValue erg = pInterpreter->doFunction(weatherId, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(weatherId, function1);
     if (erg.isNumber())
     {
         return erg.toInt();

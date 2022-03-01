@@ -23,7 +23,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     connect(this, &GameAnimationDialog::sigStartFinishTimer, this, &GameAnimationDialog::startFinishTimer, Qt::QueuedConnection);
-    connect(&m_finishTimer, &QTimer::timeout, [=]()
+    connect(&m_finishTimer, &QTimer::timeout, this, [=]()
     {
         emitFinished();
     });

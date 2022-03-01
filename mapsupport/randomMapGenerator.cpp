@@ -58,7 +58,7 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
     QString baseTerrain = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "getBaseTerrainID").toString();
     if (!TerrainManager::getInstance()->exists(baseTerrain))
     {
-        baseTerrain = "PLAINS";
+        baseTerrain = GameMap::PLAINS;
     }
     // seed map generator
     QRandomGenerator randInt(static_cast<quint32>(startSeed));
@@ -451,11 +451,9 @@ bool RandomMapGenerator::randomMapTerrainPlaceable(GameMap* pMap, qint32 x, qint
         return false;
     }
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    args << x;
-    args << y;
-    QJSValue obj4 = pInterpreter->newQObject(pMap);
-    args << obj4;
+    QJSValueList args({x,
+                       y,
+                       pInterpreter->newQObject(pMap)});
     QJSValue erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + terrainID + "Placeable", args);
     if (erg.isBool())
     {
@@ -591,9 +589,7 @@ void RandomMapGenerator::randomMapCreateRoad(GameMap* pMap, QRandomGenerator& ra
             Interpreter* pInterpreter = Interpreter::getInstance();
             if (pTerrain->getBuilding() == nullptr)
             {
-                QJSValueList args;
-                QJSValue obj = pInterpreter->newQObject(pTerrain);
-                args << obj;
+                QJSValueList args({pInterpreter->newQObject(pTerrain)});
                 QStringList ret = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "getRoadCreation", args).toVariant().toStringList();
                 if (ret.size() >= 2)
                 {
@@ -807,11 +803,9 @@ bool RandomMapGenerator::randomMapIsBuildingPlace(GameMap* pMap, QString buildin
     if (pMap->onMap(x ,y) &&
         (pMap->getTerrain(x, y)->getBuilding() == nullptr))
     {
-        QJSValueList args;
-        args << x;
-        args << y;
-        QJSValue obj4 = pInterpreter->newQObject(pMap);
-        args << obj4;
+        QJSValueList args({x,
+                           y,
+                           pInterpreter->newQObject(pMap),});
         QJSValue erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + buildingId + "Placeable", args);
         if (erg.isBool())
         {
@@ -960,7 +954,7 @@ void RandomMapGenerator::randomMapPlaceBuildings(GameMap* pMap, qint32 width, qi
     qint32 maximumBuildingTry = 1000;
     // number of factorys at start
     qint32 playerCount = pMap->getPlayerCount();
-    qint32 mirrorPlacing = 0;
+    qint32 mirrorPlacing = 1;
     if (mirrorX != MirrorMode::none)
     {
         mirrorPlacing += 2;
@@ -1355,9 +1349,7 @@ void RandomMapGenerator::connectPositionsWithRoad(GameMap* pMap, QRandomGenerato
             Interpreter* pInterpreter = Interpreter::getInstance();
             if (pTerrain->getBuilding() == nullptr)
             {
-                QJSValueList args;
-                QJSValue obj = pInterpreter->newQObject(pTerrain);
-                args << obj;
+                QJSValueList args({pInterpreter->newQObject(pTerrain)});
                 QStringList ret = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "getRoadCreation", args).toVariant().toStringList();
                 if (ret.size() >= 2)
                 {

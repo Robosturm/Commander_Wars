@@ -71,10 +71,6 @@ void HumanPlayerInput::rightClickUp(qint32, qint32)
 
 void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
 {
-    if (!m_pMap->onMap(x, y))
-    {
-        return;
-    }
     bool isViewPlayer = (m_pMap->getCurrentViewPlayer() == m_pPlayer);
 
     if (m_pMap->getCurrentPlayer() == m_pPlayer ||
@@ -107,7 +103,7 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             }
             
         }
-        else
+        else if (m_pMap->onMap(x, y))
         {
             if (m_FieldPoints.size() == 0 && m_pGameAction.get() == nullptr)
             {
@@ -121,6 +117,10 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             {
                 cleanUpInput();
             }
+        }
+        else
+        {
+            cleanUpInput();
         }
     }
     else if (isViewPlayer)
@@ -168,7 +168,7 @@ void HumanPlayerInput::showVisionFields(qint32 x, qint32 y)
                 {
                     viewColor = QColor(ret.toString());
                 }
-                createMarkedField(point.toPoint(), viewColor, Terrain::DrawPriority::MarkedFieldMap);
+                createMarkedField(point.toPoint(), viewColor, Terrain::ExtraDrawPriority::MarkedFieldMap);
             }
         }
     }
@@ -185,7 +185,8 @@ void HumanPlayerInput::cancelSelection(qint32 x, qint32 y)
     CONSOLE_PRINT("HumanPlayerInput::cancelSelection", Console::eDEBUG);
     Unit* pUnit = m_pGameAction->getTargetUnit();
     if (pUnit != nullptr && !pUnit->getHasMoved() &&
-        m_pUnitPathFindingSystem.get() != nullptr)
+        m_pUnitPathFindingSystem.get() != nullptr &&
+        !m_pMap->onMap(x, y))
     {
         qint32 costs = m_pUnitPathFindingSystem->getTargetCosts(x, y);
         if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) != costs &&
@@ -263,7 +264,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
                         QPoint target = pPoints->at(i2) + points[i];
                         if (!m_FieldPoints.contains(QVector3D(target.x(), target.y(), 1)))
                         {
-                            createMarkedField(target, QColor(255, 0, 0), Terrain::DrawPriority::MarkedFieldMap);
+                            createMarkedField(target, QColor(255, 0, 0), Terrain::ExtraDrawPriority::MarkedFieldMap);
                         }
                     }
                 }
@@ -283,7 +284,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
                 Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
                 for (qint32 i = 0; i < pPoints->size(); i++)
                 {
-                    createMarkedField(buildingPos + targetOffset + pPoints->at(i), QColor(255, 0, 0), Terrain::DrawPriority::MarkedFieldMap);
+                    createMarkedField(buildingPos + targetOffset + pPoints->at(i), QColor(255, 0, 0), Terrain::ExtraDrawPriority::MarkedFieldMap);
                 }
             }
         }
@@ -677,7 +678,7 @@ void HumanPlayerInput::getNextStepData()
             QVector<QPoint>* pFields = pData->getPoints();
             for (qint32 i = 0; i < pFields->size(); i++)
             {
-                createMarkedField(pFields->at(i), pData->getColor(), Terrain::DrawPriority::MarkedFieldMap);
+                createMarkedField(pFields->at(i), pData->getColor(), Terrain::ExtraDrawPriority::MarkedFieldMap);
             }
             syncMarkedFields();
             m_pMarkedFieldData = pData;
@@ -839,13 +840,12 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     createMarkedMoveFields();
 }
 
-void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::DrawPriority drawPriority)
-{
-    
+void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::ExtraDrawPriority drawPriority)
+{    
     if (m_pMap->onMap(point.x(), point.y()))
     {
         oxygine::spSprite pSprite = createMarkedFieldActor(point, color, drawPriority);
-        if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
+        if (drawPriority == Terrain::ExtraDrawPriority::MarkedFieldMap)
         {
             m_FieldPoints.append(QVector3D(point.x(), point.y(), 1));
         }
@@ -857,9 +857,8 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
     }
 }
 
-oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor color, Terrain::DrawPriority drawPriority)
-{
-    
+oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor color, Terrain::ExtraDrawPriority drawPriority)
+{    
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("marked+field");
@@ -876,21 +875,18 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
             pSprite->setResAnim(pAnim);
         }
         pSprite->setColor(color);
+        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
+        pSprite->setPosition(point.x() * GameMap::getImageSize(), point.y() * GameMap::getImageSize());
 
-        if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
+        if (drawPriority == Terrain::ExtraDrawPriority::MarkedFieldMap)
         {
-            pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
             pSprite->setPosition(point.x() * GameMap::getImageSize(), point.y() * GameMap::getImageSize());
-            pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
-            m_pMap->addChild(pSprite);
         }
         else
         {
-            pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
-            pSprite->setPriority(static_cast<qint16>(drawPriority));
-            pSprite->setPosition(0, 0);
-            m_pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
+            pSprite->setPriority(m_pMap->getTerrain(point.x(), point.y())->getMapTerrainDrawPriority() + static_cast<qint32>(drawPriority));
         }
+        m_pMap->addChild(pSprite);
     }
     return pSprite;
 }
@@ -921,11 +917,11 @@ void HumanPlayerInput::createMarkedMoveFields()
         {
             if (m_pUnitPathFindingSystem->getTargetCosts(points[i].x(), points[i].y()) > movementpoints)
             {
-                createMarkedField(points[i], multiTurnColor, Terrain::DrawPriority::MarkedField);
+                createMarkedField(points[i], multiTurnColor, Terrain::ExtraDrawPriority::MarkedField);
             }
             else
             {
-                createMarkedField(points[i], turnColor, Terrain::DrawPriority::MarkedField);
+                createMarkedField(points[i], turnColor, Terrain::ExtraDrawPriority::MarkedField);
             }
         }
         syncMarkedFields();
@@ -1176,7 +1172,10 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
         oxygine::spColorRectSprite pRect = oxygine::spColorRectSprite::create();
         pRect->setPosition(7, 4);
         pRect->setSize(baseWidth, pBox->getHeight() - 10);
-        pRect->setColor(m_pPlayer->getColor());
+        if (m_pPlayer != nullptr)
+        {
+            pRect->setColor(m_pPlayer->getColor());
+        }
         pRect->setAlpha(200);
         pBox->addChild(pRect);
         for (qint32 i = 0; i < pData->valueNames.size(); ++i)
@@ -1347,7 +1346,7 @@ void HumanPlayerInput::createArrow(QVector<QPoint>& points)
         if (pAnim != nullptr)
         {
             pSprite->setResAnim(pAnim);
-            pSprite->setPriority(static_cast<qint16>(points[i].y() + 3));
+            pSprite->setPriority(static_cast<qint32>(points[i].y() + 3));
             pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
             pSprite->setPosition(points[i].x() * GameMap::getImageSize() -(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2,  points[i].y() * GameMap::getImageSize() -(pSprite->getScaledHeight() - GameMap::getImageSize()));
             m_pMap->addChild(pSprite);
@@ -1468,30 +1467,30 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
     if (!event.getContinousPress())
     {
         spGameMenue pMenu = GameMenue::getInstance();
-        if (inputAllowed())
+        bool canInput = inputAllowed();
+        // for debugging
+        Qt::Key cur = event.getKey();
+        if ((cur == Settings::getKey_next() ||
+             cur == Settings::getKey_next2()) &&
+            canInput)
         {
-            // for debugging
-            Qt::Key cur = event.getKey();
-            if (cur == Settings::getKey_next() ||
-                cur == Settings::getKey_next2())
-            {
-                gotoNext();
-            }
-            else if (cur == Settings::getKey_previous() ||
-                     cur == Settings::getKey_previous2())
-            {
-                gotoPrevious();
-            }
-            else if (cur == Settings::getKey_ShowAttackFields() ||
-                     cur == Settings::getKey_ShowAttackFields2())
-            {
-                showSelectedUnitAttackableFields(true);
-            }
-            else if (cur == Settings::getKey_ShowIndirectAttackFields() ||
-                     cur == Settings::getKey_ShowIndirectAttackFields2())
-            {
-                showSelectedUnitAttackableFields(false);
-            }
+            gotoNext();
+        }
+        else if ((cur == Settings::getKey_previous() ||
+                  cur == Settings::getKey_previous2()) &&
+                 canInput)
+        {
+            gotoPrevious();
+        }
+        else if (cur == Settings::getKey_ShowAttackFields() ||
+                 cur == Settings::getKey_ShowAttackFields2())
+        {
+            showSelectedUnitAttackableFields(true);
+        }
+        else if (cur == Settings::getKey_ShowIndirectAttackFields() ||
+                 cur == Settings::getKey_ShowIndirectAttackFields2())
+        {
+            showSelectedUnitAttackableFields(false);
         }
     }
 }
@@ -1499,9 +1498,14 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
 void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
 {
     CONSOLE_PRINT("HumanPlayerInput::showSelectedUnitAttackableFields", Console::eDEBUG);
+    spGameMenue pMenu = GameMenue::getInstance();
     if (m_pUnitPathFindingSystem.get() != nullptr &&
         m_pGameAction.get() != nullptr &&
-        m_CurrentMenu.get() == nullptr)
+        m_CurrentMenu.get() == nullptr &&
+        m_pMap->getCurrentPlayer() == m_pPlayer &&
+        pMenu.get() != nullptr &&
+        GameAnimationFactory::getAnimationCount() == 0 &&
+        pMenu->getFocused())
     {
         if (m_InfoFields.size() > 0)
         {
@@ -1589,7 +1593,7 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
                     !usedFields.contains(QPoint(target.x(), target.y())))
                 {
                     usedFields.append(target);
-                    m_InfoFields.append(createMarkedFieldActor(target, QColor(255, 0, 0), Terrain::DrawPriority::MarkedFieldMap));
+                    m_InfoFields.append(createMarkedFieldActor(target, QColor(255, 0, 0), Terrain::ExtraDrawPriority::MarkedFieldMap));
                 }
             }
         }
@@ -2016,6 +2020,11 @@ void HumanPlayerInput::deserializeObject(QDataStream& stream)
 {
     qint32 version;
     stream >> version;
+    if (version == 2)
+    {
+        QString dummy;
+        stream >> dummy;
+    }
 }
 
 void HumanPlayerInput::centerCameraOnAction(GameAction* pAction)

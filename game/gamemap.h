@@ -37,6 +37,7 @@ class GameMap : public QObject, public FileSerializable, public oxygine::Actor
 public:
     static const qint32 frameTime;
     static constexpr qint32 defaultImageSize = 32;
+    static const char* const PLAINS;
     /**
      * @brief The MapHeaderInfo struct read from the filesystem
      */
@@ -144,7 +145,11 @@ public:
      * @param fast
      */
     void deserializer(QDataStream& pStream, bool fast);
-
+    /**
+     * @brief readMapHeader
+     * @param pStream
+     * @param headerInfo
+     */
     static void readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo);
     /**
      * @brief readMapName
@@ -213,7 +218,15 @@ public:
      * @brief registerMapAtInterpreter
      */
     void registerMapAtInterpreter();
+    /**
+     * @brief getMapPath
+     * @return
+     */
     QString getMapPath() const;
+    /**
+     * @brief setMapPath
+     * @param mapPath
+     */
     void setMapPath(const QString &mapPath);
     /**
      * @brief playMusic
@@ -255,6 +268,7 @@ signals:
     void sigShowUnitStatistics();
     void sigMovedMap();
     void sigZoomChanged(float zoom);
+    void sigShowDamageCalculator();
 public slots:
     /**
      * @brief getIsHumanMatch
@@ -452,7 +466,7 @@ public slots:
      * @param range the unit will be spawned on an empty field that can be crossed by the unit. This range is the test range where the game tries to spawn the unit. From 0 to anything
      * @return the spawned unit
      */
-    Unit* spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* owner, qint32 range = 0);
+    Unit* spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* owner, qint32 range = 0, bool ignoreMovement = false);
     /**
      * @brief refillAll refills all units ammo and fuel
      */
@@ -760,6 +774,10 @@ public slots:
      * @brief onWeatherChanged
      */
     void onWeatherChanged(Weather* pWeather);
+    /**
+     * @brief showDamageCalculator
+     */
+    void showDamageCalculator();
 private slots:
     void zoomChanged();
 private:

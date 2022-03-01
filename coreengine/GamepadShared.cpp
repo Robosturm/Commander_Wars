@@ -1,6 +1,8 @@
 #include "coreengine/Gamepad.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/workerthread.h"
+#include "coreengine/interpreter.h"
+
 #include <QDateTime>
 
 Gamepad::Gamepad(qint32 gamepadId)
@@ -8,6 +10,7 @@ Gamepad::Gamepad(qint32 gamepadId)
       m_gamepadId(gamepadId)
 {
     setObjectName("Gamepad");
+    Interpreter::setCppOwnerShip(this);
 }
 
 void Gamepad::init()

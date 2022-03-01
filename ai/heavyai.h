@@ -295,6 +295,16 @@ public slots:
      * @param index
      */
     void showUnitPfs(bool enemy, qint32 index);
+    /**
+     * @brief showIslandMap
+     * @param unitId
+     */
+    void showIslandMap(QString unitId);
+    /**
+     * @brief showIslandMap
+     * @param unitId
+     */
+    void hideIslandMap(QString unitId);
 protected:
     /**
      * @brief scoreActions

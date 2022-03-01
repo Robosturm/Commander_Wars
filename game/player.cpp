@@ -45,11 +45,8 @@ void Player::init()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "loadDefaultPlayerColor";
-    QJSValueList args;
-    QJSValue objArg = pInterpreter->newQObject(this);
-    args << objArg;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args << obj4;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
     pInterpreter->doFunction("PLAYER", function, args);
     m_team = getPlayerID();
     setColor(m_Color, m_team);
@@ -58,6 +55,26 @@ void Player::init()
 BaseGameInputIF* Player::getBaseGameInput()
 {
     return m_pBaseGameInput.get();
+}
+
+QString Player::getDisplayName() const
+{
+    return m_displayName;
+}
+
+void Player::setDisplayName(const QString &newDisplayName)
+{
+    m_displayName = newDisplayName;
+}
+
+const QString Player::getUniqueIdentifier() const
+{
+    return m_uniqueIdentifier;
+}
+
+void Player::setUniqueIdentifier(const QString &newUniqueIdentifier)
+{
+    m_uniqueIdentifier = newUniqueIdentifier;
 }
 
 float Player::getUnitBuildValue(const QString & unitID)
@@ -177,10 +194,8 @@ bool Player::loadTable(qint32 table)
 {
     CONSOLE_PRINT("Player::loadTable", Console::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    args << table;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args << obj4;
+    QJSValueList args({table,
+                      pInterpreter->newQObject(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorTable", args);
     QString tablename;
     bool found = false;
@@ -411,9 +426,6 @@ void Player::createTable(QColor baseColor)
     m_colorTable = QImage(imageSize, imageSize, QImage::Format_RGBA8888);
     m_colorTable.fill(QColor(0, 0, 0, 0));
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args1;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorTableCount");
     qint32 size = 0;
     if (erg.isNumber())
@@ -422,10 +434,8 @@ void Player::createTable(QColor baseColor)
     }
     for (qint32 i = 0; i < size; i++)
     {
-        QJSValueList args;
-        args << i;
-        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-        args << obj4;
+        QJSValueList args({i,
+                           pInterpreter->newQObject(m_pMap)});
         QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorForTable", args);
         qint32 value = 100;
         QColor color;
@@ -515,8 +525,7 @@ oxygine::spResAnim Player::getNeutralTableAnim()
 }
 
 qint32 Player::getPlayerID() const
-{
-    
+{    
     if (m_pMap != nullptr)
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -563,11 +572,8 @@ QString Player::getArmy()
     {
         // editor menu mode
         Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValueList args;
-        QJSValue objArg = pInterpreter->newQObject(this);
-        args << objArg;
-        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-        args << obj4;
+        QJSValueList args({pInterpreter->newQObject(this),
+                           pInterpreter->newQObject(m_pMap)});
         QJSValue ret = pInterpreter->doFunction("PLAYER", "getDefaultArmy", args);
         if (ret.isString())
         {
@@ -892,14 +898,10 @@ void Player::onUnitDeath(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "onUnitDeath";
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args << obj;
-    QJSValue obj1 = pInterpreter->newQObject(pUnit);
-    args << obj1;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args << obj4;
-    QJSValue ret = pInterpreter->doFunction("PLAYER", function1, args);
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction("PLAYER", function1, args);
     for(auto & pCO : m_playerCOs)
     {
         if (pCO.get() != nullptr)
@@ -1386,9 +1388,7 @@ bool Player::getFieldDirectVisible(qint32 x, qint32 y)
 qint32 Player::getCosts(const QString & id, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args << obj4;
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(id, "getBaseCost");
     qint32 costs = 0;
     if (ret.isNumber())
@@ -1465,13 +1465,9 @@ void Player::startOfTurn()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "startOfTurn";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-    args1 << obj4;
-    pInterpreter->doFunction("PLAYER", function1, args1);
-
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction("PLAYER", function1, args);
     for(auto & pCO : m_playerCOs)
     {
         if (pCO.get() != nullptr)
@@ -1761,10 +1757,8 @@ qint32 Player::getAverageCost()
         {
             QString unitId = pUnitSpriteManager->getID(i);
             QString function1 = "getBaseCost";
-            QJSValueList args1;
-            QJSValue obj4 = pInterpreter->newQObject(m_pMap);
-            args1 << obj4;
-            QJSValue erg = pInterpreter->doFunction(unitId, function1, args1);
+            QJSValueList args({pInterpreter->newQObject(m_pMap)});
+            QJSValue erg = pInterpreter->doFunction(unitId, function1, args);
             if (erg.isNumber())
             {
                 m_averageCosts += erg.toInt();
@@ -1807,7 +1801,7 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
                     case GameEnums::RocketTarget_Money:
                     {
                         // calc funds damage
-                        damageDone += damagePoints / Unit::MAX_UNIT_HP * modifier * pUnit->getCosts();
+                        damageDone += damagePoints / Unit::MAX_UNIT_HP * modifier * pUnit->getCoUnitValue();
                         break;
                     }
                     case GameEnums::RocketTarget_HpHighMoney:
@@ -1949,6 +1943,7 @@ void Player::serializeObject(QDataStream& pStream) const
     pStream << m_BuildlistChanged;
     m_Variables.serializeObject(pStream);
     pStream << m_playerArmySelected;
+    pStream << m_displayName;
 }
 
 void Player::deserializeObject(QDataStream& pStream)
@@ -2141,5 +2136,8 @@ void Player::deserializer(QDataStream& pStream, bool fast)
     {
         pStream >> m_playerArmySelected;
     }
-
+    if (version > 15)
+    {
+        pStream >> m_displayName;
+    }
 }

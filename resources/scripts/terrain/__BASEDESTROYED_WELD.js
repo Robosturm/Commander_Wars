@@ -114,8 +114,11 @@ var Constructor = function()
             {
                 var building = map.getTerrain(x, y + 1).getBuilding();
                 if (building !== null &&
-                        building.getBuildingID() === "ZBLACKHOLE_FACTORY" &&
-                        building.getX() - 1 === x && building.getY() - 4 === y)
+                   (building.getBuildingID() === "ZBLACKHOLE_FACTORY" ||
+                    building.getBuildingID() === "ZBLACKHOLE_FACTORYDESERT" ||
+                    building.getBuildingID() === "ZBLACKHOLE_FACTORYWASTE" ||
+                    building.getBuildingID() === "ZBLACKHOLE_FACTORYSNOW") &&
+                    building.getX() - 1 === x && building.getY() - 4 === y)
                 {
                     if (surroundings.indexOf("+W") >= 0)
                     {
@@ -222,19 +225,19 @@ var Constructor = function()
         }
         if (baseTerrainId === "WASTE")
         {
-            return WASTE.getTerrainAnimationForeground(unit, terrain)
+            return WASTE.getTerrainAnimationForeground(unit, terrain, defender, map)
         }
         else if (baseTerrainId === "SNOW")
         {
-            return SNOW.getTerrainAnimationForeground(unit, terrain)
+            return SNOW.getTerrainAnimationForeground(unit, terrain, defender, map)
         }
         else if (baseTerrainId === "DESERT")
         {
-            return DESERT.getTerrainAnimationForeground(unit, terrain)
+            return DESERT.getTerrainAnimationForeground(unit, terrain, defender, map)
         }
         else
         {
-            return TERRAIN.getTerrainAnimationForeground(unit, terrain);
+            return TERRAIN.getTerrainAnimationForeground(unit, terrain, defender, map);
         }
     };
     this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
