@@ -3,7 +3,15 @@
 #include <err.h>
 #include <execinfo.h>
 
-static uint8_t sAlternateStack[SIGSTKSZ];
+#if defined(SIGSTKSZ)
+    #define STACK_SIZE SIGSTKSZ
+#elif defined(_SC_SIGSTKSZ)
+    #define STACK_SIZE _SC_SIGSTKSZ
+#else
+    #error("unsupported build environment")
+#endif
+
+static uint8_t sAlternateStack[STACK_SIZE];
 
 // prototype to prevent warning about not returning
 void _posixSignalHandler( qint32 inSig, siginfo_t *inSigInfo, void *inContext ) __attribute__ ((noreturn));
@@ -80,9 +88,9 @@ void CrashReporter::setOsSignalHandler()
 {
     // setup alternate stack
 #ifdef Q_OS_LINUX
-    stack_t ss {static_cast<void*>(sAlternateStack), 0, SIGSTKSZ};
+    stack_t ss {static_cast<void*>(sAlternateStack), 0, STACK_SIZE};
 #else
-    stack_t ss {static_cast<void*>(sAlternateStack), SIGSTKSZ, 0};
+    stack_t ss {static_cast<void*>(sAlternateStack), STACK_SIZE, 0};
 #endif
 
     if ( sigaltstack( &ss, nullptr ) != 0 )
