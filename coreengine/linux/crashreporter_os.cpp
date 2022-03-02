@@ -3,12 +3,10 @@
 #include <err.h>
 #include <execinfo.h>
 
-#if defined(SIGSTKSZ)
-    #define STACK_SIZE SIGSTKSZ
-#elif defined(_SC_SIGSTKSZ)
+#if defined(_SC_SIGSTKSZ)
     #define STACK_SIZE _SC_SIGSTKSZ
 #else
-    #error("unsupported build environment")
+    #define STACK_SIZE SIGSTKSZ
 #endif
 
 static uint8_t sAlternateStack[STACK_SIZE];
