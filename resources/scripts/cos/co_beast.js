@@ -181,7 +181,15 @@ var Constructor = function()
         {
             if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
             {
-                attacker.setHp(attacker.getHp() - 1);
+                var hp = attacker.getHp();
+                if (hp > 1)
+                {
+                    attacker.setHp(hp - 1);
+                }
+                else
+                {
+                    attacker.setHp(0.00001);
+                }
             }
         }
     };

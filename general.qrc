@@ -6581,5 +6581,6 @@
         <file>resources/scripts/building/znest_center_laser_middle_destroyed.js</file>
         <file>resources/scripts/building/znest_center_laser_right_destroyed.js</file>
         <file>resources/scripts/building/znest_nest_laser_destroyed.js</file>
+        <file>resources/objects/info.png</file>
     </qresource>
 </RCC>

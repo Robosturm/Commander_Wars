@@ -1492,9 +1492,9 @@ void GameMap::showRules()
     emit sigShowRules();
 }
 
-void GameMap::showUnitStatistics()
+void GameMap::showUnitStatistics(qint32 player)
 {
-    emit sigShowUnitStatistics();
+    emit sigShowUnitStatistics(player);
 }
 
 void GameMap::showDamageCalculator()

@@ -180,7 +180,7 @@ var Init =
             menu.showAttackLog(0);
             menu.showRules();
             menu.showUnitInfo(0);
-            menu.showUnitStatistics();
+            menu.showUnitStatistics(0);
             menu.showExitGame();
             menu.showSurrenderGame();
             menu.showSaveAndExitGame();

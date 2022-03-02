@@ -265,7 +265,7 @@ signals:
     void sigShowChangeSound();
     void sigShowWiki();
     void sigShowRules();
-    void sigShowUnitStatistics();
+    void sigShowUnitStatistics(qint32 player);
     void sigMovedMap();
     void sigZoomChanged(float zoom);
     void sigShowDamageCalculator();
@@ -440,7 +440,7 @@ public slots:
     /**
      * @brief showUnitStatistics
      */
-    void showUnitStatistics();
+    void showUnitStatistics(qint32 player);
     /**
      * @brief getBuildingCount
      * @param buildingID

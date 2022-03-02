@@ -418,7 +418,8 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 // do nothing
                 // some one spawned them to give some info hints player needs to remove them by canceling.
             }
-            else if (m_pGameAction.get() == nullptr)
+            else if (m_pGameAction.get() == nullptr &&
+                     m_pPlayer != nullptr)
             {
                 // prepare action
                 m_pGameAction = spGameAction::create(m_pMap);
@@ -557,6 +558,10 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                     cleanUpInput();
                 }
             }
+            else if (m_pPlayer == nullptr)
+            {
+                showInfoMenu(x, y);
+            }
             else
             {
                 //cleanUpInput();
@@ -565,27 +570,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         }
         else if (isViewPlayer)
         {
-            // prepare action
-            m_pGameAction = spGameAction::create(m_pMap);
-            m_pGameAction->setTarget(QPoint(x, y));
-            if (m_pPlayer != nullptr)
-            {
-                m_pGameAction->setPlayer(m_pPlayer->getPlayerID());
-            }
-            QStringList actions = getViewplayerActionList();
-            QStringList possibleActions;
-            for (qint32 i = 0; i < actions.size(); i++)
-            {
-                if (m_pGameAction->canBePerformed(actions[i], true))
-                {
-                    possibleActions.append(actions[i]);
-                }
-            }
-            if (possibleActions.size() > 0)
-            {
-                Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
-                createActionMenu(possibleActions, x, y);
-            }
+            showInfoMenu(x, y);
         }
         else
         {
@@ -593,6 +578,36 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         }
         m_lastClickPoint = QPoint(pCursor->getMapPointX(), pCursor->getMapPointY());
     }
+}
+
+void HumanPlayerInput::showInfoMenu(qint32 x, qint32 y)
+{
+    // prepare action
+    m_pGameAction = spGameAction::create(m_pMap);
+    m_pGameAction->setTarget(QPoint(x, y));
+    if (m_pPlayer != nullptr)
+    {
+        m_pGameAction->setPlayer(m_pPlayer->getPlayerID());
+    }
+    else
+    {
+        m_pGameAction->setPlayer(m_pMap->getCurrentPlayer()->getPlayerID());
+    }
+    QStringList actions = getViewplayerActionList();
+    QStringList possibleActions;
+    for (qint32 i = 0; i < actions.size(); i++)
+    {
+        if (m_pGameAction->canBePerformed(actions[i], true))
+        {
+            possibleActions.append(actions[i]);
+        }
+    }
+    if (possibleActions.size() > 0)
+    {
+        Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+        createActionMenu(possibleActions, x, y);
+    }
+
 }
 
 void HumanPlayerInput::markedFieldSelected(QPoint point)
@@ -731,7 +746,8 @@ void HumanPlayerInput::finishAction()
         {
             emit performAction(m_pGameAction);
         }
-        else if (isViewPlayer)
+        else if (isViewPlayer ||
+                 m_pPlayer == nullptr)
         {
             if (m_pGameAction->getIsLocal())
             {

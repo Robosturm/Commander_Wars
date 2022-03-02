@@ -1521,13 +1521,16 @@ void GameMenue::showUnitInfo(qint32 player)
     addChild(pDialogUnitInfo);
 }
 
-void GameMenue::showUnitStatistics()
+void GameMenue::showUnitStatistics(qint32 player)
+{
+    showPlayerUnitStatistics(m_pMap->getPlayer(player));
+}
+
+void GameMenue::showPlayerUnitStatistics(Player* pPlayer)
 {
     m_Focused = false;
-    
     CONSOLE_PRINT("showUnitStatistics()", Console::eDEBUG);
     spGenericBox pBox = spGenericBox::create();
-    Player* pPlayer = m_pMap->getCurrentViewPlayer();
     spUnitStatisticView view = spUnitStatisticView::create(m_pMap->getGameRecorder()->getPlayerDataRecords()[pPlayer->getPlayerID()],
             Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer);
     view->setPosition(30, 30);

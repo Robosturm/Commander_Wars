@@ -2,6 +2,7 @@
 #define VIEWPLAYER_H
 
 #include "game/player.h"
+#include "gameinput/humanplayerinput.h"
 
 class Viewplayer;
 typedef oxygine::intrusive_ptr<Viewplayer> spViewplayer;
@@ -19,6 +20,11 @@ public:
 
     explicit Viewplayer(GameMap* pMap);
     virtual ~Viewplayer() = default;
+    /**
+     * @brief getColorTableAnim
+     * @return
+     */
+    virtual oxygine::spResAnim getColorTableAnim() const override;
 public slots:
     /**
      * @brief getFieldVisible
@@ -52,6 +58,7 @@ public slots:
     void setViewType(const qint32 &ViewType);
 private:
     qint32 m_ViewType{static_cast<qint32>(ViewType::CurrentTeam)};
+    HumanPlayerInput m_input;
 };
 
 #endif // VIEWPLAYER_H

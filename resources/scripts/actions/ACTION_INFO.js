@@ -46,7 +46,7 @@ var Constructor = function()
         }
         else if (id === "STATISTICS")
         {
-            map.showUnitStatistics();
+            map.showUnitStatistics(action.getPlayer());
         }
         else if (id === "CALCULATOR")
         {
