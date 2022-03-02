@@ -731,7 +731,8 @@ void GameMenue::editFinishedCanceled()
 
 spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
 {
-    if (pGameAction.get() != nullptr &&
+    if (m_gameStarted &&
+        pGameAction.get() != nullptr &&
         (pGameAction->getActionID() == CoreAI::ACTION_NEXT_PLAYER ||
          pGameAction->getActionID() == CoreAI::ACTION_SWAP_COS))
     {
@@ -1061,7 +1062,8 @@ void GameMenue::centerMapOnAction(GameAction* pGameAction)
     Player* pPlayer = getCurrentViewPlayer();
     
     QPoint target = pGameAction->getTarget();
-    if (pUnit != nullptr)
+    if (pUnit != nullptr &&
+        !pUnit->isStealthed(pPlayer))
     {
         const auto & path = pGameAction->getMovePath();
         for (const auto & point : path)
@@ -1075,7 +1077,9 @@ void GameMenue::centerMapOnAction(GameAction* pGameAction)
     }
 
     if (m_pMap->onMap(target.x(), target.y()) &&
-        pPlayer->getFieldVisible(target.x(), target.y()))
+        pPlayer->getFieldVisible(target.x(), target.y()) &&
+        (pUnit == nullptr ||
+         !pUnit->isStealthed(pPlayer)))
     {
         m_pMap->centerMap(target.x(), target.y());
     }
