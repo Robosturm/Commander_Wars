@@ -6588,5 +6588,6 @@
         <file>resources/images/game/icon_fm.png</file>
         <file>resources/images/game/icon_gw.png</file>
         <file>resources/images/game/icon_hs.png</file>
+        <file>resources/scripts/actions/ACTION_NEST_FACTORY_DOOR.js</file>
     </qresource>
 </RCC>
