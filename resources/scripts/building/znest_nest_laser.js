@@ -59,6 +59,34 @@ var Constructor = function()
             building.loadSprite("nest_laser+SW", false, 400, Qt.point(0, building.getImageSize()));
         }
     };
+    this.getActionTargetFields = function(building)
+    {
+        var map = building.getMap();
+        var targets = globals.getEmptyPointArray();
+        var day = map.getCurrentDay();
+        if (day % 3 === 1)
+        {
+            for (var i = 1; i < 20; i++)
+            {
+                targets.append(Qt.point(-1, i));
+            }
+        }
+        else if (day % 3 === 2)
+        {
+            for (var i = 1; i < 20; i++)
+            {
+                targets.append(Qt.point(i - 1, i));
+            }
+        }
+        else if (day % 3 === 0)
+        {
+            for (var i = 1; i < 20; i++)
+            {
+                targets.append(Qt.point(-i - 1, i));
+            }
+        }
+        return targets;
+    };
     this.usesMapLayer = function()
     {
         return true;
@@ -83,6 +111,10 @@ var Constructor = function()
         animation.addScreenshake(30, 0.95, 1000, 200);
         animation.setSound("explosion+land.wav");
         map.getTerrain(x, y).loadBuilding("ZNEST_NEST_LASER_DESTROYED");
+    };
+    this.getDamage = function(building, unit)
+    {
+        return 8;
     };
 }
 

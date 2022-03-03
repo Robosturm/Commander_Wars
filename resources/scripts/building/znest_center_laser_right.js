@@ -44,6 +44,20 @@ var Constructor = function()
         animation.setSound("explosion+land.wav");
         map.getTerrain(x, y).loadBuilding("ZNEST_CENTER_LASER_RIGHT_DESTROYED");
     };
+    this.getActionTargetFields = function(building)
+    {
+        var targets = globals.getEmptyPointArray();
+        // laser to not fire infinitly but the range is still fucking huge :)
+        for (var i = 1; i < 20; i++)
+        {
+            targets.append(Qt.point(0, i));
+        }
+        return targets;
+    };
+    this.getDamage = function(building, unit)
+    {
+        return 8;
+    };
 }
 
 Constructor.prototype = BUILDING;

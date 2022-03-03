@@ -1390,11 +1390,11 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     }
     if (points.size() > 10)
     {
-        m_pMap->updateSprites();
+        m_pMap->updateSprites(-1, -1, true);
     }
     else
     {
-        m_pMap->updateSpritesOfTiles(points);
+        m_pMap->updateSpritesOfTiles(points, true);
     }
     pApp->continueRendering();
 }
@@ -1471,11 +1471,11 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     }
     if (points.size() > 10)
     {
-        m_pMap->updateSprites();
+        m_pMap->updateSprites(-1, -1, true);
     }
     else
     {
-        m_pMap->updateSpritesOfTiles(points);
+        m_pMap->updateSpritesOfTiles(points, true);
     }
     if (Settings::getSyncAnimations())
     {
