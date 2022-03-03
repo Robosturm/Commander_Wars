@@ -4,7 +4,7 @@
 #include "wiki/wikipage.h"
 
 class DefaultWikipage;
-typedef oxygine::intrusive_ptr<DefaultWikipage> spDefaultWikipage;
+using spDefaultWikipage = oxygine::intrusive_ptr<DefaultWikipage>;
 
 class DefaultWikipage : public Wikipage
 {

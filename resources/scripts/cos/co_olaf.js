@@ -43,7 +43,7 @@ var Constructor = function()
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
-        map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 2);
+        map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 1);
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -55,7 +55,7 @@ var Constructor = function()
         var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-        map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 2);
+        map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 1);
         powerNameAnimation.queueAnimation(animation2);
         CO_OLAF.olafDamage(co, 2, animation2, map);
     };
@@ -208,7 +208,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Causes snow to fall for two days, causing his firepower to rise.");
+        return qsTr("Causes snow to fall for one day, causing his firepower to rise.");
     };
     this.getPowerName = function(co)
     {
@@ -216,7 +216,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("A mighty blizzard causes two HP of damage to all enemy troops. The snow will also cause his firepower to rise for two days.");
+        return qsTr("A mighty blizzard causes two HP of damage to all enemy troops. The snow will also cause his firepower to rise for one day.");
     };
     this.getSuperPowerName = function(co)
     {

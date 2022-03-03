@@ -6582,5 +6582,11 @@
         <file>resources/scripts/building/znest_center_laser_right_destroyed.js</file>
         <file>resources/scripts/building/znest_nest_laser_destroyed.js</file>
         <file>resources/objects/info.png</file>
+        <file>resources/images/game/rules.png</file>
+        <file>resources/images/game/icon_cs.png</file>
+        <file>resources/images/game/icon_fh.png</file>
+        <file>resources/images/game/icon_fm.png</file>
+        <file>resources/images/game/icon_gw.png</file>
+        <file>resources/images/game/icon_hs.png</file>
     </qresource>
 </RCC>

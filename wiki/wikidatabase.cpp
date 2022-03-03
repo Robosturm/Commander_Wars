@@ -4,6 +4,7 @@
 #include "wiki/wikidatabase.h"
 #include "wiki/fieldinfo.h"
 #include "wiki/defaultwikipage.h"
+#include "wiki/damagetablepage.h"
 
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/unitspritemanager.h"
@@ -26,6 +27,8 @@
 #include "objects/coinfoactor.h"
 
 #include "coreengine/interpreter.h"
+
+const char* const DAMAGE_TABLE_NAME = "Damage Table";
 
 WikiDatabase::WikiDatabase()
     : QObject(),
@@ -70,6 +73,8 @@ void WikiDatabase::load()
     {
         m_Entries.append(PageData(pCOPerkManager->getName(perk), perk, {"Perk"}));
     }
+
+    m_Entries.append(PageData(DAMAGE_TABLE_NAME, DAMAGE_TABLE_NAME, {"Others"}));
 
     // load general wiki page
     QStringList searchPaths;
@@ -238,6 +243,10 @@ spWikipage WikiDatabase::getPage(PageData data)
         pPlayer->init();
         spUnit pUnit = spUnit::create(id, pPlayer.get(), false, nullptr);
         ret = spFieldInfo::create(nullptr, pUnit.get());
+    }
+    else if (DAMAGE_TABLE_NAME)
+    {
+        ret = spDamageTablePage::create();
     }
     else if (QFile::exists(id))
     {

@@ -544,6 +544,7 @@ set(${PROJECT_NAME}_SRCS
     wiki/wikipage.cpp
     wiki/defaultwikipage.cpp
     wiki/wikiview.cpp
+    wiki/damagetablepage.cpp
 
     # spriting support
     spritingsupport/spritecreator.cpp

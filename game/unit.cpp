@@ -3402,7 +3402,7 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
 float Unit::getBaseDamage(Unit* pEnemyUnit)
 {
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
-    float dmg = 0.0f;
+    float dmg = -1.0f;
     if (!getWeapon1ID().isEmpty())
     {
         dmg = pWeaponManager->getBaseDamage(getWeapon1ID(), pEnemyUnit);

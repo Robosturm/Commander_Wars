@@ -144,12 +144,20 @@ var Constructor = function()
 
     this.getVisionrangeModifier = function(co, unit, posX, posY, map)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
+        if (map.getGameRules().getCurrentWeather() !== null)
         {
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
-                return 3;
+                var currentWeatherId = map.getGameRules().getCurrentWeather().getWeatherId();
+                if (currentWeatherId === "WEATHER_RAIN")
+                {
+                    return 3;
+                }
+                else if (currentWeatherId === "WEATHER_MIST")
+                {
+                    return 5;
+                }
             }
         }
         return 0;
@@ -157,13 +165,17 @@ var Constructor = function()
 
     this.getPerfectVision = function(co, map)
     {
-        if (map.getGameRules().getCurrentWeather() !== null &&
-                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
+        if (map.getGameRules().getCurrentWeather() !== null)
         {
-            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            var currentWeatherId = map.getGameRules().getCurrentWeather().getWeatherId();
+            if (currentWeatherId === "WEATHER_RAIN" ||
+                currentWeatherId === "WEATHER_MIST")
             {
-                return true;
+                if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -196,7 +208,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Changes the weather to a random one.");
+        return qsTr("Changes the weather to a random one for two days.");
     };
     this.getPowerName = function(co)
     {
@@ -204,7 +216,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Changes the weather to a random one and she gets a firepower boost.\n") +
+        return qsTr("Changes the weather to a random one for two days and she gets a firepower boost for this turn.\n") +
                qsTr("During rain she gets additionally improved vision.\n") +
                qsTr("During snow she gets additionally improved movement.\n") +
                qsTr("During sandstorm she gets additionally improved firerange for her indirects.\n");
