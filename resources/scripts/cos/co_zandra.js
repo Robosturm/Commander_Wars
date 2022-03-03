@@ -183,7 +183,7 @@ var Constructor = function()
                     case GameEnums.PowerMode_Tagpower:
                     case GameEnums.PowerMode_Superpower:
                     case GameEnums.PowerMode_Power:
-                        return 2;
+                        return 1;
                     default:
                         return 0;
                     }
