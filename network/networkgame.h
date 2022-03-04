@@ -65,7 +65,7 @@ public:
      * @brief slaveRunning
      * @param stream
      */
-    void slaveRunning(QDataStream &stream, spTCPServer & pGameServer);
+    void slaveRunning(const QJsonObject & objData, spTCPServer & pGameServer);
 signals:
     void sigDataChanged();
     void sigClose(NetworkGame* pGame);

@@ -1,6 +1,9 @@
 #include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 #include "network/networkgame.h"
+#include "network/JsonKeys.h"
 
 #include "multiplayer/networkcommands.h"
 
@@ -14,14 +17,12 @@ NetworkGame::NetworkGame(QObject* pParent)
 {
 }
 
-void NetworkGame::slaveRunning(QDataStream &stream, spTCPServer & pGameServer)
+void NetworkGame::slaveRunning(const QJsonObject & objData, spTCPServer & pGameServer)
 {
     if (!m_slaveRunning)
     {
-        QString description;
-        stream >> description;
-        bool hasPassword = false;
-        stream >> hasPassword;
+        QString description = objData.value(JsonKeys::JSONKEY_GAMEDESCRIPTION).toString();
+        bool hasPassword = objData.value(JsonKeys::JSONKEY_HASPASSWORD).toBool();
         m_data.setDescription(description);
         m_data.setLocked(hasPassword);
         auto pClient = pGameServer->getClient(m_hostingSocket);
@@ -30,12 +31,12 @@ void NetworkGame::slaveRunning(QDataStream &stream, spTCPServer & pGameServer)
             // send data
             QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
             CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-            QByteArray sendData;
-            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-            sendStream << command;
-            sendStream << m_data.getSlaveAddress();
-            sendStream << m_data.getSlavePort();
-            emit pClient->sig_sendData(m_hostingSocket, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
+            QJsonObject data;
+            data.insert(JsonKeys::JSONKEY_COMMAND, command);
+            data.insert(JsonKeys::JSONKEY_ADDRESS, m_data.getSlaveAddress());
+            data.insert(JsonKeys::JSONKEY_PORT, static_cast<qint64>(m_data.getSlavePort()));
+            QJsonDocument doc(data);
+            emit pClient->sig_sendData(m_hostingSocket, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
             m_slaveRunning = true;
         }
         else

@@ -384,6 +384,7 @@ set(${PROJECT_NAME}_SRCS
     network/networkgamedata.cpp
     network/mainserver.cpp
     network/networkgame.cpp
+    network/JsonKeys.h
 
     # game
     game/gamemap.cpp
@@ -489,6 +490,7 @@ set(${PROJECT_NAME}_SRCS
     multiplayer/password.cpp
     multiplayer/dialogpasswordandadress.cpp
     multiplayer/dialogpassword.cpp
+    multiplayer/networkcommands.h
 
     #campaign support
     ingamescriptsupport/campaigneditor.cpp

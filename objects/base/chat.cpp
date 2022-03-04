@@ -1,8 +1,8 @@
-#include "chat.h"
+#include <QSize>
+#include <QMutexLocker>
+#include <QJsonDocument>
 
-#include "QSize"
-
-#include "QMutexLocker"
+#include "objects/base/chat.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
@@ -12,6 +12,8 @@
 #include "game/gamemap.h"
 
 #include "menue/gamemenue.h"
+
+#include "network/JsonKeys.h"
 
 const char* const chatPlayerTarget = "@Player";
 const char* const chatTeamTarget = "@Team";
@@ -98,20 +100,24 @@ void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSeriv
     if (service == m_serviceMode)
     {
         CONSOLE_PRINT("Receiving chat message", Console::eDEBUG);
-        QString message(data);
-        addMessage(message);
+        QJsonDocument message = QJsonDocument::fromJson(data);
+
+        addMessage(message.object());
     }
 }
 
-void Chat::addMessage(QString message, bool local)
+void Chat::addMessage(QJsonObject data, bool local)
 {    
     spGameMenue pGamemenu = GameMenue::getInstance();
     
     bool show = true;
-    if (message.startsWith("@") && pGamemenu.get() != nullptr)
+
+    QString textMessage = data.value(JsonKeys::JSONKEY_ChatMessage).toString();
+    QString target = data.value(JsonKeys::JSONKEY_ChatTarget).toString();
+    QString sender = data.value(JsonKeys::JSONKEY_ChatSender).toString();
+
+    if (target.startsWith("@") && pGamemenu.get() != nullptr)
     {
-        QString target = message.split(" ")[0];
-        message = message.remove(0, message.indexOf(" "));
         if (target.startsWith(chatTeamTarget))
         {
             qint32 team = target.replace(chatTeamTarget, "").toInt();
@@ -144,7 +150,6 @@ void Chat::addMessage(QString message, bool local)
                 show = false;
             }
         }
-        message = message.remove(0, message.indexOf(" "));
     }
     if (local)
     {
@@ -152,7 +157,7 @@ void Chat::addMessage(QString message, bool local)
     }
     if (show)
     {
-        m_messages.append(message);
+        m_messages.append(sender + ":" + textMessage);
         if (m_messages.size() > m_bufferSize)
         {
             m_messages.pop_front();
@@ -180,9 +185,11 @@ void Chat::sendData(QString message)
 {
     if (!message.isEmpty())
     {
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_ChatSender, Settings::getUsername());
         QString text;
-        spGameMenue pGamemenu = GameMenue::getInstance();
-        
+        QString target;
+        spGameMenue pGamemenu = GameMenue::getInstance();        
         if (message.startsWith("@") &&
             pGamemenu.get() != nullptr)
         {
@@ -193,26 +200,31 @@ void Chat::sendData(QString message)
                 {
                     if (list[i] == chatEnemyTarget)
                     {
-                        list[i] = chatNotTeamTarget + QString::number(pGamemenu->getCurrentViewPlayer()->getTeam());
+                        target = chatNotTeamTarget + QString::number(pGamemenu->getCurrentViewPlayer()->getTeam());
                     }
                     else if (list[i] == chatAllyTarget)
                     {
-                        list[i] = chatTeamTarget + QString::number(pGamemenu->getCurrentViewPlayer()->getTeam());
+                        target = chatTeamTarget + QString::number(pGamemenu->getCurrentViewPlayer()->getTeam());
                     }
-                    text += list[i] + " " + Settings::getUsername() + ": ";
+                    else
+                    {
+                        target = list[i];
+                    }
                 }
                 else
                 {
                     text += list[i] + " ";
                 }
             }
+            data.insert(JsonKeys::JSONKEY_ChatTarget, target);
+            data.insert(JsonKeys::JSONKEY_ChatMessage, text);
         }
         else
         {
-            text = Settings::getUsername() + ": " + message;
+            data.insert(JsonKeys::JSONKEY_ChatTarget, "");
+            data.insert(JsonKeys::JSONKEY_ChatMessage, message);
         }
-
-        addMessage(text, true);
+        addMessage(data, true);
         if (m_messages.size() > m_bufferSize)
         {
             m_messages.pop_front();
@@ -220,7 +232,8 @@ void Chat::sendData(QString message)
         if (m_pInterface.get() != nullptr)
         {
             CONSOLE_PRINT("Sending chat message", Console::eDEBUG);
-            emit m_pInterface->sig_sendData(0, text.toStdString().c_str(), m_serviceMode, true);
+            QJsonDocument doc(data);
+            emit m_pInterface->sig_sendData(0, doc.toJson(), m_serviceMode, true);
         }
         m_ChatInput->setCurrentText("");
         

@@ -114,7 +114,7 @@ private:
      * @param socketID
      * @param stream
      */
-    void joinSlaveGame(quint64 socketID, QDataStream & stream);
+    void joinSlaveGame(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief closeGame
      * @param pGame
@@ -134,19 +134,19 @@ private:
      * @param socketID
      * @param stream
      */
-    void onSlaveReady(quint64 socketID, QDataStream &stream);
+    void onSlaveReady(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief onGameRunningOnServer called once the game has loaded all data needed for hosting a game and players can join
      * @param socketID
      * @param stream
      */
-    void onGameRunningOnServer(quint64 socketID, QDataStream &stream);
+    void onGameRunningOnServer(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief onOpenPlayerCount
      * @param socketID
      * @param stream
      */
-    void onOpenPlayerCount(quint64 socketID, QDataStream &stream);
+    void onOpenPlayerCount(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief getNextFreeSlaveAddress
      * @param address

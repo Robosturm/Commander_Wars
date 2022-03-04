@@ -2,7 +2,7 @@
 #define CHAT_H
 
 #include <QObject>
-
+#include <QJsonObject>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -31,7 +31,7 @@ public slots:
     void dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service);
     void sendData(QString message);
 private:
-    void addMessage(QString message, bool local = false);
+    void addMessage(QJsonObject data, bool local = false);
 
 private:
     QStringList m_messages;

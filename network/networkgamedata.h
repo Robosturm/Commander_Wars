@@ -2,6 +2,7 @@
 #define NETWORKGAMEDATA_H
 
 #include <QObject>
+#include <QJsonObject>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -10,7 +11,7 @@
 class NetworkGameData;
 typedef oxygine::intrusive_ptr<NetworkGameData> spNetworkGameData;
 
-class NetworkGameData : public QObject, public FileSerializable, public oxygine::ref_counter
+class NetworkGameData : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -20,20 +21,21 @@ public:
      * @brief serialize stores the object
      * @param pStream
      */
-    virtual void serializeObject(QDataStream& pStream) const override;
+    QJsonObject toJson() const;
     /**
      * @brief deserialize restores the object
      * @param pStream
      */
-    virtual void deserializeObject(QDataStream& pStream) override;
+    void fromJson(const QJsonObject & obj);
     /**
      * @brief getVersion stream version for serialization
      * @return
      */
-    inline virtual qint32 getVersion() const override
+    inline qint32 getVersion() const
     {
         return 0;
     }
+
     QString getMapName() const;
     void setMapName(const QString &mapName);
 

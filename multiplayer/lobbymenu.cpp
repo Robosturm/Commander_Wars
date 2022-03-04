@@ -18,7 +18,10 @@
 #include "objects/base/chat.h"
 
 #include "network/mainserver.h"
+#include "network/JsonKeys.h"
 
+#include <QJsonObject>
+#include <QJsonDocument>
 
 LobbyMenu::LobbyMenu()
 {
@@ -215,11 +218,12 @@ void LobbyMenu::joinGamePassword(QString password)
         CONSOLE_PRINT("Leaving Lobby Menue to join server game", Console::eDEBUG);
         QString command = QString(NetworkCommands::SERVERJOINGAME);
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-        QByteArray data;
-        QDataStream stream(&data, QIODevice::WriteOnly);
-        stream << command;
-        stream << m_currentGame->getSlaveName();
-        emit m_pTCPClient->sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
+
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, m_currentGame->getSlaveName());
+        QJsonDocument doc(data);
+        emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         m_password = password;
     }
 }
@@ -291,53 +295,51 @@ void LobbyMenu::observeGamePassword(QString password)
         oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, password, Multiplayermenu::NetworkMode::Observer));
         QString command = QString(NetworkCommands::SERVERJOINGAME);
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-        QByteArray data;
-        QDataStream stream(&data, QIODevice::WriteOnly);
-        stream << command;
-        stream << m_currentGame->getSlaveName();
-        emit m_pTCPClient->sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, m_currentGame->getSlaveName());
+        QJsonDocument doc(data);
+        emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         oxygine::Actor::detach();
     }
 }
 
 void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
 {
-    if (service == NetworkInterface::NetworkSerives::ServerHosting)
+    if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
     {
-        QDataStream stream(&data, QIODevice::ReadOnly);
-        QString messageType;
-        stream >> messageType;
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject objData = doc.object();
+        QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
         CONSOLE_PRINT("LobbyMenu Command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::SERVERGAMEDATA)
         {
-            updateGameData(stream);
+            updateGameData(objData);
         }
         else if (messageType == NetworkCommands::SLAVEADDRESSINFO)
         {
-            joinSlaveGame(stream);
+            joinSlaveGame(objData);
         }
     }
 }
 
-void LobbyMenu::updateGameData(QDataStream & stream)
+void LobbyMenu::updateGameData(const QJsonObject & objData)
 {
     m_games.clear();
-    qint32 size = 0;
-    stream >> size;
-    for (qint32 i = 0; i < size; i++)
+    QJsonObject games = objData.value(JsonKeys::JSONKEY_GAMES).toObject();
+    for (const auto & game : games)
     {
-        m_games.append(spNetworkGameData::create());
-        m_games[i]->deserializeObject(stream);
+        auto gameData = spNetworkGameData::create();
+        gameData->fromJson(game.toObject());
+        m_games.append(gameData);
     }
     emit sigUpdateGamesView();
 }
 
-void LobbyMenu::joinSlaveGame(QDataStream & stream)
+void LobbyMenu::joinSlaveGame(const QJsonObject & objData)
 {
-    QString slaveAddress;
-    stream >> slaveAddress;
-    quint16 slavePort;
-    stream >> slavePort;
+    QString slaveAddress = objData.value(JsonKeys::JSONKEY_ADDRESS).toString();
+    quint16 slavePort = objData.value(JsonKeys::JSONKEY_PORT).toInteger();
     CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", Console::eDEBUG);
     oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(slaveAddress.trimmed(), slavePort, m_password, Multiplayermenu::NetworkMode::Client));
     oxygine::Actor::detach();
