@@ -65,12 +65,7 @@ var Constructor = function()
 
     this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false, map)
     {
-        var terrainId = terrain.getBaseTerrainID()
-        if (terrainId !== "SEA" &&
-            terrainId !== "LAKE" )
-        {
-            return 1;
-        }
+        var terrainId = terrain.getBaseTerrainID()        
         var id = terrain.getID();
         if ((id === "ZGATE_E_W" || id === "ZGATE_N_S") &&
             (unit !== null) &&
@@ -78,6 +73,15 @@ var Constructor = function()
         {
             return 1;
         }
+        else if (id === "OILRIG")
+        {
+            if (terrainId !== "SEA" &&
+                terrainId !== "LAKE" )
+            {
+                return 1;
+            }
+        }
+
         return MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_FEET.movementpointsTable);
     };
 };
