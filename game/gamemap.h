@@ -271,6 +271,11 @@ signals:
     void sigShowDamageCalculator();
 public slots:
     /**
+     * @brief getMapTagsText
+     * @return
+     */
+    QString getMapTagsText();
+    /**
      * @brief getIsHumanMatch
      * @return
      */

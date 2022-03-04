@@ -380,6 +380,88 @@ Terrain* GameMap::getTerrain(qint32 x, qint32 y)
     }
 }
 
+QString GameMap::getMapTagsText()
+{
+    QString ret = tr("Tags\n\n");
+    if (GameEnums::MapFilterFlags_Bases & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Bases\n");
+    }
+    if (GameEnums::MapFilterFlags_Airport & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Airports\n");
+    }
+    if (GameEnums::MapFilterFlags_Harbour & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Harbours\n");
+    }
+    if (GameEnums::MapFilterFlags_Tower & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Towers\n");
+    }
+    if (GameEnums::MapFilterFlags_Teleport & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Teleport\n");
+    }
+    if (GameEnums::MapFilterFlags_MixedBase & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Mixed bases\n");
+    }
+    if (GameEnums::MapFilterFlags_Predeployed & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Predeployed\n");
+    }
+    if (GameEnums::MapFilterFlags_Symetric & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Symetric\n");
+    }
+    if (GameEnums::MapFilterFlags_PvP & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("PvP\n");
+    }
+    if (GameEnums::MapFilterFlags_FTA & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("FTA\n");
+    }
+    if (GameEnums::MapFilterFlags_VsAi & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Vs AI\n");
+    }
+    if (GameEnums::MapFilterFlags_TeamPlay & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Team play\n");
+    }
+    if (GameEnums::MapFilterFlags_Historical & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Historical\n");
+    }
+    if (GameEnums::MapFilterFlags_LowFunds & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Low funds\n");
+    }
+    if (GameEnums::MapFilterFlags_HighFunds & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("High funds\n");
+    }
+    if (GameEnums::MapFilterFlags_Naval & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Naval\n");
+    }
+    if (GameEnums::MapFilterFlags_Ground & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Ground\n");
+    }
+    if (GameEnums::MapFilterFlags_Air & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Air\n");
+    }
+    if (GameEnums::MapFilterFlags_Scripted & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Scripted\n");
+    }
+    return ret;
+}
+
 spPlayer GameMap::getspPlayer(qint32 player)
 {
     if (player >= 0 && player < m_players.size())

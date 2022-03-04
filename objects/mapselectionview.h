@@ -89,6 +89,7 @@ private:
     oxygine::spTextField m_MapAuthor;
     oxygine::spTextField m_MapPlayerCount;
     oxygine::spTextField m_MapDescription;
+    oxygine::spTextField m_MapTags;
     oxygine::spActor m_pVictoryInfo;
     spMinimap m_pMinimap;
     spPanel m_MinimapPanel;
