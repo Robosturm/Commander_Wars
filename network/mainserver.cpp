@@ -198,10 +198,11 @@ void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject & objData)
     if (iter != m_games.end())
     {
         const auto & game = iter.value();
+        // only send valid game data to clients
         if (game->game.get() != nullptr &&
             game->game->getServerName() == slave &&
             game->game->getSlaveRunning() &&
-            !game->game->getData().getLaunched())
+            game->game->getData().getPlayers() > 0)
         {
             // send data
             QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
