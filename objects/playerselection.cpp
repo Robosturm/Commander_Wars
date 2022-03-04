@@ -1806,8 +1806,10 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                 }
             }
             updatePlayerData(player);
-            if (!humanFound && !m_pNetworkInterface->getIsObserver())
+            if (!humanFound &&
+                !m_pNetworkInterface->getIsObserver())
             {
+                CONSOLE_PRINT("Disconnecting cause controlling no player and isn't an observer", Console::eDEBUG);
                 emit sigDisconnect();
             }
             if (m_isServerGame)

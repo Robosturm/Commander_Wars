@@ -391,6 +391,7 @@ void Multiplayermenu::connectToSlave(const QJsonObject & objData, quint64 socket
     quint16 port = objData.value(JsonKeys::JSONKEY_PORT).toInteger();
     disconnectNetworkSlots();
     m_NetworkInterface = spTCPClient::create(nullptr);
+    m_NetworkInterface->setIsObserver(m_networkMode == NetworkMode::Observer);
     m_NetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
     m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
     createChat();
