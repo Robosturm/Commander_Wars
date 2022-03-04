@@ -264,6 +264,10 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
         }
     }
     // send map data to client
+    if (!m_local && m_hostSocket == 0)
+    {
+        m_hostSocket = socketID;
+    }
     emit m_NetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 
@@ -1108,17 +1112,22 @@ void Multiplayermenu::showPlayerSelection()
     }
 }
 
-void Multiplayermenu::disconnected(quint64)
+void Multiplayermenu::disconnected(quint64 socket)
 {
     CONSOLE_PRINT("Multiplayermenu::disconnected", Console::eDEBUG);
-    if (m_networkMode == NetworkMode::Host && m_local)
+    if (m_networkMode == NetworkMode::Host)
     {
         // handled in player selection
+        if (Mainapp::getSlave() && m_hostSocket == socket)
+        {
+            CONSOLE_PRINT("Closing slave cause the host has disconnected.", Console::eDEBUG);
+            QCoreApplication::exit(0);
+        }
     }
     else
     {
-        disconnectNetwork();
         CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+        disconnectNetwork();
         oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
         oxygine::Actor::detach();
     }

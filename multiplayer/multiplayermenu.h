@@ -180,6 +180,7 @@ private:
     bool m_local{true};
     bool m_slaveGameReady{false};
     Password m_password;
+    quint64 m_hostSocket{0};
 };
 
 #endif // MULTIPLAYERMENU_H

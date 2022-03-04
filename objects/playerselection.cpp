@@ -1967,13 +1967,15 @@ void PlayerSelection::disconnected(quint64 socketID)
                 // reopen all players
                 m_playerAIs[i]->setCurrentItem(m_playerAIs[i]->getItemCount() - 1);
                 selectAI(i);
-
             }
         }
         CONSOLE_PRINT("Removing socket " + QString::number(socketID) + " from observer list", Console::eLogLevels::eDEBUG);
-        auto* gameRules = m_pMap->getGameRules();
-        auto & observer = gameRules->getObserverList();
-        observer.removeAll(socketID);
+        if (m_pMap != nullptr)
+        {
+            auto* gameRules = m_pMap->getGameRules();
+            auto & observer = gameRules->getObserverList();
+            observer.removeAll(socketID);
+        }
     }
 }
 
