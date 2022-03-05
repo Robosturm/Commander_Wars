@@ -1168,6 +1168,10 @@ bool GameMenue::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) con
             {
                 battleActive = true;
             }
+            else
+            {
+                battleActive = false;
+            }
         }
         else if (animMode == GameEnums::BattleAnimationMode_Ally)
         {
@@ -1177,6 +1181,10 @@ bool GameMenue::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) con
                 (pDefUnit != nullptr && pPlayer2->isAlly(pDefUnit->getOwner())))
             {
                 battleActive = true;
+            }
+            else
+            {
+                battleActive = false;
             }
         }
         else if (animMode == GameEnums::BattleAnimationMode_Enemy)
@@ -1190,6 +1198,10 @@ bool GameMenue::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) con
                 pPlayer2->isEnemy(pDefUnit->getOwner()))
             {
                 battleActive = true;
+            }
+            else
+            {
+                battleActive = false;
             }
         }
         else if (animMode == GameEnums::BattleAnimationMode_None)
