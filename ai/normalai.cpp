@@ -3098,53 +3098,46 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
 {
     float score = 0;
     // funds bonus
-//    double expensiveDifference = 1.0 - qAbs(data[FundsFactoryRatio] - m_superiorityRatio);
-//    double normalDifference = 1.0 - qAbs(data[FundsFactoryRatio] - m_normalUnitRatio);
-//    double cheapDifference = 1.0 - qAbs(data[FundsFactoryRatio] - m_cheapUnitRatio);
+    double normalDifference = data[FundsFactoryRatio] - m_normalUnitRatio;
+    double cheapDifference = data[FundsFactoryRatio] - m_cheapUnitRatio;
+    const double outScore = 0.25f;
+    const double inScore = 0.5f;
+
     if (data[UseHighTechUnits] > FundsMode::Expensive &&
         data[FundsFactoryRatio] > m_normalUnitRatio + m_targetPriceDifference)
     {
+        // spend what we can mode
         score = 0;
     }
     else if (data[UseHighTechUnits] > FundsMode::Normal &&
-             data[FundsFactoryRatio] >= m_normalUnitRatio -  m_targetPriceDifference &&
-             data[FundsFactoryRatio] <= m_normalUnitRatio + m_targetPriceDifference)
+             normalDifference > m_targetPriceDifference)
     {
-        score += (1 + ((m_normalUnitRatio + m_targetPriceDifference) - data[FundsFactoryRatio]) / (2 * m_targetPriceDifference)) * m_expensiveUnitBonusMultiplier;
+        // expensive malus
+        score = m_normalUnitBonusMultiplier * outScore - m_normalUnitBonusMultiplier * (qAbs(normalDifference) - m_targetPriceDifference);
     }
     else if (data[FundsFactoryRatio] > m_superiorityRatio)
     {
-        score -= (data[FundsFactoryRatio] - (1.0f - data[UnitEnemyRatio])) * m_expensiveUnitBonusMultiplier;
+        score = m_normalUnitBonusMultiplier * outScore - m_expensiveUnitBonusMultiplier * (qAbs(normalDifference) - m_targetPriceDifference);
     }
-    else if (data[FundsFactoryRatio] >= m_normalUnitRatio - m_targetPriceDifference &&
-             data[FundsFactoryRatio] <= m_normalUnitRatio + m_targetPriceDifference)
+    else if (qAbs(normalDifference) <= m_targetPriceDifference)
     {
-        score += (1 + ((m_normalUnitRatio + m_targetPriceDifference) - data[FundsFactoryRatio]) / (2 * m_targetPriceDifference)) * m_normalUnitBonusMultiplier;
+         score = m_normalUnitBonusMultiplier * (1.0 - qAbs(normalDifference) / m_targetPriceDifference * inScore);
     }
-    else if (data[FundsFactoryRatio] <= m_cheapUnitRatio + m_targetPriceDifference &&
+    else if (qAbs(cheapDifference) <= m_targetPriceDifference &&
              data[UseHighTechUnits] <= FundsMode::Expensive)
     {
         if (data[LowFunds] > 0)
         {
-            score += (2 + m_cheapUnitRatio - data[FundsFactoryRatio]) * m_cheapUnitBonusMultiplier;
+            score = m_cheapUnitBonusMultiplier * (1.0 - qAbs(cheapDifference) / m_targetPriceDifference * inScore);
         }
         else
         {
-            score -= (2 + m_cheapUnitRatio - m_targetPriceDifference - data[FundsFactoryRatio]) * m_cheapUnitBonusMultiplier;
+            score = m_normalUnitBonusMultiplier * outScore - m_cheapUnitBonusMultiplier * (qAbs(normalDifference) - m_targetPriceDifference);
         }
     }
     else
     {
-        if (data[LowFunds] > 0 &&
-            data[FundsFactoryRatio] <= m_normalUnitRatio - m_targetPriceDifference &&
-            data[UseHighTechUnits] <= FundsMode::Expensive)
-        {
-            score += (1 + m_cheapUnitRatio - data[FundsFactoryRatio]) * m_cheapUnitBonusMultiplier;
-        }
-        else
-        {
-            score -= (3 + data[FundsFactoryRatio] - m_normalUnitRatio + m_targetPriceDifference) * m_expensiveUnitBonusMultiplier;
-        }
+            score = m_normalUnitBonusMultiplier * outScore - m_normalUnitBonusMultiplier * (qAbs(normalDifference) - m_targetPriceDifference);
     }
     CONSOLE_PRINT("NormalAi::calcCostScore score=" + QString::number(score) +
                   " funds ratio=" + QString::number(data[FundsFactoryRatio]), Console::eDEBUG);

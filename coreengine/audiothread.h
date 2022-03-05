@@ -25,7 +25,7 @@ private:
     {
         static constexpr qint32 MAX_SAME_SOUNDS = 60;
         static constexpr qint32 DEFAULT_CACHE_SIZE = 10;
-        std::shared_ptr<QSoundEffect> sound[MAX_SAME_SOUNDS];
+        QSoundEffect* sound[MAX_SAME_SOUNDS];
         std::shared_ptr<QTimer> timer[MAX_SAME_SOUNDS];
         qint32 nextSoundToUse = 0;
         QUrl cacheUrl;

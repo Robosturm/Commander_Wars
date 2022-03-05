@@ -52,11 +52,12 @@ AudioThread::~AudioThread()
     {
         for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
         {
-            if (cache->sound[i].get() != nullptr)
+            if (cache->sound[i] != nullptr)
             {
                 cache->timer[i]->stop();
                 cache->sound[i]->stop();
-                cache->sound[i].reset();
+                cache->sound[i]->deleteLater();
+                cache->sound[i] = nullptr;
                 cache->timer[i].reset();
             }
         }
@@ -189,7 +190,7 @@ qint32 AudioThread::getSoundsBuffered()
     {
         for (const auto & sound : qAsConst(cache->sound))
         {
-            if (sound.get() != nullptr)
+            if (sound != nullptr)
             {
                 ++count;
             }
@@ -663,6 +664,7 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, qint32 delay, float 
 void AudioThread::SlotStopAllSounds()
 {
 #ifdef AUDIOSUPPORT
+    CONSOLE_PRINT("Stopping all sounds", Console::eDEBUG);
     for (auto & soundCache : m_soundCaches)
     {
         for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
@@ -692,13 +694,13 @@ void AudioThread::SlotStopSound(QString file)
 bool AudioThread::stopSoundAtIndex(SoundData* soundData, qint32 index)
 {
     bool stopped = false;
-    if (soundData->sound[index].get() != nullptr &&
+    if (soundData->sound[index] != nullptr &&
         soundData->sound[index]->isPlaying())
     {
         stopSound(soundData, index);
         stopped = true;
     }
-    if (soundData->timer[index].get() != nullptr &&
+    if (soundData->timer[index] != nullptr &&
         soundData->timer[index]->isActive())
     {
         soundData->timer[index]->stop();
