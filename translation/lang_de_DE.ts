@@ -2069,67 +2069,67 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1597"/>
+        <location filename="../menue/gamemenue.cpp" line="1609"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1598"/>
+        <location filename="../menue/gamemenue.cpp" line="1610"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1599"/>
+        <location filename="../menue/gamemenue.cpp" line="1611"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1600"/>
+        <location filename="../menue/gamemenue.cpp" line="1612"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1601"/>
+        <location filename="../menue/gamemenue.cpp" line="1613"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1602"/>
+        <location filename="../menue/gamemenue.cpp" line="1614"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1603"/>
+        <location filename="../menue/gamemenue.cpp" line="1615"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1604"/>
+        <location filename="../menue/gamemenue.cpp" line="1616"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1628"/>
+        <location filename="../menue/gamemenue.cpp" line="1640"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1638"/>
+        <location filename="../menue/gamemenue.cpp" line="1650"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2029"/>
+        <location filename="../menue/gamemenue.cpp" line="2041"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2060"/>
+        <location filename="../menue/gamemenue.cpp" line="2072"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2086"/>
+        <location filename="../menue/gamemenue.cpp" line="2098"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
