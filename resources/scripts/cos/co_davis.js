@@ -137,19 +137,61 @@ var Constructor = function()
     {
         return "TI";
     };
+
+    this.getAlliedUnitCount = function(owner, map)
+    {
+        var playerCounter = map.getPlayerCount();
+        var unitCount = owner.getUnitCount();
+        for (var i2 = 0; i2 < playerCounter; i2++)
+        {
+            var ownPlayer = map.getPlayer(i2);
+            if ((ownPlayer !== owner) &&
+                (owner.checkAlliance(ownPlayer) === GameEnums.Alliance_Friend))
+            {
+                unitCount += ownPlayer.getUnitCount();
+            }
+        }
+        return unitCount;
+    }
+
+    this.getEnemyUnitCount = function(owner, map)
+    {
+        var playerCounter = map.getPlayerCount();
+        var enemyCount = 0
+        for (var i2 = 0; i2 < playerCounter; i2++)
+        {
+            var ownPlayer = map.getPlayer(i2);
+            if ((ownPlayer !== owner) &&
+                (owner.checkAlliance(ownPlayer) === GameEnums.Alliance_Enemy))
+            {
+                var unitCount = CO_DAVIS.getAlliedUnitCount(ownPlayer, map);
+                if (unitCount > enemyCount)
+                {
+                    enemyCount = unitCount;
+                }
+            }
+        }
+        return enemyCount;
+    }
+
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
-        var unitCount = co.getOwner().getUnitCount();
-        var maxLuck = 0;
-        var luckPerUnit = 0;
-        switch (co.getPowerMode())
+        var owner = co.getOwner();
+        var unitCount = CO_DAVIS.getAlliedUnitCount(owner, map);
+        var enemyCount = CO_DAVIS.getEnemyUnitCount(owner, map);
+        var luck = 0;
+        if (unitCount > enemyCount)
         {
+            var maxLuck = 0;
+            var luckPerUnit = 0;
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 maxLuck = 150;
                 luckPerUnit = 6;
                 break;
-            case GameEnums.PowerMode_Power:                
+            case GameEnums.PowerMode_Power:
                 luckPerUnit = 4;
                 maxLuck = 100;
                 break;
@@ -160,11 +202,12 @@ var Constructor = function()
                     maxLuck = 50
                 }
                 break;
-        }
-        var luck = luckPerUnit * unitCount;
-        if (luck > maxLuck)
-        {
-            luck = maxLuck;
+            }
+            luck = luckPerUnit * unitCount;
+            if (luck > maxLuck)
+            {
+                luck = maxLuck;
+            }
         }
         return luck;
     };
@@ -172,21 +215,15 @@ var Constructor = function()
     this.getBonusMisfortune = function(co, unit, posX, posY, map)
     {
         var owner = co.getOwner();
-        var playerCounter = map.getPlayerCount();
-        var unitCount = 0;
-        for (var i2 = 0; i2 < playerCounter; i2++)
+        var unitCount = CO_DAVIS.getAlliedUnitCount(owner, map);
+        var enemyCount = CO_DAVIS.getEnemyUnitCount(owner, map);
+        var missFortune = 0;
+        if (enemyCount > unitCount)
         {
-            var enemyPlayer = map.getPlayer(i2);
-            if ((enemyPlayer !== owner) &&
-                (owner.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+            var maxMissFortune = 0;
+            var luckMissFortune = 0;
+            switch (co.getPowerMode())
             {
-                unitCount += enemyPlayer.getUnitCount();
-            }
-        }
-        var maxMissFortune = 0;
-        var luckMissFortune = 0;
-        switch (co.getPowerMode())
-        {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 maxMissFortune = 100;
@@ -203,11 +240,12 @@ var Constructor = function()
                     luckMissFortune = 2;
                 }
                 break;
-        }
-        var missFortune = luckMissFortune * unitCount;
-        if (missFortune > maxMissFortune)
-        {
-            missFortune = maxMissFortune;
+            }
+            missFortune = luckMissFortune * enemyCount;
+            if (missFortune > maxMissFortune)
+            {
+                missFortune = maxMissFortune;
+            }
         }
         return missFortune;
     };
@@ -264,11 +302,11 @@ var Constructor = function()
     {
         return qsTr("\nSpecial Unit:\nNone\n") +
                qsTr("\nGlobal Effect: \nNone") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain bonus luck based on the amount of troops Davis controls and gain missfortune based on the amount of troops all enemies control.");
+               qsTr("\n\nCO Zone Effect: \nUnits gain bonus luck based on the amount of troops Davis controls and gain missfortune based on the amount of troops all enemies control. The bonus/penalty depends of which unit count is higher.");
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("His luck is increased  based on the amount of troops Davis controls. However he also gains increased missfortune based  on the amount of troops all enemies control.");
+        return qsTr("His luck is increased  based on the amount of troops Davis controls. However he also gains increased missfortune based  on the amount of troops all enemies control. The bonus/penalty depends of which unit count is higher.");
     };
     this.getPowerName = function(co)
     {
@@ -276,7 +314,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("His luck raises even more based on the amount of troops Davis controls. However the cap for missfortune raises as well.");
+        return qsTr("His luck raises even more based on the amount of troops Davis controls. However the cap for missfortune raises as well. The bonus/penalty depends of which unit count is higher.");
     };
     this.getSuperPowerName = function(co)
     {

@@ -6590,5 +6590,31 @@
         <file>resources/images/game/icon_hs.png</file>
         <file>resources/scripts/actions/ACTION_NEST_FACTORY_DOOR.js</file>
         <file>resources/images/animations/oilrig+mask.png</file>
+        <file>resources/images/co/tagCos.png</file>
+        <file>resources/misc_unused/Option 1 - Tag Lightning.png</file>
+        <file>resources/misc_unused/Option 1 - Tag Point.png</file>
+        <file>resources/misc_unused/Option 1 - Tag Power.png</file>
+        <file>resources/misc_unused/Option 1 - Tag Star.png</file>
+        <file>resources/misc_unused/Option 1 - Tag Super Power.png</file>
+        <file>resources/misc_unused/Option 2 - Tag Afinity.png</file>
+        <file>resources/misc_unused/Option 2 - Tag COs.png</file>
+        <file>resources/misc_unused/Option 2 - Tag Lightning.png</file>
+        <file>resources/misc_unused/Option 2 - Tag Point.png</file>
+        <file>resources/misc_unused/Option 2 - Tag Power.png</file>
+        <file>resources/misc_unused/Option 2 - Tag Star.png</file>
+        <file>resources/misc_unused/Option 2 - Tag Super Power.png</file>
+        <file>resources/misc_unused/Option 3 - Tag Afinity.png</file>
+        <file>resources/misc_unused/Option 3 - Tag COs.png</file>
+        <file>resources/misc_unused/Option 3 - Tag Lightning.png</file>
+        <file>resources/misc_unused/Option 3 - Tag Point.png</file>
+        <file>resources/misc_unused/Option 3 - Tag Power.png</file>
+        <file>resources/misc_unused/Option 3 - Tag Star.png</file>
+        <file>resources/misc_unused/Option 3 - Tag Super Power.png</file>
+        <file>resources/misc_unused/Option 4 - Tag COs.png</file>
+        <file>resources/misc_unused/Option 4 - Tag Lightning.png</file>
+        <file>resources/misc_unused/Option 4 - Tag Point.png</file>
+        <file>resources/misc_unused/Option 4 - Tag Power.png</file>
+        <file>resources/misc_unused/Option 4 - Tag Star.png</file>
+        <file>resources/misc_unused/Option 4 - Tag Super Power.png</file>
     </qresource>
 </RCC>

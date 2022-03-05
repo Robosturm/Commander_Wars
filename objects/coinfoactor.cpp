@@ -99,21 +99,10 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_MissText->setX(m_MissSprite->getX() + m_MissSprite->getScaledWidth() + 10);
     addChild(m_MissText);
 
-    m_InfoSprite = oxygine::spBox9Sprite::create();
+    m_InfoSprite = oxygine::spSprite::create();
     m_InfoSprite->setResAnim(pCOSpriteManager->getResAnim("skill"));
-    m_InfoSprite->setSize(100, 16);
     m_InfoSprite->setScale(2.5f);
-    m_InfoSprite->setPosition(10, 400);
-    pTextField = oxygine::spTextField::create();
-    pTextField->setPosition(3, 2);
-    style.color = Qt::white;
-    pTextField->setStyle(style);
-    pTextField->setScale(1 / m_InfoSprite->getScaleX());
-    pTextField->setHtmlText(tr("Info"));
-    style.color = FontManager::getFontColor();
-    m_InfoSprite->setWidth(pTextField->getTextRect().getWidth() / m_InfoSprite->getScaleX() + 12);
-    m_InfoSprite->addChild(pTextField);
-    m_InfoSprite->setX((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_InfoSprite->getScaledWidth() / 2);
+    m_InfoSprite->setPosition((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_InfoSprite->getScaledWidth() / 2, 400);
     addChild(m_InfoSprite);
     m_InfoText = oxygine::spTextField::create();
     m_InfoText->setStyle(style);
@@ -152,10 +141,16 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_SuperPowerDesc->setWidth(m_pCurrentCO->getX() - 50);
     m_SuperPowerDesc->setX(10);
     addChild(m_SuperPowerDesc);
+
+    m_synergySprite = oxygine::spSprite::create();
+    m_synergySprite->setResAnim(pCOSpriteManager->getResAnim("tagCos"));
+    m_synergySprite->setScale(2.0f);
+    m_synergySprite->setPosition(10, 400);
+    addChild(m_synergySprite);
     m_SynergyText = oxygine::spTextField::create();
     m_SynergyText->setStyle(style);
+    m_SynergyText->setX(m_synergySprite->getX() + m_synergySprite->getScaledWidth() + 10);
     m_SynergyText->setHtmlText(tr("Synergy"));
-    m_SynergyText->setX(10);
     addChild(m_SynergyText);
 
     m_PerkText = oxygine::spTextField::create();
@@ -306,6 +301,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     if (pCO.get() != nullptr)
     {
         m_SynergyText->setY(y);
+        m_synergySprite->setY(y);
         y += 40;
 
         // show co synergys
@@ -364,6 +360,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     }
     else
     {
+        m_synergySprite->setY(y);
         m_SynergyText->setY(y);
         y += 40;
     }

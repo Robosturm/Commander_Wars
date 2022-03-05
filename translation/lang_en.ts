@@ -234,37 +234,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="112"/>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/coinfoactor.cpp" line="157"/>
+        <location filename="../objects/coinfoactor.cpp" line="153"/>
         <source>Synergy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="163"/>
+        <location filename="../objects/coinfoactor.cpp" line="158"/>
         <source>Active Perks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="174"/>
+        <location filename="../objects/coinfoactor.cpp" line="169"/>
         <source>Global Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="180"/>
+        <location filename="../objects/coinfoactor.cpp" line="175"/>
         <source>CO Zone Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="257"/>
+        <location filename="../objects/coinfoactor.cpp" line="252"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="282"/>
+        <location filename="../objects/coinfoactor.cpp" line="277"/>
         <source>Progress: </source>
         <translation type="unfinished"></translation>
     </message>
