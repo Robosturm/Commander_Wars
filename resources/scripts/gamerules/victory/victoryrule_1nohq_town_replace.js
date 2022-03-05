@@ -46,7 +46,8 @@ var Constructor = function()
             var buildings = player.getBuildings();
             var pointsX = [];
             var pointsY = [];
-            for (var i2 = 0; i2 < buildings.size(); i2++)
+            var size = buildings.size();
+            for (var i2 = 0; i2 < size; i2++)
             {
                 var building = buildings.at(i2);
                 if (building.getBuildingID() === "HQ")
@@ -67,7 +68,8 @@ var Constructor = function()
         var variables = rule.getVariables();
         var variable = variables.getVariable(variableName);
         var buildings = player.getBuildings("HQ");
-        for (var i2 = 1; i2 < buildings.size(); i2++)
+        var size = buildings.size();
+        for (var i2 = 1; i2 < size; i2++)
         {
             var terrain = buildings.at(i2).getTerrain();
             terrain.loadBuilding("TOWN");
@@ -88,7 +90,8 @@ var Constructor = function()
     this.replaceNeutrals = function(map)
     {
         var buildings = map.getBuildings(null);
-        for (var i = 0; i < buildings.size(); i++)
+        var size = buildings.size();
+        for (var i = 0; i < size; i++)
         {
             var building = buildings.at(i);
             if (building.getBuildingID() === "HQ")

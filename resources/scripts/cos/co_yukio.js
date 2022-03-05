@@ -49,7 +49,8 @@ var Constructor = function()
 
                 var units = enemyPlayer.getUnits();
                 units.randomize();
-                for (i = 0; i < units.size() / 2; i++)
+                var size = units.size() / 2;
+                for (i = 0; i < size; i++)
                 {
                     var unit = units.at(i);
                     var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
@@ -92,7 +93,8 @@ var Constructor = function()
         var animations = [];
         var counter = 0;
         buildings.randomize();
-        for (var i = 0; i < buildings.size() * count; i++)
+        var size = buildings.size();
+        for (var i = 0; i < size * count; i++)
         {
             var building = buildings.at(i);
             if (building.getBuildingID() === "TOWN")

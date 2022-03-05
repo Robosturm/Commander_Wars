@@ -168,7 +168,8 @@ CO_CAIRN.postAction = function(co, action, map)
             {
                 var path = action.getMovePath();
                 var heal = 0;
-                for (var i = 0; i < path.length; ++i)
+                var length = path.length;
+                for (var i = 0; i < length; ++i)
                 {
                     var pos = path[i];
                     if (CO_CAIRN.isWildernessTile(pos.x, pos.y))

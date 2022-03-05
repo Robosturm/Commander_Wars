@@ -100,7 +100,8 @@ var Constructor = function()
         var damage = 3;
         var fields = globals.getCircle(0, radius);
         // check all fields we can attack
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var x = fields.at(i).x + ACTION_MISSILE.postAnimationTargetX;
             var y = fields.at(i).y + ACTION_MISSILE.postAnimationTargetY;

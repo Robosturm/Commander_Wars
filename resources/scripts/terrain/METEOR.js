@@ -116,7 +116,8 @@ var Constructor = function()
             field = plasmaFields[i];
             map.getTerrain(field.x, field.y).loadSprites();
             // update sprites for surrounding meteors
-            for (var i2 = 0; i2 < testFields.size(); i2++)
+            var size = testFields.size();
+            for (var i2 = 0; i2 < size; i2++)
             {
                 var pos = testFields.at(i2);
                 var posX = field.x + pos.x;
@@ -145,7 +146,8 @@ var Constructor = function()
         {
             var pfs = terrain.createTerrainFindingSystem();
             var points = pfs.getAllQmlVectorPoints();
-            for (var i = 0; i < points.size(); i++)
+            var size = points.size();
+            for (var i = 0; i < size; i++)
             {
                 plasmaFields.push(points.at(i));
             }

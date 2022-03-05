@@ -61,7 +61,8 @@ var Constructor = function()
             unit.setFuel(unit.getFuel() - fuelCosts);            
         }
         UNIT.transporterRefilling(unit, map);
-        for (var i = 0; i < unit.getLoadedUnitCount(); i++)
+        var size = unit.getLoadedUnitCount();
+        for (var i = 0; i < size; i++)
         {
             var transportUnit = unit.getLoadedUnit(i);
             UNIT.repairUnit(transportUnit, 2, map);

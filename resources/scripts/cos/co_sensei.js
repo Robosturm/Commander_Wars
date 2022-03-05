@@ -57,7 +57,8 @@ var Constructor = function()
         var animations = [];
         var counter = 0;
         buildings.randomize();
-        for (var i = 0; i < buildings.size(); i++)
+        var size = buildings.size();
+        for (var i = 0; i < size; i++)
         {
             var building = buildings.at(i);
             if (building.getBuildingID() === "TOWN")

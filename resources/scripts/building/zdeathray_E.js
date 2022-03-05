@@ -105,8 +105,8 @@ var Constructor = function()
         animation2.setRotation(270);
         animation.queueAnimation(animation2);
 
-
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))

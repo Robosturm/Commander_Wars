@@ -49,7 +49,8 @@ var Constructor = function()
         var y = building.getY() + offset.y;
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var ret = [];
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))

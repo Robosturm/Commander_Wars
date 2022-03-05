@@ -81,7 +81,8 @@ var Constructor = function()
         var damage = CO_STURM.postAnimationThrowMeteorDamage;
         var fields = globals.getCircle(0, 2);
         // check all target fields
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var x = fields.at(i).x + meteorTarget.x;
             var y = fields.at(i).y + meteorTarget.y;

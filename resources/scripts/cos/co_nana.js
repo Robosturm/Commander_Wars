@@ -170,7 +170,8 @@ var Constructor = function()
                         for (var curRange = 1; curRange < maxRange; curRange++)
                         {
                             var directCircle = globals.getCircle(curRange, curRange);
-                            for (i = 0; i < directCircle.size(); i++)
+                            var size = directCircle.size();
+                            for (i = 0; i < size; i++)
                             {
                                 point = directCircle.at(i);
                                 if (map.onMap(defX + point.x, defY + point.y))

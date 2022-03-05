@@ -15,7 +15,8 @@ var Constructor = function()
 		{
 			var units = co.getOwner().getUnits();
 			units.randomize();
-			for (var i = 0; i < units.size(); i++)
+            var size = units.size();
+            for (var i = 0; i < size; i++)
 			{
 				var unit = units.at(i);
 				unit.refill();

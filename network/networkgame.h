@@ -66,6 +66,10 @@ public:
      * @param stream
      */
     void slaveRunning(const QJsonObject & objData, spTCPServer & pGameServer);
+    /**
+     * @brief closeGame
+     */
+    void closeGame();
 signals:
     void sigDataChanged();
     void sigClose(NetworkGame* pGame);
@@ -77,7 +81,6 @@ public slots:
      */
     void processFinished(qint32 exitCode, QProcess::ExitStatus exitStatus);
 private:
-    void closeGame();
 private:
     QByteArray m_dataBuffer;
     spNetworkInterface m_hostingClient;

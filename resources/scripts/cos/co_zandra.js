@@ -77,7 +77,8 @@ var Constructor = function()
 
                 var units = enemyPlayer.getUnits();
                 units.randomize();
-                for (i = 0; i < units.size(); i++)
+                var size = units.size();
+                for (i = 0; i < size; i++)
                 {
                     var unit = units.at(i);
 

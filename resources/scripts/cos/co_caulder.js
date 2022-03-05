@@ -214,7 +214,8 @@ var Constructor = function()
                 var y = counit.getY();
                 var animation = null;
                 var viewplayer = map.getCurrentViewPlayer();
-                for (var i = 0; i < fields.size(); i++)
+                var size = fields.size();
+                for (var i = 0; i < size; i++)
                 {
                     var point = fields.at(i);
                     var unitX = x + point.x;

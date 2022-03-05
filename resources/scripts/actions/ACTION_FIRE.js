@@ -20,7 +20,8 @@ var Constructor = function()
             if (unit.hasDirectWeapon() && minRange > 1)
             {
                 var minFields = globals.getCircle(1, 1);
-                for (var i = 0; i < minFields.size(); ++i)
+                var size = minFields.size();
+                for (var i = 0; i < size; ++i)
                 {
                     fields.append(minFields.at(i))
                 }
@@ -28,7 +29,8 @@ var Constructor = function()
             }
 
             // check all fields we can attack
-            for (var i = 0; i < fields.size(); i++)
+            var size = fields.size();
+            for (var i = 0; i < size; i++)
             {
                 var field = fields.at(i);
                 var x = field.x + actionTargetField.x;
@@ -271,7 +273,8 @@ var Constructor = function()
         var ret = 0;
         var owner = defender.getOwner();
         var units = owner.getUnits();
-        for (var i = 0; i < units.size(); ++i)
+        var size = units.size();
+        for (var i = 0; i < size; ++i)
         {
             var unit = units.at(i);
             var unitId = unit.getUnitID();
@@ -294,7 +297,8 @@ var Constructor = function()
         var reduction = 0;
         var owner = defender.getOwner();
         var units = owner.getUnits();
-        for (var i = 0; i < units.size(); ++i)
+        var size = units.size();
+        for (var i = 0; i < size; ++i)
         {
             var unit = units.at(i);
             var unitId = unit.getUnitID();
@@ -422,7 +426,8 @@ var Constructor = function()
         if (unit.hasDirectWeapon() && minRange > 1)
         {
             var minFields = globals.getCircle(1, 1);
-            for (var i = 0; i < minFields.size(); ++i)
+            var size = minFields.size();
+            for (var i = 0; i < size; ++i)
             {
                 fields.append(minFields.at(i))
             }
@@ -438,7 +443,8 @@ var Constructor = function()
         var result = Qt.rect(-1, -1, -1, -1);
         var owner = unit.getOwner();
         // check all fields we can attack
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var field = fields.at(i)
             var x = field.x + actionTargetField.x;

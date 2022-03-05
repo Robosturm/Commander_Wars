@@ -55,6 +55,7 @@ MainServer::MainServer()
     // connect signals for tcp server events
     connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, Qt::QueuedConnection);
     connect(m_pGameServer.get(), &TCPServer::sigConnected, this, &MainServer::playerJoined, Qt::QueuedConnection);
+    connect(m_pGameServer.get(), &TCPServer::sigDisconnected, this, &MainServer::disconnected, Qt::QueuedConnection);
     // connect signals for tcp slave events
     connect(m_pSlaveServer.get(), &TCPServer::recieveData, this, &MainServer::receivedSlaveData, Qt::QueuedConnection);
     // internal updates
@@ -233,6 +234,20 @@ void MainServer::slotStartRemoteGame(QString initScript, QString id)
 {
     QByteArray sendData;
     spawnSlave(initScript, Settings::getMods(), id, 0, sendData);
+}
+
+void MainServer::disconnected(qint64 socketId)
+{
+    // check if we have a slave in start up state associated with this socket
+    for (auto & game : qAsConst(m_games))
+    {
+        if (game->game->getData().getPlayers() == 0 &&
+            game->game->getHostingSocket() == socketId)
+        {
+            game->game->closeGame();
+            break;
+        }
+    }
 }
 
 void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArray& data, QString initScript, QString id)

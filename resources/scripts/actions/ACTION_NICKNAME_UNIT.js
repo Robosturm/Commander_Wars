@@ -44,7 +44,8 @@ var Constructor = function()
     this.getStepData = function(action, data, map)
     {
         var units = map.getCurrentPlayer().getUnits();
-        for (var i = 0; i < units.size(); i++)
+        var size = units.size();
+        for (var i = 0; i < size; i++)
         {
             var unit = units.at(i);
             data.addPoint(Qt.point(unit.getX(), unit.getY()));

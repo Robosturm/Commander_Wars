@@ -88,6 +88,11 @@ private slots:
      * @param configuration
      */
     void slotStartRemoteGame(QString initScript, QString id);
+    /**
+     * @brief disconnected
+     * @param socketId
+     */
+    void disconnected(qint64 socketId);
 private:
     /**
      * @brief spawnSlaveGame checks if a slave game can be spawned and spawns a slave game on the server

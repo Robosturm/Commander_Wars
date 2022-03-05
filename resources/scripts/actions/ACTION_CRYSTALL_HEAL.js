@@ -35,7 +35,8 @@ var Constructor = function()
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var animation = null;
         var damage = Global[building.getBuildingID()].getDamage(building, null);
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))
