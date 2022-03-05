@@ -244,7 +244,7 @@ void MainServer::disconnected(qint64 socketId)
         if (game->game->getData().getPlayers() == 0 &&
             game->game->getHostingSocket() == socketId)
         {
-            game->game->closeGame();
+            game->game->startCloseTimer();
             break;
         }
     }

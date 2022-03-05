@@ -104,7 +104,6 @@ var Constructor = function()
         animation2.addSprite("deathray_start", 0, 0, 0, 2);
         animation2.setRotation(270);
         animation.queueAnimation(animation2);
-
         var size = fields.size();
         for (var i = 0; i < size; i++)
         {

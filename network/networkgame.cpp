@@ -13,8 +13,24 @@
 #include "game/gamemap.h"
 
 NetworkGame::NetworkGame(QObject* pParent)
-    : QObject(pParent)
+    : QObject(pParent),
+      m_closeTimer(pParent)
 {
+    connect(&m_closeTimer, &QTimer::timeout, this, &NetworkGame::closeTimerExpired, Qt::QueuedConnection);
+}
+
+void NetworkGame::startCloseTimer()
+{
+    m_closeTimer.setSingleShot(true);
+    m_closeTimer.start(std::chrono::minutes(5));
+}
+
+void NetworkGame::closeTimerExpired()
+{
+    if (m_data.getPlayers() == 0)
+    {
+        closeGame();
+    }
 }
 
 void NetworkGame::slaveRunning(const QJsonObject & objData, spTCPServer & pGameServer)
