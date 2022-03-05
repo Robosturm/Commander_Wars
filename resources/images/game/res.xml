@@ -343,6 +343,8 @@
         <image file="no_power.png" />
         <image file="power.png" />
         <image file="superpower.png" />
+        <image file="power2.png" />
+        <image file="superpower2.png" />
         <image file="tagpower.png" />
         <image file="unhide.png" />
         <image file="build.png" />

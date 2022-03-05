@@ -6616,5 +6616,10 @@
         <file>resources/misc_unused/Option 4 - Tag Power.png</file>
         <file>resources/misc_unused/Option 4 - Tag Star.png</file>
         <file>resources/misc_unused/Option 4 - Tag Super Power.png</file>
+        <file>resources/images/game/power2.png</file>
+        <file>resources/images/game/superpower2.png</file>
+        <file>resources/misc_unused/2nd_D2D.png</file>
+        <file>resources/misc_unused/Tag_D2D.png</file>
+        <file>resources/misc_unused/Tag_SCOP.png</file>
     </qresource>
 </RCC>

@@ -29,7 +29,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "superpower";
+        return "superpower2";
     };
     this.perform = function(action, map)
     {

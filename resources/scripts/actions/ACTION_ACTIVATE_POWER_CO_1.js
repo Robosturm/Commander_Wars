@@ -29,7 +29,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "power";
+        return "power2";
     };
     this.perform = function(action, map)
     {
