@@ -575,7 +575,7 @@ void GameMenue::loadGameMenue()
 void GameMenue::connectMap()
 {    
     connect(m_pMap->getGameRules(), &GameRules::sigVictory, this, &GameMenue::victory, Qt::QueuedConnection);
-    connect(m_pMap->getGameRules()->getRoundTimer(), &Timer::timeout, m_pMap.get(), &GameMap::nextTurnPlayerTimeout, Qt::QueuedConnection);
+    connect(m_pMap->getGameRules()->getRoundTimer(), &Timer::timeout, this, &GameMenue::nextTurnPlayerTimeout, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
@@ -818,6 +818,17 @@ bool GameMenue::requiresForwarding(const spGameAction & pGameAction) const
     return getIsMultiplayer(pGameAction) &&
            baseGameInput != nullptr &&
            baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi;
+}
+
+void GameMenue::nextTurnPlayerTimeout()
+{
+    auto* input = m_pMap->getCurrentPlayer()->getBaseGameInput();
+    if (input == nullptr || input->getAiType() != GameEnums::AiTypes_ProxyAi)
+    {
+        spGameAction pAction;
+        pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
+        performAction(pAction);
+    }
 }
 
 void GameMenue::performAction(spGameAction pGameAction)

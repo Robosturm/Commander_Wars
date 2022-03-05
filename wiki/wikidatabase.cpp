@@ -31,8 +31,7 @@
 const char* const DAMAGE_TABLE_NAME = "Damage Table";
 
 WikiDatabase::WikiDatabase()
-    : QObject(),
-      RessourceManagement<WikiDatabase>("/resources/images/wiki/res.xml",
+    : RessourceManagement<WikiDatabase>("/resources/images/wiki/res.xml",
       "")
 {
     setObjectName("WikiDatabase");

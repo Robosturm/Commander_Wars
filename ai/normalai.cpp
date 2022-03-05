@@ -3098,6 +3098,14 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
 {
     float score = 0;
     // funds bonus
+
+
+    double expensiveDifference = 1.0 - qAbs(data[FundsFactoryRatio] - m_superiorityRatio);
+    double normalDifference = 1.0 - qAbs(data[FundsFactoryRatio] - m_normalUnitRatio);
+    double cheapDifference = 1.0 - qAbs(data[FundsFactoryRatio] - m_cheapUnitRatio);
+
+
+
     if (data[UseHighTechUnits] > FundsMode::Expensive &&
         data[FundsFactoryRatio] > m_normalUnitRatio + m_targetPriceDifference)
     {

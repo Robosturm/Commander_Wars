@@ -25,8 +25,7 @@
 constexpr qint32 textWidth = 300;
 
 RuleSelection::RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enabled)
-    : QObject(),
-      m_mode(mode),
+    : m_mode(mode),
       m_ruleChangeEabled(enabled),
       m_pMap(pMap)
 {

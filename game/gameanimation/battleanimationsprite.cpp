@@ -27,8 +27,7 @@ const QString BattleAnimationSprite::dyingAnimation = "loadDyingAnimation";
 const QString BattleAnimationSprite::stopAnimation = "loadStopAnimation";
 
 BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp, bool playSound)
-    : QObject(),
-      m_pUnit(pUnit),
+    : m_pUnit(pUnit),
       m_pTerrain(pTerrain),
       m_hpRounded(hp),
       m_nextFrameTimer(this),

@@ -4,7 +4,6 @@
 #include "coreengine/interpreter.h"
 
 PlayerRecord::PlayerRecord()
-    : QObject()
 {
     setObjectName("PlayerRecord");
     moveToThread(Mainapp::getInstance()->getWorkerthread());

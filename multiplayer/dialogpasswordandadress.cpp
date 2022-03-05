@@ -6,7 +6,6 @@
 #include "resource_management/fontmanager.h"
 
 DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
-    : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

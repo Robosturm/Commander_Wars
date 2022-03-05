@@ -10,7 +10,6 @@
 #include "objects/dialogs/filedialog.h"
 
 DialogRandomMap::DialogRandomMap()
-    : QObject()
 {
     setObjectName("DialogRandomMap");
     Mainapp* pApp = Mainapp::getInstance();

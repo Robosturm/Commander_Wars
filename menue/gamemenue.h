@@ -321,6 +321,10 @@ protected slots:
      * @brief onEnter
      */
     virtual void onEnter() override;
+    /**
+     * @brief nextTurnPlayerTimeout
+     */
+    void nextTurnPlayerTimeout();
 protected:
     void loadUIButtons();
     void loadGameMenue();

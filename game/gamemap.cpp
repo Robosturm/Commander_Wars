@@ -2145,15 +2145,6 @@ void GameMap::setMapName(const QString &value)
     m_headerInfo.m_mapName = value;
 }
 
-void GameMap::nextTurnPlayerTimeout()
-{
-    auto* input = m_CurrentPlayer->getBaseGameInput();
-    if (input == nullptr || input->getAiType() != GameEnums::AiTypes_ProxyAi)
-    {
-        nextTurn();
-    }
-}
-
 void GameMap::nextTurn(quint32 dayToDayUptimeMs)
 {
     if (anyPlayerAlive())

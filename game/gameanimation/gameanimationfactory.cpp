@@ -20,7 +20,6 @@ spGameAnimationFactory GameAnimationFactory::m_pInstance;
 QVector<spGameAnimation> GameAnimationFactory::m_Animations;
 
 GameAnimationFactory::GameAnimationFactory()
-    : QObject()
 {
     setObjectName("GameAnimationFactory");
     Mainapp* pApp = Mainapp::getInstance();

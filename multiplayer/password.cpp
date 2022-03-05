@@ -4,7 +4,6 @@
 #include "coreengine/filesupport.h"
 
 Password::Password()
-    : QObject()
 {
     setPassword("");
 }

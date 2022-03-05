@@ -11,8 +11,7 @@ SpecialEvent::SpecialEvent()
 }
 
 SpecialEvent::SpecialEvent(qint32 player, qint32 day, GameEnums::GameRecord_SpecialEvents event)
-    : QObject(),
-      m_Player(player),
+    : m_Player(player),
       m_Day(day),
       m_Event(event)
 {

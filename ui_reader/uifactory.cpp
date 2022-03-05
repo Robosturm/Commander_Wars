@@ -64,7 +64,6 @@ using namespace std::placeholders;
 UiFactory* UiFactory::m_pUiFactory;
 
 UiFactory::UiFactory()
-    : QObject()
 {
     setObjectName("UiFactory");
     Mainapp* pApp = Mainapp::getInstance();

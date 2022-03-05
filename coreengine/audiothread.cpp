@@ -16,9 +16,9 @@
 
 AudioThread::AudioThread(bool noAudio)
     :
-      #ifdef AUDIOSUPPORT
+#ifdef AUDIOSUPPORT
       m_audioOutput(this),
-      #endif
+#endif
       m_positionChangedTimer(this),
       m_noAudio(noAudio)
 

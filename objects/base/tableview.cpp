@@ -7,8 +7,7 @@
 #include "resource_management/fontmanager.h"
 
 TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> & data, const QStringList & header, bool selectable)
-    : QObject(),
-      m_Header(header),
+    : m_Header(header),
       m_data(data),
       m_widths(widths)
 {

@@ -22,8 +22,7 @@ const char* const chatAllyTarget = "@Ally";
 const char* const chatEnemyTarget = "@Enemy";
 
 Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkSerives serviceMode)
-    : QObject(),
-      m_pInterface(pInterface),
+    : m_pInterface(pInterface),
       m_serviceMode(serviceMode)
 {
     setSize(size.width(), size.height());

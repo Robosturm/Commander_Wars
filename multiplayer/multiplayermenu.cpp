@@ -264,7 +264,8 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
         }
     }
     // send map data to client
-    if (!m_local && m_hostSocket == 0)
+    if (Mainapp::getSlave() &&
+        m_hostSocket == 0)
     {
         m_hostSocket = socketID;
     }

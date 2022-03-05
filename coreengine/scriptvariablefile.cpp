@@ -5,8 +5,7 @@
 #include <QFile>
 
 ScriptVariableFile::ScriptVariableFile(const QString & filename)
-    : QObject(),
-      m_filename(filename)
+    : m_filename(filename)
 {
     setObjectName("ScriptVariableFile");
     Mainapp* pApp = Mainapp::getInstance();

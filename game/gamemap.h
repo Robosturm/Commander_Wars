@@ -642,11 +642,7 @@ public slots:
     /**
      * @brief nextTurn next players turn.
      */
-    void nextTurn(quint32 dayToDayUptimeMs = 2000);
-    /**
-     * @brief nextTurnPlayerTimeout
-     */
-    void nextTurnPlayerTimeout();
+    void nextTurn(quint32 dayToDayUptimeMs = 2000);    
     /**
      * @brief enableUnits makes all units of the given player movable again
      * @param pPlayer

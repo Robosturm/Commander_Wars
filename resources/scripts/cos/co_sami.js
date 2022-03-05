@@ -242,13 +242,16 @@ var Constructor = function()
     };
     this.getAiCoUnitBonus = function(co, unit, map)
     {
-        if (unit.getUnitType() === GameEnums.UnitType_Infantry)
+        if (unit.getUnitID !== "INFANTRY")
         {
-            return 6;
-        }
-        else if (unit.getBaseMaxRange() === 1)
-        {
-            return -1;
+            if (unit.getUnitType() === GameEnums.UnitType_Infantry)
+            {
+                return 8;
+            }
+            else if (unit.getBaseMaxRange() === 1)
+            {
+                return -1;
+            }
         }
         return 2;
     };

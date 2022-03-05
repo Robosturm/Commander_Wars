@@ -9,7 +9,6 @@ FocusableObject* FocusableObject::m_focusedObject = nullptr;
 bool FocusableObject::m_registeredAtStage = false;
 
 FocusableObject::FocusableObject()
-    : QObject()
 {
     setObjectName("FocusableObject");
     connect(this, &FocusableObject::sigFocused, this, &FocusableObject::focusedInternal);
