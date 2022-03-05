@@ -203,7 +203,7 @@ var Constructor = function()
                 }
                 break;
             }
-            luck = luckPerUnit * unitCount;
+            luck = luckPerUnit * (unitCount - enemyCount);
             if (luck > maxLuck)
             {
                 luck = maxLuck;
@@ -241,7 +241,7 @@ var Constructor = function()
                 }
                 break;
             }
-            missFortune = luckMissFortune * enemyCount;
+            missFortune = luckMissFortune * (enemyCount - unitCount);
             if (missFortune > maxMissFortune)
             {
                 missFortune = maxMissFortune;
