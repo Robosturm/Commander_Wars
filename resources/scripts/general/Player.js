@@ -36,7 +36,7 @@ var PLAYER =
                      ["#d39c36", "#d39c36", "",   "heavensong",], // heavensong
                      ["#8227b4", "#8227b4", "",   "requiem",], // requiem
                      ["#20918b", "#20918b", "",   "aurania",], // aurania
-                     ["#bd00a4", "#bd00a4", "",   "cacophany",], // cacophany
+                     ["#bd00a4", "#bd00a4", "",   "cacophony",], // cacophany
                      ["#cd4c18", "#cd4c18", "",   "silmor",], // silmor
                      ["#46324c", "#46324c", "",   "fumomance",], // fumomance
                      ["#908890", "#908890", "",   "neutral"], // neutral

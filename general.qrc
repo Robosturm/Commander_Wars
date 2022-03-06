@@ -6622,5 +6622,14 @@
         <file>resources/misc_unused/Tag_D2D.png</file>
         <file>resources/misc_unused/Tag_SCOP.png</file>
         <file>resources/images/game/battlesprites/background/back_wastebridge+sea.png</file>
+        <file>resources/images/colortables/aurania.png</file>
+        <file>resources/images/colortables/cacophony.png</file>
+        <file>resources/images/colortables/cherrystone.png</file>
+        <file>resources/images/colortables/felheim.png</file>
+        <file>resources/images/colortables/fumomance.png</file>
+        <file>resources/images/colortables/gloomwood.png</file>
+        <file>resources/images/colortables/heavensong.png</file>
+        <file>resources/images/colortables/requiem.png</file>
+        <file>resources/images/colortables/silmor.png</file>
     </qresource>
 </RCC>
