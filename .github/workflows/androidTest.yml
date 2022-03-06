@@ -9,14 +9,15 @@ jobs:
     name: Android Build
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [windows-latest]
         include:
-          - os: ubuntu-latest
+          - os: windows-latest
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
             target: 'android'
-            target-api: ['29']
+            target-api-level: ['27']
             build-tools: ['30.0.2']
+            abi : "armeabi-v7a"
         
     runs-on: ${{matrix.os}}
         
@@ -48,16 +49,21 @@ jobs:
         cmake \
         -B '${{github.workspace}}/build' \
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
-        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \
+        "-GNMake Makefiles JOM" \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
-        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
-        -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
-        -DANDROID_ABI=${{ matrix.abi }} \
+        -DCMAKE_C_COMPILER:STRING=$ANDROID_NDK/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe \
+        -DCMAKE_CXX_COMPILER:STRING=$ANDROID_NDK/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe \
         -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api }} \
+        -DANDROID_NDK:PATH=$ANDROID_NDK \   
+        -DANDROID_SDK_ROOT:PATH=$ANDROID_SDK \  
+        -DANDROID_ABI=${{ matrix.abi }} \
+        -DANDROID_NATIVE_API_LEVEL:STRING=${{ matrix.target-api-level }} \
+        -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
         -DANDROID_STL=c++_shared \
-        -DANDROID_TOOLCHAIN=clang \
-        -DANDROID_BUILDTOOLS_REVISION=${{ matrix.build-tools }} \
-        -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \
+        -DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL:BOOL=ON \
+        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \        
+        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
+        -DANDROID_BUILDTOOLS_REVISION=${{ matrix.build-tools }}
         
     - name: Build
       working-directory: '${{github.workspace}}/build'
