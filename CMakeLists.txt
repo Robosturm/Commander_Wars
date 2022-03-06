@@ -122,7 +122,7 @@ endif()
 add_definitions(
     -DMAJOR=0
     -DMINOR=22
-    -DREVISION=0
+    -DREVISION=1
     )
 
 ###################################################################################
@@ -646,11 +646,11 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_NAME "0.22.0"
+    QT_ANDROID_VERSION_NAME "0.22.1"
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_CODE "11"
+    QT_ANDROID_VERSION_CODE "12"
     )
 
 # link libraries
