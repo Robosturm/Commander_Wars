@@ -6,7 +6,6 @@
 #include "resource_management/fontmanager.h"
 
 DialogPassword::DialogPassword(QString text, bool showCancel, QString startInput)
-    : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

@@ -48,8 +48,8 @@ public slots:
     void observeGamePassword(QString password);
     void connected(quint64 socket);
 private:
-    void updateGameData(QDataStream & stream);
-    void joinSlaveGame(QDataStream & stream);
+    void updateGameData(const QJsonObject & objData);
+    void joinSlaveGame(const QJsonObject & objData);
 private:
     spPanel m_pGamesPanel;
     spNetworkInterface m_pTCPClient{nullptr};

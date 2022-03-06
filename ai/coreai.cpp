@@ -2169,10 +2169,11 @@ void CoreAI::serializeObject(QDataStream& stream) const
     stream << getVersion();
     stream << m_enableNeutralTerrainAttack;
     stream << static_cast<qint32>(m_BuildingChanceModifier.size());
-    for (qint32 i = 0; i < m_BuildingChanceModifier.size(); i++)
+    auto keys = m_BuildingChanceModifier.keys();
+    for (auto & key : keys)
     {
-        stream << std::get<0>(m_BuildingChanceModifier[i]);
-        stream << std::get<1>(m_BuildingChanceModifier[i]);
+        stream << key;
+        stream << m_BuildingChanceModifier[key];
     }
     stream << static_cast<qint32>(m_MoveCostMap.size());
     for (qint32 x = 0; x < m_MoveCostMap.size(); x++)
@@ -2223,7 +2224,7 @@ void CoreAI::deserializeObjectVersion(QDataStream &stream, qint32 version)
             float value = 1.0f;
             stream >> unitID;
             stream >> value;
-            m_BuildingChanceModifier.append(std::tuple<QString, float>(unitID, value));
+            m_BuildingChanceModifier.insert(unitID, value);
         }
     }
     if (version > 3)

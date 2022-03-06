@@ -104,7 +104,7 @@ public:
      * @brief getColorTableAnim
      * @return
      */
-    oxygine::spResAnim getColorTableAnim() const;
+    virtual oxygine::spResAnim getColorTableAnim() const;
     /**
      * @brief getColorTableAnim
      * @return

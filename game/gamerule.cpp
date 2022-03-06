@@ -15,8 +15,7 @@ GameRule::GameRule()
 }
 
 GameRule::GameRule(QString ruleID)
-    : QObject(),
-      m_RuleID(ruleID)
+    : m_RuleID(ruleID)
 {
     setObjectName("GameRule");
     Interpreter::setCppOwnerShip(this);

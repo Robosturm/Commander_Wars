@@ -39,7 +39,8 @@ var Constructor = function()
         talonGunAnimation.addSpriteAnimTable("talon+gun+fire+mask", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, owner, 0, 1.33, 1.33, 0, 0, GameEnums.Recoloring_Matrix);
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var animation = null;
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))

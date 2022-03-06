@@ -13,7 +13,6 @@
 #include "resource_management/fontmanager.h"
 
 DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
-    : QObject()
 {
     setObjectName("DialogUnitInfo");
     Mainapp* pApp = Mainapp::getInstance();

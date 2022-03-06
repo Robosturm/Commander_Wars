@@ -57,7 +57,8 @@ var Constructor = function()
         var explode = false;
         var terrain = null;
         var baseId = "";
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))
@@ -83,7 +84,8 @@ var Constructor = function()
             {
                 queueAnimation = GameAnimationFactory.getAnimation(animationCount - 1);
             }
-            for (i = 0; i < fields.size(); i++)
+            var size = fields.size();
+            for (i = 0; i < size; i++)
             {
                 point = fields.at(i);
                 if (map.onMap(x + point.x, y + point.y))

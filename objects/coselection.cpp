@@ -10,8 +10,7 @@
 #include "objects/base/moveinbutton.h"
 
 COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
-    : QObject(),
-      m_Coids(coids)
+    : m_Coids(coids)
 {
     setObjectName("COSelection");
     Mainapp* pApp = Mainapp::getInstance();

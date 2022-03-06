@@ -9,7 +9,7 @@ class GameData : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
-    explicit GameData();
+    explicit GameData() = default;
     virtual ~GameData() = default;
     /**
      * @brief serialize stores the object
@@ -29,10 +29,6 @@ public:
     {
         return 1;
     }
-signals:
-
-public slots:
-
 private:
     QString m_Host;
     QString m_MapName;

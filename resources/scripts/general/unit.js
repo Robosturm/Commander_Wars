@@ -108,7 +108,8 @@ var UNIT =
     transporterRefilling : function (unit, map)
     {
         // carrier refilling and unmoving is done here
-        for (var i = 0; i < unit.getLoadedUnitCount(); i++)
+        var size = unit.getLoadedUnitCount();
+        for (var i = 0; i < size; i++)
         {
             var transportUnit = unit.getLoadedUnit(i);
             var refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set

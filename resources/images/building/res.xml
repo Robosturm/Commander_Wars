@@ -407,13 +407,16 @@
         <image file="nest_center.png" />
         <image file="nest_center_laser_left.png" />
         <image file="nest_center_laser_middle.png" />
-        <image file="nest_center_laser_right.png" />
+        <image file="nest_center_laser_right.png" />        
         <image file="nest_laser+S.png" />
         <image file="nest_laser+SE.png" />
         <image file="nest_laser+SW.png" />
         <image file="nest_mortar_left.png" />
         <image file="nest_mortar_right.png" />
         <image file="nest_factory.png" />
-        
+        <image file="nest_center_laser_left+destroyed.png" />
+        <image file="nest_center_laser_middle+destroyed.png" />
+        <image file="nest_center_laser_right+destroyed.png" />
+        <image file="nest_laser+destroyed.png" />
     </atlas>
 </resources>

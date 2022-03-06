@@ -77,7 +77,8 @@ var Constructor = function()
         var range = CO_VON_BOLT.postAnimationLaserrayRange;
         var fields = globals.getCircle(0, range);
         // check all target fields
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var x = fields.at(i).x + laserTarget.x;
             var y = fields.at(i).y + laserTarget.y;

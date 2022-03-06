@@ -15,8 +15,7 @@
 #include "objects/base/dropdownmenusprite.h"
 
 ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
-    : QObject(),
-      m_Event(scriptEventDialog)
+    : m_Event(scriptEventDialog)
 {
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

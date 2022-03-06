@@ -203,7 +203,8 @@ var Constructor = function()
         if (attacker.getBaseMaxRange() === 1)
         {
             var units = co.getOwner().getUnits();
-            for (var i = 0; i < units.size(); i++)
+            var size = units.size();
+            for (var i = 0; i < size; i++)
             {
                 var unit = units.at(i);
                 var x = unit.getX();

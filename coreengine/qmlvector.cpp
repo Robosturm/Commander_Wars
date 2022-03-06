@@ -5,7 +5,6 @@
 #include "ai/coreai.h"
 
 QmlVectorPoint::QmlVectorPoint()
-    : QObject()
 {
     setObjectName("QmlVectorPoint");
     Mainapp* pApp = Mainapp::getInstance();
@@ -20,7 +19,6 @@ QmlVectorPoint::~QmlVectorPoint()
 }
 
 QmlVectorUnit::QmlVectorUnit()
-    : QObject()
 {
     setObjectName("QmlVectorUnit");
     Mainapp* pApp = Mainapp::getInstance();
@@ -135,7 +133,6 @@ void QmlVectorUnit::sortUnitsFarFromEnemyFirst(spQmlVectorUnit & pEnemyUnits)
 }
 
 QmlVectorBuilding::QmlVectorBuilding()
-    : QObject()
 {
     setObjectName("QmlVectorBuilding");
     Mainapp* pApp = Mainapp::getInstance();

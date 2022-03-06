@@ -13,7 +13,6 @@
 #include "game/player.h"
 
 Wikipage::Wikipage()
-    : QObject()
 {
     setObjectName("Wikipage");
     Mainapp* pApp = Mainapp::getInstance();

@@ -5,7 +5,6 @@
 #include "coreengine/mainapp.h"
 
 CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
-    : QObject()
 {
     setObjectName("CloseablePopUp");
     setSize(width, heigth);

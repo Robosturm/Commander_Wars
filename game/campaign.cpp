@@ -14,7 +14,6 @@
 const QString Campaign::scriptName = "campaignScript";
 
 Campaign::Campaign(QString file)
-    : QObject()
 {
     setObjectName("Campaign");
     Mainapp* pApp = Mainapp::getInstance();
@@ -25,7 +24,6 @@ Campaign::Campaign(QString file)
 }
 
 Campaign::Campaign()
-    : QObject()
 {
     setObjectName("Campaign");
     Mainapp* pApp = Mainapp::getInstance();

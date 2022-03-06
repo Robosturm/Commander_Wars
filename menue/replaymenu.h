@@ -106,6 +106,7 @@ private:
     oxygine::spButton m_oneStepButton;
     oxygine::spButton m_rewindDayButton;
     oxygine::spButton m_configButton;
+    oxygine::spBox9Sprite m_taskBar;
 
     bool m_seekingOverworldAnimations = false;
     GameEnums::BattleAnimationMode m_seekingBattleAnimations = GameEnums::BattleAnimationMode_All;

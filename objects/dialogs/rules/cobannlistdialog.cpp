@@ -18,8 +18,7 @@
 #include "objects/dialogs/dialogtextinput.h"
 
 COBannListDialog::COBannListDialog(QStringList cobannlist)
-    : QObject(),
-      m_CurrentCOBannList(cobannlist)
+    : m_CurrentCOBannList(cobannlist)
 {
     setObjectName("COBannListDialog");
     Interpreter::setCppOwnerShip(this);

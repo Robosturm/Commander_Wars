@@ -23,7 +23,8 @@ CO_ALEXANDER.startOfTurn = function(co, map)
         if (!player.getIsDefeated())
         {
             var buildings = player.getBuildings();
-            for (var i = 0; i < buildings.size(); i++)
+            var size = buildings.size();
+            for (var i = 0; i < size; i++)
             {
                 var building = buildings.at(i);
                 var unit = map.getTerrain(building.getX(), building.getY()).getUnit();

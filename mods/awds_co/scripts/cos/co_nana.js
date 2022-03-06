@@ -41,7 +41,8 @@ CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
                     for (var curRange = 1; curRange < maxRange; curRange++)
                     {
                         var directCircle = globals.getCircle(curRange, curRange);
-                        for (i = 0; i < directCircle.size(); i++)
+                        var size = directCircle.size();
+                        for (i = 0; i < size; i++)
                         {
                             point = directCircle.at(i);
                             if (map.onMap(defX + point.x, defY + point.y))
@@ -85,7 +86,8 @@ CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
             if (attacker.getBaseMaxRange() > 1 && damage > 0)
             {
                 var circle = globals.getCircle(1, explosionRange);
-                for (i = 0; i < circle.size(); i++)
+                var size = circle.size();
+                for (i = 0; i < size; i++)
                 {
                     point = circle.at(i);
                     if (map.onMap(defX + point.x, defY + point.y))

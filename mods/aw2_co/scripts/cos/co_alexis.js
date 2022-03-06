@@ -7,7 +7,8 @@ CO_ALEXIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         var fields = globals.getCircle(0, 2);
         if (map !== null)
         {
-            for (var i = 0; i < fields.size(); i++)
+            var size = fields.size();
+            for (var i = 0; i < size; i++)
             {
                 var x = fields.at(i).x + atkPosX;
                 var y = fields.at(i).y + atkPosY;
@@ -59,13 +60,15 @@ CO_ALEXIS.startOfTurn = function(co, map)
             var buildings = co.getOwner().getBuildings();
             var fields = globals.getCircle(1, 1);
             var viewplayer = map.getCurrentViewPlayer();
-            for (var i2 = 0; i2 < buildings.size(); i2++)
+            var size1 = buildings.size();
+            var size2 = fields.size();
+            for (var i2 = 0; i2 < size1; i2++)
             {
                 var building = buildings.at(i2);
                 var x = building.getX();
                 var y = building.getY();
                 var animation = null;
-                for (var i = 0; i < fields.size(); i++)
+                for (var i = 0; i < size2; i++)
                 {
                     var point = fields.at(i);
                     var unitX = x + point.x;

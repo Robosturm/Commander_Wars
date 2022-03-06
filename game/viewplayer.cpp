@@ -1,11 +1,17 @@
 #include "game/viewplayer.h"
 #include "game/gamemap.h"
 
+#include "game/gameanimation/gameanimationfactory.h"
+
+#include "menue/gamemenue.h"
+
 Viewplayer::Viewplayer(GameMap* pMap)
-    : Player(pMap)
+    : Player(pMap),
+      m_input(pMap)
 {
     setObjectName("Viewplayer");
     Interpreter::setCppOwnerShip(this);
+    m_input.init();
 }
 
 bool Viewplayer::getFieldVisible(qint32 x, qint32 y)
@@ -87,8 +93,7 @@ GameEnums::VisionType Viewplayer::getFieldVisibleType(qint32 x, qint32 y)
 }
 
 bool Viewplayer::getFieldDirectVisible(qint32 x, qint32 y)
-{
-    
+{    
     switch (m_ViewType)
     {
         case ViewType::CurrentTeam:
@@ -132,4 +137,9 @@ qint32 Viewplayer::getViewType() const
 void Viewplayer::setViewType(const qint32 &ViewType)
 {
     m_ViewType = ViewType;
+}
+
+oxygine::spResAnim Viewplayer::getColorTableAnim() const
+{
+    return m_pMap->getCurrentPlayer()->getColorTableAnim();
 }

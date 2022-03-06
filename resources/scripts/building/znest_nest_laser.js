@@ -2,7 +2,7 @@ var Constructor = function()
 {    
     this.init = function (building)
     {
-        building.setHp(-1);
+        building.setHp(100);
         building.setAlwaysVisble(true);
     };
     this.loadSprites = function(building, neutral, map)
@@ -59,9 +59,62 @@ var Constructor = function()
             building.loadSprite("nest_laser+SW", false, 400, Qt.point(0, building.getImageSize()));
         }
     };
+    this.getActionTargetFields = function(building)
+    {
+        var map = building.getMap();
+        var targets = globals.getEmptyPointArray();
+        var day = map.getCurrentDay();
+        if (day % 3 === 1)
+        {
+            for (var i = 1; i < 20; i++)
+            {
+                targets.append(Qt.point(-1, i));
+            }
+        }
+        else if (day % 3 === 2)
+        {
+            for (var i = 1; i < 20; i++)
+            {
+                targets.append(Qt.point(i - 1, i));
+            }
+        }
+        else if (day % 3 === 0)
+        {
+            for (var i = 1; i < 20; i++)
+            {
+                targets.append(Qt.point(-i - 1, i));
+            }
+        }
+        return targets;
+    };
     this.usesMapLayer = function()
     {
         return true;
+    };
+    this.getIsAttackable = function(building, x, y)
+    {
+        var buildX = building.getX();
+        var buildY = building.getY();
+        if (y === buildY && buildX - 1 === x)
+        {
+            return true;
+        }
+        return false;
+    };
+    this.onDestroyed = function(building, map)
+    {
+        // called when the terrain is destroyed and replacing of this terrain starts
+        var x = building.getX();
+        var y = building.getY();
+        var animation = GameAnimationFactory.createAnimation(map, x - 1, y);
+        animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
+        animation.addScreenshake(30, 0.95, 1000, 200);
+        animation.setSound("explosion+land.wav");
+        map.getTerrain(x, y).loadBuilding("ZNEST_NEST_LASER_DESTROYED");
+    };
+    this.getDamage = function(building, unit)
+    {
+        return 8;
     };
 }
 

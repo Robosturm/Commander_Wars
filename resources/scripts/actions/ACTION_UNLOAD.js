@@ -17,7 +17,8 @@ var Constructor = function()
             (actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
             (action.getMovementTarget() === null))
         {
-            for (var i = 0; i < unit.getLoadedUnitCount(); i++)
+            var size = unit.getLoadedUnitCount();
+            for (var i = 0; i < size; i++)
             {
                 if (ACTION_UNLOAD.getUnloadFields(action, i, map).length > 0)
                 {
@@ -196,7 +197,8 @@ var Constructor = function()
         var i3 = 0;
         var i4 = 0;
         var found = false;
-        for (var i = 0; i < unit.getLoadedUnitCount(); i++)
+        var size = unit.getLoadedUnitCount();
+        for (var i = 0; i < size; i++)
         {
             if (unitIndexes.indexOf(i) < 0)
             {
@@ -239,7 +241,8 @@ var Constructor = function()
         if (globals.isEven(action.getInputStep()))
         {
             var unit = action.getTargetUnit();
-            for (var i = 0; i < unit.getLoadedUnitCount(); i++)
+            var size = unit.getLoadedUnitCount();
+            for (var i = 0; i < size; i++)
             {
                 if (unitIndexes.indexOf(i) < 0)
                 {

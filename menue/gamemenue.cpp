@@ -575,7 +575,7 @@ void GameMenue::loadGameMenue()
 void GameMenue::connectMap()
 {    
     connect(m_pMap->getGameRules(), &GameRules::sigVictory, this, &GameMenue::victory, Qt::QueuedConnection);
-    connect(m_pMap->getGameRules()->getRoundTimer(), &Timer::timeout, m_pMap.get(), &GameMap::nextTurnPlayerTimeout, Qt::QueuedConnection);
+    connect(m_pMap->getGameRules()->getRoundTimer(), &Timer::timeout, this, &GameMenue::nextTurnPlayerTimeout, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
@@ -731,7 +731,8 @@ void GameMenue::editFinishedCanceled()
 
 spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
 {
-    if (pGameAction.get() != nullptr &&
+    if (m_gameStarted &&
+        pGameAction.get() != nullptr &&
         (pGameAction->getActionID() == CoreAI::ACTION_NEXT_PLAYER ||
          pGameAction->getActionID() == CoreAI::ACTION_SWAP_COS))
     {
@@ -817,6 +818,17 @@ bool GameMenue::requiresForwarding(const spGameAction & pGameAction) const
     return getIsMultiplayer(pGameAction) &&
            baseGameInput != nullptr &&
            baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi;
+}
+
+void GameMenue::nextTurnPlayerTimeout()
+{
+    auto* input = m_pMap->getCurrentPlayer()->getBaseGameInput();
+    if (input == nullptr || input->getAiType() != GameEnums::AiTypes_ProxyAi)
+    {
+        spGameAction pAction;
+        pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
+        performAction(pAction);
+    }
 }
 
 void GameMenue::performAction(spGameAction pGameAction)
@@ -1061,7 +1073,8 @@ void GameMenue::centerMapOnAction(GameAction* pGameAction)
     Player* pPlayer = getCurrentViewPlayer();
     
     QPoint target = pGameAction->getTarget();
-    if (pUnit != nullptr)
+    if (pUnit != nullptr &&
+        !pUnit->isStealthed(pPlayer))
     {
         const auto & path = pGameAction->getMovePath();
         for (const auto & point : path)
@@ -1075,7 +1088,9 @@ void GameMenue::centerMapOnAction(GameAction* pGameAction)
     }
 
     if (m_pMap->onMap(target.x(), target.y()) &&
-        pPlayer->getFieldVisible(target.x(), target.y()))
+        pPlayer->getFieldVisible(target.x(), target.y()) &&
+        (pUnit == nullptr ||
+         !pUnit->isStealthed(pPlayer)))
     {
         m_pMap->centerMap(target.x(), target.y());
     }
@@ -1153,6 +1168,10 @@ bool GameMenue::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) con
             {
                 battleActive = true;
             }
+            else
+            {
+                battleActive = false;
+            }
         }
         else if (animMode == GameEnums::BattleAnimationMode_Ally)
         {
@@ -1162,6 +1181,10 @@ bool GameMenue::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) con
                 (pDefUnit != nullptr && pPlayer2->isAlly(pDefUnit->getOwner())))
             {
                 battleActive = true;
+            }
+            else
+            {
+                battleActive = false;
             }
         }
         else if (animMode == GameEnums::BattleAnimationMode_Enemy)
@@ -1175,6 +1198,10 @@ bool GameMenue::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) con
                 pPlayer2->isEnemy(pDefUnit->getOwner()))
             {
                 battleActive = true;
+            }
+            else
+            {
+                battleActive = false;
             }
         }
         else if (animMode == GameEnums::BattleAnimationMode_None)
@@ -1517,13 +1544,16 @@ void GameMenue::showUnitInfo(qint32 player)
     addChild(pDialogUnitInfo);
 }
 
-void GameMenue::showUnitStatistics()
+void GameMenue::showUnitStatistics(qint32 player)
+{
+    showPlayerUnitStatistics(m_pMap->getPlayer(player));
+}
+
+void GameMenue::showPlayerUnitStatistics(Player* pPlayer)
 {
     m_Focused = false;
-    
     CONSOLE_PRINT("showUnitStatistics()", Console::eDEBUG);
     spGenericBox pBox = spGenericBox::create();
-    Player* pPlayer = m_pMap->getCurrentViewPlayer();
     spUnitStatisticView view = spUnitStatisticView::create(m_pMap->getGameRecorder()->getPlayerDataRecords()[pPlayer->getPlayerID()],
             Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer);
     view->setPosition(30, 30);

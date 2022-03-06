@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QQmlEngine>
 
+#include "coreengine/console.h"
+#include "coreengine/mainapp.h"
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -55,8 +57,71 @@ signals:
 public slots:
     void openScript(const QString & script, bool setup);
     void loadScript(const QString & content, const QString & script);
-    QJSValue doFunction(const QString & func, const QJSValueList& args = QJSValueList());
-    QJSValue doFunction(const QString & obj, const QString & func, const QJSValueList& args = QJSValueList());
+    inline QJSValue doFunction(const QString & func, const QJSValueList& args = QJSValueList())
+    {
+        QJSValue ret;
+        QJSValue funcPointer = globalObject().property(func);
+#ifdef GAMEDEBUG
+        OXY_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
+        if (funcPointer.isCallable())
+        {
+#endif
+            ret = funcPointer.call(args);
+            if (ret.isError())
+            {
+                QString error = ret.toString() + " in File: " +
+                                ret.property("fileName").toString() + " at Line: " +
+                                ret.property("lineNumber").toString();
+                CONSOLE_PRINT(error, Console::eERROR);
+            }
+#ifdef GAMEDEBUG
+        }
+        else
+        {
+            QString error = "Error: attemp to call a non function value. Call:" + func;
+            CONSOLE_PRINT(error, Console::eERROR);
+        }
+#endif
+        return ret;
+    }
+    inline QJSValue doFunction(const QString & obj, const QString & func, const QJSValueList& args = QJSValueList())
+    {
+        QJSValue ret;
+        QJSValue objPointer = globalObject().property(obj);
+#ifdef GAMEDEBUG
+        OXY_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
+        if (objPointer.isObject())
+        {
+#endif
+            QJSValue funcPointer = objPointer.property(func);
+#ifdef GAMEDEBUG
+            if (funcPointer.isCallable())
+            {
+#endif
+                ret = funcPointer.call(args);
+                if (ret.isError())
+                {
+                    QString error = ret.toString() + " in File: " +
+                                    ret.property("fileName").toString() + " at Line: " +
+                                    ret.property("lineNumber").toString();
+                    CONSOLE_PRINT(error, Console::eERROR);
+                }
+#ifdef GAMEDEBUG
+            }
+            else
+            {
+                QString error = "Error: attemp to call a non function value. Call:" + obj + "." + func;
+                CONSOLE_PRINT(error, Console::eERROR);
+            }
+        }
+        else
+        {
+            QString error = "Error: attemp to call a non object value in order to call a function. Call:" + obj + "." + func;
+            CONSOLE_PRINT(error, Console::eERROR);
+        }
+#endif
+        return ret;
+    }
     void cleanMemory();
     /**
      * @brief doString immediatly interprates the string with the javascript-interpreter
@@ -88,13 +153,33 @@ public slots:
      * @param object
      * @return
      */
-    bool exists(const QString & object);
+    bool exists(const QString & object)
+    {
+        QJSValue objPointer = globalObject().property(object);
+        if (objPointer.isObject())
+        {
+            return true;
+        }
+        return false;
+    }
     /**
      * @brief exists checks if the js object and function exists
      * @param object
      * @return
      */
-    bool exists(const QString & object, const QString & function);
+    bool exists(const QString & object, const QString & function)
+    {
+        QJSValue objPointer = globalObject().property(object);
+        if (objPointer.isObject())
+        {
+            QJSValue funcPointer = objPointer.property(function);
+            if (funcPointer.isCallable())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 private slots:
     void networkGameFinished(qint32 value, QString id);
 private:

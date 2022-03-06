@@ -51,8 +51,8 @@ var Constructor = function()
         var x = ACTION_DEATHRAY_FIRE.postAnimationX;
         var y = ACTION_DEATHRAY_FIRE.postAnimationY;
         var building = ACTION_DEATHRAY_FIRE.postAnimationBuilding;
-
-        for (var i = 0; i < ACTION_DEATHRAY_FIRE.postAnimationFields.size(); i++)
+        var size = ACTION_DEATHRAY_FIRE.postAnimationFields.size();
+        for (var i = 0; i < size; i++)
         {
             var point = ACTION_DEATHRAY_FIRE.postAnimationFields.at(i);
             if (map.onMap(x + point.x, y + point.y))

@@ -9,8 +9,11 @@ var CO =
     onCOUnitLost : function(co, map)
     {
         // called when a co unit got destroyed
-        var gamerules = map.getGameRules();
-        co.setPowerFilled(co.getPowerFilled() * (1 - gamerules.getPowerLoose()));
+        if (map !== null)
+        {
+            var gamerules = map.getGameRules();
+            co.setPowerFilled(co.getPowerFilled() * (1 - gamerules.getPowerLoose()));
+        }
     },
 
     loadCOMusic : function(co, map)
@@ -284,20 +287,23 @@ var CO =
 
     getStarCost : function(co, map)
     {
-        var startCost = 0;
-        var gamerules = map.getGameRules();
-        var powerCostIncrease = gamerules.getPowerUsageReduction();
-        var costIncrease = 1.0 + co.getPowerUsed() * powerCostIncrease;
-        var gainMode = gamerules.getPowerGainMode();
-        if (gainMode === GameEnums.PowerGainMode_Money ||
-            gainMode === GameEnums.PowerGainMode_Money_OnlyAttacker)
+        var startCost = 10000;
+        if (map !== null)
         {
-            startCost = costIncrease * CO.starFundsCost;
-        }
-        else if (gainMode === GameEnums.PowerGainMode_Hp ||
-                 gainMode === GameEnums.PowerGainMode_Hp_OnlyAttacker)
-        {
-            startCost = costIncrease * CO.starHpCost;
+            var gamerules = map.getGameRules();
+            var powerCostIncrease = gamerules.getPowerUsageReduction();
+            var costIncrease = 1.0 + co.getPowerUsed() * powerCostIncrease;
+            var gainMode = gamerules.getPowerGainMode();
+            if (gainMode === GameEnums.PowerGainMode_Money ||
+                    gainMode === GameEnums.PowerGainMode_Money_OnlyAttacker)
+            {
+                startCost = costIncrease * CO.starFundsCost;
+            }
+            else if (gainMode === GameEnums.PowerGainMode_Hp ||
+                     gainMode === GameEnums.PowerGainMode_Hp_OnlyAttacker)
+            {
+                startCost = costIncrease * CO.starHpCost;
+            }
         }
         return startCost;
     },

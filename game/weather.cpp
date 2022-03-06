@@ -4,8 +4,7 @@
 #include "coreengine/mainapp.h"
 
 Weather::Weather(QString weatherId, GameMap* pMap)
-    : QObject(),
-      m_WeatherId(weatherId),
+    : m_WeatherId(weatherId),
       m_pMap{pMap}
 {
     setObjectName("Weather");

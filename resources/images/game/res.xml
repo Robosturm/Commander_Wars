@@ -75,9 +75,10 @@
         <image file="battlesprites/background/back_desertbridge+sea.png" />
         <image file="battlesprites/background/back_snowbridge+0.png" />
         <image file="battlesprites/background/back_snowbridge+1.png" />
+        <image file="battlesprites/background/back_snowbridge+sea.png" />   
         <image file="battlesprites/background/back_wastebridge+0.png" />
-        <image file="battlesprites/background/back_wastebridge+1.png" />
-        <image file="battlesprites/background/back_snowbridge+sea.png" />        
+        <image file="battlesprites/background/back_wastebridge+1.png" />  
+        <image file="battlesprites/background/back_wastebridge+sea.png" />   
         <!-- forest -->
         <image file="battlesprites/background/back_forest+0.png" />
         <image file="battlesprites/background/back_forest+1.png" />
@@ -278,6 +279,8 @@
         <image file="battlesprites/background/back_deserttempharbour.png" />
         <image file="battlesprites/background/back_wastetempairport.png" />
         <image file="battlesprites/background/back_wastetempharbour.png" />
+        <!-- creeper -->
+        <image file="battlesprites/background/back_creeper.png" />
         <!-- uncomment and use in your mod to get a background rendered instead of filled rectangle
         <image file="battlesprites/fullscreen_battlebackground.png" />        
         -->        
@@ -343,6 +346,8 @@
         <image file="no_power.png" />
         <image file="power.png" />
         <image file="superpower.png" />
+        <image file="power2.png" />
+        <image file="superpower2.png" />
         <image file="tagpower.png" />
         <image file="unhide.png" />
         <image file="build.png" />
@@ -365,6 +370,7 @@
         <image file="nickname.png" />
         <image file="music.png" />
         <image file="wiki.png" />
+        <image file="rules.png" />
         <image file="statistics.png" />
         <image file="calculator.png" />        
         
@@ -420,7 +426,7 @@
         <image file="dialogfield.png" />    
         <image file="dialogfield+mask.png" />    
         <image file="nextday.png" />
-        <image file="tagaffinitystar.png" />        
+        <image file="tagaffinitystar.png" />
         
         <!-- powert stuff -->
         <image file="power_background.png" guideX1="0" guideX2="480" guideY1="0" guideY2="320"/>

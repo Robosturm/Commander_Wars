@@ -104,8 +104,8 @@ var Constructor = function()
         animation2.addSprite("deathray_start", 0, 0, 0, 2);
         animation2.setRotation(180);
         animation.queueAnimation(animation2);
-
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))

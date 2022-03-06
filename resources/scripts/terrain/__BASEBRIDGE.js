@@ -73,6 +73,10 @@ var Constructor = function()
     {
         var id = TERRAIN.getTerrainAnimationId(terrain, map);
         var weatherModifier = TERRAIN.getWeatherModifier(map);
+        if (weatherModifier === "")
+        {
+            weatherModifier = TERRAIN.getTerrainWeatherModifier(terrain);
+        }
         switch (id)
         {
             case "LAKE":

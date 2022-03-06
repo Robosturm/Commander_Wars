@@ -43,6 +43,10 @@ var Constructor = function()
     this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         var weatherModifier = TERRAIN.getWeatherModifier(map);
+        if (weatherModifier === "")
+        {
+            weatherModifier = TERRAIN.getTerrainWeatherModifier(terrain);
+        }
         return "back_" + weatherModifier + "factory";
     };
 

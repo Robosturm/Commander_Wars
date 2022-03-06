@@ -51,6 +51,10 @@ var Constructor = function()
 			building.loadWeatherOverlaySpriteV2("oilrig+snow", false);
 		};
 	};
+    this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
+    {
+        animation.addBuildingSprite("oilrig+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Matrix);
+    };
 }
 
 Constructor.prototype = BUILDING;

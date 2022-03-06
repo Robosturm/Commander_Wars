@@ -81,7 +81,8 @@ var Constructor = function()
         var x = ACTION_EXPLODE.postAnimationTargetX;
         var y = ACTION_EXPLODE.postAnimationTargetY;
         var fields = globals.getCircle(1, 2);
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))

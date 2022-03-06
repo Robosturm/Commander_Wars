@@ -70,7 +70,7 @@ var Constructor = function()
         }
         else
         {
-            var offset = Qt.point(-15, 5);
+            var offset = Qt.point(data[0] + data[1].x, 5);
             if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
             {
                 sprite.loadSpriteV2("neotank+" + armyName + "+mg+fire+air+mask", GameEnums.Recoloring_Matrix,

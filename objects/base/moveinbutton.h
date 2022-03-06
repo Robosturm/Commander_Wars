@@ -16,6 +16,7 @@ public:
                           qint32 startOffset = -1, float buttonScale = 2.0f, bool useY = false);
     virtual ~MoveInButton() = default;
     bool getMovedOut() const;
+
 signals:
     void sigMoved();
 private:

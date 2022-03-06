@@ -1,4 +1,6 @@
-#include <qcryptographichash.h>
+#include <QCryptographicHash>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 #include "multiplayer/multiplayermenu.h"
 #include "multiplayer/lobbymenu.h"
@@ -29,6 +31,8 @@
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
+
+#include "network/JsonKeys.h"
 
 Multiplayermenu::Multiplayermenu(QString adress, quint16 port, QString password, NetworkMode networkMode)
     : MapSelectionMapsMenue(Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 380),
@@ -260,6 +264,11 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
         }
     }
     // send map data to client
+    if (Mainapp::getSlave() &&
+        m_hostSocket == 0)
+    {
+        m_hostSocket = socketID;
+    }
     emit m_NetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 
@@ -363,28 +372,27 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             receiveCurrentGameState(stream, socketID);
         }
     }
-    else if (service == NetworkInterface::NetworkSerives::ServerHosting)
+    else if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
     {
-        QDataStream stream(&data, QIODevice::ReadOnly);
-        QString messageType;
-        stream >> messageType;
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject objData = doc.object();
+        QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
         CONSOLE_PRINT("Server Network Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
         if (messageType == NetworkCommands::SLAVEADDRESSINFO)
         {
-            connectToSlave(stream, socketID);
+            connectToSlave(objData, socketID);
         }
     }
 }
 
-void Multiplayermenu::connectToSlave(QDataStream & stream, quint64 socketID)
+void Multiplayermenu::connectToSlave(const QJsonObject & objData, quint64 socketID)
 {
     CONSOLE_PRINT("Connected to slave", Console::eDEBUG);
-    QString address;
-    stream >> address;
-    quint16 port;
-    stream >> port;
+    QString address = objData.value(JsonKeys::JSONKEY_ADDRESS).toString();
+    quint16 port = objData.value(JsonKeys::JSONKEY_PORT).toInteger();
     disconnectNetworkSlots();
     m_NetworkInterface = spTCPClient::create(nullptr);
+    m_NetworkInterface->setIsObserver(m_networkMode == NetworkMode::Observer);
     m_NetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
     m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
     createChat();
@@ -397,12 +405,12 @@ void Multiplayermenu::onSlaveConnectedToMaster(quint64 socketID)
     CONSOLE_PRINT("Connected to master", Console::eDEBUG);
     spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
     QString command = NetworkCommands::SLAVEREADY;
-    QByteArray sendData;
-    QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-    sendStream << command;
-    sendStream << Settings::getSlaveServerName();
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+    QJsonDocument doc(data);
     CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-    emit pSlaveMasterConnection->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
+    emit pSlaveMasterConnection->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 socketID)
@@ -871,20 +879,20 @@ void Multiplayermenu::sendSlaveReady()
     QString command = QString(NetworkCommands::GAMERUNNINGONSERVER);
     CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-    QByteArray sendData;
-    QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-    sendStream << command;
-    sendStream << Settings::getSlaveServerName();
-    sendStream << pMap->getGameRules()->getDescription();
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+    data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, pMap->getGameRules()->getDescription());
     if (pMap->getGameRules()->getPassword().isValidPassword(""))
     {
-        sendStream << false;
+        data.insert(JsonKeys::JSONKEY_HASPASSWORD, false);
     }
     else
     {
-        sendStream << true;
+        data.insert(JsonKeys::JSONKEY_HASPASSWORD, true);
     }
-    emit Mainapp::getSlaveClient()->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, true);
+    QJsonDocument doc(data);
+    emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, true);
 }
 
 void Multiplayermenu::slotCancelHostConnection()
@@ -1106,17 +1114,22 @@ void Multiplayermenu::showPlayerSelection()
     }
 }
 
-void Multiplayermenu::disconnected(quint64)
+void Multiplayermenu::disconnected(quint64 socket)
 {
     CONSOLE_PRINT("Multiplayermenu::disconnected", Console::eDEBUG);
-    if (m_networkMode == NetworkMode::Host && m_local)
+    if (m_networkMode == NetworkMode::Host)
     {
         // handled in player selection
+        if (Mainapp::getSlave() && m_hostSocket == socket)
+        {
+            CONSOLE_PRINT("Closing slave cause the host has disconnected.", Console::eDEBUG);
+            QCoreApplication::exit(0);
+        }
     }
     else
     {
-        disconnectNetwork();
         CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+        disconnectNetwork();
         oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
         oxygine::Actor::detach();
     }

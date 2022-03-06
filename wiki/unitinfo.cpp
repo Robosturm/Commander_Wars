@@ -19,7 +19,6 @@
 #include "objects/base/label.h"
 
 UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
-    : QObject()
 {
     setObjectName("UnitInfo");
     Mainapp* pApp = Mainapp::getInstance();

@@ -182,8 +182,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMap* pMap, const QStringList & te
                 oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
                 if (pTouchEvent != nullptr)
                 {
-                    emit pScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / static_cast<float>(pScrollbar->getContentHeigth()));
-                    pTouchEvent->stopPropagation();
+                    emit pScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / static_cast<float>(pScrollbar->getContentHeigth()));                    
                 }
             });
         }
@@ -205,6 +204,7 @@ void HumanPlayerInputMenu::addTouchMoveEvents()
             m_lastScrollPoint = te->localPosition;
             m_moveScrolling = true;
             event->stopPropagation();
+
         });
         addTouchUpListener([=](oxygine::Event* event)
         {
@@ -220,14 +220,12 @@ void HumanPlayerInputMenu::addTouchMoveEvents()
             {
                 m_moveScrolling = false;
             }
-            event->stopPropagation();
         });
         auto * pScrollbar = m_scrollbar.get();
         addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event* event)
         {
             if (m_moveScrolling)
             {
-                event->stopPropagation();
                 oxygine::TouchEvent* te = oxygine::safeCast<oxygine::TouchEvent*>(event);
                 oxygine::Vector2 newPos = te->localPosition;
                 float speed = -(newPos.y - m_lastScrollPoint.y);
@@ -237,7 +235,6 @@ void HumanPlayerInputMenu::addTouchMoveEvents()
                     m_lastScrollPoint = newPos;
                 }
             }
-            event->stopPropagation();
         });
     }
 }

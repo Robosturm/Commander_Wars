@@ -204,7 +204,7 @@ var Constructor = function()
                 {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    if (CO_CAIRN.isWildernessTile(atkPosX, atkPosY))
+                    if (CO_CAIRN.isWildernessTile(atkPosX, atkPosY, map))
                     {
                         var terrainDefense = terrain.getDefense(attacker);
                         return terrainDefense * 10 + 10;
@@ -280,7 +280,7 @@ var Constructor = function()
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (CO_CAIRN.isWildernessTile(defPosX, defPosY))
+            if (CO_CAIRN.isWildernessTile(defPosX, defPosY, map))
             {
                 var terrainDefense = map.getTerrain(defPosX, defPosY).getDefense(defender);
                 return terrainDefense * 10;
@@ -338,7 +338,7 @@ var Constructor = function()
                 for (var i = 0; i < path.length; ++i)
                 {
                     var pos = path[i];
-                    if (CO_CAIRN.isWildernessTile(pos.x, pos.y))
+                    if (CO_CAIRN.isWildernessTile(pos.x, pos.y, map))
                     {
                         ++heal;
                     }

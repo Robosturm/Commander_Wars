@@ -1,3 +1,6 @@
+#include <QJsonDocument>
+#include <QJsonObject>
+
 #include "objects/playerselection.h"
 
 #include "game/gamemap.h"
@@ -16,6 +19,7 @@
 #include "objects/dialogs/rules/perkselectiondialog.h"
 
 #include "gameinput/humanplayerinput.h"
+
 #include "ai/veryeasyai.h"
 
 #include "multiplayer/networkcommands.h"
@@ -24,6 +28,7 @@
 #include "coreengine/userdata.h"
 
 #include "network/tcpserver.h"
+#include "network/JsonKeys.h"
 
 constexpr const char* const CO_ARMY = "CO_ARMY";
 
@@ -1491,11 +1496,11 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
             CONSOLE_PRINT("Command not handled in playerselection", Console::eDEBUG);
         }
     }
-    else if (service == NetworkInterface::NetworkSerives::ServerHosting)
+    else if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
     {
-        QDataStream stream(&data, QIODevice::ReadOnly);
-        QString messageType;
-        stream >> messageType;
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject objData = doc.object();
+        QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
         CONSOLE_PRINT("Server Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
         if (messageType == NetworkCommands::SERVERREQUESTOPENPLAYERCOUNT)
         {
@@ -1547,10 +1552,9 @@ void PlayerSelection::sendOpenPlayerCount()
     {
         QString command = QString(NetworkCommands::SERVEROPENPLAYERCOUNT);
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-        QByteArray sendData;
-        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-        sendStream << command;
-        sendStream << Settings::getSlaveServerName();
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
         qint32 openPlayerCount = 0;
         for (const auto & playerAI : qAsConst(m_playerAIs))
         {
@@ -1559,8 +1563,9 @@ void PlayerSelection::sendOpenPlayerCount()
                 openPlayerCount++;
             }
         }
-        sendStream << openPlayerCount;
-        emit Mainapp::getSlaveClient()->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
+        data.insert(JsonKeys::JSONKEY_OPENPLAYERCOUNT, openPlayerCount);
+        QJsonDocument doc(data);
+        emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -1801,8 +1806,10 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                 }
             }
             updatePlayerData(player);
-            if (!humanFound && !m_pNetworkInterface->getIsObserver())
+            if (!humanFound &&
+                !m_pNetworkInterface->getIsObserver())
             {
+                CONSOLE_PRINT("Disconnecting cause controlling no player and isn't an observer", Console::eDEBUG);
                 emit sigDisconnect();
             }
             if (m_isServerGame)
@@ -1962,13 +1969,15 @@ void PlayerSelection::disconnected(quint64 socketID)
                 // reopen all players
                 m_playerAIs[i]->setCurrentItem(m_playerAIs[i]->getItemCount() - 1);
                 selectAI(i);
-
             }
         }
         CONSOLE_PRINT("Removing socket " + QString::number(socketID) + " from observer list", Console::eLogLevels::eDEBUG);
-        auto* gameRules = m_pMap->getGameRules();
-        auto & observer = gameRules->getObserverList();
-        observer.removeAll(socketID);
+        if (m_pMap != nullptr)
+        {
+            auto* gameRules = m_pMap->getGameRules();
+            auto & observer = gameRules->getObserverList();
+            observer.removeAll(socketID);
+        }
     }
 }
 

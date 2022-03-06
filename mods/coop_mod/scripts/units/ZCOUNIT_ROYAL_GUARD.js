@@ -6,7 +6,8 @@ ZCOUNIT_ROYAL_GUARD.startOfTurn = function(unit, map)
     var fields = globals.getCircle(1, 1);
     var unitX = unit.getX();
     var unitY = unit.getY();
-    for (var i = 0; i < fields.size(); i++)
+    var size = fields.size();
+    for (var i = 0; i < size; i++)
     {
         var x = fields.at(i).x + unitX;
         var y = fields.at(i).y + unitY;

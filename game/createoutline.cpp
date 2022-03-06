@@ -6,8 +6,7 @@
 #include "resource_management/objectmanager.h"
 
 void CreateOutline::addCursorRangeOutline(oxygine::spActor pOutlineSprite, const QString & prefix, qint32 range, QColor color)
-{
-    
+{    
     for (qint32 i = 0; i <= range; i++)
     {
         if (i == 0)
@@ -22,8 +21,7 @@ void CreateOutline::addCursorRangeOutline(oxygine::spActor pOutlineSprite, const
         {
             createOutline(pOutlineSprite, prefix, i, range, color);
         }
-    }
-    
+    }    
 }
 
 void CreateOutline::createOuterLeftRightOutline(oxygine::spActor pOutlineSprite, const QString & prefix, qint32 range, QColor color)

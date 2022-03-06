@@ -9,6 +9,7 @@
 #include "objects/base/dropdownmenu.h"
 #include "objects/base/slider.h"
 #include "objects/base/checkbox.h"
+#include "objects/base/moveinbutton.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
@@ -104,7 +105,7 @@ void ReplayMenu::showRecordInvalid()
         modList += mod + "\n";
     }
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("The current active mods or the current record are invalid! Exiting the Replay now. Mods used in the Replay:") + "\n" +
-                                                    modList, false);
+                                                          modList, false);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);    
     addChild(pExit);   
 }
@@ -185,25 +186,25 @@ void ReplayMenu::loadUIButtons()
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
-    pButtonBox->setResAnim(pAnim);
+    m_taskBar = oxygine::spBox9Sprite::create();
+    m_taskBar->setResAnim(pAnim);
     qint32 width = Settings::getWidth();
     if (!Settings::getSmallScreenDevice())
     {
         width += -m_IngameInfoBar->getWidth() - m_IngameInfoBar->getDetailedViewBox()->getWidth();
     }
-    pButtonBox->setSize(width, 50);
-    pButtonBox->setPosition(0, Settings::getHeight() - pButtonBox->getHeight() + 6);
-    pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    addChild(pButtonBox);
+    m_taskBar->setSize(width, 50);
+    m_taskBar->setPosition(0, Settings::getHeight() + 6);
+    m_taskBar->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    addChild(m_taskBar);
 
     oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit"), 130);
-    exitGame->setPosition(pButtonBox->getWidth() - 8 - exitGame->getWidth(), 4);
+    exitGame->setPosition(m_taskBar->getWidth() - 8 - exitGame->getWidth(), 4);
     exitGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigShowExitGame();
     });
-    pButtonBox->addChild(exitGame);
+    m_taskBar->addChild(exitGame);
 
     qint32 y = 9;
 
@@ -223,17 +224,17 @@ void ReplayMenu::loadUIButtons()
     });
     m_oneStepButton = ObjectManager::createIconButton("one_step", 36);
     m_oneStepButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getWidth(), y);
-    pButtonBox->addChild(m_oneStepButton);
+    m_taskBar->addChild(m_oneStepButton);
     m_oneStepButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigOneStep();
     });
 
-    pButtonBox->addChild(m_playButton);
-    pButtonBox->addChild(m_pauseButton);
+    m_taskBar->addChild(m_playButton);
+    m_taskBar->addChild(m_pauseButton);
     m_fastForwardButton = ObjectManager::createIconButton("fastforward", 36);
     m_fastForwardButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getWidth() - m_fastForwardButton->getWidth(), y);
-    pButtonBox->addChild(m_fastForwardButton);
+    m_taskBar->addChild(m_fastForwardButton);
     m_fastForwardButton->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event*)
     {
         emit sigStartFastForward();
@@ -248,7 +249,7 @@ void ReplayMenu::loadUIButtons()
     {
         emit sigRewindDay();
     });
-    pButtonBox->addChild(m_rewindDayButton);
+    m_taskBar->addChild(m_rewindDayButton);
 
     m_configButton = ObjectManager::createIconButton("settings", 36);
     m_configButton->setPosition(m_rewindDayButton->getX() - 4 - m_configButton->getWidth(), y);
@@ -256,7 +257,7 @@ void ReplayMenu::loadUIButtons()
     {
         emit sigShowConfig();
     });
-    pButtonBox->addChild(m_configButton);
+    m_taskBar->addChild(m_configButton);
 
     qint32 content = m_ReplayRecorder.getRecordSize() * actionPixelSize;
     if (content < exitGame->getX())
@@ -270,10 +271,12 @@ void ReplayMenu::loadUIButtons()
     m_progressBar->setContentWidth(content);
     m_progressBar->setPosition(8, y);
     m_progressBar->setScrollspeed((m_configButton->getX() - 10) / m_ReplayRecorder.getDayFromPosition(m_ReplayRecorder.getRecordSize() - 1));
+    m_taskBar->addChild(m_progressBar);
+    spMoveInButton::create(m_taskBar.get(), m_taskBar->getScaledHeight(),
+                           -1, -1, 2.0f, true);
 
-    pButtonBox->addChild(m_progressBar);
     pAnim = pObjectManager->getResAnim("panel");
-    pButtonBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
     pButtonBox->setResAnim(pAnim);
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
@@ -290,7 +293,6 @@ void ReplayMenu::loadUIButtons()
     m_XYButtonBox = pButtonBox;
     m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates());
     addChild(pButtonBox);
-    
 }
 
 void ReplayMenu::oneStep()

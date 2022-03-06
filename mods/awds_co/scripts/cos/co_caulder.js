@@ -51,7 +51,8 @@ CO_CAULDER.startOfTurn = function(co, map)
             var units = co.getOwner().getUnits();
             units.randomize();
             var viewplayer = map.getCurrentViewPlayer();
-            for (var i = 0; i < units.size(); i++)
+            var size = units.size();
+            for (var i = 0; i < size; i++)
             {
                 var unit = units.at(i);
                 UNIT.repairUnit(unit, 1, map);
