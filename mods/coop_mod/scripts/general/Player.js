@@ -10,13 +10,15 @@ PLAYER.coop_ModDoStartOfTurnRepairing = function(player, map)
 {
     if (!player.getIsDefeated())
     {
-        for (var i = 0; i < map.getPlayerCount(); i++)
+        var count = map.getPlayerCount();
+        for (var i = 0; i < count; i++)
         {
             var otherPlayer = map.getPlayer(i);
             if (otherPlayer.isAlly(player) && otherPlayer !== player)
             {
                 var buildings = otherPlayer.getBuildings();
-                for (var j = 0; j < buildings.size(); j++)
+                var size = buildings.size();
+                for (var j = 0; j < size; j++)
                 {
                     var building = buildings.at(j);
                     var constructionList = building.getConstructionList();

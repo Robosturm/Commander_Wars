@@ -35,11 +35,11 @@ public:
     {
         None = -1,
         Game,                   /**< used for game stream data */
-        Lobby,                  /**< used for lobby stream data */
         LobbyChat,              /**< used for the lobby chat */
         GameChat,               /**< used for ingame chat */
         Multiplayer,            /**< used for the multiplayer game selection */
-        ServerHosting,          /**< used for data when starting a game on the host or when communicating between slave and master */
+        ServerHostingJson,      /**< used for data when starting a game on the host or when communicating between slave and master. Packages are in JSON-Format */
+        ServerHosting,          /**< used for data when starting a game on the host or when communicating between slave and master. Packages are in Binary-Format */
         ServerSocketInfo,       /**< used inside the rx-task data is not emitted when recieving this data */
         Max,
     };

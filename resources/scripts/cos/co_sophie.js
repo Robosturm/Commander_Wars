@@ -170,7 +170,8 @@ var Constructor = function()
     this.startOfTurn = function(co, map)
     {
         var units = co.getOwner().getUnits();
-        for (var i = 0; i < units.size(); i++)
+        var size = units.size();
+        for (var i = 0; i < size; i++)
         {
             // creates the variable or returns the existing one
             var variable = units.at(i).getVariables().createVariable("SOPHIE_SCOP");

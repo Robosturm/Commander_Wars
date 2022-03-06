@@ -1,10 +1,5 @@
 #include "multiplayer/gamedata.h"
 
-GameData::GameData()
-    : QObject()
-{
-
-}
 void GameData::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();

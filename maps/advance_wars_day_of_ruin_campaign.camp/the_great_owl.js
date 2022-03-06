@@ -218,7 +218,8 @@ var Constructor = function() { // scriptStart
         var x = 9;
         var y = 6;
         var fields = globals.getCircle(0, 3);
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))

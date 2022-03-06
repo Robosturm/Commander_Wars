@@ -43,7 +43,7 @@ var Constructor = function()
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
-        map.getGameRules().changeWeather("WEATHER_SANDSTORM", map.getPlayerCount() * 2);
+        map.getGameRules().changeWeather("WEATHER_SANDSTORM", map.getPlayerCount() * 1);
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -55,7 +55,7 @@ var Constructor = function()
         var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-        map.getGameRules().changeWeather("WEATHER_SANDSTORM", map.getPlayerCount() * 2);
+        map.getGameRules().changeWeather("WEATHER_SANDSTORM", map.getPlayerCount() * 1);
         powerNameAnimation.queueAnimation(animation2);
         CO_ZANDRA.zandraDamage(co, 2, animation2, map);
     };
@@ -77,7 +77,8 @@ var Constructor = function()
 
                 var units = enemyPlayer.getUnits();
                 units.randomize();
-                for (i = 0; i < units.size(); i++)
+                var size = units.size();
+                for (i = 0; i < size; i++)
                 {
                     var unit = units.at(i);
 
@@ -183,7 +184,7 @@ var Constructor = function()
                     case GameEnums.PowerMode_Tagpower:
                     case GameEnums.PowerMode_Superpower:
                     case GameEnums.PowerMode_Power:
-                        return 2;
+                        return 1;
                     default:
                         return 0;
                     }
@@ -229,7 +230,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Causes sandstorm to fall for two days. Increasing the firerange of indirects by 1 and increasing her firepower.");
+        return qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by 1 and increasing her firepower.");
     };
     this.getPowerName = function(co)
     {
@@ -237,7 +238,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Causes sandstorm to fall for two days. Increasing the firerange of indirects by 1 and increasing her firepower. Also deals two hp damage to enemies.");
+        return qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by 1 and increasing her firepower. Also deals two hp damage to enemies.");
     };
     this.getSuperPowerName = function(co)
     {

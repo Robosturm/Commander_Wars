@@ -13,8 +13,7 @@
 #include "game/gamemap.h"
 
 DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
-    : QObject(),
-      m_pBuilding(pBuilding)
+    : m_pBuilding(pBuilding)
 {
     setObjectName("DialogModifyBuilding");
     Mainapp* pApp = Mainapp::getInstance();

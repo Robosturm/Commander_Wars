@@ -121,8 +121,8 @@ endif()
 ###################################################################################
 add_definitions(
     -DMAJOR=0
-    -DMINOR=21
-    -DREVISION=5
+    -DMINOR=22
+    -DREVISION=0
     )
 
 ###################################################################################
@@ -384,6 +384,7 @@ set(${PROJECT_NAME}_SRCS
     network/networkgamedata.cpp
     network/mainserver.cpp
     network/networkgame.cpp
+    network/JsonKeys.h
 
     # game
     game/gamemap.cpp
@@ -489,6 +490,7 @@ set(${PROJECT_NAME}_SRCS
     multiplayer/password.cpp
     multiplayer/dialogpasswordandadress.cpp
     multiplayer/dialogpassword.cpp
+    multiplayer/networkcommands.h
 
     #campaign support
     ingamescriptsupport/campaigneditor.cpp
@@ -544,6 +546,7 @@ set(${PROJECT_NAME}_SRCS
     wiki/wikipage.cpp
     wiki/defaultwikipage.cpp
     wiki/wikiview.cpp
+    wiki/damagetablepage.cpp
 
     # spriting support
     spritingsupport/spritecreator.cpp
@@ -561,8 +564,8 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/windows/crashreporter_os.cpp
         coreengine/windows/Gamepad.cpp
-        coreengine/sounds/soundcaching.cpp
-        #coreengine/sounds/ondemandsound.cpp
+        #coreengine/sounds/soundcaching.cpp
+        coreengine/sounds/ondemandsound.cpp
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     set(${PROJECT_NAME}_OS_SRCS
@@ -647,7 +650,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_CODE "10"
+    QT_ANDROID_VERSION_CODE "11"
     )
 
 # link libraries

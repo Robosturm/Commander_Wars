@@ -17,6 +17,7 @@
                 <image file="hq+yc+mask.png" />
                 <image file="town+mask.png" />
                 <image file="labor+mask.png" />
+                <image file="oilrig+mask.png" />
 		
                 <!-- soldier -->
                 <image file="soldier+ac+mask.png" cols = "5" />

@@ -65,7 +65,11 @@ public:
      * @brief slaveRunning
      * @param stream
      */
-    void slaveRunning(QDataStream &stream, spTCPServer & pGameServer);
+    void slaveRunning(const QJsonObject & objData, spTCPServer & pGameServer);
+    /**
+     * @brief startCloseTimer
+     */
+    void startCloseTimer();
 signals:
     void sigDataChanged();
     void sigClose(NetworkGame* pGame);
@@ -76,8 +80,14 @@ public slots:
      * @param exitStatus
      */
     void processFinished(qint32 exitCode, QProcess::ExitStatus exitStatus);
-private:
+    /**
+     * @brief closeGame
+     */
     void closeGame();
+    /**
+     * @brief closeTimerExpired
+     */
+    void closeTimerExpired();
 private:
     QByteArray m_dataBuffer;
     spNetworkInterface m_hostingClient;
@@ -87,6 +97,7 @@ private:
     bool m_closing{false};
     NetworkGameData m_data;
     QString m_id;
+    QTimer m_closeTimer;
 };
 
 #endif // NETWORKGAME_H

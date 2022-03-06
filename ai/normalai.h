@@ -461,6 +461,13 @@ protected:
      */
     void updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & pUnitData, bool enemy);
     /**
+     * @brief createUnitData
+     * @param pUnit
+     * @param data
+     * @param enemy
+     */
+    void createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, qint32 moveMultiplier);
+    /**
      * @brief createUnitInfluenceMap
      */
     void createUnitInfluenceMap();
@@ -603,6 +610,7 @@ private:
     double m_earlyGame{5};
     double m_startDayScoreVariancer{5.0f};
     double m_sameFundsMatchUpBonus{16.0f};
+    double m_sameFundsMatchUpMovementMalus{0.3f};
     double m_counterDamageBonus{25.0f};
     double m_attackCountBonus{25.0f};
     double m_maxOverkillBonus{2.0f};

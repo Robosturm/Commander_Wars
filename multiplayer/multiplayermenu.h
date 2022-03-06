@@ -128,7 +128,7 @@ protected:
     bool findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, bool m_saveGame);
     void sendJoinReason(QDataStream & stream, quint64 socketID);
     void receiveCurrentGameState(QDataStream & stream, quint64 socketID);
-    void connectToSlave(QDataStream & stream, quint64 socketID);
+    void connectToSlave(const QJsonObject & objData, quint64 socketID);
 private:
     /**
      * @brief init
@@ -180,6 +180,7 @@ private:
     bool m_local{true};
     bool m_slaveGameReady{false};
     Password m_password;
+    quint64 m_hostSocket{0};
 };
 
 #endif // MULTIPLAYERMENU_H

@@ -265,11 +265,16 @@ signals:
     void sigShowChangeSound();
     void sigShowWiki();
     void sigShowRules();
-    void sigShowUnitStatistics();
+    void sigShowUnitStatistics(qint32 player);
     void sigMovedMap();
     void sigZoomChanged(float zoom);
     void sigShowDamageCalculator();
 public slots:
+    /**
+     * @brief getMapTagsText
+     * @return
+     */
+    QString getMapTagsText();
     /**
      * @brief getIsHumanMatch
      * @return
@@ -440,7 +445,7 @@ public slots:
     /**
      * @brief showUnitStatistics
      */
-    void showUnitStatistics();
+    void showUnitStatistics(qint32 player);
     /**
      * @brief getBuildingCount
      * @param buildingID
@@ -637,11 +642,7 @@ public slots:
     /**
      * @brief nextTurn next players turn.
      */
-    void nextTurn(quint32 dayToDayUptimeMs = 2000);
-    /**
-     * @brief nextTurnPlayerTimeout
-     */
-    void nextTurnPlayerTimeout();
+    void nextTurn(quint32 dayToDayUptimeMs = 2000);    
     /**
      * @brief enableUnits makes all units of the given player movable again
      * @param pPlayer

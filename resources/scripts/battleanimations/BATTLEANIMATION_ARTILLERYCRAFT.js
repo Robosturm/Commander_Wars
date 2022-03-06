@@ -21,7 +21,7 @@ var Constructor = function()
                           ["bm", [Qt.point(-45, 5), Qt.point(9, 38)]],
                           ["ge", [Qt.point(-45, 5), Qt.point(14, 36)]],
                           ["yc", [Qt.point(-45, 5), Qt.point(24, 40)]],
-                          ["ma", [Qt.point(-55, 5), Qt.point(-12, 42)]],];
+                          ["ma", [Qt.point(-45, 5), Qt.point(-10, 28)]],];
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {

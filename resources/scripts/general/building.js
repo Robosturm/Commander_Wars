@@ -280,7 +280,6 @@ var BUILDING =
             rand = variable.readDataInt32();
             randArmy = armyVariable.readDataInt32();
         }
-        var baseId = terrain.getBaseTerrainID();
         var building = terrain.getBuilding();
         var player = building.getOwner();
 
@@ -290,16 +289,19 @@ var BUILDING =
             army = Global.getArmyNameFromPlayerTable(player, BUILDING.armyData);
         }
         var weatherModifier = TERRAIN.getWeatherModifier(map);
-        if (baseId === "DESERT" ||
-            weatherModifier === "desert")
+        if (weatherModifier === "")
+        {
+            weatherModifier = TERRAIN.getTerrainWeatherModifier(terrain);
+        }
+
+        if (weatherModifier === "desert")
         {
             return "back_deserttown";
         }
-        else if (baseId === "WASTE")
+        else if (weatherModifier === "waste")
         {
             return "back_wastetown";
         }
-
         return "back_" + weatherModifier + "town+" + army + "+" + rand.toString();
     },
 

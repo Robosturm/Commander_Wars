@@ -54,7 +54,8 @@ var Constructor = function()
     this.getTerrainSprites = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
-        return ["wall+E",
+        return ["wall",
+                "wall+E",
                 "wall+E+S",
                 "wall+E+S+W",
                 "wall+E+W",

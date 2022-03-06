@@ -3,7 +3,6 @@
 #include "coreengine/mainapp.h"
 
 ScriptVariables::ScriptVariables()
-    : QObject()
 {
     setObjectName("ScriptVariables");
     Mainapp* pApp = Mainapp::getInstance();

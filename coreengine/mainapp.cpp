@@ -629,7 +629,8 @@ void Mainapp::loadArgs(const QStringList & args)
 {
     if (args.contains(ARG_MODS))
     {
-        QStringList modList = args[args.indexOf(ARG_MODS) + 1].split(",");
+        QString mods = args[args.indexOf(ARG_MODS) + 1];
+        QStringList modList = mods.split(",");
         qint32 i= 0;
         while (i < modList.size())
         {
@@ -642,6 +643,7 @@ void Mainapp::loadArgs(const QStringList & args)
                 ++i;
             }
         }
+        CONSOLE_PRINT("Using injected mod list: " + mods, Console::eDEBUG);
         Settings::setActiveMods(modList);
     }
     if (args.contains(ARG_SLAVE))

@@ -155,7 +155,8 @@ var Constructor = function()
                 var indirectToUse = null;
                 var damage = -1;
                 var result = Qt.rect(-1, -1, -1, -1);
-                for (var i = 0; i < fields.size(); i++)
+                var size = fields.size();
+                for (var i = 0; i < size; i++)
                 {
                     var field = fields.at(i);
                     var x = field.x + unitX;

@@ -79,7 +79,8 @@ var Constructor = function()
         var animations = [];
         var counter = 0;
         units.randomize();
-        for (var i = 0; i < units.size(); i++)
+        var size = units.size();
+        for (var i = 0; i < size; i++)
         {
             var unit = units.at(i);
             var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());

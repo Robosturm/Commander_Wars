@@ -11,8 +11,7 @@
 #include "game/gamemap.h"
 
 MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
-    : QObject(),
-      m_currentFolder(Settings::getUserPath() + "maps"),
+    : m_currentFolder(Settings::getUserPath() + "maps"),
       m_itemChangedTimer(this)
 {
     setObjectName("MapSelection");

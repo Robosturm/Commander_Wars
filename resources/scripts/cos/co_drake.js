@@ -38,7 +38,7 @@ var Constructor = function()
         animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation);
 
-        map.getGameRules().changeWeather("WEATHER_RAIN", map.getPlayerCount() * 2);
+        map.getGameRules().changeWeather("WEATHER_RAIN", map.getPlayerCount() * 1);
         CO_DRAKE.drakeDamage(co, 2, animation, map);
     };
 

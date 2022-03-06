@@ -40,6 +40,10 @@ var Constructor = function()
     this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         var weatherModifier = TERRAIN.getWeatherModifier(map);
+        if (weatherModifier === "")
+        {
+            weatherModifier = TERRAIN.getTerrainWeatherModifier(terrain);
+        }
         return "back_" + weatherModifier + "airport";
     };
 

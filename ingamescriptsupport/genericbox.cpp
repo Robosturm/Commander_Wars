@@ -6,7 +6,6 @@
 #include "coreengine/mainapp.h"
 
 GenericBox::GenericBox(bool cancel)
-    : QObject()
 {
     setObjectName("GenericBox");
     Interpreter::setCppOwnerShip(this);

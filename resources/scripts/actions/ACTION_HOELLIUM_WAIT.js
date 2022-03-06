@@ -39,11 +39,11 @@ var Constructor = function()
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
         var targetUnit = action.getMovementTarget();
-        Global[unit.getUnitID()].doWalkingAnimation(action, map);
         if ((targetUnit !== null) && (targetUnit !== unit))
         {
             targetUnit.killUnit();
         }
+        Global[unit.getUnitID()].doWalkingAnimation(action, map);
         // move unit to target position
         unit.moveUnitAction(action);
         // disable unit commandments for this turn

@@ -174,6 +174,7 @@ public slots:
     void gotoNext();
     void gotoPrevious();
     void performBasicAction(QString action);
+    void showInfoMenu(qint32 x, qint32 y);
 protected slots:
     void zoomChanged(float zoom);
 protected:

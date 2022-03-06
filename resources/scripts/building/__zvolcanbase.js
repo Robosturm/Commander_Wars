@@ -96,7 +96,8 @@ var Constructor = function()
         }
         var animation2 = null;
         var animation3 = null;
-        for (var i = 0; i < targets.length; i++)
+        var size = targets.length;
+        for (var i = 0; i < size; i++)
         {
             var target = targets[i];
             if (map.onMap(target.x, target.y))

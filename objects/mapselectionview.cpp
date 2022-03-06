@@ -142,6 +142,13 @@ MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
     loadMapVictoryInfo();
     y += 55 * Userdata::MAX_VICTORY_INFO_PER_MAP;
 
+    m_MapTags = oxygine::spTextField::create();
+    m_MapTags->setStyle(style);
+    m_MapTags->setWidth(m_MapInfo->getContentWidth() - 80);
+    m_MapTags->setPosition(10, y);
+    m_MapInfo->addItem(m_MapTags);
+    y += 40;
+
     // building count
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("mapSelectionBuildingInfo");
     m_pBuildingBackground = oxygine::spBox9Sprite::create();
@@ -274,9 +281,12 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
                 m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor());
                 m_MapPlayerCount->setHtmlText(QString::number(m_pCurrentMap->getPlayerCount()));
                 m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription());
+                m_MapTags->setHtmlText(m_pCurrentMap->getMapTagsText());
             }
             m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 10);
             m_pVictoryInfo->setVisible(true);
+            m_MapTags->setY(m_pVictoryInfo->getY() + 55 * Userdata::MAX_VICTORY_INFO_PER_MAP);
+
             m_MapPlayerCount->setVisible(true);
             m_currentMapFile = info;
             loadMapVictoryInfo();
@@ -341,7 +351,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         maxWidth = m_MapName->getX() + m_MapName->getTextRect().getWidth();
     }
     m_MapInfo->setContentWidth(maxWidth + 30);
-    m_MapInfo->setContentHeigth(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 30 + Userdata::MAX_VICTORY_INFO_PER_MAP * 55);
+    m_MapInfo->setContentHeigth(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 30 + Userdata::MAX_VICTORY_INFO_PER_MAP * 55 + m_MapTags->getTextRect().getHeight());
 }
 
 void MapSelectionView::loadMapVictoryInfo()
@@ -465,5 +475,7 @@ void MapSelectionView::updateMapData()
     m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor());
     m_MapPlayerCount->setHtmlText(QString::number(m_pCurrentMap->getPlayerCount()));
     m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription());
+    m_MapTags->setHtmlText(m_pCurrentMap->getMapTagsText());
     m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 10);
+    m_MapTags->setY(m_pVictoryInfo->getY() + 55 * Userdata::MAX_VICTORY_INFO_PER_MAP);
 }

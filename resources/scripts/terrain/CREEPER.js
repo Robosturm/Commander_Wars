@@ -115,6 +115,16 @@ var Constructor = function()
                 "creeper+E+W",
                 "creeper+W"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
+    {
+        return "";
+    };
+
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    {
+        return "back_creeper";
+    };
+
 
 };
 Constructor.prototype = TERRAIN;

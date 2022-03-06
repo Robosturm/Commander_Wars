@@ -49,7 +49,7 @@ var Constructor = function()
     {
         return 1;
     };
-    this.transportList = ["INFANTRY", "MECH", "SNIPER", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN"];
+    this.transportList = ["INFANTRY", "MECH", "SNIPER", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN", "ZCOUNIT_RANGER"];
     this.startOfTurn = function(unit, map)
     {
         // pay unit upkeep

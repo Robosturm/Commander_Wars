@@ -88,10 +88,11 @@ var Constructor = function()
         // sea tile near land?
         if (currentGroup === 0)
         {
+            // check all fields we can attack
             var valid = false;
             var fields = globals.getCircle(1, 2);
-            // check all fields we can attack
-            for (var i = 0; i < fields.size(); i++)
+            var size = fields.size();
+            for (var i = 0; i < size; i++)
             {
                 var x = fields.at(i).x + terrain.getX();
                 var y = fields.at(i).y + terrain.getY();

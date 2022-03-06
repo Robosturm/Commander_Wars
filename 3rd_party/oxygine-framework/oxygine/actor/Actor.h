@@ -17,8 +17,8 @@ namespace oxygine
         explicit TweenOptions(timeMS duration = timeMS(500))
             : m_duration(duration),
               m_delay(timeMS(0)),
-              m_ease(Tween::ease_linear),
-              m_globalEase(Tween::ease_linear),
+              m_ease(QEasingCurve::Linear),
+              m_globalEase(QEasingCurve::Linear),
               m_loops(1),
               m_twoSides(false),
               m_detach(false)
@@ -45,7 +45,7 @@ namespace oxygine
             m_twoSides = enabled;
             return *this;
         }
-        TweenOptions& ease(Tween::EASE ease)
+        TweenOptions& ease(QEasingCurve::Type ease)
         {
             m_ease = ease;
             return *this;
@@ -55,7 +55,7 @@ namespace oxygine
             m_detach = detach_;
             return *this;
         }
-        TweenOptions& globalEase(Tween::EASE ease)
+        TweenOptions& globalEase(QEasingCurve::Type ease)
         {
             m_globalEase = ease;
             return *this;
@@ -69,8 +69,8 @@ namespace oxygine
         EventCallback   m_callback;
         timeMS          m_duration;
         timeMS          m_delay;
-        Tween::EASE     m_ease;
-        Tween::EASE     m_globalEase;
+        QEasingCurve::Type     m_ease;
+        QEasingCurve::Type     m_globalEase;
         qint32          m_loops;
         bool            m_twoSides;
         bool            m_detach;
@@ -295,7 +295,7 @@ namespace oxygine
 
         spTween addTween(spTween);
         template<class TProperty>
-        spTween addTween(const TProperty& property, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), Tween::EASE ease = Tween::ease_linear)
+        spTween addTween(const TProperty& property, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), QEasingCurve::Type ease = QEasingCurve::Linear)
         {
             return addTween(createTween(property, duration, loops, twoSides, delay, ease));
         }

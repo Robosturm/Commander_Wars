@@ -101,6 +101,7 @@ protected:
     oxygine::spTextField m_GlobalBoosts;
     oxygine::spTextField m_CoBoost;
 
+    oxygine::spSprite m_synergySprite;
     oxygine::spTextField m_SynergyText;
     QVector<oxygine::spTextField> m_SynergyCONames;
     QVector<oxygine::spActor> m_SynergyStarActors;

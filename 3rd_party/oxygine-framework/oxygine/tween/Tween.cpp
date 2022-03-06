@@ -15,7 +15,7 @@ namespace oxygine
         m_loopsDone = 0;
     }
 
-    void Tween::init(timeMS duration, qint32 loops, bool twoSides, timeMS delay, EASE ease)
+    void Tween::init(timeMS duration, qint32 loops, bool twoSides, timeMS delay, QEasingCurve::Type ease)
     {
         m_duration = duration;
         m_ease = ease;
@@ -79,6 +79,10 @@ namespace oxygine
         }
 
         v = calcEase(m_ease, v);
+        if (v > 1.0f)
+        {
+            v = 1.0f;
+        }
         return v;
     }
 
@@ -177,15 +181,14 @@ namespace oxygine
                 {
                     timeMS localElapsed = m_elapsed - m_delay;
 
-                    if (m_globalEase != ease_linear)
+                    if (m_globalEase != QEasingCurve::Linear)
                     {
-                        float p = localElapsed.count() / float(m_duration.count() * m_loops);
+                        float p = localElapsed.count() / static_cast<float>(m_duration.count() * m_loops);
                         timeMS nv = timeMS(static_cast<qint64>(calcEase(m_globalEase, std::min(p, 1.0f)) * m_duration.count() * m_loops));
                         localElapsed = nv;
                     }
-
                     qint32 loopsDone = localElapsed / m_duration;
-                    m_percent = _calcEase(((float)(localElapsed.count() - loopsDone * m_duration.count())) / m_duration.count());
+                    m_percent = _calcEase(static_cast<float>(localElapsed.count() - loopsDone * m_duration.count()) / static_cast<float>(m_duration.count()));
 
                     while(m_loopsDone < loopsDone)
                     {
@@ -247,119 +250,10 @@ namespace oxygine
         return safeCast<Actor*>(currentTarget.get());
     }
 
-    static float outBounce(float t)
+    float Tween::calcEase(QEasingCurve::Type ease, float t)
     {
-        if (t < 0.363636363636f)
-        {
-            return 7.5625f * t * t;
-        }
-        if (t < 0.727272727273f)
-        {
-            t = t - 0.545454545455f;
-            return 7.5625f * t * t + 0.75f;
-        }
-        if (t < 0.909090909091f)
-        {
-            t = t - 0.818181818182f;
-            return 7.5625f * t * t + 0.9375f;
-        }
-        t = t - 0.954545454545f;
-        return 7.5625f * t * t + 0.984375f;
-    }
-
-    float Tween::calcEase(EASE ease, float t)
-    {
-        const float s = 1.70158f;
-
-        switch (ease)
-        {
-            case ease_linear:
-                return t;
-                // quad
-            case ease_inQuad:
-                return (t * t);
-            case ease_outQuad:
-                return 1 - calcEase(ease_inQuad, 1 - t);
-            case ease_inOutQuad:
-                return t <= 0.5f ? calcEase(ease_inQuad, t * 2) / 2 : 1 - calcEase(ease_inQuad, 2 - t * 2) / 2;
-            case ease_outInQuad:
-                return t <= 0.5f ? calcEase(ease_inQuad, t * 2) / 2 : 1 - calcEase(ease_inQuad, 2 - t * 2) / 2;
-                // cubic
-            case ease_inCubic:
-                return (t * t * t);
-            case ease_outCubic:
-                return 1 - calcEase(ease_inCubic, 1 - t);
-            case ease_inOutCubic:
-                return t <= 0.5f ? calcEase(ease_inCubic, t * 2) / 2 : 1 - calcEase(ease_inCubic, 2 - t * 2) / 2;
-            case ease_outInCubic:
-                return t <= 0.5f ? calcEase(ease_inCubic, t * 2) / 2 : 1 - calcEase(ease_inCubic, 2 - t * 2) / 2;
-                // Quart
-            case ease_inQuart:
-                return (qPow(t, 4));
-            case ease_outQuart:
-                return 1 - calcEase(ease_inQuart, 1 - t);
-            case ease_inOutQuart:
-                return t <= 0.5f ? calcEase(ease_inQuart, t * 2) / 2 : 1 - calcEase(ease_inQuart, 2 - t * 2) / 2;
-            case ease_outInQuart:
-                return t <= 0.5f ? calcEase(ease_inQuart, t * 2) / 2 : 1 - calcEase(ease_inQuart, 2 - t * 2) / 2;
-
-            case ease_inQuint:
-                return (qPow(t, 5));
-            case ease_outQuint:
-                return 1 - calcEase(ease_inQuint, 1 - t);
-            case ease_inOutQuint:
-                return t <= 0.5f ? calcEase(ease_inQuint, t * 2) / 2 : 1 - calcEase(ease_inQuint, 2 - t * 2) / 2;
-            case ease_outInQuint:
-                return t <= 0.5f ? calcEase(ease_inQuint, t * 2) / 2 : 1 - calcEase(ease_inQuint, 2 - t * 2) / 2;
-                // Sin
-            case ease_inSin:
-                return (1.0f - qCos(t * (M_PI / 2.0f)));
-            case ease_outSin:
-                return 1 - calcEase(ease_inSin, 1 - t);
-            case ease_inOutSin:
-                return t <= 0.5f ? calcEase(ease_inSin, t * 2) / 2 : 1 - calcEase(ease_inSin, 2 - t * 2) / 2;
-            case ease_outInSin:
-                return t <= 0.5f ? calcEase(ease_inSin, t * 2) / 2 : 1 - calcEase(ease_inSin, 2 - t * 2) / 2;
-                // Expo
-            case ease_inExpo:
-                return (qPow(2, 10 * (t - 1)));
-            case ease_outExpo:
-                return 1 - calcEase(ease_inExpo, 1 - t);
-            case ease_inOutExpo:
-                return t <= 0.5f ? calcEase(ease_inExpo, t * 2) / 2 : 1 - calcEase(ease_inExpo, 2 - t * 2) / 2;
-            case ease_outInExpo:
-                return t <= 0.5f ? calcEase(ease_inExpo, t * 2) / 2 : 1 - calcEase(ease_inExpo, 2 - t * 2) / 2;
-                // Circ
-            case ease_inCirc:
-                return (-1.0f * (qSqrt(1 - t * t) - 1));
-            case ease_outCirc:
-                return 1 - calcEase(ease_inCirc, 1 - t);
-            case ease_inOutCirc:
-                return t <= 0.5f ? calcEase(ease_inCirc, t * 2) / 2 : 1 - calcEase(ease_inCirc, 2 - t * 2) / 2;
-            case ease_outInCirc:
-                return t <= 0.5f ? calcEase(ease_inCirc, t * 2) / 2 : 1 - calcEase(ease_inCirc, 2 - t * 2) / 2;
-                // Back
-            case ease_inBack:
-                return (t * t * ((s + 1) * t - s));
-            case ease_outBack:
-                return 1 - calcEase(ease_inBack, 1 - t);
-            case ease_inOutBack:
-                return t <= 0.5f ? calcEase(ease_inBack, t * 2) / 2 : 1 - calcEase(ease_inBack, 2 - t * 2) / 2;
-            case ease_outInBack:
-                return t <= 0.5f ? calcEase(ease_inBack, t * 2) / 2 : 1 - calcEase(ease_inBack, 2 - t * 2) / 2;
-
-            case ease_inBounce:
-                return (1 - outBounce(1 - t));
-            case ease_outBounce:
-                return 1 - calcEase(ease_inBounce, 1 - t);
-            case ease_inOutBounce:
-                return t <= 0.5f ? calcEase(ease_inBounce, t * 2) / 2 : 1 - calcEase(ease_inBounce, 2 - t * 2) / 2;
-            case ease_outInBounce:
-                return t <= 0.5f ? calcEase(ease_inBounce, t * 2) / 2 : 1 - calcEase(ease_inBounce, 2 - t * 2) / 2;
-            default:
-                oxygine::handleErrorPolicy(oxygine::ep_show_error, "unkown ease in Tween::calcEase");
-                break;
-        }
-        return t;
+        static QEasingCurve curve;
+        curve.setType(ease);
+        return curve.valueForProgress(t);
     }
 }

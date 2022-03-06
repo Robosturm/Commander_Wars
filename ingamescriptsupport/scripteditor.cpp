@@ -172,12 +172,10 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
 }
 
 void ScriptEditor::showExitBox()
-{
-    
+{    
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the script editor?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ScriptEditor::exitEditor, Qt::QueuedConnection);
-    addChild(pExit);
-    
+    addChild(pExit);    
 }
 
 void ScriptEditor::exitEditor()

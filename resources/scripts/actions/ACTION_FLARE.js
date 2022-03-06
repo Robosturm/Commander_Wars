@@ -67,7 +67,8 @@ var Constructor = function()
         data.setZLabelColor("#ff4500");
         data.setShowZData(false);
         // check all fields we can attack
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var x = fields.at(i).x + actionTargetField.x;
             var y = fields.at(i).y + actionTargetField.y;
@@ -105,7 +106,8 @@ var Constructor = function()
         animation.addSound("flare_launch.wav");
         animation.addSound("flare_explosion.wav", 1, 300);
         var fields = globals.getCircle(0, ACTION_FLARE.getUnfogRange());
-        for (var i = 0; i < fields.size(); i++)
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var x = fields.at(i).x + ACTION_FLARE.postAnimationTargetX;
             var y = fields.at(i).y + ACTION_FLARE.postAnimationTargetY;

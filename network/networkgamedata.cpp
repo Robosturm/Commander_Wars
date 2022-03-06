@@ -1,4 +1,5 @@
 #include "network/networkgamedata.h"
+#include "network/JsonKeys.h"
 
 #include "coreengine/filesupport.h"
 
@@ -27,29 +28,38 @@ void NetworkGameData::setSlavePort(quint16 newPort)
     m_slavePort = newPort;
 }
 
-void NetworkGameData::serializeObject(QDataStream& pStream) const
+QJsonObject NetworkGameData::toJson() const
 {
-    pStream << getVersion();
-    pStream << m_players;
-    pStream << m_maxPlayers;
-    Filesupport::writeVectorList(pStream, m_Mods);
-    pStream << m_description;
-    pStream << m_mapName;
-    pStream << m_slaveName;
-    pStream << m_locked;
+    QJsonObject obj;
+    obj.insert(JsonKeys::JSONKEY_VERSION, getVersion());
+    obj.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, static_cast<qint64>(m_players));
+    obj.insert(JsonKeys::JSONKEY_MAXPLAYERS, static_cast<qint64>(m_maxPlayers));
+    obj.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, m_description);
+    obj.insert(JsonKeys::JSONKEY_MAPNAME, m_mapName);
+    obj.insert(JsonKeys::JSONKEY_SLAVENAME, m_slaveName);
+    obj.insert(JsonKeys::JSONKEY_HASPASSWORD, m_locked);
+    QJsonObject mods;
+    for (qint32 i = 0; i < m_Mods.size(); ++i)
+    {
+        mods.insert(JsonKeys::JSONKEY_MOD + QString::number(i), m_Mods[i]);
+    }
+    obj.insert(JsonKeys::JSONKEY_USEDMODS, mods);
+    return obj;
 }
 
-void NetworkGameData::deserializeObject(QDataStream& pStream)
+void NetworkGameData::fromJson(const QJsonObject & obj)
 {
-    qint32 version;
-    pStream >> version;
-    pStream >> m_players;
-    pStream >> m_maxPlayers;
-    m_Mods = Filesupport::readVectorList<QString, QList>(pStream);
-    pStream >> m_description;
-    pStream >> m_mapName;
-    pStream >> m_slaveName;
-    pStream >> m_locked;
+    m_players = obj.value(JsonKeys::JSONKEY_JOINEDPLAYERS).toInteger();
+    m_maxPlayers = obj.value(JsonKeys::JSONKEY_MAXPLAYERS).toInteger();
+    QJsonObject mods = obj.value(JsonKeys::JSONKEY_USEDMODS).toObject();
+    for (const auto & mod : mods)
+    {
+        m_Mods.append(mod.toString());
+    }
+    m_description = obj.value(JsonKeys::JSONKEY_GAMEDESCRIPTION).toString();
+    m_mapName = obj.value(JsonKeys::JSONKEY_MAPNAME).toString();
+    m_slaveName = obj.value(JsonKeys::JSONKEY_SLAVENAME).toString();
+    m_locked = obj.value(JsonKeys::JSONKEY_HASPASSWORD).toBool();
 }
 
 QString NetworkGameData::getMapName() const

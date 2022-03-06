@@ -1607,7 +1607,11 @@ void Terrain::createBuildingDownStream()
             // create down stream on all other fields
             if (!((x1 == 0) && (y1 == 0)))
             {
-                m_pMap->getTerrain(m_x - x1, m_y - y1)->setSpBuilding(m_Building, true);
+                auto* pTerrain = m_pMap->getTerrain(m_x - x1, m_y - y1);
+                if (pTerrain != nullptr)
+                {
+                    pTerrain->setSpBuilding(m_Building, true);
+                }
             }
         }
     }

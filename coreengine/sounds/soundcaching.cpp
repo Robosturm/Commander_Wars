@@ -22,7 +22,7 @@ void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
         CONSOLE_PRINT("Caching sound " + folder + file + " with amount " + QString::number(count), Console::eDEBUG);
         for (qint32 i = 0; i < count; ++i)
         {
-            cache->sound[i] = std::make_shared<QSoundEffect>(this);
+            cache->sound[i] = new QSoundEffect(this);
             cache->sound[i]->setObjectName(file + QString::number(i));
             cache->sound[i]->setAudioDevice(m_audioDevice);
             cache->sound[i]->setSource(cacheUrl);
@@ -82,7 +82,7 @@ bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & sound
 #ifdef AUDIOSUPPORT
 void AudioThread::stopSound(SoundData* soundData, qint32 soundIndex)
 {
-    if (soundData->sound[soundIndex].get() != nullptr)
+    if (soundData->sound[soundIndex] != nullptr)
     {
         soundData->sound[soundIndex]->setVolume(0);
         soundData->sound[soundIndex]->setLoopCount(0);

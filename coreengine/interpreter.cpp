@@ -1,6 +1,4 @@
 #include "coreengine/interpreter.h"
-#include "coreengine/console.h"
-#include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/userdata.h"
@@ -140,73 +138,6 @@ void Interpreter::loadScript(const QString & content, const QString & script)
     }
 }
 
-QJSValue Interpreter::doFunction(const QString & func, const QJSValueList & args)
-{
-    QJSValue ret;
-    QJSValue funcPointer = globalObject().property(func);
-#ifdef GAMEDEBUG
-    OXY_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
-    if (funcPointer.isCallable())
-    {
-#endif
-        ret = funcPointer.call(args);
-        if (ret.isError())
-        {
-            QString error = ret.toString() + " in File: " +
-                            ret.property("fileName").toString() + " at Line: " +
-                            ret.property("lineNumber").toString();
-            CONSOLE_PRINT(error, Console::eERROR);
-        }
-#ifdef GAMEDEBUG
-    }
-    else
-    {
-        QString error = "Error: attemp to call a non function value. Call:" + func;
-        CONSOLE_PRINT(error, Console::eERROR);
-    }
-#endif
-    return ret;
-}
-
-QJSValue Interpreter::doFunction(const QString & obj, const QString & func, const QJSValueList & args)
-{
-    QJSValue ret;
-    QJSValue objPointer = globalObject().property(obj);
-#ifdef GAMEDEBUG
-    OXY_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
-    if (objPointer.isObject())
-    {
-#endif
-        QJSValue funcPointer = objPointer.property(func);
-#ifdef GAMEDEBUG
-        if (funcPointer.isCallable())
-        {
-#endif
-            ret = funcPointer.call(args);
-            if (ret.isError())
-            {
-                QString error = ret.toString() + " in File: " +
-                                ret.property("fileName").toString() + " at Line: " +
-                                ret.property("lineNumber").toString();
-                CONSOLE_PRINT(error, Console::eERROR);
-            }
-#ifdef GAMEDEBUG
-        }
-        else
-        {
-            QString error = "Error: attemp to call a non function value. Call:" + obj + "." + func;
-            CONSOLE_PRINT(error, Console::eERROR);
-        }
-    }
-    else
-    {
-        QString error = "Error: attemp to call a non object value in order to call a function. Call:" + obj + "." + func;
-        CONSOLE_PRINT(error, Console::eERROR);
-    }
-#endif
-    return ret;
-}
-
 QJSValue Interpreter::doString(const QString & task)
 {
 #ifdef GAMEDEBUG
@@ -331,30 +262,6 @@ void Interpreter::deleteObject(const QString & name)
     QString order = "Global[\"" + name + "\"] = null;\nGlobal[\"" + name + "\"] = undefined;";
     doString(order);
     collectGarbage();
-}
-
-bool Interpreter::exists(const QString & object, const QString & function)
-{
-    QJSValue objPointer = globalObject().property(object);
-    if (objPointer.isObject())
-    {
-        QJSValue funcPointer = objPointer.property(function);
-        if (funcPointer.isCallable())
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool Interpreter::exists(const QString & object)
-{
-    QJSValue objPointer = globalObject().property(object);
-    if (objPointer.isObject())
-    {
-        return true;
-    }
-    return false;
 }
 
 void Interpreter::networkGameFinished(qint32 value, QString id)

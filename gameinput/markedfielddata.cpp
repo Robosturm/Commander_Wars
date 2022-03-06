@@ -4,7 +4,6 @@
 #include "coreengine/mainapp.h"
 
 MarkedFieldData::MarkedFieldData()
-    : QObject()
 {
     setObjectName("MarkedFieldData");
     Mainapp* pApp = Mainapp::getInstance();

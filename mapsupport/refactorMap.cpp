@@ -231,6 +231,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
         {
             spTerrain pTerrain = m_fields[y][x];
             spUnit pUnit = pTerrain->getSpUnit();
+            spBuilding pBuilding = pTerrain->getSpBuilding();
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setX(x);
             pTerrain->setY(y);
@@ -242,13 +243,19 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
     {
         for (qint32 x = 0; x < currentWidth; x++)
         {
-            spBuilding pBuilding = spBuilding(m_fields[y][x]->getBuilding());
+            spBuilding pBuilding = m_fields[y][x]->getSpBuilding();
             if (pBuilding.get() != nullptr)
             {
-                if (pBuilding->Building::getX() - pBuilding->getBuildingWidth() + 1 < 0 ||
-                    pBuilding->Building::getY() - pBuilding->getBuildingHeigth() + 1 < 0)
+                qint32 buildX = pBuilding->Building::getX();
+                qint32 buildY = pBuilding->Building::getY();
+                if (buildX - pBuilding->getBuildingWidth() + 1 < 0 ||
+                    buildY - pBuilding->getBuildingHeigth() + 1 < 0)
                 {
                     m_fields[y][x]->setBuilding(spBuilding());
+                }
+                else
+                {
+                    m_fields[buildY][buildX]->setBuilding(pBuilding);
                 }
             }
         }

@@ -8,6 +8,8 @@
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include <limits>
 
+#include <QEasingCurve>
+
 namespace oxygine
 {
     class Tween;
@@ -37,62 +39,10 @@ namespace oxygine
     {
     public:
         static constexpr qint32 TWEEN_COMPLETE_DT = std::numeric_limits<int>::max() / 2;
-        enum EASE
-        {
-            ease_unknown,
-            ease_linear,
-
-            ease_inQuad,
-            ease_outQuad,
-            ease_inOutQuad,
-            ease_outInQuad,
-
-            ease_inCubic,
-            ease_outCubic,
-            ease_inOutCubic,
-            ease_outInCubic,
-
-            ease_inQuart,
-            ease_outQuart,
-            ease_inOutQuart,
-            ease_outInQuart,
-
-            ease_inQuint,
-            ease_outQuint,
-            ease_inOutQuint,
-            ease_outInQuint,
-
-            ease_inSin,
-            ease_outSin,
-            ease_inOutSin,
-            ease_outInSin,
-
-            ease_inExpo,
-            ease_outExpo,
-            ease_inOutExpo,
-            ease_outInExpo,
-
-            ease_inCirc,
-            ease_outCirc,
-            ease_inOutCirc,
-            ease_outInCirc,
-
-            ease_inBack,
-            ease_outBack,
-            ease_inOutBack,
-            ease_outInBack,
-
-            ease_inBounce,
-            ease_outBounce,
-            ease_inOutBounce,
-            ease_outInBounce,
-
-            ease_count
-        };
 
         explicit Tween() = default;
         virtual ~Tween() = default;
-        void init(timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), EASE ease = Tween::ease_linear);
+        void init(timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), QEasingCurve::Type ease = QEasingCurve::Linear);
         void init2(const TweenOptions& opt);
         void reset();
         qint32 getLoops() const
@@ -108,11 +58,11 @@ namespace oxygine
         {
             return m_elapsed;
         }
-        EASE getEase() const
+        QEasingCurve::Type getEase() const
         {
             return m_ease;
         }
-        EASE getGlobalEase() const
+        QEasingCurve::Type getGlobalEase() const
         {
             return m_globalEase;
         }
@@ -145,12 +95,12 @@ namespace oxygine
         setDoneCallback is faster because it doesn't allocate memory for list internally*/
         void addDoneCallback(const EventCallback& cb);
         /**set Easing function*/
-        void setEase(EASE ease)
+        void setEase(QEasingCurve::Type ease)
         {
             m_ease = ease;
         }
         /**set Global Easing function */
-        void setGlobalEase(EASE ease)
+        void setGlobalEase(QEasingCurve::Type ease)
         {
             m_globalEase = ease;
         }
@@ -189,7 +139,7 @@ namespace oxygine
         void removeFromActor();
         void start(Actor& actor);
         void update(Actor& actor, const UpdateState& us);
-        static float calcEase(EASE ease, float v);
+        static float calcEase(QEasingCurve::Type ease, float v);
         /**set callback when tween done. Doesn't allocate memory. faster than addDoneCallback*/
         void setDoneCallback(const EventCallback& cb);
         /**set callback when tween done. Doesn't allocate memory. faster than addDoneCallback*/
@@ -222,8 +172,8 @@ namespace oxygine
         timeMS m_delay{0};
         qint32 m_loops{1};
         qint32 m_loopsDone{0};
-        EASE m_ease{ease_linear};
-        EASE m_globalEase{ease_linear};
+        QEasingCurve::Type m_ease{QEasingCurve::Linear};
+        QEasingCurve::Type m_globalEase{QEasingCurve::Linear};
         bool m_twoSides{false};
         float m_percent{0};
         bool m_detach{false};
@@ -274,7 +224,7 @@ namespace oxygine
 
     template <typename TProperty>
     spTweenT<TProperty> createTween(const TProperty& property, timeMS duration, qint32 loops = 1,
-                                    bool twoSides = false, timeMS delay = oxygine::timeMS(0), Tween::EASE ease = Tween::ease_linear)
+                                    bool twoSides = false, timeMS delay = oxygine::timeMS(0), QEasingCurve::Type ease = QEasingCurve::Linear)
     {
         spTweenT<TProperty> pTween = spTweenT<TProperty>::create(property);
         pTween->init(duration, loops, twoSides, delay, ease);

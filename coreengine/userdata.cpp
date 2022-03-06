@@ -24,7 +24,6 @@ Userdata* Userdata::getInstance()
 }
 
 Userdata::Userdata()
-    : QObject()
 {
     setObjectName("Userdata");
     Interpreter::setCppOwnerShip(this);

@@ -484,6 +484,7 @@
         <image file="river+W.png" cols = "8" />
         <image file="river+N.png" cols = "8" />
         <image file="river+S.png" cols = "8" />
+        <image file="river+N+land+W.png" cols = "8" />
         <image file="river+N+land+W+NE+SE.png" cols = "8" />
         <image file="river+E+S+land+N+SE+SW.png" cols = "8" />
         <image file="river+E+S+land+N+SW.png" cols = "8" />

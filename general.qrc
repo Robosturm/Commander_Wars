@@ -6368,7 +6368,6 @@
         <file>resources/images/building/nest_laser+SW.png</file>
         <file>resources/images/building/nest_mortar_left.png</file>
         <file>resources/images/building/nest_mortar_right.png</file>
-        <file>resources/images/building/nest_wall.png</file>
         <file>resources/images/building/omega+base+shadow+desert.png</file>
         <file>resources/images/building/omega+base+shadow+plains.png</file>
         <file>resources/images/building/omega+base+shadow+snow.png</file>
@@ -6569,5 +6568,68 @@
         <file>resources/images/battleanimations/GeneralSprites/bullet_megatank.png</file>
         <file>resources/images/battleanimations/GeneralSprites/bullet_tank.png</file>
         <file>resources/objects/rewind.png</file>
+        <file>resources/images/building/nest_center_laser_left+destroyed.png</file>
+        <file>resources/images/building/nest_center_laser_middle+destroyed.png</file>
+        <file>resources/images/building/nest_center_laser_right+destroyed.png</file>
+        <file>resources/images/building/nest_laser+destroyed.png</file>
+        <file>resources/images/building/nest_wall+0.png</file>
+        <file>resources/images/building/nest_wall+1.png</file>
+        <file>resources/images/building/nest_wall+2.png</file>
+        <file>resources/images/building/nest_wall+3.png</file>
+        <file>resources/images/battleanimations/sniper/sniper+yc.png</file>
+        <file>resources/scripts/building/znest_center_laser_left_destroyed.js</file>
+        <file>resources/scripts/building/znest_center_laser_middle_destroyed.js</file>
+        <file>resources/scripts/building/znest_center_laser_right_destroyed.js</file>
+        <file>resources/scripts/building/znest_nest_laser_destroyed.js</file>
+        <file>resources/objects/info.png</file>
+        <file>resources/images/game/rules.png</file>
+        <file>resources/images/game/icon_cs.png</file>
+        <file>resources/images/game/icon_fh.png</file>
+        <file>resources/images/game/icon_fm.png</file>
+        <file>resources/images/game/icon_gw.png</file>
+        <file>resources/images/game/icon_hs.png</file>
+        <file>resources/scripts/actions/ACTION_NEST_FACTORY_DOOR.js</file>
+        <file>resources/images/animations/oilrig+mask.png</file>
+        <file>resources/images/co/tagCos.png</file>
+        <file>resources/misc_unused/Option 1 - Tag Lightning.png</file>
+        <file>resources/misc_unused/Option 1 - Tag Point.png</file>
+        <file>resources/misc_unused/Option 1 - Tag Power.png</file>
+        <file>resources/misc_unused/Option 1 - Tag Star.png</file>
+        <file>resources/misc_unused/Option 1 - Tag Super Power.png</file>
+        <file>resources/misc_unused/Option 2 - Tag Afinity.png</file>
+        <file>resources/misc_unused/Option 2 - Tag COs.png</file>
+        <file>resources/misc_unused/Option 2 - Tag Lightning.png</file>
+        <file>resources/misc_unused/Option 2 - Tag Point.png</file>
+        <file>resources/misc_unused/Option 2 - Tag Power.png</file>
+        <file>resources/misc_unused/Option 2 - Tag Star.png</file>
+        <file>resources/misc_unused/Option 2 - Tag Super Power.png</file>
+        <file>resources/misc_unused/Option 3 - Tag Afinity.png</file>
+        <file>resources/misc_unused/Option 3 - Tag COs.png</file>
+        <file>resources/misc_unused/Option 3 - Tag Lightning.png</file>
+        <file>resources/misc_unused/Option 3 - Tag Point.png</file>
+        <file>resources/misc_unused/Option 3 - Tag Power.png</file>
+        <file>resources/misc_unused/Option 3 - Tag Star.png</file>
+        <file>resources/misc_unused/Option 3 - Tag Super Power.png</file>
+        <file>resources/misc_unused/Option 4 - Tag COs.png</file>
+        <file>resources/misc_unused/Option 4 - Tag Lightning.png</file>
+        <file>resources/misc_unused/Option 4 - Tag Point.png</file>
+        <file>resources/misc_unused/Option 4 - Tag Power.png</file>
+        <file>resources/misc_unused/Option 4 - Tag Star.png</file>
+        <file>resources/misc_unused/Option 4 - Tag Super Power.png</file>
+        <file>resources/images/game/power2.png</file>
+        <file>resources/images/game/superpower2.png</file>
+        <file>resources/misc_unused/2nd_D2D.png</file>
+        <file>resources/misc_unused/Tag_D2D.png</file>
+        <file>resources/misc_unused/Tag_SCOP.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastebridge+sea.png</file>
+        <file>resources/images/colortables/aurania.png</file>
+        <file>resources/images/colortables/cacophony.png</file>
+        <file>resources/images/colortables/cherrystone.png</file>
+        <file>resources/images/colortables/felheim.png</file>
+        <file>resources/images/colortables/fumomance.png</file>
+        <file>resources/images/colortables/gloomwood.png</file>
+        <file>resources/images/colortables/heavensong.png</file>
+        <file>resources/images/colortables/requiem.png</file>
+        <file>resources/images/colortables/silmor.png</file>
     </qresource>
 </RCC>

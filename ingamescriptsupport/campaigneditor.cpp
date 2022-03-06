@@ -33,7 +33,6 @@ const QString CampaignEditor::campaignMapFinished = "campaignMapFinished";
 const QString CampaignEditor::campaignFinished = "campaignFinished";
 
 CampaignEditor::CampaignEditor()
-    : QObject()
 {
     setObjectName("CampaignEditor");
     Interpreter::setCppOwnerShip(this);

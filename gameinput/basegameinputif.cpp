@@ -143,28 +143,15 @@ GameEnums::AiTypes BaseGameInputIF::getAiType() const
 
 void BaseGameInputIF::setUnitBuildValue(QString unitID, float value)
 {
-    // modify existing value
-    for (qint32 i = 0; i < m_BuildingChanceModifier.size(); i++)
-    {
-        if (std::get<0>(m_BuildingChanceModifier[i]) == unitID)
-        {
-            std::get<1>(m_BuildingChanceModifier[i]) = value;
-            return;
-        }
-    }
-    // add modifier
-    m_BuildingChanceModifier.append(std::tuple<QString, float>(unitID, value));
+    m_BuildingChanceModifier.insert(unitID, value);
 }
 
 float BaseGameInputIF::getUnitBuildValue(QString unitID)
 {
     float modifier = m_pPlayer->getUnitBuildValue(unitID);
-    for (qint32 i = 0; i < m_BuildingChanceModifier.size(); i++)
+    if (m_BuildingChanceModifier.contains(unitID))
     {
-        if (std::get<0>(m_BuildingChanceModifier[i]) == unitID)
-        {
-            return std::get<1>(m_BuildingChanceModifier[i]) + modifier;
-        }
+        return modifier + m_BuildingChanceModifier[unitID];
     }
     return 1.0f + modifier;
 }

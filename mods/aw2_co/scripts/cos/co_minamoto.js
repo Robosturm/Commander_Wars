@@ -7,7 +7,8 @@ CO_MINAMOTO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         if (map !== null)
         {
             var fields = globals.getCircle(0, 2);
-            for (var i = 0; i < fields.size(); i++)
+            var size = fields.size();
+            for (var i = 0; i < size; i++)
             {
                 var x = fields.at(i).x + atkPosX;
                 var y = fields.at(i).y + atkPosY;
