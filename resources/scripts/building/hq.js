@@ -89,23 +89,10 @@ var Constructor = function()
         {
             armyName = Global.getArmyNameFromPlayerTable(player, HQ.armyData);
         }
-        var baseId = terrain.getBaseTerrainID();
-        var weatherModifier = "";
-        if (baseId === "DESERT")
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
+        if (weatherModifier === "")
         {
-            weatherModifier= "desert";
-        }
-        else if (baseId === "SNOW")
-        {
-            weatherModifier= "snow";
-        }
-        else if (baseId === "WASTE")
-        {
-            weatherModifier= "waste";
-        }
-        else
-        {
-            weatherModifier = TERRAIN.getWeatherModifier(map);
+            weatherModifier = TERRAIN.getTerrainWeatherModifier(terrain);
         }
         return "back_" + weatherModifier + "hq+" + armyName;
     };

@@ -195,7 +195,8 @@ var TERRAIN =
                      ["weather_snow",         [Qt.point(-1, 1),   "snow",    "over_snow"]],
                      ["weather_rain",         [Qt.point(-2, 6),   "rain",    "over_rain"]],
                      ["weather_sandstorm",    [Qt.point(9, 3),    "desert",  "over_sandstorm"]],
-                     ["weather_mist",         [Qt.point(0, 0),    "",        ""]],],
+                     ["weather_mist",         [Qt.point(0, 0),    "",        ""]],
+                     ["waste",                [Qt.point(0, 0),    "waste",        ""]],],
 
     getWeatherModifier : function(map)
     {
@@ -205,6 +206,25 @@ var TERRAIN =
             var weather     = map.getGameRules().getCurrentWeather().getWeatherId();
             var data        = Global.getDataFromTable(weather, TERRAIN.weatherData);
             weatherModifier = data[1];
+        }
+        return weatherModifier;
+    },
+
+    getTerrainWeatherModifier : function(terrain)
+    {
+        var weatherModifier = "";
+        var id = terrain.getBaseTerrainID();
+        if (id === "SNOW")
+        {
+            return TERRAIN.weatherData[1][1][1];
+        }
+        else if (id === "DESERT")
+        {
+            return TERRAIN.weatherData[3][1][1];
+        }
+        else if (id === "WASTE")
+        {
+            return TERRAIN.weatherData[5][1][1];
         }
         return weatherModifier;
     },
