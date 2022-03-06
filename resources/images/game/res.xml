@@ -293,7 +293,7 @@
         <image file="battlesprites/battle_front+mask.png" />
         <!-- <image file="battlesprites/co_back+mask.png" /> -->
         <image file="battlesprites/co_front+mask.png" />
-        <image file="battlesprites/healthbar.png" guideX1="4" guideX2="6" guideY1="1" guideY2="8"/>
+        <image file="battlesprites/healthbar.png" guideX1="4" guideX2="6" guideY1="0" guideY2="9"/>
         
         <!-- weather stuff -->
         <image file="weather/weather_sandstorm.png" cols = "16" />
