@@ -56,7 +56,7 @@ AudioThread::~AudioThread()
             {
                 cache->timer[i]->stop();
                 cache->sound[i]->stop();
-                cache->sound[i]->deleteLater();
+                delete cache->sound[i];
                 cache->sound[i] = nullptr;
                 cache->timer[i].reset();
             }
