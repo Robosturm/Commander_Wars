@@ -46,9 +46,8 @@ jobs:
     - name: Configure CMake
       run:  |
         cmake \
-        -S '${{github.workspace}}' \
-        -B '${{github.workspace}}/build' \
-        -DCMAKE_BUILD_TYPE='${{env.BUILD_TYPE}}' \
+        -B "${{github.workspace}}/build" \
+        -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
         -DCMAKE_C_COMPILER='${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe' \
         -DCMAKE_CXX_COMPILER='${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe' \
