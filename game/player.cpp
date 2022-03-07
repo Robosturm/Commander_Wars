@@ -2095,11 +2095,11 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         {
             if (!colorToTable(m_Color))
             {
-                createTable(m_Color.darker(160));
+                createTable(m_Color);
             }
         }
         else
-        {
+        {            
             qint32 width = 0;
             pStream >> width;
             QRgb rgb;
@@ -2109,7 +2109,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             }
             if (!colorToTable(m_Color))
             {
-                createTable(m_Color.darker(160));
+                createTable(m_Color);
             }
         }
         if (!fast)
