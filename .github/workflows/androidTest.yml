@@ -61,7 +61,7 @@ jobs:
         -DCMAKE_TOOLCHAIN_FILE='${{ steps.setup-ndk.outputs.ndk-path }}/build/cmake/android.toolchain.cmake' \
         -DANDROID_ABI=${{ matrix.abi }} \
         -DANDROID_STL=c++_shared \        
-        "-DCMAKE_FIND_ROOT_PATH=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/${{matrix.COMPILER_VERSION}}" 
+        "-DCMAKE_FIND_ROOT_PATH=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/${{matrix.COMPILER_VERSION}}" \
         "-DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL:BOOL=ON" \
         -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \
         -DQt6_DIR='${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/'
