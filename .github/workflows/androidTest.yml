@@ -50,16 +50,19 @@ jobs:
         cmake \
         -S "${{github.workspace}}" \
         -B "${{github.workspace}}/build" \
+        "-GNMake Makefiles JOM" \
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
-        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
+        "-DQT_QMAKE_EXECUTABLE=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/${{matrix.COMPILER_VERSION}}/bin/qmake.bat" \        
+        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/" \
         -DCMAKE_C_COMPILER='${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe' \
         -DCMAKE_CXX_COMPILER='${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe' \
         -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api }} \
         -DANDROID_NDK='${{ steps.setup-ndk.outputs.ndk-path }}' \
-        -DANDROID_ABI=${{ matrix.abi }} \
-        -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api-level }} \
         -DCMAKE_TOOLCHAIN_FILE='${{ steps.setup-ndk.outputs.ndk-path }}/build/cmake/android.toolchain.cmake' \
-        -DANDROID_STL=c++_shared \
+        -DANDROID_ABI=${{ matrix.abi }} \
+        -DANDROID_STL=c++_shared \        
+        "-DCMAKE_FIND_ROOT_PATH=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/${{matrix.COMPILER_VERSION}}" 
+        "-DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL:BOOL=ON" \
         -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \
         -DQt6_DIR='${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/'
 
