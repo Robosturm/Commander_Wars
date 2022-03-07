@@ -834,7 +834,6 @@
         <image file="light_tank/light_tank+os+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ma+mg+move+mask.png" />
-        <image file="light_tank/light_tank+ac+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+pf+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ti+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bd+mg+stop+mask.png" cols = "4" />
