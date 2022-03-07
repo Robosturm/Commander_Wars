@@ -42,8 +42,9 @@ jobs:
           install-deps: "true"
           
     - name: setup-ndk
-        env:
-            ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+       run: ./build.sh
+       env:
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
       
     - name: Configure CMake
       run:  |
