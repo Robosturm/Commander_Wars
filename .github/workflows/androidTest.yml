@@ -48,7 +48,6 @@ jobs:
         cmake \
         -B '${{github.workspace}}/build' \
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
-        "-GNMake Makefiles JOM" \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
         -DCMAKE_C_COMPILER:STRING=${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe \
         -DCMAKE_CXX_COMPILER:STRING=${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe \
