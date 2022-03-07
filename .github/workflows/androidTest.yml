@@ -60,7 +60,7 @@ jobs:
         -DANDROID_STL=c++_shared \
         -DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL:BOOL=ON \
         -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \        
-        -DQt6_DIR='${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/'
+        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
 
     - name: Build
       working-directory: '${{github.workspace}}/build'
