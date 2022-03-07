@@ -28,7 +28,7 @@ jobs:
     - uses: nttld/setup-ndk@v1
       id: setup-ndk
       with:
-        ndk-version: $NDK_Version
+        ndk-version: ${{env.NDK_Version}}
         add-to-path: false
     - run: ./build.sh
       env:
