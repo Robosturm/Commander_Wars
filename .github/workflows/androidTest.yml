@@ -29,6 +29,9 @@ jobs:
       with:
         ndk-version: 21.3.6528147
         add-to-path: false
+    - run: ./build.sh
+      env:
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
           
     - name: Install Qt
       uses: jurplel/install-qt-action@v2.14.0
@@ -41,10 +44,6 @@ jobs:
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
           
-    - name: setup-ndk
-       run: ./build.sh
-       env:
-          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
       
     - name: Configure CMake
       run:  |
