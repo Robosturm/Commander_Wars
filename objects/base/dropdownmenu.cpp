@@ -38,6 +38,7 @@ void DropDownmenu::changeList(const QStringList & items)
     m_Textfield->setWidth(m_Box->getWidth() - 20 - 45);
     m_Textfield->setHeight(m_Box->getHeight());
     m_Textfield->setY(5);
+    m_ItemTexts = items;
 
     for (qint32 i = 0; i < m_ItemTexts.size(); i++)
     {
