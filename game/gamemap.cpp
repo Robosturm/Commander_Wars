@@ -1655,6 +1655,7 @@ void GameMap::clearMap()
     m_players.clear();
     m_Rules->resetWeatherSprites();
     m_Rules->resetFogSprites();
+    m_headerInfo.m_mapFlags = GameEnums::MapFilterFlags_None;
 }
 
 QString GameMap::readMapName(QDataStream& pStream)
