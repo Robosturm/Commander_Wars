@@ -116,7 +116,7 @@ var Constructor = function()
     {
         return "";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         if (TERRAIN.isPipeline(TERRAIN.getTerrainAnimationId(terrain, map)))
         {
