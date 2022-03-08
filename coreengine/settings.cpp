@@ -311,7 +311,7 @@ Settings::Settings()
         new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&10000&20000;::1&50000&65535", "", ""},
         // auto saving
         new Value<std::chrono::seconds>{"Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)},
-        new Value<qint32>{"Autosaving", "AutoSavingCycle", &m_autoSavingCycle, 3, 1, 100},
+        new Value<qint32>{"Autosaving", "AutoSavingCycle", &m_autoSavingCycle, 3, 0, 100},
         // mods
         new Value<QStringList>{"Mods", "Mods", &m_activeMods, QStringList(), QStringList(), QStringList()},
         // logging
