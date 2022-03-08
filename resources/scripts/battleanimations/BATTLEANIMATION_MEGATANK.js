@@ -131,7 +131,7 @@ var Constructor = function()
         var i = 0;
         if (weapon === 0)
         {
-            sprite.loadSprite("bullet_megatank",  false, sprite.getMaxUnitCount(), Qt.point(10, 30),
+            sprite.loadSprite("bullet_megatank",  false, 5, Qt.point(0, 30),
                               1, 1.0, 0, 0, true, true, 50);
             sprite.loadSprite("cannon_heavy_hit",  false, 5, Qt.point(0, 20),
                               1, 1.0, 0, 100, true);
