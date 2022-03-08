@@ -1760,7 +1760,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                                     if (distance >= minFireRange && distance <= maxFireRange &&
                                         (pTargetUnit == nullptr ||
                                          pTargetUnit->getOwner()->isAlly(m_pPlayer)) &&
-                                        enemyIslandIdx == m_IslandMaps[enemyIsland]->getIsland(target.x(), target.y()))
+                                        enemyIsland == m_IslandMaps[enemyIslandIdx]->getIsland(target.x(), target.y()))
                                     {
                                         if (baseCosts[i3] > 0 && baseCost > 0)
                                         {
