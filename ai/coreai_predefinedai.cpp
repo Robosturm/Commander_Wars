@@ -1,20 +1,16 @@
+#include <QApplication>
+
 #include "ai/coreai.h"
+#include "ai/targetedunitpathfindingsystem.h"
 
 #include "coreengine/console.h"
 #include "coreengine/globalutils.h"
 
 #include "game/unitpathfindingsystem.h"
-
-#include "ai/targetedunitpathfindingsystem.h"
-
 #include "game/player.h"
-
 #include "game/co.h"
-
 #include "game/unit.h"
-
 #include "game/gameaction.h"
-
 #include "game/gamemap.h"
 
 bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
@@ -22,6 +18,7 @@ bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
     CONSOLE_PRINT("moveFlares()", Console::eDEBUG);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
+        QApplication::processEvents();
         Unit* pUnit = pUnits->at(i);
         if (!pUnit->getHasMoved())
         {
@@ -64,6 +61,7 @@ bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits
 
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
+        QApplication::processEvents();
         Unit* pUnit = pUnits->at(i);
         if (!pUnit->getHasMoved())
         {
@@ -118,6 +116,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
         }
         for (qint32 i = 0; i < pUnits->size(); i++)
         {
+            QApplication::processEvents();
             Unit* pUnit = pUnits->at(i);
             if (!pUnit->getHasMoved())
             {
@@ -195,6 +194,7 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
         spQmlVectorPoint unitFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
         for (qint32 i = 0; i < pUnits->size(); i++)
         {
+            QApplication::processEvents();
             Unit* pUnit = pUnits->at(i);
             if (pUnit->getHpRounded() < Unit::MAX_UNIT_HP && pUnit->getUnitCosts() / Unit::MAX_UNIT_HP <= m_pPlayer->getFunds())
             {
@@ -283,6 +283,7 @@ bool CoreAI::processPredefinedAi()
     pEnemyUnits->randomize();
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
+        QApplication::processEvents();
         Unit* pUnit = pUnits->at(i);
         if (!pUnit->getHasMoved())
         {

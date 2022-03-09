@@ -1,4 +1,5 @@
 #include <QSettings>
+#include <QApplication>
 
 #include "ai/veryeasyai.h"
 #include "ai/islandmap.h"
@@ -158,6 +159,7 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
     bool fireSilos = (cost >= m_minSiloDamage);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
+        QApplication::processEvents();
         Unit* pUnit = pUnits->at(i);
         if (!pUnit->getHasMoved())
         {
@@ -235,6 +237,7 @@ bool VeryEasyAI::fireWithIndirectUnits(spQmlVectorUnit & pUnits)
     CONSOLE_PRINT("VeryEasyAI::fireWithIndirectUnits()", Console::eDEBUG);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
+        QApplication::processEvents();
         Unit* pUnit = pUnits->at(i);
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() > 1 &&
@@ -254,6 +257,7 @@ bool VeryEasyAI::fireWithDirectUnits(spQmlVectorUnit & pUnits)
     CONSOLE_PRINT("VeryEasyAI::fireWithDirectUnits()", Console::eDEBUG);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
+        QApplication::processEvents();
         Unit* pUnit = pUnits->at(i);
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() == 1 &&
@@ -331,6 +335,7 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
     m_aiStep = AISteps::moveToTargets;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
+        QApplication::processEvents();
         Unit* pUnit = pUnits->at(i);
         // can we use the unit?
         if (!pUnit->getHasMoved())
@@ -387,6 +392,7 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
     m_aiStep = AISteps::moveTransporters;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
+        QApplication::processEvents();
         Unit* pUnit = pUnits->at(i);
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getLoadingPlace() > 0)
@@ -466,6 +472,7 @@ bool VeryEasyAI::loadUnits(spQmlVectorUnit & pUnits)
     m_aiStep = AISteps::loadUnits;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
+        QApplication::processEvents();
         Unit* pUnit = pUnits->at(i);
         // can we use the unit?
         if (!pUnit->getHasMoved())
@@ -639,6 +646,7 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
         qint32 transporterUnits = 0;
         for (qint32 i = 0; i < pUnits->size(); i++)
         {
+            QApplication::processEvents();
             Unit* pUnit = pUnits->at(i);
             if (pUnit->getActionList().contains(ACTION_CAPTURE))
             {
@@ -676,6 +684,7 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
         for (qint32 i2 = 0; i2 < m_maxTreeDecisionTries; i2++)
         {
+            QApplication::processEvents();
             if (i2 == 0 || m_pPlayer->getFunds() >= m_minAllBuildingFunds)
             {
                 for (qint32 i = 0; i < pBuildings->size(); i++)

@@ -69,6 +69,8 @@ class NormalAi : public CoreAI
         qint32 movementPoints{0};
         qint32 minFireRange{0};
         qint32 maxFireRange{0};
+        qint32 unitCosts{0};
+        float virtualDamageData{0};
     };
     struct ExpectedFundsData
     {
@@ -254,7 +256,7 @@ protected:
      * @param movePath
      * @return
      */
-    qint32 getMoveTargetField(Unit* pUnit, spQmlVectorUnit & pUnits, UnitPathFindingSystem& turnPfs,
+    qint32 getMoveTargetField(MoveUnitData & unitData, spQmlVectorUnit & pUnits, UnitPathFindingSystem& turnPfs,
                               QVector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
                               qint32 movePoints) const;
     /**
@@ -263,7 +265,7 @@ protected:
      * @param turnPfs
      * @return
      */
-    std::tuple<QPoint, float, bool> moveToSafety(Unit* pUnit, spQmlVectorUnit & pUnits,
+    std::tuple<QPoint, float, bool> moveToSafety(MoveUnitData & unitData, spQmlVectorUnit & pUnits,
                                                  UnitPathFindingSystem& turnPfs, QPoint target,
                                                  spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
                                                  qint32 movePoints);
@@ -309,7 +311,7 @@ protected:
      * @param moveTargetFields
      * @return
      */
-    qint32 getBestAttackTarget(Unit* pUnit, spQmlVectorUnit & pUnits, QVector<CoreAI::DamageData>& ret,
+    qint32 getBestAttackTarget(MoveUnitData & unitData, spQmlVectorUnit & pUnits, QVector<CoreAI::DamageData>& ret,
                                QVector<QVector3D>& moveTargetFields,
                                spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const;
     /**
@@ -330,7 +332,7 @@ protected:
      * @param pEnemyUnit
      * @param enemyNewLife
      */
-    float calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QPoint newPosition,
+    float calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPosition,
                                  Unit* pEnemyUnit, float enemyTakenDamage,
                                  spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
                                  bool ignoreOutOfVisionRange = false) const;
@@ -508,10 +510,6 @@ private:
      */
     QVector<QPoint> m_updatePoints;
     /**
-     * @brief m_VirtualEnemyData
-     */
-    QVector<float> m_VirtualEnemyData;
-    /**
      * @brief m_productionData
      */
     QVector<ProductionData> m_productionData;
@@ -549,6 +547,7 @@ private:
     double m_ownUnitEnemyUnitRatioAverager{10};
     double m_maxDayScoreVariancer{10};
     double m_directIndirectUnitBonusFactor{1.2f};
+    double m_influenceUnitRange{1.75f};
 
     double m_scoringCutOffDamageHigh{Unit::DAMAGE_100};
     double m_scoringCutOffDamageLow{7.5f};
@@ -624,6 +623,7 @@ private:
     double m_ProducingTransportLoadingBonus{15.0f};
     double m_ProducingTransportMinLoadingTransportRatio{7.0f};
     double m_maxProductionBuildings{5};
+    double m_maxProductionBuildingsForB{1};
 
     float m_currentDirectIndirectRatio{1.0f};
 
