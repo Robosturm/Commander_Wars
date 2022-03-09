@@ -243,7 +243,7 @@ spWikipage WikiDatabase::getPage(PageData data)
         spUnit pUnit = spUnit::create(id, pPlayer.get(), false, nullptr);
         ret = spFieldInfo::create(nullptr, pUnit.get());
     }
-    else if (DAMAGE_TABLE_NAME)
+    else if (id == DAMAGE_TABLE_NAME)
     {
         ret = spDamageTablePage::create();
     }
