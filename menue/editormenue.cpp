@@ -1388,7 +1388,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             m_pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), false);
         }
     }
-    if (points.size() > 10)
+    if (points.size() > 30)
     {
         m_pMap->updateSprites(-1, -1, true);
     }
@@ -1469,7 +1469,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             }
         }
     }
-    if (points.size() > 10)
+    if (points.size() > 30)
     {
         m_pMap->updateSprites(-1, -1, true);
     }

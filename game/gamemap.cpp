@@ -573,24 +573,23 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
 void GameMap::updateSpritesOfTiles(const QVector<QPoint> & points, bool editor, bool showLoadingScreen)
 {
     QVector<QPoint> flowPoints;
+    QVector<QPoint> updatedPoints;
     for (const auto & point : points)
     {
         for (qint32 y = point.y() -3; y <= point.y() + 3; y++)
         {
             for (qint32 x = point.x() -3; x <= point.x() + 3; x++)
             {
-                if (!points.contains(QPoint(x, y)))
+                QPoint pos(x, y);
+                if (!updatedPoints.contains(pos))
                 {
+                    updatedPoints.append(pos);
                     if (onMap(x, y))
                     {
                         updateTileSprites(x, y, flowPoints, editor);
                     }
                 }
             }
-        }
-        if (onMap(point.x(), point.y()))
-        {
-            updateTileSprites(point.x(), point.y(), flowPoints, editor);
         }
     }
     updateFlowTiles(flowPoints);
