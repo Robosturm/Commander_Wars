@@ -20,6 +20,12 @@ using spConsole = oxygine::intrusive_ptr<Console>;
 
 #define CONSOLE_PRINT(text, logLevel) if (logLevel >= Console::getLogLevel() ) {Console::print(text, logLevel);}
 
+#ifdef GAMEDEBUG
+#define AI_CONSOLE_PRINT(text, logLevel) CONSOLE_PRINT(text, logLevel)
+#else
+#define AI_CONSOLE_PRINT(text, logLevel)
+#endif
+
 class Console : public TextInput
 {
     Q_OBJECT

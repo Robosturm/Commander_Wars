@@ -29,7 +29,7 @@ var Constructor = function()
                         ["HOVERCRAFT", 65],
                         // heavy tanks
                         ["HEAVY_HOVERCRAFT", 50],
-                        ["HEAVY_TANK", 40],
+                        ["HEAVY_TANK", 45],
                         ["NEOTANK", 50],
                         // very heavy tanks
                         ["MEGATANK", 40],

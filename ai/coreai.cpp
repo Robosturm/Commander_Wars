@@ -104,7 +104,7 @@ void CoreAI::init()
 
 void CoreAI::loadIni(QString file)
 {
-        CONSOLE_PRINT("CoreAI::loadIni " + file, Console::eDEBUG);
+        AI_CONSOLE_PRINT("CoreAI::loadIni " + file, Console::eDEBUG);
         m_iniFiles.append(file);
         QStringList searchFiles;
         if (!file.isEmpty())
@@ -132,7 +132,7 @@ void CoreAI::readIni(QString name)
     if (QFile::exists(name))
     {
         QSettings settings(name, QSettings::IniFormat);
-        CONSOLE_PRINT("NormalAi::readIni status=" + QString::number(settings.status()), Console::eDEBUG);
+        AI_CONSOLE_PRINT("NormalAi::readIni status=" + QString::number(settings.status()), Console::eDEBUG);
         QString lastGroup = "";
         for (auto & entry : m_iniData)
         {
@@ -162,7 +162,7 @@ void CoreAI::readIni(QString name)
 void CoreAI::saveIni(QString name) const
 {
     QSettings settings(name, QSettings::IniFormat);
-    CONSOLE_PRINT("NormalAi::saveIni status=" + QString::number(settings.status()), Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::saveIni status=" + QString::number(settings.status()), Console::eDEBUG);
     QString lastGroup = "";
     for (auto & entry : m_iniData)
     {
@@ -253,7 +253,7 @@ double CoreAI::getInitValue(QString name) const
 
 void CoreAI::nextAction()
 {
-    CONSOLE_PRINT("CoreAI::nextAction", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::nextAction", Console::eDEBUG);
     // check if it's our turn
     spGameMenue pMenue = GameMenue::getInstance();
     
@@ -265,7 +265,7 @@ void CoreAI::nextAction()
 
         if (!processPredefinedAi())
         {
-            CONSOLE_PRINT("Processing ai specific behaviour", Console::eDEBUG);
+            AI_CONSOLE_PRINT("Processing ai specific behaviour", Console::eDEBUG);
             // if so execute next action
             process();
         }
@@ -300,7 +300,7 @@ qint32 CoreAI::index(QVector<QVector3D>& points, const QPoint & point)
 
 bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
 {
-    CONSOLE_PRINT("CoreAI::useCOPower()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::useCOPower()", Console::eDEBUG);
     QVector<float> data;
     data.append(-1);
     data.append(0);
@@ -431,7 +431,7 @@ float CoreAI::calcBuildingDamage(Unit* pUnit, const QPoint & newPosition, Buildi
 
 void CoreAI::createMovementMap(spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
-    CONSOLE_PRINT("CoreAI::createMovementMap", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::createMovementMap", Console::eDEBUG);
     
     if (m_pMap != nullptr)
     {
@@ -737,7 +737,7 @@ QRectF CoreAI::calcVirtuelUnitDamage(GameMap* pMap,
 
 bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
 {
-    CONSOLE_PRINT("CoreAI::moveAwayFromProduction", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::moveAwayFromProduction", Console::eDEBUG);
     m_aiStep = AISteps::moveAway;
     
     for (qint32 i = 0; i < pUnits->size(); i++)
@@ -792,7 +792,7 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
 
 void CoreAI::addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost)
 {
-    CONSOLE_PRINT("CoreAI::addMenuItemData()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::addMenuItemData()", Console::eDEBUG);
     pGameAction->writeDataString(itemID);
     // increase costs and input step
     pGameAction->setCosts(pGameAction->getCosts() + cost);
@@ -801,7 +801,7 @@ void CoreAI::addMenuItemData(spGameAction & pGameAction, const QString & itemID,
 
 void CoreAI::addSelectedFieldData(spGameAction & pGameAction, const QPoint & point)
 {
-    CONSOLE_PRINT("CoreAI::addSelectedFieldData()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::addSelectedFieldData()", Console::eDEBUG);
     pGameAction->writeDataInt32(point.x());
     pGameAction->writeDataInt32(point.y());
     pGameAction->setInputStep(pGameAction->getInputStep() + 1);
@@ -1218,7 +1218,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
 
 void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings, QVector<QVector3D>& targets)
 {
-    CONSOLE_PRINT("CoreAI::appendNearestUnloadTargets", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::appendNearestUnloadTargets", Console::eDEBUG);
     QVector<QVector<qint32>> checkedIslands;
     QVector<qint32> loadedUnitIslandIdx;
 
@@ -1346,7 +1346,7 @@ void CoreAI::getBestFlareTarget(Unit* pUnit, spGameAction & pAction, UnitPathFin
     }
     if (score > 0)
     {
-        CONSOLE_PRINT("Found flare target with score: " + QString::number(score), Console::eDEBUG);
+        AI_CONSOLE_PRINT("Found flare target with score: " + QString::number(score), Console::eDEBUG);
     }
     pAction->setMovepath(QVector<QPoint>(), 0);
 }
@@ -1662,7 +1662,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding
 
 void CoreAI::rebuildIsland(spQmlVectorUnit & pUnits)
 {
-    CONSOLE_PRINT("CoreAI::rebuildIsland", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::rebuildIsland", Console::eDEBUG);
     // and create one
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -1819,7 +1819,7 @@ qint32 CoreAI::getIslandIndex(Unit* pUnit) const
 
 void CoreAI::finishTurn()
 {
-    CONSOLE_PRINT("CoreAI::finishTurn(()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::finishTurn(()", Console::eDEBUG);
     m_usedTransportSystem = false;
     spGameAction pAction = spGameAction::create(ACTION_NEXT_PLAYER, m_pMap);
     CO* pCO0 = m_pPlayer->getCO(0);
@@ -1857,7 +1857,7 @@ void CoreAI::finishTurn()
 
 bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
 {
-    CONSOLE_PRINT("CoreAI::useBuilding", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::useBuilding", Console::eDEBUG);
     
     for (qint32 i = 0; i < pBuildings->size(); i++)
     {
@@ -2031,7 +2031,7 @@ void CoreAI::GetOwnUnitCounts(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemy
 
 bool CoreAI::buildCOUnit(spQmlVectorUnit & pUnits)
 {
-    CONSOLE_PRINT("CoreAI::buildCOUnit", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::buildCOUnit", Console::eDEBUG);
     spGameAction pAction = spGameAction::create(m_pMap);
     for (quint8 i2 = 0; i2 < 2; i2++)
     {
@@ -2165,7 +2165,7 @@ bool CoreAI::isMoveableTile(Building* pBuilding) const
 
 void CoreAI::serializeObject(QDataStream& stream) const
 {    
-    CONSOLE_PRINT("storing core ai", Console::eDEBUG);
+    AI_CONSOLE_PRINT("storing core ai", Console::eDEBUG);
     stream << getVersion();
     stream << m_enableNeutralTerrainAttack;
     stream << static_cast<qint32>(m_BuildingChanceModifier.size());
@@ -2201,7 +2201,7 @@ void CoreAI::serializeObject(QDataStream& stream) const
 
 void CoreAI::deserializeObject(QDataStream& stream)
 {
-    CONSOLE_PRINT("reading core ai", Console::eDEBUG);
+    AI_CONSOLE_PRINT("reading core ai", Console::eDEBUG);
     qint32 version;
     stream >> version;
     deserializeObjectVersion(stream, version);

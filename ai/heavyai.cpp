@@ -220,7 +220,7 @@ void HeavyAi::endTurn()
 
 bool HeavyAi::selectActionToPerform()
 {
-    CONSOLE_PRINT("HeavyAi selecting action to be performed", Console::eDEBUG);
+    AI_CONSOLE_PRINT("HeavyAi selecting action to be performed", Console::eDEBUG);
     float bestScore = std::numeric_limits<float>::lowest();
     qint32 index = -1;
     qint32 pos = 0;
@@ -244,7 +244,7 @@ bool HeavyAi::selectActionToPerform()
     {
         auto & unit = m_ownUnits[index];
         QPoint target = unit.m_action->getTarget();
-        CONSOLE_PRINT("HeavyAi selected action " + unit.m_action->getActionID() + " to be performed with score " + QString::number(bestScore), Console::eDEBUG);
+        AI_CONSOLE_PRINT("HeavyAi selected action " + unit.m_action->getActionID() + " to be performed with score " + QString::number(bestScore), Console::eDEBUG);
         m_updatePoints.append(target);
         m_updatePoints.append(unit.m_action->getActionTarget());
         if (target != unit.m_pUnit->Unit::getPosition())
@@ -287,7 +287,7 @@ void HeavyAi::setupTurn(const spQmlVectorBuilding & buildings)
     }
     if (startOfTurn)
     {
-        CONSOLE_PRINT("HeavyAi initial start of turn calculation", Console::eDEBUG);
+        AI_CONSOLE_PRINT("HeavyAi initial start of turn calculation", Console::eDEBUG);
         createIslandMaps();
 
         // create influence map at the start of the turn
@@ -304,9 +304,9 @@ void HeavyAi::setupTurn(const spQmlVectorBuilding & buildings)
         }
         m_InfluenceFrontMap.updateOwners();
         m_InfluenceFrontMap.calculateGlobalData();
-        CONSOLE_PRINT("HeavyAi front lines created", Console::eDEBUG);
+        AI_CONSOLE_PRINT("HeavyAi front lines created", Console::eDEBUG);
         findHqThreads(buildings);
-        CONSOLE_PRINT("HeavyAi initial scoring actions for units", Console::eDEBUG);
+        AI_CONSOLE_PRINT("HeavyAi initial scoring actions for units", Console::eDEBUG);
         for (auto & unit : m_ownUnits)
         {
             scoreActions(unit);
@@ -483,7 +483,7 @@ void HeavyAi::updateCaptureBuildings(UnitData & unitData)
 
 void HeavyAi::findHqThreads(const spQmlVectorBuilding & buildings)
 {
-    CONSOLE_PRINT("Searching for HQ Threads", Console::eDEBUG);
+    AI_CONSOLE_PRINT("Searching for HQ Threads", Console::eDEBUG);
     QVector<QVector3D> hqPositions;
     for (qint32 i = 0; i < buildings->size(); ++i)
     {
@@ -547,7 +547,7 @@ bool HeavyAi::isCaptureTransporterOrCanCapture(Unit* pUnit)
 
 void HeavyAi::scoreActions(UnitData & unit)
 {
-    CONSOLE_PRINT("HeavyAi::scoreActions", Console::eDEBUG);
+    AI_CONSOLE_PRINT("HeavyAi::scoreActions", Console::eDEBUG);
     if (!unit.m_pUnit->getHasMoved())
     {
         if (unit.m_pUnit->getTerrain() == nullptr ||
@@ -621,7 +621,7 @@ void HeavyAi::mutateActionForFields(UnitData & unitData, const QVector<QPoint> &
                                     QString action, FunctionType type, qint32 index,
                                     float & bestScore, QVector<ScoreData> & scoreInfos)
 {
-    CONSOLE_PRINT("HeavyAi::mutateActionForFields " + action, Console::eDEBUG);
+    AI_CONSOLE_PRINT("HeavyAi::mutateActionForFields " + action, Console::eDEBUG);
     for (const auto & target : moveTargets)
     {
         QVector<QPoint> path = unitData.m_pPfs->getPath(target.x(), target.y());
@@ -1229,7 +1229,7 @@ qint32 HeavyAi::getNumberOfTargetsOnIsland(const QVector<QPoint> & ignoreList)
 
 void HeavyAi::scoreMoveToTargets()
 {
-    CONSOLE_PRINT("HeavyAi scoring wait actions if needed", Console::eDEBUG);
+    AI_CONSOLE_PRINT("HeavyAi scoring wait actions if needed", Console::eDEBUG);
     for (auto & unit : m_ownUnits)
     {
         if (!unit.m_pUnit->getHasMoved() &&

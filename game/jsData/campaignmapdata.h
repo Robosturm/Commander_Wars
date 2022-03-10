@@ -9,7 +9,8 @@ class CampaignMapData : public QObject
 {
     Q_OBJECT
 public:
-    explicit CampaignMapData() = default;
+    explicit CampaignMapData();
+    virtual ~CampaignMapData() = default;
 
 public slots:
     const QString getMapBackground() const;

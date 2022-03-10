@@ -1,5 +1,12 @@
 #include "game/jsData/campaignmapdata.h"
 
+#include "coreengine/interpreter.h"
+
+CampaignMapData::CampaignMapData()
+{
+    setObjectName("CampaignMapData");
+    Interpreter::setCppOwnerShip(this);
+}
 
 const QString CampaignMapData::getMapBackground() const
 {

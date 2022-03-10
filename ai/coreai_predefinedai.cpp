@@ -15,7 +15,7 @@
 
 bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
 {
-    CONSOLE_PRINT("moveFlares()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("moveFlares()", Console::eDEBUG);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         QApplication::processEvents();
@@ -51,7 +51,7 @@ bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
 
 bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
 {
-    CONSOLE_PRINT("moveOoziums()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("moveOoziums()", Console::eDEBUG);
     QVector<QVector3D> targets;
     for (qint32 i = 0; i < pEnemyUnits->size(); i++)
     {
@@ -93,7 +93,7 @@ bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits
 
 bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
 {
-    CONSOLE_PRINT("moveBlackBombs()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("moveBlackBombs()", Console::eDEBUG);
     
     if (m_pMap != nullptr)
     {
@@ -184,7 +184,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
 
 bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTransporters)
 {
-    CONSOLE_PRINT("CoreAI::moveSupport", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::moveSupport", Console::eDEBUG);
     m_aiStep = step;
     
     if (m_pMap != nullptr)
@@ -276,7 +276,7 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
 
 bool CoreAI::processPredefinedAi()
 {
-    CONSOLE_PRINT("processPredefinedAi()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("processPredefinedAi()", Console::eDEBUG);
     spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
     pUnits->randomize();
     spQmlVectorUnit pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
@@ -322,7 +322,7 @@ bool CoreAI::processPredefinedAi()
 
 void CoreAI::processPredefinedAiHold(Unit* pUnit)
 {
-    CONSOLE_PRINT("CoreAI::processPredefinedAiHold", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::processPredefinedAiHold", Console::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
     QVector<QVector3D> ret;
@@ -354,7 +354,7 @@ void CoreAI::processPredefinedAiHold(Unit* pUnit)
 
 void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 {
-    CONSOLE_PRINT("CoreAI::processPredefinedAiDefensive", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::processPredefinedAiDefensive", Console::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
     UnitPathFindingSystem pfs(m_pMap, pUnit);
@@ -401,7 +401,7 @@ void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 
 void CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyUnits)
 {
-    CONSOLE_PRINT("CoreAI::processPredefinedAiOffensive", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::processPredefinedAiOffensive", Console::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
     UnitPathFindingSystem pfs(m_pMap, pUnit);
     pfs.explore();
@@ -427,7 +427,7 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyU
 
 bool CoreAI::processPredefinedAiAttack(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem & pfs)
 {
-    CONSOLE_PRINT("CoreAI::processPredefinedAiAttack", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::processPredefinedAiAttack", Console::eDEBUG);
     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
     pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())), 0);
 
@@ -464,7 +464,7 @@ bool CoreAI::processPredefinedAiAttack(Unit* pUnit, spGameAction & pAction, Unit
 
 void CoreAI::processPredefinedAiPatrol(Unit* pUnit)
 {
-    CONSOLE_PRINT("CoreAI::processPredefinedAiPatrol", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::processPredefinedAiPatrol", Console::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
     UnitPathFindingSystem pfs(m_pMap, pUnit);
     pfs.explore();

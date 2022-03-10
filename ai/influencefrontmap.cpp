@@ -33,7 +33,7 @@ InfluenceFrontMap::InfluenceFrontMap(GameMap* pMap, const QVector<spIslandMap> &
 
 void InfluenceFrontMap::addBuildingInfluence()
 {
-    CONSOLE_PRINT("InfluenceFrontMap::addBuildingInfluence()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("InfluenceFrontMap::addBuildingInfluence()", Console::eDEBUG);
     QVector<QPoint> buildingPositions;
     QVector<qint32> buildingOwners;
     QVector<QStringList> buildLists;
@@ -201,7 +201,7 @@ void InfluenceFrontMap::InfluenceInfo::increaseInfluence(qint32 player, qint32 v
 
 void InfluenceFrontMap::reset()
 {
-    CONSOLE_PRINT("InfluenceFrontMap::reset()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("InfluenceFrontMap::reset()", Console::eDEBUG);
     hide();
     
     for (qint32 x = 0; x < m_InfluenceMap.size(); ++x)
@@ -356,7 +356,7 @@ void InfluenceFrontMap::hide()
 
 void InfluenceFrontMap::calculateGlobalData()
 {
-    CONSOLE_PRINT("InfluenceFrontMap::calculateGlobalData()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("InfluenceFrontMap::calculateGlobalData()", Console::eDEBUG);
     findFrontLineTiles();
     createFrontLine();
     updateHighestInfluence();
@@ -364,7 +364,7 @@ void InfluenceFrontMap::calculateGlobalData()
 
 void InfluenceFrontMap::findFrontLineTiles()
 {
-    CONSOLE_PRINT("InfluenceFrontMap::findFrontLineTiles()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("InfluenceFrontMap::findFrontLineTiles()", Console::eDEBUG);
     spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
     
     qint32 width = m_pMap->getMapWidth();
@@ -436,7 +436,7 @@ void InfluenceFrontMap::addFrontLineMoveTypes(InfluenceInfo & info, qint32 x1, q
 
 void InfluenceFrontMap::createFrontLine()
 {
-    CONSOLE_PRINT("InfluenceFrontMap::createFrontLine()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("InfluenceFrontMap::createFrontLine()", Console::eDEBUG);
     spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
     
     qint32 width = m_pMap->getMapWidth();
@@ -483,7 +483,7 @@ void InfluenceFrontMap::searchFrontLine(QmlVectorPoint* neighbours, InfluenceInf
 
 void InfluenceFrontMap::updateHighestInfluence()
 {
-    CONSOLE_PRINT("InfluenceFrontMap::updateHighestInfluence()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("InfluenceFrontMap::updateHighestInfluence()", Console::eDEBUG);
     spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
     
     qint32 width = m_pMap->getMapWidth();

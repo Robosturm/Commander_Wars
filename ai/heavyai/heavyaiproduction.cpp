@@ -32,7 +32,7 @@ bool HeavyAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
     if (index >= 0)
     {
         auto & item = m_BuildingData[index];
-        CONSOLE_PRINT("HeavyAi::buildUnits " + item.buildingDataInput[item.m_selectedData].unitId + " with scored value " + QString::number(bestScore), Console::eDEBUG);
+        AI_CONSOLE_PRINT("HeavyAi::buildUnits " + item.buildingDataInput[item.m_selectedData].unitId + " with scored value " + QString::number(bestScore), Console::eDEBUG);
         m_updatePoints.append(item.m_action->getTarget());
         emit performAction(item.m_action);
         item.m_action = nullptr;
@@ -47,7 +47,7 @@ bool HeavyAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
     }
     else
     {
-        CONSOLE_PRINT("HeavyAi::buildUnits build no units highest value was: " + QString::number(bestScore), Console::eDEBUG);
+        AI_CONSOLE_PRINT("HeavyAi::buildUnits build no units highest value was: " + QString::number(bestScore), Console::eDEBUG);
     }
     return false;
 }
