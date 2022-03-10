@@ -1681,7 +1681,45 @@ void CoreAI::rebuildIsland(spQmlVectorUnit & pUnits)
     }
 }
 
-bool CoreAI::needsRefuel(Unit *pUnit) const
+
+void CoreAI::sortUnitsFarFromEnemyFirst(QVector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits)
+{
+    auto & pEnemyUnitsVec = pEnemyUnits->getVector();
+    for (auto & pUnitData : pUnits)
+    {
+        qint32 distance = std::numeric_limits<qint32>::max();
+        for (const auto & pEnemy : qAsConst(pEnemyUnitsVec))
+        {
+            qint32 newDistance = GlobalUtils::getDistance(pEnemy->getPosition(), pUnitData.pUnit->getPosition());
+            if (newDistance < distance)
+            {
+                distance = newDistance;
+            }
+        }
+        pUnitData.distanceToEnemy = distance;
+        pUnitData.canCapture = pUnitData.actions.contains(CoreAI::ACTION_CAPTURE);
+    }
+    std::sort(pUnits.begin(), pUnits.end(), [](const MoveUnitData& lhs, const MoveUnitData& rhs)
+    {
+        if (lhs.canCapture == rhs.canCapture)
+        {
+            if (lhs.distanceToEnemy == rhs.distanceToEnemy)
+            {
+                return lhs.movementPoints < rhs.movementPoints;
+            }
+            else
+            {
+                return lhs.distanceToEnemy > rhs.distanceToEnemy;
+            }
+        }
+        else
+        {
+            return lhs.canCapture < rhs.canCapture;
+        }
+    });
+}
+
+bool CoreAI::needsRefuel(const Unit *pUnit) const
 {
     if (pUnit->getMaxFuel() > 0 &&
         pUnit->getFuel() / static_cast<float>(pUnit->getMaxFuel()) < m_fuelResupply)
@@ -1701,12 +1739,6 @@ bool CoreAI::needsRefuel(Unit *pUnit) const
         return true;
     }
     return false;
-}
-
-bool CoreAI::isRefuelUnit(Unit* pUnit) const
-{
-    QStringList list = pUnit->getActionList();
-    return isRefuelUnit(list);
 }
 
 bool CoreAI::isRefuelUnit(const QStringList & actionList) const
@@ -1987,13 +2019,13 @@ float CoreAI::getAiCoBuildRatioModifier()
     return multiplier;
 }
 
-void CoreAI::GetOwnUnitCounts(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
+void CoreAI::GetOwnUnitCounts(QVector<MoveUnitData> & units, spQmlVectorUnit & pOwnUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                               UnitCountData & countData)
 {
-    for (qint32 i = 0; i < pUnits->size(); i++)
+    for (auto & unitData : units)
     {
-        Unit* pUnit = pUnits->at(i);
-        if (pUnit->getActionList().contains(ACTION_CAPTURE))
+        Unit* pUnit = unitData.pUnit.get();
+        if (unitData.actions.contains(ACTION_CAPTURE))
         {
             countData.infantryUnits++;
         }
@@ -2012,7 +2044,7 @@ void CoreAI::GetOwnUnitCounts(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemy
         {
             countData.supplyNeededUnits++;
         }
-        if (isRefuelUnit(pUnit))
+        if (isRefuelUnit(unitData.actions))
         {
             countData.supplyUnits++;
         }
@@ -2020,7 +2052,7 @@ void CoreAI::GetOwnUnitCounts(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemy
         {
             countData.transporterUnits++;
             QVector<QVector3D> ret;
-            QVector<Unit*> transportUnits = appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, true, ret, true);
+            QVector<Unit*> transportUnits = appendLoadingTargets(pUnit, pOwnUnits, pEnemyUnits, pEnemyBuildings, false, true, ret, true);
             for (qint32 i2 = 0; i2 < transportUnits.size(); i2++)
             {
                 countData.transportTargets.append(std::tuple<Unit*, Unit*>(pUnit, transportUnits[i2]));

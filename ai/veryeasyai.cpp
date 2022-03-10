@@ -58,6 +58,7 @@ VeryEasyAI::VeryEasyAI(GameMap* pMap)
 
 void VeryEasyAI::process()
 {
+    AI_CONSOLE_PRINT("NormalAi::process()", Console::eDEBUG);
     spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
     pBuildings->randomize();
     spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());

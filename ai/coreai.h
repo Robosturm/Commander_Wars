@@ -7,6 +7,7 @@
 
 #include "gameinput/basegameinputif.h"
 #include "game/gameaction.h"
+#include "game/unitpathfindingsystem.h"
 
 #include "ai/islandmap.h"
 
@@ -30,6 +31,14 @@ class CoreAI : public BaseGameInputIF
 {
     Q_OBJECT
 public:
+    ENUM_CLASS ThreadLevel
+    {
+        Normal,
+        High,
+        Hq,
+        Max,
+    };
+
     struct UnitCountData
     {
         qint32 infantryUnits{0};
@@ -69,6 +78,28 @@ public:
         float counterDamage{0.0f};
     };
 
+    struct MoveUnitData
+    {
+        spUnit pUnit;
+        spUnitPathFindingSystem pUnitPfs;
+        QStringList actions;
+        float virtualDamageData{0};
+        ThreadLevel m_threadLevel{ThreadLevel::Normal};
+        QPoint m_hqThread;
+        QVector<QPoint> m_capturePoints;
+        qint32 movementPoints{0};
+        qint32 minFireRange{0};
+        qint32 maxFireRange{0};
+        qint32 unitCosts{0};
+        // get filled by sortUnitsFarFromEnemyFirst
+        bool canCapture{false};
+        qint32 distanceToEnemy{0};
+
+        // infos for performing an action
+        spGameAction m_action;
+        float m_score{0};
+        QPoint captureTarget{-1, -1};
+    };
     /**
      * @brief The AISteps enum
      */
@@ -335,6 +366,7 @@ public slots:
     void appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets);
 
 protected:
+    void sortUnitsFarFromEnemyFirst(QVector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
     void addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost);
     void addSelectedFieldData(spGameAction & pGameAction, const QPoint & point);
     /**
@@ -519,13 +551,7 @@ protected:
      * @param pUnit
      * @return
      */
-    bool needsRefuel(Unit* pUnit) const;
-    /**
-     * @brief isRefuelUnit
-     * @param pUnit
-     * @return
-     */
-    bool isRefuelUnit(Unit* pUnit) const;
+    bool needsRefuel(const Unit* pUnit) const;
     /**
      * @brief isRefuelUnit
      * @param actionList
@@ -561,7 +587,7 @@ protected:
      * @param directUnits
      * @param transportTargets
      */
-    void GetOwnUnitCounts(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
+    void GetOwnUnitCounts(QVector<MoveUnitData> & units, spQmlVectorUnit & pOwnUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                           UnitCountData & countData);
     /**
      * @brief buildCOUnit

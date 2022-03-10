@@ -92,46 +92,6 @@ void QmlVectorUnit::sortShortestMovementRange(bool infantriesLast)
     }
 }
 
-void QmlVectorUnit::sortUnitsFarFromEnemyFirst(spQmlVectorUnit & pEnemyUnits)
-{
-    auto & pEnemyUnitsVec = pEnemyUnits->getUnits();
-    for (auto & pUnit : m_Vector)
-    {
-        qint32 distance = std::numeric_limits<qint32>::max();
-        for (auto & pEnemy : pEnemyUnitsVec)
-        {
-            qint32 newDistance = GlobalUtils::getDistance(pEnemy->getPosition(), pUnit->getPosition());
-            if (newDistance < distance)
-            {
-                distance = newDistance;
-            }
-        }
-        pUnit->setSortValues({pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())),
-                             pUnit->getActionList().contains(CoreAI::ACTION_CAPTURE),
-                             distance});
-    }
-    std::sort(m_Vector.begin(), m_Vector.end(), [](const spUnit& lhs, const spUnit& rhs)
-    {
-        auto & lhsVec = lhs->getSortValues();
-        auto & rhsVec = rhs->getSortValues();
-        if (rhsVec[1] == lhsVec[1])
-        {
-            if (lhsVec[2] == rhsVec[2])
-            {
-                return lhsVec[0] < rhsVec[0];
-            }
-            else
-            {
-                return lhsVec[2] > rhsVec[2];
-            }
-        }
-        else
-        {
-            return lhsVec[1] < rhsVec[1];
-        }
-    });
-}
-
 QmlVectorBuilding::QmlVectorBuilding()
 {
     setObjectName("QmlVectorBuilding");

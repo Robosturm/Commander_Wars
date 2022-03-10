@@ -492,7 +492,7 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, sp
     if (m_pMap != nullptr)
     {
         UnitCountData countData;
-        GetOwnUnitCounts(pUnits, pEnemyUnits, pEnemyBuildings, countData);
+        GetOwnUnitCounts(m_ownUnits, pUnits, pEnemyUnits, pEnemyBuildings, countData);
         double count = pUnits->size() + 1;
         data[DirectUnitRatio]       = static_cast<double>(countData.directUnits)   / count;
         data[IndirectUnitRatio]     = static_cast<double>(countData.indirectUnits) / count;

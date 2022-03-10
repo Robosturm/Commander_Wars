@@ -21,7 +21,10 @@ class QmlVectorPoint : public QObject, public oxygine::ref_counter
 public:
     explicit QmlVectorPoint();
     virtual ~QmlVectorPoint();
-signals:
+    const QVector<QPoint> & getVector() const
+    {
+        return m_Vector;
+    }
 
 public slots:
     inline QPoint at(qint32 i) const
@@ -56,20 +59,10 @@ class QmlVectorUnit : public QObject, public oxygine::ref_counter
 public:
     explicit QmlVectorUnit();
     virtual ~QmlVectorUnit();
-    /**
-     * @brief getUnits
-     * @return
-     */
-    QVector<spUnit> & getUnits()
+    const QVector<spUnit> & getVector() const
     {
         return m_Vector;
     }
-    /**
-     * @brief sortOwnUnits
-     * @param pUnits
-     * @param pEnemyUnits
-     */
-    void sortUnitsFarFromEnemyFirst(spQmlVectorUnit & pEnemyUnits);
 
 public slots:
     inline Unit* at(qint32 i) const
@@ -113,7 +106,10 @@ class QmlVectorBuilding: public QObject, public oxygine::ref_counter
 public:
     explicit QmlVectorBuilding();
     virtual ~QmlVectorBuilding();
-signals:
+    const QVector<spBuilding> & getVector() const
+    {
+        return m_Vector;
+    }
 
 public slots:
     inline Building* at(qint32 i) const

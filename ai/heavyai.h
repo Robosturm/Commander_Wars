@@ -150,35 +150,12 @@ class HeavyAi : public CoreAI
     };
 
 public:
-    ENUM_CLASS ThreadLevel
-    {
-        Normal,
-        High,
-        Hq,
-        Max,
-    };
     ENUM_CLASS FunctionType
     {
         JavaScript,
         CPlusPlus,
     };
 
-    struct UnitData
-    {
-        Unit* m_pUnit;
-        spUnitPathFindingSystem m_pPfs;
-        qint32 m_movepoints{0};
-        float m_virtualDamage{0.0f};
-        ThreadLevel m_threadLevel{ThreadLevel::Normal};
-        QPoint m_hqThread;
-        QVector<QPoint> m_capturePoints;
-        QStringList m_actions;
-
-        // infos for performing an action
-        spGameAction m_action;
-        float m_score{0};
-        QPoint captureTarget{-1, -1};
-    };
     struct UnitBuildData
     {
         bool enabled{true};
@@ -310,28 +287,28 @@ protected:
      * @brief scoreActions
      * @param unit
      */
-    void scoreActions(UnitData & unit);
+    void scoreActions(MoveUnitData & unit);
     /**
      * @brief prepareWaitPfs
      * @param unitData
      * @param actions
      */
-    void prepareWaitPfs(UnitData & unitData, QStringList & actions);
+    void prepareWaitPfs(MoveUnitData & unitData, QStringList & actions);
 private:
     void setupTurn(const spQmlVectorBuilding & buildings);
     void endTurn();
     void createIslandMaps();
-    void initUnits(spQmlVectorUnit & pUnits, QVector<UnitData> & units, bool enemyUnits);
-    void addNewUnitToUnitData(QVector<UnitData> & units, Unit* pUnit, bool enemyUnits);
+    void initUnits(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & units, bool enemyUnits);
+    void addNewUnitToUnitData(QVector<MoveUnitData> & units, Unit* pUnit, bool enemyUnits);
     void updateUnits();
-    void updateUnits(QVector<UnitData> & units, spQmlVectorUnit & pUnits, bool enemyUnits);
-    void updateCaptureBuildings(UnitData & unitData);
+    void updateUnits(QVector<MoveUnitData> & units, spQmlVectorUnit & pUnits, bool enemyUnits);
+    void updateCaptureBuildings(MoveUnitData & unitData);
     void findHqThreads(const spQmlVectorBuilding & buildings);
     bool isCaptureTransporterOrCanCapture(Unit* pUnit);
-    void mutateActionForFields(UnitData & unit, const QVector<QPoint> & moveTargets,
+    void mutateActionForFields(MoveUnitData & unit, const QVector<QPoint> & moveTargets,
                                QString action, FunctionType type, qint32 index,
                                float & bestScore, QVector<ScoreData> & scoreInfos);
-    bool mutateAction(ScoreData & data, UnitData & unitData, QVector<double> & baseData, FunctionType type, qint32 functionIndex,
+    bool mutateAction(ScoreData & data, MoveUnitData & MoveUnitData, QVector<double> & baseData, FunctionType type, qint32 functionIndex,
                       qint32 & step, QVector<qint32> & stepPosition);
     /**
      * @brief scoreWait
@@ -347,13 +324,13 @@ private:
      * @param action
      * @return
      */
-    void scoreCapture(ScoreData & data, UnitData & unitData, QVector<double> baseData);
+    void scoreCapture(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
     /**
      * @brief scoreFire
      * @param action
      * @return
      */
-    void scoreFire(ScoreData & data, UnitData & unitData, QVector<double> baseData);
+    void scoreFire(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
     /**
      * @brief scoreJoin
      * @param action
@@ -361,7 +338,7 @@ private:
      * @param baseData
      * @return
      */
-    void scoreJoin(ScoreData & data, UnitData & unitData, QVector<double> baseData);
+    void scoreJoin(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
     /**
      * @brief scoreMissile
      * @param action
@@ -369,7 +346,7 @@ private:
      * @param baseData
      * @return
      */
-    void scoreMissile(ScoreData & data, UnitData & unitData, QVector<double> baseData);
+    void scoreMissile(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
     /**
      * @brief scoreLoad
      * @param action
@@ -377,33 +354,33 @@ private:
      * @param baseData
      * @return
      */
-    void scoreLoad(ScoreData & data, UnitData & unitData, QVector<double> baseData);
+    void scoreLoad(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
     /**
      * @brief scoreUnload
      * @param data
      * @param unitData
      * @param baseData
      */
-    void scoreUnload(ScoreData & data, UnitData & unitData, QVector<double> baseData);
+    void scoreUnload(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
     /**
      * @brief getMoveTargets
      * @param unit
      * @param targets
      */
-    void getMoveTargets(UnitData & unit, QStringList & actions, QVector<QVector3D> & targets);
+    void getMoveTargets(MoveUnitData & unit, QStringList & actions, QVector<QVector3D> & targets);
     /**
      * @brief scoreWait
      * @param action
      * @return
      */
-    void scoreWait(ScoreData & data, UnitData & unitData, QVector<double> baseData);
+    void scoreWait(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
     /**
      * @brief scoreWaitGeneric
      * @param data
      * @param unitData
      * @param baseData
      */
-    void scoreWaitGeneric(ScoreData & data, UnitData & unitData, QVector<double> baseData);
+    void scoreWaitGeneric(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
     /**
      * @brief addCaptureTargets
      * @param pUnit
@@ -580,15 +557,15 @@ private:
     qint32 getDistanceToMovepath(const QVector<QPoint> & targetPath, const QPoint & target) const;
 private:
     // function for scoring a function
-    using scoreFunction = std::function<void (ScoreData & data, UnitData & unitData, QVector<double> baseData)>;
+    using scoreFunction = std::function<void (ScoreData & data, MoveUnitData & unitData, QVector<double> baseData)>;
     struct ScoreInfo
     {
         QString m_actionId;
         scoreFunction callback;
     };
     const QVector<ScoreInfo> m_scoreInfos;
-    QVector<UnitData> m_enemyUnits;
-    QVector<UnitData> m_ownUnits;
+    QVector<MoveUnitData> m_enemyUnits;
+    QVector<MoveUnitData> m_ownUnits;
     QVector<QPoint> m_updatePoints;
     QVector<BuildingData> m_BuildingData;
     QVector<QPoint> m_planedCaptureTargets;

@@ -5,7 +5,6 @@
 
 #include "ai/coreai.h"
 
-#include "game/unitpathfindingsystem.h"
 #include "ai/influencefrontmap.h"
 
 class QmlVectorUnit;
@@ -62,16 +61,6 @@ class NormalAi : public CoreAI
         qint32 m_y = -1;
         QStringList buildList;
         QVector<UnitBuildData> m_buildData;
-    };
-    struct MoveUnitData
-    {
-        spUnit pUnit;
-        spUnitPathFindingSystem pUnitPfs;
-        qint32 movementPoints{0};
-        qint32 minFireRange{0};
-        qint32 maxFireRange{0};
-        qint32 unitCosts{0};
-        float virtualDamageData{0};
     };
     struct ExpectedFundsData
     {
@@ -257,7 +246,7 @@ protected:
      * @param movePath
      * @return
      */
-    qint32 getMoveTargetField(MoveUnitData & unitData, spQmlVectorUnit & pUnits, UnitPathFindingSystem& turnPfs,
+    qint32 getMoveTargetField(MoveUnitData & unitData, UnitPathFindingSystem& turnPfs,
                               QVector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
                               qint32 movePoints) const;
     /**
@@ -266,8 +255,7 @@ protected:
      * @param turnPfs
      * @return
      */
-    std::tuple<QPoint, float, bool> moveToSafety(MoveUnitData & unitData, spQmlVectorUnit & pUnits,
-                                                 UnitPathFindingSystem& turnPfs, QPoint target,
+    std::tuple<QPoint, float, bool> moveToSafety(MoveUnitData & unitData, UnitPathFindingSystem& turnPfs, QPoint target,
                                                  spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
                                                  qint32 movePoints);
     /**
@@ -312,7 +300,7 @@ protected:
      * @param moveTargetFields
      * @return
      */
-    qint32 getBestAttackTarget(MoveUnitData & unitData, spQmlVectorUnit & pUnits, QVector<CoreAI::DamageData>& ret,
+    qint32 getBestAttackTarget(MoveUnitData & unitData, QVector<CoreAI::DamageData>& ret,
                                QVector<QVector3D>& moveTargetFields,
                                spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const;
     /**

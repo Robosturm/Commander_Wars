@@ -104,7 +104,6 @@ else("Release")
     message("Compiling as Release")
     set(DEPLOY_RESOURCES_AS_FOLDER false)
     add_definitions(
-        -DGAMEDEBUG
         -DDEBUG_LEVEL=0             # default console log level
     )
 endif()

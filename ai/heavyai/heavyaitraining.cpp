@@ -88,14 +88,14 @@ void HeavyAi::showUnitPfs(bool enemy, qint32 index)
     {
         if (index >= 0 && index < m_enemyUnits.size())
         {
-            m_InfluenceFrontMap.showPfs(m_enemyUnits[index].m_pPfs.get());
+            m_InfluenceFrontMap.showPfs(m_enemyUnits[index].pUnitPfs.get());
         }
     }
     else
     {
         if (index >= 0 && index < m_ownUnits.size())
         {
-            m_InfluenceFrontMap.showPfs(m_ownUnits[index].m_pPfs.get());
+            m_InfluenceFrontMap.showPfs(m_ownUnits[index].pUnitPfs.get());
         }
     }
 }
