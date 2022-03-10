@@ -2167,9 +2167,17 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     }
     else if (fundsPerFactory >= m_spamingFunds * m_fundsPerBuildingFactorA)
     {
-        AI_CONSOLE_PRINT("NormalAI: Building expensive units", Console::eDEBUG);
+        if (fundsPerFactory >= m_spamingFunds * m_fundsPerBuildingFactorA + m_spamingFunds)
+        {
+            AI_CONSOLE_PRINT("NormalAI: Building expensive units with no spend malus", Console::eDEBUG);
+            data[UseHighTechUnits] = NoSpendMalus;
+        }
+        else
+        {
+            AI_CONSOLE_PRINT("NormalAI: Building expensive units", Console::eDEBUG);
+            data[UseHighTechUnits] = FundsMode::Expensive;
+        }
         fundsPerFactory = m_spamingFunds * m_fundsPerBuildingFactorA;
-        data[UseHighTechUnits] = FundsMode::Expensive;
     }
     AI_CONSOLE_PRINT("NormalAI: fundsPerFactory=" + QString::number(fundsPerFactory), Console::eDEBUG);
     data[DirectUnitRatio] = static_cast<float>(countData.directUnits) / static_cast<float>(countData.indirectUnits + 1);
@@ -3131,7 +3139,7 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
     const double outScore = 0.25f;
     const double inScore = 0.5f;
 
-    if (data[UseHighTechUnits] > FundsMode::Expensive &&
+    if (data[UseHighTechUnits] == NoSpendMalus &&
         data[FundsFactoryRatio] > m_normalUnitRatio + m_targetPriceDifference)
     {
         // spend what we can mode

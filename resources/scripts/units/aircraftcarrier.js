@@ -1,3 +1,4 @@
+
 var Constructor = function()
 {
     this.init = function(unit)

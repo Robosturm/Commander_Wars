@@ -30,7 +30,7 @@ Constructor = function()
                         ["NEOTANK", 45],
 
                         // very heavy tanks
-                        ["MEGATANK", 35],
+                        ["MEGATANK", 30],
 
                         // ranged land units
                         ["ARTILLERY", 75],

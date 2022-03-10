@@ -23,7 +23,8 @@ class NormalAi : public CoreAI
     {
         Normal,
         Expensive,
-        VeryExpensive
+        VeryExpensive,
+        NoSpendMalus
     };
 
     static constexpr float NO_BUILD_SCORE = std::numeric_limits<float>::lowest();

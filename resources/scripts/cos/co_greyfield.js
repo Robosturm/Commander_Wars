@@ -249,7 +249,7 @@ var Constructor = function()
     {
         if (CO_GREYFIELD.isBoostUnit(unit))
         {
-            return 2.5;
+            return 6;
         }
         return 0;
     };
