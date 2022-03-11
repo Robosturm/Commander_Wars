@@ -240,7 +240,13 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
         stream << mods[i];
         stream << versions[i];
     }
-    Filesupport::writeByteArray(stream, Filesupport::getRuntimeHash(mods));
+    auto hostHash = Filesupport::getRuntimeHash(mods);
+    if (Console::eDEBUG >= Console::getLogLevel())
+    {
+        QString hostString = GlobalUtils::getByteArrayString(hostHash);
+        CONSOLE_PRINT("Sending host hash: " + hostString, Console::eDEBUG);
+    }
+    Filesupport::writeByteArray(stream, hostHash);
     stream << m_saveGame;
     if (m_saveGame)
     {
@@ -614,6 +620,13 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         bool differentHash = false;
         QByteArray hostRuntime = Filesupport::readByteArray(stream);
         QByteArray ownRuntime = Filesupport::getRuntimeHash(mods);
+        if (Console::eDEBUG >= Console::getLogLevel())
+        {
+            QString hostString = GlobalUtils::getByteArrayString(hostRuntime);
+            QString ownString = GlobalUtils::getByteArrayString(ownRuntime);
+            CONSOLE_PRINT("Received host hash: " + hostString, Console::eDEBUG);
+            CONSOLE_PRINT("Own hash: " + ownString, Console::eDEBUG);
+        }
         differentHash = (hostRuntime != ownRuntime);
         if (version == Mainapp::getGameVersion() && sameMods && !differentHash)
         {

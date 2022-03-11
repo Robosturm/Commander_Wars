@@ -22,6 +22,16 @@ GlobalUtils::GlobalUtils()
     m_randGenerator.seed(seedValue);
 }
 
+QString GlobalUtils::getByteArrayString(const QByteArray & bytes)
+{
+    QString data;
+    for (qint32 i = 0; i < bytes.size(); i++)
+    {
+        data += "0x" + QString::number(bytes[i])+ " ";
+    }
+    return data;
+}
+
 void GlobalUtils::seed(quint32 seed)
 {
     m_seed = seed;

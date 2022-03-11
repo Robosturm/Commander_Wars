@@ -27,6 +27,7 @@ void Filesupport::addHash(QCryptographicHash & hash, const QString & folder, con
     for (auto & item : list)
     {
         QString filePath = item.filePath();
+        CONSOLE_PRINT("Adding file: " + filePath + " to hash", Console::eDEBUG);
         QFile file(filePath);
         file.open(QIODevice::ReadOnly | QIODevice::Truncate);
         hash.addData(&file);

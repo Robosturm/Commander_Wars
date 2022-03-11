@@ -104,7 +104,7 @@ else("Release")
     message("Compiling as Release")
     set(DEPLOY_RESOURCES_AS_FOLDER false)
     add_definitions(
-        -DDEBUG_LEVEL=0             # default console log level
+        -DDEBUG_LEVEL=1             # default console log level
     )
 endif()
 
@@ -868,8 +868,6 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
                 --plugindir \"${FullInstallPath}\"
         COMMENT "Running windeployqt..."
     )
-
-
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     message("Build will run macdeployqt")
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD

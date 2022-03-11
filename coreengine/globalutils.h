@@ -23,7 +23,7 @@ public:
     static double randDoubleBase(double low, double high);
     static QFileInfoList getInfoList(const QString & folder, const QStringList & list = QStringList());
     static QUrl getUrlForFile(const QString & file);
-
+    static QString getByteArrayString(const QByteArray & bytes);
 public slots:
     static QString makePathRelative(QString file, bool full = true);
     /**
