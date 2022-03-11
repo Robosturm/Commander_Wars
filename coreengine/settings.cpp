@@ -178,6 +178,10 @@ Settings::Settings()
         defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
         defaultCoCount = 1;
     }
+#ifdef USEAPPCONFIGPATH
+    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+#endif
+
     auto devices = QInputDevice::devices();
     bool hasTouch = false;
     for (const auto & device: qAsConst(devices))

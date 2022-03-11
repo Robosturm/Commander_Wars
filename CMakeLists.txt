@@ -21,6 +21,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 set(AUDIOSUPPORT ON)
+set(USEAPPCONFIGPATH OFF)
 
 ###################################################################################
 # show configuration
@@ -113,6 +114,13 @@ if (AUDIOSUPPORT)
     find_package(Qt6 COMPONENTS Multimedia REQUIRED)
     add_definitions(
         -DAUDIOSUPPORT
+    )
+endif()
+
+if (USEAPPCONFIGPATH)
+    message("Building with user config path")
+    add_definitions(
+        -DUSEAPPCONFIGPATH
     )
 endif()
 

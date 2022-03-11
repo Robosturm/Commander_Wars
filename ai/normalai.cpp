@@ -1025,7 +1025,8 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit 
                             else if (unloadFields[i].size() > 0 &&
                                      pUnit->getLoadedUnit(i)->getActionList().contains(ACTION_CAPTURE))
                             {
-                                for (auto field : unloadFields[i])
+                                auto & fields = unloadFields[i];
+                                for (auto & field : fields)
                                 {
                                     QPoint unloadField = field.toPoint();
                                     Building* pBuilding = m_pMap->getTerrain(unloadField.x(),
