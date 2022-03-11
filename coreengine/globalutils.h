@@ -4,8 +4,11 @@
 #include <QObject>
 #include <QDir>
 #include <QRandomGenerator>
-#include "coreengine/qmlvector.h"
-#include "coreengine/qmlvector.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
+
+class QmlVectorPoint;
+using spQmlVectorPoint = oxygine::intrusive_ptr<QmlVectorPoint>;
 
 class GlobalUtils : public QObject
 {
@@ -24,6 +27,11 @@ public:
     static QFileInfoList getInfoList(const QString & folder, const QStringList & list = QStringList());
     static QUrl getUrlForFile(const QString & file);
     static QString getByteArrayString(const QByteArray & bytes);
+    template<typename TData>
+    static bool contains(const std::vector<TData> & vec, const TData & data)
+    {
+        return std::find(vec.cbegin(), vec.cend(), data) != vec.cend();
+    }
 public slots:
     static QString makePathRelative(QString file, bool full = true);
     /**

@@ -47,7 +47,7 @@ public:
         qint32 transporterUnits{0};
         qint32 supplyUnits{0};
         qint32 supplyNeededUnits{0};
-        QVector<std::tuple<Unit*, Unit*>> transportTargets;
+        std::vector<std::tuple<Unit*, Unit*>> transportTargets;
     };
 
     struct IniData
@@ -366,7 +366,7 @@ public slots:
     void appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets);
 
 protected:
-    void sortUnitsFarFromEnemyFirst(QVector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
+    void sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
     void addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost);
     void addSelectedFieldData(spGameAction & pGameAction, const QPoint & point);
     /**
@@ -587,7 +587,7 @@ protected:
      * @param directUnits
      * @param transportTargets
      */
-    void GetOwnUnitCounts(QVector<MoveUnitData> & units, spQmlVectorUnit & pOwnUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
+    void GetOwnUnitCounts(std::vector<MoveUnitData> & units, spQmlVectorUnit & pOwnUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                           UnitCountData & countData);
     /**
      * @brief buildCOUnit

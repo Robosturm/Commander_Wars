@@ -105,7 +105,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
                 if (m_pMap->onMap(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y()))
                 {
                     QVector3D point = QVector3D(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y(), 1);
-                    if (!enemyTargets.contains(point))
+                    if (!GlobalUtils::contains(enemyTargets, point))
                     {
                         enemyTargets.push_back(point);
                     }
@@ -202,7 +202,7 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
                         m_pMap->getTerrain(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y())->getUnit() == nullptr)
                     {
                         QVector3D point = QVector3D(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y(), 1);
-                        if (!unitTargets.contains(point) )
+                        if (!GlobalUtils::contains(unitTargets, point))
                         {
                             unitTargets.push_back(point);
                             unitPos.push_back(pUnit->getPosition());
@@ -220,7 +220,7 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
                     m_pMap->getTerrain(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y())->getUnit() == nullptr)
                 {
                     QVector3D point = QVector3D(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y(), 1);
-                    if (!unitTargets.contains(point) )
+                    if (!GlobalUtils::contains(unitTargets, point))
                     {
                         unitTargets.push_back(point);
                         unitPos.push_back(pUnit->getPosition());

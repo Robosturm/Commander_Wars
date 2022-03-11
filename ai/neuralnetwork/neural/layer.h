@@ -46,7 +46,7 @@ public:
 
     void connectComplete(Layer* next);
 
-    QVector<double> output();
+    std::vector<double> output();
 
     void randomizeAllWeights(double abs_value);
     void mutateAllWeights(double mutationChance, double maxWeight, double mutationRate = 0.1f);

@@ -104,7 +104,7 @@ private:
      * @param x
      * @param y
      */
-    void searchFrontLine(QmlVectorPoint* neighbours, InfluenceInfo & info, qint32 x, qint32 y, QVector<QPoint> & frontline);
+    void searchFrontLine(QmlVectorPoint* neighbours, InfluenceInfo & info, qint32 x, qint32 y, std::vector<QPoint> & frontline);
     /**
      * @brief updateHighestInfluence
      */
@@ -113,7 +113,7 @@ private:
 
     std::vector<std::vector<InfluenceInfo>> m_InfluenceMap;
     const std::vector<spIslandMap> & m_islands;
-    std::vector<QVector<QPoint>> m_frontLines;
+    std::vector<std::vector<QPoint>> m_frontLines;
     Player* m_pOwner;
     std::vector<oxygine::spActor> m_info;
     qint32 m_totalHighestInfluence{0};

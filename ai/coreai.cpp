@@ -873,7 +873,7 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
                             break;
                         }
                     }
-                    if (found && (virtualLoading || !targets.contains(QVector3D(targetX, targetY, 1))))
+                    if (found && (virtualLoading || !GlobalUtils::contains(targets, QVector3D(targetX, targetY, 1))))
                     {
                         targets.push_back(QVector3D(targetX, targetY, 1));
                         transportUnits.push_back(pLoadingUnit);
@@ -971,7 +971,7 @@ void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUni
                             m_pMap->getTerrain(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y())->getUnit() == nullptr)
                         {
                             QVector3D point = QVector3D(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y(), 2);
-                            if (!targets.contains(point) )
+                            if (!GlobalUtils::contains(targets, point))
                             {
                                 targets.push_back(point);
                             }
@@ -990,7 +990,7 @@ void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUni
                         m_pMap->getTerrain(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y())->getUnit() == nullptr)
                     {
                         QVector3D point = QVector3D(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y(), 2);
-                        if (!targets.contains(point) )
+                        if (!GlobalUtils::contains(targets, point))
                         {
                             targets.push_back(point);
                         }
@@ -1051,7 +1051,7 @@ void CoreAI::appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std
                             }
                         }
                         QVector3D possibleTarget(x, y, 1 + stealthMalus);
-                        if (!targets.contains(possibleTarget))
+                        if (!GlobalUtils::contains(targets, possibleTarget))
                         {
                             targets.push_back(possibleTarget);
                         }
@@ -1093,7 +1093,7 @@ void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit & pE
                             }
                         }
                         QVector3D possibleTarget(x, y, 4 + stealthMalus);
-                        if (!targets.contains(possibleTarget))
+                        if (!GlobalUtils::contains(targets, possibleTarget))
                         {
                             targets.push_back(possibleTarget);
                         }
@@ -1226,7 +1226,7 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUni
             qint32 targetIsland = m_IslandMaps[loadedUnitIslandIdx[i2]]->getIsland(pEnemy->Unit::getX(), pEnemy->Unit::getY());
             // check if we could reach the enemy if we would be on his island
             // and we didn't checked this island yet -> improves the speed
-            if (targetIsland >= 0 && !checkedIslands[i2].contains(targetIsland))
+            if (targetIsland >= 0 && !GlobalUtils::contains(checkedIslands[i2], targetIsland))
             {
                 // could we beat his ass? -> i mean can we attack him
                 // if so this is a great island
@@ -1251,7 +1251,7 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUni
                 qint32 targetIsland = m_IslandMaps[loadedUnitIslandIdx[i2]]->getIsland(pEnemyBuilding->Building::getX(), pEnemyBuilding->Building::getY());
                 // check if we could reach the enemy if we would be on his island
                 // and we didn't checked this island yet -> improves the speed
-                if (targetIsland >= 0 && !checkedIslands[i2].contains(targetIsland))
+                if (targetIsland >= 0 && !GlobalUtils::contains(checkedIslands[i2], targetIsland))
                 {
                     if (pEnemyBuilding->isCaptureOrMissileBuilding(missileTarget))
                     {
@@ -1402,7 +1402,7 @@ void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, std::vector
                         if (m_pMap->onMap(unloadX, unloadY) &&
                             m_pMap->getTerrain(unloadX, unloadY)->getUnit() == nullptr &&
                             pLoadedUnit->getBaseMovementCosts(unloadX, unloadY, unloadX, unloadY) > 0 &&
-                            !targets.contains(QVector3D(x, y, 1)) &&
+                            !GlobalUtils::contains(targets, QVector3D(x, y, 1)) &&
                             pUnit->getBaseMovementCosts(x, y, x, y) > 0)
                         {
                             targets.push_back(QVector3D(x, y, 1));
@@ -1454,7 +1454,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
                         qint32 y = point.y() + unloadPos.y();
                         if (m_pMap->onMap(x, y) &&
                             m_pMap->getTerrain(x, y)->getUnit() == nullptr &&
-                            !targets.contains(QVector3D(x, y, 1)))
+                            !GlobalUtils::contains(targets, QVector3D(x, y, 1)))
                         {
                             if (isUnloadTerrain(pUnit, m_pMap->getTerrain(x, y)))
                             {
@@ -1521,7 +1521,7 @@ void CoreAI::appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEne
                         qint32 y = enemyY + rangePos.y() + unloadPos.y();
                         if (m_pMap->onMap(x, y) &&
                             m_pMap->getTerrain(x, y)->getUnit() == nullptr &&
-                            !targets.contains(QVector3D(x, y, 1)))
+                            !GlobalUtils::contains(targets, QVector3D(x, y, 1)))
                         {
                             if (isUnloadTerrain(pUnit, m_pMap->getTerrain(x, y)))
                             {
@@ -1587,7 +1587,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding
                         if (pUnit->canMoveOver(x, y))
                         {
                             QVector3D possibleTarget(x, y, 2);
-                            if (!targets.contains(possibleTarget))
+                            if (!GlobalUtils::contains(targets, possibleTarget))
                             {
                                 targets.push_back(possibleTarget);
                             }
@@ -1619,7 +1619,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding
                             if (pUnit->canMoveOver(x1, y1))
                             {
                                 QVector3D possibleTarget(x1, y1, 2);
-                                if (!targets.contains(possibleTarget))
+                                if (!GlobalUtils::contains(targets, possibleTarget))
                                 {
                                     targets.push_back(possibleTarget);
                                 }
@@ -1653,7 +1653,7 @@ void CoreAI::rebuildIsland(spQmlVectorUnit & pUnits)
 }
 
 
-void CoreAI::sortUnitsFarFromEnemyFirst(QVector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits)
+void CoreAI::sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits)
 {
     auto & pEnemyUnitsVec = pEnemyUnits->getVector();
     for (auto & pUnitData : pUnits)
@@ -1989,7 +1989,7 @@ float CoreAI::getAiCoBuildRatioModifier()
     return multiplier;
 }
 
-void CoreAI::GetOwnUnitCounts(QVector<MoveUnitData> & units, spQmlVectorUnit & pOwnUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
+void CoreAI::GetOwnUnitCounts(std::vector<MoveUnitData> & units, spQmlVectorUnit & pOwnUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                               UnitCountData & countData)
 {
     for (auto & unitData : units)
@@ -2025,7 +2025,7 @@ void CoreAI::GetOwnUnitCounts(QVector<MoveUnitData> & units, spQmlVectorUnit & p
             std::vector<Unit*> transportUnits = appendLoadingTargets(pUnit, pOwnUnits, pEnemyUnits, pEnemyBuildings, false, true, ret, true);
             for (auto & pTransporter : transportUnits)
             {
-                countData.transportTargets.append(std::tuple<Unit*, Unit*>(pUnit, pTransporter));
+                countData.transportTargets.push_back(std::tuple<Unit*, Unit*>(pUnit, pTransporter));
             }
         }
     }

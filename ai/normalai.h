@@ -186,7 +186,7 @@ protected:
      * @param pUnits
      * @param targets
      */
-    void appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit & pUnits, QVector<QVector3D>& targets) const;
+    void appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets) const;
     /**
      * @brief moveUnit
      * @param pAction
@@ -197,7 +197,7 @@ protected:
      * @return
      */
     bool moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVectorUnit & pUnits, QStringList& actions,
-                  QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets,
+                  std::vector<QVector3D>& targets, std::vector<QVector3D>& transporterTargets,
                   bool shortenPathForTarget,
                   spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
@@ -223,7 +223,7 @@ protected:
      * @return
      */
     bool moveToUnloadArea(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVectorUnit & pUnits, QStringList& actions,
-                          QVector<QVector3D>& targets,
+                          std::vector<QVector3D>& targets,
                           spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
                           spQmlVectorUnit & pEnemyUnits);
     /**
@@ -247,7 +247,7 @@ protected:
      * @return
      */
     qint32 getMoveTargetField(MoveUnitData & unitData, UnitPathFindingSystem& turnPfs,
-                              QVector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
+                              std::vector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
                               qint32 movePoints) const;
     /**
      * @brief moveToSafety
@@ -292,7 +292,7 @@ protected:
      * @param moveTargetFields
      * @return
      */
-    qint32 getIndirectTarget(Unit* pUnit, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
+    qint32 getIndirectTarget(Unit* pUnit, std::vector<QVector3D>& ret, std::vector<QVector3D>& moveTargetFields);
     /**
      * @brief getBestAttackTarget
      * @param pUnit
@@ -300,8 +300,8 @@ protected:
      * @param moveTargetFields
      * @return
      */
-    qint32 getBestAttackTarget(MoveUnitData & unitData, QVector<CoreAI::DamageData>& ret,
-                               QVector<QVector3D>& moveTargetFields,
+    qint32 getBestAttackTarget(MoveUnitData & unitData, std::vector<CoreAI::DamageData>& ret,
+                               std::vector<QVector3D>& moveTargetFields,
                                spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const;
     /**
      * @brief calcVirtualDamage
@@ -351,7 +351,7 @@ protected:
      * @param pEnemyUnits
      * @param attackCount
      */
-    void getEnemyDamageCounts(spQmlVectorUnit & pUnits,spQmlVectorUnit & pEnemyUnits, QVector<QVector4D> & attackCount);
+    void getEnemyDamageCounts(spQmlVectorUnit & pUnits,spQmlVectorUnit & pEnemyUnits, std::vector<QVector4D> & attackCount);
     /**
      * @brief getIndexInProductionData
      * @param pBuilding
@@ -365,15 +365,15 @@ protected:
      * @return
      */
     qint32 getUnitProductionIdx(qint32 index, const QString & unitId,
-                                spQmlVectorUnit & pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
+                                spQmlVectorUnit & pUnits, std::vector<std::tuple<Unit*, Unit*>> & transportTargets,
                                 spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                                QVector<QVector4D> & attackCount, QVector<float> & buildData);
+                                std::vector<QVector4D> & attackCount, std::vector<float> & buildData);
     /**
      * @brief calcBuildScore
      * @param data
      * @return
      */
-    float calcBuildScore(QVector<float>& data, UnitBuildData & unitBuildData);
+    float calcBuildScore(std::vector<float>& data, UnitBuildData & unitBuildData);
     /**
      * @brief createUnitBuildData
      * @param x
@@ -385,15 +385,15 @@ protected:
      * @param buildData
      */
     void createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuildData,
-                             spQmlVectorUnit & pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
+                             spQmlVectorUnit & pUnits, std::vector<std::tuple<Unit*, Unit*>> & transportTargets,
                              spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                             QVector<QVector4D> & attackCount, QVector<float> & buildData, const QStringList & buildList);
+                             std::vector<QVector4D> & attackCount, std::vector<float> & buildData, const QStringList & buildList);
     /**
      * @brief calcCostScore
      * @param data
      * @return
      */
-    float calcCostScore(QVector<float>& data, UnitBuildData & unitBuildData);
+    float calcCostScore(std::vector<float>& data, UnitBuildData & unitBuildData);
     /**
      * @brief getTransporterData
      * @param unitBuildData
@@ -405,7 +405,7 @@ protected:
      */
     void getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, spQmlVectorUnit & pUnits,
                             spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                            QVector<std::tuple<Unit*, Unit*>>& transportTargets);
+                            std::vector<std::tuple<Unit*, Unit*>>& transportTargets);
     /**
      * @brief calcTransporterScore
      * @param posX
@@ -415,14 +415,14 @@ protected:
      * @param pEnemyUnits
      * @return
      */
-    float calcTransporterScore(UnitBuildData & unitBuildData,  spQmlVectorUnit & pUnits, QVector<float>& data);
+    float calcTransporterScore(UnitBuildData & unitBuildData,  spQmlVectorUnit & pUnits, std::vector<float>& data);
     /**
      * @brief NormalAi::calcExpectedFundsDamage
      * @param dummy
      * @param pEnemyUnits
      * @return
      */
-    ExpectedFundsData calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit & pEnemyUnits, const QVector<QVector4D> & attackCount, float bonusFactor, float myMovepoints);
+    ExpectedFundsData calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit & pEnemyUnits, const std::vector<QVector4D> & attackCount, float bonusFactor, float myMovepoints);
     /**
      * @brief getClosestTargetDistance
      * @param posX
@@ -439,7 +439,7 @@ protected:
      * @param unitBuildData
      * @return
      */
-    float calcSupplyScore(QVector<float>& data, UnitBuildData & unitBuildData);
+    float calcSupplyScore(std::vector<float>& data, UnitBuildData & unitBuildData);
     /**
      * @brief updateAllUnitData
      * @param pUnits
@@ -450,7 +450,7 @@ protected:
      * @param pUnitData
      * @param enemy
      */
-    void updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & pUnitData, bool enemy);
+    void updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & pUnitData, bool enemy);
     /**
      * @brief createUnitData
      * @param pUnit
@@ -488,11 +488,11 @@ private:
     /**
      * @brief m_EnemyUnits all enemy units that exists at the start of turn
      */
-    QVector<MoveUnitData> m_EnemyUnits;
+    std::vector<MoveUnitData> m_EnemyUnits;
     /**
      * @brief m_OwnUnits
      */
-    QVector<MoveUnitData> m_OwnUnits;
+    std::vector<MoveUnitData> m_OwnUnits;
 
     /**
      * @brief updatePoints points we need to update for the next pfs

@@ -1,13 +1,13 @@
-#include "dialograndommap.h"
+#include "objects/dialogs/editor/dialograndommap.h"
+#include "objects/dialogs/filedialog.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
 
-#include "objects/dialogs/filedialog.h"
+#include "game/terrain.h"
 
 DialogRandomMap::DialogRandomMap()
 {

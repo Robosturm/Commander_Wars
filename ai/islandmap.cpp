@@ -25,7 +25,7 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
 
         for (qint32 x = 0; x < width; x++)
         {
-            m_Islands.append(QVector<qint32>(heigth, UNKNOWN));
+            m_Islands.push_back(std::vector<qint32>(heigth, UNKNOWN));
         }
         spUnit pUnit = spUnit::create(unitID, pOwner, false, pMap);
         pUnit->setIgnoreUnitCollision(true);
@@ -46,7 +46,7 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
                         pfs.setFast(true);
                         pfs.setStartPoint(x, y);
                         pfs.explore();
-                        QVector<QPoint> nodes = pfs.getAllNodePointsFast();
+                        auto nodes = pfs.getAllNodePointsFast();
                         for (qint32 i = 0; i < nodes.size(); i++)
                         {
                             m_Islands[nodes[i].x()][nodes[i].y()] = currentIsland;
@@ -129,7 +129,7 @@ void IslandMap::show()
                 sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
                 sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
                 m_pMap->addChild(sprite);
-                m_info.append(sprite);
+                m_info.push_back(sprite);
             }
         }
     }

@@ -1368,24 +1368,24 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
         {
             TerrainFindingSystem Pfs(m_pMap.get(), m_pMap->getTerrain(x, y)->getID(),x , y);
             Pfs.explore();
-            points = Pfs.getAllNodePointsFast();
+            points = Pfs.getAllNodePoints();
             break;
         }
     }
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    for (qint32 i = 0; i < points.size(); i++)
+    for (auto point : points)
     {
         // nice we can place the terrain
-        if (canTerrainBePlaced(points.at(i).x(), points.at(i).y()))
+        if (canTerrainBePlaced(point.x(), point.y()))
         {
             QString terrainID = m_EditorSelection->getCurrentTerrainID();
             spUnit pUnit;
-            m_pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(pUnit);
+            m_pMap->getTerrain(point.x(), point.y())->setUnit(pUnit);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
-            m_pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), false);
+            m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false);
         }
     }
     if (points.size() > 30)

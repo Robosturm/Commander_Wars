@@ -102,9 +102,9 @@ void Layer::connectComplete(Layer *next)
     }
 }
 
-QVector<double> Layer::output()
+std::vector<double> Layer::output()
 {
-    QVector<double> outputs;
+    std::vector<double> outputs;
     outputs.reserve(m_neurons.size());
     for(auto & n : m_neurons)
     {

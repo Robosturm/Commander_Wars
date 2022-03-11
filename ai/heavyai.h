@@ -161,7 +161,7 @@ public:
         bool enabled{true};
         QString unitId;
         qint32 cost{0};
-        QVector<double> unitBuildingDataInput = QVector<double>(static_cast<qsizetype>(BuildingEntryMaxSize));
+        std::vector<double> unitBuildingDataInput = std::vector<double>(static_cast<qsizetype>(BuildingEntryMaxSize));
     };
     struct BuildingData
     {
@@ -298,18 +298,18 @@ private:
     void setupTurn(const spQmlVectorBuilding & buildings);
     void endTurn();
     void createIslandMaps();
-    void initUnits(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & units, bool enemyUnits);
-    void addNewUnitToUnitData(QVector<MoveUnitData> & units, Unit* pUnit, bool enemyUnits);
+    void initUnits(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & units, bool enemyUnits);
+    void addNewUnitToUnitData(std::vector<MoveUnitData> & units, Unit* pUnit, bool enemyUnits);
     void updateUnits();
-    void updateUnits(QVector<MoveUnitData> & units, spQmlVectorUnit & pUnits, bool enemyUnits);
+    void updateUnits(std::vector<MoveUnitData> & units, spQmlVectorUnit & pUnits, bool enemyUnits);
     void updateCaptureBuildings(MoveUnitData & unitData);
     void findHqThreads(const spQmlVectorBuilding & buildings);
     bool isCaptureTransporterOrCanCapture(Unit* pUnit);
-    void mutateActionForFields(MoveUnitData & unit, const QVector<QPoint> & moveTargets,
+    void mutateActionForFields(MoveUnitData & unit, const std::vector<QPoint> & moveTargets,
                                QString action, FunctionType type, qint32 index,
-                               float & bestScore, QVector<ScoreData> & scoreInfos);
-    bool mutateAction(ScoreData & data, MoveUnitData & MoveUnitData, QVector<double> & baseData, FunctionType type, qint32 functionIndex,
-                      qint32 & step, QVector<qint32> & stepPosition);
+                               float & bestScore, std::vector<ScoreData> & scoreInfos);
+    bool mutateAction(ScoreData & data, MoveUnitData & MoveUnitData, std::vector<double> & baseData, FunctionType type, qint32 functionIndex,
+                      qint32 & step, std::vector<qint32> & stepPosition);
     /**
      * @brief scoreWait
      * @param unit
@@ -324,13 +324,13 @@ private:
      * @param action
      * @return
      */
-    void scoreCapture(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
+    void scoreCapture(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData);
     /**
      * @brief scoreFire
      * @param action
      * @return
      */
-    void scoreFire(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
+    void scoreFire(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData);
     /**
      * @brief scoreJoin
      * @param action
@@ -338,7 +338,7 @@ private:
      * @param baseData
      * @return
      */
-    void scoreJoin(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
+    void scoreJoin(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData);
     /**
      * @brief scoreMissile
      * @param action
@@ -346,7 +346,7 @@ private:
      * @param baseData
      * @return
      */
-    void scoreMissile(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
+    void scoreMissile(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData);
     /**
      * @brief scoreLoad
      * @param action
@@ -354,33 +354,33 @@ private:
      * @param baseData
      * @return
      */
-    void scoreLoad(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
+    void scoreLoad(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData);
     /**
      * @brief scoreUnload
      * @param data
      * @param unitData
      * @param baseData
      */
-    void scoreUnload(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
+    void scoreUnload(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData);
     /**
      * @brief getMoveTargets
      * @param unit
      * @param targets
      */
-    void getMoveTargets(MoveUnitData & unit, QStringList & actions, QVector<QVector3D> & targets);
+    void getMoveTargets(MoveUnitData & unit, QStringList & actions, std::vector<QVector3D> & targets);
     /**
      * @brief scoreWait
      * @param action
      * @return
      */
-    void scoreWait(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
+    void scoreWait(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData);
     /**
      * @brief scoreWaitGeneric
      * @param data
      * @param unitData
      * @param baseData
      */
-    void scoreWaitGeneric(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData);
+    void scoreWaitGeneric(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData);
     /**
      * @brief addCaptureTargets
      * @param pUnit
@@ -389,29 +389,29 @@ private:
      * @param targets
      */
     void addCaptureTargets(const QStringList & actions,
-                           Terrain* pTerrain, QVector<QVector3D>& targets);
+                           Terrain* pTerrain, std::vector<QVector3D>& targets);
     /**
      * @brief addAttackTargets
      * @param pUnit
      * @param pTargetFields
      * @param targets
      */
-    void addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* pTargetFields, QVector<QVector3D> & targets);
+    void addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* pTargetFields, std::vector<QVector3D> & targets);
     /**
      * @brief addTransporterTargets
      */
-    void addTransporterTargets(Unit* pUnit, Terrain* pTerrain, QVector<QVector3D>& targets);
+    void addTransporterTargets(Unit* pUnit, Terrain* pTerrain, std::vector<QVector3D>& targets);
     /**
      * @brief addCaptureTransporterTargets
      */
     void addCaptureTransporterTargets(Unit* pUnit, const QStringList & actions,
-                                      Terrain* pTerrain, QVector<QVector3D>& targets);
+                                      Terrain* pTerrain, std::vector<QVector3D>& targets);
     /**
      * @brief getBasicFieldInputVector
      * @param action
      * @param data
      */
-    void getBasicFieldInputVector(spGameAction & action, QVector<double> & data);
+    void getBasicFieldInputVector(spGameAction & action, std::vector<double> & data);
     /**
      * @brief getBasicFieldInputVector
      * @param pMoveUnit
@@ -420,7 +420,7 @@ private:
      * @param movepoints
      * @param data
      */
-    void getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, double moveCosts, double movepoints, QVector<double> & data);
+    void getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, double moveCosts, double movepoints, std::vector<double> & data);
     /**
      * @brief getFunctionType
      * @param action
@@ -433,7 +433,7 @@ private:
      * @param pBuilding
      * @param pUnit
      */
-    void getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBuildData & data, const QVector<Unit*> & immuneUnits, qint32 movementPoints);
+    void getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBuildData & data, const std::vector<Unit*> & immuneUnits, qint32 movementPoints);
     /**
      * @brief buildUnits
      * @return
@@ -459,34 +459,34 @@ private:
      */
     QVector<double> getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits,
                                        spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                                       QVector<std::tuple<Unit*, Unit*>> & transportTargets);
+                                       std::vector<std::tuple<Unit*, Unit*>> & transportTargets);
     /**
      * @brief createUnitBuildData
      * @param building
      */
-    void createUnitBuildData(BuildingData & building, QVector<double> & data, qint32 funds, const QVector<Unit*> & immuneUnits,
-                             const QVector<std::tuple<Unit*, Unit*>> & transportTargets, spQmlVectorBuilding & pEnemyBuildings);
+    void createUnitBuildData(BuildingData & building, QVector<double> & data, qint32 funds, const std::vector<Unit*> & immuneUnits,
+                             const std::vector<std::tuple<Unit*, Unit*>> & transportTargets, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief UpdateUnitBuildData
      * @param unitData
      * @param data
      * @param funds
      */
-    void updateUnitBuildData(BuildingData & building, QVector<double> & data, qint32 funds);
+    void updateUnitBuildData(BuildingData & building, std::vector<double> & data, qint32 funds);
     /**
      * @brief updateUnitBuildData
      * @param unitData
      * @param data
      * @param funds
      */
-    void updateUnitBuildData(UnitBuildData &unitData, QVector<double> &data, qint32 funds);
+    void updateUnitBuildData(UnitBuildData &unitData, std::vector<double> &data, qint32 funds);
     /**
      * @brief calculateUnitProductionDamage
      * @param pBuilding
      * @param pUnit
      * @param data
      */
-    void calculateUnitProductionDamage(Building* pBuilding, Unit* pUnit, qint32 movementPoints, QPoint position, UnitBuildData & data, const QVector<Unit*> & immuneUnits);
+    void calculateUnitProductionDamage(Building* pBuilding, Unit* pUnit, qint32 movementPoints, QPoint position, UnitBuildData & data, const std::vector<Unit*> & immuneUnits);
     /**
      * @brief getBaseDamage
      * @param pAttacker
@@ -507,7 +507,7 @@ private:
      * @param pEnemyUnits
      * @param immuneUnits
      */
-    void getImmuneUnits(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, QVector<Unit*> & immuneUnits);
+    void getImmuneUnits(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, std::vector<Unit*> & immuneUnits);
     /**
      * @brief getTransportInputVector
      * @param building
@@ -516,7 +516,7 @@ private:
      * @param pEnemyBuildings
      * @param data
      */
-    void getTransportInputVector(Building* pBuilding, Unit* pUnit, const QVector<std::tuple<Unit*, Unit*>> & transportTargets,
+    void getTransportInputVector(Building* pBuilding, Unit* pUnit, const std::vector<std::tuple<Unit*, Unit*>> & transportTargets,
                                  spQmlVectorBuilding & pEnemyBuildings, qint32 movementPoints, UnitBuildData & data);
     /**
      * @brief isPrimaryEnemy
@@ -548,27 +548,27 @@ private:
      * @param ignoreList
      * @return
      */
-    qint32 getNumberOfTargetsOnIsland(const QVector<QPoint> & ignoreList);
+    qint32 getNumberOfTargetsOnIsland(const std::vector<QPoint> & ignoreList);
     /**
      * @brief getDistanceToMovepath
      * @param targetPath
      * @param target
      */
-    qint32 getDistanceToMovepath(const QVector<QPoint> & targetPath, const QPoint & target) const;
+    qint32 getDistanceToMovepath(const std::vector<QPoint> & targetPath, const QPoint & target) const;
 private:
     // function for scoring a function
-    using scoreFunction = std::function<void (ScoreData & data, MoveUnitData & unitData, QVector<double> baseData)>;
+    using scoreFunction = std::function<void (ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData)>;
     struct ScoreInfo
     {
         QString m_actionId;
         scoreFunction callback;
     };
-    const QVector<ScoreInfo> m_scoreInfos;
-    QVector<MoveUnitData> m_enemyUnits;
-    QVector<MoveUnitData> m_ownUnits;
-    QVector<QPoint> m_updatePoints;
-    QVector<BuildingData> m_BuildingData;
-    QVector<QPoint> m_planedCaptureTargets;
+    const std::vector<ScoreInfo> m_scoreInfos;
+    std::vector<MoveUnitData> m_enemyUnits;
+    std::vector<MoveUnitData> m_ownUnits;
+    std::vector<QPoint> m_updatePoints;
+    std::vector<BuildingData> m_BuildingData;
+    std::vector<QPoint> m_planedCaptureTargets;
     InfluenceFrontMap m_InfluenceFrontMap;
     spQmlVectorUnit m_pUnits = spQmlVectorUnit();
     spQmlVectorUnit m_pEnemyUnits = spQmlVectorUnit();
@@ -587,7 +587,7 @@ private:
         ACTION_UNLOAD,
     };
     spTargetedUnitPathFindingSystem m_currentTargetedfPfs;
-    QVector<QPoint> m_possibleCaptureTargets;
+    std::vector<QPoint> m_possibleCaptureTargets;
 
     double m_minActionScore{0.2};
     double m_actionScoreVariant{0.05};

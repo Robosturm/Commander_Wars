@@ -335,3 +335,30 @@ bool PathFindingSystem::isReachable(qint32 x, qint32 y) const
 {
     return getTargetCosts(x, y) >= 0;
 }
+
+QVector<QPoint> PathFindingSystem::getPathFast(qint32 x, qint32 y) const
+{
+    m_Movepath.reserve(points.size());
+    for (auto & point : points)
+    {
+        m_Movepath.append(point);
+    }
+}
+/**
+ * @brief getTargetPath
+ * @return
+ */
+QVector<QPoint> PathFindingSystem::getTargetPathFast() const;
+/**
+ * @brief getFields searches for all fields in the range of min and max ignoring all movement costs
+ * @param min minimum search range
+ * @param max maximum search range
+ * @return shared pointer to the points
+ */
+QVector<QPoint> PathFindingSystem::getFieldsFast(qint32 startX, qint32 startY, qint32 min, qint32 max);
+/**
+ * @brief getAllNodePoints returns all reachable fields in a point vector
+ * @param maxRange max costs of the target fields (costs need to be smaller than this value)
+ * @return
+ */
+QVector<QPoint> PathFindingSystem::getAllNodePointsFast(qint32 maxRange = infinite);

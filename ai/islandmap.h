@@ -70,9 +70,9 @@ public slots:
      */
     void getValueOnIsland(qint32 island, qint32 &ownValue, qint32 & enemyValue);
 private:
-    QVector<QVector<qint32>> m_Islands;
+    std::vector<std::vector<qint32>> m_Islands;
     QString m_MovementType;
     Player* m_pOwner;
     GameMap* m_pMap{nullptr};
-    QVector<oxygine::spActor> m_info;
+    std::vector<oxygine::spActor> m_info;
 };

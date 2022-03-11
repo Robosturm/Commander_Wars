@@ -449,8 +449,8 @@ void InfluenceFrontMap::createFrontLine()
             if (info.frontMovetype.size() > 0 &&
                 info.frontLineCreated == false)
             {
-                QVector<QPoint> frontline;
-                frontline.append(QPoint(x, y));
+                std::vector<QPoint> frontline;
+                frontline.push_back(QPoint(x, y));
                 info.frontLineCreated = true;
                 searchFrontLine(circle.get(), info, x, y, frontline);
                 m_frontLines.push_back(frontline);
@@ -459,7 +459,7 @@ void InfluenceFrontMap::createFrontLine()
     }
 }
 
-void InfluenceFrontMap::searchFrontLine(QmlVectorPoint* neighbours, InfluenceInfo & info, qint32 x, qint32 y, QVector<QPoint> & frontline)
+void InfluenceFrontMap::searchFrontLine(QmlVectorPoint* neighbours, InfluenceInfo & info, qint32 x, qint32 y, std::vector<QPoint> & frontline)
 {    
     for (qint32 i = 0; i < neighbours->size(); ++i)
     {
@@ -472,7 +472,7 @@ void InfluenceFrontMap::searchFrontLine(QmlVectorPoint* neighbours, InfluenceInf
             if (info2.frontLineCreated == false &&
                 info2.frontMovetype == info.frontMovetype)
             {
-                frontline.append(QPoint(newX, newY));
+                frontline.push_back(QPoint(newX, newY));
                 info2.frontLineCreated = true;
                 searchFrontLine(neighbours, info, newX, newY, frontline);
             }

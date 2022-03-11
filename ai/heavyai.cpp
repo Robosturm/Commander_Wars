@@ -256,7 +256,7 @@ bool HeavyAi::selectActionToPerform()
         }
         if (unit.captureTarget.x() >= 0)
         {
-            m_planedCaptureTargets.append(unit.captureTarget);
+            m_planedCaptureTargets.push_back(unit.captureTarget);
         }
         emit performAction(unit.m_action);
         unit.m_action = nullptr;
@@ -328,7 +328,7 @@ void HeavyAi::createIslandMaps()
     }
 }
 
-void HeavyAi::initUnits(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & units, bool enemyUnits)
+void HeavyAi::initUnits(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & units, bool enemyUnits)
 {
     units.clear();
     for (qint32 i = 0; i < pUnits->size(); i++)
@@ -337,7 +337,7 @@ void HeavyAi::initUnits(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & units,
     }
 }
 
-void HeavyAi::addNewUnitToUnitData(QVector<MoveUnitData> & units, Unit* pUnit, bool enemyUnits)
+void HeavyAi::addNewUnitToUnitData(std::vector<MoveUnitData> & units, Unit* pUnit, bool enemyUnits)
 {
     MoveUnitData data;
     data.pUnit = pUnit;
@@ -350,7 +350,7 @@ void HeavyAi::addNewUnitToUnitData(QVector<MoveUnitData> & units, Unit* pUnit, b
     {
         updateCaptureBuildings(data);
     }
-    units.append(data);
+    units.push_back(data);
 }
 
 void HeavyAi::updateUnits()
@@ -360,7 +360,7 @@ void HeavyAi::updateUnits()
     m_updatePoints.clear();
 }
 
-void HeavyAi::updateUnits(QVector<MoveUnitData> & units, spQmlVectorUnit & pUnits, bool enemyUnits)
+void HeavyAi::updateUnits(std::vector<MoveUnitData> & units, spQmlVectorUnit & pUnits, bool enemyUnits)
 {
     
     if (m_pMap == nullptr)
@@ -373,7 +373,7 @@ void HeavyAi::updateUnits(QVector<MoveUnitData> & units, spQmlVectorUnit & pUnit
         if (units[i].pUnit->getHp() <= 0 ||
             units[i].pUnit->getTerrain() == nullptr)
         {
-            units.removeAt(i);
+            units.erase(units.cbegin() + i);
         }
         else
         {
@@ -398,14 +398,14 @@ void HeavyAi::updateUnits(QVector<MoveUnitData> & units, spQmlVectorUnit & pUnit
             ++i;
         }
     }
-    QVector<qint32> updated;
+    std::vector<qint32> updated;
     spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(1, 5));
     for (auto & updatePoint : m_updatePoints)
     {
         qint32 i2 = 0;
         while (i2 < units.size())
         {
-            if (!updated.contains(i2))
+            if (!GlobalUtils::contains(updated, i2))
             {
                 if (qAbs(updatePoint.x() - units[i2].pUnit->Unit::getX()) +
                     qAbs(updatePoint.y() - units[i2].pUnit->Unit::getY()) <=
@@ -468,7 +468,7 @@ void HeavyAi::updateCaptureBuildings(MoveUnitData & unitData)
         unitData.m_capturePoints.clear();
         GameAction action(ACTION_CAPTURE, m_pMap);
         action.setTarget(QPoint(unitData.pUnit->Unit::getX(), unitData.pUnit->Unit::getY()));
-        QVector<QPoint> targets = unitData.pUnitPfs->getAllNodePointsFast(unitData.movementPoints + 1);
+        auto targets = unitData.pUnitPfs->getAllNodePointsFast(unitData.movementPoints + 1);
         for (const auto & target : targets)
         {
             action.setMovepath(QVector<QPoint>(1, target), 0);
@@ -483,13 +483,13 @@ void HeavyAi::updateCaptureBuildings(MoveUnitData & unitData)
 void HeavyAi::findHqThreads(const spQmlVectorBuilding & buildings)
 {
     AI_CONSOLE_PRINT("Searching for HQ Threads", Console::eDEBUG);
-    QVector<QVector3D> hqPositions;
+    std::vector<QVector3D> hqPositions;
     for (qint32 i = 0; i < buildings->size(); ++i)
     {
         const auto * pBuilding = buildings->at(i);
         if (pBuilding->getBuildingID() == "HQ")
         {
-            hqPositions.append(QVector3D(pBuilding->Building::getX(), pBuilding->Building::getY(), 1));
+            hqPositions.push_back(QVector3D(pBuilding->Building::getX(), pBuilding->Building::getY(), 1));
         }
     }
     for (auto & enemy : m_enemyUnits)
@@ -557,7 +557,7 @@ void HeavyAi::scoreActions(MoveUnitData & unit)
             unit.m_score = 0;
             return;
         }
-        QVector<ScoreData> scoreInfos;
+        std::vector<ScoreData> scoreInfos;
         float bestScore = 0.0f;
         unit.actions = unit.pUnit->getActionList();
         auto moveTargets = unit.pUnitPfs->getAllNodePointsFast(unit.movementPoints + 1);
@@ -616,18 +616,18 @@ bool HeavyAi::isScoringAllowed(const QString & action, const QStringList & actio
     return ret;
 }
 
-void HeavyAi::mutateActionForFields(MoveUnitData & unitData, const QVector<QPoint> & moveTargets,
+void HeavyAi::mutateActionForFields(MoveUnitData & unitData, const std::vector<QPoint> & moveTargets,
                                     QString action, FunctionType type, qint32 index,
-                                    float & bestScore, QVector<ScoreData> & scoreInfos)
+                                    float & bestScore, std::vector<ScoreData> & scoreInfos)
 {
     AI_CONSOLE_PRINT("HeavyAi::mutateActionForFields " + action, Console::eDEBUG);
     for (const auto & target : moveTargets)
     {
-        QVector<QPoint> path = unitData.pUnitPfs->getPath(target.x(), target.y());
+        auto path = unitData.pUnitPfs->getPathFast(target.x(), target.y());
         qint32 costs = unitData.pUnitPfs->getCosts(path);
         bool mutate = true;
-        QVector<qint32> stepPosition;
-        QVector<double> baseData(static_cast<qsizetype>(BasicFieldInfo::BasicFieldInfoMaxSize));
+        std::vector<qint32> stepPosition;
+        std::vector<double> baseData(static_cast<qsizetype>(BasicFieldInfo::BasicFieldInfoMaxSize));
         spGameAction pDummy  = spGameAction::create(m_pMap);
         pDummy->setActionID(action);
         pDummy->setMovepath(path, costs);
@@ -659,18 +659,18 @@ void HeavyAi::mutateActionForFields(MoveUnitData & unitData, const QVector<QPoin
                         {
                             if (data.m_score < scoreInfos[i].m_score - m_actionScoreVariant)
                             {
-                                scoreInfos.removeAt(i);
+                                scoreInfos.erase(scoreInfos.cbegin() + i);
                             }
                             else
                             {
                                 ++i;
                             }
                         }
-                        scoreInfos.append(data);
+                        scoreInfos.push_back(data);
                     }
                     else if (bestScore - m_actionScoreVariant <= data.m_score)
                     {
-                        scoreInfos.append(data);
+                        scoreInfos.push_back(data);
                     }
                 }
             }
@@ -683,7 +683,8 @@ void HeavyAi::mutateActionForFields(MoveUnitData & unitData, const QVector<QPoin
     }
 }
 
-bool HeavyAi::mutateAction(ScoreData & data, MoveUnitData & unitData, QVector<double> & baseData, FunctionType type, qint32 functionIndex, qint32 & step, QVector<qint32> & stepPosition)
+bool HeavyAi::mutateAction(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData, FunctionType type, qint32 functionIndex, qint32 & step,
+                           std::vector<qint32> & stepPosition)
 {
     bool ret = false;
     if (data.m_gameAction->isFinalStep())
@@ -733,7 +734,7 @@ bool HeavyAi::mutateAction(ScoreData & data, MoveUnitData & unitData, QVector<do
                 }
                 else
                 {
-                    stepPosition.append(0);
+                    stepPosition.push_back(0);
                 }
                 const auto & enableList = pData->getEnabledList();
                 const auto & costList = pData->getCostList();
@@ -759,7 +760,7 @@ bool HeavyAi::mutateAction(ScoreData & data, MoveUnitData & unitData, QVector<do
             }
             else
             {
-                stepPosition.append(0);
+                stepPosition.push_back(0);
             }
             if (data.m_gameAction->getActionID() == ACTION_MISSILE)
             {
@@ -811,7 +812,7 @@ void HeavyAi::getFunctionType(const QString & action, FunctionType & type, qint3
     }
 }
 
-void HeavyAi::getBasicFieldInputVector(spGameAction & action, QVector<double> & data)
+void HeavyAi::getBasicFieldInputVector(spGameAction & action, std::vector<double> & data)
 {
     Unit* pMoveUnit = action->getTargetUnit();
     QPoint moveTarget = action->getActionTarget();
@@ -819,7 +820,7 @@ void HeavyAi::getBasicFieldInputVector(spGameAction & action, QVector<double> & 
                              pMoveUnit->getMovementpoints(action->getTarget()), data);
 }
 
-void HeavyAi::getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, double moveCosts, double movementPoints, QVector<double> & data)
+void HeavyAi::getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, double moveCosts, double movementPoints, std::vector<double> & data)
 {
     
     if (m_pMap != nullptr)
@@ -949,9 +950,9 @@ void HeavyAi::getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, dou
     }
 }
 
-void HeavyAi::scoreCapture(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData)
+void HeavyAi::scoreCapture(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData)
 {
-    baseData.append(QList<double>(static_cast<qsizetype>(CaptureInfoMaxSize - CaptureInfoStart)));
+    baseData.resize(baseData.size() + static_cast<qsizetype>(CaptureInfoMaxSize - CaptureInfoStart), 0);
     Building* pBuilding = data.m_gameAction->getMovementBuilding();
     auto target = data.m_gameAction->getActionTarget();
     baseData[CaptureInfoIsHq] = (pBuilding->getBuildingID() == "HQ");
@@ -988,10 +989,10 @@ void HeavyAi::scoreCapture(ScoreData & data, MoveUnitData & unitData, QVector<do
     data.m_score = score[0];
 }
 
-void HeavyAi::scoreFire(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData)
+void HeavyAi::scoreFire(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData)
 {
     
-    baseData.append(QList<double>(static_cast<qsizetype>(AttackInfoMaxSize - AttackInfoStart)));
+    baseData.resize(baseData.size() + static_cast<qsizetype>(AttackInfoMaxSize - AttackInfoStart), 0);
     if (m_pMap != nullptr)
     {
         data.m_gameAction->startReading();
@@ -1071,7 +1072,7 @@ void HeavyAi::scoreFire(ScoreData & data, MoveUnitData & unitData, QVector<doubl
     data.m_score = score[0];
 }
 
-void HeavyAi::scoreJoin(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData)
+void HeavyAi::scoreJoin(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData)
 {
     Unit* pJoinUnit = data.m_gameAction->getMovementTarget();
     float ret = -m_maxScore;
@@ -1095,7 +1096,7 @@ void HeavyAi::scoreJoin(ScoreData & data, MoveUnitData & unitData, QVector<doubl
     data.m_score = ret;
 }
 
-void HeavyAi::scoreMissile(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData)
+void HeavyAi::scoreMissile(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData)
 {
     float ret = -m_maxScore;
     bool fireSilos = hasMissileTarget();
@@ -1107,7 +1108,7 @@ void HeavyAi::scoreMissile(ScoreData & data, MoveUnitData & unitData, QVector<do
     data.m_score = ret;
 }
 
-void HeavyAi::scoreLoad(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData)
+void HeavyAi::scoreLoad(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData)
 {
     float ret = -m_maxCapturePoints;
     // we got a transporter is it a good one
@@ -1126,9 +1127,9 @@ void HeavyAi::scoreLoad(ScoreData & data, MoveUnitData & unitData, QVector<doubl
             qint32 enemyValue = 0;
             qint32 island = getIsland(unitData.pUnit.get());
             m_IslandMaps[island]->getValueOnIsland(getIslandIndex(unitData.pUnit.get()), ownValue, enemyValue);
-            QVector<QPoint> ignoreList = {data.m_gameAction->getActionTarget()};
+            std::vector<QPoint> ignoreList = {data.m_gameAction->getActionTarget()};
             qint32 targets = getNumberOfTargetsOnIsland(ignoreList);
-            QVector<QVector3D> transporterTargets;
+            std::vector<QVector3D> transporterTargets;
             appendTransporterTargets(unitData.pUnit.get(), m_pUnits, transporterTargets);
             // Is it a useful transporter at all?
             if (CoreAI::contains(transporterTargets, data.m_gameAction->getActionTarget()))
@@ -1165,7 +1166,7 @@ void HeavyAi::scoreLoad(ScoreData & data, MoveUnitData & unitData, QVector<doubl
     data.m_score = ret;
 }
 
-void HeavyAi::scoreUnload(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData)
+void HeavyAi::scoreUnload(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData)
 {
     float ret = -m_maxCapturePoints;
     // we got a transporter is it a good one
@@ -1203,7 +1204,7 @@ void HeavyAi::scoreUnload(ScoreData & data, MoveUnitData & unitData, QVector<dou
     data.m_score = ret;
 }
 
-qint32 HeavyAi::getNumberOfTargetsOnIsland(const QVector<QPoint> & ignoreList)
+qint32 HeavyAi::getNumberOfTargetsOnIsland(const std::vector<QPoint> & ignoreList)
 {
     qint32 ret = 0;
     
@@ -1212,7 +1213,7 @@ qint32 HeavyAi::getNumberOfTargetsOnIsland(const QVector<QPoint> & ignoreList)
         const auto & targets = m_currentTargetedfPfs->getTargets();
         for (const auto & point : targets)
         {
-            if (!ignoreList.contains(QPoint(point.x(), point.y())))
+            if (!GlobalUtils::contains(ignoreList, QPoint(point.x(), point.y())))
             {
                 Unit* pUnit = m_pMap->getTerrain(point.x(), point.y())->getUnit();
                 if (pUnit == nullptr ||
@@ -1238,7 +1239,7 @@ void HeavyAi::scoreMoveToTargets()
             prepareWaitPfs(unit, actions);
             for (const auto & action : qAsConst(actions))
             {
-                QVector<ScoreData> scoreInfos;
+                std::vector<ScoreData> scoreInfos;
                 float bestScore = 0.0f;
                 spGameAction pAction;
                 FunctionType type = FunctionType::CPlusPlus;
@@ -1271,14 +1272,14 @@ void HeavyAi::prepareWaitPfs(MoveUnitData & unitData, QStringList & actions)
 {
     if (m_currentTargetedfPfs.get() == nullptr)
     {
-        QVector<QVector3D> targets;
+        std::vector<QVector3D> targets;
         getMoveTargets(unitData, actions, targets);
         m_currentTargetedfPfs = spTargetedUnitPathFindingSystem::create(m_pMap, unitData.pUnit.get(), targets, &m_MoveCostMap);
         m_currentTargetedfPfs->explore();
     }
 }
 
-void HeavyAi::getMoveTargets(MoveUnitData & unit, QStringList & actions, QVector<QVector3D> & targets)
+void HeavyAi::getMoveTargets(MoveUnitData & unit, QStringList & actions, std::vector<QVector3D> & targets)
 {
     // todo
     
@@ -1291,7 +1292,7 @@ void HeavyAi::getMoveTargets(MoveUnitData & unit, QStringList & actions, QVector
         qint32 maxFirerange = unit.pUnit->getMaxRange(unit.pUnit->getPosition());
         spQmlVectorPoint pTargetFields = spQmlVectorPoint(GlobalUtils::getCircle(minFirerange, maxFirerange));
 
-        QVector<double> input;
+        std::vector<double> input;
         // todo create input vector
         m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier]->predict(input);
 
@@ -1327,7 +1328,7 @@ void HeavyAi::getMoveTargets(MoveUnitData & unit, QStringList & actions, QVector
 }
 
 void HeavyAi::addCaptureTargets(const QStringList & actions,
-                                Terrain* pTerrain, QVector<QVector3D>& targets)
+                                Terrain* pTerrain, std::vector<QVector3D>& targets)
 {
     if (actions.contains(ACTION_CAPTURE) ||
         actions.contains(ACTION_MISSILE))
@@ -1356,21 +1357,21 @@ void HeavyAi::addCaptureTargets(const QStringList & actions,
             {
                 captureDistanceModifier = 1;
             }
-            if (m_planedCaptureTargets.contains(QPoint(x, y)))
+            if (GlobalUtils::contains(m_planedCaptureTargets, QPoint(x, y)))
             {
                 captureDistanceModifier *= m_usedCapturePointIncrease;
             }
             QVector3D possibleTarget(x, y, captureDistanceModifier);
-            if (!targets.contains(possibleTarget))
+            if (!GlobalUtils::contains(targets, possibleTarget))
             {
-                targets.append(possibleTarget);
-                m_possibleCaptureTargets.append(QPoint(x, y));
+                targets.push_back(possibleTarget);
+                m_possibleCaptureTargets.push_back(QPoint(x, y));
             }
         }
     }
 }
 
-void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* pTargetFields, QVector<QVector3D> & targets)
+void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* pTargetFields, std::vector<QVector3D> & targets)
 {
     
     if (m_pMap != nullptr)
@@ -1411,9 +1412,9 @@ void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* p
                         attackDistanceModifier = 1;
                     }
                     QVector3D possibleTarget(x, y, (stealthMalus + attackDistanceModifier) * alliedmultiplier);
-                    if (!targets.contains(possibleTarget))
+                    if (!GlobalUtils::contains(targets, possibleTarget))
                     {
-                        targets.append(possibleTarget);
+                        targets.push_back(possibleTarget);
                     }
                 }
                 else if (m_enableNeutralTerrainAttack)
@@ -1434,9 +1435,9 @@ void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* p
                         }
                         qint32 attackDistanceModifier = m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier]->output(WaitTargetTypes_Enemy);
                         QVector3D possibleTarget(x, y, (attackDistanceModifier) * alliedmultiplier);
-                        if (!targets.contains(possibleTarget))
+                        if (!GlobalUtils::contains(targets, possibleTarget))
                         {
-                            targets.append(possibleTarget);
+                            targets.push_back(possibleTarget);
                         }
                     }
                 }
@@ -1446,7 +1447,7 @@ void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* p
 }
 
 void HeavyAi::addCaptureTransporterTargets(Unit* pUnit, const QStringList & actions,
-                                  Terrain* pTerrain, QVector<QVector3D>& targets)
+                                  Terrain* pTerrain, std::vector<QVector3D>& targets)
 {
     if (actions.contains(ACTION_CAPTURE) ||
         actions.contains(ACTION_MISSILE))
@@ -1464,15 +1465,15 @@ void HeavyAi::addCaptureTransporterTargets(Unit* pUnit, const QStringList & acti
                 distanceModifier = 1;
             }
             QVector3D possibleTarget(x, y, distanceModifier);
-            if (!targets.contains(possibleTarget))
+            if (!GlobalUtils::contains(targets, possibleTarget))
             {
-                targets.append(possibleTarget);
+                targets.push_back(possibleTarget);
             }
         }
     }
 }
 
-void HeavyAi::addTransporterTargets(Unit* pUnit, Terrain* pTerrain, QVector<QVector3D>& targets)
+void HeavyAi::addTransporterTargets(Unit* pUnit, Terrain* pTerrain, std::vector<QVector3D>& targets)
 {
     qint32 x = pTerrain->Terrain::getX();
     qint32 y = pTerrain->Terrain::getY();
@@ -1487,14 +1488,14 @@ void HeavyAi::addTransporterTargets(Unit* pUnit, Terrain* pTerrain, QVector<QVec
             distanceModifier = 1;
         }
         QVector3D possibleTarget(x, y, distanceModifier);
-        if (!targets.contains(possibleTarget))
+        if (!GlobalUtils::contains(targets, possibleTarget))
         {
-            targets.append(possibleTarget);
+            targets.push_back(possibleTarget);
         }
     }
 }
 
-void HeavyAi::scoreWait(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData)
+void HeavyAi::scoreWait(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData)
 {
     float score = m_minActionScore - 1;
     if (unitData.pUnit->getLoadedUnitCount() > 0)
@@ -1510,12 +1511,12 @@ void HeavyAi::scoreWait(ScoreData & data, MoveUnitData & unitData, QVector<doubl
     scoreWaitGeneric(data, unitData, baseData);
 }
 
-void HeavyAi::scoreWaitGeneric(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData)
+void HeavyAi::scoreWaitGeneric(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData)
 {
     float score = m_minActionScore - 1;
     auto targetPath = m_currentTargetedfPfs->getTargetPathFast();
     QPoint target = data.m_gameAction->getActionTarget();
-    if (m_possibleCaptureTargets.contains(target))
+    if (GlobalUtils::contains(m_possibleCaptureTargets, target))
     {
         data.m_captureTarget = target;
     }
@@ -1529,10 +1530,10 @@ void HeavyAi::scoreWaitGeneric(ScoreData & data, MoveUnitData & unitData, QVecto
     data.m_score = score;
 }
 
-qint32 HeavyAi::getDistanceToMovepath(const QVector<QPoint> & targetPath, const QPoint & target) const
+qint32 HeavyAi::getDistanceToMovepath(const std::vector<QPoint> & targetPath, const QPoint & target) const
 {
     qint32 distance = std::numeric_limits<qint32>::max();
-    if (!targetPath.contains(target))
+    if (!GlobalUtils::contains(targetPath, target))
     {
         for (const auto & path : qAsConst(targetPath))
         {

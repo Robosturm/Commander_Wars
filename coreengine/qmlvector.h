@@ -5,15 +5,16 @@
 #include <QObject>
 #include <QVector>
 
-
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "game/unit.h"
 #include "game/building.h"
 #include "game/terrain.h"
 
+#include "coreengine/globalutils.h"
+
 class QmlVectorPoint;
-typedef oxygine::intrusive_ptr<QmlVectorPoint> spQmlVectorPoint;
+using spQmlVectorPoint = oxygine::intrusive_ptr<QmlVectorPoint>;
 
 class QmlVectorPoint : public QObject, public oxygine::ref_counter
 {
@@ -41,7 +42,7 @@ public slots:
     }
     bool contains(QPoint pos)
     {
-        return std::find(m_Vector.cbegin(), m_Vector.cend(), pos) != m_Vector.cend();
+        return GlobalUtils::contains(m_Vector, pos);
     }
     void remove()
     {

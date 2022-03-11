@@ -3,6 +3,7 @@
 #include <QDirIterator>
 #include <QDateTime>
 
+#include "coreengine/qmlvector.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/console.h"
 #include "coreengine/interpreter.h"
