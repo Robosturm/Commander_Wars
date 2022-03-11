@@ -26,7 +26,7 @@ void Filesupport::addHash(QCryptographicHash & hash, const QString & folder, con
     auto list = dir.entryInfoList(filter, QDir::Files);
     for (auto & item : list)
     {
-        QString filePath = item.absoluteFilePath();
+        QString filePath = item.filePath();
         QFile file(filePath);
         file.open(QIODevice::ReadOnly | QIODevice::Truncate);
         hash.addData(&file);
@@ -35,7 +35,7 @@ void Filesupport::addHash(QCryptographicHash & hash, const QString & folder, con
     list = dir.entryInfoList(QStringList(), QDir::Dirs | QDir::NoDotAndDotDot);
     for (auto & item : list)
     {
-        QString path = item.absoluteDir().absolutePath();
+        QString path = item.filePath();
         addHash(hash, path, filter);
     }
 }
