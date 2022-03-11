@@ -31,7 +31,8 @@ void Filesupport::addHash(QCryptographicHash & hash, const QString & folder, con
         QFile file(filePath);
         file.open(QIODevice::ReadOnly);
         QTextStream stream(&file);
-        hash.addData(stream.readAll().toLatin1());
+        QString content = stream.readAll();
+        hash.addData(content.toUtf8());
         file.close();
     }
     list = dir.entryInfoList(QStringList(), QDir::Dirs | QDir::NoDotAndDotDot);
