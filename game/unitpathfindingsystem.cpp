@@ -194,16 +194,16 @@ std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint ta
                     // add next node if it's more expensive and not added
                     if (!direct &&
                         testCost > currentCost &&
-                        !usedNodes.contains(test) &&
-                        !nextNodes.contains(test))
+                        !GlobalUtils::contains(usedNodes, test) &&
+                        !GlobalUtils::contains(nextNodes, test))
                     {
                         nextNodes.push_back(test);
                     }
                     // add previous nodes if it's a previous one and not used yet
                     else if (testCost >= 0 &&
                              testCost <= currentCost &&
-                             !usedNodes.contains(test) &&
-                             !nextNodes.contains(test))
+                             !GlobalUtils::contains(usedNodes, test) &&
+                             !GlobalUtils::contains(nextNodes, test))
                     {
                         nextNodes.push_back(test);
                     }
@@ -262,6 +262,16 @@ std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(std::vect
     {
         return path;
     }
+}
+
+std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoint>& path, qint32 movepoints)
+{
+    std::vector<QPoint> stdPath(path.size());
+    for (auto & point : path)
+    {
+        stdPath.push_back(point);
+    }
+    return getClosestReachableMovePath(stdPath, movepoints);
 }
 
 bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 curX, qint32 curY, qint32 movementCosts, qint32 movepoints)

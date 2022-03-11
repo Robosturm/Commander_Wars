@@ -15,7 +15,7 @@ class DecisionNode : public QObject, public FileSerializable, public oxygine::re
     Q_OBJECT
 public:
         DecisionNode();
-        DecisionNode(spDecisionQuestion & pQuestion, const QVector<spDecisionNode> & pNodes);
+        DecisionNode(spDecisionQuestion & pQuestion, const std::vector<spDecisionNode> & pNodes);
         virtual ~DecisionNode() = default;
 
         virtual void serializeObject(QDataStream& pStream) const override;
@@ -41,5 +41,5 @@ public slots:
         virtual float getDecision(std::vector<float>& input);
 private:
         spDecisionQuestion m_pQuestion;
-        QVector<spDecisionNode> m_pNodes;
+        std::vector<spDecisionNode> m_pNodes;
 };

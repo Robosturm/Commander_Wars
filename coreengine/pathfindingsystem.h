@@ -189,25 +189,25 @@ public slots:
      * @param y
      * @return the first point is the target and the last point is the start
      */
-    QVector<QPoint> getPathFast(qint32 x, qint32 y) const;
+    QVector<QPoint> getPath(qint32 x, qint32 y) const;
     /**
      * @brief getTargetPath
      * @return
      */
-    QVector<QPoint> getTargetPathFast() const;
+    QVector<QPoint> getTargetPath() const;
     /**
      * @brief getFields searches for all fields in the range of min and max ignoring all movement costs
      * @param min minimum search range
      * @param max maximum search range
      * @return shared pointer to the points
      */
-    static QVector<QPoint> getFieldsFast(qint32 startX, qint32 startY, qint32 min, qint32 max);
+    static QVector<QPoint> getFields(qint32 startX, qint32 startY, qint32 min, qint32 max);
     /**
      * @brief getAllNodePoints returns all reachable fields in a point vector
      * @param maxRange max costs of the target fields (costs need to be smaller than this value)
      * @return
      */
-    QVector<QPoint> getAllNodePointsFast(qint32 maxRange = infinite);
+    QVector<QPoint> getAllNodePoints(qint32 maxRange = infinite);
 protected:
     inline qint32 getMoveDirection(const qint32& curX, const qint32& curY,
                                    const qint32& targetX, const qint32& targetY)

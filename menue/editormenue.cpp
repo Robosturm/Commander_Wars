@@ -1434,7 +1434,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         {
             TerrainFindingSystem Pfs(m_pMap.get(), m_pMap->getTerrain(x, y)->getID(),x , y);
             Pfs.explore();
-            points = Pfs.getAllNodePointsFast();
+            points = Pfs.getAllNodePoints();
             break;
         }
     }

@@ -331,9 +331,9 @@ void HeavyAi::createIslandMaps()
 void HeavyAi::initUnits(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & units, bool enemyUnits)
 {
     units.clear();
-    for (qint32 i = 0; i < pUnits->size(); i++)
+    for (auto & pUnit : pUnits->getVector())
     {
-        addNewUnitToUnitData(units, pUnits->at(i), enemyUnits);
+        addNewUnitToUnitData(units, pUnit.get(), enemyUnits);
     }
 }
 
@@ -431,9 +431,9 @@ void HeavyAi::updateUnits(std::vector<MoveUnitData> & units, spQmlVectorUnit & p
         }
         if (!enemyUnits)
         {
-            for (qint32 i3 = 0; i3 < pPoints->size(); ++i3)
+            for (auto & point : pPoints->getVector())
             {
-                QPoint pos = pPoints->at(i3) + m_updatePoints[i];
+                QPoint pos = point + m_updatePoints[i];
                 if (m_pMap->onMap(pos.x(), pos.y()))
                 {
                     bool found = false;
@@ -484,9 +484,8 @@ void HeavyAi::findHqThreads(const spQmlVectorBuilding & buildings)
 {
     AI_CONSOLE_PRINT("Searching for HQ Threads", Console::eDEBUG);
     std::vector<QVector3D> hqPositions;
-    for (qint32 i = 0; i < buildings->size(); ++i)
+    for (auto & pBuilding : buildings->getVector())
     {
-        const auto * pBuilding = buildings->at(i);
         if (pBuilding->getBuildingID() == "HQ")
         {
             hqPositions.push_back(QVector3D(pBuilding->Building::getX(), pBuilding->Building::getY(), 1));
@@ -532,9 +531,9 @@ bool HeavyAi::isCaptureTransporterOrCanCapture(Unit* pUnit)
     }
     else if (pUnit->getLoadedUnitCount() > 0)
     {
-        for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); ++i)
+        for (auto & pLoadedUnit : pUnit->getLoadedUnits())
         {
-            if (isCaptureTransporterOrCanCapture(pUnit->getLoadedUnit(i)))
+            if (isCaptureTransporterOrCanCapture(pLoadedUnit.get()))
             {
                 canCapture = true;
                 break;
@@ -860,9 +859,9 @@ void HeavyAi::getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, dou
         data[BasicFieldInfo::MoveTurnProgress] = notMovedUnitCount / static_cast<double>(m_ownUnits.size());
         spQmlVectorPoint pCircle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
         double wallCount = 0;
-        for (qint32 i = 0; i < pCircle->size(); ++i)
+        for (auto & circlePos : pCircle->getVector())
         {
-            QPoint pos = pCircle->at(i);
+            QPoint pos = circlePos;
             pos += moveTarget;
             if (m_pMap->onMap(pos.x(), pos.y()))
             {
@@ -1378,10 +1377,10 @@ void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* p
     {
         qint32 x = pTerrain->Terrain::getX();
         qint32 y = pTerrain->Terrain::getY();
-        for (qint32 i = 0; i < pTargetFields->size(); ++i)
+        for (auto & target :  pTargetFields->getVector())
         {
-            qint32 targetX = pTargetFields->at(i).x() + x;
-            qint32 targetY = pTargetFields->at(i).y() + y;
+            qint32 targetX = target.x() + x;
+            qint32 targetY = target.y() + y;
             if (m_pMap->onMap(targetX, targetY))
             {
                 Terrain* pTargetTerrain = m_pMap->getTerrain(targetX, targetY);

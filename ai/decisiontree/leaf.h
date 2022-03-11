@@ -13,7 +13,7 @@ class Leaf : public DecisionNode
     Q_OBJECT
 public:
         explicit Leaf();
-        Leaf(QVector<QVector<float>>& trainingData);
+        Leaf(std::vector<std::vector<float>>& trainingData);
         virtual ~Leaf() = default;
         virtual void serializeObject(QDataStream& pStream) const override;
         virtual void deserializeObject(QDataStream& pStream)  override;
@@ -25,7 +25,7 @@ public:
 public slots:
         virtual float getDecision(std::vector<float>& input) override;
 private:
-        QVector<qint32> m_AnswersChances;
-        QVector<float> m_Answers;
+        std::vector<qint32> m_AnswersChances;
+        std::vector<float> m_Answers;
         qint32 m_totalChance{0};
 };

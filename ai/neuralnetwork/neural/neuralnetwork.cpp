@@ -4,6 +4,7 @@
 
 #include "coreengine/globalutils.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 NeuralNetwork::NeuralNetwork(double maxWeight)
     : m_maxWeight(maxWeight)

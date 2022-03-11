@@ -192,7 +192,7 @@ void HumanPlayerInput::cancelSelection(qint32 x, qint32 y)
         if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) != costs &&
             costs > 0)
         {
-            m_ArrowPoints = m_pUnitPathFindingSystem->getPath(x, y);
+            m_ArrowPoints = m_pUnitPathFindingSystem->getPathFast(x, y);
             createCursorPath(x, y);
         }
         else
@@ -252,16 +252,16 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
             UnitPathFindingSystem pfs(m_pMap, m_pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
             pfs.explore();
-            QVector<QPoint> points = pfs.getAllNodePointsFast();
-            for (qint32 i = 0; i < points.size(); i++)
+            auto points = pfs.getAllNodePointsFast();
+            for (auto & point : points)
             {
                 if (pUnit->canMoveAndFire(QPoint(x, y)) ||
-                    (points[i].x() == x && points[i].y() == y))
+                    (point.x() == x && point.y() == y))
                 {
 
-                    for (qint32 i2 = 0; i2 < pPoints->size(); i2++)
+                    for (auto & point2 : pPoints->getVector())
                     {
-                        QPoint target = pPoints->at(i2) + points[i];
+                        QPoint target = point2 + point;
                         if (!m_FieldPoints.contains(QVector3D(target.x(), target.y(), 1)))
                         {
                             createMarkedField(target, QColor(255, 0, 0), Terrain::ExtraDrawPriority::MarkedFieldMap);
@@ -724,7 +724,7 @@ void HumanPlayerInput::finishAction()
             if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) > movepoints)
             {
                 // shorten path
-                QVector<QPoint> newPath = m_pUnitPathFindingSystem->getClosestReachableMovePath(m_ArrowPoints, movepoints);
+                auto newPath = m_pUnitPathFindingSystem->getClosestReachableMovePath(m_ArrowPoints, movepoints);
                 m_pGameAction->setMovepath(newPath, m_pUnitPathFindingSystem->getCosts(newPath));
                 QVector<QPoint> multiTurnPath;
                 for (qint32 i = 0; i <= m_ArrowPoints.size() - newPath.size(); i++)
@@ -928,7 +928,7 @@ void HumanPlayerInput::createMarkedMoveFields()
             turnColor = QColor(ret.toString());
         }
         qint32 movementpoints = m_pGameAction->getTargetUnit()->getMovementpoints(m_pGameAction->getTarget());
-        QVector<QPoint> points = m_pUnitPathFindingSystem->getAllNodePointsFast();
+        auto points = m_pUnitPathFindingSystem->getAllNodePointsFast();
         for (qint32 i = 0; i < points.size(); i++)
         {
             if (m_pUnitPathFindingSystem->getTargetCosts(points[i].x(), points[i].y()) > movementpoints)
@@ -1019,11 +1019,16 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     deleteArrow();
                     if (pUnit != nullptr)
                     {
-                        QVector<QPoint> multiTurnPath = pUnit->getMultiTurnPath();
+                        auto multiTurnPath = pUnit->getMultiTurnPath();
+                        std::vector<QPoint> path(multiTurnPath.size());
+                        for (auto & point : multiTurnPath)
+                        {
+                            path.push_back(point);
+                        }
                         if (pUnit->getOwner() == m_pPlayer &&
                             multiTurnPath.size() > 0)
                         {
-                            createArrow(multiTurnPath);
+                            createArrow(path);
                         }
                     }
                 }
@@ -1256,7 +1261,7 @@ void HumanPlayerInput::zoomChanged(float zoom)
 void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("HumanPlayerInput::createCursorPath", Console::eDEBUG);
-    QVector<QPoint> points = m_ArrowPoints;
+    auto points = m_ArrowPoints;
     QPoint lastPoint = QPoint(-1, -1);
     if (points.size() > 0)
     {
@@ -1275,34 +1280,34 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
             {
                 if ((points.size() > 0) && ((qAbs(points[0].x() - x) + qAbs(points[0].y() - y)) == 1))
                 {
-                    if (points.contains(QPoint(x, y)))
+                    if (GlobalUtils::contains(points, QPoint(x, y)))
                     {
-                        points = m_pUnitPathFindingSystem->getPath(x, y);
+                        points = m_pUnitPathFindingSystem->getPathFast(x, y);
                     }
                     else if (m_pUnitPathFindingSystem->getCosts(m_pUnitPathFindingSystem->getIndex(x, y), x, y, points[0].x(), points[0].y()) >= 0)
                     {
-                        points.push_front(QPoint(x, y));
+                        points.insert(points.cbegin(), QPoint(x, y));
                         qint32 movepoints = m_pGameAction->getTargetUnit()->getMovementpoints(QPoint(x, y));
                         if ((m_pUnitPathFindingSystem->getTargetCosts(x, y)  <= movepoints) &&
                             (m_pUnitPathFindingSystem->getCosts(points)  > movepoints))
                         {
                             // not reachable this way get the ideal path
-                            points = m_pUnitPathFindingSystem->getPath(x, y);
+                            points = m_pUnitPathFindingSystem->getPathFast(x, y);
                         }
                     }
                     else
                     {
-                        points = m_pUnitPathFindingSystem->getPath(x, y);
+                        points = m_pUnitPathFindingSystem->getPathFast(x, y);
                     }
                 }
                 else
                 {
-                    points = m_pUnitPathFindingSystem->getPath(x, y);
+                    points = m_pUnitPathFindingSystem->getPathFast(x, y);
                 }
             }
             else if (points.size() == 0)
             {
-                points = m_pUnitPathFindingSystem->getPath(x, y);
+                points = m_pUnitPathFindingSystem->getPathFast(x, y);
             }
             else
             {
@@ -1312,7 +1317,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
                 (points[0].x() != x) ||
                 (points[0].y() != y))
             {
-                points = m_pUnitPathFindingSystem->getPath(x, y);
+                points = m_pUnitPathFindingSystem->getPathFast(x, y);
             }
             m_pGameAction->setCosts(m_pUnitPathFindingSystem->getCosts(points));
             m_ArrowPoints = points;
@@ -1351,7 +1356,7 @@ QStringList HumanPlayerInput::getViewplayerActionList()
     }
 }
 
-void HumanPlayerInput::createArrow(QVector<QPoint>& points)
+void HumanPlayerInput::createArrow(std::vector<QPoint>& points)
 {
     
     GameManager* pGameManager = GameManager::getInstance();
@@ -1581,7 +1586,7 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
 {
     Mainapp::getInstance()->pauseRendering();
     UnitPathFindingSystem pfs(m_pMap, pUnit, m_pPlayer);
-    QVector<QPoint> points;
+    std::vector<QPoint> points;
     QPoint position = pUnit->getPosition();
     bool canMoveAndFire = pUnit->canMoveAndFire(position);
     if (canMoveAndFire)
@@ -1591,7 +1596,7 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
     }
     else
     {
-        points.append(position);
+        points.push_back(position);
     }
     
     qint32 maxRange = pUnit->getMaxRange(position);

@@ -64,6 +64,13 @@ public:
      */
     std::vector<QPoint> getClosestReachableMovePath(std::vector<QPoint>& path, qint32 movepoints);
     /**
+     * @brief getClosestReachableMovePath
+     * @param path
+     * @param movepoints
+     * @return
+     */
+    std::vector<QPoint> getClosestReachableMovePath(QVector<QPoint>& path, qint32 movepoints);
+    /**
      * @brief setMoveCosts
      * @param movepoints how far this pfs explodes. -2 for infinite
      */

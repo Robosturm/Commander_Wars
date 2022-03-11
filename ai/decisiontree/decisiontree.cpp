@@ -19,7 +19,7 @@ DecisionTree::DecisionTree(spDecisionNode & pRootNode)
     Interpreter::setCppOwnerShip(this);
 }
 
-DecisionTree::DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
+DecisionTree::DecisionTree(std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions)
 {
     setObjectName("DecisionTree");
     Interpreter::setCppOwnerShip(this);
@@ -72,8 +72,8 @@ DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDat
         }
         if (needsTraining)
         {
-            QVector<QVector<float>> trainingData;
-            QVector<QVector<spDecisionQuestion>> questions;
+            std::vector<std::vector<float>> trainingData;
+            std::vector<std::vector<spDecisionQuestion>> questions;
             getTrainingData(trainingDataFile, trainingData, questions);
             m_pRootNode = train(trainingData, questions);
             CONSOLE_PRINT("Storing tree: " + treeFile, Console::eDEBUG);
@@ -97,7 +97,7 @@ float DecisionTree::getDecision(std::vector<float>& input)
     return output;
 }
 
-spDecisionNode DecisionTree::train(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
+spDecisionNode DecisionTree::train(std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions)
 {
     CONSOLE_PRINT("training decision tree()", Console::eDEBUG);
 	float gain = 0;
@@ -106,43 +106,49 @@ spDecisionNode DecisionTree::train(QVector<QVector<float>>& trainingData, QVecto
 	{
         return spLeaf::create(trainingData);
 	}
-    QVector<QVector<QVector<float>>> splitData;
+    std::vector<std::vector<std::vector<float>>> splitData;
     seperateData(trainingData, pQuestion, splitData);
 
-    QVector<spDecisionNode> pNodes;
+    std::vector<spDecisionNode> pNodes;
     for (qint32 i = 0; i < splitData.size(); i++)
     {
-        pNodes.append(train(splitData[i], questions));
+        pNodes.push_back(train(splitData[i], questions));
     }
     return spDecisionNode::create(pQuestion, pNodes);
 }
 
-QVector<qint32> DecisionTree::countClassItems(QVector<QVector<float>>& trainingData)
+std::vector<qint32> DecisionTree::countClassItems(std::vector<std::vector<float>>& trainingData)
 {
-	QVector<qint32> ret;
-	QVector<float> labels;
+    std::vector<qint32> ret;
+    std::vector<float> labels;
 
 	for (qint32 i = 0; i < trainingData.size(); i++)
 	{
 		float label = trainingData[i][trainingData[i].size() - 1];
-		if (labels.contains(label))
+        bool found = false;
+        for (qint32 i = 0; i < labels.size(); ++i)
+        {
+            if (labels[i] == label)
+            {
+                ret[i]++;
+                found = true;
+                break;
+            }
+        }
+        if (!found)
 		{
-			ret[labels.indexOf(label)]++;
-		}
-		else
-		{
-			ret.append(1);
-			labels.append(label);
+            ret.push_back(1);
+            labels.push_back(label);
 		}
 	}
 	return ret;
 }
 
-void DecisionTree::seperateData(QVector<QVector<float>>& trainingData, spDecisionQuestion & question, QVector<QVector<QVector<float>>>& splitData)
+void DecisionTree::seperateData(std::vector<std::vector<float>>& trainingData, spDecisionQuestion & question, std::vector<std::vector<std::vector<float>>>& splitData)
 {
     for (qint32 i = 0; i < question->getSize(); i++)
     {
-        splitData.append(QVector<QVector<float>>());
+        splitData.push_back(std::vector<std::vector<float>>());
     }
 
 	for (qint32 i = 0; i < trainingData.size(); i++)
@@ -150,14 +156,14 @@ void DecisionTree::seperateData(QVector<QVector<float>>& trainingData, spDecisio
         qint32 answer = question->matches(trainingData[i]);
         if (answer >= 0 && answer < splitData.size())
         {
-            splitData[answer].append(trainingData[i]);
+            splitData[answer].push_back(trainingData[i]);
         }
 	}
 }
 
-float DecisionTree::giniImpurity(QVector<QVector<float>>& trainingData)
+float DecisionTree::giniImpurity(std::vector<std::vector<float>>& trainingData)
 {
-	QVector<qint32> counts = countClassItems(trainingData);
+    std::vector<qint32> counts = countClassItems(trainingData);
 	float impurity = 1;
 	for (qint32 i = 0; i < counts.size(); i++)
 	{
@@ -167,7 +173,7 @@ float DecisionTree::giniImpurity(QVector<QVector<float>>& trainingData)
 	return impurity;
 }
 
-float DecisionTree::infoGain(QVector<QVector<QVector<float>>>& splitTrainingData, float currentUncertainty)
+float DecisionTree::infoGain(std::vector<std::vector<std::vector<float>>>& splitTrainingData, float currentUncertainty)
 {
     float count = 0;
     for (qint32 i = 0; i < splitTrainingData.size(); i++)
@@ -183,7 +189,7 @@ float DecisionTree::infoGain(QVector<QVector<QVector<float>>>& splitTrainingData
     return ret;
 }
 
-spDecisionQuestion DecisionTree::findBestSplit(QVector<QVector<float>>& trainingData, float& bestGain, QVector<QVector<spDecisionQuestion>>& questions)
+spDecisionQuestion DecisionTree::findBestSplit(std::vector<std::vector<float>>& trainingData, float& bestGain, std::vector<std::vector<spDecisionQuestion>>& questions)
 {
     spDecisionQuestion bestQuestion;
     if (trainingData.size() > 0)
@@ -196,7 +202,7 @@ spDecisionQuestion DecisionTree::findBestSplit(QVector<QVector<float>>& training
             for (qint32 i = 0; i < questions[col].size(); i++)
             {
                 // try splitting the dataset
-                QVector<QVector<QVector<float>>> splitData;
+                std::vector<std::vector<std::vector<float>>> splitData;
                 seperateData(trainingData, questions[col][i], splitData);
 
                 // Skip this split if it doesn't divide the dataset.
@@ -269,7 +275,7 @@ void DecisionTree::printTree(DecisionNode* pNode, QString spacing)
     }
 }
 
-void DecisionTree::getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
+void DecisionTree::getTrainingData(QString file, std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions)
 {
     QFile trainingFile(file);
     if (!trainingFile.exists())
@@ -280,7 +286,7 @@ void DecisionTree::getTrainingData(QString file, QVector<QVector<float>>& traini
     QTextStream stream(&trainingFile);
     bool questionsFound = false;
     QStringList types;
-    QVector<spDecisionQuestion> readQuestions;
+    std::vector<spDecisionQuestion> readQuestions;
 
     readTrainingFile(stream, questionsFound, types, readQuestions, trainingData, questions);
 
@@ -305,8 +311,8 @@ void DecisionTree::getTrainingData(QString file, QVector<QVector<float>>& traini
 }
 
 void DecisionTree::readTrainingFile(QTextStream& stream, bool& questionsFound, QStringList& types,
-                              QVector<spDecisionQuestion>& readQuestions,
-                              QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
+                              std::vector<spDecisionQuestion>& readQuestions,
+                              std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -328,7 +334,7 @@ void DecisionTree::readTrainingFile(QTextStream& stream, bool& questionsFound, Q
                 QStringList items = line.split(" ");
                 for (qint32 i = 1; i < items.size(); i++)
                 {
-                    readQuestions.append(spDecisionQuestion::create());
+                    readQuestions.push_back(spDecisionQuestion::create());
                     qint32 index = types.size();
                     QString typeLine = items[i];
                     if (typeLine.startsWith("NUMBER:"))
@@ -405,8 +411,8 @@ void DecisionTree::readTrainingFile(QTextStream& stream, bool& questionsFound, Q
                 // check for identic match here
                 if (items.size() == types.size())
                 {
-                    trainingData.append(QVector<float>());
-                    questions.append(QVector<spDecisionQuestion>());
+                    trainingData.push_back(std::vector<float>());
+                    questions.push_back(std::vector<spDecisionQuestion>());
                     qint32 item = trainingData.size() - 1;
                     for (qint32 i = 0; i < types.size(); i++)
                     {
@@ -414,37 +420,37 @@ void DecisionTree::readTrainingFile(QTextStream& stream, bool& questionsFound, Q
                         if (types[i] == "CO")
                         {
                             qint32 index = pCOSpriteManager->getIndex(items[i]);
-                            trainingData[item].append(index);
+                            trainingData[item].push_back(index);
                             if (i < types.size() - 1)
                             {
-                                questions[item].append(readQuestions[i]);
+                                questions[item].push_back(readQuestions[i]);
                             }
                         }
                         else if (types[i] == "BUILDING")
                         {
                             qint32 index = pBuildingSpriteManager->getIndex(items[i]);
-                            trainingData[item].append(index);
+                            trainingData[item].push_back(index);
                             if (i < types.size() - 1)
                             {
-                                questions[item].append(readQuestions[i]);
+                                questions[item].push_back(readQuestions[i]);
                             }
                         }
                         else if (types[i] == "UNIT")
                         {
                             qint32 index = pUnitSpriteManager->getIndex(items[i]);
-                            trainingData[item].append(index);
+                            trainingData[item].push_back(index);
                             if (i < types.size() - 1)
                             {
-                                questions[item].append(readQuestions[i]);
+                                questions[item].push_back(readQuestions[i]);
                             }
                         }
                         else if (types[i] == "NUMBER")
                         {
                             float value = items[i].toFloat();
-                            trainingData[item].append(value);
+                            trainingData[item].push_back(value);
                             if (i < types.size() - 1)
                             {
-                                questions[item].append(readQuestions[i]);
+                                questions[item].push_back(readQuestions[i]);
                             }
                         }
                     }

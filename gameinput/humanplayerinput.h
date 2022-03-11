@@ -55,7 +55,7 @@ public:
      * @brief createArrow
      * @param points
      */
-    void createArrow(QVector<QPoint>& points);
+    void createArrow(std::vector<QPoint>& points);
     /**
      * @brief selectUnit selects the given target unit as active
      * @param x
@@ -213,7 +213,7 @@ private:
     QVector<oxygine::spActor> m_InfoFields;
 
     QVector<oxygine::spActor> m_Arrows;
-    QVector<QPoint> m_ArrowPoints;
+    std::vector<QPoint> m_ArrowPoints;
 
     oxygine::spActor m_ZInformationLabel;
 

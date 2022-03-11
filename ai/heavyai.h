@@ -457,14 +457,14 @@ private:
      * @param pEnemyBuildings
      * @return
      */
-    QVector<double> getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits,
+    std::vector<double> getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits,
                                        spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                                        std::vector<std::tuple<Unit*, Unit*>> & transportTargets);
     /**
      * @brief createUnitBuildData
      * @param building
      */
-    void createUnitBuildData(BuildingData & building, QVector<double> & data, qint32 funds, const std::vector<Unit*> & immuneUnits,
+    void createUnitBuildData(BuildingData & building, std::vector<double> & data, qint32 funds, const std::vector<Unit*> & immuneUnits,
                              const std::vector<std::tuple<Unit*, Unit*>> & transportTargets, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief UpdateUnitBuildData

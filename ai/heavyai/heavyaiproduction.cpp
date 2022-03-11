@@ -33,7 +33,7 @@ bool HeavyAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
     {
         auto & item = m_BuildingData[index];
         AI_CONSOLE_PRINT("HeavyAi::buildUnits " + item.buildingDataInput[item.m_selectedData].unitId + " with scored value " + QString::number(bestScore), Console::eDEBUG);
-        m_updatePoints.append(item.m_action->getTarget());
+        m_updatePoints.push_back(item.m_action->getTarget());
         emit performAction(item.m_action);
         item.m_action = nullptr;
         item.m_score = 0;
@@ -55,9 +55,9 @@ bool HeavyAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
 void HeavyAi::scoreUnitBuildings(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits,
                                  spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
-    QVector<std::tuple<Unit*, Unit*>> transportTargets;
-    QVector<double> data = getGlobalBuildInfo(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings, transportTargets);
-    QVector<Unit*> immuneUnits;
+    std::vector<std::tuple<Unit*, Unit*>> transportTargets;
+    std::vector<double> data = getGlobalBuildInfo(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings, transportTargets);
+    std::vector<Unit*> immuneUnits;
     getImmuneUnits(pUnits, pEnemyUnits, immuneUnits);
 
 
@@ -156,8 +156,8 @@ void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
     }
 }
 
-void HeavyAi::createUnitBuildData(BuildingData & building, QVector<double> & data, qint32 funds, const QVector<Unit*> & immuneUnits,
-                                  const QVector<std::tuple<Unit*, Unit*>> & transportTargets, spQmlVectorBuilding & pEnemyBuildings)
+void HeavyAi::createUnitBuildData(BuildingData & building, std::vector<double> & data, qint32 funds, const std::vector<Unit*> & immuneUnits,
+                                  const std::vector<std::tuple<Unit*, Unit*>> & transportTargets, spQmlVectorBuilding & pEnemyBuildings)
 {
     // create new
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
@@ -202,7 +202,7 @@ void HeavyAi::createUnitBuildData(BuildingData & building, QVector<double> & dat
     }
 }
 
-void HeavyAi::updateUnitBuildData(BuildingData & building, QVector<double> & data, qint32 funds)
+void HeavyAi::updateUnitBuildData(BuildingData & building, std::vector<double> & data, qint32 funds)
 {
     GameAction action = GameAction(ACTION_BUILD_UNITS, m_pMap);
     action.setTarget(QPoint(building.m_pBuilding->Building::getX(), building.m_pBuilding->Building::getY()));
@@ -238,7 +238,7 @@ void HeavyAi::updateUnitBuildData(BuildingData & building, QVector<double> & dat
     }
 }
 
-void HeavyAi::updateUnitBuildData(UnitBuildData &unitData, QVector<double> &data, qint32 funds)
+void HeavyAi::updateUnitBuildData(UnitBuildData &unitData, std::vector<double> &data, qint32 funds)
 {
     for (qint32 i = 0; i < BuildingEntry::LocalUnitData; ++i)
     {
@@ -264,7 +264,7 @@ void HeavyAi::setAiName(const QString &newAiName)
     m_aiName = newAiName;
 }
 
-void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBuildData & data, const QVector<Unit*> & immuneUnits, qint32 movementPoints)
+void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBuildData & data, const std::vector<Unit*> & immuneUnits, qint32 movementPoints)
 {
     
     if (m_pMap != nullptr)
@@ -313,20 +313,20 @@ void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBui
     }
 }
 
-void HeavyAi::getTransportInputVector(Building* pBuilding, Unit* pUnit, const QVector<std::tuple<Unit*, Unit*>> & transportTargets,
+void HeavyAi::getTransportInputVector(Building* pBuilding, Unit* pUnit, const std::vector<std::tuple<Unit*, Unit*>> & transportTargets,
                                       spQmlVectorBuilding & pEnemyBuildings, qint32 movementPoints, UnitBuildData & data)
 {
     if (data.unitBuildingDataInput[BuildingEntry::LoadingPotential] > 0)
     {
         QPoint position(pBuilding->Building::getX(), pBuilding->Building::getY());
-        QVector<QVector3D> targets;
-        QVector<Unit*> loadingUnits = appendLoadingTargets(pUnit, m_pUnits, m_pEnemyUnits, pEnemyBuildings, false, true, targets, true);
-        QVector<Unit*> transporterUnits;
+        std::vector<QVector3D> targets;
+        std::vector<Unit*> loadingUnits = appendLoadingTargets(pUnit, m_pUnits, m_pEnemyUnits, pEnemyBuildings, false, true, targets, true);
+        std::vector<Unit*> transporterUnits;
         for (qint32 i2 = 0; i2 < transportTargets.size(); i2++)
         {
-            if (!transporterUnits.contains(std::get<0>(transportTargets[i2])))
+            if (!GlobalUtils::contains(transporterUnits, std::get<0>(transportTargets[i2])))
             {
-                transporterUnits.append(std::get<0>(transportTargets[i2]));
+                transporterUnits.push_back(std::get<0>(transportTargets[i2]));
             }
         }
         double transporterCount = 0;
@@ -349,7 +349,7 @@ void HeavyAi::getTransportInputVector(Building* pBuilding, Unit* pUnit, const QV
     }
 }
 
-void HeavyAi::calculateUnitProductionDamage(Building* pBuilding, Unit* pUnit, qint32 movementPoints, QPoint position, UnitBuildData & data, const QVector<Unit*> & immuneUnits)
+void HeavyAi::calculateUnitProductionDamage(Building* pBuilding, Unit* pUnit, qint32 movementPoints, QPoint position, UnitBuildData & data, const std::vector<Unit*> & immuneUnits)
 {
     
     if (m_pMap != nullptr)
@@ -395,7 +395,7 @@ void HeavyAi::calculateUnitProductionDamage(Building* pBuilding, Unit* pUnit, qi
                         possibleFundsDamage += unitMulitpler * enemyUnitValue;
                         hpDamage            += unitMulitpler * damageMultiplier;
                         possibleHpDamage    += unitMulitpler * enemyHp / Unit::MAX_UNIT_HP;
-                        if (immuneUnits.contains(pEnemyUnit))
+                        if (GlobalUtils::contains(immuneUnits, pEnemyUnit))
                         {
                             ++immuneUnit;
                         }
@@ -483,11 +483,11 @@ float HeavyAi::getBaseDamage(Unit* pAttacker, Unit* pDefender)
     return dmg;
 }
 
-QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits,
+std::vector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits,
                                             spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                                            QVector<std::tuple<Unit*, Unit*>> & transportTargets)
+                                            std::vector<std::tuple<Unit*, Unit*>> & transportTargets)
 {
-    QVector<double> data(BuildingEntryMaxSize, 0.0);
+    std::vector<double> data(BuildingEntryMaxSize, 0.0);
     
     if (m_pMap != nullptr)
     {
@@ -558,7 +558,7 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, sp
                             {
                                 BuildingData newData;
                                 newData.m_pBuilding = pBuilding;
-                                m_BuildingData.append(newData);
+                                m_BuildingData.push_back(newData);
                                 unusedCount++;
                                 break;
                             }
@@ -571,7 +571,7 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, sp
                     {
                         if (m_BuildingData[i].m_pBuilding == pBuilding)
                         {
-                            m_BuildingData.removeAt(i);
+                            m_BuildingData.erase(m_BuildingData.cbegin() + i);
                             break;
                         }
                     }
@@ -586,7 +586,7 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, sp
     return data;
 }
 
-void HeavyAi::getImmuneUnits(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, QVector<Unit*> & immuneUnits)
+void HeavyAi::getImmuneUnits(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, std::vector<Unit*> & immuneUnits)
 {
     immuneUnits.clear();
     for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
@@ -606,7 +606,7 @@ void HeavyAi::getImmuneUnits(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyU
         }
         if (!attackable)
         {
-            immuneUnits.append(pEnemyUnits->at(i2));
+            immuneUnits.push_back(pEnemyUnits->at(i2));
         }
     }
 }

@@ -3,6 +3,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/interpreter.h"
 
 Leaf::Leaf()
 {
@@ -10,7 +11,7 @@ Leaf::Leaf()
     Interpreter::setCppOwnerShip(this);
 }
 
-Leaf::Leaf(QVector<QVector<float>>& trainingData)
+Leaf::Leaf(std::vector<std::vector<float>>& trainingData)
     : m_AnswersChances(DecisionTree::countClassItems(trainingData))
 {
     setObjectName("Leaf");
@@ -18,9 +19,9 @@ Leaf::Leaf(QVector<QVector<float>>& trainingData)
     for (qint32 i = 0; i < trainingData.size(); i++)
 	{
         float answer = trainingData[i][trainingData[i].size() - 1];
-        if (m_Answers.contains(answer) == false)
+        if (GlobalUtils::contains(m_Answers, answer) == false)
 		{
-            m_Answers.append(answer);
+            m_Answers.push_back(answer);
 		}
 	}
     for (qint32 i = 0; i < m_AnswersChances.size(); i++)
@@ -96,7 +97,7 @@ void Leaf::deserializeObject(QDataStream& pStream)
     {
         qint32 item = 0;
         pStream >> item;
-        m_AnswersChances.append(item);
+        m_AnswersChances.push_back(item);
     }
     size = 0;
     pStream >> size;
@@ -105,7 +106,7 @@ void Leaf::deserializeObject(QDataStream& pStream)
     {
         float item = 0;
         pStream >> item;
-        m_Answers.append(item);
+        m_Answers.push_back(item);
     }
     pStream >> m_totalChance;
 }

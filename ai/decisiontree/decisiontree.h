@@ -13,14 +13,14 @@ class DecisionTree : public QObject, public FileSerializable
 	Q_OBJECT
 public:
     DecisionTree(spDecisionNode & pRootNode);
-    DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
+    DecisionTree(std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions);
     DecisionTree(const QString & treeFile, const QString & trainingDataFile);
 
     virtual ~DecisionTree() = default;
 
-    spDecisionNode train(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
+    spDecisionNode train(std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions);
 
-    static QVector<qint32> countClassItems(QVector<QVector<float>>& trainingData);
+    static std::vector<qint32> countClassItems(std::vector<std::vector<float>>& trainingData);
 
     virtual void serializeObject(QDataStream& pStream) const override;
     virtual void deserializeObject(QDataStream& pStream)  override;
@@ -35,7 +35,7 @@ public:
      * @param trainingData
      * @param questions
      */
-    static void getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
+    static void getTrainingData(QString file, std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions);
     /**
      * @brief readTrainingFile
      * @param stream
@@ -46,17 +46,17 @@ public:
      * @param questions
      */
     static void readTrainingFile(QTextStream& stream, bool& questionsFound, QStringList& types,
-                                 QVector<spDecisionQuestion>& readQuestions,
-                                 QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
+                                 std::vector<spDecisionQuestion>& readQuestions,
+                                 std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions);
 
 public slots:
     float getDecision(std::vector<float>& input);
     void printTree(DecisionNode* pNode = nullptr, QString spacing = "");
 protected:
-    void seperateData(QVector<QVector<float>>& trainingData, spDecisionQuestion & question, QVector<QVector<QVector<float>>>& splitData);
-    float giniImpurity(QVector<QVector<float>>& trainingData);
-    float infoGain(QVector<QVector<QVector<float>>>& splitTrainingData, float currentUncertainty);
-    spDecisionQuestion findBestSplit(QVector<QVector<float>>& trainingData, float& bestGain, QVector<QVector<spDecisionQuestion>>& questions);
+    void seperateData(std::vector<std::vector<float>>& trainingData, spDecisionQuestion & question, std::vector<std::vector<std::vector<float>>>& splitData);
+    float giniImpurity(std::vector<std::vector<float>>& trainingData);
+    float infoGain(std::vector<std::vector<std::vector<float>>>& splitTrainingData, float currentUncertainty);
+    spDecisionQuestion findBestSplit(std::vector<std::vector<float>>& trainingData, float& bestGain, std::vector<std::vector<spDecisionQuestion>>& questions);
 private:
         spDecisionNode m_pRootNode;
 };

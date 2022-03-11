@@ -2,7 +2,7 @@
 #include "ai/decisiontree/leaf.h"
 #include "coreengine/interpreter.h"
 
-DecisionNode::DecisionNode(spDecisionQuestion & pQuestion, const QVector<spDecisionNode> & pNodes)
+DecisionNode::DecisionNode(spDecisionQuestion & pQuestion, const std::vector<spDecisionNode> & pNodes)
 	: m_pQuestion(pQuestion),
       m_pNodes(pNodes)
 {
@@ -32,9 +32,9 @@ void DecisionNode::serializeObject(QDataStream& pStream) const
     pStream << getVersion();
     m_pQuestion->serializeObject(pStream);
     pStream << static_cast<qint32>(m_pNodes.size());
-    for (qint32 i = 0; i < m_pNodes.size(); i++)
+    for (auto & node : m_pNodes)
     {
-        m_pNodes[i]->serializeObject(pStream);
+        node->serializeObject(pStream);
     }
 }
 
@@ -53,12 +53,12 @@ void DecisionNode::deserializeObject(QDataStream& pStream)
         pStream >> isNode;
         if (isNode)
         {
-            m_pNodes.append(spDecisionNode::create());
+            m_pNodes.push_back(spDecisionNode::create());
             m_pNodes[i]->deserializeObject(pStream);
         }
         else
         {
-            m_pNodes.append(spLeaf::create());
+            m_pNodes.push_back(spLeaf::create());
             m_pNodes[i]->deserializeObject(pStream);
         }
     }

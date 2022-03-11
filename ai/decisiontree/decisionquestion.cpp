@@ -17,9 +17,9 @@ void DecisionQuestion::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << static_cast<qint32>(m_Questions.size());
-    for (qint32 i = 0; i < m_Questions.size(); i++)
+    for (auto & question : m_Questions)
     {
-        m_Questions[i]->serializeObject(pStream);
+        question->serializeObject(pStream);
     }
 }
 
@@ -40,9 +40,9 @@ void DecisionQuestion::deserializeObject(QDataStream& pStream)
 QString DecisionQuestion::print()
 {
     QString ret = "";
-    for (qint32 i = 0; i < m_Questions.size(); i++)
+    for (auto & question : m_Questions)
     {
-        ret += m_Questions[i]->print() + " ";
+        ret += question->print() + " ";
     }
     return ret;
 }
