@@ -50,7 +50,7 @@ public:
                                  QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
 
 public slots:
-    float getDecision(QVector<float>& input);
+    float getDecision(std::vector<float>& input);
     void printTree(DecisionNode* pNode = nullptr, QString spacing = "");
 protected:
     void seperateData(QVector<QVector<float>>& trainingData, spDecisionQuestion & question, QVector<QVector<QVector<float>>>& splitData);

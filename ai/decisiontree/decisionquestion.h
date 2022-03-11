@@ -31,7 +31,7 @@ public:
     }
 public slots:
         qint32 matches(float value);
-        qint32 matches(QVector<float> &rData);
+        qint32 matches(std::vector<float> &rData);
 
 private:
         QVector<spQuestion> m_Questions;

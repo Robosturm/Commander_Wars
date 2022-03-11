@@ -46,7 +46,7 @@ var Constructor = function()
         return true;
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         return "back_tower";
     };

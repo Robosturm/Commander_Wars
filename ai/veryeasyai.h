@@ -90,7 +90,7 @@ protected:
      * @return
      */
     bool moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& actions,
-                  QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets, bool unload = false);
+                  std::vector<QVector3D>& targets, std::vector<QVector3D>& transporterTargets, bool unload = false);
     /**
      * @brief buildUnits
      * @param pBuildings

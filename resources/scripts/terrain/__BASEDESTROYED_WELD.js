@@ -240,7 +240,7 @@ var Constructor = function()
             return TERRAIN.getTerrainAnimationForeground(unit, terrain, defender, map);
         }
     };
-    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         var baseTerrainId = ""
         if (terrain !== null)

@@ -68,7 +68,7 @@ void PathFindingSystem::explore()
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "PathFindingSystem::explore invalid start point");
     }
     qint32 neighboursIndex = getIndex(m_StartPoint.x(), m_StartPoint.y());
-    m_OpenList.append(Node(m_StartPoint.x(), m_StartPoint.y(), neighboursIndex, 0, 0,
+    m_OpenList.push_back(Node(m_StartPoint.x(), m_StartPoint.y(), neighboursIndex, 0, 0,
                            m_StartPoint.x(), m_StartPoint.y(), 0));
     qint32 remainingCosts;
     qint32 neighboursX = -1;
@@ -79,7 +79,8 @@ void PathFindingSystem::explore()
     while (!m_OpenList.empty())
     {
         // get current node and pop it
-        Node pCurrent = m_OpenList.takeFirst();
+        Node pCurrent = m_OpenList.front();
+        m_OpenList.pop_front();
         if (pCurrent.index < 0 || m_costs[pCurrent.index] != infinite)
         {
             if (pCurrent.index < 0)
@@ -205,32 +206,32 @@ void PathFindingSystem::explore()
     }
 }
 
-QVector<QPoint> PathFindingSystem::getFields(qint32 startX, qint32 startY, qint32 min, qint32 max)
+std::vector<QPoint> PathFindingSystem::getFieldsFast(qint32 startX, qint32 startY, qint32 min, qint32 max)
 {
-    QVector<QPoint> points;
+    std::vector<QPoint> points;
     for (qint32 x = -max; x <= max; x++)
     {
         for (qint32 y = -max; y <= max; y++)
         {
             if ((qAbs(x) + qAbs(y) >= min) && (qAbs(x) + qAbs(y) <= max))
             {
-                points.append(QPoint(startX + x, startY + y));
+                points.push_back(QPoint(startX + x, startY + y));
             }
         }
     }
     return points;
 }
 
-QVector<QPoint> PathFindingSystem::getAllNodePoints(qint32 maxRange)
+std::vector<QPoint> PathFindingSystem::getAllNodePointsFastFast(qint32 maxRange)
 {
-    QVector<QPoint> points;
+    std::vector<QPoint> points;
     for (qint32 x = 0; x < m_width; x++)
     {
         for (qint32 y = 0; y < m_heigth; y++)
         {
             if (m_costs[getIndex(x, y)] >= 0 && m_costs[getIndex(x, y)] < maxRange)
             {
-                points.append(QPoint(x, y));
+                points.push_back(QPoint(x, y));
             }
         }
     }
@@ -253,13 +254,13 @@ QmlVectorPoint* PathFindingSystem::getAllQmlVectorPoints()
     return ret;
 }
 
-QVector<QPoint> PathFindingSystem::getTargetPath() const
+std::vector<QPoint> PathFindingSystem::getTargetPathFastFast() const
 {
     if (m_FinishNode >= 0)
     {
-        return getPath(m_FinishNodeX, m_FinishNodeY);
+        return getPathFast(m_FinishNodeX, m_FinishNodeY);
     }
-    return QVector<QPoint>();
+    return std::vector<QPoint>();
 }
 
 QPoint PathFindingSystem::getTarget() const
@@ -271,15 +272,15 @@ QPoint PathFindingSystem::getTarget() const
     return QPoint(-1, -1);
 }
 
-QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y) const
+std::vector<QPoint> PathFindingSystem::getPathFast(qint32 x, qint32 y) const
 {
-    QVector<QPoint> points;
+    std::vector<QPoint> points;
     qint32 startCost = getTargetCosts(x, y);
     if (startCost >= 0)
     {
         qint32 curX = x;
         qint32 curY = y;
-        points.append(QPoint(curX, curY));
+        points.push_back(QPoint(curX, curY));
         while (curX != m_StartPoint.x() ||
                curY != m_StartPoint.y())
         {
@@ -310,7 +311,7 @@ QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y) const
                     return points;
                 }
             }
-            points.append(QPoint(curX, curY));
+            points.push_back(QPoint(curX, curY));
         }
     }
     return points;

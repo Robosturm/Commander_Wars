@@ -16,7 +16,7 @@ DecisionNode::DecisionNode()
     Interpreter::setCppOwnerShip(this);
 }
 
-float DecisionNode::getDecision(QVector<float>& input)
+float DecisionNode::getDecision(std::vector<float>& input)
 {
     qint32 result = m_pQuestion->matches(input);
     if (result >= 0 && result < m_pNodes.size())

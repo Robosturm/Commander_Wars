@@ -85,7 +85,7 @@ protected:
     /**
      * @brief m_MoveCostMap move cost modifier map for the ai
      */
-    QVector<QVector<std::tuple<qint32, bool>>> m_MoveCostMap;
+    std::vector<std::vector<std::tuple<qint32, bool>>> m_MoveCostMap;
     GameMap* m_pMap{nullptr};
 };
 

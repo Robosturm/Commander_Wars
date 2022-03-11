@@ -162,14 +162,14 @@ public:
      * @param point
      * @return
      */
-    static bool contains(QVector<QVector3D>& points, const QPoint & point);
+    static bool contains(std::vector<QVector3D>& points, const QPoint & point);
     /**
      * @brief index
      * @param points
      * @param point
      * @return
      */
-    static qint32 index(QVector<QVector3D>& points, const QPoint & point);
+    static qint32 index(std::vector<QVector3D>& points, const QPoint & point);
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -318,14 +318,14 @@ public slots:
      * @param pPfs
      * @return target unit x, y and z = fonddamage
      */
-    void getBestTarget(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields, qint32 maxDistance = PathFindingSystem::infinite);
+    void getBestTarget(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, std::vector<QVector3D>& ret, std::vector<QVector3D>& moveTargetFields, qint32 maxDistance = PathFindingSystem::infinite);
     /**
      * @brief getAttacksFromField
      * @param pUnit
      * @param pAction
      * @param ret
      */
-    void getBestAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
+    void getBestAttacksFromField(Unit* pUnit, spGameAction & pAction, std::vector<QVector3D>& ret, std::vector<QVector3D>& moveTargetFields);
     /**
      * @brief getAttackTargets
      * @param pUnit
@@ -334,7 +334,7 @@ public slots:
      * @param ret
      * @param moveTargetFields
      */
-    void getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<CoreAI::DamageData>& ret, QVector<QVector3D>& moveTargetFields, qint32 maxDistance = PathFindingSystem::infinite) const;
+    void getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, std::vector<CoreAI::DamageData>& ret, std::vector<QVector3D>& moveTargetFields, qint32 maxDistance = PathFindingSystem::infinite) const;
     /**
      * @brief getAttacksFromField
      * @param pUnit
@@ -342,7 +342,7 @@ public slots:
      * @param ret
      * @param moveTargetFields
      */
-    void getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<DamageData>& ret, QVector<QVector3D>& moveTargetFields) const;
+    void getAttacksFromField(Unit* pUnit, spGameAction & pAction, std::vector<DamageData>& ret, std::vector<QVector3D>& moveTargetFields) const;
     /**
      * @brief moveAwayFromProduction
      * @param pUnits
@@ -363,7 +363,7 @@ public slots:
      * @param pEnemyUnits
      * @param targets
      */
-    void appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets);
+    void appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets);
 
 protected:
     void sortUnitsFarFromEnemyFirst(QVector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
@@ -387,17 +387,17 @@ protected:
     bool processPredefinedAiAttack(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem & pfs);
     virtual void finishTurn();
     // helper functions to get targets for unit actions
-    void appendSupportTargets(const QStringList & actions, Unit* pCurrentUnit, spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets);
-    void appendCaptureTargets(const QStringList & actions, Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings,  QVector<QVector3D>& targets);
-    void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets);
-    void appendRepairTargets(Unit* pUnit, spQmlVectorBuilding & pBuildings, QVector<QVector3D>& targets);
-    void appendSupplyTargets(Unit* pUnit, spQmlVectorUnit & pUnits, QVector<QVector3D>& targets);
-    void appendTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits, QVector<QVector3D>& targets);
+    void appendSupportTargets(const QStringList & actions, Unit* pCurrentUnit, spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets);
+    void appendCaptureTargets(const QStringList & actions, Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings,  std::vector<QVector3D>& targets);
+    void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets);
+    void appendRepairTargets(Unit* pUnit, spQmlVectorBuilding & pBuildings, std::vector<QVector3D>& targets);
+    void appendSupplyTargets(Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets);
+    void appendTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets);
     void appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
-                                         spQmlVectorBuilding & pEnemyBuildings, QVector<QVector3D>& targets);
-    QVector<Unit*> appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
+                                         spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets);
+    std::vector<Unit*> appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
                                         spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                                        bool addCaptureTargets, bool virtualLoading, QVector<QVector3D>& targets,
+                                        bool addCaptureTargets, bool virtualLoading, std::vector<QVector3D>& targets,
                                         bool all = false);
     /**
      * @brief hasTargets checks if a unit has anything to do on this island
@@ -428,27 +428,27 @@ protected:
      * @param pEnemyUnits
      * @param pEnemyBuildings
      */
-    void appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings, QVector<QVector3D>& targets);
+    void appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets);
     /**
      * @brief appendUnloadTargetsForCapturing searches unload fields near enemy buildings
      * @param pUnit
      * @param pEnemyBuildings
      */
-    void appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, QVector<QVector3D>& targets);
+    void appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets);
     /**
      * @brief appendUnloadTargetsForAttacking
      * @param pUnit
      * @param pEnemyUnits
      * @param targets
      */
-    void appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets, qint32 rangeMultiplier);
+    void appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 rangeMultiplier);
     /**
      * @brief appendTerrainBuildingAttackTargets
      * @param pUnit
      * @param pEnemyBuildings
      * @param targets
      */
-    void appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, QVector<QVector3D>& targets);
+    void appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets);
     /**
      * @brief checkIslandForUnloading
      * @param pUnit
@@ -461,10 +461,10 @@ protected:
      * @param pUnloadArea
      * @param targets
      */
-    void checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, QVector<qint32>& checkedIslands,
+    void checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, std::vector<qint32>& checkedIslands,
                                  qint32 unitIslandIdx, qint32 unitIsland,
                                  qint32 loadedUnitIslandIdx, qint32 targetIsland,
-                                 QmlVectorPoint* pUnloadArea, QVector<QVector3D>& targets);
+                                 QmlVectorPoint* pUnloadArea, std::vector<QVector3D>& targets);
     /**
      * @brief getBestFlareTarget
      * @param pUnit

@@ -221,7 +221,7 @@ void InfluenceFrontMap::addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPf
         QApplication::processEvents();
         qint32 value = pUnit->getCoUnitValue();
         qint32 owner = pUnit->getOwner()->getPlayerID();
-        auto points = pPfs->getAllNodePoints();
+        auto points = pPfs->getAllNodePointsFast();
         for (const auto & point : points)
         {
             float multiplier = 1.0f;

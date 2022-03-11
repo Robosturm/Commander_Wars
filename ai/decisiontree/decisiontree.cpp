@@ -89,7 +89,7 @@ DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDat
     }
 }
 
-float DecisionTree::getDecision(QVector<float>& input)
+float DecisionTree::getDecision(std::vector<float>& input)
 {
     CONSOLE_PRINT("getDecision() for decision tree()", Console::eDEBUG);
     float output = m_pRootNode->getDecision(input);

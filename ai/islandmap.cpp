@@ -46,7 +46,7 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
                         pfs.setFast(true);
                         pfs.setStartPoint(x, y);
                         pfs.explore();
-                        QVector<QPoint> nodes = pfs.getAllNodePoints();
+                        QVector<QPoint> nodes = pfs.getAllNodePointsFast();
                         for (qint32 i = 0; i < nodes.size(); i++)
                         {
                             m_Islands[nodes[i].x()][nodes[i].y()] = currentIsland;

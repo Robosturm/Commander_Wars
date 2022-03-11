@@ -23,7 +23,7 @@ public:
         }
         QString print();
 public slots:
-        virtual float getDecision(QVector<float>& input) override;
+        virtual float getDecision(std::vector<float>& input) override;
 private:
         QVector<qint32> m_AnswersChances;
         QVector<float> m_Answers;

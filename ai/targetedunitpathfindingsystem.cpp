@@ -5,7 +5,7 @@
 
 #include "resource_management/movementtablemanager.h"
 
-TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, QVector<QVector3D>& targets, QVector<QVector<std::tuple<qint32, bool>>>* pMoveCostMap)
+TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, std::vector<QVector3D>& targets, std::vector<std::vector<std::tuple<qint32, bool>>>* pMoveCostMap)
     : UnitPathFindingSystem(pMap, pUnit),
       m_Targets(targets),
       m_pMoveCostMap(pMoveCostMap)
@@ -81,7 +81,7 @@ void TargetedUnitPathFindingSystem::setAbortOnCostExceed(bool abortOnCostExceed)
     m_abortOnCostExceed = abortOnCostExceed;
 }
 
-const QVector<QVector3D> &TargetedUnitPathFindingSystem::getTargets() const
+const std::vector<QVector3D> &TargetedUnitPathFindingSystem::getTargets() const
 {
     return m_Targets;
 }
@@ -90,7 +90,7 @@ QPoint TargetedUnitPathFindingSystem::getReachableTargetField(qint32 movepoints)
 {
     if (m_FinishNode >= 0)
     {
-        QVector<QPoint> path = getPath(m_FinishNodeX, m_FinishNodeY);
+        auto path = getPathFast(m_FinishNodeX, m_FinishNodeY);
         qint32 cost = UnitPathFindingSystem::getCosts(path);
         qint32 curX = m_FinishNodeX;
         qint32 curY = m_FinishNodeY;
@@ -98,7 +98,7 @@ QPoint TargetedUnitPathFindingSystem::getReachableTargetField(qint32 movepoints)
                 (cost > movepoints)) ||
                (path.size() > 1 && UnitPathFindingSystem::getCosts(getIndex(curX, curY), curX, curY, path[1].x(), path[1].y()) == 0))
         {
-            path.removeFirst();
+            path.erase(path.cbegin());
             cost = UnitPathFindingSystem::getCosts(path);
         }
         return path[0];
@@ -111,7 +111,7 @@ bool TargetedUnitPathFindingSystem::finished(qint32 x, qint32 y, qint32 movement
     qint32 index = CoreAI::index(m_Targets, QPoint(x, y));
     if (index >= 0)
     {
-        m_FinishNodes.append(std::tuple<qint32, qint32, qint32, float>(x, y, movementCosts, m_Targets[index].z()));
+        m_FinishNodes.push_back(std::tuple<qint32, qint32, qint32, float>(x, y, movementCosts, m_Targets[index].z()));
     }
     Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
     if ((pUnit == nullptr) ||

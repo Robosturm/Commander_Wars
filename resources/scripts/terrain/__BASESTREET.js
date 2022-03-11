@@ -206,7 +206,7 @@ var Constructor = function()
             return "fore_" + weatherModifier + "street+" + rand.toString();
         }
     };
-    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         var variables = terrain.getVariables();
         var variable = variables.getVariable("BACKGROUND_ID");

@@ -84,7 +84,7 @@ var Constructor = function()
         }
         return "fore_snowplains+" + rand.toString();
     };
-    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         var id = TERRAIN.getTerrainAnimationId(terrain, map);
         return TERRAIN.getTerrainBackgroundId(id, "snow");

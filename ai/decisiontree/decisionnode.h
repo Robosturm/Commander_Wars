@@ -38,7 +38,7 @@ public:
             return m_pQuestion.get();
         }
 public slots:
-        virtual float getDecision(QVector<float>& input);
+        virtual float getDecision(std::vector<float>& input);
 private:
         spDecisionQuestion m_pQuestion;
         QVector<spDecisionNode> m_pNodes;

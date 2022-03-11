@@ -107,6 +107,12 @@ public:
      * @return
      */
     spMarkedFieldData getMarkedFieldStepData();
+    /**
+     * @brief GameAction::setMovepath
+     * @param points
+     * @param fuelCost
+     */
+    void setMovepath(const std::vector<QPoint> & points, qint32 fuelCost);
 
 public slots:
     /**

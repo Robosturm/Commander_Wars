@@ -468,7 +468,7 @@ void HeavyAi::updateCaptureBuildings(MoveUnitData & unitData)
         unitData.m_capturePoints.clear();
         GameAction action(ACTION_CAPTURE, m_pMap);
         action.setTarget(QPoint(unitData.pUnit->Unit::getX(), unitData.pUnit->Unit::getY()));
-        QVector<QPoint> targets = unitData.pUnitPfs->getAllNodePoints(unitData.movementPoints + 1);
+        QVector<QPoint> targets = unitData.pUnitPfs->getAllNodePointsFast(unitData.movementPoints + 1);
         for (const auto & target : targets)
         {
             action.setMovepath(QVector<QPoint>(1, target), 0);
@@ -560,7 +560,7 @@ void HeavyAi::scoreActions(MoveUnitData & unit)
         QVector<ScoreData> scoreInfos;
         float bestScore = 0.0f;
         unit.actions = unit.pUnit->getActionList();
-        auto moveTargets = unit.pUnitPfs->getAllNodePoints(unit.movementPoints + 1);
+        auto moveTargets = unit.pUnitPfs->getAllNodePointsFast(unit.movementPoints + 1);
         if (m_aiStep >= AISteps::moveToTargets ||
             unit.actions.contains(ACTION_CAPTURE))
         {
@@ -1173,7 +1173,7 @@ void HeavyAi::scoreUnload(ScoreData & data, MoveUnitData & unitData, QVector<dou
     if (pTransporter != nullptr &&
         !pTransporter->getHasMoved())
     {
-        auto targetPath = m_currentTargetedfPfs->getTargetPath();
+        auto targetPath = m_currentTargetedfPfs->getTargetPathFast();
         QPoint target = data.m_gameAction->getActionTarget();
         double movePathSize = unitData.m_action->getMovePathLength() - 1;
         double loadingCount = pTransporter->getLoadedUnitCount();
@@ -1246,7 +1246,7 @@ void HeavyAi::scoreMoveToTargets()
                 getFunctionType(action, type, index);
                 if (index >= 0)
                 {
-                    auto moveTargets = unit.pUnitPfs->getAllNodePoints(unit.movementPoints + 1);
+                    auto moveTargets = unit.pUnitPfs->getAllNodePointsFast(unit.movementPoints + 1);
                     mutateActionForFields(unit, moveTargets, action, type, index,
                                           bestScore, scoreInfos);
                 }
@@ -1513,7 +1513,7 @@ void HeavyAi::scoreWait(ScoreData & data, MoveUnitData & unitData, QVector<doubl
 void HeavyAi::scoreWaitGeneric(ScoreData & data, MoveUnitData & unitData, QVector<double> baseData)
 {
     float score = m_minActionScore - 1;
-    auto targetPath = m_currentTargetedfPfs->getTargetPath();
+    auto targetPath = m_currentTargetedfPfs->getTargetPathFast();
     QPoint target = data.m_gameAction->getActionTarget();
     if (m_possibleCaptureTargets.contains(target))
     {

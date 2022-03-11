@@ -252,7 +252,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
             UnitPathFindingSystem pfs(m_pMap, m_pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
             pfs.explore();
-            QVector<QPoint> points = pfs.getAllNodePoints();
+            QVector<QPoint> points = pfs.getAllNodePointsFast();
             for (qint32 i = 0; i < points.size(); i++)
             {
                 if (pUnit->canMoveAndFire(QPoint(x, y)) ||
@@ -928,7 +928,7 @@ void HumanPlayerInput::createMarkedMoveFields()
             turnColor = QColor(ret.toString());
         }
         qint32 movementpoints = m_pGameAction->getTargetUnit()->getMovementpoints(m_pGameAction->getTarget());
-        QVector<QPoint> points = m_pUnitPathFindingSystem->getAllNodePoints();
+        QVector<QPoint> points = m_pUnitPathFindingSystem->getAllNodePointsFast();
         for (qint32 i = 0; i < points.size(); i++)
         {
             if (m_pUnitPathFindingSystem->getTargetCosts(points[i].x(), points[i].y()) > movementpoints)
@@ -1587,7 +1587,7 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
     if (canMoveAndFire)
     {
         pfs.explore();
-        points = pfs.getAllNodePoints();
+        points = pfs.getAllNodePointsFast();
     }
     else
     {

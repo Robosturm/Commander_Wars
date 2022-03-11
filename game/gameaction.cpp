@@ -190,6 +190,17 @@ void GameAction::setMovepath(const QVector<QPoint> & points, qint32 fuelCost)
     m_costs = fuelCost;
 }
 
+void GameAction::setMovepath(const std::vector<QPoint> & points, qint32 fuelCost)
+{
+    m_Movepath.clear();
+    m_Movepath.reserve(points.size());
+    for (auto & point : points)
+    {
+        m_Movepath.append(point);
+    }
+    m_costs = fuelCost;
+}
+
 bool GameAction::canBePerformed()
 {
     return canBePerformed(m_actionID);

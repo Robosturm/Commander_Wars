@@ -117,7 +117,7 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
     return m_movecosts[index][direction];
 }
 
-qint32 UnitPathFindingSystem::getCosts(const QVector<QPoint> & path)
+qint32 UnitPathFindingSystem::getCosts(const std::vector<QPoint> & path)
 {
     qint32 totalCosts = 0;
     for (qint32 i = path.size() - 2; i >= 0; i--)
@@ -128,25 +128,25 @@ qint32 UnitPathFindingSystem::getCosts(const QVector<QPoint> & path)
     return totalCosts;
 }
 
-QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target, qint32 movepoints, bool direct)
+std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target, qint32 movepoints, bool direct)
 {    
     if (m_pMap != nullptr)
     {
-        QVector<QVector4D> usedNodes;
-        QVector<QVector4D> nextNodes;
-        QVector<QVector4D> currentNodes;
-        currentNodes.append(QVector4D(target.x(), target.y(), target.x(), target.y()));
+        std::vector<QVector4D> usedNodes;
+        std::vector<QVector4D> nextNodes;
+        std::vector<QVector4D> currentNodes;
+        currentNodes.push_back(QVector4D(target.x(), target.y(), target.x(), target.y()));
         while (currentNodes.size() > 0 || nextNodes.size() > 0)
         {
             if (currentNodes.size() == 0)
             {
                 // swap nodes
-                currentNodes.append(nextNodes);
+                currentNodes.insert(currentNodes.end(), nextNodes.begin(), nextNodes.end());
                 nextNodes.clear();
             }
-            QVector4D currentNode = currentNodes.first();
-            currentNodes.removeFirst();
-            usedNodes.append(currentNode);
+            QVector4D currentNode = currentNodes.front();
+            currentNodes.erase(currentNodes.cbegin());
+            usedNodes.push_back(currentNode);
             qint32 currentCost = getTargetCosts(currentNode.x(), currentNode.y());
             Unit* pNodeUnit = m_pMap->getTerrain(currentNode.x(), currentNode.y())->getUnit();
             // empty field or unit ignores collision and can move on the field
@@ -155,7 +155,7 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
                             getTargetCosts(currentNode.x(), currentNode.y()), movepoints))
             {
 
-                return getPath(currentNode.x(), currentNode.y());
+                return getPathFast(currentNode.x(), currentNode.y());
             }
             else
             {
@@ -197,7 +197,7 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
                         !usedNodes.contains(test) &&
                         !nextNodes.contains(test))
                     {
-                        nextNodes.append(test);
+                        nextNodes.push_back(test);
                     }
                     // add previous nodes if it's a previous one and not used yet
                     else if (testCost >= 0 &&
@@ -205,25 +205,25 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
                              !usedNodes.contains(test) &&
                              !nextNodes.contains(test))
                     {
-                        nextNodes.append(test);
+                        nextNodes.push_back(test);
                     }
                 }
             }
         }
     }
-    return QVector<QPoint>();
+    return std::vector<QPoint>();
 }
 
-QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoint>& path, qint32 movepoints)
+std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(std::vector<QPoint>& path, qint32 movepoints)
 {
     if (movepoints > 0 && path.size() > 0)
     {
-        QVector<QPoint> ret;
-        QVector<QPoint> buffer;
+        std::vector<QPoint> ret;
+        std::vector<QPoint> buffer;
         qint32 currentCosts = 0;
         
         QPoint lastValidPoint = path[path.size() - 1];
-        ret.append(lastValidPoint);
+        ret.push_back(lastValidPoint);
         if (m_pMap != nullptr)
         {
             for (qint32 i = path.size() - 2; i >= 0; i--)
@@ -236,9 +236,9 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoin
                     lastValidPoint = path[i];
                     for (qint32 i2 = 0; i2 < buffer.size(); i2++)
                     {
-                        ret.push_front(buffer[i2]);
+                        ret.insert(ret.cbegin(), buffer[i2]);
                     }
-                    ret.push_front(lastValidPoint);
+                    ret.insert(ret.cbegin(), lastValidPoint);
                     buffer.clear();
                 }
                 else if (currentCosts > movepoints ||
@@ -248,7 +248,7 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoin
                 }
                 else
                 {
-                    buffer.append(path[i]);
+                    buffer.push_back(path[i]);
                 }
             }
         }
@@ -256,7 +256,7 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoin
     }
     else if (movepoints == 0 && path.size() > 0)
     {
-        return QVector<QPoint>(1, path[path.size() - 1]);
+        return std::vector<QPoint>(1, path[path.size() - 1]);
     }
     else
     {

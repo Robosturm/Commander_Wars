@@ -626,7 +626,7 @@ void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints)
         spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(this, m_fields[pos.y()][pos.x()]->getFlowTiles(), pos.x(), pos.y());
         pPfs->explore();
         m_fields[pos.y()][pos.x()]->updateFlowSprites(pPfs.get());
-        auto points = pPfs->getAllNodePoints();
+        auto points = pPfs->getAllNodePointsFast();
         for (const auto & point : qAsConst(points))
         {
             flowPoints.removeAll(point);

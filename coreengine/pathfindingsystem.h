@@ -123,6 +123,31 @@ public:
      * @brief setFinishNode
      */
     virtual void setFinishNode(qint32 x, qint32 y);
+    /**
+     * @brief get the Path to the given field as vector of qpoints. an empty vector means unreachable
+     * @param x
+     * @param y
+     * @return the first point is the target and the last point is the start
+     */
+    std::vector<QPoint> getPathFast(qint32 x, qint32 y) const;
+    /**
+     * @brief getTargetPath
+     * @return
+     */
+    std::vector<QPoint> getTargetPathFast() const;
+    /**
+     * @brief getFields searches for all fields in the range of min and max ignoring all movement costs
+     * @param min minimum search range
+     * @param max maximum search range
+     * @return shared pointer to the points
+     */
+    static std::vector<QPoint> getFieldsFast(qint32 startX, qint32 startY, qint32 min, qint32 max);
+    /**
+     * @brief getAllNodePoints returns all reachable fields in a point vector
+     * @param maxRange max costs of the target fields (costs need to be smaller than this value)
+     * @return
+     */
+    std::vector<QPoint> getAllNodePointsFast(qint32 maxRange = infinite);
 public slots:
     /**
      * @brief getTarget
@@ -130,30 +155,12 @@ public slots:
      */
     QPoint getTarget() const;
     /**
-     * @brief get the Path to the given field as vector of qpoints. an empty vector means unreachable
-     * @param x
-     * @param y
-     * @return the first point is the target and the last point is the start
-     */
-    QVector<QPoint> getPath(qint32 x, qint32 y) const;
-    /**
-     * @brief getTargetPath
-     * @return
-     */
-    QVector<QPoint> getTargetPath() const;
-    /**
      * @brief getCosts
      * @param x
      * @param y
      * @return
      */
     qint32 getTargetCosts(qint32 x, qint32 y) const;
-    /**
-     * @brief getAllNodePoints returns all reachable fields in a point vector
-     * @param maxRange max costs of the target fields (costs need to be smaller than this value)
-     * @return
-     */
-    QVector<QPoint> getAllNodePoints(qint32 maxRange = infinite);
     /**
      * @brief isReachable
      * @param x
@@ -166,13 +173,6 @@ public slots:
      * @return
      */
      QmlVectorPoint* getAllQmlVectorPoints();
-    /**
-     * @brief getFields searches for all fields in the range of min and max ignoring all movement costs
-     * @param min minimum search range
-     * @param max maximum search range
-     * @return shared pointer to the points
-     */
-    static QVector<QPoint> getFields(qint32 startX, qint32 startY, qint32 min, qint32 max);
     /**
      * @brief getIndex
      * @param x
@@ -215,7 +215,7 @@ protected:
     qint32 *m_costs;
     Directions* m_DirectionMap;
     std::array<qint32, Directions::Max> *m_movecosts;
-    QList<Node> m_OpenList;
+    std::list<Node> m_OpenList;
     qint32 m_FinishNode = -1;
     qint32 m_FinishNodeX = -1;
     qint32 m_FinishNodeY = -1;

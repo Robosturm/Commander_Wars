@@ -59,7 +59,7 @@ qint32 DecisionQuestion::matches(float value)
     return -1;
 }
 
-qint32 DecisionQuestion::matches(QVector<float> &rData)
+qint32 DecisionQuestion::matches(std::vector<float> &rData)
 {
     for (qint32 i = 0; i < m_Questions.size(); i++)
     {

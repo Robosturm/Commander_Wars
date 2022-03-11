@@ -29,7 +29,7 @@ Leaf::Leaf(QVector<QVector<float>>& trainingData)
     }
 }
 
-float Leaf::getDecision(QVector<float>&)
+float Leaf::getDecision(std::vector<float>&)
 {
     if (m_Answers.size() > 1)
     {
