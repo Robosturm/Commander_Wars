@@ -29,8 +29,10 @@ void Filesupport::addHash(QCryptographicHash & hash, const QString & folder, con
         QString filePath = item.filePath();
         CONSOLE_PRINT("Adding file: " + filePath + " to hash", Console::eDEBUG);
         QFile file(filePath);
-        file.open(QIODevice::ReadOnly | QIODevice::Truncate);
-        hash.addData(&file);
+        file.open(QIODevice::ReadOnly);
+        QTextStream stream(&file);
+        QString content = stream.readAll();
+        hash.addData(content.toUtf8());
         file.close();
     }
     list = dir.entryInfoList(QStringList(), QDir::Dirs | QDir::NoDotAndDotDot);

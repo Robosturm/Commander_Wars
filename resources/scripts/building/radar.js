@@ -58,6 +58,10 @@ var Constructor = function()
 			building.loadWeatherOverlaySpriteV2("radar+snow", false);
 		};
 	};
+    this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
+    {
+        animation.addBuildingSprite("radar+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Matrix);
+    };
 }
 
 Constructor.prototype = BUILDING;
