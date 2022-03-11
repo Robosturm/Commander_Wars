@@ -21,7 +21,7 @@ class QmlVectorPoint : public QObject, public oxygine::ref_counter
 public:
     explicit QmlVectorPoint();
     virtual ~QmlVectorPoint();
-    const QVector<QPoint> & getVector() const
+    const std::vector<QPoint> & getVector() const
     {
         return m_Vector;
     }
@@ -29,11 +29,11 @@ public:
 public slots:
     inline QPoint at(qint32 i) const
     {
-        return m_Vector.at(i);
+        return m_Vector[i];
     }
     inline void append(QPoint t)
     {
-        m_Vector.append(t);
+        m_Vector.push_back(t);
     }
     inline qint32 size() const
     {
@@ -41,14 +41,14 @@ public slots:
     }
     bool contains(QPoint pos)
     {
-        return m_Vector.contains(pos);
+        return std::find(m_Vector.cbegin(), m_Vector.cend(), pos) != m_Vector.cend();
     }
     void remove()
     {
         delete this;
     }
 private:
-    QVector<QPoint> m_Vector;
+    std::vector<QPoint> m_Vector;
 };
 
 class QmlVectorUnit;
@@ -59,7 +59,7 @@ class QmlVectorUnit : public QObject, public oxygine::ref_counter
 public:
     explicit QmlVectorUnit();
     virtual ~QmlVectorUnit();
-    const QVector<spUnit> & getVector() const
+    const std::vector<spUnit> & getVector() const
     {
         return m_Vector;
     }
@@ -67,11 +67,11 @@ public:
 public slots:
     inline Unit* at(qint32 i) const
     {
-        return m_Vector.at(i).get();
+        return m_Vector[i].get();
     }
     inline void append(Unit* t)
     {
-        m_Vector.append(spUnit(t));
+        m_Vector.push_back(spUnit(t));
     }
     inline qint32 size() const
     {
@@ -83,7 +83,7 @@ public slots:
     }
     void removeAt(qint32 i)
     {
-        m_Vector.removeAt(i);
+        m_Vector.erase(m_Vector.cbegin() + i);
     }
     void randomize();
     /**
@@ -95,7 +95,7 @@ public slots:
      */
     void sortShortestMovementRange(bool infantriesLast);
 private:
-    QVector<spUnit> m_Vector;
+    std::vector<spUnit> m_Vector;
 };
 
 class QmlVectorBuilding;
@@ -106,7 +106,7 @@ class QmlVectorBuilding: public QObject, public oxygine::ref_counter
 public:
     explicit QmlVectorBuilding();
     virtual ~QmlVectorBuilding();
-    const QVector<spBuilding> & getVector() const
+    const std::vector<spBuilding> & getVector() const
     {
         return m_Vector;
     }
@@ -114,11 +114,11 @@ public:
 public slots:
     inline Building* at(qint32 i) const
     {
-        return m_Vector.at(i).get();
+        return m_Vector[i].get();
     }
     inline void append(Building* t)
     {
-        m_Vector.append(spBuilding(t));
+        m_Vector.push_back(spBuilding(t));
     }
     inline qint32 size() const
     {
@@ -130,11 +130,11 @@ public slots:
     }
     void removeAt(qint32 i)
     {
-        m_Vector.removeAt(i);
+        m_Vector.erase(m_Vector.cbegin() + i);
     }
     void randomize();
 private:
-    QVector<spBuilding> m_Vector;
+    std::vector<spBuilding> m_Vector;
 };
 
 #endif // QMLVECTOR_H

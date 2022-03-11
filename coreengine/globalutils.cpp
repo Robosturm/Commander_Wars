@@ -267,7 +267,6 @@ bool GlobalUtils::isEven(qint32 value)
     }
 }
 
-
 bool GlobalUtils::getUseSeed()
 {
     return m_useSeed;

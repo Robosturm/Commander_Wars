@@ -616,7 +616,7 @@ protected:
      */
     void deserializeObjectVersion(QDataStream &stream, qint32 version);
 protected:
-    QVector<spIslandMap> m_IslandMaps;
+    std::vector<spIslandMap> m_IslandMaps;
     double m_buildingValue{1.0f};
     double m_ownUnitValue{1.0f};
     GameEnums::AiTurnMode turnMode{GameEnums::AiTurnMode_StartOfDay};

@@ -172,9 +172,9 @@ void Chat::addMessage(QJsonObject data, bool local)
     }
 
     QString drawText;
-    for(qint32 i = 0; i < m_messages.size();i++)
+    for(auto & message : m_messages)
     {
-        drawText += "> " + m_messages[i] + "\n";
+        drawText += "> " + message + "\n";
     }
     m_Chat->setHtmlText(drawText);
     m_Chat->setHeight(m_Chat->getTextRect().getHeight() + 20);

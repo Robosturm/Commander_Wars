@@ -93,10 +93,10 @@ namespace oxygine
 
         TextNode::TextNode(const QString & v)
         {
-            for (qint32 i = 0; i < v.size(); i++)
+            for (auto & c : v)
             {
                 Symbol s;
-                s.code = v[i].unicode();
+                s.code = c.unicode();
                 m_data.push_back(s);
             }
         }
@@ -113,10 +113,8 @@ namespace oxygine
 
         void TextNode::draw(DrawContext& dc)
         {
-            qint32 size = m_data.size();
-            for (qint32 i = 0; i < size; ++i)
+            for (const auto & s : qAsConst(m_data))
             {
-                const Symbol& s = m_data[i];
                 if (!s.mat)
                 {
                     continue;
@@ -131,16 +129,11 @@ namespace oxygine
 
         void TextNode::xupdateMaterial(const Material& mat)
         {
-            for (qint32 i = 0; i < m_data.size(); ++i)
+            for (auto & s : m_data)
             {
-                size_t size = m_data.size();
-                for (size_t i = 0; i < size; ++i)
-                {
-                    Symbol& s = m_data[i];
-                    spMaterial m = mat.clone();
-                    m->m_base = s.mat->m_base;
-                    s.mat = MaterialCache::mc().cache(*m.get());
-                }
+                spMaterial m = mat.clone();
+                m->m_base = s.mat->m_base;
+                s.mat = MaterialCache::mc().cache(*m.get());
             }
         }
 
@@ -210,11 +203,9 @@ namespace oxygine
 
             qint32 offsetY = rd.getBounds().pos.y;
 
-            for (qint32 i = 0; i < m_data.size(); ++i)
+            for (auto & s : m_data)
             {
-                Symbol& s = m_data[i];
                 s.y += offsetY;
-
                 if (s.gl.texture)
                 {
                     s.destRect = RectF(mlt(s.x, scaleFactor), mlt(s.y, scaleFactor), mlt(s.gl.sw, scaleFactor), mlt(s.gl.sh, scaleFactor));

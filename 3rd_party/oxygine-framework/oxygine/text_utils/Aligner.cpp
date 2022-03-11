@@ -111,18 +111,16 @@ namespace oxygine
             {
                 //calculate real text width
                 qint32 rx = 0;
-                for (qint32 i = 0; i < ln.size(); ++i)
+                for (auto & s : ln)
                 {
-                    Symbol& s = *ln[i];
-                    rx = std::max(s.x + s.gl.advance_x, rx);
+                    rx = std::max(s->x + s->gl.advance_x, rx);
                 }
 
                 qint32 tx = _alignX(rx);
 
-                for (qint32 i = 0; i < ln.size(); ++i)
+                for (auto & s : ln)
                 {
-                    Symbol& s = *ln[i];
-                    s.x += tx;
+                    s->x += tx;
                 }
 
                 m_lineWidth = rx;
@@ -204,9 +202,9 @@ namespace oxygine
                 leftPart = line(m_line.begin() + lastWordPos, m_line.end());
                 m_line.resize(lastWordPos);
                 nextLine();
-                for (qint32 i = 0; i < leftPart.size(); ++i)
+                for (auto & left : leftPart)
                 {
-                    putSymbol(*leftPart[i]);
+                    putSymbol(*left);
                 }
 
                 return 0;

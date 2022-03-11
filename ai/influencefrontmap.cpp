@@ -14,7 +14,7 @@
 
 #include "objects/base/label.h"
 
-InfluenceFrontMap::InfluenceFrontMap(GameMap* pMap, const QVector<spIslandMap> & islands)
+InfluenceFrontMap::InfluenceFrontMap(GameMap* pMap, const std::vector<spIslandMap> & islands)
     : m_islands(islands),
       m_pMap(pMap)
 {
@@ -27,7 +27,7 @@ InfluenceFrontMap::InfluenceFrontMap(GameMap* pMap, const QVector<spIslandMap> &
     qint32 heigth = m_pMap->getMapHeight();
     for (qint32 x = 0; x < width; x++)
     {
-        m_InfluenceMap.append(QVector<InfluenceInfo>(heigth, InfluenceInfo(m_pMap)));
+        m_InfluenceMap.push_back(std::vector<InfluenceInfo>(heigth, InfluenceInfo(m_pMap)));
     }
 }
 
@@ -265,7 +265,7 @@ void InfluenceFrontMap::show()
                 sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
                 sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
                 m_pMap->addChild(sprite);
-                m_info.append(sprite);
+                m_info.push_back(sprite);
             }
         }
     }
@@ -296,7 +296,7 @@ void InfluenceFrontMap::showPfs(UnitPathFindingSystem* pPfs)
                 sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
                 sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
                 m_pMap->addChild(sprite);
-                m_info.append(sprite);
+                m_info.push_back(sprite);
             }
         }
     }
@@ -332,7 +332,7 @@ void InfluenceFrontMap::showFrontlines()
                 sprite->setPosition(field.x() * GameMap::getImageSize() + size * i, field.y() * GameMap::getImageSize());
                 sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
                 m_pMap->addChild(sprite);
-                m_info.append(sprite);
+                m_info.push_back(sprite);
             }
             spLabel pTextfield = spLabel::create(GameMap::getImageSize());
             pTextfield->setStyle(style);
@@ -340,7 +340,7 @@ void InfluenceFrontMap::showFrontlines()
             pTextfield->setPosition(field.x() * GameMap::getImageSize(), field.y() * GameMap::getImageSize());
             pTextfield->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
             m_pMap->addChild(pTextfield);
-            m_info.append(pTextfield);
+            m_info.push_back(pTextfield);
         }
     }
 }
@@ -453,15 +453,14 @@ void InfluenceFrontMap::createFrontLine()
                 frontline.append(QPoint(x, y));
                 info.frontLineCreated = true;
                 searchFrontLine(circle.get(), info, x, y, frontline);
-                m_frontLines.append(frontline);
+                m_frontLines.push_back(frontline);
             }
         }
     }
 }
 
 void InfluenceFrontMap::searchFrontLine(QmlVectorPoint* neighbours, InfluenceInfo & info, qint32 x, qint32 y, QVector<QPoint> & frontline)
-{
-    
+{    
     for (qint32 i = 0; i < neighbours->size(); ++i)
     {
         auto neighbour = neighbours->at(i);
@@ -484,8 +483,7 @@ void InfluenceFrontMap::searchFrontLine(QmlVectorPoint* neighbours, InfluenceInf
 void InfluenceFrontMap::updateHighestInfluence()
 {
     AI_CONSOLE_PRINT("InfluenceFrontMap::updateHighestInfluence()", Console::eDEBUG);
-    spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
-    
+    spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));    
     qint32 width = m_pMap->getMapWidth();
     qint32 heigth = m_pMap->getMapHeight();
     for (qint32 x = 0; x < width; ++x)

@@ -1,7 +1,6 @@
 #include "coreengine/filesupport.h"
 #include "coreengine/settings.h"
 
-#include <QCryptographicHash>
 #include <QDirIterator>
 #include <QCoreApplication>
 
@@ -16,18 +15,29 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
     }
     for (const auto & folder : qAsConst(fullList))
     {
-        QString path =  folder;
-        QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
-        while (dirIter.hasNext())
-        {
-            dirIter.next();
-            QFile file(dirIter.filePath());
-            file.open(QIODevice::ReadOnly | QIODevice::Truncate);
-            myHash.addData(&file);
-            file.close();
-        }
+        addHash(myHash, folder, filter);
     }
     return myHash.result();
+}
+
+void Filesupport::addHash(QCryptographicHash & hash, const QString & folder, const QStringList & filter)
+{
+    QDir dir(folder);
+    auto list = dir.entryInfoList(filter, QDir::Files);
+    for (auto & item : list)
+    {
+        QString filePath = item.absoluteFilePath();
+        QFile file(filePath);
+        file.open(QIODevice::ReadOnly | QIODevice::Truncate);
+        hash.addData(&file);
+        file.close();
+    }
+    list = dir.entryInfoList(QStringList(), QDir::Dirs | QDir::NoDotAndDotDot);
+    for (auto & item : list)
+    {
+        QString path = item.absoluteDir().absolutePath();
+        addHash(hash, path, filter);
+    }
 }
 
 QByteArray Filesupport::getRuntimeHash(const QStringList & mods)

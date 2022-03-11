@@ -13,11 +13,11 @@ TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit
     setObjectName("TargetedUnitPathFindingSystem");
     Interpreter::setCppOwnerShip(this);
     setFast(true);
-    for (qint32 i = 0; i < m_Targets.size(); i++)
+    for (auto & target : m_Targets)
     {
-        if (m_Targets[i].z() <= 0.0f)
+        if (target.z() <= 0.0f)
         {
-            m_Targets[i].setZ(1.0f);
+            target.setZ(1.0f);
         }
     }
     setMovepoints(m_pUnit->getFuel() * 2);
@@ -28,11 +28,11 @@ qint32 TargetedUnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint3
     qint32 minCost = -1;
     if (!m_abortOnCostExceed || currentCost <= m_Movepoints)
     {
-        for (qint32 i = 0; i < m_Targets.size(); i++)
+        for (auto & target : m_Targets)
         {
-            qint32 cost = static_cast<qint32>(qAbs(static_cast<qint32>(m_Targets[i].x()) - x) +
-                                              qAbs(static_cast<qint32>(m_Targets[i].y()) - y)) * m_Targets[i].z() +
-                          static_cast<qint32>(m_pUnit->getBaseMovementPoints() * (m_Targets[i].z() - 1.0));
+            qint32 cost = static_cast<qint32>(qAbs(static_cast<qint32>(target.x()) - x) +
+                                              qAbs(static_cast<qint32>(target.y()) - y)) * target.z() +
+                          static_cast<qint32>(m_pUnit->getBaseMovementPoints() * (target.z() - 1.0));
             if (cost < minCost)
             {
                 minCost = cost;
@@ -130,14 +130,14 @@ void TargetedUnitPathFindingSystem::setFinishNode(qint32, qint32)
         qint32 minCosts = std::numeric_limits<qint32>::max();
         qint32 x = -1;
         qint32 y = -1;
-        for (qint32 i = 0; i < m_FinishNodes.size(); i++)
+        for (auto & node : m_FinishNodes)
         {
-            qint32 costs = static_cast<qint32>(std::get<2>(m_FinishNodes[i]) * std::get<3>(m_FinishNodes[i]));
+            qint32 costs = static_cast<qint32>(std::get<2>(node) * std::get<3>(node));
             if (costs < minCosts)
             {
                 minCosts = costs;
-                x = std::get<0>(m_FinishNodes[i]);
-                y = std::get<1>(m_FinishNodes[i]);
+                x = std::get<0>(node);
+                y = std::get<1>(node);
             }
         }
         PathFindingSystem::setFinishNode(x, y);

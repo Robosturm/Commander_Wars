@@ -245,8 +245,8 @@ bool HeavyAi::selectActionToPerform()
         auto & unit = m_ownUnits[index];
         QPoint target = unit.m_action->getTarget();
         AI_CONSOLE_PRINT("HeavyAi selected action " + unit.m_action->getActionID() + " to be performed with score " + QString::number(bestScore), Console::eDEBUG);
-        m_updatePoints.append(target);
-        m_updatePoints.append(unit.m_action->getActionTarget());
+        m_updatePoints.push_back(target);
+        m_updatePoints.push_back(unit.m_action->getActionTarget());
         if (target != unit.pUnit->Unit::getPosition())
         {
             oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "HeavyAi::selectActionToPerform action error");
@@ -400,15 +400,15 @@ void HeavyAi::updateUnits(QVector<MoveUnitData> & units, spQmlVectorUnit & pUnit
     }
     QVector<qint32> updated;
     spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(1, 5));
-    for (qint32 i = 0; i < m_updatePoints.size(); i++)
+    for (auto & updatePoint : m_updatePoints)
     {
         qint32 i2 = 0;
         while (i2 < units.size())
         {
             if (!updated.contains(i2))
             {
-                if (qAbs(m_updatePoints[i].x() - units[i2].pUnit->Unit::getX()) +
-                    qAbs(m_updatePoints[i].y() - units[i2].pUnit->Unit::getY()) <=
+                if (qAbs(updatePoint.x() - units[i2].pUnit->Unit::getX()) +
+                    qAbs(updatePoint.y() - units[i2].pUnit->Unit::getY()) <=
                     units[i2].pUnit->getMovementpoints(QPoint(units[i2].pUnit->Unit::getX(), units[i2].pUnit->Unit::getY())) + 2)
                 {
                     units[i2].pUnitPfs = spUnitPathFindingSystem::create(m_pMap, units[i2].pUnit.get());

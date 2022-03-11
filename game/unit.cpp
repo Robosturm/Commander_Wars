@@ -2502,16 +2502,16 @@ void Unit::setHasMoved(bool value)
     // change unit color
     if (m_Moved)
     {
-        for(qint32 i = 0; i < m_pUnitWaitSprites.size(); i++)
+        for(auto & sprite : m_pUnitWaitSprites)
         {
-            m_pUnitWaitSprites[i]->setVisible(true);
+            sprite->setVisible(true);
         }
     }
     else
     {
-        for(qint32 i = 0; i < m_pUnitWaitSprites.size(); i++)
+        for(auto & sprite : m_pUnitWaitSprites)
         {
-            m_pUnitWaitSprites[i]->setVisible(false);
+            sprite->setVisible(false);
         }
     }
 }

@@ -161,7 +161,14 @@ public:
     {
         m_sortValues = newSortValues;
     }
-
+    /**
+     * @brief Unit::getLoadedUnits
+     * @return
+     */
+    QVector<spUnit> & getLoadedUnits()
+    {
+        return m_TransportUnits;
+    }
 public slots:
     /**
      * @brief getActionList
