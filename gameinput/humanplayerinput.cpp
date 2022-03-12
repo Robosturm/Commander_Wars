@@ -282,9 +282,9 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             if (pPoints.get() != nullptr && pPoints->size() > 0)
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
-                for (qint32 i = 0; i < pPoints->size(); i++)
+                for (auto & point : pPoints->getVector())
                 {
-                    createMarkedField(buildingPos + targetOffset + pPoints->at(i), QColor(255, 0, 0), Terrain::ExtraDrawPriority::MarkedFieldMap);
+                    createMarkedField(buildingPos + targetOffset + point, QColor(255, 0, 0), Terrain::ExtraDrawPriority::MarkedFieldMap);
                 }
             }
         }
@@ -342,9 +342,9 @@ void HumanPlayerInput::clearMenu()
 void HumanPlayerInput::clearMarkedFields()
 {
     Mainapp::getInstance()->pauseRendering();
-    for (qint32 i = 0; i < m_Fields.size(); i++)
+    for (auto & field : m_Fields)
     {
-        m_Fields[i]->detach();
+        field->detach();
     }
     m_FieldPoints.clear();
     m_Fields.clear();
@@ -400,11 +400,11 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 }
                 else
                 {
-                    QVector<QPoint>* pFields = m_pMarkedFieldData->getPoints();
-                    for (qint32 i = 0; i < pFields->size(); i++)
+                    QVector<QPoint> & pFields = *m_pMarkedFieldData->getPoints();
+                    for (auto field : pFields)
                     {
-                        if ((pFields->at(i).x() == x) &&
-                            (pFields->at(i).y() == y))
+                        if ((field.x() == x) &&
+                            (field.y() == y))
                         {
                             markedFieldSelected(QPoint(x, y));
                             break;
@@ -444,11 +444,11 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                         (pBuilding->getOwner() == m_pPlayer))
                     {
                         actions = pBuilding->getActionList();
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & action : actions)
                         {
-                            if (m_pGameAction->canBePerformed(actions[i]))
+                            if (m_pGameAction->canBePerformed(action))
                             {
-                                possibleActions.append(actions[i]);
+                                possibleActions.append(action);
                             }
                         }
                     }
@@ -478,11 +478,11 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                         {
                             actions = getEmptyActionList();
                             possibleActions.clear();
-                            for (qint32 i = 0; i < actions.size(); i++)
+                            for (auto & action : actions)
                             {
-                                if (m_pGameAction->canBePerformed(actions[i], true))
+                                if (m_pGameAction->canBePerformed(action, true))
                                 {
-                                    possibleActions.append(actions[i]);
+                                    possibleActions.append(action);
                                 }
                             }
                             if (possibleActions.size() > 0)
@@ -539,11 +539,11 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                             // we want to do something with this unit :)
                             actions = pUnit->getActionList();
                         }
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & action : actions)
                         {
-                            if (m_pGameAction->canBePerformed(actions[i]))
+                            if (m_pGameAction->canBePerformed(action))
                             {
-                                possibleActions.append(actions[i]);
+                                possibleActions.append(action);
                             }
                         }
                         if (possibleActions.size() > 0)
@@ -595,11 +595,11 @@ void HumanPlayerInput::showInfoMenu(qint32 x, qint32 y)
     }
     QStringList actions = getViewplayerActionList();
     QStringList possibleActions;
-    for (qint32 i = 0; i < actions.size(); i++)
+    for (auto & action : actions)
     {
-        if (m_pGameAction->canBePerformed(actions[i], true))
+        if (m_pGameAction->canBePerformed(action, true))
         {
-            possibleActions.append(actions[i]);
+            possibleActions.append(action);
         }
     }
     if (possibleActions.size() > 0)
@@ -690,10 +690,10 @@ void HumanPlayerInput::getNextStepData()
         {
             CONSOLE_PRINT("HumanPlayerInput::getNextStepData show fields", Console::eDEBUG);
             spMarkedFieldData pData = m_pGameAction->getMarkedFieldStepData();
-            QVector<QPoint>* pFields = pData->getPoints();
-            for (qint32 i = 0; i < pFields->size(); i++)
+            QVector<QPoint> & pFields = *pData->getPoints();
+            for (auto & field : pFields)
             {
-                createMarkedField(pFields->at(i), pData->getColor(), Terrain::ExtraDrawPriority::MarkedFieldMap);
+                createMarkedField(field, pData->getColor(), Terrain::ExtraDrawPriority::MarkedFieldMap);
             }
             syncMarkedFields();
             m_pMarkedFieldData = pData;
@@ -769,9 +769,9 @@ void HumanPlayerInput::createActionMenu(const QStringList & actionIDs, qint32 x,
     CONSOLE_PRINT("HumanPlayerInput::createActionMenu", Console::eDEBUG);
     clearMarkedFields();
     MenuData data(m_pMap);
-    for (qint32 i = 0; i < actionIDs.size(); i++)
+    for (auto & action : actionIDs)
     {
-        data.addData(GameAction::getActionText(m_pMap, actionIDs[i]), actionIDs[i], GameAction::getActionIcon(m_pMap, actionIDs[i]));
+        data.addData(GameAction::getActionText(m_pMap, action), action, GameAction::getActionIcon(m_pMap, action));
     }
     m_CurrentMenu = spHumanPlayerInputMenu::create(m_pMap, data.getTexts(), actionIDs, data.getIconList());
     attachActionMenu(x, y);
@@ -929,15 +929,15 @@ void HumanPlayerInput::createMarkedMoveFields()
         }
         qint32 movementpoints = m_pGameAction->getTargetUnit()->getMovementpoints(m_pGameAction->getTarget());
         auto points = m_pUnitPathFindingSystem->getAllNodePointsFast();
-        for (qint32 i = 0; i < points.size(); i++)
+        for (auto & point : points)
         {
-            if (m_pUnitPathFindingSystem->getTargetCosts(points[i].x(), points[i].y()) > movementpoints)
+            if (m_pUnitPathFindingSystem->getTargetCosts(point.x(), point.y()) > movementpoints)
             {
-                createMarkedField(points[i], multiTurnColor, Terrain::ExtraDrawPriority::MarkedField);
+                createMarkedField(point, multiTurnColor, Terrain::ExtraDrawPriority::MarkedField);
             }
             else
             {
-                createMarkedField(points[i], turnColor, Terrain::ExtraDrawPriority::MarkedField);
+                createMarkedField(point, turnColor, Terrain::ExtraDrawPriority::MarkedField);
             }
         }
         syncMarkedFields();
@@ -1020,7 +1020,8 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     if (pUnit != nullptr)
                     {
                         auto multiTurnPath = pUnit->getMultiTurnPath();
-                        std::vector<QPoint> path(multiTurnPath.size());
+                        std::vector<QPoint> path;
+                        path.reserve(multiTurnPath.size());
                         for (auto & point : multiTurnPath)
                         {
                             path.push_back(point);
@@ -1602,14 +1603,14 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
     qint32 maxRange = pUnit->getMaxRange(position);
     qint32 minRange = pUnit->getMinRange(position);
     spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(minRange, maxRange));
-    for (qint32 i = 0; i < points.size(); i++)
+    for (auto & point : points)
     {
         if (canMoveAndFire ||
-            (points[i].x() == position.x() && points[i].y() == position.y()))
+            (point.x() == position.x() && point.y() == position.y()))
         {
-            for (qint32 i2 = 0; i2 < pPoints->size(); i2++)
+            for (auto & rangePos : pPoints->getVector())
             {
-                QPoint target = pPoints->at(i2) + points[i];
+                QPoint target = rangePos + point;
                 if (m_pMap->onMap(target.x(), target.y()) &&
                     !usedFields.contains(QPoint(target.x(), target.y())))
                 {
@@ -1641,10 +1642,10 @@ void HumanPlayerInput::nextMarkedField()
         {
             while (x < width && !found)
             {
-                for (qint32 i = 0; i < m_FieldPoints.size(); i++)
+                for (auto & field : m_FieldPoints)
                 {
-                    if (x == static_cast<qint32>(m_FieldPoints[i].x()) &&
-                        (y == static_cast<qint32>(m_FieldPoints[i].y())))
+                    if (x == static_cast<qint32>(field.x()) &&
+                       (y == static_cast<qint32>(field.y())))
                     {
                         if (center)
                         {
@@ -1666,10 +1667,10 @@ void HumanPlayerInput::nextMarkedField()
         {
             while (x < width && !found)
             {
-                for (qint32 i = 0; i < m_FieldPoints.size(); i++)
+                for (auto & field : m_FieldPoints)
                 {
-                    if (x == static_cast<qint32>(m_FieldPoints[i].x()) &&
-                        (y == static_cast<qint32>(m_FieldPoints[i].y())))
+                    if (x == static_cast<qint32>(field.x()) &&
+                        (y == static_cast<qint32>(field.y())))
                     {
                         if (center)
                         {
@@ -1710,10 +1711,10 @@ void HumanPlayerInput::previousMarkedField()
         {
             while (x >= 0 && !found)
             {
-                for (qint32 i = 0; i < m_FieldPoints.size(); i++)
+                for (auto & field : m_FieldPoints)
                 {
-                    if (x == static_cast<qint32>(m_FieldPoints[i].x()) &&
-                        (y == static_cast<qint32>(m_FieldPoints[i].y())))
+                    if (x == static_cast<qint32>(field.x()) &&
+                        (y == static_cast<qint32>(field.y())))
                     {
                         if (center)
                         {
@@ -1735,10 +1736,10 @@ void HumanPlayerInput::previousMarkedField()
         {
             while (x >= 0 && !found)
             {
-                for (qint32 i = 0; i < m_FieldPoints.size(); i++)
+                for (auto & field : m_FieldPoints)
                 {
-                    if (x == static_cast<qint32>(m_FieldPoints[i].x()) &&
-                        (y == static_cast<qint32>(m_FieldPoints[i].y())))
+                    if (x == static_cast<qint32>(field.x()) &&
+                        (y == static_cast<qint32>(field.y())))
                     {
                         if (center)
                         {
@@ -1800,9 +1801,9 @@ void HumanPlayerInput::nextSelectOption()
                         GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & actionId : actions)
                         {
-                            if (action.canBePerformed(actions[i]))
+                            if (action.canBePerformed(actionId))
                             {
                                 if (center)
                                 {
@@ -1844,9 +1845,9 @@ void HumanPlayerInput::nextSelectOption()
                         GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & actionId : actions)
                         {
-                            if (action.canBePerformed(actions[i]))
+                            if (action.canBePerformed(actionId))
                             {
                                 if (center)
                                 {
@@ -1910,9 +1911,9 @@ void HumanPlayerInput::previousSelectOption()
                         GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & actionId : actions)
                         {
-                            if (action.canBePerformed(actions[i]))
+                            if (action.canBePerformed(actionId))
                             {
                                 if (center)
                                 {
@@ -1954,9 +1955,9 @@ void HumanPlayerInput::previousSelectOption()
                         GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & actionId : actions)
                         {
-                            if (action.canBePerformed(actions[i]))
+                            if (action.canBePerformed(actionId))
                             {
                                 if (center)
                                 {
@@ -2014,9 +2015,9 @@ void HumanPlayerInput::autoEndTurn()
                         GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & actionId : actions)
                         {
-                            action.setActionID(actions[i]);
+                            action.setActionID(actionId);
                             if (action.canBePerformed())
                             {
                                 return;
