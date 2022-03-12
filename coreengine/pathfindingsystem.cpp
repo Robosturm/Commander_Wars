@@ -339,7 +339,8 @@ bool PathFindingSystem::isReachable(qint32 x, qint32 y) const
 QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y) const
 {
     auto points = getPathFast(x, y);
-    QVector<QPoint> path(points.size());
+    QVector<QPoint> path;
+    path.reserve((points.size()));
     for (auto & point : points)
     {
         path.append(point);
@@ -350,7 +351,8 @@ QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y) const
 QVector<QPoint> PathFindingSystem::getTargetPath() const
 {
     auto points = getTargetPathFast();
-    QVector<QPoint> path(points.size());
+    QVector<QPoint> path;
+    path.reserve((points.size()));
     for (auto & point : points)
     {
         path.append(point);
@@ -361,7 +363,8 @@ QVector<QPoint> PathFindingSystem::getTargetPath() const
 QVector<QPoint> PathFindingSystem::getFields(qint32 startX, qint32 startY, qint32 min, qint32 max)
 {
     auto points = getFieldsFast(startX, startY, min, max);
-    QVector<QPoint> path(points.size());
+    QVector<QPoint> path;
+    path.reserve((points.size()));
     for (auto & point : points)
     {
         path.append(point);
@@ -372,7 +375,8 @@ QVector<QPoint> PathFindingSystem::getFields(qint32 startX, qint32 startY, qint3
 QVector<QPoint> PathFindingSystem::getAllNodePoints(qint32 maxRange)
 {
     auto points = getAllNodePoints(maxRange);
-    QVector<QPoint> path(points.size());
+    QVector<QPoint> path;
+    path.reserve((points.size()));
     for (auto & point : points)
     {
         path.append(point);

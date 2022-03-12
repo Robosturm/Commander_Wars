@@ -1520,19 +1520,17 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
             break;
         }
     }
-    for (qint32 i = 0; i < points.size(); i++)
+    for (auto & point : points)
     {
         // point still on the map great :)
-        qint32 curX = points.at(i).x();
-        qint32 curY = points.at(i).y();
+        qint32 curX = point.x();
+        qint32 curY = point.y();
         if (canUnitBePlaced(curX, curY))
         {
             spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
             spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, m_pMap.get());
-            pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
-            
-            m_pMap->getTerrain(curX, curY)->setUnit(pUnit);
-            
+            pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);            
+            m_pMap->getTerrain(curX, curY)->setUnit(pUnit);            
         }
     }
     if (Settings::getSyncAnimations())
