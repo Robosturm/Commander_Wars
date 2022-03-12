@@ -151,6 +151,7 @@ var Constructor = function()
         if (weapon === 0)
         {
             var offset = Qt.point(0, 0);
+            var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_ZCOUNIT_RANGER.armyData);
             var data = Global.getDataFromTable(armyName, BATTLEANIMATION_ZCOUNIT_RANGER.animationData);
             if (position > 0)
             {
