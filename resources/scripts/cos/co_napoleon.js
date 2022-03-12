@@ -177,7 +177,7 @@ var Constructor = function()
             return 0;
         case GameEnums.PowerMode_Power:
             var defHp = defender.getHp() * 10;
-            if (damage  > defHp / 2)
+            if (damage > defHp / 2 && defHp > 1.0 && damage >= 0)
             {
                 return damage - defHp / 2;
             }
@@ -272,7 +272,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Units cannot take damage that is more than half of their starting HP in a single attack.");
+        return qsTr("Units cannot take damage that is more than half of their current HP in a single attack.");
     };
     this.getPowerName = function(co)
     {
@@ -288,9 +288,9 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Me and what army, you ask?  I have many more soldiers than you think."),
+        return [qsTr("Me and what army, you ask? I have many more soldiers than you think."),
                 qsTr("Size does not matter in a battle of wills."),
-                qsTr("I can take any attack.  You would be wrong to test that statement."),
+                qsTr("I can take any attack. You would be wrong to test that statement."),
                 qsTr("You can give up now and avoid further bloodshed.  Either way, though, my troops simply won't die."),
                 qsTr("My casualties are not dead, but simply waiting to fight again."),
                 qsTr("I need not worry about attrition.  On the other hand, you do.")];
@@ -298,12 +298,12 @@ var Constructor = function()
     this.getVictorySentences = function(co)
     {
         return [qsTr("The survival of the Metal Army is assured."),
-                qsTr("My casualties are recovering.  Yours are not so lucky."),
-                qsTr("Why were you so confident?  Success is earned, not granted.")];
+                qsTr("My casualties are recovering. Yours are not so lucky."),
+                qsTr("Why were you so confident? Success is earned, not granted.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Our losses are unacceptable.  I will fix that."),
+        return [qsTr("Our losses are unacceptable. I will fix that."),
                 qsTr("Stand aside; I will deal with them.")];
     };
     this.getName = function()

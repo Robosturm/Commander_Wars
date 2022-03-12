@@ -153,6 +153,10 @@ var Constructor = function()
                 }
                 result.y = 1;
             }
+            if (result.x < 0)
+            {
+                result.x = 0;
+            }
         }
         return result;
     };

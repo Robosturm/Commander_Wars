@@ -860,7 +860,7 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     oxygine::VStyleActor::TweenColor tweenColor(getHealthBarColor(endHp));
     oxygine::spTween colorTween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pHealthbar->addTween(colorTween);
-    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth((spriteWidth -  healthBarSize) * endHp / Unit::MAX_UNIT_HP + 10), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
+    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth((spriteWidth -  healthBarSize) * endHp / Unit::MAX_UNIT_HP), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pHealthbar->addTween(posTween);
     if (m_currentState <= AnimationProgress::AttackerImpact)
     {
