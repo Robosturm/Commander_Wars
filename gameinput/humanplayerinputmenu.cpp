@@ -138,7 +138,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMap* pMap, const QStringList & te
                         pItemBox->setY(y);
                         pItemBox->setX(x);
                         pItemBox->setWidth(width);
-                        pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
+                        pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *pEvent)->void
                         {
                             oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
                             if (pTouchEvent != nullptr)
@@ -168,7 +168,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMap* pMap, const QStringList & te
             qint32 height = maxY + bottomHeigth;
             qint32 max = m_ItemActors.size() - m_rowCount * m_maxXCount;
             m_scrollbar = spH_Scrollbar::create(height, height + max * m_itemHeigth * 1.5f);
-            connect(m_scrollbar.get(), &H_Scrollbar::sigScrollValueChanged, this, [=](float value)
+            connect(m_scrollbar.get(), &H_Scrollbar::sigScrollValueChanged, this, [this, max](float value)
             {
                 m_startItem = max * value;
                 updateItemPositionAndVisibility();
@@ -198,7 +198,7 @@ void HumanPlayerInputMenu::addTouchMoveEvents()
 {
     if (m_scrollbar.get() != nullptr)
     {
-        addTouchDownListener([=](oxygine::Event* event)
+        addTouchDownListener([this](oxygine::Event* event)
         {
             oxygine::TouchEvent* te = oxygine::safeCast<oxygine::TouchEvent*>(event);
             m_lastScrollPoint = te->localPosition;
@@ -206,7 +206,7 @@ void HumanPlayerInputMenu::addTouchMoveEvents()
             event->stopPropagation();
 
         });
-        addTouchUpListener([=](oxygine::Event* event)
+        addTouchUpListener([this](oxygine::Event* event)
         {
             if (m_moveScrolling)
             {
@@ -214,7 +214,7 @@ void HumanPlayerInputMenu::addTouchMoveEvents()
             }
             event->stopPropagation();
         });
-        addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event* event)
+        addEventListener(oxygine::TouchEvent::OUTX, [this](oxygine::Event* event)
         {
             if (m_moveScrolling)
             {
@@ -222,7 +222,7 @@ void HumanPlayerInputMenu::addTouchMoveEvents()
             }
         });
         auto * pScrollbar = m_scrollbar.get();
-        addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event* event)
+        addEventListener(oxygine::TouchEvent::MOVE, [this, pScrollbar](oxygine::Event* event)
         {
             if (m_moveScrolling)
             {
@@ -321,7 +321,7 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
         addChild(pItemBox);
         oxygine::Actor* pBox = pItemBox.get();
         oxygine::Sprite* pCursor = m_Cursor.get();
-        pItemBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *pEvent)->void
+        pItemBox->addEventListener(oxygine::TouchEvent::OVER, [this, pCursor, pBox, width, item](oxygine::Event *pEvent)->void
         {
             Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
             pEvent->stopPropagation();
@@ -331,7 +331,7 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
         });
         if (enabled)
         {
-            pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
+            pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [this, action, costs](oxygine::Event *pEvent)->void
             {
                 oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
                 if (pTouchEvent != nullptr)
@@ -351,7 +351,7 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
         }
         else
         {
-            pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
+            pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *pEvent)->void
             {
                 oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
                 if (pTouchEvent != nullptr)
@@ -564,7 +564,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                         spUnit pDummy = spUnit::create(id, m_pMap->getCurrentPlayer(), false, m_pMap);
                         spFieldInfo fieldinfo = spFieldInfo::create(nullptr, pDummy.get());
                         pMenu->addChild(fieldinfo);
-                        connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [=]
+                        connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [this]
                         {
                             m_Focused = true;
                         });
@@ -578,7 +578,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                         {
                             spWikipage page = pDatabase->getPage(data);
                             pMenu->addChild(page);
-                            connect(page.get(), &FieldInfo::sigFinished, this, [=]
+                            connect(page.get(), &FieldInfo::sigFinished, this, [this]
                             {
                                 m_Focused = true;
                             });

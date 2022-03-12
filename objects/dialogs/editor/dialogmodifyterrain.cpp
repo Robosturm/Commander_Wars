@@ -33,7 +33,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigFinished();
     });
@@ -93,7 +93,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
             pSprite->loadSprites();
             pSprite->setScale(2);            
             pSprite->setPosition(x, y);
-            pSprite->addClickListener([=](oxygine::Event*)
+            pSprite->addClickListener([this, id](oxygine::Event*)
             {
                 emit sigTerrainClicked(id);
             });
@@ -125,7 +125,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     oxygine::spButton pButtonDefault = pObjectManager->createButton(tr("Default"), 150);
     pButtonDefault->setPosition(10, y);
     m_pPanel->addChild(pButtonDefault);
-    pButtonDefault->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pButtonDefault->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
          emit sigTerrainClicked("");
     });
@@ -133,7 +133,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     oxygine::spButton pButtonSelect = pObjectManager->createButton(tr("Select Image"), 150);
     pButtonSelect->setPosition(10 + 20 + pButtonDefault->getWidth(), y);
     m_pPanel->addChild(pButtonSelect);
-    pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
          emit sigShowLoadDialog();
     });

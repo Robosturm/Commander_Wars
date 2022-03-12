@@ -83,7 +83,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
         oxygine::spButton randomButton = pObjectManager->createButton(tr("Random"), 150);
         randomButton->setPosition(m_randomFillCheckbox->getX() + m_randomFillCheckbox->getWidth() + 10, 30);
         pSpriteBox->addChild(randomButton);
-        randomButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        randomButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {
             emit sigSelectRandomPerks();
         });
@@ -113,14 +113,14 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
         m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
         m_CancelButton->setPosition(30, Settings::getHeight() - 30 - m_CancelButton->getHeight());
         pSpriteBox->addChild(m_CancelButton);
-        m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {
             emit sigCancel();
         });
 
         oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
         pSave->setPosition(Settings::getWidth() / 2 - pSave->getWidth() / 2, Settings::getHeight() - 30 - m_CancelButton->getHeight());
-        pSave->addClickListener([=](oxygine::Event*)
+        pSave->addClickListener([this](oxygine::Event*)
         {
             emit sigShowSavePerklist();
         });
@@ -130,7 +130,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
         m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
         m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 75 - m_ToggleAll->getHeight());
         pSpriteBox->addChild(m_ToggleAll);
-        m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {
             m_toggle = !m_toggle;
             emit sigToggleAll(m_toggle);
@@ -149,7 +149,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
 
         oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
         pSave->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 30 - pSave->getHeight());
-        pSave->addClickListener([=](oxygine::Event*)
+        pSave->addClickListener([this](oxygine::Event*)
         {
             emit sigShowSavePerklist();
         });
@@ -164,7 +164,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
     }
 
     auto* pPerkSelection = m_pPerkSelection.get();
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPerkSelection](oxygine::Event*)
     {
         emit editFinished(pPerkSelection->getPerks());
         emit sigFinished();

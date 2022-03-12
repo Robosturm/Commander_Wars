@@ -30,7 +30,7 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_ExitButton);
-    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit canceled();
     });
@@ -43,7 +43,7 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
     connect(this, &ColorSelectionDialog::sigFinished, this, &ColorSelectionDialog::remove, Qt::QueuedConnection);
     connect(this, &ColorSelectionDialog::canceled, this, &ColorSelectionDialog::remove, Qt::QueuedConnection);
     auto* pColorSelector = m_pColorSelector.get();
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pColorSelector](oxygine::Event*)
     {
         emit editFinished(pColorSelector->getCurrentColor());
         emit sigFinished();

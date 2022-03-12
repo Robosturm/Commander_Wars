@@ -46,15 +46,15 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
     m_pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Actor* pPtrDown = m_pArrowDown.get();
-    m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [pPtrDown](oxygine::Event*)
     {
         pPtrDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
-    m_pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [pPtrDown](oxygine::Event*)
     {
         pPtrDown->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    m_Box->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_Box->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         if (m_Panel->getVisible())
         {
@@ -168,15 +168,15 @@ const oxygine::Vector2& DropDownmenuBase::addDropDownItem(oxygine::spActor item,
     m_Panel->addItem(pBox);
     // add some event handling :)
     oxygine::Actor* pPtrBox = pBox.get();
-    pBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
+    pBox->addEventListener(oxygine::TouchEvent::OVER, [pPtrBox](oxygine::Event*)
     {
         pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
     });
-    pBox->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
+    pBox->addEventListener(oxygine::TouchEvent::OUTX, [pPtrBox](oxygine::Event*)
     {
         pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, id, pPtrBox](oxygine::Event*)
     {
         m_currentItem = id;
         pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(1));

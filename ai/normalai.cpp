@@ -985,7 +985,7 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit 
     
     Interpreter* pInterpreter = Interpreter::getInstance();
     bool unloaded = false;
-    QVector<qint32> unloadedUnits;
+    std::vector<qint32> unloadedUnits;
     do
     {
         unloaded = false;
@@ -994,7 +994,7 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit 
         {
             QStringList actions = pDataMenu->getActionIDs();
             QVector<qint32> unitIDx = pDataMenu->getCostList();
-            QVector<QList<QVariant>> unloadFields;
+            std::vector<QList<QVariant>> unloadFields;
             for (qint32 i = 0; i < unitIDx.size() - 1; i++)
             {
                 QString function1 = "getUnloadFields";
@@ -1002,7 +1002,7 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit 
                                    unitIDx[i],
                                    pInterpreter->newQObject(m_pMap),});
                 QJSValue ret = pInterpreter->doFunction(ACTION_UNLOAD, function1, args);
-                unloadFields.append(ret.toVariant().toList());
+                unloadFields.push_back(ret.toVariant().toList());
             }
             if (actions.size() > 1)
             {
@@ -1011,7 +1011,7 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit 
                     Unit* pLoadedUnit = pUnit->getLoadedUnit(i);
                     if (!needsRefuel(pLoadedUnit))
                     {
-                        if (!unloadedUnits.contains(unitIDx[i]))
+                        if (!GlobalUtils::contains(unloadedUnits, unitIDx[i]))
                         {
                             if (unloadFields[i].size() == 1)
                             {
@@ -1019,7 +1019,7 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit 
                                 spMarkedFieldData pFields = pAction->getMarkedFieldStepData();
                                 addSelectedFieldData(pAction, pFields->getPoints()->at(0));
                                 unloaded = true;
-                                unloadedUnits.append(unitIDx[i]);
+                                unloadedUnits.push_back(unitIDx[i]);
                                 break;
                             }
                             else if (unloadFields[i].size() > 0 &&
@@ -1036,7 +1036,7 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit 
                                         addMenuItemData(pAction, actions[i], unitIDx[i]);
                                         addSelectedFieldData(pAction, unloadField);
                                         unloaded = true;
-                                        unloadedUnits.append(unitIDx[i]);
+                                        unloadedUnits.push_back(unitIDx[i]);
                                         break;
                                     }
                                 }
@@ -1659,7 +1659,7 @@ float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPos
 {
     AI_CONSOLE_PRINT("NormalAi calculateCounterDamage", Console::eDEBUG);
     Unit* pUnit = curUnitData.pUnit.get();
-    QMap<QString, qint32> unitDamageData;
+    std::map<QString, qint32> unitDamageData;
     float counterDamage = 0;
     for (auto & enemyData : m_EnemyUnits)
     {
@@ -1713,7 +1713,7 @@ float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPos
                                                                        ignoreOutOfVisionRange);
                             if (damageData.x() >= 0)
                             {
-                                unitDamageData.insert(pNextEnemy->getUnitID(), damageData.x() * Unit::MAX_UNIT_HP / pNextEnemy->getHp());
+                                unitDamageData.insert_or_assign(pNextEnemy->getUnitID(), damageData.x() * Unit::MAX_UNIT_HP / pNextEnemy->getHp());
                             }
                         }
                         if (damageData.x() >= m_notAttackableDamage)
@@ -1763,7 +1763,7 @@ float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPos
                                                                                ignoreOutOfVisionRange);
                                     if (damageData.x() >= 0)
                                     {
-                                        unitDamageData.insert(pNextEnemy->getUnitID(), damageData.x() * Unit::MAX_UNIT_HP / pNextEnemy->getHp());
+                                        unitDamageData.insert_or_assign(pNextEnemy->getUnitID(), damageData.x() * Unit::MAX_UNIT_HP / pNextEnemy->getHp());
                                     }
 
                                 }
@@ -3150,13 +3150,13 @@ float NormalAi::calcCostScore(std::vector<float>& data, UnitBuildData & unitBuil
     const double outScore = 0.25f;
     const double inScore = 0.5f;
 
-    if (data[UseHighTechUnits] == NoSpendMalus &&
+    if (data[UseHighTechUnits] == static_cast<float>(NoSpendMalus) &&
         data[FundsFactoryRatio] > m_normalUnitRatio + m_targetPriceDifference)
     {
         // spend what we can mode
         score = 0;
     }
-    else if (data[UseHighTechUnits] > FundsMode::Normal &&
+    else if (data[UseHighTechUnits] > static_cast<float>(FundsMode::Normal) &&
              normalDifference > m_targetPriceDifference)
     {
         // expensive malus
@@ -3171,7 +3171,7 @@ float NormalAi::calcCostScore(std::vector<float>& data, UnitBuildData & unitBuil
         score = m_normalUnitBonusMultiplier * (1.0 - qAbs(normalDifference) / m_targetPriceDifference * inScore);
     }
     else if (qAbs(cheapDifference) <= m_targetPriceDifference &&
-             data[UseHighTechUnits] <= FundsMode::Expensive)
+             data[UseHighTechUnits] <= static_cast<float>(FundsMode::Expensive))
     {
         if (data[LowFunds] > 0)
         {

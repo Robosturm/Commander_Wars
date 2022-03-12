@@ -133,7 +133,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     addChild(pButtonExit);
     pButtonExit->setPosition(Settings::getWidth() - pButtonExit->getWidth() - 10,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
-    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
     });
@@ -225,7 +225,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     oxygine::spButton pButtonFunds = ObjectManager::createButton(tr("Funds"));
     addChild(pButtonFunds);
     pButtonFunds->setPosition(5, 5);
-    pButtonFunds->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonFunds->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowGraph(GraphModes::Funds);
     });
@@ -234,7 +234,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     oxygine::spButton pButtonIncome = ObjectManager::createButton(tr("Income"));
     addChild(pButtonIncome);
     pButtonIncome->setPosition(10 + pButtonFunds->getWidth() + pButtonFunds->getX(), 5);
-    pButtonIncome->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonIncome->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowGraph(GraphModes::Income);
     });
@@ -243,7 +243,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     oxygine::spButton pButtonBuildings = ObjectManager::createButton(tr("Buildings"));
     addChild(pButtonBuildings);
     pButtonBuildings->setPosition(10 + pButtonIncome->getWidth() + pButtonIncome->getX(), 5);
-    pButtonBuildings->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonBuildings->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowGraph(GraphModes::Buildings);
     });
@@ -252,7 +252,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     oxygine::spButton pButtonUnits = ObjectManager::createButton(tr("Units"));
     addChild(pButtonUnits);
     pButtonUnits->setPosition(10 + pButtonBuildings->getWidth() + pButtonBuildings->getX(), 5);
-    pButtonUnits->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonUnits->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowGraph(GraphModes::Units);
     });
@@ -261,7 +261,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     oxygine::spButton pButtonPlayerStrength = ObjectManager::createButton(tr("Player Strength"));
     addChild(pButtonPlayerStrength);
     pButtonPlayerStrength->setPosition(10 + pButtonUnits->getWidth() + pButtonUnits->getX(), 5);
-    pButtonPlayerStrength->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonPlayerStrength->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowGraph(GraphModes::PlayerStrength);
     });
@@ -270,7 +270,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     oxygine::spButton pButtonPlayerStatistic = ObjectManager::createButton(tr("Player Statistics"));
     addChild(pButtonPlayerStatistic);
     pButtonPlayerStatistic->setPosition(10 + pButtonPlayerStrength->getWidth() + pButtonPlayerStrength->getX(), 5);
-    pButtonPlayerStatistic->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonPlayerStatistic->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowGraph(GraphModes::PlayerStatistics);
     });
@@ -281,7 +281,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         oxygine::spButton pButtonVictoryRanking = ObjectManager::createButton(tr("Ranking"));
         addChild(pButtonVictoryRanking);
         pButtonVictoryRanking->setPosition(10 + pButtonPlayerStatistic->getWidth() + pButtonPlayerStatistic->getX(), 5);
-        pButtonVictoryRanking->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        pButtonVictoryRanking->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowGraph(GraphModes::VictoryRanking);
         });
@@ -322,7 +322,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         spCheckbox pCheckbox = spCheckbox::create();
         pCheckbox->setChecked(true);
         pCheckbox->setPosition(15 + pTextfield->getTextRect().getWidth(), pTextfield->getY());
-        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
+        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, i](bool value)
         {
             m_VisiblePlayers[i] = value;
             emit sigShowGraph(m_CurrentGraphMode);
@@ -490,7 +490,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         showGraph(GraphModes::Funds);
     }
 
-    m_pGraphBackground->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* pEvent)
+    m_pGraphBackground->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -550,7 +550,7 @@ void VictoryMenue::createStatisticsView()
     m_pStatisticPlayer->setTooltipText(tr("The player for which the statistics should be shown."));
     m_pStatisticPlayer->setPosition(10, 10);
     m_statisticsBox->addChild(m_pStatisticPlayer);
-    connect(m_pStatisticPlayer.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 item)
+    connect(m_pStatisticPlayer.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 item)
     {
         showPlayerStatistic(item);
     });

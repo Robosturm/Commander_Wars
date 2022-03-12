@@ -116,7 +116,7 @@ void InGameMenue::loadHandling()
     {
         m_handlingLoaded = true;
         Mainapp* pApp = Mainapp::getInstance();
-        addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event *pEvent )->void
+        addEventListener(oxygine::TouchEvent::WHEEL_DIR, [this](oxygine::Event *pEvent )->void
         {
             oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
@@ -141,7 +141,7 @@ void InGameMenue::connectMapCursor()
     Mainapp* pApp = Mainapp::getInstance();
     
     Cursor* pCursor = m_Cursor.get();
-    m_pMap->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
+    m_pMap->addEventListener(oxygine::TouchEvent::MOVE, [this, pCursor](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -159,7 +159,7 @@ void InGameMenue::connectMapCursor()
             }
         }
     });
-    m_pMap->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
+    m_pMap->addEventListener(oxygine::TouchEvent::CLICK, [this, pCursor](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -175,7 +175,7 @@ void InGameMenue::connectMapCursor()
             }
         }
     });
-    m_pMap->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event *pEvent )->void
+    m_pMap->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this, pCursor](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -190,7 +190,7 @@ void InGameMenue::connectMapCursor()
             }
         }
     });
-    m_pMap->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event *pEvent )->void
+    m_pMap->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this, pCursor](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -429,11 +429,11 @@ void InGameMenue::initSlidingActor(qint32 x, qint32 y, qint32 width, qint32 heig
         m_mapSlidingActor = oxygine::spActor::create();
         addChild(m_mapSliding);
         m_mapSliding->setContent(m_mapSlidingActor);
-        m_mapSlidingActor->addEventListener(oxygine::Draggable::DragMoveEvent, [=](oxygine::Event*)
+        m_mapSlidingActor->addEventListener(oxygine::Draggable::DragMoveEvent, [this](oxygine::Event*)
         {
             emit m_pMap->sigMovedMap();
         });
-        m_mapSliding->addEventListener(oxygine::SlidingEvent::SLIDING, [=](oxygine::Event*)
+        m_mapSliding->addEventListener(oxygine::SlidingEvent::SLIDING, [this](oxygine::Event*)
         {
             emit m_pMap->sigMovedMap();
         });

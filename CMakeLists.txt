@@ -13,7 +13,7 @@ project (Commander_Wars LANGUAGES CXX)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # set tool chain info
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Instruct CMake to run moc automatically when needed.

@@ -97,7 +97,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
-            [=](qreal value)
+            [this](qreal value)
     {
         setPlayer(static_cast<qint32>(value) - 1);
     });
@@ -113,7 +113,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(co + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
-            [=](qreal value)
+            [this](qreal value)
     {
         setCo(static_cast<qint32>(value) - 1);
     });
@@ -130,7 +130,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(stars);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
-            [=](qreal value)
+            [this](qreal value)
     {
         setStars(static_cast<qint32>(value));
     });

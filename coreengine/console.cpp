@@ -85,7 +85,7 @@ Console::Console()
     // we're hidden to begin with
     oxygine::Actor::setVisible(false);
     connect(this, &Console::sigToggleView, this, &Console::toggleView, Qt::QueuedConnection);
-    addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* event)
+    addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* event)
     {
         event->stopPropagation();
         emit sigFocused();

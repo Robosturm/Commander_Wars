@@ -624,7 +624,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         oxygine::spButton coBannlist = ObjectManager::createButton(tr("Edit"), 150);
         coBannlist->setPosition(textWidth, y - 2);
         coBannlist->setEnabled(m_ruleChangeEabled);
-        coBannlist->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        coBannlist->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowCOBannlist();
         });
@@ -640,7 +640,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         oxygine::spButton perkBannlist = ObjectManager::createButton(tr("Edit"), 150);
         perkBannlist->setPosition(textWidth, y - 2);
         perkBannlist->setEnabled(m_ruleChangeEabled);
-        perkBannlist->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        perkBannlist->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowPerkBannlist();
         });
@@ -656,7 +656,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         oxygine::spButton actionBannlist = ObjectManager::createButton(tr("Edit"), 150);
         actionBannlist->setPosition(textWidth, y - 2);
         actionBannlist->setEnabled(m_ruleChangeEabled);
-        actionBannlist->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        actionBannlist->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowActionBannlist();
         });
@@ -754,7 +754,7 @@ void RuleSelection::showRuleSelection(bool advanced)
             m_MapScriptFile->setEnabled(m_ruleChangeEabled);
             addChild(m_MapScriptFile);
             pScriptButton->setEnabled(m_ruleChangeEabled);
-            pScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+            pScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
             {
                 emit sigShowSelectScript();
             });

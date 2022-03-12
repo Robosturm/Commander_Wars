@@ -62,7 +62,7 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
         QString unitId = iter.key();
         spUnit pDummy = spUnit::create(unitId, pPlayer, false, pPlayer->getMap());
         pDummy->setPosition(x, y);
-        pDummy->addClickListener([=](oxygine::Event*)
+        pDummy->addClickListener([this, unitId](oxygine::Event*)
         {
             emit sigShowLink(unitId);
         });

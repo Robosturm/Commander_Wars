@@ -78,7 +78,7 @@ void AudioThread::initAudio()
         SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getMusicVolume())));
         m_positionChangedTimer.setInterval(1);
         m_positionChangedTimer.setSingleShot(false);
-        connect(&m_positionChangedTimer, &QTimer::timeout, this, [=]()
+        connect(&m_positionChangedTimer, &QTimer::timeout, this, [this]()
         {
             SlotCheckMusicEnded(m_player->m_player.position());
         });

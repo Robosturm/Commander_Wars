@@ -103,7 +103,7 @@ void TCPServer::onConnect()
             connect(pClient.get(), &TCPClient::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
 
             quint64 socket = pClient->getSocketID();
-            connect(nextSocket, &QTcpSocket::disconnected, this, [=]()
+            connect(nextSocket, &QTcpSocket::disconnected, this, [this, socket]()
             {
                 emit sigDisconnectClient(socket);
             });

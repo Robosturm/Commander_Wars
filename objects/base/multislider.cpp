@@ -49,7 +49,7 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
         }
         totalSliderValue += m_Slider[i]->getCurrentValue();
 
-        connect(m_Slider[i].get(), &Slider::sliderValueChanged, this, [=](qint32)
+        connect(m_Slider[i].get(), &Slider::sliderValueChanged, this, [this, i](qint32)
         {
             emit signalSliderValueChanged(i);
         });
@@ -69,7 +69,7 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
         // add click listener for locking
         oxygine::Actor* pActor = pLockButton.get();
         auto* pSlider = m_Slider[i].get();
-        pLockButton->addClickListener([=](oxygine::Event*)
+        pLockButton->addClickListener([this, i, pActor, pLabel, unlockChar, lockChar, pSlider](oxygine::Event*)
         {
             if (m_locked[i])
             {

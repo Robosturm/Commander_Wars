@@ -84,7 +84,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 spinBox->setPosition(width, y);
                 spinBox->setCurrentValue(m_Items[i].item.toFloat());
                 connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-                        [=](qreal value)
+                        [this, i](qreal value)
                 {
                     m_Items[i].item = QString::number(value);
                 });
@@ -100,7 +100,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 spinBox->setPosition(width, y);
                 spinBox->setCurrentValue(m_Items[i].item.toInt());
                 connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-                        [=](qreal value)
+                        [this, i](qreal value)
                 {
                     m_Items[i].item = QString::number(value);
                 });
@@ -114,7 +114,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 textBox->setPosition(width, y);
                 textBox->setCurrentText(m_Items[i].item);
                 connect(textBox.get(), &Textbox::sigTextChanged, this,
-                        [=](QString value)
+                        [this, i](QString value)
                 {
                     m_Items[i].item = value;
                 });
@@ -129,7 +129,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 QVariant var = m_Items[i].item;
                 checkBox->setChecked(var.toBool());
                 connect(checkBox.get(), &Checkbox::checkChanged, this,
-                        [=](bool value)
+                        [this, i](bool value)
                 {
                     QVariant var;
                     var.setValue(value);
@@ -150,7 +150,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                         dropDown->setCurrentItem(i2);
                     }
                 }
-                connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 item)
+                connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [this, i](qint32 item)
                 {
                     m_Items[i].item = m_Items[i].data[item];
                 });
@@ -163,7 +163,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 pTextbox->setTooltipText(m_Items[i].tooltip);
                 pTextbox->setCurrentText(m_Items[i].item);
                 pTextbox->setPosition(width, y);
-                connect(pTextbox.get(), &Textbox::sigTextChanged, this, [=](QString item)
+                connect(pTextbox.get(), &Textbox::sigTextChanged, this, [this, i](QString item)
                 {
                     m_Items[i].item = item;
                 });
@@ -172,9 +172,10 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 oxygine::spButton pButtonSelect = pObjectManager->createButton(tr("Select"), 150);
                 pButtonSelect->setPosition(10 + pTextbox->getX() + pTextbox->getWidth(), y);
                 pBox->addChild(pButtonSelect);
-                pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+                auto* pPtrTextbox = pTextbox.get();
+                pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [this, i, pPtrTextbox](oxygine::Event*)
                 {
-                     emit sigShowSelectFile (m_Items[i].filter, m_Items[i].startFolder, m_Items[i].item, pTextbox);
+                     emit sigShowSelectFile (m_Items[i].filter, m_Items[i].startFolder, m_Items[i].item, spTextbox(pPtrTextbox));
                 });
                 break;
             }

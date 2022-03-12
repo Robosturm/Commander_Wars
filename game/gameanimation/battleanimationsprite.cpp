@@ -615,7 +615,7 @@ void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnum
         pSprite->addTween(tween);
         if (deleteAfter && moveTime <= 0)
         {
-            tween->addDoneCallback([=](oxygine::Event * pEvent)
+            tween->addDoneCallback([this](oxygine::Event * pEvent)
             {
                 oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
                 if (pTarget.get() != nullptr)
@@ -676,7 +676,7 @@ void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnum
             oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endX, yPos - movement.y())), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
             if (deleteAfter)
             {
-                moveTween->addDoneCallback([=](oxygine::Event * pEvent)
+                moveTween->addDoneCallback([this](oxygine::Event * pEvent)
                 {
                     oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
                     if (pTarget.get() != nullptr)

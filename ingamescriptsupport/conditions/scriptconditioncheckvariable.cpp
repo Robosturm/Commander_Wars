@@ -122,7 +122,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     textBox->setPosition(width, 30);
     textBox->setCurrentText(m_Variable);
     connect(textBox.get(), &Textbox::sigTextChanged, this,
-            [=](QString value)
+            [this](QString value)
     {
         m_Variable = value;
     });
@@ -139,7 +139,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     dropDown->setPosition(width, 70);
     dropDown->setCurrentItemText(m_Compare);
     DropDownmenu* pDropDown = dropDown.get();
-    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
+    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [this, pDropDown](qint32)
     {
         m_Compare = pDropDown->getCurrentItemText();
     });
@@ -155,7 +155,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(m_value);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         m_value = value;
     });
@@ -171,7 +171,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     checkBox->setPosition(width, 150);
     checkBox->setChecked(m_CampaignVariable);
     connect(checkBox.get(), &Checkbox::checkChanged, this,
-            [=](bool value)
+            [this](bool value)
     {
         m_CampaignVariable = value;
     });

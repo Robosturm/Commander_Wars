@@ -152,7 +152,7 @@ void GameAnimationWalk::loadSpriteV2(const QString & spriteID, GameEnums::Recolo
                     {
                         isVisible = false;
                     }
-                    tween1->addDoneCallback([=](oxygine::Event *)
+                    tween1->addDoneCallback([this, isVisible](oxygine::Event *)
                     {
                         setVisible(isVisible);
                     });
@@ -198,7 +198,7 @@ void GameAnimationWalk::loadSpriteV2(const QString & spriteID, GameEnums::Recolo
                     if(!m_finishQueued)
                     {
                         m_finishQueued = true;
-                        queueMoving->addDoneCallback([=](oxygine::Event *)->void
+                        queueMoving->addDoneCallback([this](oxygine::Event *)->void
                         {
                             emitFinished();
                         });
@@ -212,7 +212,7 @@ void GameAnimationWalk::loadSpriteV2(const QString & spriteID, GameEnums::Recolo
             if(!m_finishQueued)
             {
                 m_finishQueued = true;
-                queueMoving->addDoneCallback([=](oxygine::Event *)->void
+                queueMoving->addDoneCallback([this](oxygine::Event *)->void
                 {
                     emitFinished();
                 });

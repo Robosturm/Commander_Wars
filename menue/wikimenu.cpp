@@ -42,7 +42,7 @@ Wikimenu::Wikimenu()
     addChild(pButtonExit);
     pButtonExit->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
-    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
     });

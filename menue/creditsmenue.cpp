@@ -45,7 +45,7 @@ CreditsMenue::CreditsMenue()
     addChild(pButtonExit);
     pButtonExit->setPosition(10,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
-    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
     });

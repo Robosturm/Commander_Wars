@@ -116,7 +116,7 @@ void ScriptConditionTerrainDestroyed::showEditCondition(spScriptEditor pScriptEd
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_x);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         setX(static_cast<qint32>(value));
     });
@@ -132,7 +132,7 @@ void ScriptConditionTerrainDestroyed::showEditCondition(spScriptEditor pScriptEd
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_y);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         setY(static_cast<qint32>(value));
     });

@@ -55,7 +55,7 @@ bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & sound
         {
             soundCache->timer[i]->start(delay);
             soundCache->sound[i] = soundItem;
-            connect(soundCache->timer[i].get(), &QTimer::timeout, soundItem, [=]()
+            connect(soundCache->timer[i].get(), &QTimer::timeout, soundItem, [this, stopOldestSound, pSoundCache, i]()
             {
                 CONSOLE_PRINT("Starting delayed sound", Console::eDEBUG);
                 if (stopOldestSound)

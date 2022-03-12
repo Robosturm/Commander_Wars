@@ -152,7 +152,7 @@ EditorMenue::EditorMenue()
     addChild(m_Topbar);
 
     Cursor* pCursor = m_Cursor.get();
-    m_pMap->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
+    m_pMap->addEventListener(oxygine::TouchEvent::MOVE, [this, pCursor](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -525,7 +525,7 @@ void EditorMenue::showResizeMap()
     auto* pTopBox = topBox.get();
     auto* pBottomBox = bottomBox.get();
 
-    connect(pBox.get(), &GenericBox::sigFinished, this, [=]
+    connect(pBox.get(), &GenericBox::sigFinished, this, [this, pLeftBox, pTopBox, pRightBox, pBottomBox]
     {
         emit sigResizeMap(pLeftBox->getCurrentValue(), pTopBox->getCurrentValue(),
                           pRightBox->getCurrentValue(), pBottomBox->getCurrentValue());
@@ -721,7 +721,7 @@ void EditorMenue::showExit()
     m_Focused = false;
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the map editor?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &EditorMenue::exitEditor, Qt::QueuedConnection);
-    connect(pExit.get(), &DialogMessageBox::sigCancel, this, [=]()
+    connect(pExit.get(), &DialogMessageBox::sigCancel, this, [this]()
     {
         m_Focused = true;
     });
@@ -909,7 +909,7 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                     Terrain* pTerrain = m_pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
                     spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pTerrain->getUnit());
                     addChild(fieldinfo);
-                    connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [=]
+                    connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [this]
                     {
                         setFocused(true);
                     });

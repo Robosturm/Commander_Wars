@@ -59,7 +59,7 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
     addChild(m_ChatInput);
 
     Textbox* pChatInput = m_ChatInput.get();
-    m_Send->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_Send->addEventListener(oxygine::TouchEvent::CLICK, [this, pChatInput](oxygine::Event * )->void
     {
         emit sigSendText(pChatInput->getCurrentText());
     });

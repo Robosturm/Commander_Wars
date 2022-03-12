@@ -95,7 +95,7 @@ void ScriptEventModifyTerrain::showEditEvent(spScriptEditor pScriptEditor)
     {
         items.append(curTerrainId);
     }
-    auto creator = [=](QString id)
+    auto creator = [this](QString id)
     {
         spTerrain pTerrain = Terrain::createTerrain(id, -1, -1, "", m_pMap);
         pTerrain->loadSprites();
@@ -107,7 +107,7 @@ void ScriptEventModifyTerrain::showEditEvent(spScriptEditor pScriptEditor)
     pMenu->setCurrentItem(currentItem);
     pBox->addItem(pMenu);
     DropDownmenuSprite* pPtrMenu = pMenu.get();
-    connect(pMenu.get(), &DropDownmenuSprite::sigItemChanged, this, [=](qint32)
+    connect(pMenu.get(), &DropDownmenuSprite::sigItemChanged, this, [this, pPtrMenu](qint32)
     {
         m_newTerrainID = pPtrMenu->getCurrentItemText();
     });

@@ -54,7 +54,7 @@ Multiplayermenu::Multiplayermenu(QString adress, quint16 port, QString password,
     {
         m_pHostAdresse = ObjectManager::createButton("Show Adresses");
         addChild(m_pHostAdresse);
-        m_pHostAdresse->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        m_pHostAdresse->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowIPs();
         });
@@ -119,7 +119,7 @@ void Multiplayermenu::init()
     m_pButtonLoadSavegame = ObjectManager::createButton(tr("Load Savegame"));
     m_pButtonLoadSavegame->setPosition(Settings::getWidth() - m_pButtonLoadSavegame->getWidth() - m_pButtonNext->getWidth() - 20, Settings::getHeight() - 10 - m_pButtonLoadSavegame->getHeight());
     addChild(m_pButtonLoadSavegame);
-    m_pButtonLoadSavegame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_pButtonLoadSavegame->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigLoadSaveGame();
     });

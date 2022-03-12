@@ -124,7 +124,7 @@ void ScriptConditionPlayerDefeated::showEditCondition(spScriptEditor pScriptEdit
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         setPlayer(static_cast<qint32>(value) - 1);
     });

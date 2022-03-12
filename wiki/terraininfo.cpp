@@ -199,7 +199,7 @@ void TerrainInfo::showUnitList(QStringList productionList, qint32& y, qint32 wid
         spUnit pDummy = spUnit::create(productionList[i], m_pPlayer.get(), false, m_pMap);
         pDummy->setPosition(x, y);
         QString id = productionList[i];
-        pDummy->addClickListener([=](oxygine::Event*)
+        pDummy->addClickListener([this, id](oxygine::Event*)
         {
            emit sigShowLink(id);
         });

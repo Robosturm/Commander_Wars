@@ -34,15 +34,15 @@ InfluenceFrontMap::InfluenceFrontMap(GameMap* pMap, const std::vector<spIslandMa
 void InfluenceFrontMap::addBuildingInfluence()
 {
     AI_CONSOLE_PRINT("InfluenceFrontMap::addBuildingInfluence()", Console::eDEBUG);
-    QVector<QPoint> buildingPositions;
-    QVector<qint32> buildingOwners;
-    QVector<QStringList> buildLists;
-    QMap<QString, qint32> unitIdToIsland;
+    std::vector<QPoint> buildingPositions;
+    std::vector<qint32> buildingOwners;
+    std::vector<QStringList> buildLists;
+    std::map<QString, qint32> unitIdToIsland;
     
-    QVector<qint32> income;
+    std::vector<qint32> income;
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
     {
-        income.append(m_pMap->getPlayer(i)->calcIncome());
+        income.push_back(m_pMap->getPlayer(i)->calcIncome());
     }
 
     qint32 width = m_pMap->getMapWidth();
@@ -56,9 +56,9 @@ void InfluenceFrontMap::addBuildingInfluence()
             {
                 if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS))
                 {
-                    buildingPositions.append(QPoint(x, y));
-                    buildingOwners.append(pBuilding->getOwner()->getPlayerID());
-                    buildLists.append(pBuilding->getConstructionList());
+                    buildingPositions.push_back(QPoint(x, y));
+                    buildingOwners.push_back(pBuilding->getOwner()->getPlayerID());
+                    buildLists.push_back(pBuilding->getConstructionList());
                 }
             }
         }
@@ -97,7 +97,7 @@ void InfluenceFrontMap::addBuildingInfluence()
     }
 }
 
-qint32 InfluenceFrontMap::getIslandFromUnitId(const QString & unitId, QMap<QString, qint32> & unitIdToIsland)
+qint32 InfluenceFrontMap::getIslandFromUnitId(const QString & unitId, std::map<QString, qint32> & unitIdToIsland)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     qint32 island = -1;
@@ -117,7 +117,7 @@ qint32 InfluenceFrontMap::getIslandFromUnitId(const QString & unitId, QMap<QStri
                 break;
             }
         }
-        unitIdToIsland.insert(unitId, island);
+        unitIdToIsland.insert_or_assign(unitId, island);
     }
     return island;
 }

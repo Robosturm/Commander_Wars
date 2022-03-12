@@ -193,7 +193,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_x);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         setX(static_cast<qint32>(value));
     });
@@ -210,7 +210,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_y);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         setY(static_cast<qint32>(value));
     });
@@ -227,7 +227,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_width);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         setWidth(static_cast<qint32>(value));
     });
@@ -244,7 +244,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_heigth);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         setHeigth(static_cast<qint32>(value));
     });
@@ -274,7 +274,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pButton->setPosition(30, y);
     SpinBox* pSpinBox = spinBox.get();
     Label* pLabel = pTextInfo.get();
-    pButton->addClickListener([=](oxygine::Event*)
+    pButton->addClickListener([this, pSpinBox, pLabel](oxygine::Event*)
     {
         qint32 player = pSpinBox->getCurrentValue() - 1;
         if (!m_Player.contains(player))
@@ -286,7 +286,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pBox->addItem(pButton);
     pButton = ObjectManager::createButton(tr("Remove last Player"), 200);
     pButton->setPosition(270, y);
-    pButton->addClickListener([=](oxygine::Event*)
+    pButton->addClickListener([this, pLabel](oxygine::Event*)
     {
         if (m_Player.size() > 1)
         {

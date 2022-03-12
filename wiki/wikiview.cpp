@@ -37,7 +37,7 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
     oxygine::spButton pButton = ObjectManager::createButton(tr("Search"));
     addChild(pButton);
     pButton->setPosition(m_SearchString->getWidth() + m_SearchString->getX() + 10, y);
-    pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigSearch(false);
     });
@@ -113,7 +113,7 @@ void WikiView::search(bool onlyTag)
             pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
         });
         pBox->setPosition(0, itemCount * 40);
-        pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, wikiItem](oxygine::Event*)
         {
             emit sigShowWikipage(wikiItem);
         });

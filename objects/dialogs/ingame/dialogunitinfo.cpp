@@ -37,7 +37,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 10 - pOkButton->getHeight());
     pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigFinished();
     });
@@ -153,7 +153,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
         pButton->setPosition(750, y);
         qint32 posX = pUnit->Unit::getX();
         qint32 posY = pUnit->Unit::getY();
-        pButton->addClickListener([=](oxygine::Event*)
+        pButton->addClickListener([this, posX, posY](oxygine::Event*)
         {
             emit sigMoveToUnit(posX, posY);
         });

@@ -36,7 +36,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     m_pOkButton = pObjectManager->createButton(tr("Apply"), 150);
     m_pOkButton->setPosition(Settings::getWidth() - m_pOkButton->getWidth() - 30, Settings::getHeight() - 10 - m_pOkButton->getHeight());
     m_pSpriteBox->addChild(m_pOkButton);
-    m_pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* event)
+    m_pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pCOSpriteManager](oxygine::Event* event)
     {
         event->stopPropagation();
         Userdata::getInstance()->addCOStyle(m_currentCOID, m_ResFilePath, m_colorTable, m_maskTable, m_useColorBox);
@@ -48,7 +48,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     oxygine::spButton pExitButton = pObjectManager->createButton(tr("Cancel"), 150);
     pExitButton->setPosition(30, Settings::getHeight() - 10 - pExitButton->getHeight());
     m_pSpriteBox->addChild(pExitButton);
-    pExitButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigCancel();
     });
@@ -238,7 +238,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         {
             m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() -  10 - m_pOkButton->getHeight());
         }
-        connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 item)
+        connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 item)
         {
             m_maskTable = m_baseColorTable.copy(0, item, m_baseColorTable.width(), 1);
             if (!Settings::getSmallScreenDevice())
@@ -275,7 +275,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
                 pixel->setColor(color.red(), color.green(), color.blue(), 255);
                 pixel->setPosition(xStep * 22 + 5, y);
                 oxygine::Actor* pActor = m_PixelsSelector.get();
-                pixel->addClickListener([=](oxygine::Event* pEvent)
+                pixel->addClickListener([this, pActor, xStep, y, i](oxygine::Event* pEvent)
                 {
                     pEvent->stopPropagation();
                     pActor->setPosition(xStep * 22 - 2 + 5, y - 2);
@@ -315,7 +315,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
         // add some event handling :)
         qint32 index = m_pCOBoxes.size();
         auto* pPtrBox = pBox.get();
-        pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrBox, index](oxygine::Event*)
         {
             for (qint32 i = 0; i < m_pCOBoxes.size(); i++)
             {

@@ -26,15 +26,15 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
     }
     m_pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Sprite* ptr = m_pButton.get();
-    m_pButton->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
+    m_pButton->addEventListener(oxygine::TouchEvent::OVER, [ptr](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
-    m_pButton->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
+    m_pButton->addEventListener(oxygine::TouchEvent::OUTX, [ptr](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    m_pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_pButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         addMoveTween();
     });
@@ -119,7 +119,7 @@ void MoveInButton::addMoveTween()
             pTween = oxygine::createTween(oxygine::Actor::TweenX(endPos), oxygine::timeMS(200));
         }
         oxygine::Sprite* pActor = m_pButton.get();
-        pTween->addDoneCallback([=](oxygine::Event*)
+        pTween->addDoneCallback([this, pActor](oxygine::Event*)
         {
             m_movedOut = !m_movedOut;
             if (m_useY)

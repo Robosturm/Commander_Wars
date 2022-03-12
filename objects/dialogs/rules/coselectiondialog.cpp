@@ -42,7 +42,7 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit editFinished(m_currentCOID, m_player);
         emit sigFinished();
@@ -52,7 +52,7 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_ExitButton);
-    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit canceled();
     });
@@ -61,7 +61,7 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
     m_ShowCOInfoButton = pObjectManager->createButton(tr("Show CO Info"), 250);
     m_ShowCOInfoButton->setPosition(Settings::getWidth() / 2 - m_ShowCOInfoButton->getWidth() / 2, Settings::getHeight() - 30 - m_ShowCOInfoButton->getHeight());
     pSpriteBox->addChild(m_ShowCOInfoButton);
-    m_ShowCOInfoButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_ShowCOInfoButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigShowCOInfo();
     });
@@ -135,7 +135,7 @@ void COSelectionDialog::showCOInfo()
     }
     Player* pPlayer = m_pMap->getPlayer(m_player);
     spCO co = spCO::create(coid, pPlayer, m_pMap);
-    addChild(spCOInfoDialog::create(co, spPlayer(pPlayer), [=](spCO& pCurrentCO, spPlayer&, qint32 direction)
+    addChild(spCOInfoDialog::create(co, spPlayer(pPlayer), [this, pPlayer](spCO& pCurrentCO, spPlayer&, qint32 direction)
     {        
         qint32 index = m_coids.indexOf(pCurrentCO->getCoID());
         index += direction;

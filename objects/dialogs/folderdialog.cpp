@@ -41,7 +41,7 @@ FolderDialog::FolderDialog(QString startFolder)
                             Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
     auto* pCurrentFolder = m_CurrentFolder.get();
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentFolder](oxygine::Event*)
     {
         QDir folder(pCurrentFolder->getCurrentText());
         QDir virtFolder(oxygine::Resources::RCC_PREFIX_PATH + pCurrentFolder->getCurrentText());
@@ -56,7 +56,7 @@ FolderDialog::FolderDialog(QString startFolder)
     m_CancelButton->setPosition(30,
                                 Settings::getHeight() - 30 - m_CancelButton->getHeight());
     pSpriteBox->addChild(m_CancelButton);
-    m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigCancel();
     });
@@ -172,7 +172,7 @@ void FolderDialog::showFolder(QString folder)
                 QString path = GlobalUtils::makePathRelative(infoList[i].filePath()).replace(folder, "");
                 textField->setHtmlText(path);
             }
-            pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+            pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, myPath](oxygine::Event*)
             {
                 emit sigShowFolder(myPath);
             });
@@ -223,7 +223,7 @@ void FolderDialog::KeyInput(oxygine::KeyEvent event)
                     m_focused = false;
                     spDialogMessageBox pSurrender = spDialogMessageBox::create(tr("Do you want to delete the folder ") + m_CurrentFolder->getCurrentText() + "?", true);
                     connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &FolderDialog::deleteItem, Qt::QueuedConnection);
-                    connect(pSurrender.get(), &DialogMessageBox::sigCancel, this, [=]()
+                    connect(pSurrender.get(), &DialogMessageBox::sigCancel, this, [this]()
                     {
                         m_focused = true;
                     });

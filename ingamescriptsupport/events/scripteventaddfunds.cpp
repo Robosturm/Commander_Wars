@@ -78,7 +78,7 @@ void ScriptEventAddFunds::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         setPlayer(static_cast<qint32>(value) - 1);
     });
@@ -94,7 +94,7 @@ void ScriptEventAddFunds::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(funds);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         setFunds(static_cast<qint32>(value));
     });

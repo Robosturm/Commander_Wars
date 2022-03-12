@@ -26,7 +26,7 @@ GenericBox::GenericBox(bool cancel)
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 10 - pOkButton->getHeight());
     m_pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigFinished();
     });
@@ -36,7 +36,7 @@ GenericBox::GenericBox(bool cancel)
         oxygine::spButton pCancelButton = pObjectManager->createButton(tr("Cancel"), 150);
         pCancelButton->setPosition(Settings::getWidth() / 2 - pCancelButton->getWidth() - 10, Settings::getHeight() - 10 - pOkButton->getHeight());
         m_pSpriteBox->addChild(pCancelButton);
-        pCancelButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pCancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {
             emit sigCancel();
         });

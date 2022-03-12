@@ -49,7 +49,7 @@ Achievementmenu::Achievementmenu()
     addChild(pButtonExit);
     pButtonExit->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
-    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
     });
@@ -71,7 +71,7 @@ Achievementmenu::Achievementmenu()
     m_SearchString = spTextbox::create(Settings::getWidth() - 380);
     m_SearchString->setTooltipText(tr("Text that will be searched for in the title of each wikipage."));
     m_SearchString->setPosition(150, y);
-    connect(m_SearchString.get(), &Textbox::sigTextChanged, this, [=](QString)
+    connect(m_SearchString.get(), &Textbox::sigTextChanged, this, [this](QString)
     {
         search();
     }, Qt::QueuedConnection);
@@ -79,7 +79,7 @@ Achievementmenu::Achievementmenu()
     oxygine::spButton pButton = ObjectManager::createButton(tr("Search"));
     addChild(pButton);
     pButton->setPosition(m_SearchString->getWidth() + m_SearchString->getX() + 10, y);
-    pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigSearch();
     });
@@ -107,7 +107,7 @@ Achievementmenu::Achievementmenu()
     m_group = spDropDownmenu::create(200, groups);
     m_group->setPosition(x, y);
     addChild(m_group);
-    connect(m_group.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
+    connect(m_group.get(), &DropDownmenu::sigItemChanged, this, [this](qint32)
     {
         search();
     }, Qt::QueuedConnection);
@@ -122,7 +122,7 @@ Achievementmenu::Achievementmenu()
     m_sort = spDropDownmenu::create(200, QStringList{tr("None"), tr("Ascending"), tr("Descending")});
     m_sort->setPosition(x, y);
     addChild(m_sort);
-    connect(m_sort.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
+    connect(m_sort.get(), &DropDownmenu::sigItemChanged, this, [this](qint32)
     {
         search();
     }, Qt::QueuedConnection);

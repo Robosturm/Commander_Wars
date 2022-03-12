@@ -108,7 +108,7 @@ DamageTablePage::DamageTablePage()
             {
                 pLabel->setHtmlText("-");
             }
-            pLabel->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
+            pLabel->addEventListener(oxygine::TouchEvent::OVER, [this, posY, posX](oxygine::Event*)
             {
                 m_verticalMarker->setY(posY);
                 m_horizontalMarker->setX(posX);

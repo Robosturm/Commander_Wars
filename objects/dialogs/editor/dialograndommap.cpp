@@ -46,7 +46,7 @@ DialogRandomMap::DialogRandomMap()
     m_pPanel->addItem(m_GeneratorFile);
     m_Generator = ObjectManager::createButton(tr("Select"), 130);
     m_Generator->setPosition(m_GeneratorFile->getX() + m_GeneratorFile->getWidth() + 10, y);
-    m_Generator->addClickListener([=](oxygine::Event*)
+    m_Generator->addClickListener([this](oxygine::Event*)
     {
         emit sigShowGeneratorSelection();
     });
@@ -270,21 +270,21 @@ DialogRandomMap::DialogRandomMap()
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_ExitButton);
-    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigCancel();
     });
     generatorChanged(m_GeneratorFile->getCurrentText());
 
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigFinish();
     });
-    connect(m_mirrored.get(), &Checkbox::checkChanged, this, [=](bool)
+    connect(m_mirrored.get(), &Checkbox::checkChanged, this, [this](bool)
     {
         checkIfGenerationIsAllowed();
     }, Qt::QueuedConnection);
-    connect(m_MapPlayerCount.get(), &SpinBox::sigValueChanged, this, [=](qreal)
+    connect(m_MapPlayerCount.get(), &SpinBox::sigValueChanged, this, [this](qreal)
     {
         checkIfGenerationIsAllowed();
     }, Qt::QueuedConnection);

@@ -89,7 +89,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("Field X on which the animation will be shown."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(x);
-    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [this](qreal value)
     {
         setX(static_cast<qint32>(value));
     });
@@ -105,7 +105,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("Field Y on which the animation will be shown."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(getY());
-    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [this](qreal value)
     {
         setY(static_cast<qint32>(value));
     });
@@ -122,7 +122,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("X-Offset of the animation. Moving it away from the center."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(offsetX);
-    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [this](qreal value)
     {
         setOffsetX(static_cast<qint32>(value));
     });
@@ -139,7 +139,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("Y-Offset of the animation. Moving it away from the center."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(offsetY);
-    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [this](qreal value)
     {
         setOffsetY(static_cast<qint32>(value));
     });
@@ -156,7 +156,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     colorBox->setTooltipText(tr("Recoloring color for the animation sprite."));
     colorBox->setPosition(width, y);
     colorBox->setCurrentItem(color);
-    connect(colorBox.get(), &DropDownmenuColor::sigItemChanged, this, [=](QColor value)
+    connect(colorBox.get(), &DropDownmenuColor::sigItemChanged, this, [this](QColor value)
     {
         setColor(value);
     });
@@ -173,7 +173,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("Time in ms the animation remains visible after all frames were played."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(sleepAfterFinish);
-    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [this](qreal value)
     {
         setSleepAfterFinish(static_cast<qint32>(value));
     });
@@ -190,7 +190,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("X-Scaling of the actual sprite."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(scaleX);
-    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [this](qreal value)
     {
         setScaleX(static_cast<float>(value));
     });
@@ -207,7 +207,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("Y-Scaling of the actual sprite."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(scaleY);
-    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [this](qreal value)
     {
         setScaleY(static_cast<float>(value));
     });
@@ -224,7 +224,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("Time in ms before the animation gets played."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(delay);
-    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [this](qreal value)
     {
         setDelay(static_cast<qint32>(value));
     });
@@ -240,7 +240,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     m_pTextbox->setTooltipText(tr("Current select animation."));
     m_pTextbox->setPosition(width, y);
     m_pTextbox->setCurrentText(sprite);
-    connect(m_pTextbox.get(), &Textbox::sigTextChanged, this, [=](QString text)
+    connect(m_pTextbox.get(), &Textbox::sigTextChanged, this, [this](QString text)
     {
         setSprite(text);
     });
@@ -248,7 +248,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     oxygine::spButton pButtonSelect = ObjectManager::getInstance()->createButton(tr("Select Image"), 150);
     pButtonSelect->setPosition(width + m_pTextbox->getWidth() + 10, y);
     pBox->addItem(pButtonSelect);
-    pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
          emit sigShowLoadDialog();
     });
@@ -264,7 +264,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("Amount of frames for the animation. Only has an effect on custom animations."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(frames);
-    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [this](qreal value)
     {
         setFrames(static_cast<qint32>(value));
     });

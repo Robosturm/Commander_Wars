@@ -93,7 +93,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         setPlayer(static_cast<qint32>(value) - 1);
     });
@@ -122,7 +122,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     pMenu->setCurrentItem(currentItem);
     pBox->addItem(pMenu);
     DropDownmenu* pPtrMenu = pMenu.get();
-    connect(pMenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
+    connect(pMenu.get(), &DropDownmenu::sigItemChanged, this, [this, pPtrMenu](qint32)
     {
         unitID = pPtrMenu->getCurrentItemText();
     });
@@ -138,7 +138,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     checkBox->setPosition(width, 110);
     checkBox->setChecked(remove);
     connect(checkBox.get(), &Checkbox::checkChanged, this,
-            [=](bool value)
+            [this](bool value)
     {
         setRemove(value);
     });

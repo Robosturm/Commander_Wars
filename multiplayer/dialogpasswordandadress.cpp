@@ -53,7 +53,7 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
     m_OkButton->setPosition(Settings::getWidth() / 2 + 10,
                             Settings::getHeight() / 2 + 90);
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         QString currentText = m_pTextbox->getCurrentText();
         QString password = m_pPasswordbox->getCurrentText();
@@ -67,7 +67,7 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
     m_CancelButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() - 10,
                                 Settings::getHeight() / 2 + 90);
     pSpriteBox->addChild(m_CancelButton);
-    m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigCancel();
     });

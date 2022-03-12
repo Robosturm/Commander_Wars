@@ -97,7 +97,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     textBox->setPosition(width, 30);
     textBox->setCurrentText(m_variable);
     connect(textBox.get(), &Textbox::sigTextChanged, this,
-            [=](QString value)
+            [this](QString value)
     {
         m_variable = value;
     });
@@ -114,7 +114,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     dropDown->setPosition(width, 70);
     dropDown->setCurrentItemText(m_Modifier);
     DropDownmenu* pDropDown = dropDown.get();
-    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
+    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [this, pDropDown](qint32)
     {
         m_Modifier = pDropDown->getCurrentItemText();
     });
@@ -130,7 +130,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(m_value);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         m_value = value;
     });
@@ -146,7 +146,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     checkBox->setPosition(width, 150);
     checkBox->setChecked(m_CampaignVariable);
     connect(checkBox.get(), &Checkbox::checkChanged, this,
-            [=](bool value)
+            [this](bool value)
     {
         m_CampaignVariable = value;
     });

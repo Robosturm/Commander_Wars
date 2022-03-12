@@ -68,7 +68,7 @@ CampaignEditor::CampaignEditor()
     oxygine::spButton pCampaignButton = pObjectManager->createButton(tr("Folder"), 150);
     pCampaignButton->setPosition(Settings::getWidth() - pCampaignButton->getWidth() - 30, 30);
     pSpriteBox->addChild(pCampaignButton);
-    pCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigShowSelectFolder();
     });
@@ -119,7 +119,7 @@ CampaignEditor::CampaignEditor()
     oxygine::spButton pAddCampaignButton = pObjectManager->createButton(tr("Add Map"), 200);
     pAddCampaignButton->setPosition(30, Settings::getHeight() - 30 - pAddCampaignButton->getHeight());
     pSpriteBox->addChild(pAddCampaignButton);
-    pAddCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pAddCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigShowAddCampaign();
     });
@@ -128,7 +128,7 @@ CampaignEditor::CampaignEditor()
     oxygine::spButton pLoadCampaignButton = pObjectManager->createButton(tr("Load"), 150);
     pLoadCampaignButton->setPosition(Settings::getWidth() / 2 - 10 - pLoadCampaignButton->getWidth(), Settings::getHeight() - 30 - pLoadCampaignButton->getHeight());
     pSpriteBox->addChild(pLoadCampaignButton);
-    pLoadCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pLoadCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigShowLoadCampaign();
     });
@@ -137,7 +137,7 @@ CampaignEditor::CampaignEditor()
     oxygine::spButton pSaveCampaignButton = pObjectManager->createButton(tr("Save"), 150);
     pSaveCampaignButton->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 10 - pSaveCampaignButton->getHeight());
     pSpriteBox->addChild(pSaveCampaignButton);
-    pSaveCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pSaveCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigShowSaveCampaign();
     });
@@ -146,7 +146,7 @@ CampaignEditor::CampaignEditor()
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 10 - pOkButton->getHeight());
     pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigShowExitBox();
     });
@@ -274,7 +274,7 @@ void CampaignEditor::updateCampaignData()
         oxygine::spButton pEnableButton = pObjectManager->createButton(tr("Enable Maps"), 150);
         pEnableButton->setPosition(200, 10 + i * 40);
         m_Panel->addItem(pEnableButton);
-        pEnableButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pEnableButton->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
             emit sigShowEditEnableMaps(i);
         });
@@ -282,7 +282,7 @@ void CampaignEditor::updateCampaignData()
         oxygine::spButton pDisableButton = pObjectManager->createButton(tr("Disable Maps"), 150);
         pDisableButton->setPosition(360, 10 + i * 40);
         m_Panel->addItem(pDisableButton);
-        pDisableButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pDisableButton->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
             emit sigShowEditDisableMaps(i);
         });
@@ -290,7 +290,7 @@ void CampaignEditor::updateCampaignData()
         oxygine::spButton pVariableButton = pObjectManager->createButton(tr("Variables"), 150);
         pVariableButton->setPosition(520, 10 + i * 40);
         m_Panel->addItem(pVariableButton);
-        pVariableButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pVariableButton->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
             emit sigShowEditScriptVariables(i);
         });
@@ -298,7 +298,7 @@ void CampaignEditor::updateCampaignData()
         oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove Map"), 150);
         pRemoveButton->setPosition(680, 10 + i * 40);
         m_Panel->addItem(pRemoveButton);
-        pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
             mapDatas.removeAt(i);
             emit sigUpdateCampaignData();
@@ -315,7 +315,7 @@ void CampaignEditor::updateCampaignData()
         pBox->setTooltipText(tr("All maps marked as last map need to be won in order to finish the campaign"));
         pBox->setPosition(940, 10 + i * 40);
         m_Panel->addItem(pBox);
-        connect(pBox.get(), &Checkbox::checkChanged, [=](bool value)
+        connect(pBox.get(), &Checkbox::checkChanged, [this, i](bool value)
         {
             mapDatas[i].lastMap = value;
         });
@@ -693,7 +693,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     spinBox->setPosition(300, 10);
     spinBox->setCurrentValue(mapDatas[index].previousCount);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
-            [=](qreal value)
+            [this, index](qreal value)
     {
         mapDatas[index].previousCount = static_cast<qint32>(value);
     });
@@ -721,7 +721,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
             {
                 pCheckbox->setChecked(false);
             }
-            connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+            connect(pCheckbox.get(), &Checkbox::checkChanged, [this, index, i](bool value)
             {
                 if (value)
                 {
@@ -765,7 +765,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     spinBox->setPosition(300, 10);
     spinBox->setCurrentValue(mapDatas[index].disableCount);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
-            [=](qreal value)
+            [this, index](qreal value)
     {
         mapDatas[index].disableCount = static_cast<qint32>(value);
     });
@@ -791,7 +791,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
         {
             pCheckbox->setChecked(false);
         }
-        connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+        connect(pCheckbox.get(), &Checkbox::checkChanged, [this, index, i](bool value)
         {
             if (value)
             {
@@ -852,7 +852,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     textBox->setPosition(width, y);
     textBox->setCurrentText(mapDatas[index].scriptVariableEnableName);
     connect(textBox.get(), &Textbox::sigTextChanged,
-            [=](QString value)
+            [this, index](QString value)
     {
         mapDatas[index].scriptVariableEnableName = value;
     });
@@ -870,7 +870,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
     dropDown->setPosition(width, y);
     dropDown->setCurrentItemText(mapDatas[index].scriptVariableEnableCompare);
-    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
+    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [this, index, dropDown](qint32)
     {
         mapDatas[index].scriptVariableEnableCompare = dropDown->getCurrentItemText();
     });
@@ -887,7 +887,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(mapDatas[index].scriptVariableEnableValue);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
-            [=](qreal value)
+            [this, index](qreal value)
     {
         mapDatas[index].scriptVariableEnableValue = value;
     });
@@ -904,7 +904,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     checkBox->setPosition(width, y);
     checkBox->setChecked(mapDatas[index].scriptVariableEnableActive);
     connect(checkBox.get(), &Checkbox::checkChanged,
-            [=](bool value)
+            [this, index](bool value)
     {
         mapDatas[index].scriptVariableEnableActive = value;
     });
@@ -928,7 +928,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     textBox->setPosition(width, y);
     textBox->setCurrentText(mapDatas[index].scriptVariableDisableName);
     connect(textBox.get(), &Textbox::sigTextChanged,
-            [=](QString value)
+            [this, index](QString value)
     {
         mapDatas[index].scriptVariableDisableName = value;
     });
@@ -944,7 +944,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
     dropDown->setPosition(width, y);
     dropDown->setCurrentItemText(mapDatas[index].scriptVariableDisableCompare);
-    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
+    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [this, index, dropDown](qint32)
     {
         mapDatas[index].scriptVariableDisableCompare = dropDown->getCurrentItemText();
     });
@@ -961,7 +961,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(mapDatas[index].scriptVariableDisableValue);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
-            [=](qreal value)
+            [this, index](qreal value)
     {
         mapDatas[index].scriptVariableDisableValue = value;
     });
@@ -978,7 +978,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     checkBox->setPosition(width, y);
     checkBox->setChecked(mapDatas[index].scriptVariableDisableActive);
     connect(checkBox.get(), &Checkbox::checkChanged,
-            [=](bool value)
+            [this, index](bool value)
     {
         mapDatas[index].scriptVariableDisableActive = value;
     });

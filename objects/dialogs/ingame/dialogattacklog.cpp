@@ -45,7 +45,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 10 - pOkButton->getHeight());
     pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigFinished();
     });
@@ -256,7 +256,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         qint32 posDefX = log->defenderX;
         qint32 posDefY = log->defenderY;
         qint32 playerDef = log->defenderOwnerID;
-        pButton->addClickListener([=](oxygine::Event*)
+        pButton->addClickListener([this, posAtkX, posAtkY, playerAtk, posDefX, posDefY, playerDef](oxygine::Event*)
         {
             emit sigShowAttack(posAtkX, posAtkY, playerAtk, posDefX, posDefY, playerDef);
         });

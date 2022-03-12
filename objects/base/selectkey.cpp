@@ -17,7 +17,7 @@ SelectKey::SelectKey(Qt::Key code)
 
     m_Button = ObjectManager::createButton("", 180);
     oxygine::Actor* pActor = m_Button.get();
-    m_Button->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_Button->addEventListener(oxygine::TouchEvent::CLICK, [this, pActor](oxygine::Event * )->void
     {
         Label* pText = dynamic_cast<Label*>(pActor->getFirstChild()->getFirstChild().get());
         pText->setHtmlText(tr("Press Key"));

@@ -116,7 +116,7 @@ void TableView::addRow(qint32 i, qint32 i2, qint32 x, bool selectable)
         addChild(line);
         if (selectable)
         {
-            line->addClickListener([=](oxygine::Event*)
+            line->addClickListener([this, i](oxygine::Event*)
             {
                 setCurrentItem(i);
                 emit sigItemClicked();
@@ -130,7 +130,7 @@ void TableView::addRow(qint32 i, qint32 i2, qint32 x, bool selectable)
     addChild(pTextfield);
     if (selectable)
     {
-        pTextfield->addClickListener([=](oxygine::Event*)
+        pTextfield->addClickListener([this, i](oxygine::Event*)
         {
             setCurrentItem(i);
             emit sigItemClicked();

@@ -30,7 +30,7 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
     m_Colorfield = oxygine::spColorRectSprite::create();
     if (!Settings::getSmallScreenDevice())
     {
-        m_Colorfield->addClickListener([=](oxygine::Event* event)
+        m_Colorfield->addClickListener([this](oxygine::Event* event)
         {
             event->stopPropagation();
             looseFocusInternal();

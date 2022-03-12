@@ -80,8 +80,8 @@ void HeavyAi::scoreUnitBuildings(spQmlVectorBuilding & pBuildings, spQmlVectorUn
 void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
 {
     double bestScore = 0.0;
-    QVector<qint32> bestItems;
-    QVector<double> scores;
+    std::vector<qint32> bestItems;
+    std::vector<double> scores;
     building.m_action = nullptr;
     building.m_score = 0;
     qint32 coCount = m_pPlayer->getCoCount();
@@ -127,21 +127,21 @@ void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
                 {
                     if (scores[i2] < bestScore - m_actionScoreVariant)
                     {
-                        scores.removeAt(i2);
-                        bestItems.removeAt(i2);
+                        scores.erase(scores.cbegin() + i2);
+                        bestItems.erase(bestItems.cbegin() + i2);
                     }
                     else
                     {
                         ++i2;
                     }
                 }
-                scores.append(bestScore);
-                bestItems.append(i);
+                scores.push_back(bestScore);
+                bestItems.push_back(i);
             }
             else if (bestScore - m_actionScoreVariant <= value)
             {
-                bestItems.append(i);
-                scores.append(value);
+                bestItems.push_back(i);
+                scores.push_back(value);
             }
         }
     }

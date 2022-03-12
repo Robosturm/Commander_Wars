@@ -146,7 +146,7 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
         if (m_endPoints == 0)
         {
             oxygine::Sprite* pSrite = m_buildingSprites.get();
-            tween2->addDoneCallback([=](oxygine::Event *)
+            tween2->addDoneCallback([this, pSrite, capturedPlayer](oxygine::Event *)
             {
                 pSrite->setResAnim(m_captureBuildingResAnim.get());
                 if (m_pMap->getCurrentViewPlayer()->isEnemy(capturedPlayer))
@@ -213,7 +213,7 @@ void GameAnimationCapture::addSoldierSprite(const QString & spriteID, Player*  p
                 if(!m_finishQueued)
                 {
                     m_finishQueued = true;
-                    tween4->addDoneCallback([=](oxygine::Event *)->void
+                    tween4->addDoneCallback([this](oxygine::Event *)->void
                     {
                         emitFinished();
                     });
@@ -224,7 +224,7 @@ void GameAnimationCapture::addSoldierSprite(const QString & spriteID, Player*  p
                 if(!m_finishQueued)
                 {
                     m_finishQueued = true;
-                    tween3->addDoneCallback([=](oxygine::Event *)->void
+                    tween3->addDoneCallback([this](oxygine::Event *)->void
                     {
                         emitFinished();
                     });

@@ -16,7 +16,7 @@ Checkbox::Checkbox()
     if (pAnim != nullptr)
     {
         setResAnim(pAnim);
-        addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
+        addEventListener(oxygine::TouchEvent::OVER, [this, pAnim](oxygine::Event*)
         {
             addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
             if (m_Checked)
@@ -29,7 +29,7 @@ Checkbox::Checkbox()
             }
         });
 
-        addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
+        addEventListener(oxygine::TouchEvent::OUTX, [this, pAnim](oxygine::Event*)
         {
             addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
             if (m_Checked)
@@ -42,7 +42,7 @@ Checkbox::Checkbox()
             }
         });
 
-        addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        addEventListener(oxygine::TouchEvent::CLICK, [this, pAnim](oxygine::Event*)
         {
             m_Checked = !m_Checked;
             if (m_Checked)
