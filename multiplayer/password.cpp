@@ -28,7 +28,7 @@ void Password::deserializeObject(QDataStream& pStream)
 
 void Password::setPassword(QString password)
 {
-    QCryptographicHash myHash(QCryptographicHash::Sha3_512);
+    QCryptographicHash myHash(QCryptographicHash::Sha256);
     myHash.addData(password.toStdString().c_str(), password.size());
     m_passwordHash = myHash.result();
 }
@@ -40,7 +40,7 @@ void Password::setPassword(const Password & password)
 
 bool Password::isValidPassword(QString password) const
 {
-    QCryptographicHash myHash(QCryptographicHash::Sha3_512);
+    QCryptographicHash myHash(QCryptographicHash::Sha256);
     myHash.addData(password.toStdString().c_str(), password.size());
     return (m_passwordHash == myHash.result());
 }

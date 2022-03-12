@@ -266,13 +266,13 @@ void EditorMenue::createTempFile(bool cleanUp)
     if (previous.exists())
     {
         file.open(QIODevice::ReadOnly | QIODevice::Truncate);
-        QCryptographicHash myHash(QCryptographicHash::Sha3_512);
+        QCryptographicHash myHash(QCryptographicHash::Md5);
         myHash.addData(&file);
         QByteArray hash = myHash.result();
         file.close();
 
         previous.open(QIODevice::ReadOnly | QIODevice::Truncate);
-        QCryptographicHash myHash1(QCryptographicHash::Sha3_512);
+        QCryptographicHash myHash1(QCryptographicHash::Md5);
         myHash1.addData(&previous);
         QByteArray hash1 = myHash1.result();
         previous.close();

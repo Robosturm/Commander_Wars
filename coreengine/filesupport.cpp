@@ -6,7 +6,7 @@
 
 QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & folders)
 {
-    QCryptographicHash myHash(QCryptographicHash::Sha3_512);
+    QCryptographicHash myHash(QCryptographicHash::Md5);
     QStringList fullList;
     for (const auto & folder : qAsConst(folders))
     {
