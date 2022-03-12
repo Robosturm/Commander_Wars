@@ -17,7 +17,11 @@
 #include <QInputDevice>
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
-const QString Settings::m_settingFile = "Commander_Wars.ini";
+#ifdef USEAPPCONFIGPATH
+    const QString Settings::m_settingFile = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + "/Commander_Wars.ini";
+#else
+    const QString Settings::m_settingFile = "Commander_Wars.ini";
+#endif
 float Settings::m_mouseSensitivity   = -0.75f;
 qint32 Settings::m_x                 = 0;
 qint32 Settings::m_y                 = 0;
