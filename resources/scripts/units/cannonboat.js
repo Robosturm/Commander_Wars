@@ -32,7 +32,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return qsTr("Cannonboat");
+        return qsTr("Missile boat");
     };
     this.startOfTurn = function(unit, map)
     {
