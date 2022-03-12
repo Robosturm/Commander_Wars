@@ -374,7 +374,7 @@ QVector<QPoint> PathFindingSystem::getFields(qint32 startX, qint32 startY, qint3
 
 QVector<QPoint> PathFindingSystem::getAllNodePoints(qint32 maxRange)
 {
-    auto points = getAllNodePoints(maxRange);
+    auto points = getAllNodePointsFast(maxRange);
     QVector<QPoint> path;
     path.reserve((points.size()));
     for (auto & point : points)
