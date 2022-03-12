@@ -21,15 +21,15 @@ var PLAYER =
                      ["#ff33cc", "#ff33cc", "pf", "pink_frontier",], // pf
                      ["#17a195", "#17a195", "ti", "teal_isle",], // ti
                      ["#800080", "#474370", "dm", "dark_matter",], // dm
+                     ["#c4443d", "#943142", "",   "red_fire",], // red_fire
+                     ["#ff0000", "#ff0000", "",   "red",], // red
+                     ["#2342ba", "#2342ba", "",   "cobalt_ice",], // cobalt_ice
                      ["#01cbff", "#01cbff", "",   "cyan",], // cyan
                      ["#006400", "#006400", "",   "dark_green",], // dark_green
-                     ["#ff0000", "#ff0000", "",   "red",], // red
-                     ["#c4443d", "#943142", "",   "red_fire",], // red_fire
-                     ["#a29db9", "#7d798e", "",   "light_grey",], // light_grey
                      ["#617c0e", "#617c0e", "",   "olive",], // olive
-                     ["#2342ba", "#2342ba", "",   "cobalt_ice",], // cobalt_ice
-                     ["#85927b", "#85927b", "",   "silver",], // silver
                      ["#6b01db", "#6b01db", "",   "purple",], // purple
+                     ["#a29db9", "#7d798e", "",   "light_grey",], // light_grey
+                     ["#85927b", "#85927b", "",   "silver",], // silver
                      ["#aa003f", "#aa003f", "",   "cherrystone",], // cherrystone
                      ["#366eca", "#366eca", "",   "felheim",], // felheim
                      ["#77aa08", "#77aa08", "",   "gloomwood",], // gloomwood
