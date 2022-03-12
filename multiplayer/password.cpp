@@ -28,9 +28,16 @@ void Password::deserializeObject(QDataStream& pStream)
 
 void Password::setPassword(QString password)
 {
-    QCryptographicHash myHash(QCryptographicHash::Sha256);
-    myHash.addData(password.toStdString().c_str(), password.size());
-    m_passwordHash = myHash.result();
+    if (password.isEmpty())
+    {
+        m_passwordHash = QByteArray();
+    }
+    else
+    {
+        QCryptographicHash myHash(QCryptographicHash::Sha256);
+        myHash.addData(password.toUtf8());
+        m_passwordHash = myHash.result();
+    }
 }
 
 void Password::setPassword(const Password & password)

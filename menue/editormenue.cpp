@@ -256,7 +256,7 @@ void EditorMenue::createTempFile(bool cleanUp)
         cleanTemp(m_tempCounter);
     }
     QFile file("temp/temp" + QString::number(m_tempCounter) + ".tmp");
-    file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    file.open(QIODevice::WriteOnly);
     QDataStream stream(&file);
     
     m_pMap->serializeObject(stream);
@@ -265,14 +265,14 @@ void EditorMenue::createTempFile(bool cleanUp)
     QFile previous("temp/temp" + QString::number(m_tempCounter - 1) + ".tmp");
     if (previous.exists())
     {
-        file.open(QIODevice::ReadOnly | QIODevice::Truncate);
-        QCryptographicHash myHash(QCryptographicHash::Md5);
+        file.open(QIODevice::ReadOnly);
+        QCryptographicHash myHash(QCryptographicHash::Sha256);
         myHash.addData(&file);
         QByteArray hash = myHash.result();
         file.close();
 
-        previous.open(QIODevice::ReadOnly | QIODevice::Truncate);
-        QCryptographicHash myHash1(QCryptographicHash::Md5);
+        previous.open(QIODevice::ReadOnly);
+        QCryptographicHash myHash1(QCryptographicHash::Sha256);
         myHash1.addData(&previous);
         QByteArray hash1 = myHash1.result();
         previous.close();

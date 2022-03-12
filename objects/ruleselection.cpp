@@ -186,6 +186,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         spPasswordbox pPasswordbox = spPasswordbox::create(Settings::getWidth() - 100 - textWidth);
         pPasswordbox->setPosition(textWidth, y);
         pPasswordbox->setCurrentText("");
+        m_pMap->getGameRules()->setPassword("");
         pPasswordbox->setTooltipText(tr("Map description shown for players who want to join. Keep it short here."));
         pPasswordbox->setEnabled(m_ruleChangeEabled);
         connect(pPasswordbox.get(), &Passwordbox::sigTextChanged, m_pMap->getGameRules(), &GameRules::setPassword, Qt::QueuedConnection);

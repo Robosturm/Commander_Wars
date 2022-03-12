@@ -1,12 +1,13 @@
 #include "coreengine/filesupport.h"
 #include "coreengine/settings.h"
+#include "coreengine/globalutils.h"
 
 #include <QDirIterator>
 #include <QCoreApplication>
 
 QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & folders)
 {
-    QCryptographicHash myHash(QCryptographicHash::Md5);
+    QCryptographicHash myHash(QCryptographicHash::Sha256);
     QStringList fullList;
     for (const auto & folder : qAsConst(folders))
     {
@@ -34,6 +35,11 @@ void Filesupport::addHash(QCryptographicHash & hash, const QString & folder, con
         QString content = stream.readAll();
         hash.addData(content.toUtf8());
         file.close();
+        if (Console::eDEBUG >= Console::getLogLevel())
+        {
+            QString hostString = GlobalUtils::getByteArrayString(hash.result());
+            CONSOLE_PRINT("Hash after file is: " + hostString, Console::eDEBUG);
+        }
     }
     list = dir.entryInfoList(QStringList(), QDir::Dirs | QDir::NoDotAndDotDot);
     for (auto & item : list)

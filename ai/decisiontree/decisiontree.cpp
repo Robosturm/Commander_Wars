@@ -45,7 +45,7 @@ DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDat
     if (trainingFile.exists())
     {
         trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
-        QCryptographicHash myHash(QCryptographicHash::Md5);
+        QCryptographicHash myHash(QCryptographicHash::Sha256);
         myHash.addData(&trainingFile);
         myHash.addData(Settings::getModString().toUtf8());
         hash = myHash.result();

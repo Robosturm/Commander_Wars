@@ -28,7 +28,7 @@ QString GlobalUtils::getByteArrayString(const QByteArray & bytes)
     QString data;
     for (qint32 i = 0; i < bytes.size(); i++)
     {
-        data += "0x" + QString::number(bytes[i])+ " ";
+        data += "0x" + QString::number(bytes[i], 16)+ " ";
     }
     return data;
 }

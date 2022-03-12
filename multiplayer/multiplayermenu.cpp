@@ -214,7 +214,7 @@ void Multiplayermenu::playerJoined(quint64 socketID)
 void Multiplayermenu::acceptNewConnection(quint64 socketID)
 {
     CONSOLE_PRINT("Accepting connection for socket " + QString::number(socketID), Console::eDEBUG);
-    QCryptographicHash myHash(QCryptographicHash::Md5);
+    QCryptographicHash myHash(QCryptographicHash::Sha256);
     QString file = m_pMapSelectionView->getCurrentFile().filePath();
     QString fileName = m_pMapSelectionView->getCurrentFile().fileName();
     QString scriptFile = m_pMapSelectionView->getCurrentMap()->getGameScript()->getScriptFile();
@@ -261,7 +261,7 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
         {
             // create hash for script file
             QFile scriptData(scriptFile);
-            QCryptographicHash myScriptHash(QCryptographicHash::Md5);
+            QCryptographicHash myScriptHash(QCryptographicHash::Sha256);
             scriptData.open(QIODevice::ReadOnly);
             myScriptHash.addData(&scriptData);
             scriptData.close();
@@ -544,7 +544,12 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
         if (!m_password.areEqualPassword(m_pMapSelectionView->getCurrentMap()->getGameRules()->getPassword()))
         {
             CONSOLE_PRINT("Incorrect Password found.", Console::eDEBUG);
-            buttonBack();
+            CONSOLE_PRINT("Entered password hash: " + GlobalUtils::getByteArrayString(m_password.getHash()), Console::eDEBUG);
+            CONSOLE_PRINT("Host    password hash: " + GlobalUtils::getByteArrayString(m_pMapSelectionView->getCurrentMap()->getGameRules()->getPassword().getHash()), Console::eDEBUG);
+            spDialogMessageBox pDialogMessageBox;
+            pDialogMessageBox = spDialogMessageBox::create(tr("Wrong password entered for joining the game."));
+            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+            addChild(pDialogMessageBox);
         }
         else
         {
@@ -625,7 +630,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
             QString hostString = GlobalUtils::getByteArrayString(hostRuntime);
             QString ownString = GlobalUtils::getByteArrayString(ownRuntime);
             CONSOLE_PRINT("Received host hash: " + hostString, Console::eDEBUG);
-            CONSOLE_PRINT("Own hash: " + ownString, Console::eDEBUG);
+            CONSOLE_PRINT("Own hash:           " + ownString, Console::eDEBUG);
         }
         differentHash = (hostRuntime != ownRuntime);
         if (version == Mainapp::getGameVersion() && sameMods && !differentHash)
@@ -1052,7 +1057,7 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
             {
                 scriptFile.setFileName(Settings::getUserPath() + scriptFileName);
                 scriptFile.open(QIODevice::ReadOnly);
-                QCryptographicHash myHash(QCryptographicHash::Md5);
+                QCryptographicHash myHash(QCryptographicHash::Sha256);
                 myHash.addData(&scriptFile);
                 scriptFile.close();
                 myHashArray = myHash.result();
@@ -1062,7 +1067,7 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
             {
                 scriptFile.setFileName(oxygine::Resource::RCC_PREFIX_PATH + scriptFileName);
                 scriptFile.open(QIODevice::ReadOnly);
-                QCryptographicHash myHash(QCryptographicHash::Md5);
+                QCryptographicHash myHash(QCryptographicHash::Sha256);
                 myHash.addData(&scriptFile);
                 scriptFile.close();
                 QByteArray myHashArray = myHash.result();
@@ -1089,7 +1094,7 @@ bool Multiplayermenu::findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, b
         QString file = dirIter.fileInfo().absoluteFilePath();
         QFile mapFile(file);
         mapFile.open(QIODevice::ReadOnly);
-        QCryptographicHash myHash(QCryptographicHash::Md5);
+        QCryptographicHash myHash(QCryptographicHash::Sha256);
         myHash.addData(&mapFile);
         mapFile.close();
         QByteArray myHashArray = myHash.result();
