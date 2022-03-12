@@ -162,8 +162,8 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
     {
         loadIni( "normal/" + configurationFile);
     }
-    m_BuildingChanceModifier.insert("MOTORBIKE", 0.85f);
-    m_BuildingChanceModifier.insert("MECH", 1.2f);
+    m_BuildingChanceModifier.insert("MOTORBIKE", 0.9f);
+    m_BuildingChanceModifier.insert("MECH", 1.1f);
 }
 
 void NormalAi::process()
