@@ -44,8 +44,8 @@ ReplayMenu::ReplayMenu(QString filename)
 
         m_storedAnimationSpeed = Settings::getAnimationSpeedValue();
         m_storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
-        m_storedDialogAnimationSpeed = Settings::getDialogAnimationSpeed();
-        m_storedCaptureAnimationSpeed = Settings::getCaptureAnimationSpeed();
+        m_storedDialogAnimationSpeed = Settings::getDialogAnimationSpeedValue();
+        m_storedCaptureAnimationSpeed = Settings::getCaptureAnimationSpeedValue();
         
         loadHandling();
         loadGameMenue();
