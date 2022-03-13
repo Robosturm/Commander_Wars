@@ -4604,5 +4604,19 @@
         <file>resources/images/units/motorbike+ti+mask.png</file>
         <file>resources/images/units/motorbike+ti+walk+mask.png</file>
         <file>resources/images/units/sniper+bg+mask.png</file>
+        <file>resources/images/terrain/bridge_river.png</file>
+        <file>resources/images/terrain/bridge_river+E.png</file>
+        <file>resources/images/terrain/bridge_river+E+S.png</file>
+        <file>resources/images/terrain/bridge_river+E+S+W.png</file>
+        <file>resources/images/terrain/bridge_river+N.png</file>
+        <file>resources/images/terrain/bridge_river+N+E.png</file>
+        <file>resources/images/terrain/bridge_river+N+E+S+W.png</file>
+        <file>resources/images/terrain/bridge_river+N+E+W.png</file>
+        <file>resources/images/terrain/bridge_river+N+S+W.png</file>
+        <file>resources/images/terrain/bridge_river+N+W.png</file>
+        <file>resources/images/terrain/bridge_river+S.png</file>
+        <file>resources/images/terrain/bridge_river+S+W.png</file>
+        <file>resources/images/terrain/bridge_river+W.png</file>
+        <file>resources/images/terrain/bridge_river+N+E+S.png</file>
     </qresource>
 </RCC>
