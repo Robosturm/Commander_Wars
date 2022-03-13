@@ -1,4 +1,3 @@
-#include <QCryptographicHash>
 #include <QJsonObject>
 #include <QJsonDocument>
 
@@ -11,6 +10,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/filesupport.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/sha256hash.h"
 
 #include "menue/gamemenue.h"
 
@@ -214,13 +214,13 @@ void Multiplayermenu::playerJoined(quint64 socketID)
 void Multiplayermenu::acceptNewConnection(quint64 socketID)
 {
     CONSOLE_PRINT("Accepting connection for socket " + QString::number(socketID), Console::eDEBUG);
-    QCryptographicHash myHash(QCryptographicHash::Sha256);
+    Sha256Hash myHash;
     QString file = m_pMapSelectionView->getCurrentFile().filePath();
     QString fileName = m_pMapSelectionView->getCurrentFile().fileName();
     QString scriptFile = m_pMapSelectionView->getCurrentMap()->getGameScript()->getScriptFile();
     QFile mapFile(file);
     mapFile.open(QIODevice::ReadOnly);
-    myHash.addData(&mapFile);
+    myHash.addData(mapFile.readAll());
     mapFile.close();
     QString command = QString(NetworkCommands::MAPINFO);
     CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
@@ -261,9 +261,9 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
         {
             // create hash for script file
             QFile scriptData(scriptFile);
-            QCryptographicHash myScriptHash(QCryptographicHash::Sha256);
+            Sha256Hash myScriptHash;
             scriptData.open(QIODevice::ReadOnly);
-            myScriptHash.addData(&scriptData);
+            myScriptHash.addData(scriptData.readAll());
             scriptData.close();
             QByteArray scriptHash = myScriptHash.result();
             stream << scriptHash;
@@ -1057,7 +1057,7 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
             {
                 scriptFile.setFileName(Settings::getUserPath() + scriptFileName);
                 scriptFile.open(QIODevice::ReadOnly);
-                QCryptographicHash myHash(QCryptographicHash::Sha256);
+                Sha256Hash myHash;
                 myHash.addData(&scriptFile);
                 scriptFile.close();
                 myHashArray = myHash.result();
@@ -1067,7 +1067,7 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
             {
                 scriptFile.setFileName(oxygine::Resource::RCC_PREFIX_PATH + scriptFileName);
                 scriptFile.open(QIODevice::ReadOnly);
-                QCryptographicHash myHash(QCryptographicHash::Sha256);
+                Sha256Hash myHash;
                 myHash.addData(&scriptFile);
                 scriptFile.close();
                 QByteArray myHashArray = myHash.result();
@@ -1094,7 +1094,7 @@ bool Multiplayermenu::findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, b
         QString file = dirIter.fileInfo().absoluteFilePath();
         QFile mapFile(file);
         mapFile.open(QIODevice::ReadOnly);
-        QCryptographicHash myHash(QCryptographicHash::Sha256);
+        Sha256Hash myHash;
         myHash.addData(&mapFile);
         mapFile.close();
         QByteArray myHashArray = myHash.result();

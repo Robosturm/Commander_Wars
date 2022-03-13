@@ -386,6 +386,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/metatyperegister.cpp
     coreengine/Gamepad.h
     coreengine/GamepadShared.cpp
+    coreengine/sha256hash.cpp
 
     # network engine
     network/tcpclient.cpp
