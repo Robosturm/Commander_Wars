@@ -854,13 +854,14 @@ set(${PROJECT_NAME}_INSTALL_QT_LIBS
 message("install lib dir: ${CMAKE_INSTALL_PREFIX}")
 set(INSTALL_PATH "Commander_Wars_${CMAKE_BUILD_TYPE}")
 # install folders and executable
-install(TARGETS ${PROJECT_NAME}
-    RUNTIME         DESTINATION         "${INSTALL_PATH}"
-    BUNDLE          DESTINATION         "${INSTALL_PATH}"
-    LIBRARY         DESTINATION         "${INSTALL_PATH}")
 
-if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows" OR
-   "${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+    install(TARGETS ${PROJECT_NAME}
+        RUNTIME         DESTINATION         "${INSTALL_PATH}"
+        BUNDLE          DESTINATION         "${INSTALL_PATH}"
+        LIBRARY         DESTINATION         "${INSTALL_PATH}")
+
     install(DIRECTORY templates DESTINATION "${INSTALL_PATH}")
     if (DEPLOY_RESOURCES_AS_FOLDER)
         message("Installing resources as folder")
@@ -877,6 +878,23 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows" OR
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "${INSTALL_PATH}" OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS} DESTINATION                    "${INSTALL_PATH}" OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "${INSTALL_PATH}/platforms" OPTIONAL)
+
+elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+    install(TARGETS ${PROJECT_NAME}
+        RUNTIME         DESTINATION         "${INSTALL_PATH}/bin"
+        BUNDLE          DESTINATION         "${INSTALL_PATH}/bin"
+        LIBRARY         DESTINATION         "${INSTALL_PATH}/bin")
+    # install libs
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS}            DESTINATION "${INSTALL_PATH}/lib/${PROJECT_NAME}"                OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS}            DESTINATION "${INSTALL_PATH}/lib/${PROJECT_NAME}"                OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION "${INSTALL_PATH}/lib/${PROJECT_NAME}/platforms"      OPTIONAL)
+    install(DIRECTORY templates                                 DESTINATION "${INSTALL_PATH}/share/${PROJECT_NAME}/"             OPTIONAL)
+    install(FILES "icon.png"                                     DESTINATION "${INSTALL_PATH}/share/pixmaps/${PROJECT_NAME}.png"  OPTIONAL)
+else()
+    install(TARGETS ${PROJECT_NAME}
+        RUNTIME         DESTINATION         "${INSTALL_PATH}"
+        BUNDLE          DESTINATION         "${INSTALL_PATH}"
+        LIBRARY         DESTINATION         "${INSTALL_PATH}")
 endif()
 
 if (DOXYGEN_FOUND)
