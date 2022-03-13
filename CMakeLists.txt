@@ -20,7 +20,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-option(AUDIOSUPPORT ON)
+option(AUDIOSUPPORT "enables audio support for the game" ON)
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
 
 ###################################################################################
@@ -115,6 +115,8 @@ if (AUDIOSUPPORT)
     add_definitions(
         -DAUDIOSUPPORT
     )
+else()
+    message("Building without Audio")
 endif()
 
 if (USEAPPCONFIGPATH)
@@ -122,6 +124,8 @@ if (USEAPPCONFIGPATH)
     add_definitions(
         -DUSEAPPCONFIGPATH
     )
+else()
+    message("Building without user config path")
 endif()
 
 ###################################################################################
