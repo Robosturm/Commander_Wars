@@ -102,6 +102,8 @@ quint16 Settings::m_slaveServerPort   = 9003;
 QString Settings::m_ServerAdress      = "";
 QString Settings::m_slaveServerName   = "";
 QString Settings::m_slaveHostOptions      = "::1&10000&20000;::1&50000&65535";
+QString Settings::m_serverListenAdress = "";
+QString Settings::m_slaveListenAdress = "::1";
 bool Settings::m_Server               = false;
 bool Settings::m_record               = true;
 // auto saving
@@ -141,6 +143,7 @@ bool Settings::m_showDetailedBattleForcast = true;
 bool Settings::m_autoMoveCursor = false;
 QString Settings::m_userPath = "";
 float Settings::m_supplyWarning = 0.33f;
+qint32 Settings::m_pauseAfterAction = 0;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -310,13 +313,16 @@ Settings::Settings()
         new Value<GameEnums::COInfoPosition>{"Game", "COInfoPosition", &m_coInfoPosition, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Right},
         new Value<GameEnums::AutoFocusing>{"Game", "AutoFocusing", &m_autoFocusing, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_Owned},
         // network
-        new Value<QString>{"Network", "ServerAdress", &m_ServerAdress, "", "", ""},
         new Value<quint16>{"Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()},
-        new Value<quint16>{"Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()},
+        new Value<QString>{"Network", "ServerAdress", &m_ServerAdress, "", "", ""},
         new Value<quint16>{"Network", "SlaveServerPort", &m_slaveServerPort, 9003, 0, std::numeric_limits<quint16>::max()},
+        new Value<quint16>{"Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()},
         new Value<bool>{"Network", "Server", &m_Server, false, false, true},
         new Value<QString>{"Network", "SlaveServerName", &m_slaveServerName, "", "", ""},
+        new Value<QString>{"Network", "ServerListenAdress", &m_serverListenAdress, "", "", ""},
+        new Value<QString>{"Network", "SlaveListenAdress", &m_slaveListenAdress, "", "", ""},
         new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&10000&20000;::1&50000&65535", "", ""},
+
         // auto saving
         new Value<std::chrono::seconds>{"Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)},
         new Value<qint32>{"Autosaving", "AutoSavingCycle", &m_autoSavingCycle, 3, 0, 100},
@@ -326,6 +332,36 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+const QString &Settings::getSlaveListenAdress()
+{
+    return m_slaveListenAdress;
+}
+
+void Settings::setSlaveListenAdress(const QString &newSlaveListenAdress)
+{
+    m_slaveListenAdress = newSlaveListenAdress;
+}
+
+const QString &Settings::getServerListenAdress()
+{
+    return m_serverListenAdress;
+}
+
+void Settings::setServerListenAdress(const QString &newServerListenAdress)
+{
+    m_serverListenAdress = newServerListenAdress;
+}
+
+qint32 Settings::getPauseAfterAction()
+{
+    return m_pauseAfterAction;
+}
+
+void Settings::setPauseAfterAction(qint32 newPauseAfterAction)
+{
+    m_pauseAfterAction = newPauseAfterAction;
 }
 
 QString Settings::getSlaveHostOptions()

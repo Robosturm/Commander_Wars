@@ -63,8 +63,8 @@ MainServer::MainServer()
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
     parseSlaveAddressOptions();
 
-    emit m_pGameServer->sig_connect("", Settings::getServerPort());
-    emit m_pSlaveServer->sig_connect("", Settings::getSlaveServerPort());
+    emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort());
+    emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort());
 }
 
 MainServer::~MainServer()

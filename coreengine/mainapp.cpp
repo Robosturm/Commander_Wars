@@ -63,6 +63,7 @@ const char* const Mainapp::ARG_INITSCRIPT = "-initScript";
 const char* const Mainapp::ARG_CREATESLAVELOGS = "-createSlaveLogs";
 const char* const Mainapp::ARG_SLAVEADDRESS = "-slaveAdress";
 const char* const Mainapp::ARG_MASTERADDRESS = "-masterAdress";
+const char* const Mainapp::ARG_SERVER = "-server";
 
 Mainapp::Mainapp()
 {
@@ -679,6 +680,12 @@ void Mainapp::loadArgs(const QStringList & args)
     if (args.contains(ARG_CREATESLAVELOGS))
     {
         m_createSlaveLogs = true;
+    }
+    if (args.contains(ARG_SERVER))
+    {
+        bool ok = false;
+        qint32 startIndex = args.indexOf(ARG_SERVER);
+        Settings::setServerPort(QString(args[startIndex + 1]).toInt(&ok));
     }
 }
 

@@ -31,7 +31,11 @@ void Filesupport::addHash(Sha256Hash & hash, const QString & folder, const QStri
         CONSOLE_PRINT("Adding file: " + filePath + " to hash", Console::eDEBUG);
         QFile file(filePath);
         file.open(QIODevice::ReadOnly);
-        hash.addData(file.readAll());
+        QTextStream stream(&file);
+        while (!stream.atEnd())
+        {
+            hash.addData(file.readLine().trimmed());
+        }
         file.close();
         if (Console::eDEBUG >= Console::getLogLevel())
         {

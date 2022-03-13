@@ -35,6 +35,7 @@ public:
     static const char* const ARG_CREATESLAVELOGS;
     static const char* const ARG_SLAVEADDRESS;
     static const char* const ARG_MASTERADDRESS;
+    static const char* const ARG_SERVER;
     static constexpr qint32 stepProgress = 4;
     enum StartupPhase
     {

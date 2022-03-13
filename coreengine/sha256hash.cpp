@@ -2,12 +2,12 @@
 
 static constexpr quint32 ROTLEFT(quint32 a, quint32 b)
 {
-    return (((a) << (b)) | ((a) >> (32-(b))));
+    return (((a) << (b)) | ((a) >> (32 - (b))));
 }
 
 static constexpr quint32 ROTRIGHT(quint32 a, quint32 b)
 {
-    return (((a) >> (b)) | ((a) << (32-(b))));
+    return (((a) >> (b)) | ((a) << (32 - (b))));
 }
 
 static constexpr quint32 CH(quint32 x, quint32 y, quint32 z)
