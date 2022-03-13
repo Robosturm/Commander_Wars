@@ -106,6 +106,7 @@
         <image file="infantry+ac+mask.png" cols = "4"  />
         <image file="infantry+ac+walk+mask.png" cols = "4"  rows = "4"  />
         <image file="infantry+bd+mask.png" cols = "4"  />
+        <image file="infantry+bd+walk+mask.png" cols = "4"  rows = "4"  />
         <image file="infantry+bh+mask.png" cols = "4"  />
         <image file="infantry+bh+walk+mask.png" cols = "4"  rows = "4"  />
         <image file="infantry+bg+mask.png" cols = "4"  />
@@ -113,14 +114,19 @@
         <image file="infantry+bm+mask.png" cols = "4"  />
         <image file="infantry+bm+walk+mask.png" cols = "4"  rows = "4"  />
         <image file="infantry+dm+mask.png" cols = "4"  />
+        <image file="infantry+dm+walk+mask.png" cols = "4"  rows = "4"  />
         <image file="infantry+ge+mask.png" cols = "4"  />
         <image file="infantry+ge+walk+mask.png" cols = "4"  rows = "4"  />
         <image file="infantry+gs.png" cols = "4"  />
+        <image file="infantry+gs+walk.png" cols = "4"  rows = "4"  />
         <image file="infantry+gs+mask.png" cols = "4"  />
+        <image file="infantry+gs+walk+mask.png" cols = "4"  rows = "4"  />
         <image file="infantry+ma+mask.png" cols = "4"  />
         <image file="infantry+ma+walk+mask.png" cols = "4"  rows = "4"  />
         <image file="infantry+pf+mask.png" cols = "4"  />
+        <image file="infantry+pf+walk+mask.png" cols = "4"  rows = "4"  />
         <image file="infantry+ti+mask.png" cols = "4"  />
+        <image file="infantry+ti+walk+mask.png" cols = "4"  rows = "4"  />
         <image file="infantry+yc+mask.png" cols = "4"  />
         <image file="infantry+yc+walk+mask.png" cols = "4"  rows = "4"  />
         <!-- battle copter -->
@@ -136,6 +142,7 @@
         <image file="mech+ac+mask.png" cols = "4"  />
         <image file="mech+ac+walk+mask.png" cols = "4" rows = "4"  />
         <image file="mech+bd+mask.png" cols = "4"  />
+        <image file="mech+bd+walk+mask.png" cols = "4" rows = "4"  />
         <image file="mech+bh+mask.png" cols = "4"  />
         <image file="mech+bh+walk+mask.png" cols = "4" rows = "4"  />
         <image file="mech+bg+mask.png" cols = "4"  />
@@ -143,16 +150,21 @@
         <image file="mech+bm+mask.png" cols = "4"  />
         <image file="mech+bm+walk+mask.png" cols = "4" rows = "4"  />
         <image file="mech+dm+mask.png" cols = "4"  />
+        <image file="mech+dm+walk+mask.png" cols = "4" rows = "4"  />
         <image file="mech+ge+mask.png" cols = "4"  />
         <image file="mech+ge+walk+mask.png" cols = "4" rows = "4"  />
         <image file="mech+gs.png" cols = "4"  />
+        <image file="mech+gs+walk.png" cols = "4" rows = "4"  />
         <image file="mech+gs+mask.png" cols = "4"  />
+        <image file="mech+gs+walk+mask.png" cols = "4" rows = "4"  />
         <image file="mech+ma+mask.png" cols = "4"  />
         <image file="mech+ma+walk+mask.png" cols = "4" rows = "4"  />
         <image file="mech+os+mask.png" cols = "4"  />
         <image file="mech+os+walk+mask.png" cols = "4" rows = "4"  />
         <image file="mech+pf+mask.png" cols = "4"  />
+        <image file="mech+pf+walk+mask.png" cols = "4" rows = "4"  />
         <image file="mech+ti+mask.png" cols = "4"  />
+        <image file="mech+ti+walk+mask.png" cols = "4" rows = "4"  />
         <image file="mech+yc+mask.png" cols = "4"  />
         <image file="mech+yc+walk+mask.png" cols = "4" rows = "4"  />
         <!-- megatank -->
@@ -174,6 +186,24 @@
         <image file="motorbike+yc+walk+mask.png" cols = "3" rows = "4"  />
         <image file="motorbike+bh+mask.png" cols = "4"  />
         <image file="motorbike+bh+walk+mask.png" cols = "3" rows = "4"  />
+        <image file="motorbike+bg+mask.png" cols = "4"  />
+        <image file="motorbike+bg+walk+mask.png" cols = "3" rows = "4"  />
+        <image file="motorbike+ma+mask.png" cols = "4"  />
+        <image file="motorbike+ma+walk+mask.png" cols = "3" rows = "4"  />
+        <image file="motorbike+ac+mask.png" cols = "4"  />
+        <image file="motorbike+ac+walk+mask.png" cols = "3" rows = "4"  />
+        <image file="motorbike+bd+mask.png" cols = "4"  />
+        <image file="motorbike+bd+walk+mask.png" cols = "3" rows = "4"  />
+        <image file="motorbike+gs.png" cols = "4"  />
+        <image file="motorbike+gs+walk.png" cols = "3" rows = "4"  />
+        <image file="motorbike+gs+mask.png" cols = "4"  />
+        <image file="motorbike+gs+walk+mask.png" cols = "3" rows = "4"  />
+        <image file="motorbike+pf+mask.png" cols = "4"  />
+        <image file="motorbike+pf+walk+mask.png" cols = "3" rows = "4"  />
+        <image file="motorbike+ti+mask.png" cols = "4"  />
+        <image file="motorbike+ti+walk+mask.png" cols = "3" rows = "4"  />
+        <image file="motorbike+dm+mask.png" cols = "4"  />
+        <image file="motorbike+dm+walk+mask.png" cols = "3" rows = "4"  />
         <!-- neotank -->
         <image file="neotank+mask.png" cols = "4"  />
         <image file="neotank+walk+mask.png" cols = "3" rows = "4"  />
