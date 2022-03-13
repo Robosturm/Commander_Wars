@@ -675,6 +675,23 @@
         <image file="bridge+style1+S+W.png" />
         <image file="bridge+style1+W.png" />
         
+        <image file="bridge+river.png" />
+        <image file="bridge+river+E.png" />
+        <image file="bridge+river+E+S.png" />
+        <image file="bridge+river+E+S+W.png" />
+        <image file="bridge+river+E+W.png" />
+        <image file="bridge+river+N.png" />
+        <image file="bridge+river+N+E.png" />
+        <image file="bridge+river+N+E+S.png" />
+        <image file="bridge+river+N+E+S+W.png" />
+        <image file="bridge+river+N+E+W.png" />
+        <image file="bridge+river+N+S.png" />
+        <image file="bridge+river+N+S+W.png" />
+        <image file="bridge+river+N+W.png" />
+        <image file="bridge+river+S.png" />
+        <image file="bridge+river+S+W.png" />
+        <image file="bridge+river+W.png" />
+
         <image file="weld+E+W.png" />
         <image file="weld+N+S.png" />
         
