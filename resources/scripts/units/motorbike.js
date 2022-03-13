@@ -22,8 +22,14 @@ var Constructor = function()
                      ["ge", "ge"],
                      ["yc", "yc"],
                      ["bh", "bh"],
-                     ["bg", "bh"],
-                     ["dm", ""],];
+                     ["bg", "bg"],
+                     ["ma", "ma"],
+                     ["ac", "ac"],
+                     ["bd", "bd"],
+                     ["gs", "gs"],
+                     ["pf", "pf"],
+                     ["ti", "ti"],
+                     ["dm", "dm"],];
     this.getBaseCost = function()
     {
         return 2500;

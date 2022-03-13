@@ -1617,7 +1617,7 @@
         <file>customTerrainImages/plane_street+7.png</file>
         <file>customTerrainImages/plane_street+8.png</file>
         <file>customTerrainImages/plane_street+9.png</file>
-        <file>customTerrainImages/readme.txt</file>        
+        <file>customTerrainImages/readme.txt</file>
         <file>resources/images/battleanimations/aircraftcarrier/aircraftcarrier+mask.png</file>
         <file>resources/images/battleanimations/aircraftcarrier/aircraftcarrier.png</file>
         <file>resources/images/battleanimations/apc/apc+ac+mask.png</file>
@@ -2091,7 +2091,7 @@
         <file>resources/images/terrain/beach+SE.png</file>
         <file>resources/images/terrain/beach+SW.png</file>
         <file>resources/images/battleanimations/mech/mech+ma+river.png</file>
-        <file>resources/objects/one_step.png</file>        
+        <file>resources/objects/one_step.png</file>
         <file>resources/images/co_perks/banshee.png</file>
         <file>resources/images/co_perks/classic_apc.png</file>
         <file>resources/images/co_perks/country_hick.png</file>
@@ -4573,5 +4573,36 @@
         <file>resources/images/colortables/silmor.png</file>
         <file>resources/images/animations/radar+mask.png</file>
         <file>resources/images/animations/tower+mask.png</file>
+        <file>resources/images/units/infantry+bd+walk+mask.png</file>
+        <file>resources/images/units/infantry+dm+walk+mask.png</file>
+        <file>resources/images/units/infantry+gs+walk.png</file>
+        <file>resources/images/units/infantry+gs+walk+mask.png</file>
+        <file>resources/images/units/infantry+pf+walk+mask.png</file>
+        <file>resources/images/units/infantry+ti+walk+mask.png</file>
+        <file>resources/images/units/mech+bd+walk+mask.png</file>
+        <file>resources/images/units/mech+dm+walk+mask.png</file>
+        <file>resources/images/units/mech+gs+walk.png</file>
+        <file>resources/images/units/mech+gs+walk+mask.png</file>
+        <file>resources/images/units/mech+pf+walk+mask.png</file>
+        <file>resources/images/units/mech+ti+walk+mask.png</file>
+        <file>resources/images/units/motorbike+ac+mask.png</file>
+        <file>resources/images/units/motorbike+ac+walk+mask.png</file>
+        <file>resources/images/units/motorbike+bd+mask.png</file>
+        <file>resources/images/units/motorbike+bd+walk+mask.png</file>
+        <file>resources/images/units/motorbike+bg+mask.png</file>
+        <file>resources/images/units/motorbike+bg+walk+mask.png</file>
+        <file>resources/images/units/motorbike+dm+mask.png</file>
+        <file>resources/images/units/motorbike+dm+walk+mask.png</file>
+        <file>resources/images/units/motorbike+gs.png</file>
+        <file>resources/images/units/motorbike+gs+mask.png</file>
+        <file>resources/images/units/motorbike+gs+walk.png</file>
+        <file>resources/images/units/motorbike+gs+walk+mask.png</file>
+        <file>resources/images/units/motorbike+ma+mask.png</file>
+        <file>resources/images/units/motorbike+ma+walk+mask.png</file>
+        <file>resources/images/units/motorbike+pf+mask.png</file>
+        <file>resources/images/units/motorbike+pf+walk+mask.png</file>
+        <file>resources/images/units/motorbike+ti+mask.png</file>
+        <file>resources/images/units/motorbike+ti+walk+mask.png</file>
+        <file>resources/images/units/sniper+bg+mask.png</file>
     </qresource>
 </RCC>
