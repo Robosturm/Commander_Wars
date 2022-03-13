@@ -204,16 +204,16 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
         {
             visionHigh = 0;
         }
-        QVector<QRect> m_LineSight;
-        QVector<QRect> m_LineSightEvaluated;
-        m_LineSight.append(QRect(x - 1, y, 0, 2));
-        m_LineSight.append(QRect(x - 1, y, 0, 3));
-        m_LineSight.append(QRect(x + 1, y, 1, 2));
-        m_LineSight.append(QRect(x + 1, y, 1, 3));
-        m_LineSight.append(QRect(x, y - 1, 2, 0));
-        m_LineSight.append(QRect(x, y - 1, 2, 1));
-        m_LineSight.append(QRect(x, y + 1, 3, 0));
-        m_LineSight.append(QRect(x, y + 1, 3, 1));
+        std::vector<QRect> m_LineSight;
+        std::vector<QRect> m_LineSightEvaluated;
+        m_LineSight.push_back(QRect(x - 1, y, 0, 2));
+        m_LineSight.push_back(QRect(x - 1, y, 0, 3));
+        m_LineSight.push_back(QRect(x + 1, y, 1, 2));
+        m_LineSight.push_back(QRect(x + 1, y, 1, 3));
+        m_LineSight.push_back(QRect(x, y - 1, 2, 0));
+        m_LineSight.push_back(QRect(x, y - 1, 2, 1));
+        m_LineSight.push_back(QRect(x, y + 1, 3, 0));
+        m_LineSight.push_back(QRect(x, y + 1, 3, 1));
 
         QPoint pos(x, y);
         if (0 >= minVisionRange && 0 <= maxVisionRange)
@@ -223,8 +223,8 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
         while (m_LineSight.size() > 0)
         {
             QRect current = m_LineSight.front();
-            m_LineSight.pop_front();
-            m_LineSightEvaluated.append(current);
+            m_LineSight.erase(m_LineSight.cbegin());
+            m_LineSightEvaluated.push_back(current);
             if (onMap(current.x(), current.y()))
             {
                 qint32 distance = GlobalUtils::getDistance(QPoint(current.x(), current.y()), pos);
@@ -289,7 +289,7 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
                                 }
                                 if (notIncluded)
                                 {
-                                    m_LineSight.append(next);
+                                    m_LineSight.push_back(next);
                                 }
                             }
                         }

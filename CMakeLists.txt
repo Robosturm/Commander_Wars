@@ -20,7 +20,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-option(AUDIOSUPPORT "enables audio support for the game" ON)
+option(AUDIOSUPPORT "enables audio support for the game and compiles music/sound into the exe" ON)
+option(GRAPHICSUPPORT "enables sprites for the game and compiles them into the exe" ON)
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
 
 ###################################################################################
@@ -609,16 +610,29 @@ endif()
 
 if (NOT DEPLOY_RESOURCES_AS_FOLDER)
     message("Using compiled resources")
-    if(AUDIOSUPPORT)
+
+    if (GRAPHICSUPPORT AND AUDIOSUPPORT)
         qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
-                             "general.qrc"
-                             "music.qrc"
-                             "sound.qrc"
-        )
+            "general.qrc"
+            "sprites.qrc"
+            "music.qrc"
+            "sound.qrc"
+            )
+    elseif(AUDIOSUPPORT)
+        qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
+            "general.qrc"
+            "music.qrc"
+            "sound.qrc"
+            )
+    elseif(GRAPHICSUPPORT)
+        qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
+            "general.qrc"
+            "sprites.qrc"
+            )
     else()
         qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
             "general.qrc"
-        )
+            )
     endif()
 endif()
 
