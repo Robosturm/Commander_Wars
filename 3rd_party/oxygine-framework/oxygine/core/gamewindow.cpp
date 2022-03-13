@@ -93,21 +93,6 @@ namespace oxygine
 
     void GameWindow::paintGL()
     {
-        static qint32 fps = 0;
-        static auto lastUpdate = std::chrono::system_clock::now().time_since_epoch();
-        auto now = std::chrono::system_clock::now().time_since_epoch();
-        ++fps;
-        if (now - lastUpdate > std::chrono::milliseconds(1000))
-        {
-            lastUpdate = now;
-
-            if (fps < 30)
-            {
-                qint32 a = 0;
-            }
-            fps = 0;
-        }
-
         updateData();
         if (m_pauseMutex.tryLock())
         {
@@ -120,12 +105,17 @@ namespace oxygine
                 // Render all actors inside the stage. Actor::render will also be called for all its children
                 oxygine::Stage::getStage()->renderStage(clearColor, viewport);
                 swapDisplayBuffers();
+                m_repeatedFramesDropped = 0;
             }
             m_pauseMutex.unlock();
         }
         else
         {
-            update();
+            ++m_repeatedFramesDropped;
+            if (m_repeatedFramesDropped > 10)
+            {
+                update();
+            }
         }
         // check for termination
         if (m_quit)

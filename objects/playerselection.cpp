@@ -402,7 +402,7 @@ void PlayerSelection::showPlayerSelection()
     oxygine::spButton pButtonAllCOs = ObjectManager::createButton(tr("All Random"), labelminStepSize - 10);
     pButtonAllCOs->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(pButtonAllCOs);
-    pButtonAllCOs->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonAllCOs->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigCOsRandom(-1);
     });
@@ -410,7 +410,7 @@ void PlayerSelection::showPlayerSelection()
     oxygine::spButton pButtonCOs1 = ObjectManager::createButton(tr("CO 1 Random"), labelminStepSize - 10);
     pButtonCOs1->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(pButtonCOs1);
-    pButtonCOs1->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonCOs1->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigCOsRandom(0);
     });
@@ -419,7 +419,7 @@ void PlayerSelection::showPlayerSelection()
     oxygine::spButton pButtonCOs2 = ObjectManager::createButton(tr("CO 2 Random"), labelminStepSize - 10);
     pButtonCOs2->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(pButtonCOs2);
-    pButtonCOs2->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonCOs2->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigCOsRandom(1);
     });
@@ -476,7 +476,7 @@ void PlayerSelection::showPlayerSelection()
     teamSpinBox->setPosition(xPositions[itemIndex], y);
     teamSpinBox->setCurrentValue(m_pMap->getPlayerCount());
     teamSpinBox->setSpinSpeed(1.0f);
-    connect(teamSpinBox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
+    connect(teamSpinBox.get(), &SpinBox::sigValueChanged, this, [this](qreal value)
     {
         emit sigChangeAllTeams(static_cast<qint32>(value));
     });
@@ -492,7 +492,7 @@ void PlayerSelection::showPlayerSelection()
     oxygine::spButton pButtonAllBuildList = ObjectManager::createButton(tr("Build List"), 150);
     pButtonAllBuildList->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(pButtonAllBuildList);
-    pButtonAllBuildList->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonAllBuildList->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit buttonShowAllBuildList();
     });
@@ -611,7 +611,7 @@ void PlayerSelection::showPlayerSelection()
         m_pPlayerSelection->addItem(spriteCO1);
         m_playerCO1.append(spriteCO1);
 
-        spriteCO1->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        spriteCO1->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
             emit sigShowSelectCO(i, 0);
         });
@@ -642,7 +642,7 @@ void PlayerSelection::showPlayerSelection()
         spriteCO2->setDisableColor(QColor(0, 0, 0, 0));
         m_pPlayerSelection->addItem(spriteCO2);
         m_playerCO2.append(spriteCO2);
-        spriteCO2->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        spriteCO2->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
             emit sigShowSelectCO(i, 1);
         });
@@ -674,7 +674,7 @@ void PlayerSelection::showPlayerSelection()
         pIconButton->setPosition(xPositions[itemIndex] + 67, y + 3);
         m_pPlayerSelection->addItem(pIconButton);
         m_playerPerks.append(pIconButton);
-        pIconButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pIconButton->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
             emit sigShowSelectCOPerks(i);
         });
@@ -694,7 +694,7 @@ void PlayerSelection::showPlayerSelection()
         playerColor->setCurrentItem(tableColorToDisplayColor(m_pMap->getPlayer(i)->getColor()));
         m_pPlayerSelection->addItem(playerColor);
         DropDownmenuColor* pPlayerColor = playerColor.get();
-        connect(playerColor.get(), &DropDownmenuColor::sigItemChanged, this, [=](QColor value)
+        connect(playerColor.get(), &DropDownmenuColor::sigItemChanged, this, [this, i, pPlayerColor](QColor value)
         {
             playerColorChanged(value, i, pPlayerColor->getCurrentItem());
         }, Qt::QueuedConnection);
@@ -785,7 +785,7 @@ void PlayerSelection::showPlayerSelection()
                 playerAi->setCurrentItem(ai);
             }
         }
-        connect(playerAi.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
+        connect(playerAi.get(), &DropDownmenu::sigItemChanged, this, [this, i](qint32)
         {
             emit sigAiChanged(i);
         });
@@ -801,7 +801,7 @@ void PlayerSelection::showPlayerSelection()
         playerStartFundsSpinBox->setSpinSpeed(500);
         m_pPlayerSelection->addItem(playerStartFundsSpinBox);
         m_playerStartFunds.append(playerStartFundsSpinBox);
-        connect(playerStartFundsSpinBox.get(), &SpinBox::sigValueChanged, this, [=](float value)
+        connect(playerStartFundsSpinBox.get(), &SpinBox::sigValueChanged, this, [this, i](float value)
         {
             playerStartFundsChanged(value, i);
         }, Qt::QueuedConnection);
@@ -820,7 +820,7 @@ void PlayerSelection::showPlayerSelection()
         playerIncomeSpinBox->setSpinSpeed(0.1f);
         m_pPlayerSelection->addItem(playerIncomeSpinBox);
         m_playerIncomes.append(playerIncomeSpinBox);
-        connect(playerIncomeSpinBox.get(), &SpinBox::sigValueChanged, this, [=](float value)
+        connect(playerIncomeSpinBox.get(), &SpinBox::sigValueChanged, this, [this, i](float value)
         {
             playerIncomeChanged(value, i);
         }, Qt::QueuedConnection);
@@ -837,7 +837,7 @@ void PlayerSelection::showPlayerSelection()
         playerTeam->setPosition(xPositions[itemIndex], y);
         playerTeam->setCurrentItem(m_pMap->getPlayer(i)->getTeam());
         m_pPlayerSelection->addItem(playerTeam);
-        connect(playerTeam.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
+        connect(playerTeam.get(), &DropDownmenu::sigItemChanged, this, [this, i](qint32 value)
         {
             playerTeamChanged(value, i);
         }, Qt::QueuedConnection);
@@ -853,7 +853,7 @@ void PlayerSelection::showPlayerSelection()
         oxygine::spButton pButtonPlayerBuildList = ObjectManager::createButton(tr("Build List"), 150);
         pButtonPlayerBuildList->setPosition(xPositions[itemIndex], y);
         m_pPlayerSelection->addItem(pButtonPlayerBuildList);
-        pButtonPlayerBuildList->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        pButtonPlayerBuildList->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event * )->void
         {
             emit buttonShowPlayerBuildList(i);
         });
@@ -911,7 +911,7 @@ void PlayerSelection::createArmySelection(qint32 ai, const QVector<qint32> & xPo
     m_pPlayerSelection->addItem(pArmy);
     m_playerArmy.append(pArmy);
     DropDownmenuSprite* pPtrArmy = pArmy.get();
-    connect(pArmy.get(), &DropDownmenuSprite::sigItemChanged, this, [=](qint32)
+    connect(pArmy.get(), &DropDownmenuSprite::sigItemChanged, this, [this, player, pPtrArmy](qint32)
     {
         emit sigSelectedArmyChanged(player, pPtrArmy->getCurrentItemText());
     });
@@ -1342,7 +1342,7 @@ void PlayerSelection::showSelectCOPerks(qint32 player)
         auto hiddenList = pUserdata->getShopItemsList(GameEnums::ShopItemType_Perk, false);
         spPerkSelectionDialog pPerkSelectionDialog = spPerkSelectionDialog::create(m_pMap, pPlayer, m_pMap->getGameRules()->getMaxPerkCount(), false, hiddenList);
         oxygine::Stage::getStage()->addChild(pPerkSelectionDialog);
-        connect(pPerkSelectionDialog.get(), &PerkSelectionDialog::sigFinished, this, [=]()
+        connect(pPerkSelectionDialog.get(), &PerkSelectionDialog::sigFinished, this, [this, player]()
         {
             updateCOData(player);
         });

@@ -52,7 +52,7 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
     setContentWidth(contentSize.width());
     setContentHeigth(contentSize.height());
 
-    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event* pEvent)
+    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [this](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)

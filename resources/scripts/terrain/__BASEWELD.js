@@ -166,7 +166,7 @@ var Constructor = function()
         return "fore_pipeline";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         var id = TERRAIN.getTerrainAnimationId(terrain, map);
         var baseTerrainId = ""

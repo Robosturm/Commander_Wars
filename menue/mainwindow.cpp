@@ -81,7 +81,7 @@ Mainwindow::Mainwindow()
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(Mainapp::getGameVersion());
     pTextfield->setPosition(Settings::getWidth() - 10 - pTextfield->getTextRect().getWidth(), Settings::getHeight() - 10 - pTextfield->getTextRect().getHeight());
-    pTextfield->addClickListener([=](oxygine::Event*)
+    pTextfield->addClickListener([this](oxygine::Event*)
     {
         emit sigVersionClicked();
     });
@@ -94,7 +94,7 @@ Mainwindow::Mainwindow()
         oxygine::spButton pImport = ObjectManager::createButton(tr("Import"), 170, tr("Imports all data from an other Commander Wars release to the current release."));
         addChild(pImport);
         pImport->setPosition(10, Settings::getHeight() - 10 - pImport->getHeight());
-        pImport->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        pImport->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigImport();
         });

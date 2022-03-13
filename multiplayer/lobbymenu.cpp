@@ -58,7 +58,7 @@ LobbyMenu::LobbyMenu()
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
     pButtonExit->setPosition(10, Settings::getHeight() - pButtonExit->getHeight() - 10);
-    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
     });
@@ -67,7 +67,7 @@ LobbyMenu::LobbyMenu()
     oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Direct Host"));
     addChild(pButtonHost);
     pButtonHost->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
-    pButtonHost->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonHost->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigHostLocal();
     });
@@ -76,7 +76,7 @@ LobbyMenu::LobbyMenu()
     m_pButtonHostOnServer = ObjectManager::createButton(tr("Server Host"));
     addChild(m_pButtonHostOnServer);
     m_pButtonHostOnServer->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() * 2 - 10);
-    m_pButtonHostOnServer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_pButtonHostOnServer->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigHostServer();
     });
@@ -90,7 +90,7 @@ LobbyMenu::LobbyMenu()
     oxygine::spButton pButtonJoin = ObjectManager::createButton(tr("Join Game"));
     addChild(pButtonJoin);
     pButtonJoin->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
-    pButtonJoin->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonJoin->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigJoinGame();
     });
@@ -99,7 +99,7 @@ LobbyMenu::LobbyMenu()
     oxygine::spButton pButtonObserve = ObjectManager::createButton(tr("Observe Game"));
     addChild(pButtonObserve);
     pButtonObserve->setPosition(Settings::getWidth() / 2 + 10, pButtonJoin->getY() - pButtonJoin->getHeight());
-    pButtonObserve->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonObserve->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigObserveGame();
     });
@@ -108,7 +108,7 @@ LobbyMenu::LobbyMenu()
     oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Adress"));
     addChild(pButtonJoinAdress);
     pButtonJoinAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getWidth(), Settings::getHeight() - pButtonExit->getHeight() - 10);
-    pButtonJoinAdress->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonJoinAdress->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigJoinAdress();
     });
@@ -117,7 +117,7 @@ LobbyMenu::LobbyMenu()
     oxygine::spButton pButtonObserveAdress = ObjectManager::createButton(tr("Observe Adress"));
     addChild(pButtonObserveAdress);
     pButtonObserveAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getWidth(), pButtonJoinAdress->getY() - pButtonJoinAdress->getHeight());
-    pButtonObserveAdress->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonObserveAdress->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigObserveAdress();
     });

@@ -173,7 +173,7 @@ void COSelection::loadArmy(QString army, qint32& bannerX, qint32& y, qint32 i)
         m_ArmyBanners.append(pSprite);
 
         qint32 index = m_ArmyBanners.size() - 1;
-        pSprite->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pSprite->addEventListener(oxygine::TouchEvent::CLICK, [this, army, index](oxygine::Event*)
         {
             armyBannerClicked(army, index);
         });
@@ -319,13 +319,13 @@ void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QStrin
 
     actor->setPosition(5 + x * 51 * scale, 7 + y * 51 * scale);
     auto* pCursor = m_Cursor.get();
-    actor->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
+    actor->addEventListener(oxygine::TouchEvent::OVER, [this, pCursor, x, y, coid](oxygine::Event*)
     {
         pCursor->setPosition(5 + x * 51 * scale, 7 + y * 51 * scale);
         m_CurrentCO = coid;
     });
     connect(this, &COSelection::sigHoveredCOChanged, this, &COSelection::hoveredCOChanged, Qt::QueuedConnection);
-    actor->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    actor->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigHoveredCOChanged(m_CurrentCO);
         emit coSelected(m_CurrentCO);

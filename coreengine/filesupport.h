@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QDataStream>
+#include <QCryptographicHash>
 
 class Filesupport : public QObject
 {
@@ -26,6 +27,13 @@ public:
      * @return
      */
     static QByteArray getHash(const QStringList & filter, const QStringList & folders);
+    /**
+     * @brief addHash
+     * @param hash
+     * @param folder
+     * @param filter
+     */
+    static void addHash(QCryptographicHash & hash, const QString & folder, const QStringList & filter);
     /**
      * @brief writeByteArray
      * @param stream

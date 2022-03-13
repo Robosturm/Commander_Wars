@@ -32,7 +32,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return qsTr("Rocketthrower");
+        return qsTr("Rockets");
     };
     this.doWalkingAnimation = function(action, map)
     {

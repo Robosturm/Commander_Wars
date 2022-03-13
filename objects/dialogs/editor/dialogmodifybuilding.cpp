@@ -32,7 +32,7 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigFinished();
     });
@@ -89,7 +89,7 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
         pDropdownmenu->setCurrentItem(pMap->getPlayerCount());
     }
 
-    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
+    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [this, pMap](qint32 value)
     {
         if (value >= pMap->getPlayerCount())
         {

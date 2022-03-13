@@ -65,12 +65,12 @@ public:
      * @param in
      * @return
      */
-    QVector<double> predict(const QVector<double>& in);
+    std::vector<double> predict(const std::vector<double>& in);
     /**
      * @brief output
      * @return the last predicted output
      */
-    QVector<double> output();
+    std::vector<double> output();
     /**
      * @brief NeuralNetwork::output
      * @param index
@@ -105,7 +105,7 @@ public:
     void setDisabled(bool newDisabled);
 
 private:
-    void setInput(const QVector<double> & in);
+    void setInput(const std::vector<double> & in);
     void trigger();
     void clean();
     void connectComplete();

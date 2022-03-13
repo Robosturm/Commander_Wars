@@ -17,7 +17,7 @@ Tooltip::Tooltip()
     moveToThread(pApp->getWorkerthread());
     m_TooltipTimer.setSingleShot(true);
     m_TooltipPauseTimer.setSingleShot(true);
-    addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::MOVE, [this](oxygine::Event*)
     {
         if (m_mouseHovered)
         {
@@ -28,7 +28,7 @@ Tooltip::Tooltip()
             emit sigStartHoveredTimer();
         }
     });
-    addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::OVER, [this](oxygine::Event*)
     {
         if (m_mouseHovered)
         {
@@ -39,20 +39,20 @@ Tooltip::Tooltip()
             emit sigStartHoveredTimer();
         }
     });
-    addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::OUTX, [this](oxygine::Event*)
     {
         m_mouseHovered = false;
         emit sigStartHoveredTimer();
         emit sigHideTooltip();
     });
-    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event* pEvent)
+    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [this](oxygine::Event* pEvent)
     {
         m_mouseHovered = false;
         emit sigStartHoveredTimer();
         emit sigHideTooltip();
     });
 
-    addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigStopTooltip();
     });
@@ -62,7 +62,7 @@ Tooltip::Tooltip()
     connect(this, &Tooltip::sigStartTooltip, this, &Tooltip::restartTooltiptimer, Qt::QueuedConnection);
     connect(this, &Tooltip::sigStartHoveredTimer, this, &Tooltip::startHoveredTimer, Qt::QueuedConnection);
     connect(&m_TooltipTimer, &QTimer::timeout, this, &Tooltip::showTooltip, Qt::QueuedConnection);
-    connect(&m_TooltipPauseTimer, &QTimer::timeout, this, [=]()
+    connect(&m_TooltipPauseTimer, &QTimer::timeout, this, [this]()
     {
         stopTooltiptimer();
         hideTooltip();

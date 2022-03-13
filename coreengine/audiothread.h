@@ -63,6 +63,8 @@ signals:
     void sigStopAllSounds();
     void sigChangeAudioDevice(const QVariant& value);
     void sigLoadNextAudioFile();
+    void sigDeleteSound(SoundData* soundData, qint32 soundIndex);
+    void sigPlayDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound);
 public slots:
     /**
      * @brief initAudio
@@ -233,6 +235,19 @@ protected:
      * @param index
      */
     bool stopSoundAtIndex(SoundData* soundData, qint32 index);
+    /**
+     * @brief deleteSound
+     * @param soundData
+     * @param soundIndex
+     */
+    void deleteSound(SoundData* soundData, qint32 soundIndex);
+    /**
+     * @brief playDelayedSound
+     * @param soundData
+     * @param soundIndex
+     * @param stopOldestSound
+     */
+    void playDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound);
 #endif
     void loadMediaForFile(QString filePath);
 

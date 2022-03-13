@@ -44,7 +44,7 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
                             Settings::getHeight() / 2 + 50);
     pSpriteBox->addChild(m_OkButton);
     auto* pTextbox = m_pTextbox.get();
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pTextbox](oxygine::Event*)
     {
         QString currentText = pTextbox->getCurrentText();
         if (!currentText.isEmpty())
@@ -59,7 +59,7 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
         m_CancelButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() - 10,
                                     Settings::getHeight() / 2 + 50);
         pSpriteBox->addChild(m_CancelButton);
-        m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {
             emit sigCancel();
         });

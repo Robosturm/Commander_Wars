@@ -46,7 +46,7 @@ var Constructor = function()
         return true;
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         return "back_radar";
     };
@@ -58,6 +58,10 @@ var Constructor = function()
 			building.loadWeatherOverlaySpriteV2("radar+snow", false);
 		};
 	};
+    this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
+    {
+        animation.addBuildingSprite("radar+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Matrix);
+    };
 }
 
 Constructor.prototype = BUILDING;

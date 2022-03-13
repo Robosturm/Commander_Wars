@@ -38,7 +38,7 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 10 - pOkButton->getHeight());
     m_pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigFinished();
     });
@@ -47,7 +47,7 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     oxygine::spButton pDialogButton = pObjectManager->createButton(tr("add Dialog"), 150);
     pDialogButton->setPosition(30, Settings::getHeight() - 10 - pDialogButton->getHeight());
     m_pSpriteBox->addChild(pDialogButton);
-    pDialogButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pDialogButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigAddItem();
     });
@@ -55,7 +55,7 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("remove Last"), 150);
     pRemoveButton->setPosition(Settings::getWidth() / 2 - pRemoveButton->getWidth() / 2, Settings::getHeight() - 10 - pRemoveButton->getHeight());
     m_pSpriteBox->addChild(pRemoveButton);
-    pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigRemoveLast();
     });
@@ -204,7 +204,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     colors->setPosition(posX + 300, y);
     colors->setCurrentItem(pDialog->color);
     pActor->addChild(colors);
-    connect(colors.get(), &DropDownmenuColor::sigItemChanged, this, [=](QColor color)
+    connect(colors.get(), &DropDownmenuColor::sigItemChanged, this, [this, pPtrDialog](QColor color)
     {
         pPtrDialog->color = color;
     });
@@ -212,7 +212,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     oxygine::spButton pBackgroundTextbox = ObjectManager::createButton(tr("Background"), 200);
     pBackgroundTextbox->setPosition(posX + 420, y);
     pActor->addChild(pBackgroundTextbox);
-    pBackgroundTextbox->addClickListener([=](oxygine::Event*)
+    pBackgroundTextbox->addClickListener([this, i](oxygine::Event*)
     {
         dialogIndex = i;
         emit sigShowChangeBackground();

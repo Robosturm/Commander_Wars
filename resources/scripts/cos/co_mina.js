@@ -192,11 +192,11 @@ var Constructor = function()
                 {
                     return 25;
                 }
-                else if (luckMode === GameEnums.LuckDamageMode_Min)
+                else if (luckMode === GameEnums.LuckDamageMode_Max)
                 {
                     return 0;
                 }
-                else if (luckMode === GameEnums.LuckDamageMode_Max)
+                else if (luckMode === GameEnums.LuckDamageMode_Min)
                 {
                     return 50;
                 }

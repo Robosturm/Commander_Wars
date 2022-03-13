@@ -78,17 +78,17 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
     pButtonTop->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Sprite* ptr = pButtonTop.get();
-    pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
+    pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [ptr](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
 
-    pButtonTop->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
+    pButtonTop->addEventListener(oxygine::TouchEvent::OUTX, [ptr](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     pButtonTop->setFlippedY(true);
-    pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigChangeScrollValue(1);
     });
@@ -99,20 +99,20 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     pButtonDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
     pButtonDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ptr = pButtonDown.get();
-    pButtonDown->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
+    pButtonDown->addEventListener(oxygine::TouchEvent::OVER, [ptr](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
 
-    pButtonDown->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
+    pButtonDown->addEventListener(oxygine::TouchEvent::OUTX, [ptr](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pButtonDown->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pButtonDown->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigChangeScrollValue(-1);
     });
-    m_BoxPlacementSelection->addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event* pEvent)
+    m_BoxPlacementSelection->addEventListener(oxygine::TouchEvent::WHEEL_DIR, [this](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -290,7 +290,7 @@ void EditorSelection::createBoxPlacementSize()
     pSpriteNone->setPosition(m_frameSize, yStartPos);
     m_BoxPlacementSize->addChild(pSpriteNone);
     auto* pCurrentSelectorSize = m_CurrentSelectorSize.get();
-    pSpriteNone->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)
+    pSpriteNone->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorSize, yStartPos](oxygine::Event *)
     {
         m_SizeMode = PlacementSize::None;
         pCurrentSelectorSize->setPosition(m_frameSize, yStartPos);
@@ -304,7 +304,7 @@ void EditorSelection::createBoxPlacementSize()
     pSpriteSmall->setResAnim(pAnim);
     pSpriteSmall->setPosition(m_frameSize + xChange, yStartPos);
     m_BoxPlacementSize->addChild(pSpriteSmall);
-    pSpriteSmall->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)
+    pSpriteSmall->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorSize, yStartPos, xChange](oxygine::Event *)
     {
         m_SizeMode = PlacementSize::Small;
         pCurrentSelectorSize->setPosition(m_frameSize + xChange, yStartPos);
@@ -316,7 +316,7 @@ void EditorSelection::createBoxPlacementSize()
     pSpriteMedium->setResAnim(pAnim);
     pSpriteMedium->setPosition(m_frameSize + xChange * 2, yStartPos);
     m_BoxPlacementSize->addChild(pSpriteMedium);
-    pSpriteMedium->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)
+    pSpriteMedium->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorSize, yStartPos, xChange](oxygine::Event *)
     {
         m_SizeMode = PlacementSize::Medium;
         pCurrentSelectorSize->setPosition(m_frameSize + xChange * 2, yStartPos);
@@ -328,7 +328,7 @@ void EditorSelection::createBoxPlacementSize()
     pSpriteBigSquare->setResAnim(pAnim);
     pSpriteBigSquare->setPosition(m_frameSize + xChange * 3, yStartPos );
     m_BoxPlacementSize->addChild(pSpriteBigSquare);
-    pSpriteBigSquare->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)
+    pSpriteBigSquare->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorSize, yStartPos, xChange](oxygine::Event *)
     {
         m_SizeMode = PlacementSize::BigSquare;
         pCurrentSelectorSize->setPosition(m_frameSize + xChange * 3, yStartPos);
@@ -340,7 +340,7 @@ void EditorSelection::createBoxPlacementSize()
     pSpriteBig->setResAnim(pAnim);
     pSpriteBig->setPosition(m_frameSize + xChange * 4, yStartPos );
     m_BoxPlacementSize->addChild(pSpriteBig);
-    pSpriteBig->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)
+    pSpriteBig->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorSize, yStartPos, xChange](oxygine::Event *)
     {
         m_SizeMode = PlacementSize::Big;
         pCurrentSelectorSize->setPosition(m_frameSize + xChange * 4, yStartPos);
@@ -352,7 +352,7 @@ void EditorSelection::createBoxPlacementSize()
     pSpriteFill->setResAnim(pAnim);
     pSpriteFill->setPosition(m_frameSize + xChange * 5, yStartPos );
     m_BoxPlacementSize->addChild(pSpriteFill);
-    pSpriteFill->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)
+    pSpriteFill->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorSize, yStartPos, xChange](oxygine::Event *)
     {
         m_SizeMode = PlacementSize::Fill;
         pCurrentSelectorSize->setPosition(m_frameSize + xChange * 5, yStartPos);
@@ -380,7 +380,7 @@ void EditorSelection::createPlayerSelection()
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     pButtonLeft->setFlippedX(true);
-    pButtonLeft->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pButtonLeft->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         m_playerStartIndex -= 1;
         if (m_playerStartIndex < 0)
@@ -396,16 +396,16 @@ void EditorSelection::createPlayerSelection()
     pButtonRight->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
     pButtonRight->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ptr = pButtonRight.get();
-    pButtonRight->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
+    pButtonRight->addEventListener(oxygine::TouchEvent::OVER, [ptr](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
 
-    pButtonRight->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
+    pButtonRight->addEventListener(oxygine::TouchEvent::OUTX, [ptr](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pButtonRight->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pButtonRight->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         m_playerStartIndex += 1;
         if (m_playerStartIndex >= m_Players.size() - calcMaxPlayerSelection())
@@ -442,7 +442,7 @@ void EditorSelection::createPlayerSelection()
         m_BoxSelectedPlayer->addChild(pBuilding);
         pBuilding->setVisible(true);
         pBuilding->setPosition(25 * i, 27);
-        pBuilding->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pBuilding->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
             emit sigChangeSelectedPlayer(i);
         });
@@ -537,7 +537,7 @@ void EditorSelection::createBoxSelectionMode()
     m_pSpriteTerrainMode->setPosition(m_frameSize, yStartPos);
     m_BoxSelectionType->addChild(m_pSpriteTerrainMode);
     auto* pCurrentSelectorMode = m_CurrentSelectorMode.get();
-    m_pSpriteTerrainMode->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)
+    m_pSpriteTerrainMode->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorMode, yStartPos](oxygine::Event *)
     {
         m_Mode = EditorMode::Terrain;
         pCurrentSelectorMode->setPosition(m_frameSize, yStartPos);
@@ -552,7 +552,7 @@ void EditorSelection::createBoxSelectionMode()
     m_pSpriteBuildingMode->setResAnim(pAnim);
     m_pSpriteBuildingMode->setPosition(m_frameSize + xChange, yStartPos);
     m_BoxSelectionType->addChild(m_pSpriteBuildingMode);
-    m_pSpriteBuildingMode->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)
+    m_pSpriteBuildingMode->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorMode, xChange, yStartPos](oxygine::Event *)
     {
         m_Mode = EditorMode::Building;
         pCurrentSelectorMode->setPosition(m_frameSize + xChange, yStartPos);
@@ -565,7 +565,7 @@ void EditorSelection::createBoxSelectionMode()
     m_pSpriteUnitMode->setResAnim(pAnim);
     m_pSpriteUnitMode->setPosition(m_frameSize + xChange * 2, yStartPos);
     m_BoxSelectionType->addChild(m_pSpriteUnitMode);
-    m_pSpriteUnitMode->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)
+    m_pSpriteUnitMode->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorMode, xChange, yStartPos](oxygine::Event *)
     {
         m_Mode = EditorMode::Unit;
         pCurrentSelectorMode->setPosition(m_frameSize + xChange * 2, yStartPos);
@@ -684,7 +684,7 @@ void EditorSelection::initBuildingSection()
         m_Buildings[i]->setX(posX + GameMap::getImageSize() * (width - 1) / (width));
         m_Buildings[i]->setY(posY + GameMap::getImageSize() * (heigth - 1) / (heigth));
         m_Buildings[i]->setVisible(false);
-        m_Buildings[i]->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        m_Buildings[i]->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
             selectBuilding(i);
         });
@@ -709,7 +709,7 @@ void EditorSelection::initTerrainSection()
         }
         m_Terrains[i]->setPosition(posX, posY);
         m_Terrains[i]->setVisible(false);
-        m_Terrains[i]->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        m_Terrains[i]->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
             selectTerrain(i);
         });
@@ -760,7 +760,7 @@ void EditorSelection::initUnitSelection()
         }
         m_Units[i]->setPosition(posX, posY);
         m_Units[i]->setVisible(false);
-        m_Units[i]->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        m_Units[i]->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
             selectUnit(i);
         });

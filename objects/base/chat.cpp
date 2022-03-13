@@ -59,7 +59,7 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
     addChild(m_ChatInput);
 
     Textbox* pChatInput = m_ChatInput.get();
-    m_Send->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_Send->addEventListener(oxygine::TouchEvent::CLICK, [this, pChatInput](oxygine::Event * )->void
     {
         emit sigSendText(pChatInput->getCurrentText());
     });
@@ -172,9 +172,9 @@ void Chat::addMessage(QJsonObject data, bool local)
     }
 
     QString drawText;
-    for(qint32 i = 0; i < m_messages.size();i++)
+    for(auto & message : m_messages)
     {
-        drawText += "> " + m_messages[i] + "\n";
+        drawText += "> " + message + "\n";
     }
     m_Chat->setHtmlText(drawText);
     m_Chat->setHeight(m_Chat->getTextRect().getHeight() + 20);

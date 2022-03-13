@@ -30,7 +30,7 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2,
                             Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigFinished();
     });

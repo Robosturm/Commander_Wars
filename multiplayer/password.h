@@ -38,6 +38,10 @@ public:
      * @return
      */
     void setPassword(const Password & password);
+    const QByteArray & getHash() const
+    {
+        return m_passwordHash;
+    }
 public slots:
     void setPassword(QString password);
     bool isValidPassword(QString password) const;

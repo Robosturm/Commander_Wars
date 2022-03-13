@@ -23,7 +23,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     connect(this, &GameAnimationDialog::sigStartFinishTimer, this, &GameAnimationDialog::startFinishTimer, Qt::QueuedConnection);
-    connect(&m_finishTimer, &QTimer::timeout, this, [=]()
+    connect(&m_finishTimer, &QTimer::timeout, this, [this]()
     {
         emitFinished();
     });
@@ -77,7 +77,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
 
     setPositionTop(false);
     m_textTimer.start();
-    addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
+    addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)

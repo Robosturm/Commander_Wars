@@ -186,10 +186,10 @@ void IngameInfoBar::updatePlayerInfo()
                 pBox->setSize(91, 95);
                 pBox->setPosition(198, y);
                 m_pGameInfoBox->addChild(pBox);
+                y += 100;
 
                 if (m_pMap->getGameRules()->getWeatherPrediction())
                 {
-                    y += 100;
                     pSprite = oxygine::spSprite::create();
                     Weather* pWeather = m_pMap->getGameRules()->getWeatherAtDay(1, m_pMap->getCurrentPlayer()->getPlayerID());
                     if (pWeather != nullptr)
@@ -232,7 +232,6 @@ void IngameInfoBar::updatePlayerInfo()
                     pBox->setPosition(243, y - 4);
                     m_pGameInfoBox->addChild(pBox);
                 }
-
 
                 style = oxygine::TextStyle(FontManager::getMainFont16());
                 style.color = FontManager::getFontColor();

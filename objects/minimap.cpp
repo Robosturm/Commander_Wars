@@ -15,7 +15,7 @@ Minimap::Minimap()
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-    addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* pEvent)
+    addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)

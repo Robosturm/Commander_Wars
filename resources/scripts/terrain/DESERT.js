@@ -119,7 +119,7 @@ var Constructor = function()
         return TERRAIN.getFactoryForeground(terrain, map);
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         var id = TERRAIN.getTerrainAnimationId(terrain, map);
         switch (id)

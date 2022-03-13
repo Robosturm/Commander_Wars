@@ -6583,11 +6583,6 @@
         <file>resources/scripts/building/znest_nest_laser_destroyed.js</file>
         <file>resources/objects/info.png</file>
         <file>resources/images/game/rules.png</file>
-        <file>resources/images/game/icon_cs.png</file>
-        <file>resources/images/game/icon_fh.png</file>
-        <file>resources/images/game/icon_fm.png</file>
-        <file>resources/images/game/icon_gw.png</file>
-        <file>resources/images/game/icon_hs.png</file>
         <file>resources/scripts/actions/ACTION_NEST_FACTORY_DOOR.js</file>
         <file>resources/images/animations/oilrig+mask.png</file>
         <file>resources/images/co/tagCos.png</file>
@@ -6631,5 +6626,7 @@
         <file>resources/images/colortables/heavensong.png</file>
         <file>resources/images/colortables/requiem.png</file>
         <file>resources/images/colortables/silmor.png</file>
+        <file>resources/images/animations/radar+mask.png</file>
+        <file>resources/images/animations/tower+mask.png</file>
     </qresource>
 </RCC>

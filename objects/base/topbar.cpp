@@ -73,7 +73,7 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
         pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     auto* pPtrTooltip = pTooltip.get();
-    pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrTooltip, itemID](oxygine::Event*)
     {
         for (qint32 i = 0; i < m_Items.size(); i++)
         {
@@ -108,7 +108,7 @@ void Topbar::addGroup(QString text)
     }
     pButton->setPosition(x, 18);
     qint32 groupID = m_Buttons.size();
-    pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
+    pButton->addEventListener(oxygine::TouchEvent::CLICK, [this, groupID](oxygine::Event *)->void
     {
         // hide selection
         for (qint32 i = 0; i < m_ItemPanels.size(); i++)

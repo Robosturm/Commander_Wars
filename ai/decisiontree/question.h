@@ -34,7 +34,7 @@ public:
         QString print();
 public slots:
         bool matches(float value);
-        bool matches(QVector<float> &rData);
+        bool matches(std::vector<float> &rData);
 
 private:
         float m_MinValue;

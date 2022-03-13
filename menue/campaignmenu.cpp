@@ -54,7 +54,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     addChild(pButtonExit);
     pButtonExit->setPosition(10,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
-    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
     });
@@ -63,7 +63,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     m_pButtonNext = ObjectManager::createButton(tr("Next"));
     m_pButtonNext->setPosition(Settings::getWidth() - 10 - m_pButtonNext->getWidth(), Settings::getHeight() - 10 - m_pButtonNext->getHeight());
     addChild(m_pButtonNext);
-    m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigButtonNext();
     });
@@ -72,7 +72,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     m_pButtonSave = ObjectManager::createButton(tr("Save"));
     m_pButtonSave->setPosition(Settings::getWidth() / 2 - m_pButtonSave->getWidth() / 2, Settings::getHeight() - 10 - m_pButtonSave->getHeight());
     addChild(m_pButtonSave);
-    m_pButtonSave->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
+    m_pButtonSave->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *)->void
     {
         emit sigShowSaveCampaign();
     });
@@ -118,7 +118,7 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
     pApp->loadResAnim(m_campaignBackground, background, 1, 1, 1.0f, false);
     m_pMapBackground = oxygine::spSprite::create();
     m_pMapBackground->setResAnim(m_campaignBackground.get());
-    m_pMapBackground->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* event)
+    m_pMapBackground->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* event)
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(event);
         if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
@@ -177,7 +177,7 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
             pSprite->setPosition(position.x() * width - pAnim->getWidth() / 2, position.y() * height + flagHeight - pAnim->getHeight());
             focusOnPosition(pSprite->getPosition());
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime));
-            tween->addDoneCallback([=](oxygine::Event* pEvent)
+            tween->addDoneCallback([this](oxygine::Event* pEvent)
             {
                 emit sigEventPlayed(0);
             });
@@ -235,7 +235,7 @@ void CampaignMenu::playNextEvent(qint32 event)
         {
             oxygine::Sprite* pPtrSprite = pSprite.get();
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), 1);
-            tween->addDoneCallback([=](oxygine::Event* pEvent)
+            tween->addDoneCallback([this, pPtrSprite, event, index](oxygine::Event* pEvent)
             {
                 emit sigFlagAppeared(pPtrSprite, index);
                 emit sigEventPlayed(event + 1);
@@ -265,7 +265,7 @@ void CampaignMenu::flagAppeared(oxygine::Sprite* pPtrSprite, qint32 map)
     {
         pPtrSprite->setResAnim(pAnim);
     }
-    pPtrSprite->addClickListener([=](oxygine::Event* event)
+    pPtrSprite->addClickListener([this, map, pPtrSprite](oxygine::Event* event)
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(event);
         if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)

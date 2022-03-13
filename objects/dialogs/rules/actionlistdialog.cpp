@@ -38,7 +38,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit editFinished(m_CurrentActionList);
         emit sigFinished();
@@ -48,14 +48,14 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_ExitButton->getHeight());
     pSpriteBox->addChild(m_ExitButton);
-    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit canceled();
     });
 
     oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
     pSave->setPosition(Settings::getWidth() / 2 - pSave->getWidth() / 2, Settings::getHeight() - 30 - m_ExitButton->getHeight());
-    pSave->addClickListener([=](oxygine::Event*)
+    pSave->addClickListener([this](oxygine::Event*)
     {
         emit sigShowSaveBannlist();
     });
@@ -65,7 +65,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
     m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 75 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_ToggleAll);
-    m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         m_toggle = !m_toggle;
         for (qint32 i = 0; i < m_Checkboxes.size(); i++)
@@ -147,7 +147,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
             {
                 pCheckbox->setChecked(false);
             }
-            connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool checked)
+            connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, actionId](bool checked)
             {
                 if (checked)
                 {

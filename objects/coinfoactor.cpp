@@ -452,7 +452,7 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     qint32 i = m_UnitDataActors.size() - 1;
     m_UnitDataActors[i]->setPosition(x, y);
     QString unitId = pUnit->getUnitID();
-    m_UnitDataActors[i]->addClickListener([=](oxygine::Event*)
+    m_UnitDataActors[i]->addClickListener([this, unitId](oxygine::Event*)
     {
         emit sigShowLink(unitId);
     });
@@ -565,7 +565,7 @@ void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 ind
     WikiDatabase* pDatabase = WikiDatabase::getInstance();
     m_UnitDataActors[i]->addChild(pDatabase->getIcon(pCO->getMap(), info.getIconId(), GameMap::defaultImageSize * 2));
     QString wikiLink = info.getLink();
-    m_UnitDataActors[i]->addClickListener([=](oxygine::Event*)
+    m_UnitDataActors[i]->addClickListener([this, wikiLink](oxygine::Event*)
     {
         emit sigShowLink(wikiLink);
     });
@@ -654,7 +654,7 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
             perkActor->addChild(pLabel);
             perkActor->setPosition(x, y);
             addChild(perkActor);
-            perkActor->addClickListener([=](oxygine::Event*)
+            perkActor->addClickListener([this, perk](oxygine::Event*)
             {
                 emit sigShowLink(perk);
             });

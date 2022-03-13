@@ -110,7 +110,7 @@ OptionMenue::OptionMenue()
     addChild(pButtonExit);
     pButtonExit->setPosition(Settings::getWidth()  / 2.0f - 10,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
-    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
     });
@@ -120,7 +120,7 @@ OptionMenue::OptionMenue()
     addChild(pButtonReset);
     pButtonReset->setPosition(Settings::getWidth()  / 2.0f - pButtonReset->getWidth() - 10,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
-    pButtonReset->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonReset->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowResetBox();
     });
@@ -130,7 +130,7 @@ OptionMenue::OptionMenue()
     oxygine::spButton pButtonMods = ObjectManager::createButton(tr("Mods"));
     addChild(pButtonMods);
     pButtonMods->setPosition(Settings::getWidth() - pButtonMods->getWidth() - 10, 10);
-    pButtonMods->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonMods->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowMods();
     });
@@ -139,7 +139,7 @@ OptionMenue::OptionMenue()
     oxygine::spButton pButtonSettings = ObjectManager::createButton(tr("Settings"));
     addChild(pButtonSettings);
     pButtonSettings->setPosition(10, 10);
-    pButtonSettings->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonSettings->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowSettings();
     });
@@ -151,7 +151,7 @@ OptionMenue::OptionMenue()
     oxygine::spButton pButtonGameplayAndKeys = ObjectManager::createButton(tr("Gameplay &amp; Keys"), 220);
     addChild(pButtonGameplayAndKeys);
     pButtonGameplayAndKeys->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f, 10);
-    pButtonGameplayAndKeys->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonGameplayAndKeys->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowGameplayAndKeys();
     });
@@ -415,7 +415,7 @@ void OptionMenue::showSettings()
     pScreenResolution->setTooltipText(tr("Selects the screen resolution for the game"));
     m_pOptions->addItem(pScreenResolution);
     auto* pPtrScreenResolution = pScreenResolution.get();
-    connect(pScreenResolution.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
+    connect(pScreenResolution.get(), &DropDownmenu::sigItemChanged, this, [this, pPtrScreenResolution](qint32)
     {
         QStringList itemData = pPtrScreenResolution->getCurrentItemText().split(" x ");
         qint32 width = itemData[0].toInt();
@@ -553,7 +553,7 @@ void OptionMenue::showSettings()
         oxygine::spButton pButtonGamepad = ObjectManager::createButton(tr("Info"), 100);
         pButtonGamepad->setPosition(pCheckbox->getX() + 80, y);
         m_pOptions->addItem(pButtonGamepad);
-        pButtonGamepad->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        pButtonGamepad->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowGamepadInfo();
         });
@@ -613,7 +613,7 @@ void OptionMenue::showSettings()
     pLanguageMenu->setCurrentItem(current);
     m_pOptions->addItem(pLanguageMenu);
     connect(pLanguageMenu.get(), &DropDownmenu::sigItemChanged, pApp,
-            [=](qint32 item)
+            [this](qint32 item)
     {
         CONSOLE_PRINT("Marking restart cause language changed.", Console::eDEBUG);
         Settings::setLanguage(m_languages[item]);
@@ -681,7 +681,7 @@ void OptionMenue::showSettings()
     pTextbox->setTooltipText(tr("Selects your username shown at various places of the game"));
     pTextbox->setCurrentText(Settings::getUsername());
     Textbox* pPtrTextbox = pTextbox.get();
-    connect(pTextbox.get(), &Textbox::sigTextChanged, this, [=](QString value)
+    connect(pTextbox.get(), &Textbox::sigTextChanged, this, [this, pPtrTextbox](QString value)
     {
         if (value.isEmpty())
         {
@@ -741,7 +741,7 @@ void OptionMenue::showSettings()
     pCheckbox = spCheckbox::create();
     pCheckbox->setTooltipText(tr("Enables this game as global server."));
     pCheckbox->setChecked(Settings::getServer());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
+    connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this](bool value)
     {
         CONSOLE_PRINT("Marking restart cause server settings changed.", Console::eDEBUG);
         Settings::setServer(value);
@@ -985,7 +985,7 @@ void OptionMenue::showMods()
         {
             modCheck->setChecked(true);
         }
-        connect(modCheck.get(), &Checkbox::checkChanged, this, [=](bool checked)
+        connect(modCheck.get(), &Checkbox::checkChanged, this, [this, mod](bool checked)
         {
             if (checked)
             {
@@ -1002,7 +1002,9 @@ void OptionMenue::showMods()
         pBox->setSize(Settings::getWidth() - 130, 50);
 
         auto* pPtrBox = pBox.get();
-        pBox->addClickListener([=](oxygine::Event* pEvent)
+        pBox->addClickListener([this, pPtrBox, name, description, version,
+                               compatibleMods, incompatibleMods, requiredMods, isComsetic,
+                               modTags, thumbnail](oxygine::Event* pEvent)
         {
             pEvent->stopPropagation();
             sigLoadModInfo(pPtrBox, name, description, version,
@@ -1021,7 +1023,7 @@ void OptionMenue::showMods()
     spDropDownmenu pTagSelection = spDropDownmenu::create(300, tags);
     pTagSelection->setTooltipText(tr("Filters the mods by the given tags"));
     pTagSelection->setPosition(260, y);
-    connect(pTagSelection.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
+    connect(pTagSelection.get(), &DropDownmenu::sigItemChanged, this, [this, tags](qint32 value)
     {
         QString tag;
         if (value > 0)

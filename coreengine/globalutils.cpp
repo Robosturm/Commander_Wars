@@ -3,6 +3,7 @@
 #include <QDirIterator>
 #include <QDateTime>
 
+#include "coreengine/qmlvector.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/console.h"
 #include "coreengine/interpreter.h"
@@ -20,6 +21,16 @@ GlobalUtils::GlobalUtils()
     Interpreter::setCppOwnerShip(this);
     quint32 seedValue = QRandomGenerator::global()->bounded(0u, std::numeric_limits<quint32>::max());
     m_randGenerator.seed(seedValue);
+}
+
+QString GlobalUtils::getByteArrayString(const QByteArray & bytes)
+{
+    QString data;
+    for (qint32 i = 0; i < bytes.size(); i++)
+    {
+        data += "0x" + QString::number(bytes[i], 16)+ " ";
+    }
+    return data;
 }
 
 void GlobalUtils::seed(quint32 seed)
@@ -266,7 +277,6 @@ bool GlobalUtils::isEven(qint32 value)
         return false;
     }
 }
-
 
 bool GlobalUtils::getUseSeed()
 {

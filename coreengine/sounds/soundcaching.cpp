@@ -89,4 +89,14 @@ void AudioThread::stopSound(SoundData* soundData, qint32 soundIndex)
         soundData->sound[soundIndex]->stop();
     }
 }
+
+void AudioThread::deleteSound(SoundData* soundData, qint32 soundIndex)
+{
+}
+
+
+void AudioThread::playDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound)
+{
+}
+
 #endif

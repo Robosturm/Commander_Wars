@@ -182,22 +182,32 @@ public slots:
             case QAbstractSocket::ConnectionRefusedError:
                 CONSOLE_PRINT("The connection was refused by the peer.", Console::eDEBUG);
                 break;
-            default:
-                CONSOLE_PRINT("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
-        }
-    }
-    void displayLocalError(QLocalSocket::LocalSocketError socketError)
-    {
-        switch (socketError)
-        {
-            case QLocalSocket::ConnectionError:
-                CONSOLE_PRINT("The server was closed by the peer.", Console::eDEBUG);
+            case QAbstractSocket::SocketAccessError:
+                CONSOLE_PRINT("Socket connection access error.", Console::eDEBUG);
                 break;
-            case QLocalSocket::ServerNotFoundError:
-                CONSOLE_PRINT("The host was not found. Please check the host name and port settings.", Console::eERROR);
+            case QAbstractSocket::SocketResourceError:
+                CONSOLE_PRINT("Socket Connection resource error.", Console::eDEBUG);
                 break;
-            case QLocalSocket::ConnectionRefusedError:
-                CONSOLE_PRINT("The connection was refused by the peer.", Console::eDEBUG);
+            case QAbstractSocket::SocketTimeoutError:
+                CONSOLE_PRINT("Socket timeout error.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::DatagramTooLargeError:
+                CONSOLE_PRINT("Datagram too large error.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::NetworkError:
+                CONSOLE_PRINT("Network error.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::AddressInUseError:
+                CONSOLE_PRINT("Address in user error.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::SocketAddressNotAvailableError:
+                CONSOLE_PRINT("Socket Address not available error.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::UnsupportedSocketOperationError:
+                CONSOLE_PRINT("Unsupported socket operation error.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::UnfinishedSocketOperationError:
+                CONSOLE_PRINT("Unfinished socket operation error.", Console::eDEBUG);
                 break;
             default:
                 CONSOLE_PRINT("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);

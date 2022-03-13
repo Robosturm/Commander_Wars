@@ -115,7 +115,7 @@ var Constructor = function()
     {
         return "fore_sea";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         return "back_sea";
     };

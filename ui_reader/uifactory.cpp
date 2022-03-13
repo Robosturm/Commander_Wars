@@ -212,7 +212,7 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         if (!onUpdateLine.isEmpty())
         {
             Label* pPtr = pLabel.get();
-            connect(pMenu, &CreatedGui::sigOnUpdate, pLabel.get(), [=]()
+            connect(pMenu, &CreatedGui::sigOnUpdate, pLabel.get(), [this, pPtr, onUpdateLine]()
             {
                 pPtr->setHtmlText(onUpdate<QString>(onUpdateLine));
             });
@@ -284,7 +284,7 @@ bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygi
         pButton->setY(y);
         pButton->setEnabled(enabled);
         QString onEvent = getAttribute(childs, attrOnEvent);
-        pButton->addClickListener([=](oxygine::Event*)
+        pButton->addClickListener([this, onEvent](oxygine::Event*)
         {
             emit sigDoEvent(onEvent);
         });
@@ -311,7 +311,7 @@ bool UiFactory::createIconButton(oxygine::spActor parent, QDomElement element, o
         pButton->setY(y);
         pButton->setEnabled(enabled);
         QString onEvent = getAttribute(childs, attrOnEvent);
-        pButton->addClickListener([=](oxygine::Event*)
+        pButton->addClickListener([this, onEvent](oxygine::Event*)
         {
             emit sigDoEvent(onEvent);
         });
@@ -393,7 +393,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
         pCheckbox->setObjectName(id);
         pCheckbox->setEnabled(enabled);
         parent->addChild(pCheckbox);
-        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
+        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, onEventLine](bool value)
         {
             onEvent(onEventLine, value);
         });
@@ -429,7 +429,7 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
         pSpinBox->setCurrentValue(value);
         pSpinBox->setObjectName(id);
         pSpinBox->setEnabled(enabled);
-        connect(pSpinBox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
+        connect(pSpinBox.get(), &SpinBox::sigValueChanged, this, [this, onEventLine](qreal value)
         {
             onEvent(onEventLine, value);
         });
@@ -470,7 +470,7 @@ bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygi
         pSlider->setCurrentValue(value);
         pSlider->setObjectName(id);
         pSlider->setEnabled(enabled);
-        connect(pSlider.get(), &Slider::sliderValueChanged, this, [=](qint32 value)
+        connect(pSlider.get(), &Slider::sliderValueChanged, this, [this, onEventLine](qint32 value)
         {
             onEvent(onEventLine, value);
         });
@@ -506,7 +506,7 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
         pTextbox->setCurrentText(value);
         pTextbox->setObjectName(id);
         pTextbox->setEnabled(enabled);
-        connect(pTextbox.get(), &Textbox::sigTextChanged, this, [=](QString value)
+        connect(pTextbox.get(), &Textbox::sigTextChanged, this, [this, onEventLine](QString value)
         {
             onEvent(onEventLine, value);
         });
@@ -542,7 +542,7 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
         pSpinBox->setCurrentValue(value);
         pSpinBox->setObjectName(id);
         pSpinBox->setEnabled(enabled);
-        connect(pSpinBox.get(), &TimeSpinBox::sigValueChanged, this, [=](qint32 value)
+        connect(pSpinBox.get(), &TimeSpinBox::sigValueChanged, this, [this, onEventLine](qint32 value)
         {
             onEvent(onEventLine, value);
         });

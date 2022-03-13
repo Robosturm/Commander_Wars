@@ -11,8 +11,8 @@ var Constructor = function()
         unit.setWeapon2ID("");
 
         unit.setVisionHigh(999);
-        unit.setFuel(100);
-        unit.setMaxFuel(100);
+        unit.setFuel(60);
+        unit.setMaxFuel(60);
         unit.setBaseMovementPoints(7);
         unit.setMinRange(1);
         unit.setMaxRange(1);
@@ -93,7 +93,7 @@ var Constructor = function()
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         return "";
     };

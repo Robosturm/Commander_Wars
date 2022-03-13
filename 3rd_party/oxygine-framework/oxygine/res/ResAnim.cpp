@@ -83,9 +83,9 @@ namespace oxygine
     void ResAnim::init(qint32 columns, float scaleFactor, float appliedScale)
     {
         m_columns = columns;
-        for (qint32 i = 0; i < m_frames.size(); ++i)
+        for (auto & frame : m_frames)
         {
-            m_frames[i].setResAnim(this);
+            frame.setResAnim(this);
         }
         m_scaleFactor = scaleFactor;
         m_appliedScale = appliedScale;

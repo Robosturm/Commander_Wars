@@ -13,14 +13,15 @@ project (Commander_Wars LANGUAGES CXX)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # set tool chain info
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-set(AUDIOSUPPORT ON)
+option(AUDIOSUPPORT "enables audio support for the game" ON)
+option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
 
 ###################################################################################
 # show configuration
@@ -104,7 +105,7 @@ else("Release")
     message("Compiling as Release")
     set(DEPLOY_RESOURCES_AS_FOLDER false)
     add_definitions(
-        -DDEBUG_LEVEL=0             # default console log level
+        -DDEBUG_LEVEL=1             # default console log level
     )
 endif()
 
@@ -114,6 +115,17 @@ if (AUDIOSUPPORT)
     add_definitions(
         -DAUDIOSUPPORT
     )
+else()
+    message("Building without Audio")
+endif()
+
+if (USEAPPCONFIGPATH)
+    message("Building with user config path")
+    add_definitions(
+        -DUSEAPPCONFIGPATH
+    )
+else()
+    message("Building without user config path")
 endif()
 
 ###################################################################################
@@ -122,7 +134,7 @@ endif()
 add_definitions(
     -DMAJOR=0
     -DMINOR=22
-    -DREVISION=0
+    -DREVISION=3
     )
 
 ###################################################################################
@@ -646,11 +658,11 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_NAME "0.22.0"
+    QT_ANDROID_VERSION_NAME "0.22.3"
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_CODE "11"
+    QT_ANDROID_VERSION_CODE "13"
     )
 
 # link libraries
@@ -868,8 +880,6 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
                 --plugindir \"${FullInstallPath}\"
         COMMENT "Running windeployqt..."
     )
-
-
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     message("Build will run macdeployqt")
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD

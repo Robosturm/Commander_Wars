@@ -55,14 +55,14 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, QStri
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_CancelButton->setPosition(m_DropDownmenu->getWidth() + 30 + 10, m_DropDownmenu->getY());
     pSpriteBox->addChild(m_CancelButton);
-    m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigCancel();
     });
     auto* pCurrentFolder = m_CurrentFolder.get();
     auto* pPtrCurrentFile = m_CurrentFile.get();
     auto* pPtrDropDownmenu = m_DropDownmenu.get();
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentFolder, pPtrCurrentFile, pPtrDropDownmenu](oxygine::Event*)
     {
         QString fileStart = m_pathPrefix + pCurrentFolder->getCurrentText();
         if (!fileStart.isEmpty())
@@ -218,7 +218,7 @@ void FileDialog::showFolder(QString folder)
                 QString path = GlobalUtils::makePathRelative(infoList[i].filePath()).replace(folder, "");
                 textField->setHtmlText(path);
             }
-            pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+            pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, myPath](oxygine::Event*)
             {
                 emit sigShowFolder(myPath);
             });
@@ -229,7 +229,7 @@ void FileDialog::showFolder(QString folder)
             QString file = infoList[i].fileName();
             textField->setHtmlText(file);
             auto* pCurrentFile = m_CurrentFile.get();
-            pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+            pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, fullPath, pCurrentFile, file](oxygine::Event*)
             {
                 if (fullPath.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
                 {
@@ -302,7 +302,7 @@ void FileDialog::KeyInput(oxygine::KeyEvent event)
                     spDialogMessageBox pSurrender = spDialogMessageBox::create(tr("Do you want to delete the item ") + m_CurrentFolder->getCurrentText() + "/" +
                                                                                m_CurrentFile->getCurrentText() + "?", true);
                     connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &FileDialog::deleteItem, Qt::QueuedConnection);
-                    connect(pSurrender.get(), &DialogMessageBox::sigCancel, this, [=]()
+                    connect(pSurrender.get(), &DialogMessageBox::sigCancel, this, [this]()
                     {
                         m_focused = true;
                     });

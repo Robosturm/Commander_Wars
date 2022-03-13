@@ -48,13 +48,13 @@ public:
      * @param path the path the unit should go
      * @return the costs needed when using the given path
      */
-    qint32 getCosts(const QVector<QPoint> & path);
+    qint32 getCosts(const std::vector<QPoint> & path);
     /**
      * @brief getClosestReachableMovePath
      * @param target
      * @return
      */
-    QVector<QPoint> getClosestReachableMovePath(QPoint target, qint32 movepoints = -2, bool direct = false);
+    std::vector<QPoint> getClosestReachableMovePath(QPoint target, qint32 movepoints = -2, bool direct = false);
     /**
      * @brief getClosestReachableMovePath
      * @param path
@@ -62,7 +62,14 @@ public:
      * @param direct
      * @return
      */
-    QVector<QPoint> getClosestReachableMovePath(QVector<QPoint>& path, qint32 movepoints);
+    std::vector<QPoint> getClosestReachableMovePath(std::vector<QPoint>& path, qint32 movepoints);
+    /**
+     * @brief getClosestReachableMovePath
+     * @param path
+     * @param movepoints
+     * @return
+     */
+    std::vector<QPoint> getClosestReachableMovePath(QVector<QPoint>& path, qint32 movepoints);
     /**
      * @brief setMoveCosts
      * @param movepoints how far this pfs explodes. -2 for infinite

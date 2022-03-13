@@ -44,8 +44,8 @@ ReplayMenu::ReplayMenu(QString filename)
 
         m_storedAnimationSpeed = Settings::getAnimationSpeedValue();
         m_storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
-        m_storedDialogAnimationSpeed = Settings::getDialogAnimationSpeed();
-        m_storedCaptureAnimationSpeed = Settings::getCaptureAnimationSpeed();
+        m_storedDialogAnimationSpeed = Settings::getDialogAnimationSpeedValue();
+        m_storedCaptureAnimationSpeed = Settings::getCaptureAnimationSpeedValue();
         
         loadHandling();
         loadGameMenue();
@@ -164,7 +164,7 @@ void ReplayMenu::showExitGame()
     m_Focused = false;
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the current replay?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
-    connect(pExit.get(), &DialogMessageBox::sigCancel, this, [=]()
+    connect(pExit.get(), &DialogMessageBox::sigCancel, this, [this]()
     {
         m_Focused = true;
     });
@@ -200,7 +200,7 @@ void ReplayMenu::loadUIButtons()
 
     oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit"), 130);
     exitGame->setPosition(m_taskBar->getWidth() - 8 - exitGame->getWidth(), 4);
-    exitGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    exitGame->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowExitGame();
     });
@@ -214,18 +214,18 @@ void ReplayMenu::loadUIButtons()
     m_pauseButton = ObjectManager::createIconButton("pause", 36);
     m_playButton->setPosition(exitGame->getX() - 4 - m_playButton->getWidth(), y);
     m_pauseButton->setPosition(exitGame->getX() - 4 - m_pauseButton->getWidth(), y);
-    m_playButton->addClickListener([=](oxygine::Event * )
+    m_playButton->addClickListener([this](oxygine::Event * )
     {
         emit sigSwapPlay();
     });
-    m_pauseButton->addClickListener([=](oxygine::Event * )
+    m_pauseButton->addClickListener([this](oxygine::Event * )
     {
         emit sigSwapPlay();
     });
     m_oneStepButton = ObjectManager::createIconButton("one_step", 36);
     m_oneStepButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getWidth(), y);
     m_taskBar->addChild(m_oneStepButton);
-    m_oneStepButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_oneStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigOneStep();
     });
@@ -235,17 +235,17 @@ void ReplayMenu::loadUIButtons()
     m_fastForwardButton = ObjectManager::createIconButton("fastforward", 36);
     m_fastForwardButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getWidth() - m_fastForwardButton->getWidth(), y);
     m_taskBar->addChild(m_fastForwardButton);
-    m_fastForwardButton->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event*)
+    m_fastForwardButton->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event*)
     {
         emit sigStartFastForward();
     });
-    m_fastForwardButton->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event*)
+    m_fastForwardButton->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this](oxygine::Event*)
     {
         emit sigStopFastForward();
     });
     m_rewindDayButton = ObjectManager::createIconButton("rewind", 36);
     m_rewindDayButton->setPosition(m_fastForwardButton->getX() - 4 - m_rewindDayButton->getWidth(), y);
-    m_rewindDayButton->addClickListener([=](oxygine::Event*)
+    m_rewindDayButton->addClickListener([this](oxygine::Event*)
     {
         emit sigRewindDay();
     });
@@ -253,7 +253,7 @@ void ReplayMenu::loadUIButtons()
 
     m_configButton = ObjectManager::createIconButton("settings", 36);
     m_configButton->setPosition(m_rewindDayButton->getX() - 4 - m_configButton->getWidth(), y);
-    m_configButton->addClickListener([=](oxygine::Event*)
+    m_configButton->addClickListener([this](oxygine::Event*)
     {
         emit sigShowConfig();
     });

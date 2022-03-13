@@ -145,7 +145,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         setPlayer(static_cast<qint32>(value) - 1);
     });
@@ -169,7 +169,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
         items.append(curUnitId);
     }
     Player* pPlayer = m_dropDownPlayer.get();
-    auto creator = [=](QString id)
+    auto creator = [this, pPlayer](QString id)
     {
         spUnit pSprite = spUnit::create(id, pPlayer, false, m_pMap);
         pSprite->setOwner(nullptr);
@@ -181,7 +181,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     pMenu->setCurrentItem(currentItem);
     pBox->addItem(pMenu);
     DropDownmenuSprite* pPtrMenu = pMenu.get();
-    connect(pMenu.get(), &DropDownmenuSprite::sigItemChanged, this, [=](qint32)
+    connect(pMenu.get(), &DropDownmenuSprite::sigItemChanged, this, [this, pPtrMenu](qint32)
     {
         unitID = pPtrMenu->getCurrentItemText();
     });

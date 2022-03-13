@@ -48,7 +48,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     m_SpinBoxRed = spSpinBox::create(space - 20, 0, 255);
     m_SpinBoxRed->setPosition(space * 0, y + 40);
     addChild(m_SpinBoxRed);
-    connect(m_SpinBoxRed.get(), &SpinBox::sigValueChanged, this, [=](float value)
+    connect(m_SpinBoxRed.get(), &SpinBox::sigValueChanged, this, [this](float value)
     {
         emit sigSelecetedColorChanged(QColor(value, m_CurrentColor.green(), m_CurrentColor.blue()));
     });
@@ -61,7 +61,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     m_SpinBoxGreen = spSpinBox::create(space - 20, 0, 255);
     m_SpinBoxGreen->setPosition(space * 1, y + 40);
     addChild(m_SpinBoxGreen);
-    connect(m_SpinBoxGreen.get(), &SpinBox::sigValueChanged, this, [=](float value)
+    connect(m_SpinBoxGreen.get(), &SpinBox::sigValueChanged, this, [this](float value)
     {
         emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), value, m_CurrentColor.blue()));
     });
@@ -74,7 +74,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     m_SpinBoxBlue= spSpinBox::create(space - 20, 0, 255);
     m_SpinBoxBlue->setPosition(space * 2, y + 40);
     addChild(m_SpinBoxBlue);
-    connect(m_SpinBoxBlue.get(), &SpinBox::sigValueChanged, this, [=](float value)
+    connect(m_SpinBoxBlue.get(), &SpinBox::sigValueChanged, this, [this](float value)
     {
         emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), m_CurrentColor.green(), value));
     });
@@ -82,13 +82,13 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     connect(this, &ColorSelector::sigSelecetedColorChanged, this, &ColorSelector::selecetedColorChanged);
 
     m_ColorDialog = oxygine::spActor::create();
-    m_ColorDialog->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event* pEvent)
+    m_ColorDialog->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event* pEvent)
     {
         pEvent->stopPropagation();
         m_boxUpdating = true;
         FocusableObject::looseFocus();
     });
-    m_ColorDialog->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event* pEvent)
+    m_ColorDialog->addEventListener(oxygine::TouchEvent::MOVE, [this, pixelSize](oxygine::Event* pEvent)
     {
         if (m_boxUpdating)
         {
@@ -105,7 +105,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
             FocusableObject::looseFocus();
         }
     });
-    m_ColorDialog->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event* pEvent)
+    m_ColorDialog->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this, pixelSize](oxygine::Event* pEvent)
     {
         if (m_boxUpdating)
         {
@@ -163,12 +163,12 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         pSprite->setColor(m_CurrentColor.red(), m_CurrentColor.green(), blue, 255);
         bar->addChild(pSprite);
     }
-    bar->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event* pEvent)
+    bar->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event* pEvent)
     {
         pEvent->stopPropagation();
         m_barUpdating = true;
     });
-    bar->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event* pEvent)
+    bar->addEventListener(oxygine::TouchEvent::MOVE, [this, pixelSize](oxygine::Event* pEvent)
     {
         if (m_barUpdating)
         {
@@ -184,7 +184,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
             FocusableObject::looseFocus();
         }
     });
-    bar->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event* pEvent)
+    bar->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this, pixelSize](oxygine::Event* pEvent)
     {
         if (m_barUpdating)
         {

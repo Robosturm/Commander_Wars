@@ -26,8 +26,7 @@ void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, const QStr
         m_players.append(spPlayer::create(this));
         m_players[m_players.size() - 1]->init();
     }
-
-    updateSprites();
+    updateSprites(-1, -1, true);
     centerMap(width / 2, heigth / 2);
     Mainapp::getInstance()->continueRendering();
 }
@@ -106,8 +105,7 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
             m_players.removeLast();
         }
     }
-
-    updateSprites();
+    updateSprites(-1, -1, true);
     centerMap(width / 2, heigth / 2);
     Mainapp::getInstance()->continueRendering();
 }
@@ -260,7 +258,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             }
         }
     }
-    updateSprites();
+    updateSprites(-1, -1, true);
     centerMap(currentWidth / 2, currentHeigth / 2);
     Mainapp::getInstance()->continueRendering();
 }
@@ -298,7 +296,7 @@ void GameMap::flipX()
             }
         }
     }
-    updateSprites();
+    updateSprites(-1, -1, true);
     centerMap(getMapWidth() / 2, getMapHeight() / 2);
     Mainapp::getInstance()->continueRendering();
 }
@@ -336,7 +334,7 @@ void GameMap::rotateX()
             }
         }
     }
-    updateSprites();
+    updateSprites(-1, -1, true);
     centerMap(getMapWidth() / 2, getMapHeight() / 2);
     Mainapp::getInstance()->continueRendering();
 }
@@ -374,7 +372,7 @@ void GameMap::flipY()
             }
         }
     }
-    updateSprites();
+    updateSprites(-1, -1, true);
     centerMap(getMapWidth() / 2, getMapHeight() / 2);
     Mainapp::getInstance()->continueRendering();
 }
@@ -412,7 +410,7 @@ void GameMap::rotateY()
             }
         }
     }
-    updateSprites();
+    updateSprites(-1, -1, true);
     centerMap(getMapWidth() / 2, getMapHeight() / 2);
     Mainapp::getInstance()->continueRendering();
 }

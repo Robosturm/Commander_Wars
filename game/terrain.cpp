@@ -915,6 +915,7 @@ void Terrain::addBuildingSprite(spBuilding pBuilding)
     }
     else
     {
+        m_Building->setPosition(0, 0);
         m_Building->setPriority(static_cast<qint32>(DrawPriority::Building));
         addChild(m_Building);
     }

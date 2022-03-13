@@ -189,14 +189,12 @@ void TerrainFlowData::print()
 QVector<QPoint> TerrainFlowData::getOverlayTiles(const QStringList & terrains)
 {
     QVector<QPoint> ret;
-    spQmlVectorPoint circle(GlobalUtils::getCircle(1, 1));
-    
-    const qint32 size = circle->size();
+    spQmlVectorPoint circle(GlobalUtils::getCircle(1, 1));    
     for (qint32 i2 = 0; i2 < m_positions.size(); ++i2)
     {
-        for (qint32 i = 0; i < size; ++i)
+        for (auto & circlePos : circle->getVector())
         {
-            QPoint newPos = m_positions[i2] + circle->at(i);
+            QPoint newPos = m_positions[i2] + circlePos;
             if (m_pMap->onMap(newPos.x(), newPos.y()) &&
                 !ret.contains(newPos) &&
                 terrains.contains(m_pMap->getTerrain(newPos.x(), newPos.y())->getID()))

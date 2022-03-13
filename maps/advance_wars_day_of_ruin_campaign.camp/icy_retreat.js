@@ -258,7 +258,7 @@ var Constructor = function() { // scriptStart
             // Dialog
             variable1.writeDataBool(true);
         } // Unit Destroyed End
-        if (map.isPlayersUnitInArea(Qt.rect(0, 4, 1, 1), [0]) && variable3.readDataBool() === false) {// 1 Player in Area
+        if (map.isPlayersUnitInArea(Qt.rect(0, 4, 1, 1), [0, 1]) && variable3.readDataBool() === false) {// 1 Player in Area
             map.getPlayer(2).defeatPlayer(null); // 0 Defeat Player
             variable3.writeDataBool(true);
         } // Player in Area End

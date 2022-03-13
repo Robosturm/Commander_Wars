@@ -24,7 +24,7 @@ namespace oxygine
         m_current = 0;
         QDomElement node = context.m_walker.getNode();
         loadBase(node);
-        QVector<spResAnim> anims;
+        std::vector<spResAnim> anims;
         while (true)
         {
             XmlWalker walker = context.m_walker.next();

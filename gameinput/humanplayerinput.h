@@ -55,7 +55,7 @@ public:
      * @brief createArrow
      * @param points
      */
-    void createArrow(QVector<QPoint>& points);
+    void createArrow(std::vector<QPoint>& points);
     /**
      * @brief selectUnit selects the given target unit as active
      * @param x
@@ -206,14 +206,14 @@ private:
     spGameAction m_pGameAction{nullptr};
     spUnitPathFindingSystem m_pUnitPathFindingSystem{nullptr};
 
-    QVector<oxygine::spActor> m_Fields;
-    QVector<QVector3D> m_FieldPoints;
+    std::vector<oxygine::spActor> m_Fields;
+    std::vector<QVector3D> m_FieldPoints;
     spMarkedFieldData m_pMarkedFieldData{nullptr};
 
-    QVector<oxygine::spActor> m_InfoFields;
+    std::vector<oxygine::spActor> m_InfoFields;
 
-    QVector<oxygine::spActor> m_Arrows;
-    QVector<QPoint> m_ArrowPoints;
+    std::vector<oxygine::spActor> m_Arrows;
+    std::vector<QPoint> m_ArrowPoints;
 
     oxygine::spActor m_ZInformationLabel;
 

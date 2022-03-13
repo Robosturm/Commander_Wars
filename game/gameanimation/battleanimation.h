@@ -23,6 +23,7 @@ public:
         oxygine::spSprite coSprite;
     };
     static constexpr qint32 spriteWidth = 127;
+    static constexpr qint32 healthBarSize = 20;
     static constexpr qint32 spriteHeigth = 192;
 
     static const short priorityBackground = -2;

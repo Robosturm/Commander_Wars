@@ -159,7 +159,7 @@ void HumanPlayerInput::showVisionFields(qint32 x, qint32 y)
         auto points = pUnit->getVisionFields(pUnit->Unit::getPosition());
         for (auto & point : qAsConst(points))
         {
-            if (!m_FieldPoints.contains(QVector3D(point.x(), point.y(), 1)))
+            if (!GlobalUtils::contains(m_FieldPoints, QVector3D(point.x(), point.y(), 1)))
             {
                 Interpreter* pInterpreter = Interpreter::getInstance();
                 QColor viewColor = QColor(255, 127, 39, 255);
@@ -192,7 +192,7 @@ void HumanPlayerInput::cancelSelection(qint32 x, qint32 y)
         if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) != costs &&
             costs > 0)
         {
-            m_ArrowPoints = m_pUnitPathFindingSystem->getPath(x, y);
+            m_ArrowPoints = m_pUnitPathFindingSystem->getPathFast(x, y);
             createCursorPath(x, y);
         }
         else
@@ -252,17 +252,17 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
             UnitPathFindingSystem pfs(m_pMap, m_pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
             pfs.explore();
-            QVector<QPoint> points = pfs.getAllNodePoints();
-            for (qint32 i = 0; i < points.size(); i++)
+            auto points = pfs.getAllNodePointsFast();
+            for (auto & point : points)
             {
                 if (pUnit->canMoveAndFire(QPoint(x, y)) ||
-                    (points[i].x() == x && points[i].y() == y))
+                    (point.x() == x && point.y() == y))
                 {
 
-                    for (qint32 i2 = 0; i2 < pPoints->size(); i2++)
+                    for (auto & point2 : pPoints->getVector())
                     {
-                        QPoint target = pPoints->at(i2) + points[i];
-                        if (!m_FieldPoints.contains(QVector3D(target.x(), target.y(), 1)))
+                        QPoint target = point2 + point;
+                        if (!GlobalUtils::contains(m_FieldPoints, QVector3D(target.x(), target.y(), 1)))
                         {
                             createMarkedField(target, QColor(255, 0, 0), Terrain::ExtraDrawPriority::MarkedFieldMap);
                         }
@@ -282,9 +282,9 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             if (pPoints.get() != nullptr && pPoints->size() > 0)
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
-                for (qint32 i = 0; i < pPoints->size(); i++)
+                for (auto & point : pPoints->getVector())
                 {
-                    createMarkedField(buildingPos + targetOffset + pPoints->at(i), QColor(255, 0, 0), Terrain::ExtraDrawPriority::MarkedFieldMap);
+                    createMarkedField(buildingPos + targetOffset + point, QColor(255, 0, 0), Terrain::ExtraDrawPriority::MarkedFieldMap);
                 }
             }
         }
@@ -342,9 +342,9 @@ void HumanPlayerInput::clearMenu()
 void HumanPlayerInput::clearMarkedFields()
 {
     Mainapp::getInstance()->pauseRendering();
-    for (qint32 i = 0; i < m_Fields.size(); i++)
+    for (auto & field : m_Fields)
     {
-        m_Fields[i]->detach();
+        field->detach();
     }
     m_FieldPoints.clear();
     m_Fields.clear();
@@ -400,11 +400,11 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 }
                 else
                 {
-                    QVector<QPoint>* pFields = m_pMarkedFieldData->getPoints();
-                    for (qint32 i = 0; i < pFields->size(); i++)
+                    QVector<QPoint> & pFields = *m_pMarkedFieldData->getPoints();
+                    for (auto field : pFields)
                     {
-                        if ((pFields->at(i).x() == x) &&
-                            (pFields->at(i).y() == y))
+                        if ((field.x() == x) &&
+                            (field.y() == y))
                         {
                             markedFieldSelected(QPoint(x, y));
                             break;
@@ -444,11 +444,11 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                         (pBuilding->getOwner() == m_pPlayer))
                     {
                         actions = pBuilding->getActionList();
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & action : actions)
                         {
-                            if (m_pGameAction->canBePerformed(actions[i]))
+                            if (m_pGameAction->canBePerformed(action))
                             {
-                                possibleActions.append(actions[i]);
+                                possibleActions.append(action);
                             }
                         }
                     }
@@ -478,11 +478,11 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                         {
                             actions = getEmptyActionList();
                             possibleActions.clear();
-                            for (qint32 i = 0; i < actions.size(); i++)
+                            for (auto & action : actions)
                             {
-                                if (m_pGameAction->canBePerformed(actions[i], true))
+                                if (m_pGameAction->canBePerformed(action, true))
                                 {
-                                    possibleActions.append(actions[i]);
+                                    possibleActions.append(action);
                                 }
                             }
                             if (possibleActions.size() > 0)
@@ -539,11 +539,11 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                             // we want to do something with this unit :)
                             actions = pUnit->getActionList();
                         }
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & action : actions)
                         {
-                            if (m_pGameAction->canBePerformed(actions[i]))
+                            if (m_pGameAction->canBePerformed(action))
                             {
-                                possibleActions.append(actions[i]);
+                                possibleActions.append(action);
                             }
                         }
                         if (possibleActions.size() > 0)
@@ -595,11 +595,11 @@ void HumanPlayerInput::showInfoMenu(qint32 x, qint32 y)
     }
     QStringList actions = getViewplayerActionList();
     QStringList possibleActions;
-    for (qint32 i = 0; i < actions.size(); i++)
+    for (auto & action : actions)
     {
-        if (m_pGameAction->canBePerformed(actions[i], true))
+        if (m_pGameAction->canBePerformed(action, true))
         {
-            possibleActions.append(actions[i]);
+            possibleActions.append(action);
         }
     }
     if (possibleActions.size() > 0)
@@ -690,10 +690,10 @@ void HumanPlayerInput::getNextStepData()
         {
             CONSOLE_PRINT("HumanPlayerInput::getNextStepData show fields", Console::eDEBUG);
             spMarkedFieldData pData = m_pGameAction->getMarkedFieldStepData();
-            QVector<QPoint>* pFields = pData->getPoints();
-            for (qint32 i = 0; i < pFields->size(); i++)
+            QVector<QPoint> & pFields = *pData->getPoints();
+            for (auto & field : pFields)
             {
-                createMarkedField(pFields->at(i), pData->getColor(), Terrain::ExtraDrawPriority::MarkedFieldMap);
+                createMarkedField(field, pData->getColor(), Terrain::ExtraDrawPriority::MarkedFieldMap);
             }
             syncMarkedFields();
             m_pMarkedFieldData = pData;
@@ -724,7 +724,7 @@ void HumanPlayerInput::finishAction()
             if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) > movepoints)
             {
                 // shorten path
-                QVector<QPoint> newPath = m_pUnitPathFindingSystem->getClosestReachableMovePath(m_ArrowPoints, movepoints);
+                auto newPath = m_pUnitPathFindingSystem->getClosestReachableMovePath(m_ArrowPoints, movepoints);
                 m_pGameAction->setMovepath(newPath, m_pUnitPathFindingSystem->getCosts(newPath));
                 QVector<QPoint> multiTurnPath;
                 for (qint32 i = 0; i <= m_ArrowPoints.size() - newPath.size(); i++)
@@ -769,9 +769,9 @@ void HumanPlayerInput::createActionMenu(const QStringList & actionIDs, qint32 x,
     CONSOLE_PRINT("HumanPlayerInput::createActionMenu", Console::eDEBUG);
     clearMarkedFields();
     MenuData data(m_pMap);
-    for (qint32 i = 0; i < actionIDs.size(); i++)
+    for (auto & action : actionIDs)
     {
-        data.addData(GameAction::getActionText(m_pMap, actionIDs[i]), actionIDs[i], GameAction::getActionIcon(m_pMap, actionIDs[i]));
+        data.addData(GameAction::getActionText(m_pMap, action), action, GameAction::getActionIcon(m_pMap, action));
     }
     m_CurrentMenu = spHumanPlayerInputMenu::create(m_pMap, data.getTexts(), actionIDs, data.getIconList());
     attachActionMenu(x, y);
@@ -863,13 +863,13 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Ex
         oxygine::spSprite pSprite = createMarkedFieldActor(point, color, drawPriority);
         if (drawPriority == Terrain::ExtraDrawPriority::MarkedFieldMap)
         {
-            m_FieldPoints.append(QVector3D(point.x(), point.y(), 1));
+            m_FieldPoints.push_back(QVector3D(point.x(), point.y(), 1));
         }
         else
         {
-            m_FieldPoints.append(QVector3D(point.x(), point.y(), 0));
+            m_FieldPoints.push_back(QVector3D(point.x(), point.y(), 0));
         }
-        m_Fields.append(pSprite);
+        m_Fields.push_back(pSprite);
     }
 }
 
@@ -928,16 +928,16 @@ void HumanPlayerInput::createMarkedMoveFields()
             turnColor = QColor(ret.toString());
         }
         qint32 movementpoints = m_pGameAction->getTargetUnit()->getMovementpoints(m_pGameAction->getTarget());
-        QVector<QPoint> points = m_pUnitPathFindingSystem->getAllNodePoints();
-        for (qint32 i = 0; i < points.size(); i++)
+        auto points = m_pUnitPathFindingSystem->getAllNodePointsFast();
+        for (auto & point : points)
         {
-            if (m_pUnitPathFindingSystem->getTargetCosts(points[i].x(), points[i].y()) > movementpoints)
+            if (m_pUnitPathFindingSystem->getTargetCosts(point.x(), point.y()) > movementpoints)
             {
-                createMarkedField(points[i], multiTurnColor, Terrain::ExtraDrawPriority::MarkedField);
+                createMarkedField(point, multiTurnColor, Terrain::ExtraDrawPriority::MarkedField);
             }
             else
             {
-                createMarkedField(points[i], turnColor, Terrain::ExtraDrawPriority::MarkedField);
+                createMarkedField(point, turnColor, Terrain::ExtraDrawPriority::MarkedField);
             }
         }
         syncMarkedFields();
@@ -1019,11 +1019,17 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     deleteArrow();
                     if (pUnit != nullptr)
                     {
-                        QVector<QPoint> multiTurnPath = pUnit->getMultiTurnPath();
+                        auto multiTurnPath = pUnit->getMultiTurnPath();
+                        std::vector<QPoint> path;
+                        path.reserve(multiTurnPath.size());
+                        for (auto & point : multiTurnPath)
+                        {
+                            path.push_back(point);
+                        }
                         if (pUnit->getOwner() == m_pPlayer &&
                             multiTurnPath.size() > 0)
                         {
-                            createArrow(multiTurnPath);
+                            createArrow(path);
                         }
                     }
                 }
@@ -1256,7 +1262,7 @@ void HumanPlayerInput::zoomChanged(float zoom)
 void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("HumanPlayerInput::createCursorPath", Console::eDEBUG);
-    QVector<QPoint> points = m_ArrowPoints;
+    auto points = m_ArrowPoints;
     QPoint lastPoint = QPoint(-1, -1);
     if (points.size() > 0)
     {
@@ -1266,7 +1272,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
     if (m_pGameAction->getTarget() != QPoint(x, y) &&
         m_pUnitPathFindingSystem.get() != nullptr &&
         !m_pGameAction->getTargetUnit()->getHasMoved() &&
-        m_FieldPoints.contains(QVector3D(x, y, 0)))
+        GlobalUtils::contains(m_FieldPoints, QVector3D(x, y, 0)))
     {
         if (m_pUnitPathFindingSystem->getCosts(m_pUnitPathFindingSystem->getIndex(x, y), x, y, x, y) >= 0)
         {
@@ -1275,34 +1281,34 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
             {
                 if ((points.size() > 0) && ((qAbs(points[0].x() - x) + qAbs(points[0].y() - y)) == 1))
                 {
-                    if (points.contains(QPoint(x, y)))
+                    if (GlobalUtils::contains(points, QPoint(x, y)))
                     {
-                        points = m_pUnitPathFindingSystem->getPath(x, y);
+                        points = m_pUnitPathFindingSystem->getPathFast(x, y);
                     }
                     else if (m_pUnitPathFindingSystem->getCosts(m_pUnitPathFindingSystem->getIndex(x, y), x, y, points[0].x(), points[0].y()) >= 0)
                     {
-                        points.push_front(QPoint(x, y));
+                        points.insert(points.cbegin(), QPoint(x, y));
                         qint32 movepoints = m_pGameAction->getTargetUnit()->getMovementpoints(QPoint(x, y));
                         if ((m_pUnitPathFindingSystem->getTargetCosts(x, y)  <= movepoints) &&
                             (m_pUnitPathFindingSystem->getCosts(points)  > movepoints))
                         {
                             // not reachable this way get the ideal path
-                            points = m_pUnitPathFindingSystem->getPath(x, y);
+                            points = m_pUnitPathFindingSystem->getPathFast(x, y);
                         }
                     }
                     else
                     {
-                        points = m_pUnitPathFindingSystem->getPath(x, y);
+                        points = m_pUnitPathFindingSystem->getPathFast(x, y);
                     }
                 }
                 else
                 {
-                    points = m_pUnitPathFindingSystem->getPath(x, y);
+                    points = m_pUnitPathFindingSystem->getPathFast(x, y);
                 }
             }
             else if (points.size() == 0)
             {
-                points = m_pUnitPathFindingSystem->getPath(x, y);
+                points = m_pUnitPathFindingSystem->getPathFast(x, y);
             }
             else
             {
@@ -1312,7 +1318,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
                 (points[0].x() != x) ||
                 (points[0].y() != y))
             {
-                points = m_pUnitPathFindingSystem->getPath(x, y);
+                points = m_pUnitPathFindingSystem->getPathFast(x, y);
             }
             m_pGameAction->setCosts(m_pUnitPathFindingSystem->getCosts(points));
             m_ArrowPoints = points;
@@ -1351,7 +1357,7 @@ QStringList HumanPlayerInput::getViewplayerActionList()
     }
 }
 
-void HumanPlayerInput::createArrow(QVector<QPoint>& points)
+void HumanPlayerInput::createArrow(std::vector<QPoint>& points)
 {
     
     GameManager* pGameManager = GameManager::getInstance();
@@ -1366,7 +1372,7 @@ void HumanPlayerInput::createArrow(QVector<QPoint>& points)
             pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
             pSprite->setPosition(points[i].x() * GameMap::getImageSize() -(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2,  points[i].y() * GameMap::getImageSize() -(pSprite->getScaledHeight() - GameMap::getImageSize()));
             m_pMap->addChild(pSprite);
-            m_Arrows.append(pSprite);
+            m_Arrows.push_back(pSprite);
 
             if (i > 0)
             {
@@ -1581,35 +1587,35 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
 {
     Mainapp::getInstance()->pauseRendering();
     UnitPathFindingSystem pfs(m_pMap, pUnit, m_pPlayer);
-    QVector<QPoint> points;
+    std::vector<QPoint> points;
     QPoint position = pUnit->getPosition();
     bool canMoveAndFire = pUnit->canMoveAndFire(position);
     if (canMoveAndFire)
     {
         pfs.explore();
-        points = pfs.getAllNodePoints();
+        points = pfs.getAllNodePointsFast();
     }
     else
     {
-        points.append(position);
+        points.push_back(position);
     }
     
     qint32 maxRange = pUnit->getMaxRange(position);
     qint32 minRange = pUnit->getMinRange(position);
     spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(minRange, maxRange));
-    for (qint32 i = 0; i < points.size(); i++)
+    for (auto & point : points)
     {
         if (canMoveAndFire ||
-            (points[i].x() == position.x() && points[i].y() == position.y()))
+            (point.x() == position.x() && point.y() == position.y()))
         {
-            for (qint32 i2 = 0; i2 < pPoints->size(); i2++)
+            for (auto & rangePos : pPoints->getVector())
             {
-                QPoint target = pPoints->at(i2) + points[i];
+                QPoint target = rangePos + point;
                 if (m_pMap->onMap(target.x(), target.y()) &&
                     !usedFields.contains(QPoint(target.x(), target.y())))
                 {
                     usedFields.append(target);
-                    m_InfoFields.append(createMarkedFieldActor(target, QColor(255, 0, 0), Terrain::ExtraDrawPriority::MarkedFieldMap));
+                    m_InfoFields.push_back(createMarkedFieldActor(target, QColor(255, 0, 0), Terrain::ExtraDrawPriority::MarkedFieldMap));
                 }
             }
         }
@@ -1636,10 +1642,10 @@ void HumanPlayerInput::nextMarkedField()
         {
             while (x < width && !found)
             {
-                for (qint32 i = 0; i < m_FieldPoints.size(); i++)
+                for (auto & field : m_FieldPoints)
                 {
-                    if (x == static_cast<qint32>(m_FieldPoints[i].x()) &&
-                        (y == static_cast<qint32>(m_FieldPoints[i].y())))
+                    if (x == static_cast<qint32>(field.x()) &&
+                       (y == static_cast<qint32>(field.y())))
                     {
                         if (center)
                         {
@@ -1661,10 +1667,10 @@ void HumanPlayerInput::nextMarkedField()
         {
             while (x < width && !found)
             {
-                for (qint32 i = 0; i < m_FieldPoints.size(); i++)
+                for (auto & field : m_FieldPoints)
                 {
-                    if (x == static_cast<qint32>(m_FieldPoints[i].x()) &&
-                        (y == static_cast<qint32>(m_FieldPoints[i].y())))
+                    if (x == static_cast<qint32>(field.x()) &&
+                        (y == static_cast<qint32>(field.y())))
                     {
                         if (center)
                         {
@@ -1705,10 +1711,10 @@ void HumanPlayerInput::previousMarkedField()
         {
             while (x >= 0 && !found)
             {
-                for (qint32 i = 0; i < m_FieldPoints.size(); i++)
+                for (auto & field : m_FieldPoints)
                 {
-                    if (x == static_cast<qint32>(m_FieldPoints[i].x()) &&
-                        (y == static_cast<qint32>(m_FieldPoints[i].y())))
+                    if (x == static_cast<qint32>(field.x()) &&
+                        (y == static_cast<qint32>(field.y())))
                     {
                         if (center)
                         {
@@ -1730,10 +1736,10 @@ void HumanPlayerInput::previousMarkedField()
         {
             while (x >= 0 && !found)
             {
-                for (qint32 i = 0; i < m_FieldPoints.size(); i++)
+                for (auto & field : m_FieldPoints)
                 {
-                    if (x == static_cast<qint32>(m_FieldPoints[i].x()) &&
-                        (y == static_cast<qint32>(m_FieldPoints[i].y())))
+                    if (x == static_cast<qint32>(field.x()) &&
+                        (y == static_cast<qint32>(field.y())))
                     {
                         if (center)
                         {
@@ -1795,9 +1801,9 @@ void HumanPlayerInput::nextSelectOption()
                         GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & actionId : actions)
                         {
-                            if (action.canBePerformed(actions[i]))
+                            if (action.canBePerformed(actionId))
                             {
                                 if (center)
                                 {
@@ -1839,9 +1845,9 @@ void HumanPlayerInput::nextSelectOption()
                         GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & actionId : actions)
                         {
-                            if (action.canBePerformed(actions[i]))
+                            if (action.canBePerformed(actionId))
                             {
                                 if (center)
                                 {
@@ -1905,9 +1911,9 @@ void HumanPlayerInput::previousSelectOption()
                         GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & actionId : actions)
                         {
-                            if (action.canBePerformed(actions[i]))
+                            if (action.canBePerformed(actionId))
                             {
                                 if (center)
                                 {
@@ -1949,9 +1955,9 @@ void HumanPlayerInput::previousSelectOption()
                         GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & actionId : actions)
                         {
-                            if (action.canBePerformed(actions[i]))
+                            if (action.canBePerformed(actionId))
                             {
                                 if (center)
                                 {
@@ -2009,9 +2015,9 @@ void HumanPlayerInput::autoEndTurn()
                         GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        for (auto & actionId : actions)
                         {
-                            action.setActionID(actions[i]);
+                            action.setActionID(actionId);
                             if (action.canBePerformed())
                             {
                                 return;

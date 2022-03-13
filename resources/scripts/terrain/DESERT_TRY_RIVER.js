@@ -50,7 +50,7 @@ var Constructor = function()
     {
         return "fore_river";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         return "back_river";
     };
@@ -85,7 +85,7 @@ var Constructor = function()
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         var variables = terrain.getVariables();
         var variable = variables.getVariable("BACKGROUND_ID");

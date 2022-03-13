@@ -21,7 +21,7 @@ var Constructor = function()
                         ["HEAVY_TANK", 15],
                         ["NEOTANK", 25],
                         // very heavy tanks
-                        ["MEGATANK", 15],
+                        ["MEGATANK", 10],
                         ["HOELLIUM", 30],
                         // ranged land units
                         ["ARTILLERY", 70],

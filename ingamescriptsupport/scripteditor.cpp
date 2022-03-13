@@ -67,7 +67,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     oxygine::spButton pConditionButton = pObjectManager->createButton(tr("Add Condition"), 200);
     pConditionButton->setPosition(m_Conditions->getX() + m_Conditions->getWidth() + 10, Settings::getHeight() / 2 - 45);
     pSpriteBox->addChild(pConditionButton);
-    pConditionButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pConditionButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigAddCondition();
     });
@@ -76,7 +76,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     oxygine::spButton pConditionDuplicate = pObjectManager->createButton(tr("Duplicate"), 200);
     pConditionDuplicate->setPosition(pConditionButton->getX() + pConditionButton->getWidth() + 10, Settings::getHeight() / 2 - 45);
     pSpriteBox->addChild(pConditionDuplicate);
-    pConditionDuplicate->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pConditionDuplicate->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigDuplicateCondition();
     });
@@ -119,7 +119,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     m_pEventButton = pObjectManager->createButton(tr("Add Event"), 200);
     m_pEventButton->setPosition(m_Events->getX() + m_Events->getWidth() + 10, Settings::getHeight() - 115);
     pSpriteBox->addChild(m_pEventButton);
-    m_pEventButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_pEventButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigAddEvent();
     });
@@ -142,7 +142,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 10 - pOkButton->getHeight());
     pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigShowExitBox();
     });
@@ -150,14 +150,14 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     oxygine::spButton pSaveButton = pObjectManager->createButton(tr("Save"), 150);
     pSaveButton->setPosition(Settings::getWidth() / 2 - pSaveButton->getWidth() / 2, Settings::getHeight() - 10 - pSaveButton->getHeight());
     pSpriteBox->addChild(pSaveButton);
-    pSaveButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pSaveButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigSaveScript();
     });
     oxygine::spButton pLoadButton = pObjectManager->createButton(tr("Load"), 150);
     pLoadButton->setPosition(30, Settings::getHeight() - 10 - pLoadButton->getHeight());
     pSpriteBox->addChild(pLoadButton);
-    pLoadButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pLoadButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigLoadScript();
     });
@@ -302,14 +302,14 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
         oxygine::spButton pEditButton = pObjectManager->createButton(tr("Edit"), 130);
         pEditButton->setPosition(x, boxY);
         pSpritebox->addChild(pEditButton);
-        pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [this, condition](oxygine::Event*)
         {
             emit sigShowEditCondition(condition);
         });
         oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 130);
         pRemoveButton->setPosition(x + 140, boxY);
         pSpritebox->addChild(pRemoveButton);
-        pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [this, condition](oxygine::Event*)
         {
             m_Data->removeCondition(condition);
             emit sigUpdateConditions();
@@ -319,7 +319,7 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
         pSpritebox->addChild(pSelectButton);
         auto pPtrSpritebox = pSpritebox.get();
         auto pCondition = condition.get();
-        pSelectButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pSelectButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrSpritebox, pCondition](oxygine::Event*)
         {
             selectCondition(pPtrSpritebox, pCondition);
         });
@@ -389,14 +389,14 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
     pEditButton->setPosition(x, y);
     m_EventPanel->addItem(pEditButton);
     auto* pPtrEvent = pEvent.get();
-    pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrEvent](oxygine::Event*)
     {
         emit sigShowEditEvent(spScriptEvent(pPtrEvent));
     });
     oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 130);
     pRemoveButton->setPosition(x + 140, y);
     m_EventPanel->addItem(pRemoveButton);
-    pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrEvent](oxygine::Event*)
     {
         m_CurrentCondition->removeEvent(spScriptEvent(pPtrEvent));
         emit sigUpdateEvents();
@@ -404,7 +404,7 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
     oxygine::spButton pDuplicateButton = pObjectManager->createButton(tr("Duplicate"), 130);
     pDuplicateButton->setPosition(x + 140 * 2, y);
     m_EventPanel->addItem(pDuplicateButton);
-    pDuplicateButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pDuplicateButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrEvent](oxygine::Event*)
     {
         emit sigDuplicateEvent(spScriptEvent(pPtrEvent));
     });

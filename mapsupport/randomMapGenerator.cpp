@@ -643,7 +643,7 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint
                 pfs.setMovepoints(days);
                 pfs.setStartPoint(position.x(), position.y());
                 pfs.explore();
-                if (pfs.getAllNodePoints().size() < minimalDistance)
+                if (pfs.getAllNodePointsFast().size() < minimalDistance)
                 {
                     positionOk = false;
                 }
@@ -872,7 +872,7 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint
                     pfs.setMovepoints(days);
                     pfs.setStartPoint(position.x(), position.y());
                     pfs.explore();
-                    if (pfs.getAllNodePoints().size() < minimalDistance)
+                    if (pfs.getAllNodePointsFast().size() < minimalDistance)
                     {
                         positionOk = false;
                     }

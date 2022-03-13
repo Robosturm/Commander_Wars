@@ -292,7 +292,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pTerrain->loadSprites();
         qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);
         pTerrain->setPosition(x, y);
-        pTerrain->addClickListener([=](oxygine::Event*)
+        pTerrain->addClickListener([this, terrainId](oxygine::Event*)
         {
             emit sigShowLink(terrainId);
         });
@@ -349,7 +349,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pBuilding->oxygine::Actor::setX(x + GameMap::getImageSize() * (buildingWidth - 1) / (buildingWidth));
         pBuilding->oxygine::Actor::setY(y + GameMap::getImageSize() * (buildingHeigth - 1) / (buildingHeigth));
 
-        pBuilding->addClickListener([=](oxygine::Event*)
+        pBuilding->addClickListener([this, pBuildingSpriteManager, i](oxygine::Event*)
         {
             emit sigShowLink(pBuildingSpriteManager->getID(i));
         });
@@ -417,7 +417,7 @@ void UnitInfo::createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& 
     {
         spUnit pDummy = spUnit::create(sortedUnits[i], pUnit->getOwner(), false, pUnit->getMap());
         QString unitId = sortedUnits[i];
-        pDummy->addClickListener([=](oxygine::Event*)
+        pDummy->addClickListener([this, unitId](oxygine::Event*)
         {
             emit sigShowLink(unitId);
         });
@@ -452,7 +452,7 @@ void UnitInfo::createLoadingTable(Unit* pUnit, const QStringList & loadables, qi
     {
         spUnit pDummy = spUnit::create(unitID, pUnit->getOwner(), false, pUnit->getMap());
         pDummy->setPosition(x, y);
-        pDummy->addClickListener([=](oxygine::Event*)
+        pDummy->addClickListener([this, unitID](oxygine::Event*)
         {
             emit sigShowLink(unitID);
         });
@@ -481,7 +481,7 @@ void UnitInfo::createLoadedUnits(Unit* pUnit, qint32& y, qint32 width)
         pDummy->setFuel(loadedUnit->getFuel());
         pDummy->setUnitRank(loadedUnit->getUnitRank());
         QString loadedUnitId = loadedUnit->getUnitID();
-        pDummy->addClickListener([=](oxygine::Event*)
+        pDummy->addClickListener([this, loadedUnitId](oxygine::Event*)
         {
             emit sigShowLink(loadedUnitId);
         });
@@ -506,7 +506,7 @@ void UnitInfo::createTransportTable(Unit* pUnit, qint32& y, qint32 width)
         if (pDummy->canTransportUnit(pUnit, true))
         {
             pDummy->setPosition(x, y);
-            pDummy->addClickListener([=](oxygine::Event*)
+            pDummy->addClickListener([this, unitID](oxygine::Event*)
             {
                 emit sigShowLink(unitID);
             });
@@ -532,7 +532,7 @@ void UnitInfo::createActionTable(Unit* pUnit, qint32& y, qint32 width)
         WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
         oxygine::spSprite pSprite = pWikiDatabase->getIcon(pUnit->getMap(), icon, GameMap::getImageSize());
         pSprite->setPosition(x, y);
-        pSprite->addClickListener([=](oxygine::Event*)
+        pSprite->addClickListener([this, action](oxygine::Event*)
         {
             emit sigShowLink(action);
         });

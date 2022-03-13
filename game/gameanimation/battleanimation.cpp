@@ -11,6 +11,8 @@
 #include "game/player.h"
 #include "game/co.h"
 
+static constexpr qint32 MIN_HEALTHBAR_WIDTH = 8;
+
 BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                  Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage,
                                  GameMap* pMap)
@@ -410,10 +412,10 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
     auto* pAnim = GameManager::getInstance()->getResAnim("healthbar");
     m_HealthBar0 = oxygine::spBox9Sprite::create();
     m_HealthBar0->setResAnim(pAnim);
-    m_HealthBar0->setSize((spriteWidth - 8) * atkStartHp / Unit::MAX_UNIT_HP + 8, 9);
+    m_HealthBar0->setSize((spriteWidth - healthBarSize) * atkStartHp / Unit::MAX_UNIT_HP + MIN_HEALTHBAR_WIDTH, 9);
     if (getIsLeft(pAtkUnit, pDefUnit))
     {
-        m_HealthBar0->setPosition(31, 25);
+        m_HealthBar0->setPosition(41, 25);
     }
     else
     {
@@ -424,10 +426,10 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
     addChild(m_HealthBar0);
     m_HealthBar1 = oxygine::spBox9Sprite::create();
     m_HealthBar1->setResAnim(pAnim);
-    m_HealthBar1->setSize((spriteWidth - 8) * defStartHp / Unit::MAX_UNIT_HP + 8, 9);
+    m_HealthBar1->setSize((spriteWidth - healthBarSize) * defStartHp / Unit::MAX_UNIT_HP + MIN_HEALTHBAR_WIDTH, 9);
     if (getIsLeft(pDefUnit, pAtkUnit))
     {
-        m_HealthBar1->setPosition(31, 25);
+        m_HealthBar1->setPosition(41, 25);
     }
     else
     {
@@ -860,7 +862,7 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     oxygine::VStyleActor::TweenColor tweenColor(getHealthBarColor(endHp));
     oxygine::spTween colorTween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pHealthbar->addTween(colorTween);
-    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth((spriteWidth -  8) * endHp / Unit::MAX_UNIT_HP + 8), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
+    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth((spriteWidth -  healthBarSize) * endHp / Unit::MAX_UNIT_HP + MIN_HEALTHBAR_WIDTH), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pHealthbar->addTween(posTween);
     if (m_currentState <= AnimationProgress::AttackerImpact)
     {

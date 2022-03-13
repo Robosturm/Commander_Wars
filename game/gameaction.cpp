@@ -1,5 +1,6 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
+#include "coreengine/globalutils.h"
 
 #include "game/gameaction.h"
 #include "game/gamemap.h"
@@ -119,12 +120,8 @@ void GameAction::printAction()
         CONSOLE_PRINT("Moving to X " + QString::number(m_Movepath[0].x()) +
                 " Moving to Y " + QString::number(m_Movepath[0].y()), Console::eINFO);
     }
-    QString data;
-    QByteArray bytes = m_buffer.data();
-    for (qint32 i = 0; i < bytes.size(); i++)
-    {
-        data += "0x" + QString::number(bytes[i])+ " ";
-    }
+    auto bytes = m_buffer.data();
+    QString data = GlobalUtils::getByteArrayString(bytes);
     CONSOLE_PRINT("Data " + data, Console::eINFO);
 }
 
@@ -190,6 +187,17 @@ Building* GameAction::getTargetBuilding()
 void GameAction::setMovepath(const QVector<QPoint> & points, qint32 fuelCost)
 {
     m_Movepath = points;
+    m_costs = fuelCost;
+}
+
+void GameAction::setMovepath(const std::vector<QPoint> & points, qint32 fuelCost)
+{
+    m_Movepath.clear();
+    m_Movepath.reserve(points.size());
+    for (auto & point : points)
+    {
+        m_Movepath.append(point);
+    }
     m_costs = fuelCost;
 }
 

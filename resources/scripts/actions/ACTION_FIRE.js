@@ -158,9 +158,17 @@ var Constructor = function()
     };
     this.calcAttackerDamage = function(action, attacker, attackerWeapon, takenDamage, attackerPosition, defender, luckMode)
     {
-        return ACTION_FIRE.calcDamage(action, attacker, attackerWeapon, attackerPosition, globals.roundUp(attacker.getVirtualHp() - takenDamage / 10.0),
-                                      defender, defender.getPosition(), false,
-                                      luckMode)
+        var hp = globals.roundUp(attacker.getVirtualHp() - takenDamage / 10.0);
+        if (hp < 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return ACTION_FIRE.calcDamage(action, attacker, attackerWeapon, attackerPosition, hp,
+                                          defender, defender.getPosition(), false,
+                                          luckMode);
+        }
     };
 
     this.calcDefenderWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckModeDefender, result, rangeCheck = 0)

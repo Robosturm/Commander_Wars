@@ -54,7 +54,7 @@ Shopmenu::Shopmenu()
     pButtonBox->addChild(pButtonExit);
     pButtonExit->setPosition(Settings::getWidth() - pButtonExit->getWidth() - 10,
                              10);
-    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
     });
@@ -90,7 +90,7 @@ Shopmenu::Shopmenu()
     pButtonBox->addChild(m_buyButton);
     m_buyButton->setPosition(Settings::getWidth() - m_buyButton->getWidth() - pButtonExit->getWidth() - 20,
                              10);
-    m_buyButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_buyButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigBuy();
     });
@@ -165,7 +165,7 @@ void Shopmenu::filterChanged(qint32 item)
         pCheckbox->setTooltipText(tr("Check to but the item on the buy list. Afterwards click buy to confirm your shopping."));
         qint32 costs = item.price;
         qint32 itemPos = m_shoppingList.size() - 1;
-        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool checked)
+        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, itemPos, costs](bool checked)
         {
             m_shoppingList[itemPos] = checked;
             if (checked)
@@ -286,7 +286,7 @@ void Shopmenu::loadWikiInfo(oxygine::spButton pIcon, GameEnums::ShopItemType ite
         case GameEnums::ShopItemType_Perk:
         case GameEnums::ShopItemType_Unit:
         {
-            pIcon->addClickListener([=](oxygine::Event*)
+            pIcon->addClickListener([this, key](oxygine::Event*)
             {
                 emit sigShowWikipage(key);
             });

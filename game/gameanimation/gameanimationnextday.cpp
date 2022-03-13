@@ -112,12 +112,12 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     {
         m_endTimer.setSingleShot(true);
         m_endTimer.setInterval(uptimeMs / Settings::getAnimationSpeed());
-        connect(&m_endTimer, &QTimer::timeout, this, [=]()
+        connect(&m_endTimer, &QTimer::timeout, this, [this]()
         {
             emitFinished();
         });
         m_endTimer.start();
-        addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
+        addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *pEvent )->void
         {
             oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
@@ -144,7 +144,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
             oxygine::spButton pButtonSaveAndExit = ObjectManager::createButton(tr("Save and Exit"), 220);
             addChild(pButtonSaveAndExit);
             pButtonSaveAndExit->setPosition(Settings::getWidth() / 2 - pButtonSaveAndExit->getWidth() - 10, Settings::getHeight() - 50);
-            pButtonSaveAndExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+            pButtonSaveAndExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
             {
                 emit sigShowSaveAndExit();
             });
@@ -153,7 +153,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
             oxygine::spButton pButtonContinue = ObjectManager::createButton(tr("Continue"), 220);
             addChild(pButtonContinue);
             pButtonContinue->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 50);
-            pButtonContinue->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+            pButtonContinue->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
             {
                 emit sigRightClick();
             });

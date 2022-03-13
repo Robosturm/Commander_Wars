@@ -573,24 +573,23 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
 void GameMap::updateSpritesOfTiles(const QVector<QPoint> & points, bool editor, bool showLoadingScreen)
 {
     QVector<QPoint> flowPoints;
+    QVector<QPoint> updatedPoints;
     for (const auto & point : points)
     {
         for (qint32 y = point.y() -3; y <= point.y() + 3; y++)
         {
             for (qint32 x = point.x() -3; x <= point.x() + 3; x++)
             {
-                if (!points.contains(QPoint(x, y)))
+                QPoint pos(x, y);
+                if (!updatedPoints.contains(pos))
                 {
+                    updatedPoints.append(pos);
                     if (onMap(x, y))
                     {
                         updateTileSprites(x, y, flowPoints, editor);
                     }
                 }
             }
-        }
-        if (onMap(point.x(), point.y()))
-        {
-            updateTileSprites(point.x(), point.y(), flowPoints, editor);
         }
     }
     updateFlowTiles(flowPoints);
@@ -627,7 +626,7 @@ void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints)
         spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(this, m_fields[pos.y()][pos.x()]->getFlowTiles(), pos.x(), pos.y());
         pPfs->explore();
         m_fields[pos.y()][pos.x()]->updateFlowSprites(pPfs.get());
-        auto points = pPfs->getAllNodePoints();
+        auto points = pPfs->getAllNodePointsFast();
         for (const auto & point : qAsConst(points))
         {
             flowPoints.removeAll(point);
@@ -1655,6 +1654,7 @@ void GameMap::clearMap()
     m_players.clear();
     m_Rules->resetWeatherSprites();
     m_Rules->resetFogSprites();
+    m_headerInfo = MapHeaderInfo();
 }
 
 QString GameMap::readMapName(QDataStream& pStream)

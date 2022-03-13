@@ -74,7 +74,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     m_pButtonBack = ObjectManager::createButton(tr("Back"));
     m_pButtonBack->setPosition(10, Settings::getHeight() - 10 - m_pButtonBack->getHeight());
     addChild(m_pButtonBack);
-    m_pButtonBack->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_pButtonBack->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigButtonBack();
     });
@@ -83,7 +83,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     m_pButtonNext = ObjectManager::createButton(tr("Next"));
     m_pButtonNext->setPosition(Settings::getWidth() - 10 - m_pButtonNext->getWidth(), Settings::getHeight() - 10 - m_pButtonNext->getHeight());
     addChild(m_pButtonNext);
-    m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigButtonNext();
     });
@@ -92,7 +92,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     m_pRandomMap = ObjectManager::createButton(tr("Random Map"));
     m_pRandomMap->setPosition(m_pButtonBack->getX() + m_pButtonBack->getWidth() + 20, Settings::getHeight() - 10 - m_pButtonNext->getHeight());
     addChild(m_pRandomMap);
-    m_pRandomMap->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_pRandomMap->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigRandomMap();
     });
@@ -101,7 +101,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     m_pMapFilter = ObjectManager::createButton(tr("Map filter"));
     m_pMapFilter->setPosition(m_pRandomMap->getX() + m_pRandomMap->getWidth() + 20, Settings::getHeight() - 10 - m_pButtonNext->getHeight());
     addChild(m_pMapFilter);
-    m_pMapFilter->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_pMapFilter->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigMapFilter();
     });
@@ -111,7 +111,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     m_pButtonLoadRules->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 10 - m_pButtonNext->getHeight());
     addChild(m_pButtonLoadRules);
     m_pButtonLoadRules->setVisible(false);
-    m_pButtonLoadRules->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_pButtonLoadRules->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowLoadRules();
     });
@@ -121,7 +121,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     m_pButtonSaveRules->setPosition(Settings::getWidth() / 2 - m_pButtonSaveRules->getWidth() - 10, Settings::getHeight() - 10 - m_pButtonNext->getHeight());
     addChild(m_pButtonSaveRules);
     m_pButtonSaveRules->setVisible(false);
-    m_pButtonSaveRules->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_pButtonSaveRules->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowSaveRules();
     });
@@ -131,7 +131,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     m_pButtonSaveMap->setPosition(m_pButtonBack->getX() + m_pButtonBack->getWidth() + 20, Settings::getHeight() - 10 - m_pButtonNext->getHeight());
     addChild(m_pButtonSaveMap);
     m_pButtonSaveMap->setVisible(false);
-    m_pButtonSaveMap->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_pButtonSaveMap->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowSaveMap();
     });
@@ -141,7 +141,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     m_pButtonStart = ObjectManager::createButton(tr("Start Game"), 150);
     m_pButtonStart->setPosition(Settings::getWidth() - 10 - m_pButtonStart->getWidth(), Settings::getHeight() - 10 - m_pButtonStart->getHeight());
     addChild(m_pButtonStart);
-    m_pButtonStart->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_pButtonStart->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigButtonStartGame();
     });

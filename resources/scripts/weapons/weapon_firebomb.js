@@ -29,7 +29,7 @@ var Constructor = function()
                         ["NEOTANK", 35],
 
                         // very heavy tanks
-                        ["MEGATANK", 20],
+                        ["MEGATANK", 10],
 
                         ["HOELLIUM", 20],
 

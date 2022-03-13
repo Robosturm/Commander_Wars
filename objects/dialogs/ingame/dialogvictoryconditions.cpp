@@ -37,7 +37,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigFinished();
     });
@@ -128,7 +128,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
         oxygine::spButton pButton = pObjectManager->createButton(tr("Keep Track"), 150);
         pButton->setPosition(10, y);
         pPanel->addItem(pButton);
-        pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pVictoryRule](oxygine::Event*)
         {
             emit sigShowPopup(pVictoryRule->getRuleID());
         });

@@ -87,7 +87,7 @@ DamageCalculator::DamageCalculator()
     oxygine::spButton pCalculateButton = pObjectManager->createButton(tr("Calculate"), 150);
     pCalculateButton->setPosition(getWidth() / 2 - pCalculateButton->getWidth() / 2, y + 5);
 
-    pCalculateButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pCalculateButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigCalculateDamage();
     });
@@ -109,7 +109,7 @@ void DamageCalculator::loadCoData(qint32 & x, qint32 & y, CosData & cosData,
     powers.append(dummy.getActionIcon(&m_map, CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_0));
     powers.append(dummy.getActionIcon(&m_map, CoreAI::ACTION_ACTIVATE_TAGPOWER));
 
-    auto coCreator = [=](QString id)
+    auto coCreator = [this, pCOSpriteManager](QString id)
     {
         oxygine::ResAnim* pAnim = nullptr;
         if (id.isEmpty())
@@ -126,7 +126,7 @@ void DamageCalculator::loadCoData(qint32 & x, qint32 & y, CosData & cosData,
         pSprite->setSize(pAnim->getSize());
         return pSprite;
     };
-    auto powerCreator = [=](QString id)
+    auto powerCreator = [this, pGameManager](QString id)
     {
         oxygine::spSprite pSprite = pGameManager->getIcon(&m_map, id);
         const oxygine::ResAnim* pAnim = pSprite->getResAnim();
@@ -168,7 +168,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
 {
     qint32 startX = x;
     Player* pPlayer = m_dropDownPlayer.get();
-    auto unitCreator = [=](QString id)
+    auto unitCreator = [this, pPlayer](QString id)
     {
         spUnit pSprite = spUnit::create(id, pPlayer, false, &m_map);
         pSprite->setOwner(nullptr);
@@ -179,7 +179,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     unitData.m_unit->setPosition(x, y);
     addItem(unitData.m_unit);
     x += unitData.m_unit->getWidth() + xAdvance;
-    auto terrainCreator = [=](QString id)
+    auto terrainCreator = [this, buildingIds](QString id)
     {
         QString terrainId = GameMap::PLAINS;
         bool isBuilding = buildingIds.contains(id);

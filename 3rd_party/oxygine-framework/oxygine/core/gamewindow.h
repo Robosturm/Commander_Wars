@@ -177,5 +177,6 @@ namespace oxygine
         bool m_shuttingDown{false};
         bool m_noUi{false};
         bool m_launched{false};
+        qint32 m_repeatedFramesDropped{0};
     };
 }

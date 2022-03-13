@@ -49,23 +49,15 @@ bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & sound
         soundItem->setVolume(sound);
         soundItem->setLoopCount(loops);
         soundItem->setMuted(false);
+        soundCache->sound[i] = soundItem;
         auto* pSoundCache = soundCache.get();
         // start play
         if (delay > 0)
         {
             soundCache->timer[i]->start(delay);
-            soundCache->sound[i] = soundItem;
-            connect(soundCache->timer[i].get(), &QTimer::timeout, soundItem, [=]()
+            connect(soundCache->timer[i].get(), &QTimer::timeout, soundItem, [this, stopOldestSound, pSoundCache, i]()
             {
-                CONSOLE_PRINT("Starting delayed sound", Console::eDEBUG);
-                if (stopOldestSound)
-                {
-                    AudioThread::stopOldestSound(pSoundCache);
-                }
-                if (pSoundCache->sound[i] != nullptr)
-                {
-                    pSoundCache->sound[i]->play();
-                }
+                emit sigPlayDelayedSound(pSoundCache, i, stopOldestSound);
             });
         }
         else
@@ -74,19 +66,11 @@ bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & sound
             {
                 AudioThread::stopOldestSound(pSoundCache);
             }
-            soundCache->sound[i] = soundItem;
             soundItem->play();
         }
-        connect(soundCache->sound[i], &QSoundEffect::playingChanged, this, [=]()
+        connect(soundCache->sound[i], &QSoundEffect::playingChanged, this, [this, pSoundCache, i]()
         {
-            if (pSoundCache->sound[i] != nullptr &&
-                !pSoundCache->sound[i]->isPlaying())
-            {
-                CONSOLE_PRINT("Stopping sound on playing changed.", Console::eDEBUG);
-                pSoundCache->sound[i]->stop();
-                pSoundCache->sound[i]->deleteLater();
-                pSoundCache->sound[i] = nullptr;
-            }
+            emit sigDeleteSound(pSoundCache, i);
         }, Qt::QueuedConnection);
         started = true;
         soundCache->nextSoundToUse = i + 1;
@@ -106,4 +90,30 @@ void AudioThread::stopSound(SoundData* soundData, qint32 soundIndex)
         soundData->sound[soundIndex] = nullptr;
     }
 }
+
+void AudioThread::playDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound)
+{
+    CONSOLE_PRINT("Starting delayed sound", Console::eDEBUG);
+    if (stopOldestSound)
+    {
+        AudioThread::stopOldestSound(soundData);
+    }
+    if (soundData->sound[soundIndex] != nullptr)
+    {
+        soundData->sound[soundIndex]->play();
+    }
+}
+
+void AudioThread::deleteSound(SoundData* soundData, qint32 soundIndex)
+{
+    if (soundData->sound[soundIndex] != nullptr &&
+        !soundData->sound[soundIndex]->isPlaying())
+    {
+        CONSOLE_PRINT("Stopping sound on playing changed.", Console::eDEBUG);
+        soundData->sound[soundIndex]->stop();
+        soundData->sound[soundIndex]->deleteLater();
+        soundData->sound[soundIndex] = nullptr;
+    }
+}
 #endif
+

@@ -1,13 +1,13 @@
 #include "coreengine/filesupport.h"
 #include "coreengine/settings.h"
+#include "coreengine/globalutils.h"
 
-#include <QCryptographicHash>
 #include <QDirIterator>
 #include <QCoreApplication>
 
 QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & folders)
 {
-    QCryptographicHash myHash(QCryptographicHash::Sha3_512);
+    QCryptographicHash myHash(QCryptographicHash::Sha256);
     QStringList fullList;
     for (const auto & folder : qAsConst(folders))
     {
@@ -16,25 +16,47 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
     }
     for (const auto & folder : qAsConst(fullList))
     {
-        QString path =  folder;
-        QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
-        while (dirIter.hasNext())
-        {
-            dirIter.next();
-            QFile file(dirIter.filePath());
-            file.open(QIODevice::ReadOnly | QIODevice::Truncate);
-            myHash.addData(&file);
-            file.close();
-        }
+        addHash(myHash, folder, filter);
     }
     return myHash.result();
+}
+
+void Filesupport::addHash(QCryptographicHash & hash, const QString & folder, const QStringList & filter)
+{
+    QDir dir(folder);
+    auto list = dir.entryInfoList(filter, QDir::Files);
+    for (auto & item : list)
+    {
+        QString filePath = item.filePath();
+        CONSOLE_PRINT("Adding file: " + filePath + " to hash", Console::eDEBUG);
+        QFile file(filePath);
+
+        file.open(QIODevice::ReadOnly);
+        QTextStream stream;
+        while (!stream.atEnd())
+        {
+            hash.addData(file.readLine());
+        }
+        file.close();
+        if (Console::eDEBUG >= Console::getLogLevel())
+        {
+            QString hostString = GlobalUtils::getByteArrayString(hash.result());
+            CONSOLE_PRINT("Hash after file is: " + hostString, Console::eDEBUG);
+        }
+    }
+    list = dir.entryInfoList(QStringList(), QDir::Dirs | QDir::NoDotAndDotDot);
+    for (auto & item : list)
+    {
+        QString path = item.filePath();
+        addHash(hash, path, filter);
+    }
 }
 
 QByteArray Filesupport::getRuntimeHash(const QStringList & mods)
 {
     QStringList folders = mods;
     folders.append("/resources");
-    QStringList filter = {"*.js", "*.txt", "*.csv", "*.xml"};
+    QStringList filter = {"*.js", "*.csv"};
     return getHash(filter, folders);
 }
 

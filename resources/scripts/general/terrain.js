@@ -165,20 +165,23 @@ var TERRAIN =
     getTerrainAnimationId : function(terrain, map)
     {
         var id = "PLAINS";
-        var y = terrain.getY() - 1;
-        var x = terrain.getX();
-        if (map.onMap(x, y))
+        if (map !== null)
         {
-            var upTerrain = map.getTerrain(x, y);
-            id = upTerrain.getID();
-            if (id === "ZWELD_E_W" ||
-                id === "ZWELD_N_S")
+            var y = terrain.getY() - 1;
+            var x = terrain.getX();
+            if (map.onMap(x, y))
             {
-                id = "PIPELINE";
-            }
-            else if (upTerrain.getBuilding() !== null)
-            {
-                id = "BUILDING";
+                var upTerrain = map.getTerrain(x, y);
+                id = upTerrain.getID();
+                if (id === "ZWELD_E_W" ||
+                        id === "ZWELD_N_S")
+                {
+                    id = "PIPELINE";
+                }
+                else if (upTerrain.getBuilding() !== null)
+                {
+                    id = "BUILDING";
+                }
             }
         }
         return id;

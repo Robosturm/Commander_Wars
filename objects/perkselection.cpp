@@ -75,7 +75,7 @@ void PerkSelection::updatePerksView(CO* pCO)
             pCheckbox->setPosition(x, y + 5);
             pCheckbox->setTooltipText(description);
             pCheckbox->setChecked(m_perks.contains(id));
-            connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
+            connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, id](bool value)
             {
                 if (value)
                 {

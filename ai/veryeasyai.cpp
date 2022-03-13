@@ -1,4 +1,5 @@
 #include <QSettings>
+#include <QApplication>
 
 #include "ai/veryeasyai.h"
 #include "ai/islandmap.h"
@@ -57,6 +58,7 @@ VeryEasyAI::VeryEasyAI(GameMap* pMap)
 
 void VeryEasyAI::process()
 {
+    AI_CONSOLE_PRINT("NormalAi::process()", Console::eDEBUG);
     spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
     pBuildings->randomize();
     spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
@@ -152,13 +154,15 @@ void VeryEasyAI::finishTurn()
 
 bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
 {
-    CONSOLE_PRINT("VeryEasyAI::captureBuildings()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("VeryEasyAI::captureBuildings()", Console::eDEBUG);
     qint32 cost = 0;
     QPoint rocketTarget = m_pPlayer->getSiloRockettarget(2, 3, cost);
     bool fireSilos = (cost >= m_minSiloDamage);
-    for (qint32 i = 0; i < pUnits->size(); i++)
+
+    for (auto & spUnit : pUnits->getVector())
     {
-        Unit* pUnit = pUnits->at(i);
+        Unit* pUnit = spUnit.get();
+        QApplication::processEvents();
         if (!pUnit->getHasMoved())
         {
             if (pUnit->getActionList().contains(ACTION_CAPTURE))
@@ -179,17 +183,17 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     UnitPathFindingSystem pfs(m_pMap, pUnit);
                     pfs.explore();
-                    QVector<QPoint> targets = pfs.getAllNodePoints();
-                    for (qint32 i2 = 0; i2 < targets.size(); i2++)
+                    auto targets = pfs.getAllNodePointsFast();
+                    for (auto & target : targets)
                     {
-                        if (pUnit->Unit::getX() == targets[i2].x() &&
-                            pUnit->Unit::getY() == targets[i2].y())
+                        if (pUnit->Unit::getX() == target.x() &&
+                            pUnit->Unit::getY() == target.y())
                         {
                             pAction->setMovepath(QVector<QPoint>(), 0);
                         }
                         else
                         {
-                            QVector<QPoint> path = pfs.getPath(targets[i2].x(), targets[i2].y());
+                            auto path = pfs.getPathFast(target.x(), target.y());
                             pAction->setMovepath(path, pfs.getCosts(path));
                         }
                         if (pAction->canBePerformed())
@@ -202,16 +206,16 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
                     pAction->setActionID(ACTION_MISSILE);
                     if (fireSilos)
                     {
-                        for (qint32 i2 = 0; i2 < targets.size(); i2++)
+                        for (auto & target : targets)
                         {
-                            if (pUnit->Unit::getX() == targets[i2].x() &&
-                                pUnit->Unit::getY() == targets[i2].y())
+                            if (pUnit->Unit::getX() == target.x() &&
+                                pUnit->Unit::getY() == target.y())
                             {
                                 pAction->setMovepath(QVector<QPoint>(), 0);
                             }
                             else
                             {
-                                QVector<QPoint> path = pfs.getPath(targets[i2].x(), targets[i2].y());
+                                auto path = pfs.getPathFast(target.x(), target.y());
                                 pAction->setMovepath(path, pfs.getCosts(path));
                             }
                             if (pAction->canBePerformed())
@@ -232,15 +236,15 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
 
 bool VeryEasyAI::fireWithIndirectUnits(spQmlVectorUnit & pUnits)
 {
-    CONSOLE_PRINT("VeryEasyAI::fireWithIndirectUnits()", Console::eDEBUG);
-    for (qint32 i = 0; i < pUnits->size(); i++)
+    AI_CONSOLE_PRINT("VeryEasyAI::fireWithIndirectUnits()", Console::eDEBUG);
+    for (auto & pUnit : pUnits->getVector())
     {
-        Unit* pUnit = pUnits->at(i);
+        QApplication::processEvents();
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() > 1 &&
             (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0))
         {
-            if (attack(pUnit))
+            if (attack(pUnit.get()))
             {
                 return true;
             }
@@ -251,15 +255,15 @@ bool VeryEasyAI::fireWithIndirectUnits(spQmlVectorUnit & pUnits)
 
 bool VeryEasyAI::fireWithDirectUnits(spQmlVectorUnit & pUnits)
 {
-    CONSOLE_PRINT("VeryEasyAI::fireWithDirectUnits()", Console::eDEBUG);
-    for (qint32 i = 0; i < pUnits->size(); i++)
+    AI_CONSOLE_PRINT("VeryEasyAI::fireWithDirectUnits()", Console::eDEBUG);
+    for (auto & pUnit : pUnits->getVector())
     {
-        Unit* pUnit = pUnits->at(i);
+        QApplication::processEvents();
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() == 1 &&
             (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0))
         {
-            if (attack(pUnit))
+            if (attack(pUnit.get()))
             {
                 return true;
             }
@@ -270,7 +274,7 @@ bool VeryEasyAI::fireWithDirectUnits(spQmlVectorUnit & pUnits)
 
 bool VeryEasyAI::attack(Unit* pUnit)
 {
-    CONSOLE_PRINT("VeryEasyAI::attack", Console::eDEBUG);
+    AI_CONSOLE_PRINT("VeryEasyAI::attack", Console::eDEBUG);
     if (pUnit->hasAction(CoreAI::ACTION_FIRE))
     {
         // try to perform an attack
@@ -278,8 +282,8 @@ bool VeryEasyAI::attack(Unit* pUnit)
         pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
         UnitPathFindingSystem pfs(m_pMap, pUnit);
         pfs.explore();
-        QVector<QVector3D> ret;
-        QVector<QVector3D> moveTargetFields;
+        std::vector<QVector3D> ret;
+        std::vector<QVector3D> moveTargetFields;
         CoreAI::getBestTarget(pUnit, pAction, &pfs, ret, moveTargetFields);
         float minDamage = -pUnit->getCoUnitValue() / m_ownUnitDamageDivider;
         if (minDamage > m_minDamage)
@@ -294,7 +298,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
             if (static_cast<qint32>(moveTargetFields[selection].x()) != point.x() ||
                 static_cast<qint32>(moveTargetFields[selection].y()) != point.y())
             {
-                QVector<QPoint> path = pfs.getPath(static_cast<qint32>(moveTargetFields[selection].x()),
+                auto path = pfs.getPathFast(static_cast<qint32>(moveTargetFields[selection].x()),
                                                    static_cast<qint32>(moveTargetFields[selection].y()));
                 pAction->setMovepath(path, pfs.getCosts(path));
             }
@@ -323,20 +327,21 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
                            spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                            bool supportUnits )
 {
-    CONSOLE_PRINT("VeryEasyAI::moveUnits()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("VeryEasyAI::moveUnits()", Console::eDEBUG);
     if (m_aiStep < AISteps::moveToTargets)
     {
         createMovementMap(pBuildings, pEnemyBuildings);
     }
     m_aiStep = AISteps::moveToTargets;
-    for (qint32 i = 0; i < pUnits->size(); i++)
+    for (auto & spUnit : pUnits->getVector())
     {
-        Unit* pUnit = pUnits->at(i);
+        Unit* pUnit = spUnit.get();
+        QApplication::processEvents();
         // can we use the unit?
         if (!pUnit->getHasMoved())
         {
-            QVector<QVector3D> targets;
-            QVector<QVector3D> transporterTargets;
+            std::vector<QVector3D> targets;
+            std::vector<QVector3D> transporterTargets;
             spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
             QStringList actions = pUnit->getActionList();
             // find possible targets for this unit
@@ -347,7 +352,7 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
             if (targets.size() > 0)
             {
                 appendCaptureTransporterTargets(pUnit, pUnits, pEnemyBuildings, transporterTargets);
-                targets.append(transporterTargets);
+                targets.insert(targets.cend(), transporterTargets.cbegin(), transporterTargets.cend());
             }
             appendAttackTargets(pUnit, pEnemyUnits, targets);
             appendAttackTargetsIgnoreOwnUnits(pUnit, pEnemyUnits, targets);
@@ -383,11 +388,12 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
 
 bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
-    CONSOLE_PRINT("VeryEasyAI::moveTransporters()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("VeryEasyAI::moveTransporters()", Console::eDEBUG);
     m_aiStep = AISteps::moveTransporters;
-    for (qint32 i = 0; i < pUnits->size(); i++)
+    for (auto & spUnit : pUnits->getVector())
     {
-        Unit* pUnit = pUnits->at(i);
+        QApplication::processEvents();
+        Unit* pUnit = spUnit.get();
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getLoadingPlace() > 0)
         {
@@ -398,13 +404,12 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
                 QStringList actions = pUnit->getActionList();
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 // find possible targets for this unit
-                QVector<QVector3D> targets;
+                std::vector<QVector3D> targets;
                 // can one of our units can capture buildings?
                 bool captureFound = false;
                 bool attackFound = false;
-                for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
+                for (auto & pLoaded : pUnit->getLoadedUnits())
                 {
-                    Unit* pLoaded = pUnit->getLoadedUnit(i);
                     QStringList actions = pLoaded->getActionList();
                     if (!captureFound && actions.contains(ACTION_CAPTURE))
                     {
@@ -442,8 +447,8 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
                 // find possible targets for this unit
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 // we need to move to a loading place
-                QVector<QVector3D> targets;
-                QVector<QVector3D> transporterTargets;
+                std::vector<QVector3D> targets;
+                std::vector<QVector3D> transporterTargets;
                 appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, false, targets);
                 if (targets.size() == 0)
                 {
@@ -462,27 +467,27 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
 
 bool VeryEasyAI::loadUnits(spQmlVectorUnit & pUnits)
 {
-    CONSOLE_PRINT("VeryEasyAI::loadUnits()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("VeryEasyAI::loadUnits()", Console::eDEBUG);
     m_aiStep = AISteps::loadUnits;
-    for (qint32 i = 0; i < pUnits->size(); i++)
+    for (auto & pUnit : pUnits->getVector())
     {
-        Unit* pUnit = pUnits->at(i);
+        QApplication::processEvents();
         // can we use the unit?
         if (!pUnit->getHasMoved())
         {
-            QVector<QVector3D> targets;
-            QVector<QVector3D> transporterTargets;
+            std::vector<QVector3D> targets;
+            std::vector<QVector3D> transporterTargets;
             spGameAction pAction = spGameAction::create(ACTION_LOAD, m_pMap);
             QStringList actions = pUnit->getActionList();
             // find possible targets for this unit
             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
 
             // find some cool targets
-            appendTransporterTargets(pUnit, pUnits, transporterTargets);
-            targets.append(transporterTargets);
+            appendTransporterTargets(pUnit.get(), pUnits, transporterTargets);
+            targets.insert(targets.end(), transporterTargets.begin(), transporterTargets.end());
             // till now the selected targets are a little bit lame cause we only search for reachable transporters
             // but not for reachable loading places.
-            if (moveUnit(pAction, pUnit, actions, targets, transporterTargets))
+            if (moveUnit(pAction, pUnit.get(), actions, targets, transporterTargets))
             {
                 return true;
             }
@@ -492,9 +497,9 @@ bool VeryEasyAI::loadUnits(spQmlVectorUnit & pUnits)
 }
 
 bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& actions,
-                          QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets, bool unload)
+                          std::vector<QVector3D>& targets, std::vector<QVector3D>& transporterTargets, bool unload)
 {
-    CONSOLE_PRINT("VeryEasyAI::moveUnit()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("VeryEasyAI::moveUnit()", Console::eDEBUG);
     TargetedUnitPathFindingSystem pfs(m_pMap, pUnit, targets, &m_MoveCostMap);
     pfs.explore();
     qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -508,7 +513,7 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
         {
             if (unload)
             {
-                QVector<QPoint> path = turnPfs.getPath(targetFields.x(), targetFields.y());
+                auto path = turnPfs.getPathFast(targetFields.x(), targetFields.y());
                 pAction->setMovepath(path, turnPfs.getCosts(path));
                 pAction->setActionID(ACTION_UNLOAD);
                 // this isn't ideal since we unload the units in a random order and not the best fitting order
@@ -546,7 +551,7 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
             }
             else
             {
-                QVector<QPoint> path = turnPfs.getPath(targetFields.x(), targetFields.y());
+                auto path = turnPfs.getPathFast(targetFields.x(), targetFields.y());
                 pAction->setMovepath(path, turnPfs.getCosts(path));
                 pAction->setActionID(ACTION_LOAD);
                 if (pAction->canBePerformed())
@@ -558,7 +563,7 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
         }
         else
         {
-            QVector<QPoint> path = turnPfs.getClosestReachableMovePath(targetFields);
+            auto path = turnPfs.getClosestReachableMovePath(targetFields);
             pAction->setMovepath(path, turnPfs.getCosts(path));
             for (const auto & action : actions)
             {
@@ -618,15 +623,14 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
 
 bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits)
 {
-    CONSOLE_PRINT("VeryEasyAI::buildUnits()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("VeryEasyAI::buildUnits()", Console::eDEBUG);
     
     if (m_pMap != nullptr)
     {
-        QVector<float> data;
+        std::vector<float> data;
         qint32 productionBuildings = 0;
-        for (qint32 i = 0; i < pBuildings->size(); i++)
+        for (auto & pBuilding : pBuildings->getVector())
         {
-            Building* pBuilding = pBuildings->at(i);
             if (pBuilding->isProductionBuilding() &&
                 m_pMap->getTerrain(pBuilding->Building::getX(), pBuilding->Building::getY())->getUnit() == nullptr)
             {
@@ -637,9 +641,9 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
         qint32 indirectUnits = 0;
         qint32 directUnits = 0;
         qint32 transporterUnits = 0;
-        for (qint32 i = 0; i < pUnits->size(); i++)
+        for (auto & pUnit : pUnits->getVector())
         {
-            Unit* pUnit = pUnits->at(i);
+            QApplication::processEvents();
             if (pUnit->getActionList().contains(ACTION_CAPTURE))
             {
                 infantryUnits++;
@@ -659,28 +663,28 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
                 transporterUnits++;
             }
         }
-        data.append(m_pPlayer->getFunds());
-        data.append(m_pPlayer->getFunds() / static_cast<float>(productionBuildings));
-        data.append(pUnits->size());
+        data.push_back(m_pPlayer->getFunds());
+        data.push_back(m_pPlayer->getFunds() / static_cast<float>(productionBuildings));
+        data.push_back(pUnits->size());
         if (indirectUnits > 0)
         {
-            data.append(directUnits / static_cast<float>(indirectUnits));
+            data.push_back(directUnits / static_cast<float>(indirectUnits));
         }
         else
         {
-            data.append(1.0f);
+            data.push_back(1.0f);
         }
-        data.append(infantryUnits);
-        data.append(transporterUnits);
+        data.push_back(infantryUnits);
+        data.push_back(transporterUnits);
 
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-        for (qint32 i2 = 0; i2 < m_maxTreeDecisionTries; i2++)
+        for (qint32 i = 0; i < m_maxTreeDecisionTries; i++)
         {
-            if (i2 == 0 || m_pPlayer->getFunds() >= m_minAllBuildingFunds)
+            QApplication::processEvents();
+            if (i == 0 || m_pPlayer->getFunds() >= m_minAllBuildingFunds)
             {
-                for (qint32 i = 0; i < pBuildings->size(); i++)
+                for (auto & pBuilding : pBuildings->getVector())
                 {
-                    Building* pBuilding = pBuildings->at(i);
                     if (pBuilding->isProductionBuilding() &&
                         pBuilding->getTerrain()->getUnit() == nullptr)
                     {

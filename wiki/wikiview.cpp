@@ -37,7 +37,7 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
     oxygine::spButton pButton = ObjectManager::createButton(tr("Search"));
     addChild(pButton);
     pButton->setPosition(m_SearchString->getWidth() + m_SearchString->getX() + 10, y);
-    pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    pButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigSearch(false);
     });
@@ -80,7 +80,7 @@ void WikiView::search(bool onlyTag)
     m_MainPanel->clearContent();
     QVector<WikiDatabase::PageData> items = WikiDatabase::getInstance()->getEntries(m_SearchString->getCurrentText(), onlyTag);
     qint32 itemCount = 0;
-    for (qint32 i = 0; i < items.size(); i++)
+    for (auto & wikiItem : items)
     {
         ObjectManager* pObjectManager = ObjectManager::getInstance();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
@@ -98,7 +98,7 @@ void WikiView::search(bool onlyTag)
         textField->setX(13);
         textField->setY(5);
         // loop through all entries :)
-        QString item = items[i].m_name;
+        QString item = wikiItem.m_name;
         textField->setHtmlText(item);
         pBox->addChild(textField);
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -113,9 +113,9 @@ void WikiView::search(bool onlyTag)
             pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
         });
         pBox->setPosition(0, itemCount * 40);
-        pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, wikiItem](oxygine::Event*)
         {
-            emit sigShowWikipage(items[i]);
+            emit sigShowWikipage(wikiItem);
         });
         m_MainPanel->addItem(pBox);
         itemCount++;

@@ -17,7 +17,11 @@
 #include <QInputDevice>
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
-const QString Settings::m_settingFile = "Commander_Wars.ini";
+#ifdef USEAPPCONFIGPATH
+    const QString Settings::m_settingFile = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + "/Commander_Wars.ini";
+#else
+    const QString Settings::m_settingFile = "Commander_Wars.ini";
+#endif
 float Settings::m_mouseSensitivity   = -0.75f;
 qint32 Settings::m_x                 = 0;
 qint32 Settings::m_y                 = 0;
@@ -178,6 +182,10 @@ Settings::Settings()
         defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
         defaultCoCount = 1;
     }
+#ifdef USEAPPCONFIGPATH
+    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+#endif
+
     auto devices = QInputDevice::devices();
     bool hasTouch = false;
     for (const auto & device: qAsConst(devices))
@@ -311,7 +319,7 @@ Settings::Settings()
         new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&10000&20000;::1&50000&65535", "", ""},
         // auto saving
         new Value<std::chrono::seconds>{"Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)},
-        new Value<qint32>{"Autosaving", "AutoSavingCycle", &m_autoSavingCycle, 3, 1, 100},
+        new Value<qint32>{"Autosaving", "AutoSavingCycle", &m_autoSavingCycle, 3, 0, 100},
         // mods
         new Value<QStringList>{"Mods", "Mods", &m_activeMods, QStringList(), QStringList(), QStringList()},
         // logging

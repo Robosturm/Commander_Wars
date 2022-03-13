@@ -68,7 +68,7 @@ bool Question::matches(float value)
 	return false;
 }
 
-bool Question::matches(QVector<float> &rData)
+bool Question::matches(std::vector<float> &rData)
 {
 	return matches(rData[m_Index]);
 }

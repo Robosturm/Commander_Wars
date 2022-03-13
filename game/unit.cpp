@@ -2041,10 +2041,6 @@ void Unit::setFuel(const qint32 &value)
     {
         m_fuel = value;
     }
-    if (m_fuel < 0 && m_maxFuel >= 0)
-    {
-        m_fuel = 0;
-    }
     if (m_maxFuel > 0 && static_cast<float>(m_fuel) / static_cast<float>(m_maxFuel) <= Settings::getSupplyWarning())
     {
         loadIcon("fuel", GameMap::getImageSize() / 2, 0);
@@ -2506,16 +2502,16 @@ void Unit::setHasMoved(bool value)
     // change unit color
     if (m_Moved)
     {
-        for(qint32 i = 0; i < m_pUnitWaitSprites.size(); i++)
+        for(auto & sprite : m_pUnitWaitSprites)
         {
-            m_pUnitWaitSprites[i]->setVisible(true);
+            sprite->setVisible(true);
         }
     }
     else
     {
-        for(qint32 i = 0; i < m_pUnitWaitSprites.size(); i++)
+        for(auto & sprite : m_pUnitWaitSprites)
         {
-            m_pUnitWaitSprites[i]->setVisible(false);
+            sprite->setVisible(false);
         }
     }
 }

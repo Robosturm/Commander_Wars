@@ -88,7 +88,7 @@ void ScriptConditionVictory::showEditCondition(spScriptEditor pScriptEditor)
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(team + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [=](qreal value)
+            [this](qreal value)
     {
         setTeam(static_cast<qint32>(value) - 1);
     });

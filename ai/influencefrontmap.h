@@ -34,7 +34,7 @@ public:
         QVector<qint32> playerValues;
         GameMap* m_pMap{nullptr};
     };
-    explicit InfluenceFrontMap(GameMap* pMap, const QVector<spIslandMap> & islands);
+    explicit InfluenceFrontMap(GameMap* pMap, const std::vector<spIslandMap> & islands);
     virtual ~InfluenceFrontMap() = default;
     void addBuildingInfluence();
     void addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPfs, qint32 movePoints);
@@ -84,7 +84,7 @@ private:
      * @param unitId
      * @param unitIdToIsland
      */
-    qint32 getIslandFromUnitId(const QString & unitId, QMap<QString, qint32> & unitIdToIsland);
+    qint32 getIslandFromUnitId(const QString & unitId, std::map<QString, qint32> & unitIdToIsland);
     /**
      * @brief findFrontLineTiles
      */
@@ -104,18 +104,18 @@ private:
      * @param x
      * @param y
      */
-    void searchFrontLine(QmlVectorPoint* neighbours, InfluenceInfo & info, qint32 x, qint32 y, QVector<QPoint> & frontline);
+    void searchFrontLine(QmlVectorPoint* neighbours, InfluenceInfo & info, qint32 x, qint32 y, std::vector<QPoint> & frontline);
     /**
      * @brief updateHighestInfluence
      */
     void updateHighestInfluence();
 private:
 
-    QVector<QVector<InfluenceInfo>> m_InfluenceMap;
-    const QVector<spIslandMap> & m_islands;
-    QVector<QVector<QPoint>> m_frontLines;
+    std::vector<std::vector<InfluenceInfo>> m_InfluenceMap;
+    const std::vector<spIslandMap> & m_islands;
+    std::vector<std::vector<QPoint>> m_frontLines;
     Player* m_pOwner;
-    QVector<oxygine::spActor> m_info;
+    std::vector<oxygine::spActor> m_info;
     qint32 m_totalHighestInfluence{0};
     GameMap* m_pMap{nullptr};
 };

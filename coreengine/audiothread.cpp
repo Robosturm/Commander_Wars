@@ -38,6 +38,8 @@ AudioThread::AudioThread(bool noAudio)
         connect(this, &AudioThread::sigStopAllSounds,     this, &AudioThread::SlotStopAllSounds, Qt::QueuedConnection);
         connect(this, &AudioThread::sigChangeAudioDevice, this, &AudioThread::SlotChangeAudioDevice, Qt::BlockingQueuedConnection);
         connect(this, &AudioThread::sigLoadNextAudioFile, this, &AudioThread::loadNextAudioFile, Qt::QueuedConnection);
+        connect(this, &AudioThread::sigDeleteSound,       this, &AudioThread::deleteSound, Qt::QueuedConnection);
+        connect(this, &AudioThread::sigPlayDelayedSound,  this, &AudioThread::playDelayedSound, Qt::QueuedConnection);
     }
 }
 
@@ -56,7 +58,7 @@ AudioThread::~AudioThread()
             {
                 cache->timer[i]->stop();
                 cache->sound[i]->stop();
-                cache->sound[i]->deleteLater();
+                delete cache->sound[i];
                 cache->sound[i] = nullptr;
                 cache->timer[i].reset();
             }
@@ -78,7 +80,7 @@ void AudioThread::initAudio()
         SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getMusicVolume())));
         m_positionChangedTimer.setInterval(1);
         m_positionChangedTimer.setSingleShot(false);
-        connect(&m_positionChangedTimer, &QTimer::timeout, this, [=]()
+        connect(&m_positionChangedTimer, &QTimer::timeout, this, [this]()
         {
             SlotCheckMusicEnded(m_player->m_player.position());
         });

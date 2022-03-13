@@ -88,7 +88,7 @@ var Constructor = function()
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         return "";
     };

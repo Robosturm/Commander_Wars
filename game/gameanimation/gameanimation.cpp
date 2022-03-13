@@ -241,7 +241,7 @@ void GameAnimation::addBox(QString spriteID, float offsetX, float offsetY, qint3
     if(!m_finishQueued)
     {
         m_finishQueued = true;
-        queuedAnim->setDoneCallback([=](oxygine::Event *)->void
+        queuedAnim->setDoneCallback([this](oxygine::Event *)->void
         {
             emitFinished();
         });
@@ -279,7 +279,7 @@ void GameAnimation::loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, 
         if(!m_finishQueued)
         {
             m_finishQueued = true;
-            queuedAnim->setDoneCallback([=](oxygine::Event *)->void
+            queuedAnim->setDoneCallback([this](oxygine::Event *)->void
             {
                 emitFinished();
             });
@@ -319,7 +319,7 @@ void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float
     if(!m_finishQueued)
     {
         m_finishQueued = true;
-        queuedAnim->setDoneCallback([=](oxygine::Event *)->void
+        queuedAnim->setDoneCallback([this](oxygine::Event *)->void
         {
             emitFinished();
         });
@@ -454,7 +454,7 @@ void GameAnimation::addTweenWait(qint32 duration)
     if(!m_finishQueued)
     {
         m_finishQueued = true;
-        tween1->setDoneCallback([=](oxygine::Event *)->void
+        tween1->setDoneCallback([this](oxygine::Event *)->void
         {
             emitFinished();
         });

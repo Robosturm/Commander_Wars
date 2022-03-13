@@ -67,7 +67,7 @@ void ScriptEventVictoryInfo::showEditEvent(spScriptEditor pScriptEditor)
     pTextBox->setCurrentText(info);
     pTextBox->setPosition(width, 30);
     pTextBox->setTooltipText("Additional info text shown in the victory info screen. Replaces the last set text with this one.");
-    connect(pTextBox.get(), &Textbox::sigTextChanged, this, [=](QString value)
+    connect(pTextBox.get(), &Textbox::sigTextChanged, this, [this](QString value)
     {
         setInfo(value);
     });

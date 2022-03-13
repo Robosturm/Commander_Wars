@@ -3,25 +3,35 @@ on: [push]
 env:
   BUILD_TYPE: Release
   QT_Version: '6.2.3'
+  NDK_Version: r21e
   
 jobs:
   install:
     name: Android Build
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [windows-latest]
         include:
-          - os: ubuntu-latest
+          - os: windows-latest
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
             target: 'android'
-            target-api: ['29']
-            build-tools: ['30.0.2']
+            target-api-level: '27'
+            abi : "armeabi-v7a"
         
     runs-on: ${{matrix.os}}
+    defaults:
+      run:
+        shell: bash
         
     steps:
     - uses: actions/checkout@v2
+          
+    - uses: nttld/setup-ndk@v1
+      id: setup-ndk
+      with:
+        ndk-version: ${{env.NDK_Version}}
+        add-to-path: false
           
     - name: Install Qt
       uses: jurplel/install-qt-action@v2.14.0
@@ -34,31 +44,28 @@ jobs:
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
           
-    - name: Configure
-      run: |      
-        export JAVA_HOME=$JAVA_HOME_8_X64
-        export ANDROID_SDK=$ANDROID_SDK_ROOT
-        export ANDROID_NDK=$ANDROID_SDK/ndk-bundle
-        echo $ANDROID_SDK
-        echo $ANDROID_NDK
-        echo $JAVA_HOME
       
     - name: Configure CMake
       run:  |
         cmake \
-        -B '${{github.workspace}}/build' \
+        -S "${{github.workspace}}" \
+        -B "${{github.workspace}}/build" \
+        "-GNMake Makefiles JOM" \
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
-        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \
-        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
-        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
-        -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
-        -DANDROID_ABI=${{ matrix.abi }} \
+        "-DQT_QMAKE_EXECUTABLE=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/${{matrix.COMPILER_VERSION}}/bin/qmake.bat" \        
+        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/" \
+        -DCMAKE_C_COMPILER='${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe' \
+        -DCMAKE_CXX_COMPILER='${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe' \
         -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api }} \
-        -DANDROID_STL=c++_shared \
-        -DANDROID_TOOLCHAIN=clang \
-        -DANDROID_BUILDTOOLS_REVISION=${{ matrix.build-tools }} \
-        -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \
-        
+        -DANDROID_NDK='${{ steps.setup-ndk.outputs.ndk-path }}' \
+        -DCMAKE_TOOLCHAIN_FILE='${{ steps.setup-ndk.outputs.ndk-path }}/build/cmake/android.toolchain.cmake' \
+        -DANDROID_ABI=${{ matrix.abi }} \
+        -DANDROID_STL=c++_shared \        
+        "-DCMAKE_FIND_ROOT_PATH=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/${{matrix.COMPILER_VERSION}}" \
+        "-DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL:BOOL=ON" \
+        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \
+        -DQt6_DIR='${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/'
+
     - name: Build
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j16

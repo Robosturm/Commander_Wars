@@ -501,12 +501,12 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pDefaultRuleFile->setTooltipText(tr("The relative path from the exe to the default ruleset."));
     m_pDefaultRuleFile->setPosition(sliderOffset - 130, textField->getY());
     m_pDefaultRuleFile->setCurrentText(Settings::getDefaultRuleset());
-    connect(m_pDefaultRuleFile.get(), &Textbox::sigTextChanged, this, [=](QString text)
+    connect(m_pDefaultRuleFile.get(), &Textbox::sigTextChanged, this, [](QString text)
     {
         Settings::setDefaultRuleset(text);
     });
     m_pOptions->addItem(m_pDefaultRuleFile);
-    pScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigShowSelectDefaultRules();
     });

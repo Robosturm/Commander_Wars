@@ -4,6 +4,7 @@
 
 #include "coreengine/globalutils.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 NeuralNetwork::NeuralNetwork(double maxWeight)
     : m_maxWeight(maxWeight)
@@ -45,7 +46,7 @@ void NeuralNetwork::clean()
     }
 }
 
-void NeuralNetwork::setInput(const QVector<double> & in)
+void NeuralNetwork::setInput(const std::vector<double> & in)
 {
 	clean();
     for(qint32 i = 0; i < in.size(); ++i)
@@ -63,7 +64,7 @@ void NeuralNetwork::trigger()
     }
 }
 
-QVector<double> NeuralNetwork::output()
+std::vector<double> NeuralNetwork::output()
 {
     auto ret = (m_layers.back())->output();
     if (m_disabled)
@@ -143,7 +144,7 @@ QString NeuralNetwork::toString()
     }
     return s;
 }
-QVector<double> NeuralNetwork::predict(const QVector<double>& in)
+std::vector<double> NeuralNetwork::predict(const std::vector<double>& in)
 {
 	setInput(in);
 	trigger();

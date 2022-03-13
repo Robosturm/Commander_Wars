@@ -46,7 +46,7 @@ DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigFinished();
     });
@@ -102,7 +102,7 @@ void DialogModifyUnit::updateData()
     pTexbox->setPosition(sliderOffset - 160, y);
     pTexbox->setCurrentText(m_pUnit->getName());
     pTexbox->setTooltipText(tr("Selects the custom name of the unit shown instead of the actual unit name. An empty name equals the actual unit name"));
-    connect(pTexbox.get(), &Textbox::sigTextChanged, [=](QString value)
+    connect(pTexbox.get(), &Textbox::sigTextChanged, [this](QString value)
     {
         m_pUnit->setCustomName(value);
     });
@@ -118,7 +118,7 @@ void DialogModifyUnit::updateData()
     pSlider->setTooltipText(tr("Selects the HP of the current unit. This is immediatly applied."));
     pSlider->setPosition(sliderOffset - 160, y);
     pSlider->setCurrentValue(m_pUnit->getHpRounded());
-    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    connect(pSlider.get(), &Slider::sliderValueChanged, [this](qint32 value)
     {
         m_pUnit->setHp(value);
     });
@@ -135,7 +135,7 @@ void DialogModifyUnit::updateData()
         pSlider->setTooltipText(tr("Selects the Fuel of the current unit. This is immediatly applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getFuel());
-        connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+        connect(pSlider.get(), &Slider::sliderValueChanged, [this](qint32 value)
         {
             m_pUnit->setFuel(value);
             if (value == m_pUnit->getMaxFuel())
@@ -161,7 +161,7 @@ void DialogModifyUnit::updateData()
         pSlider->setTooltipText(tr("Selects the Ammo 1 of the current unit. This is immediatly applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo1());
-        connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+        connect(pSlider.get(), &Slider::sliderValueChanged, [this](qint32 value)
         {
             m_pUnit->setAmmo1(value);
             if (value == m_pUnit->getMaxAmmo1())
@@ -187,7 +187,7 @@ void DialogModifyUnit::updateData()
         pSlider->setTooltipText(tr("Selects the Ammo 2 of the current unit. This is immediatly applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo2());
-        connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+        connect(pSlider.get(), &Slider::sliderValueChanged, [this](qint32 value)
         {
             m_pUnit->setAmmo2(value);
             if (value == m_pUnit->getMaxAmmo2())
@@ -218,7 +218,7 @@ void DialogModifyUnit::updateData()
     pDropdownmenu->setTooltipText(tr("Selects the Owner of the current unit. This is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(m_pUnit->getOwner()->getPlayerID());
-    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
+    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 value)
     {
         m_pUnit->setOwner(m_pMap->getPlayer(value));
 
@@ -243,7 +243,7 @@ void DialogModifyUnit::updateData()
                                      "This is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getAiMode()));
-    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [this](qint32 value)
     {
         m_pUnit->setAiMode(static_cast<GameEnums::GameAi>(value));
         emit sigUpdateData();
@@ -270,7 +270,7 @@ void DialogModifyUnit::updateData()
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getUnitRank()));
     qint32 size = items.size();
-    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [this, size](qint32 value)
     {
         if (size - 2 == value)
         {
@@ -323,7 +323,7 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
         }
     }
     Player* pPlayer = m_dropDownPlayer.get();
-    auto unitCreator = [=](QString id)
+    auto unitCreator = [this, pPlayer](QString id)
     {
         oxygine::spActor ret;
         if (id != "-")
@@ -353,7 +353,7 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
         pDropdownmenu->setCurrentItem("-");
     }
     auto* pPtrDropdownmenu = pDropdownmenu.get();
-    connect(pDropdownmenu.get(), &DropDownmenuSprite::sigItemChanged, this, [=](qint32)
+    connect(pDropdownmenu.get(), &DropDownmenuSprite::sigItemChanged, this, [this, pPtrDropdownmenu, index](qint32)
     {
         emit sigLoadUnit(pPtrDropdownmenu->getCurrentItemText(), index);
     });
@@ -401,7 +401,7 @@ void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
             pSpinbox->setTooltipText("X-Coordinate for the move path.");
             pSpinbox->setPosition(sliderOffset - 160, y);
             m_pPanel->addItem(pSpinbox);
-            connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](qreal value)
+            connect(pSpinbox.get(), &SpinBox::sigValueChanged, [this, i](qreal value)
             {
                 auto points = m_pUnit->getAiMovePath();
                 points[i].setX(value);
@@ -411,7 +411,7 @@ void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
             pSpinbox->setCurrentValue(points[i].y());
             pSpinbox->setTooltipText("Y-Coordinate for the move path.");
             pSpinbox->setPosition(sliderOffset + 50, y);
-            connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](qreal value)
+            connect(pSpinbox.get(), &SpinBox::sigValueChanged, [this, i](qreal value)
             {
                 auto points = m_pUnit->getAiMovePath();
                 points[i].setY(value);
@@ -424,7 +424,7 @@ void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
         oxygine::spButton pButton = pObjectManager->createButton(tr("Add Point"), 150);
         pButton->setPosition(sliderOffset - 160, y + 10);
         m_pPanel->addItem(pButton);
-        pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {
             m_pUnit->addAiMovePathPoint(QPoint(0, 0));
             emit sigUpdateData();
@@ -432,7 +432,7 @@ void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
         pButton = pObjectManager->createButton(tr("Remove last Point"), 150);
         pButton->setPosition(sliderOffset, y + 10);
         m_pPanel->addItem(pButton);
-        pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        pButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {
             m_pUnit->removeLastAiMovePathPoint();
             emit sigUpdateData();

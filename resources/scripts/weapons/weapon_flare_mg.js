@@ -8,10 +8,10 @@ var Constructor = function()
     {
         return 1;
     };
-    this.damageTable = [["INFANTRY", 80],
-                        ["MECH", 70],
-                        ["MOTORBIKE", 70],
-                        ["SNIPER", 70],
+    this.damageTable = [["INFANTRY", 70],
+                        ["MECH", 60],
+                        ["MOTORBIKE", 60],
+                        ["SNIPER", 60],
 
                         // supporter
                         ["APC", 45],

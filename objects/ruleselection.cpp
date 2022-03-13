@@ -186,6 +186,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         spPasswordbox pPasswordbox = spPasswordbox::create(Settings::getWidth() - 100 - textWidth);
         pPasswordbox->setPosition(textWidth, y);
         pPasswordbox->setCurrentText("");
+        m_pMap->getGameRules()->setPassword("");
         pPasswordbox->setTooltipText(tr("Map description shown for players who want to join. Keep it short here."));
         pPasswordbox->setEnabled(m_ruleChangeEabled);
         connect(pPasswordbox.get(), &Passwordbox::sigTextChanged, m_pMap->getGameRules(), &GameRules::setPassword, Qt::QueuedConnection);
@@ -624,7 +625,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         oxygine::spButton coBannlist = ObjectManager::createButton(tr("Edit"), 150);
         coBannlist->setPosition(textWidth, y - 2);
         coBannlist->setEnabled(m_ruleChangeEabled);
-        coBannlist->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        coBannlist->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowCOBannlist();
         });
@@ -640,7 +641,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         oxygine::spButton perkBannlist = ObjectManager::createButton(tr("Edit"), 150);
         perkBannlist->setPosition(textWidth, y - 2);
         perkBannlist->setEnabled(m_ruleChangeEabled);
-        perkBannlist->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        perkBannlist->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowPerkBannlist();
         });
@@ -656,7 +657,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         oxygine::spButton actionBannlist = ObjectManager::createButton(tr("Edit"), 150);
         actionBannlist->setPosition(textWidth, y - 2);
         actionBannlist->setEnabled(m_ruleChangeEabled);
-        actionBannlist->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        actionBannlist->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowActionBannlist();
         });
@@ -754,7 +755,7 @@ void RuleSelection::showRuleSelection(bool advanced)
             m_MapScriptFile->setEnabled(m_ruleChangeEabled);
             addChild(m_MapScriptFile);
             pScriptButton->setEnabled(m_ruleChangeEabled);
-            pScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+            pScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
             {
                 emit sigShowSelectScript();
             });

@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.init = function(co, map)
     {
-        co.setPowerStars(4);
+        co.setPowerStars(5);
         co.setSuperpowerStars(1);
     };
 

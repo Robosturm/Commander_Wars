@@ -29,7 +29,7 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigOk();
     });
@@ -39,7 +39,7 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
     {
         m_pButtonLoadRules = ObjectManager::createButton(tr("Load"));
         m_pButtonLoadRules->setPosition(Settings::getWidth() / 2 + 20 + m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
-        m_pButtonLoadRules->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        m_pButtonLoadRules->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowLoadRules();
         });
@@ -48,7 +48,7 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
 
         m_pButtonSaveRules = ObjectManager::createButton(tr("Save"));
         m_pButtonSaveRules->setPosition(Settings::getWidth() / 2 - m_pButtonSaveRules->getWidth() - 20 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
-        m_pButtonSaveRules->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        m_pButtonSaveRules->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowSaveRules();
         });

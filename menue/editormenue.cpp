@@ -152,7 +152,7 @@ EditorMenue::EditorMenue()
     addChild(m_Topbar);
 
     Cursor* pCursor = m_Cursor.get();
-    m_pMap->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
+    m_pMap->addEventListener(oxygine::TouchEvent::MOVE, [this, pCursor](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -256,7 +256,7 @@ void EditorMenue::createTempFile(bool cleanUp)
         cleanTemp(m_tempCounter);
     }
     QFile file("temp/temp" + QString::number(m_tempCounter) + ".tmp");
-    file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    file.open(QIODevice::WriteOnly);
     QDataStream stream(&file);
     
     m_pMap->serializeObject(stream);
@@ -265,14 +265,14 @@ void EditorMenue::createTempFile(bool cleanUp)
     QFile previous("temp/temp" + QString::number(m_tempCounter - 1) + ".tmp");
     if (previous.exists())
     {
-        file.open(QIODevice::ReadOnly | QIODevice::Truncate);
-        QCryptographicHash myHash(QCryptographicHash::Sha3_512);
+        file.open(QIODevice::ReadOnly);
+        QCryptographicHash myHash(QCryptographicHash::Sha256);
         myHash.addData(&file);
         QByteArray hash = myHash.result();
         file.close();
 
-        previous.open(QIODevice::ReadOnly | QIODevice::Truncate);
-        QCryptographicHash myHash1(QCryptographicHash::Sha3_512);
+        previous.open(QIODevice::ReadOnly);
+        QCryptographicHash myHash1(QCryptographicHash::Sha256);
         myHash1.addData(&previous);
         QByteArray hash1 = myHash1.result();
         previous.close();
@@ -525,7 +525,7 @@ void EditorMenue::showResizeMap()
     auto* pTopBox = topBox.get();
     auto* pBottomBox = bottomBox.get();
 
-    connect(pBox.get(), &GenericBox::sigFinished, this, [=]
+    connect(pBox.get(), &GenericBox::sigFinished, this, [this, pLeftBox, pTopBox, pRightBox, pBottomBox]
     {
         emit sigResizeMap(pLeftBox->getCurrentValue(), pTopBox->getCurrentValue(),
                           pRightBox->getCurrentValue(), pBottomBox->getCurrentValue());
@@ -721,7 +721,7 @@ void EditorMenue::showExit()
     m_Focused = false;
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the map editor?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &EditorMenue::exitEditor, Qt::QueuedConnection);
-    connect(pExit.get(), &DialogMessageBox::sigCancel, this, [=]()
+    connect(pExit.get(), &DialogMessageBox::sigCancel, this, [this]()
     {
         m_Focused = true;
     });
@@ -909,7 +909,7 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                     Terrain* pTerrain = m_pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
                     spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pTerrain->getUnit());
                     addChild(fieldinfo);
-                    connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [=]
+                    connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [this]
                     {
                         setFocused(true);
                     });
@@ -1374,21 +1374,21 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     }
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    for (qint32 i = 0; i < points.size(); i++)
+    for (auto point : points)
     {
         // nice we can place the terrain
-        if (canTerrainBePlaced(points.at(i).x(), points.at(i).y()))
+        if (canTerrainBePlaced(point.x(), point.y()))
         {
             QString terrainID = m_EditorSelection->getCurrentTerrainID();
             spUnit pUnit;
-            m_pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(pUnit);
+            m_pMap->getTerrain(point.x(), point.y())->setUnit(pUnit);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
-            m_pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), false);
+            m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false);
         }
     }
-    if (points.size() > 10)
+    if (points.size() > 30)
     {
         m_pMap->updateSprites(-1, -1, true);
     }
@@ -1469,7 +1469,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             }
         }
     }
-    if (points.size() > 10)
+    if (points.size() > 30)
     {
         m_pMap->updateSprites(-1, -1, true);
     }
@@ -1520,19 +1520,17 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
             break;
         }
     }
-    for (qint32 i = 0; i < points.size(); i++)
+    for (auto & point : points)
     {
         // point still on the map great :)
-        qint32 curX = points.at(i).x();
-        qint32 curY = points.at(i).y();
+        qint32 curX = point.x();
+        qint32 curY = point.y();
         if (canUnitBePlaced(curX, curY))
         {
             spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
             spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, m_pMap.get());
-            pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
-            
-            m_pMap->getTerrain(curX, curY)->setUnit(pUnit);
-            
+            pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);            
+            m_pMap->getTerrain(curX, curY)->setUnit(pUnit);            
         }
     }
     if (Settings::getSyncAnimations())
