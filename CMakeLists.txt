@@ -857,9 +857,9 @@ message("install lib dir: ${CMAKE_INSTALL_PREFIX}")
 
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     install(TARGETS ${PROJECT_NAME}
-        RUNTIME         DESTINATION         "/"
-        BUNDLE          DESTINATION         "/"
-        LIBRARY         DESTINATION         "/")
+        RUNTIME         DESTINATION         "."
+        BUNDLE          DESTINATION         "."
+        LIBRARY         DESTINATION         ".")
 
     install(DIRECTORY templates DESTINATION "/")
     if (DEPLOY_RESOURCES_AS_FOLDER)
@@ -896,9 +896,9 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     install(FILES "Commander_Wars.desktop"                      DESTINATION "share/applications"  RENAME "${PROJECT_NAME}.desktop"   OPTIONAL)
 else()
     install(TARGETS ${PROJECT_NAME}
-        RUNTIME         DESTINATION         "/"
-        BUNDLE          DESTINATION         "/"
-        LIBRARY         DESTINATION         "/")
+        RUNTIME         DESTINATION         "."
+        BUNDLE          DESTINATION         "."
+        LIBRARY         DESTINATION         ".")
 endif()
 
 if (DOXYGEN_FOUND)
