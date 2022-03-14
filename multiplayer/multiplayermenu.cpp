@@ -263,7 +263,10 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
             QFile scriptData(scriptFile);
             Sha256Hash myScriptHash;
             scriptData.open(QIODevice::ReadOnly);
-            myScriptHash.addData(scriptData.readAll());
+            while (!scriptData.atEnd())
+            {
+                myHash.addData(scriptData.readLine().trimmed());
+            }
             scriptData.close();
             QByteArray scriptHash = myScriptHash.result();
             stream << scriptHash;
@@ -1058,7 +1061,10 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
                 scriptFile.setFileName(Settings::getUserPath() + scriptFileName);
                 scriptFile.open(QIODevice::ReadOnly);
                 Sha256Hash myHash;
-                myHash.addData(&scriptFile);
+                while (!scriptFile.atEnd())
+                {
+                    myHash.addData(scriptFile.readLine().trimmed());
+                }
                 scriptFile.close();
                 myHashArray = myHash.result();
 
@@ -1068,7 +1074,10 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
                 scriptFile.setFileName(oxygine::Resource::RCC_PREFIX_PATH + scriptFileName);
                 scriptFile.open(QIODevice::ReadOnly);
                 Sha256Hash myHash;
-                myHash.addData(&scriptFile);
+                while (!scriptFile.atEnd())
+                {
+                    myHash.addData(scriptFile.readLine().trimmed());
+                }
                 scriptFile.close();
                 QByteArray myHashArray = myHash.result();
                 if (myHashArray != scriptHash)

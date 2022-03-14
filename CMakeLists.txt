@@ -388,6 +388,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/Gamepad.h
     coreengine/GamepadShared.cpp
     coreengine/sha256hash.cpp
+    coreengine/commandlineparser.cpp
 
     # network engine
     network/tcpclient.cpp

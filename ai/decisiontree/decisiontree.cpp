@@ -46,7 +46,10 @@ DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDat
     {
         trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
         Sha256Hash myHash;
-        myHash.addData(trainingFile.readAll());
+        while (!trainingFile.atEnd())
+        {
+            myHash.addData(trainingFile.readLine().trimmed());
+        }
         myHash.addData(Settings::getModString().toUtf8());
         hash = myHash.result();
         trainingFile.close();

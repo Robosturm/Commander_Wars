@@ -12,6 +12,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/LUPDATE_MACROS.h"
 #include "coreengine/Gamepad.h"
+#include "coreengine/commandlineparser.h"
 
 class WorkerThread;
 using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
@@ -26,16 +27,6 @@ class Mainapp : public oxygine::GameWindow
     Q_OBJECT
 public:
     static const char* const GAME_CONTEXT;
-    static const char* const ARG_MODS;
-    static const char* const ARG_SLAVE;
-    static const char* const ARG_SLAVENAME;
-    static const char* const ARG_NOUI;
-    static const char* const ARG_NOAUDIO;
-    static const char* const ARG_INITSCRIPT;
-    static const char* const ARG_CREATESLAVELOGS;
-    static const char* const ARG_SLAVEADDRESS;
-    static const char* const ARG_MASTERADDRESS;
-    static const char* const ARG_SERVER;
     static constexpr qint32 stepProgress = 4;
     enum StartupPhase
     {
@@ -182,6 +173,31 @@ public:
         return m_gamepad;
     }
     static spTCPClient getSlaveClient();
+    /**
+     * @brief setNoUi
+     */
+    void setNoUi();
+    /**
+     * @brief setNoAudio
+     */
+    void setNoAudio();
+    /**
+     * @brief actAsSlave
+     */
+    void actAsSlave();
+    /**
+     * @brief setInitScript
+     * @param newInitScript
+     */
+    void setInitScript(const QString &newInitScript);
+    /**
+     * @brief getParser
+     * @return
+     */
+    CommandLineParser & getParser()
+    {
+        return m_parser;
+    }
 
 public slots:
     void changeScreenMode(qint32 mode);
@@ -201,11 +217,6 @@ public slots:
      * @param log
      */
     static void showCrashReport(const QString & log);
-    /**
-     * @brief loadArgs
-     * @param args
-     */
-    void loadArgs(const QStringList & args);
     /**
      * @brief onActiveChanged
      */
@@ -285,6 +296,7 @@ private:
     bool m_createSlaveLogs{false};
     Gamepad m_gamepad{0};
     bool m_noAudio{false};
+    CommandLineParser m_parser;
 };
 
 #endif // MAINAPP_H

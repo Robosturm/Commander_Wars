@@ -22,13 +22,7 @@ InfluenceFrontMap::InfluenceFrontMap(GameMap* pMap, const std::vector<spIslandMa
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    
-    qint32 width = m_pMap->getMapWidth();
-    qint32 heigth = m_pMap->getMapHeight();
-    for (qint32 x = 0; x < width; x++)
-    {
-        m_InfluenceMap.push_back(std::vector<InfluenceInfo>(heigth, InfluenceInfo(m_pMap)));
-    }
+    reset();
 }
 
 void InfluenceFrontMap::addBuildingInfluence()
@@ -138,7 +132,6 @@ void InfluenceFrontMap::InfluenceInfo::updateOwner(Player* pOwner)
     qint32 highestValue = 0;
     enemyInfluence = 0;
     ownInfluence = 0;
-    qint32 playerId = pOwner->getPlayerID();
     for (qint32 player = 0; player < playerValues.size(); ++player)
     {
         qint32 influence = getPlayerInfluence(player);
@@ -203,6 +196,15 @@ void InfluenceFrontMap::reset()
 {
     AI_CONSOLE_PRINT("InfluenceFrontMap::reset()", Console::eDEBUG);
     hide();
+    if (m_InfluenceMap.size() == 0)
+    {
+        qint32 width = m_pMap->getMapWidth();
+        qint32 heigth = m_pMap->getMapHeight();
+        for (qint32 x = 0; x < width; x++)
+        {
+            m_InfluenceMap.push_back(std::vector<InfluenceInfo>(heigth, InfluenceInfo(m_pMap)));
+        }
+    }
     
     for (qint32 x = 0; x < m_InfluenceMap.size(); ++x)
     {

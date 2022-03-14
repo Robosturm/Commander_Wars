@@ -1523,23 +1523,13 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
     static QFile file(Settings::getUserPath() + "console.log");
     if (!file.isOpen())
     {
-        QStringList args = QCoreApplication::arguments();
-        bool slave = args.contains(Mainapp::ARG_SLAVE);
-        if (slave &&
-            args.contains(Mainapp::ARG_CREATESLAVELOGS))
+        Mainapp* pApp = Mainapp::getInstance();
+        if (pApp->getSlave() && pApp->getCreateSlaveLogs())
         {
-            QString slaveName = "slave";
-            if (args.contains(Mainapp::ARG_SLAVENAME))
-            {
-                slaveName = args[args.indexOf(Mainapp::ARG_SLAVENAME) + 1];
-            }
-            file.setFileName(Settings::getUserPath() + slaveName + ".log");
-            file.open(QIODevice::WriteOnly);
+            QString slaveName = Settings::getSlaveServerName();
+            file.setFileName(Settings::getUserPath() + slaveName + ".log");            
         }
-        else if (!slave)
-        {
-            file.open(QIODevice::WriteOnly);
-        }
+        file.open(QIODevice::WriteOnly);
     }
     static QTextStream stream(&file);
     QByteArray localMsg = msg.toLocal8Bit();

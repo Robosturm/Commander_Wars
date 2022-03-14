@@ -11,6 +11,7 @@
 #include "coreengine/filesupport.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/commandlineparser.h"
 
 #include "game/gamemap.h"
 
@@ -279,24 +280,27 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         QString program = "Commander_Wars.exe";
         game->process = std::make_shared<QProcess>();
         game->process->setObjectName(slaveName + "Slaveprocess");
-        QStringList args({Mainapp::ARG_SLAVE,
-                          Mainapp::ARG_SLAVENAME,
+        const char* const prefix = "--";
+        QStringList args({QString(prefix) + CommandLineParser::ARG_SLAVE,
+                          QString(prefix) + CommandLineParser::ARG_SLAVENAME,
                           slaveName,
-                          Mainapp::ARG_NOUI, // comment out for debugging
-                          Mainapp::ARG_NOAUDIO,
-                          Mainapp::ARG_MODS,
+                          QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
+                          QString(prefix) + CommandLineParser::ARG_NOAUDIO,
+                          QString(prefix) + CommandLineParser::ARG_MODS,
                           Settings::getConfigString(mods),
-                          Mainapp::ARG_SLAVEADDRESS,
+                          QString(prefix) + CommandLineParser::ARG_SLAVEADDRESS,
                           slaveAddress,
+                          QString(prefix) + CommandLineParser::ARG_SLAVEPORT,
                           QString::number(slavePort),
-                          Mainapp::ARG_MASTERADDRESS,
-                          Settings::getSlaveServerName(),
+                          QString(prefix) + CommandLineParser::ARG_MASTERADDRESS,
+                          Settings::getSlaveListenAdress(),
+                          QString(prefix) + CommandLineParser::ARG_MASTERPORT,
                           QString::number(Settings::getSlaveServerPort()),
-                          Mainapp::ARG_INITSCRIPT,
+                          QString(prefix) + CommandLineParser::ARG_INITSCRIPT,
                           initScript});
         if (Mainapp::getInstance()->getCreateSlaveLogs())
         {
-            args << Mainapp::ARG_CREATESLAVELOGS;
+            args << QString(prefix) + CommandLineParser::ARG_CREATESLAVELOGS;
         }
         game->game = spNetworkGame::create(nullptr);
         game->game->setDataBuffer(data);

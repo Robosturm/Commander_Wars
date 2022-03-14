@@ -1355,7 +1355,7 @@ bool NormalAi::suicide(spGameAction & pAction, Unit* pUnit, UnitPathFindingSyste
         qint32 selection = GlobalUtils::randIntBase(0, ret.size() - 1);
         QVector3D target = ret[selection];
         auto path = turnPfs.getPathFast(static_cast<qint32>(moveTargetFields[selection].x()),
-                                               static_cast<qint32>(moveTargetFields[selection].y()));
+                                        static_cast<qint32>(moveTargetFields[selection].y()));
         pAction->setMovepath(path, turnPfs.getCosts(path));
         CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
                                                      static_cast<qint32>(target.y())));
