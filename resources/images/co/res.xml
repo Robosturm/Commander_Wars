@@ -60,39 +60,120 @@
         <image file="os/co_empty_os+nrm.png" />
         <image file="os/co_empty_os+info.png" />
         <image file="os/co_empty_os+face.png" cols = "3" />
+        <image file="os/co_empty_os+alt+nrm.png" />
+        <image file="os/co_empty_os+alt+info.png" />
+        <image file="os/co_empty_os+alt+face.png" cols = "3" />
+        <image file="os/co_empty_os+alt1+nrm.png" />
+        <image file="os/co_empty_os+alt1+info.png" />
+        <image file="os/co_empty_os+alt1+face.png" cols = "3" />
+        <image file="os/co_empty_os+alt2+nrm.png" />
+        <image file="os/co_empty_os+alt2+info.png" />
+        <image file="os/co_empty_os+alt2+face.png" cols = "3" />
         <image file="ac/co_empty_ac+nrm.png" />
         <image file="ac/co_empty_ac+info.png" />
         <image file="ac/co_empty_ac+face.png" cols = "3" />
+        <image file="ac/co_empty_ac+alt+nrm.png" />
+        <image file="ac/co_empty_ac+alt+info.png" />
+        <image file="ac/co_empty_ac+alt+face.png" cols = "3" />
+        <image file="ac/co_empty_ac+alt1+nrm.png" />
+        <image file="ac/co_empty_ac+alt1+info.png" />
+        <image file="ac/co_empty_ac+alt1+face.png" cols = "3" />
         <image file="ti/co_empty_ti+nrm.png" />
         <image file="ti/co_empty_ti+info.png" />
         <image file="ti/co_empty_ti+face.png" cols = "3" />
+        <image file="ti/co_empty_ti+alt+nrm.png" />
+        <image file="ti/co_empty_ti+alt+info.png" />
+        <image file="ti/co_empty_ti+alt+face.png" cols = "3" />
+        <image file="ti/co_empty_ti+alt1+nrm.png" />
+        <image file="ti/co_empty_ti+alt1+info.png" />
+        <image file="ti/co_empty_ti+alt1+face.png" cols = "3" />
         <image file="bm/co_empty_bm+nrm.png" />
         <image file="bm/co_empty_bm+info.png" />
         <image file="bm/co_empty_bm+face.png" cols = "3" />
+        <image file="bm/co_empty_bm+alt+nrm.png" />
+        <image file="bm/co_empty_bm+alt+info.png" />
+        <image file="bm/co_empty_bm+alt+face.png" cols = "3" />
+        <image file="bm/co_empty_bm+alt1+nrm.png" />
+        <image file="bm/co_empty_bm+alt1+info.png" />
+        <image file="bm/co_empty_bm+alt1+face.png" cols = "3" />
+        <image file="bm/co_empty_bm+alt2+nrm.png" />
+        <image file="bm/co_empty_bm+alt2+info.png" />
+        <image file="bm/co_empty_bm+alt2+face.png" cols = "3" />
         <image file="bd/co_empty_bd+nrm.png" />
         <image file="bd/co_empty_bd+info.png" />
         <image file="bd/co_empty_bd+face.png" cols = "3" />
+        <image file="bd/co_empty_bd+alt+nrm.png" />
+        <image file="bd/co_empty_bd+alt+info.png" />
+        <image file="bd/co_empty_bd+alt+face.png" cols = "3" />
+        <image file="bd/co_empty_bd+alt1+nrm.png" />
+        <image file="bd/co_empty_bd+alt1+info.png" />
+        <image file="bd/co_empty_bd+alt1+face.png" cols = "3" />
         <image file="dm/co_empty_dm+nrm.png" />
         <image file="dm/co_empty_dm+info.png" />
         <image file="dm/co_empty_dm+face.png" cols = "3" />
+        <image file="dm/co_empty_dm+alt+nrm.png" />
+        <image file="dm/co_empty_dm+alt+info.png" />
+        <image file="dm/co_empty_dm+alt+face.png" cols = "3" />
+        <image file="dm/co_empty_dm+alt1+nrm.png" />
+        <image file="dm/co_empty_dm+alt1+info.png" />
+        <image file="dm/co_empty_dm+alt1+face.png" cols = "3" />
+        <image file="dm/co_empty_dm+alt2+nrm.png" />
+        <image file="dm/co_empty_dm+alt2+info.png" />
+        <image file="dm/co_empty_dm+alt2+face.png" cols = "3" />
         <image file="ge/co_empty_ge+nrm.png" />
         <image file="ge/co_empty_ge+info.png" />
         <image file="ge/co_empty_ge+face.png" cols = "3" />
+        <image file="ge/co_empty_ge+alt+nrm.png" />
+        <image file="ge/co_empty_ge+alt+info.png" />
+        <image file="ge/co_empty_ge+alt+face.png" cols = "3" />
+        <image file="ge/co_empty_ge+alt1+nrm.png" />
+        <image file="ge/co_empty_ge+alt1+info.png" />
+        <image file="ge/co_empty_ge+alt1+face.png" cols = "3" />
+        <image file="ge/co_empty_ge+alt2+nrm.png" />
+        <image file="ge/co_empty_ge+alt2+info.png" />
+        <image file="ge/co_empty_ge+alt2+face.png" cols = "3" />
         <image file="pf/co_empty_pf+nrm.png" />
         <image file="pf/co_empty_pf+info.png" />
         <image file="pf/co_empty_pf+face.png" cols = "3" />
+        <image file="pf/co_empty_pf+alt+nrm.png" />
+        <image file="pf/co_empty_pf+alt+info.png" />
+        <image file="pf/co_empty_pf+alt+face.png" cols = "3" />
         <image file="yc/co_empty_yc+nrm.png" />
         <image file="yc/co_empty_yc+info.png" />
         <image file="yc/co_empty_yc+face.png" cols = "3" />
+        <image file="yc/co_empty_yc+alt+nrm.png" />
+        <image file="yc/co_empty_yc+alt+info.png" />
+        <image file="yc/co_empty_yc+alt+face.png" cols = "3" />
+        <image file="yc/co_empty_yc+alt1+nrm.png" />
+        <image file="yc/co_empty_yc+alt1+info.png" />
+        <image file="yc/co_empty_yc+alt1+face.png" cols = "3" />
+        <image file="yc/co_empty_yc+alt2+nrm.png" />
+        <image file="yc/co_empty_yc+alt2+info.png" />
+        <image file="yc/co_empty_yc+alt2+face.png" cols = "3" />
         <image file="gs/co_empty_gs+nrm.png" />
         <image file="gs/co_empty_gs+info.png" />
         <image file="gs/co_empty_gs+face.png" cols = "3" />
+        <image file="gs/co_empty_gs+alt+nrm.png" />
+        <image file="gs/co_empty_gs+alt+info.png" />
+        <image file="gs/co_empty_gs+alt+face.png" cols = "3" />
         <image file="bh/co_empty_bh+nrm.png" />
         <image file="bh/co_empty_bh+info.png" />
         <image file="bh/co_empty_bh+face.png" cols = "3" />
+        <image file="bh/co_empty_bh+alt+nrm.png" />
+        <image file="bh/co_empty_bh+alt+info.png" />
+        <image file="bh/co_empty_bh+alt+face.png" cols = "3" />
+        <image file="bh/co_empty_bh+alt1+nrm.png" />
+        <image file="bh/co_empty_bh+alt1+info.png" />
+        <image file="bh/co_empty_bh+alt1+face.png" cols = "3" />
+        <image file="bh/co_empty_bh+alt2+nrm.png" />
+        <image file="bh/co_empty_bh+alt2+info.png" />
+        <image file="bh/co_empty_bh+alt2+face.png" cols = "3" />
         <image file="bg/co_empty_bg+nrm.png" />
         <image file="bg/co_empty_bg+info.png" />
         <image file="bg/co_empty_bg+face.png" cols = "3" />
+        <image file="bg/co_empty_bg+alt+nrm.png" />
+        <image file="bg/co_empty_bg+alt+info.png" />
+        <image file="bg/co_empty_bg+alt+face.png" cols = "3" />
         <image file="ma/co_empty_ma+nrm.png" />
         <image file="ma/co_empty_ma+info.png" />
         <image file="ma/co_empty_ma+face.png" cols = "3" />
