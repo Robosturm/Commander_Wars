@@ -690,17 +690,17 @@
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="43"/>
-        <source>Ip-Address and Port range on which slave games will be spawned to listen. E.g. ::1&amp;10000&amp;20000;::1&amp;50000&amp;65535. Not the Ip-Address needs to be accessible by connecting clients.</source>
+        <source>Ip-Address and Port range separated by &apos;&amp;&apos; for the 3 parts and &apos;;&apos; for gaps or different addresses on which slave games will be spawned to listen. E.g. ::1&amp;10000&amp;20000;::1&amp;50000&amp;65535. Not the Ip-Address needs to be accessible by connecting clients.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="45"/>
+        <source>Port on which the server will initially listen for clients.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="44"/>
         <source>The address on which the server will listen for clients. Empty for all addresses.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="45"/>
-        <source>Port on which the server will listen for clients.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

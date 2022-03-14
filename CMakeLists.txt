@@ -853,32 +853,30 @@ set(${PROJECT_NAME}_INSTALL_QT_LIBS
 )
 
 message("install lib dir: ${CMAKE_INSTALL_PREFIX}")
-set(INSTALL_PATH "Commander_Wars_${CMAKE_BUILD_TYPE}")
 # install folders and executable
-
 
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     install(TARGETS ${PROJECT_NAME}
-        RUNTIME         DESTINATION         "${INSTALL_PATH}"
-        BUNDLE          DESTINATION         "${INSTALL_PATH}"
-        LIBRARY         DESTINATION         "${INSTALL_PATH}")
+        RUNTIME         DESTINATION         "/"
+        BUNDLE          DESTINATION         "/"
+        LIBRARY         DESTINATION         "/")
 
-    install(DIRECTORY templates DESTINATION "${INSTALL_PATH}")
+    install(DIRECTORY templates DESTINATION "/")
     if (DEPLOY_RESOURCES_AS_FOLDER)
         message("Installing resources as folder")
-        install(DIRECTORY system DESTINATION                "${INSTALL_PATH}")
-        install(DIRECTORY resources DESTINATION             "${INSTALL_PATH}")
-        install(DIRECTORY maps DESTINATION                  "${INSTALL_PATH}")
-        install(FILES ${QM_FILES} DESTINATION               "${INSTALL_PATH}/resources/translation/" OPTIONAL)
-        install(DIRECTORY customTerrainImages DESTINATION   "${INSTALL_PATH}")
-        install(DIRECTORY mods DESTINATION                  "${INSTALL_PATH}")
-        install(DIRECTORY savegames DESTINATION             "${INSTALL_PATH}")
-        install(DIRECTORY data DESTINATION                  "${INSTALL_PATH}")
+        install(DIRECTORY system DESTINATION                "/")
+        install(DIRECTORY resources DESTINATION             "/")
+        install(DIRECTORY maps DESTINATION                  "/")
+        install(FILES ${QM_FILES} DESTINATION               "resources/translation/" OPTIONAL)
+        install(DIRECTORY customTerrainImages DESTINATION   "/")
+        install(DIRECTORY mods DESTINATION                  "/")
+        install(DIRECTORY savegames DESTINATION             "/")
+        install(DIRECTORY data DESTINATION                  "/")
     endif()
     # install libs
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "${INSTALL_PATH}" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS} DESTINATION                    "${INSTALL_PATH}" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "${INSTALL_PATH}/platforms" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "/" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS} DESTINATION                    "/" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "platforms" OPTIONAL)
 
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
@@ -898,9 +896,9 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     install(FILES "Commander_Wars.desktop"                      DESTINATION "share/applications"  RENAME "${PROJECT_NAME}.desktop"   OPTIONAL)
 else()
     install(TARGETS ${PROJECT_NAME}
-        RUNTIME         DESTINATION         "${INSTALL_PATH}"
-        BUNDLE          DESTINATION         "${INSTALL_PATH}"
-        LIBRARY         DESTINATION         "${INSTALL_PATH}")
+        RUNTIME         DESTINATION         "/"
+        BUNDLE          DESTINATION         "/"
+        LIBRARY         DESTINATION         "/")
 endif()
 
 if (DOXYGEN_FOUND)
@@ -932,12 +930,12 @@ endif()
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
     message("Build will zip artifacts")
     add_custom_target(createReleaseZip
-        WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/"
+        WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/../"
         COMMAND ${CMAKE_COMMAND} -E tar
         "cfv"
         "${CMAKE_INSTALL_PREFIX}/Commander_Wars.zip"
         --format=zip
-        "${CMAKE_INSTALL_PREFIX}/${INSTALL_PATH}/"
+        "${CMAKE_INSTALL_PREFIX}/"
         COMMENT "Zipping Commander Wars..."
     )
 endif()
