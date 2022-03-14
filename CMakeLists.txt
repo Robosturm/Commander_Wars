@@ -885,9 +885,9 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         OUTPUT_NAME "${PROJECT_NAME_LOWER}"
     )
     install(TARGETS ${PROJECT_NAME}
-        RUNTIME         DESTINATION         "$bin"
-        BUNDLE          DESTINATION         "$bin"
-        LIBRARY         DESTINATION         "$bin")
+        RUNTIME         DESTINATION         "bin"
+        BUNDLE          DESTINATION         "bin"
+        LIBRARY         DESTINATION         "bin")
     # install libs
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
