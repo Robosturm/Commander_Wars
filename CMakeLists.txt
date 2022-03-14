@@ -881,16 +881,21 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "${INSTALL_PATH}/platforms" OPTIONAL)
 
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+    string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        OUTPUT_NAME "${PROJECT_NAME_LOWER}"
+    )
     install(TARGETS ${PROJECT_NAME}
-        RUNTIME         DESTINATION         "${INSTALL_PATH}/bin"
-        BUNDLE          DESTINATION         "${INSTALL_PATH}/bin"
-        LIBRARY         DESTINATION         "${INSTALL_PATH}/bin")
+        RUNTIME         DESTINATION         "bin"
+        BUNDLE          DESTINATION         "bin"
+        LIBRARY         DESTINATION         "bin")
     # install libs
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS}            DESTINATION "${INSTALL_PATH}/lib/${PROJECT_NAME}"                OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS}            DESTINATION "${INSTALL_PATH}/lib/${PROJECT_NAME}"                OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION "${INSTALL_PATH}/lib/${PROJECT_NAME}/platforms"      OPTIONAL)
-    install(DIRECTORY templates                                 DESTINATION "${INSTALL_PATH}/share/${PROJECT_NAME}/"             OPTIONAL)
-    install(FILES "icon.png"                                     DESTINATION "${INSTALL_PATH}/share/pixmaps/${PROJECT_NAME}.png"  OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
+    install(DIRECTORY templates                                 DESTINATION "share/${PROJECT_NAME_LOWER}"                            OPTIONAL)
+    install(FILES "icon.png"                                    DESTINATION "share/pixmaps"       RENAME "${PROJECT_NAME_LOWER}.png" OPTIONAL)
+    install(FILES "Commander_Wars.desktop"                      DESTINATION "share/applications"  RENAME "${PROJECT_NAME}.desktop"   OPTIONAL)
 else()
     install(TARGETS ${PROJECT_NAME}
         RUNTIME         DESTINATION         "${INSTALL_PATH}"
