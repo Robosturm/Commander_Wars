@@ -165,9 +165,6 @@
         <image file="bh/co_empty_bh+alt1+nrm.png" />
         <image file="bh/co_empty_bh+alt1+info.png" />
         <image file="bh/co_empty_bh+alt1+face.png" cols = "3" />
-        <image file="bh/co_empty_bh+alt2+nrm.png" />
-        <image file="bh/co_empty_bh+alt2+info.png" />
-        <image file="bh/co_empty_bh+alt2+face.png" cols = "3" />
         <image file="bg/co_empty_bg+nrm.png" />
         <image file="bg/co_empty_bg+info.png" />
         <image file="bg/co_empty_bg+face.png" cols = "3" />

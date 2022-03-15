@@ -235,8 +235,8 @@ public slots:
     static const QString &getSlaveListenAdress();
     static void setSlaveListenAdress(const QString &newSlaveListenAdress);
 
-    static qint32 getPauseAfterAction();
-    static void setPauseAfterAction(qint32 newPauseAfterAction);
+    static quint32 getPauseAfterAction();
+    static void setPauseAfterAction(quint32 newPauseAfterAction);
 
     static const QString &getServerListenAdress();
     static void setServerListenAdress(const QString &newServerListenAdress);
@@ -798,7 +798,7 @@ private:
     static bool m_showDetailedBattleForcast;
     static bool m_autoMoveCursor;
     static float m_supplyWarning;
-    static qint32 m_pauseAfterAction;
+    static quint32 m_pauseAfterAction;
 
     // internal members
     static spSettings m_pInstance;
