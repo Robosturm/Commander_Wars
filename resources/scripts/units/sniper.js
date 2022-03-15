@@ -51,8 +51,11 @@ var Constructor = function()
                      ["ge", "ge"],
                      ["yc", "yc"],
                      ["bh", "bh"],
-                     ["bg", "bh"],
-                     ["ma", "ma"],];
+                     ["bg", "bg"],
+                     ["ma", "ma"],
+                     ["ac", "ac"],
+                     ["bd", "bd"],
+                     ["dm", "dm"],];
     this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();

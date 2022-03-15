@@ -43,6 +43,7 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, MOTORBIKE.armyData);
         // load sprites
         unit.loadSpriteV2("motorbike+" + armyName +"+mask", GameEnums.Recoloring_Matrix);
+        unit.loadSpriteV2("motorbike+" + armyName, GameEnums.Recoloring_None);
     };
     this.getMovementType = function()
     {
