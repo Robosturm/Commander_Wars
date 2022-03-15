@@ -1904,6 +1904,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
     AI_CONSOLE_PRINT("NormalAi::updateEnemyData", Console::eDEBUG);
     if (pUnitData.size() == 0)
     {
+        pUnitData.reserve(pUnits->size());
         for (auto & pUnit : pUnits->getVector())
         {
             QApplication::processEvents();
@@ -1930,6 +1931,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
     }
     if (!enemy && m_aiStep >= AISteps::moveTransporters)
     {
+        pUnitData.reserve(pUnits->size());
         for (auto & pUnit : pUnits->getVector())
         {
             QApplication::processEvents();
