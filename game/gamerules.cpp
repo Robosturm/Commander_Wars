@@ -44,6 +44,9 @@ GameRules::GameRules(GameMap* pMap)
             m_COBannlist.append(coid);
         }
     }
+    m_weatherMaster = oxygine::spSprite::create();
+    m_weatherMaster->setPriority(static_cast<qint32>(Mainapp::ZOrder::Weather));
+    m_pMap->addChild(m_weatherMaster);
     m_StartWeather = 0;
     m_RoundTimer.setSingleShot(true);
     m_allowedPerks = COPerkManager::getInstance()->getLoadedRessources();
@@ -565,13 +568,12 @@ void GameRules::createWeatherSprites()
                         pSprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
                         pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Weather));
                         m_WeatherSprites.push_back(pSprite);
-                        m_pMap->addChild(pSprite);
+                        m_weatherMaster->addChild(pSprite);
                     }
                 }
             }
         }
-    }
-    
+    }    
 }
 
 void GameRules::resetWeatherSprites()

@@ -162,7 +162,6 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
     {
         loadIni( "normal/" + configurationFile);
     }
-    m_BuildingChanceModifier.insert("MOTORBIKE", 0.9f);
     m_BuildingChanceModifier.insert("MECH", 1.1f);
 }
 
@@ -1168,7 +1167,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
         }
         else if (!shortenPathForTarget && CoreAI::contains(targets, targetFields))
         {
-            auto movePath = turnPfs.getClosestReachableMovePath(targetFields);
+            auto movePath = turnPfs.getClosestReachableMovePath(targetFields, pUnitData->movementPoints);
             pAction->setMovepath(movePath, turnPfs.getCosts(movePath));
             pAction->setActionID(ACTION_WAIT);
             if (pAction->canBePerformed())
@@ -1181,7 +1180,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
         }
         else
         {
-            auto movePath = turnPfs.getClosestReachableMovePath(targetFields);
+            auto movePath = turnPfs.getClosestReachableMovePath(targetFields, pUnitData->movementPoints);
             if (movePath.size() == 0)
             {
                 movePath.push_back(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));

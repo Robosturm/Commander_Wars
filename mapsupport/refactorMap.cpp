@@ -12,10 +12,14 @@ void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, const QStr
     for (qint32 y = 0; y < heigth; y++)
     {
         m_fields.push_back(std::vector<spTerrain>());
+        auto pActor = oxygine::spActor::create();
+        pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
+        m_rowSprites.push_back(pActor);
+        addChild(pActor);
         for (qint32 x = 0; x < width; x++)
         {
             spTerrain pTerrain = Terrain::createTerrain(baseTerrain, x, y, "", this);
-            addChild(pTerrain);
+            m_rowSprites[y]->addChild(pTerrain);
             m_fields[y].push_back(pTerrain);
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
         }
@@ -45,7 +49,7 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
             for (qint32 x = currentWidth; x < width; x++)
             {
                 spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, x, y, "", this);
-                addChild(pTerrain);
+                m_rowSprites[y]->addChild(pTerrain);
                 m_fields[y].push_back(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             }
@@ -68,10 +72,14 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
         for (qint32 y = currentHeigth; y < heigth; y++)
         {
             m_fields.push_back(std::vector<spTerrain>());
+            auto pActor = oxygine::spActor::create();
+            pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
+            m_rowSprites.push_back(pActor);
+            addChild(pActor);
             for (qint32 x = 0; x < width; x++)
             {
                 spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, x, y, "", this);
-                addChild(pTerrain);
+                m_rowSprites[y]->addChild(pTerrain);
                 m_fields[y].push_back(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             }
@@ -123,7 +131,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
                 for (qint32 y = 0; y < currentHeigth; y++)
                 {
                     spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", this);
-                    addChild(pTerrain);
+                    m_rowSprites[y]->addChild(pTerrain);
                     m_fields[y].insert(m_fields[y].begin(), pTerrain);
                 }
             }
@@ -149,7 +157,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
                 for (qint32 y = 0; y < currentHeigth; y++)
                 {
                     spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", this);
-                    addChild(pTerrain);
+                    m_rowSprites[y]->addChild(pTerrain);
                     m_fields[y].push_back(pTerrain);
                 }
             }
@@ -174,10 +182,13 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             for (qint32 i = 0; i < top; i++)
             {
                 m_fields.insert(m_fields.begin(), std::vector<spTerrain>());
+                auto pActor = oxygine::spActor::create();
+                m_rowSprites.push_back(pActor);
+                addChild(pActor);
                 for (qint32 x = 0; x < currentWidth; x++)
                 {
                     spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", this);
-                    addChild(pTerrain);
+                    m_rowSprites[i]->addChild(pTerrain);
                     m_fields[0].push_back(pTerrain);
                 }
             }
@@ -191,6 +202,8 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
                     m_fields[0][x]->detach();
                 }
                 m_fields.erase(m_fields.begin());
+                m_rowSprites[0]->detach();
+                m_rowSprites.erase(m_rowSprites.cbegin());
             }
         }
     }
@@ -201,10 +214,13 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             for (qint32 i = 0; i < bottom; i++)
             {
                 m_fields.push_back(std::vector<spTerrain>());
+                auto pActor = oxygine::spActor::create();
+                m_rowSprites.push_back(pActor);
+                addChild(pActor);
                 for (qint32 x = 0; x < currentWidth; x++)
                 {
                     spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", this);
-                    addChild(pTerrain);
+                    m_rowSprites[i]->addChild(pTerrain);
                     m_fields.back().push_back(pTerrain);
                 }
             }
@@ -218,6 +234,8 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
                     m_fields.back()[x]->detach();
                 }
                 m_fields.pop_back();
+                m_rowSprites[m_rowSprites.size() - 1]->detach();
+                m_rowSprites.pop_back();
             }
         }
     }
@@ -225,6 +243,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
     currentHeigth = getMapHeight();
     for (qint32 y = 0; y < currentHeigth; y++)
     {
+        m_rowSprites[y]->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         for (qint32 x = 0; x < currentWidth; x++)
         {
             spTerrain pTerrain = m_fields[y][x];
@@ -276,7 +295,7 @@ void GameMap::flipX()
             currentTerrain->detach();
             spTerrain flipTerrain = m_fields.at(y)[currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID(), this);
-            addChild(pTerrain);
+            m_rowSprites[y]->addChild(pTerrain);
             m_fields[y][x] = pTerrain;
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
 
@@ -314,7 +333,7 @@ void GameMap::rotateX()
             currentTerrain->detach();
             spTerrain flipTerrain = m_fields[currentHeigth - y - 1][currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID(), this);
-            addChild(pTerrain);
+            m_rowSprites[y]->addChild(pTerrain);
             m_fields[y][x] = pTerrain;
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
 
@@ -352,7 +371,7 @@ void GameMap::flipY()
             currentTerrain->detach();
             spTerrain flipTerrain = m_fields[currentHeigth - y - 1][x];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID(), this);
-            addChild(pTerrain);
+            m_rowSprites[y]->addChild(pTerrain);
             m_fields[y][x] = pTerrain;
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
 
@@ -390,7 +409,7 @@ void GameMap::rotateY()
             currentTerrain->detach();
             spTerrain flipTerrain = m_fields[currentHeigth - y - 1][currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID(), this);
-            addChild(pTerrain);
+            m_rowSprites[y]->addChild(pTerrain);
             m_fields[y][x] = pTerrain;
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
 

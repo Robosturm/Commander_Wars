@@ -90,7 +90,6 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             if ((m_pGameAction->getInputStep() > 0) ||
                 (m_pGameAction->getActionID() != ""))
             {
-                // todo implement go back steps
                 cancelActionInput();
             }
             else if (m_CurrentMenu.get() == nullptr)
@@ -902,7 +901,7 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
         {
             pSprite->setPriority(m_pMap->getTerrain(point.x(), point.y())->getMapTerrainDrawPriority() + static_cast<qint32>(drawPriority));
         }
-        m_pMap->addChild(pSprite);
+        m_pMap->getRowActor(point.y())->addChild(pSprite);
     }
     return pSprite;
 }
@@ -1371,7 +1370,7 @@ void HumanPlayerInput::createArrow(std::vector<QPoint>& points)
             pSprite->setPriority(static_cast<qint32>(points[i].y() + 3));
             pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
             pSprite->setPosition(points[i].x() * GameMap::getImageSize() -(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2,  points[i].y() * GameMap::getImageSize() -(pSprite->getScaledHeight() - GameMap::getImageSize()));
-            m_pMap->addChild(pSprite);
+            m_pMap->getRowActor(points[i].y())->addChild(pSprite);
             m_Arrows.push_back(pSprite);
 
             if (i > 0)

@@ -151,6 +151,18 @@ namespace NetworkCommands
      * @brief STARTSERVERGAME
      */
     const char* const STARTSERVERGAME = "STARTSERVERGAME";
+    /**
+     * @brief GAMENOLONGERAVAILABLE
+     */
+    const char* const SERVERGAMENOLONGERAVAILABLE = "SERVERGAMENOLONGERAVAILABLE";
+    /**
+     * @brief SERVERINVALIDMODCONFIG
+     */
+    const char* const SERVERINVALIDMODCONFIG = "SERVERINVALIDMODCONFIG";
+    /**
+     * @brief SERVERNOGAMESLOTSAVAILABLE
+     */
+    const char* const SERVERNOGAMESLOTSAVAILABLE = "SERVERNOGAMESLOTSAVAILABLE";
 }
 
 #endif // NETWORKCOMMANDS_H

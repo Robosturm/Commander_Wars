@@ -88,17 +88,19 @@ void GameMap::loadMap(QString map, bool onlyLoad, bool fast, bool savegame)
     clearMap();
     m_savegame = savegame;
     QFile file(map);
-    file.open(QIODevice::ReadOnly);
-    QDataStream pStream(&file);
-    deserializer(pStream, fast);
-    setMapNameFromFilename(map);
-    m_loaded = true;
-    if (!onlyLoad)
+    if (file.open(QIODevice::ReadOnly))
     {
-        updateSprites();
-        qint32 heigth = getMapHeight();
-        qint32 width = getMapWidth();
-        centerMap(width / 2, heigth / 2);
+        QDataStream pStream(&file);
+        deserializer(pStream, fast);
+        setMapNameFromFilename(map);
+        m_loaded = true;
+        if (!onlyLoad)
+        {
+            updateSprites();
+            qint32 heigth = getMapHeight();
+            qint32 width = getMapWidth();
+            centerMap(width / 2, heigth / 2);
+        }
     }
 }
 
@@ -332,12 +334,14 @@ GameMap::~GameMap()
     // clean up session
     for (qint32 y = 0; y < m_fields.size(); ++y)
     {
+        m_rowSprites[y]->detach();
         for (qint32 x = 0; x < m_fields[y].size(); ++x)
         {
             m_fields[y].at(x)->detach();
         }
         m_fields[y].clear();
     }
+    m_rowSprites.clear();
     m_fields.clear();
 }
 
@@ -674,7 +678,7 @@ void GameMap::syncTerrainAnimations(bool showLoadingScreen)
             spTerrain pTerrain = m_fields[y][x];
             pTerrain->syncAnimation(timeMs);
             pTerrain->detach();
-            addChild(pTerrain);
+            m_rowSprites[y]->addChild(pTerrain);
         }
     }
 }
@@ -1157,14 +1161,14 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
                 pTerrainOld->detach();
                 pTerrain->setBaseTerrain(pTerrainOld);
                 m_fields[y][x] = pTerrain;
-                addChild(pTerrain);
+                m_rowSprites[y]->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             }
             else
             {
                 pTerrainOld->detach();
                 m_fields[y][x] = pTerrain;
-                addChild(pTerrain);
+                m_rowSprites[y]->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             }
             if (!removeUnit)
@@ -1177,7 +1181,7 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
             {
                 spTerrain pTerrain = m_fields[y][xPos];
                 pTerrain->detach();
-                addChild(pTerrain);
+                m_rowSprites[y]->addChild(pTerrain);
             }
         }
         else
@@ -1417,6 +1421,10 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
             pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_heigth), 5 + 75 * y / m_headerInfo.m_heigth);
         }
         m_fields.push_back(std::vector<spTerrain>());
+        auto pActor = oxygine::spActor::create();
+        pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
+        m_rowSprites.push_back(pActor);
+        addChild(pActor);
         for (qint32 x = 0; x < m_headerInfo.m_width; x++)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y, "", this);
@@ -1426,7 +1434,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
             {
                 if (!fast)
                 {
-                    addChild(pTerrain);
+                    m_rowSprites[y]->addChild(pTerrain);
                     pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 }
             }
@@ -1644,12 +1652,14 @@ void GameMap::clearMap()
 {
     for (qint32 y = 0; y < m_fields.size(); y++)
     {
+        m_rowSprites[y]->detach();
         for (qint32 x = 0; x < m_fields[y].size(); x++)
         {
             m_fields[y][x]->detach();
         }
         m_fields[y].clear();
     }
+    m_rowSprites.clear();
     m_fields.clear();
     m_players.clear();
     m_Rules->resetWeatherSprites();

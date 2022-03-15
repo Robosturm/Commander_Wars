@@ -221,8 +221,12 @@ void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject & objData)
     if (!found)
     {
         CONSOLE_PRINT("Failed to find game " + slave + " for socket " + QString::number(socketID) + " to join game. Forcing a disconnection.", Console::eDEBUG);
-        // todo send an actual error messge to client
-        m_pGameServer->disconnectClient(socketID);
+        QString command = QString(NetworkCommands::SERVERGAMENOLONGERAVAILABLE);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonDocument doc(data);
+        emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -262,8 +266,12 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
     else
     {
         CONSOLE_PRINT("Requested invalid mod configuration.", Console::eDEBUG);
-        // todo send an actual error messge to client
-        m_pGameServer->disconnectClient(socketID);
+        QString command = QString(NetworkCommands::SERVERINVALIDMODCONFIG);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonDocument doc(data);
+        emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -318,8 +326,12 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
     else
     {
         CONSOLE_PRINT("No free slots available.", Console::eDEBUG);
-        // todo send an actual error messge to client
-        m_pGameServer->disconnectClient(socketID);
+        QString command = QString(NetworkCommands::SERVERNOGAMESLOTSAVAILABLE);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonDocument doc(data);
+        emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 

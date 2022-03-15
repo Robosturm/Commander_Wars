@@ -391,6 +391,20 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             connectToSlave(objData, socketID);
         }
+        else if (messageType == NetworkCommands::SERVERINVALIDMODCONFIG)
+        {
+            spDialogMessageBox pDialogMessageBox;
+            pDialogMessageBox = spDialogMessageBox::create(tr("Server doesn't have the given mods installed."));
+            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+            addChild(pDialogMessageBox);
+        }
+        else if (messageType == NetworkCommands::SERVERNOGAMESLOTSAVAILABLE)
+        {
+            spDialogMessageBox pDialogMessageBox;
+            pDialogMessageBox = spDialogMessageBox::create(tr("Server doesn't have any more slots for playing a game."));
+            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+            addChild(pDialogMessageBox);
+        }
     }
 }
 
@@ -715,7 +729,6 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
                 }
                 pDialogMessageBox = spDialogMessageBox::create(tr("Host has  different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods:" + myMods);
             }
-
             connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
             addChild(pDialogMessageBox);
             
@@ -840,26 +853,45 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
                 QByteArray mapData;
                 mapData = Filesupport::readByteArray(stream);
                 QFileInfo mapInfo(mapFile);
-                QDir dir;
-                QString fileDir = mapInfo.filePath().replace(mapInfo.fileName(), "");
-                dir.mkdir(fileDir);
-                map.open(QIODevice::WriteOnly);
-                QDataStream mapFilestream(&map);
-                Filesupport::writeBytes(mapFilestream, mapData);
-                map.close();
-                if (!scriptFile.isEmpty())
+                QDir dir = mapInfo.absoluteDir();
+                dir.mkpath(".");
+                if (map.open(QIODevice::WriteOnly))
                 {
-                    QByteArray scriptData;
-                    scriptData = Filesupport::readByteArray(stream);
-                    QFileInfo scriptInfo(scriptFile);
-                    fileDir = scriptInfo.filePath().replace(scriptInfo.fileName(), "");
-                    dir.mkdir(fileDir);
-                    script.open(QIODevice::WriteOnly);
-                    QDataStream scriptFilestream(&script);
-                    Filesupport::writeBytes(scriptFilestream, scriptData);
-                    script.close();
+                    QDataStream mapFilestream(&map);
+                    Filesupport::writeBytes(mapFilestream, mapData);
+                    map.close();
+                    if (!scriptFile.isEmpty())
+                    {
+                        QByteArray scriptData;
+                        scriptData = Filesupport::readByteArray(stream);
+                        QFileInfo scriptInfo(scriptFile);
+                        dir = scriptInfo.absoluteDir();
+                        dir.mkpath(".");
+                        if (script.open(QIODevice::WriteOnly))
+                        {
+                            QDataStream scriptFilestream(&script);
+                            Filesupport::writeBytes(scriptFilestream, scriptData);
+                            script.close();
+                        }
+                        else
+                        {
+                            CONSOLE_PRINT("Unable to write downloaded script-file", Console::eDEBUG);
+                            spDialogMessageBox pDialogMessageBox;
+                            pDialogMessageBox = spDialogMessageBox::create(tr("Unable to download script file from host."));
+                            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+                            addChild(pDialogMessageBox);
+                        }
+                    }
+                    pMap = spGameMap::create(mapFile, true, false, m_saveGame);
                 }
-                pMap = spGameMap::create(mapFile, true, false, m_saveGame);
+                else
+                {
+                    CONSOLE_PRINT("Unable to write downloaded map-file", Console::eDEBUG);
+                    spDialogMessageBox pDialogMessageBox;
+                    pDialogMessageBox = spDialogMessageBox::create(tr("Unable to download map file from host."));
+                    connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+                    addChild(pDialogMessageBox);
+                }
             }
             else
             {
