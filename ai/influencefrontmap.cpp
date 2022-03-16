@@ -67,9 +67,8 @@ void InfluenceFrontMap::addBuildingInfluence()
             {
                 QApplication::processEvents();
                 QPoint pos = buildingPositions[building];
-                for (qint32 unitIdx = 0; unitIdx < buildLists[building].size(); unitIdx++)
+                for (auto & unitId : buildLists[building])
                 {
-                    QString unitId = buildLists[building][unitIdx];
                     qint32 island = getIslandFromUnitId(unitId, unitIdToIsland);
 
                     if (island >= 0 && m_islands[island]->sameIsland(x, y, pos.x(), pos.y()))

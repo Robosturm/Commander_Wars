@@ -1414,13 +1414,15 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     }
 
     // restore map
+    m_fields.reserve(m_headerInfo.m_heigth);
+    m_rowSprites.reserve(m_headerInfo.m_heigth);
     for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
     {
         if (showLoadingScreen)
         {
             pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_heigth), 5 + 75 * y / m_headerInfo.m_heigth);
         }
-        m_fields.push_back(std::vector<spTerrain>());
+        m_fields.push_back(std::vector<spTerrain>(m_headerInfo.m_width, spTerrain()));
         auto pActor = oxygine::spActor::create();
         pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         m_rowSprites.push_back(pActor);
@@ -1428,7 +1430,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         for (qint32 x = 0; x < m_headerInfo.m_width; x++)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y, "", this);
-            m_fields[y].push_back(pTerrain);
+            m_fields[y][x] = pTerrain;
             pTerrain->deserializer(pStream, fast);
             if (pTerrain->isValid())
             {
@@ -2378,14 +2380,16 @@ void GameMap::showGrid(bool show)
         qint32 mapWidth = getMapWidth();
         qint32 mapHeight = getMapHeight();
         QColor gridColor = getGridColor();
+        m_gridSprites.reserve(mapWidth + mapHeight + 1);
+        oxygine::spColorRectSprite pActor = oxygine::spColorRectSprite::create();
+        pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
         for (qint32 x = 1; x < mapWidth; ++x)
         {
             oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
             pSprite->setSize(1, mapHeight * m_imagesize);
             pSprite->setColor(gridColor);
             pSprite->setPosition(x * m_imagesize, 0);
-            pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
-            addChild(pSprite);
+            pActor->addChild(pSprite);
             m_gridSprites.append(pSprite);
         }
         for (qint32 y = 1; y < mapHeight; ++y)
@@ -2395,9 +2399,11 @@ void GameMap::showGrid(bool show)
             pSprite->setPosition(0, y * m_imagesize);
             pSprite->setColor(gridColor);
             pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
-            addChild(pSprite);
+            pActor->addChild(pSprite);
             m_gridSprites.append(pSprite);
         }
+        addChild(pActor);
+        m_gridSprites.append(pActor);
     }
 }
 

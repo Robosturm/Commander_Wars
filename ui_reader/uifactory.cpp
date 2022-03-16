@@ -155,11 +155,11 @@ bool UiFactory::createItem(oxygine::spActor parent, QDomElement element, oxygine
 {
     QString name = element.nodeName();
     bool success = false;
-    for (qint32 i = 0; i < m_factoryItems.size(); ++i)
+    for (auto & itemFunc : m_factoryItems)
     {
-        if (m_factoryItems[i].m_id == name)
+        if (itemFunc.m_id == name)
         {
-            success = m_factoryItems[i].m_creator(parent, element, item, pMenu);
+            success = itemFunc.m_creator(parent, element, item, pMenu);
             break;
         }
     }

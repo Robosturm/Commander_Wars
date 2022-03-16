@@ -1552,7 +1552,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
             qint32 distance = currentUnit->getMovementpoints(position);
             distance += currentUnit->getMaxRange(position);
 
-            QVector<QPoint> usedFields;
+            std::vector<QPoint> usedFields;
             
             for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
             {
@@ -1582,7 +1582,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
     
 }
 
-void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedFields)
+void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, std::vector<QPoint> & usedFields)
 {
     Mainapp::getInstance()->pauseRendering();
     UnitPathFindingSystem pfs(m_pMap, pUnit, m_pPlayer);
@@ -1611,9 +1611,9 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
             {
                 QPoint target = rangePos + point;
                 if (m_pMap->onMap(target.x(), target.y()) &&
-                    !usedFields.contains(QPoint(target.x(), target.y())))
+                    !GlobalUtils::contains(usedFields, QPoint(target.x(), target.y())))
                 {
-                    usedFields.append(target);
+                    usedFields.push_back(target);
                     m_InfoFields.push_back(createMarkedFieldActor(target, QColor(255, 0, 0), Terrain::ExtraDrawPriority::MarkedFieldMap));
                 }
             }

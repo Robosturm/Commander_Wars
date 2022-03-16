@@ -41,6 +41,7 @@ message("OS: ${CMAKE_SYSTEM_NAME}")
 message("CFlags: ${CMAKE_C_FLAGS}")
 message("CXX Flags: ${CMAKE_CXX_FLAGS}")
 message("CMake Systemname: ${CMAKE_SYSTEM_NAME}")
+message("CMake Binary dir: ${CMAKE_CURRENT_BINARY_DIR}")
 
 ###################################################################################
 # Find external libs
@@ -894,6 +895,9 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     install(DIRECTORY templates                                 DESTINATION "share/${PROJECT_NAME_LOWER}"                            OPTIONAL)
     install(FILES "icon.png"                                    DESTINATION "share/pixmaps"       RENAME "${PROJECT_NAME_LOWER}.png" OPTIONAL)
     install(FILES "Commander_Wars.desktop"                      DESTINATION "share/applications"  RENAME "${PROJECT_NAME}.desktop"   OPTIONAL)
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/debug/android-build-debug.apk"
+            DESTINATION "."                   RENAME "${PROJECT_NAME}_${ANDROID_ABI}.apk" OPTIONAL)
 else()
     install(TARGETS ${PROJECT_NAME}
         RUNTIME         DESTINATION         "."

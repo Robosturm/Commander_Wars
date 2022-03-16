@@ -338,9 +338,9 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
 bool MainServer::validHostRequest(QStringList mods)
 {
     // make sure the server has the requested mods installed.
-    for (qint32 i = 0; i < mods.size(); i++)
+    for (auto & mod : mods)
     {
-        QFile file(mods[i] + "/mod.txt");
+        QFile file(mod + "/mod.txt");
         if (!file.exists())
         {
             return false;

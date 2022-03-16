@@ -62,9 +62,9 @@ float Leaf::getDecision(std::vector<float>&)
 QString Leaf::print()
 {
     QString ret = "Answer ";
-    for (qint32 i = 0; i < m_Answers.size(); i++)
+    for (auto & answer : m_Answers)
     {
-        ret += QString::number(m_Answers[i], 'f', 1) + " ";
+        ret += QString::number(answer, 'f', 1) + " ";
     }
     return ret;
 }
@@ -74,14 +74,14 @@ void Leaf::serializeObject(QDataStream& pStream) const
     pStream << false; // --> 0 for node and 1 for leaf
     pStream << getVersion();
     pStream << static_cast<qint32>(m_AnswersChances.size());
-    for (qint32 i = 0; i < m_AnswersChances.size(); i++)
+    for (auto & chance : m_AnswersChances)
     {
-        pStream << m_AnswersChances[i];
+        pStream << chance;
     }
     pStream << static_cast<qint32>(m_Answers.size());
-    for (qint32 i = 0; i < m_Answers.size(); i++)
+    for (auto & answer : m_Answers)
     {
-        pStream << m_Answers[i];
+        pStream << answer;
     }
     pStream << m_totalChance;
 }

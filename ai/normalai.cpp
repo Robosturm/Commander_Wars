@@ -1657,6 +1657,7 @@ float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPos
                                        bool ignoreOutOfVisionRange) const
 {
     AI_CONSOLE_PRINT("NormalAi calculateCounterDamage", Console::eDEBUG);
+    QApplication::processEvents();
     Unit* pUnit = curUnitData.pUnit.get();
     std::map<QString, qint32> unitDamageData;
     float counterDamage = 0;
@@ -1889,10 +1890,12 @@ void NormalAi::createUnitInfluenceMap()
     m_InfluenceFrontMap.addBuildingInfluence();
     for (auto & unit : m_OwnUnits)
     {
+        QApplication::processEvents();
         m_InfluenceFrontMap.addUnitInfluence(unit.pUnit.get(), unit.pUnitPfs.get(), unit.movementPoints);
     }
     for (auto & unit : m_EnemyUnits)
     {
+        QApplication::processEvents();
         m_InfluenceFrontMap.addUnitInfluence(unit.pUnit.get(), unit.pUnitPfs.get(), unit.movementPoints);
     }
     m_InfluenceFrontMap.updateOwners();

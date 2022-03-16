@@ -454,9 +454,9 @@ qint32 Building::getVision()
 void Building::updateBuildingSprites(bool neutral)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    for (qint32 i = 0; i < m_pBuildingSprites.size(); i++)
+    for (auto & sprite : m_pBuildingSprites)
     {
-        m_pBuildingSprites[i]->detach();
+        sprite->detach();
     }
     // call the js loader function to do the rest
     m_pBuildingSprites.clear();
@@ -680,9 +680,8 @@ QStringList Building::getActionList()
             }
         }
     }
-    for (qint32 i = 0; i < actionModifierList.size(); i++)
+    for (auto & action : actionModifierList)
     {
-        QString action = actionModifierList[i];
         if (!action.startsWith("-") && !action.isEmpty())
         {
             if (!retList.contains(action))
@@ -691,9 +690,8 @@ QStringList Building::getActionList()
             }
         }
     }
-    for (qint32 i = 0; i < actionModifierList.size(); i++)
+    for (auto & action : actionModifierList)
     {
-        QString action = actionModifierList[i];
         if (action.startsWith("-") && !action.isEmpty())
         {
             qint32 index = retList.indexOf(action.replace("-", ""));
@@ -739,15 +737,15 @@ QStringList Building::getConstructionList()
     }
     if (coUnits.size() > 0)
     {
-        for (qint32 i = 0; i < coUnits.size(); i++)
+        for (auto unitId : coUnits)
         {
-            if (coUnits[i].startsWith("-"))
+            if (unitId.startsWith("-"))
             {
-                buildList.removeAll(coUnits[i].replace("-", ""));
+                buildList.removeAll(unitId.replace("-", ""));
             }
             else
             {
-                buildList.append(coUnits[i]);
+                buildList.append(unitId);
             }
         }
     }
@@ -758,9 +756,8 @@ QStringList Building::getConstructionList()
     {
      bool coUnits = m_pMap->getGameRules()->getCoUnits();
         QStringList playerBuildList = m_pOwner->getBuildList();
-        for (qint32 i = 0; i < buildList.size(); i++)
+        for (auto & unitID : buildList)
         {
-            QString unitID = buildList[i];
             function1 = "getCOSpecificUnit";
             QJSValue erg = pInterpreter->doFunction(unitID, function1, args);
             bool isCoUnit = false;

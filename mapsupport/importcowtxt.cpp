@@ -140,9 +140,12 @@ void GameMap::importTxtMap(QString file)
                 QStringList data = line.split("|");
                 qint32 width = data[1].toInt();
                 qint32 heigth = data[2].toInt();
+
+                m_fields.reserve(heigth);
+                m_rowSprites.reserve(heigth);
                 for (qint32 y = 0; y < heigth; y++)
                 {
-                    m_fields.push_back(std::vector<spTerrain>());
+                    m_fields.push_back(std::vector<spTerrain>(width, spTerrain()));
                     auto pActor = oxygine::spActor::create();
                     pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
                     m_rowSprites.push_back(pActor);
@@ -151,7 +154,7 @@ void GameMap::importTxtMap(QString file)
                     {
                         spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, x, y, "", this);
                         m_rowSprites[y]->addChild(pTerrain);
-                        m_fields[y].push_back(pTerrain);
+                        m_fields[y][x] = pTerrain;
                         pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                     }
                 }

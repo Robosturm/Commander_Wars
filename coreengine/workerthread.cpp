@@ -65,9 +65,8 @@ void WorkerThread::start()
         searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/scripts/general");
         searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/scripts/general");
     }
-    for (qint32 i = 0; i < searchPaths.size(); i++)
+    for (auto & path : searchPaths)
     {
-        QString path = searchPaths[i];
         QStringList filter;
         filter << "*.js";
         QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);

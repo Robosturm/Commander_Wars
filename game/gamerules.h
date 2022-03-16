@@ -623,6 +623,7 @@ private:
     std::vector<std::vector<oxygine::spSprite>> m_FogSprites;
     std::vector<oxygine::spSprite> m_WeatherSprites;
     oxygine::spSprite m_weatherMaster;
+    oxygine::spSprite m_fogMaster;
 
     qint32 roundTime{0};
     Timer m_RoundTimer;

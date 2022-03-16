@@ -638,6 +638,9 @@ private:
     bool m_isDefeated{false};
     struct VisionFieldInfo
     {
+        VisionFieldInfo()
+        {
+        }
         VisionFieldInfo(GameEnums::VisionType visionType, qint32 duration, bool directView)
             : m_visionType(visionType),
               m_duration(duration),
@@ -649,7 +652,7 @@ private:
         bool m_directView = false;
     };
 
-    QVector<QVector<VisionFieldInfo>> m_FogVisionFields;
+    std::vector<std::vector<VisionFieldInfo>> m_FogVisionFields;
     /**
      * @brief m_BuildList contains all units we're allowed to build
      */

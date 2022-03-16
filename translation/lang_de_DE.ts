@@ -1933,26 +1933,26 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="57"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="60"/>
         <source>Loading Empty Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="57"/>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="74"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="60"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="77"/>
         <location filename="../game/gamemap.cpp" line="550"/>
         <location filename="../game/gamemap.cpp" line="674"/>
-        <location filename="../game/gamemap.cpp" line="1421"/>
+        <location filename="../game/gamemap.cpp" line="1423"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="74"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="77"/>
         <source>Importing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="1041"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="1044"/>
         <source>Loading Sprites</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2079,7 +2079,7 @@ Distributed for units beeing spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="550"/>
-        <location filename="../game/gamemap.cpp" line="1421"/>
+        <location filename="../game/gamemap.cpp" line="1423"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2099,22 +2099,22 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1451"/>
+        <location filename="../game/gamemap.cpp" line="1453"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1461"/>
+        <location filename="../game/gamemap.cpp" line="1463"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1469"/>
+        <location filename="../game/gamemap.cpp" line="1471"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1481"/>
+        <location filename="../game/gamemap.cpp" line="1483"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4041,14 +4041,14 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <message>
         <location filename="../mapsupport/randomMapGenerator.cpp" line="117"/>
         <location filename="../mapsupport/randomMapGenerator.cpp" line="177"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="623"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="696"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="700"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="848"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="933"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="937"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="1128"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="1170"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="624"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="697"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="701"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="849"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="934"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="938"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="1129"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="1171"/>
         <source>Generating </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6297,7 +6297,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>UnitSpriteManager</name>
     <message>
-        <location filename="../resource_management/unitspritemanager.cpp" line="105"/>
+        <location filename="../resource_management/unitspritemanager.cpp" line="104"/>
         <source>Ground</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6456,67 +6456,67 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WorkerThread</name>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="81"/>
+        <location filename="../coreengine/workerthread.cpp" line="80"/>
         <source>Loading Buildings...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="84"/>
+        <location filename="../coreengine/workerthread.cpp" line="83"/>
         <source>Loading COs...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="87"/>
+        <location filename="../coreengine/workerthread.cpp" line="86"/>
         <source>Loading Gamescripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="90"/>
+        <location filename="../coreengine/workerthread.cpp" line="89"/>
         <source>Loading Gamerules...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="93"/>
+        <location filename="../coreengine/workerthread.cpp" line="92"/>
         <source>Loading Movements...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="96"/>
+        <location filename="../coreengine/workerthread.cpp" line="95"/>
         <source>Loading Terrains...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="99"/>
+        <location filename="../coreengine/workerthread.cpp" line="98"/>
         <source>Loading Units...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="102"/>
+        <location filename="../coreengine/workerthread.cpp" line="101"/>
         <source>Loading Weapons...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="105"/>
+        <location filename="../coreengine/workerthread.cpp" line="104"/>
         <source>Loading Battleanimation scripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="108"/>
+        <location filename="../coreengine/workerthread.cpp" line="107"/>
         <source>Loading CO-Perks...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="111"/>
+        <location filename="../coreengine/workerthread.cpp" line="110"/>
         <source>Loading Wikiscripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="113"/>
+        <location filename="../coreengine/workerthread.cpp" line="112"/>
         <source>Loading Shop items...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="117"/>
+        <location filename="../coreengine/workerthread.cpp" line="116"/>
         <source>Loading Achievements...</source>
         <translation type="unfinished"></translation>
     </message>
