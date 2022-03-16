@@ -1329,6 +1329,7 @@ bool Multiplayermenu::getGameReady()
 {
     bool gameReady = true;
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+    bool hasRemotePlayer = false;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         auto* pInput = pMap->getPlayer(i)->getBaseGameInput();
@@ -1350,9 +1351,13 @@ bool Multiplayermenu::getGameReady()
                 break;
             }
         }
+        if (aiType == GameEnums::AiTypes_ProxyAi)
+        {
+            hasRemotePlayer = true;
+        }
     }
-    CONSOLE_PRINT("Game ready", Console::eDEBUG);
-    return gameReady;
+    CONSOLE_PRINT("Game ready " + QString::number(gameReady) + " and remote player found " + QString::number(hasRemotePlayer), Console::eDEBUG);
+    return gameReady && hasRemotePlayer;
 }
 
 void Multiplayermenu::startGame()
