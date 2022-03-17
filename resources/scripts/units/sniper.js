@@ -17,35 +17,7 @@ var Constructor = function()
         unit.setMaxRange(3);
         unit.setVision(2);
     };
-    
-    this.armyDataStanding = [["os", "os"],
-                     ["bm", "bm"],
-                     ["ge", "ge"],
-                     ["yc", "yc"],
-                     ["bh", "bh"],
-                     ["bg", "bh"],
-                     ["ma", "ma"],
-                     ["ac", "ac"],
-                     ["bd", "bd"],
-                     ["dm", "dm"],
-                     ["gs", "gs"],
-                     ["pf", "pf"],
-                     ["ti", "ti"],];
-    this.loadSprites = function(unit)
-    {
-        // none neutral player
-        var player = unit.getOwner();
-        // get army name
-        var armyName = Global.getArmyNameFromPlayerTable(player, SNIPER.armyDataStanding);
-        // load sprites        
-        unit.loadSpriteV2("sniper+" + armyName +"+mask", GameEnums.Recoloring_Matrix);
-        unit.loadSpriteV2("sniper+" + armyName, GameEnums.Recoloring_None);
-    };
-    this.getMovementType = function()
-    {
-        return "MOVE_FEET";
-    };
-    this.actionList = ["ACTION_FIRE", "ACTION_MISSILE", "ACTION_CAPTURE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
+
     this.armyData = [["os", "os"],
                      ["bm", "bm"],
                      ["ge", "ge"],
@@ -55,7 +27,27 @@ var Constructor = function()
                      ["ma", "ma"],
                      ["ac", "ac"],
                      ["bd", "bd"],
-                     ["dm", "dm"],];
+                     ["dm", "dm"],
+                     ["gs", "gs"],
+                     ["pf", "pf"],
+                     ["ti", "ti"],];
+
+    this.loadSprites = function(unit)
+    {
+        // none neutral player
+        var player = unit.getOwner();
+        // get army name
+        var armyName = Global.getArmyNameFromPlayerTable(player, SNIPER.armyData);
+        // load sprites        
+        unit.loadSpriteV2("sniper+" + armyName +"+mask", GameEnums.Recoloring_Matrix);
+        unit.loadSpriteV2("sniper+" + armyName, GameEnums.Recoloring_None);
+    };
+    this.getMovementType = function()
+    {
+        return "MOVE_FEET";
+    };
+    this.actionList = ["ACTION_FIRE", "ACTION_MISSILE", "ACTION_CAPTURE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
+
     this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();

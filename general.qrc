@@ -2055,5 +2055,6 @@
         <file>templates/gamescript.js</file>
         <file>templates/init.js</file>
         <file>resources/credits/credits.cred</file>
+        <file>resources/scripts/terrain/BRIDGE2.js</file>
     </qresource>
 </RCC>

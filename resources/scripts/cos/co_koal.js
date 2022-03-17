@@ -145,6 +145,7 @@ var Constructor = function()
                                (terrainID === "SNOW_STREET") ||
                                (terrainID === "BRIDGE") ||
                                (terrainID === "BRIDGE1") ||
+                               (terrainID === "BRIDGE2") ||
                                (terrainID === "WASTE_PATH") ||
                                (terrainID === "DESERT_PATH") ||
                                (terrainID === "DESERT_PATH1");

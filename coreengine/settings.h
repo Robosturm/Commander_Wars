@@ -53,7 +53,7 @@ class Settings : public QObject, public oxygine::ref_counter
             {
                 bool ok = false;
                 *m_value = settings.value(m_name, m_defaultValue).toFloat(&ok);
-                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
+                if(!ok || *m_value <= m_minValue || *m_value >= m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
                     CONSOLE_PRINT(error, Console::eERROR);
@@ -235,8 +235,8 @@ public slots:
     static const QString &getSlaveListenAdress();
     static void setSlaveListenAdress(const QString &newSlaveListenAdress);
 
-    static quint32 getPauseAfterAction();
-    static void setPauseAfterAction(quint32 newPauseAfterAction);
+    static qint32 getPauseAfterAction();
+    static void setPauseAfterAction(qint32 newPauseAfterAction);
 
     static const QString &getServerListenAdress();
     static void setServerListenAdress(const QString &newServerListenAdress);
@@ -798,7 +798,7 @@ private:
     static bool m_showDetailedBattleForcast;
     static bool m_autoMoveCursor;
     static float m_supplyWarning;
-    static quint32 m_pauseAfterAction;
+    static qint32 m_pauseAfterAction;
 
     // internal members
     static spSettings m_pInstance;

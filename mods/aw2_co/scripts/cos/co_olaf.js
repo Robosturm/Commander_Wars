@@ -44,6 +44,7 @@ CO_OLAF.getMovementcostModifier = function(co, unit, posX, posY, map)
                      id !== "SNOW_STREET" &&
                      id !== "BRIDGE" &&
                      id !== "BRIDGE1" &&
+                     id !== "BRIDGE2" &&
                      id !== "WASTE_PATH" &&
                      id !== "DESERT_PATH" &&
                      id !== "DESERT_PATH1" &&

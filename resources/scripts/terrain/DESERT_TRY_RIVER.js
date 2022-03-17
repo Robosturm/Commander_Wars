@@ -39,7 +39,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain, map)
     {
-        var surroundings = terrain.getSurroundings("DESERT_TRY_RIVER,BRIDGE,BRIDGE1", false, false, GameEnums.Directions_Direct);
+        var surroundings = terrain.getSurroundings("DESERT_TRY_RIVER,BRIDGE,BRIDGE1,BRIDGE2", false, false, GameEnums.Directions_Direct);
         terrain.loadBaseSprite("desert_try_river" + surroundings);
     };
     this.getMiniMapIcon = function()

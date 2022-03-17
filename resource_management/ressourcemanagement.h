@@ -232,6 +232,7 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
 {    
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths = getSearchPaths();
+    QApplication::processEvents();
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString path = searchPaths[i];

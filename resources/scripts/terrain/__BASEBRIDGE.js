@@ -18,7 +18,8 @@ var Constructor = function()
             (terrain.getTerrainID() === "RIVER") ||
             (terrain.getTerrainID() === "DESERT_TRY_RIVER") ||
             (terrain.getTerrainID() === "BRIDGE") ||
-            (terrain.getTerrainID() === "BRIDGE1"))
+            (terrain.getTerrainID() === "BRIDGE1") ||
+            (terrain.getTerrainID() === "BRIDGE2"))
         {
             return true;
         }
@@ -71,6 +72,25 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
+        var variables = terrain.getVariables();
+        var variable = variables.getVariable("BACKGROUND_ID");
+        var rand = 0;
+        if (variable === null)
+        {
+            rand = globals.randInt(0, 1);
+            variable = variables.createVariable("BACKGROUND_ID");
+            variable.writeDataInt32(rand);
+        }
+        else
+        {
+            rand = variable.readDataInt32();
+        }
+        return __BASEBRIDGE.getTerrainAnimationBackgroundRand(unit, terrain, defender, map, rand);
+    }
+
+
+    this.getTerrainAnimationBackgroundRand = function(unit, terrain, defender, map, rand)
+    {
         var id = TERRAIN.getTerrainAnimationId(terrain, map);
         var weatherModifier = TERRAIN.getWeatherModifier(map);
         if (weatherModifier === "")
@@ -90,19 +110,6 @@ var Constructor = function()
             }
             default:
             {
-                var variables = terrain.getVariables();
-                var variable = variables.getVariable("BACKGROUND_ID");
-                var rand = 0;
-                if (variable === null)
-                {
-                    rand = globals.randInt(0, 1);
-                    variable = variables.createVariable("BACKGROUND_ID");
-                    variable.writeDataInt32(rand);
-                }
-                else
-                {
-                    rand = variable.readDataInt32();
-                }
                 return "back_" + weatherModifier + "bridge+" + rand.toString();
             }
         }
