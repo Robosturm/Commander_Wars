@@ -233,13 +233,16 @@
         <image file="sniper+ge+walk+mask.png" cols = "4" rows = "4"  />
         <image file="sniper+gs.png" cols = "4"  />
         <image file="sniper+gs+mask.png" cols = "4"  />
-        <image file="sniper+gs+walk.png" cols = "4"  />
+        <image file="sniper+gs+walk.png" cols = "4" rows = "4"  />
+        <image file="sniper+gs+walk+mask.png" cols = "4" rows = "4"  />
         <image file="sniper+ma+mask.png" cols = "4"  />
         <image file="sniper+ma+walk+mask.png" cols = "4" rows = "4"  />        
         <image file="sniper+os+mask.png" cols = "4"  />
         <image file="sniper+os+walk+mask.png" cols = "4" rows = "4"  />        
         <image file="sniper+pf+mask.png" cols = "4"  />
+        <image file="sniper+pf+walk+mask.png" cols = "4" rows = "4"  />
         <image file="sniper+ti+mask.png" cols = "4"  />
+        <image file="sniper+ti+walk+mask.png" cols = "4" rows = "4"  />
         <image file="sniper+yc+mask.png" cols = "4"  />
         <image file="sniper+yc+walk+mask.png" cols = "4" rows = "4"  />
         <!-- submarine -->
