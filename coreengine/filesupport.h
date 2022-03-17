@@ -3,7 +3,8 @@
 
 #include <QObject>
 #include <QDataStream>
-#include <QCryptographicHash>
+
+#include "coreengine/sha256hash.h"
 
 class Filesupport : public QObject
 {
@@ -33,7 +34,7 @@ public:
      * @param folder
      * @param filter
      */
-    static void addHash(QCryptographicHash & hash, const QString & folder, const QStringList & filter);
+    static void addHash(Sha256Hash & hash, const QString & folder, const QStringList & filter);
     /**
      * @brief writeByteArray
      * @param stream

@@ -38,8 +38,11 @@ AudioThread::AudioThread(bool noAudio)
         connect(this, &AudioThread::sigStopAllSounds,     this, &AudioThread::SlotStopAllSounds, Qt::QueuedConnection);
         connect(this, &AudioThread::sigChangeAudioDevice, this, &AudioThread::SlotChangeAudioDevice, Qt::BlockingQueuedConnection);
         connect(this, &AudioThread::sigLoadNextAudioFile, this, &AudioThread::loadNextAudioFile, Qt::QueuedConnection);
+
+#ifdef AUDIOSUPPORT
         connect(this, &AudioThread::sigDeleteSound,       this, &AudioThread::deleteSound, Qt::QueuedConnection);
         connect(this, &AudioThread::sigPlayDelayedSound,  this, &AudioThread::playDelayedSound, Qt::QueuedConnection);
+#endif
     }
 }
 

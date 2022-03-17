@@ -349,7 +349,6 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
         {
             GameManager* pGameManager = GameManager::getInstance();
             m_pMapSelectionView->loadMap(info);
-            // todo show map info
             auto pBuildingBackground = m_pMapSelectionView->getBuildingBackground();
             qint32 contentHeight = pBuildingBackground->getScaledHeight();
             if (y - contentHeight + m_pMapBackground->getY() > 0)

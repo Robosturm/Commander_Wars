@@ -554,6 +554,9 @@ void GameMenue::loadGameMenue()
     m_mapSlidingActor->addChild(m_pMap);
     m_pMap->centerMap(m_pMap->getMapWidth() / 2, m_pMap->getMapHeight() / 2);
 
+    m_delayedActionPerformedTimer.setSingleShot(true);
+    connect(&m_delayedActionPerformedTimer, &QTimer::timeout, this, &GameMenue::delayedActionPerformed, Qt::QueuedConnection);
+
     connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
     connectMap();
     connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
@@ -833,6 +836,11 @@ void GameMenue::nextTurnPlayerTimeout()
 
 void GameMenue::performAction(spGameAction pGameAction)
 {
+    if (m_pCurrentAction.get() != nullptr)
+    {
+        CONSOLE_PRINT("Ignoring action request cause an action is currently performed", Console::eWARNING);
+        return;
+    }
     m_saveAllowed = false;
     if (m_multiplayerSyncData.m_waitingForSyncFinished)
     {
@@ -1257,8 +1265,7 @@ void GameMenue::finishActionPerformed()
 void GameMenue::actionPerformed()
 {
     if (getParent() != nullptr)
-    {
-        
+    {        
         if (m_pMap.get() != nullptr)
         {
             CONSOLE_PRINT("Action performed", Console::eDEBUG);
@@ -1296,7 +1303,15 @@ void GameMenue::actionPerformed()
                         m_pMap->getGameRules()->resumeRoundTime();
                     }
                     CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
-                    emit sigActionPerformed();
+                    quint32 delay = Settings::getPauseAfterAction();
+                    if (delay == 0)
+                    {
+                        emit sigActionPerformed();
+                    }
+                    else
+                    {
+                        m_delayedActionPerformedTimer.start(std::chrono::seconds(delay));
+                    }
                 }
             }
         }
@@ -1310,6 +1325,14 @@ void GameMenue::actionPerformed()
     if (m_saveMap)
     {
         doSaveMap();
+    }
+}
+
+void GameMenue::delayedActionPerformed()
+{
+    if (m_pCurrentAction.get() == nullptr)
+    {
+        emit sigActionPerformed();
     }
 }
 

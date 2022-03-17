@@ -98,33 +98,30 @@ void Player::loadVisionFields()
     qint32 heigth = m_pMap->getMapHeight();
     GameEnums::Fog mode = m_pMap->getGameRules()->getFogMode();
     m_FogVisionFields.clear();
+    m_FogVisionFields.reserve(width);
     for (qint32 x = 0; x < width; x++)
     {
-        m_FogVisionFields.append(QVector<VisionFieldInfo>());
-        for (qint32 y = 0; y < heigth; y++)
+        switch (mode)
         {
-            switch (mode)
+            case GameEnums::Fog::Fog_Off:
             {
-                case GameEnums::Fog::Fog_Off:
-                {
-                    m_FogVisionFields[x].append(VisionFieldInfo(GameEnums::VisionType_Clear, 0, false));
-                    break;
-                }
-                case GameEnums::Fog::Fog_OfWar:
-                {
-                    m_FogVisionFields[x].append(VisionFieldInfo(GameEnums::VisionType_Fogged, 0, false));
-                    break;
-                }
-                case GameEnums::Fog::Fog_OfShroud:
-                {
-                    m_FogVisionFields[x].append(VisionFieldInfo(GameEnums::VisionType_Shrouded, 0, false));
-                    break;
-                }
-                case GameEnums::Fog::Fog_OfMist:
-                {
-                    m_FogVisionFields[x].append(VisionFieldInfo(GameEnums::VisionType_Mist, 0, false));
-                    break;
-                }
+                m_FogVisionFields.push_back(std::vector<VisionFieldInfo>(heigth, VisionFieldInfo(GameEnums::VisionType_Clear, 0, false)));
+                break;
+            }
+            case GameEnums::Fog::Fog_OfWar:
+            {
+                m_FogVisionFields.push_back(std::vector<VisionFieldInfo>(heigth, VisionFieldInfo(GameEnums::VisionType_Fogged, 0, false)));
+                break;
+            }
+            case GameEnums::Fog::Fog_OfShroud:
+            {
+                m_FogVisionFields.push_back(std::vector<VisionFieldInfo>(heigth, VisionFieldInfo(GameEnums::VisionType_Shrouded, 0, false)));
+                break;
+            }
+            case GameEnums::Fog::Fog_OfMist:
+            {
+                m_FogVisionFields.push_back(std::vector<VisionFieldInfo>(heigth, VisionFieldInfo(GameEnums::VisionType_Mist, 0, false)));
+                break;
             }
         }
     }
@@ -1198,9 +1195,8 @@ void Player::updatePlayerVision(bool reduceTimer)
                     {
                         pPoints = GlobalUtils::getCircle(0, visionRange);
                     }
-                    for (qint32 i = 0; i < pPoints->size(); i++)
+                    for (auto & point : pPoints->getVector())
                     {
-                        QPoint point = pPoints->at(i);
                         if (m_pMap->onMap(point.x() + x, point.y() + y))
                         {
                             Terrain* visionField = m_pMap->getTerrain(point.x() + x,point.y() + y);
@@ -1234,9 +1230,8 @@ void Player::updatePlayerVision(bool reduceTimer)
                         {
                             pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, visionRange));
                         }
-                        for (qint32 i = 0; i < pPoints->size(); i++)
+                        for (auto & point : pPoints->getVector())
                         {
-                            QPoint point = pPoints->at(i);
                             if (m_pMap->onMap(point.x() + x, point.y() + y))
                             {
                                 Terrain* visionField = m_pMap->getTerrain(point.x() + x,point.y() + y);
@@ -1274,9 +1269,8 @@ void Player::updatePlayerVision(bool reduceTimer)
                     {
                         pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, visionRange));
                     }
-                    for (qint32 i = 0; i < pPoints->size(); i++)
+                    for (auto & point : pPoints->getVector())
                     {
-                        QPoint point = pPoints->at(i);
                         if (m_pMap->onMap(point.x() + x, point.y() + y))
                         {
                             Terrain* visionField = m_pMap->getTerrain(point.x() + x,point.y() + y);
@@ -1774,10 +1768,10 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
     qint32 averageCosts = getAverageCost();
     
     qint32 damageDone = 0;
-    for (qint32 i = 0; i < pPoints->size(); i++)
+    for (auto & point : pPoints->getVector())
     {
-        qint32 x2 = x + pPoints->at(i).x();
-        qint32 y2 = y + pPoints->at(i).y();
+        qint32 x2 = x + point.x();
+        qint32 y2 = y + point.y();
         // is there a unit?
         if ((m_pMap->onMap(x2, y2)) &&
             (m_pMap->getTerrain(x2, y2)->getUnit() != nullptr))
@@ -2011,9 +2005,10 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             pStream >> width;
             pStream >> heigth;
             CONSOLE_PRINT("Loading player vision width " + QString::number(width) + " height " + QString::number(heigth), Console::eDEBUG);
+            m_FogVisionFields.reserve(width);
             for (qint32 x = 0; x < width; x++)
             {
-                m_FogVisionFields.append(QVector<VisionFieldInfo>());
+                m_FogVisionFields.push_back(std::vector<VisionFieldInfo>(heigth, VisionFieldInfo()));
                 for (qint32 y = 0; y < heigth; y++)
                 {
                     GameEnums::VisionType value = GameEnums::VisionType_Shrouded;
@@ -2056,7 +2051,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
                     {
                         pStream >> directView;
                     }
-                    m_FogVisionFields[x].append(VisionFieldInfo(value, duration, directView));
+                    m_FogVisionFields[x][y] = VisionFieldInfo(value, duration, directView);
                 }
             }
         }

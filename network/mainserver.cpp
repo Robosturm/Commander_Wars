@@ -11,6 +11,7 @@
 #include "coreengine/filesupport.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/commandlineparser.h"
 
 #include "game/gamemap.h"
 
@@ -63,8 +64,8 @@ MainServer::MainServer()
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
     parseSlaveAddressOptions();
 
-    emit m_pGameServer->sig_connect("", Settings::getServerPort());
-    emit m_pSlaveServer->sig_connect("", Settings::getSlaveServerPort());
+    emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort());
+    emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort());
 }
 
 MainServer::~MainServer()
@@ -220,8 +221,12 @@ void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject & objData)
     if (!found)
     {
         CONSOLE_PRINT("Failed to find game " + slave + " for socket " + QString::number(socketID) + " to join game. Forcing a disconnection.", Console::eDEBUG);
-        // todo send an actual error messge to client
-        m_pGameServer->disconnectClient(socketID);
+        QString command = QString(NetworkCommands::SERVERGAMENOLONGERAVAILABLE);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonDocument doc(data);
+        emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -261,8 +266,12 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
     else
     {
         CONSOLE_PRINT("Requested invalid mod configuration.", Console::eDEBUG);
-        // todo send an actual error messge to client
-        m_pGameServer->disconnectClient(socketID);
+        QString command = QString(NetworkCommands::SERVERINVALIDMODCONFIG);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonDocument doc(data);
+        emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -279,24 +288,27 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         QString program = "Commander_Wars.exe";
         game->process = std::make_shared<QProcess>();
         game->process->setObjectName(slaveName + "Slaveprocess");
-        QStringList args({Mainapp::ARG_SLAVE,
-                          Mainapp::ARG_SLAVENAME,
+        const char* const prefix = "--";
+        QStringList args({QString(prefix) + CommandLineParser::ARG_SLAVE,
+                          QString(prefix) + CommandLineParser::ARG_SLAVENAME,
                           slaveName,
-                          Mainapp::ARG_NOUI, // comment out for debugging
-                          Mainapp::ARG_NOAUDIO,
-                          Mainapp::ARG_MODS,
+                          QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
+                          QString(prefix) + CommandLineParser::ARG_NOAUDIO,
+                          QString(prefix) + CommandLineParser::ARG_MODS,
                           Settings::getConfigString(mods),
-                          Mainapp::ARG_SLAVEADDRESS,
+                          QString(prefix) + CommandLineParser::ARG_SLAVEADDRESS,
                           slaveAddress,
+                          QString(prefix) + CommandLineParser::ARG_SLAVEPORT,
                           QString::number(slavePort),
-                          Mainapp::ARG_MASTERADDRESS,
-                          Settings::getSlaveServerName(),
+                          QString(prefix) + CommandLineParser::ARG_MASTERADDRESS,
+                          Settings::getSlaveListenAdress(),
+                          QString(prefix) + CommandLineParser::ARG_MASTERPORT,
                           QString::number(Settings::getSlaveServerPort()),
-                          Mainapp::ARG_INITSCRIPT,
+                          QString(prefix) + CommandLineParser::ARG_INITSCRIPT,
                           initScript});
         if (Mainapp::getInstance()->getCreateSlaveLogs())
         {
-            args << Mainapp::ARG_CREATESLAVELOGS;
+            args << QString(prefix) + CommandLineParser::ARG_CREATESLAVELOGS;
         }
         game->game = spNetworkGame::create(nullptr);
         game->game->setDataBuffer(data);
@@ -314,17 +326,21 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
     else
     {
         CONSOLE_PRINT("No free slots available.", Console::eDEBUG);
-        // todo send an actual error messge to client
-        m_pGameServer->disconnectClient(socketID);
+        QString command = QString(NetworkCommands::SERVERNOGAMESLOTSAVAILABLE);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonDocument doc(data);
+        emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
 bool MainServer::validHostRequest(QStringList mods)
 {
     // make sure the server has the requested mods installed.
-    for (qint32 i = 0; i < mods.size(); i++)
+    for (auto & mod : mods)
     {
-        QFile file(mods[i] + "/mod.txt");
+        QFile file(mod + "/mod.txt");
         if (!file.exists())
         {
             return false;

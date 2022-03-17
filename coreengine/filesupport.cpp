@@ -7,7 +7,7 @@
 
 QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & folders)
 {
-    QCryptographicHash myHash(QCryptographicHash::Sha256);
+    Sha256Hash myHash;
     QStringList fullList;
     for (const auto & folder : qAsConst(folders))
     {
@@ -21,7 +21,7 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
     return myHash.result();
 }
 
-void Filesupport::addHash(QCryptographicHash & hash, const QString & folder, const QStringList & filter)
+void Filesupport::addHash(Sha256Hash & hash, const QString & folder, const QStringList & filter)
 {
     QDir dir(folder);
     auto list = dir.entryInfoList(filter, QDir::Files);
@@ -30,12 +30,10 @@ void Filesupport::addHash(QCryptographicHash & hash, const QString & folder, con
         QString filePath = item.filePath();
         CONSOLE_PRINT("Adding file: " + filePath + " to hash", Console::eDEBUG);
         QFile file(filePath);
-
         file.open(QIODevice::ReadOnly);
-        QTextStream stream;
-        while (!stream.atEnd())
+        while (!file.atEnd())
         {
-            hash.addData(file.readLine());
+            hash.addData(file.readLine().trimmed());
         }
         file.close();
         if (Console::eDEBUG >= Console::getLogLevel())

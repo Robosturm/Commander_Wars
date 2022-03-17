@@ -71,18 +71,17 @@ QStringList UnitSpriteManager::getUnitsSorted()
             unitTypes.append(unitType);
         }
     }
-    for (qint32 i2 = 0; i2 < unitTypes.size(); i2++)
+    for (auto & type : unitTypes)
     {
-        if (pInterpreter->exists("UNIT", "getUnitTypeSort" + QString::number(unitTypes[i2])))
+        if (pInterpreter->exists("UNIT", "getUnitTypeSort" + QString::number(type)))
         {
-            function1 = "getUnitTypeSort" + QString::number(unitTypes[i2]);
+            function1 = "getUnitTypeSort" + QString::number(type);
             ret = pInterpreter->doFunction("UNIT", function1);
             sortedUnits.append(ret.toVariant().toStringList());
         }
         for (qint32 i = 0; i < m_loadedRessources.size(); i++)
         {
-
-            if (getUnitType(i) == unitTypes[i2] && !sortedUnits.contains(m_loadedRessources[i]))
+            if (getUnitType(i) == type && !sortedUnits.contains(m_loadedRessources[i]))
             {
                 sortedUnits.append(m_loadedRessources[i]);
             }

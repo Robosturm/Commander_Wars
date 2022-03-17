@@ -325,6 +325,10 @@ protected slots:
      * @brief nextTurnPlayerTimeout
      */
     void nextTurnPlayerTimeout();
+    /**
+     * @brief delayedActionPerformed
+     */
+    void delayedActionPerformed();
 protected:
     void loadUIButtons();
     void loadGameMenue();
@@ -357,7 +361,8 @@ protected:
     bool m_SaveGame{false};
     bool m_Multiplayer{false};
 
-    QTimer m_UpdateTimer;
+    QTimer m_UpdateTimer{this};
+    QTimer m_delayedActionPerformedTimer{this};
     spGameAction m_pStoredAction{nullptr};
     spGameAction m_pCurrentAction{nullptr};
 

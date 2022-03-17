@@ -83,9 +83,8 @@ void WikiDatabase::load()
     }
     searchPaths.append(Settings::getUserPath() + "resources/scripts/wiki");
     searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/scripts/wiki");
-    for (qint32 i = 0; i < searchPaths.size(); i++)
+    for (auto & path : searchPaths)
     {
-        QString path =  searchPaths[i];
         QStringList filter;
         filter << "*.js";
         QDirIterator dirIter = QDirIterator(path, filter, QDir::Files, QDirIterator::Subdirectories);
@@ -115,12 +114,12 @@ void WikiDatabase::load()
 QVector<WikiDatabase::PageData> WikiDatabase::getEntries(QString searchTerm, bool onlyTag)
 {
     QVector<PageData> ret;
-    for (qint32 i = 0; i < m_Entries.size(); i++)
+    for (auto & entry : m_Entries)
     {
-        if ((m_Entries[i].m_name.contains(searchTerm, Qt::CaseInsensitive) && !onlyTag) ||
-            (tagMatches(m_Entries[i].m_tags, searchTerm)))
+        if ((entry.m_name.contains(searchTerm, Qt::CaseInsensitive) && !onlyTag) ||
+            (tagMatches(entry.m_tags, searchTerm)))
         {
-            ret.append(m_Entries[i]);
+            ret.append(entry);
         }
     }
     return ret;
@@ -149,14 +148,14 @@ bool WikiDatabase::hasEntry(QString file1)
 QStringList WikiDatabase::getTags()
 {
     QStringList ret;
-    for (qint32 i = 0; i < m_Entries.size(); i++)
+    for (auto & entry : m_Entries)
     {
-        QStringList tags = m_Entries[i].m_tags;
-        for (qint32 i2 = 0; i2 < tags.size(); i2++)
+        QStringList tags = entry.m_tags;
+        for (auto & tag : tags)
         {
-            if (!ret.contains(tags[i2]))
+            if (!ret.contains(tag))
             {
-               ret.append(tags[i2]);
+               ret.append(tag);
             }
         }
     }
@@ -174,19 +173,19 @@ WikiDatabase::PageData WikiDatabase::getEntry(qint32 entry)
 
 WikiDatabase::PageData WikiDatabase::getEntry(QString id)
 {
-    for (qint32 i = 0; i < m_Entries.size(); i++)
+    for (auto & entryPage : m_Entries)
     {
-        QString entry = m_Entries[i].m_id;
+        QString entry = entryPage.m_id;
         entry = entry.replace(".js", "");
         entry = entry.remove(0, entry.lastIndexOf("/") + 1);
         entry = entry.remove(0, entry.lastIndexOf("\\") + 1);
         if (entry == id)
         {
-            return m_Entries[i];
+            return entryPage;
         }
         else if (entry.toUpper() == id.toUpper())
         {
-            return m_Entries[i];
+            return entryPage;
         }
     }
     return PageData("", id, QStringList());
@@ -194,9 +193,9 @@ WikiDatabase::PageData WikiDatabase::getEntry(QString id)
 
 bool WikiDatabase::tagMatches(const QStringList & tags, const QString & searchTerm)
 {
-    for (qint32 i = 0; i < tags.size(); i++)
+    for (auto & tag : tags)
     {
-        if (tags[i].contains(searchTerm, Qt::CaseInsensitive))
+        if (tag.contains(searchTerm, Qt::CaseInsensitive))
         {
             return true;
         }

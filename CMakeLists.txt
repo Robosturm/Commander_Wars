@@ -20,7 +20,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-option(AUDIOSUPPORT "enables audio support for the game" ON)
+option(AUDIOSUPPORT "enables audio support for the game and compiles music/sound into the exe" ON)
+option(GRAPHICSUPPORT "enables sprites for the game and compiles them into the exe" ON)
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
 
 ###################################################################################
@@ -40,6 +41,7 @@ message("OS: ${CMAKE_SYSTEM_NAME}")
 message("CFlags: ${CMAKE_C_FLAGS}")
 message("CXX Flags: ${CMAKE_CXX_FLAGS}")
 message("CMake Systemname: ${CMAKE_SYSTEM_NAME}")
+message("CMake Binary dir: ${CMAKE_CURRENT_BINARY_DIR}")
 
 ###################################################################################
 # Find external libs
@@ -386,6 +388,8 @@ set(${PROJECT_NAME}_SRCS
     coreengine/metatyperegister.cpp
     coreengine/Gamepad.h
     coreengine/GamepadShared.cpp
+    coreengine/sha256hash.cpp
+    coreengine/commandlineparser.cpp
 
     # network engine
     network/tcpclient.cpp
@@ -608,16 +612,29 @@ endif()
 
 if (NOT DEPLOY_RESOURCES_AS_FOLDER)
     message("Using compiled resources")
-    if(AUDIOSUPPORT)
+
+    if (GRAPHICSUPPORT AND AUDIOSUPPORT)
         qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
-                             "general.qrc"
-                             "music.qrc"
-                             "sound.qrc"
-        )
+            "general.qrc"
+            "sprites.qrc"
+            "music.qrc"
+            "sound.qrc"
+            )
+    elseif(AUDIOSUPPORT)
+        qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
+            "general.qrc"
+            "music.qrc"
+            "sound.qrc"
+            )
+    elseif(GRAPHICSUPPORT)
+        qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
+            "general.qrc"
+            "sprites.qrc"
+            )
     else()
         qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
             "general.qrc"
-        )
+            )
     endif()
 endif()
 
@@ -837,31 +854,55 @@ set(${PROJECT_NAME}_INSTALL_QT_LIBS
 )
 
 message("install lib dir: ${CMAKE_INSTALL_PREFIX}")
-set(INSTALL_PATH "Commander_Wars_${CMAKE_BUILD_TYPE}")
 # install folders and executable
-install(TARGETS ${PROJECT_NAME}
-    RUNTIME         DESTINATION         "${INSTALL_PATH}"
-    BUNDLE          DESTINATION         "${INSTALL_PATH}"
-    LIBRARY         DESTINATION         "${INSTALL_PATH}")
 
-if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows" OR
-   "${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
-    install(DIRECTORY templates DESTINATION "${INSTALL_PATH}")
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+    install(TARGETS ${PROJECT_NAME}
+        RUNTIME         DESTINATION         "."
+        BUNDLE          DESTINATION         "."
+        LIBRARY         DESTINATION         ".")
+
+    install(DIRECTORY templates DESTINATION "/")
     if (DEPLOY_RESOURCES_AS_FOLDER)
         message("Installing resources as folder")
-        install(DIRECTORY system DESTINATION                "${INSTALL_PATH}")
-        install(DIRECTORY resources DESTINATION             "${INSTALL_PATH}")
-        install(DIRECTORY maps DESTINATION                  "${INSTALL_PATH}")
-        install(FILES ${QM_FILES} DESTINATION               "${INSTALL_PATH}/resources/translation/" OPTIONAL)
-        install(DIRECTORY customTerrainImages DESTINATION   "${INSTALL_PATH}")
-        install(DIRECTORY mods DESTINATION                  "${INSTALL_PATH}")
-        install(DIRECTORY savegames DESTINATION             "${INSTALL_PATH}")
-        install(DIRECTORY data DESTINATION                  "${INSTALL_PATH}")
+        install(DIRECTORY system DESTINATION                "/")
+        install(DIRECTORY resources DESTINATION             "/")
+        install(DIRECTORY maps DESTINATION                  "/")
+        install(FILES ${QM_FILES} DESTINATION               "resources/translation/" OPTIONAL)
+        install(DIRECTORY customTerrainImages DESTINATION   "/")
+        install(DIRECTORY mods DESTINATION                  "/")
+        install(DIRECTORY savegames DESTINATION             "/")
+        install(DIRECTORY data DESTINATION                  "/")
     endif()
     # install libs
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "${INSTALL_PATH}" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS} DESTINATION                    "${INSTALL_PATH}" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "${INSTALL_PATH}/platforms" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "/" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS} DESTINATION                    "/" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "platforms" OPTIONAL)
+
+elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+    string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        OUTPUT_NAME "${PROJECT_NAME_LOWER}"
+    )
+    install(TARGETS ${PROJECT_NAME}
+        RUNTIME         DESTINATION         "bin"
+        BUNDLE          DESTINATION         "bin"
+        LIBRARY         DESTINATION         "bin")
+    # install libs
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
+    install(DIRECTORY templates                                 DESTINATION "share/${PROJECT_NAME_LOWER}"                            OPTIONAL)
+    install(FILES "icon.png"                                    DESTINATION "share/pixmaps"       RENAME "${PROJECT_NAME_LOWER}.png" OPTIONAL)
+    install(FILES "Commander_Wars.desktop"                      DESTINATION "share/applications"  RENAME "${PROJECT_NAME}.desktop"   OPTIONAL)
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/debug/android-build-debug.apk"
+            DESTINATION "."                   RENAME "${PROJECT_NAME}_${ANDROID_ABI}.apk" OPTIONAL)
+else()
+    install(TARGETS ${PROJECT_NAME}
+        RUNTIME         DESTINATION         "."
+        BUNDLE          DESTINATION         "."
+        LIBRARY         DESTINATION         ".")
 endif()
 
 if (DOXYGEN_FOUND)
@@ -893,12 +934,12 @@ endif()
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
     message("Build will zip artifacts")
     add_custom_target(createReleaseZip
-        WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/"
+        WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/../"
         COMMAND ${CMAKE_COMMAND} -E tar
         "cfv"
         "${CMAKE_INSTALL_PREFIX}/Commander_Wars.zip"
         --format=zip
-        "${CMAKE_INSTALL_PREFIX}/${INSTALL_PATH}/"
+        "${CMAKE_INSTALL_PREFIX}/"
         COMMENT "Zipping Commander Wars..."
     )
 endif()

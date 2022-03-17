@@ -22,8 +22,14 @@ var Constructor = function()
                      ["ge", "ge"],
                      ["yc", "yc"],
                      ["bh", "bh"],
-                     ["bg", "bh"],
-                     ["dm", ""],];
+                     ["bg", "bg"],
+                     ["ma", "ma"],
+                     ["ac", "ac"],
+                     ["bd", "bd"],
+                     ["gs", "gs"],
+                     ["pf", "pf"],
+                     ["ti", "ti"],
+                     ["dm", "dm"],];
     this.getBaseCost = function()
     {
         return 2500;
@@ -37,6 +43,7 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, MOTORBIKE.armyData);
         // load sprites
         unit.loadSpriteV2("motorbike+" + armyName +"+mask", GameEnums.Recoloring_Matrix);
+        unit.loadSpriteV2("motorbike+" + armyName, GameEnums.Recoloring_None);
     };
     this.getMovementType = function()
     {

@@ -23,6 +23,7 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
         qint32 width = m_pMap->getMapWidth();
         qint32 heigth = m_pMap->getMapHeight();
 
+        m_Islands.reserve(width);
         for (qint32 x = 0; x < width; x++)
         {
             m_Islands.push_back(std::vector<qint32>(heigth, UNKNOWN));
@@ -115,6 +116,7 @@ void IslandMap::getValueOnIsland(qint32 island, qint32 &ownValue, qint32 & enemy
 
 void IslandMap::show()
 {
+    m_info.reserve(m_Islands.size() * m_Islands[0].size());
     for (qint32 x = 0; x < m_Islands.size(); ++x)
     {
         for (qint32 y = 0; y < m_Islands[x].size(); ++y)

@@ -162,7 +162,6 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
     {
         loadIni( "normal/" + configurationFile);
     }
-    m_BuildingChanceModifier.insert("MOTORBIKE", 0.9f);
     m_BuildingChanceModifier.insert("MECH", 1.1f);
 }
 
@@ -1168,7 +1167,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
         }
         else if (!shortenPathForTarget && CoreAI::contains(targets, targetFields))
         {
-            auto movePath = turnPfs.getClosestReachableMovePath(targetFields);
+            auto movePath = turnPfs.getClosestReachableMovePath(targetFields, pUnitData->movementPoints);
             pAction->setMovepath(movePath, turnPfs.getCosts(movePath));
             pAction->setActionID(ACTION_WAIT);
             if (pAction->canBePerformed())
@@ -1181,7 +1180,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
         }
         else
         {
-            auto movePath = turnPfs.getClosestReachableMovePath(targetFields);
+            auto movePath = turnPfs.getClosestReachableMovePath(targetFields, pUnitData->movementPoints);
             if (movePath.size() == 0)
             {
                 movePath.push_back(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -1355,7 +1354,7 @@ bool NormalAi::suicide(spGameAction & pAction, Unit* pUnit, UnitPathFindingSyste
         qint32 selection = GlobalUtils::randIntBase(0, ret.size() - 1);
         QVector3D target = ret[selection];
         auto path = turnPfs.getPathFast(static_cast<qint32>(moveTargetFields[selection].x()),
-                                               static_cast<qint32>(moveTargetFields[selection].y()));
+                                        static_cast<qint32>(moveTargetFields[selection].y()));
         pAction->setMovepath(path, turnPfs.getCosts(path));
         CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
                                                      static_cast<qint32>(target.y())));
@@ -1658,6 +1657,7 @@ float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPos
                                        bool ignoreOutOfVisionRange) const
 {
     AI_CONSOLE_PRINT("NormalAi calculateCounterDamage", Console::eDEBUG);
+    QApplication::processEvents();
     Unit* pUnit = curUnitData.pUnit.get();
     std::map<QString, qint32> unitDamageData;
     float counterDamage = 0;
@@ -1890,10 +1890,12 @@ void NormalAi::createUnitInfluenceMap()
     m_InfluenceFrontMap.addBuildingInfluence();
     for (auto & unit : m_OwnUnits)
     {
+        QApplication::processEvents();
         m_InfluenceFrontMap.addUnitInfluence(unit.pUnit.get(), unit.pUnitPfs.get(), unit.movementPoints);
     }
     for (auto & unit : m_EnemyUnits)
     {
+        QApplication::processEvents();
         m_InfluenceFrontMap.addUnitInfluence(unit.pUnit.get(), unit.pUnitPfs.get(), unit.movementPoints);
     }
     m_InfluenceFrontMap.updateOwners();
@@ -1905,6 +1907,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
     AI_CONSOLE_PRINT("NormalAi::updateEnemyData", Console::eDEBUG);
     if (pUnitData.size() == 0)
     {
+        pUnitData.reserve(pUnits->size());
         for (auto & pUnit : pUnits->getVector())
         {
             QApplication::processEvents();
@@ -1931,6 +1934,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
     }
     if (!enemy && m_aiStep >= AISteps::moveTransporters)
     {
+        pUnitData.reserve(pUnits->size());
         for (auto & pUnit : pUnits->getVector())
         {
             QApplication::processEvents();

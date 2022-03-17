@@ -97,7 +97,7 @@ jobs:
         cmake \
         -B '${{github.workspace}}/build' \
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
-        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \
+        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install/Commander_Wars_Release' \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
         -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
     
@@ -118,7 +118,7 @@ jobs:
         GITHUB_TOKEN: ${{github.token}}
       with:
         upload_url: '${{needs.create_release.outputs.upload_url}}'
-        asset_path: '${{github.workspace}}/install/${{matrix.source_asset}}'
+        asset_path: '${{github.workspace}}/${{matrix.source_asset}}'
         asset_name: '${{matrix.asset_name}}'
         asset_content_type: application/zip
 

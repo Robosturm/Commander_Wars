@@ -470,9 +470,9 @@ void GameAction::serializeObject(QDataStream& stream) const
     stream << m_actionID;
     stream << m_target;
     stream << static_cast<qint32>(m_Movepath.size());
-    for (qint32 i = 0; i < m_Movepath.size(); i++)
+    for (auto & path : m_Movepath)
     {
-        stream << m_Movepath[i];
+        stream << path;
     }
     stream << m_inputStep;
     stream << m_costs;

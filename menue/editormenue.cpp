@@ -1,6 +1,5 @@
 #include <QFile>
 #include <QDir>
-#include <QCryptographicHash>
 
 #include "menue/editormenue.h"
 #include "menue/mainwindow.h"
@@ -10,6 +9,7 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/pathfindingsystem.h"
 #include "coreengine/console.h"
+#include "coreengine/sha256hash.h"
 
 #include "resource_management/movementtablemanager.h"
 #include "resource_management/objectmanager.h"
@@ -266,14 +266,14 @@ void EditorMenue::createTempFile(bool cleanUp)
     if (previous.exists())
     {
         file.open(QIODevice::ReadOnly);
-        QCryptographicHash myHash(QCryptographicHash::Sha256);
-        myHash.addData(&file);
+        Sha256Hash myHash;
+        myHash.addData(file.readAll());
         QByteArray hash = myHash.result();
         file.close();
 
         previous.open(QIODevice::ReadOnly);
-        QCryptographicHash myHash1(QCryptographicHash::Sha256);
-        myHash1.addData(&previous);
+        Sha256Hash myHash1;
+        myHash1.addData(previous.readAll());
         QByteArray hash1 = myHash1.result();
         previous.close();
         // no changes don't save map and don't increase counters
