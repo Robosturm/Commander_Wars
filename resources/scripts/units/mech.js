@@ -21,8 +21,8 @@ var Constructor = function()
     {
         return 2500;
     };
-    
-    this.armyDataStanding = [["os", "os"],
+
+    this.armyData = [["os", "os"],
                      ["bm", "bm"],
                      ["ge", "ge"],
                      ["yc", "yc"],
@@ -35,12 +35,13 @@ var Constructor = function()
                      ["gs", "gs"],
                      ["pf", "pf"],
                      ["ti", "ti"],];
+
     this.loadSprites = function(unit)
     {
         // none neutral player
         var player = unit.getOwner();
         // get army name
-        var armyName = Global.getArmyNameFromPlayerTable(player, MECH.armyDataStanding);
+        var armyName = Global.getArmyNameFromPlayerTable(player, MECH.armyData);
         // load sprites
         unit.loadSpriteV2("mech+" + armyName +"+mask", GameEnums.Recoloring_Matrix);
         unit.loadSpriteV2("mech+" + armyName, GameEnums.Recoloring_None);
@@ -50,14 +51,7 @@ var Constructor = function()
         return "MOVE_MECH";
     };
     this.actionList = ["ACTION_FIRE", "ACTION_MISSILE", "ACTION_CAPTURE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
-    this.armyData = [["os", "os"],
-                     ["bm", "bm"],
-                     ["ge", "ge"],
-                     ["yc", "yc"],
-                     ["bh", "bh"],
-                     ["bg", "bg"],
-                     ["ma", "ma"],
-                     ["ac", "ac"],];
+
     this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();

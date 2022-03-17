@@ -1,4 +1,3 @@
-#include <QCryptographicHash>
 #include <QJsonObject>
 #include <QJsonDocument>
 
@@ -11,6 +10,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/filesupport.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/sha256hash.h"
 
 #include "menue/gamemenue.h"
 
@@ -214,13 +214,13 @@ void Multiplayermenu::playerJoined(quint64 socketID)
 void Multiplayermenu::acceptNewConnection(quint64 socketID)
 {
     CONSOLE_PRINT("Accepting connection for socket " + QString::number(socketID), Console::eDEBUG);
-    QCryptographicHash myHash(QCryptographicHash::Sha256);
+    Sha256Hash myHash;
     QString file = m_pMapSelectionView->getCurrentFile().filePath();
     QString fileName = m_pMapSelectionView->getCurrentFile().fileName();
     QString scriptFile = m_pMapSelectionView->getCurrentMap()->getGameScript()->getScriptFile();
     QFile mapFile(file);
     mapFile.open(QIODevice::ReadOnly);
-    myHash.addData(&mapFile);
+    myHash.addData(mapFile.readAll());
     mapFile.close();
     QString command = QString(NetworkCommands::MAPINFO);
     CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
@@ -261,9 +261,12 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
         {
             // create hash for script file
             QFile scriptData(scriptFile);
-            QCryptographicHash myScriptHash(QCryptographicHash::Sha256);
+            Sha256Hash myScriptHash;
             scriptData.open(QIODevice::ReadOnly);
-            myScriptHash.addData(&scriptData);
+            while (!scriptData.atEnd())
+            {
+                myHash.addData(scriptData.readLine().trimmed());
+            }
             scriptData.close();
             QByteArray scriptHash = myScriptHash.result();
             stream << scriptHash;
@@ -387,6 +390,20 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         if (messageType == NetworkCommands::SLAVEADDRESSINFO)
         {
             connectToSlave(objData, socketID);
+        }
+        else if (messageType == NetworkCommands::SERVERINVALIDMODCONFIG)
+        {
+            spDialogMessageBox pDialogMessageBox;
+            pDialogMessageBox = spDialogMessageBox::create(tr("Server doesn't have the given mods installed."));
+            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+            addChild(pDialogMessageBox);
+        }
+        else if (messageType == NetworkCommands::SERVERNOGAMESLOTSAVAILABLE)
+        {
+            spDialogMessageBox pDialogMessageBox;
+            pDialogMessageBox = spDialogMessageBox::create(tr("Server doesn't have any more slots for playing a game."));
+            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+            addChild(pDialogMessageBox);
         }
     }
 }
@@ -712,7 +729,6 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
                 }
                 pDialogMessageBox = spDialogMessageBox::create(tr("Host has  different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods:" + myMods);
             }
-
             connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
             addChild(pDialogMessageBox);
             
@@ -837,26 +853,45 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
                 QByteArray mapData;
                 mapData = Filesupport::readByteArray(stream);
                 QFileInfo mapInfo(mapFile);
-                QDir dir;
-                QString fileDir = mapInfo.filePath().replace(mapInfo.fileName(), "");
-                dir.mkdir(fileDir);
-                map.open(QIODevice::WriteOnly);
-                QDataStream mapFilestream(&map);
-                Filesupport::writeBytes(mapFilestream, mapData);
-                map.close();
-                if (!scriptFile.isEmpty())
+                QDir dir = mapInfo.absoluteDir();
+                dir.mkpath(".");
+                if (map.open(QIODevice::WriteOnly))
                 {
-                    QByteArray scriptData;
-                    scriptData = Filesupport::readByteArray(stream);
-                    QFileInfo scriptInfo(scriptFile);
-                    fileDir = scriptInfo.filePath().replace(scriptInfo.fileName(), "");
-                    dir.mkdir(fileDir);
-                    script.open(QIODevice::WriteOnly);
-                    QDataStream scriptFilestream(&script);
-                    Filesupport::writeBytes(scriptFilestream, scriptData);
-                    script.close();
+                    QDataStream mapFilestream(&map);
+                    Filesupport::writeBytes(mapFilestream, mapData);
+                    map.close();
+                    if (!scriptFile.isEmpty())
+                    {
+                        QByteArray scriptData;
+                        scriptData = Filesupport::readByteArray(stream);
+                        QFileInfo scriptInfo(scriptFile);
+                        dir = scriptInfo.absoluteDir();
+                        dir.mkpath(".");
+                        if (script.open(QIODevice::WriteOnly))
+                        {
+                            QDataStream scriptFilestream(&script);
+                            Filesupport::writeBytes(scriptFilestream, scriptData);
+                            script.close();
+                        }
+                        else
+                        {
+                            CONSOLE_PRINT("Unable to write downloaded script-file", Console::eDEBUG);
+                            spDialogMessageBox pDialogMessageBox;
+                            pDialogMessageBox = spDialogMessageBox::create(tr("Unable to download script file from host."));
+                            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+                            addChild(pDialogMessageBox);
+                        }
+                    }
+                    pMap = spGameMap::create(mapFile, true, false, m_saveGame);
                 }
-                pMap = spGameMap::create(mapFile, true, false, m_saveGame);
+                else
+                {
+                    CONSOLE_PRINT("Unable to write downloaded map-file", Console::eDEBUG);
+                    spDialogMessageBox pDialogMessageBox;
+                    pDialogMessageBox = spDialogMessageBox::create(tr("Unable to download map file from host."));
+                    connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+                    addChild(pDialogMessageBox);
+                }
             }
             else
             {
@@ -1057,8 +1092,11 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
             {
                 scriptFile.setFileName(Settings::getUserPath() + scriptFileName);
                 scriptFile.open(QIODevice::ReadOnly);
-                QCryptographicHash myHash(QCryptographicHash::Sha256);
-                myHash.addData(&scriptFile);
+                Sha256Hash myHash;
+                while (!scriptFile.atEnd())
+                {
+                    myHash.addData(scriptFile.readLine().trimmed());
+                }
                 scriptFile.close();
                 myHashArray = myHash.result();
 
@@ -1067,8 +1105,11 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
             {
                 scriptFile.setFileName(oxygine::Resource::RCC_PREFIX_PATH + scriptFileName);
                 scriptFile.open(QIODevice::ReadOnly);
-                QCryptographicHash myHash(QCryptographicHash::Sha256);
-                myHash.addData(&scriptFile);
+                Sha256Hash myHash;
+                while (!scriptFile.atEnd())
+                {
+                    myHash.addData(scriptFile.readLine().trimmed());
+                }
                 scriptFile.close();
                 QByteArray myHashArray = myHash.result();
                 if (myHashArray != scriptHash)
@@ -1094,7 +1135,7 @@ bool Multiplayermenu::findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, b
         QString file = dirIter.fileInfo().absoluteFilePath();
         QFile mapFile(file);
         mapFile.open(QIODevice::ReadOnly);
-        QCryptographicHash myHash(QCryptographicHash::Sha256);
+        Sha256Hash myHash;
         myHash.addData(&mapFile);
         mapFile.close();
         QByteArray myHashArray = myHash.result();
@@ -1288,6 +1329,7 @@ bool Multiplayermenu::getGameReady()
 {
     bool gameReady = true;
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+    bool hasRemotePlayer = false;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         auto* pInput = pMap->getPlayer(i)->getBaseGameInput();
@@ -1309,9 +1351,13 @@ bool Multiplayermenu::getGameReady()
                 break;
             }
         }
+        if (aiType == GameEnums::AiTypes_ProxyAi)
+        {
+            hasRemotePlayer = true;
+        }
     }
-    CONSOLE_PRINT("Game ready", Console::eDEBUG);
-    return gameReady;
+    CONSOLE_PRINT("Game ready " + QString::number(gameReady) + " and remote player found " + QString::number(hasRemotePlayer), Console::eDEBUG);
+    return gameReady && hasRemotePlayer;
 }
 
 void Multiplayermenu::startGame()

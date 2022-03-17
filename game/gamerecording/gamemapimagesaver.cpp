@@ -1,10 +1,11 @@
 #include <QOpenGLFramebufferObject>
 
 #include "game/gamerecording/gamemapimagesaver.h"
-
 #include "game/gamemap.h"
 
 #include "menue/ingamemenue.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 void GamemapImageSaver::saveMapAsImage(QString filename)
 {
@@ -16,7 +17,9 @@ void GamemapImageSaver::saveMapAsImage(QString filename)
         GameMap* pMap = pMenu->getMap();
         if (pMap != nullptr)
         {
-            QSize size(GameMap::getImageSize() * pMap->getMapWidth() * pMap->getScaleX(), GameMap::getImageSize() * pMap->getMapHeight() * pMap->getScaleY());
+            oxygine::GameWindow* window = oxygine::GameWindow::getWindow();
+            qreal ratio = window->devicePixelRatio();
+            QSize size(GameMap::getImageSize() * pMap->getMapWidth() * pMap->getScaleX() * ratio, GameMap::getImageSize() * pMap->getMapHeight() * pMap->getScaleY() * ratio);
             QOpenGLFramebufferObject buffer(size);
             buffer.bind();
             QColor clearColor(0, 0, 255, 255);

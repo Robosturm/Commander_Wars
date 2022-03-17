@@ -937,7 +937,7 @@ void HeavyAi::getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, dou
                 }
             }
         }
-        if (info.frontOwners.contains(playerId))
+        if (GlobalUtils::contains(info.frontOwners, playerId))
         {
             data[BasicFieldInfo::FrontTile] = 1;
         }

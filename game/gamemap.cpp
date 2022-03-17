@@ -88,17 +88,19 @@ void GameMap::loadMap(QString map, bool onlyLoad, bool fast, bool savegame)
     clearMap();
     m_savegame = savegame;
     QFile file(map);
-    file.open(QIODevice::ReadOnly);
-    QDataStream pStream(&file);
-    deserializer(pStream, fast);
-    setMapNameFromFilename(map);
-    m_loaded = true;
-    if (!onlyLoad)
+    if (file.open(QIODevice::ReadOnly))
     {
-        updateSprites();
-        qint32 heigth = getMapHeight();
-        qint32 width = getMapWidth();
-        centerMap(width / 2, heigth / 2);
+        QDataStream pStream(&file);
+        deserializer(pStream, fast);
+        setMapNameFromFilename(map);
+        m_loaded = true;
+        if (!onlyLoad)
+        {
+            updateSprites();
+            qint32 heigth = getMapHeight();
+            qint32 width = getMapWidth();
+            centerMap(width / 2, heigth / 2);
+        }
     }
 }
 
@@ -204,16 +206,16 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
         {
             visionHigh = 0;
         }
-        QVector<QRect> m_LineSight;
-        QVector<QRect> m_LineSightEvaluated;
-        m_LineSight.append(QRect(x - 1, y, 0, 2));
-        m_LineSight.append(QRect(x - 1, y, 0, 3));
-        m_LineSight.append(QRect(x + 1, y, 1, 2));
-        m_LineSight.append(QRect(x + 1, y, 1, 3));
-        m_LineSight.append(QRect(x, y - 1, 2, 0));
-        m_LineSight.append(QRect(x, y - 1, 2, 1));
-        m_LineSight.append(QRect(x, y + 1, 3, 0));
-        m_LineSight.append(QRect(x, y + 1, 3, 1));
+        std::vector<QRect> m_LineSight;
+        std::vector<QRect> m_LineSightEvaluated;
+        m_LineSight.push_back(QRect(x - 1, y, 0, 2));
+        m_LineSight.push_back(QRect(x - 1, y, 0, 3));
+        m_LineSight.push_back(QRect(x + 1, y, 1, 2));
+        m_LineSight.push_back(QRect(x + 1, y, 1, 3));
+        m_LineSight.push_back(QRect(x, y - 1, 2, 0));
+        m_LineSight.push_back(QRect(x, y - 1, 2, 1));
+        m_LineSight.push_back(QRect(x, y + 1, 3, 0));
+        m_LineSight.push_back(QRect(x, y + 1, 3, 1));
 
         QPoint pos(x, y);
         if (0 >= minVisionRange && 0 <= maxVisionRange)
@@ -223,8 +225,8 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
         while (m_LineSight.size() > 0)
         {
             QRect current = m_LineSight.front();
-            m_LineSight.pop_front();
-            m_LineSightEvaluated.append(current);
+            m_LineSight.erase(m_LineSight.cbegin());
+            m_LineSightEvaluated.push_back(current);
             if (onMap(current.x(), current.y()))
             {
                 qint32 distance = GlobalUtils::getDistance(QPoint(current.x(), current.y()), pos);
@@ -289,7 +291,7 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
                                 }
                                 if (notIncluded)
                                 {
-                                    m_LineSight.append(next);
+                                    m_LineSight.push_back(next);
                                 }
                             }
                         }
@@ -332,12 +334,14 @@ GameMap::~GameMap()
     // clean up session
     for (qint32 y = 0; y < m_fields.size(); ++y)
     {
+        m_rowSprites[y]->detach();
         for (qint32 x = 0; x < m_fields[y].size(); ++x)
         {
             m_fields[y].at(x)->detach();
         }
         m_fields[y].clear();
     }
+    m_rowSprites.clear();
     m_fields.clear();
 }
 
@@ -674,7 +678,7 @@ void GameMap::syncTerrainAnimations(bool showLoadingScreen)
             spTerrain pTerrain = m_fields[y][x];
             pTerrain->syncAnimation(timeMs);
             pTerrain->detach();
-            addChild(pTerrain);
+            m_rowSprites[y]->addChild(pTerrain);
         }
     }
 }
@@ -1157,14 +1161,14 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
                 pTerrainOld->detach();
                 pTerrain->setBaseTerrain(pTerrainOld);
                 m_fields[y][x] = pTerrain;
-                addChild(pTerrain);
+                m_rowSprites[y]->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             }
             else
             {
                 pTerrainOld->detach();
                 m_fields[y][x] = pTerrain;
-                addChild(pTerrain);
+                m_rowSprites[y]->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             }
             if (!removeUnit)
@@ -1177,7 +1181,7 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
             {
                 spTerrain pTerrain = m_fields[y][xPos];
                 pTerrain->detach();
-                addChild(pTerrain);
+                m_rowSprites[y]->addChild(pTerrain);
             }
         }
         else
@@ -1410,23 +1414,29 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     }
 
     // restore map
+    m_fields.reserve(m_headerInfo.m_heigth);
+    m_rowSprites.reserve(m_headerInfo.m_heigth);
     for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
     {
         if (showLoadingScreen)
         {
             pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_heigth), 5 + 75 * y / m_headerInfo.m_heigth);
         }
-        m_fields.push_back(std::vector<spTerrain>());
+        m_fields.push_back(std::vector<spTerrain>(m_headerInfo.m_width, spTerrain()));
+        auto pActor = oxygine::spActor::create();
+        pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
+        m_rowSprites.push_back(pActor);
+        addChild(pActor);
         for (qint32 x = 0; x < m_headerInfo.m_width; x++)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y, "", this);
-            m_fields[y].push_back(pTerrain);
+            m_fields[y][x] = pTerrain;
             pTerrain->deserializer(pStream, fast);
             if (pTerrain->isValid())
             {
                 if (!fast)
                 {
-                    addChild(pTerrain);
+                    m_rowSprites[y]->addChild(pTerrain);
                     pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 }
             }
@@ -1644,12 +1654,14 @@ void GameMap::clearMap()
 {
     for (qint32 y = 0; y < m_fields.size(); y++)
     {
+        m_rowSprites[y]->detach();
         for (qint32 x = 0; x < m_fields[y].size(); x++)
         {
             m_fields[y][x]->detach();
         }
         m_fields[y].clear();
     }
+    m_rowSprites.clear();
     m_fields.clear();
     m_players.clear();
     m_Rules->resetWeatherSprites();
@@ -2368,14 +2380,16 @@ void GameMap::showGrid(bool show)
         qint32 mapWidth = getMapWidth();
         qint32 mapHeight = getMapHeight();
         QColor gridColor = getGridColor();
+        m_gridSprites.reserve(mapWidth + mapHeight + 1);
+        oxygine::spColorRectSprite pActor = oxygine::spColorRectSprite::create();
+        pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
         for (qint32 x = 1; x < mapWidth; ++x)
         {
             oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
             pSprite->setSize(1, mapHeight * m_imagesize);
             pSprite->setColor(gridColor);
             pSprite->setPosition(x * m_imagesize, 0);
-            pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
-            addChild(pSprite);
+            pActor->addChild(pSprite);
             m_gridSprites.append(pSprite);
         }
         for (qint32 y = 1; y < mapHeight; ++y)
@@ -2385,9 +2399,11 @@ void GameMap::showGrid(bool show)
             pSprite->setPosition(0, y * m_imagesize);
             pSprite->setColor(gridColor);
             pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
-            addChild(pSprite);
+            pActor->addChild(pSprite);
             m_gridSprites.append(pSprite);
         }
+        addChild(pActor);
+        m_gridSprites.append(pActor);
     }
 }
 

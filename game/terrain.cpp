@@ -911,7 +911,7 @@ void Terrain::addBuildingSprite(spBuilding pBuilding)
     {
         m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
         m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
-        m_pMap->addChild(m_Building);
+        m_pMap->getRowActor(Terrain::m_y)->addChild(m_Building);
     }
     else
     {
@@ -1521,7 +1521,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
             {
                 m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
                 m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
-                m_pMap->addChild(m_Building);
+                m_pMap->getRowActor(Terrain::m_y)->addChild(m_Building);
             }
             m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
             createBuildingDownStream();

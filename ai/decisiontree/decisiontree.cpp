@@ -3,8 +3,8 @@
 
 #include "coreengine/console.h"
 #include <coreengine/settings.h>
+#include <coreengine/sha256hash.h>
 
-#include <QCryptographicHash>
 #include <QFile>
 #include <QDataStream>
 
@@ -45,8 +45,11 @@ DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDat
     if (trainingFile.exists())
     {
         trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
-        QCryptographicHash myHash(QCryptographicHash::Sha256);
-        myHash.addData(&trainingFile);
+        Sha256Hash myHash;
+        while (!trainingFile.atEnd())
+        {
+            myHash.addData(trainingFile.readLine().trimmed());
+        }
         myHash.addData(Settings::getModString().toUtf8());
         hash = myHash.result();
         trainingFile.close();

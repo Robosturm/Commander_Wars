@@ -13,8 +13,6 @@
 
 #include "game/gameanimation/gameanimationfactory.h"
 
-#include "multiplayer/multiplayermenu.h"
-#include "network/tcpserver.h"
 
 #include "resource_management/terrainmanager.h"
 #include "resource_management/buildingspritemanager.h"
@@ -67,9 +65,8 @@ void WorkerThread::start()
         searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/scripts/general");
         searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/scripts/general");
     }
-    for (qint32 i = 0; i < searchPaths.size(); i++)
+    for (auto & path : searchPaths)
     {
-        QString path = searchPaths[i];
         QStringList filter;
         filter << "*.js";
         QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
@@ -215,54 +212,5 @@ void WorkerThread::startSlaveGame()
 {
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
-
-    QStringList args = QCoreApplication::arguments();
-    QString slaveAddress;
-    quint16 slavePort = 0;
-    if (args.contains(Mainapp::ARG_SLAVEADDRESS))
-    {
-        bool ok = false;
-        slaveAddress = args[args.indexOf(Mainapp::ARG_SLAVEADDRESS) + 1];
-        slavePort = args[args.indexOf(Mainapp::ARG_SLAVEADDRESS) + 2].toInt(&ok);
-        if (!ok)
-        {
-            slaveAddress = "";
-        }
-    }
-    QString masterAddress;
-    quint16 masterPort = 0;
-    if (args.contains(Mainapp::ARG_MASTERADDRESS))
-    {
-        bool ok = false;
-        masterAddress = args[args.indexOf(Mainapp::ARG_MASTERADDRESS) + 1];
-        masterPort = args[args.indexOf(Mainapp::ARG_MASTERADDRESS) + 2].toInt(&ok);
-        if (!ok)
-        {
-            masterPort = 0;
-        }
-        if (masterAddress.isEmpty())
-        {
-            masterAddress = "::1";
-        }
-    }
-    if (!slaveAddress.isEmpty() && masterPort > 0 && slavePort > 0 && !masterAddress.isEmpty())
-    {
-        // init multiplayer menu
-        spTCPServer pServer = spTCPServer::create(nullptr);
-        pServer->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", Multiplayermenu::NetworkMode::Host);
-        pMenu->connectNetworkSlots();
-        oxygine::Stage::getStage()->addChild(pMenu);
-        emit pServer->sig_connect(slaveAddress, slavePort);
-        // connect to server
-        spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
-        connect(pSlaveMasterConnection.get(), &TCPClient::sigConnected, pMenu.get(), &Multiplayermenu::onSlaveConnectedToMaster, Qt::QueuedConnection);
-        connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, pMenu.get(), &Multiplayermenu::recieveServerData, Qt::QueuedConnection);
-        emit pSlaveMasterConnection->sig_connect(masterAddress, masterPort);
-
-    }
-    else
-    {
-        QApplication::exit(-3);
-    }
+    Mainapp::getInstance()->getParser().startSlaveGame();
 }

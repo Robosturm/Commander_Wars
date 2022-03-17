@@ -1,3 +1,6 @@
+#include <QJsonObject>
+#include <QJsonDocument>
+
 #include "multiplayer/lobbymenu.h"
 #include "multiplayer/networkcommands.h"
 #include "multiplayer/dialogpassword.h"
@@ -16,12 +19,10 @@
 #include "resource_management/fontmanager.h"
 
 #include "objects/base/chat.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 #include "network/mainserver.h"
 #include "network/JsonKeys.h"
-
-#include <QJsonObject>
-#include <QJsonDocument>
 
 LobbyMenu::LobbyMenu()
 {
@@ -318,6 +319,12 @@ void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkS
         else if (messageType == NetworkCommands::SLAVEADDRESSINFO)
         {
             joinSlaveGame(objData);
+        }
+        else if (messageType == NetworkCommands::SERVERGAMENOLONGERAVAILABLE)
+        {
+             spDialogMessageBox pDialogMessageBox;
+             pDialogMessageBox = spDialogMessageBox::create(tr("Host game is no longer available."));
+             addChild(pDialogMessageBox);
         }
     }
 }

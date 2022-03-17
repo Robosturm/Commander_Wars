@@ -511,7 +511,8 @@ namespace oxygine
         {
             return;
         }
-        m_size = size;
+        m_size.x = static_cast<qint32>(size.x);
+        m_size.y = static_cast<qint32>(size.y);
         markTranformDirty();
     }
 
@@ -626,7 +627,7 @@ namespace oxygine
         else
         {
             offset.x = -float(m_size.x * m_anchor.x);
-            offset.y = -float(m_size.y * m_anchor.y);//todo, what to do? (per pixel quality)
+            offset.y = -float(m_size.y * m_anchor.y);
         }
 
         tr.translate(offset);

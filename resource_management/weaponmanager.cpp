@@ -60,9 +60,9 @@ void WeaponManager::loadAll()
     QTextStream stream(&file);
     QString jsHeader = stream.readAll();
     QStringList searchPaths = getSearchPaths();
-    for (qint32 i = 0; i < searchPaths.size(); i++)
+    for (auto & path : searchPaths)
     {
-        QString jsData = CsvTableImporter::ImportCsvTable(searchPaths[i] + "/weapontable.csv", jsHeader, "damageTable", data);
+        QString jsData = CsvTableImporter::ImportCsvTable(path + "/weapontable.csv", jsHeader, "damageTable", data);
         if (!jsData.isEmpty())
         {
             m_loadedRessources.append(data);

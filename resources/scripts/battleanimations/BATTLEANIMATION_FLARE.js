@@ -10,15 +10,22 @@ var Constructor = function()
                      ["bg", "bh"],
                      ["ma", "bh"],];
 
-    this.animationData = [["os", [Qt.point(31, 29)]],
-                          ["bh", [Qt.point(4, 19)]],];
+    this.animationData = [["os", [Qt.point(34, 26), Qt.point(-10, 5)]],
+                          ["bh", [Qt.point(16, 18), Qt.point(-20, 5)]],];
+
+    // -10 5
+    // 44  26
+
+    // 36  18
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FLARE.armyData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_FLARE.animationData);
+        var offset = data[1];
         sprite.loadSpriteV2("flare+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
-                            BATTLEANIMATION_FLARE.getMaxUnitCount(), Qt.point(-38, 5));
+                            BATTLEANIMATION_FLARE.getMaxUnitCount(), offset);
         BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 

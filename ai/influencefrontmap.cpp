@@ -22,13 +22,7 @@ InfluenceFrontMap::InfluenceFrontMap(GameMap* pMap, const std::vector<spIslandMa
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    
-    qint32 width = m_pMap->getMapWidth();
-    qint32 heigth = m_pMap->getMapHeight();
-    for (qint32 x = 0; x < width; x++)
-    {
-        m_InfluenceMap.push_back(std::vector<InfluenceInfo>(heigth, InfluenceInfo(m_pMap)));
-    }
+    reset();
 }
 
 void InfluenceFrontMap::addBuildingInfluence()
@@ -73,9 +67,8 @@ void InfluenceFrontMap::addBuildingInfluence()
             {
                 QApplication::processEvents();
                 QPoint pos = buildingPositions[building];
-                for (qint32 unitIdx = 0; unitIdx < buildLists[building].size(); unitIdx++)
+                for (auto & unitId : buildLists[building])
                 {
-                    QString unitId = buildLists[building][unitIdx];
                     qint32 island = getIslandFromUnitId(unitId, unitIdToIsland);
 
                     if (island >= 0 && m_islands[island]->sameIsland(x, y, pos.x(), pos.y()))
@@ -126,9 +119,10 @@ InfluenceFrontMap::InfluenceInfo::InfluenceInfo(GameMap* pMap)
     : m_pMap(pMap)
 {
     qint32 playerCount = pMap->getPlayerCount();
+    playerValues.reserve(playerCount);
     for (qint32 x = 0; x < playerCount; x++)
     {
-        playerValues.append(0);
+        playerValues.push_back(0);
     }
 }
 
@@ -138,7 +132,6 @@ void InfluenceFrontMap::InfluenceInfo::updateOwner(Player* pOwner)
     qint32 highestValue = 0;
     enemyInfluence = 0;
     ownInfluence = 0;
-    qint32 playerId = pOwner->getPlayerID();
     for (qint32 player = 0; player < playerValues.size(); ++player)
     {
         qint32 influence = getPlayerInfluence(player);
@@ -156,12 +149,12 @@ void InfluenceFrontMap::InfluenceInfo::updateOwner(Player* pOwner)
         {
             highestValue = influence;
             owners.clear();
-            owners.append(player);
+            owners.push_back(player);
         }
         else if (influence > 0 &&
                  influence == highestValue)
         {
-            owners.append(player);
+            owners.push_back(player);
         }
     }
     highestInfluence = highestValue;
@@ -203,6 +196,15 @@ void InfluenceFrontMap::reset()
 {
     AI_CONSOLE_PRINT("InfluenceFrontMap::reset()", Console::eDEBUG);
     hide();
+    if (m_InfluenceMap.size() == 0)
+    {
+        qint32 width = m_pMap->getMapWidth();
+        qint32 heigth = m_pMap->getMapHeight();
+        for (qint32 x = 0; x < width; x++)
+        {
+            m_InfluenceMap.push_back(std::vector<InfluenceInfo>(heigth, InfluenceInfo(m_pMap)));
+        }
+    }
     
     for (qint32 x = 0; x < m_InfluenceMap.size(); ++x)
     {
@@ -392,22 +394,22 @@ void InfluenceFrontMap::findFrontLineTiles()
                             {
                                 for (auto & owner : owners)
                                 {
-                                    if (!info.frontOwners.contains(owner))
+                                    if (!GlobalUtils::contains(info.frontOwners, owner))
                                     {
-                                        info.frontOwners.append(owner);
+                                        info.frontOwners.push_back(owner);
                                     }
                                 }
                                 addFrontLineMoveTypes(info, x, y, neighbourX, neighbourY);
                             }
                             else if (owners[0] != info2.owners[0] && owner2Size == 1)
                             {
-                                if (!info.frontOwners.contains(owners[0]))
+                                if (!GlobalUtils::contains(info.frontOwners, owners[0]))
                                 {
-                                    info.frontOwners.append(owners[0]);
+                                    info.frontOwners.push_back(owners[0]);
                                 }
-                                if (!info.frontOwners.contains(info2.owners[0]))
+                                if (!GlobalUtils::contains(info.frontOwners, info2.owners[0]))
                                 {
-                                    info.frontOwners.append(info2.owners[0]);
+                                    info.frontOwners.push_back(info2.owners[0]);
                                 }
                                 addFrontLineMoveTypes(info, x, y, neighbourX, neighbourY);
                             }

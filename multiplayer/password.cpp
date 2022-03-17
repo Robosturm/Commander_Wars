@@ -1,7 +1,7 @@
-#include "qcryptographichash.h"
-
 #include "multiplayer/password.h"
+
 #include "coreengine/filesupport.h"
+#include "coreengine/sha256hash.h"
 
 Password::Password()
 {
@@ -34,7 +34,7 @@ void Password::setPassword(QString password)
     }
     else
     {
-        QCryptographicHash myHash(QCryptographicHash::Sha256);
+        Sha256Hash myHash;
         myHash.addData(password.toUtf8());
         m_passwordHash = myHash.result();
     }
@@ -47,8 +47,8 @@ void Password::setPassword(const Password & password)
 
 bool Password::isValidPassword(QString password) const
 {
-    QCryptographicHash myHash(QCryptographicHash::Sha256);
-    myHash.addData(password.toStdString().c_str(), password.size());
+    Sha256Hash myHash;
+    myHash.addData(password.toUtf8());
     return (m_passwordHash == myHash.result());
 }
 

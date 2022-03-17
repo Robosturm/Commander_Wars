@@ -63,8 +63,10 @@ signals:
     void sigStopAllSounds();
     void sigChangeAudioDevice(const QVariant& value);
     void sigLoadNextAudioFile();
+#ifdef AUDIOSUPPORT
     void sigDeleteSound(SoundData* soundData, qint32 soundIndex);
     void sigPlayDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound);
+#endif
 public slots:
     /**
      * @brief initAudio

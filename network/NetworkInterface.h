@@ -60,11 +60,11 @@ public:
         QString ipAddress;
         QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
         // use the first non-localhost IPv4 address
-        for (qint32 i = 0; i < ipAddressesList.size(); ++i)
+        for (auto & ipAddr : ipAddressesList)
         {
-            if (ipAddressesList.at(i) != QHostAddress::LocalHost && ipAddressesList.at(i).toIPv4Address())
+            if (ipAddr != QHostAddress::LocalHost && ipAddr.toIPv4Address())
             {
-                ipAddress = ipAddressesList.at(i).toString();
+                ipAddress = ipAddr.toString();
                 break;
             }
         }
@@ -81,11 +81,11 @@ public:
         QStringList ipAddresses;
         QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
         // use the first non-localhost IPv4 address
-        for (qint32 i = 0; i < ipAddressesList.size(); ++i)
+        for (auto & ipAddr : ipAddressesList)
         {
-            if (ipAddressesList.at(i) != QHostAddress::LocalHost)
+            if (ipAddr != QHostAddress::LocalHost)
             {
-                ipAddresses.append(ipAddressesList.at(i).toString());
+                ipAddresses.append(ipAddr.toString());
             }
         }
         return ipAddresses;

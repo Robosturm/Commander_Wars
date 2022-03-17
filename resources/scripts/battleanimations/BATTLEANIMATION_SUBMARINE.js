@@ -19,7 +19,6 @@ var Constructor = function()
                           ["bh", [-60, 20]],
                           ["ma", [0,   30]],];
 
-    // todo load ship move sound
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         var player = unit.getOwner();

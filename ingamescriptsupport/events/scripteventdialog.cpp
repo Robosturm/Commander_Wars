@@ -67,7 +67,8 @@ void ScriptEventDialog::readEvent(QTextStream& rStream, QString line)
         {
             line = line.simplified();
 
-            QStringList items = line.replace("var dialog" + QString::number(m_Dialog.size()) + " = GameAnimationFactory.createGameAnimationDialog(qsTr(\"", "")
+            QStringList items = line.replace("var dialog" + QString::number(m_Dialog.size()) + " = GameAnimationFactory.createGameAnimationDialog(map, qsTr(\"", "")
+                                    .replace("var dialog" + QString::number(m_Dialog.size()) + " = GameAnimationFactory.createGameAnimationDialog(qsTr(\"", "")
                                     .replace("\"), \"", "@")
                                     .replace("\"), ", "@")
                                     .replace("\", GameEnums.COMood_", "@")
@@ -116,7 +117,7 @@ void ScriptEventDialog::writeEvent(QTextStream& rStream)
     rStream << "            // " + EventDialog + "\n";
     for (qint32 i = 0; i < m_Dialog.size(); i++)
     {
-        rStream <<  "            var dialog" << QString::number(i) << " = GameAnimationFactory.createGameAnimationDialog(qsTr(\"";
+        rStream <<  "            var dialog" << QString::number(i) << " = GameAnimationFactory.createGameAnimationDialog(map, qsTr(\"";
         QString text = m_Dialog[i]->text;
         text = text.replace("\"", "\\\"");
         rStream <<  text;

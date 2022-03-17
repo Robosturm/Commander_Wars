@@ -1,3 +1,7 @@
+#include <QApplication>
+#include <QVariant>
+#include <QFile>
+
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
@@ -5,9 +9,6 @@
 #include "spritingsupport/spritecreator.h"
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
-
-#include <qvariant.h>
-#include <qfile.h>
 
 namespace oxygine
 {
@@ -27,6 +28,7 @@ namespace oxygine
         std::vector<spResAnim> anims;
         while (true)
         {
+            QApplication::processEvents();
             XmlWalker walker = context.m_walker.next();
             if (walker.empty())
             {

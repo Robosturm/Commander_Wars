@@ -54,15 +54,6 @@ spTCPClient Mainapp::m_slaveClient;
 bool Mainapp::m_slave{false};
 QMutex Mainapp::m_crashMutex;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
-const char* const Mainapp::ARG_MODS = "-mods";
-const char* const Mainapp::ARG_SLAVE = "-slave";
-const char* const Mainapp::ARG_SLAVENAME = "-slaveServer";
-const char* const Mainapp::ARG_NOUI = "-noui";
-const char* const Mainapp::ARG_NOAUDIO = "-noaudio";
-const char* const Mainapp::ARG_INITSCRIPT = "-initScript";
-const char* const Mainapp::ARG_CREATESLAVELOGS = "-createSlaveLogs";
-const char* const Mainapp::ARG_SLAVEADDRESS = "-slaveAdress";
-const char* const Mainapp::ARG_MASTERADDRESS = "-masterAdress";
 
 Mainapp::Mainapp()
 {
@@ -625,61 +616,24 @@ void Mainapp::showCrashReport(const QString & log)
     }
 }
 
-void Mainapp::loadArgs(const QStringList & args)
+void Mainapp::setNoUi()
 {
-    if (args.contains(ARG_MODS))
-    {
-        QString mods = args[args.indexOf(ARG_MODS) + 1];
-        QStringList modList = mods.split(",");
-        qint32 i= 0;
-        while (i < modList.size())
-        {
-            if (modList[i].isEmpty())
-            {
-                modList.removeAt(i);
-            }
-            else
-            {
-                ++i;
-            }
-        }
-        CONSOLE_PRINT("Using injected mod list: " + mods, Console::eDEBUG);
-        Settings::setActiveMods(modList);
-    }
-    if (args.contains(ARG_SLAVE))
-    {
-        setSlave(true);
-        Settings::setServer(false);
-        Settings::setUsername("Server");                    
-        m_slaveClient = spTCPClient::create(nullptr);
-        m_slaveClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    }
-    if (args.contains(ARG_NOUI))
-    {
-        m_noUi = true;
-        Settings::setOverworldAnimations(false);
-        Settings::setBattleAnimationType(GameEnums::BattleAnimationType_Overworld);
-        Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode_None);
-        Settings::setAnimationSpeed(100);
-        Settings::setWalkAnimationSpeed(100);
-        Settings::setBattleAnimationSpeed(100);
-        Settings::setDialogAnimation(false);
-        Settings::setDialogAnimationSpeed(100);
-        m_Timer.stop();
-    }
-    m_noAudio = args.contains(ARG_NOAUDIO);
-    if (args.contains(ARG_SLAVENAME))
-    {
-        Settings::setSlaveServerName(args[args.indexOf(ARG_SLAVENAME) + 1]);
-    }
-    if (args.contains(ARG_INITSCRIPT))
-    {
-        m_initScript = args[args.indexOf(ARG_INITSCRIPT) + 1];
-    }
-    if (args.contains(ARG_CREATESLAVELOGS))
-    {
-        m_createSlaveLogs = true;
-    }
+    m_noUi = true;
+    m_Timer.stop();
+}
+
+void Mainapp::setNoAudio()
+{
+    m_noAudio = true;
+}
+
+void Mainapp::actAsSlave()
+{
+    setSlave(true);
+    Settings::setServer(false);
+    Settings::setUsername("Server");
+    m_slaveClient = spTCPClient::create(nullptr);
+    m_slaveClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
 }
 
 void Mainapp::onActiveChanged()
@@ -773,6 +727,11 @@ void Mainapp::onQuit()
         m_GameServerThread.wait();
     }
     QApplication::processEvents();
+}
+
+void Mainapp::setInitScript(const QString &newInitScript)
+{
+    m_initScript = newInitScript;
 }
 
 spTCPClient Mainapp::getSlaveClient()

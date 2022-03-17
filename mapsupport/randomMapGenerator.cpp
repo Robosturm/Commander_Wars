@@ -516,6 +516,7 @@ void RandomMapGenerator::randomMapPlaceOnTop(GameMap* pMap, QString terrainID, Q
     QVector<QPoint> reafOptions;
     qint32 mapWidth = pMap->getMapWidth();
     qint32 mapHeigth = pMap->getMapHeight();
+    reafOptions.reserve(mapWidth * mapHeigth);
     for (qint32 x = 0; x < mapWidth; x++)
     {
         for (qint32 y = 0; y < mapHeigth; y++)

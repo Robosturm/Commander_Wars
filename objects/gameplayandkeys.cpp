@@ -515,6 +515,22 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Action delay: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSpinBox pSpinbox = spSpinBox::create(450, 0, 100, SpinBox::Mode::Int);
+    pSpinbox->setTooltipText(tr("The delay after an action before an ai or replay action gets triggered."));
+    pSpinbox->setCurrentValue(Settings::getPauseAfterAction());
+    connect(pSpinbox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
+    {
+        Settings::setPauseAfterAction(static_cast<quint32>(value));
+    });
+    pSpinbox->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pSpinbox);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Ingame Keys"));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

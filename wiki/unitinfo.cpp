@@ -469,9 +469,8 @@ void UnitInfo::createLoadingTable(Unit* pUnit, const QStringList & loadables, qi
 void UnitInfo::createLoadedUnits(Unit* pUnit, qint32& y, qint32 width)
 {
     qint32 x = 0;
-    for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
+    for (auto & loadedUnit : pUnit->getLoadedUnits())
     {
-        spUnit loadedUnit = spUnit(pUnit->getLoadedUnit(i));
         spUnit pDummy = spUnit::create(loadedUnit->getUnitID(), pUnit->getOwner(), false, pUnit->getMap());
         pDummy->setPosition(x, y);
         pDummy->setHasMoved(loadedUnit->getHasMoved());

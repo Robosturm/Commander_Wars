@@ -90,7 +90,6 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             if ((m_pGameAction->getInputStep() > 0) ||
                 (m_pGameAction->getActionID() != ""))
             {
-                // todo implement go back steps
                 cancelActionInput();
             }
             else if (m_CurrentMenu.get() == nullptr)
@@ -902,7 +901,7 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
         {
             pSprite->setPriority(m_pMap->getTerrain(point.x(), point.y())->getMapTerrainDrawPriority() + static_cast<qint32>(drawPriority));
         }
-        m_pMap->addChild(pSprite);
+        m_pMap->getRowActor(point.y())->addChild(pSprite);
     }
     return pSprite;
 }
@@ -1371,7 +1370,7 @@ void HumanPlayerInput::createArrow(std::vector<QPoint>& points)
             pSprite->setPriority(static_cast<qint32>(points[i].y() + 3));
             pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
             pSprite->setPosition(points[i].x() * GameMap::getImageSize() -(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2,  points[i].y() * GameMap::getImageSize() -(pSprite->getScaledHeight() - GameMap::getImageSize()));
-            m_pMap->addChild(pSprite);
+            m_pMap->getRowActor(points[i].y())->addChild(pSprite);
             m_Arrows.push_back(pSprite);
 
             if (i > 0)
@@ -1553,7 +1552,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
             qint32 distance = currentUnit->getMovementpoints(position);
             distance += currentUnit->getMaxRange(position);
 
-            QVector<QPoint> usedFields;
+            std::vector<QPoint> usedFields;
             
             for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
             {
@@ -1583,7 +1582,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
     
 }
 
-void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedFields)
+void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, std::vector<QPoint> & usedFields)
 {
     Mainapp::getInstance()->pauseRendering();
     UnitPathFindingSystem pfs(m_pMap, pUnit, m_pPlayer);
@@ -1612,9 +1611,9 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
             {
                 QPoint target = rangePos + point;
                 if (m_pMap->onMap(target.x(), target.y()) &&
-                    !usedFields.contains(QPoint(target.x(), target.y())))
+                    !GlobalUtils::contains(usedFields, QPoint(target.x(), target.y())))
                 {
-                    usedFields.append(target);
+                    usedFields.push_back(target);
                     m_InfoFields.push_back(createMarkedFieldActor(target, QColor(255, 0, 0), Terrain::ExtraDrawPriority::MarkedFieldMap));
                 }
             }

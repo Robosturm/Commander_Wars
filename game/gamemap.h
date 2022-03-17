@@ -249,7 +249,18 @@ public:
      * @param newIsHumanMatch
      */
     void setIsHumanMatch(bool newIsHumanMatch);
-
+    /**
+     * @brief getRowActor
+     * @return
+     */
+    oxygine::spActor getRowActor(qint32 y)
+    {
+        if (y >= 0 && y < m_rowSprites.size())
+        {
+            return m_rowSprites[y];
+        }
+        return oxygine::spActor();
+    }
 signals:
     void signalExitGame();
     void signalSaveGame();
@@ -789,6 +800,7 @@ private:
     QString m_mapPath;
     MapHeaderInfo m_headerInfo;
     std::vector<std::vector<spTerrain>> m_fields;
+    std::vector<oxygine::spActor> m_rowSprites;
     QVector<spPlayer> m_players;
     QVector<oxygine::spColorRectSprite> m_gridSprites;
     QVector<oxygine::spColorRectSprite> m_middleCrossGridSprites;
