@@ -69,13 +69,13 @@
         <image file="bomber+walk+mask.png" cols = "3" rows = "4"   />
         <!-- cannonboat -->
         <image file="cannonboat+mask.png" cols = "4"  />
-        <image file="cannonboat+walk+mask.png" cols = "3" rows = "4"   />
+        <image file="cannonboat+walk+mask.png" cols = "2" rows = "4"   />
         <!-- cruiser -->
         <image file="cruiser+mask.png" cols = "4"  />
         <image file="cruiser+walk+mask.png" cols = "2"  rows = "4"  />
         <!-- destroyer -->
         <image file="destroyer+mask.png" cols = "4"  />
-        <image file="destroyer+walk+mask.png" cols = "4"  rows = "4"  />
+        <image file="destroyer+walk+mask.png" cols = "2"  rows = "4"  />
         <!-- fighter -->
         <image file="fighter+mask.png" cols = "4"  />
         <image file="fighter+walk+mask.png" cols = "3"  rows = "4"  />
@@ -251,7 +251,7 @@
         <image file="t_heli+walk+mask.png" cols = "2" rows = "4"  />
         <!-- transportplane -->
         <image file="transportplane+mask.png" cols = "4"  />
-        <image file="transportplane+walk+mask.png" cols = "4" rows = "4"  />
+        <image file="transportplane+walk+mask.png" cols = "3" rows = "4"  />
         <!-- waterplane -->
         <image file="waterplane+mask.png" cols = "4"  />
         <image file="waterplane+walk+mask.png" cols = "3" rows = "4"  />
