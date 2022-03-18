@@ -149,7 +149,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co, map)
     {
-        return 4;
+        return 3;
     };
     this.getCOArmy = function()
     {

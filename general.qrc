@@ -2056,5 +2056,6 @@
         <file>templates/init.js</file>
         <file>resources/credits/credits.cred</file>
         <file>resources/scripts/terrain/BRIDGE2.js</file>
+        <file>resources/scripts/weapons/weapon_bike_bazooka.js</file>
     </qresource>
 </RCC>
