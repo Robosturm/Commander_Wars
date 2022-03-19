@@ -358,6 +358,7 @@ protected:
 
     QTimer m_UpdateTimer{this};
     QTimer m_delayedActionPerformedTimer{this};
+    bool m_noTimeOut{false};
     spGameAction m_pStoredAction{nullptr};
     spGameAction m_pCurrentAction{nullptr};
 

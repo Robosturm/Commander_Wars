@@ -824,11 +824,27 @@ bool GameMenue::requiresForwarding(const spGameAction & pGameAction) const
 void GameMenue::nextTurnPlayerTimeout()
 {
     auto* input = m_pMap->getCurrentPlayer()->getBaseGameInput();
-    if (input == nullptr || input->getAiType() != GameEnums::AiTypes_ProxyAi)
+    if (input != nullptr)
     {
-        spGameAction pAction;
-        pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
-        performAction(pAction);
+        if (input->getAiType() == GameEnums::AiTypes_Human)
+
+        {
+            if (m_pCurrentAction.get() == nullptr)
+            {
+                spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap.get());
+                performAction(pAction);
+            }
+            else
+            {
+                m_noTimeOut = true;
+            }
+        }
+        else if (input->getAiType() != GameEnums::AiTypes_Human &&
+                 input->getAiType() != GameEnums::AiTypes_ProxyAi &&
+                 input->getAiType() != GameEnums::AiTypes_Closed)
+        {
+            m_noTimeOut = true;
+        }
     }
 }
 
@@ -1192,15 +1208,24 @@ void GameMenue::actionPerformed()
                 {
                     m_pMap->getGameRules()->resumeRoundTime();
                 }
-                CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
-                quint32 delay = Settings::getPauseAfterAction();
-                if (delay == 0)
+                if (m_noTimeOut)
                 {
-                    emit sigActionPerformed();
+                    spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap.get());
+                    performAction(pAction);
+                    m_noTimeOut = false;
                 }
                 else
                 {
-                    m_delayedActionPerformedTimer.start(std::chrono::seconds(delay));
+                    CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
+                    quint32 delay = Settings::getPauseAfterAction();
+                    if (delay == 0)
+                    {
+                        emit sigActionPerformed();
+                    }
+                    else
+                    {
+                        m_delayedActionPerformedTimer.start(std::chrono::seconds(delay));
+                    }
                 }
             }
         }

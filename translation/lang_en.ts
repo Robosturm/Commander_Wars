@@ -2147,77 +2147,77 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="846"/>
+        <location filename="../menue/gamemenue.cpp" line="862"/>
         <source>Waiting for Players/Observers to join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="866"/>
+        <location filename="../menue/gamemenue.cpp" line="882"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1521"/>
+        <location filename="../menue/gamemenue.cpp" line="1546"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1522"/>
+        <location filename="../menue/gamemenue.cpp" line="1547"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1523"/>
+        <location filename="../menue/gamemenue.cpp" line="1548"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1524"/>
+        <location filename="../menue/gamemenue.cpp" line="1549"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1525"/>
+        <location filename="../menue/gamemenue.cpp" line="1550"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1526"/>
+        <location filename="../menue/gamemenue.cpp" line="1551"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1527"/>
+        <location filename="../menue/gamemenue.cpp" line="1552"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1528"/>
+        <location filename="../menue/gamemenue.cpp" line="1553"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1552"/>
+        <location filename="../menue/gamemenue.cpp" line="1577"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1562"/>
+        <location filename="../menue/gamemenue.cpp" line="1587"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1953"/>
+        <location filename="../menue/gamemenue.cpp" line="1978"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1984"/>
+        <location filename="../menue/gamemenue.cpp" line="2009"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2010"/>
+        <location filename="../menue/gamemenue.cpp" line="2035"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
