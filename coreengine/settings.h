@@ -231,7 +231,11 @@ public:
 
     static void setUsername(const QString &Username);
 
+
 public slots:
+    static bool getCaptureAnimation();
+    static void setCaptureAnimation(bool newCaptureAnimation);
+
     static const QString &getSlaveListenAdress();
     static void setSlaveListenAdress(const QString &newSlaveListenAdress);
 
@@ -776,6 +780,7 @@ private:
     static quint32 m_captureAnimationSpeed;
     static bool m_useCoMinis;
     static bool m_dialogAnimation;
+    static bool m_captureAnimation;
     static quint32 multiTurnCounter;
     static QString m_LastSaveGame;
     static QString m_defaultRuleset;

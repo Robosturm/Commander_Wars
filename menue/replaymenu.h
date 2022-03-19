@@ -111,6 +111,7 @@ private:
     bool m_seekingOverworldAnimations = false;
     GameEnums::BattleAnimationMode m_seekingBattleAnimations = GameEnums::BattleAnimationMode_All;
     bool m_seekingDialog = false;
+    bool m_seekingCapture = false;
 
     spHumanPlayerInput m_HumanInput;
     spViewplayer m_Viewplayer;
@@ -119,6 +120,7 @@ private:
     GameEnums::BattleAnimationMode m_storedBattleAnimMode;
     GameEnums::BattleAnimationType m_storedBatteAnimType;
     bool m_storedDialog = false;
+    bool m_storedCaptureAnimation = false;
     quint32 m_storedDialogAnimationSpeed = 1;
     quint32 m_storedAnimationSpeed = 1;
     quint32 m_storedBattleAnimationSpeed = 1;

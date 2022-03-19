@@ -13,7 +13,7 @@ var Constructor = function()
     {
 		if (CO_PERK.isActive(co))
 		{
-            var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack);
+            var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map);
             co.setPowerFilled(co.getPowerFilled() + powerGain * 0.1);
 		}
         return 0;

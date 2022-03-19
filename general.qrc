@@ -798,7 +798,6 @@
         <file>mods/aw2_co/scripts/cos/co_xavier.js</file>
         <file>mods/aw2_co/scripts/cos/co_yukio.js</file>
         <file>mods/aw2_co/scripts/cos/co_zandra.js</file>
-        <file>mods/aw2_co/scripts/general/co.js</file>
         <file>mods/aw2_co/scripts/general/co_perk.js</file>
         <file>mods/aw2_co/scripts/general/tagpower.js</file>
         <file>mods/aw2_co/mod.txt</file>
@@ -887,7 +886,6 @@
         <file>mods/aw_co/scripts/cos/co_xavier.js</file>
         <file>mods/aw_co/scripts/cos/co_yukio.js</file>
         <file>mods/aw_co/scripts/cos/co_zandra.js</file>
-        <file>mods/aw_co/scripts/general/co.js</file>
         <file>mods/aw_co/scripts/general/co_perk.js</file>
         <file>mods/aw_co/scripts/general/tagpower.js</file>
         <file>mods/aw_co/mod.txt</file>
@@ -1204,7 +1202,6 @@
         <file>mods/awds_co/scripts/cos/co_xavier.js</file>
         <file>mods/awds_co/scripts/cos/co_yukio.js</file>
         <file>mods/awds_co/scripts/cos/co_zandra.js</file>
-        <file>mods/awds_co/scripts/general/co.js</file>
         <file>mods/awds_co/scripts/general/co_perk.js</file>
         <file>mods/awds_co/scripts/general/tagpower.js</file>
         <file>mods/awds_co/aw_dualstrike.png</file>

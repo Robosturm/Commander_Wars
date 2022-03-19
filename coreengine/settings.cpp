@@ -121,6 +121,7 @@ quint32 Settings::m_dialogAnimationSpeed = 20;
 quint32 Settings::m_captureAnimationSpeed = 1;
 bool Settings::m_useCoMinis = true;
 bool Settings::m_dialogAnimation = true;
+bool Settings::m_captureAnimation = true;
 quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
 QString Settings::m_defaultRuleset = "";
@@ -297,6 +298,7 @@ Settings::Settings()
         new Value<bool>{"Game", "StaticMarkedFields", &m_StaticMarkedFields, false, false, true},
         new Value<qint32>{"Game", "ShowCoCount", &m_showCoCount, defaultCoCount, 0, std::numeric_limits<qint32>::max()},
         new Value<bool>{"Game", "DialogAnimation", &m_dialogAnimation, true, false, true},
+        new Value<bool>{"Game", "CaptureAnimation", &m_captureAnimation, true, false, true},
         new Value<QString>{"Game", "LastSaveGame", &m_LastSaveGame, "", "", ""},
         new Value<QString>{"Game", "DefaultRuleset", &m_defaultRuleset, "", "", ""},
         new Value<bool>{"Game", "ShowCursor", &m_ShowCursor, true, false, true},
@@ -334,6 +336,16 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+bool Settings::getCaptureAnimation()
+{
+    return m_captureAnimation;
+}
+
+void Settings::setCaptureAnimation(bool newCaptureAnimation)
+{
+    m_captureAnimation = newCaptureAnimation;
 }
 
 const QString &Settings::getSlaveListenAdress()

@@ -21,7 +21,6 @@
 
 #include "coreengine/LUPDATE_MACROS.h"
 
-class BattleAnimation;
 class GameMenue;
 using spGameMenue = oxygine::intrusive_ptr<GameMenue>;
 
@@ -335,10 +334,6 @@ protected:
     void connectMap();
     void keyInputAll(Qt::Key cur);
     QString getSaveFileEnding();
-    void skipAllAnimations();
-    bool shouldSkipDialog(GameAnimationDialog* pDialogAnimation) const;
-    bool shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) const;
-    bool shouldSkipOtherAnimation(GameAnimation* pBattleAnimation) const;
     void showChat();
     void doSaveMap();
     bool getIsMultiplayer(const spGameAction & pGameAction) const;

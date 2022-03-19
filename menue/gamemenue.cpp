@@ -18,8 +18,6 @@
 #include "game/co.h"
 #include "game/gameanimation/gameanimationfactory.h"
 #include "game/unitpathfindingsystem.h"
-#include "game/gameanimation/battleanimation.h"
-#include "game/gameanimation/gameanimationdialog.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -1111,7 +1109,7 @@ void GameMenue::skipAnimations(bool postAnimation)
     Mainapp::getInstance()->pauseRendering();
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
-        skipAllAnimations();
+        GameAnimationFactory::skipAllAnimations();
     }
     if (GameAnimationFactory::getAnimationCount() == 0 && !postAnimation)
     {
@@ -1119,114 +1117,6 @@ void GameMenue::skipAnimations(bool postAnimation)
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
     Mainapp::getInstance()->continueRendering();
-}
-
-void GameMenue::skipAllAnimations()
-{
-    CONSOLE_PRINT("skipAllAnimations()", Console::eDEBUG);
-    qint32 i = 0;
-    while (i < GameAnimationFactory::getAnimationCount())
-    {
-        GameAnimation* pAnimation = GameAnimationFactory::getAnimation(i);
-        if (pAnimation != nullptr)
-        {
-            GameAnimationDialog* pDialogAnimation = dynamic_cast<GameAnimationDialog*>(pAnimation);
-            BattleAnimation* pBattleAnimation = dynamic_cast<BattleAnimation*>(pAnimation);
-            if (shouldSkipDialog(pDialogAnimation) ||
-                shouldSkipBattleAnimation(pBattleAnimation) ||
-                (pDialogAnimation == nullptr &&
-                 pBattleAnimation == nullptr &&
-                 shouldSkipOtherAnimation(pAnimation)))
-            {
-                while (!pAnimation->onFinished(true));
-            }
-            else
-            {
-                i++;
-            }
-        }
-        else
-        {
-            i++;
-        }
-    }
-    CONSOLE_PRINT("skipAllAnimations remaining Animations=" + QString::number(GameAnimationFactory::getAnimationCount()), Console::eDEBUG);
-}
-
-bool GameMenue::shouldSkipDialog(GameAnimationDialog* pDialogAnimation) const
-{
-    bool dialogEnabled = Settings::getDialogAnimation();
-    return pDialogAnimation != nullptr && !dialogEnabled;
-}
-
-bool GameMenue::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) const
-{
-    bool battleActive = true;
-    if (pBattleAnimation != nullptr)
-    {
-        
-        GameEnums::BattleAnimationMode animMode = Settings::getBattleAnimationMode();
-        Unit* pAtkUnit = pBattleAnimation->getAtkUnit();
-        Unit* pDefUnit = pBattleAnimation->getDefUnit();
-        if (animMode == GameEnums::BattleAnimationMode_Own)
-        {
-            // only show animation if at least one player is a human
-            if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human) ||
-                (pDefUnit != nullptr && pDefUnit->getOwner()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human))
-            {
-                battleActive = true;
-            }
-            else
-            {
-                battleActive = false;
-            }
-        }
-        else if (animMode == GameEnums::BattleAnimationMode_Ally)
-        {
-            Player* pPlayer2 = m_pMap->getCurrentViewPlayer();
-            // only show animation if at least one player is an ally
-            if (pPlayer2->isAlly(pAtkUnit->getOwner()) ||
-                (pDefUnit != nullptr && pPlayer2->isAlly(pDefUnit->getOwner())))
-            {
-                battleActive = true;
-            }
-            else
-            {
-                battleActive = false;
-            }
-        }
-        else if (animMode == GameEnums::BattleAnimationMode_Enemy)
-        {
-            Player* pPlayer2 = m_pMap->getCurrentViewPlayer();
-            // only show animation if none of the players is human and all units are enemies of the current view player
-            if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human) &&
-                pDefUnit != nullptr &&
-                pDefUnit->getOwner()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human &&
-                pPlayer2->isEnemy(pAtkUnit->getOwner()) &&
-                pPlayer2->isEnemy(pDefUnit->getOwner()))
-            {
-                battleActive = true;
-            }
-            else
-            {
-                battleActive = false;
-            }
-        }
-        else if (animMode == GameEnums::BattleAnimationMode_None)
-        {
-            battleActive = false;
-        }
-        else if (animMode == GameEnums::BattleAnimationMode_All)
-        {
-            battleActive = true;
-        }
-    }
-    return !battleActive;
-}
-
-bool GameMenue::shouldSkipOtherAnimation(GameAnimation* pBattleAnimation) const
-{
-    return !Settings::getOverworldAnimations();
 }
 
 void GameMenue::finishActionPerformed()
@@ -1264,61 +1154,60 @@ void GameMenue::finishActionPerformed()
 
 void GameMenue::actionPerformed()
 {
-    if (getParent() != nullptr)
-    {        
-        if (m_pMap.get() != nullptr)
+    if (getParent() != nullptr &&
+        m_pMap.get() != nullptr &&
+        m_pCurrentAction.get() != nullptr)
+    {
+        CONSOLE_PRINT("Action performed", Console::eDEBUG);
+        finishActionPerformed();
+        if (Settings::getSyncAnimations())
         {
-            CONSOLE_PRINT("Action performed", Console::eDEBUG);
-            finishActionPerformed();
-            if (Settings::getSyncAnimations())
+            m_pMap->syncUnitsAndBuildingAnimations();
+        }
+        m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
+        m_IngameInfoBar->updateMinimap();
+        m_IngameInfoBar->updatePlayerInfo();
+        if (GameAnimationFactory::getAnimationCount() == 0 &&
+            !m_pMap->getGameRules()->getVictory())
+        {
+            if (!m_pMap->anyPlayerAlive())
             {
-                m_pMap->syncUnitsAndBuildingAnimations();
+                CONSOLE_PRINT("Forcing exiting the game cause no player is alive", Console::eDEBUG);
+                emit sigExitGame();
             }
-            m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
-            m_IngameInfoBar->updateMinimap();
-            m_IngameInfoBar->updatePlayerInfo();
-            if (GameAnimationFactory::getAnimationCount() == 0 &&
-                !m_pMap->getGameRules()->getVictory())
+            else if (m_pMap->getCurrentPlayer()->getIsDefeated())
             {
-                if (!m_pMap->anyPlayerAlive())
+                CONSOLE_PRINT("Triggering next player cause current player is defeated", Console::eDEBUG);
+                spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap.get());
+                performAction(pAction);
+            }
+            else if (m_pStoredAction.get() != nullptr)
+            {
+                performAction(m_pStoredAction);
+            }
+            else
+            {
+                GlobalUtils::setUseSeed(false);
+                if (m_pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
                 {
-                    CONSOLE_PRINT("Forcing exiting the game cause no player is alive", Console::eDEBUG);
-                    emit sigExitGame();
+                    m_pMap->getGameRules()->resumeRoundTime();
                 }
-                else if (m_pMap->getCurrentPlayer()->getIsDefeated())
+                CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
+                quint32 delay = Settings::getPauseAfterAction();
+                if (delay == 0)
                 {
-                    CONSOLE_PRINT("Triggering next player cause current player is defeated", Console::eDEBUG);
-                    spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap.get());
-                    performAction(pAction);
-                }
-                else if (m_pStoredAction.get() != nullptr)
-                {
-                    performAction(m_pStoredAction);
+                    emit sigActionPerformed();
                 }
                 else
                 {
-                    GlobalUtils::setUseSeed(false);
-                    if (m_pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
-                    {
-                        m_pMap->getGameRules()->resumeRoundTime();
-                    }
-                    CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
-                    quint32 delay = Settings::getPauseAfterAction();
-                    if (delay == 0)
-                    {
-                        emit sigActionPerformed();
-                    }
-                    else
-                    {
-                        m_delayedActionPerformedTimer.start(std::chrono::seconds(delay));
-                    }
+                    m_delayedActionPerformedTimer.start(std::chrono::seconds(delay));
                 }
             }
         }
     }
     else
     {
-        CONSOLE_PRINT("Skipping action performed due to exiting the game", Console::eDEBUG);
+        CONSOLE_PRINT("Skipping action performed", Console::eDEBUG);
     }
 
     m_saveAllowed = true;
@@ -1845,7 +1734,7 @@ void GameMenue::saveMap(QString filename, bool skipAnimations)
         }
         else if (skipAnimations)
         {
-            skipAllAnimations();
+            GameAnimationFactory::skipAllAnimations();
         }
     }
     else

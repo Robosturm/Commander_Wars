@@ -14,6 +14,7 @@ class GameAnimationPower;
 class GameAnimationNextDay;
 class GameAction;
 class CO;
+class BattleAnimation;
 
 class GameAnimationFactory;
 using spGameAnimationFactory = oxygine::intrusive_ptr<GameAnimationFactory>;
@@ -141,6 +142,34 @@ public slots:
      * @brief removeAllAnimations removes all animations and calls onFinished of them and emits animationFinished
      */
     static void finishAllAnimationsWithEmitFinished();
+    /**
+     * @brief skipAllAnimations
+     */
+     static void skipAllAnimations();
+    /**
+     * @brief shouldSkipDialog
+     * @param pDialogAnimation
+     * @return
+     */
+     static bool shouldSkipDialog(GameAnimationDialog* pDialogAnimation);
+    /**
+     * @brief shouldSkipCapture
+     * @param pGameAnimationCapture
+     * @return
+     */
+     static bool shouldSkipCapture(GameAnimationCapture* pGameAnimationCapture);
+    /**
+     * @brief shouldSkipBattleAnimation
+     * @param pBattleAnimation
+     * @return
+     */
+     static bool shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation);
+    /**
+     * @brief shouldSkipOtherAnimation
+     * @param pBattleAnimation
+     * @return
+     */
+     static bool shouldSkipOtherAnimation(GameAnimation* pBattleAnimation);
 private:
     friend class oxygine::intrusive_ptr<GameAnimationFactory>;
     explicit GameAnimationFactory();

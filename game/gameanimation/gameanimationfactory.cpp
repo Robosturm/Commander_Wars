@@ -367,3 +367,120 @@ void GameAnimationFactory::finishAllAnimationsWithEmitFinished()
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
 }
+
+void GameAnimationFactory::skipAllAnimations()
+{
+    CONSOLE_PRINT("skipAllAnimations()", Console::eDEBUG);
+    qint32 i = 0;
+    while (i < GameAnimationFactory::getAnimationCount())
+    {
+        GameAnimation* pAnimation = GameAnimationFactory::getAnimation(i);
+        if (pAnimation != nullptr)
+        {
+            GameAnimationDialog* pDialogAnimation = dynamic_cast<GameAnimationDialog*>(pAnimation);
+            BattleAnimation* pBattleAnimation = dynamic_cast<BattleAnimation*>(pAnimation);
+            GameAnimationCapture* pGameAnimationCapture = dynamic_cast<GameAnimationCapture*>(pAnimation);
+            if (shouldSkipDialog(pDialogAnimation) ||
+                shouldSkipBattleAnimation(pBattleAnimation) ||
+                shouldSkipCapture(pGameAnimationCapture) ||
+                (pDialogAnimation == nullptr &&
+                 pBattleAnimation == nullptr &&
+                 pGameAnimationCapture == nullptr &&
+                 shouldSkipOtherAnimation(pAnimation)))
+            {
+                while (!pAnimation->onFinished(true));
+            }
+            else
+            {
+                i++;
+            }
+        }
+        else
+        {
+            i++;
+        }
+    }
+    CONSOLE_PRINT("skipAllAnimations remaining Animations=" + QString::number(GameAnimationFactory::getAnimationCount()), Console::eDEBUG);
+}
+
+bool GameAnimationFactory::shouldSkipDialog(GameAnimationDialog* pDialogAnimation)
+{
+    bool dialogEnabled = Settings::getDialogAnimation();
+    return pDialogAnimation != nullptr && !dialogEnabled;
+}
+
+bool GameAnimationFactory::shouldSkipCapture(GameAnimationCapture* pGameAnimationCapture)
+{
+    bool captureEnabled = Settings::getCaptureAnimation();
+    return pGameAnimationCapture != nullptr && !captureEnabled;
+}
+
+bool GameAnimationFactory::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation)
+{
+    bool battleActive = true;
+    if (pBattleAnimation != nullptr)
+    {
+        GameMap* pMap = pBattleAnimation->getMap();
+        GameEnums::BattleAnimationMode animMode = Settings::getBattleAnimationMode();
+        Unit* pAtkUnit = pBattleAnimation->getAtkUnit();
+        Unit* pDefUnit = pBattleAnimation->getDefUnit();
+        if (animMode == GameEnums::BattleAnimationMode_Own)
+        {
+            // only show animation if at least one player is a human
+            if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human) ||
+                (pDefUnit != nullptr && pDefUnit->getOwner()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human))
+            {
+                battleActive = true;
+            }
+            else
+            {
+                battleActive = false;
+            }
+        }
+        else if (animMode == GameEnums::BattleAnimationMode_Ally)
+        {
+            Player* pPlayer2 = pMap->getCurrentViewPlayer();
+            // only show animation if at least one player is an ally
+            if (pPlayer2->isAlly(pAtkUnit->getOwner()) ||
+                (pDefUnit != nullptr && pPlayer2->isAlly(pDefUnit->getOwner())))
+            {
+                battleActive = true;
+            }
+            else
+            {
+                battleActive = false;
+            }
+        }
+        else if (animMode == GameEnums::BattleAnimationMode_Enemy)
+        {
+            Player* pPlayer2 = pMap->getCurrentViewPlayer();
+            // only show animation if none of the players is human and all units are enemies of the current view player
+            if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human) &&
+                pDefUnit != nullptr &&
+                pDefUnit->getOwner()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human &&
+                pPlayer2->isEnemy(pAtkUnit->getOwner()) &&
+                pPlayer2->isEnemy(pDefUnit->getOwner()))
+            {
+                battleActive = true;
+            }
+            else
+            {
+                battleActive = false;
+            }
+        }
+        else if (animMode == GameEnums::BattleAnimationMode_None)
+        {
+            battleActive = false;
+        }
+        else if (animMode == GameEnums::BattleAnimationMode_All)
+        {
+            battleActive = true;
+        }
+    }
+    return !battleActive;
+}
+
+bool GameAnimationFactory::shouldSkipOtherAnimation(GameAnimation* pBattleAnimation)
+{
+    return !Settings::getOverworldAnimations();
+}
