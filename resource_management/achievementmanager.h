@@ -24,4 +24,5 @@ protected:
 private:
     virtual ~AchievementManager() = default;
 };
+
 #endif // ACHIEVEMENTMANAGER_H

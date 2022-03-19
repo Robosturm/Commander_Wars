@@ -32,4 +32,6 @@ private:
     virtual ~BuildingSpriteManager() = default;
 };
 
+Q_DECLARE_INTERFACE(BuildingSpriteManager, "BuildingSpriteManager");
+
 #endif // BUILDINGSPRITEMANAGER_H

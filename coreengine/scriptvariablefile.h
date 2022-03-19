@@ -55,3 +55,4 @@ class ScriptVariableFile : public QObject, public FileSerializable, public oxygi
         QString m_filename;
 };
 
+Q_DECLARE_INTERFACE(ScriptVariableFile, "ScriptVariableFile");

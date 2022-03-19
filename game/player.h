@@ -671,4 +671,6 @@ private:
     static QImage m_neutralTableImage;
 };
 
+Q_DECLARE_INTERFACE(Player, "Player");
+
 #endif // PLAYER_H

@@ -67,4 +67,6 @@ private:
     bool m_Multiplayer{false};
 };
 
+Q_DECLARE_INTERFACE(CampaignMenu, "CampaignMenu");
+
 #endif // CAMPAIGNMENU_H

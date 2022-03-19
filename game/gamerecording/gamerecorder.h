@@ -78,6 +78,8 @@ public:
     bool defenderSeesAttacker{true};
 };
 
+Q_DECLARE_INTERFACE(AttackReport, "AttackReport");
+
 class GameRecorder : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT    
@@ -278,5 +280,7 @@ private:
     QVector<PlayerData> m_playerDataRecords;
     GameMap* m_pMap{nullptr};
 };
+
+Q_DECLARE_INTERFACE(GameRecorder, "GameRecorder");
 
 #endif // GAMERECORDER_H

@@ -66,3 +66,5 @@ protected:
     QTimer m_cheatTimeout;
     qint32 m_cheatCounter{0};
 };
+
+Q_DECLARE_INTERFACE(Mainwindow, "Mainwindow");

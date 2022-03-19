@@ -61,4 +61,6 @@ private:
     QVector<QPoint> m_movePath;
 };
 
+Q_DECLARE_INTERFACE(GameAnimationWalk, "GameAnimationWalk");
+
 #endif // GAMEANIMATIONWALK_H

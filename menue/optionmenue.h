@@ -90,4 +90,6 @@ private:
     bool m_restartNeeded{false};
 };
 
+Q_DECLARE_INTERFACE(OptionMenue, "OptionMenue");
+
 #endif // OPTIONMENUE_H

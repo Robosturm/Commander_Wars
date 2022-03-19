@@ -818,4 +818,6 @@ private:
     static Console::eLogLevels m_defaultLogLevel;
 };
 
+Q_DECLARE_INTERFACE(Settings, "Settings");
+
 #endif // SETTINGS_H

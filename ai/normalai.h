@@ -634,4 +634,6 @@ private:
     bool m_secondMoveRound{false};
 };
 
+Q_DECLARE_INTERFACE(NormalAi, "NormalAi");
+
 #endif // NORMALAI_H

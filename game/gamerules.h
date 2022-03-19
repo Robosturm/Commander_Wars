@@ -21,7 +21,7 @@ class Unit;
 class GameMap;
 
 class GameRules;
-typedef oxygine::intrusive_ptr<GameRules> spGameRules;
+using spGameRules = oxygine::intrusive_ptr<GameRules>;
 
 /**
  * @brief The GameRules class
@@ -665,5 +665,7 @@ private:
     qint32 m_multiplayerObserver{0};
     QVector<quint64> m_observerList;
 };
+
+Q_DECLARE_INTERFACE(GameRules, "GameRules");
 
 #endif // GAMERULES_H

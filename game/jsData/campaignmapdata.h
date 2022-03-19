@@ -52,3 +52,4 @@ private:
     QVector<QPointF> m_wonMapPositions;
 };
 
+Q_DECLARE_INTERFACE(CampaignMapData, "CampaignMapData");

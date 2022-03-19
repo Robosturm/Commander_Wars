@@ -177,66 +177,66 @@ message("Addr2Line Path: ${ADDR_2_LINE}")
 ###################################################################################
 set(${PROJECT_NAME}_OXYGINE_SRCS
     # top level
-    3rd_party/oxygine-framework/oxygine/AnimationFrame.cpp
-    3rd_party/oxygine-framework/oxygine/Clock.cpp
-    3rd_party/oxygine-framework/oxygine/Draggable.cpp
-    3rd_party/oxygine-framework/oxygine/EventDispatcher.cpp
-    3rd_party/oxygine-framework/oxygine/Font.cpp
-    3rd_party/oxygine-framework/oxygine/Input.cpp
-    3rd_party/oxygine-framework/oxygine/MaskedRenderer.cpp
-    3rd_party/oxygine-framework/oxygine/Material.cpp
-    3rd_party/oxygine-framework/oxygine/MaterialCache.cpp
-    3rd_party/oxygine-framework/oxygine/PointerState.cpp
-    3rd_party/oxygine-framework/oxygine/RenderDelegate.cpp
-    3rd_party/oxygine-framework/oxygine/STDRenderer.cpp
-    3rd_party/oxygine-framework/oxygine/VisualStyle.cpp
+    3rd_party/oxygine-framework/oxygine/AnimationFrame.cpp 3rd_party/oxygine-framework/oxygine/AnimationFrame.h
+    3rd_party/oxygine-framework/oxygine/Clock.cpp 3rd_party/oxygine-framework/oxygine/Clock.h
+    3rd_party/oxygine-framework/oxygine/Draggable.cpp 3rd_party/oxygine-framework/oxygine/Draggable.h
+    3rd_party/oxygine-framework/oxygine/EventDispatcher.cpp 3rd_party/oxygine-framework/oxygine/EventDispatcher.h
+    3rd_party/oxygine-framework/oxygine/Font.cpp 3rd_party/oxygine-framework/oxygine/Font.h
+    3rd_party/oxygine-framework/oxygine/Input.cpp 3rd_party/oxygine-framework/oxygine/Input.h
+    3rd_party/oxygine-framework/oxygine/MaskedRenderer.cpp 3rd_party/oxygine-framework/oxygine/MaskedRenderer.h
+    3rd_party/oxygine-framework/oxygine/Material.cpp 3rd_party/oxygine-framework/oxygine/Material.h
+    3rd_party/oxygine-framework/oxygine/MaterialCache.cpp 3rd_party/oxygine-framework/oxygine/MaterialCache.h
+    3rd_party/oxygine-framework/oxygine/PointerState.cpp 3rd_party/oxygine-framework/oxygine/PointerState.h
+    3rd_party/oxygine-framework/oxygine/RenderDelegate.cpp 3rd_party/oxygine-framework/oxygine/RenderDelegate.h
+    3rd_party/oxygine-framework/oxygine/STDRenderer.cpp 3rd_party/oxygine-framework/oxygine/STDRenderer.h
+    3rd_party/oxygine-framework/oxygine/VisualStyle.cpp 3rd_party/oxygine-framework/oxygine/VisualStyle.h
     3rd_party/oxygine-framework/oxygine/RenderState.h
     3rd_party/oxygine-framework/oxygine/oxygine-forwards.h
     #core
-    3rd_party/oxygine-framework/oxygine/core/Object.cpp
-    3rd_party/oxygine-framework/oxygine/core/oxygine.cpp
-    3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.cpp
-    3rd_party/oxygine-framework/oxygine/core/VideoDriver.cpp
-    3rd_party/oxygine-framework/oxygine/core/gamewindow.cpp
-    3rd_party/oxygine-framework/oxygine/core/ref_counter.cpp
-    3rd_party/oxygine-framework/oxygine/core/texture.cpp
-    3rd_party/oxygine-framework/oxygine/core/ShaderProgram.cpp
+    3rd_party/oxygine-framework/oxygine/core/Object.cpp 3rd_party/oxygine-framework/oxygine/core/Object.h
+    3rd_party/oxygine-framework/oxygine/core/oxygine.cpp 3rd_party/oxygine-framework/oxygine/core/oxygine.h
+    3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h
+    3rd_party/oxygine-framework/oxygine/core/VideoDriver.cpp 3rd_party/oxygine-framework/oxygine/core/VideoDriver.h
+    3rd_party/oxygine-framework/oxygine/core/gamewindow.cpp 3rd_party/oxygine-framework/oxygine/core/gamewindow.h
+    3rd_party/oxygine-framework/oxygine/core/ref_counter.cpp 3rd_party/oxygine-framework/oxygine/core/ref_counter.h
+    3rd_party/oxygine-framework/oxygine/core/texture.cpp 3rd_party/oxygine-framework/oxygine/core/texture.h
+    3rd_party/oxygine-framework/oxygine/core/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h
     3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h
     # actor
-    3rd_party/oxygine-framework/oxygine/actor/Actor.cpp
-    3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.cpp
-    3rd_party/oxygine-framework/oxygine/actor/Button.cpp
-    3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.cpp
-    3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.cpp
-    3rd_party/oxygine-framework/oxygine/actor/SlidingActor.cpp
-    3rd_party/oxygine-framework/oxygine/actor/SlidingActorNoClipRect.cpp
-    3rd_party/oxygine-framework/oxygine/actor/Sprite.cpp
-    3rd_party/oxygine-framework/oxygine/actor/Stage.cpp
-    3rd_party/oxygine-framework/oxygine/actor/TextField.cpp
-    3rd_party/oxygine-framework/oxygine/actor/slidingsprite.cpp
+    3rd_party/oxygine-framework/oxygine/actor/Actor.cpp 3rd_party/oxygine-framework/oxygine/actor/Actor.h
+    3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.cpp 3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h
+    3rd_party/oxygine-framework/oxygine/actor/Button.cpp 3rd_party/oxygine-framework/oxygine/actor/Button.h
+    3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.cpp 3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h
+    3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.cpp 3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h
+    3rd_party/oxygine-framework/oxygine/actor/SlidingActor.cpp 3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h
+    3rd_party/oxygine-framework/oxygine/actor/SlidingActorNoClipRect.cpp 3rd_party/oxygine-framework/oxygine/actor/SlidingActorNoClipRect.h
+    3rd_party/oxygine-framework/oxygine/actor/Sprite.cpp 3rd_party/oxygine-framework/oxygine/actor/Sprite.h
+    3rd_party/oxygine-framework/oxygine/actor/Stage.cpp 3rd_party/oxygine-framework/oxygine/actor/Stage.h
+    3rd_party/oxygine-framework/oxygine/actor/TextField.cpp 3rd_party/oxygine-framework/oxygine/actor/TextField.h
+    3rd_party/oxygine-framework/oxygine/actor/slidingsprite.cpp 3rd_party/oxygine-framework/oxygine/actor/slidingsprite.h
     # tween
-    3rd_party/oxygine-framework/oxygine/tween/Tween.cpp
-    3rd_party/oxygine-framework/oxygine/tween/TweenAnim.cpp
-    3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.cpp
-    3rd_party/oxygine-framework/oxygine/tween/TweenQueue.cpp
-    3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.cpp
-    3rd_party/oxygine-framework/oxygine/tween/tweenwait.cpp
-    3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.cpp
-    3rd_party/oxygine-framework/oxygine/tween/tweenshakey.cpp
+    3rd_party/oxygine-framework/oxygine/tween/Tween.cpp 3rd_party/oxygine-framework/oxygine/tween/Tween.h
+    3rd_party/oxygine-framework/oxygine/tween/TweenAnim.cpp 3rd_party/oxygine-framework/oxygine/tween/TweenAnim.h
+    3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.cpp 3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.h
+    3rd_party/oxygine-framework/oxygine/tween/TweenQueue.cpp 3rd_party/oxygine-framework/oxygine/tween/TweenQueue.h
+    3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.cpp 3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h
+    3rd_party/oxygine-framework/oxygine/tween/tweenwait.cpp 3rd_party/oxygine-framework/oxygine/tween/tweenwait.h
+    3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.cpp 3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h
+    3rd_party/oxygine-framework/oxygine/tween/tweenshakey.cpp 3rd_party/oxygine-framework/oxygine/tween/tweenshakey.h
     # res stuff
-    3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.cpp
-    3rd_party/oxygine-framework/oxygine/res/ResAnim.cpp
-    3rd_party/oxygine-framework/oxygine/res/ResAtlas.cpp
-    3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.cpp
-    3rd_party/oxygine-framework/oxygine/res/ResFont.cpp
-    3rd_party/oxygine-framework/oxygine/res/ResFontBM.cpp
-    3rd_party/oxygine-framework/oxygine/res/Resource.cpp
-    3rd_party/oxygine-framework/oxygine/res/Resources.cpp
-    3rd_party/oxygine-framework/oxygine/res/SingleResAnim.cpp
+    3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.cpp 3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h
+    3rd_party/oxygine-framework/oxygine/res/ResAnim.cpp 3rd_party/oxygine-framework/oxygine/res/ResAnim.h
+    3rd_party/oxygine-framework/oxygine/res/ResAtlas.cpp 3rd_party/oxygine-framework/oxygine/res/ResAtlas.h
+    3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.cpp 3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.h
+    3rd_party/oxygine-framework/oxygine/res/ResFont.cpp 3rd_party/oxygine-framework/oxygine/res/ResFont.h
+    3rd_party/oxygine-framework/oxygine/res/ResFontBM.cpp 3rd_party/oxygine-framework/oxygine/res/ResFontBM.h
+    3rd_party/oxygine-framework/oxygine/res/Resource.cpp 3rd_party/oxygine-framework/oxygine/res/Resource.h
+    3rd_party/oxygine-framework/oxygine/res/Resources.cpp 3rd_party/oxygine-framework/oxygine/res/Resources.h
+    3rd_party/oxygine-framework/oxygine/res/SingleResAnim.cpp 3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h
     # text utils
-    3rd_party/oxygine-framework/oxygine/text_utils/Aligner.cpp
-    3rd_party/oxygine-framework/oxygine/text_utils/Node.cpp
-    3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.cpp
+    3rd_party/oxygine-framework/oxygine/text_utils/Aligner.cpp 3rd_party/oxygine-framework/oxygine/text_utils/Aligner.h
+    3rd_party/oxygine-framework/oxygine/text_utils/Node.cpp 3rd_party/oxygine-framework/oxygine/text_utils/Node.h
+    3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.cpp 3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.h
     # closure
     3rd_party/oxygine-framework/oxygine/core/closure.h
     # math
@@ -256,321 +256,320 @@ set(${PROJECT_NAME}_SRCS
     main.cpp
 
     #objects --> i don't have a good place to put them right now
-    objects/coinfoactor.cpp
-    objects/rotatingsprite.cpp
-    objects/ruleselection.cpp
-    objects/minimap.cpp
-    objects/perkselection.cpp
-    objects/mapselectionview.cpp
-    objects/loadingscreen.cpp
-    objects/gameplayandkeys.cpp
-    objects/editorselection.cpp
-    objects/mapselection.cpp
-    objects/coselection.cpp
-    objects/playerselection.cpp
-    objects/achievementbanner.cpp
-    objects/unitstatisticview.cpp
+    objects/coinfoactor.cpp objects/coinfoactor.h
+    objects/rotatingsprite.cpp objects/rotatingsprite.h
+    objects/ruleselection.cpp objects/ruleselection.h
+    objects/minimap.cpp objects/minimap.h
+    objects/perkselection.cpp objects/perkselection.h
+    objects/mapselectionview.cpp objects/mapselectionview.h
+    objects/loadingscreen.cpp objects/loadingscreen.h
+    objects/gameplayandkeys.cpp objects/gameplayandkeys.h
+    objects/editorselection.cpp objects/editorselection.h
+    objects/mapselection.cpp objects/mapselection.h
+    objects/coselection.cpp objects/coselection.h
+    objects/playerselection.cpp objects/playerselection.h
+    objects/achievementbanner.cpp objects/achievementbanner.h
+    objects/unitstatisticview.cpp objects/unitstatisticview.h
     # objects base
-    objects/base/textinput.cpp
-    objects/base/topbar.cpp
-    objects/base/textbox.cpp
-    objects/base/h_scrollbar.cpp
-    objects/base/v_scrollbar.cpp
-    objects/base/dropdownmenu.cpp
-    objects/base/dropdownmenucolor.cpp
-    objects/base/panel.cpp
-    objects/base/spinbox.cpp
-    objects/base/checkbox.cpp
-    objects/base/slider.cpp
-    objects/base/multislider.cpp
-    objects/base/passwordbox.cpp
-    objects/base/progressinfobar.cpp
-    objects/base/selectkey.cpp
-    objects/base/chat.cpp
-    objects/base/timespinbox.cpp
-    objects/base/dropdownmenubase.cpp
-    objects/base/label.cpp
-    objects/base/colorselector.cpp
-    objects/base/dropdownmenusprite.cpp
-    objects/base/tooltip.cpp
-    objects/base/focusableobject.cpp
-    objects/base/tableview.cpp
-    objects/base/closeablepopup.cpp
-    objects/base/moveinbutton.cpp
+    objects/base/textinput.cpp objects/base/textinput.h
+    objects/base/topbar.cpp objects/base/topbar.h
+    objects/base/textbox.cpp objects/base/textbox.h
+    objects/base/h_scrollbar.cpp objects/base/h_scrollbar.h
+    objects/base/v_scrollbar.cpp objects/base/v_scrollbar.h
+    objects/base/dropdownmenu.cpp objects/base/dropdownmenu.h
+    objects/base/dropdownmenucolor.cpp objects/base/dropdownmenucolor.h
+    objects/base/panel.cpp objects/base/panel.h
+    objects/base/spinbox.cpp objects/base/spinbox.h
+    objects/base/checkbox.cpp objects/base/checkbox.h
+    objects/base/slider.cpp objects/base/slider.h
+    objects/base/multislider.cpp objects/base/multislider.h
+    objects/base/passwordbox.cpp objects/base/passwordbox.h
+    objects/base/progressinfobar.cpp objects/base/progressinfobar.h
+    objects/base/selectkey.cpp objects/base/selectkey.h
+    objects/base/chat.cpp objects/base/chat.h
+    objects/base/timespinbox.cpp objects/base/timespinbox.h
+    objects/base/dropdownmenubase.cpp objects/base/dropdownmenubase.h
+    objects/base/label.cpp objects/base/label.h
+    objects/base/colorselector.cpp objects/base/colorselector.h
+    objects/base/dropdownmenusprite.cpp objects/base/dropdownmenusprite.h
+    objects/base/tooltip.cpp objects/base/tooltip.h
+    objects/base/focusableobject.cpp objects/base/focusableobject.h
+    objects/base/tableview.cpp objects/base/tableview.h
+    objects/base/closeablepopup.cpp objects/base/closeablepopup.h
+    objects/base/moveinbutton.cpp objects/base/moveinbutton.h
     # objects dialogs
-    objects/dialogs/colorselectiondialog.cpp
-    objects/dialogs/dialogconnecting.cpp
-    objects/dialogs/filedialog.cpp
-    objects/dialogs/dialogcostyle.cpp
-    objects/dialogs/dialogmessagebox.cpp
-    objects/dialogs/dialogtextinput.cpp
-    objects/dialogs/folderdialog.cpp
-    objects/dialogs/dialogvaluecounter.cpp
-    objects/dialogs/gamepadinfo.cpp
+    objects/dialogs/colorselectiondialog.cpp objects/dialogs/colorselectiondialog.h
+    objects/dialogs/dialogconnecting.cpp objects/dialogs/dialogconnecting.h
+    objects/dialogs/filedialog.cpp objects/dialogs/filedialog.h
+    objects/dialogs/dialogcostyle.cpp objects/dialogs/dialogcostyle.h
+    objects/dialogs/dialogmessagebox.cpp objects/dialogs/dialogmessagebox.h
+    objects/dialogs/dialogtextinput.cpp objects/dialogs/dialogtextinput.h
+    objects/dialogs/folderdialog.cpp objects/dialogs/folderdialog.h
+    objects/dialogs/dialogvaluecounter.cpp objects/dialogs/dialogvaluecounter.h
+    objects/dialogs/gamepadinfo.cpp objects/dialogs/gamepadinfo.h
     # objects dialogs editor
-    objects/dialogs/editor/dialogmodifyunit.cpp
-    objects/dialogs/editor/dialogmodifybuilding.cpp
-    objects/dialogs/editor/dialogmodifyterrain.cpp
-    objects/dialogs/editor/dialograndommap.cpp
-    objects/dialogs/editor/mapeditdialog.cpp
+    objects/dialogs/editor/dialogmodifyunit.cpp objects/dialogs/editor/dialogmodifyunit.h
+    objects/dialogs/editor/dialogmodifybuilding.cpp objects/dialogs/editor/dialogmodifybuilding.h
+    objects/dialogs/editor/dialogmodifyterrain.cpp objects/dialogs/editor/dialogmodifyterrain.h
+    objects/dialogs/editor/dialograndommap.cpp objects/dialogs/editor/dialograndommap.h
+    objects/dialogs/editor/mapeditdialog.cpp objects/dialogs/editor/mapeditdialog.h
     # objects dialogs rules
-    objects/dialogs/rules/actionlistdialog.cpp
-    objects/dialogs/rules/buildlistdialog.cpp
-    objects/dialogs/rules/cobannlistdialog.cpp
-    objects/dialogs/rules/coselectiondialog.cpp
-    objects/dialogs/rules/perkselectiondialog.cpp
-    objects/dialogs/rules/playerselectiondialog.cpp
-    objects/dialogs/rules/ruleselectiondialog.cpp
+    objects/dialogs/rules/actionlistdialog.cpp objects/dialogs/rules/actionlistdialog.h
+    objects/dialogs/rules/buildlistdialog.cpp objects/dialogs/rules/buildlistdialog.h
+    objects/dialogs/rules/cobannlistdialog.cpp objects/dialogs/rules/cobannlistdialog.h
+    objects/dialogs/rules/coselectiondialog.cpp objects/dialogs/rules/coselectiondialog.h
+    objects/dialogs/rules/perkselectiondialog.cpp objects/dialogs/rules/perkselectiondialog.h
+    objects/dialogs/rules/playerselectiondialog.cpp objects/dialogs/rules/playerselectiondialog.h
+    objects/dialogs/rules/ruleselectiondialog.cpp objects/dialogs/rules/ruleselectiondialog.h
     # objects dialogs ingame
-    objects/dialogs/ingame/coinfodialog.cpp
-    objects/dialogs/ingame/dialogvictoryconditions.cpp
-    objects/dialogs/ingame/dialogattacklog.cpp
-    objects/dialogs/ingame/dialogunitinfo.cpp
-    objects/dialogs/ingame/victoryrulepopup.cpp
+    objects/dialogs/ingame/coinfodialog.cpp objects/dialogs/ingame/coinfodialog.h
+    objects/dialogs/ingame/dialogvictoryconditions.cpp objects/dialogs/ingame/dialogvictoryconditions.h
+    objects/dialogs/ingame/dialogattacklog.cpp objects/dialogs/ingame/dialogattacklog.h
+    objects/dialogs/ingame/dialogunitinfo.cpp objects/dialogs/ingame/dialogunitinfo.h
+    objects/dialogs/ingame/victoryrulepopup.cpp objects/dialogs/ingame/victoryrulepopup.h
     # objects dialogs map selection
-    objects/dialogs/mapSelection/mapselectionfilterdialog.cpp
+    objects/dialogs/mapSelection/mapselectionfilterdialog.cpp objects/dialogs/mapSelection/mapselectionfilterdialog.h
 
     #modding
-    modding/csvtableimporter.cpp
+    modding/csvtableimporter.cpp modding/csvtableimporter.h
 
     #menues
-    menue/basemenu.cpp
-    menue/mainwindow.cpp
-    menue/ingamemenue.cpp
-    menue/editormenue.cpp
-    menue/gamemenue.cpp
-    menue/optionmenue.cpp
-    menue/mapselectionmapsmenue.cpp
-    menue/creditsmenue.cpp
-    menue/victorymenue.cpp
-    menue/campaignmenu.cpp
-    menue/wikimenu.cpp
-    menue/costylemenu.cpp
-    menue/replaymenu.cpp
-    menue/achievementmenu.cpp
-    menue/shopmenu.cpp
+    menue/basemenu.cpp menue/basemenu.h
+    menue/mainwindow.cpp menue/mainwindow.h
+    menue/ingamemenue.cpp menue/ingamemenue.h
+    menue/editormenue.cpp menue/editormenue.h
+    menue/gamemenue.cpp menue/gamemenue.h
+    menue/optionmenue.cpp menue/optionmenue.h
+    menue/mapselectionmapsmenue.cpp menue/mapselectionmapsmenue.h
+    menue/creditsmenue.cpp menue/creditsmenue.h
+    menue/victorymenue.cpp menue/victorymenue.h
+    menue/campaignmenu.cpp menue/campaignmenu.h
+    menue/wikimenu.cpp menue/wikimenu.h
+    menue/costylemenu.cpp menue/costylemenu.h
+    menue/replaymenu.cpp menue/replaymenu.h
+    menue/achievementmenu.cpp menue/achievementmenu.h
+    menue/shopmenu.cpp menue/shopmenu.h
 
     # ressource management
-    resource_management/unitspritemanager.cpp
-    resource_management/terrainmanager.cpp
-    resource_management/fontmanager.cpp
-    resource_management/backgroundmanager.cpp
-    resource_management/objectmanager.cpp
-    resource_management/buildingspritemanager.cpp
-    resource_management/movementtablemanager.cpp
-    resource_management/gamemanager.cpp
-    resource_management/gameanimationmanager.cpp
-    resource_management/weaponmanager.cpp
-    resource_management/cospritemanager.cpp
-    resource_management/gamerulemanager.cpp
-    resource_management/battleanimationmanager.cpp
-    resource_management/coperkmanager.cpp
-    resource_management/achievementmanager.cpp
-    resource_management/shoploader.cpp
+    resource_management/unitspritemanager.cpp resource_management/unitspritemanager.h
+    resource_management/terrainmanager.cpp resource_management/terrainmanager.h
+    resource_management/fontmanager.cpp resource_management/fontmanager.h
+    resource_management/backgroundmanager.cpp resource_management/backgroundmanager.h
+    resource_management/objectmanager.cpp resource_management/objectmanager.h
+    resource_management/buildingspritemanager.cpp resource_management/buildingspritemanager.h
+    resource_management/movementtablemanager.cpp resource_management/movementtablemanager.h
+    resource_management/gamemanager.cpp resource_management/gamemanager.h
+    resource_management/gameanimationmanager.cpp resource_management/gameanimationmanager.h
+    resource_management/weaponmanager.cpp resource_management/weaponmanager.h
+    resource_management/cospritemanager.cpp resource_management/cospritemanager.h
+    resource_management/gamerulemanager.cpp resource_management/gamerulemanager.h
+    resource_management/battleanimationmanager.cpp resource_management/battleanimationmanager.h
+    resource_management/coperkmanager.cpp resource_management/coperkmanager.h
+    resource_management/achievementmanager.cpp resource_management/achievementmanager.h
+    resource_management/shoploader.cpp resource_management/shoploader.h
+    resource_management/ressourcemanagement.h
 
     # core engine
-    coreengine/mainapp.cpp
-    coreengine/settings.cpp
-    coreengine/interpreter.cpp
-    coreengine/console.cpp
-    coreengine/audiothread.cpp
-    coreengine/pathfindingsystem.cpp
-    coreengine/qmlvector.cpp
-    coreengine/scriptvariables.cpp
-    coreengine/scriptvariable.cpp
-    coreengine/workerthread.cpp
-    coreengine/timer.cpp
-    coreengine/userdata.cpp
-    coreengine/crashreporter.cpp
-    coreengine/filesupport.cpp
-    coreengine/globalutils.cpp
-    coreengine/scriptvariablefile.cpp
-    coreengine/metatyperegister.cpp
-    coreengine/Gamepad.h
-    coreengine/GamepadShared.cpp
-    coreengine/sha256hash.cpp
-    coreengine/commandlineparser.cpp
+    coreengine/mainapp.cpp coreengine/mainapp.h
+    coreengine/settings.cpp coreengine/settings.h
+    coreengine/interpreter.cpp coreengine/interpreter.h
+    coreengine/console.cpp coreengine/console.h
+    coreengine/audiothread.cpp coreengine/audiothread.h
+    coreengine/pathfindingsystem.cpp coreengine/pathfindingsystem.h
+    coreengine/qmlvector.cpp coreengine/qmlvector.h
+    coreengine/scriptvariables.cpp coreengine/scriptvariables.h
+    coreengine/scriptvariable.cpp coreengine/scriptvariable.h
+    coreengine/workerthread.cpp coreengine/workerthread.h
+    coreengine/timer.cpp coreengine/timer.h
+    coreengine/userdata.cpp coreengine/userdata.h
+    coreengine/crashreporter.cpp coreengine/crashreporter.h
+    coreengine/filesupport.cpp coreengine/filesupport.h
+    coreengine/globalutils.cpp coreengine/globalutils.h
+    coreengine/scriptvariablefile.cpp coreengine/scriptvariablefile.h
+    coreengine/metatyperegister.cpp coreengine/metatyperegister.h
+    coreengine/GamepadShared.cpp coreengine/Gamepad.h
+    coreengine/sha256hash.cpp coreengine/sha256hash.h
+    coreengine/commandlineparser.cpp coreengine/commandlineparser.h
 
     # network engine
-    network/tcpclient.cpp
-    network/tcpserver.cpp
-    network/txtask.cpp
-    network/rxtask.cpp
+    network/tcpclient.cpp network/tcpclient.h
+    network/tcpserver.cpp network/tcpserver.h
+    network/txtask.cpp network/txtask.h
+    network/rxtask.cpp network/rxtask.h
     network/NetworkInterface.h
-    network/networkgamedata.cpp
-    network/mainserver.cpp
-    network/networkgame.cpp
+    network/networkgamedata.cpp network/networkgamedata.h
+    network/mainserver.cpp network/mainserver.h
+    network/networkgame.cpp network/networkgame.h
     network/JsonKeys.h
 
     # game
-    game/gamemap.cpp
-    game/terrain.cpp
-    game/building.cpp
-    game/co.cpp
-    game/player.cpp
-    game/unit.cpp
-    game/terrainfindingsystem.cpp
-    game/gameaction.cpp
-    game/unitpathfindingsystem.cpp
-    game/GameEnums.cpp
-    game/gamerules.cpp
-    game/gamerule.cpp
-    game/victoryrule.cpp
-    game/weather.cpp
-    game/cursor.cpp
-    game/createoutline.cpp
+    game/gamemap.cpp game/gamemap.h
+    game/terrain.cpp game/terrain.h
+    game/building.cpp game/building.h
+    game/co.cpp game/co.h
+    game/player.cpp game/player.h
+    game/unit.cpp game/unit.h
+    game/terrainfindingsystem.cpp game/terrainfindingsystem.h
+    game/gameaction.cpp game/gameaction.h
+    game/unitpathfindingsystem.cpp game/unitpathfindingsystem.h
+    game/GameEnums.cpp game/GameEnums.h
+    game/gamerules.cpp game/gamerules.h
+    game/gamerule.cpp game/gamerule.h
+    game/victoryrule.cpp game/victoryrule.h
+    game/weather.cpp game/weather.h
+    game/cursor.cpp game/cursor.h
+    game/createoutline.cpp game/createoutline.h
     # cool ingame recording
-    game/gamerecording/daytodayrecord.cpp
-    game/gamerecording/playerrecord.cpp
-    game/gamerecording/specialevent.cpp
-    game/gamerecording/gamerecorder.cpp
-    game/gamerecording/replayrecorder.cpp
-    game/gamerecording/gamemapimagesaver.cpp
+    game/gamerecording/daytodayrecord.cpp game/gamerecording/daytodayrecord.h
+    game/gamerecording/playerrecord.cpp game/gamerecording/playerrecord.h
+    game/gamerecording/specialevent.cpp game/gamerecording/specialevent.h
+    game/gamerecording/gamerecorder.cpp game/gamerecording/gamerecorder.h
+    game/gamerecording/replayrecorder.cpp game/gamerecording/replayrecorder.h
+    game/gamerecording/gamemapimagesaver.cpp game/gamerecording/gamemapimagesaver.h
 
     # cool ingame script support
-    game/gamescript.cpp
-    game/campaign.cpp
+    game/gamescript.cpp game/gamescript.h
+    game/campaign.cpp game/campaign.h
     # animation stuff
-    game/gameanimation/gameanimation.cpp
-    game/gameanimation/gameanimationfactory.cpp
-    game/gameanimation/gameanimationwalk.cpp
-    game/gameanimation/gameanimationcapture.cpp
-    game/gameanimation/gameanimationdialog.cpp
-    game/gameanimation/gameanimationpower.cpp
-    game/gameanimation/gameanimationnextday.cpp
-    game/gameanimation/battleanimation.cpp
-    game/gameanimation/battleanimationsprite.cpp
+    game/gameanimation/gameanimation.cpp game/gameanimation/gameanimation.h
+    game/gameanimation/gameanimationfactory.cpp game/gameanimation/gameanimationfactory.h
+    game/gameanimation/gameanimationwalk.cpp game/gameanimation/gameanimationwalk.h
+    game/gameanimation/gameanimationcapture.cpp game/gameanimation/gameanimationcapture.h
+    game/gameanimation/gameanimationdialog.cpp game/gameanimation/gameanimationdialog.h
+    game/gameanimation/gameanimationpower.cpp game/gameanimation/gameanimationpower.h
+    game/gameanimation/gameanimationnextday.cpp game/gameanimation/gameanimationnextday.h
+    game/gameanimation/battleanimation.cpp game/gameanimation/battleanimation.h
+    game/gameanimation/battleanimationsprite.cpp game/gameanimation/battleanimationsprite.h
     # replay/observer
-    game/viewplayer.cpp
+    game/viewplayer.cpp game/viewplayer.h
 
     # terrain flow data
-    game/jsData/terrainflowdata.cpp
-    game/jsData/campaignmapdata.cpp
+    game/jsData/terrainflowdata.cpp game/jsData/terrainflowdata.h
+    game/jsData/campaignmapdata.cpp game/jsData/campaignmapdata.h
 
     #ui
-    game/ui/playerinfo.cpp
-    game/ui/ingameinfobar.cpp
-    game/ui/copowermeter.cpp
-    game/ui/customcoboostinfo.cpp
-    game/ui/humanquickbuttons.cpp
-    game/ui/damagecalculator.h
-    game/ui/damagecalculator.cpp
+    game/ui/playerinfo.cpp game/ui/playerinfo.h
+    game/ui/ingameinfobar.cpp game/ui/ingameinfobar.h
+    game/ui/copowermeter.cpp game/ui/copowermeter.h
+    game/ui/customcoboostinfo.cpp game/ui/customcoboostinfo.h
+    game/ui/humanquickbuttons.cpp game/ui/humanquickbuttons.h
+    game/ui/damagecalculator.cpp game/ui/damagecalculator.h
 
     # game input
-    gameinput/basegameinputif.cpp
-    gameinput/humanplayerinput.cpp
-    gameinput/humanplayerinputmenu.cpp
-    gameinput/menudata.cpp
-    gameinput/markedfielddata.cpp
-    gameinput/cursordata.cpp
-    gameinput/mapmover.cpp
+    gameinput/basegameinputif.cpp gameinput/basegameinputif.h
+    gameinput/humanplayerinput.cpp gameinput/humanplayerinput.h
+    gameinput/humanplayerinputmenu.cpp gameinput/humanplayerinputmenu.h
+    gameinput/menudata.cpp gameinput/menudata.h
+    gameinput/markedfielddata.cpp gameinput/markedfielddata.h
+    gameinput/cursordata.cpp gameinput/cursordata.h
+    gameinput/mapmover.cpp gameinput/mapmover.h
 
     # map importing/exporting support
     # and resizing etc.
     mapsupport/importcowtxt.cpp
     mapsupport/refactorMap.cpp
-    mapsupport/randomMapGenerator.cpp
+    mapsupport/randomMapGenerator.cpp mapsupport/randomMapGenerator.h
     mapsupport/importexport_awds.cpp
     mapsupport/importexport_awdc.cpp
     mapsupport/importawbyweb_text.cpp
-    mapsupport/mapfilter.cpp
+    mapsupport/mapfilter.cpp mapsupport/mapfilter.h
 
     # ai
-    ai/coreai.cpp
-    ai/veryeasyai.cpp
-    ai/targetedunitpathfindingsystem.cpp
-    ai/islandmap.cpp
+    ai/coreai.cpp ai/coreai.h
+    ai/veryeasyai.cpp ai/veryeasyai.h
+    ai/targetedunitpathfindingsystem.cpp ai/targetedunitpathfindingsystem.h
+    ai/islandmap.cpp ai/islandmap.h
     ai/coreai_predefinedai.cpp
-    ai/proxyai.cpp
-    ai/normalai.cpp
-    ai/heavyai.cpp
+    ai/proxyai.cpp ai/proxyai.h
+    ai/normalai.cpp ai/normalai.h
+    ai/heavyai.cpp ai/heavyai.h
     ai/heavyai/heavyaiproduction.cpp
     ai/heavyai/heavyaitraining.cpp
-    ai/influencefrontmap.cpp
+    ai/influencefrontmap.cpp ai/influencefrontmap.h
+
     # neuralnetwork
-    ai/neuralnetwork/neural/edge.cpp
-    ai/neuralnetwork/neural/layer.cpp
-    ai/neuralnetwork/neural/neuralnetwork.cpp
-    ai/neuralnetwork/neural/neuron.cpp
+    ai/neuralnetwork/neural/edge.cpp ai/neuralnetwork/neural/edge.h
+    ai/neuralnetwork/neural/layer.cpp ai/neuralnetwork/neural/layer.h
+    ai/neuralnetwork/neural/neuralnetwork.cpp ai/neuralnetwork/neural/neuralnetwork.h
+    ai/neuralnetwork/neural/neuron.cpp ai/neuralnetwork/neural/neuron.h
     # decision tree
-    ai/decisiontree/leaf.cpp
-    ai/decisiontree/decisionnode.cpp
-    ai/decisiontree/question.cpp
-    ai/decisiontree/decisionquestion.cpp
-    ai/decisiontree/decisiontree.cpp
+    ai/decisiontree/leaf.cpp ai/decisiontree/leaf.h
+    ai/decisiontree/decisionnode.cpp ai/decisiontree/decisionnode.h
+    ai/decisiontree/question.cpp ai/decisiontree/question.h
+    ai/decisiontree/decisionquestion.cpp ai/decisiontree/decisionquestion.h
+    ai/decisiontree/decisiontree.cpp ai/decisiontree/decisiontree.h
 
     # multiplayer
-    multiplayer/lobbymenu.cpp
-    multiplayer/multiplayermenu.cpp
-    multiplayer/gamedata.cpp
-    multiplayer/password.cpp
-    multiplayer/dialogpasswordandadress.cpp
-    multiplayer/dialogpassword.cpp
+    multiplayer/lobbymenu.cpp multiplayer/lobbymenu.h
+    multiplayer/multiplayermenu.cpp multiplayer/multiplayermenu.h
+    multiplayer/gamedata.cpp multiplayer/gamedata.h
+    multiplayer/password.cpp multiplayer/password.h
+    multiplayer/dialogpasswordandadress.cpp multiplayer/dialogpasswordandadress.h
+    multiplayer/dialogpassword.cpp multiplayer/dialogpassword.h
     multiplayer/networkcommands.h
 
     #campaign support
-    ingamescriptsupport/campaigneditor.cpp
+    ingamescriptsupport/campaigneditor.cpp ingamescriptsupport/campaigneditor.h
 
     # script support
-    ingamescriptsupport/scripteditor.cpp
-    ingamescriptsupport/genericbox.cpp
-    ingamescriptsupport/scriptdialogdialog.cpp
-    ingamescriptsupport/scriptdata.cpp
+    ingamescriptsupport/scripteditor.cpp ingamescriptsupport/scripteditor.h
+    ingamescriptsupport/genericbox.cpp ingamescriptsupport/genericbox.h
+    ingamescriptsupport/scriptdialogdialog.cpp ingamescriptsupport/scriptdialogdialog.h
+    ingamescriptsupport/scriptdata.cpp ingamescriptsupport/scriptdata.h
     # condition stuff
-    ingamescriptsupport/conditions/scriptcondition.cpp
-    ingamescriptsupport/conditions/scriptconditionvictory.cpp
-    ingamescriptsupport/conditions/scriptconditionstartofturn.cpp
-    ingamescriptsupport/conditions/scriptconditioneachday.cpp
-    ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp
-    ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp
-    ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp
-    ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp
-    ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp
-    ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp
-    ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp
-    ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp
-    ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp
-    ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp
+    ingamescriptsupport/conditions/scriptcondition.cpp ingamescriptsupport/conditions/scriptcondition.h
+    ingamescriptsupport/conditions/scriptconditionvictory.cpp ingamescriptsupport/conditions/scriptconditionvictory.h
+    ingamescriptsupport/conditions/scriptconditionstartofturn.cpp ingamescriptsupport/conditions/scriptconditionstartofturn.h
+    ingamescriptsupport/conditions/scriptconditioneachday.cpp ingamescriptsupport/conditions/scriptconditioneachday.h
+    ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp ingamescriptsupport/conditions/scriptconditionunitdestroyed.h
+    ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.h
+    ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp ingamescriptsupport/conditions/scriptconditionterraindestroyed.h
+    ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp ingamescriptsupport/conditions/scriptconditionbuildingcaptured.h
+    ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp ingamescriptsupport/conditions/scriptconditionplayerdefeated.h
+    ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp ingamescriptsupport/conditions/scriptconditionunitsdestroyed.h
+    ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp ingamescriptsupport/conditions/scriptconditionbuildingsowned.h
+    ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp ingamescriptsupport/conditions/scriptconditionplayerreachedarea.h
+    ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.h
+    ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp ingamescriptsupport/conditions/scriptconditioncheckvariable.h
     # event stuff
-    ingamescriptsupport/events/scriptevent.cpp
-    ingamescriptsupport/events/scripteventdialog.cpp
-    ingamescriptsupport/events/scripteventspawnunit.cpp
-    ingamescriptsupport/events/scripteventdefeatplayer.cpp
-    ingamescriptsupport/events/scripteventchangebuildlist.cpp
-    ingamescriptsupport/events/scripteventaddfunds.cpp
-    ingamescriptsupport/events/scripteventchangeweather.cpp
-    ingamescriptsupport/events/scripteventchangecobar.cpp
-    ingamescriptsupport/events/scripteventmodifyunit.cpp
-    ingamescriptsupport/events/scripteventmodifyterrain.cpp
-    ingamescriptsupport/events/scripteventanimation.cpp
-    ingamescriptsupport/events/scripteventvictoryinfo.cpp
-    ingamescriptsupport/events/scripteventmodifyvariable.cpp
-    ingamescriptsupport/events/scripteventgeneric.cpp
-    ingamescriptsupport/events/scripteventchangeunitai.cpp
-    ingamescriptsupport/events/scripteventchangebuildingowner.cpp
-    ingamescriptsupport/events/scripteventchangeunitowner.cpp
-    ingamescriptsupport/events/scripteventchangeplayerteam.cpp
-    ingamescriptsupport/events/scripteventspawnbuilding.cpp
-    ingamescriptsupport/events/scripteventcentermap.cpp
-    ingamescriptsupport/events/scripteventplaysound.cpp
+    ingamescriptsupport/events/scriptevent.cpp ingamescriptsupport/events/scriptevent.h
+    ingamescriptsupport/events/scripteventdialog.cpp ingamescriptsupport/events/scripteventdialog.h
+    ingamescriptsupport/events/scripteventspawnunit.cpp ingamescriptsupport/events/scripteventspawnunit.h
+    ingamescriptsupport/events/scripteventdefeatplayer.cpp ingamescriptsupport/events/scripteventdefeatplayer.h
+    ingamescriptsupport/events/scripteventchangebuildlist.cpp ingamescriptsupport/events/scripteventchangebuildlist.h
+    ingamescriptsupport/events/scripteventaddfunds.cpp ingamescriptsupport/events/scripteventaddfunds.h
+    ingamescriptsupport/events/scripteventchangeweather.cpp ingamescriptsupport/events/scripteventchangeweather.h
+    ingamescriptsupport/events/scripteventchangecobar.cpp ingamescriptsupport/events/scripteventchangecobar.h
+    ingamescriptsupport/events/scripteventmodifyunit.cpp ingamescriptsupport/events/scripteventmodifyunit.h
+    ingamescriptsupport/events/scripteventmodifyterrain.cpp ingamescriptsupport/events/scripteventmodifyterrain.h
+    ingamescriptsupport/events/scripteventanimation.cpp ingamescriptsupport/events/scripteventanimation.h
+    ingamescriptsupport/events/scripteventvictoryinfo.cpp ingamescriptsupport/events/scripteventvictoryinfo.h
+    ingamescriptsupport/events/scripteventmodifyvariable.cpp ingamescriptsupport/events/scripteventmodifyvariable.h
+    ingamescriptsupport/events/scripteventgeneric.cpp ingamescriptsupport/events/scripteventgeneric.h
+    ingamescriptsupport/events/scripteventchangeunitai.cpp ingamescriptsupport/events/scripteventchangeunitai.h
+    ingamescriptsupport/events/scripteventchangebuildingowner.cpp ingamescriptsupport/events/scripteventchangebuildingowner.h
+    ingamescriptsupport/events/scripteventchangeunitowner.cpp ingamescriptsupport/events/scripteventchangeunitowner.h
+    ingamescriptsupport/events/scripteventchangeplayerteam.cpp ingamescriptsupport/events/scripteventchangeplayerteam.h
+    ingamescriptsupport/events/scripteventspawnbuilding.cpp ingamescriptsupport/events/scripteventspawnbuilding.h
+    ingamescriptsupport/events/scripteventcentermap.cpp ingamescriptsupport/events/scripteventcentermap.h
+    ingamescriptsupport/events/scripteventplaysound.cpp ingamescriptsupport/events/scripteventplaysound.h
 
     # wiki stuff
-    wiki/terraininfo.cpp
-    wiki/unitinfo.cpp
-    wiki/fieldinfo.cpp
-    wiki/wikidatabase.cpp
-    wiki/wikipage.cpp
-    wiki/defaultwikipage.cpp
-    wiki/wikiview.cpp
-    wiki/damagetablepage.cpp
+    wiki/terraininfo.cpp wiki/terraininfo.h
+    wiki/unitinfo.cpp wiki/unitinfo.h
+    wiki/fieldinfo.cpp wiki/fieldinfo.h
+    wiki/wikidatabase.cpp wiki/wikidatabase.h
+    wiki/wikipage.cpp wiki/wikipage.h
+    wiki/defaultwikipage.cpp wiki/defaultwikipage.h
+    wiki/wikiview.cpp wiki/wikiview.h
+    wiki/damagetablepage.cpp wiki/damagetablepage.h
 
     # spriting support
-    spritingsupport/spritecreator.cpp
+    spritingsupport/spritecreator.cpp spritingsupport/spritecreator.h
 
     # ui
-    ui_reader/uifactory.cpp
-    ui_reader/createdgui.h
-    ui_reader/createdgui.cpp
+    ui_reader/uifactory.cpp ui_reader/uifactory.h
+    ui_reader/createdgui.cpp ui_reader/createdgui.h
 )
 
 ##############################################################################

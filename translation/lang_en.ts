@@ -892,6 +892,19 @@
     </message>
 </context>
 <context>
+    <name>DialogMessageBox</name>
+    <message>
+        <location filename="../objects/dialogs/dialogmessagebox.h" line="16"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/dialogmessagebox.h" line="16"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DialogModifyBuilding</name>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="32"/>
@@ -4780,6 +4793,11 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <source>Player that has to capture the building.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.h" line="42"/>
+        <source>Building Captured X: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptConditionBuildingDestroyed</name>
@@ -4803,6 +4821,11 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <source>Y Location of the Building that has to be destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.h" line="41"/>
+        <source>Building Destroyed X: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptConditionBuildingsOwned</name>
@@ -4824,6 +4847,11 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="151"/>
         <source>Player that has to own the given amount of buildings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.h" line="42"/>
+        <source>Buildings Owned: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4869,6 +4897,11 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <source>If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.h" line="33"/>
+        <source>Check Variable: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptConditionEachDay</name>
@@ -4898,6 +4931,21 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.h" line="61"/>
+        <source>Each: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.h" line="61"/>
+        <source> Start: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.h" line="61"/>
+        <source> Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptConditionPlayerDefeated</name>
@@ -4909,6 +4957,11 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="123"/>
         <source>The player that has to be defeated in order to executed the events.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.h" line="41"/>
+        <source>Player Defeated: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4979,6 +5032,21 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <source>Players: </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.h" line="40"/>
+        <source>Player reached X:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.h" line="42"/>
+        <source> width: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.h" line="42"/>
+        <source> heigth: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptConditionStartOfTurn</name>
@@ -5000,6 +5068,16 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="117"/>
         <source>Player at which the events get executed at the start of this turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.h" line="50"/>
+        <source>Day: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.h" line="50"/>
+        <source> Player: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5025,6 +5103,11 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <source>Y Location of the Terrain that has to be destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.h" line="42"/>
+        <source>Terrain Destroyed X: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptConditionUnitDestroyed</name>
@@ -5046,6 +5129,11 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="152"/>
         <source>Y Location of the unit at the start of the game that needs to be destroyed. The unit is allowed to move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.h" line="41"/>
+        <source>Unit Destroyed X: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5111,6 +5199,26 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <source>Target Area heigth which the unit needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.h" line="41"/>
+        <source>Unit at X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.h" line="41"/>
+        <source> reached X:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.h" line="43"/>
+        <source> width: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.h" line="43"/>
+        <source> heigth: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptConditionUnitsDestroyed</name>
@@ -5134,6 +5242,16 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <source>Player who has to kill the units.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.h" line="40"/>
+        <source>Units killed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.h" line="40"/>
+        <source> by Player</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptConditionVictory</name>
@@ -5145,6 +5263,11 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="87"/>
         <source>Team that has to win the game to executed the events.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.h" line="33"/>
+        <source>Victory Team: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5315,6 +5438,16 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <source>The funds the given player will earn.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventaddfunds.h" line="41"/>
+        <source>Add </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventaddfunds.h" line="41"/>
+        <source> Funds to </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptEventAnimation</name>
@@ -5433,6 +5566,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <source>Amount of frames for the animation. Only has an effect on custom animations.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.h" line="44"/>
+        <source>Animation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptEventCenterMap</name>
@@ -5522,6 +5660,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <source>If the checked the unit will be forbidden to be build, else it gets allowed to be build.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.h" line="41"/>
+        <source>Change Buildlist: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptEventChangeCOBar</name>
@@ -5553,6 +5696,16 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="129"/>
         <source>The amount of Stars that will be changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.h" line="40"/>
+        <source>Gain </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.h" line="40"/>
+        <source> Stars: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5687,6 +5840,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <source>The new weather that appears.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeweather.h" line="32"/>
+        <source>Change Weather</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptEventDefeatPlayer</name>
@@ -5698,6 +5856,19 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventdefeatplayer.cpp" line="61"/>
         <source>The player that gets defeated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventdefeatplayer.h" line="42"/>
+        <source>Defeat: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventDialog</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventdialog.h" line="81"/>
+        <source>Dialog: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5739,6 +5910,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.cpp" line="105"/>
         <source>New Terrain which gets spawned. Note: all units on the terrain get deleted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.h" line="42"/>
+        <source>Modify Unit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5804,6 +5980,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <source>Fuel change for the unit.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyunit.h" line="42"/>
+        <source>Modify Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptEventModifyVariable</name>
@@ -5845,6 +6026,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="145"/>
         <source>If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.h" line="31"/>
+        <source>Modify Variable</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5966,12 +6152,22 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <source>Radius around the given location at which the unit gets tried to be spawned, if either the field is blocked or the unit can&apos;t move over the given field.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.h" line="82"/>
+        <source>Spawn Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptEventVictoryInfo</name>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventvictoryinfo.cpp" line="62"/>
         <source>Victory Info: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventvictoryinfo.h" line="41"/>
+        <source>Victory Info</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

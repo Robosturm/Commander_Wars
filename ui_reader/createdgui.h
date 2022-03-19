@@ -22,3 +22,4 @@ protected:
     QVector<oxygine::spActor> m_factoryUiItem;
 };
 
+Q_DECLARE_INTERFACE(CreatedGui, "CreatedGui");

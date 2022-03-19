@@ -297,4 +297,6 @@ private:
     GameMap* m_pMap{nullptr};
 };
 
+Q_DECLARE_INTERFACE(PlayerSelection, "PlayerSelection");
+
 #endif // PLAYERSELECTION_H

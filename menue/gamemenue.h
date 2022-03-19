@@ -380,4 +380,6 @@ protected:
     } m_multiplayerSyncData;
 };
 
+Q_DECLARE_INTERFACE(GameMenue, "GameMenue");
+
 #endif // GAMEMENUE_H

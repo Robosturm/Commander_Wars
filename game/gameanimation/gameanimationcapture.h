@@ -59,4 +59,6 @@ private:
     oxygine::spSingleResAnim m_captureBuildingResAnim;
 };
 
+Q_DECLARE_INTERFACE(GameAnimationCapture, "GameAnimationCapture");
+
 #endif // GAMEANIMATIONCAPTURE_H

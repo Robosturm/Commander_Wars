@@ -48,3 +48,4 @@ private:
     MapFilter* m_mapFilter;
 };
 
+Q_DECLARE_INTERFACE(MapSelectionFilterDialog, "MapSelectionFilterDialog");

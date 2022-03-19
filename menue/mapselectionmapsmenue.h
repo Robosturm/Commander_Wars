@@ -123,5 +123,7 @@ protected:
     MapSelectionStep m_MapSelectionStep{MapSelectionStep::selectMap};
 };
 
+Q_DECLARE_INTERFACE(MapSelectionMapsMenue, "MapSelectionMapsMenue");
+
 #endif // MAPSELECTIONMENUE_H
 

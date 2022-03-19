@@ -13,7 +13,7 @@
 
 class GameMap;
 class Weather;
-typedef oxygine::intrusive_ptr<Weather> spWeather;
+using spWeather = oxygine::intrusive_ptr<Weather>;
 
 
 class Weather : public QObject, public FileSerializable, public oxygine::ref_counter
@@ -65,6 +65,8 @@ private:
     ScriptVariables m_Variables;
     GameMap* m_pMap{nullptr};
 };
+
+Q_DECLARE_INTERFACE(Weather, "Weather");
 
 #endif // WEATHER_H
 

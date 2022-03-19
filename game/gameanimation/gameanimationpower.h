@@ -35,4 +35,6 @@ private:
     static GameAnimationPower* m_pGameAnimationPower;
 };
 
+Q_DECLARE_INTERFACE(GameAnimationPower, "GameAnimationPower");
+
 #endif // GAMEANIMATIONPOWER_H

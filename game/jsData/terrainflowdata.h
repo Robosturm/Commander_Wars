@@ -49,3 +49,4 @@ private:
     GameMap* m_pMap{nullptr};
 };
 
+Q_DECLARE_INTERFACE(TerrainFlowData, "TerrainFlowData");

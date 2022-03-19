@@ -174,5 +174,7 @@ private:
     bool m_isReplay{false};
 };
 
+Q_DECLARE_INTERFACE(VictoryMenue, "VictoryMenue");
+
 #endif // VICTORYMENUE_H
 

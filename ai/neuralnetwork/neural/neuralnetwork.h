@@ -119,4 +119,6 @@ private:
     bool m_disabled{false};
 };
 
+Q_DECLARE_INTERFACE(NeuralNetwork, "NeuralNetwork");
+
 #endif // NEURALNETWORK_H

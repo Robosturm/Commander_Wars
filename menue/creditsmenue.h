@@ -33,4 +33,6 @@ private:
     oxygine::spActor m_creditsActor;
 };
 
+Q_DECLARE_INTERFACE(CreditsMenue, "CreditsMenue");
+
 #endif // CREDITSMENUE_H

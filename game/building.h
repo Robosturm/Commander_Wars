@@ -506,4 +506,6 @@ private:
     QVector<qint32> m_sortValues;
 };
 
+Q_DECLARE_INTERFACE(Building, "Building");
+
 #endif // BUILDING_H

@@ -618,4 +618,6 @@ private:
     GameMap* m_pMap{nullptr};
 };
 
+Q_DECLARE_INTERFACE(Terrain, "Terrain");
+
 #endif // TERRAIN_H

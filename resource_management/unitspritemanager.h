@@ -47,5 +47,6 @@ private:
     virtual ~UnitSpriteManager() = default;
 };
 
+Q_DECLARE_INTERFACE(UnitSpriteManager, "UnitSpriteManager");
 
 #endif // UNITSPRITEMANAGER_H

@@ -1186,5 +1186,7 @@ private:
     QVector<qint32> m_sortValues;
 };
 
+Q_DECLARE_INTERFACE(Unit, "Unit");
+
 #endif // UNIT_H
 

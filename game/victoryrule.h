@@ -14,7 +14,7 @@ class Player;
 class GameMap;
 
 class VictoryRule;
-typedef oxygine::intrusive_ptr<VictoryRule> spVictoryRule;
+using spVictoryRule = oxygine::intrusive_ptr<VictoryRule>;
 
 class VictoryRule : public QObject, public FileSerializable, public oxygine::ref_counter
 {
@@ -75,5 +75,7 @@ private:
     ScriptVariables m_Variables;
     GameMap* m_pMap{nullptr};
 };
+
+Q_DECLARE_INTERFACE(VictoryRule, "VictoryRule");
 
 #endif // VICTORYRULE_H

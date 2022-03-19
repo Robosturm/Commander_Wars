@@ -299,4 +299,6 @@ private:
     CommandLineParser m_parser;
 };
 
+Q_DECLARE_INTERFACE(Mainapp, "Mainapp");
+
 #endif // MAINAPP_H

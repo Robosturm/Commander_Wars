@@ -15,7 +15,7 @@ class Player;
 class GameMap;
 
 class GameAnimation;
-typedef oxygine::intrusive_ptr<GameAnimation> spGameAnimation;
+using spGameAnimation = oxygine::intrusive_ptr<GameAnimation>;
 
 class GameAnimation : public QObject, public oxygine::Sprite
 {
@@ -368,5 +368,7 @@ private:
     QDataStream m_actionData{&m_buffer};
     QVector<oxygine::spTween> m_stageTweens;
 };
+
+Q_DECLARE_INTERFACE(GameAnimation, "GameAnimation");
 
 #endif // GAMEANIMATION_H

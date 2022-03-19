@@ -29,4 +29,6 @@ private:
     bool m_permanent;
 };
 
+Q_DECLARE_INTERFACE(GameAnimationNextDay, "GameAnimationNextDay");
+
 #endif // GAMEANIMATIONNEXTDAY_H

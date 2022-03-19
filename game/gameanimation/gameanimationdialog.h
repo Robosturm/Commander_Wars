@@ -115,4 +115,6 @@ private:
     bool m_paused{false};
 };
 
+Q_DECLARE_INTERFACE(GameAnimationDialog, "GameAnimationDialog");
+
 #endif // GAMEANIMATIONDIALOG_H
