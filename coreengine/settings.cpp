@@ -314,7 +314,7 @@ Settings::Settings()
         new Value<bool>{"Game", "SimpleDeselect", &m_simpleDeselect, false, false, true},
         new Value<GameEnums::COInfoPosition>{"Game", "COInfoPosition", &m_coInfoPosition, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Right},
         new Value<GameEnums::AutoFocusing>{"Game", "AutoFocusing", &m_autoFocusing, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_Owned},
-        new Value<qint32>{"Game", "PauseAfterAction", &m_pauseAfterAction, 0, 1, 100},
+        new Value<qint32>{"Game", "PauseAfterAction", &m_pauseAfterAction, 0, 0, 100},
 
         // network
         new Value<quint16>{"Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()},
