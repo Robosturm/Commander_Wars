@@ -41,6 +41,7 @@ ReplayMenu::ReplayMenu(QString filename)
         m_storedBattleAnimMode = Settings::getBattleAnimationMode();
         m_storedBatteAnimType = Settings::getBattleAnimationType();
         m_storedDialog = Settings::getDialogAnimation();
+        m_storedCaptureAnimation = Settings::getCaptureAnimation();
 
         m_storedAnimationSpeed = Settings::getAnimationSpeedValue();
         m_storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
@@ -88,6 +89,7 @@ ReplayMenu::~ReplayMenu()
     Settings::setBattleAnimationMode(m_storedBattleAnimMode);
     Settings::setBattleAnimationType(m_storedBatteAnimType);
     Settings::setDialogAnimation(m_storedDialog);
+    Settings::setCaptureAnimation(m_storedCaptureAnimation);
 
     Settings::setAnimationSpeed(m_storedAnimationSpeed);
     Settings::setBattleAnimationSpeed(m_storedBattleAnimationSpeed);
@@ -346,6 +348,7 @@ void ReplayMenu::startSeeking()
     m_replayCounter = 0;
     m_seekingOverworldAnimations = Settings::getOverworldAnimations();
     m_seekingDialog = Settings::getDialogAnimation();
+    m_seekingCapture = Settings::getCaptureAnimation();
     m_seekingBattleAnimations = Settings::getBattleAnimationMode();
     Settings::setOverworldAnimations(false);
     Settings::setDialogAnimation(false);
@@ -488,6 +491,7 @@ void ReplayMenu::startFastForward()
     QMutexLocker locker(&m_replayMutex);
     m_seekingOverworldAnimations = Settings::getOverworldAnimations();
     m_seekingDialog = Settings::getDialogAnimation();
+    m_seekingCapture = Settings::getCaptureAnimation();
     m_seekingBattleAnimations = Settings::getBattleAnimationMode();
     Settings::setOverworldAnimations(false);
     Settings::setDialogAnimation(false);
@@ -503,6 +507,7 @@ void ReplayMenu::stopFastForward()
     Settings::setBattleAnimationMode(m_seekingBattleAnimations);
     Settings::setOverworldAnimations(m_seekingOverworldAnimations);
     Settings::setDialogAnimation(m_seekingDialog);
+    Settings::setCaptureAnimation(m_seekingCapture);
 }
 
 void ReplayMenu::showConfig()
@@ -629,13 +634,30 @@ void ReplayMenu::showConfig()
     pPanel->addItem(pTextfield);
     items = {tr("off"), tr("on")};
     spDropDownmenu pDialogAnimationMode = spDropDownmenu::create(450, items);
-    pDialogAnimationMode->setTooltipText(tr("Selects if the dialogs are shown or not."));
+    pDialogAnimationMode->setTooltipText(tr("Selects if capture animations are shown or not."));
     pDialogAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getDialogAnimation()));
     pDialogAnimationMode->setPosition(width - 130, y);
     pPanel->addItem(pDialogAnimationMode);
     connect(pDialogAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
         Settings::setDialogAnimation(value);
+    });
+    y += 40;
+
+    pTextfield = spLabel::create(width - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Capture: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    items = {tr("off"), tr("on")};
+    spDropDownmenu pCaptureAnimationMode = spDropDownmenu::create(450, items);
+    pCaptureAnimationMode->setTooltipText(tr("Selects if the dialogs are shown or not."));
+    pCaptureAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getCaptureAnimation()));
+    pCaptureAnimationMode->setPosition(width - 130, y);
+    pPanel->addItem(pCaptureAnimationMode);
+    connect(pCaptureAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setCaptureAnimation(value);
     });
     y += 40;
 

@@ -1,17 +1,16 @@
 #ifndef GAMERECORDSPECIALEVENT_H
 #define GAMERECORDSPECIALEVENT_H
 
-#include "qobject.h"
+#include <QObject>
 
 #include "game/GameEnums.h"
 
 #include "coreengine/fileserializable.h"
 
-
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class SpecialEvent;
-typedef oxygine::intrusive_ptr<SpecialEvent> spSpecialEvent;
+using spSpecialEvent = oxygine::intrusive_ptr<SpecialEvent>;
 
 class SpecialEvent : public QObject, public FileSerializable, public oxygine::ref_counter
 {
@@ -47,5 +46,7 @@ private:
     qint32 m_Day{-1};
     GameEnums::GameRecord_SpecialEvents m_Event{GameEnums::GameRecord_SpecialEvents_Power};
 };
+
+Q_DECLARE_INTERFACE(SpecialEvent, "SpecialEvent");
 
 #endif // SPECIALEVENT_H

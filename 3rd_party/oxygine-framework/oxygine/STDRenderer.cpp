@@ -345,7 +345,7 @@ namespace oxygine
     void STDRenderer::addQuad(const QColor& clr, const RectF& srcRect, const RectF& destRect)
     {
         QColor color = clr;
-        std::vector<VertexPCT2> quad =
+        static std::vector<VertexPCT2> quad =
         {
             VertexPCT2(),
             VertexPCT2(),

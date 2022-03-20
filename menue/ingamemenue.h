@@ -42,7 +42,6 @@ public:
         return m_pInstance.get();
     }
 
-
 signals:
     void sigMouseWheel(float direction);
     void sigRightClick(qint32 x, qint32 y);
@@ -53,7 +52,7 @@ signals:
     void sigLeftClickUp(qint32 x, qint32 y);
     void sigMouseMove(qint32 x, qint32 y);
 public slots:
-    virtual GameMap* getMap() const;
+    GameMap* getMap() const;
     virtual void keyInput(oxygine::KeyEvent event);
     virtual void keyUp(oxygine::KeyEvent event);
     void centerMapOnCursor();
@@ -82,5 +81,7 @@ protected:
     static spInGameMenue m_pInstance;
     spGameMap m_pMap{nullptr};
 };
+
+Q_DECLARE_INTERFACE(InGameMenue, "InGameMenue");
 
 #endif // INGAMEMENUE_H

@@ -10,6 +10,7 @@ var Constructor = function()
                                 ["BEACH", 1],
                                 ["BRIDGE", 1],
                                 ["BRIDGE1", 1],
+                                ["BRIDGE2", 1],
                                 ["DESTROYEDWELD", 1],
                                 ["RUIN", 1],
                                 ["STREET", 1],

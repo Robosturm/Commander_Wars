@@ -36,4 +36,6 @@ private:
     spPanel m_MainPanel;
 };
 
+Q_DECLARE_INTERFACE(WikiView, "WikiView");
+
 #endif // WIKIVIEW_H

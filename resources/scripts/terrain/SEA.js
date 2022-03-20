@@ -17,7 +17,7 @@ var Constructor = function()
     this.loadBaseSprite = function(terrain, currentTerrainID, map)
     {
         var surroundingsPlains = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
-        var surroundingsBride = terrain.getSurroundings("BRIDGE1", false, false, GameEnums.Directions_North, false, true);
+        var surroundingsBride = terrain.getSurroundings("BRIDGE1,BRIDGE2", false, false, GameEnums.Directions_North, false, true);
         if (surroundingsBride !== "" && terrain.existsResAnim("sea" + surroundingsPlains + "+bridge"))
         {
             surroundingsPlains += "+bridge";

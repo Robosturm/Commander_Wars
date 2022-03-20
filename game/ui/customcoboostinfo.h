@@ -36,3 +36,4 @@ private:
     QStringList m_iconBonus;
 };
 
+Q_DECLARE_INTERFACE(CustomCoBoostInfo, "CustomCoBoostInfo");

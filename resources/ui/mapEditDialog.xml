@@ -150,7 +150,7 @@
                 <width>350</width>
                 <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Score Information")</text>
-                <font>main32</font>
+                <font>"main32"</font>
             </Label>
             <Label>
                 <x>10</x>
@@ -196,7 +196,7 @@
                 <width>350</width>
                 <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Map Information")</text>
-                <font>main32</font>
+                <font>"main32"</font>
             </Label>
             <Label>
                 <x>10</x>
@@ -219,7 +219,7 @@
                 <width>350</width>
                 <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Map layout")</text>
-                <font>main32</font>
+                <font>"main32"</font>
             </Label>
             <Label>
                 <x>10</x>
@@ -332,7 +332,7 @@
                 <width>350</width>
                 <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Funds")</text>
-                <font>main32</font>
+                <font>"main32"</font>
             </Label>
             <Label>
                 <x>10</x>
@@ -370,7 +370,7 @@
                 <width>350</width>
                 <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Battle type")</text>
-                <font>main32</font>
+                <font>"main32"</font>
             </Label>
             <Label>
                 <x>10</x>

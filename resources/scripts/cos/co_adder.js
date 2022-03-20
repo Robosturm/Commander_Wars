@@ -181,7 +181,7 @@ var Constructor = function()
     this.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
     {
         // adder gains more power than other co's
-        var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
+        var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
         co.setPowerFilled(co.getPowerFilled() + powerGain * 1.2);
     };
     this.getCOUnits = function(co, building, map)

@@ -132,4 +132,6 @@ private:
     bool m_loaded{false};
 };
 
+Q_DECLARE_INTERFACE(Campaign, "Campaign");
+
 #endif // CAMPAIGN_H

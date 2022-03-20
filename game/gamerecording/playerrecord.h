@@ -2,16 +2,14 @@
 #define PLAYERRECORD_H
 
 #include <QObject>
-
-#include <qvector.h>
+#include <QVector>
 
 #include "coreengine/fileserializable.h"
-
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class PlayerRecord;
-typedef oxygine::intrusive_ptr<PlayerRecord> spPlayerRecord;
+using spPlayerRecord = oxygine::intrusive_ptr<PlayerRecord>;
 
 
 class PlayerRecord : public QObject, public FileSerializable, public oxygine::ref_counter
@@ -57,5 +55,7 @@ private:
     qint32 m_Units{-1};
     qint32 m_PlayerStrength{-1};
 };
+
+Q_DECLARE_INTERFACE(PlayerRecord, "PlayerRecord");
 
 #endif // PLAYERRECORD_H

@@ -43,7 +43,8 @@ var Constructor = function ()
                          unitID === "CANNONBOAT")
                 {
                     if ((terrainId === "BRIDGE") ||
-                        (terrainId === "BRIDGE1"))
+                        (terrainId === "BRIDGE1") ||
+                        (terrainId === "BRIDGE2"))
                     {
                         return false;
                     }

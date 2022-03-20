@@ -2,6 +2,7 @@
 #define EDITORMENUE_H
 
 #include <QObject>
+
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 #include "menue/ingamemenue.h"
@@ -152,11 +153,6 @@ public slots:
      */
     bool canUnitBePlaced(qint32 x, qint32 y);
     /**
-     * @brief KeyInput called on any key input
-     * @param event
-     */
-    virtual void keyInput(oxygine::KeyEvent event) override;
-    /**
      * @brief clickedTopbar event handling for the top bar
      * @param itemID
      */
@@ -197,16 +193,6 @@ public slots:
      */
     void importAWByWeb(QString filename);
     /**
-     * @brief newMap
-     * @param info
-     */
-    void newMap(MapEditDialog::MapEditInfo info);
-    /**
-     * @brief changeMap
-     * @param info
-     */
-    void changeMap(MapEditDialog::MapEditInfo info);
-    /**
      * @brief playersChanged
      */
     void playersChanged();
@@ -214,34 +200,6 @@ public slots:
      * @brief rulesChanged
      */
     void rulesChanged();
-    /**
-     * @brief createRandomMap
-     * @param mapName
-     * @param author
-     * @param description
-     * @param width
-     * @param heigth
-     * @param playerCount
-     * @param roadSupport
-     * @param seed
-     * @param terrains
-     * @param buildings
-     * @param ownedBaseSize
-     * @param startBaseSize
-     */
-    void createRandomMap(QString mapName, QString author, QString description,
-                         qint32 width, qint32 heigth, qint32 playerCount,
-                         bool roadSupport, qint32 seed,
-                         QVector<std::tuple<QString, float>> terrains,
-                         QVector<std::tuple<QString, float>> buildings,
-                         QVector<float> ownedBaseSize,
-                         float startBaseSize,
-                         QVector<std::tuple<QString, float>> units,
-                         qint32 unitCount,
-                         float startBaseUnitSize,
-                         QVector<float> unitDistribution,
-                         bool unitsDistributed,
-                         bool mirrored);
     /**
      * @brief showResizeMap
      */
@@ -255,21 +213,9 @@ public slots:
      */
     void resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom);
     /**
-     * @brief createMarkedArea
-     * @param pActor
-     * @param p1
-     * @param p2
-     * @param mode
-     */
-    void createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2, EditorMenue::CursorModes mode, QColor color = Qt::white);
-    /**
      * @brief selectionChanged
      */
     void selectionChanged();
-    /**
-     * @brief pasteSelection
-     */
-    void pasteSelection(qint32 x, qint32 y, bool click, EditorSelection::EditorMode selection);
     /**
      * @brief exitEditor
      */
@@ -374,7 +320,62 @@ public slots:
      * @brief copy
      */
     void copy();
+    /**
+     * @brief KeyInput called on any key input
+     * @param event
+     */
+    virtual void keyInput(oxygine::KeyEvent event) override;
 protected slots:
+    /**
+     * @brief newMap
+     * @param info
+     */
+    void newMap(MapEditDialog::MapEditInfo info);
+    /**
+     * @brief changeMap
+     * @param info
+     */
+    void changeMap(MapEditDialog::MapEditInfo info);
+    /**
+     * @brief pasteSelection
+     */
+    void pasteSelection(qint32 x, qint32 y, bool click, EditorSelection::EditorMode selection);
+    /**
+     * @brief createMarkedArea
+     * @param pActor
+     * @param p1
+     * @param p2
+     * @param mode
+     */
+    void createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2, EditorMenue::CursorModes mode, QColor color = Qt::white);
+    /**
+     * @brief createRandomMap
+     * @param mapName
+     * @param author
+     * @param description
+     * @param width
+     * @param heigth
+     * @param playerCount
+     * @param roadSupport
+     * @param seed
+     * @param terrains
+     * @param buildings
+     * @param ownedBaseSize
+     * @param startBaseSize
+     */
+    void createRandomMap(QString mapName, QString author, QString description,
+                         qint32 width, qint32 heigth, qint32 playerCount,
+                         bool roadSupport, qint32 seed,
+                         QVector<std::tuple<QString, float>> terrains,
+                         QVector<std::tuple<QString, float>> buildings,
+                         QVector<float> ownedBaseSize,
+                         float startBaseSize,
+                         QVector<std::tuple<QString, float>> units,
+                         qint32 unitCount,
+                         float startBaseUnitSize,
+                         QVector<float> unitDistribution,
+                         bool unitsDistributed,
+                         bool mirrored);
     /**
      * @brief onEnter
      */
@@ -397,5 +398,7 @@ private:
     bool m_middleCrossGridVisible{false};
     QTimer m_autosaveTimer;
 };
+
+Q_DECLARE_INTERFACE(EditorMenue, "EditorMenue");
 
 #endif // EDITORMENUE_H

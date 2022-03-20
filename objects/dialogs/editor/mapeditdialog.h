@@ -66,4 +66,6 @@ private:
     MapEditInfo m_info;
 };
 
+Q_DECLARE_INTERFACE(MapEditDialog, "MapEditDialog");
+
 #endif // MAPEDITDIALOG_H

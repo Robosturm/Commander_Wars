@@ -7,7 +7,7 @@
 #include "objects/base/panel.h"
 
 class Wikipage;
-typedef oxygine::intrusive_ptr<Wikipage> spWikipage;
+using spWikipage = oxygine::intrusive_ptr<Wikipage>;
 
 class Wikipage : public QObject, public oxygine::Actor
 {
@@ -59,5 +59,7 @@ protected:
     oxygine::spButton m_OkButton;
     qint32 m_y{10};
 };
+
+Q_DECLARE_INTERFACE(Wikipage, "Wikipage");
 
 #endif // WIKIPAGE_H

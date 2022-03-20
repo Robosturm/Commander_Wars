@@ -40,7 +40,8 @@ ACTION_LOAD.canBePerformed = function(action, map)
                      unitID === "CANNONBOAT")
             {
                 if ((terrainId === "BRIDGE") ||
-                    (terrainId === "BRIDGE1"))
+                    (terrainId === "BRIDGE1") ||
+                    (terrainId === "BRIDGE2"))
                 {
                     return false;
                 }

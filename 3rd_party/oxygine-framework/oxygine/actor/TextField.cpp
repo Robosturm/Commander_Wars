@@ -9,6 +9,24 @@
 
 #include <QMutexLocker>
 
+// #include <QPainter>
+// #include <QPainterPath>
+// QFontDatabase::addApplicationFont
+//QPainter painter(oxygine::GameWindow::getWindow());
+//QPainterPath path;
+//QFont font("Helvetica", 24);
+//QFontMetrics metrics(font);
+//const qint32 borderWidth = 2;
+//QString text = "f jalöjgaöjgaögjaöäjgagjaglhglashläbäajbabjöabjalgjaljgalagjgaäjgaöafgöajgäaöjgalj";
+//QRect drawnRect;
+//drawnRect = metrics.boundingRect(text);
+//qint32 ascent = metrics.ascent();
+//path.addText(100 + borderWidth, 100 + ascent + borderWidth, font, text);
+//painter.setClipRect(100, 100, 100, 40);
+//painter.strokePath(path, QPen(Qt::black, borderWidth));
+//painter.fillPath(path, QBrush(Qt::green));
+//painter.end();
+
 namespace oxygine
 {
     TextField::TextField():

@@ -13,7 +13,7 @@
 #include "coreengine/fileserializable.h"
 
 class ScriptVariable;
-typedef oxygine::intrusive_ptr<ScriptVariable> spScriptVariable;
+using spScriptVariable = oxygine::intrusive_ptr<ScriptVariable>;
 
 class ScriptVariable : public QObject, public FileSerializable, public oxygine::ref_counter
 {
@@ -241,5 +241,7 @@ private:
     QBuffer m_buffer;
     QDataStream m_actionData{&m_buffer};
 };
+
+Q_DECLARE_INTERFACE(ScriptVariable, "ScriptVariable");
 
 #endif // SCRIPTVARIABLE_H

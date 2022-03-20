@@ -45,6 +45,7 @@ class NormalAi : public CoreAI
         qint32 movePoints{0};
         qint32 attackCount{0};
         float sameFundsMatchUpScore{0.0f};
+        float turnOneDamage{0.0f};
 
         qint32 smallTransporterCount{0};
         qint32 loadingPlace{0};
@@ -68,6 +69,15 @@ class NormalAi : public CoreAI
         float counterDamage{0.0f};
         float notAttackableCount{0};
         qint32 attackCount{0};
+        float turnOneDamage{0.0f};
+    };
+
+    struct NotAttackableData
+    {
+        qint32 sameIslandNotAttackableCount{0};
+        qint32 notAttackableCount{0};
+        qint32 midDamageCount{0};
+        qint32 highDamageCount{0};
     };
 
 
@@ -98,6 +108,7 @@ public:
         SameFundsMatchUpScore = 21,
         CounterDamage = 22,
         EnemyUnitCount = 23,
+        TurnOneDamageMalus = 24,
         Max,
     };
 
@@ -351,7 +362,7 @@ protected:
      * @param pEnemyUnits
      * @param attackCount
      */
-    void getEnemyDamageCounts(spQmlVectorUnit & pUnits,spQmlVectorUnit & pEnemyUnits, std::vector<QVector4D> & attackCount);
+    void getEnemyDamageCounts(spQmlVectorUnit & pUnits,spQmlVectorUnit & pEnemyUnits, std::vector<NotAttackableData> & attackCount);
     /**
      * @brief getIndexInProductionData
      * @param pBuilding
@@ -367,7 +378,7 @@ protected:
     qint32 getUnitProductionIdx(qint32 index, const QString & unitId,
                                 spQmlVectorUnit & pUnits, std::vector<std::tuple<Unit*, Unit*>> & transportTargets,
                                 spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                                std::vector<QVector4D> & attackCount, std::vector<float> & buildData);
+                                std::vector<NotAttackableData> & attackCount, std::vector<float> & buildData);
     /**
      * @brief calcBuildScore
      * @param data
@@ -387,7 +398,7 @@ protected:
     void createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuildData,
                              spQmlVectorUnit & pUnits, std::vector<std::tuple<Unit*, Unit*>> & transportTargets,
                              spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                             std::vector<QVector4D> & attackCount, std::vector<float> & buildData, const QStringList & buildList);
+                             std::vector<NotAttackableData> & attackCount, std::vector<float> & buildData, const QStringList & buildList);
     /**
      * @brief calcCostScore
      * @param data
@@ -422,7 +433,7 @@ protected:
      * @param pEnemyUnits
      * @return
      */
-    ExpectedFundsData calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit & pEnemyUnits, const std::vector<QVector4D> & attackCount, float bonusFactor, float myMovepoints);
+    ExpectedFundsData calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit & pEnemyUnits, const std::vector<NotAttackableData> & attackCount, float bonusFactor, float myMovepoints);
     /**
      * @brief getClosestTargetDistance
      * @param posX
@@ -613,6 +624,8 @@ private:
     double m_ProducingTransportMinLoadingTransportRatio{7.0f};
     double m_maxProductionBuildings{5};
     double m_maxProductionBuildingsForB{1};
+    double m_turnOneDmageMalus{5};
+    double m_counterUnitRatio{2};
 
     float m_currentDirectIndirectRatio{1.0f};
 
@@ -620,5 +633,7 @@ private:
     bool m_pause{false};
     bool m_secondMoveRound{false};
 };
+
+Q_DECLARE_INTERFACE(NormalAi, "NormalAi");
 
 #endif // NORMALAI_H

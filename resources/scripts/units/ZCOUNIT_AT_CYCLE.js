@@ -9,7 +9,7 @@ var Constructor = function()
     {
         unit.setAmmo1(5);
         unit.setMaxAmmo1(5);
-        unit.setWeapon1ID("WEAPON_BAZOOKA");
+        unit.setWeapon1ID("WEAPON_BIKE_BAZOOKA");
 
         unit.setAmmo2(0);
         unit.setMaxAmmo2(0);

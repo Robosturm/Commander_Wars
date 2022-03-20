@@ -41,4 +41,6 @@ private:
     virtual ~COPerkManager() = default;
 };
 
+Q_DECLARE_INTERFACE(COPerkManager, "COPerkManager");
+
 #endif // COPERKMANAGER_H

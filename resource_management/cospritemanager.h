@@ -87,5 +87,6 @@ private:
     QVector<CoSprite> m_Ressources;
 };
 
+Q_DECLARE_INTERFACE(COSpriteManager, "COSpriteManager");
 
 #endif // COSPRITEMANAGER_H

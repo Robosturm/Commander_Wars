@@ -4721,5 +4721,8 @@
         <file>resources/images/co/bd/co_empty_bd+alt1+nrm.png</file>
         <file>resources/images/co/dm/co_empty_dm+alt1+nrm.png</file>
         <file>resources/images/co/gs/co_empty_gs+alt+nrm.png</file>
+        <file>resources/images/units/sniper+gs+walk+mask.png</file>
+        <file>resources/images/units/sniper+pf+walk+mask.png</file>
+        <file>resources/images/units/sniper+ti+walk+mask.png</file>
     </qresource>
 </RCC>

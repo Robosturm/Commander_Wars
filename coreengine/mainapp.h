@@ -279,6 +279,7 @@ protected:
     virtual bool event(QEvent *ev) override;
     void createBaseDirs();
     virtual void onQuit() override;
+
 private:
     QLineEdit* m_pLineEdit{nullptr};
 
@@ -298,5 +299,7 @@ private:
     bool m_noAudio{false};
     CommandLineParser m_parser;
 };
+
+Q_DECLARE_INTERFACE(Mainapp, "Mainapp");
 
 #endif // MAINAPP_H

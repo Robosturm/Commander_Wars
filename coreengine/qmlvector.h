@@ -52,8 +52,10 @@ private:
     std::vector<QPoint> m_Vector;
 };
 
+Q_DECLARE_INTERFACE(QmlVectorPoint, "QmlVectorPoint");
+
 class QmlVectorUnit;
-typedef oxygine::intrusive_ptr<QmlVectorUnit> spQmlVectorUnit;
+using spQmlVectorUnit = oxygine::intrusive_ptr<QmlVectorUnit>;
 class QmlVectorUnit : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
@@ -99,8 +101,10 @@ private:
     std::vector<spUnit> m_Vector;
 };
 
+Q_DECLARE_INTERFACE(QmlVectorUnit, "QmlVectorUnit");
+
 class QmlVectorBuilding;
-typedef oxygine::intrusive_ptr<QmlVectorBuilding> spQmlVectorBuilding;
+using spQmlVectorBuilding = oxygine::intrusive_ptr<QmlVectorBuilding>;
 class QmlVectorBuilding: public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
@@ -137,5 +141,7 @@ public slots:
 private:
     std::vector<spBuilding> m_Vector;
 };
+
+Q_DECLARE_INTERFACE(QmlVectorBuilding, "QmlVectorBuilding");
 
 #endif // QMLVECTOR_H

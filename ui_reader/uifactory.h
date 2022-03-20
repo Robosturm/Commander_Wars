@@ -209,4 +209,6 @@ private:
     quint32 m_creationCount{0};
 };
 
+Q_DECLARE_INTERFACE(UiFactory, "UiFactory");
+
 #endif // UIFACTORY_H

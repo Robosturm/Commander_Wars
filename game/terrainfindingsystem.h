@@ -80,4 +80,6 @@ private:
     GameMap* m_pMap{nullptr};
 };
 
+Q_DECLARE_INTERFACE(TerrainFindingSystem, "TerrainFindingSystem");
+
 #endif // TERRAINFINDINGSYSTEM_H

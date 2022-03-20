@@ -320,8 +320,8 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     }
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        id = pBuildingSpriteManager->getID(i);
-        spBuilding pBuilding = spBuilding::create(id, pUnit->getMap());
+        QString buildingId = pBuildingSpriteManager->getID(i);
+        spBuilding pBuilding = spBuilding::create(buildingId, pUnit->getMap());
         spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", pUnit->getMap());
         pTerrain->setBuilding(pBuilding);
         qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);

@@ -16,7 +16,7 @@ class Player;
 class GameAction;
 
 class BaseGameInputIF;
-typedef oxygine::intrusive_ptr<BaseGameInputIF> spBaseGameInputIF;
+using spBaseGameInputIF = oxygine::intrusive_ptr<BaseGameInputIF>;
 
 class BaseGameInputIF : public QObject, public FileSerializable, public oxygine::ref_counter
 {
@@ -88,5 +88,7 @@ protected:
     std::vector<std::vector<std::tuple<qint32, bool>>> m_MoveCostMap;
     GameMap* m_pMap{nullptr};
 };
+
+Q_DECLARE_INTERFACE(BaseGameInputIF, "BaseGameInputIF");
 
 #endif // BASEGAMEINPUTIF_H

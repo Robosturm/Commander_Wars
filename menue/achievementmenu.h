@@ -42,4 +42,6 @@ private:
     spDropDownmenu m_sort;
 };
 
+Q_DECLARE_INTERFACE(Achievementmenu, "Achievementmenu");
+
 #endif // ACHIEVEMENTMENU_H

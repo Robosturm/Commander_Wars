@@ -17,6 +17,7 @@ var Constructor = function()
                                 ["PLAINS_PLASMA", 1],
                                 ["BRIDGE", 1],
                                 ["BRIDGE1", 1],
+                                ["BRIDGE2", 1],
                                 ["STREET", 1],
                                 ["SNOW_STREET", 1],
                                 ["STREET1", 1],

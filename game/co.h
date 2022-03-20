@@ -23,7 +23,7 @@ class GameAction;
 class GameMap;
 
 class CO;
-typedef oxygine::intrusive_ptr<CO> spCO;
+using spCO = oxygine::intrusive_ptr<CO>;
 
 class CO : public QObject, public oxygine::Actor, public FileSerializable
 {
@@ -777,5 +777,7 @@ private:
     QVector<std::tuple<QString, QString, QImage, QImage, bool>> m_customCOStyles;
     QVector<std::tuple<QString, oxygine::spResAnim>> m_Ressources;
 };
+
+Q_DECLARE_INTERFACE(CO, "CO");
 
 #endif // KO_H

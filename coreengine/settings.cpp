@@ -121,6 +121,7 @@ quint32 Settings::m_dialogAnimationSpeed = 20;
 quint32 Settings::m_captureAnimationSpeed = 1;
 bool Settings::m_useCoMinis = true;
 bool Settings::m_dialogAnimation = true;
+bool Settings::m_captureAnimation = true;
 quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
 QString Settings::m_defaultRuleset = "";
@@ -143,7 +144,7 @@ bool Settings::m_showDetailedBattleForcast = true;
 bool Settings::m_autoMoveCursor = false;
 QString Settings::m_userPath = "";
 float Settings::m_supplyWarning = 0.33f;
-quint32 Settings::m_pauseAfterAction = 0;
+qint32 Settings::m_pauseAfterAction = 0;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -297,6 +298,7 @@ Settings::Settings()
         new Value<bool>{"Game", "StaticMarkedFields", &m_StaticMarkedFields, false, false, true},
         new Value<qint32>{"Game", "ShowCoCount", &m_showCoCount, defaultCoCount, 0, std::numeric_limits<qint32>::max()},
         new Value<bool>{"Game", "DialogAnimation", &m_dialogAnimation, true, false, true},
+        new Value<bool>{"Game", "CaptureAnimation", &m_captureAnimation, true, false, true},
         new Value<QString>{"Game", "LastSaveGame", &m_LastSaveGame, "", "", ""},
         new Value<QString>{"Game", "DefaultRuleset", &m_defaultRuleset, "", "", ""},
         new Value<bool>{"Game", "ShowCursor", &m_ShowCursor, true, false, true},
@@ -312,7 +314,7 @@ Settings::Settings()
         new Value<bool>{"Game", "SimpleDeselect", &m_simpleDeselect, false, false, true},
         new Value<GameEnums::COInfoPosition>{"Game", "COInfoPosition", &m_coInfoPosition, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Right},
         new Value<GameEnums::AutoFocusing>{"Game", "AutoFocusing", &m_autoFocusing, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_Owned},
-        new Value<quint32>{"Game", "PauseAfterAction", &m_pauseAfterAction, 0, 1, 100},
+        new Value<qint32>{"Game", "PauseAfterAction", &m_pauseAfterAction, 0, 0, 100},
 
         // network
         new Value<quint16>{"Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()},
@@ -336,6 +338,16 @@ Settings::Settings()
     };
 }
 
+bool Settings::getCaptureAnimation()
+{
+    return m_captureAnimation;
+}
+
+void Settings::setCaptureAnimation(bool newCaptureAnimation)
+{
+    m_captureAnimation = newCaptureAnimation;
+}
+
 const QString &Settings::getSlaveListenAdress()
 {
     return m_slaveListenAdress;
@@ -356,12 +368,12 @@ void Settings::setServerListenAdress(const QString &newServerListenAdress)
     m_serverListenAdress = newServerListenAdress;
 }
 
-quint32 Settings::getPauseAfterAction()
+qint32 Settings::getPauseAfterAction()
 {
     return m_pauseAfterAction;
 }
 
-void Settings::setPauseAfterAction(quint32 newPauseAfterAction)
+void Settings::setPauseAfterAction(qint32 newPauseAfterAction)
 {
     m_pauseAfterAction = newPauseAfterAction;
 }

@@ -100,4 +100,6 @@ private:
     QTimer m_closeTimer;
 };
 
+Q_DECLARE_INTERFACE(NetworkGame, "NetworkGame");
+
 #endif // NETWORKGAME_H

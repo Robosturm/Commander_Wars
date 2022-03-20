@@ -13,7 +13,7 @@
 class Player;
 
 class GameRule;
-typedef oxygine::intrusive_ptr<GameRule> spGameRule;
+using spGameRule = oxygine::intrusive_ptr<GameRule>;
 
 class GameRule : public QObject, public FileSerializable, public oxygine::ref_counter
 {
@@ -65,5 +65,7 @@ private:
     QString m_RuleID;
     ScriptVariables m_Variables;
 };
+
+Q_DECLARE_INTERFACE(GameRule, "GameRule");
 
 #endif // VICTORYRULE_H

@@ -97,8 +97,6 @@ var Init =
         menu.loadMap(":/maps/6_player/Stella di David.map");
         menu.resizeMap(1, 1, 1, 1);
         menu.resizeMap(-1, -1, -1, -1);
-        menu.changeMap("test", "test", "test", "", 30, 30, 5, 0, 0);
-        menu.newMap("test", "test", "test", "", 30, 30, 5, 0, 0);
         menu.toggleGridLayout();
         menu.toggleGridLayout();
         menu.toggleMiddleCrossGrid();

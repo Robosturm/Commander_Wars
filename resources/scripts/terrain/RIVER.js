@@ -150,7 +150,7 @@ var Constructor = function()
     };
     this.getFlowTiles = function()
     {
-        return ["RIVER", "BRIDGE", "BRIDGE1"];
+        return ["RIVER", "BRIDGE", "BRIDGE1", "BRIDGE2"];
     };
     this.updateFlowSprites = function(terrain, pPfs, map)
     {
@@ -181,7 +181,7 @@ var Constructor = function()
     this.loadSpriteFromFlowData = function(terrain, pos, flowData, index, map)
     {
         var flow = flowData.getFlowString(index);
-        var surroundingsDirect = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,LAKE,SEA,REAF", false, true, GameEnums.Directions_Direct, false);
+        var surroundingsDirect = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,BRIDGE2,LAKE,SEA,REAF", false, true, GameEnums.Directions_Direct, false);
         if (surroundingsDirect === "+N+E+S+W" ||
             surroundingsDirect === "+E+S+W" ||
             surroundingsDirect === "+N+S+W" ||
@@ -193,7 +193,7 @@ var Constructor = function()
         }
         else
         {
-            var surroundingsDiagonal = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,LAKE,SEA,REAF", false, true, GameEnums.Directions_Diagnonal);
+            var surroundingsDiagonal = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,BRIDGE2,LAKE,SEA,REAF", false, true, GameEnums.Directions_Diagnonal);
             if (surroundingsDirect.includes("+N"))
             {
                 surroundingsDiagonal = surroundingsDiagonal.replace("+NE", "").replace("+NW", "");
@@ -264,8 +264,8 @@ var Constructor = function()
     };
     this.loadTerrainSeaOverlay = function(terrain, flowString)
     {
-        var surroundingsLandDirect = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,LAKE,SEA,REAF,BEACH,FOG,ROUGH_SEA", false, true, GameEnums.Directions_Direct);
-        var surroundingsLandDiagonal = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,LAKE,SEA,REAF,BEACH,FOG,ROUGH_SEA", false, true, GameEnums.Directions_Diagnonal);
+        var surroundingsLandDirect = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,BRIDGE2,LAKE,SEA,REAF,BEACH,FOG,ROUGH_SEA", false, true, GameEnums.Directions_Direct);
+        var surroundingsLandDiagonal = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,BRIDGE2LAKE,SEA,REAF,BEACH,FOG,ROUGH_SEA", false, true, GameEnums.Directions_Diagnonal);
         if (flowString === "+S")
         {
             surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NW", "");

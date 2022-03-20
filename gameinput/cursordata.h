@@ -7,7 +7,8 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class CursorData;
-typedef oxygine::intrusive_ptr<CursorData> spCursorData;
+using spCursorData = oxygine::intrusive_ptr<CursorData>;
+
 class CursorData : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
@@ -34,5 +35,7 @@ private:
     qint32 m_yOffset{0};
     float m_scale{1.0};
 };
+
+Q_DECLARE_INTERFACE(CursorData, "CursorData");
 
 #endif // CURSORDATA_H

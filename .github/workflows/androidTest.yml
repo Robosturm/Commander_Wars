@@ -2,7 +2,7 @@ name: Commnader_Wars_AndroidTest
 on: [push]
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.2.3'
+  QT_Version: '6.2.4'
   NDK_Version: r21e
   
 jobs:

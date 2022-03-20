@@ -14,7 +14,7 @@
 
 class GameMap;
 class GameScript;
-typedef oxygine::intrusive_ptr<GameScript> spGameScript;
+using spGameScript = oxygine::intrusive_ptr<GameScript>;
 
 class GameScript : public QObject, public FileSerializable, public oxygine::ref_counter
 {
@@ -100,5 +100,7 @@ private:
     GameMap* m_pMap{nullptr};
     static const QString m_scriptName;
 };
+
+Q_DECLARE_INTERFACE(GameScript, "GameScript");
 
 #endif // GAMESCRIPT_H

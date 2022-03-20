@@ -7,7 +7,7 @@ name: Commnader_Wars_Release
 
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.2.3'
+  QT_Version: '6.2.4'
   
 jobs:
   create_release:
@@ -118,7 +118,7 @@ jobs:
         GITHUB_TOKEN: ${{github.token}}
       with:
         upload_url: '${{needs.create_release.outputs.upload_url}}'
-        asset_path: '${{github.workspace}}/${{matrix.source_asset}}'
+        asset_path: '${{github.workspace}}/install/${{matrix.source_asset}}'
         asset_name: '${{matrix.asset_name}}'
         asset_content_type: application/zip
 

@@ -116,6 +116,23 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Capture: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    items = {tr("off"), tr("on")};
+    spDropDownmenu pCaptureAnimationMode = spDropDownmenu::create(450, items);
+    pCaptureAnimationMode->setTooltipText(tr("Selects if capture animations are shown or not."));
+    pCaptureAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getCaptureAnimation()));
+    pCaptureAnimationMode->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pCaptureAnimationMode);
+    connect(pCaptureAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setCaptureAnimation(value);
+    });
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Animation Speed: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

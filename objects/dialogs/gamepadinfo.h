@@ -18,3 +18,4 @@ public slots:
     void remove();
 };
 
+Q_DECLARE_INTERFACE(GamepadInfo, "GamepadInfo");

@@ -619,3 +619,5 @@ private:
     static const char* const NeuralNetworkFileEnding;
     static const char* const NeuralNetworkPath;
 };
+
+Q_DECLARE_INTERFACE(HeavyAi, "HeavyAi");

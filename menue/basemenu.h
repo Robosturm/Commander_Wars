@@ -27,4 +27,6 @@ private:
     QTimer m_onEnterTimer;
 };
 
+Q_DECLARE_INTERFACE(Basemenu, "Basemenu");
+
 #endif // BASEMENU_H

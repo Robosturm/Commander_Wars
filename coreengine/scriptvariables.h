@@ -5,9 +5,9 @@
 
 #include <QVector>
 
-#include "scriptvariable.h"
+#include "coreengine/scriptvariable.h"
 
-#include "fileserializable.h"
+#include "coreengine/fileserializable.h"
 
 /**
  * @brief The ScriptVariables class holds variables for javascript that belong to a specific object
@@ -53,5 +53,7 @@ public slots:
 private:
     QVector<spScriptVariable> m_Variables;
 };
+
+Q_DECLARE_INTERFACE(ScriptVariables, "ScriptVariables");
 
 #endif // SCRIPTVARIABLES_H

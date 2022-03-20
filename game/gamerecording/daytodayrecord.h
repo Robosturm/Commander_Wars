@@ -71,4 +71,6 @@ private:
     GameMap* m_pMap{nullptr};
 };
 
+Q_DECLARE_INTERFACE(DayToDayRecord, "DayToDayRecord");
+
 #endif // DAYTODAYRECORD_H
