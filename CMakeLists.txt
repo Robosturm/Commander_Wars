@@ -936,7 +936,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
         WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/../"
         COMMAND ${CMAKE_COMMAND} -E tar
         "cfv"
-        "${CMAKE_INSTALL_PREFIX}/Commander_Wars.zip"
+        "${CMAKE_INSTALL_PREFIX}/../Commander_Wars.zip"
         --format=zip
         "${CMAKE_INSTALL_PREFIX}/"
         COMMENT "Zipping Commander Wars..."
