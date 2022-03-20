@@ -279,6 +279,7 @@ protected:
     virtual bool event(QEvent *ev) override;
     void createBaseDirs();
     virtual void onQuit() override;
+
 private:
     QLineEdit* m_pLineEdit{nullptr};
 
