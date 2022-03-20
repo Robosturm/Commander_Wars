@@ -1171,8 +1171,7 @@ void GameMenue::finishActionPerformed()
 void GameMenue::actionPerformed()
 {
     if (getParent() != nullptr &&
-        m_pMap.get() != nullptr &&
-        m_pCurrentAction.get() != nullptr)
+        m_pMap.get() != nullptr)
     {
         CONSOLE_PRINT("Action performed", Console::eDEBUG);
         finishActionPerformed();
