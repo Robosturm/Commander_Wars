@@ -13,7 +13,7 @@ The project is seperated in three parts.
 If you need help with modding or have a question concerning the game contact me!
 E-Mail-Contact: commanderwars@gmx.de ask for help here. :)
 
-Latest Release is Beta 22.3 which can be found here: [CoW Beta 22.3](hhttps://github.com/Robosturm/Commander_Wars/releases/tag/Beta_22_3_1)
+Latest Release is Beta 22.3 which can be found here: [CoW Beta 22.5](https://github.com/Robosturm/Commander_Wars/releases/tag/Beta_22_5_v2)
 
 Commander Wars is also avaibale at the following repositories:
 
