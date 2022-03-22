@@ -37,19 +37,19 @@ namespace oxygine
             }
         }
 
-        void Node::drawChildren(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled)
+        void Node::drawChildren(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
         {
             spNode child = m_firstChild;
             while (child)
             {
-                child->draw(rs, style, dc, painter, scissorRect, scissorEnabled);
+                child->draw(rs, style, drawColor, painter);
                 child = child->m_nextSibling;
             }
         }
 
-        void Node::draw(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled)
+        void Node::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
         {
-            drawChildren(rs, style, dc, painter, scissorRect, scissorEnabled);
+            drawChildren(rs, style, drawColor, painter);
         }
 
         QPoint Node::getRelativPos() const
@@ -68,7 +68,7 @@ namespace oxygine
             m_yPos.push_back(0);
         }
 
-        void TextNode::draw(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled)
+        void TextNode::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
         {
             QPainterPath path;
             for (qint32 i = 0; i < m_splitData.size(); ++i)
@@ -76,8 +76,8 @@ namespace oxygine
                 path.addText(rs.transform.x + m_relativPos.x() + style.borderWidth, rs.transform.y + m_relativPos.y() + style.borderWidth + m_yPos[0], style.font, m_splitData[i]);
             }            
             painter.strokePath(path, QPen(Qt::black, style.borderWidth));
-            painter.fillPath(path, QBrush(dc.m_color));
-            drawChildren(rs, style, dc, painter, scissorRect, scissorEnabled);
+            painter.fillPath(path, QBrush(drawColor));
+            drawChildren(rs, style, drawColor, painter);
         }
 
         // todo move to
@@ -151,13 +151,9 @@ namespace oxygine
             resizeChildren(rd);
         }
 
-        void DivNode::draw(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled)
+        void DivNode::draw(const RenderState& rs, const TextStyle & style, const QColor &, QPainter & painter)
         {
-            QColor prev = dc.m_color;
-
-            dc.m_color = m_color * dc.m_primary;
-            drawChildren(rs, style, dc, painter, scissorRect, scissorEnabled);
-            dc.m_color = prev;
+            drawChildren(rs, style, m_color, painter);
         }
 
         DivNode::DivNode(QDomElement& reader)

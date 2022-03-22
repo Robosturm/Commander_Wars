@@ -54,7 +54,6 @@ namespace oxygine
         enum STATE
         {
             STATE_BLEND,
-            STATE_CULL_FACE,
             STATE_NUM
         };
 

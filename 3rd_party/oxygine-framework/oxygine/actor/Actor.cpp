@@ -918,11 +918,6 @@ namespace oxygine
         return true;
     }
 
-    void Actor::completeRender(const RenderState&)
-    {
-
-    }
-
     bool Actor::internalRender(RenderState& rs, const RenderState& parentRS)
     {
         if (!prepareRender(rs, parentRS))
@@ -936,7 +931,6 @@ namespace oxygine
         {
             doRender(rs);
         }
-        completeRender(rs);
         return true;
     }
 

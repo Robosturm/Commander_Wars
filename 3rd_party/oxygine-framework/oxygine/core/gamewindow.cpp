@@ -98,11 +98,18 @@ namespace oxygine
             oxygine::Stage::getStage()->updateStage();
             if (beginRendering())
             {
+                QPainter painter(this);
+                painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+                painter.beginNativePainting();
+
+                STDRenderer* renderer = STDRenderer::getCurrent();
+                renderer->setPainter(&painter);
                 QColor clearColor(0, 0, 0, 255);
                 QSize size = oxygine::GameWindow::getWindow()->size();
                 oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(size.width(), size.height()));
                 // Render all actors inside the stage. Actor::render will also be called for all its children
                 oxygine::Stage::getStage()->renderStage(clearColor, viewport);
+                painter.endNativePainting();
                 swapDisplayBuffers();
                 m_repeatedFramesDropped = 0;
             }

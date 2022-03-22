@@ -65,6 +65,11 @@ Mainwindow::Mainwindow()
     pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
     pApp->getAudioThread()->playRandom();
 
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue obj = pInterpreter->newQObject(this);
+    pInterpreter->setGlobal("currentMenu", obj);
+    UiFactory::getInstance().createUi("ui/mainmenu.xml", this);
+
     if (Settings::getUsername().isEmpty())
     {
         spDialogTextInput pDialogTextInput = spDialogTextInput::create(tr("Select Username"), false, "");
@@ -99,11 +104,6 @@ Mainwindow::Mainwindow()
         });
         connect(this, &Mainwindow::sigImport, this, &Mainwindow::import, Qt::QueuedConnection);
     }
-
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue obj = pInterpreter->newQObject(this);
-    pInterpreter->setGlobal("currentMenu", obj);
-    UiFactory::getInstance().createUi("ui/mainmenu.xml", this);
 
     m_cheatTimeout.setSingleShot(true);
     connect(&m_cheatTimeout, &QTimer::timeout, this, &Mainwindow::cheatTimeout, Qt::QueuedConnection);

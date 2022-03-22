@@ -4,6 +4,8 @@
 #include <functional>
 #include <vector>
 
+class QPainter;
+
 namespace oxygine
 {
     class ShaderProgramChangedHook
@@ -16,7 +18,7 @@ namespace oxygine
         }
         ShaderProgramChangedHook* prev;
         ShaderProgramChangedHook* next;
-        std::function< void() > hook;
+        std::function<void()> hook;
     };    
 
     class STDRenderer;
@@ -73,7 +75,6 @@ namespace oxygine
         void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
         void setBaseShaderFlags(quint32 fl);
-
         /**Sets World transformation.*/
         void setTransform(const AffineTransform& world);
         void addQuad(const QColor&, const RectF& srcRect, const RectF& destRect);
@@ -139,6 +140,9 @@ namespace oxygine
             vt.v = v + dv;
             quad[3] = vt;
         }
+        QPainter *getPainter() const;
+        void setPainter(QPainter *newPPainter);
+
     protected:
         virtual void shaderProgramChanged() {}
         void setShader(ShaderProgram* prog);
@@ -158,6 +162,7 @@ namespace oxygine
         spTexture m_prevRT;
     private:
         static bool m_restored;
+        QPainter* m_pPainter{nullptr};
     };
 
     class RenderStateCache

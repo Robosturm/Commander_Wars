@@ -1,6 +1,8 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 
+#include <QPainter>
+
 namespace oxygine
 {
     class RenderDelegate;

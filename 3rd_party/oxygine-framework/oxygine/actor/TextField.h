@@ -9,7 +9,7 @@ namespace oxygine
 {
     class TextField;
     using spTextField = intrusive_ptr<TextField>;
-    class TextField : public VStyleActor
+    class TextField : public Actor
     {
     public:
         explicit TextField();

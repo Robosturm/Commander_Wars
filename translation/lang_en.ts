@@ -3288,17 +3288,17 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="70"/>
+        <location filename="../menue/mainwindow.cpp" line="75"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="93"/>
+        <location filename="../menue/mainwindow.cpp" line="98"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="93"/>
+        <location filename="../menue/mainwindow.cpp" line="98"/>
         <source>Imports all data from an other Commander Wars release to the current release.</source>
         <translation type="unfinished"></translation>
     </message>

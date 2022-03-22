@@ -195,24 +195,6 @@ namespace oxygine
                 }
                 break;
             }
-            case STATE_CULL_FACE:
-            {
-                switch (value)
-                {
-                    case CULL_FACE_FRONT_AND_BACK:
-                        window->glCullFace(GL_FRONT_AND_BACK);
-                        break;
-                    case CULL_FACE_FRONT:
-                        window->glCullFace(GL_FRONT);
-                        break;
-                    case CULL_FACE_BACK:
-                        window->glCullFace(GL_BACK);
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            }
             default:
                 oxygine::handleErrorPolicy(oxygine::ep_show_error, "VideoDriver::setState unknown state");
         }
@@ -239,6 +221,8 @@ namespace oxygine
 
     void VideoDriver::begin(const Rect& viewport, const QColor* clearColor)
     {
+
+
         _begin(viewport, clearColor);
     }
 
@@ -325,6 +309,9 @@ namespace oxygine
         window->glEnable(GL_MULTISAMPLE);
 #endif
     }
+
+    // GL_BLEND
+    // texture?
 
     void VideoDriver::setUniformInt(const char* id, qint32 v)
     {

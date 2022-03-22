@@ -317,6 +317,16 @@ namespace oxygine
         }
     }
 
+    QPainter *STDRenderer::getPainter() const
+    {
+        return m_pPainter;
+    }
+
+    void STDRenderer::setPainter(QPainter *newPPainter)
+    {
+        m_pPainter = newPPainter;
+    }
+
     STDRenderer::STDRenderer(VideoDriver* driver)
     {
         if (!driver)

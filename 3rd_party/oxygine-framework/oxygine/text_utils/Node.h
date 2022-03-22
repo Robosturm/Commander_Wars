@@ -34,8 +34,7 @@ namespace oxygine
         public:
             explicit DrawContext() = default;
             virtual ~DrawContext() = default;
-            QColor m_color;
-            QColor m_primary;
+            ;
         };
 
         class Node : public oxygine::ref_counter
@@ -47,9 +46,9 @@ namespace oxygine
             void appendNode(spNode tn);
             virtual void resize(Aligner& rd);
 
-            void drawChildren(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled);
+            void drawChildren(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter);
             void resizeChildren(Aligner& rd);
-            virtual void draw(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled);
+            virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter);
             virtual void xresize(Aligner&) {}
 
             QPoint getRelativPos() const;
@@ -68,7 +67,7 @@ namespace oxygine
             explicit TextNode(const QString & v);
             virtual ~TextNode() = default;
             virtual void xresize(Aligner& rd) override;
-            virtual void draw(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled) override;
+            virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
         private:
             std::vector<QString> m_splitData;
             std::vector<qint32> m_yPos;
@@ -80,7 +79,7 @@ namespace oxygine
             explicit DivNode(QDomElement& reader);
             virtual ~DivNode() = default;
             virtual void resize(Aligner& rd) override;
-            virtual void draw(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled) override;
+            virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
         private:
             QColor m_color;
             quint32 m_options;
