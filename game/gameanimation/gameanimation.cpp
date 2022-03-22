@@ -331,7 +331,6 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont72());
     style.color = color;
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::spTextField pTextfield = oxygine::spTextField::create();

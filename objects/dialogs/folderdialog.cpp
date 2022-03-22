@@ -135,7 +135,6 @@ void FolderDialog::showFolder(QString folder)
         oxygine::spTextField textField = oxygine::spTextField::create();
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
         textField->setStyle(style);

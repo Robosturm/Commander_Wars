@@ -51,7 +51,6 @@ CampaignEditor::CampaignEditor()
     qint32 y = 30;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::spTextField pText =  oxygine::spTextField::create();
@@ -262,7 +261,6 @@ void CampaignEditor::updateCampaignData()
     {
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_TOP;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
         spLabel pText =  spLabel::create(180);
@@ -679,7 +677,6 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     pBox->addChild(pPanel);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -751,7 +748,6 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     pBox->addChild(pPanel);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -821,13 +817,11 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pBox->addChild(pPanel);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_TOP;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 

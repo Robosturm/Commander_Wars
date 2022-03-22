@@ -12,7 +12,8 @@
                 <width>600</width>
                 <height>60</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Map Filter Settings")</text>
-                <font>"main48"</font>
+                <font>"main"</font>
+                <fontSize>48</fontSize>
             </Label>
             <Label>
                 <x>10</x>
@@ -20,7 +21,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Map name:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Textbox>
                 <x>lastX + lastWidth + 10</x>
@@ -36,7 +38,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Author:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Textbox>
                 <x>lastX + lastWidth + 10</x>
@@ -52,7 +55,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Player:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
@@ -71,7 +75,8 @@
                 <width>10</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","-")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
@@ -90,7 +95,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Width:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
@@ -109,7 +115,8 @@
                 <width>10</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","-")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
@@ -128,7 +135,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Height:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
@@ -147,7 +155,8 @@
                 <width>10</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","-")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
@@ -166,7 +175,9 @@
                 <width>350</width>
                 <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Has to be placed")</text>
-                <font>"main32"</font>
+
+                <font>"main"</font>
+                <fontSize>32</fontSize>
             </Label>
             <Label>
                 <x>10</x>
@@ -174,7 +185,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Bases:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -189,7 +201,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -204,7 +217,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Airports:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -219,7 +233,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -234,7 +249,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Harbours:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -249,7 +265,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -264,7 +281,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Towers:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -279,7 +297,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -294,7 +313,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Teleport tiles:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -309,7 +329,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -324,7 +345,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Predeployed:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -339,7 +361,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -354,7 +377,9 @@
                 <width>350</width>
                 <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Map layout")</text>
-                <font>"main32"</font>
+
+                <font>"main"</font>
+                <fontSize>32</fontSize>
             </Label>
             <Label>
                 <x>10</x>
@@ -362,7 +387,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Mixed bases:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -377,7 +403,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -392,7 +419,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Symetric:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -407,7 +435,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -422,7 +451,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","PvP:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -437,7 +467,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -452,7 +483,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","FTA:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -467,7 +499,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -482,7 +515,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Versus AI:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -497,7 +531,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -512,7 +547,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Team Play:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -527,7 +563,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -542,7 +579,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Historical:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -557,7 +595,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -572,7 +611,9 @@
                 <width>350</width>
                 <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Funds")</text>
-                <font>"main32"</font>
+
+                <font>"main"</font>
+                <fontSize>32</fontSize>
             </Label>
             <Label>
                 <x>10</x>
@@ -580,7 +621,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Low funds:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -595,7 +637,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -610,7 +653,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","High funds:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -625,7 +669,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -640,7 +685,8 @@
                 <width>350</width>
                 <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Battle type")</text>
-                <font>"main32"</font>
+                <font>"main"</font>
+                <fontSize>32</fontSize>
             </Label>
             <Label>
                 <x>10</x>
@@ -648,7 +694,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Naval map:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -663,7 +710,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -678,7 +726,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Ground map:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -693,7 +742,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -708,7 +758,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Air map:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -723,7 +774,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -738,7 +790,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Scripted map:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
@@ -753,7 +806,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>

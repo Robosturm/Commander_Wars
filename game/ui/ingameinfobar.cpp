@@ -235,7 +235,6 @@ void IngameInfoBar::updatePlayerInfo()
 
                 style = oxygine::TextStyle(FontManager::getMainFont16());
                 style.color = FontManager::getFontColor();
-                style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
                 style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
                 style.multiline = false;
 
@@ -525,7 +524,6 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
 {
     oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getMainFont16());
     smallStyle.color = FontManager::getFontColor();
-    smallStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     smallStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     smallStyle.multiline = false;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -772,7 +770,6 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
 {
     oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getMainFont16());
     smallStyle.color = FontManager::getFontColor();
-    smallStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     smallStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     smallStyle.multiline = false;
     ObjectManager* pObjectManager = ObjectManager::getInstance();

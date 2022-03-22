@@ -151,7 +151,6 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     // text incoming
     oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getMainFont72());
     headline.color = FontManager::getFontColor();
-    headline.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headline.multiline = false;
     oxygine::spTextField testField = oxygine::spTextField::create();
@@ -162,7 +161,6 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         // select smaller font size in case of small screen or large name
         headline = oxygine::TextStyle(FontManager::getMainFont48());
         headline.color = FontManager::getFontColor();
-        headline.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         headline.multiline = false;
     }
@@ -260,7 +258,6 @@ void GameAnimationPower::createPowerDescription(CO* pCo, GameEnums::PowerMode po
         }
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont32());
         style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
         style.multiline = true;
         oxygine::spTextField descriptionField = oxygine::spTextField::create();

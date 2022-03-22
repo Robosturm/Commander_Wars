@@ -23,7 +23,6 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
     spLabel textField = spLabel::create(width - 10);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     textField->setStyle(style);

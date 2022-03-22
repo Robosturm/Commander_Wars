@@ -113,7 +113,6 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     connect(this, &COSelection::armySelectedChange, this, &COSelection::armyChanged, Qt::QueuedConnection);
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
@@ -126,7 +125,6 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     width -= 70;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_COPower = spLabel::create(m_CoDescription->getWidth());

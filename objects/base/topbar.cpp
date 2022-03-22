@@ -49,7 +49,6 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     oxygine::spTextField textField = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
     textField->setStyle(style);
@@ -93,7 +92,6 @@ void Topbar::addGroup(QString text)
     oxygine::spTextField textField = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
     textField->setStyle(style);

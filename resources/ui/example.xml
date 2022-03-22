@@ -23,7 +23,8 @@
         <height>30</height>
         <text>QT_TRANSLATE_NOOP("GAME","Test")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Test")</tooltip>
-        <font>"main24"</font>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
         <onUpdate>Works</onUpdate>
     </Label>
     <Checkbox>

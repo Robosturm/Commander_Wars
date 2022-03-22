@@ -9,9 +9,8 @@
     <TextField>
         <x>settings.getWidth() / 2 - 134 * 2 + 70 * 2</x>
         <y>currentMenu.getButtonY(0) - 60 * 2 + 24 * 2</y>
-        <text>"DARK HORIZONS"</text>
+        <text>QT_TRANSLATE_NOOP("GAME","DARK HORIZONS")</text>
         <font>"logoFont"</font>
-        <fontScale>2</fontScale>
         <fontColor>"#FFFFFF"</fontColor>
     </TextField>
     <Button>

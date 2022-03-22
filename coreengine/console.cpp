@@ -4,7 +4,8 @@
 #include <QDir>
 #include <qlogging.h>
 #include <QLoggingCategory>
-#include <qdatetime.h>
+#include <QDateTime>
+#include <QFontMetrics>
 
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
@@ -259,7 +260,8 @@ void Console::update(const oxygine::UpdateState& us)
     {
         QMutexLocker locker(&m_datalocker);
         qint32 screenheight = Settings::getHeight();
-        qint32 h = FontManager::getMainFont16()->getSize();
+        QFontMetrics metrics(FontManager::getMainFont16());
+        qint32 h = metrics.height();
         // pre calc message start
         qint32 num = screenheight / h - 4;
         m_outputSize = num + 30;

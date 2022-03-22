@@ -85,7 +85,6 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     // no the fun begins create checkboxes and stuff and a panel down here
@@ -96,7 +95,6 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
     spLabel pLabel = spLabel::create(pPanel->getWidth() - 60);

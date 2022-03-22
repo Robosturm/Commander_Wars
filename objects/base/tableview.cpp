@@ -25,7 +25,6 @@ TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> 
     QColor color(255, 127, 39);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     // first vertical line
@@ -103,7 +102,6 @@ void TableView::addRow(qint32 i, qint32 i2, qint32 x, bool selectable)
     QColor color(255, 127, 39);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 

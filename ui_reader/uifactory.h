@@ -43,7 +43,7 @@ private:
     /**
      * Nodename: Label
      * supported attributes are:
-     * mandatory: x, y, width, heigth, text, font,
+     * mandatory: x, y, width, heigth, text, font, fontSize
      * optional: tooltip, onUpdate, id, enabled, fontColor
      */
     bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
@@ -51,7 +51,7 @@ private:
     /**
      * Nodename: TextField
      * supported attributes are:
-     * mandatory: x, y, text, font
+     * mandatory: x, y, text, font, fontSize
      * optional: fontColor
      */
     bool createTextfield(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
@@ -156,7 +156,7 @@ private:
     float getFloatValue(QString line, float defaultValue = 0.0f);
     bool getBoolValue(QString line, bool defaultValue = false);
     QString getStringValue(QString line);
-    oxygine::TextStyle getStyle(QString styleName, QColor fontColor);
+    oxygine::TextStyle getStyle(QString styleName, QColor fontColor, qint32 size);
     QString getId(QString attribute);
     template<typename TType>
     void onEvent(QString line, TType value)

@@ -3,21 +3,23 @@
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Aligner.h"
-#include <qstring.h>
+
 #include <QDomElement>
 #include <vector>
+
+#include <QString>
+#include <QPainter>
+#include <QPainterPath>
 
 namespace oxygine
 {
     class RenderState;
-    struct glyph;
     class Aligner;
     class STDRenderer;
     class RenderState;
 
     namespace text
     {
-        using text_data = std::vector<Symbol>;
         class Node;
         using spNode = oxygine::intrusive_ptr<Node>;
         class DivNode;
@@ -32,7 +34,6 @@ namespace oxygine
         public:
             explicit DrawContext() = default;
             virtual ~DrawContext() = default;
-
             QColor m_color;
             QColor m_primary;
         };
@@ -45,17 +46,16 @@ namespace oxygine
 
             void appendNode(spNode tn);
             virtual void resize(Aligner& rd);
-            void finalPass(Aligner& rd);
 
-            void drawChildren(DrawContext& dc);
+            void drawChildren(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled);
             void resizeChildren(Aligner& rd);
-            virtual Symbol* getSymbol(int& pos);
-            virtual void draw(DrawContext& dc);
+            virtual void draw(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled);
             virtual void xresize(Aligner&) {}
-            virtual void xfinalPass(Aligner&) {}
-            virtual void xupdateMaterial(const Material&) {}
-            void updateMaterial(const Material& mat);
 
+            QPoint getRelativPos() const;
+            void setRelativPos(QPoint newRelativPos);
+        protected:
+            QPoint m_relativPos;
         private:
             spNode m_firstChild;
             spNode m_lastChild;
@@ -65,16 +65,13 @@ namespace oxygine
         class TextNode: public Node
         {
         public:
-            static qint32 m_defMissingGlyph;
             explicit TextNode(const QString & v);
             virtual ~TextNode() = default;
             virtual void xresize(Aligner& rd) override;
-            virtual void xfinalPass(Aligner& rd) override;
-            virtual void draw(DrawContext& dc) override;
-            virtual void xupdateMaterial(const Material& mat) override;
-            virtual Symbol* getSymbol(int& pos) override;
+            virtual void draw(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled) override;
         private:
-            text_data m_data;
+            std::vector<QString> m_splitData;
+            std::vector<qint32> m_yPos;
         };
 
         class DivNode: public Node
@@ -83,7 +80,7 @@ namespace oxygine
             explicit DivNode(QDomElement& reader);
             virtual ~DivNode() = default;
             virtual void resize(Aligner& rd) override;
-            virtual void draw(DrawContext& dc) override;
+            virtual void draw(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled) override;
         private:
             QColor m_color;
             quint32 m_options;

@@ -24,7 +24,6 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::spTextField pText = oxygine::spTextField::create();

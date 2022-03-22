@@ -18,7 +18,6 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -89,7 +88,6 @@ void WikiView::search(bool onlyTag)
         pBox->setSize(m_MainPanel->getWidth() - 70, 40);
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
         spLabel textField = spLabel::create(pBox->getWidth() - 18);

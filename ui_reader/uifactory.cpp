@@ -43,7 +43,6 @@ static const char* const attrText = "text";
 static const char* const attrOnUpdate = "onUpdate";
 static const char* const attrFont = "font";
 static const char* const attrFontColor = "fontColor";
-static const char* const attrFontScale = "fontScale";
 static const char* const attrInfinite = "infinite";
 static const char* const attrMin = "min";
 static const char* const attrMax = "max";
@@ -57,6 +56,7 @@ static const char* const attrScale = "scale";
 static const char* const attrUseY = "useY";
 static const char* const attrStartOffset = "startOffset";
 static const char* const attrMoveInSize = "moveInSize";
+static const char* const attrFontSize = "fontSize";
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -194,8 +194,7 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         {
             fontColor = FontManager::getFontColor().name();
         }
-        auto style = getStyle(getStringValue(getAttribute(childs, attrFont)), fontColor);
-        float fontScale = getFloatValue(getAttribute(childs, attrFontScale), 1.0f);
+        auto style = getStyle(getStringValue(getAttribute(childs, attrFont)), fontColor, getIntValue(getAttribute(childs, attrFontSize)));
         QString id = getId(getStringValue(getAttribute(childs, attrId)));
         spLabel pLabel = spLabel::create(width);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), true);
@@ -203,7 +202,6 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         pLabel->setX(x);
         pLabel->setY(y);
         pLabel->setStyle(style);
-        pLabel->setScale(fontScale);
         pLabel->setHtmlText(text);
         pLabel->setTooltipText(tooltip);
         pLabel->setObjectName(id);
@@ -239,13 +237,11 @@ bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, ox
         {
             fontColor = FontManager::getFontColor().name();
         }
-        auto style = getStyle(getStringValue(getAttribute(childs, attrFont)), fontColor);
-        float fontScale = getFloatValue(getAttribute(childs, attrFontScale), 1.0f);
+        auto style = getStyle(getStringValue(getAttribute(childs, attrFont)), fontColor, getIntValue(getAttribute(childs, attrFontSize)));
         oxygine::spTextField pLabel = oxygine::spTextField::create();
         pLabel->setX(x);
         pLabel->setY(y);
         pLabel->setStyle(style);
-        pLabel->setScale(fontScale);
         pLabel->setHtmlText(text);
         parent->addChild(pLabel);
         item = pLabel;
@@ -812,11 +808,10 @@ QString UiFactory::getStringValue(QString line)
     return value;
 }
 
-oxygine::TextStyle UiFactory::getStyle(QString styleName, QColor fontColor)
+oxygine::TextStyle UiFactory::getStyle(QString styleName, QColor fontColor, qint32 size)
 {
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getInstance()->getResFont(styleName));
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getInstance()->getFont(styleName, size));
     style.color = fontColor;
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     return style;

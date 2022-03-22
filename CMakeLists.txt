@@ -181,7 +181,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/Clock.cpp 3rd_party/oxygine-framework/oxygine/Clock.h
     3rd_party/oxygine-framework/oxygine/Draggable.cpp 3rd_party/oxygine-framework/oxygine/Draggable.h
     3rd_party/oxygine-framework/oxygine/EventDispatcher.cpp 3rd_party/oxygine-framework/oxygine/EventDispatcher.h
-    3rd_party/oxygine-framework/oxygine/Font.cpp 3rd_party/oxygine-framework/oxygine/Font.h
     3rd_party/oxygine-framework/oxygine/Input.cpp 3rd_party/oxygine-framework/oxygine/Input.h
     3rd_party/oxygine-framework/oxygine/MaskedRenderer.cpp 3rd_party/oxygine-framework/oxygine/MaskedRenderer.h
     3rd_party/oxygine-framework/oxygine/Material.cpp 3rd_party/oxygine-framework/oxygine/Material.h
@@ -192,6 +191,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/VisualStyle.cpp 3rd_party/oxygine-framework/oxygine/VisualStyle.h
     3rd_party/oxygine-framework/oxygine/RenderState.h
     3rd_party/oxygine-framework/oxygine/oxygine-forwards.h
+    3rd_party/oxygine-framework/oxygine/TextStyle.h
     #core
     3rd_party/oxygine-framework/oxygine/core/Object.cpp 3rd_party/oxygine-framework/oxygine/core/Object.h
     3rd_party/oxygine-framework/oxygine/core/oxygine.cpp 3rd_party/oxygine-framework/oxygine/core/oxygine.h
@@ -228,8 +228,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/res/ResAnim.cpp 3rd_party/oxygine-framework/oxygine/res/ResAnim.h
     3rd_party/oxygine-framework/oxygine/res/ResAtlas.cpp 3rd_party/oxygine-framework/oxygine/res/ResAtlas.h
     3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.cpp 3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.h
-    3rd_party/oxygine-framework/oxygine/res/ResFont.cpp 3rd_party/oxygine-framework/oxygine/res/ResFont.h
-    3rd_party/oxygine-framework/oxygine/res/ResFontBM.cpp 3rd_party/oxygine-framework/oxygine/res/ResFontBM.h
     3rd_party/oxygine-framework/oxygine/res/Resource.cpp 3rd_party/oxygine-framework/oxygine/res/Resource.h
     3rd_party/oxygine-framework/oxygine/res/Resources.cpp 3rd_party/oxygine-framework/oxygine/res/Resources.h
     3rd_party/oxygine-framework/oxygine/res/SingleResAnim.cpp 3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h

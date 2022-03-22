@@ -12,6 +12,8 @@
 
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 
+#include <QPainter>
+
 namespace oxygine
 {
     spRenderDelegate RenderDelegate::instance;
@@ -77,11 +79,10 @@ namespace oxygine
             actor->Actor::render(rs);
         }
 
-
         if (actor->getClipping())
         {
             renderer->flush();
-            driver->setScissorRect(scissorEnabled ? &scissorRect : 0);
+            driver->setScissorRect(scissorEnabled ? &scissorRect : nullptr);
         }
     }
 
@@ -103,12 +104,34 @@ namespace oxygine
         {
             return;
         }
-        text::DrawContext dc;
+
         STDRenderer* renderer = STDRenderer::getCurrent();
-        dc.m_primary = premultiply(rs.getFinalColor(tf->getColor()));
-        dc.m_color = tf->getStyle().color * dc.m_primary;
-        renderer->setTransform(rs.transform);
-        root->draw(dc);
+        renderer->flush();
+        VideoDriver* driver = renderer->getDriver();
+        Rect scissorRect(0, 0, 0, 0);
+        bool scissorEnabled = driver->getScissorRect(scissorRect);
+        driver->setScissorRect(nullptr);
+        Material::null->apply();
+
+        //QPainter painter(oxygine::GameWindow::getWindow());
+        //painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+        //if (painter.isActive())
+        //{
+        //    text::DrawContext dc;
+        //    if (scissorEnabled)
+        //    {
+        //        painter.setClipRect(scissorRect.getX(), scissorRect.getY(), scissorRect.getWidth(), scissorRect.getHeight());
+        //    }
+        //    renderer->setTransform(rs.transform);
+        //    dc.m_primary = premultiply(rs.getFinalColor(tf->getColor()));
+        //    dc.m_color = tf->getStyle().color * dc.m_primary;
+        //    if (!scissorEnabled)
+        //    {
+        //        root->draw(rs, tf->getStyle(), dc, painter, scissorRect, scissorEnabled);
+        //    }
+        //    painter.end();
+        //}
+        driver->setScissorRect(scissorEnabled ? &scissorRect : nullptr);
     }
 
     void RenderDelegate::doRender(ColorRectSprite* sprite, const RenderState& rs)

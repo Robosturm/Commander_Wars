@@ -1,6 +1,8 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "qcolor.h"
+
+#include <QColor>
+#include <QFont>
 
 namespace oxygine
 {
@@ -15,29 +17,14 @@ namespace oxygine
             HALIGN_RIGHT
         };
 
-        enum VerticalAlign
-        {
-            VALIGN_DEFAULT,
-            VALIGN_BASELINE,
-            VALIGN_TOP,
-            VALIGN_MIDDLE,
-            VALIGN_BOTTOM
-        };
-
-        explicit TextStyle(const ResFont* rs = nullptr)
+        explicit TextStyle(QFont rs = QFont())
             : font(rs)
         {
         }
-
-        const ResFont* font;
+        QFont font;
         HorizontalAlign hAlign{HALIGN_DEFAULT};
-        VerticalAlign vAlign{VALIGN_DEFAULT};
-        qint32 linesOffset{0};      /**<vertical distance offset between lines */
-        qint32 kerning{0};          /**<horizontal distance */
         bool multiline{false};
-        qint32 fontSize{0};
-        bool breakLongWords{false}; /**<works with multiline flag. breakLongWords = false doesn't allow to break too long words  */
         QColor color{Qt::white};
-        float baselineScale{1.0f};  /**<baseline distance multiplier */
+        qint32 borderWidth{2};
     };
 }

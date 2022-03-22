@@ -1,7 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
-#include "3rd_party/oxygine-framework/oxygine/res/ResFont.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
 #include "qfile.h"
@@ -55,11 +54,6 @@ namespace oxygine
     ResAnim* Resources::getResAnim(const QString & id, error_policy ep) const
     {
         return getT<ResAnim>(id, ep);
-    }
-
-    ResFont* Resources::getResFont(const QString & id, error_policy ep) const
-    {
-        return getT<ResFont>(id, ep);
     }
 
     void Resources::load()

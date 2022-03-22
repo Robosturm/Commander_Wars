@@ -101,8 +101,6 @@ void ScriptConditionBuildingDestroyed::showEditCondition(spScriptEditor pScriptE
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     qint32 width = 300;

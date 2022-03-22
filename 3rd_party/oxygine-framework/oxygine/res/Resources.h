@@ -58,11 +58,6 @@ namespace oxygine
         */
         virtual ResAnim* getResAnim(const QString & id, error_policy ep = ep_ignore_error) const;
 
-        /** get animation resource by id
-        @param resource id
-        */
-        ResFont* getResFont(const QString & id, error_policy ep = ep_ignore_error) const;
-
         template<class T>
         T* getT(const QString & id, error_policy ep = ep_ignore_error) const
         {

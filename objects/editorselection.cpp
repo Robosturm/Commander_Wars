@@ -728,7 +728,6 @@ void EditorSelection::createTerrainSectionLabel(qint32 item, qint32 & currentIde
         xCounter = 0;
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
 
@@ -778,7 +777,6 @@ void EditorSelection::createUnitSectionLabel(qint32 item, qint32 & currentIdenti
         xCounter = 0;
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
 

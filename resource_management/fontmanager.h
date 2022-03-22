@@ -2,10 +2,11 @@
 #define FONTMANAGER_H
 
 #include <QColor>
+#include <QFont>
 
 #include "resource_management/ressourcemanagement.h"
 
-class FontManager : public QObject, public RessourceManagement<FontManager>
+class FontManager : public QObject
 {
     Q_OBJECT
 public:
@@ -14,55 +15,77 @@ public:
         unlockChar = 1,
         lockChar = 2
     };
+
+    static const char* const MAINFONT;
+    static const char* const LOGOFONT;
+
+    static FontManager* getInstance()
+    {
+        if (m_pInstance == nullptr)
+        {
+            m_pInstance = new FontManager();
+            Interpreter::setCppOwnerShip(m_pInstance);
+        }
+        return m_pInstance;
+    }
     /**
      * @brief getMainFont16
      * @return
      */
-    inline static oxygine::ResFont* getMainFont16()
+    inline static QFont getMainFont16()
     {
-        return getInstance()->getResFont("main16");
+        return QFont(m_fonts[MAINFONT], 16);
     }
     /**
      * @brief getMainFont24
      * @return
      */
-    inline static oxygine::ResFont* getMainFont24()
+    inline static QFont getMainFont24()
     {
-        return getInstance()->getResFont("main24");
+        return QFont(m_fonts[MAINFONT], 24);
     }
     /**
      * @brief getMainFont48
      * @return
      */
-    inline static oxygine::ResFont* getMainFont48()
+    inline static QFont getMainFont48()
     {
-        return getInstance()->getResFont("main48");
+        return QFont(m_fonts[MAINFONT], 48);
     }
     /**
      * @brief getMainFont48
      * @return
      */
-    inline static oxygine::ResFont* getMainFont32()
+    inline static QFont getMainFont32()
     {
-        return getInstance()->getResFont("main32");
+        return QFont(m_fonts[MAINFONT], 32);
     }
     /**
      * @brief getMainFont72
      * @return
      */
-    inline static oxygine::ResFont* getMainFont72()
+    inline static QFont getMainFont72()
     {
-        return getInstance()->getResFont("main72");
+        return QFont(m_fonts[MAINFONT], 72);
     }
     /**
      * @brief getLogoFont
      * @return
      */
-    inline static oxygine::ResFont* getLogoFont()
+    inline static QFont getLogoFont()
     {
-        return getInstance()->getResFont("logoFont");
+        return QFont(m_fonts[LOGOFONT], 16);
     }
-
+    /**
+     * @brief getMainFontName
+     * @return
+     */
+    static const QString &getMainFontName();
+    /**
+     * @brief getLogoFontName
+     * @return
+     */
+    static const QString &getLogoFontName();
 public slots:
     /**
      * @brief setFontColor
@@ -74,16 +97,26 @@ public slots:
      * @return
      */
     static QColor getFontColor();
+    /**
+     * @brief getFont
+     * @param fontType
+     * @param size
+     * @return
+     */
+    static QFont getFont(QString fontType, qint32 size)
+    {
+        return QFont(m_fonts[fontType], size);
+    }
+
 protected:
     friend RessourceManagement<FontManager>;
-    FontManager()
-        : RessourceManagement<FontManager>("/fonts/fonts.xml", "")
-    {
-        setObjectName("FontManager");
-    }
+    FontManager();
 private:
+
     virtual ~FontManager() = default;
-    static QColor defaultColor;
+    static QColor m_defaultColor;
+    static QMap<QString, QString> m_fonts;
+    static FontManager* m_pInstance;
 };
 
 #endif // FONTMANAGER_H

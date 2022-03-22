@@ -42,7 +42,6 @@ void VictoryRulePopup::updateInfo()
 
         oxygine::TextStyle styleSmall = oxygine::TextStyle(FontManager::getMainFont16());
         styleSmall.color = FontManager::getFontColor();
-        styleSmall.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         styleSmall.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         styleSmall.multiline = true;
 
@@ -55,7 +54,6 @@ void VictoryRulePopup::updateInfo()
 
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = true;
 

@@ -94,7 +94,7 @@ void Mainapp::shutdown()
     WikiDatabase::getInstance()->free();
     AchievementManager::getInstance()->free();
     BackgroundManager::getInstance()->free();
-    FontManager::getInstance()->free();
+    // FontManager::getInstance()->free();
     GameAnimationManager::getInstance()->free();
     ObjectManager::getInstance()->free();
     ShopLoader::getInstance()->free();

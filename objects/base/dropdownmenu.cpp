@@ -15,7 +15,6 @@ DropDownmenu::DropDownmenu(qint32 width, const QStringList & items)
     m_Textfield = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_Textfield->setStyle(style);
@@ -89,7 +88,6 @@ void DropDownmenu::addDropDownText(QString text, qint32 id)
     oxygine::spTextField textField = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;
     style.multiline = false;
     textField->setStyle(style);

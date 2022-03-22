@@ -117,7 +117,6 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
             oxygine::spTextField pTextfield = oxygine::spTextField::create();
             oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
             style.color = FontManager::getFontColor();
-            style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
             style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
             style.multiline = false;
             pTextfield->setStyle(style);

@@ -15,7 +15,6 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
     qint32 textWidth = 0;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     for (qint32 i = 0; i < texts.size(); i++)

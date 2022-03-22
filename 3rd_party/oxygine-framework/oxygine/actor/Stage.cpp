@@ -6,6 +6,10 @@
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
+#include <QPainter>
+#include <QPainterPath>
+#include "resource_management/fontmanager.h"
+
 namespace oxygine
 {
     spStage Stage::instance;
@@ -81,7 +85,6 @@ namespace oxygine
 
         Actor::render(rs);
         STDRenderer::getCurrent()->flush();
-
         Material::null->apply();
     }
 

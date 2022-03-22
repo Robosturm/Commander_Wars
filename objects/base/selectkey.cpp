@@ -67,7 +67,6 @@ void SelectKey::keyInput(oxygine::KeyEvent event)
 QString SelectKey::getKeycodeText(Qt::Key code)
 {
     QString codeText = tr("Unknown");
-    const oxygine::Font* pFont = FontManager::getMainFont24()->getFont();
     if (code == Qt::Key_Space)
     {
         codeText = tr("Space");
@@ -182,11 +181,7 @@ QString SelectKey::getKeycodeText(Qt::Key code)
     }
     else if (code <= 255)
     {
-        const oxygine::glyph* pGlyph = pFont->getGlyph(code);
-        if (pGlyph != nullptr)
-        {
-            codeText = static_cast<char>(code);
-        }
+        codeText = static_cast<char>(code);
     }
     return codeText;
 }

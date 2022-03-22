@@ -1,16 +1,12 @@
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 #include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
-#include "3rd_party/oxygine-framework/oxygine/Font.h"
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
-#include "3rd_party/oxygine-framework/oxygine/res/ResFont.h"
 
 namespace oxygine
 {
     namespace text
-    {        
-        qint32 TextNode::m_defMissingGlyph = '?';
-
+    {
         void Node::appendNode(spNode tn)
         {
             if (!m_firstChild)
@@ -41,180 +37,108 @@ namespace oxygine
             }
         }
 
-        void Node::finalPass(Aligner& rd)
-        {
-            xfinalPass(rd);
-            spNode child = m_firstChild;
-            while (child)
-            {
-                child->finalPass(rd);
-                child = child->m_nextSibling;
-            }
-        }
-
-        void Node::drawChildren(DrawContext& dc)
+        void Node::drawChildren(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled)
         {
             spNode child = m_firstChild;
             while (child)
             {
-                child->draw(dc);
+                child->draw(rs, style, dc, painter, scissorRect, scissorEnabled);
                 child = child->m_nextSibling;
             }
         }
 
-        Symbol* Node::getSymbol(int& pos)
+        void Node::draw(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled)
         {
-            spNode node = m_firstChild;
-            while (node)
-            {
-                Symbol* res = node->getSymbol(pos);
-                if (res)
-                    return res;
-                node = node->m_nextSibling;
-            }
-            return 0;
+            drawChildren(rs, style, dc, painter, scissorRect, scissorEnabled);
         }
 
-        void Node::draw(DrawContext& dc)
+        QPoint Node::getRelativPos() const
         {
-            drawChildren(dc);
+            return m_relativPos;
         }
 
-        void Node::updateMaterial(const Material& mat)
+        void Node::setRelativPos(QPoint newRelativPos)
         {
-            spNode node = m_firstChild;
-            while (node)
-            {
-                node->updateMaterial(mat);
-                node = node->m_nextSibling;
-            }
-            xupdateMaterial(mat);
+            m_relativPos = newRelativPos;
         }
 
         TextNode::TextNode(const QString & v)
         {
-            for (auto & c : v)
-            {
-                Symbol s;
-                s.code = c.unicode();
-                m_data.push_back(s);
-            }
+            m_splitData.push_back(v);
+            m_yPos.push_back(0);
         }
 
-        Symbol* TextNode::getSymbol(int& pos)
+        void TextNode::draw(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled)
         {
-            if (m_data.size() > pos)
+            QPainterPath path;
+            for (qint32 i = 0; i < m_splitData.size(); ++i)
             {
-                return &m_data[pos];
-            }
-            pos -= m_data.size();
-            return Node::getSymbol(pos);
+                path.addText(rs.transform.x + m_relativPos.x() + style.borderWidth, rs.transform.y + m_relativPos.y() + style.borderWidth + m_yPos[0], style.font, m_splitData[i]);
+            }            
+            painter.strokePath(path, QPen(Qt::black, style.borderWidth));
+            painter.fillPath(path, QBrush(dc.m_color));
+            drawChildren(rs, style, dc, painter, scissorRect, scissorEnabled);
         }
 
-        void TextNode::draw(DrawContext& dc)
-        {
-            for (const auto & s : qAsConst(m_data))
-            {
-                if (!s.mat)
-                {
-                    continue;
-                }
-
-                s.mat->apply();
-                s.mat->render(dc.m_color, s.gl.src, s.destRect);
-            }
-
-            drawChildren(dc);
-        }
-
-        void TextNode::xupdateMaterial(const Material& mat)
-        {
-            for (auto & s : m_data)
-            {
-                spMaterial m = mat.clone();
-                m->m_base = s.mat->m_base;
-                s.mat = MaterialCache::mc().cache(*m.get());
-            }
-        }
+        // todo move to
+        // QFontMetrics metrics(style.font);
+        // QRect drawnRect;
+        // drawnRect = metrics.boundingRect(m_data);
+        // qint32 ascent = metrics.ascent();
 
         void TextNode::xresize(Aligner& rd)
         {
-            if (!m_data.empty())
-            {
-                qint32 i = 0;
-                const Font* font = rd.getFont();
-                while (i != m_data.size())
-                {
-                    Symbol& s = m_data[i];
-                    if (s.code == '\n')
-                    {
-                        rd.nextLine();
-                    }
-                    else
-                    {
-                        const glyph* gl = font->getGlyph(s.code);
-                        if (gl)
-                        {
-                            s.gl = *gl;
-                            i += rd.putSymbol(s);
-                        }
-                        else
-                        {
-                            gl = font->getGlyph(m_defMissingGlyph);
-                            if (gl)//even 'missing' symbol  could be missing
-                            {
-                                s.gl = *gl;
-                                i += rd.putSymbol(s);
-                            }
-                        }
+            // if (!m_data.empty())
+            // {
+            //     qint32 i = 0;
+            //     const Font* font = rd.getFont();
+            //     while (i != m_data.size())
+            //     {
+            //         Symbol& s = m_data[i];
+            //         if (s.code == '\n')
+            //         {
+            //             rd.nextLine();
+            //         }
+            //         else
+            //         {
+            //             const glyph* gl = font->getGlyph(s.code);
+            //             if (gl)
+            //             {
+            //                 s.gl = *gl;
+            //                 i += rd.putSymbol(s);
+            //             }
+            //             else
+            //             {
+            //                 gl = font->getGlyph(m_defMissingGlyph);
+            //                 if (gl)//even 'missing' symbol  could be missing
+            //                 {
+            //                     s.gl = *gl;
+            //                     i += rd.putSymbol(s);
+            //                 }
+            //             }
 
-                        if (gl != nullptr)
-                        {
-                            if (rd.getMat()->m_base.get() == gl->texture.get())
-                            {
-                                s.mat = rd.getMat();
-                            }
-                            else
-                            {
-                                spMaterial mat = dynamic_pointer_cast<Material>(rd.getMat()->clone());
-                                mat->m_base = gl->texture;
-                                s.mat = MaterialCache::mc().cache(*mat.get());
-                                rd.setMat(s.mat);
-                            }
-                        }
-                    }
-                    ++i;
-                    if (i < 0)
-                    {
-                        i = 0;
-                    }
-                }
-            }
-        }
-
-        float mlt(qint32 x, float sf)
-        {
-            return x / sf;
-        }
-
-        void TextNode::xfinalPass(Aligner& rd)
-        {
-            float scaleFactor = rd.getScale();
-
-            qint32 offsetY = rd.getBounds().pos.y;
-
-            for (auto & s : m_data)
-            {
-                s.y += offsetY;
-                if (s.gl.texture)
-                {
-                    s.destRect = RectF(mlt(s.x, scaleFactor), mlt(s.y, scaleFactor), mlt(s.gl.sw, scaleFactor), mlt(s.gl.sh, scaleFactor));
-                }
-                else
-                {
-                    s.destRect = RectF(0, 0, 0, 0);
-                }
-            }
+            //             if (gl != nullptr)
+            //             {
+            //                 if (rd.getMat()->m_base.get() == gl->texture.get())
+            //                 {
+            //                     s.mat = rd.getMat();
+            //                 }
+            //                 else
+            //                 {
+            //                     spMaterial mat = dynamic_pointer_cast<Material>(rd.getMat()->clone());
+            //                     mat->m_base = gl->texture;
+            //                     s.mat = MaterialCache::mc().cache(*mat.get());
+            //                     rd.setMat(s.mat);
+            //                 }
+            //             }
+            //         }
+            //         ++i;
+            //         if (i < 0)
+            //         {
+            //             i = 0;
+            //         }
+            //     }
+            // }
         }
 
         void DivNode::resize(Aligner& rd)
@@ -227,12 +151,12 @@ namespace oxygine
             resizeChildren(rd);
         }
 
-        void DivNode::draw(DrawContext& dc)
+        void DivNode::draw(const RenderState& rs, const TextStyle & style, DrawContext& dc, QPainter & painter, Rect & scissorRect, bool scissorEnabled)
         {
             QColor prev = dc.m_color;
 
             dc.m_color = m_color * dc.m_primary;
-            drawChildren(dc);
+            drawChildren(rs, style, dc, painter, scissorRect, scissorEnabled);
             dc.m_color = prev;
         }
 

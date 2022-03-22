@@ -32,9 +32,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMap* pMap, const QStringList & te
     qint32 width = 0;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont32());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;
-    style.fontSize = 20;
     oxygine::spTextField testText = oxygine::spTextField::create();
     for (qint32 i = 0; i < texts.size(); i++)
     {

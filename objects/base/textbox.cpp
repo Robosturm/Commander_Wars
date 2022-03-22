@@ -20,7 +20,6 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     m_Textfield = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = (heigth > 0);
     m_Textfield->setStyle(style);

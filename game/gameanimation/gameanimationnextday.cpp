@@ -91,7 +91,6 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
 
     oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getMainFont72());
     headline.color = FontManager::getFontColor();
-    headline.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headline.multiline = false;
     oxygine::spTextField textField = oxygine::spTextField::create();

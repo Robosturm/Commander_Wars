@@ -24,41 +24,24 @@ namespace oxygine
         const Rect& getTextRect() const;
         /**Returns current text*/
         const QString & getText() const;
-        const ResFont* getFont() const;
-        qint32 getFontSize() const;
-        qint32 getLinesOffset() const;
-        qint32 getKerning() const;
-        TextStyle::VerticalAlign getVAlign() const;
+        const QFont & getFont() const;
+
         TextStyle::HorizontalAlign getHAlign() const;
         bool getMultiline() const;
-        bool getBreakLongWords() const;
-        text::Symbol* getSymbolAt(qint32 pos) const;
+
         const QColor& getStyleColor() const;
-        float getBaselineScale() const;
-        size_t getOptions() const;
+
+
         virtual bool getBounds(RectF&) const override;
-        /**Overwrites TextStyle Vertical align*/
-        void setVAlign(TextStyle::VerticalAlign align);
         /**Overwrites TextStyle Horizontal align*/
         void setHAlign(TextStyle::HorizontalAlign align);
-        void setAlign(TextStyle::VerticalAlign, TextStyle::HorizontalAlign);
         /**Overwrites TextStyle multiline*/
         void setMultiline(bool multiline);
-        /**Overwrites TextStyle breakLongWords*/
-        void setBreakLongWords(bool val);
-        /**Overwrites TextStyle linesOffset*/
-        void setLinesOffset(qint32 offset);
-        /**Overwrites TextStyle baselineScale*/
-        void setBaselineScale(float scale);
-        /**Overwrites TextStyle kerning*/
-        void setKerning(qint32 kerning);
-        /**Overwrites TextStyle fontSize*/
-        void setFontSize(qint32 size);
         /**Overwrites TextStyle color*/
         void setStyleColor(const QColor&);
 
         /**Overwrites TextStyle font.*/
-        void setFont(const ResFont* rs);
+        void setFont(QFont & rs);
 
         void setStyle(const TextStyle& st);
         /**Changes text utf-8 string*/
@@ -77,7 +60,6 @@ namespace oxygine
 
     protected:
         virtual void sizeChanged(const Vector2& size) override;
-        virtual void matChanged() override;
         void rebuildText();
 
     protected:
@@ -86,7 +68,6 @@ namespace oxygine
 
         text::spNode m_root;
         Rect m_textRect;
-        float m_rtscale;
         bool m_htmlText = false;
     };
 }

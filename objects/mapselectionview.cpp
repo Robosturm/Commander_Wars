@@ -26,7 +26,6 @@ MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -158,7 +157,6 @@ MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
                                        m_MapInfo->getY() + m_MapInfo->getHeight() + 20);
     oxygine::TextStyle styleMain16 = oxygine::TextStyle(FontManager::getMainFont16());
     styleMain16.color = FontManager::getFontColor();
-    styleMain16.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     styleMain16.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     styleMain16.multiline = false;
 
@@ -358,8 +356,6 @@ void MapSelectionView::loadMapVictoryInfo()
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     m_pVictoryInfo->removeChildren();
