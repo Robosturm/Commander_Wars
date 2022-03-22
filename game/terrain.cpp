@@ -911,7 +911,10 @@ void Terrain::addBuildingSprite(spBuilding pBuilding)
     {
         m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
         m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
-        m_pMap->getRowActor(Terrain::m_y)->addChild(m_Building);
+        if (Terrain::m_y >= 0)
+        {
+            m_pMap->getRowActor(Terrain::m_y)->addChild(m_Building);
+        }
     }
     else
     {
