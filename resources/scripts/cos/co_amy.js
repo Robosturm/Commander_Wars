@@ -173,11 +173,7 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (isAttacker === true)
-            {
-                return 99999;
-            }
+        case GameEnums.PowerMode_Superpower:            
             return CO_AMY.superPowerDeffensiveBonus;
         case GameEnums.PowerMode_Power:
             return 10;
@@ -190,6 +186,21 @@ var Constructor = function()
         }
         return 0;
     };
+    this.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
+                                       defender, defPosX, defPosY, isDefender, luckMode, map)
+    {
+        switch (co.getPowerMode())
+        {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            if (isDefender === true)
+            {
+                return damage;
+            }
+        }
+        return 0;
+    }
+
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
         if (unit.getMovementType() === "MOVE_HOVERCRAFT")
