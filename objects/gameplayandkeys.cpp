@@ -133,6 +133,40 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Day 2 Day: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    items = {tr("off"), tr("on")};
+    spDropDownmenu pDay2DayMode = spDropDownmenu::create(450, items);
+    pDay2DayMode->setTooltipText(tr("Selects if the day to day screen gets skipped or not. Note on fog of war maps the screen is still shown."));
+    pDay2DayMode->setCurrentItem(static_cast<qint32>(Settings::getDay2dayScreen()));
+    pDay2DayMode->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pDay2DayMode);
+    connect(pDay2DayMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setDay2dayScreen(value);
+    });
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Movement: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    items = {tr("off"), tr("on")};
+    spDropDownmenu pMovementAnimationMode = spDropDownmenu::create(450, items);
+    pMovementAnimationMode->setTooltipText(tr("Selects if movement animations get shown or not."));
+    pMovementAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getMovementAnimations()));
+    pMovementAnimationMode->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pMovementAnimationMode);
+    connect(pMovementAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setMovementAnimations(value);
+    });
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Animation Speed: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
