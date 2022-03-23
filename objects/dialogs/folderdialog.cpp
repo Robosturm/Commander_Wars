@@ -1,10 +1,13 @@
 #include "objects/dialogs/folderdialog.h"
+#include "objects/dialogs/dialogmessagebox.h"
+
+#include "objects/base/label.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
-#include "objects/dialogs/dialogmessagebox.h"
 
 const char* const ROOT = "::::";
 
@@ -132,20 +135,13 @@ void FolderDialog::showFolder(QString folder)
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
         oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
         pBox->setResAnim(pAnim);
-        oxygine::spTextField textField = oxygine::spTextField::create();
-        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
-        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-        style.multiline = false;
-        textField->setStyle(style);
-
-        pBox->addChild(textField);
         pBox->setSize(m_MainPanel->getWidth() - 70, 40);
-        textField->setHeight(40);
-        textField->setWidth(pBox->getWidth() - 18);
+        pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+
+        spLabel textField = spLabel::create(pBox->getWidth() - 18);
         textField->setX(13);
         textField->setY(5);
-        pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+        pBox->addChild(textField);
         m_MainPanel->addItem(pBox);
         // add some event handling :)
         auto* pPtrBox = pBox.get();

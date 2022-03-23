@@ -88,7 +88,7 @@ namespace oxygine
                     QStringList words = line.split(' ');
                     for (auto & word : words)
                     {
-                        if (checkWidth && metrics.boundingRect(*currentLine + word).width() > rd.getWidth() - rd.getX() - borderWidth)
+                        if (checkWidth && metrics.horizontalAdvance(*currentLine + word) > rd.getWidth() - rd.getX() - borderWidth)
                         {
                             if (rd.getStyle().multiline)
                             {
@@ -109,8 +109,7 @@ namespace oxygine
                 }
                 qint32 index = m_lines.size() - 1;
                 QString line = m_lines[index];
-                auto boundingRect = metrics.boundingRect(line);
-                qint32 width = boundingRect.width();
+                qint32 width = metrics.horizontalAdvance(line);
                 m_offsets[index].setX(rd.getXAlignment(width));
                 rd.nodeEnd(width);
             }
@@ -121,7 +120,7 @@ namespace oxygine
             if (m_lines.size() != 0)
             {
                 qint32 index = m_lines.size() - 1;
-                qint32 width = rd.getMetrics().boundingRect(m_lines[index]).width();
+                qint32 width = rd.getMetrics().horizontalAdvance(m_lines[index]);
                 qint32 posX = rd.getXAlignment(width);
                 m_offsets[index].setX(posX);
                 rd.nextLine(posX, width);

@@ -58,7 +58,6 @@ namespace oxygine
         Input::instance.cleanup();
         Stage::instance = nullptr;
         Resources::unregisterResourceType("atlas");
-        Resources::unregisterResourceType("font");;
         m_window = nullptr;
     }
 
