@@ -1,6 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Aligner.h"
-
-#include <QFontMetrics>
+#include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 
 namespace oxygine
 {
@@ -13,169 +12,89 @@ namespace oxygine
               m_height(size.y),
               m_x(0),
               m_y(0),
-              m_lineWidth(0)
+              m_metrics(style.font)
         {
-            // m_line.reserve(50);
-            // m_lineSkip = (m_font->getBaselineDistance() * m_style.baselineScale) + m_style.linesOffset;
-            QFontMetrics metrics(style.font);
-            m_lineSkip = metrics.height();
+            m_lineSkip = m_metrics.height() + style.borderWidth * 2;
+            m_lineNodes.reserve(50);
         }
 
-        qint32 Aligner::_alignX(qint32 rx)
+        void Aligner::align(text::Node & node)
         {
-            qint32 tx = 0;
-            switch (getStyle().hAlign)
-            {
-                case TextStyle::HALIGN_LEFT:
-                case TextStyle::HALIGN_DEFAULT:
-                    tx = 0;
-                    break;
-                case TextStyle::HALIGN_MIDDLE:
-                    tx = m_width / 2 - rx / 2;
-                    break;
-                case TextStyle::HALIGN_RIGHT:
-                    tx = m_width - rx;
-                    break;
-            }
-            return tx;
+            begin();
+            node.resize(*this);
+            end();
         }
 
         void Aligner::begin()
         {
             m_x = 0;
-            m_y = 0;
-            m_bounds = Rect(_alignX(0), 0, 0, 0);
-            nextLine();
+            m_y = m_metrics.ascent();
+            m_bounds = Rect(getXAlignment(0), 0, 0, 0);
+        }
+
+        void Aligner::nextLine(qint32 lastLineX, qint32 lastLineWidth)
+        {
+            m_y += m_lineSkip;
+            updateX();
+            m_bounds.setX(std::min(lastLineX, m_bounds.getX()));
+            m_bounds.setWidth(std::max(lastLineWidth, m_bounds.getWidth()));
+            m_x = 0;
+        }
+
+        void Aligner::addLineNode(Node* node)
+        {
+            m_lineNodes.push_back(node);
+        }
+
+        void Aligner::updateX()
+        {
+            if (m_lineNodes.size() > 1)
+            {
+                qint32 totalWidth = 0;
+                std::vector<qint32> widths;
+                widths.reserve(m_lineNodes.size());
+                for (auto & node : m_lineNodes)
+                {
+                    qint32 width = node->getWidth(*this);
+                    widths.push_back(width);
+                    totalWidth += width;
+                }
+                qint32 startX = getXAlignment(totalWidth);
+                for (qint32 i = 0; i < m_lineNodes.size(); ++i)
+                {
+                    m_lineNodes[i]->setX(startX);
+                    startX += widths[i];
+                }
+            }
+            m_lineNodes.clear();
+        }
+
+        void Aligner::nodeEnd(qint32 lastLineWidth)
+        {
+            m_x += lastLineWidth;
+            m_bounds.setWidth(std::max(lastLineWidth, m_bounds.getWidth()));
         }
 
         void Aligner::end()
         {
             qint32 ry = m_y;
-
-            if (getStyle().multiline)
+            if (m_style.multiline)
             {
-                nextLine();
-                m_y -=  getLineSkip();
+                m_y += m_lineSkip;
             }
-            else
-            {
-                // _alignLine(m_line);
-            }
-
-            // m_bounds.setY(_alignY(ry));
+            updateX();
             m_bounds.setHeight(ry);
         }
 
-        qint32 Aligner::getLineWidth() const
+        qint32 Aligner::getX() const
         {
-            return m_lineWidth;
+            return m_x;
         }
 
-        qint32 Aligner::getLineSkip() const
+        void Aligner::setX(qint32 newX)
         {
-            return m_lineSkip;
+            m_x = newX;
         }
 
-        // void Aligner::_alignLine(line& ln)
-        // {
-        //     if (!ln.empty())
-        //     {
-        //         //calculate real text width
-        //         qint32 rx = 0;
-        //         for (auto & s : ln)
-        //         {
-        //             rx = std::max(s->x + s->gl.advance_x, rx);
-        //         }
-
-        //         qint32 tx = _alignX(rx);
-
-        //         for (auto & s : ln)
-        //         {
-        //             s->x += tx;
-        //         }
-
-        //         m_lineWidth = rx;
-
-        //         m_bounds.setX(std::min(tx, m_bounds.getX()));
-        //         m_bounds.setWidth(std::max(m_lineWidth, m_bounds.getWidth()));
-        //     }
-        // }
-
-        // void Aligner::_nextLine(line& ln)
-        // {
-        //     m_y += getLineSkip();
-        //     _alignLine(ln);
-
-
-        //     m_lineWidth = 0;
-
-        //     m_x = 0;
-        // }
-
-        void Aligner::nextLine()
-        {
-            // _nextLine(m_line);
-            // m_line.clear();
-        }
-
-       // qint32 Aligner::putSymbol(Symbol& s)
-       // {
-       //     if (m_line.empty() && s.code == ' ')
-       //     {
-       //         return 0;
-       //     }
-       //     m_line.push_back(&s);
-
-       //     //optional remove?
-       //     if (m_line.size() == 1 && s.gl.offset_x < 0)
-       //     {
-       //         m_x -= s.gl.offset_x;
-       //     }
-
-       //     s.x = m_x + s.gl.offset_x;
-       //     s.y = m_y + s.gl.offset_y;
-       //     m_x += s.gl.advance_x + getStyle().kerning;
-
-       //     qint32 rx = s.x + s.gl.advance_x;
-       //     m_lineWidth = std::max(rx, m_lineWidth);
-
-       //     if (m_lineWidth > m_width && getStyle().multiline && (m_width > 0) && m_line.size() > 1)
-       //     {
-       //         qint32 lastWordPos = m_line.size() - 1;
-       //         for (; lastWordPos > 0; --lastWordPos)
-       //         {
-       //             if (m_line[lastWordPos]->code == ' ' && m_line[lastWordPos - 1]->code != ' ')
-       //             {
-       //                 break;
-       //             }
-       //         }
-
-       //         if (!lastWordPos)
-       //         {
-       //             if (m_style.breakLongWords)
-       //             {
-       //                 lastWordPos = m_line.size() - 1;
-       //             }
-       //             else
-       //             {
-       //                 return 0;
-       //             }
-       //         }
-
-       //         qint32 delta = m_line.size() - lastWordPos;
-       //         line leftPart;
-       //         leftPart.resize(delta + 1);
-       //         leftPart = line(m_line.begin() + lastWordPos, m_line.end());
-       //         m_line.resize(lastWordPos);
-       //         nextLine();
-       //         for (auto & left : leftPart)
-       //         {
-       //             putSymbol(*left);
-       //         }
-
-       //         return 0;
-       //     }
-       //     return 0;
-       // }
     }
 }

@@ -3,8 +3,7 @@
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
 #include <functional>
 #include <vector>
-
-class QPainter;
+#include <QPainter>
 
 namespace oxygine
 {
@@ -140,9 +139,6 @@ namespace oxygine
             vt.v = v + dv;
             quad[3] = vt;
         }
-        QPainter *getPainter() const;
-        void setPainter(QPainter *newPPainter);
-
     protected:
         virtual void shaderProgramChanged() {}
         void setShader(ShaderProgram* prog);
@@ -162,7 +158,6 @@ namespace oxygine
         spTexture m_prevRT;
     private:
         static bool m_restored;
-        QPainter* m_pPainter{nullptr};
     };
 
     class RenderStateCache
@@ -183,6 +178,9 @@ namespace oxygine
 
         void reset();
         void resetTextures();
+        void restoreAfterPainterUse();
+    protected:
+        void setBlendModeInternal();
 
     protected:
         static constexpr quint32 MAX_TEXTURES = 8;

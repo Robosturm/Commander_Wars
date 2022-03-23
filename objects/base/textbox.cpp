@@ -101,11 +101,6 @@ void Textbox::update(const oxygine::UpdateState& us)
     {
         m_Textfield->setHtmlText(drawText);
     }
-    qint32 width = m_Textfield->getTextRect().getWidth();
-    if (width != m_Textfield->getWidth())
-    {
-        m_Textfield->setWidth(m_Textfield->getTextRect().getWidth());
-    }
     oxygine::Actor::update(us);
 }
 

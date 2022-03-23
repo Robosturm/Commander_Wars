@@ -12,6 +12,8 @@
 
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 
+#include <QPainter>
+
 namespace oxygine
 {
     spRenderDelegate RenderDelegate::instance;
@@ -104,31 +106,30 @@ namespace oxygine
         }
 
         STDRenderer* renderer = STDRenderer::getCurrent();
-        QPainter & painter = *renderer->getPainter();
-         VideoDriver* driver = renderer->getDriver();
-         Rect scissorRect(0, 0, 0, 0);
-         bool scissorEnabled = driver->getScissorRect(scissorRect);
-         driver->setScissorRect(nullptr);
+        VideoDriver* driver = renderer->getDriver();
+        Rect scissorRect(0, 0, 0, 0);
+        bool scissorEnabled = driver->getScissorRect(scissorRect);
+        driver->setScissorRect(nullptr);
 
-         spMaterial cur = Material::current;
-         Material::null->apply();
-
-        if (painter.isActive())
+        //---------------------------------------------------------
+        // qt painter usage
+        GameWindow* window = oxygine::GameWindow::getWindow();
+        QPainter painter(window);
+        if (scissorEnabled)
         {
-            // if (scissorEnabled)
-            // {
-            //     // painter.setClipRect(scissorRect.getX(), scissorRect.getY(), scissorRect.getWidth(), scissorRect.getHeight());
-            // }
-            GLfloat glColor[4];
-            GameWindow* window = oxygine::GameWindow::getWindow();
-            GLint value;
-            window->glGetIntegerv(GL_ACTIVE_TEXTURE, &value);
-            root->draw(rs, tf->getStyle(), tf->getStyle().color, painter);
-
-            painter.endNativePainting();
-            painter.beginNativePainting();
-            Material::current->apply();
+            QSize size = window->size();
+            QRect clipRect(scissorRect.getX(), size.height() - scissorRect.getY() - scissorRect.getHeight(), scissorRect.getWidth(), scissorRect.getHeight());
+            painter.setClipRect(clipRect);
         }
+        else
+        {
+            painter.setClipRect(QRect(), Qt::NoClip);
+        }
+        root->draw(rs, tf->getStyle(), tf->getStyle().color, painter);
+        //---------------------------------------------------------
+
+        rsCache().restoreAfterPainterUse();
+        driver->setScissorRect(scissorEnabled ? &scissorRect : nullptr);
     }
 
     void RenderDelegate::doRender(ColorRectSprite* sprite, const RenderState& rs)

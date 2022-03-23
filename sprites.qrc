@@ -17,15 +17,6 @@
         <file>resources/cursor/cursor+radius_3.png</file>
         <file>resources/cursor/cursor+unable.png</file>
         <file>resources/cursor/res.xml</file>
-        <file>resources/fonts/fonts.xml</file>
-        <file>resources/fonts/main16.xml</file>
-        <file>resources/fonts/main16_0.png</file>
-        <file>resources/fonts/main24.xml</file>
-        <file>resources/fonts/main24_0.png</file>
-        <file>resources/fonts/main48.xml</file>
-        <file>resources/fonts/main48_0.png</file>
-        <file>resources/fonts/main72.xml</file>
-        <file>resources/fonts/main72_0.png</file>
         <file>resources/objects/arrow+down.png</file>
         <file>resources/objects/arrow+right.png</file>
         <file>resources/objects/barforeground.png</file>
@@ -2084,8 +2075,6 @@
         <file>resources/images/game/minimap/minimap_weld.png</file>
         <file>resources/ui/example.xml</file>
         <file>resources/images/terrain/wall.png</file>
-        <file>resources/fonts/main32.xml</file>
-        <file>resources/fonts/main32_0.png</file>
         <file>resources/images/terrain/beach+NE.png</file>
         <file>resources/images/terrain/beach+NW.png</file>
         <file>resources/images/terrain/beach+SE.png</file>
@@ -4113,8 +4102,6 @@
         <file>resources/images/units/icons/rank+hidden.png</file>
         <file>resources/images/co/bd/co_cairn+mini.png</file>
         <file>resources/ui/mainmenu.xml</file>
-        <file>resources/fonts/logoFont.png</file>
-        <file>resources/fonts/logoFont.xml</file>
         <file>resources/objects/logo.png</file>
         <file>resources/images/units/motorbike++mask.png</file>
         <file>resources/images/units/motorbike++walk+mask.png</file>
@@ -4724,5 +4711,8 @@
         <file>resources/images/units/sniper+gs+walk+mask.png</file>
         <file>resources/images/units/sniper+pf+walk+mask.png</file>
         <file>resources/images/units/sniper+ti+walk+mask.png</file>
+        <file>resources/fonts/BebasNeue.ttf</file>
+        <file>resources/fonts/res.xml</file>
+        <file>resources/fonts/verminVibes.ttf</file>
     </qresource>
 </RCC>

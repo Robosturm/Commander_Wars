@@ -5,12 +5,15 @@
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.h"
 
+#include "resource_management/fontmanager.h"
+
 #include <QMutexLocker>
 
 namespace oxygine
 {
     TextField::TextField():
         m_root(nullptr),
+        m_style(FontManager::getMainFont24()),
         m_textRect(0, 0, 0, 0)
     {
         setText("");
@@ -140,9 +143,7 @@ namespace oxygine
             m_root = text::spTextNode::create(m_text);
         }
         text::Aligner rd(m_style, getSize());
-        rd.begin();
-        m_root->resize(rd);
-        rd.end();
+        rd.align(*m_root.get());
         m_textRect = rd.getBounds().cast<Rect>();
     }
 

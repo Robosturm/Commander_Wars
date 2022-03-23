@@ -4,10 +4,13 @@
 #include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 
+#include <QFontMetrics>
+
 namespace oxygine
 {
     namespace text
     {
+        class Node;
         class Aligner
         {
         public:
@@ -17,22 +20,66 @@ namespace oxygine
             {
                 return m_style;
             }
-            float getScale() const;
-            void begin();
-            void end();
-            void nextLine();
-            const Rect &getBounds() const
+            void align(text::Node & node);
+            void nextLine(qint32 lastLineX, qint32 lastLineWidth);
+            void nodeEnd(qint32 lastLineWidth);
+            /**
+             * @brief getXAlignment calculates the x-alignement for the given line width
+             * @param lineWidth
+             * @return
+             */
+            inline qint32 getXAlignment(qint32 lineWidth)
+            {
+                qint32 tx = 0;
+                switch (m_style.hAlign)
+                {
+                    case TextStyle::HALIGN_LEFT:
+                    case TextStyle::HALIGN_DEFAULT:
+                        tx = 0;
+                        break;
+                    case TextStyle::HALIGN_MIDDLE:
+                        tx = m_width / 2 - lineWidth / 2;
+                        break;
+                    case TextStyle::HALIGN_RIGHT:
+                        tx = m_width - lineWidth;
+                        break;
+                }
+                return tx;
+            }
+            /**
+             * @brief getY current Y advance position
+             * @return
+             */
+            inline qint32 getY() const
+            {
+                return m_y;
+            }
+
+            inline const Rect &getBounds() const
             {
                 return m_bounds;
             }
+            /**
+             * @brief getWidth the available width of the text rect
+             * @return
+             */
+            inline qint32 getWidth() const
+            {
+                return m_width;
+            }
 
+            inline const QFontMetrics &getMetrics() const
+            {
+                return m_metrics;
+            }
+
+            qint32 getX() const;
+            void setX(qint32 newX);
+            void addLineNode(Node* node);
         private:
-            qint32 getLineWidth() const;
-            qint32 getLineSkip() const;
-            // void _alignLine(line& ln);
-            // void _nextLine(line& ln);
-            qint32 _alignX(qint32 rx);
-
+            void begin();
+            void end();
+            void updateX();
         private:
             TextStyle m_style;
             Rect m_bounds;
@@ -40,9 +87,9 @@ namespace oxygine
             qint32 m_height;
             qint32 m_x;
             qint32 m_y;
-            // line m_line;
-            qint32 m_lineWidth;
             qint32 m_lineSkip;
+            QFontMetrics m_metrics;
+            std::vector<Node*> m_lineNodes;
         };
     }
 }

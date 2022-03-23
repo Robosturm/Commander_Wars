@@ -67,6 +67,7 @@ FontManager::FontManager()
                     }
                     node = node.nextSibling();
                 }
+                m_fonts[MAINFONT] = "Helvetica";
             }
             else
             {

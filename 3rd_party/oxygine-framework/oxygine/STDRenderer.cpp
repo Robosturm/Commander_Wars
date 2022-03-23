@@ -7,11 +7,11 @@
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
-#include "qfile.h"
-#include "qtextstream.h"
+#include <QFile>
+#include <QTextStream>
 
 class STDRenderer;
-typedef oxygine::intrusive_ptr<STDRenderer> spSTDRenderer;
+using spSTDRenderer = oxygine::intrusive_ptr<STDRenderer>;
 
 namespace oxygine
 {
@@ -83,18 +83,23 @@ namespace oxygine
         {
             return;
         }
-        if (blend == 0)
+        m_blend = blend;
+        setBlendModeInternal();
+    }
+
+    void RenderStateCache::setBlendModeInternal()
+    {
+        if (m_blend == 0)
         {
             m_driver->setState(VideoDriver::STATE_BLEND, 0);
         }
         else
         {
-            VideoDriver::BLEND_TYPE src = static_cast<VideoDriver::BLEND_TYPE>(blend >> 16);
-            VideoDriver::BLEND_TYPE dest = static_cast<VideoDriver::BLEND_TYPE>(blend & 0xFFFF);
+            VideoDriver::BLEND_TYPE src = static_cast<VideoDriver::BLEND_TYPE>(m_blend >> 16);
+            VideoDriver::BLEND_TYPE dest = static_cast<VideoDriver::BLEND_TYPE>(m_blend & 0xFFFF);
             m_driver->setBlendFunc(src, dest);
             m_driver->setState(VideoDriver::STATE_BLEND, 1);
         }
-        m_blend = blend;
     }
 
     bool RenderStateCache::setShader(ShaderProgram* prog)
@@ -106,6 +111,12 @@ namespace oxygine
         m_program = prog;
         m_driver->setShaderProgram(prog);
         return true;
+    }
+
+    void RenderStateCache::restoreAfterPainterUse()
+    {
+        m_driver->setShaderProgram(m_program);
+        setBlendModeInternal();
     }
 
     void STDRenderer::initialize()
@@ -258,7 +269,6 @@ namespace oxygine
         return m_driver;
     }
 
-
     void STDRenderer::setViewProj(const QMatrix4x4& viewProj)
     {
         flush();
@@ -317,16 +327,6 @@ namespace oxygine
         }
     }
 
-    QPainter *STDRenderer::getPainter() const
-    {
-        return m_pPainter;
-    }
-
-    void STDRenderer::setPainter(QPainter *newPPainter)
-    {
-        m_pPainter = newPPainter;
-    }
-
     STDRenderer::STDRenderer(VideoDriver* driver)
     {
         if (!driver)
@@ -366,7 +366,6 @@ namespace oxygine
         addVertices(quad);
     }
 
-
     void STDRenderer::setShaderFlags(quint32 flags)
     {
         ShaderProgram* sp = m_uberShader->getShaderProgram(m_baseShaderFlags | flags);
@@ -385,7 +384,6 @@ namespace oxygine
                       &STDRenderer::indices16.front(), count);
         m_verticesData.clear();
     }
-
 
     void STDRenderer::setUberShaderProgram(UberShaderProgram* pr)
     {

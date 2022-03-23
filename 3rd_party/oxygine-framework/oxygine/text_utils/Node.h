@@ -50,11 +50,15 @@ namespace oxygine
             void resizeChildren(Aligner& rd);
             virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter);
             virtual void xresize(Aligner&) {}
+            virtual qint32 getWidth(Aligner& aligner)
+            {
+                return 0;
+            }
+            virtual void setX(qint32 x)
+            {
+            }
 
-            QPoint getRelativPos() const;
-            void setRelativPos(QPoint newRelativPos);
-        protected:
-            QPoint m_relativPos;
+
         private:
             spNode m_firstChild;
             spNode m_lastChild;
@@ -68,9 +72,14 @@ namespace oxygine
             virtual ~TextNode() = default;
             virtual void xresize(Aligner& rd) override;
             virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
+            virtual qint32 getWidth(Aligner& rd) override;
+            virtual void setX(qint32 x) override;
         private:
-            std::vector<QString> m_splitData;
-            std::vector<qint32> m_yPos;
+            QString * addNewLine(Aligner& rd);
+        private:
+            QString m_text;
+            std::vector<QString> m_lines;
+            std::vector<QPoint> m_offsets;
         };
 
         class DivNode: public Node
@@ -92,7 +101,7 @@ namespace oxygine
             virtual ~BrNode() = default;
             virtual void xresize(Aligner& rd) override
             {
-                rd.nextLine();
+                rd.nextLine(0, 0);
             }
         };
     }

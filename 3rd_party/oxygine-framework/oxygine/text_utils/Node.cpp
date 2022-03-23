@@ -23,6 +23,7 @@ namespace oxygine
 
         void Node::resize(Aligner& rd)
         {
+            rd.addLineNode(this);
             xresize(rd);
             resizeChildren(rd);
         }
@@ -52,93 +53,102 @@ namespace oxygine
             drawChildren(rs, style, drawColor, painter);
         }
 
-        QPoint Node::getRelativPos() const
-        {
-            return m_relativPos;
-        }
-
-        void Node::setRelativPos(QPoint newRelativPos)
-        {
-            m_relativPos = newRelativPos;
-        }
-
         TextNode::TextNode(const QString & v)
+            : m_text(v)
         {
-            m_splitData.push_back(v);
-            m_yPos.push_back(0);
         }
 
         void TextNode::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
         {
             QPainterPath path;
-            for (qint32 i = 0; i < m_splitData.size(); ++i)
+            for (qint32 i = 0; i < m_lines.size(); ++i)
             {
-                path.addText(rs.transform.x + m_relativPos.x() + style.borderWidth, rs.transform.y + m_relativPos.y() + style.borderWidth + m_yPos[0], style.font, m_splitData[i]);
+                path.addText(rs.transform.x + m_offsets[i].x() + style.borderWidth, rs.transform.y + m_offsets[i].y() + style.borderWidth, style.font, m_lines[i]);
             }            
-            painter.strokePath(path, QPen(Qt::black, style.borderWidth));
+            painter.strokePath(path, QPen(Qt::black, style.borderWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
             painter.fillPath(path, QBrush(drawColor));
             drawChildren(rs, style, drawColor, painter);
         }
 
-        // todo move to
-        // QFontMetrics metrics(style.font);
-        // QRect drawnRect;
-        // drawnRect = metrics.boundingRect(m_data);
-        // qint32 ascent = metrics.ascent();
-
         void TextNode::xresize(Aligner& rd)
         {
-            // if (!m_data.empty())
-            // {
-            //     qint32 i = 0;
-            //     const Font* font = rd.getFont();
-            //     while (i != m_data.size())
-            //     {
-            //         Symbol& s = m_data[i];
-            //         if (s.code == '\n')
-            //         {
-            //             rd.nextLine();
-            //         }
-            //         else
-            //         {
-            //             const glyph* gl = font->getGlyph(s.code);
-            //             if (gl)
-            //             {
-            //                 s.gl = *gl;
-            //                 i += rd.putSymbol(s);
-            //             }
-            //             else
-            //             {
-            //                 gl = font->getGlyph(m_defMissingGlyph);
-            //                 if (gl)//even 'missing' symbol  could be missing
-            //                 {
-            //                     s.gl = *gl;
-            //                     i += rd.putSymbol(s);
-            //                 }
-            //             }
+            if (!m_text.isEmpty())
+            {
+                QStringList lines = m_text.split("\n");
+                m_lines.clear();
+                m_offsets.clear();
+                m_lines.reserve(50);
+                m_offsets.reserve(50);
+                qint32 borderWidth = rd.getStyle().borderWidth * 2;
+                auto & metrics = rd.getMetrics();
+                bool checkWidth = (rd.getWidth() > 0);
+                for (auto & line : lines)
+                {
+                    auto * currentLine = addNewLine(rd);
+                    QStringList words = line.split(' ');
+                    for (auto & word : words)
+                    {
+                        if (checkWidth && metrics.boundingRect(*currentLine + word).width() > rd.getWidth() - rd.getX() - borderWidth)
+                        {
+                            if (rd.getStyle().multiline)
+                            {
+                                currentLine = addNewLine(rd);
+                                *currentLine = metrics.elidedText(word + ' ', Qt::TextElideMode::ElideRight, rd.getWidth() - rd.getX() - borderWidth);
+                            }
+                            else
+                            {
+                                *currentLine = metrics.elidedText(*currentLine + word + ' ', Qt::TextElideMode::ElideRight, rd.getWidth() - rd.getX() - borderWidth);
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            *currentLine += word + ' ';
+                        }
+                    }
+                }
+                qint32 index = m_lines.size() - 1;
+                QString line = m_lines[index];
+                auto boundingRect = metrics.boundingRect(line);
+                qint32 width = boundingRect.width();
+                m_offsets[index].setX(rd.getXAlignment(width));
+                rd.nodeEnd(width);
+            }
+        }
 
-            //             if (gl != nullptr)
-            //             {
-            //                 if (rd.getMat()->m_base.get() == gl->texture.get())
-            //                 {
-            //                     s.mat = rd.getMat();
-            //                 }
-            //                 else
-            //                 {
-            //                     spMaterial mat = dynamic_pointer_cast<Material>(rd.getMat()->clone());
-            //                     mat->m_base = gl->texture;
-            //                     s.mat = MaterialCache::mc().cache(*mat.get());
-            //                     rd.setMat(s.mat);
-            //                 }
-            //             }
-            //         }
-            //         ++i;
-            //         if (i < 0)
-            //         {
-            //             i = 0;
-            //         }
-            //     }
-            // }
+        QString * TextNode::addNewLine(Aligner& rd)
+        {
+            if (m_lines.size() != 0)
+            {
+                qint32 index = m_lines.size() - 1;
+                qint32 width = rd.getMetrics().boundingRect(m_lines[index]).width();
+                qint32 posX = rd.getXAlignment(width);
+                m_offsets[index].setX(posX);
+                rd.nextLine(posX, width);
+            }
+            m_lines.push_back(QString());
+            m_offsets.push_back(QPoint(rd.getX(), rd.getY()));
+            return &(m_lines[m_lines.size() - 1]);
+        }
+
+        qint32 TextNode::getWidth(Aligner& rd)
+        {
+            qint32 width = 0;
+            if (m_lines.size() > 0)
+            {
+                qint32 index = m_lines.size() - 1;
+                width = rd.getMetrics().boundingRect(m_lines[index]).width();
+            }
+            return width;
+        }
+
+        void TextNode::setX(qint32 x)
+        {
+            if (m_lines.size() > 0)
+            {
+                qint32 index = m_lines.size() - 1;
+                m_offsets[index].setX(x);
+            }
         }
 
         void DivNode::resize(Aligner& rd)

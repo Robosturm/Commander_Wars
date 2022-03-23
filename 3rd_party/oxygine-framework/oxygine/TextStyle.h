@@ -17,7 +17,7 @@ namespace oxygine
             HALIGN_RIGHT
         };
 
-        explicit TextStyle(QFont rs = QFont())
+        explicit TextStyle(QFont rs)
             : font(rs)
         {
         }
@@ -25,6 +25,6 @@ namespace oxygine
         HorizontalAlign hAlign{HALIGN_DEFAULT};
         bool multiline{false};
         QColor color{Qt::white};
-        qint32 borderWidth{2};
+        qint32 borderWidth{4};
     };
 }

@@ -77,6 +77,7 @@ Mainapp::Mainapp()
 void Mainapp::createLineEdit()
 {
     m_pLineEdit = new QLineEdit();
+    m_pLineEdit->setVisible(false);
 }
 
 void Mainapp::shutdown()
