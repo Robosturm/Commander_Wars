@@ -48,7 +48,7 @@ namespace oxygine
 
         void Aligner::updateX()
         {
-            if (m_lineNodes.size() > 1)
+            if (m_lineNodes.size() > 0)
             {
                 qint32 totalWidth = 0;
                 std::vector<qint32> widths;

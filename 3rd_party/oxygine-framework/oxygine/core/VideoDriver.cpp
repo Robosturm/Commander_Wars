@@ -221,8 +221,6 @@ namespace oxygine
 
     void VideoDriver::begin(const Rect& viewport, const QColor* clearColor)
     {
-
-
         _begin(viewport, clearColor);
     }
 

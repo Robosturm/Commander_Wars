@@ -111,28 +111,29 @@ namespace oxygine
         bool scissorEnabled = driver->getScissorRect(scissorRect);
         driver->setScissorRect(nullptr);
 
+        spMaterial cur = Material::current;
+        Material::null->apply();
+
         //---------------------------------------------------------
         // qt painter usage
         GameWindow* window = oxygine::GameWindow::getWindow();
         QPainter painter(window);
-        painter.beginNativePainting();
         if (scissorEnabled)
         {
             QSize size = window->size();
             QRect clipRect(scissorRect.getX(), size.height() - scissorRect.getY() - scissorRect.getHeight(), scissorRect.getWidth(), scissorRect.getHeight());
             painter.setClipRect(clipRect);
         }
-        else
-        {
-            painter.setClipRect(QRect(), Qt::NoClip);
-        }
         root->draw(rs, tf->getStyle(), tf->getStyle().color, painter);
-        painter.endNativePainting();
         painter.end();
         //---------------------------------------------------------
 
-        rsCache().restoreAfterPainterUse();
-        driver->setScissorRect(scissorEnabled ? &scissorRect : nullptr);
+        rsCache().restoreAfterPainterUse();        
+        cur->apply();
+        if (scissorEnabled)
+        {
+            driver->setScissorRect(&scissorRect);
+        }
     }
 
     void RenderDelegate::doRender(ColorRectSprite* sprite, const RenderState& rs)

@@ -128,6 +128,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
     Console::print("Loading startup phase: " + QString::number(step), Console::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->moveToThread(&m_Workerthread);
+    m_startUpStep = step;
     switch (step)
     {
         case StartupPhase::General:
@@ -508,31 +509,37 @@ qint32 Mainapp::getScreenMode()
 
 void Mainapp::keyPressEvent(QKeyEvent *event)
 {
-    Qt::Key cur = static_cast<Qt::Key>(event->key());
-    if (cur == Settings::getKeyConsole())
+    if (m_startUpStep >= StartupPhase::Finalizing)
     {
-        emit Console::getInstance()->sigToggleView();
-    }
-    else if (cur == Settings::getKey_screenshot())
-    {
-        doScreenshot();
-    }
-    else if (cur == Settings::getKey_mapshot())
-    {
-        doMapshot();
-    }
-    else
-    {
-        CONSOLE_PRINT("keyPressEvent", Console::eDEBUG);
-        emit sigKeyDown(oxygine::KeyEvent(event));
+        Qt::Key cur = static_cast<Qt::Key>(event->key());
+        if (cur == Settings::getKeyConsole())
+        {
+            emit Console::getInstance()->sigToggleView();
+        }
+        else if (cur == Settings::getKey_screenshot())
+        {
+            doScreenshot();
+        }
+        else if (cur == Settings::getKey_mapshot())
+        {
+            doMapshot();
+        }
+        else
+        {
+            CONSOLE_PRINT("keyPressEvent", Console::eDEBUG);
+            emit sigKeyDown(oxygine::KeyEvent(event));
+        }
     }
 }
 
 void Mainapp::keyReleaseEvent(QKeyEvent *event)
 {
-    if (!event->isAutoRepeat())
+    if (m_startUpStep >= StartupPhase::Finalizing)
     {
-        emit sigKeyUp(oxygine::KeyEvent(event));
+        if (!event->isAutoRepeat())
+        {
+            emit sigKeyUp(oxygine::KeyEvent(event));
+        }
     }
 }
 

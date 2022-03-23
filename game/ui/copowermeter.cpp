@@ -150,11 +150,11 @@ void CoPowermeter::drawPowerMeter()
                     pText->setX(0);
                 }
                 oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
-                oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
+                oxygine::TextField::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(200), 1, false);
-                oxygine::Sprite::TweenColor tweenColor2(QColor(255, 0, 0, 255));
+                oxygine::TextField::TweenColor tweenColor2(QColor(255, 0, 0, 255));
                 oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(200), 1, false);
-                oxygine::Sprite::TweenColor tweenColor3(QColor(0, 255, 0, 255));
+                oxygine::TextField::TweenColor tweenColor3(QColor(0, 255, 0, 255));
                 oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(200), 1, false);
                 queue->add(tween1);
                 queue->add(tween2);
@@ -181,11 +181,11 @@ void CoPowermeter::drawPowerMeter()
                     pText->setX(0);
                 }
                 oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
-                oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
+                oxygine::TextField::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(200), 1, false);
-                oxygine::Sprite::TweenColor tweenColor2(QColor(255, 0, 0, 255));
+                oxygine::TextField::TweenColor tweenColor2(QColor(255, 0, 0, 255));
                 oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(200), 1, false);
-                oxygine::Sprite::TweenColor tweenColor3(QColor(0, 255, 0, 255));
+                oxygine::TextField::TweenColor tweenColor3(QColor(0, 255, 0, 255));
                 oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(200), 1, false);
                 queue->add(tween1);
                 queue->add(tween2);
@@ -212,11 +212,11 @@ void CoPowermeter::drawPowerMeter()
                     pText->setX(0);
                 }
                 oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
-                oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
+                oxygine::TextField::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(100), 1, false);
-                oxygine::Sprite::TweenColor tweenColor2(QColor(255, 0, 0, 255));
+                oxygine::TextField::TweenColor tweenColor2(QColor(255, 0, 0, 255));
                 oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(100), 1, false);
-                oxygine::Sprite::TweenColor tweenColor3(QColor(0, 255, 0, 255));
+                oxygine::TextField::TweenColor tweenColor3(QColor(0, 255, 0, 255));
                 oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(100), 1, false);
                 queue->add(tween1);
                 queue->add(tween2);

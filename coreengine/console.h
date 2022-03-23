@@ -187,7 +187,7 @@ public slots:
      * @brief getConsoleLog
      * @return
      */
-    QList<QString> getConsoleLog()
+    std::vector<QString> getConsoleLog()
     {
         QMutexLocker locker(&m_datalocker);
         return m_output;
@@ -210,13 +210,13 @@ private:
 
 private:
     static eLogLevels m_LogLevel;
-    static QList<QString> m_lastmsgs;
+    static std::vector<QString> m_lastmsgs;
     static const qint32 m_lastMsgSize{10};
     static qint32 m_curlastmsgpos;
     static spConsole m_pConsole;
     static bool m_show;
     static bool m_toggled;
-    static QList<QString> m_output;
+    static std::vector<QString> m_output;
     static qint32 m_outputSize;
     static QMutex m_datalocker;
     static bool m_developerMode;

@@ -93,11 +93,11 @@ namespace oxygine
                             if (rd.getStyle().multiline)
                             {
                                 currentLine = addNewLine(rd);
-                                *currentLine = metrics.elidedText(word + ' ', Qt::TextElideMode::ElideRight, rd.getWidth() - rd.getX() - borderWidth);
+                                *currentLine = metrics.elidedText(word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX() - borderWidth);
                             }
                             else
                             {
-                                *currentLine = metrics.elidedText(*currentLine + word + ' ', Qt::TextElideMode::ElideRight, rd.getWidth() - rd.getX() - borderWidth);
+                                *currentLine = metrics.elidedText(*currentLine + word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX() - borderWidth);
                                 break;
                             }
                         }
@@ -125,6 +125,7 @@ namespace oxygine
                 qint32 posX = rd.getXAlignment(width);
                 m_offsets[index].setX(posX);
                 rd.nextLine(posX, width);
+                rd.addLineNode(this);
             }
             m_lines.push_back(QString());
             m_offsets.push_back(QPoint(rd.getX(), rd.getY()));

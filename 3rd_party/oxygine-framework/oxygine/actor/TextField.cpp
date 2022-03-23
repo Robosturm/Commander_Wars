@@ -35,7 +35,11 @@ namespace oxygine
     void TextField::setStyleColor(const QColor& color)
     {
         m_style.color = color;
-        rebuildText();
+    }
+
+    const QColor& TextField::getStyleColor() const
+    {
+        return m_style.color;
     }
 
     const QFont & TextField::getFont() const
@@ -105,11 +109,6 @@ namespace oxygine
     bool TextField::getMultiline() const
     {
         return m_style.multiline;
-    }
-
-    const QColor& TextField::getStyleColor() const
-    {
-        return m_style.color;
     }
 
     const Rect& TextField::getTextRect() const

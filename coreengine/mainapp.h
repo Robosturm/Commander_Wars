@@ -298,6 +298,7 @@ private:
     Gamepad m_gamepad{0};
     bool m_noAudio{false};
     CommandLineParser m_parser;
+    StartupPhase m_startUpStep{StartupPhase::Start};
 };
 
 Q_DECLARE_INTERFACE(Mainapp, "Mainapp");

@@ -191,8 +191,7 @@ void FileDialog::showFolder(QString folder)
         textField->setWidth(pBox->getWidth() - 18);
         textField->setX(13);
         textField->setY(5);
-        pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-        m_MainPanel->addItem(pBox);
+        pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));        
         // add some event handling :)
         auto* pPtrBox = pBox.get();
         pBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
@@ -260,6 +259,7 @@ void FileDialog::showFolder(QString folder)
             // not possible i hope
         }
         m_Items.append(pBox);
+        m_MainPanel->addItem(pBox);
         itemCount++;
     }
     m_MainPanel->setContentHeigth(itemCount * 40 + 50);

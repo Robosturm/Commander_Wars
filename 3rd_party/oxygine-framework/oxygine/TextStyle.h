@@ -26,5 +26,6 @@ namespace oxygine
         bool multiline{false};
         QColor color{Qt::white};
         qint32 borderWidth{4};
+        Qt::TextElideMode elideText{Qt::TextElideMode::ElideRight};
     };
 }

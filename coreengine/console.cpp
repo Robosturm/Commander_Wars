@@ -26,10 +26,10 @@ Console::eLogLevels Console::m_LogLevel = static_cast<Console::eLogLevels>(DEBUG
 bool Console::m_show = false;
 bool Console::m_toggled = false;
 bool Console::m_developerMode = false;
-QList<QString> Console::m_output;
+std::vector<QString> Console::m_output;
 spConsole Console::m_pConsole;
 qint32 Console::m_curlastmsgpos = 0;
-QList<QString> Console::m_lastmsgs;
+std::vector<QString> Console::m_lastmsgs;
 qint32 Console::m_outputSize = 100;
 QMutex Console::m_datalocker;
 
@@ -91,6 +91,9 @@ Console::Console()
         event->stopPropagation();
         emit sigFocused();
     });
+
+    m_output.reserve(m_outputSize);
+    m_lastmsgs.reserve(m_lastMsgSize);
 }
 
 spConsole Console::getInstance()
@@ -230,10 +233,10 @@ void Console::print(const QString & message, eLogLevels logLevel)
                 break;
         }
         msg.replace("&", "&amp;");
-        m_output.append(prefix + msg);
-        while (m_output.size() > m_outputSize)
+        m_output.push_back(prefix + msg);
+        if (m_output.size() > m_outputSize)
         {
-            m_output.removeFirst();
+            m_output.erase(m_output.cbegin(), m_output.cbegin() + m_output.size() - m_outputSize);
         }
     }
 }
@@ -264,7 +267,7 @@ void Console::update(const oxygine::UpdateState& us)
         qint32 h = metrics.height();
         // pre calc message start
         qint32 num = screenheight / h - 4;
-        m_outputSize = num + 30;
+        m_outputSize = num + 2;
         qint32 i = 0;
         qint32 start = m_output.size() - num;
         if (start < 0)
@@ -275,10 +278,7 @@ void Console::update(const oxygine::UpdateState& us)
         QString drawText;
         for(i = start; i < m_output.size();i++)
         {
-            if(i >= 0)
-            {
-                drawText += "> " + m_output[i] + "\n";
-            }
+            drawText += "> " + m_output[i] + "\n";
         }
         if (m_focused)
         {
@@ -1506,10 +1506,10 @@ bool Console::onEditFinished()
 {
     QString message = getCurrentText();
     dotask(message);
-    m_lastmsgs.append(message);
+    m_lastmsgs.push_back(message);
     while (m_lastmsgs.size() > m_lastMsgSize)
     {
-        m_lastmsgs.removeFirst();
+        m_lastmsgs.erase(m_lastmsgs.cbegin());
     }
     m_curlastmsgpos = m_lastmsgs.size();
     setCurrentText("");

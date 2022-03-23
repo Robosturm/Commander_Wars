@@ -117,13 +117,6 @@ namespace oxygine
     {
         m_driver->setShaderProgram(m_program);
         setBlendModeInternal();        
-        for (qint32 i = 0; i < MAX_TEXTURES; ++i)
-        {
-            if (m_textures[i].get() != nullptr)
-            {
-                m_driver->setTexture(i, m_textures[i]);
-            }
-        }
     }
 
     void STDRenderer::initialize()

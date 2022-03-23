@@ -29,9 +29,6 @@ namespace oxygine
         TextStyle::HorizontalAlign getHAlign() const;
         bool getMultiline() const;
 
-        const QColor& getStyleColor() const;
-
-
         virtual bool getBounds(RectF&) const override;
         /**Overwrites TextStyle Horizontal align*/
         void setHAlign(TextStyle::HorizontalAlign align);
@@ -39,6 +36,7 @@ namespace oxygine
         void setMultiline(bool multiline);
         /**Overwrites TextStyle color*/
         void setStyleColor(const QColor&);
+        const QColor& getStyleColor() const;
 
         /**Overwrites TextStyle font.*/
         void setFont(QFont & rs);
@@ -58,6 +56,7 @@ namespace oxygine
         virtual void doRender(const RenderState&) override;
         text::Node* getRootNode();
 
+        using TweenColor = Property<QColor, const QColor&, TextField, &TextField::getStyleColor, &TextField::setStyleColor>;
     protected:
         virtual void sizeChanged(const Vector2& size) override;
         void rebuildText();

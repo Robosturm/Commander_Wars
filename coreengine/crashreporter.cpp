@@ -46,11 +46,11 @@ void CrashReporter::_writeLog( const QString &inSignal)
         stream.flush();
         stream << "\nConsole log\n";
         stream.flush();
-        QList<QString> consoleOutput = Console::getInstance()->getConsoleLog();
-        for (qint32 i = 0; i < consoleOutput.size(); i++)
+        std::vector<QString> consoleOutput = Console::getInstance()->getConsoleLog();
+        for (auto & item : consoleOutput)
         {
-            stream << consoleOutput[i] << Qt::endl;
-            ret += consoleOutput[i] + "\n";
+            stream << item << Qt::endl;
+            ret += item + "\n";
             stream.flush();
         }
 
