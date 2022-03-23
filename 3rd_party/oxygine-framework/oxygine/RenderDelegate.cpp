@@ -127,6 +127,7 @@ namespace oxygine
         }
         root->draw(rs, tf->getStyle(), tf->getStyle().color, painter);
         //---------------------------------------------------------
+        painter.end();
 
         rsCache().restoreAfterPainterUse();
         driver->setScissorRect(scissorEnabled ? &scissorRect : nullptr);
