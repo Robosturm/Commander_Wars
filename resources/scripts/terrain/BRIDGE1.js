@@ -12,6 +12,10 @@ var Constructor = function()
     {
         return __BASEBRIDGE.getSprites("bridge+style0")
     };
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
+    {
+        return __BASEBRIDGE.getTerrainAnimationBackgroundRand(unit, terrain, defender, map, 0);
+    };
 };
 Constructor.prototype = __BASEBRIDGE;
 var BRIDGE1 = new Constructor();
