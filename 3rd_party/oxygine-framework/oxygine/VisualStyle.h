@@ -24,7 +24,7 @@ namespace oxygine
 
     protected:
         QColor m_color{Qt::white};
-        VideoDriver::blend_mode m_blend{VideoDriver::blend_premultiplied_alpha};
+        VideoDriver::blend_mode m_blend{VideoDriver::blend_alpha};
     };
 
     class VStyleActor;

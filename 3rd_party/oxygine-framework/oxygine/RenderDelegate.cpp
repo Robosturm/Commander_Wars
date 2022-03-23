@@ -115,6 +115,7 @@ namespace oxygine
         // qt painter usage
         GameWindow* window = oxygine::GameWindow::getWindow();
         QPainter painter(window);
+        painter.beginNativePainting();
         if (scissorEnabled)
         {
             QSize size = window->size();
@@ -126,8 +127,9 @@ namespace oxygine
             painter.setClipRect(QRect(), Qt::NoClip);
         }
         root->draw(rs, tf->getStyle(), tf->getStyle().color, painter);
-        //---------------------------------------------------------
+        painter.endNativePainting();
         painter.end();
+        //---------------------------------------------------------
 
         rsCache().restoreAfterPainterUse();
         driver->setScissorRect(scissorEnabled ? &scissorRect : nullptr);

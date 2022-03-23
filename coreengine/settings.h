@@ -231,8 +231,14 @@ public:
 
     static void setUsername(const QString &Username);
 
-
 public slots:
+
+    static bool getDay2dayScreen();
+    static void setDay2dayScreen(bool newDay2dayScreen);
+
+    static bool getMovementAnimations();
+    static void setMovementAnimations(bool newMovementAnimations);
+
     static bool getCaptureAnimation();
     static void setCaptureAnimation(bool newCaptureAnimation);
 
@@ -781,6 +787,8 @@ private:
     static bool m_useCoMinis;
     static bool m_dialogAnimation;
     static bool m_captureAnimation;
+    static bool m_day2dayScreen;
+    static bool m_movementAnimations;
     static quint32 multiTurnCounter;
     static QString m_LastSaveGame;
     static QString m_defaultRuleset;

@@ -112,6 +112,8 @@ private:
     GameEnums::BattleAnimationMode m_seekingBattleAnimations = GameEnums::BattleAnimationMode_All;
     bool m_seekingDialog = false;
     bool m_seekingCapture = false;
+    bool m_seekingMovement = false;
+    bool m_seekingDay2Day = false;
 
     spHumanPlayerInput m_HumanInput;
     spViewplayer m_Viewplayer;
@@ -121,6 +123,8 @@ private:
     GameEnums::BattleAnimationType m_storedBatteAnimType;
     bool m_storedDialog = false;
     bool m_storedCaptureAnimation = false;
+    bool m_storedMovementAnimation = false;
+    bool m_storedDay2DayAnimation = false;
     quint32 m_storedDialogAnimationSpeed = 1;
     quint32 m_storedAnimationSpeed = 1;
     quint32 m_storedBattleAnimationSpeed = 1;

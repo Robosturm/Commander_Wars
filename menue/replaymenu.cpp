@@ -42,6 +42,8 @@ ReplayMenu::ReplayMenu(QString filename)
         m_storedBatteAnimType = Settings::getBattleAnimationType();
         m_storedDialog = Settings::getDialogAnimation();
         m_storedCaptureAnimation = Settings::getCaptureAnimation();
+        m_storedMovementAnimation = Settings::getMovementAnimations();
+        m_storedDay2DayAnimation = Settings::getDay2dayScreen();
 
         m_storedAnimationSpeed = Settings::getAnimationSpeedValue();
         m_storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
@@ -90,6 +92,8 @@ ReplayMenu::~ReplayMenu()
     Settings::setBattleAnimationType(m_storedBatteAnimType);
     Settings::setDialogAnimation(m_storedDialog);
     Settings::setCaptureAnimation(m_storedCaptureAnimation);
+    Settings::setMovementAnimations(m_storedMovementAnimation);
+    Settings::setDay2dayScreen(m_storedDay2DayAnimation);
 
     Settings::setAnimationSpeed(m_storedAnimationSpeed);
     Settings::setBattleAnimationSpeed(m_storedBattleAnimationSpeed);
@@ -342,12 +346,17 @@ void ReplayMenu::startSeeking()
         swapPlay();
     }
     m_replayCounter = 0;
-    m_seekingOverworldAnimations = Settings::getOverworldAnimations();
+    m_seekingOverworldAnimations = Settings::getOverworldAnimations();    
     m_seekingDialog = Settings::getDialogAnimation();
-    m_seekingCapture = Settings::getCaptureAnimation();
     m_seekingBattleAnimations = Settings::getBattleAnimationMode();
+
+    m_seekingCapture = Settings::getCaptureAnimation();
+    m_seekingMovement = Settings::getMovementAnimations();
+    m_seekingDay2Day = Settings::getDay2dayScreen();
     Settings::setOverworldAnimations(false);
     Settings::setDialogAnimation(false);
+    Settings::setMovementAnimations(false);
+    Settings::setDay2dayScreen(false);
     Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode::BattleAnimationMode_None);
 
     if (GameAnimationFactory::getAnimationCount() > 0)
@@ -357,6 +366,9 @@ void ReplayMenu::startSeeking()
     Settings::setBattleAnimationMode(m_seekingBattleAnimations);
     Settings::setOverworldAnimations(m_seekingOverworldAnimations);
     Settings::setDialogAnimation(m_seekingDialog);
+    Settings::setCaptureAnimation(m_seekingCapture);
+    Settings::setMovementAnimations(m_seekingMovement);
+    Settings::setDay2dayScreen(m_seekingDay2Day);
 
     m_seeking = true;    
 }
@@ -489,6 +501,8 @@ void ReplayMenu::startFastForward()
     m_seekingDialog = Settings::getDialogAnimation();
     m_seekingCapture = Settings::getCaptureAnimation();
     m_seekingBattleAnimations = Settings::getBattleAnimationMode();
+    m_seekingMovement = Settings::getMovementAnimations();
+    m_seekingDay2Day = Settings::getDay2dayScreen();
     Settings::setOverworldAnimations(false);
     Settings::setDialogAnimation(false);
     Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode::BattleAnimationMode_None);
@@ -504,6 +518,8 @@ void ReplayMenu::stopFastForward()
     Settings::setOverworldAnimations(m_seekingOverworldAnimations);
     Settings::setDialogAnimation(m_seekingDialog);
     Settings::setCaptureAnimation(m_seekingCapture);
+    Settings::setMovementAnimations(m_seekingMovement);
+    Settings::setDay2dayScreen(m_seekingDay2Day);
 }
 
 void ReplayMenu::showConfig()
@@ -653,6 +669,40 @@ void ReplayMenu::showConfig()
     connect(pCaptureAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
         Settings::setCaptureAnimation(value);
+    });
+    y += 40;
+
+    pTextfield = spLabel::create(width - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Day 2 Day: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    items = {tr("off"), tr("on")};
+    spDropDownmenu pDay2DayMode = spDropDownmenu::create(450, items);
+    pDay2DayMode->setTooltipText(tr("Selects if the day to day screen gets skipped or not. Note on fog of war maps the screen is still shown."));
+    pDay2DayMode->setCurrentItem(static_cast<qint32>(Settings::getDay2dayScreen()));
+    pDay2DayMode->setPosition(width - 130, y);
+    pPanel->addItem(pDay2DayMode);
+    connect(pDay2DayMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setDay2dayScreen(value);
+    });
+    y += 40;
+
+    pTextfield = spLabel::create(width - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Movement: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    items = {tr("off"), tr("on")};
+    spDropDownmenu pMovementAnimationMode = spDropDownmenu::create(450, items);
+    pMovementAnimationMode->setTooltipText(tr("Selects if movement animations get shown or not."));
+    pMovementAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getMovementAnimations()));
+    pMovementAnimationMode->setPosition(width - 130, y);
+    pPanel->addItem(pMovementAnimationMode);
+    connect(pMovementAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setMovementAnimations(value);
     });
     y += 40;
 

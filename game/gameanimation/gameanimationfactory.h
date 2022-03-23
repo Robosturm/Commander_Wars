@@ -170,6 +170,18 @@ public slots:
      * @return
      */
      static bool shouldSkipOtherAnimation(GameAnimation* pBattleAnimation);
+     /**
+      * @brief shouldSkipDay2Day
+      * @param pGameAnimationNextDay
+      * @return
+      */
+     static bool shouldSkipDay2Day(GameAnimationNextDay* pGameAnimationNextDay);
+     /**
+      * @brief shouldSkipMovement
+      * @param pGameAnimationNextDay
+      * @return
+      */
+     static bool shouldSkipMovement(GameAnimationWalk* pGameAnimationWalk);
 private:
     friend class oxygine::intrusive_ptr<GameAnimationFactory>;
     explicit GameAnimationFactory();

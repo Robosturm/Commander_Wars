@@ -380,12 +380,18 @@ void GameAnimationFactory::skipAllAnimations()
             GameAnimationDialog* pDialogAnimation = dynamic_cast<GameAnimationDialog*>(pAnimation);
             BattleAnimation* pBattleAnimation = dynamic_cast<BattleAnimation*>(pAnimation);
             GameAnimationCapture* pGameAnimationCapture = dynamic_cast<GameAnimationCapture*>(pAnimation);
+            GameAnimationNextDay* pGameAnimationNextDay = dynamic_cast<GameAnimationNextDay*>(pAnimation);
+            GameAnimationWalk* pGameAnimationWalk = dynamic_cast<GameAnimationWalk*>(pAnimation);
             if (shouldSkipDialog(pDialogAnimation) ||
                 shouldSkipBattleAnimation(pBattleAnimation) ||
                 shouldSkipCapture(pGameAnimationCapture) ||
+                shouldSkipDay2Day(pGameAnimationNextDay) ||
+                shouldSkipMovement(pGameAnimationWalk) ||
                 (pDialogAnimation == nullptr &&
                  pBattleAnimation == nullptr &&
                  pGameAnimationCapture == nullptr &&
+                 pGameAnimationWalk == nullptr &&
+                 pGameAnimationNextDay == nullptr &&
                  shouldSkipOtherAnimation(pAnimation)))
             {
                 while (!pAnimation->onFinished(true));
@@ -413,6 +419,19 @@ bool GameAnimationFactory::shouldSkipCapture(GameAnimationCapture* pGameAnimatio
 {
     bool captureEnabled = Settings::getCaptureAnimation();
     return pGameAnimationCapture != nullptr && !captureEnabled;
+}
+
+bool GameAnimationFactory::shouldSkipDay2Day(GameAnimationNextDay* pGameAnimationNextDay)
+{
+    bool day2dayEnabled = Settings::getDay2dayScreen();
+    return pGameAnimationNextDay != nullptr && !day2dayEnabled;
+}
+
+
+bool GameAnimationFactory::shouldSkipMovement(GameAnimationWalk* pGameAnimationWalk)
+{
+    bool movementEnabled = Settings::getMovementAnimations();
+    return pGameAnimationWalk != nullptr && !movementEnabled;
 }
 
 bool GameAnimationFactory::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation)

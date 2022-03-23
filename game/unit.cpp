@@ -510,6 +510,7 @@ void Unit::setUnitRank(const qint32 &UnitRank, bool force)
                            pInterpreter->newQObject(m_pMap)});
         pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
         loadIcon(getUnitRangIcon(), GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
+        updateRankInfoVisibility(m_pMap->getCurrentViewPlayer());
     }
 }
 
@@ -1853,8 +1854,10 @@ void Unit::startOfTurn()
 void Unit::updateStatusDurations(qint32 player)
 {
     qint32 i = 0;
-    QStringList removeList;
-    QStringList existList;
+    std::vector<QString> removeList;
+    removeList.reserve(m_IconDurations.size());
+    std::vector<QString> existList;
+    existList.reserve(m_IconDurations.size());
     while (i < m_IconDurations.size())
     {
         IconDuration & icon = m_IconDurations[i];
@@ -1863,24 +1866,24 @@ void Unit::updateStatusDurations(qint32 player)
             --icon.duration;
             if (icon.duration <= 0)
             {
-                removeList.append(icon.icon);
+                removeList.push_back(icon.icon);
                 m_IconDurations.removeAt(i);
             }
             else
             {
-                existList.append(icon.icon);
+                existList.push_back(icon.icon);
                 ++i;
             }
         }
         else
         {
-            existList.append(icon.icon);
+            existList.push_back(icon.icon);
             ++i;
         }
     }
     for (const auto & item : removeList)
     {
-        if (!existList.contains(item))
+        if (!GlobalUtils::contains(existList, item))
         {
             unloadIcon(item);
         }
@@ -2362,6 +2365,11 @@ void Unit::updateIcons(Player* pPlayer)
         }
         updateStealthIcon();
     }
+    updateRankInfoVisibility(pPlayer);
+}
+
+void Unit::updateRankInfoVisibility(Player* pPlayer)
+{
     if (getRankInfoHidden(pPlayer))
     {
         if (m_CORange.get() != nullptr)
