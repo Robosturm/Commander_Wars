@@ -186,7 +186,7 @@ Settings::Settings()
         defaultCoCount = 1;
     }
 #ifdef USEAPPCONFIGPATH
-    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
 #endif
 
     auto devices = QInputDevice::devices();
