@@ -3709,7 +3709,7 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="706"/>
-        <source>Dedicated adress: </source>
+        <source>Dedicated address: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>

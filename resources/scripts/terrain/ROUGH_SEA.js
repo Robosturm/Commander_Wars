@@ -52,8 +52,15 @@ var Constructor = function()
     };
     this.loadOverlaySprite = function(terrain, map)
     {
-        SEA.loadOverlaySprite(terrain);
-        LAKE.loadOverlaySprite(terrain);
+        var baseId = terrain.getBaseTerrainID();
+        if (baseId === "SEA")
+        {
+            SEA.loadOverlaySprite(terrain, map);
+        }
+        else
+        {
+            LAKE.loadOverlaySprite(terrain, map);
+        }
     };
     this.getMiniMapIcon = function()
     {

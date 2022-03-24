@@ -4723,5 +4723,22 @@
         <file>resources/images/units/sniper+gs+walk+mask.png</file>
         <file>resources/images/units/sniper+pf+walk+mask.png</file>
         <file>resources/images/units/sniper+ti+walk+mask.png</file>
+        <file>resources/images/terrain/reaf.png</file>
+        <file>resources/images/terrain/reaf+E+S+W.png</file>
+        <file>resources/images/terrain/reaf+E+W.png</file>
+        <file>resources/images/terrain/reaf+N+E+S.png</file>
+        <file>resources/images/terrain/reaf+N+E+W.png</file>
+        <file>resources/images/terrain/reaf+N+S.png</file>
+        <file>resources/images/terrain/reaf+N+S+W.png</file>
+        <file>resources/images/terrain/reaf+NE.png</file>
+        <file>resources/images/terrain/reaf+NE+NW.png</file>
+        <file>resources/images/terrain/reaf+NE+NW+S.png</file>
+        <file>resources/images/terrain/reaf+NE+S.png</file>
+        <file>resources/images/terrain/reaf+NE+S+W.png</file>
+        <file>resources/images/terrain/reaf+NE+W.png</file>
+        <file>resources/images/terrain/reaf+NW.png</file>
+        <file>resources/images/terrain/reaf+NW+E.png</file>
+        <file>resources/images/terrain/reaf+NW+S.png</file>
+        <file>resources/images/terrain/reaf+NW+S+E.png</file>
     </qresource>
 </RCC>

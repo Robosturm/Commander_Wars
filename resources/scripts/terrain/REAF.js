@@ -29,7 +29,12 @@ var Constructor = function()
     {
         var surroundingsPlainsDiagonal = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Diagnonal, false);
         var surroundingsPlainsDirect = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
-        if (surroundingsPlainsDirect !== "")
+        var fullName = "reaf" + surroundingsPlainsDiagonal + surroundingsPlainsDirect;
+        if (terrain.existsResAnim(fullName))
+        {
+            terrain.loadBaseSprite(fullName);
+        }
+        else if (surroundingsPlainsDirect !== "")
         {
             terrain.loadBaseSprite("reaf" + surroundingsPlainsDirect);
         }
@@ -92,8 +97,15 @@ var Constructor = function()
     };
     this.loadOverlaySprite = function(terrain, map)
     {
-        SEA.loadOverlaySprite(terrain, map);
-        LAKE.loadOverlaySprite(terrain, map);
+        var baseId = terrain.getBaseTerrainID();
+        if (baseId === "SEA")
+        {
+            SEA.loadOverlaySprite(terrain, map);
+        }
+        else
+        {
+            LAKE.loadOverlaySprite(terrain, map);
+        }
     };
     this.getDefense = function()
     {
@@ -113,6 +125,11 @@ var Constructor = function()
             var diagonalCount = 0;
             var surroundingsPlainsDiagonal = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Diagnonal, false);
             var surroundingsPlainsDirect = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
+            var fullName = "reaf" + surroundingsPlainsDiagonal + surroundingsPlainsDirect;
+            if (terrain.existsResAnim(fullName))
+            {
+                return true;
+            }
             if (surroundingsPlainsDiagonal.includes("+SE"))
             {
                 diagonalCount++;
@@ -180,10 +197,34 @@ var Constructor = function()
     this.getTerrainSprites = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
-        return ["reaf+N+E+S+W",
+        return ["reaf+0+N+E+S+W",
                 "reaf+1+N+E+S+W",
                 "reaf+2+N+E+S+W",
-                "reaf+3+N+E+S+W"];
+                "reaf+3+N+E+S+W",
+                "reaf+E.png",
+                "reaf+N.png",
+                "reaf+S.png",
+                "reaf+W.png",
+                "reaf+E+S",
+                "reaf+N+E",
+                "reaf+N+W",
+                "reaf+S+W",
+                "reaf+E+S+W",
+                "reaf+E+W",
+                "reaf+N+E+S",
+                "reaf+N+E+W",
+                "reaf+N+S+W",
+                "reaf+N+S",
+                "reaf+NE+NW+S",
+                "reaf+NE+NW",
+                "reaf+NE+S+W",
+                "reaf+NE+S",
+                "reaf+NE+W",
+                "reaf+NE",
+                "reaf+NW+E",
+                "reaf+NW+S+E",
+                "reaf+NW+S",
+                "reaf+NW",];
     };
 };
 Constructor.prototype = TERRAIN;
