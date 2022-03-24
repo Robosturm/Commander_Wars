@@ -703,7 +703,7 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Dedicated adress: "));
+    pTextfield->setHtmlText(tr("Dedicated address: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pTextbox = spTextbox::create(Settings::getWidth() - 20 - sliderOffset);
