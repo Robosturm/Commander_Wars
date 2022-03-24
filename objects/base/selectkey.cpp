@@ -19,7 +19,7 @@ SelectKey::SelectKey(Qt::Key code)
     oxygine::Actor* pActor = m_Button.get();
     m_Button->addEventListener(oxygine::TouchEvent::CLICK, [this, pActor](oxygine::Event * )->void
     {
-        Label* pText = dynamic_cast<Label*>(pActor->getFirstChild()->getFirstChild().get());
+        Label* pText = dynamic_cast<Label*>(pActor->getFirstChild().get());
         pText->setHtmlText(tr("Press Key"));
         pText->setX(pActor->getWidth() / 2 - pText->getTextRect().getWidth() / 2);
         if (pText->getX() < 5)
@@ -193,7 +193,7 @@ void SelectKey::setKeycode(Qt::Key code)
     if (codeText != tr("Unknown"))
     {
         m_currentCode = code;
-        Label* pText = dynamic_cast<Label*>(m_Button->getFirstChild()->getFirstChild().get());
+        Label* pText = dynamic_cast<Label*>(m_Button->getFirstChild().get());
         pText->setHtmlText((tr("Key ") + codeText));
         pText->setX(m_Button->getWidth() / 2 - pText->getTextRect().getWidth() / 2);
         if (pText->getX() < 5)

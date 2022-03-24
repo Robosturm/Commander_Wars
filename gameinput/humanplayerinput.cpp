@@ -1086,11 +1086,10 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
         clipRec->setY(0);
         clipRec->setSize(28 * 4, 40);
         oxygine::spTextField textField = oxygine::spTextField::create();
-        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont72());
+        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont32());
         style.color = FontManager::getFontColor();
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         textField->setStyle(style);
-        textField->setScale(32.0f / 72.0f);
         textField->setHtmlText(m_pMarkedFieldData->getZLabelText());
         textField->setSize(clipRec->getSize());
         clipRec->addChild(textField);
@@ -1101,7 +1100,6 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
         textField2->setY(44);
         textField2->setX(10);
         textField2->setSize(clipRec->getSize());
-        textField2->setScale(32.0f / 72.0f);
         textField2->setHtmlText(labelText);
         m_ZInformationLabel->addChild(textField2);
 

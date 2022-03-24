@@ -61,9 +61,14 @@ namespace oxygine
         void TextNode::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
         {
             QPainterPath path;
+            QFont font = style.font;
+            if (rs.transform.a != 1)
+            {
+                font.setPixelSize(font.pixelSize() * rs.transform.a);
+            }
             for (qint32 i = 0; i < m_lines.size(); ++i)
             {
-                path.addText(rs.transform.x + m_offsets[i].x() + style.borderWidth, rs.transform.y + m_offsets[i].y() + style.borderWidth, style.font, m_lines[i]);
+                path.addText(rs.transform.x + (m_offsets[i].x() + style.borderWidth) * rs.transform.a, rs.transform.y + (m_offsets[i].y() + style.borderWidth) * rs.transform.d, font, m_lines[i]);
             }            
             painter.strokePath(path, QPen(Qt::black, style.borderWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
             painter.fillPath(path, QBrush(drawColor));
@@ -79,7 +84,7 @@ namespace oxygine
                 m_offsets.clear();
                 m_lines.reserve(50);
                 m_offsets.reserve(50);
-                qint32 borderWidth = rd.getStyle().borderWidth * 2;
+                qint32 borderWidth = rd.getStyle().borderWidth;
                 auto & metrics = rd.getMetrics();
                 bool checkWidth = (rd.getWidth() > 0);
                 for (auto & line : lines)

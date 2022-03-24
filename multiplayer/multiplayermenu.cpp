@@ -79,7 +79,7 @@ Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, QString p
     }
     else
     {
-        dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
+        dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
         m_pPlayerSelection->setIsServerGame(true);
     }
 }
@@ -93,7 +93,7 @@ void Multiplayermenu::initClientAndWaitForConnection()
     // change the name of the start button
     if (m_networkMode == NetworkMode::Client)
     {
-        dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
+        dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
     }
     else if (m_networkMode == NetworkMode::Observer)
     {
@@ -1403,11 +1403,11 @@ void Multiplayermenu::changeButtonText()
 {
     if (m_pPlayerSelection->getPlayerReady())
     {
-        dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Not Ready"));
+        dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Not Ready"));
     }
     else
     {
-        dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
+        dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
     }
 }
 

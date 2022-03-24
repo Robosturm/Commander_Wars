@@ -14,7 +14,7 @@ namespace oxygine
               m_y(0),
               m_metrics(style.font)
         {
-            m_lineSkip = m_metrics.height() + style.borderWidth * 2;
+            m_lineSkip = m_metrics.height() + style.borderWidth / 2;
             m_lineNodes.reserve(50);
         }
 
@@ -77,7 +77,7 @@ namespace oxygine
 
         void Aligner::end()
         {
-            qint32 ry = m_y;
+            qint32 ry = m_y + m_metrics.descent();
             if (m_style.multiline)
             {
                 m_y += m_lineSkip;
