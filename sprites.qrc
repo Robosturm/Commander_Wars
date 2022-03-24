@@ -3773,7 +3773,6 @@
         <file>resources/images/terrain/reaf+1+N+E+S+W .png</file>
         <file>resources/images/terrain/reaf+2+N+E+S+W .png</file>
         <file>resources/images/terrain/reaf+3+N+E+S+W .png</file>
-        <file>resources/images/terrain/reaf+S+E.png</file>
         <file>resources/images/terrain/river+N+land+E+NW+SW.png</file>
         <file>resources/images/terrain/river+N+W+land+E+NW+SW.png</file>
         <file>resources/images/terrain/river+S+land+E+NW+SW.png</file>
@@ -4710,8 +4709,22 @@
         <file>resources/images/units/sniper+gs+walk+mask.png</file>
         <file>resources/images/units/sniper+pf+walk+mask.png</file>
         <file>resources/images/units/sniper+ti+walk+mask.png</file>
-        <file>resources/fonts/BebasNeue.ttf</file>
-        <file>resources/fonts/res.xml</file>
-        <file>resources/fonts/verminVibes.ttf</file>
+        <file>resources/images/terrain/reaf.png</file>
+        <file>resources/images/terrain/reaf+E+S+W.png</file>
+        <file>resources/images/terrain/reaf+E+W.png</file>
+        <file>resources/images/terrain/reaf+N+E+S.png</file>
+        <file>resources/images/terrain/reaf+N+E+W.png</file>
+        <file>resources/images/terrain/reaf+N+S.png</file>
+        <file>resources/images/terrain/reaf+N+S+W.png</file>
+        <file>resources/images/terrain/reaf+NE.png</file>
+        <file>resources/images/terrain/reaf+NE+NW.png</file>
+        <file>resources/images/terrain/reaf+NE+NW+S.png</file>
+        <file>resources/images/terrain/reaf+NE+S.png</file>
+        <file>resources/images/terrain/reaf+NE+S+W.png</file>
+        <file>resources/images/terrain/reaf+NE+W.png</file>
+        <file>resources/images/terrain/reaf+NW.png</file>
+        <file>resources/images/terrain/reaf+NW+E.png</file>
+        <file>resources/images/terrain/reaf+NW+S.png</file>
+        <file>resources/images/terrain/reaf+NW+S+E.png</file>
     </qresource>
 </RCC>

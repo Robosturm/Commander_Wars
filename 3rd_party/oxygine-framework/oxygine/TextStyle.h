@@ -25,7 +25,7 @@ namespace oxygine
         HorizontalAlign hAlign{HALIGN_DEFAULT};
         bool multiline{false};
         QColor color{Qt::white};
-        qint32 borderWidth{4};
+        qint32 borderWidth{3};
         Qt::TextElideMode elideText{Qt::TextElideMode::ElideRight};
     };
 }

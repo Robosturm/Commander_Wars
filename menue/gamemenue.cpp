@@ -857,7 +857,7 @@ void GameMenue::performAction(spGameAction pGameAction)
     if (m_multiplayerSyncData.m_waitingForSyncFinished)
     {
         m_multiplayerSyncData.m_postSyncAction = pGameAction;
-        spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players/Observers to join"), 1000 * 60 * 5);
+        spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players/Observers to join..."), 1000 * 60 * 5);
         addChild(pDialogConnecting);
         connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
         connect(this, &GameMenue::sigSyncFinished, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
@@ -1680,7 +1680,7 @@ void GameMenue::saveGame()
     QStringList wildcards;
     wildcards.append("*" + getSaveFileEnding());
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName());
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName(), false, tr("Save"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, [this](QString filename)
     {
@@ -1717,7 +1717,7 @@ void GameMenue::showSaveAndExitGame()
         wildcards.append("*.sav");
     }
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName());
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName(), false, tr("Save"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMapAndExit, Qt::QueuedConnection);
     setFocused(false);

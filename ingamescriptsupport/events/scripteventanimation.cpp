@@ -279,7 +279,7 @@ void ScriptEventAnimation::showLoadDialog()
     QStringList wildcards;
     wildcards.append("*.png");
     QString path = Settings::getUserPath() + "resources/images/animations/";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, sprite, true);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, sprite, true, tr("Load"));
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEventAnimation::selectAnimation, Qt::QueuedConnection);
     oxygine::Stage::getStage()->addChild(fileDialog);    
 }

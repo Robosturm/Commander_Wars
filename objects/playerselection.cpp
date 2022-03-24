@@ -440,7 +440,7 @@ void PlayerSelection::showPlayerSelection()
 
     itemIndex = 3;
     spSpinBox allStartFundsSpinBox = spSpinBox::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
-    allStartFundsSpinBox->setTooltipText(tr("Select with how much funds all player start the game."));
+    allStartFundsSpinBox->setTooltipText(tr("Select how much funds all player start the game with."));
     allStartFundsSpinBox->setSpinSpeed(500);
     allStartFundsSpinBox->setPosition(xPositions[itemIndex], y);
     allStartFundsSpinBox->setCurrentValue(0);
@@ -688,7 +688,7 @@ void PlayerSelection::showPlayerSelection()
 
         itemIndex++;
         spDropDownmenuColor playerColor = spDropDownmenuColor::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, playerColors);
-        playerColor->setTooltipText(tr("Select the Color for this players army."));
+        playerColor->setTooltipText(tr("Select the Color for this player's army."));
         playerColor->setPosition(xPositions[itemIndex], y);
         playerColor->setCurrentItem(tableColorToDisplayColor(m_pMap->getPlayer(i)->getColor()));
         m_pPlayerSelection->addItem(playerColor);
@@ -794,7 +794,7 @@ void PlayerSelection::showPlayerSelection()
 
         itemIndex++;
         spSpinBox playerStartFundsSpinBox = spSpinBox::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
-        playerStartFundsSpinBox->setTooltipText(tr("Select with how much funds this player starts the game."));
+        playerStartFundsSpinBox->setTooltipText(tr("Select how much funds this player starts the game with."));
         playerStartFundsSpinBox->setPosition(xPositions[itemIndex], y);
         playerStartFundsSpinBox->setCurrentValue(m_pMap->getPlayer(i)->getFunds());
         playerStartFundsSpinBox->setSpinSpeed(500);
@@ -868,7 +868,7 @@ void PlayerSelection::showPlayerSelection()
         if (m_pNetworkInterface.get() != nullptr)
         {
             spCheckbox pCheckbox = spCheckbox::create();
-            pCheckbox->setTooltipText(tr("Shows which player is ready to start the game. All players need to be checked in order to start a game."));
+            pCheckbox->setTooltipText(tr("Shows which players are ready to start the game. All players need to be checked in order to start a game."));
             pCheckbox->setPosition(xPositions[itemIndex] + labelminStepSize / 2 - pCheckbox->getWidth(), y);
             pCheckbox->setEnabled(false);
             m_pReadyBoxes.append(pCheckbox);

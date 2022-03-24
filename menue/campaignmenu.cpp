@@ -506,7 +506,7 @@ void CampaignMenu::showSaveCampaign()
     QStringList wildcards;
     wildcards.append("*.camp");
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignMenu::saveCampaign, Qt::QueuedConnection);    
 }

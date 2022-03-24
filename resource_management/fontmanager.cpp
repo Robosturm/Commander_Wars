@@ -98,3 +98,9 @@ QColor FontManager::getFontColor()
     return m_defaultColor;
 }
 
+QFont FontManager::getFontWithPixelSize(const QString & font, qint32 size)
+{
+    QFont qFont(font);
+    qFont.setPixelSize(size);
+    return qFont;
+}

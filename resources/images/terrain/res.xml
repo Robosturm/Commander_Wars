@@ -221,6 +221,22 @@
         <image file="reaf+N+E.png" cols = "8" />
         <image file="reaf+N+W.png" cols = "8" />
         <image file="reaf+S+W.png" cols = "8" />
+        <image file="reaf+E+S+W.png" cols = "8" />
+        <image file="reaf+E+W.png" cols = "8" />
+        <image file="reaf+N+E+S.png" cols = "8" />
+        <image file="reaf+N+E+W.png" cols = "8" />
+        <image file="reaf+N+S+W.png" cols = "8" />
+        <image file="reaf+N+S.png" cols = "8" />
+        <image file="reaf+NE+NW+S.png" cols = "8" />
+        <image file="reaf+NE+NW.png" cols = "8" />
+        <image file="reaf+NE+S+W.png" cols = "8" />
+        <image file="reaf+NE+S.png" cols = "8" />
+        <image file="reaf+NE+W.png" cols = "8" />
+        <image file="reaf+NE.png" cols = "8" />
+        <image file="reaf+NW+E.png" cols = "8" />
+        <image file="reaf+NW+S+E.png" cols = "8" />
+        <image file="reaf+NW+S.png" cols = "8" />
+        <image file="reaf+NW.png" cols = "8" />
         
         <image file="mountain.png" />
         <image file="mountain+short.png" />

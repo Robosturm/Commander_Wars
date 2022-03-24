@@ -411,7 +411,7 @@ void OptionMenue::showSettings()
     spDropDownmenu pScreenResolution = spDropDownmenu::create(400, displaySizes);
     pScreenResolution->setPosition(sliderOffset - 130, y);
     pScreenResolution->setCurrentItem(currentDisplayMode);
-    pScreenResolution->setTooltipText(tr("Selects the screen resolution for the game"));
+    pScreenResolution->setTooltipText(tr("Selects the screen resolution for the game."));
     m_pOptions->addItem(pScreenResolution);
     auto* pPtrScreenResolution = pScreenResolution.get();
     connect(pScreenResolution.get(), &DropDownmenu::sigItemChanged, this, [this, pPtrScreenResolution](qint32)
@@ -433,7 +433,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pTextfield);
     QStringList items = {tr("Window"), tr("Bordered"), tr("Fullscreen")};
     spDropDownmenu pScreenModes = spDropDownmenu::create(400, items);
-    pScreenModes->setTooltipText(tr("Selects the screen mode for the game"));
+    pScreenModes->setTooltipText(tr("Selects the screen mode for the game."));
     pScreenModes->setPosition(sliderOffset - 130, y);
     pScreenModes->setCurrentItem(pApp->getScreenMode());
     pScreenModes->setEnabled(!Settings::getSmallScreenDevice());
@@ -447,7 +447,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSlider pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, -50, 50);
-    pSlider->setTooltipText(tr("Selects the brightness for the game"));
+    pSlider->setTooltipText(tr("Selects the brightness for the game."));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(Settings::getBrightness());
     connect(pSlider.get(), &Slider::sliderValueChanged, this, [=](qint32 value)
@@ -464,7 +464,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 1, 160, "");
-    pSlider->setTooltipText(tr("Selects the gamma factor for the game"));
+    pSlider->setTooltipText(tr("Selects the gamma factor for the game."));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(Settings::getGamma() * 30.0f);
     connect(pSlider.get(), &Slider::sliderValueChanged, this, [=](qint32 value)
@@ -481,7 +481,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spCheckbox pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If checked several ui elements are hidden and get shown with an additional button.\nWarning disabling this on a smaller screen may lead to unplayable game experience."));
+    pCheckbox->setTooltipText(tr("If checked several UI elements are hidden and accessible with an additional button.\nWarning: disabling this on a smaller screen may lead to unplayable game experience."));
     pCheckbox->setChecked(Settings::getSmallScreenDevice());
     pCheckbox->setPosition(sliderOffset - 130, y);
     connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setSmallScreenDevice, Qt::QueuedConnection);
@@ -502,7 +502,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 30, 60, "");
-    pSlider->setTooltipText(tr("Selects the maximum FPS use it to reduce power consumption on smartphones."));
+    pSlider->setTooltipText(tr("Selects the maximum FPS, use it to reduce power consumption on smartphones."));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(Settings::getFramesPerSecond());
     connect(pSlider.get(), &Slider::sliderValueChanged, Settings::getInstance(), &Settings::setFramesPerSecond, Qt::QueuedConnection);
@@ -528,7 +528,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSpinBox touchPointSensitivity = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
-    touchPointSensitivity->setTooltipText(tr("Selects how long a touch is treated as the same point. Used for detecting long press events."));
+    touchPointSensitivity->setTooltipText(tr("Selects how long a touch is treated as the same point. Used for detecting long-press events."));
     touchPointSensitivity->setCurrentValue(Settings::getTouchPointSensitivity());
     touchPointSensitivity->setPosition(sliderOffset - 130, y);
     connect(touchPointSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setTouchPointSensitivity);
@@ -543,7 +543,7 @@ void OptionMenue::showSettings()
         pTextfield->setPosition(10, y);
         m_pOptions->addItem(pTextfield);
         pCheckbox = spCheckbox::create();
-        pCheckbox->setTooltipText(tr("Enables Gamepad support for controllers. Note: This is experimental and won't 100% with all controllers and isn't supported for android, iOS, macOS and linux."));
+        pCheckbox->setTooltipText(tr("Enables Gamepad support for controllers. Note: This is an experimental feature and won't work 100% with all controllers. This feature isn't supported for Android, iOS, MacOS and Linux."));
         pCheckbox->setChecked(Settings::getGamepadEnabled());
         pCheckbox->setPosition(sliderOffset - 130, y);
         connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setGamepadEnabled, Qt::QueuedConnection);
@@ -565,7 +565,7 @@ void OptionMenue::showSettings()
         pTextfield->setPosition(10, y);
         m_pOptions->addItem(pTextfield);
         spSpinBox gamepadSensitivity = spSpinBox::create(200, 0.1, 100);
-        gamepadSensitivity->setTooltipText(tr("Selects how often events are send by the gamepad. Smaller values create a faster cursor."));
+        gamepadSensitivity->setTooltipText(tr("Selects how often events are sent by a gamepad. Lowering this value will increase cursor speed."));
         gamepadSensitivity->setCurrentValue(Settings::getGamepadSensitivity());
         gamepadSensitivity->setPosition(sliderOffset - 130, y);
         connect(gamepadSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setGamepadSensitivity);
@@ -627,7 +627,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spTimeSpinBox autoSavingCycleTime = spTimeSpinBox::create(200);
-    autoSavingCycleTime->setTooltipText(tr("Selects the auto saving cycle in hours:minutes:seconds"));
+    autoSavingCycleTime->setTooltipText(tr("Selects the time between auto saves in hours:minutes:seconds"));
     autoSavingCycleTime->setCurrentValue(std::chrono::duration_cast<std::chrono::milliseconds>(Settings::getAutoSavingCylceTime()).count());
     autoSavingCycleTime->setPosition(sliderOffset - 130, y);
     connect(autoSavingCycleTime.get(), &TimeSpinBox::sigValueChanged, [=](qint32 value)
@@ -643,7 +643,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSpinBox autoSavingCycle = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
-    autoSavingCycle->setTooltipText(tr("Selects the amount of auto save games that get cycled through while auto saving. A value 0 disables this feature."));
+    autoSavingCycle->setTooltipText(tr("Selects the number of auto saves that are kept during games. A value of 0 disables this feature."));
     autoSavingCycle->setCurrentValue(Settings::getAutoSavingCycle());
     autoSavingCycle->setPosition(sliderOffset - 130, y);
     connect(autoSavingCycle.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setAutoSavingCycle);
@@ -657,7 +657,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If checked games will be recorded and you can rewatch them in the replay section."));
+    pCheckbox->setTooltipText(tr("If checked: games will be recorded and you can rewatch them in the replay section."));
     pCheckbox->setChecked(Settings::getRecord());
     pCheckbox->setPosition(sliderOffset - 130, y);
     connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setRecord, Qt::QueuedConnection);
@@ -677,7 +677,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spTextbox pTextbox = spTextbox::create(Settings::getWidth() - 20 - sliderOffset);
-    pTextbox->setTooltipText(tr("Selects your username shown at various places of the game"));
+    pTextbox->setTooltipText(tr("Select your Username that is shown in-game and in multiplayer lobbies."));
     pTextbox->setCurrentText(Settings::getUsername());
     Textbox* pPtrTextbox = pTextbox.get();
     connect(pTextbox.get(), &Textbox::sigTextChanged, this, [this, pPtrTextbox](QString value)
@@ -702,11 +702,11 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Dedicated adress: "));
+    pTextfield->setHtmlText(tr("Dedicated address: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pTextbox = spTextbox::create(Settings::getWidth() - 20 - sliderOffset);
-    pTextbox->setTooltipText(tr("Selects the dedicated game server you wan't to connect to when playing a multiplayer game."));
+    pTextbox->setTooltipText(tr("Provide the address to the multiplayer game server you want to connect to."));
     pTextbox->setCurrentText(Settings::getServerAdress());
     connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString value)
     {
@@ -722,7 +722,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSpinBox portBox = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
-    portBox->setTooltipText(tr("Selects the dedicated servers chat port for used to chat in the lobby of the dedicated server"));
+    portBox->setTooltipText(tr("Selects the port dedicated server use for the lobby chat."));
     portBox->setCurrentValue(Settings::getServerPort());
     portBox->setPosition(sliderOffset - 130, y);
     connect(portBox.get(), &SpinBox::sigValueChanged, [=](float value)
@@ -756,7 +756,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     portBox = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
-    portBox->setTooltipText(tr("Selects the game port for used to play the game with the server either with a dedicated server or direct connection."));
+    portBox->setTooltipText(tr("Selects the game port used to play on a dedicated server or through a direct connection."));
     portBox->setCurrentValue(Settings::getGamePort());
     portBox->setPosition(sliderOffset - 130, y);
     connect(portBox.get(), &SpinBox::sigValueChanged, [=](float value)
@@ -791,7 +791,7 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pTextfield->setPosition(10, y);
     pOwner->addItem(pTextfield);
     spCheckbox pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If checked mutes all sounds and music are muted."));
+    pCheckbox->setTooltipText(tr("If checked: mutes all sounds and music."));
     pCheckbox->setChecked(Settings::getMuted());
     pCheckbox->setPosition(sliderOffset - 130, y);
     connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), [=](bool checked)
@@ -821,7 +821,7 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
         }
     }
     spDropDownmenu pAudioDevice = spDropDownmenu::create(Settings::getWidth() - 20 - sliderOffset, items);
-    pAudioDevice->setTooltipText(tr("Selects the primary audio output device"));
+    pAudioDevice->setTooltipText(tr("Selects the primary audio output device."));
     pAudioDevice->setPosition(sliderOffset - 130, y);
     pAudioDevice->setCurrentItem(currentItem);
     pAudioDevice->setEnabled(!Settings::getSmallScreenDevice());
@@ -836,11 +836,11 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Global Volume: "));
+    pTextfield->setHtmlText(tr("Master Volume: "));
     pTextfield->setPosition(10, y);
     pOwner->addItem(pTextfield);
     spSlider pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 0, 100);
-    pSlider->setTooltipText(tr("Selects the global volume for the game"));
+    pSlider->setTooltipText(tr("Selects the master volume for the game."));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(Settings::getTotalVolume());
     connect(pSlider.get(), &Slider::sliderValueChanged, pSignalOwner, [=](qint32 value)
@@ -857,7 +857,7 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pTextfield->setPosition(10, y);
     pOwner->addItem(pTextfield);
     pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 0, 100);
-    pSlider->setTooltipText(tr("Selects the music volume for the game"));
+    pSlider->setTooltipText(tr("Selects the music volume for the game."));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(Settings::getMusicVolume());
     connect(pSlider.get(), &Slider::sliderValueChanged, pSignalOwner, [=](qint32 value)
@@ -874,7 +874,7 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pTextfield->setPosition(10, y);
     pOwner->addItem(pTextfield);
     pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 0, 100);
-    pSlider->setTooltipText(tr("Selects the sound volume for the game"));
+    pSlider->setTooltipText(tr("Selects the sound volume for the game."));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(Settings::getSoundVolume());
     connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
@@ -920,12 +920,12 @@ void OptionMenue::showMods()
     pLabel->setHtmlText(tr("Advance Wars Game:"));
     m_ModSelector->addChild(pLabel);
     qint32 y = 0;
-    QStringList versions = {tr("Unkown"),
+    QStringList versions = {tr("Unknown"),
                                  tr("Commander Wars"),
                                  tr("Advance Wars DS"),
                                  tr("Advance Wars DC")};
     m_pModSelection = spDropDownmenu::create(300, versions);
-    m_pModSelection->setTooltipText(tr("Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game"));
+    m_pModSelection->setTooltipText(tr("Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game."));
     m_pModSelection->setX(260);
     connect(m_pModSelection.get(), &DropDownmenu::sigItemChanged, this, &OptionMenue::selectMods, Qt::QueuedConnection);
     m_ModSelector->addChild(m_pModSelection);
@@ -1018,7 +1018,7 @@ void OptionMenue::showMods()
     tags.sort();
     tags.push_front(tr("All"));
     spDropDownmenu pTagSelection = spDropDownmenu::create(300, tags);
-    pTagSelection->setTooltipText(tr("Filters the mods by the given tags"));
+    pTagSelection->setTooltipText(tr("Filters mods by given tags."));
     pTagSelection->setPosition(260, y);
     connect(pTagSelection.get(), &DropDownmenu::sigItemChanged, this, [this, tags](qint32 value)
     {
@@ -1107,7 +1107,7 @@ void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
     QString cosmeticInfo;
     if (isComsetic)
     {
-        cosmeticInfo = QString("\n\n") + tr("The mod is claimed to be pure cosmetic by the creator and may be used during multiplayer games based on the game rules.");
+        cosmeticInfo = QString("\n\n") + tr("The mod author designated this mod as 'Cosmetic' and may be used during multiplayer matches based on the game rules.");
     }
     QString modInfo = "\n\n" + tr("Compatible Mods:\n");
     for (const auto & mod : compatibleMods)

@@ -48,7 +48,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spCheckbox pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If active walk, capture power animations and so on will be shown"));
+    pCheckbox->setTooltipText(tr("If active walk, capture, power animations, etc. will be shown"));
     pCheckbox->setChecked(Settings::getOverworldAnimations());
     connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setOverworldAnimations, Qt::QueuedConnection);
     pCheckbox->setPosition(sliderOffset - 130, y);
@@ -64,7 +64,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     spDropDownmenu pAnimationMode = spDropDownmenu::create(450, items);
     pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationMode()));
     pAnimationMode->setPosition(sliderOffset - 130, y);
-    pAnimationMode->setTooltipText(tr("Select which ingame animations are played."));
+    pAnimationMode->setTooltipText(tr("Select which in-game animations are played."));
     m_pOptions->addItem(pAnimationMode);
     connect(pAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
@@ -84,7 +84,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
              tr("Fullscreen Transparent")};
     spDropDownmenu pBattleAnimationMode = spDropDownmenu::create(450, items);
     pBattleAnimationMode->setTooltipText(tr("Selects which battle animations are played when fighting an enemy.\n"
-                                            "Detailed    - Normal Battleanimation\n"
+                                            "Detailed    - Normal battle animations\n"
                                             "Transparent - Colored background is semi-transparent\n"
                                             "Fullscreen  - Animations are upscaled based on the resolution\n"));
     pBattleAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationType()));
@@ -103,7 +103,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pTextfield);
     items = {tr("off"), tr("on")};
     spDropDownmenu pDialogAnimationMode = spDropDownmenu::create(450, items);
-    pDialogAnimationMode->setTooltipText(tr("Selects if the dialogs are shown or not."));
+    pDialogAnimationMode->setTooltipText(tr("Selects if dialogs are shown or not."));
     pDialogAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getDialogAnimation()));
     pDialogAnimationMode->setPosition(sliderOffset - 130, y);
     m_pOptions->addItem(pDialogAnimationMode);
@@ -170,7 +170,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSlider pAnimationSpeed = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 1, 100, "");
-    pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Except battle and walking animations."));
+    pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. This does not include battle and walking animations."));
     pAnimationSpeed->setPosition(sliderOffset - 130, y);
     pAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getAnimationSpeedValue()));
     m_pOptions->addItem(pAnimationSpeed);
@@ -266,7 +266,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If active the game will automatically end your turn if you can't give any orders anymore."));
+    pCheckbox->setTooltipText(tr("If enabled the game will automatically end your turn if you can't give any orders anymore."));
     pCheckbox->setChecked(Settings::getAutoEndTurn());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
@@ -282,7 +282,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If active the game will show a detailed battle forecast info."));
+    pCheckbox->setTooltipText(tr("If enabled the game will show a detailed battle forecast info."));
     pCheckbox->setChecked(Settings::getShowDetailedBattleForcast());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
@@ -302,7 +302,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSlider pMenuItemHeigth = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 5, (Settings::getHeight() - GameMap::getImageSize() * 2) / GameMap::getImageSize(), "");
-    pMenuItemHeigth->setTooltipText(tr("Amount of items per row for ingame menus before a new row is added."));
+    pMenuItemHeigth->setTooltipText(tr("Amount of items per row for in-game menus before a new row is added."));
     pMenuItemHeigth->setPosition(sliderOffset - 130, y);
     pMenuItemHeigth->setCurrentValue(static_cast<qint32>(Settings::getMenuItemCount()));
     m_pOptions->addItem(pMenuItemHeigth);
@@ -318,7 +318,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSlider pMenuItemWidth = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 1, 20, "");
-    pMenuItemWidth->setTooltipText(tr("Amount of columns for ingame menus before a scrollable menu is shown."));
+    pMenuItemWidth->setTooltipText(tr("Amount of columns for in-game menus before a scrollable menu is shown."));
     pMenuItemWidth->setPosition(sliderOffset - 130, y);
     pMenuItemWidth->setCurrentValue(static_cast<qint32>(Settings::getMenuItemRowCount()));
     m_pOptions->addItem(pMenuItemWidth);
@@ -335,7 +335,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pTextfield);
     spSpinBox showCoCount = spSpinBox::create(200, 0, std::numeric_limits<qint32>::max());
     showCoCount->setInfinityValue(0);
-    showCoCount->setTooltipText(tr("Selects the amount of players shown in game on the sidebar."));
+    showCoCount->setTooltipText(tr("Selects the amount of players shown in-game on the sidebar."));
     showCoCount->setCurrentValue(Settings::getShowCoCount());
     showCoCount->setPosition(sliderOffset - 130, y);
     connect(showCoCount.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setShowCoCount);
@@ -364,7 +364,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If active the windows cursors is hidden during a game. Giving you a more Gameboy like feeling."));
+    pCheckbox->setTooltipText(tr("If active the Computer's cursor is hidden during a game, giving you a more Gameboy like feeling."));
     pCheckbox->setChecked(Settings::getShowCursor());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
@@ -380,7 +380,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If active the windows cursors is moved to the first entry when opening menus or similar actions. Only disable it if you intend to play the mouse only."));
+    pCheckbox->setTooltipText(tr("If active the Computer's cursor is moved to the first entry when opening menus or similar actions. Only disable this feature if you intend to play using a mouse only."));
     pCheckbox->setChecked(Settings::getAutoMoveCursor());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
@@ -396,7 +396,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If active the currently selectable fiedls get animated."));
+    pCheckbox->setTooltipText(tr("If active the currently selectable fields get animated."));
     pCheckbox->setChecked(!Settings::getStaticMarkedFields());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
@@ -415,7 +415,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     spDropDownmenu pCoInfOMode = spDropDownmenu::create(450, items);
     pCoInfOMode->setCurrentItem(static_cast<qint32>(Settings::getCoInfoPosition()));
     pCoInfOMode->setPosition(sliderOffset - 130, y);
-    pCoInfOMode->setTooltipText(tr("Select where the CO Info is shown. Where Flipping positions it at the opposite side of the cursor."));
+    pCoInfOMode->setTooltipText(tr("Select where the CO Info is shown. 'Flipping' positions the info opposite the side of the screen where the cursor is located."));
     m_pOptions->addItem(pCoInfOMode);
     connect(pCoInfOMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
@@ -429,7 +429,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If active the map is scrolled automatically while the cursor is at the screen borders."));
+    pCheckbox->setTooltipText(tr("If active: the map is scrolled automatically when the cursor is at the edge of the screen."));
     pCheckbox->setChecked(Settings::getAutoScrolling());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
@@ -449,7 +449,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If active the map coordinates are shown during a game."));
+    pCheckbox->setTooltipText(tr("If active: map coordinates are shown during a game."));
     pCheckbox->setChecked(Settings::getShowIngameCoordinates());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
@@ -465,7 +465,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If active the map is centered on the unit action during other player turns. If the field is visible to the player."));
+    pCheckbox->setTooltipText(tr("If active: the screen will center on every unit performing an action, except when not visible within Fog of War."));
     pCheckbox->setChecked(Settings::getAutoCamera());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
@@ -484,7 +484,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     spDropDownmenu pAutoFocusMode = spDropDownmenu::create(450, items);
     pAutoFocusMode->setCurrentItem(static_cast<qint32>(Settings::getAutoFocusing()));
     pAutoFocusMode->setPosition(sliderOffset - 130, y);
-    pAutoFocusMode->setTooltipText(tr("Select where the game starts during a human player phase, when auto focusing is active."));
+    pAutoFocusMode->setTooltipText(tr("Select where the screen starts during your player phase. This setting only applies while auto focusing is active."));
     m_pOptions->addItem(pAutoFocusMode);
     connect(pAutoFocusMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
@@ -513,7 +513,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     spCheckbox pSyncAnimations = spCheckbox::create();
     pSyncAnimations->setChecked(Settings::getSyncAnimations());
     pSyncAnimations->setPosition(sliderOffset - 130, y);
-    pSyncAnimations->setTooltipText(tr("If checked units and building animations on the map are synchronized. Note: changing this doesn't have an immediate effect, while playing."));
+    pSyncAnimations->setTooltipText(tr("If checked: units and building animations on the map are synchronized. Note: changing this doesn't have an immediate effect in-game."));
     m_pOptions->addItem(pSyncAnimations);
     connect(pSyncAnimations.get(), &Checkbox::checkChanged, Settings::getInstance(), Settings::setSyncAnimations, Qt::QueuedConnection);
     y += 40;
@@ -524,7 +524,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If active units and actions can be canceld by long press. This is only recommended for devices without a keyboard."));
+    pCheckbox->setTooltipText(tr("If active units and actions can be canceled by a long-press. This is only recommended for devices without a keyboard."));
     pCheckbox->setChecked(Settings::getSimpleDeselect());
     connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
     {
@@ -1047,7 +1047,7 @@ void GameplayAndKeys::showSelectDefaultRules()
     QStringList wildcards;
     wildcards.append("*.grl");
     QString path = Settings::getUserPath() + "data/gamerules";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
     oxygine::Stage::getStage()->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &GameplayAndKeys::selectDefaultRules, Qt::QueuedConnection);
 }

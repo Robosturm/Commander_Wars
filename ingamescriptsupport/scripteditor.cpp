@@ -59,7 +59,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
                               tr(ScriptCondition::ConditionUnitReachedArea.toStdString().c_str()),
                               tr(ScriptCondition::ConditionCheckVariable.toStdString().c_str())};
     m_Conditions = spDropDownmenu::create(300, items);
-    m_Conditions->setTooltipText(tr("Condition type you wan't to create. If a condition is selected this condition and the selected one need to be fullfilled to activate the event."));
+    m_Conditions->setTooltipText(tr("Condition type you want to create. If another condition is selected both must be fulfilled to activate the event."));
     m_Conditions->setPosition(30, Settings::getHeight() / 2 - 45);
     pSpriteBox->addChild(m_Conditions);
     // condition button
@@ -131,7 +131,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     pText->setPosition(30, 30);
     pSpriteBox->addChild(pText);
     m_ImmediateStart = spCheckbox::create();
-    m_ImmediateStart->setTooltipText(tr("If checked the game starts without beeing able to change rules, players or co's."));
+    m_ImmediateStart->setTooltipText(tr("If checked the game starts without being able to change rules, players or CO's."));
     m_ImmediateStart->setPosition(280, 30);
     m_ImmediateStart->setChecked(false);
     pSpriteBox->addChild(m_ImmediateStart);
@@ -188,7 +188,7 @@ void ScriptEditor::showSaveScript()
     QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::saveScript, Qt::QueuedConnection);
 }
@@ -198,7 +198,7 @@ void ScriptEditor::showLoadScript()
     QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::loadScript, Qt::QueuedConnection);
 }

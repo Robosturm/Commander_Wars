@@ -597,7 +597,7 @@ void ReplayMenu::showConfig()
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     spCheckbox pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If active walk, capture power animations and so on will be shown"));
+    pCheckbox->setTooltipText(tr("If active: walk, capture power animations, and so on will be shown."));
     pCheckbox->setChecked(Settings::getOverworldAnimations());
     connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setOverworldAnimations, Qt::QueuedConnection);
     pCheckbox->setPosition(width - 130, y);
@@ -613,7 +613,7 @@ void ReplayMenu::showConfig()
     spDropDownmenu pAnimationMode = spDropDownmenu::create(450, items);
     pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationMode()));
     pAnimationMode->setPosition(width - 130, y);
-    pAnimationMode->setTooltipText(tr("Select which ingame animations are played."));
+    pAnimationMode->setTooltipText(tr("Select which in-game animations are played."));
     pPanel->addItem(pAnimationMode);
     connect(pAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
@@ -628,7 +628,7 @@ void ReplayMenu::showConfig()
     pPanel->addItem(pTextfield);
     items = {tr("Detailed"), tr("Overworld")};
     spDropDownmenu pBattleAnimationMode = spDropDownmenu::create(450, items);
-    pBattleAnimationMode->setTooltipText(tr("Selects which battle animations are played when fighting an enemy."));
+    pBattleAnimationMode->setTooltipText(tr("Selects which battle animations are played during combat."));
     pBattleAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationType()));
     pBattleAnimationMode->setPosition(width - 130, y);
     pPanel->addItem(pBattleAnimationMode);
@@ -712,7 +712,7 @@ void ReplayMenu::showConfig()
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     spSlider pAnimationSpeed = spSlider::create(Settings::getWidth() - 20 - width, 1, 100, "");
-    pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Except battle animations."));
+    pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Note: This does not include capture or battle animations."));
     pAnimationSpeed->setPosition(width - 150, y);
     pAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getAnimationSpeedValue()));
     pPanel->addItem(pAnimationSpeed);

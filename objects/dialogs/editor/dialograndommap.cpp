@@ -101,7 +101,7 @@ DialogRandomMap::DialogRandomMap()
     text->setPosition(30, 5 + y );
     m_pPanel->addItem(text);
     m_MapWidth = spSpinBox::create(300, 1, 999, SpinBox::Mode::Int);
-    m_MapWidth->setTooltipText(tr("Selects the width for the new map."));
+    m_MapWidth->setTooltipText(tr("Selects the width of the new map."));
     m_MapWidth->setPosition(text->getX() + width, text->getY());
     m_MapWidth->setCurrentValue(20);
     m_pPanel->addItem(m_MapWidth);
@@ -114,7 +114,7 @@ DialogRandomMap::DialogRandomMap()
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
     m_MapHeigth = spSpinBox::create(300, 1, 999, SpinBox::Mode::Int);
-    m_MapHeigth->setTooltipText(tr("Selects the heigth for the new map."));
+    m_MapHeigth->setTooltipText(tr("Selects the height of the new map."));
     m_MapHeigth->setPosition(text->getX() + width, text->getY());
     m_MapHeigth->setCurrentValue(20);
     m_pPanel->addItem(m_MapHeigth);
@@ -154,7 +154,7 @@ DialogRandomMap::DialogRandomMap()
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
     m_Seed = spSpinBox::create(300, 0, std::numeric_limits<qint32>::max() - 1, SpinBox::Mode::Int);
-    m_Seed->setTooltipText(tr("The seed to generate the new map. Same map settings with the same seed generate the same map."));
+    m_Seed->setTooltipText(tr("The seed to generate the new map. Using the same map settings with the same seed will generate the same map."));
     m_Seed->setPosition(text->getX() + width, text->getY());
     m_Seed->setCurrentValue(GlobalUtils::randInt(0, std::numeric_limits<qint32>::max() - 1));
     m_pPanel->addItem(m_Seed);
@@ -181,7 +181,7 @@ DialogRandomMap::DialogRandomMap()
     m_pPanel->addItem(text);
     m_BaseSize = spSlider::create(Settings::getWidth() - 220 - width, 0, 100);
     m_BaseSize->setCurrentValue(10);
-    m_BaseSize->setTooltipText(tr("The percent distribution between randomly placed buildings and buildings placed near each HQ. A lower distributes more buildings randomly across the whole map."));
+    m_BaseSize->setTooltipText(tr("The percent of randomly placed buildings versus buildings placed near each HQ. A lower percentage places more buildings randomly across the whole map."));
     m_BaseSize->setPosition(text->getX() + width, y);
     m_pPanel->addItem(m_BaseSize);
 
@@ -213,7 +213,7 @@ DialogRandomMap::DialogRandomMap()
     m_unitCountLabel->setPosition(30, 5 + y );
     m_pPanel->addItem(m_unitCountLabel);
     m_unitCount = spSpinBox::create(300, 0, 9999, SpinBox::Mode::Int);
-    m_unitCount->setTooltipText(tr("Total amount of units that get spawned. If no valid position for a unit is found no unit gets spawned instead"));
+    m_unitCount->setTooltipText(tr("Total amount of units that get spawned. If no valid position for a unit is found no unit will be spawned."));
     m_unitCount->setPosition(m_unitCountLabel->getX() + width, m_unitCountLabel->getY());
     m_unitCount->setCurrentValue(0);
     m_pPanel->addItem(m_unitCount);
@@ -227,7 +227,7 @@ DialogRandomMap::DialogRandomMap()
     m_pPanel->addItem(m_unitsNearHqLabel);
     m_unitsNearHq = spSpinBox::create(300, 0, 100, SpinBox::Mode::Int);
     m_unitsNearHq->setUnit("%");
-    m_unitsNearHq->setTooltipText(tr("The percantage of units which get spawned near the HQ of the player."));
+    m_unitsNearHq->setTooltipText(tr("The percentage of units which are spawned near the HQ of the player."));
     m_unitsNearHq->setPosition(text->getX() + width, text->getY());
     m_unitsNearHq->setCurrentValue(100);
     m_pPanel->addItem(m_unitsNearHq);
@@ -240,7 +240,7 @@ DialogRandomMap::DialogRandomMap()
     m_pPanel->addItem(m_unitDistributionLabel);
     QStringList items = {tr("Random"), tr("Distributed")};
     m_unitDistributionSelection = spDropDownmenu::create(300, items);
-    m_unitDistributionSelection->setTooltipText(tr("Random for units getting spawned at random.\nDistributed for units beeing spawned at the given rate."));
+    m_unitDistributionSelection->setTooltipText(tr("Random: Units are spawned at random.\nDistributed: Units are spawned at the given rate."));
     m_unitDistributionSelection->setPosition(text->getX() + width, text->getY());
     m_unitDistributionSelection->setCurrentItem(1);
     m_pPanel->addItem(m_unitDistributionSelection);
@@ -368,7 +368,7 @@ void DialogRandomMap::showGeneratorSelection()
     QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "data/randomMaps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogRandomMap::generatorChanged, Qt::QueuedConnection);    
 }
@@ -420,7 +420,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
             }
         }
         m_TerrainChances = spMultislider::create(terrainStrings, Settings::getWidth() - 150, terrainChances);
-        m_TerrainChances->setTooltipText(tr("The percent distribution between the different terrains when a terrain is placed."));
+        m_TerrainChances->setTooltipText(tr("The percentage of different terrain types distributed."));
         m_TerrainChances->setPosition(30, m_TerrainChanceLabel->getY() + 40);
         m_pPanel->addItem(m_TerrainChances);
 
@@ -437,7 +437,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
             }
         }
         m_BuildingChances = spMultislider::create(buildingStrings, Settings::getWidth() - 150, buildingChances);
-        m_BuildingChances->setTooltipText(tr("The percent distribution between the different buildings when a building is placed."));
+        m_BuildingChances->setTooltipText(tr("The percentage of different buildings types distributed."));
         m_BuildingChances->setPosition(30, m_BuildingChanceLabel->getY() + 40);
         m_pPanel->addItem(m_BuildingChances);
         m_OwnerDistributionLabel->setY(m_BuildingChances->getY() + 40 * buildingStrings.size());
@@ -469,7 +469,7 @@ void DialogRandomMap::playerChanged(qreal)
         playerChances.append(0);
     }
     m_OwnerDistribution = spMultislider::create(playerStrings, Settings::getWidth() - 150, playerChances);
-    m_OwnerDistribution->setTooltipText(tr("The percent building distribution between the players. Note buildings close to an Player HQ may be ignored."));
+    m_OwnerDistribution->setTooltipText(tr("The percentage of buildings distributed between the players. Note buildings close to an Player HQ may be ignored."));
     m_OwnerDistribution->setPosition(30, m_OwnerDistributionLabel->getY() + 40);
     m_pPanel->addItem(m_OwnerDistribution);
     createUnitChances();
