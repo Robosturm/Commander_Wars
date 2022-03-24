@@ -110,7 +110,7 @@ void ReplayMenu::showRecordInvalid()
     {
         modList += mod + "\n";
     }
-    spDialogMessageBox pExit = spDialogMessageBox::create(tr("The current active mods or the current record are invalid! Exiting the Replay now. Mods used in the Replay:") + "\n" +
+    spDialogMessageBox pExit = spDialogMessageBox::create(tr("The current active mods or the current record are invalid or damaged! Exiting the Replay now. Mods used in the Replay:") + "\n" +
                                                           modList, false);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);    
     addChild(pExit);   
