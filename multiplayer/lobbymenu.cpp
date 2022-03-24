@@ -106,7 +106,7 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigObserveGame, this, &LobbyMenu::observeGame, Qt::QueuedConnection);
 
-    oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Adress"));
+    oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Address"));
     addChild(pButtonJoinAdress);
     pButtonJoinAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getWidth(), Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonJoinAdress->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
@@ -115,7 +115,7 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigJoinAdress, this, &LobbyMenu::joinAdress, Qt::QueuedConnection);
 
-    oxygine::spButton pButtonObserveAdress = ObjectManager::createButton(tr("Observe Adress"));
+    oxygine::spButton pButtonObserveAdress = ObjectManager::createButton(tr("Observe Address"));
     addChild(pButtonObserveAdress);
     pButtonObserveAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getWidth(), pButtonJoinAdress->getY() - pButtonJoinAdress->getHeight());
     pButtonObserveAdress->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void

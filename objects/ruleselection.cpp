@@ -154,7 +154,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     textField->setPosition(30, y);
     addChild(textField);
     spCheckbox pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("Check this to see all game rules"));
+    pCheckbox->setTooltipText(tr("Check this to see all game rules."));
     pCheckbox->setPosition(textWidth, textField->getY());
     addChild(pCheckbox);
     pCheckbox->setChecked(advanced);
@@ -201,7 +201,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         pCheckbox = spCheckbox::create();
         pCheckbox->setPosition(textWidth, y);
         pCheckbox->setChecked(false);
-        pCheckbox->setTooltipText(tr("If checked cosmetic mods can be different on host and client site.\nWarning this may lead to asynchron games or crashes in case one of the mods is not a pure cosmetic mod."));
+        pCheckbox->setTooltipText(tr("If checked cosmetic mods can be different between host and players.\nWarning this may lead to desynced games or crashes if one of the mods is not a purely cosmetic mod."));
         pCheckbox->setEnabled(m_ruleChangeEabled);
         connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setCosmeticModsAllowed, Qt::QueuedConnection);
         addChild(pCheckbox);
@@ -338,7 +338,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     textField->setPosition(30, y);
     addChild(textField);
     pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If checked CO's have their day to day abilities else only perks are active. This has no impact on co powers."));
+    pCheckbox->setTooltipText(tr("If checked CO's have their day to day abilities, when unchecked CO's only have perks active. This has no impact on co powers."));
     pCheckbox->setPosition(textWidth, textField->getY());
     pCheckbox->setEnabled(m_ruleChangeEabled);
     addChild(pCheckbox);
@@ -355,7 +355,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setPosition(30, y);
         addChild(textField);
         pCheckbox = spCheckbox::create();
-        pCheckbox->setTooltipText(tr("If checked you can only select a single co for a player."));
+        pCheckbox->setTooltipText(tr("If checked players may only select a single CO."));
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
@@ -497,7 +497,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setPosition(30, y);
         addChild(textField);
         pSpinbox = spSpinBox::create(400, 0, 1, SpinBox::Mode::Float);
-        pSpinbox->setTooltipText(tr("The percentage of the co gauge lost when the co unit gets destroyed."));
+        pSpinbox->setTooltipText(tr("The percentage of the CO gauge lost when the CO unit gets destroyed."));
         pSpinbox->setInfinityValue(-1.0);
         pSpinbox->setSpinSpeed(0.1f);
         pSpinbox->setPosition(textWidth, textField->getY());
@@ -523,7 +523,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     addChild(textField);
     QStringList fogModes = {tr("Off"), tr("Mist of War"), tr("Fog of War"), tr("Shroud of War")};
     spDropDownmenu fogOfWar = spDropDownmenu::create(400, fogModes);
-    fogOfWar->setTooltipText(tr("Select the fog of war rule for the current game."));
+    fogOfWar->setTooltipText(tr("Select the fog of war rule for the current game. \n In Mist of War all units can be seen but not targeted without Vision. \n In Fog of War all units cannot be seen without vision. \n In Shroud of War none of the map can be seen until explored, all units cannot be seen without vision."));
     fogOfWar->setPosition(textWidth, textField->getY());
     auto fogMode = m_pMap->getGameRules()->getFogMode();
     if (fogMode == GameEnums::Fog_OfMist)
@@ -566,7 +566,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setPosition(30, y);
         addChild(textField);
         pCheckbox = spCheckbox::create();
-        pCheckbox->setTooltipText(tr("If checked units can't see over certain terrains. Reducing their vision range. Air units are unaffected by this effect."));
+        pCheckbox->setTooltipText(tr("If checked units can't see over certain terrains, reducing their vision range. Air units are unaffected by this effect."));
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
@@ -580,7 +580,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setPosition(30, y);
         addChild(textField);
         pCheckbox = spCheckbox::create();
-        pCheckbox->setTooltipText(tr("If checked most buildings deny vision. E.g. you can hide a unit in a building similar to a forest."));
+        pCheckbox->setTooltipText(tr("If checked most buildings deny vision. This means you can hide a unit in a building similar to a forest."));
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
@@ -595,7 +595,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         addChild(textField);
         QStringList dayModes = {tr("Default"), tr("Permanent")};
         spDropDownmenu pDropDownmenu = spDropDownmenu::create(400, dayModes);
-        pDropDownmenu->setTooltipText(tr("Defines if the day to day banner is shown permanent for human or not. Decision is depending of chosen fog of war."));
+        pDropDownmenu->setTooltipText(tr("If set to 'Permanent' the New Day screen for Human players will remain on screen until dismissed. If set to 'Default' this feature will be off except in Fog of War games. This setting only takes effect in games with more than 1 Human players on the Host's PC."));
         pDropDownmenu->setPosition(textWidth, textField->getY());
         pDropDownmenu->setEnabled(m_ruleChangeEabled);
         addChild(pDropDownmenu);
@@ -687,7 +687,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setPosition(30, y);
         addChild(textField);
         pCheckbox = spCheckbox::create();
-        pCheckbox->setTooltipText(tr("If checked the impact of terrain defense stars is reduced the less hp a unit has."));
+        pCheckbox->setTooltipText(tr("If checked: the impact of terrain defense stars is reduced the less hp a unit has."));
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
@@ -701,7 +701,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setPosition(30, y);
         addChild(textField);
         pCheckbox = spCheckbox::create();
-        pCheckbox->setTooltipText(tr("If checked ships and boats can move through bridges placed on sea tiles, like in advance wars darc conflict."));
+        pCheckbox->setTooltipText(tr("If checked: ships and boats can move through bridges placed on sea tiles, like in Advance Wars Dark conflict."));
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
@@ -715,7 +715,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setPosition(30, y);
         addChild(textField);
         pCheckbox = spCheckbox::create();
-        pCheckbox->setTooltipText(tr("If checked units can move after getting unload. If the unit remained in their transporter for more than one turn."));
+        pCheckbox->setTooltipText(tr("If checked: units can move after getting unloaded if the unit had remained in their transporter for more than one turn."));
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
@@ -780,7 +780,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setPosition(30, y);
         addChild(textField);
         pCheckbox = spCheckbox::create();
-        pCheckbox->setTooltipText(tr("If checked CO's that are randomly selected are unique. Note: If not enough CO's are available this may select no co for a player"));
+        pCheckbox->setTooltipText(tr("If checked: CO's that are randomly selected are unique. Note: If not enough CO's are available this may select no CO for a player"));
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
@@ -808,7 +808,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setPosition(30, y);
         addChild(textField);
         spSpinBox pSpinbox = spSpinBox::create(400, 0, 1, SpinBox::Mode::Float);
-        pSpinbox->setTooltipText(tr("The amount of funds you get back for selling a unit. Only has an impact if the sell action is active"));
+        pSpinbox->setTooltipText(tr("The amount of funds you are refunded for selling a unit. Selling is only possible if the 'Sell' action is active"));
         pSpinbox->setInfinityValue(-1.0);
         pSpinbox->setSpinSpeed(0.1f);
         pSpinbox->setUnit("%");
@@ -825,7 +825,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setPosition(30, y);
         addChild(textField);
         pCheckbox = spCheckbox::create();
-        pCheckbox->setTooltipText(tr("If checked units of the same team have the same direction rather than based on player order."));
+        pCheckbox->setTooltipText(tr("If checked units of the same team face the same direction rather than based on player order."));
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);

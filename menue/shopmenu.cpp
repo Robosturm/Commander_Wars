@@ -162,7 +162,7 @@ void Shopmenu::filterChanged(qint32 item)
         m_shoppingList.append(false);
         spCheckbox pCheckbox = spCheckbox::create();
         pCheckbox->setPosition(10, y);
-        pCheckbox->setTooltipText(tr("Check to but the item on the buy list. Afterwards click buy to confirm your shopping."));
+        pCheckbox->setTooltipText(tr("Check any items you'd like to buy from the shop, then click 'Buy' to confirm your purchase."));
         qint32 costs = item.price;
         qint32 itemPos = m_shoppingList.size() - 1;
         connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, itemPos, costs](bool checked)

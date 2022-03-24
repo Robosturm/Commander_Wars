@@ -512,7 +512,7 @@ void MapSelectionMapsMenue::saveRules(QString filename)
         spGameMap pMap = m_pMapSelectionView->getCurrentMap();
         pMap->getGameRules()->serializeObject(stream);
         file.close();
-        spDialogMessageBox pMessageBox = spDialogMessageBox::create(tr("Do you want to make the saved ruleset as default ruleset?"), true, tr("Yes"), tr("No"));
+        spDialogMessageBox pMessageBox = spDialogMessageBox::create(tr("Do you want to make the saved ruleset the default ruleset?"), true, tr("Yes"), tr("No"));
         addChild(pMessageBox);
         connect(pMessageBox.get(),  &DialogMessageBox::sigOk, this, [=]()
         {
