@@ -76,7 +76,7 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     }
     items.append(tr("Neutral"));
     spDropDownmenu pDropdownmenu = spDropDownmenu::create(300, items);
-    pDropdownmenu->setTooltipText(tr("Selects the Owner of the current unit. This is immediatly applied."));
+    pDropdownmenu->setTooltipText(tr("Selects the Owner of the current unit. This is immediately applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
 
     Player* pPlayer = m_pBuilding->getOwner();
@@ -108,7 +108,7 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     pLabel->setHtmlText(tr("Name:"));
     pLabel->setPosition(10, y);
     spTextbox pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getWidth());
-    pTextbox->setTooltipText(tr("Custom Name of the Terrain. Empty name equals the default name."));
+    pTextbox->setTooltipText(tr("Custom Name of the Terrain. Leave the name empty to use its Default Name."));
     pTextbox->setPosition(sliderOffset - 160, y);
     pTextbox->setCurrentText(m_pBuilding->getBuildingName());
     connect(pTextbox.get(), &Textbox::sigTextChanged, m_pBuilding, &Building::setBuildingName, Qt::QueuedConnection);

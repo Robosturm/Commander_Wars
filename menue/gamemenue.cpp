@@ -859,7 +859,7 @@ void GameMenue::performAction(spGameAction pGameAction)
     if (m_multiplayerSyncData.m_waitingForSyncFinished)
     {
         m_multiplayerSyncData.m_postSyncAction = pGameAction;
-        spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players/Observers to join"), 1000 * 60 * 5);
+        spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players/Observers to join..."), 1000 * 60 * 5);
         addChild(pDialogConnecting);
         connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
         connect(this, &GameMenue::sigSyncFinished, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);

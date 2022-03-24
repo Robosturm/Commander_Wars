@@ -547,7 +547,7 @@ void VictoryMenue::createStatisticsView()
         items.append(tr("Player ") + QString::number(i + 1));
     }
     m_pStatisticPlayer = spDropDownmenu::create(250, items);
-    m_pStatisticPlayer->setTooltipText(tr("The player for which the statistics should be shown."));
+    m_pStatisticPlayer->setTooltipText(tr("Select which player's statistics you'd like to see."));
     m_pStatisticPlayer->setPosition(10, 10);
     m_statisticsBox->addChild(m_pStatisticPlayer);
     connect(m_pStatisticPlayer.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 item)

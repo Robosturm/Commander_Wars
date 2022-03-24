@@ -52,7 +52,7 @@ Multiplayermenu::Multiplayermenu(QString adress, quint16 port, QString password,
     }
     else
     {
-        m_pHostAdresse = ObjectManager::createButton("Show Adresses");
+        m_pHostAdresse = ObjectManager::createButton("Show Addresses");
         addChild(m_pHostAdresse);
         m_pHostAdresse->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
@@ -141,8 +141,8 @@ void Multiplayermenu::showIPs()
     style.multiline = true;
     oxygine::spTextField info = oxygine::spTextField::create();
     info->setStyle(style);
-    info->setHtmlText((tr("Please use one of the following IP-Adresses to connect to this Host. Not all IP-Adresses") +
-                       tr(" may work for each client depending on the network settings. Please use cmd and the ping command to verify if an IP-Adress may work")));
+    info->setHtmlText((tr("Please use one of the following IP-Addresses to connect to this Host. Not all IP-Addresses") +
+                       tr(" may work for each client depending on their network settings. Please use CMD and the ping command to verify if an IP-Address will work")));
     info->setSize(Settings::getWidth() - 80, 500);
     info->setPosition(10, 10);
     pPanel->addItem(info);
@@ -401,7 +401,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         else if (messageType == NetworkCommands::SERVERNOGAMESLOTSAVAILABLE)
         {
             spDialogMessageBox pDialogMessageBox;
-            pDialogMessageBox = spDialogMessageBox::create(tr("Server doesn't have any more slots for playing a game."));
+            pDialogMessageBox = spDialogMessageBox::create(tr("Server doesn't have any more slots for players."));
             connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
             addChild(pDialogMessageBox);
         }

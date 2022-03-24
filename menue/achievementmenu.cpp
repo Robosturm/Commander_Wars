@@ -69,7 +69,7 @@ Achievementmenu::Achievementmenu()
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
     m_SearchString = spTextbox::create(Settings::getWidth() - 380);
-    m_SearchString->setTooltipText(tr("Text that will be searched for in the title of each wikipage."));
+    m_SearchString->setTooltipText(tr("Search for an Achievement by title or description."));
     m_SearchString->setPosition(150, y);
     connect(m_SearchString.get(), &Textbox::sigTextChanged, this, [this](QString)
     {

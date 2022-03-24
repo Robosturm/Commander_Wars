@@ -101,7 +101,7 @@ void DialogModifyUnit::updateData()
     spTextbox pTexbox = spTextbox::create(Settings::getWidth() - 40 - sliderOffset);
     pTexbox->setPosition(sliderOffset - 160, y);
     pTexbox->setCurrentText(m_pUnit->getName());
-    pTexbox->setTooltipText(tr("Selects the custom name of the unit shown instead of the actual unit name. An empty name equals the actual unit name"));
+    pTexbox->setTooltipText(tr("Selects the custom name of the unit shown instead of the actual unit name. An empty name will display the default name for that unit."));
     connect(pTexbox.get(), &Textbox::sigTextChanged, [this](QString value)
     {
         m_pUnit->setCustomName(value);
@@ -115,7 +115,7 @@ void DialogModifyUnit::updateData()
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     spSlider pSlider = spSlider::create(Settings::getWidth() - 40 - sliderOffset, 1, 10, tr("HP"));
-    pSlider->setTooltipText(tr("Selects the HP of the current unit. This is immediatly applied."));
+    pSlider->setTooltipText(tr("Selects the HP of the current unit. This is immediately applied."));
     pSlider->setPosition(sliderOffset - 160, y);
     pSlider->setCurrentValue(m_pUnit->getHpRounded());
     connect(pSlider.get(), &Slider::sliderValueChanged, [this](qint32 value)
@@ -132,7 +132,7 @@ void DialogModifyUnit::updateData()
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
         spSlider pSlider = spSlider::create(Settings::getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxFuel(), tr("Fuel"));
-        pSlider->setTooltipText(tr("Selects the Fuel of the current unit. This is immediatly applied."));
+        pSlider->setTooltipText(tr("Selects the Fuel of the current unit. This is immediately applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getFuel());
         connect(pSlider.get(), &Slider::sliderValueChanged, [this](qint32 value)
@@ -158,7 +158,7 @@ void DialogModifyUnit::updateData()
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
         spSlider pSlider = spSlider::create(Settings::getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo1(), tr("Ammo"));
-        pSlider->setTooltipText(tr("Selects the Ammo 1 of the current unit. This is immediatly applied."));
+        pSlider->setTooltipText(tr("Selects the Ammo 1 of the current unit. This is immediately applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo1());
         connect(pSlider.get(), &Slider::sliderValueChanged, [this](qint32 value)
@@ -184,7 +184,7 @@ void DialogModifyUnit::updateData()
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
         spSlider pSlider = spSlider::create(Settings::getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo2(), tr("Ammo"));
-        pSlider->setTooltipText(tr("Selects the Ammo 2 of the current unit. This is immediatly applied."));
+        pSlider->setTooltipText(tr("Selects the Ammo 2 of the current unit. This is immediately applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo2());
         connect(pSlider.get(), &Slider::sliderValueChanged, [this](qint32 value)
@@ -215,7 +215,7 @@ void DialogModifyUnit::updateData()
         items.append(tr("Player ") + QString::number(i + 1));
     }
     spDropDownmenu pDropdownmenu = spDropDownmenu::create(300, items);
-    pDropdownmenu->setTooltipText(tr("Selects the Owner of the current unit. This is immediatly applied."));
+    pDropdownmenu->setTooltipText(tr("Selects the Owner of the current unit. This is immediately applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(m_pUnit->getOwner()->getPlayerID());
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 value)
@@ -240,7 +240,7 @@ void DialogModifyUnit::updateData()
                                      "Hold AI the ai only attacks but never moves with this unit.\n"
                                      "Patrol the unit will move to each position in the given order\n"
                                      "Patrol Loop the unit will move to each position in the given order and restart at the first\n"
-                                     "This is immediatly applied."));
+                                     "This is immediately applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getAiMode()));
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [this](qint32 value)
@@ -266,7 +266,7 @@ void DialogModifyUnit::updateData()
     items.append(tr("CO 1"));
     items.append(tr("CO 2"));
     pDropdownmenu = spDropDownmenu::create(300, items);
-    pDropdownmenu->setTooltipText(tr("Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied."));
+    pDropdownmenu->setTooltipText(tr("Selects the Rank of this Unit. CO Ranks may be replaced with highest rank. This is immediately applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getUnitRank()));
     qint32 size = items.size();
@@ -342,7 +342,7 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
     };
     spDropDownmenuSprite pDropdownmenu = spDropDownmenuSprite::create(105, items, unitCreator, 30);
     pDropdownmenu->setPosition(sliderOffset - 160, y);
-    pDropdownmenu->setTooltipText(tr("Selects the unit loaded by the transporter. - for no unit. This is immediatly applied."));
+    pDropdownmenu->setTooltipText(tr("Selects the unit loaded by the transporter. Enter '-' for no unit. This is immediately applied."));
     Unit* pLoadedUnit = m_pUnit->getLoadedUnit(index);
     if (pLoadedUnit != nullptr)
     {

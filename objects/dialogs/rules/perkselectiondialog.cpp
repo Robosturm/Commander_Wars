@@ -77,7 +77,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
         pLabel->setPosition(pDropDownmenu->getX() + pDropDownmenu->getWidth() + 10, 30);
         pSpriteBox->addChild(pLabel);
         m_randomFillCheckbox = spCheckbox::create();
-        m_randomFillCheckbox->setTooltipText(tr("If checked clicking the random button. The selected perks are filled up to the maximum."));
+        m_randomFillCheckbox->setTooltipText(tr("If checked: clicking the 'Random' Button will fill all available perk slots instead of just 1."));
         m_randomFillCheckbox->setPosition(pLabel->getX() + pLabel->getWidth() + 10, 30);
         pSpriteBox->addChild(m_randomFillCheckbox);
         oxygine::spButton randomButton = pObjectManager->createButton(tr("Random"), 150);
