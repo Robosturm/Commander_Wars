@@ -9,7 +9,7 @@
 
 const char* const ROOT = "::::";
 
-FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, QString startFile, bool preview)
+FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, QString startFile, bool preview, QString acceptButtonName)
     : m_preview(preview),
       m_pathPrefix(Settings::getUserPath())
 {
@@ -43,7 +43,7 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, QStri
     m_CurrentFile->setCurrentText(startFile);
     pSpriteBox->addChild(m_CurrentFile);
     // ok button
-    m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
+    m_OkButton = pObjectManager->createButton(acceptButtonName, 150);
     m_OkButton->setPosition(m_CurrentFile->getWidth() + 30 + 10, m_CurrentFile->getY());
     pSpriteBox->addChild(m_OkButton);
     // drop down menu

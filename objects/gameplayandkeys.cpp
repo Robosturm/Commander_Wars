@@ -1048,7 +1048,7 @@ void GameplayAndKeys::showSelectDefaultRules()
     QStringList wildcards;
     wildcards.append("*.grl");
     QString path = Settings::getUserPath() + "data/gamerules";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
     oxygine::Stage::getStage()->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &GameplayAndKeys::selectDefaultRules, Qt::QueuedConnection);
 }

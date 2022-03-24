@@ -171,7 +171,7 @@ void DialogModifyTerrain::showLoadDialog()
     QStringList wildcards;
     wildcards.append("*.png");
     QString path = Settings::getUserPath() + "customTerrainImages";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName(), true);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName(), true, tr("Load"));
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogModifyTerrain::loadCustomSprite, Qt::QueuedConnection);
     addChild(fileDialog);    
 }

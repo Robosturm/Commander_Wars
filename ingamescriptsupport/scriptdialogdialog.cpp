@@ -252,7 +252,7 @@ void ScriptDialogDialog::showChangeBackground()
         folder = file.path();
         fileName = file.fileName();
     }
-    spFileDialog pFileDialog = spFileDialog::create(folder, QStringList(1, "*.png"), fileName, true);
+    spFileDialog pFileDialog = spFileDialog::create(folder, QStringList(1, "*.png"), fileName, true, tr("Load"));
     addChild(pFileDialog);
     connect(pFileDialog.get(), &FileDialog::sigFileSelected, this, &ScriptDialogDialog::setCurrentDialogBackground, Qt::QueuedConnection);
     

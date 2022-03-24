@@ -166,7 +166,7 @@ void Multiplayermenu::showLoadSaveGameDialog()
     QStringList wildcards;
     wildcards.append("*.msav");
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards);
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, "", false, tr("Save"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Multiplayermenu::loadSaveGame, Qt::QueuedConnection);
 }
