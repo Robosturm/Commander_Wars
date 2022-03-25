@@ -473,6 +473,10 @@ void AudioThread::mediaStatusChanged(QMediaPlayer::MediaStatus status)
             case QMediaPlayer::InvalidMedia:
             {
                 CONSOLE_PRINT("Invalid media detected for player", Console::eWARNING);
+                if (m_player->m_currentMedia < m_PlayListdata.size())
+                {
+                    CONSOLE_PRINT("Unable to play: " +  m_PlayListdata[m_player->m_currentMedia].m_file, Console::eWARNING);
+                }
             }
             default:
             {

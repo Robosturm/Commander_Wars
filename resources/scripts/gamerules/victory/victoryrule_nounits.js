@@ -6,31 +6,52 @@ var Constructor = function()
     };
     this.getRuleName = function(itemNumber)
     {
-        return qsTr("No Units");
+        if (itemNumber === 0)
+        {
+            return qsTr("No Units");
+        }
+        else
+        {
+            return qsTr("Ignore Watermines");
+        }
     };
     // the type how the rule will be represented in the map selection ui
     this.getRuleType = function()
     {
         // for now checkbox or spinbox
-        return "checkbox"
+        return ["checkbox", "checkbox"]
     };
     // defines the default value during map selection for this rule
     this.getDefaultRuleValue = function(itemNumber)
     {
-        return 1;
+        if (itemNumber === 0)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
     };
     // create and initialize the variables for this rule
     this.init = function(rule, map)
     {
         var playerCount = map.getPlayerCount();
         var variables = rule.getVariables();
+        var noWatermines = VICTORYRULE_NOUNITS.getRuleValue(rule, 1, map);
         for (var i = 0; i < playerCount; i++)
         {
             var player = map.getPlayer(i);
             var playerID = player.getPlayerID();
             var variableName = "Active" + playerID.toString();
             var variable = variables.createVariable(variableName);
-            if (player.getUnitCount() > 0)
+            var unitCount = player.getUnitCount();
+            if (noWatermines)
+            {
+                unitCount -= player.getUnitCount("WATERMINE");
+            }
+
+            if (unitCount > 0)
             {
                 variable.writeDataBool(true);
             }
@@ -47,9 +68,15 @@ var Constructor = function()
         var variables = rule.getVariables();
         var variable = variables.getVariable(variableName);
         var value = variable.readDataBool();
+        var noWatermines = VICTORYRULE_NOUNITS.getRuleValue(rule, 1, map);
         if (value === false)
         {
-            if (player.getUnitCount() > 0)
+            var unitCount = player.getUnitCount();
+            if (noWatermines)
+            {
+                unitCount -= player.getUnitCount("WATERMINE");
+            }
+            if (unitCount > 0)
             {
                 variable.writeDataBool(true);
                 value = true;
@@ -62,7 +89,13 @@ var Constructor = function()
     {
         if (VICTORYRULE_NOUNITS.checkUnitCount(rule, player, map))
         {
-            if (player.getUnitCount() <= 0)
+            var noWatermines = VICTORYRULE_NOUNITS.getRuleValue(rule, 1, map);
+            var unitCount = player.getUnitCount();
+            if (noWatermines)
+            {
+                unitCount -= player.getUnitCount("WATERMINE");
+            }
+            if (unitCount <= 0)
             {
                 return GameEnums.DefeatType_Defeated;
             }
