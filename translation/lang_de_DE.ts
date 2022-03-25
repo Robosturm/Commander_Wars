@@ -4176,11 +4176,6 @@ Warning: disabling this on a smaller screen may lead to unplayable game experien
 <context>
     <name>ReplayMenu</name>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="113"/>
-        <source>The current active mods or the current record are invalid! Exiting the Replay now. Mods used in the Replay:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/replaymenu.cpp" line="171"/>
         <source>Do you want to exit the current replay?</source>
         <translation type="unfinished"></translation>
@@ -4255,6 +4250,11 @@ Warning: disabling this on a smaller screen may lead to unplayable game experien
         <location filename="../menue/replaymenu.cpp" line="614"/>
         <location filename="../menue/replaymenu.cpp" line="631"/>
         <source>Battle Animations: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="113"/>
+        <source>The current active mods or the current record are invalid or damaged! Exiting the Replay now. Mods used in the Replay:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -432,7 +432,7 @@ void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoin
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        QString currentPath = Settings::getUserPath() + file;
+        QString currentPath = Settings::getUserPath() + "/" + file;
         if (!QFile::exists(currentPath))
         {
             currentPath = oxygine::Resource::RCC_PREFIX_PATH + file;
@@ -500,7 +500,8 @@ void AudioThread::SlotLoadFolder(QString folder)
     QStringList loadedSounds;
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        loadMusicFolder(Settings::getMods().at(i) + "/" + folder, loadedSounds);
+        loadMusicFolder(Settings::getUserPath() + "/" + Settings::getMods().at(i) + "/" + folder, loadedSounds);
+        loadMusicFolder(QString(oxygine::Resource::RCC_PREFIX_PATH) +  "/" + Settings::getMods().at(i) + "/" + folder, loadedSounds);
     }
     if (m_loadBaseGameFolders)
     {
