@@ -387,7 +387,7 @@ bool GameAnimation::onFinished(bool skipping)
     }
     m_stageTweens.clear();
     GameAnimationFactory::removeAnimation(this, m_skipping, false);
-    if (!m_skipping && GameAnimationFactory::getAnimationCount() > 0)
+    if (!skipping && GameAnimationFactory::getAnimationCount() > 0)
     {
         GameAnimationFactory::skipAllAnimations();
         if (GameAnimationFactory::getAnimationCount() == 0)

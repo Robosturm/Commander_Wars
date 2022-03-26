@@ -1967,7 +1967,9 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
                 QApplication::processEvents();
                 auto & unitData = pUnitData[i2];
                 Unit* pUnit = unitData.pUnit.get();
-                if (pUnit->getHp() > 0 && pUnit->getTerrain() != nullptr)
+                if (pUnit != nullptr &&
+                    pUnit->getHp() > 0 &&
+                    pUnit->getTerrain() != nullptr)
                 {
                     if (qAbs(point.x() - pUnit->Unit::getX()) +
                         qAbs(point.y() - pUnit->Unit::getY()) <=

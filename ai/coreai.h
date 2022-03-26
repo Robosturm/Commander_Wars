@@ -638,6 +638,7 @@ protected:
     QVector<IniData> m_iniData;
 private:
     bool finish{false};
+    bool  m_processing{false};
     struct FlareInfo
     {
         qint32 minRange{0};

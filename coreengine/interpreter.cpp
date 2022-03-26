@@ -141,7 +141,10 @@ bool Interpreter::loadScript(const QString & content, const QString & script)
         QString error = value.toString() + " in script " + script + " in File: " +
                         value.property("fileName").toString() + " at Line: " +
                         value.property("lineNumber").toString();
-        CONSOLE_PRINT(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);        
+    }
+    else
+    {
         success = true;
     }
     return success;

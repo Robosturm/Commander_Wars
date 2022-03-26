@@ -256,19 +256,27 @@ void CoreAI::nextAction()
     AI_CONSOLE_PRINT("CoreAI::nextAction", Console::eDEBUG);
     // check if it's our turn
     spGameMenue pMenue = GameMenue::getInstance();
-    
-    if (pMenue.get() != nullptr &&
-        m_pMap != nullptr &&
-        m_pPlayer == m_pMap->getCurrentPlayer() &&
-        pMenue->getGameStarted())
+    if (!m_processing)
     {
-
-        if (!processPredefinedAi())
+        m_processing = true;
+        if (pMenue.get() != nullptr &&
+            m_pMap != nullptr &&
+            m_pPlayer == m_pMap->getCurrentPlayer() &&
+            pMenue->getGameStarted())
         {
-            AI_CONSOLE_PRINT("Processing ai specific behaviour", Console::eDEBUG);
-            // if so execute next action
-            process();
+
+            if (!processPredefinedAi())
+            {
+                AI_CONSOLE_PRINT("Processing ai specific behaviour", Console::eDEBUG);
+                // if so execute next action
+                process();
+            }
         }
+        m_processing = false;
+    }
+    else
+    {
+        AI_CONSOLE_PRINT("Unexpected nextAction call", Console::eDEBUG);
     }
 }
 
