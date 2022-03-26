@@ -2274,7 +2274,9 @@ bool Unit::getHpHidden(Player* pPlayer)
 
 bool Unit::getRankInfoHidden(Player* pPlayer)
 {
-    if (pPlayer != nullptr && pPlayer->isEnemy(m_pOwner))
+    if (pPlayer != nullptr &&
+        m_pOwner != nullptr &&
+        pPlayer->isEnemy(m_pOwner))
     {
         CO* pCO = m_pOwner->getCO(0);
         if (pCO != nullptr)

@@ -433,7 +433,6 @@ void ReplayMenu::seekToDay(qint32 day)
         auto actorPos = m_mapSlidingActor->getPosition();
         // load map state during that day
         m_ReplayRecorder.seekToDay(day);
-        m_pMap->registerMapAtInterpreter();
         m_mapSlidingActor->addChild(m_pMap);
         // restore map position and scale
         m_pMap->setScale(scale);
@@ -443,8 +442,6 @@ void ReplayMenu::seekToDay(qint32 day)
         m_pMap->getGameRules()->createFogVision();
         updatePlayerinfo();
         Mainapp::getInstance()->continueRendering();
-        connectMap();
-        connectMapCursor();
         if (!m_uiPause)
         {
             swapPlay();
