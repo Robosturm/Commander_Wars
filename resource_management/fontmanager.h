@@ -34,7 +34,7 @@ public:
      */
     inline static QFont getMainFont16()
     {
-        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 14);
+        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 16);
         return font;
     }
     /**
@@ -43,7 +43,7 @@ public:
      */
     inline static QFont getMainFont24()
     {
-        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 22);
+        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 24);
         return font;
     }
     /**
@@ -52,7 +52,7 @@ public:
      */
     inline static QFont getMainFont32()
     {
-        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 28);
+        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 32);
         return font;
     }
     /**
@@ -61,7 +61,7 @@ public:
      */
     inline static QFont getMainFont48()
     {
-        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 46);
+        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 48);
         return font;
     }
     /**
@@ -70,7 +70,7 @@ public:
      */
     inline static QFont getMainFont72()
     {
-        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 70);
+        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 72);
         return font;
     }
     /**
@@ -79,7 +79,7 @@ public:
      */
     inline static QFont getLogoFont()
     {
-        static const QFont font = getFontWithPixelSize(m_fonts[LOGOFONT], 14);
+        static const QFont font = getFontWithPixelSize(m_fonts[LOGOFONT], 16);
         return font;
     }
     /**

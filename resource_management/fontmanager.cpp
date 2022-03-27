@@ -23,6 +23,7 @@ FontManager::FontManager()
     {
         searchFolders.append(mod + "/fonts/");
     }
+    m_fonts[MAINFONT] = "Helvetica";
     for (qint32 i = searchFolders.size() - 1; i >= 0; --i)
     {
         QString folder = searchFolders[i];
@@ -67,7 +68,6 @@ FontManager::FontManager()
                     }
                     node = node.nextSibling();
                 }
-                m_fonts[MAINFONT] = "Helvetica";
             }
             else
             {

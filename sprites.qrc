@@ -4726,5 +4726,8 @@
         <file>resources/images/terrain/reaf+NW+E.png</file>
         <file>resources/images/terrain/reaf+NW+S.png</file>
         <file>resources/images/terrain/reaf+NW+S+E.png</file>
+        <file>resources/objects/lock.png</file>
+        <file>resources/objects/unlock.png</file>
+        <file>resources/fonts/res.xml</file>
     </qresource>
 </RCC>

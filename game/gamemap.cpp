@@ -129,6 +129,17 @@ void GameMap::loadMapData()
         setZoom(1);
     }
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
+
+     m_markedFieldsLayer = oxygine::spActor::create();
+     m_markedFieldsLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
+     addChild(m_markedFieldsLayer);
+     m_moveArrowLayer = oxygine::spActor::create();
+     m_moveArrowLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::MoveArrow));
+     addChild(m_moveArrowLayer);
+     m_unitsLayer = oxygine::spActor::create();
+     m_unitsLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::Units));
+     addChild(m_unitsLayer);
+
     connect(this, &GameMap::sigZoomChanged, this, &GameMap::zoomChanged, Qt::QueuedConnection);
 }
 
@@ -1345,6 +1356,21 @@ void GameMap::updateMapFlags() const
             }
         }
     }
+}
+
+oxygine::spActor GameMap::getUnitsLayer() const
+{
+    return m_unitsLayer;
+}
+
+oxygine::spActor GameMap::getMoveArrowLayer() const
+{
+    return m_moveArrowLayer;
+}
+
+oxygine::spActor GameMap::getMarkedFieldsLayer() const
+{
+    return m_markedFieldsLayer;
 }
 
 void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)

@@ -54,10 +54,7 @@ public:
     };
     ENUM_CLASS ExtraDrawPriority
     {
-        MarkedFieldMap = -10, // used for marking an extra map layer
         BuildingLayer = 2,
-        MarkedField = 19,
-        UnitLayer,
     };
     static spTerrain createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap);
 

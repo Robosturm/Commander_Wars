@@ -938,6 +938,7 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
                 // we need to move to a loading place
                 std::vector<QVector3D> targets;
                 std::vector<QVector3D> transporterTargets;
+                appendCaptureTargets(actions, pUnit, pEnemyBuildings, targets);
                 appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, false, targets);
                 if (targets.size() == 0)
                 {
@@ -1967,7 +1968,9 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
                 QApplication::processEvents();
                 auto & unitData = pUnitData[i2];
                 Unit* pUnit = unitData.pUnit.get();
-                if (pUnit->getHp() > 0 && pUnit->getTerrain() != nullptr)
+                if (pUnit != nullptr &&
+                    pUnit->getHp() > 0 &&
+                    pUnit->getTerrain() != nullptr)
                 {
                     if (qAbs(point.x() - pUnit->Unit::getX()) +
                         qAbs(point.y() - pUnit->Unit::getY()) <=

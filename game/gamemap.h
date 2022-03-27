@@ -261,6 +261,22 @@ public:
         }
         return oxygine::spActor();
     }
+    /**
+     * @brief getMarkedFieldsLayer
+     * @return
+     */
+    oxygine::spActor getMarkedFieldsLayer() const;
+    /**
+     * @brief getMoveArrowLayer
+     * @return
+     */
+    oxygine::spActor getMoveArrowLayer() const;
+    /**
+     * @brief getUnitsLayer
+     * @return
+     */
+    oxygine::spActor getUnitsLayer() const;
+
 signals:
     void signalExitGame();
     void signalSaveGame();
@@ -801,6 +817,9 @@ private:
     MapHeaderInfo m_headerInfo;
     std::vector<std::vector<spTerrain>> m_fields;
     std::vector<oxygine::spActor> m_rowSprites;
+    oxygine::spActor m_markedFieldsLayer;
+    oxygine::spActor m_moveArrowLayer;
+    oxygine::spActor m_unitsLayer;
     QVector<spPlayer> m_players;
     QVector<oxygine::spColorRectSprite> m_gridSprites;
     QVector<oxygine::spColorRectSprite> m_middleCrossGridSprites;

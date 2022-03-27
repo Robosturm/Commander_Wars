@@ -110,7 +110,7 @@ void ReplayMenu::showRecordInvalid()
     {
         modList += mod + "\n";
     }
-    spDialogMessageBox pExit = spDialogMessageBox::create(tr("The current active mods or the current record are invalid! Exiting the Replay now. Mods used in the Replay:") + "\n" +
+    spDialogMessageBox pExit = spDialogMessageBox::create(tr("The current active mods or the current record are invalid or damaged! Exiting the Replay now. Mods used in the Replay:") + "\n" +
                                                           modList, false);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);    
     addChild(pExit);   
@@ -429,7 +429,6 @@ void ReplayMenu::seekToDay(qint32 day)
         auto actorPos = m_mapSlidingActor->getPosition();
         // load map state during that day
         m_ReplayRecorder.seekToDay(day);
-        m_pMap->registerMapAtInterpreter();
         m_mapSlidingActor->addChild(m_pMap);
         // restore map position and scale
         m_pMap->setScale(scale);
@@ -439,8 +438,6 @@ void ReplayMenu::seekToDay(qint32 day)
         m_pMap->getGameRules()->createFogVision();
         updatePlayerinfo();
         Mainapp::getInstance()->continueRendering();
-        connectMap();
-        connectMapCursor();
         if (!m_uiPause)
         {
             swapPlay();

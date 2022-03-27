@@ -802,6 +802,27 @@ qint32 Building::getOffensiveBonus()
     }
 }
 
+qint32 Building::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getCostReduction";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       id,
+                       baseCost,
+                       position.x(),
+                       position.y(),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 qint32 Building::getDefensiveBonus()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

@@ -53,13 +53,11 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
             emit signalSliderValueChanged(i);
         });
         addChild(m_Slider[i]);
-        char unlockChar = FontManager::SpecialChars::unlockChar;
-        char lockChar = FontManager::SpecialChars::lockChar;
-        oxygine::spButton pLockButton = pObjectManager->createButton("", 40, "Locks this slider. So the value can't be changed.", "button_square");
-        Label* pLabel = oxygine::safeCast<Label*>(pLockButton->getFirstChild().get());
-        pLabel->setText(QString(unlockChar));
-        pLockButton->getFirstChild()->setY(-5);
-        pLockButton->getFirstChild()->setX(-8);
+
+        oxygine::spButton pLockButton = pObjectManager->createIconButton("unlock", 40);
+        oxygine::Sprite* pSprite = oxygine::safeCast<Sprite*>(pLockButton->getFirstChild().get());
+
+
         qint32 x = m_Slider[i]->getX() + m_Slider[i]->getWidth() + 10;
         pLockButton->setPosition(x, i * 40);        
         m_lockButtons.append(pLockButton);
@@ -68,17 +66,15 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
         // add click listener for locking
         oxygine::Actor* pActor = pLockButton.get();
         auto* pSlider = m_Slider[i].get();
-        pLockButton->addClickListener([this, i, pActor, pLabel, unlockChar, lockChar, pSlider](oxygine::Event*)
+        pLockButton->addClickListener([this, i, pActor, pSprite, pObjectManager, pSlider](oxygine::Event*)
         {
             if (m_locked[i])
             {
-                pActor->getFirstChild()->setY(-5);
-                pLabel->setText(QString(unlockChar));
+                pSprite->setResAnim(pObjectManager->getResAnim("unlock"));
             }
             else
             {
-                pActor->getFirstChild()->setY(0);
-                pLabel->setText(QString(lockChar));
+                pSprite->setResAnim(pObjectManager->getResAnim("lock"));
             }
             pSlider->setEnabled(m_locked[i]);
             m_locked[i] = !m_locked[i];

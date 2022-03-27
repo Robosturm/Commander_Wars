@@ -19,6 +19,8 @@
         <image file="next_unit.png" />
         <image file="cancel.png" />
         <image file="info.png" />
+        <image file="lock.png" />
+        <image file="unlock.png" />
         <!-- editor selection -->
         <image file="arrow+right.png" cols = "3"/>
         <image file="editorselection.png"           guideX1="9" guideX2="120" guideY1="5" guideY2="125"/>

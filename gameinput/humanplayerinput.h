@@ -72,7 +72,7 @@ public:
      * @param y field
      * @param color of the marked field
      */
-    void createMarkedField(QPoint point, QColor color, Terrain::ExtraDrawPriority drawPriority);
+    void createMarkedField(QPoint point, QColor color);
     /**
      * @brief createCursorPath creates the arrow showing the current unit path
      * @param x
@@ -191,7 +191,7 @@ protected:
      * @param drawPriority
      * @return
      */
-    oxygine::spSprite createMarkedFieldActor(QPoint point, QColor color, Terrain::ExtraDrawPriority drawPriority);
+    oxygine::spSprite createMarkedFieldActor(QPoint point, QColor color);
     /**
      * @brief createSimpleZInformation
      * @param pData
@@ -207,7 +207,7 @@ private:
     spUnitPathFindingSystem m_pUnitPathFindingSystem{nullptr};
 
     std::vector<oxygine::spActor> m_Fields;
-    std::vector<QVector3D> m_FieldPoints;
+    std::vector<QPoint> m_FieldPoints;
     spMarkedFieldData m_pMarkedFieldData{nullptr};
 
     std::vector<oxygine::spActor> m_InfoFields;
