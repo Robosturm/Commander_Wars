@@ -4739,5 +4739,17 @@
         <file>resources/images/terrain/reaf+NW+E.png</file>
         <file>resources/images/terrain/reaf+NW+S.png</file>
         <file>resources/images/terrain/reaf+NW+S+E.png</file>
+        <file>resources/images/terrain/depot.png</file>
+        <file>resources/images/terrain/desert_pipeline.png</file>
+        <file>resources/images/terrain/pipeline.png</file>
+        <file>resources/images/terrain/snow_Pipeline.png</file>
+        <file>resources/images/terrain/waste_Pipeline.png</file>
+        <file>resources/images/game/battlesprites/background/back_depot.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertdepot.png</file>
+        <file>resources/images/game/battlesprites/background/back_raindepot.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowdepot.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastedepot.png</file>
+        <file>resources/images/game/minimap/minimap_depot.png</file>
+        <file>resources/images/building/depot.png</file>
     </qresource>
 </RCC>

@@ -278,7 +278,13 @@
         <image file="battlesprites/background/back_deserttempairport.png" />
         <image file="battlesprites/background/back_deserttempharbour.png" />
         <image file="battlesprites/background/back_wastetempairport.png" />
-        <image file="battlesprites/background/back_wastetempharbour.png" />
+        <image file="battlesprites/background/back_wastetempharbour.png" />        
+        <!-- depot stuff -->
+        <image file="battlesprites/background/back_depot.png" />
+        <image file="battlesprites/background/back_raindepot.png" />
+        <image file="battlesprites/background/back_snowdepot.png" />
+        <image file="battlesprites/background/back_desertdepot.png" />
+        <image file="battlesprites/background/back_wastedepot.png" />
         <!-- creeper -->
         <image file="battlesprites/background/back_creeper.png" />
         <!-- uncomment and use in your mod to get a background rendered instead of filled rectangle
@@ -421,6 +427,7 @@
         <image file="minimap/minimap_waste_ruin.png" />        
         <image file="minimap/minimap_teleport.png" />
         <image file="minimap/minimap_volcan.png" />
+        <image file="minimap/minimap_depot.png" />
         
         <!-- dialogue stuff -->
         <image file="dialogfield.png" />    

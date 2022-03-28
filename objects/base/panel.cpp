@@ -59,7 +59,7 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
         {
            emit m_HScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / getContentHeigth());
            emit m_VScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.x / getContentWidth());
-           pTouchEvent->stopPropagation();
+           // pTouchEvent->stopPropagation();
         }
     });
     m_hideTimer.setSingleShot(true);

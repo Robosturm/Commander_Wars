@@ -26,6 +26,7 @@ var Constructor = function()
                                 ["FACTORY", 1],
                                 ["HARBOUR", 1],
                                 ["HQ", 1],
+                                ["DEPOT", 1],
                                 ["MINE", 2],
                                 ["PIPESTATION", 1],
                                 ["RADAR", 1],
