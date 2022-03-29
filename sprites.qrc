@@ -2146,7 +2146,6 @@
         <file>resources/images/battleanimations/GeneralSprites/water_hit.png</file>
         <file>resources/images/battleanimations/watermine/watermine.png</file>
         <file>resources/images/battleanimations/watermine/watermine+mask.png</file>
-        <file>resources/images/colortables/preview.png</file>
         <file>resources/images/battleanimations/partisan/partisan+alt+mask.png</file>
         <file>resources/images/battleanimations/rocketthrower/rocketthrower+ac+fire+mask.png</file>
         <file>resources/images/battleanimations/rocketthrower/rocketthrower+bh+fire+mask.png</file>
@@ -4739,7 +4738,6 @@
         <file>resources/images/terrain/reaf+NW+E.png</file>
         <file>resources/images/terrain/reaf+NW+S.png</file>
         <file>resources/images/terrain/reaf+NW+S+E.png</file>
-        <file>resources/images/terrain/depot.png</file>
         <file>resources/images/terrain/desert_pipeline.png</file>
         <file>resources/images/terrain/pipeline.png</file>
         <file>resources/images/terrain/snow_Pipeline.png</file>
