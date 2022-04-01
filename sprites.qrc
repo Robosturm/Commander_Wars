@@ -4749,5 +4749,10 @@
         <file>resources/images/game/battlesprites/background/back_wastedepot.png</file>
         <file>resources/images/game/minimap/minimap_depot.png</file>
         <file>resources/images/building/depot.png</file>
+        <file>resources/images/battleanimations/duster/duster+ge+mask.png</file>
+        <file>resources/images/battleanimations/duster/duster+ma+mask.png</file>
+        <file>resources/images/battleanimations/duster/duster+os+mask.png</file>
+        <file>resources/images/battleanimations/duster/duster+ti+mask.png</file>
+        <file>resources/images/battleanimations/duster/duster+yc+mask.png</file>
     </qresource>
 </RCC>
