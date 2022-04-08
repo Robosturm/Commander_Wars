@@ -4754,5 +4754,9 @@
         <file>resources/images/battleanimations/duster/duster+os+mask.png</file>
         <file>resources/images/battleanimations/duster/duster+ti+mask.png</file>
         <file>resources/images/battleanimations/duster/duster+yc+mask.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastestreet+forest.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastestreet+mountain.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastestreet+sea.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastestreet+town.png</file>
     </qresource>
 </RCC>

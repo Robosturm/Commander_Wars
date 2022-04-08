@@ -11,6 +11,7 @@
         <image file="battlesprites/base_desertforest.png" />
         <image file="battlesprites/base_snowforest.png" />
         <image file="battlesprites/base_rainforest.png" />
+        <image file="battlesprites/base_wasteforest.png" />        
         <image file="battlesprites/over_rain.png" />
         <image file="battlesprites/over_snow.png" />
         <image file="battlesprites/over_sandstorm.png" />
@@ -181,6 +182,13 @@
         <image file="battlesprites/background/back_desertstreet+pipe.png" />
         <image file="battlesprites/background/back_desertstreet+sea.png" />
         <image file="battlesprites/background/back_desertstreet+town.png" />
+        <image file="battlesprites/background/back_wastestreet.png" />
+        <image file="battlesprites/background/back_wastestreet+forest.png" />
+        <image file="battlesprites/background/back_wastestreet+mountain.png" />
+        <image file="battlesprites/background/back_wastestreet+pipe.png" />
+        <image file="battlesprites/background/back_wastestreet+sea.png" />
+        <image file="battlesprites/background/back_wastestreet+town.png" />
+        <!-- hq -->
         <!-- hq -->
         <image file="battlesprites/background/back_hq+.png" />
         <image file="battlesprites/background/back_hq+ac.png" />
