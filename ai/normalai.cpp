@@ -157,6 +157,8 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"MaxProductionBuildingsForB", "Production", &m_maxProductionBuildingsForB, 1.0f, 1.f, 5.0f},
                   {"TurnOneDmageMalus", "Production", &m_turnOneDmageMalus, 10.0f, 1.f, 20.0f},
                   {"CounterUnitRatio", "Production", &m_counterUnitRatio, 2.0f, 1.f, 5.0f},
+                  {"SpamInfantryChance", "Production", &m_spamInfantryChance, 50.0f, 100.f, 50.0f},
+
                 };
 
     if (m_pMap != nullptr &&
@@ -2168,14 +2170,22 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     AI_CONSOLE_PRINT("NormalAI: Funds: " + QString::number(funds) + " funds for the next factory: " + QString::number(fundsPerFactory), Console::eDEBUG);
     if (fundsPerFactory <= m_cappingFunds)
     {
-        data[LowFunds] = 1.0;
-        if (fundsPerFactory > m_cappedFunds * m_fundsPerBuildingFactorB && productionBuildings <= m_maxProductionBuildingsForB)
+        auto chance = GlobalUtils::randInt(0, 100);
+        if (funds >= m_spamingFunds && chance > m_spamInfantryChance)
         {
-            fundsPerFactory = m_cappedFunds * m_fundsPerBuildingFactorB;
+            fundsPerFactory = m_spamingFunds;
         }
         else
         {
-            fundsPerFactory = m_cappedFunds;
+            data[LowFunds] = 1.0;
+            if (fundsPerFactory > m_cappedFunds * m_fundsPerBuildingFactorB && productionBuildings <= m_maxProductionBuildingsForB)
+            {
+                fundsPerFactory = m_cappedFunds * m_fundsPerBuildingFactorB;
+            }
+            else
+            {
+                fundsPerFactory = m_cappedFunds;
+            }
         }
     }
     else if (fundsPerFactory < m_spamingFunds * m_fundsPerBuildingFactorA)
