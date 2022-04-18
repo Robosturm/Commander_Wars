@@ -1392,7 +1392,7 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(MoveUnitData & unitData, 
         qint32 x = moveTarget.x();
         qint32 y = moveTarget.y();
         if (m_pMap->getTerrain(x, y)->getUnit() == nullptr &&
-            turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y) > 0)
+            turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y, 0) > 0)
         {
             float currentDamage = calculateCounterDamage(unitData, moveTarget, nullptr, 0.0f, pBuildings, pEnemyBuildings);
             if (currentDamage < 0)
@@ -1439,7 +1439,7 @@ qint32 NormalAi::getMoveTargetField(MoveUnitData & unitData, UnitPathFindingSyst
         qint32 y = movePath[i].y();
         Terrain* pTerrain = m_pMap->getTerrain(x, y);
         Building* pBuilding = pTerrain->getBuilding();
-        qint32 costs = turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y);
+        qint32 costs = turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y, 0);
         if ((pTerrain->getUnit() == nullptr ||
              pTerrain->getUnit() == unitData.pUnit.get()) &&
             costs >= 0 &&

@@ -1257,7 +1257,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
         !m_pGameAction->getTargetUnit()->getHasMoved() &&
         GlobalUtils::contains(m_FieldPoints, QPoint(x, y)))
     {
-        if (m_pUnitPathFindingSystem->getCosts(m_pUnitPathFindingSystem->getIndex(x, y), x, y, x, y) >= 0)
+        if (m_pUnitPathFindingSystem->getCosts(m_pUnitPathFindingSystem->getIndex(x, y), x, y, x, y, 0) >= 0)
         {
             // is it a neighbour field to the last target?
             if (((points.size() > 0) && ((points[0].x() - x + points[0].y() - y) != 0)))
@@ -1268,7 +1268,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
                     {
                         points = m_pUnitPathFindingSystem->getPathFast(x, y);
                     }
-                    else if (m_pUnitPathFindingSystem->getCosts(m_pUnitPathFindingSystem->getIndex(x, y), x, y, points[0].x(), points[0].y()) >= 0)
+                    else if (m_pUnitPathFindingSystem->getCosts(m_pUnitPathFindingSystem->getIndex(x, y), x, y, points[0].x(), points[0].y(), 0) >= 0)
                     {
                         points.insert(points.cbegin(), QPoint(x, y));
                         qint32 movepoints = m_pGameAction->getTargetUnit()->getMovementpoints(QPoint(x, y));
