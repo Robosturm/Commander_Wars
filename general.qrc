@@ -2055,5 +2055,10 @@
         <file>resources/scripts/terrain/BRIDGE2.js</file>
         <file>resources/scripts/weapons/weapon_bike_bazooka.js</file>
         <file>resources/scripts/building/depot.js</file>
+        <file>data/gamerules/info.txt</file>
+        <file>data/randommaps/commanderwarsgenerator.js</file>
+        <file>data/randommaps/multiclimatesgenerator.js</file>
+        <file>data/randommaps/seamapgenerator.js</file>
+        <file>data/records/info.txt</file>
     </qresource>
 </RCC>
