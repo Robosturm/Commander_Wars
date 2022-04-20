@@ -1,9 +1,8 @@
 var Constructor = function()
 {
     
-    this.loadSprites = function(building, neutral, map)
+    this.loadSprites = function(terrain, map)
     {
-        // neutral player
         building.loadSprite("depot", false);
     };
     this.getBaseIncome = function()
@@ -12,7 +11,7 @@ var Constructor = function()
     };
     this.getDefense = function()
     {
-        return 3;
+        return 2;
     };
     this.getMiniMapIcon = function()
     {
@@ -26,7 +25,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Depot which provides some defence.");
+        return qsTr("A civilian cargo depot that provides adequate cover.");
     };
 
     this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
