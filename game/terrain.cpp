@@ -911,7 +911,10 @@ void Terrain::addBuildingSprite(spBuilding pBuilding)
     {
         m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
         m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
-        m_pMap->getRowActor(Terrain::m_y)->addChild(m_Building);
+        if (Terrain::m_y >= 0)
+        {
+            m_pMap->getRowActor(Terrain::m_y)->addChild(m_Building);
+        }
     }
     else
     {
@@ -1014,11 +1017,9 @@ void Terrain::setUnit(spUnit pUnit)
             pTerrain->setUnit(spUnit());
         }
         // add Terrain to unit and unit to drawing actor
-        pUnit->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::UnitLayer));
+        pUnit->setPriority(getMapTerrainDrawPriority());
         pUnit->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
         pUnit->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
-
-        
         if (m_pMap)
         {
             Player* pPlayer = m_pMap->getCurrentViewPlayer();
@@ -1030,7 +1031,7 @@ void Terrain::setUnit(spUnit pUnit)
             {
                 pUnit->setVisible(false);
             }
-            m_pMap->addChild(pUnit);
+            m_pMap->getUnitsLayer()->addChild(pUnit);
         }
     }
 }

@@ -111,6 +111,11 @@ public:
      */
     void updateIcons(Player* pPlayer);
     /**
+     * @brief updateRankInfoVisibility
+     * @param pPlayer
+     */
+    void updateRankInfoVisibility(Player* pPlayer);
+    /**
      * @brief setModdingFlags
      * @param value
      */

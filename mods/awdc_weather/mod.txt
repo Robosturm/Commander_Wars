@@ -1,4 +1,4 @@
-name=Advance Wars Darc Conflict Weather Mod
+name=Advance Wars Dark Conflict Weather Mod
 description=This mod changes all Weather effects to Advance Wars DC.
 version=1.0.0
 compatible_mods=

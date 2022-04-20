@@ -190,7 +190,7 @@ var Constructor = function()
         }
         if (baseTerrainId === "WASTE")
         {
-            return "fore_street+" + rand.toString();
+            return "";
         }
         else if (baseTerrainId === "SNOW")
         {
@@ -230,6 +230,10 @@ var Constructor = function()
         if (baseTerrainId === "WASTE")
         {
             var weatherModifier = TERRAIN.getWeatherModifier(map);
+            if (weatherModifier === "")
+            {
+                weatherModifier = TERRAIN.getTerrainWeatherModifier(terrain);
+            }
             return __BASESTREET.getStreetAnimationBackground(id, weatherModifier);
         }
         else if (baseTerrainId === "SNOW")

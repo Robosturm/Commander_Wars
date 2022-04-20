@@ -119,15 +119,7 @@ var Constructor = function()
                 }
             }
         }
-
-        if (surroundings === "")
-        {
-            terrain.loadBaseSprite(spriteId + "+E+W");
-        }
-        else
-        {
-            terrain.loadBaseSprite(spriteId + surroundings);
-        }
+        terrain.loadBaseSprite(spriteId + surroundings);
     };
     this.getMiniMapIcon = function()
     {
@@ -193,7 +185,8 @@ var Constructor = function()
     this.getSprites = function(spriteId)
     {
         // array of sprites that can be selected as fix sprites for this terrain
-        return [spriteId + "+E",
+        return [spriteId,
+                spriteId + "+E",
                 spriteId + "+E+S",
                 spriteId + "+E+S+W",
                 spriteId + "+E+W",

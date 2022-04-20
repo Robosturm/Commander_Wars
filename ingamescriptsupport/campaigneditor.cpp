@@ -180,7 +180,7 @@ void CampaignEditor::showAddCampaign()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getUserPath() + m_CampaignFolder->getCurrentText();
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Add"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);    
 }
@@ -190,7 +190,7 @@ void CampaignEditor::showSaveCampaign()
     QStringList wildcards;
     wildcards.append("*.jsm");
     QString path = Settings::getUserPath() + "maps/";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_Name->getCurrentText());
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_Name->getCurrentText(), false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::saveCampaign, Qt::QueuedConnection);    
 }
@@ -200,7 +200,7 @@ void CampaignEditor::showLoadCampaign()
     QStringList wildcards;
     wildcards.append("*.jsm");
     QString path = Settings::getUserPath() + "maps/";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::loadCampaign, Qt::QueuedConnection);    
 }
@@ -312,7 +312,7 @@ void CampaignEditor::updateCampaignData()
 
         spCheckbox pBox = spCheckbox::create();
         pBox->setChecked(mapDatas[i].lastMap);
-        pBox->setTooltipText(tr("All maps marked as last map need to be won in order to finish the campaign"));
+        pBox->setTooltipText(tr("All maps marked as last map need to be won in order to finish the campaign."));
         pBox->setPosition(940, 10 + i * 40);
         m_Panel->addItem(pBox);
         connect(pBox.get(), &Checkbox::checkChanged, [this, i](bool value)
@@ -761,7 +761,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     pText->setPosition(10, 10);
     pPanel->addItem(pText);
     spSpinBox spinBox = spSpinBox::create(150, 1, mapDatas.size() - 1);
-    spinBox->setTooltipText(tr("Number of maps that disable this map again. They need to be won in order to make this map unplayable again. E.g. you won the selected map and you want to stop make it repeatedly playable."));
+    spinBox->setTooltipText(tr("Number of maps that disable this map again. When they are one this map is made unplayable. Can be used to make a map no longer playable after a Victory."));
     spinBox->setPosition(300, 10);
     spinBox->setCurrentValue(mapDatas[index].disableCount);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -974,7 +974,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pText->setPosition(30, y);
     pPanel->addItem(pText);
     checkBox = spCheckbox::create();
-    checkBox->setTooltipText(tr("If checked and if the disable variable fullfil the condition this map can't be played."));
+    checkBox->setTooltipText(tr("If checked and if the disable variable has been fullfiled this map can't be played."));
     checkBox->setPosition(width, y);
     checkBox->setChecked(mapDatas[index].scriptVariableDisableActive);
     connect(checkBox.get(), &Checkbox::checkChanged,

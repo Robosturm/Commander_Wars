@@ -42,7 +42,7 @@ public:
      * @param y
      * @return the exact costs needed to get onto the given field. -1 = unreachable
      */
-    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY)  override;
+    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY, qint32 currentCost)  override;
     /**
      * @brief getCosts returns the costs need to go the given path
      * @param path the path the unit should go
@@ -132,6 +132,7 @@ protected:
     Unit* m_pUnit;
     Player* m_pPlayer{nullptr};
     qint32 m_Movepoints{-2};
+    qint32 m_unitMovepoints{0};
     bool m_fast{false};
     bool m_supportsShortCuts{true};
     bool m_useBasecosts{false};

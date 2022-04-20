@@ -221,6 +221,22 @@
         <image file="reaf+N+E.png" cols = "8" />
         <image file="reaf+N+W.png" cols = "8" />
         <image file="reaf+S+W.png" cols = "8" />
+        <image file="reaf+E+S+W.png" cols = "8" />
+        <image file="reaf+E+W.png" cols = "8" />
+        <image file="reaf+N+E+S.png" cols = "8" />
+        <image file="reaf+N+E+W.png" cols = "8" />
+        <image file="reaf+N+S+W.png" cols = "8" />
+        <image file="reaf+N+S.png" cols = "8" />
+        <image file="reaf+NE+NW+S.png" cols = "8" />
+        <image file="reaf+NE+NW.png" cols = "8" />
+        <image file="reaf+NE+S+W.png" cols = "8" />
+        <image file="reaf+NE+S.png" cols = "8" />
+        <image file="reaf+NE+W.png" cols = "8" />
+        <image file="reaf+NE.png" cols = "8" />
+        <image file="reaf+NW+E.png" cols = "8" />
+        <image file="reaf+NW+S+E.png" cols = "8" />
+        <image file="reaf+NW+S.png" cols = "8" />
+        <image file="reaf+NW.png" cols = "8" />
         
         <image file="mountain.png" />
         <image file="mountain+short.png" />
@@ -606,6 +622,7 @@
         <image file="meteor+S+W.png" cols = "3" />
         <image file="meteor+W.png" cols = "3" />
         
+        <image file="pipeline.png" />
         <image file="pipeline+E.png" />
         <image file="pipeline+E+S.png" />
         <image file="pipeline+E+S+W.png" />
@@ -750,6 +767,7 @@
         <image file="snow_weld+E+W.png" />
         <image file="snow_weld+N+S.png" />
         
+        <image file="snow_Pipeline.png" />
         <image file="snow_Pipeline+E.png" />
         <image file="snow_Pipeline+E+S.png" />
         <image file="snow_Pipeline+E+S+W.png" />
@@ -852,6 +870,7 @@
         <image file="desert_weld+E+W.png" />
         <image file="desert_weld+N+S.png" />
 
+        <image file="desert_pipeline.png" />
         <image file="desert_pipeline+E.png" />
         <image file="desert_pipeline+E+S.png" />
         <image file="desert_pipeline+E+S+W.png" />
@@ -1011,6 +1030,7 @@
         <image file="waste_path+style0+S+W+shadow.png" />
         <image file="waste_path+style0+W+shadow.png" />
 
+        <image file="waste_Pipeline.png" />
         <image file="waste_Pipeline+E.png" />
         <image file="waste_Pipeline+E+S.png" />
         <image file="waste_Pipeline+E+S+W.png" />

@@ -626,6 +626,7 @@ private:
     double m_maxProductionBuildingsForB{1};
     double m_turnOneDmageMalus{5};
     double m_counterUnitRatio{2};
+    double m_spamInfantryChance{50};
 
     float m_currentDirectIndirectRatio{1.0f};
 

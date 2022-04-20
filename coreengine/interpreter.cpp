@@ -25,13 +25,13 @@ Interpreter::Interpreter()
     connect(this, &Interpreter::sigNetworkGameFinished, this, &Interpreter::networkGameFinished, Qt::QueuedConnection);
 }
 
-void Interpreter::reloadInterpreter(const QString & runtime)
+bool Interpreter::reloadInterpreter(const QString & runtime)
 {
     CONSOLE_PRINT("Reloading interpreter", Console::eDEBUG);
     m_pInstance = nullptr;
     m_pInstance = spInterpreter::create();
     m_pInstance->init();
-    m_pInstance->loadScript(runtime, "Interpreter Runtime");
+    return m_pInstance->loadScript(runtime, "Interpreter Runtime");
 }
 
 Interpreter::~Interpreter()
@@ -86,8 +86,9 @@ QString Interpreter::getRuntimeData()
     return m_runtimeData;
 }
 
-void Interpreter::openScript(const QString & script, bool setup)
+bool Interpreter::openScript(const QString & script, bool setup)
 {
+    bool success = false;
     QFile scriptFile(script);
     if (!scriptFile.open(QIODevice::ReadOnly))
     {
@@ -122,11 +123,17 @@ void Interpreter::openScript(const QString & script, bool setup)
                             value.property("lineNumber").toString();
             CONSOLE_PRINT(error, Console::eERROR);
         }
+        else
+        {
+            success = true;
+        }
     }
+    return success;
 }
 
-void Interpreter::loadScript(const QString & content, const QString & script)
+bool Interpreter::loadScript(const QString & content, const QString & script)
 {
+    bool success = false;
     CONSOLE_PRINT("Interpreter::loadScript: " + script, Console::eDEBUG);
     QJSValue value = evaluate(content, script);
     if (value.isError())
@@ -134,8 +141,13 @@ void Interpreter::loadScript(const QString & content, const QString & script)
         QString error = value.toString() + " in script " + script + " in File: " +
                         value.property("fileName").toString() + " at Line: " +
                         value.property("lineNumber").toString();
-        CONSOLE_PRINT(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);        
     }
+    else
+    {
+        success = true;
+    }
+    return success;
 }
 
 QJSValue Interpreter::doString(const QString & task)

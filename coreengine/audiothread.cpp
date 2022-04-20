@@ -432,9 +432,14 @@ void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoin
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        QString currentPath = Settings::getUserPath() + file;
+        QString currentPath = file;
+        if (!Settings::getUserPath().isEmpty())
+        {
+            currentPath = Settings::getUserPath() + "/" + file;
+        }
         if (!QFile::exists(currentPath))
         {
+            CONSOLE_PRINT("Unable to locate music file: " + currentPath + " using compiled path.", Console::eERROR);
             currentPath = oxygine::Resource::RCC_PREFIX_PATH + file;
         }
         if (QFile::exists(currentPath))
@@ -473,6 +478,10 @@ void AudioThread::mediaStatusChanged(QMediaPlayer::MediaStatus status)
             case QMediaPlayer::InvalidMedia:
             {
                 CONSOLE_PRINT("Invalid media detected for player", Console::eWARNING);
+                if (m_player->m_currentMedia < m_PlayListdata.size())
+                {
+                    CONSOLE_PRINT("Unable to play: " +  m_PlayListdata[m_player->m_currentMedia].m_file, Console::eWARNING);
+                }
             }
             default:
             {
@@ -500,7 +509,8 @@ void AudioThread::SlotLoadFolder(QString folder)
     QStringList loadedSounds;
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        loadMusicFolder(Settings::getMods().at(i) + "/" + folder, loadedSounds);
+        loadMusicFolder(Settings::getUserPath() + "/" + Settings::getMods().at(i) + "/" + folder, loadedSounds);
+        loadMusicFolder(QString(oxygine::Resource::RCC_PREFIX_PATH) +  "/" + Settings::getMods().at(i) + "/" + folder, loadedSounds);
     }
     if (m_loadBaseGameFolders)
     {

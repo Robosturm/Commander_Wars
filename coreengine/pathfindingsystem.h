@@ -113,7 +113,7 @@ public:
      * @param y
      * @return
      */
-    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY) = 0;
+    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY, qint32 currentCost) = 0;
     /**
      * @brief explores the map until the open list is empty or finished returned true.
      * This will also add the start point to the open list

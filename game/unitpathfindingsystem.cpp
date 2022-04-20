@@ -14,8 +14,10 @@ UnitPathFindingSystem::UnitPathFindingSystem(GameMap* pMap, Unit* pUnit, Player*
                         pMap->getMapWidth(),
                         pMap->getMapHeight()),
       m_pUnit(pUnit),
+      m_unitMovepoints{m_pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()))},
       m_pPlayer(pPlayer),
       m_pMap(pMap)
+
 {
     setObjectName("UnitPathFindingSystem");
     Mainapp* pApp = Mainapp::getInstance();
@@ -25,7 +27,7 @@ UnitPathFindingSystem::UnitPathFindingSystem(GameMap* pMap, Unit* pUnit, Player*
     {
         m_pPlayer = m_pUnit->getOwner();
     }
-    setMovepoints(m_pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())));
+    setMovepoints(m_unitMovepoints);
     m_supportsShortCuts = MovementTableManager::getInstance()->getSupportsFastPfs(pUnit->getMovementType());
 }
 
@@ -50,7 +52,7 @@ bool UnitPathFindingSystem::finished(qint32, qint32, qint32)
     return false;
 }
 
-qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY)
+qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY, qint32 currentCost)
 {
     qint32 direction = getMoveDirection(curX, curY, x, y);
     if (direction == Directions::Unknown)
@@ -123,7 +125,7 @@ qint32 UnitPathFindingSystem::getCosts(const std::vector<QPoint> & path)
     for (qint32 i = path.size() - 2; i >= 0; i--)
     {
         totalCosts += UnitPathFindingSystem::getCosts(getIndex(path[i].x(), path[i].y()), path[i].x(), path[i].y(),
-                                                      path[i + 1].x(), path[i + 1].y());
+                                                      path[i + 1].x(), path[i + 1].y(), totalCosts);
     }
     return totalCosts;
 }
@@ -230,7 +232,7 @@ std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(std::vect
             {
                 Unit* pNodeUnit = m_pMap->getTerrain(path[i].x(), path[i].y())->getUnit();
                 currentCosts += getCosts(getIndex(path[i].x(), path[i].y()), path[i].x(), path[i].y(),
-                                         path[i + 1].x(), path[i + 1].y());
+                                         path[i + 1].x(), path[i + 1].y(), currentCosts);
                 if (isCrossable(pNodeUnit, path[i].x(), path[i].y(), path[i + 1].x(), path[i + 1].y(), currentCosts, movepoints))
                 {
                     lastValidPoint = path[i];
@@ -280,7 +282,7 @@ bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qin
          (pNodeUnit == m_pUnit) || // current field
          blockedByEnemy(pNodeUnit)) &&
         (movepoints < 0 || movementCosts <= movepoints) && // inside given cost limits
-        (getCosts(getIndex(x, y), x, y, curX, curY) > 0))
+        (getCosts(getIndex(x, y), x, y, curX, curY, 0) > 0))
     {
         return true;
     }

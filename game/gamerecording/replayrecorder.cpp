@@ -119,21 +119,23 @@ bool ReplayRecorder::loadRecord(const QString & filename)
         if (m_mods == Settings::getMods())
         {
             QString interpreterEnvironment(envData);
-            Interpreter::reloadInterpreter(interpreterEnvironment);
-            m_stream >> m_count;
-            m_stream >> m_dailyMapPos;
-            // load map
-            m_mapPos = m_recordFile.pos();
-            m_pMap->clearMap();
-            m_pMap->deserializeObject(m_stream);
-            m_pMap->setIsHumanMatch(false);
-            m_progress = 0;
-            // swap out all ai's / or players with a proxy ai.
-            for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+            if (Interpreter::reloadInterpreter(interpreterEnvironment))
             {
-                m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes::AiTypes_ProxyAi));
+                m_stream >> m_count;
+                m_stream >> m_dailyMapPos;
+                // load map
+                m_mapPos = m_recordFile.pos();
+                m_pMap->clearMap();
+                m_pMap->deserializeObject(m_stream);
+                m_pMap->setIsHumanMatch(false);
+                m_progress = 0;
+                // swap out all ai's / or players with a proxy ai.
+                for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+                {
+                    m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes::AiTypes_ProxyAi));
+                }
+                m_playing = true;
             }
-            m_playing = true;
         }
     }
     return m_playing;

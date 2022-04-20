@@ -338,6 +338,11 @@ public slots:
      */
     qint32 getOffensiveBonus();
     /**
+     * @brief getCostReduction
+     * @return
+     */
+    qint32 getCostModifier(const QString & id, qint32 baseCost, QPoint position);
+    /**
      * @brief getOffensiveFieldBonus
      * @param pAttacker
      * @param atkPosition

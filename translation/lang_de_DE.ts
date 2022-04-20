@@ -15,7 +15,7 @@
     </message>
     <message>
         <location filename="../menue/achievementmenu.cpp" line="72"/>
-        <source>Text that will be searched for in the title of each wikipage.</source>
+        <source>Search for an Achievement by title or description.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -376,11 +376,13 @@
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="128"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="203"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="137"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="193"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -392,6 +394,11 @@
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="167"/>
         <source>Do you want to exit the campaign editor?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="183"/>
+        <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -421,7 +428,17 @@
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="315"/>
-        <source>All maps marked as last map need to be won in order to finish the campaign</source>
+        <source>All maps marked as last map need to be won in order to finish the campaign.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="764"/>
+        <source>Number of maps that disable this map again. When they are one this map is made unplayable. Can be used to make a map no longer playable after a Victory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="977"/>
+        <source>If checked and if the disable variable has been fullfiled this map can&apos;t be played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -442,11 +459,6 @@
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="760"/>
         <source>Disable Map Count:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="764"/>
-        <source>Number of maps that disable this map again. They need to be won in order to make this map unplayable again. E.g. you won the selected map and you want to stop make it repeatedly playable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -511,11 +523,6 @@
         <source>Disable Variable</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="977"/>
-        <source>If checked and if the disable variable fullfil the condition this map can&apos;t be played.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CampaignMenu</name>
@@ -531,6 +538,7 @@
     </message>
     <message>
         <location filename="../menue/campaignmenu.cpp" line="72"/>
+        <location filename="../menue/campaignmenu.cpp" line="509"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -933,17 +941,17 @@
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="79"/>
-        <source>Selects the Owner of the current unit. This is immediatly applied.</source>
+        <source>Selects the Owner of the current unit. This is immediately applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="111"/>
+        <source>Custom Name of the Terrain. Leave the name empty to use its Default Name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="108"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="111"/>
-        <source>Custom Name of the Terrain. Empty name equals the default name.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -994,6 +1002,11 @@
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="174"/>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogModifyUnit</name>
@@ -1009,11 +1022,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="104"/>
-        <source>Selects the custom name of the unit shown instead of the actual unit name. An empty name equals the actual unit name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="114"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
@@ -1024,11 +1032,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="118"/>
-        <source>Selects the HP of the current unit. This is immediatly applied.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="131"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
@@ -1036,11 +1039,6 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="134"/>
         <source>Fuel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="135"/>
-        <source>Selects the Fuel of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1055,18 +1053,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="161"/>
-        <source>Selects the Ammo 1 of the current unit. This is immediatly applied.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="183"/>
         <source>Ammo 2: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="187"/>
-        <source>Selects the Ammo 2 of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1080,8 +1068,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="104"/>
+        <source>Selects the custom name of the unit shown instead of the actual unit name. An empty name will display the default name for that unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="118"/>
+        <source>Selects the HP of the current unit. This is immediately applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="135"/>
+        <source>Selects the Fuel of the current unit. This is immediately applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="161"/>
+        <source>Selects the Ammo 1 of the current unit. This is immediately applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="187"/>
+        <source>Selects the Ammo 2 of the current unit. This is immediately applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="218"/>
-        <source>Selects the Owner of the current unit. This is immediatly applied.</source>
+        <source>Selects the Owner of the current unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1118,7 +1131,17 @@ Defensive AI the ai moves the unit only if it can attack.
 Hold AI the ai only attacks but never moves with this unit.
 Patrol the unit will move to each position in the given order
 Patrol Loop the unit will move to each position in the given order and restart at the first
-This is immediatly applied.</source>
+This is immediately applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="269"/>
+        <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rank. This is immediately applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="345"/>
+        <source>Selects the unit loaded by the transporter. Enter &apos;-&apos; for no unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1137,18 +1160,8 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="269"/>
-        <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="313"/>
         <source>Loaded Unit </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="345"/>
-        <source>Selects the unit loaded by the transporter. - for no unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1252,17 +1265,48 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="104"/>
-        <source>Selects the width for the new map.</source>
+        <source>Selects the width of the new map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="117"/>
+        <source>Selects the height of the new map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="157"/>
+        <source>The seed to generate the new map. Using the same map settings with the same seed will generate the same map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="184"/>
+        <source>The percent of randomly placed buildings versus buildings placed near each HQ. A lower percentage places more buildings randomly across the whole map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="216"/>
+        <source>Total amount of units that get spawned. If no valid position for a unit is found no unit will be spawned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="230"/>
+        <source>The percentage of units which are spawned near the HQ of the player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="243"/>
+        <source>Random: Units are spawned at random.
+Distributed: Units are spawned at the given rate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="472"/>
+        <source>The percentage of buildings distributed between the players. Note buildings close to an Player HQ may be ignored.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="113"/>
         <source>Heigth:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="117"/>
-        <source>Selects the heigth for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1291,11 +1335,6 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="157"/>
-        <source>The seed to generate the new map. Same map settings with the same seed generate the same map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="166"/>
         <source>Create Road:</source>
         <translation type="unfinished"></translation>
@@ -1308,11 +1347,6 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="179"/>
         <source>Base Size:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="184"/>
-        <source>The percent distribution between randomly placed buildings and buildings placed near each HQ. A lower distributes more buildings randomly across the whole map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1336,18 +1370,8 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="216"/>
-        <source>Total amount of units that get spawned. If no valid position for a unit is found no unit gets spawned instead</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="225"/>
         <source>Units near HQ:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="230"/>
-        <source>The percantage of units which get spawned near the HQ of the player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1363,12 +1387,6 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="241"/>
         <source>Distributed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="243"/>
-        <source>Random for units getting spawned at random.
-Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1392,6 +1410,11 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="371"/>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="463"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
@@ -1400,11 +1423,6 @@ Distributed for units beeing spawned at the given rate.</source>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="468"/>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="510"/>
         <source>Player </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="472"/>
-        <source>The percent building distribution between the players. Note buildings close to an Player HQ may be ignored.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1422,12 +1440,12 @@ Distributed for units beeing spawned at the given rate.</source>
     <name>DialogRandomMap::DialogRandomMap</name>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="423"/>
-        <source>The percent distribution between the different terrains when a terrain is placed.</source>
+        <source>The percentage of different terrain types distributed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="440"/>
-        <source>The percent distribution between the different buildings when a building is placed.</source>
+        <source>The percentage of different buildings types distributed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1839,6 +1857,16 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="436"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="448"/>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="472"/>
         <source>Left: </source>
         <translation type="unfinished"></translation>
@@ -1879,6 +1907,19 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="557"/>
+        <location filename="../menue/editormenue.cpp" line="569"/>
+        <location filename="../menue/editormenue.cpp" line="593"/>
+        <location filename="../menue/editormenue.cpp" line="605"/>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="581"/>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="722"/>
         <source>Do you want to exit the map editor?</source>
         <translation type="unfinished"></translation>
@@ -1887,7 +1928,7 @@ Distributed for units beeing spawned at the given rate.</source>
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="../objects/dialogs/filedialog.cpp" line="46"/>
+        <location filename="../objects/dialogs/filedialog.h" line="30"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1953,9 +1994,9 @@ Distributed for units beeing spawned at the given rate.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="60"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="77"/>
-        <location filename="../game/gamemap.cpp" line="550"/>
-        <location filename="../game/gamemap.cpp" line="674"/>
-        <location filename="../game/gamemap.cpp" line="1423"/>
+        <location filename="../game/gamemap.cpp" line="561"/>
+        <location filename="../game/gamemap.cpp" line="685"/>
+        <location filename="../game/gamemap.cpp" line="1449"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1970,164 +2011,164 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="389"/>
+        <location filename="../game/gamemap.cpp" line="400"/>
         <source>Tags
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="392"/>
+        <location filename="../game/gamemap.cpp" line="403"/>
         <source>Bases
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="396"/>
+        <location filename="../game/gamemap.cpp" line="407"/>
         <source>Airports
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="400"/>
+        <location filename="../game/gamemap.cpp" line="411"/>
         <source>Harbours
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="404"/>
+        <location filename="../game/gamemap.cpp" line="415"/>
         <source>Towers
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="408"/>
+        <location filename="../game/gamemap.cpp" line="419"/>
         <source>Teleport
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="412"/>
+        <location filename="../game/gamemap.cpp" line="423"/>
         <source>Mixed bases
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="416"/>
+        <location filename="../game/gamemap.cpp" line="427"/>
         <source>Predeployed
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="420"/>
+        <location filename="../game/gamemap.cpp" line="431"/>
         <source>Symetric
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="424"/>
+        <location filename="../game/gamemap.cpp" line="435"/>
         <source>PvP
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="428"/>
+        <location filename="../game/gamemap.cpp" line="439"/>
         <source>FTA
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="432"/>
+        <location filename="../game/gamemap.cpp" line="443"/>
         <source>Vs AI
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="436"/>
+        <location filename="../game/gamemap.cpp" line="447"/>
         <source>Team play
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="440"/>
+        <location filename="../game/gamemap.cpp" line="451"/>
         <source>Historical
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="444"/>
+        <location filename="../game/gamemap.cpp" line="455"/>
         <source>Low funds
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="448"/>
+        <location filename="../game/gamemap.cpp" line="459"/>
         <source>High funds
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="452"/>
+        <location filename="../game/gamemap.cpp" line="463"/>
         <source>Naval
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="456"/>
+        <location filename="../game/gamemap.cpp" line="467"/>
         <source>Ground
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="460"/>
+        <location filename="../game/gamemap.cpp" line="471"/>
         <source>Air
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="464"/>
+        <location filename="../game/gamemap.cpp" line="475"/>
         <source>Scripted
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="550"/>
-        <location filename="../game/gamemap.cpp" line="1423"/>
+        <location filename="../game/gamemap.cpp" line="561"/>
+        <location filename="../game/gamemap.cpp" line="1449"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="646"/>
+        <location filename="../game/gamemap.cpp" line="657"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="674"/>
+        <location filename="../game/gamemap.cpp" line="685"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1398"/>
+        <location filename="../game/gamemap.cpp" line="1424"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1453"/>
+        <location filename="../game/gamemap.cpp" line="1479"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1463"/>
+        <location filename="../game/gamemap.cpp" line="1489"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1471"/>
+        <location filename="../game/gamemap.cpp" line="1497"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1483"/>
+        <location filename="../game/gamemap.cpp" line="1509"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2146,6 +2187,8 @@ Distributed for units beeing spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="631"/>
+        <location filename="../menue/gamemenue.cpp" line="1685"/>
+        <location filename="../menue/gamemenue.cpp" line="1722"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2161,7 +2204,7 @@ Distributed for units beeing spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="862"/>
-        <source>Waiting for Players/Observers to join</source>
+        <source>Waiting for Players/Observers to join...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2256,11 +2299,6 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="52"/>
-        <source>If active walk, capture power animations and so on will be shown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/gameplayandkeys.cpp" line="61"/>
         <source>Battle Animations: </source>
         <translation type="unfinished"></translation>
@@ -2288,11 +2326,6 @@ Distributed for units beeing spawned at the given rate.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="64"/>
         <source>Enemy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="68"/>
-        <source>Select which ingame animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2326,15 +2359,6 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="87"/>
-        <source>Selects which battle animations are played when fighting an enemy.
-Detailed    - Normal Battleanimation
-Transparent - Colored background is semi-transparent
-Fullscreen  - Animations are upscaled based on the resolution
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/gameplayandkeys.cpp" line="102"/>
         <source>Dialogs: </source>
         <translation type="unfinished"></translation>
@@ -2342,18 +2366,17 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="105"/>
         <location filename="../objects/gameplayandkeys.cpp" line="122"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="139"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="156"/>
         <source>off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="105"/>
         <location filename="../objects/gameplayandkeys.cpp" line="122"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="139"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="156"/>
         <source>on</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="107"/>
-        <source>Selects if the dialogs are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2368,609 +2391,670 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="136"/>
+        <source>Day 2 Day: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="141"/>
+        <source>Selects if the day to day screen gets skipped or not. Note on fog of war maps the screen is still shown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="153"/>
+        <source>Movement: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="158"/>
+        <source>Selects if movement animations get shown or not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="170"/>
         <source>Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="140"/>
-        <source>Selects the speed at which animations are played. Except battle and walking animations.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="152"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="186"/>
         <source>Walk Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="156"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="190"/>
         <source>Selects the speed at which units walk across the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="168"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="202"/>
         <source>Battle Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="172"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="206"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="184"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="218"/>
         <source>Capture Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="188"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="222"/>
         <source>Selects the speed at which capture animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="200"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="234"/>
         <source>Dialog Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="204"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="238"/>
         <source>Selects the speed at which dialog animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="216"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="250"/>
         <source>Multi Turn Plantime: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="220"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="254"/>
         <source>Selects the amount of turns you can preplan with a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="232"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="266"/>
         <source>Auto End Turn: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="236"/>
-        <source>If active the game will automatically end your turn if you can&apos;t give any orders anymore.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="248"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="282"/>
         <source>Detailed Battle Info: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="252"/>
-        <source>If active the game will show a detailed battle forecast info.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="268"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="302"/>
         <source>Menu Heigth: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="272"/>
-        <source>Amount of items per row for ingame menus before a new row is added.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="284"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="318"/>
         <source>Menu Width: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="288"/>
-        <source>Amount of columns for ingame menus before a scrollable menu is shown.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="300"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="334"/>
         <source>Shown Players: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="305"/>
-        <source>Selects the amount of players shown in game on the sidebar.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="314"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="348"/>
         <source>Supply Warning: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="318"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="352"/>
         <source>Selects when the supply warnings for ammo and fuel appear.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="330"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="364"/>
         <source>Show PC Cursor: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="334"/>
-        <source>If active the windows cursors is hidden during a game. Giving you a more Gameboy like feeling.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="346"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="380"/>
         <source>Warp PC Cursor: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="350"/>
-        <source>If active the windows cursors is moved to the first entry when opening menus or similar actions. Only disable it if you intend to play the mouse only.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="362"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="396"/>
         <source>Animated Markers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="366"/>
-        <source>If active the currently selectable fiedls get animated.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="378"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="412"/>
         <source>CO Info Position: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="381"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="415"/>
         <source>Flipping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="381"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="415"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="381"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="415"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="385"/>
-        <source>Select where the CO Info is shown. Where Flipping positions it at the opposite side of the cursor.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="395"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="429"/>
         <source>Auto Scrolling: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="399"/>
-        <source>If active the map is scrolled automatically while the cursor is at the screen borders.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="415"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="449"/>
         <source>Show Coordinates: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="419"/>
-        <source>If active the map coordinates are shown during a game.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="431"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="465"/>
         <source>Auto Camera: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="435"/>
-        <source>If active the map is centered on the unit action during other player turns. If the field is visible to the player.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="447"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="481"/>
         <source>Auto Camera Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="450"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="484"/>
         <source>Last Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="450"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="484"/>
         <source>Owned HQ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="454"/>
-        <source>Select where the game starts during a human player phase, when auto focusing is active.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="464"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="498"/>
         <source>Center Camera on Fields: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="470"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="504"/>
         <source>Selects if the camera centers on marked fields for an action or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="477"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="511"/>
         <source>Synchronize Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="483"/>
-        <source>If checked units and building animations on the map are synchronized. Note: changing this doesn&apos;t have an immediate effect, while playing.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="490"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="524"/>
         <source>Simple Cancel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="494"/>
-        <source>If active units and actions can be canceld by long press. This is only recommended for devices without a keyboard.</source>
+        <location filename="../objects/gameplayandkeys.cpp" line="52"/>
+        <source>If active walk, capture, power animations, etc. will be shown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="510"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="68"/>
+        <source>Select which in-game animations are played.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="87"/>
+        <source>Selects which battle animations are played when fighting an enemy.
+Detailed    - Normal battle animations
+Transparent - Colored background is semi-transparent
+Fullscreen  - Animations are upscaled based on the resolution
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="107"/>
+        <source>Selects if dialogs are shown or not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="174"/>
+        <source>Selects the speed at which animations are played. This does not include battle and walking animations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="270"/>
+        <source>If enabled the game will automatically end your turn if you can&apos;t give any orders anymore.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="286"/>
+        <source>If enabled the game will show a detailed battle forecast info.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="306"/>
+        <source>Amount of items per row for in-game menus before a new row is added.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="322"/>
+        <source>Amount of columns for in-game menus before a scrollable menu is shown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="339"/>
+        <source>Selects the amount of players shown in-game on the sidebar.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="368"/>
+        <source>If active the Computer&apos;s cursor is hidden during a game, giving you a more Gameboy like feeling.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="384"/>
+        <source>If active the Computer&apos;s cursor is moved to the first entry when opening menus or similar actions. Only disable this feature if you intend to play using a mouse only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="400"/>
+        <source>If active the currently selectable fields get animated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="419"/>
+        <source>Select where the CO Info is shown. &apos;Flipping&apos; positions the info opposite the side of the screen where the cursor is located.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="433"/>
+        <source>If active: the map is scrolled automatically when the cursor is at the edge of the screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="453"/>
+        <source>If active: map coordinates are shown during a game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="469"/>
+        <source>If active: the screen will center on every unit performing an action, except when not visible within Fog of War.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="488"/>
+        <source>Select where the screen starts during your player phase. This setting only applies while auto focusing is active.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="517"/>
+        <source>If checked: units and building animations on the map are synchronized. Note: changing this doesn&apos;t have an immediate effect in-game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="528"/>
+        <source>If active units and actions can be canceled by a long-press. This is only recommended for devices without a keyboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="544"/>
         <source>Default rules:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="514"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="548"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="572"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="518"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="552"/>
         <source>The relative path from the exe to the default ruleset.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="535"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="569"/>
+        <source>Default bannlist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="576"/>
+        <source>The relative path from the exe to the default bannlist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="593"/>
         <source>Action delay: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="539"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="597"/>
         <source>The delay after an action before an ai or replay action gets triggered.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="551"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="609"/>
         <source>Ingame Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="558"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="616"/>
         <source>Key Up: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="562"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="567"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="620"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="625"/>
         <source>Key for moving the cursor up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="575"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="633"/>
         <source>Key Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="579"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="584"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="637"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="642"/>
         <source>Key for moving the cursor left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="592"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="650"/>
         <source>Key Down: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="596"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="601"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="654"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="659"/>
         <source>Key for moving the cursor down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="609"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="667"/>
         <source>Key Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="613"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="618"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="671"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="676"/>
         <source>Key for moving the cursor right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="626"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="684"/>
         <source>Key Confirm: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="630"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="635"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="688"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="693"/>
         <source>Key for confirming any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="643"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="701"/>
         <source>Key Cancel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="647"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="652"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="705"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="710"/>
         <source>Key for canceling any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="660"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="718"/>
         <source>Key Next: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="664"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="669"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="722"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="727"/>
         <source>Key for moving the cursor to the next possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="677"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="735"/>
         <source>Key Previous: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="681"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="686"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="739"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="744"/>
         <source>Key for moving the cursor to the previous possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="694"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="752"/>
         <source>Key Quicksave 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="698"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="756"/>
         <source>Key for quick saving slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="706"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="764"/>
         <source>Key Quickload 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="710"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="768"/>
         <source>Key for quick loading slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="718"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="776"/>
         <source>Key Quicksave 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="722"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="780"/>
         <source>Key for quick saving slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="730"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="788"/>
         <source>Key Quickload 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="734"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="792"/>
         <source>Key for quick loading slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="742"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="800"/>
         <source>Key Information: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="746"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="751"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="804"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="809"/>
         <source>Key to show information about the current field, action, unit at any time in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="759"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="817"/>
         <source>Key Move Map Up: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="763"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="768"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="821"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="826"/>
         <source>Key to move the map a field up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="776"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="834"/>
         <source>Key Move Map Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="780"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="785"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="838"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="843"/>
         <source>Key to move the map a field left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="793"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="851"/>
         <source>Key Move Map Down: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="797"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="802"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="855"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="860"/>
         <source>Key to move the map a field down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="810"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="868"/>
         <source>Key Move Map Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="814"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="819"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="872"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="877"/>
         <source>Key to move the map a field right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="827"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="885"/>
         <source>Key Zoom In: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="831"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="836"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="889"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="894"/>
         <source>Key to zoom into the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="844"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="902"/>
         <source>Key Zoom Out: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="848"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="853"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="906"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="911"/>
         <source>Key to zoom out of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="861"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="919"/>
         <source>Key Show Indirects: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="865"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="870"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="923"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="928"/>
         <source>Key to show where all enemy indirect units can attack near the selected unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="878"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="936"/>
         <source>Key Show all: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="882"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="887"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="940"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="945"/>
         <source>Key to show where all enemy units can attack near the selected unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="895"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="953"/>
         <source>Screenshot: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="899"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="957"/>
         <source>Key for taking a screenshot.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="907"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="965"/>
         <source>Mapshot: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="911"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="969"/>
         <source>Key for taking a mapshot. Saving the current map in an image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="919"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="977"/>
         <source>Key Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="926"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="984"/>
         <source>Key Place Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="930"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="988"/>
         <source>Key to select Place Terrain in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="938"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="996"/>
         <source>Key Place Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="942"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="1000"/>
         <source>Key to select Place Unit in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="950"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="1008"/>
         <source>Key Place Building: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="954"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="1012"/>
         <source>Key to select Place Building in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="962"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="1020"/>
         <source>Key Next Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="966"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="1024"/>
         <source>Key to select the next player in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="974"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="1032"/>
         <source>Key Previous Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="978"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="1036"/>
         <source>Key to select the previous player in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="986"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="1044"/>
         <source>Key Next Item: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="990"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="1048"/>
         <source>Key to select the next editor item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="998"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="1056"/>
         <source>Key Previous Item: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="1002"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="1060"/>
         <source>Key to select the previous editor item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="1075"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="1094"/>
+        <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3134,12 +3218,12 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="109"/>
-        <source>Join Adress</source>
+        <source>Join Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="118"/>
-        <source>Observe Adress</source>
+        <source>Observe Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3303,8 +3387,23 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/mainwindow.cpp" line="276"/>
+        <location filename="../menue/mainwindow.cpp" line="286"/>
+        <location filename="../menue/mainwindow.cpp" line="325"/>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/mainwindow.cpp" line="441"/>
         <source>Do you want to enable all current items in the shop?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MapEditDialog</name>
+    <message>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="189"/>
+        <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3332,11 +3431,14 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="110"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="470"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="120"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="481"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="529"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3352,7 +3454,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="515"/>
-        <source>Do you want to make the saved ruleset as default ruleset?</source>
+        <source>Do you want to make the saved ruleset the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3409,16 +3511,6 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="144"/>
-        <source>Please use one of the following IP-Adresses to connect to this Host. Not all IP-Adresses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="145"/>
-        <source> may work for each client depending on the network settings. Please use cmd and the ping command to verify if an IP-Adress may work</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="154"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
@@ -3429,8 +3521,23 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="144"/>
+        <source>Please use one of the following IP-Addresses to connect to this Host. Not all IP-Addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="145"/>
+        <source> may work for each client depending on their network settings. Please use CMD and the ping command to verify if an IP-Address will work</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="169"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="404"/>
-        <source>Server doesn&apos;t have any more slots for playing a game.</source>
+        <source>Server doesn&apos;t have any more slots for players.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3514,7 +3621,133 @@ Host mods: </source>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="415"/>
-        <source>Selects the screen resolution for the game</source>
+        <source>Selects the screen resolution for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="437"/>
+        <source>Selects the screen mode for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="451"/>
+        <source>Selects the brightness for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="468"/>
+        <source>Selects the gamma factor for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="485"/>
+        <source>If checked several UI elements are hidden and accessible with an additional button.
+Warning: disabling this on a smaller screen may lead to unplayable game experience.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="506"/>
+        <source>Selects the maximum FPS, use it to reduce power consumption on smartphones.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="532"/>
+        <source>Selects how long a touch is treated as the same point. Used for detecting long-press events.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="547"/>
+        <source>Enables Gamepad support for controllers. Note: This is an experimental feature and won&apos;t work 100% with all controllers. This feature isn&apos;t supported for Android, iOS, MacOS and Linux.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="569"/>
+        <source>Selects how often events are sent by a gamepad. Lowering this value will increase cursor speed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="631"/>
+        <source>Selects the time between auto saves in hours:minutes:seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="647"/>
+        <source>Selects the number of auto saves that are kept during games. A value of 0 disables this feature.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="661"/>
+        <source>If checked: games will be recorded and you can rewatch them in the replay section.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="681"/>
+        <source>Select your Username that is shown in-game and in multiplayer lobbies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="710"/>
+        <source>Provide the address to the multiplayer game server you want to connect to.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="726"/>
+        <source>Selects the port dedicated server use for the lobby chat.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="760"/>
+        <source>Selects the game port used to play on a dedicated server or through a direct connection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="796"/>
+        <source>If checked: mutes all sounds and music.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="826"/>
+        <source>Selects the primary audio output device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="841"/>
+        <source>Master Volume: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="845"/>
+        <source>Selects the master volume for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="862"/>
+        <source>Selects the music volume for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="879"/>
+        <source>Selects the sound volume for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="926"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="931"/>
+        <source>Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="1024"/>
+        <source>Filters mods by given tags.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="1113"/>
+        <source>The mod author designated this mod as &apos;Cosmetic&apos; and may be used during multiplayer matches based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3538,18 +3771,8 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="437"/>
-        <source>Selects the screen mode for the game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="447"/>
         <source>Brightness: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="451"/>
-        <source>Selects the brightness for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3558,29 +3781,13 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="468"/>
-        <source>Selects the gamma factor for the game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="481"/>
         <source>Small screen: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="485"/>
-        <source>If checked several ui elements are hidden and get shown with an additional button.
-Warning disabling this on a smaller screen may lead to unplayable game experience.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="502"/>
         <source>Max FPS: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="506"/>
-        <source>Selects the maximum FPS use it to reduce power consumption on smartphones.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3599,18 +3806,8 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="532"/>
-        <source>Selects how long a touch is treated as the same point. Used for detecting long press events.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="543"/>
         <source>Gamepad: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="547"/>
-        <source>Enables Gamepad support for controllers. Note: This is experimental and won&apos;t 100% with all controllers and isn&apos;t supported for android, iOS, macOS and linux.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3621,11 +3818,6 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <message>
         <location filename="../menue/optionmenue.cpp" line="565"/>
         <source>Gamepad Sensitivity: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="569"/>
-        <source>Selects how often events are send by the gamepad. Smaller values create a faster cursor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3644,28 +3836,13 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="631"/>
-        <source>Selects the auto saving cycle in hours:minutes:seconds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="643"/>
         <source>Auto Saving Cycle: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="647"/>
-        <source>Selects the amount of auto save games that get cycled through while auto saving. A value 0 disables this feature.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="657"/>
         <source>Record Games: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="661"/>
-        <source>If checked games will be recorded and you can rewatch them in the replay section.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3679,28 +3856,13 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="681"/>
-        <source>Selects your username shown at various places of the game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="706"/>
-        <source>Dedicated adress: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="710"/>
-        <source>Selects the dedicated game server you wan&apos;t to connect to when playing a multiplayer game.</source>
+        <source>Dedicated address: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="722"/>
         <source>Dedicated port: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="726"/>
-        <source>Selects the dedicated servers chat port for used to chat in the lobby of the dedicated server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3719,11 +3881,6 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="760"/>
-        <source>Selects the game port for used to play the game with the server either with a dedicated server or direct connection.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="785"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
@@ -3734,28 +3891,8 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="796"/>
-        <source>If checked mutes all sounds and music are muted.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="809"/>
         <source>Audio Device: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="826"/>
-        <source>Selects the primary audio output device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="841"/>
-        <source>Global Volume: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="845"/>
-        <source>Selects the global volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3764,28 +3901,13 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="862"/>
-        <source>Selects the music volume for the game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="875"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="879"/>
-        <source>Selects the sound volume for the game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="923"/>
         <source>Advance Wars Game:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="926"/>
-        <source>Unkown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3804,11 +3926,6 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="931"/>
-        <source>Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="940"/>
         <source>Tag Filter:</source>
         <translation type="unfinished"></translation>
@@ -3816,16 +3933,6 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <message>
         <location filename="../menue/optionmenue.cpp" line="1022"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="1024"/>
-        <source>Filters the mods by the given tags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="1113"/>
-        <source>The mod is claimed to be pure cosmetic by the creator and may be used during multiplayer games based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3867,7 +3974,7 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     </message>
     <message>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="80"/>
-        <source>If checked clicking the random button. The selected perks are filled up to the maximum.</source>
+        <source>If checked: clicking the &apos;Random&apos; Button will fill all available perk slots instead of just 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3939,7 +4046,7 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <message>
         <location filename="../objects/playerselection.cpp" line="362"/>
         <location filename="../objects/playerselection.cpp" line="492"/>
-        <location filename="../objects/playerselection.cpp" line="853"/>
+        <location filename="../objects/playerselection.cpp" line="865"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3970,7 +4077,22 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="444"/>
-        <source>Select with how much funds all player start the game.</source>
+        <source>Select how much funds all player start the game with.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/playerselection.cpp" line="704"/>
+        <source>Select the Color for this player&apos;s army.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/playerselection.cpp" line="810"/>
+        <source>Select how much funds this player starts the game with.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/playerselection.cpp" line="884"/>
+        <source>Shows which players are ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4018,37 +4140,22 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="692"/>
-        <source>Select the Color for this players army.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/playerselection.cpp" line="711"/>
+        <location filename="../objects/playerselection.cpp" line="723"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="798"/>
-        <source>Select with how much funds this player starts the game.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/playerselection.cpp" line="817"/>
+        <location filename="../objects/playerselection.cpp" line="829"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="836"/>
+        <location filename="../objects/playerselection.cpp" line="848"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="872"/>
-        <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/playerselection.cpp" line="910"/>
+        <location filename="../objects/playerselection.cpp" line="922"/>
         <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4072,8 +4179,8 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <location filename="../mapsupport/randomMapGenerator.cpp" line="849"/>
         <location filename="../mapsupport/randomMapGenerator.cpp" line="934"/>
         <location filename="../mapsupport/randomMapGenerator.cpp" line="938"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="1129"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="1171"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="1133"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="1175"/>
         <source>Generating </source>
         <translation type="unfinished"></translation>
     </message>
@@ -4081,196 +4188,220 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
 <context>
     <name>ReplayMenu</name>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="109"/>
-        <source>The current active mods or the current record are invalid! Exiting the Replay now. Mods used in the Replay:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="167"/>
+        <location filename="../menue/replaymenu.cpp" line="171"/>
         <source>Do you want to exit the current replay?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="203"/>
+        <location filename="../menue/replaymenu.cpp" line="207"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="329"/>
-        <location filename="../menue/replaymenu.cpp" line="377"/>
+        <location filename="../menue/replaymenu.cpp" line="333"/>
+        <location filename="../menue/replaymenu.cpp" line="389"/>
         <source>Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="537"/>
+        <location filename="../menue/replaymenu.cpp" line="550"/>
         <source>Current Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="538"/>
+        <location filename="../menue/replaymenu.cpp" line="551"/>
         <source>All Teams</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="539"/>
+        <location filename="../menue/replaymenu.cpp" line="552"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="553"/>
+        <location filename="../menue/replaymenu.cpp" line="566"/>
         <source>Team </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="558"/>
+        <location filename="../menue/replaymenu.cpp" line="571"/>
         <source>Teamview:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="578"/>
+        <location filename="../menue/replaymenu.cpp" line="591"/>
         <source>Gameplay Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="585"/>
+        <location filename="../menue/replaymenu.cpp" line="598"/>
         <source>Overworld Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="589"/>
-        <source>If active walk, capture power animations and so on will be shown</source>
+        <location filename="../menue/replaymenu.cpp" line="602"/>
+        <source>If active: walk, capture power animations, and so on will be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="598"/>
-        <location filename="../menue/replaymenu.cpp" line="615"/>
+        <location filename="../menue/replaymenu.cpp" line="618"/>
+        <source>Select which in-game animations are played.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="633"/>
+        <source>Selects which battle animations are played during combat.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="717"/>
+        <source>Selects the speed at which animations are played. Note: This does not include capture or battle animations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="611"/>
+        <location filename="../menue/replaymenu.cpp" line="628"/>
         <source>Battle Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="601"/>
+        <location filename="../menue/replaymenu.cpp" line="113"/>
+        <source>The current active mods or the current record are invalid or damaged! Exiting the Replay now. Mods used in the Replay:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="614"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="601"/>
+        <location filename="../menue/replaymenu.cpp" line="614"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="601"/>
+        <location filename="../menue/replaymenu.cpp" line="614"/>
         <source>Own</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="601"/>
+        <location filename="../menue/replaymenu.cpp" line="614"/>
         <source>Ally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="601"/>
+        <location filename="../menue/replaymenu.cpp" line="614"/>
         <source>Enemy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="605"/>
-        <source>Select which ingame animations are played.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="618"/>
+        <location filename="../menue/replaymenu.cpp" line="631"/>
         <source>Detailed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="618"/>
+        <location filename="../menue/replaymenu.cpp" line="631"/>
         <source>Overworld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="620"/>
-        <source>Selects which battle animations are played when fighting an enemy.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="632"/>
+        <location filename="../menue/replaymenu.cpp" line="645"/>
         <source>Dialogs: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="635"/>
-        <location filename="../menue/replaymenu.cpp" line="652"/>
+        <location filename="../menue/replaymenu.cpp" line="648"/>
+        <location filename="../menue/replaymenu.cpp" line="665"/>
+        <location filename="../menue/replaymenu.cpp" line="682"/>
+        <location filename="../menue/replaymenu.cpp" line="699"/>
         <source>off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="635"/>
-        <location filename="../menue/replaymenu.cpp" line="652"/>
+        <location filename="../menue/replaymenu.cpp" line="648"/>
+        <location filename="../menue/replaymenu.cpp" line="665"/>
+        <location filename="../menue/replaymenu.cpp" line="682"/>
+        <location filename="../menue/replaymenu.cpp" line="699"/>
         <source>on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="637"/>
+        <location filename="../menue/replaymenu.cpp" line="650"/>
         <source>Selects if capture animations are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="649"/>
+        <location filename="../menue/replaymenu.cpp" line="662"/>
         <source>Capture: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="654"/>
+        <location filename="../menue/replaymenu.cpp" line="667"/>
         <source>Selects if the dialogs are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="666"/>
+        <location filename="../menue/replaymenu.cpp" line="679"/>
+        <source>Day 2 Day: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="684"/>
+        <source>Selects if the day to day screen gets skipped or not. Note on fog of war maps the screen is still shown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="696"/>
+        <source>Movement: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="701"/>
+        <source>Selects if movement animations get shown or not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="713"/>
         <source>Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="670"/>
-        <source>Selects the speed at which animations are played. Except battle animations.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="682"/>
+        <location filename="../menue/replaymenu.cpp" line="729"/>
         <source>Walk Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="686"/>
+        <location filename="../menue/replaymenu.cpp" line="733"/>
         <source>Selects the speed at which units walk across the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="698"/>
+        <location filename="../menue/replaymenu.cpp" line="745"/>
         <source>Battle Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="702"/>
+        <location filename="../menue/replaymenu.cpp" line="749"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="714"/>
+        <location filename="../menue/replaymenu.cpp" line="761"/>
         <source>Capture Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="718"/>
+        <location filename="../menue/replaymenu.cpp" line="765"/>
         <source>Selects the speed at which capture animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="730"/>
+        <location filename="../menue/replaymenu.cpp" line="777"/>
         <source>Dialog Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="734"/>
+        <location filename="../menue/replaymenu.cpp" line="781"/>
         <source>Selects the speed at which dialog animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4280,11 +4411,6 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <message>
         <location filename="../objects/ruleselection.cpp" line="153"/>
         <source>Show Advanced: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="157"/>
-        <source>Check this to see all game rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4306,12 +4432,6 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <message>
         <location filename="../objects/ruleselection.cpp" line="198"/>
         <source>Cosmetic Mods: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="204"/>
-        <source>If checked cosmetic mods can be different on host and client site.
-Warning this may lead to asynchron games or crashes in case one of the mods is not a pure cosmetic mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4395,18 +4515,29 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="341"/>
-        <source>If checked CO&apos;s have their day to day abilities else only perks are active. This has no impact on co powers.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="354"/>
         <source>Single CO&apos;s: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/ruleselection.cpp" line="157"/>
+        <source>Check this to see all game rules.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="204"/>
+        <source>If checked cosmetic mods can be different between host and players.
+Warning this may lead to desynced games or crashes if one of the mods is not a purely cosmetic mod.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="341"/>
+        <source>If checked CO&apos;s have their day to day abilities, when unchecked CO&apos;s only have perks active. This has no impact on co powers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/ruleselection.cpp" line="358"/>
-        <source>If checked you can only select a single co for a player.</source>
+        <source>If checked players may only select a single CO.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4526,7 +4657,65 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="500"/>
-        <source>The percentage of the co gauge lost when the co unit gets destroyed.</source>
+        <source>The percentage of the CO gauge lost when the CO unit gets destroyed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="526"/>
+        <source>Select the fog of war rule for the current game. 
+ In Mist of War all units can be seen but not targeted without Vision. 
+ In Fog of War all units cannot be seen without vision. 
+ In Shroud of War none of the map can be seen until explored, all units cannot be seen without vision.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="569"/>
+        <source>If checked units can&apos;t see over certain terrains, reducing their vision range. Air units are unaffected by this effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="583"/>
+        <source>If checked most buildings deny vision. This means you can hide a unit in a building similar to a forest.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="598"/>
+        <source>If set to &apos;Permanent&apos; the New Day screen for Human players will remain on screen until dismissed. If set to &apos;Default&apos; this feature will be off except in Fog of War games. This setting only takes effect in games with more than 1 Human players on the Host&apos;s PC.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="690"/>
+        <source>If checked: the impact of terrain defense stars is reduced the less hp a unit has.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="704"/>
+        <source>If checked: ships and boats can move through bridges placed on sea tiles, like in Advance Wars Dark conflict.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="718"/>
+        <source>If checked: units can move after getting unloaded if the unit had remained in their transporter for more than one turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="783"/>
+        <source>If checked: CO&apos;s that are randomly selected are unique. Note: If not enough CO&apos;s are available this may select no CO for a player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="811"/>
+        <source>The amount of funds you are refunded for selling a unit. Selling is only possible if the &apos;Sell&apos; action is active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="828"/>
+        <source>If checked units of the same team face the same direction rather than based on player order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="1085"/>
+        <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4556,28 +4745,13 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="526"/>
-        <source>Select the fog of war rule for the current game.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="565"/>
         <source>Vision Block: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="569"/>
-        <source>If checked units can&apos;t see over certain terrains. Reducing their vision range. Air units are unaffected by this effect.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="579"/>
         <source>Building Hiding:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="583"/>
-        <source>If checked most buildings deny vision. E.g. you can hide a unit in a building similar to a forest.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4593,11 +4767,6 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     <message>
         <location filename="../objects/ruleselection.cpp" line="596"/>
         <source>Permanent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="598"/>
-        <source>Defines if the day to day banner is shown permanent for human or not. Decision is depending of chosen fog of war.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4643,28 +4812,13 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="690"/>
-        <source>If checked the impact of terrain defense stars is reduced the less hp a unit has.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="700"/>
         <source>Ship bridges:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="704"/>
-        <source>If checked ships and boats can move through bridges placed on sea tiles, like in advance wars darc conflict.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="714"/>
         <source>Transporter refresh: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="718"/>
-        <source>If checked units can move after getting unload. If the unit remained in their transporter for more than one turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4703,11 +4857,6 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="783"/>
-        <source>If checked CO&apos;s that are randomly selected are unique. Note: If not enough CO&apos;s are available this may select no co for a player</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="793"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
@@ -4723,18 +4872,8 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="811"/>
-        <source>The amount of funds you get back for selling a unit. Only has an impact if the sell action is active</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="824"/>
         <source>Team Facing :</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="828"/>
-        <source>If checked units of the same team have the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4752,11 +4891,13 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     </message>
     <message>
         <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="40"/>
+        <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="79"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="49"/>
+        <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="89"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5329,17 +5470,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <source>Background</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="255"/>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptEditor</name>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="42"/>
         <source>Conditions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="63"/>
-        <source>Condition type you wan&apos;t to create. If a condition is selected this condition and the selected one need to be fullfilled to activate the event.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5374,8 +5515,13 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="63"/>
+        <source>Condition type you want to create. If another condition is selected both must be fulfilled to activate the event.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="135"/>
-        <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
+        <source>If checked the game starts without being able to change rules, players or CO&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5385,11 +5531,13 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="150"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="192"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="157"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="202"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5564,6 +5712,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="264"/>
         <source>Amount of frames for the animation. Only has an effect on custom animations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="283"/>
+        <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5876,6 +6029,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <name>ScriptEventGeneric</name>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="172"/>
+        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="194"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6389,7 +6543,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../menue/shopmenu.cpp" line="165"/>
-        <source>Check to but the item on the buy list. Afterwards click buy to confirm your shopping.</source>
+        <source>Check any items you&apos;d like to buy from the shop, then click &apos;Buy&apos; to confirm your purchase.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6620,7 +6774,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="550"/>
-        <source>The player for which the statistics should be shown.</source>
+        <source>Select which player&apos;s statistics you&apos;d like to see.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

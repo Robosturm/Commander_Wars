@@ -42,6 +42,8 @@ ReplayMenu::ReplayMenu(QString filename)
         m_storedBatteAnimType = Settings::getBattleAnimationType();
         m_storedDialog = Settings::getDialogAnimation();
         m_storedCaptureAnimation = Settings::getCaptureAnimation();
+        m_storedMovementAnimation = Settings::getMovementAnimations();
+        m_storedDay2DayAnimation = Settings::getDay2dayScreen();
 
         m_storedAnimationSpeed = Settings::getAnimationSpeedValue();
         m_storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
@@ -90,6 +92,8 @@ ReplayMenu::~ReplayMenu()
     Settings::setBattleAnimationType(m_storedBatteAnimType);
     Settings::setDialogAnimation(m_storedDialog);
     Settings::setCaptureAnimation(m_storedCaptureAnimation);
+    Settings::setMovementAnimations(m_storedMovementAnimation);
+    Settings::setDay2dayScreen(m_storedDay2DayAnimation);
 
     Settings::setAnimationSpeed(m_storedAnimationSpeed);
     Settings::setBattleAnimationSpeed(m_storedBattleAnimationSpeed);
@@ -106,7 +110,7 @@ void ReplayMenu::showRecordInvalid()
     {
         modList += mod + "\n";
     }
-    spDialogMessageBox pExit = spDialogMessageBox::create(tr("The current active mods or the current record are invalid! Exiting the Replay now. Mods used in the Replay:") + "\n" +
+    spDialogMessageBox pExit = spDialogMessageBox::create(tr("The current active mods or the current record are invalid or damaged! Exiting the Replay now. Mods used in the Replay:") + "\n" +
                                                           modList, false);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);    
     addChild(pExit);   
@@ -346,12 +350,17 @@ void ReplayMenu::startSeeking()
         swapPlay();
     }
     m_replayCounter = 0;
-    m_seekingOverworldAnimations = Settings::getOverworldAnimations();
+    m_seekingOverworldAnimations = Settings::getOverworldAnimations();    
     m_seekingDialog = Settings::getDialogAnimation();
-    m_seekingCapture = Settings::getCaptureAnimation();
     m_seekingBattleAnimations = Settings::getBattleAnimationMode();
+
+    m_seekingCapture = Settings::getCaptureAnimation();
+    m_seekingMovement = Settings::getMovementAnimations();
+    m_seekingDay2Day = Settings::getDay2dayScreen();
     Settings::setOverworldAnimations(false);
     Settings::setDialogAnimation(false);
+    Settings::setMovementAnimations(false);
+    Settings::setDay2dayScreen(false);
     Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode::BattleAnimationMode_None);
 
     if (GameAnimationFactory::getAnimationCount() > 0)
@@ -361,6 +370,9 @@ void ReplayMenu::startSeeking()
     Settings::setBattleAnimationMode(m_seekingBattleAnimations);
     Settings::setOverworldAnimations(m_seekingOverworldAnimations);
     Settings::setDialogAnimation(m_seekingDialog);
+    Settings::setCaptureAnimation(m_seekingCapture);
+    Settings::setMovementAnimations(m_seekingMovement);
+    Settings::setDay2dayScreen(m_seekingDay2Day);
 
     m_seeking = true;    
 }
@@ -421,7 +433,6 @@ void ReplayMenu::seekToDay(qint32 day)
         auto actorPos = m_mapSlidingActor->getPosition();
         // load map state during that day
         m_ReplayRecorder.seekToDay(day);
-        m_pMap->registerMapAtInterpreter();
         m_mapSlidingActor->addChild(m_pMap);
         // restore map position and scale
         m_pMap->setScale(scale);
@@ -431,8 +442,6 @@ void ReplayMenu::seekToDay(qint32 day)
         m_pMap->getGameRules()->createFogVision();
         updatePlayerinfo();
         Mainapp::getInstance()->continueRendering();
-        connectMap();
-        connectMapCursor();
         if (!m_uiPause)
         {
             swapPlay();
@@ -493,6 +502,8 @@ void ReplayMenu::startFastForward()
     m_seekingDialog = Settings::getDialogAnimation();
     m_seekingCapture = Settings::getCaptureAnimation();
     m_seekingBattleAnimations = Settings::getBattleAnimationMode();
+    m_seekingMovement = Settings::getMovementAnimations();
+    m_seekingDay2Day = Settings::getDay2dayScreen();
     Settings::setOverworldAnimations(false);
     Settings::setDialogAnimation(false);
     Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode::BattleAnimationMode_None);
@@ -508,6 +519,8 @@ void ReplayMenu::stopFastForward()
     Settings::setOverworldAnimations(m_seekingOverworldAnimations);
     Settings::setDialogAnimation(m_seekingDialog);
     Settings::setCaptureAnimation(m_seekingCapture);
+    Settings::setMovementAnimations(m_seekingMovement);
+    Settings::setDay2dayScreen(m_seekingDay2Day);
 }
 
 void ReplayMenu::showConfig()
@@ -586,7 +599,7 @@ void ReplayMenu::showConfig()
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     spCheckbox pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If active walk, capture power animations and so on will be shown"));
+    pCheckbox->setTooltipText(tr("If active: walk, capture power animations, and so on will be shown."));
     pCheckbox->setChecked(Settings::getOverworldAnimations());
     connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setOverworldAnimations, Qt::QueuedConnection);
     pCheckbox->setPosition(width - 130, y);
@@ -602,7 +615,7 @@ void ReplayMenu::showConfig()
     spDropDownmenu pAnimationMode = spDropDownmenu::create(450, items);
     pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationMode()));
     pAnimationMode->setPosition(width - 130, y);
-    pAnimationMode->setTooltipText(tr("Select which ingame animations are played."));
+    pAnimationMode->setTooltipText(tr("Select which in-game animations are played."));
     pPanel->addItem(pAnimationMode);
     connect(pAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
@@ -617,7 +630,7 @@ void ReplayMenu::showConfig()
     pPanel->addItem(pTextfield);
     items = {tr("Detailed"), tr("Overworld")};
     spDropDownmenu pBattleAnimationMode = spDropDownmenu::create(450, items);
-    pBattleAnimationMode->setTooltipText(tr("Selects which battle animations are played when fighting an enemy."));
+    pBattleAnimationMode->setTooltipText(tr("Selects which battle animations are played during combat."));
     pBattleAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationType()));
     pBattleAnimationMode->setPosition(width - 130, y);
     pPanel->addItem(pBattleAnimationMode);
@@ -661,13 +674,47 @@ void ReplayMenu::showConfig()
     });
     y += 40;
 
+    pTextfield = spLabel::create(width - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Day 2 Day: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    items = {tr("off"), tr("on")};
+    spDropDownmenu pDay2DayMode = spDropDownmenu::create(450, items);
+    pDay2DayMode->setTooltipText(tr("Selects if the day to day screen gets skipped or not. Note on fog of war maps the screen is still shown."));
+    pDay2DayMode->setCurrentItem(static_cast<qint32>(Settings::getDay2dayScreen()));
+    pDay2DayMode->setPosition(width - 130, y);
+    pPanel->addItem(pDay2DayMode);
+    connect(pDay2DayMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setDay2dayScreen(value);
+    });
+    y += 40;
+
+    pTextfield = spLabel::create(width - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Movement: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    items = {tr("off"), tr("on")};
+    spDropDownmenu pMovementAnimationMode = spDropDownmenu::create(450, items);
+    pMovementAnimationMode->setTooltipText(tr("Selects if movement animations get shown or not."));
+    pMovementAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getMovementAnimations()));
+    pMovementAnimationMode->setPosition(width - 130, y);
+    pPanel->addItem(pMovementAnimationMode);
+    connect(pMovementAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setMovementAnimations(value);
+    });
+    y += 40;
+
     pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Animation Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     spSlider pAnimationSpeed = spSlider::create(Settings::getWidth() - 20 - width, 1, 100, "");
-    pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Except battle animations."));
+    pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Note: This does not include capture or battle animations."));
     pAnimationSpeed->setPosition(width - 150, y);
     pAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getAnimationSpeedValue()));
     pPanel->addItem(pAnimationSpeed);

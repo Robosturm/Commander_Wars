@@ -185,7 +185,7 @@ void PathFindingSystem::explore()
                 }
             }
             // get field costs from index
-            neighboursCosts = getCosts(neighboursIndex, neighboursX, neighboursY, pCurrent.x, pCurrent.y);
+            neighboursCosts = getCosts(neighboursIndex, neighboursX, neighboursY, pCurrent.x, pCurrent.y, currentCost);
             if (neighboursCosts >= 0) // passable?
             {
                 // costs to reach this field

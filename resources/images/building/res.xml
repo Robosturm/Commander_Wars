@@ -418,5 +418,8 @@
         <image file="nest_center_laser_middle+destroyed.png" />
         <image file="nest_center_laser_right+destroyed.png" />
         <image file="nest_laser+destroyed.png" />
+                
+        <!-- depot -->
+        <image file="depot.png" />
     </atlas>
 </resources>

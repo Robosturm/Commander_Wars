@@ -50,13 +50,13 @@ public:
      * @brief reloadInterpreter
      * @param runtime
      */
-    static void reloadInterpreter(const QString & runtime);
+    static bool reloadInterpreter(const QString & runtime);
 
 signals:
     void sigNetworkGameFinished(qint32 value, QString id);
 public slots:
-    void openScript(const QString & script, bool setup);
-    void loadScript(const QString & content, const QString & script);
+    bool openScript(const QString & script, bool setup);
+    bool loadScript(const QString & content, const QString & script);
     inline QJSValue doFunction(const QString & func, const QJSValueList& args = QJSValueList())
     {
         QJSValue ret;

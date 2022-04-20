@@ -136,7 +136,7 @@ endif()
 add_definitions(
     -DMAJOR=0
     -DMINOR=22
-    -DREVISION=5
+    -DREVISION=7
     )
 
 ###################################################################################
@@ -155,12 +155,8 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         add_link_options("-long-plt")
     endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
-    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-    set(CMAKE_INSTALL_RPATH "${QT_BIN_DIR}/../")
     find_program(ADDR_2_LINE addr2line)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
-    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-    set(CMAKE_INSTALL_RPATH "${QT_BIN_DIR}/../")
     find_program(ADDR_2_LINE addr2line)
 else()
     message(FATAL_ERROR "Unsupported OS found")
@@ -674,11 +670,11 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_NAME "0.22.5"
+    QT_ANDROID_VERSION_NAME "0.22.7"
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_CODE "15"
+    QT_ANDROID_VERSION_CODE "17"
     )
 
 # link libraries

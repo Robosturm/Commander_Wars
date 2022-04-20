@@ -145,6 +145,8 @@ bool Settings::m_autoMoveCursor = false;
 QString Settings::m_userPath = "";
 float Settings::m_supplyWarning = 0.33f;
 qint32 Settings::m_pauseAfterAction = 0;
+bool Settings::m_day2dayScreen = true;
+bool Settings::m_movementAnimations = true;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -187,7 +189,7 @@ Settings::Settings()
         defaultCoCount = 1;
     }
 #ifdef USEAPPCONFIGPATH
-    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
 #endif
 
     auto devices = QInputDevice::devices();
@@ -299,6 +301,8 @@ Settings::Settings()
         new Value<qint32>{"Game", "ShowCoCount", &m_showCoCount, defaultCoCount, 0, std::numeric_limits<qint32>::max()},
         new Value<bool>{"Game", "DialogAnimation", &m_dialogAnimation, true, false, true},
         new Value<bool>{"Game", "CaptureAnimation", &m_captureAnimation, true, false, true},
+        new Value<bool>{"Game", "Day2DayScreen", &m_day2dayScreen, true, false, true},
+        new Value<bool>{"Game", "MovementAnimations", &m_movementAnimations, true, false, true},
         new Value<QString>{"Game", "LastSaveGame", &m_LastSaveGame, "", "", ""},
         new Value<QString>{"Game", "DefaultRuleset", &m_defaultRuleset, "", "", ""},
         new Value<bool>{"Game", "ShowCursor", &m_ShowCursor, true, false, true},
@@ -336,6 +340,26 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+bool Settings::getMovementAnimations()
+{
+    return m_movementAnimations;
+}
+
+void Settings::setMovementAnimations(bool newMovementAnimations)
+{
+    m_movementAnimations = newMovementAnimations;
+}
+
+bool Settings::getDay2dayScreen()
+{
+    return m_day2dayScreen;
+}
+
+void Settings::setDay2dayScreen(bool newDay2dayScreen)
+{
+    m_day2dayScreen = newDay2dayScreen;
 }
 
 bool Settings::getCaptureAnimation()

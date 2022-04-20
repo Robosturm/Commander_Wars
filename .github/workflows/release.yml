@@ -7,7 +7,7 @@ name: Commnader_Wars_Release
 
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.2.4'
+  QT_Version: '6.3.0'
   
 jobs:
   create_release:

@@ -40,15 +40,29 @@ CO_AMY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (isAttacker === true)
-            {
-                return 99999;
-            }
             return CO_AMY.superPowerDeffensiveBonus;
         case GameEnums.PowerMode_Power:
             return 10;
         default:
             break;
+        }
+    }
+    return 0;
+};
+
+CO_AMY.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
+                                   defender, defPosX, defPosY, isDefender, luckMode, map)
+{
+    if (co.getIsCO0() === true)
+    {
+        switch (co.getPowerMode())
+        {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            if (isDefender === true)
+            {
+                return damage;
+            }
         }
     }
     return 0;

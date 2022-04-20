@@ -114,6 +114,11 @@ var BUILDING =
         return 1000;
     },
 
+    getCostModifier : function(building, unitId, baseCost, posX, posY, map)
+    {
+        return 0;
+    },
+
     getConstructionList : function(building, map)
     {
         return [];

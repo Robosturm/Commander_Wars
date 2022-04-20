@@ -61,10 +61,13 @@ public:
         Map,
         Terrain,
         // gap for stacking the terrain sprites
+
         CORange = std::numeric_limits<qint32>::max() - 200,
         GridLayout,
         FogFields,
         MarkedFields,
+        Units,
+        MoveArrow,
         Weather,
         Cursor,
         Animation,

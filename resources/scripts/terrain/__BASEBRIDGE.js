@@ -9,17 +9,14 @@ var Constructor = function()
     {
         terrain.setTerrainName(__BASEBRIDGE.getName(terrain));
     };
-
-    this.canBePlaced = function(x, y, map)
+    this.canBePlacedBaseId = function(x, y, map, baseId)
     {
         var terrain = map.getTerrain(x, y);
         if ((terrain.getTerrainID() === "SEA") ||
             (terrain.getTerrainID() === "LAKE") ||
             (terrain.getTerrainID() === "RIVER") ||
             (terrain.getTerrainID() === "DESERT_TRY_RIVER") ||
-            (terrain.getTerrainID() === "BRIDGE") ||
-            (terrain.getTerrainID() === "BRIDGE1") ||
-            (terrain.getTerrainID() === "BRIDGE2"))
+            (terrain.getTerrainID() === baseId))
         {
             return true;
         }

@@ -28,6 +28,7 @@ var Constructor = function()
                                 ["SILO", 1],
                                 ["SILO_ROCKET", 1],
                                 ["LABOR", 1],
+                                ["DEPOT", 1],
                                 ["TEMPORARY_AIRPORT", 1],
                                 ["TEMPORARY_HARBOUR", 1],
                                 ["OILRIG", 1],

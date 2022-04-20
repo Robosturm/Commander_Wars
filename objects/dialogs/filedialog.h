@@ -27,7 +27,7 @@ public:
      * @param startFolder initial folder of the file dialog
      * @param wildcards wildcard items will be split at ;
      */
-    explicit FileDialog(QString startFolder, const QStringList & wildcards, QString startFile = "", bool preview = false);
+    explicit FileDialog(QString startFolder, const QStringList & wildcards, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"));
     virtual ~FileDialog() = default;
 
     bool getPreview() const;

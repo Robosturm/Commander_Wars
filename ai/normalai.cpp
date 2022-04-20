@@ -157,6 +157,8 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"MaxProductionBuildingsForB", "Production", &m_maxProductionBuildingsForB, 1.0f, 1.f, 5.0f},
                   {"TurnOneDmageMalus", "Production", &m_turnOneDmageMalus, 10.0f, 1.f, 20.0f},
                   {"CounterUnitRatio", "Production", &m_counterUnitRatio, 2.0f, 1.f, 5.0f},
+                  {"SpamInfantryChance", "Production", &m_spamInfantryChance, 50.0f, 100.f, 50.0f},
+
                 };
 
     if (m_pMap != nullptr &&
@@ -938,6 +940,7 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
                 // we need to move to a loading place
                 std::vector<QVector3D> targets;
                 std::vector<QVector3D> transporterTargets;
+                appendCaptureTargets(actions, pUnit, pEnemyBuildings, targets);
                 appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, false, targets);
                 if (targets.size() == 0)
                 {
@@ -1389,7 +1392,7 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(MoveUnitData & unitData, 
         qint32 x = moveTarget.x();
         qint32 y = moveTarget.y();
         if (m_pMap->getTerrain(x, y)->getUnit() == nullptr &&
-            turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y) > 0)
+            turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y, 0) > 0)
         {
             float currentDamage = calculateCounterDamage(unitData, moveTarget, nullptr, 0.0f, pBuildings, pEnemyBuildings);
             if (currentDamage < 0)
@@ -1436,7 +1439,7 @@ qint32 NormalAi::getMoveTargetField(MoveUnitData & unitData, UnitPathFindingSyst
         qint32 y = movePath[i].y();
         Terrain* pTerrain = m_pMap->getTerrain(x, y);
         Building* pBuilding = pTerrain->getBuilding();
-        qint32 costs = turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y);
+        qint32 costs = turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y, 0);
         if ((pTerrain->getUnit() == nullptr ||
              pTerrain->getUnit() == unitData.pUnit.get()) &&
             costs >= 0 &&
@@ -1967,7 +1970,9 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
                 QApplication::processEvents();
                 auto & unitData = pUnitData[i2];
                 Unit* pUnit = unitData.pUnit.get();
-                if (pUnit->getHp() > 0 && pUnit->getTerrain() != nullptr)
+                if (pUnit != nullptr &&
+                    pUnit->getHp() > 0 &&
+                    pUnit->getTerrain() != nullptr)
                 {
                     if (qAbs(point.x() - pUnit->Unit::getX()) +
                         qAbs(point.y() - pUnit->Unit::getY()) <=
@@ -2165,14 +2170,22 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     AI_CONSOLE_PRINT("NormalAI: Funds: " + QString::number(funds) + " funds for the next factory: " + QString::number(fundsPerFactory), Console::eDEBUG);
     if (fundsPerFactory <= m_cappingFunds)
     {
-        data[LowFunds] = 1.0;
-        if (fundsPerFactory > m_cappedFunds * m_fundsPerBuildingFactorB && productionBuildings <= m_maxProductionBuildingsForB)
+        auto chance = GlobalUtils::randInt(0, 100);
+        if (funds >= m_spamingFunds && chance > m_spamInfantryChance)
         {
-            fundsPerFactory = m_cappedFunds * m_fundsPerBuildingFactorB;
+            fundsPerFactory = m_spamingFunds;
         }
         else
         {
-            fundsPerFactory = m_cappedFunds;
+            data[LowFunds] = 1.0;
+            if (fundsPerFactory > m_cappedFunds * m_fundsPerBuildingFactorB && productionBuildings <= m_maxProductionBuildingsForB)
+            {
+                fundsPerFactory = m_cappedFunds * m_fundsPerBuildingFactorB;
+            }
+            else
+            {
+                fundsPerFactory = m_cappedFunds;
+            }
         }
     }
     else if (fundsPerFactory < m_spamingFunds * m_fundsPerBuildingFactorA)

@@ -2146,7 +2146,6 @@
         <file>resources/images/battleanimations/GeneralSprites/water_hit.png</file>
         <file>resources/images/battleanimations/watermine/watermine.png</file>
         <file>resources/images/battleanimations/watermine/watermine+mask.png</file>
-        <file>resources/images/colortables/preview.png</file>
         <file>resources/images/battleanimations/partisan/partisan+alt+mask.png</file>
         <file>resources/images/battleanimations/rocketthrower/rocketthrower+ac+fire+mask.png</file>
         <file>resources/images/battleanimations/rocketthrower/rocketthrower+bh+fire+mask.png</file>
@@ -3784,7 +3783,6 @@
         <file>resources/images/terrain/reaf+1+N+E+S+W .png</file>
         <file>resources/images/terrain/reaf+2+N+E+S+W .png</file>
         <file>resources/images/terrain/reaf+3+N+E+S+W .png</file>
-        <file>resources/images/terrain/reaf+S+E.png</file>
         <file>resources/images/terrain/river+N+land+E+NW+SW.png</file>
         <file>resources/images/terrain/river+N+W+land+E+NW+SW.png</file>
         <file>resources/images/terrain/river+S+land+E+NW+SW.png</file>
@@ -4628,7 +4626,6 @@
         <file>resources/images/co/ac/co_officier_bw+info.png</file>
         <file>resources/images/co/ac/co_officier_bw+nrm.png</file>
         <file>resources/images/co/ac/co_will+table.png</file>
-        <file>resources/images/co/bd/cco_empty_bd+alt1+nrm.png</file>
         <file>resources/images/co/bd/co_empty_bd+alt+face.png</file>
         <file>resources/images/co/bd/co_empty_bd+alt+info.png</file>
         <file>resources/images/co/bd/co_empty_bd+alt+nrm.png</file>
@@ -4724,5 +4721,42 @@
         <file>resources/images/units/sniper+gs+walk+mask.png</file>
         <file>resources/images/units/sniper+pf+walk+mask.png</file>
         <file>resources/images/units/sniper+ti+walk+mask.png</file>
+        <file>resources/images/terrain/reaf.png</file>
+        <file>resources/images/terrain/reaf+E+S+W.png</file>
+        <file>resources/images/terrain/reaf+E+W.png</file>
+        <file>resources/images/terrain/reaf+N+E+S.png</file>
+        <file>resources/images/terrain/reaf+N+E+W.png</file>
+        <file>resources/images/terrain/reaf+N+S.png</file>
+        <file>resources/images/terrain/reaf+N+S+W.png</file>
+        <file>resources/images/terrain/reaf+NE.png</file>
+        <file>resources/images/terrain/reaf+NE+NW.png</file>
+        <file>resources/images/terrain/reaf+NE+NW+S.png</file>
+        <file>resources/images/terrain/reaf+NE+S.png</file>
+        <file>resources/images/terrain/reaf+NE+S+W.png</file>
+        <file>resources/images/terrain/reaf+NE+W.png</file>
+        <file>resources/images/terrain/reaf+NW.png</file>
+        <file>resources/images/terrain/reaf+NW+E.png</file>
+        <file>resources/images/terrain/reaf+NW+S.png</file>
+        <file>resources/images/terrain/reaf+NW+S+E.png</file>
+        <file>resources/images/terrain/desert_pipeline.png</file>
+        <file>resources/images/terrain/pipeline.png</file>
+        <file>resources/images/terrain/snow_Pipeline.png</file>
+        <file>resources/images/terrain/waste_Pipeline.png</file>
+        <file>resources/images/game/battlesprites/background/back_depot.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertdepot.png</file>
+        <file>resources/images/game/battlesprites/background/back_raindepot.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowdepot.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastedepot.png</file>
+        <file>resources/images/game/minimap/minimap_depot.png</file>
+        <file>resources/images/building/depot.png</file>
+        <file>resources/images/battleanimations/duster/duster+ge+mask.png</file>
+        <file>resources/images/battleanimations/duster/duster+ma+mask.png</file>
+        <file>resources/images/battleanimations/duster/duster+os+mask.png</file>
+        <file>resources/images/battleanimations/duster/duster+ti+mask.png</file>
+        <file>resources/images/battleanimations/duster/duster+yc+mask.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastestreet+forest.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastestreet+mountain.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastestreet+sea.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastestreet+town.png</file>
     </qresource>
 </RCC>
