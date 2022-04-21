@@ -1391,16 +1391,19 @@ qint32 Player::getCosts(const QString & id, QPoint position)
     }
 
     qint32 costModifier = 0;
-    qint32 mapHeigth = m_pMap->getMapHeight();
-    qint32 mapWidth = m_pMap->getMapWidth();
-    for (qint32 x = 0; x < mapWidth; x++)
+    if (m_pMap != nullptr)
     {
-        for (qint32 y = 0; y < mapHeigth; y++)
+        qint32 mapHeigth = m_pMap->getMapHeight();
+        qint32 mapWidth = m_pMap->getMapWidth();
+        for (qint32 x = 0; x < mapWidth; x++)
         {
-            Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
-            if ((pBuilding != nullptr) && pBuilding->getOwner() == this)
+            for (qint32 y = 0; y < mapHeigth; y++)
             {
-                costModifier += pBuilding->getCostModifier(id, costs, position);
+                Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
+                if ((pBuilding != nullptr) && pBuilding->getOwner() == this)
+                {
+                    costModifier += pBuilding->getCostModifier(id, costs, position);
+                }
             }
         }
     }

@@ -490,6 +490,14 @@ void EditorSelection::changeSelectedPlayer(qint32 player)
 
 void EditorSelection::updateSelectedPlayer()
 {
+    if (m_playerStartIndex >= m_Players.size() - calcMaxPlayerSelection())
+    {
+        m_playerStartIndex = m_Players.size() - calcMaxPlayerSelection();
+        if (m_playerStartIndex < 0)
+        {
+            m_playerStartIndex = 0;
+        }
+    }
     for (qint32 i = 0; i < m_Players.size(); i++)
     {
         m_Players[i]->setVisible(false);
