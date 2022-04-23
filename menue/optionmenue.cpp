@@ -387,8 +387,8 @@ void OptionMenue::showSettings()
     qint32 currentDisplayMode = 0;
     for  (qint32 i = 0; i < supportedSizes.size(); i++)
     {
-        if (supportedSizes[i].width() == Settings::getWidth() &&
-            supportedSizes[i].height() == Settings::getHeight())
+        if (supportedSizes[i].width() == Settings::getWidth() / pApp->getActiveDpiFactor() &&
+            supportedSizes[i].height() == Settings::getHeight() / pApp->getActiveDpiFactor())
         {
             currentDisplayMode = i;
         }
@@ -403,7 +403,6 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pTextfield);
     y += 40;
 
-
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Screen Resolution: "));
@@ -415,14 +414,15 @@ void OptionMenue::showSettings()
     pScreenResolution->setTooltipText(tr("Selects the screen resolution for the game."));
     m_pOptions->addItem(pScreenResolution);
     auto* pPtrScreenResolution = pScreenResolution.get();
-    connect(pScreenResolution.get(), &DropDownmenu::sigItemChanged, this, [this, pPtrScreenResolution](qint32)
+    connect(pScreenResolution.get(), &DropDownmenu::sigItemChanged, this, [this, pPtrScreenResolution, pApp](qint32)
     {
         QStringList itemData = pPtrScreenResolution->getCurrentItemText().split(" x ");
-        qint32 width = itemData[0].toInt();
-        qint32 heigth = itemData[1].toInt();
+        qint32 width = itemData[0].toInt() * pApp->getActiveDpiFactor();
+        qint32 heigth = itemData[1].toInt() * pApp->getActiveDpiFactor();
         Settings::setWidth(width);
         Settings::setHeight(heigth);
         emit sigChangeScreenSize(width, heigth);
+        emit sigReloadSettings();
     });
     pScreenResolution->setEnabled(!Settings::getSmallScreenDevice());
     y += 40;
@@ -494,6 +494,39 @@ void OptionMenue::showSettings()
     {
         pCheckbox->setEnabled(true);
     }
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Use High DPI: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pCheckbox = spCheckbox::create();
+    pCheckbox->setTooltipText(tr("If checked the game will use the high dpi option of the screen"));
+    pCheckbox->setChecked(Settings::getUseHighDpi());
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), [this, pApp](bool value)
+    {
+        qint32 newWidth = 0;
+        qint32 newHeigth  = 0;
+        if (value)
+        {
+            newWidth = Settings::getWidth() / pApp->getActiveDpiFactor();
+            newHeigth = Settings::getHeight() / pApp->getActiveDpiFactor();
+            Settings::setUseHighDpi(value);
+        }
+        else
+        {
+            Settings::setUseHighDpi(value);
+            newWidth = Settings::getWidth() * pApp->getActiveDpiFactor();
+            newHeigth = Settings::getHeight() * pApp->getActiveDpiFactor();
+        }
+        Settings::setWidth(newWidth);
+        Settings::setHeight(newHeigth);
+        emit sigChangeScreenSize(newWidth, newHeigth);
+        emit sigReloadSettings();
+    }, Qt::QueuedConnection);
     m_pOptions->addItem(pCheckbox);
     y += 40;
 

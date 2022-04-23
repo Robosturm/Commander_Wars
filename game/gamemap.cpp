@@ -124,7 +124,7 @@ void GameMap::loadMapData()
 {
     Interpreter::setCppOwnerShip(this);
     registerMapAtInterpreter();
-    if (Mainapp::getInstance()->devicePixelRatio() < 2.0f)
+    if (Mainapp::getInstance()->devicePixelRatio() < 2.0f && !Settings::getUseHighDpi())
     {
         setZoom(1);
     }
@@ -1121,7 +1121,7 @@ void GameMap::setZoom(float zoom)
     // limit zoom
 
     float minLimit = 1.0f / 4.0f;
-    if (Mainapp::getInstance()->devicePixelRatio() >= 2.0f)
+    if (Mainapp::getInstance()->devicePixelRatio() >= 2.0f && !Settings::getUseHighDpi())
     {
         minLimit = 1.0f / 8.0f;
     }

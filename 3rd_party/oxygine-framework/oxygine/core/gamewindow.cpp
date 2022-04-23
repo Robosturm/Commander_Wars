@@ -57,7 +57,7 @@ namespace oxygine
         Material::null = spMaterial();
         Material::current = spMaterial();
         Input::instance.cleanup();
-        Stage::instance = nullptr;
+        Stage::setStage(spStage());
         Resources::unregisterResourceType("atlas");
         Resources::unregisterResourceType("font");;
         m_window = nullptr;
@@ -220,7 +220,7 @@ namespace oxygine
         {
             registerResourceTypes();
             // Create the stage. Stage is a root node for all updateable and drawable objects
-            oxygine::Stage::instance = oxygine::spStage::create();
+            oxygine::Stage::setStage(oxygine::spStage::create());
             emit sigLoadRessources();
         }
     }

@@ -16,9 +16,7 @@ namespace oxygine
             DEACTIVATE = sysEventID('S', 'D', 'c'),
             LOST_CONTEXT = sysEventID('S', 'L', 'C'),
         };
-        static spStage instance;
 
-        static Rect calcCenteredViewport(const Point& displaySize, const Point& gameSize);
         static QMatrix4x4 getViewProjectionMatrix(const Rect& viewport);
         explicit Stage();
         virtual ~Stage() = default;
@@ -40,12 +38,16 @@ namespace oxygine
         {
             return Stage::instance;
         }
+        static void setStage(spStage stage)
+        {
+            Stage::instance = stage;
+        }
     protected:
         void onDeactivate(Event*);
         virtual bool isOn(const Vector2& localPosition, float localScale) override;
 
     protected:
+        static spStage instance;
         timeMS m_statUpdate;
-        Rect   m_viewport;
     };
 }

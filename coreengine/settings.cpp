@@ -35,6 +35,7 @@ bool Settings::m_smallScreenDevice  = false;
 bool Settings::m_touchScreen = false;
 bool Settings::m_gamepadEnabled = false;
 float Settings::m_gamepadSensitivity = 1.0f;
+bool Settings::m_useHighDpi = true;
 qint32 Settings::m_framesPerSecond = 60;
 qint32 Settings::m_touchPointSensitivity = 15;
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
@@ -179,7 +180,7 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
-    QSize size = QGuiApplication::primaryScreen()->availableSize();
+    QSize size = QGuiApplication::primaryScreen()->availableSize() * QGuiApplication::primaryScreen()->devicePixelRatio();
     bool smallScreenDevice = hasSmallScreen();
     QString defaultPath = "";
     qint32 defaultCoCount = 0;
@@ -216,6 +217,8 @@ Settings::Settings()
         new Value<bool>{"Resolution", "fullscreen", &m_fullscreen, false, false, true, true},
         new Value<bool>{"Resolution", "recordgames", &m_record, false, false, true},
         new Value<bool>{"Resolution", "SmallScreenDevice", &m_smallScreenDevice, smallScreenDevice, false, true},
+        new Value<bool>{"Resolution", "UseHighDpi", &m_useHighDpi, true, false, true},
+
         // general
         new Value<QString>{"General", "language", &m_language, "en", "", ""},
         new Value<float>{"General", "MouseSensitivity", &m_mouseSensitivity, -0.75f, -100, 100},
@@ -340,6 +343,16 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+bool Settings::getUseHighDpi()
+{
+    return m_useHighDpi;
+}
+
+void Settings::setUseHighDpi(bool newUseHighDpi)
+{
+    m_useHighDpi = newUseHighDpi;
 }
 
 bool Settings::getMovementAnimations()

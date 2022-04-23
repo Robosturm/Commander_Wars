@@ -232,6 +232,8 @@ public:
     static void setUsername(const QString &Username);
 
 public slots:
+    static bool getUseHighDpi();
+    static void setUseHighDpi(bool newUseHighDpi);
 
     static bool getDay2dayScreen();
     static void setDay2dayScreen(bool newDay2dayScreen);
@@ -692,6 +694,7 @@ private:
     static bool m_gamepadEnabled;
     static float m_gamepadSensitivity;
     static qint32 m_framesPerSecond;
+    static bool m_useHighDpi;
 
     static bool m_borderless;
     static bool m_fullscreen;

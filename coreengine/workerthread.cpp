@@ -191,9 +191,9 @@ bool WorkerThread::getStarted() const
 void WorkerThread::onQuit()
 {
     CONSOLE_PRINT("Shutting down workerthread", Console::eDEBUG);
-    if (oxygine::Stage::instance)
+    if (oxygine::Stage::getStage())
     {
-        oxygine::Stage::instance->cleanup();
+        oxygine::Stage::getStage()->cleanup();
     }
     if (InGameMenue::getMenuInstance() != nullptr)
     {

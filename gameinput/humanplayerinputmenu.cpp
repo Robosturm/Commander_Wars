@@ -601,7 +601,7 @@ void HumanPlayerInputMenu::moveMouseToItem(qint32 x, qint32 y)
     if (pApp->hasCursor() && Settings::getAutoMoveCursor())
     {
         oxygine::Vector2 pos = local2stage();
-        QPoint curPos = pApp->mapToGlobal(QPoint(pos.x + m_itemWidth / 2 + m_itemWidth * x, pos.y + m_startY + m_itemHeigth / 2 + m_itemHeigth * y));
+        QPoint curPos = pApp->mapPosToGlobal(QPoint(pos.x + m_itemWidth / 2 + m_itemWidth * x, pos.y + m_startY + m_itemHeigth / 2 + m_itemHeigth * y));
         pApp->cursor().setPos(curPos);
     }
 }

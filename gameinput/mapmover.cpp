@@ -33,7 +33,7 @@ void MapMover::autoScroll()
     bool posValid = false;
     if (pApp->hasCursor())
     {
-        curPos = pApp->mapFromGlobal(pApp->cursor().pos());
+        curPos = pApp->mapPosFromGlobal(pApp->cursor().pos());
         posValid = true;
     }
     else

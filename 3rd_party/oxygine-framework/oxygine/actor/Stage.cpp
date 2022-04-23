@@ -11,8 +11,7 @@ namespace oxygine
     spStage Stage::instance;
 
     Stage::Stage()
-        : m_statUpdate(0),
-          m_viewport(0, 0, 0, 0)
+        : m_statUpdate(0)
     {
         spClock clock = spClock::create();
         setClock(clock);
@@ -24,32 +23,12 @@ namespace oxygine
         core::reset();
     }
 
-    Rect Stage::calcCenteredViewport(const Point& displaySize, const Point& gameSize)
-    {
-        float width = (float)displaySize.x;
-        float height = (float)displaySize.y;
-
-        float scaleFactorX = width / gameSize.x;
-        float scaleFactorY = height / gameSize.y;
-
-        float scaleFactor = scaleFactorX < scaleFactorY ? scaleFactorX : scaleFactorY;
-        Vector2 size = gameSize * scaleFactor;
-
-        Vector2 free = displaySize.cast<Vector2>() - size;
-
-        return Rect((free / 2).cast<Point>(), size.cast<Point>());
-    }
 
     void Stage::init(const Point& displaySize, const Point& gameSize)
     {
-        setSize(gameSize);
-
-        m_viewport = calcCenteredViewport(displaySize, gameSize);
-
-        float scaleFactor = m_viewport.size.x / (float)gameSize.x;
-
+        float scaleFactor = displaySize.x / static_cast<float>(gameSize.x);
         setScale(scaleFactor);
-        setPosition(m_viewport.pos);
+        setSize(gameSize);
     }
 
     bool Stage::isOn(const Vector2&, float)
@@ -74,7 +53,6 @@ namespace oxygine
             driver->clear(*clearColor);
         }
         STDRenderer::instance->setViewProj(viewProjection);
-        setSize(viewport.getWidth(), viewport.getHeight());
         RenderState rs;
         RectF clip(0.0f, 0.0f, viewport.getWidth(), viewport.getHeight());
         rs.clip = &clip;

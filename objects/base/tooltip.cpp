@@ -127,7 +127,7 @@ void Tooltip::showTooltip()
                 !m_tooltipText.isEmpty())
             {
                 CONSOLE_PRINT("Showing tooltip", Console::eDEBUG);
-                QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
+                QPoint curPos = pApp->mapPosFromGlobal(pApp->cursor().pos());
                 if (m_Tooltip.get() != nullptr)
                 {
                     m_Tooltip->detach();

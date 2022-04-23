@@ -408,12 +408,12 @@ void Mainapp::changeScreenMode(qint32 mode)
             if (screenSize.width() < Settings::getWidth())
             {
                 setWidth(screenSize.width());
-                Settings::setWidth(screenSize.width());
+                Settings::setWidth(screenSize.width() * getActiveDpiFactor());
             }
             if (screenSize.height() < Settings::getHeight())
             {
                 setHeight(screenSize.height());
-                Settings::setHeight(screenSize.height());
+                Settings::setHeight(screenSize.height() * getActiveDpiFactor());
             }
             break;
         }
@@ -425,8 +425,8 @@ void Mainapp::changeScreenMode(qint32 mode)
             // set window info
             Settings::setFullscreen(true);
             Settings::setBorderless(false);
-            Settings::setWidth(screenSize.width());
-            Settings::setHeight(screenSize.height());
+            Settings::setWidth(screenSize.width() * getActiveDpiFactor());
+            Settings::setHeight(screenSize.height() * getActiveDpiFactor());
             setGeometry(screenSize);
             break;
         }
@@ -441,12 +441,12 @@ void Mainapp::changeScreenMode(qint32 mode)
             if (screenSize.width() < Settings::getWidth())
             {
                 setWidth(screenSize.width());
-                Settings::setWidth(screenSize.width());
+                Settings::setWidth(screenSize.width() * getActiveDpiFactor());
             }
             if (screenSize.height() < Settings::getHeight())
             {
                 setHeight(screenSize.height());
-                Settings::setHeight(screenSize.height());
+                Settings::setHeight(screenSize.height() * getActiveDpiFactor());
             }
             showNormal();
         }
@@ -462,18 +462,46 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
         return;
     }
     CONSOLE_PRINT("Changing screen size to width: " + QString::number(width) + " height: " + QString::number(heigth), Console::eDEBUG);
-    resize(width, heigth);
-    setMinimumSize(QSize(width, heigth));
-    setMaximumSize(QSize(width, heigth));
+    auto ratio = getActiveDpiFactor();
+    resize(width / ratio, heigth / ratio);
+    setMinimumSize(QSize(width / ratio, heigth / ratio));
+    setMaximumSize(QSize(width / ratio, heigth / ratio));
+
     Settings::setWidth(width);
     Settings::setHeight(heigth);
-    if (oxygine::Stage::instance.get() != nullptr)
-    {
-        oxygine::Stage::instance->setSize(width, heigth);
-    }
     Settings::saveSettings();
+    if (oxygine::Stage::getStage().get() != nullptr)
+    {
+        oxygine::Stage::getStage()->init (oxygine::Point(width / ratio, heigth / ratio),
+                                          oxygine::Point(width, heigth));
+    }
     emit sigWindowLayoutChanged();
     emit sigChangePosition(QPoint(-1, -1), true);
+}
+
+float Mainapp::getActiveDpiFactor() const
+{
+    auto ratio = devicePixelRatio();
+    if (Settings::getUseHighDpi())
+    {
+        CONSOLE_PRINT("Using high dpi option", Console::eDEBUG);
+        ratio = 1.0f;
+    }
+    else
+    {
+        CONSOLE_PRINT("Using no high dpi option scaling ui internal with " + QString::number(ratio), Console::eDEBUG);
+    }
+    return ratio;
+}
+
+QPoint Mainapp::mapPosFromGlobal(QPoint pos) const
+{
+    return mapFromGlobal(pos) * getActiveDpiFactor();
+}
+
+QPoint Mainapp::mapPosToGlobal(QPoint pos) const
+{
+    return mapToGlobal(pos / getActiveDpiFactor());
 }
 
 void Mainapp::changePosition(QPoint pos, bool invert)
