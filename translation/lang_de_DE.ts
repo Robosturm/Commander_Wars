@@ -3340,18 +3340,18 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="617"/>
+        <location filename="../coreengine/mainapp.cpp" line="616"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="623"/>
+        <location filename="../coreengine/mainapp.cpp" line="622"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="625"/>
+        <location filename="../coreengine/mainapp.cpp" line="624"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>

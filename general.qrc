@@ -2060,5 +2060,6 @@
         <file>data/randommaps/multiclimatesgenerator.js</file>
         <file>data/randommaps/seamapgenerator.js</file>
         <file>data/records/info.txt</file>
+        <file>mods/cow_movement_mod/scripts/actions/ACTION_TRAP.js</file>
     </qresource>
 </RCC>
