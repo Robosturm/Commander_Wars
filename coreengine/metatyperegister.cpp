@@ -170,11 +170,11 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<BuildingSpriteManager>("BuildingSpriteManager", 1);
     qmlRegisterInterface<TerrainManager>("TerrainManager", 1);
     qmlRegisterInterface<COPerkManager>("COPerkManager", 1);
+    qmlRegisterInterface<InGameMenue>("InGameMenue", 1);
     qmlRegisterInterface<WikiView>("WikiView", 1);
     qmlRegisterInterface<Mainwindow>("Mainwindow", 1);
     qmlRegisterInterface<VictoryMenue>("VictoryMenue", 1);
     qmlRegisterInterface<GameMenue>("GameMenue", 1);
-    qmlRegisterInterface<InGameMenue>("InGameMenue", 1);
     qmlRegisterInterface<CampaignMenu>("CampaignMenu", 1);
     qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
     qmlRegisterInterface<CreditsMenue>("CreditsMenue", 1);

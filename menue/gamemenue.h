@@ -79,6 +79,8 @@ public:
     bool getIsReplay() const;
     void setIsReplay(bool isReplay);
 
+    bool getActionRunning() const;
+
 signals:
     void sigActionPerformed();
     void sigGameStarted();
@@ -370,6 +372,7 @@ protected:
     bool m_exitAfterSave{false};
     bool m_saveAllowed{false};
     bool m_isReplay{false};
+    bool m_actionRunning{false};
 
     struct
     {

@@ -818,7 +818,12 @@ bool GameMenue::requiresForwarding(const spGameAction & pGameAction) const
     auto* baseGameInput = pCurrentPlayer->getBaseGameInput();
     return getIsMultiplayer(pGameAction) &&
            baseGameInput != nullptr &&
-           baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi;
+                            baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi;
+}
+
+bool GameMenue::getActionRunning() const
+{
+    return m_actionRunning;
 }
 
 void GameMenue::nextTurnPlayerTimeout()
@@ -850,11 +855,12 @@ void GameMenue::nextTurnPlayerTimeout()
 
 void GameMenue::performAction(spGameAction pGameAction)
 {
-    if (m_pCurrentAction.get() != nullptr)
+    if (m_actionRunning)
     {
         CONSOLE_PRINT("Ignoring action request cause an action is currently performed", Console::eWARNING);
         return;
     }
+    m_actionRunning = true;
     m_saveAllowed = false;
     if (m_multiplayerSyncData.m_waitingForSyncFinished)
     {
@@ -1185,6 +1191,7 @@ void GameMenue::actionPerformed()
         if (GameAnimationFactory::getAnimationCount() == 0 &&
             !m_pMap->getGameRules()->getVictory())
         {
+            m_actionRunning = false;
             if (!m_pMap->anyPlayerAlive())
             {
                 CONSOLE_PRINT("Forcing exiting the game cause no player is alive", Console::eDEBUG);

@@ -60,7 +60,6 @@ public slots:
 
 private:
     QList<spGameAction> m_ActionBuffer;
-    bool m_actionRunning{false};
     QMutex m_ActionMutex;
 };
 
