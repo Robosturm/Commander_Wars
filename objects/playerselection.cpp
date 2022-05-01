@@ -596,6 +596,18 @@ void PlayerSelection::showPlayerSelection()
     // add player selection information
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
+        if (!isCampaign)
+        {
+            auto bannlist = Settings::getDefaultBannlist();
+            if (!bannlist.isEmpty())
+            {
+                auto unitList = Filesupport::readList(bannlist, "");
+                if (unitList.items.size() > 0)
+                {
+                    m_pMap->getPlayer(i)->setBuildList(unitList.items);
+                }
+            }
+        }
         qint32 ai = 0;
         if (m_pMap->getPlayer(i)->getBaseGameInput() != nullptr)
         {
@@ -1009,23 +1021,23 @@ void PlayerSelection::slotShowPlayerBuildList(qint32 player)
 
 void PlayerSelection::slotChangeAllBuildList(qint32, QStringList buildList)
 {
-    
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         m_pMap->getPlayer(i)->setBuildList(buildList);
     }
     playerDataChanged();
+
 }
 
 void PlayerSelection::slotChangePlayerBuildList(qint32 player, QStringList buildList)
-{
-    
+{    
     if (player >= 0 && player < m_pMap->getPlayerCount())
     {
         m_pMap->getPlayer(player)->setBuildList(buildList);
     }
     playerDataChanged();
 }
+
 
 void PlayerSelection::playerStartFundsChanged(float value, qint32 playerIdx)
 {    

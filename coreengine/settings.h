@@ -232,6 +232,9 @@ public:
     static void setUsername(const QString &Username);
 
 public slots:
+    static const QString &getDefaultBannlist();
+    static void setDefaultBannlist(const QString &newDefaultBannlist);
+
     static bool getUseHighDpi();
     static void setUseHighDpi(bool newUseHighDpi);
 
@@ -795,6 +798,7 @@ private:
     static quint32 multiTurnCounter;
     static QString m_LastSaveGame;
     static QString m_defaultRuleset;
+    static QString m_defaultBannlist;
     static bool m_ShowCursor;
     static bool m_AutoEndTurn;
     static qint32 m_MenuItemCount;

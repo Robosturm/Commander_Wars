@@ -126,6 +126,7 @@ bool Settings::m_captureAnimation = true;
 quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
 QString Settings::m_defaultRuleset = "";
+QString Settings::m_defaultBannlist = "";
 QString Settings::m_Username = "";
 bool Settings::m_ShowCursor = true;
 bool Settings::m_AutoEndTurn = false;
@@ -308,6 +309,7 @@ Settings::Settings()
         new Value<bool>{"Game", "MovementAnimations", &m_movementAnimations, true, false, true},
         new Value<QString>{"Game", "LastSaveGame", &m_LastSaveGame, "", "", ""},
         new Value<QString>{"Game", "DefaultRuleset", &m_defaultRuleset, "", "", ""},
+        new Value<QString>{"Game", "DefaultBannlist", &m_defaultBannlist, "", "", ""},
         new Value<bool>{"Game", "ShowCursor", &m_ShowCursor, true, false, true},
         new Value<bool>{"Game", "AutoEndTurn", &m_AutoEndTurn, false, false, true},
         new Value<bool>{"Game", "AutoCamera", &m_autoCamera, true, false, true},
@@ -343,6 +345,16 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+const QString &Settings::getDefaultBannlist()
+{
+    return m_defaultBannlist;
+}
+
+void Settings::setDefaultBannlist(const QString &newDefaultBannlist)
+{
+    m_defaultBannlist = newDefaultBannlist;
 }
 
 bool Settings::getUseHighDpi()
