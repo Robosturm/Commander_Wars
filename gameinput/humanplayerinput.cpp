@@ -7,6 +7,7 @@
 #include "game/building.h"
 #include "game/player.h"
 #include "game/co.h"
+#include "game/actionperformer.h"
 #include "game/gameanimation/gameanimationfactory.h"
 
 #include "resource_management/gamemanager.h"
@@ -39,11 +40,11 @@ void HumanPlayerInput::init()
         connect(pMenu.get(), &GameMenue::sigRightClickDown, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
         connect(pMenu.get(), &GameMenue::sigRightClickUp, this, &HumanPlayerInput::rightClickUp, Qt::QueuedConnection);
         connect(pMenu.get(), &GameMenue::sigLeftClick, this, &HumanPlayerInput::leftClick, Qt::QueuedConnection);
-        connect(pMenu.get(), &GameMenue::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
+        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
         connect(m_pMap, &GameMap::sigZoomChanged, this, &HumanPlayerInput::zoomChanged, Qt::QueuedConnection);
         connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
         connect(pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
-        connect(this, &HumanPlayerInput::performAction, pMenu.get(), &GameMenue::performAction, Qt::QueuedConnection);
+        connect(this, &HumanPlayerInput::performAction, &pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
         connect(this, &HumanPlayerInput::sigNextTurn, this, &HumanPlayerInput::nextTurn, Qt::QueuedConnection);
         m_Fields.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
         m_FieldPoints.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);

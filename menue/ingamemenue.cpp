@@ -15,7 +15,7 @@ spInGameMenue InGameMenue::m_pInstance(nullptr);
 
 const char* const JS_GAME_NAME = "game";
 
-InGameMenue::InGameMenue(spGameMap & pMap)
+InGameMenue::InGameMenue(spGameMap pMap)
     : m_pMap(pMap)
 {
     m_MapMoveThread.setObjectName("MapMoveThread");

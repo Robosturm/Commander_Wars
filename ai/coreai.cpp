@@ -83,8 +83,8 @@ CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType)
 
 void CoreAI::init()
 {
-    connect(GameMenue::getInstance().get(), &GameMenue::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-    connect(this, &CoreAI::performAction, GameMenue::getInstance().get(), &GameMenue::performAction, Qt::QueuedConnection);
+    connect(&GameMenue::getInstance()->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
+    connect(this, &CoreAI::performAction, &GameMenue::getInstance()->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
 
     
     if (m_pMap != nullptr)

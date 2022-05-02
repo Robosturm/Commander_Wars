@@ -18,6 +18,7 @@
 #include "game/ui/playerinfo.h"
 #include "game/ui/ingameinfobar.h"
 #include "game/ui/humanquickbuttons.h"
+#include "game/actionperformer.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
 
@@ -71,18 +72,38 @@ public:
      * @brief autoScroll
      */
     virtual void autoScroll(QPoint cursorPosition) override;
-    /**
-     * @brief doTrapping
-     * @param pGameAction
-     */
-    void doTrapping(spGameAction & pGameAction);
     bool getIsReplay() const;
     void setIsReplay(bool isReplay);
 
     bool getActionRunning() const;
+    void updateQuickButtons();
+    void setSaveMap(bool newSaveMap);
+    bool getSaveMap() const;
+
+    bool getSaveAllowed() const;
+    void setSaveAllowed(bool newSaveAllowed);
+    /**
+     * @brief doSaveMap
+     */
+    void doSaveMap();
+    void setGameStarted(bool newGameStarted);
+    /**
+     * @brief getReplayRecorder
+     * @return
+     */
+    ReplayRecorder &getReplayRecorder();
+    /**
+     * @brief getNetworkInterface
+     * @return
+     */
+    NetworkInterface* getNetworkInterface();
+    /**
+     * @brief getActionPerformer
+     * @return
+     */
+    ActionPerformer &getActionPerformer();
 
 signals:
-    void sigActionPerformed();
     void sigGameStarted();
     void sigSyncFinished();
     void sigSaveGame();
@@ -91,42 +112,7 @@ signals:
     void sigShowSurrenderGame();
     void sigNicknameUnit(qint32 x, qint32 y, QString name);
 public slots:
-    /**
-     * @brief centerMapOnAction
-     * @param pGameAction
-     */
-    void centerMapOnAction(GameAction* pGameAction);
-    /**
-     * @brief actionPerformed
-     */
-    void actionPerformed();
-    /**
-     * @brief performAction performs the given action and deletes it afterwards.
-     * @param pGameAction
-     */
-    void performAction(spGameAction pGameAction);
-    /**
-     * @brief isTrap
-     * @param pAction
-     * @param pMoveUnit
-     * @param currentPoint
-     * @param previousPoint
-     * @return
-     */
-    bool isTrap(const QString & function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost);
-    /**
-     * @brief finsihActionPerformed
-     */
-    void finishActionPerformed();
-    /**
-     * @brief skipAnimations
-     */
-    void skipAnimations(bool postAnimation);
-    /**
-     * @brief doMultiTurnMovement
-     * @param pGameAction
-     */
-    spGameAction doMultiTurnMovement(spGameAction pGameAction);
+
     /**
      * @brief updatePlayerinfo
      */
@@ -135,6 +121,10 @@ public slots:
      * @brief updateMinimap
      */
     void updateMinimap();
+    /**
+     * @brief updateGameInfo
+     */
+    void updateGameInfo();
     /**
      * @brief cursorMoved
      * @param x
@@ -276,6 +266,13 @@ public slots:
      * @brief showDamageCalculator
      */
     void showDamageCalculator();
+    /**
+     * @brief getIsMultiplayer
+     * @param pGameAction
+     * @return
+     */
+    bool getIsMultiplayer(const spGameAction & pGameAction) const;
+
 protected slots:
     /**
      * @brief recieveData
@@ -322,14 +319,7 @@ protected slots:
      * @brief onEnter
      */
     virtual void onEnter() override;
-    /**
-     * @brief nextTurnPlayerTimeout
-     */
-    void nextTurnPlayerTimeout();
-    /**
-     * @brief delayedActionPerformed
-     */
-    void delayedActionPerformed();
+
 protected:
     void loadUIButtons();
     void loadGameMenue();
@@ -337,9 +327,6 @@ protected:
     void keyInputAll(Qt::Key cur);
     QString getSaveFileEnding();
     void showChat();
-    void doSaveMap();
-    bool getIsMultiplayer(const spGameAction & pGameAction) const;
-    bool requiresForwarding(const spGameAction & pGameAction) const;
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;
@@ -359,12 +346,7 @@ protected:
     bool m_Multiplayer{false};
 
     QTimer m_UpdateTimer{this};
-    QTimer m_delayedActionPerformedTimer{this};
-    bool m_noTimeOut{false};
-    spGameAction m_pStoredAction{nullptr};
-    spGameAction m_pCurrentAction{nullptr};
 
-    qint64 m_syncCounter{0};
     bool m_enabledAutosaving{false};
 
     QString m_saveFile;
@@ -372,15 +354,8 @@ protected:
     bool m_exitAfterSave{false};
     bool m_saveAllowed{false};
     bool m_isReplay{false};
-    bool m_actionRunning{false};
 
-    struct
-    {
-        bool m_waitingForSyncFinished{false};
-        spGameAction m_postSyncAction;
-        QVector<bool> m_lockedPlayers;
-        QVector<quint64> m_connectingSockets;
-    } m_multiplayerSyncData;
+    ActionPerformer m_actionPerformer;
 };
 
 Q_DECLARE_INTERFACE(GameMenue, "GameMenue");

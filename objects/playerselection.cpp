@@ -703,6 +703,7 @@ void PlayerSelection::showPlayerSelection()
         spDropDownmenuColor playerColor = spDropDownmenuColor::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, playerColors);
         playerColor->setTooltipText(tr("Select the Color for this player's army."));
         playerColor->setPosition(xPositions[itemIndex], y);
+        playerColor->setShowUnitPreview(true);
         playerColor->setCurrentItem(tableColorToDisplayColor(m_pMap->getPlayer(i)->getColor()));
         m_pPlayerSelection->addItem(playerColor);
         DropDownmenuColor* pPlayerColor = playerColor.get();

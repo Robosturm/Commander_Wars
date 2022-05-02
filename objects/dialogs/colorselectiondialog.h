@@ -10,17 +10,25 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "objects/base/panel.h"
-
 #include "objects/base/colorselector.h"
 
 class ColorSelectionDialog;
 using spColorSelectionDialog = oxygine::intrusive_ptr<ColorSelectionDialog>;
 
+class Player;
+using spPlayer = oxygine::intrusive_ptr<Player>;
+
+class Unit;
+using spUnit = oxygine::intrusive_ptr<Unit>;
+
+class Building;
+using spBuilding = oxygine::intrusive_ptr<Building>;
+
 class ColorSelectionDialog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit ColorSelectionDialog(QColor color);
+    explicit ColorSelectionDialog(QColor color, bool showUnitPreview = false);
     virtual ~ColorSelectionDialog() = default;
 signals:
     void editFinished(QColor color);
@@ -28,10 +36,14 @@ signals:
     void sigFinished();
 private slots:
     void remove();
+    void selecetedColorChanged(QColor color);
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ExitButton;
     spColorSelector m_pColorSelector;
+    spPlayer m_pPlayer;
+    spBuilding m_pBuilding;
+    spUnit m_pUnit;
 };
 
 #endif // COLORSELECTIONDIALOG_H

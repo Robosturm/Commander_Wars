@@ -4,9 +4,12 @@
 
 #include "resource_management/objectmanager.h"
 
+#include "game/unit.h"
+#include "game/player.h"
+#include "game/building.h"
+#include "game/gamemap.h"
 
-ColorSelectionDialog::ColorSelectionDialog(QColor color)
-    : QObject()
+ColorSelectionDialog::ColorSelectionDialog(QColor color, bool showUnitPreview)
 {
     setObjectName("ColorSelectionDialog");
     Mainapp* pApp = Mainapp::getInstance();
@@ -40,6 +43,22 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
     m_pColorSelector->setY(30);
     m_pColorSelector->setX(Settings::getWidth() / 2 - m_pColorSelector->getWidth() / 2);
     pSpriteBox->addChild(m_pColorSelector);
+    if (showUnitPreview)
+    {
+        constexpr float scale = 2.0f;
+        connect(m_pColorSelector.get(), &ColorSelector::sigSelecetedColorChanged, this, &ColorSelectionDialog::selecetedColorChanged, Qt::QueuedConnection);
+        m_pPlayer = spPlayer::create(nullptr);
+        m_pPlayer->setColor(color);
+        m_pBuilding = spBuilding::create("TOWN", nullptr);
+        m_pBuilding->setOwner(m_pPlayer.get());
+        m_pBuilding->setScale(scale);
+        m_pBuilding->setPosition(Settings::getWidth() / 2 - GameMap::getImageSize() * scale - 5, Settings::getHeight() -  GameMap::getImageSize() * scale - 5);
+        m_pUnit = spUnit::create("INFANTRY", m_pPlayer.get(), false, nullptr);
+        m_pUnit->setScale(scale);
+        m_pUnit->setPosition(Settings::getWidth() / 2 + 5, Settings::getHeight() -  GameMap::getImageSize() * scale - 5);
+        pSpriteBox->addChild(m_pUnit);
+        pSpriteBox->addChild(m_pBuilding);
+    }
     connect(this, &ColorSelectionDialog::sigFinished, this, &ColorSelectionDialog::remove, Qt::QueuedConnection);
     connect(this, &ColorSelectionDialog::canceled, this, &ColorSelectionDialog::remove, Qt::QueuedConnection);
     auto* pColorSelector = m_pColorSelector.get();
@@ -53,4 +72,11 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
 void ColorSelectionDialog::remove()
 {
     detach();
+}
+
+void ColorSelectionDialog::selecetedColorChanged(QColor color)
+{
+    m_pPlayer->setColor(color);
+    m_pBuilding->setOwner(m_pPlayer.get());
+    m_pUnit->setOwner(m_pPlayer.get());
 }

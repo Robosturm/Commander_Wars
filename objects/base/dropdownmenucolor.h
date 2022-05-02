@@ -31,6 +31,9 @@ public:
      * @param index
      */
     virtual void setCurrentItem(qint32 index) override;
+    bool getShowUnitPreview() const;
+    void setShowUnitPreview(bool newShowUnitPreview);
+
 signals:
     void sigItemChanged(QColor color);
     void sigShowColorDialog();
@@ -52,6 +55,7 @@ private:
     oxygine::spColorRectSprite m_Colorfield;
     QVector<QColor> m_ItemColors;
     QColor m_currentColor;
+    bool m_showUnitPreview{false};
 };
 
 #endif // DropDownmenuColor_H

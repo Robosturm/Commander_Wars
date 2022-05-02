@@ -3,6 +3,7 @@
 #include "game/gamemap.h"
 #include "game/gamerules.h"
 #include "game/victoryrule.h"
+#include "game/actionperformer.h"
 #include "resource_management/fontmanager.h"
 #include "menue/gamemenue.h"
 
@@ -18,7 +19,7 @@ VictoryRulePopup::VictoryRulePopup(GameMap* pMap, QString rule, qint32 width, qi
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr)
     {
-        connect(pMenu.get(), &GameMenue::sigActionPerformed, this, &VictoryRulePopup::updateInfo, Qt::QueuedConnection);
+        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &VictoryRulePopup::updateInfo, Qt::QueuedConnection);
     }
     updateInfo();
     m_popUps.append(m_rule);

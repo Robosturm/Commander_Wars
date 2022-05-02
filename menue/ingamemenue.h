@@ -23,7 +23,7 @@ class InGameMenue : public Basemenu
 {
     Q_OBJECT
 public:
-    explicit InGameMenue(spGameMap & pMap);
+    explicit InGameMenue(spGameMap pMap);
     explicit InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame);
     virtual ~InGameMenue();
     void deleteMenu();

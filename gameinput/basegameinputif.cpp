@@ -188,7 +188,7 @@ void BaseGameInputIF::centerCameraOnAction(GameAction* pAction)
                 spGameMenue pMenu = GameMenue::getInstance();
                 if (pMenu.get() != nullptr)
                 {
-                    pMenu->centerMapOnAction(pAction);
+                    pMenu->getActionPerformer().centerMapOnAction(pAction);
                 }
             }
             else

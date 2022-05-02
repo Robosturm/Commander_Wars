@@ -345,6 +345,7 @@ set(${PROJECT_NAME}_SRCS
     menue/replaymenu.cpp menue/replaymenu.h
     menue/achievementmenu.cpp menue/achievementmenu.h
     menue/shopmenu.cpp menue/shopmenu.h
+    menue/movementplanner.h menue/movementplanner.cpp
 
     # ressource management
     resource_management/unitspritemanager.cpp resource_management/unitspritemanager.h
@@ -415,6 +416,7 @@ set(${PROJECT_NAME}_SRCS
     game/weather.cpp game/weather.h
     game/cursor.cpp game/cursor.h
     game/createoutline.cpp game/createoutline.h
+    game/actionperformer.h game/actionperformer.cpp
     # cool ingame recording
     game/gamerecording/daytodayrecord.cpp game/gamerecording/daytodayrecord.h
     game/gamerecording/playerrecord.cpp game/gamerecording/playerrecord.h

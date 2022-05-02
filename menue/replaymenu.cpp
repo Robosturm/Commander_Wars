@@ -24,7 +24,7 @@ ReplayMenu::ReplayMenu(QString filename)
     setIsReplay(true);
     connect(this, &ReplayMenu::sigExitReplay, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigShowRecordInvalid, this, &ReplayMenu::showRecordInvalid, Qt::QueuedConnection);
-    connect(this, &GameMenue::sigActionPerformed, this, &ReplayMenu::nextReplayAction, Qt::QueuedConnection);
+    connect(&getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &ReplayMenu::nextReplayAction, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigSwapPlay, this, &ReplayMenu::togglePlayUi, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigStartFastForward, this, &ReplayMenu::startFastForward, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigStopFastForward, this, &ReplayMenu::stopFastForward, Qt::QueuedConnection);
@@ -81,7 +81,7 @@ void ReplayMenu::onEnter()
     }
     if (m_valid)
     {
-        emit sigActionPerformed();
+        emit getActionPerformer().sigActionPerformed();
     }
 }
 
@@ -153,7 +153,7 @@ void ReplayMenu::nextReplayAction()
         {
             --m_replayCounter;
             CONSOLE_PRINT("Performing next replay action", Console::eDEBUG);
-            performAction(pAction);
+            getActionPerformer().performAction(pAction);
         }
         else
         {
@@ -309,7 +309,7 @@ void ReplayMenu::oneStep()
     {
         m_paused = false;
         m_pauseRequested = true;
-        emit sigActionPerformed();
+        emit getActionPerformer().sigActionPerformed();
     }
 }
 
@@ -461,7 +461,7 @@ void ReplayMenu::swapPlay()
     {
         CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
         m_paused = false;
-        emit sigActionPerformed();
+        emit getActionPerformer().sigActionPerformed();
     }
     else
     {
@@ -507,9 +507,7 @@ void ReplayMenu::startFastForward()
     Settings::setOverworldAnimations(false);
     Settings::setDialogAnimation(false);
     Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode::BattleAnimationMode_None);
-
-    skipAnimations(false);
-    
+    getActionPerformer().skipAnimations(false);
 }
 
 void ReplayMenu::stopFastForward()
