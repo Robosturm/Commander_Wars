@@ -634,12 +634,12 @@
 <context>
     <name>ColorSelectionDialog</name>
     <message>
-        <location filename="../objects/dialogs/colorselectiondialog.cpp" line="28"/>
+        <location filename="../objects/dialogs/colorselectiondialog.cpp" line="25"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/colorselectiondialog.cpp" line="33"/>
+        <location filename="../objects/dialogs/colorselectiondialog.cpp" line="30"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>

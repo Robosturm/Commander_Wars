@@ -6,6 +6,9 @@
 #include <QColor>
 #include <QVector>
 
+#include "game/unit.h"
+#include "game/player.h"
+#include "game/building.h"
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -14,15 +17,6 @@
 
 class ColorSelectionDialog;
 using spColorSelectionDialog = oxygine::intrusive_ptr<ColorSelectionDialog>;
-
-class Player;
-using spPlayer = oxygine::intrusive_ptr<Player>;
-
-class Unit;
-using spUnit = oxygine::intrusive_ptr<Unit>;
-
-class Building;
-using spBuilding = oxygine::intrusive_ptr<Building>;
 
 class ColorSelectionDialog : public QObject, public oxygine::Actor
 {

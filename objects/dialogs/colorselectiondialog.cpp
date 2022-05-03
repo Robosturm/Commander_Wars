@@ -4,9 +4,6 @@
 
 #include "resource_management/objectmanager.h"
 
-#include "game/unit.h"
-#include "game/player.h"
-#include "game/building.h"
 #include "game/gamemap.h"
 
 ColorSelectionDialog::ColorSelectionDialog(QColor color, bool showUnitPreview)
