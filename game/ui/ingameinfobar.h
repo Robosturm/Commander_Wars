@@ -35,8 +35,9 @@ public slots:
     void updatePlayerInfo();
     void updateCursorInfo(qint32 x, qint32 y);
     void updateDetailedView(qint32 x, qint32 y);
-    void createUnitInfo(qint32 x, qint32 y);
+    bool createUnitInfo(qint32 x, qint32 y);
     void createTerrainInfo(qint32 x, qint32 y);
+    void createMovementInfo(qint32 x, qint32 y);
     void addColorbar(float divider, qint32 posX, qint32 posY, QColor color);
     void syncMinimapPosition();
 private:
