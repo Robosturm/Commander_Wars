@@ -211,6 +211,7 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
             }
         }
     }
+    m_playerDataRecords.clear();
     if (version > 6)
     {
         pStream >> size;
