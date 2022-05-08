@@ -95,7 +95,7 @@ var Constructor = function()
                     if (unit.getHp() <= 0)
                     {
                         // we destroyed a unit
-                        map.getGameRecorder().destroyedUnit(unit.getOwner().getPlayerID(), unit.getUnitID());
+                        map.getGameRecorder().destroyedUnit(unit.getOwner().getPlayerID(), unit.getUnitID(), unit.getOwner().getPlayerID());
                         unit.killUnit();
                     }
                 }                
@@ -106,7 +106,7 @@ var Constructor = function()
         animation.addSprite("explosion+black_bomb", 0, map.getImageSize() / 2, 0, 1.875);
         animation.setSound("explosion+land.wav");
         // we destroyed a unit
-        map.getGameRecorder().destroyedUnit(owner.getPlayerID(), ACTION_EXPLODE.postAnimationUnit.getUnitID());
+        map.getGameRecorder().destroyedUnit(owner.getPlayerID(), ACTION_EXPLODE.postAnimationUnit.getUnitID(), ACTION_EXPLODE.postAnimationUnit.getOwner().getPlayerID());
         ACTION_EXPLODE.postAnimationUnit.killUnit();
         ACTION_EXPLODE.postAnimationUnit.killUnit();
         ACTION_EXPLODE.postAnimationUnit = null;

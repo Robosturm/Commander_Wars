@@ -11,8 +11,9 @@
 #include "wiki/wikidatabase.h"
 
 #include "game/player.h"
+#include "game/gamemap.h"
 
-UnitStatisticView::UnitStatisticView(const GameRecorder::PlayerData & data, qint32 width, qint32 heigth, Player* pPlayer)
+UnitStatisticView::UnitStatisticView(const GameRecorder::PlayerData & data, qint32 width, qint32 heigth, Player* pPlayer, GameMap* pMap)
 {
     setObjectName("UnitStatisticView");
     Mainapp* pApp = Mainapp::getInstance();
@@ -22,9 +23,9 @@ UnitStatisticView::UnitStatisticView(const GameRecorder::PlayerData & data, qint
     spPanel pPanel = spPanel::create(true, size, size);
     addChild(pPanel);
     qint32 y = 10;
-    addStatistic(pPanel, tr("Produced"), data.producedUnits, pPlayer, y, width);
-    addStatistic(pPanel, tr("Lost"), data.lostUnits, pPlayer, y, width);
-    addStatistic(pPanel, tr("Destroyed"), data.killedUnits, pPlayer, y, width);
+    addStatistic(pPanel, tr("Produced"), data.producedUnits, pPlayer, pMap, y, width);
+    addStatistic(pPanel, tr("Lost"), data.lostUnits, pPlayer, pMap, y, width);
+    addStatistic(pPanel, tr("Destroyed"), data.killedUnits, pPlayer, pMap, y, width);
     pPanel->setContentHeigth(y + 40);
     connect(this, &UnitStatisticView::sigShowLink, this, &UnitStatisticView::showLink, Qt::QueuedConnection);
 }
@@ -35,7 +36,7 @@ void UnitStatisticView::showLink(QString pageID)
     oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(pageID)));
 }
 
-void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const QMap<QString, qint32> & view, Player* pPlayer, qint32 & y, qint32 width)
+void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const QVector<GameRecorder::UnitData> & view, Player* pPlayer, GameMap* pMap, qint32 & y, qint32 width)
 {
     qint32 x = 10;
     qint32 textWidth = 100;
@@ -50,31 +51,49 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    auto iter = view.constBegin();
     spLabel headlineLabel = spLabel::create(width - 50);
     headlineLabel->setStyle(styleHeadline);
     headlineLabel->setHtmlText(headline);
     headlineLabel->setPosition(x, y);
     pPanel->addItem(headlineLabel);
     y += 70;
-    while (iter != view.constEnd())
+
+    qint32 count = pMap->getPlayerCount();
+    for (qint32 player = -1; player < count; ++player)
     {
-        QString unitId = iter.key();
-        spUnit pDummy = spUnit::create(unitId, pPlayer, false, pPlayer->getMap());
-        pDummy->setPosition(x, y);
-        pDummy->addClickListener([this, unitId](oxygine::Event*)
+        bool added = false;
+        for (auto & item : view)
         {
-            emit sigShowLink(unitId);
-        });
-        pPanel->addItem(pDummy);
-        spLabel pLabel = spLabel::create(textWidth);
-        pLabel->setStyle(style);
-        pLabel->setHtmlText("x " + QString::number(iter.value()));
-        pLabel->setPosition(x + 30, y - 5);
-        pPanel->addItem(pLabel);
-        x += 40 + textWidth;
-        ++iter;
-        if (x + 50 + textWidth > width && iter != view.constEnd())
+            if (item.player == player)
+            {
+                added = true;
+                QString unitId = item.unitId;
+                Player* pUnitPlayer = pPlayer;
+                if (player >= 0)
+                {
+                    pUnitPlayer = pMap->getPlayer(player);
+                }
+                spUnit pDummy = spUnit::create(item.unitId, pUnitPlayer, false, pMap);
+                pDummy->setPosition(x, y);
+                pDummy->addClickListener([this, unitId](oxygine::Event*)
+                {
+                    emit sigShowLink(unitId);
+                });
+                pPanel->addItem(pDummy);
+                spLabel pLabel = spLabel::create(textWidth);
+                pLabel->setStyle(style);
+                pLabel->setHtmlText("x " + QString::number(item.count));
+                pLabel->setPosition(x + 30, y - 5);
+                pPanel->addItem(pLabel);
+                x += 40 + textWidth;
+                if (x + 50 + textWidth > width && player != count - 1)
+                {
+                    x = 10;
+                    y += 40;
+                }
+            }
+        }
+        if (player != count - 1 && added)
         {
             x = 10;
             y += 40;

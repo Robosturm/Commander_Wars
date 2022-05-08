@@ -122,7 +122,7 @@ var Constructor = function()
                                  "WATERMINE", player);
         if (unit !== null)
         {
-            map.getGameRecorder().buildUnit(player.getPlayerID(), unit.getUnitID());
+            map.getGameRecorder().buildUnit(player.getPlayerID(), unit.getUnitID(), player.getPlayerID());
             unit.setHasMoved(true);
         }
         player.buildedUnit(unit);

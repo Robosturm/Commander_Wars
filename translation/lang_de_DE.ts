@@ -6707,17 +6707,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>UnitStatisticView</name>
     <message>
-        <location filename="../objects/unitstatisticview.cpp" line="25"/>
+        <location filename="../objects/unitstatisticview.cpp" line="26"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/unitstatisticview.cpp" line="26"/>
+        <location filename="../objects/unitstatisticview.cpp" line="27"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/unitstatisticview.cpp" line="27"/>
+        <location filename="../objects/unitstatisticview.cpp" line="28"/>
         <source>Destroyed</source>
         <translation type="unfinished"></translation>
     </message>

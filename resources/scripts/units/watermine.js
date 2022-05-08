@@ -135,7 +135,7 @@ var Constructor = function()
         if (unit !== null)
         {
             var owner = unit.getOwner();
-            map.getGameRecorder().destroyedUnit(owner.getPlayerID(), unit.getUnitID());
+            map.getGameRecorder().destroyedUnit(owner.getPlayerID(), unit.getUnitID(), unit.getOwner().getPlayerID());
             unit.removeUnit();
         }
     }
@@ -154,7 +154,7 @@ var Constructor = function()
             if (targetUnit.getHp() <= 0)
             {
                 // we destroyed a unit
-                map.getGameRecorder().destroyedUnit(targetUnit.getOwner().getPlayerID(), targetUnit.getUnitID());
+                map.getGameRecorder().destroyedUnit(targetUnit.getOwner().getPlayerID(), targetUnit.getUnitID(), targetUnit.getOwner().getPlayerID());
                 targetUnit.killUnit();
             }
         }

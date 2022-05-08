@@ -17,7 +17,7 @@ class UnitStatisticView : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit UnitStatisticView(const GameRecorder::PlayerData & data, qint32 width, qint32 heigth, Player* pPlayer);
+    explicit UnitStatisticView(const GameRecorder::PlayerData & data, qint32 width, qint32 heigth, Player* pPlayer, GameMap* pMap);
     virtual ~UnitStatisticView() = default;
 signals:
     void sigShowLink(QString pageID);
@@ -34,7 +34,7 @@ private:
      * @param y
      * @param width
      */
-    void addStatistic(spPanel & pPanel, QString headline, const QMap<QString, qint32> & view, Player* pPlayer, qint32 & y, qint32 width);
+    void addStatistic(spPanel & pPanel, QString headline, const QVector<GameRecorder::UnitData> & view, Player* pPlayer, GameMap* pMap, qint32 & y, qint32 width);
 
 };
 

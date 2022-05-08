@@ -1053,7 +1053,7 @@ void GameMenue::showPlayerUnitStatistics(Player* pPlayer)
     CONSOLE_PRINT("showUnitStatistics()", Console::eDEBUG);
     spGenericBox pBox = spGenericBox::create();
     spUnitStatisticView view = spUnitStatisticView::create(m_pMap->getGameRecorder()->getPlayerDataRecords()[pPlayer->getPlayerID()],
-            Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer);
+                                                           Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer, m_pMap.get());
     view->setPosition(30, 30);
     pBox->addItem(view);
     connect(pBox.get(), &GenericBox::sigFinished, this, [this]()

@@ -793,7 +793,7 @@ var Constructor = function()
                 ACHIEVEMENT_KILL_UNIT.unitKilled(attacker.getUnitID());
             }
             // we destroyed a unit
-            map.getGameRecorder().destroyedUnit(defUnit.getOwner().getPlayerID(), attacker.getUnitID());
+            map.getGameRecorder().destroyedUnit(defUnit.getOwner().getPlayerID(), attacker.getUnitID(), attacker.getOwner().getPlayerID());
             attacker.killUnit();
             UNITRANKINGSYSTEM.increaseRang(defUnit);
         }
@@ -806,7 +806,7 @@ var Constructor = function()
                 ACHIEVEMENT_KILL_UNIT.unitKilled(defUnit.getUnitID());
             }
             // we destroyed a unit nice
-            map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID(), defUnit.getUnitID());
+            map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID(), defUnit.getUnitID(), defUnit.getOwner().getPlayerID());
             defUnit.killUnit();
             UNITRANKINGSYSTEM.increaseRang(attacker);
         }

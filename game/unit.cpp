@@ -2863,7 +2863,7 @@ GameAnimation* Unit::killUnit()
     {
         if (!m_pOwner->getIsDefeated())
         {
-            m_pMap->getGameRecorder()->lostUnit(m_pOwner->getPlayerID(), m_UnitID);
+            m_pMap->getGameRecorder()->lostUnit(m_pOwner->getPlayerID(), m_UnitID, m_pMap->getCurrentPlayer()->getPlayerID());
         }
     }
     return pRet;
