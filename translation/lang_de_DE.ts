@@ -6721,6 +6721,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <source>Destroyed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../objects/unitstatisticview.cpp" line="115"/>
+        <source>Summary</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VictoryMenue</name>
