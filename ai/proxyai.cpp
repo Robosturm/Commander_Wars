@@ -17,9 +17,10 @@ ProxyAi::ProxyAi(GameMap* pMap)
 
 }
 
-void ProxyAi::init()
+void ProxyAi::init(GameMenue* pMenu)
 {
-    CoreAI::init();
+    m_pMenu = pMenu;
+    CoreAI::init(pMenu);
 }
 
 void ProxyAi::readIni(QString)
@@ -72,13 +73,12 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
         if (m_pPlayer->getPlayerID() == player)
         {
             AI_CONSOLE_PRINT("Received action from network for player " + QString::number(player), Console::eDEBUG);
-            spGameMenue pMenu = GameMenue::getInstance();
             QMutexLocker locker(&m_ActionMutex);
             spGameAction pAction = spGameAction::create(m_pMap);
             pAction->deserializeObject(stream);
             m_ActionBuffer.append(pAction);
-            if (pMenu.get() != nullptr &&
-                !pMenu->getActionRunning() &&
+            if (m_pMenu != nullptr &&
+                !m_pMenu->getActionRunning() &&
                 m_pPlayer == m_pMap->getCurrentPlayer())
             {
                 spGameAction pAction = m_ActionBuffer.front();
@@ -92,9 +92,8 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
 void ProxyAi::nextAction()
 {
     QMutexLocker locker(&m_ActionMutex);
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr &&
-        !pMenu->getActionRunning() &&
+    if (m_pMenu != nullptr &&
+        !m_pMenu->getActionRunning() &&
         m_pPlayer == m_pMap->getCurrentPlayer())
     {
         if (m_ActionBuffer.size() > 0)

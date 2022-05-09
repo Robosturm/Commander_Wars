@@ -158,10 +158,9 @@ void Player::swapCOs()
         spCO co0 = m_playerCOs[0];
         m_playerCOs[0] = m_playerCOs[1];
         m_playerCOs[1] = co0;
-        spGameMenue pGameMenue = GameMenue::getInstance();
-        if (pGameMenue.get() != nullptr)
+        if (m_pMenu != nullptr)
         {
-            pGameMenue->updatePlayerinfo();
+            m_pMenu->updatePlayerinfo();
         }
     }
 }
@@ -656,10 +655,9 @@ bool Player::isAlly(Player* pOwner)
 void Player::setFunds(const qint32 &value)
 {
     m_funds = value;
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pGameMenue->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
 }
 
@@ -863,10 +861,9 @@ void Player::defeatPlayer(Player* pPlayer, bool units)
             }
         }
     }
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pGameMenue->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
 }
 
@@ -1382,7 +1379,6 @@ bool Player::getFieldDirectVisible(qint32 x, qint32 y)
 qint32 Player::getCosts(const QString & id, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args({pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(id, "getBaseCost");
     qint32 costs = 0;
     if (ret.isNumber())
@@ -1427,10 +1423,9 @@ void Player::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage,
             pCO->gainPowerstar(fundsDamage * speed, position, hpDamage * speed, defender, counterAttack);
         }
     }
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pGameMenue->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
 }
 
@@ -1899,7 +1894,6 @@ qint32 Player::calculatePlayerStrength() const
     return ret + calcIncome();
 }
 
-
 qint32 Player::calculatePlayerStrength(Unit* pUnit) const
 {
     qint32 ret = 0;
@@ -1913,6 +1907,11 @@ qint32 Player::calculatePlayerStrength(Unit* pUnit) const
         ret += calculatePlayerStrength(pLoadedUnit);
     }
     return ret;
+}
+
+void Player::setMenu(GameMenue *newMenu)
+{
+    m_pMenu = newMenu;
 }
 
 void Player::serializeObject(QDataStream& pStream) const

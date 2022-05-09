@@ -81,12 +81,11 @@ CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType)
     }
 }
 
-void CoreAI::init()
+void CoreAI::init(GameMenue* pMenu)
 {
-    connect(&GameMenue::getInstance()->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-    connect(this, &CoreAI::performAction, &GameMenue::getInstance()->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
-
-    
+    m_pMenu = pMenu;
+    connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
+    connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
     if (m_pMap != nullptr)
     {
         qint32 heigth = m_pMap->getMapHeight();
@@ -255,14 +254,13 @@ void CoreAI::nextAction()
 {
     AI_CONSOLE_PRINT("CoreAI::nextAction", Console::eDEBUG);
     // check if it's our turn
-    spGameMenue pMenue = GameMenue::getInstance();
     if (!m_processing)
     {
         m_processing = true;
-        if (pMenue.get() != nullptr &&
+        if (m_pMenu != nullptr &&
             m_pMap != nullptr &&
             m_pPlayer == m_pMap->getCurrentPlayer() &&
-            pMenue->getGameStarted())
+            m_pMenu->getGameStarted())
         {
 
             if (!processPredefinedAi())

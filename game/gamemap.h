@@ -276,6 +276,11 @@ public:
      * @return
      */
     oxygine::spActor getUnitsLayer() const;
+    /**
+     * @brief setMenu
+     * @param newMenu
+     */
+    void setMenu(GameMenue *newMenu);
 
 signals:
     void signalExitGame();
@@ -296,6 +301,7 @@ signals:
     void sigMovedMap();
     void sigZoomChanged(float zoom);
     void sigShowDamageCalculator();
+    void sigShowMovementPlanner();
 public slots:
     /**
      * @brief getMapTagsText
@@ -473,6 +479,10 @@ public slots:
      * @brief showUnitStatistics
      */
     void showUnitStatistics(qint32 player);
+    /**
+     * @brief showMovementPlanner
+     */
+    void showMovementPlanner();
     /**
      * @brief getBuildingCount
      * @param buildingID
@@ -837,6 +847,7 @@ private:
     qint32 m_endLoopMs{-1};
     bool m_savegame{false};
     bool m_isHumanMatch{false};
+    GameMenue* m_pMenu{nullptr};
     static qint32 m_imagesize;
 };
 

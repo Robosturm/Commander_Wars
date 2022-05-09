@@ -1358,6 +1358,11 @@ void GameMap::updateMapFlags() const
     }
 }
 
+void GameMap::setMenu(GameMenue *newMenu)
+{
+    m_pMenu = newMenu;
+}
+
 oxygine::spActor GameMap::getUnitsLayer() const
 {
     return m_unitsLayer;
@@ -1612,6 +1617,11 @@ void GameMap::showRules()
 void GameMap::showUnitStatistics(qint32 player)
 {
     emit sigShowUnitStatistics(player);
+}
+
+void GameMap::showMovementPlanner()
+{
+    emit sigShowMovementPlanner();
 }
 
 void GameMap::showDamageCalculator()
@@ -1895,10 +1905,9 @@ void GameMap::refillTransportedUnits(Unit* pUnit)
 
 Player* GameMap::getCurrentViewPlayer()
 {
-    spGameMenue pMenue = GameMenue::getInstance();
-    if (pMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        return pMenue->getCurrentViewPlayer();
+        return m_pMenu->getCurrentViewPlayer();
     }
     return getCurrentPlayer();
 }
@@ -2235,11 +2244,10 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         }
         if (permanent)
         {
-            spGameMenue pMenu = GameMenue::getInstance();
-            if (pMenu.get() != nullptr)
+            if (m_pMenu != nullptr)
             {
                 spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(this, m_CurrentPlayer.get(), GameMap::frameTime, true);
-                pMenu->addChild(pAnim);
+                m_pMenu->addChild(pAnim);
             }
         }
         else
@@ -2257,11 +2265,10 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         checkFuel(m_CurrentPlayer.get());
         m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
         m_Rules->initRoundTime();
-        spGameMenue pMenu = GameMenue::getInstance();
-        if (pMenu.get() != nullptr)
+        if (m_pMenu != nullptr)
         {
-            pMenu->updatePlayerinfo();
-            pMenu->updateMinimap();
+            m_pMenu->updatePlayerinfo();
+            m_pMenu->updateMinimap();
         }
         playMusic();
         if (baseGameInput->getAiType() == GameEnums::AiTypes_Human)

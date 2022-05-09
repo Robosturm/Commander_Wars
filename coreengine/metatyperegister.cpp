@@ -21,6 +21,7 @@
 #include "menue/achievementmenu.h"
 #include "menue/optionmenue.h"
 #include "menue/basemenu.h"
+#include "menue/replaymenu.h"
 
 #include "ui_reader/uifactory.h"
 #include "ui_reader/createdgui.h"
@@ -170,13 +171,11 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<BuildingSpriteManager>("BuildingSpriteManager", 1);
     qmlRegisterInterface<TerrainManager>("TerrainManager", 1);
     qmlRegisterInterface<COPerkManager>("COPerkManager", 1);
-    qmlRegisterInterface<InGameMenue>("InGameMenue", 1);
+
+    qmlRegisterInterface<CampaignMenu>("CampaignMenu", 1);
     qmlRegisterInterface<WikiView>("WikiView", 1);
     qmlRegisterInterface<Mainwindow>("Mainwindow", 1);
     qmlRegisterInterface<VictoryMenue>("VictoryMenue", 1);
-    qmlRegisterInterface<GameMenue>("GameMenue", 1);
-    qmlRegisterInterface<CampaignMenu>("CampaignMenu", 1);
-    qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
     qmlRegisterInterface<CreditsMenue>("CreditsMenue", 1);
     qmlRegisterInterface<Achievementmenu>("Achievementmenu", 1);
     qmlRegisterInterface<OptionMenue>("OptionMenue", 1);
@@ -187,11 +186,15 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<TerrainFlowData>("TerrainFlowData", 1);
     qmlRegisterInterface<CampaignMapData>("CampaignMapData", 1);
     qmlRegisterInterface<GamepadInfo>("GamepadInfo", 1);
-    qmlRegisterInterface<Basemenu>("Basemenu", 1);
     qmlRegisterInterface<CreatedGui>("CreatedGui", 1);
     qmlRegisterInterface<UiFactory>("UiFactory", 1);
     qmlRegisterInterface<GameRecorder>("GameRecorder", 1);
     qmlRegisterInterface<PlayerRecord>("PlayerRecord", 1);
     qmlRegisterInterface<SpecialEvent>("SpecialEvent", 1);
     qmlRegisterInterface<DayToDayRecord>("DayToDayRecord", 1);
+
+    qmlRegisterInterface<GameMenue>("GameMenue", 1);
+    qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
+    qmlRegisterInterface<InGameMenue>("InGameMenue", 1);
+    qmlRegisterInterface<Basemenu>("Basemenu", 1);
 }

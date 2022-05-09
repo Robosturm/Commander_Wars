@@ -46,7 +46,7 @@ public:
     explicit HumanPlayerInput(GameMap* pMap);
     virtual ~HumanPlayerInput();
 
-    virtual void init() override;
+    virtual void init(GameMenue* pMenu) override;
     /**
      * @brief deleteArrow deletes the current unit path arrow
      */
@@ -150,6 +150,17 @@ public:
     }
 
     virtual void centerCameraOnAction(GameAction* pAction) override;
+    /**
+     * @brief isCurrentPlayer
+     * @return
+     */
+    virtual bool isCurrentPlayer(Player* pPlayer) const;
+    /**
+     * @brief canActionBePerformed
+     * @param pAction
+     * @return
+     */
+    virtual bool canActionBePerformed(GameAction* pAction) const;
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -167,7 +178,7 @@ public slots:
     void markedFieldSelected(QPoint point);
     QStringList getEmptyActionList();
     QStringList getViewplayerActionList();
-    void autoEndTurn();
+    virtual void autoEndTurn();
     void syncMarkedFields();
     void nextTurn();
     bool inputAllowed();
@@ -225,7 +236,6 @@ private:
 
     QPoint m_lastClickPoint;
     QPoint m_lastCursorPosition;
-
     bool m_showVisionFields;
 };
 

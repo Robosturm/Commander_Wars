@@ -17,12 +17,13 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/unitspritemanager.h"
 
-HumanPlayerInputMenu::HumanPlayerInputMenu(GameMap* pMap, const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
+HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
                                            const QVector<qint32> & costList, const QVector<bool> & enabledList)
     : m_ActionIDs(actionIDs),
       m_CostList(costList),
       m_EnabledList(enabledList),
-      m_pMap(pMap)
+      m_pMap(pMap),
+      m_pMenu(pMenu)
 {
     setObjectName("HumanPlayerInputMenu");
     Mainapp* pApp = Mainapp::getInstance();
@@ -182,7 +183,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMap* pMap, const QStringList & te
                 oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
                 if (pTouchEvent != nullptr)
                 {
-                    emit pScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / static_cast<float>(pScrollbar->getContentHeigth()));                    
+                    emit pScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / static_cast<float>(pScrollbar->getContentHeigth()));
                 }
             });
         }
@@ -406,8 +407,6 @@ qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width, Player* pPl
 
 void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
 {
-    
-
     if (x + getWidth() + GameMap::getImageSize() / 2 > m_pMap->getMapWidth() * GameMap::getImageSize())
     {
         x = m_pMap->getMapWidth() * GameMap::getImageSize() - getWidth() - GameMap::getImageSize() / 2;
@@ -430,10 +429,9 @@ void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
 
 void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
 {
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        Chat* pChat = pMenu->getChat();
+        Chat* pChat = m_pMenu->getChat();
         if (m_Focused && (pChat == nullptr || pChat->getVisible() == false))
         {
             // for debugging
@@ -563,7 +561,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     {
                         spUnit pDummy = spUnit::create(id, m_pMap->getCurrentPlayer(), false, m_pMap);
                         spFieldInfo fieldinfo = spFieldInfo::create(nullptr, pDummy.get());
-                        pMenu->addChild(fieldinfo);
+                        m_pMenu->addChild(fieldinfo);
                         connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [this]
                         {
                             m_Focused = true;
@@ -577,7 +575,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                         if (data.m_id != "")
                         {
                             spWikipage page = pDatabase->getPage(data);
-                            pMenu->addChild(page);
+                            m_pMenu->addChild(page);
                             connect(page.get(), &FieldInfo::sigFinished, this, [this]
                             {
                                 m_Focused = true;

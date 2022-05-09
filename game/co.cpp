@@ -73,6 +73,11 @@ bool CO::isJsFunctionEnabled(QString perk) const
                           m_pMap->getGameRules()->getEnableDayToDayCoAbilities(); // or if d2d is active
 }
 
+void CO::setMenu(GameMenue *newMenu)
+{
+    m_pMenu = newMenu;
+}
+
 bool CO::getGlobalCoZone() const
 {
     return m_globalCoZone;
@@ -90,10 +95,9 @@ GameMap *CO::getMap() const
 
 void CO::setCOUnit(Unit* pUnit)
 {
-    spGameMenue pMenu = GameMenue::getInstance();
-    if ((pUnit == nullptr) &&
-        (m_pCOUnit.get() != nullptr) &&
-        (pMenu.get() != nullptr))
+    if (pUnit == nullptr &&
+        m_pCOUnit.get() != nullptr &&
+        m_pMenu != nullptr)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "onCOUnitLost";
@@ -165,10 +169,9 @@ void CO::setPowerFilled(const double &value)
         }
         CONSOLE_PRINT("Powerbar changed by: " + QString::number(value - currentValue), Console::eDEBUG);
     }
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pMenu->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
 }
 void CO::limitPowerbar(float previousValue)
@@ -181,8 +184,7 @@ void CO::limitPowerbar(float previousValue)
     {
         m_powerFilled = 0;
     }
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();
         if (previousValue < m_powerStars && m_powerFilled >= m_powerStars)
@@ -884,10 +886,9 @@ void CO::activatePower()
     {
         pInterpreter->doFunction(perk, function1, args);
     }
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pMenu->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
     addUnitShines();
 }
@@ -907,10 +908,9 @@ void CO::activateSuperpower(GameEnums::PowerMode powerMode)
     {
         pInterpreter->doFunction(perk, function1, args);
     }
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pMenu->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
     addUnitShines();
 }
@@ -1598,7 +1598,7 @@ GameAnimationPower* CO::createPowerScreen(GameEnums::PowerMode powerMode, quint3
 
 bool CO::getIsCO0()
 {
-    if (this == m_Owner->getCO(0) || GameMenue::getInstance().get() == nullptr)
+    if (this == m_Owner->getCO(0) || m_pMenu == nullptr)
     {
         return true;
     }
@@ -2085,10 +2085,9 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
         }
     }
     pCOAnim = nullptr;
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pMenu->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
 }
 

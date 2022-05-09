@@ -5,6 +5,7 @@
 #include "menue/gamemenue.h"
 #include "menue/victorymenue.h"
 #include "menue/optionmenue.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/console.h"
 #include "coreengine/audiothread.h"
@@ -149,6 +150,11 @@ GameMenue::GameMenue(spGameMap pMap)
     pApp->continueRendering();
 }
 
+GameMenue::~GameMenue()
+{
+    exitMovementPlanner();
+}
+
 spGameMenue GameMenue::getInstance()
 {
     return oxygine::dynamic_pointer_cast<GameMenue>(m_pInstance);
@@ -277,8 +283,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
 }
 
 Player* GameMenue::getCurrentViewPlayer()
-{
-    
+{    
     spPlayer pCurrentPlayer = spPlayer(m_pMap->getCurrentPlayer());
     if (pCurrentPlayer.get() != nullptr)
     {
@@ -534,7 +539,7 @@ void GameMenue::loadGameMenue()
         auto* input = m_pMap->getPlayer(i)->getBaseGameInput();
         if (input != nullptr)
         {
-            input->init();
+            input->init(this);
         }
     }
     // back to normal code
@@ -542,7 +547,7 @@ void GameMenue::loadGameMenue()
     m_pPlayerinfo->updateData();
     addChild(m_pPlayerinfo);
 
-    m_IngameInfoBar = spIngameInfoBar::create(m_pMap.get());
+    m_IngameInfoBar = spIngameInfoBar::create(this, m_pMap.get());
     m_IngameInfoBar->updateMinimap();
     addChild(m_IngameInfoBar);
     if (Settings::getSmallScreenDevice())
@@ -600,6 +605,7 @@ void GameMenue::connectMap()
     connect(m_pMap.get(), &GameMap::sigShowUnitStatistics, this, &GameMenue::showUnitStatistics, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowDamageCalculator, this, &GameMenue::showDamageCalculator, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigMovedMap, m_IngameInfoBar.get(), &IngameInfoBar::syncMinimapPosition, Qt::QueuedConnection);
+    connect(m_pMap.get(), &GameMap::sigShowMovementPlanner, this, &GameMenue::showMovementPlanner, Qt::QueuedConnection);
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, m_pMap.get(), &GameMap::centerMap, Qt::QueuedConnection);
 }
 
@@ -607,8 +613,8 @@ void GameMenue::loadUIButtons()
 {    
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
-    pButtonBox->setResAnim(pAnim);
+    m_pButtonBox = oxygine::spBox9Sprite::create();
+    m_pButtonBox->setResAnim(pAnim);
     qint32 roundTime = m_pMap->getGameRules()->getRoundTimeMs();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
@@ -620,39 +626,40 @@ void GameMenue::loadUIButtons()
     m_CurrentRoundTime->setStyle(style);
     if (roundTime > 0)
     {
-        pButtonBox->setSize(286 + 120, 50);
+        m_pButtonBox->setSize(286 + 120, 50);
         m_CurrentRoundTime->setPosition(138 + 5, 10);
-        pButtonBox->addChild(m_CurrentRoundTime);
+        m_pButtonBox->addChild(m_CurrentRoundTime);
         updateTimer();
     }
     else
     {
-        pButtonBox->setSize(286, 50);
+        m_pButtonBox->setSize(286, 50);
     }
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
-    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) / 2 - pButtonBox->getWidth() / 2, Settings::getHeight() - pButtonBox->getHeight() + 6);
-    pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    addChild(pButtonBox);
+    m_pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) / 2 - m_pButtonBox->getWidth() / 2, Settings::getHeight() - m_pButtonBox->getHeight() + 6);
+    m_pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    addChild(m_pButtonBox);
     oxygine::spButton saveGame = pObjectManager->createButton(tr("Save"), 130);
     saveGame->setPosition(8, 4);
     saveGame->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigSaveGame();
     });
-    pButtonBox->addChild(saveGame);
+    m_pButtonBox->addChild(saveGame);
 
     oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit"), 130);
-    exitGame->setPosition(pButtonBox->getWidth() - 138, 4);
+    exitGame->setPosition(m_pButtonBox->getWidth() - 138, 4);
     exitGame->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowExitGame();
     });
-    pButtonBox->addChild(exitGame);
+    m_pButtonBox->addChild(exitGame);
+    addChild(m_pButtonBox);
 
     pAnim = pObjectManager->getResAnim("panel");
-    pButtonBox = oxygine::spBox9Sprite::create();
-    pButtonBox->setResAnim(pAnim);
+    m_XYButtonBox = oxygine::spBox9Sprite::create();
+    m_XYButtonBox->setResAnim(pAnim);
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -661,19 +668,18 @@ void GameMenue::loadUIButtons()
     m_xyTextInfo->setStyle(style);
     m_xyTextInfo->setHtmlText("X: 0 Y: 0");
     m_xyTextInfo->setPosition(8, 8);
-    pButtonBox->addChild(m_xyTextInfo);
-    pButtonBox->setSize(200, 50);
-    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
-    m_XYButtonBox = pButtonBox;
+    m_XYButtonBox->addChild(m_xyTextInfo);
+    m_XYButtonBox->setSize(200, 50);
+    m_XYButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - m_XYButtonBox->getWidth(), 0);
     m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates() && !Settings::getSmallScreenDevice());
-    addChild(pButtonBox);
+    addChild(m_XYButtonBox);
     m_UpdateTimer.setInterval(500);
     m_UpdateTimer.setSingleShot(false);
     m_UpdateTimer.start();
     bool loadQuickButtons = true;
     if (m_pNetworkInterface.get() != nullptr)
     {
-        pButtonBox = oxygine::spBox9Sprite::create();
+        oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
         pButtonBox->setResAnim(pAnim);
         pButtonBox->setSize(144, 50);
         pButtonBox->setPosition(0, Settings::getHeight() - pButtonBox->getHeight());
@@ -1380,14 +1386,28 @@ void GameMenue::startGame()
     CONSOLE_PRINT("GameMenue::startGame", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     GameAnimationFactory::clearAllAnimations();
-    
+    qint32 count = m_pMap->getPlayerCount();
+    m_pMap->setMenu(this);
+    for (qint32 i = 0; i < count; ++i)
+    {
+        Player* pPlayer = m_pMap->getPlayer(i);
+        pPlayer->setMenu(this);
+        qint32 coCount = pPlayer->getMaxCoCount();
+        for (qint32 co = 0; co < coCount; ++co)
+        {
+            CO* pCO = pPlayer->getCO(co);
+            if (pCO != nullptr)
+            {
+                pCO->setMenu(this);
+            }
+        }
+    }
     if (!m_SaveGame)
     {
         m_pMap->startGame();
         m_pMap->setCurrentPlayer(m_pMap->getPlayerCount() - 1);
         if (m_pNetworkInterface.get() == nullptr)
         {
-            qint32 count = m_pMap->getPlayerCount();
             bool humanAlive = false;
             for (qint32 i = 0; i < count; i++)
             {
@@ -1562,7 +1582,6 @@ void GameMenue::showWiki()
 
 void GameMenue::showSurrenderGame()
 {
-    
     if (m_pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes::AiTypes_Human)
     {
         CONSOLE_PRINT("showSurrenderGame()", Console::eDEBUG);
@@ -1621,6 +1640,116 @@ void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
 void GameMenue::showDamageCalculator()
 {
     addChild(spDamageCalculator::create());
+}
+
+void GameMenue::showMovementPlanner()
+{
+    m_Focused = false;
+    if (m_pMovementPlanner.get() == nullptr)
+    {
+        m_pMovementPlanner = spMovementPlanner::create(this, m_pMap.get(), m_pMap->getCurrentViewPlayer());
+        addChild(m_pMovementPlanner);
+    }
+    else
+    {
+        m_pMovementPlanner->setVisible(true);
+    }
+    m_pMovementPlanner->onShowPlanner();
+    if (m_humanQuickButtons.get() != nullptr)
+    {
+        m_humanQuickButtons->setVisible(false);
+    }
+    if (m_mapSliding.get())
+    {
+        m_mapSliding->setVisible(false);
+    }
+    if (m_pChat.get())
+    {
+        m_pChat->setVisible(false);
+    }
+    if (m_ChatButton.get())
+    {
+        m_ChatButton->setVisible(false);
+    }
+    if (m_xyTextInfo.get())
+    {
+        m_xyTextInfo->setVisible(false);
+    }
+    if (m_IngameInfoBar.get())
+    {
+        m_IngameInfoBar->setVisible(false);
+    }
+    if (m_pPlayerinfo.get())
+    {
+        m_pPlayerinfo->setVisible(false);
+    }
+    if (m_XYButtonBox.get())
+    {
+        m_XYButtonBox->setVisible(false);
+    }
+    if (m_pButtonBox.get())
+    {
+        m_pButtonBox->setVisible(false);
+    }
+}
+
+void GameMenue::hideMovementPlanner()
+{
+    if (m_pMovementPlanner.get() != nullptr)
+    {
+        m_pMovementPlanner->setVisible(false);
+    }
+}
+
+void GameMenue::exitMovementPlanner()
+{
+    if (m_pMovementPlanner.get() != nullptr)
+    {
+        if (m_pMovementPlanner->getVisible())
+        {
+            m_pMovementPlanner->onExitPlanner();
+        }
+        m_pMovementPlanner->detach();
+    }
+    m_pMovementPlanner = nullptr;
+    if (m_mapSliding.get())
+    {
+        m_mapSliding->setVisible(true);
+    }
+    m_mapSliding->setVisible(true);
+    if (m_humanQuickButtons.get() != nullptr)
+    {
+        m_humanQuickButtons->setVisible(true);
+    }
+    if (m_pChat.get())
+    {
+        m_pChat->setVisible(true);
+    }
+    if (m_ChatButton.get())
+    {
+        m_ChatButton->setVisible(true);
+    }
+    if (m_xyTextInfo.get())
+    {
+        m_xyTextInfo->setVisible(true);
+    }
+    if (m_IngameInfoBar.get())
+    {
+        m_IngameInfoBar->setVisible(true);
+    }
+    if (m_pPlayerinfo.get())
+    {
+        m_pPlayerinfo->setVisible(true);
+    }
+    if (m_XYButtonBox.get())
+    {
+        m_XYButtonBox->setVisible(true);
+    }
+    if (m_pButtonBox.get())
+    {
+        m_pButtonBox->setVisible(true);
+    }
+    m_Focused = true;
 }
 
 bool GameMenue::getIsReplay() const

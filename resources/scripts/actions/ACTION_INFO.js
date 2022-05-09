@@ -82,6 +82,7 @@ var Constructor = function()
         data.addData(qsTr("Rules"), "RULES", "rules");
         data.addData(qsTr("Wiki"), "WIKI", "wiki");
         data.addData(qsTr("Calculator"), "CALCULATOR", "calculator");
+
     };
 }
 

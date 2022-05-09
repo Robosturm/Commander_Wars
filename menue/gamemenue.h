@@ -24,9 +24,11 @@
 
 class GameMenue;
 using spGameMenue = oxygine::intrusive_ptr<GameMenue>;
+class MovementPlanner;
+using spMovementPlanner = oxygine::intrusive_ptr<MovementPlanner>;
 
 /**
- * @brief The GameMenue class handles the game :)
+ * @brief The GameMenue class handles the game
  */
 class GameMenue : public InGameMenue
 {
@@ -36,7 +38,7 @@ public:
     explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface);
     explicit GameMenue(QString map, bool saveGame);
     explicit GameMenue(spGameMap pMap);
-    virtual ~GameMenue() = default;
+    virtual ~GameMenue();
     static spGameMenue getInstance();
     /**
      * @brief attachInterface
@@ -267,6 +269,18 @@ public slots:
      */
     void showDamageCalculator();
     /**
+     * @brief showMovementPlaner
+     */
+    void showMovementPlanner();
+    /**
+     * @brief hideMovementPlanner
+     */
+    void hideMovementPlanner();
+    /**
+     * @brief exitMovementPlanner
+     */
+    void exitMovementPlanner();
+    /**
      * @brief getIsMultiplayer
      * @param pGameAction
      * @return
@@ -331,8 +345,9 @@ protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;
     spIngameInfoBar m_IngameInfoBar;
+    oxygine::spBox9Sprite m_pButtonBox;
     spLabel m_xyTextInfo;
-    oxygine::spActor m_XYButtonBox;
+    oxygine::spBox9Sprite m_XYButtonBox;
     spHumanQuickButtons m_humanQuickButtons;
     spChat m_pChat{nullptr};
     oxygine::spButton m_ChatButton{nullptr};
@@ -356,6 +371,7 @@ protected:
     bool m_isReplay{false};
 
     ActionPerformer m_actionPerformer;
+    spMovementPlanner m_pMovementPlanner;
 };
 
 Q_DECLARE_INTERFACE(GameMenue, "GameMenue");

@@ -11,16 +11,17 @@
 
 #include "objects/base/h_scrollbar.h"
 
+class Player;
+class GameMenue;
+class GameMap;
 class HumanPlayerInputMenu;
 using spHumanPlayerInputMenu = oxygine::intrusive_ptr<HumanPlayerInputMenu>;
-class Player;
-class GameMap;
 
 class HumanPlayerInputMenu : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit HumanPlayerInputMenu(GameMap* pMap, const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
+    explicit HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
                                   const QVector<qint32> & costList = QVector<qint32>(), const QVector<bool> & enabledList = QVector<bool>());
     virtual ~HumanPlayerInputMenu() = default;
     /**
@@ -65,7 +66,8 @@ private:
 
     bool m_moveScrolling{false};
     oxygine::Vector2 m_lastScrollPoint;
-    GameMap* m_pMap{nullptr};
+    GameMap* m_pMap{nullptr};    
+    GameMenue* m_pMenu{nullptr};
 };
 
 #endif // HUMANPLAYERINPUTMENU_H

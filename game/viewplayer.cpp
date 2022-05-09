@@ -5,13 +5,13 @@
 
 #include "menue/gamemenue.h"
 
-Viewplayer::Viewplayer(GameMap* pMap)
+Viewplayer::Viewplayer(GameMenue* pMenu, GameMap* pMap)
     : Player(pMap),
       m_input(pMap)
 {
     setObjectName("Viewplayer");
     Interpreter::setCppOwnerShip(this);
-    m_input.init();
+    m_input.init(pMenu);
 }
 
 bool Viewplayer::getFieldVisible(qint32 x, qint32 y)

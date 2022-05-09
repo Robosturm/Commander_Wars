@@ -18,8 +18,9 @@
 
 #include "objects/base/label.h"
 
-IngameInfoBar::IngameInfoBar(GameMap* pMap)
-    : m_pMap(pMap)
+IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
+    : m_pMap(pMap),
+      m_pMenu(pMenu)
 {
     setObjectName("IngameInfoBar");
     Interpreter::setCppOwnerShip(this);
@@ -46,6 +47,7 @@ IngameInfoBar::IngameInfoBar(GameMap* pMap)
 
     pMiniMapBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pMinimap = spMinimap::create();
+    m_pMinimap->setMenu(pMenu);
     m_pMinimap->setPosition(0, 0);
     updateMinimap();
     m_pMinimap->setScale(2.0f);
@@ -99,8 +101,7 @@ void IngameInfoBar::updatePlayerInfo()
         m_pMap->getCurrentPlayer() != nullptr)
     {
         m_pDetailedViewBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
-        spGameMenue pMenu = GameMenue::getInstance();
-        if (pMenu.get() != nullptr)
+        if (m_pMenu != nullptr)
         {
             Player* pPlayer = m_pMap->getCurrentPlayer();
             if (pPlayer != nullptr)
@@ -256,7 +257,7 @@ void IngameInfoBar::updatePlayerInfo()
                 m_pGameInfoBox->addChild(pTextfield);
                 y += 25;
 
-                Player* pViewPlayer = pMenu->getCurrentViewPlayer();
+                Player* pViewPlayer = m_pMenu->getCurrentViewPlayer();
                 if (pViewPlayer != nullptr)
                 {
                     pTextfield = spLabel::create(width);
@@ -375,18 +376,20 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
         m_LastX = x;
         m_LastY = y;
         m_pCursorInfoBox->removeChildren();
-        spGameMenue pGamemenu = GameMenue::getInstance();
-        if (pGamemenu.get() != nullptr)
+        if (m_pMenu != nullptr)
         {
-            Player* pPlayer = pGamemenu->getCurrentViewPlayer();
-            GameEnums::VisionType visionHide = pPlayer->getFieldVisibleType(x, y);
-            if (visionHide != GameEnums::VisionType_Shrouded)
+            Player* pPlayer = m_pMenu->getCurrentViewPlayer();
+            if (pPlayer != nullptr)
             {
-                updateDetailedView(x, y);
-                createTerrainInfo(x, y);
-                if (!createUnitInfo(x, y))
+                GameEnums::VisionType visionHide = pPlayer->getFieldVisibleType(x, y);
+                if (visionHide != GameEnums::VisionType_Shrouded)
                 {
-                    createMovementInfo(x, y);
+                    updateDetailedView(x, y);
+                    createTerrainInfo(x, y);
+                    if (!createUnitInfo(x, y))
+                    {
+                        createMovementInfo(x, y);
+                    }
                 }
             }
         }
@@ -441,19 +444,17 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     static constexpr qint32 xOffset = 2;
     static constexpr qint32 yOffset = 4;
     bool hpHidden = false;
-    spGameMenue pGamemenu = GameMenue::getInstance();
-    
     Terrain* pTerrain = m_pMap->getTerrain(x, y);
     spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
     spUnit pUnit = spUnit(pTerrain->getUnit());
-    Player* pPlayer = pGamemenu->getCurrentViewPlayer();
+    Player* pPlayer = m_pMenu->getCurrentViewPlayer();
     if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
     {
         pUnit = nullptr;
     }
     if (pUnit.get() != nullptr)
     {
-        hpHidden = pUnit->getHpHidden(pGamemenu->getCurrentViewPlayer());
+        hpHidden = pUnit->getHpHidden(m_pMenu->getCurrentViewPlayer());
     }
     GameManager* pGameManager = GameManager::getInstance();
     m_pDetailedViewBox->removeChildren();
@@ -576,11 +577,9 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
     smallStyle.multiline = false;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("barforeground");
-    spGameMenue pGamemenu = GameMenue::getInstance();
-    
     Terrain* pTerrain = m_pMap->getTerrain(x, y);
     spUnit pUnit = spUnit(pTerrain->getUnit());
-    Player* pPlayer = pGamemenu->getCurrentViewPlayer();
+    Player* pPlayer = m_pMenu->getCurrentViewPlayer();
     if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
     {
         pUnit = nullptr;
@@ -600,8 +599,8 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         posY += 22;
         float hp = pUnit->getHp();
         float divider = static_cast<float>(hp) / static_cast<float>(Unit::MAX_UNIT_HP);
-        bool hpHidden = pUnit->getHpHidden(pGamemenu->getCurrentViewPlayer());
-        bool perfectHpVision = pUnit->getPerfectHpView(pGamemenu->getCurrentViewPlayer());
+        bool hpHidden = pUnit->getHpHidden(m_pMenu->getCurrentViewPlayer());
+        bool perfectHpVision = pUnit->getPerfectHpView(m_pMenu->getCurrentViewPlayer());
         if (hpHidden)
         {
             divider = 0.0f;
@@ -827,12 +826,10 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("barforeground");
     if (pAnim != nullptr)
     {
-        spGameMenue pGamemenu = GameMenue::getInstance();
-
         Terrain* pTerrain = m_pMap->getTerrain(x, y);
         spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
         spUnit pUnit = spUnit(pTerrain->getUnit());
-        Player* pPlayer = pGamemenu->getCurrentViewPlayer();
+        Player* pPlayer = m_pMenu->getCurrentViewPlayer();
         if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
         {
             pUnit = nullptr;

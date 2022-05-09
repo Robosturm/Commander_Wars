@@ -24,7 +24,6 @@ typedef oxygine::intrusive_ptr<Player> spPlayer;
 class Player : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
-
 public:
     /**
      * @brief Player
@@ -126,6 +125,8 @@ public:
      */
     void setUniqueIdentifier(const QString &newUniqueIdentifier);
     void setDisplayName(const QString &newDisplayName);
+    void setMenu(GameMenue *newMenu);
+
 public slots:
     /**
      * @brief getDisplayName
@@ -635,6 +636,7 @@ private:
      * @brief m_pBaseGameInput pointer to the ai or human player
      */
     spBaseGameInputIF m_pBaseGameInput{nullptr};
+    GameMenue* m_pMenu{nullptr};
     bool m_isDefeated{false};
     struct VisionFieldInfo
     {

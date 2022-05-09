@@ -7,6 +7,7 @@
 #include "objects/minimap.h"
 
 class GameMap;
+class GameMenue;
 class IngameInfoBar;
 using spIngameInfoBar = oxygine::intrusive_ptr<IngameInfoBar>;
 
@@ -17,15 +18,13 @@ public:
     static constexpr qint32 spriteWidth = 127;
     static constexpr qint32 spriteHeigth = 192;
 
-    explicit IngameInfoBar(GameMap* pMap);
+    explicit IngameInfoBar(GameMenue* pMenu, GameMap* pMap);
     virtual ~IngameInfoBar() = default;
     Minimap* getMinimap()
     {
         return m_pMinimap.get();
     }
-
     void updateTerrainInfo(qint32 x, qint32 y, bool update);
-
     oxygine::spBox9Sprite getDetailedViewBox() const;
     void setMap(GameMap *newMap);
 
@@ -49,6 +48,7 @@ private:
     qint32 m_LastX{-1};
     qint32 m_LastY{-1};
     GameMap* m_pMap{nullptr};
+    GameMenue* m_pMenu{nullptr};
 };
 
 #endif // INGAMEINFOBAR_H

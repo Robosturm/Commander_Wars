@@ -438,6 +438,7 @@ set(${PROJECT_NAME}_SRCS
     game/gameanimation/gameanimationnextday.cpp game/gameanimation/gameanimationnextday.h
     game/gameanimation/battleanimation.cpp game/gameanimation/battleanimation.h
     game/gameanimation/battleanimationsprite.cpp game/gameanimation/battleanimationsprite.h
+    game/gameanimation/animationskipper.h game/gameanimation/animationskipper.cpp
     # replay/observer
     game/viewplayer.cpp game/viewplayer.h
 

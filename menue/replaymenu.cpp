@@ -35,20 +35,9 @@ ReplayMenu::ReplayMenu(QString filename)
     m_valid = m_ReplayRecorder.loadRecord(filename);
     if (m_valid)
     {
-        m_Viewplayer = spViewplayer::create(m_pMap.get());
+        m_Viewplayer = spViewplayer::create(this, m_pMap.get());
         // store animation modes
-        m_storedOverworldAnimations = Settings::getOverworldAnimations();
-        m_storedBattleAnimMode = Settings::getBattleAnimationMode();
-        m_storedBatteAnimType = Settings::getBattleAnimationType();
-        m_storedDialog = Settings::getDialogAnimation();
-        m_storedCaptureAnimation = Settings::getCaptureAnimation();
-        m_storedMovementAnimation = Settings::getMovementAnimations();
-        m_storedDay2DayAnimation = Settings::getDay2dayScreen();
-
-        m_storedAnimationSpeed = Settings::getAnimationSpeedValue();
-        m_storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
-        m_storedDialogAnimationSpeed = Settings::getDialogAnimationSpeedValue();
-        m_storedCaptureAnimationSpeed = Settings::getCaptureAnimationSpeedValue();
+        m_storedAnimationSettings.storeAnimationSettings();
         
         loadHandling();
         loadGameMenue();
@@ -56,7 +45,7 @@ ReplayMenu::ReplayMenu(QString filename)
         m_pMap->updateSprites();
         loadUIButtons();
         m_HumanInput = spHumanPlayerInput::create(m_pMap.get());
-        m_HumanInput->init();
+        m_HumanInput->init(this);
         m_gameStarted = true;
         CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
     }
@@ -87,18 +76,7 @@ void ReplayMenu::onEnter()
 
 ReplayMenu::~ReplayMenu()
 {
-    Settings::setOverworldAnimations(m_storedOverworldAnimations);
-    Settings::setBattleAnimationMode(m_storedBattleAnimMode);
-    Settings::setBattleAnimationType(m_storedBatteAnimType);
-    Settings::setDialogAnimation(m_storedDialog);
-    Settings::setCaptureAnimation(m_storedCaptureAnimation);
-    Settings::setMovementAnimations(m_storedMovementAnimation);
-    Settings::setDay2dayScreen(m_storedDay2DayAnimation);
-
-    Settings::setAnimationSpeed(m_storedAnimationSpeed);
-    Settings::setBattleAnimationSpeed(m_storedBattleAnimationSpeed);
-    Settings::setDialogAnimationSpeed(m_storedDialogAnimationSpeed);
-    Settings::setCaptureAnimationSpeed(m_storedCaptureAnimationSpeed);
+    m_storedAnimationSettings.restoreAnimationSettings();
 }
 
 void ReplayMenu::showRecordInvalid()
@@ -112,8 +90,8 @@ void ReplayMenu::showRecordInvalid()
     }
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("The current active mods or the current record are invalid or damaged! Exiting the Replay now. Mods used in the Replay:") + "\n" +
                                                           modList, false);
-    connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);    
-    addChild(pExit);   
+    connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
+    addChild(pExit);
 }
 
 void ReplayMenu::exitReplay()
@@ -174,7 +152,7 @@ void ReplayMenu::showExitGame()
     {
         m_Focused = true;
     });
-    addChild(pExit);    
+    addChild(pExit);
 }
 
 Player* ReplayMenu::getCurrentViewPlayer()
@@ -350,31 +328,14 @@ void ReplayMenu::startSeeking()
         swapPlay();
     }
     m_replayCounter = 0;
-    m_seekingOverworldAnimations = Settings::getOverworldAnimations();    
-    m_seekingDialog = Settings::getDialogAnimation();
-    m_seekingBattleAnimations = Settings::getBattleAnimationMode();
 
-    m_seekingCapture = Settings::getCaptureAnimation();
-    m_seekingMovement = Settings::getMovementAnimations();
-    m_seekingDay2Day = Settings::getDay2dayScreen();
-    Settings::setOverworldAnimations(false);
-    Settings::setDialogAnimation(false);
-    Settings::setMovementAnimations(false);
-    Settings::setDay2dayScreen(false);
-    Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode::BattleAnimationMode_None);
-
+    m_storedSeekingAnimationSettings.startSeeking();
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
         GameAnimationFactory::finishAllAnimations();
     }
-    Settings::setBattleAnimationMode(m_seekingBattleAnimations);
-    Settings::setOverworldAnimations(m_seekingOverworldAnimations);
-    Settings::setDialogAnimation(m_seekingDialog);
-    Settings::setCaptureAnimation(m_seekingCapture);
-    Settings::setMovementAnimations(m_seekingMovement);
-    Settings::setDay2dayScreen(m_seekingDay2Day);
-
-    m_seeking = true;    
+    m_storedSeekingAnimationSettings.restoreAnimationSettings();
+    m_seeking = true;
 }
 
 void ReplayMenu::seekChanged(float value)
@@ -386,17 +347,17 @@ void ReplayMenu::seekChanged(float value)
     {
         day = m_ReplayRecorder.getDayFromPosition(count);
     }
-    m_seekDayLabel->setHtmlText(tr("Day: ") + QString::number(day));    
+    m_seekDayLabel->setHtmlText(tr("Day: ") + QString::number(day));
 }
 
 void ReplayMenu::seekRecord(float value)
 {
-    QMutexLocker locker(&m_replayMutex);    
+    QMutexLocker locker(&m_replayMutex);
     qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
     qint32 day = m_ReplayRecorder.getDayFromPosition(count);
     seekToDay(day);
     m_seekActor->setVisible(false);
-    m_seeking = false;    
+    m_seeking = false;
 }
 
 void ReplayMenu::rewindDay()
@@ -498,27 +459,14 @@ void ReplayMenu::togglePlayUi()
 void ReplayMenu::startFastForward()
 {
     QMutexLocker locker(&m_replayMutex);
-    m_seekingOverworldAnimations = Settings::getOverworldAnimations();
-    m_seekingDialog = Settings::getDialogAnimation();
-    m_seekingCapture = Settings::getCaptureAnimation();
-    m_seekingBattleAnimations = Settings::getBattleAnimationMode();
-    m_seekingMovement = Settings::getMovementAnimations();
-    m_seekingDay2Day = Settings::getDay2dayScreen();
-    Settings::setOverworldAnimations(false);
-    Settings::setDialogAnimation(false);
-    Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode::BattleAnimationMode_None);
+    m_storedSeekingAnimationSettings.startSeeking();
     getActionPerformer().skipAnimations(false);
 }
 
 void ReplayMenu::stopFastForward()
 {
     QMutexLocker locker(&m_replayMutex);
-    Settings::setBattleAnimationMode(m_seekingBattleAnimations);
-    Settings::setOverworldAnimations(m_seekingOverworldAnimations);
-    Settings::setDialogAnimation(m_seekingDialog);
-    Settings::setCaptureAnimation(m_seekingCapture);
-    Settings::setMovementAnimations(m_seekingMovement);
-    Settings::setDay2dayScreen(m_seekingDay2Day);
+    m_storedSeekingAnimationSettings.restoreAnimationSettings();
 }
 
 void ReplayMenu::showConfig()
@@ -537,7 +485,7 @@ void ReplayMenu::showConfig()
     style.multiline = false;
 
     spPanel pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
-                         QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
+                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     pPanel->setPosition(30, 30);
     pBox->addChild(pPanel);
     qint32 width = 450;
@@ -786,12 +734,11 @@ void ReplayMenu::showConfig()
     });
     y += 40;
 
-    addChild(pBox);    
+    addChild(pBox);
 }
 
 void ReplayMenu::setViewTeam(qint32 item)
-{    
-    
+{
     if (item <= -Viewplayer::ViewType::CurrentTeam)
     {
         m_Viewplayer->setViewType(item + Viewplayer::ViewType::CurrentTeam);
@@ -813,5 +760,5 @@ void ReplayMenu::setViewTeam(qint32 item)
             }
         }
     }
-    m_pMap->getGameRules()->createFogVision();    
+    m_pMap->getGameRules()->createFogVision();
 }

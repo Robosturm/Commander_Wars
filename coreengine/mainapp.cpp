@@ -484,12 +484,7 @@ float Mainapp::getActiveDpiFactor() const
     auto ratio = devicePixelRatio();
     if (Settings::getUseHighDpi())
     {
-        CONSOLE_PRINT("Using high dpi option", Console::eDEBUG);
         ratio = 1.0f;
-    }
-    else
-    {
-        CONSOLE_PRINT("Using no high dpi option scaling ui internal with " + QString::number(ratio), Console::eDEBUG);
     }
     return ratio;
 }
