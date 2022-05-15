@@ -20,7 +20,6 @@ class ProxyAi : public CoreAI
 public:
     explicit ProxyAi(GameMap* pMap);
     virtual ~ProxyAi() = default;
-    virtual void init(GameMenue* pMenu) override;
     /**
      * @brief serialize stores the object
      * @param pStream

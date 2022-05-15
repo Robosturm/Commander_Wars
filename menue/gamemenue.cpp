@@ -573,6 +573,7 @@ void GameMenue::loadGameMenue()
     connect(this, &GameMenue::sigShowSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigNicknameUnit, this, &GameMenue::nicknameUnit, Qt::QueuedConnection);
+    connect(&m_actionPerformer, &ActionPerformer::sigActionPerformed, this, &GameMenue::checkMovementPlanner, Qt::QueuedConnection);
 
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, &m_actionPerformer, &ActionPerformer::actionPerformed, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, m_IngameInfoBar.get(), &IngameInfoBar::updateCursorInfo, Qt::QueuedConnection);
@@ -1647,7 +1648,7 @@ void GameMenue::showMovementPlanner()
     m_Focused = false;
     if (m_pMovementPlanner.get() == nullptr)
     {
-        m_pMovementPlanner = spMovementPlanner::create(this, m_pMap.get(), m_pMap->getCurrentViewPlayer());
+        m_pMovementPlanner = spMovementPlanner::create(this, m_pMap->getCurrentViewPlayer());
         addChild(m_pMovementPlanner);
     }
     else
@@ -1710,46 +1711,57 @@ void GameMenue::exitMovementPlanner()
             m_pMovementPlanner->onExitPlanner();
         }
         m_pMovementPlanner->detach();
-    }
-    m_pMovementPlanner = nullptr;
-    if (m_mapSliding.get())
-    {
+        m_pMovementPlanner = nullptr;
+        if (m_mapSliding.get())
+        {
+            m_mapSliding->setVisible(true);
+        }
         m_mapSliding->setVisible(true);
+        if (m_humanQuickButtons.get() != nullptr)
+        {
+            m_humanQuickButtons->setVisible(true);
+        }
+        if (m_pChat.get())
+        {
+            m_pChat->setVisible(true);
+        }
+        if (m_ChatButton.get())
+        {
+            m_ChatButton->setVisible(true);
+        }
+        if (m_xyTextInfo.get())
+        {
+            m_xyTextInfo->setVisible(true);
+        }
+        if (m_IngameInfoBar.get())
+        {
+            m_IngameInfoBar->setVisible(true);
+        }
+        if (m_pPlayerinfo.get())
+        {
+            m_pPlayerinfo->setVisible(true);
+        }
+        if (m_XYButtonBox.get())
+        {
+            m_XYButtonBox->setVisible(true);
+        }
+        if (m_pButtonBox.get())
+        {
+            m_pButtonBox->setVisible(true);
+        }
+        m_Focused = true;
     }
-    m_mapSliding->setVisible(true);
-    if (m_humanQuickButtons.get() != nullptr)
+}
+
+void GameMenue::checkMovementPlanner()
+{
+    if (m_pMovementPlanner.get())
     {
-        m_humanQuickButtons->setVisible(true);
+        if (m_pMovementPlanner->getViewPlayer() != m_pMap->getCurrentViewPlayer())
+        {
+            exitMovementPlanner();
+        }
     }
-    if (m_pChat.get())
-    {
-        m_pChat->setVisible(true);
-    }
-    if (m_ChatButton.get())
-    {
-        m_ChatButton->setVisible(true);
-    }
-    if (m_xyTextInfo.get())
-    {
-        m_xyTextInfo->setVisible(true);
-    }
-    if (m_IngameInfoBar.get())
-    {
-        m_IngameInfoBar->setVisible(true);
-    }
-    if (m_pPlayerinfo.get())
-    {
-        m_pPlayerinfo->setVisible(true);
-    }
-    if (m_XYButtonBox.get())
-    {
-        m_XYButtonBox->setVisible(true);
-    }
-    if (m_pButtonBox.get())
-    {
-        m_pButtonBox->setVisible(true);
-    }
-    m_Focused = true;
 }
 
 bool GameMenue::getIsReplay() const

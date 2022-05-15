@@ -141,7 +141,7 @@ public slots:
      * @brief victory
      * @param team
      */
-    void victory(qint32 team);
+    virtual void victory(qint32 team);
     /**
      * @brief saveGame
      */
@@ -280,6 +280,10 @@ public slots:
      * @brief exitMovementPlanner
      */
     void exitMovementPlanner();
+    /**
+     * @brief checkMovementPlanner
+     */
+    void checkMovementPlanner();
     /**
      * @brief getIsMultiplayer
      * @param pGameAction

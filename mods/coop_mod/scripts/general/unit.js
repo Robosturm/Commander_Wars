@@ -13,7 +13,7 @@ UNIT.repairUnit = function (unit, repairAmount, map)
         // we could heal more than we need
         healingDone = 10 - hp;
     }
-    var funds = map.getCurrentPlayer().getFunds();
+    var funds = unit.getOwner().getFunds();
     // check if we can pay for all healing
     for (var i = healingDone; i >= 0; i--)
     {
@@ -31,5 +31,5 @@ UNIT.repairUnit = function (unit, repairAmount, map)
     // heal unit
     unit.setHp(hp + healingDone);
     // pay for healing
-    map.getCurrentPlayer().addFunds(-healingDone / 10 * costs);
+    unit.getOwner().addFunds(-healingDone / 10 * costs);
 };

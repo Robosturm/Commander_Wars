@@ -17,12 +17,6 @@ ProxyAi::ProxyAi(GameMap* pMap)
 
 }
 
-void ProxyAi::init(GameMenue* pMenu)
-{
-    m_pMenu = pMenu;
-    CoreAI::init(pMenu);
-}
-
 void ProxyAi::readIni(QString)
 {
 }

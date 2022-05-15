@@ -6,7 +6,7 @@ ACTION_TRAP.isTrap = function(action, moveUnit, targetFieldUnit, targetX, target
     {
         var moveUnitType = moveUnit.getUnitType();
         var targetFieldUnitType = targetFieldUnit.getUnitType();
-        if ((targetFieldUnit.isStealthed(map.getCurrentPlayer()) &&
+        if ((targetFieldUnit.isStealthed(moveUnit.getOwner()) &&
              ((moveUnitType === targetFieldUnitType) || (moveUnitType !== GameEnums.UnitType_Air && targetFieldUnitType !== GameEnums.UnitType_Air)) &&
              !targetFieldUnit.getIgnoreUnitCollision()) ||
              moveCost < 0)

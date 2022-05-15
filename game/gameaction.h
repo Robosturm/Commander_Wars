@@ -171,7 +171,7 @@ public slots:
      * @param actionID id of the action we want to check
      * @return
      */
-    bool canBePerformed(const QString & actionID, bool emptyField = false);
+    bool canBePerformed(const QString & actionID, bool emptyField = false, Player* pUsingPlayer = nullptr);
     /**
      * @brief isFinalStep
      * @return true if we have all data to perform this action

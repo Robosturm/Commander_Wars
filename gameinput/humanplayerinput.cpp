@@ -32,22 +32,25 @@ HumanPlayerInput::HumanPlayerInput(GameMap* pMap)
 
 void HumanPlayerInput::init(GameMenue* pMenu)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    m_pMenu = pMenu;
-    
-    if (m_pMenu != nullptr)
+    if (!m_initDone)
     {
-        connect(m_pMenu, &GameMenue::sigRightClickDown, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
-        connect(m_pMenu, &GameMenue::sigRightClickUp, this, &HumanPlayerInput::rightClickUp, Qt::QueuedConnection);
-        connect(m_pMenu, &GameMenue::sigLeftClick, this, &HumanPlayerInput::leftClick, Qt::QueuedConnection);
-        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
-        connect(m_pMap, &GameMap::sigZoomChanged, this, &HumanPlayerInput::zoomChanged, Qt::QueuedConnection);
-        connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
-        connect(m_pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
-        connect(this, &HumanPlayerInput::performAction, &pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
-        connect(this, &HumanPlayerInput::sigNextTurn, this, &HumanPlayerInput::nextTurn, Qt::QueuedConnection);
-        m_Fields.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
-        m_FieldPoints.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
+        m_initDone = true;
+        Mainapp* pApp = Mainapp::getInstance();
+        m_pMenu = pMenu;
+        if (m_pMenu != nullptr)
+        {
+            connect(m_pMenu, &GameMenue::sigRightClickDown, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
+            connect(m_pMenu, &GameMenue::sigRightClickUp, this, &HumanPlayerInput::rightClickUp, Qt::QueuedConnection);
+            connect(m_pMenu, &GameMenue::sigLeftClick, this, &HumanPlayerInput::leftClick, Qt::QueuedConnection);
+            connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
+            connect(m_pMap, &GameMap::sigZoomChanged, this, &HumanPlayerInput::zoomChanged, Qt::QueuedConnection);
+            connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
+            connect(m_pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
+            connect(this, &HumanPlayerInput::performAction, &pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+            connect(this, &HumanPlayerInput::sigNextTurn, this, &HumanPlayerInput::nextTurn, Qt::QueuedConnection);
+            m_Fields.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
+            m_FieldPoints.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
+        }
     }
 }
 
@@ -59,15 +62,6 @@ HumanPlayerInput::~HumanPlayerInput()
 
 void HumanPlayerInput::rightClickUp(qint32, qint32)
 {
-    // if (m_pMap->getCurrentPlayer() == m_pPlayer ||
-    //     m_pPlayer == nullptr)
-    // {
-    //     if (m_FieldPoints.size() > 0 && m_pGameAction.get() == nullptr)
-    //     {
-    //         cleanUpInput();
-    //     }
-    //
-    // }
 }
 
 void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
@@ -145,12 +139,12 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
 
 bool HumanPlayerInput::isCurrentPlayer(Player* pPlayer) const
 {
-    return m_pMap->getCurrentPlayer() == pPlayer;
+    return getPerformingPlayer(pPlayer) == pPlayer;
 }
 
-bool HumanPlayerInput::canActionBePerformed(GameAction* pAction) const
+Player* HumanPlayerInput::getPerformingPlayer(Player*) const
 {
-    return pAction->canBePerformed();
+    return m_pMap->getCurrentPlayer();
 }
 
 void HumanPlayerInput::showVisionFields(qint32 x, qint32 y)
@@ -450,7 +444,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                         actions = pBuilding->getActionList();
                         for (auto & action : actions)
                         {
-                            if (m_pGameAction->canBePerformed(action))
+                            if (m_pGameAction->canBePerformed(action, false, getPerformingPlayer(pBuilding->getOwner())))
                             {
                                 possibleActions.append(action);
                             }
@@ -484,7 +478,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                             possibleActions.clear();
                             for (auto & action : actions)
                             {
-                                if (m_pGameAction->canBePerformed(action, true))
+                                if (m_pGameAction->canBePerformed(action, true, getPerformingPlayer(nullptr)))
                                 {
                                     possibleActions.append(action);
                                 }
@@ -545,7 +539,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                         }
                         for (auto & action : actions)
                         {
-                            if (m_pGameAction->canBePerformed(action))
+                            if (m_pGameAction->canBePerformed(action, false, getPerformingPlayer(pUnit->getOwner())))
                             {
                                 possibleActions.append(action);
                             }
@@ -1245,9 +1239,11 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
         lastPoint = points[0];
     }
     deleteArrow();
+    Unit* pTargetUnit = m_pGameAction->getTargetUnit();
     if (m_pGameAction->getTarget() != QPoint(x, y) &&
         m_pUnitPathFindingSystem.get() != nullptr &&
-        !m_pGameAction->getTargetUnit()->getHasMoved() &&
+        pTargetUnit != nullptr &&
+        !pTargetUnit->getHasMoved() &&
         GlobalUtils::contains(m_FieldPoints, QPoint(x, y)))
     {
         if (m_pUnitPathFindingSystem->getCosts(m_pUnitPathFindingSystem->getIndex(x, y), x, y, x, y, 0) >= 0)

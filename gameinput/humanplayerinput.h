@@ -154,13 +154,12 @@ public:
      * @brief isCurrentPlayer
      * @return
      */
-    virtual bool isCurrentPlayer(Player* pPlayer) const;
+    bool isCurrentPlayer(Player* pPlayer) const;
     /**
-     * @brief canActionBePerformed
-     * @param pAction
+     * @brief getPerformingPlayer
      * @return
      */
-    virtual bool canActionBePerformed(GameAction* pAction) const;
+    virtual Player* getPerformingPlayer(Player*) const;
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -176,7 +175,7 @@ public slots:
     void keyDown(oxygine::KeyEvent event);
     void menuItemSelected(const QString & itemID, qint32 cost);
     void markedFieldSelected(QPoint point);
-    QStringList getEmptyActionList();
+    virtual QStringList getEmptyActionList();
     QStringList getViewplayerActionList();
     virtual void autoEndTurn();
     void syncMarkedFields();

@@ -88,6 +88,7 @@ protected:
     std::vector<std::vector<std::tuple<qint32, bool>>> m_MoveCostMap;
     GameMap* m_pMap{nullptr};
     GameMenue* m_pMenu{nullptr};
+    bool m_initDone{false};
 };
 
 Q_DECLARE_INTERFACE(BaseGameInputIF, "BaseGameInputIF");

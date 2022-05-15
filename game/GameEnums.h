@@ -189,6 +189,7 @@ public:
 
     enum AiTypes
     {
+        AiTypes_MovePlanner = -2,
         AiTypes_ProxyAi = -1,
         AiTypes_Human = 0,
         AiTypes_VeryEasy,

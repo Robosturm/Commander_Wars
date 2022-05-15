@@ -83,19 +83,23 @@ CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType)
 
 void CoreAI::init(GameMenue* pMenu)
 {
-    m_pMenu = pMenu;
-    connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-    connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
-    if (m_pMap != nullptr)
+    if (!m_initDone)
     {
-        qint32 heigth = m_pMap->getMapHeight();
-        qint32 width = m_pMap->getMapWidth();
-        for (qint32 x = 0; x < width; x++)
+        m_initDone = true;
+        m_pMenu = pMenu;
+        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
+        connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+        if (m_pMap != nullptr)
         {
-            m_MoveCostMap.push_back(std::vector<std::tuple<qint32, bool>>());
-            for (qint32 y = 0; y < heigth; y++)
+            qint32 heigth = m_pMap->getMapHeight();
+            qint32 width = m_pMap->getMapWidth();
+            for (qint32 x = 0; x < width; x++)
             {
-                m_MoveCostMap[x].push_back(std::tuple<qint32, bool>(0, false));
+                m_MoveCostMap.push_back(std::vector<std::tuple<qint32, bool>>());
+                for (qint32 y = 0; y < heigth; y++)
+                {
+                    m_MoveCostMap[x].push_back(std::tuple<qint32, bool>(0, false));
+                }
             }
         }
     }

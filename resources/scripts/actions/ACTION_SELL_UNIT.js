@@ -52,7 +52,7 @@ var Constructor = function()
         {
             var resellValue = map.getGameRules().getResellValue();
 			var funds = unit.getUnitCosts() * unit.getHp() / 10;
-            map.getCurrentPlayer().addFunds(funds * resellValue);
+            unit.getOwner().addFunds(funds * resellValue);
             unit.killUnit();
         }
     };

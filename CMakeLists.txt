@@ -462,6 +462,7 @@ set(${PROJECT_NAME}_SRCS
     gameinput/markedfielddata.cpp gameinput/markedfielddata.h
     gameinput/cursordata.cpp gameinput/cursordata.h
     gameinput/mapmover.cpp gameinput/mapmover.h
+    gameinput/moveplannerinput.h gameinput/moveplannerinput.cpp
 
     # map importing/exporting support
     # and resizing etc.

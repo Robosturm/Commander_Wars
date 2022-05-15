@@ -216,7 +216,7 @@ qint32 GameAction::getMovePathLength()
     return m_Movepath.size();
 }
 
-bool GameAction::canBePerformed(const QString & actionID, bool emptyField)
+bool GameAction::canBePerformed(const QString & actionID, bool emptyField, Player* pUsingPlayer)
 {
     if (!actionID.isEmpty())
     {        
@@ -225,6 +225,10 @@ bool GameAction::canBePerformed(const QString & actionID, bool emptyField)
         {
             Unit* pUnit = getTargetUnit();
             Building* pBuilding = getTargetBuilding();
+            if (pUsingPlayer == nullptr)
+            {
+                pUsingPlayer = m_pMap->getCurrentPlayer();
+            }
             if (!emptyField)
             {
                 if (pUnit != nullptr)
@@ -233,7 +237,7 @@ bool GameAction::canBePerformed(const QString & actionID, bool emptyField)
                     {
                         return false;
                     }
-                    if ((pUnit->getOwner()->getPlayerID() != m_pMap->getCurrentPlayer()->getPlayerID()) &&
+                    if ((pUnit->getOwner()->getPlayerID() != pUsingPlayer->getPlayerID()) &&
                         (!pUnit->getHasMoved()))
                     {
                         return false;
@@ -242,7 +246,7 @@ bool GameAction::canBePerformed(const QString & actionID, bool emptyField)
                 if ((pBuilding != nullptr) && (pUnit == nullptr))
                 {
                     if ((pBuilding->getOwner() == nullptr) ||
-                        (pBuilding->getOwner()->getPlayerID() != m_pMap->getCurrentPlayer()->getPlayerID()))
+                        (pBuilding->getOwner()->getPlayerID() != pUsingPlayer->getPlayerID()))
                     {
                         return false;
                     }
