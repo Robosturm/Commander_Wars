@@ -4,6 +4,7 @@
 #include "ui_reader/uifactory.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 constexpr const char* const quickButtonsMenu = "quickButtonsMenu";
 

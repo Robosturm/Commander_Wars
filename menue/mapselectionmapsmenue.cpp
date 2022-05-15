@@ -2,6 +2,7 @@
 #include "menue/mainwindow.h"
 #include "menue/gamemenue.h"
 #include "menue/campaignmenu.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"

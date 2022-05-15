@@ -30,6 +30,7 @@
 
 #include "menue/gamemenue.h"
 #include "menue/ingamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "objects/loadingscreen.h"
 

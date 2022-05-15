@@ -2,6 +2,7 @@
 
 #include "menue/replaymenu.h"
 #include "menue/victorymenue.h"
+#include "menue/movementplanner.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
 

@@ -22,6 +22,7 @@
 #include "menue/optionmenue.h"
 #include "menue/basemenu.h"
 #include "menue/replaymenu.h"
+#include "menue/movementplanner.h"
 
 #include "ui_reader/uifactory.h"
 #include "ui_reader/createdgui.h"

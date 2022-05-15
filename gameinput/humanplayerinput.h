@@ -13,16 +13,16 @@
 
 #include "game/unitpathfindingsystem.h"
 
-#include "menue/gamemenue.h"
-
 #include "coreengine/LUPDATE_MACROS.h"
+
+#include "menue/gamemenue.h"
 
 class GameMap;
 class GameAction;
 class UnitPathFindingSystem;
 
 class HumanPlayerInput;
-typedef oxygine::intrusive_ptr<HumanPlayerInput> spHumanPlayerInput;
+using spHumanPlayerInput = oxygine::intrusive_ptr<HumanPlayerInput>;
 
 
 class HumanPlayerInput : public BaseGameInputIF

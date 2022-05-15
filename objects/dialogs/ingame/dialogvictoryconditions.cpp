@@ -1,6 +1,9 @@
-#include "dialogvictoryconditions.h"
+#include "objects/dialogs/ingame/dialogvictoryconditions.h"
+#include "objects/base/panel.h"
+#include "objects/dialogs/ingame/victoryrulepopup.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 
@@ -8,8 +11,6 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "objects/base/panel.h"
-#include "objects/dialogs/ingame/victoryrulepopup.h"
 
 #include "game/gamemap.h"
 #include "game/gamerules.h"

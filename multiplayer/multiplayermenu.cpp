@@ -13,6 +13,7 @@
 #include "coreengine/sha256hash.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "network/tcpclient.h"
 #include "network/tcpserver.h"

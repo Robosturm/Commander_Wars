@@ -1,13 +1,15 @@
-#include "victoryrulepopup.h"
+#include "objects/dialogs/ingame/victoryrulepopup.h"
+#include "objects/base/label.h"
 
 #include "game/gamemap.h"
 #include "game/gamerules.h"
 #include "game/victoryrule.h"
 #include "game/actionperformer.h"
-#include "resource_management/fontmanager.h"
-#include "menue/gamemenue.h"
 
-#include "objects/base/label.h"
+#include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
+
+#include "resource_management/fontmanager.h"
 
 QStringList VictoryRulePopup::m_popUps;
 

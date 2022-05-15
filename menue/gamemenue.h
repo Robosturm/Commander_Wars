@@ -24,6 +24,7 @@
 
 class GameMenue;
 using spGameMenue = oxygine::intrusive_ptr<GameMenue>;
+
 class MovementPlanner;
 using spMovementPlanner = oxygine::intrusive_ptr<MovementPlanner>;
 

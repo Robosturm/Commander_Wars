@@ -10,6 +10,7 @@
 #include "game/co.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"

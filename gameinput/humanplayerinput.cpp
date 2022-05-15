@@ -21,6 +21,8 @@
 
 #include "ai/coreai.h"
 
+#include "menue/movementplanner.h"
+
 HumanPlayerInput::HumanPlayerInput(GameMap* pMap)
     : BaseGameInputIF(pMap, GameEnums::AiTypes_Human)
 {    

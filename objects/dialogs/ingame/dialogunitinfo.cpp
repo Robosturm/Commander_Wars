@@ -8,6 +8,8 @@
 
 #include "objects/base/panel.h"
 
+#include "menue/movementplanner.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"

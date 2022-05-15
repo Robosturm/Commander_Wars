@@ -17,6 +17,7 @@
 #include "resource_management/gamemanager.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 GameRules::GameRules(GameMap* pMap)
     : m_RoundTimer(this),

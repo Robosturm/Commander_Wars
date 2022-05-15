@@ -11,6 +11,7 @@
 #include "game/gameanimation/gameanimationfactory.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs)
     : GameAnimation(frameTime, pMap),

@@ -12,6 +12,7 @@
 #include "menue/replaymenu.h"
 #include "menue/achievementmenu.h"
 #include "menue/shopmenu.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"

@@ -12,6 +12,7 @@
 #include "game/gamemap.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "network/JsonKeys.h"
 

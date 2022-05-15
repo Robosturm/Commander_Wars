@@ -106,15 +106,22 @@ void MovementPlanner::clickedTopbar(QString itemID)
     QVector<MenuItem> items =
     {
         MenuItem("EXIT",                &MovementPlanner::exit),
-        MenuItem("Hide",                &MovementPlanner::hide),
+        MenuItem("HIDE",                &MovementPlanner::hide),
     };
+    bool called = false;
     for (auto & item : qAsConst(items))
     {
         if (item.m_Id == itemID &&
             item.m_func != nullptr)
         {
             (this->*(item.m_func))();
+            called = true;
+            break;
         }
+    }
+    if (!called)
+    {
+
     }
 }
 

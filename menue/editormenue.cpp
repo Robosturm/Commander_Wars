@@ -394,6 +394,7 @@ void EditorMenue::clickedTopbar(QString itemID)
             item.m_func != nullptr)
         {
             (this->*(item.m_func))();
+            break;
         }
     }
 }

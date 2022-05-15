@@ -2,6 +2,7 @@
 #include "menue/mainwindow.h"
 #include "menue/mapselectionmapsmenue.h"
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "multiplayer/multiplayermenu.h"
 

@@ -4,9 +4,7 @@
 #include "objects/playerselection.h"
 
 #include "game/gamemap.h"
-
 #include "game/player.h"
-
 #include "game/co.h"
 
 #include "resource_management/fontmanager.h"
@@ -19,6 +17,8 @@
 #include "objects/dialogs/rules/perkselectiondialog.h"
 
 #include "gameinput/humanplayerinput.h"
+
+#include "menue/movementplanner.h"
 
 #include "ai/veryeasyai.h"
 

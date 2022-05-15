@@ -8,6 +8,7 @@
 #include "wiki/wikidatabase.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"

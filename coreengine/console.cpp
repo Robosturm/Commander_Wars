@@ -14,6 +14,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "network/NetworkInterface.h"
 

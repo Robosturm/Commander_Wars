@@ -12,6 +12,7 @@
 #include "game/gameaction.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "resource_management/cospritemanager.h"
 

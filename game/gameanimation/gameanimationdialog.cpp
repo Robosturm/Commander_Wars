@@ -1,4 +1,4 @@
-#include "qfile.h"
+#include <QFile>
 
 #include "game/gameanimation/gameanimationdialog.h"
 #include "game/gameanimation/gameanimationfactory.h"
@@ -8,6 +8,7 @@
 #include "coreengine/audiothread.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
