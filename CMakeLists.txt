@@ -364,6 +364,7 @@ set(${PROJECT_NAME}_SRCS
     resource_management/coperkmanager.cpp resource_management/coperkmanager.h
     resource_management/achievementmanager.cpp resource_management/achievementmanager.h
     resource_management/shoploader.cpp resource_management/shoploader.h
+    resource_management/movementplanneraddinmanager.h resource_management/movementplanneraddinmanager.cpp
     resource_management/ressourcemanagement.h
 
     # core engine
@@ -453,6 +454,7 @@ set(${PROJECT_NAME}_SRCS
     game/ui/customcoboostinfo.cpp game/ui/customcoboostinfo.h
     game/ui/humanquickbuttons.cpp game/ui/humanquickbuttons.h
     game/ui/damagecalculator.cpp game/ui/damagecalculator.h
+    game/ui/movementplanneraddin.h game/ui/movementplanneraddin.cpp
 
     # game input
     gameinput/basegameinputif.cpp gameinput/basegameinputif.h

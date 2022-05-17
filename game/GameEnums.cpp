@@ -173,6 +173,9 @@ void GameEnums::registerEnums()
     value.setProperty("AttackRangeCheck_OnlyMin", AttackRangeCheck_OnlyMin);
     value.setProperty("AttackRangeCheck_OnlyMax", AttackRangeCheck_OnlyMax);
 
+    value.setProperty("AddinStepType_Field", AddinStepType_Field);
+    value.setProperty("AddinStepType_Menu", AddinStepType_Menu);
+
     pInterpreter->setGlobal("GameEnums", value);
 }
 

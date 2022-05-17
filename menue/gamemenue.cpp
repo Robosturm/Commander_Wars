@@ -1640,7 +1640,8 @@ void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
 
 void GameMenue::showDamageCalculator()
 {
-    addChild(spDamageCalculator::create());
+    spDamageCalculator calculator = spDamageCalculator::create();
+    addChild(calculator);
 }
 
 void GameMenue::showMovementPlanner()
@@ -1700,6 +1701,7 @@ void GameMenue::hideMovementPlanner()
     {
         m_pMovementPlanner->setVisible(false);
     }
+    unhideGameMenue();
 }
 
 void GameMenue::exitMovementPlanner()
@@ -1712,44 +1714,48 @@ void GameMenue::exitMovementPlanner()
         }
         m_pMovementPlanner->detach();
         m_pMovementPlanner = nullptr;
-        if (m_mapSliding.get())
-        {
-            m_mapSliding->setVisible(true);
-        }
+    }
+    unhideGameMenue();
+}
+
+void GameMenue::unhideGameMenue()
+{
+    m_Focused = true;
+    if (m_humanQuickButtons.get() != nullptr)
+    {
+        m_humanQuickButtons->setVisible(true);
+    }
+    if (m_mapSliding.get())
+    {
         m_mapSliding->setVisible(true);
-        if (m_humanQuickButtons.get() != nullptr)
-        {
-            m_humanQuickButtons->setVisible(true);
-        }
-        if (m_pChat.get())
-        {
-            m_pChat->setVisible(true);
-        }
-        if (m_ChatButton.get())
-        {
-            m_ChatButton->setVisible(true);
-        }
-        if (m_xyTextInfo.get())
-        {
-            m_xyTextInfo->setVisible(true);
-        }
-        if (m_IngameInfoBar.get())
-        {
-            m_IngameInfoBar->setVisible(true);
-        }
-        if (m_pPlayerinfo.get())
-        {
-            m_pPlayerinfo->setVisible(true);
-        }
-        if (m_XYButtonBox.get())
-        {
-            m_XYButtonBox->setVisible(true);
-        }
-        if (m_pButtonBox.get())
-        {
-            m_pButtonBox->setVisible(true);
-        }
-        m_Focused = true;
+    }
+    if (m_pChat.get())
+    {
+        m_pChat->setVisible(true);
+    }
+    if (m_ChatButton.get())
+    {
+        m_ChatButton->setVisible(true);
+    }
+    if (m_xyTextInfo.get())
+    {
+        m_xyTextInfo->setVisible(true);
+    }
+    if (m_IngameInfoBar.get())
+    {
+        m_IngameInfoBar->setVisible(true);
+    }
+    if (m_pPlayerinfo.get())
+    {
+        m_pPlayerinfo->setVisible(true);
+    }
+    if (m_XYButtonBox.get())
+    {
+        m_XYButtonBox->setVisible(true);
+    }
+    if (m_pButtonBox.get())
+    {
+        m_pButtonBox->setVisible(true);
     }
 }
 

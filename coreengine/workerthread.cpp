@@ -26,6 +26,7 @@
 #include "resource_management/coperkmanager.h"
 #include "resource_management/achievementmanager.h"
 #include "resource_management/shoploader.h"
+#include "resource_management/movementplanneraddinmanager.h"
 #include "wiki/wikidatabase.h"
 
 #include "objects/loadingscreen.h"
@@ -112,8 +113,11 @@ void WorkerThread::start()
     pLoadingScreen->setProgress(tr("Loading Shop items..."), Mainapp::SCRIPT_PROCESS + 22);
     ShopLoader* pShopLoader = ShopLoader::getInstance();
     pShopLoader->loadAll();
+    pLoadingScreen->setProgress(tr("Loading Movement Planner addins..."), Mainapp::SCRIPT_PROCESS + 24);
+    MovementPlannerAddInManager::getInstance()->loadAll();;
+
     Userdata::getInstance()->changeUser();
-    pLoadingScreen->setProgress(tr("Loading Achievements..."), Mainapp::SCRIPT_PROCESS + 24);
+    pLoadingScreen->setProgress(tr("Loading Achievements..."), Mainapp::SCRIPT_PROCESS + 26);
     // achievements should be loaded last
     AchievementManager* pAchievementManager = AchievementManager::getInstance();
     pAchievementManager->loadAll();

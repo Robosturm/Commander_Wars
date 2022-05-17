@@ -12,6 +12,8 @@
 #include "objects/base/checkbox.h"
 #include "objects/base/moveinbutton.h"
 
+#include "wiki/fieldinfo.h"
+
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
@@ -762,4 +764,42 @@ void ReplayMenu::setViewTeam(qint32 item)
         }
     }
     m_pMap->getGameRules()->createFogVision();
+}
+
+void ReplayMenu::keyInput(oxygine::KeyEvent event)
+{
+    if (!event.getContinousPress())
+    {
+        // for debugging
+        Qt::Key cur = event.getKey();
+        if (m_Focused)
+        {
+            if (cur == Settings::getKey_information() ||
+                     cur == Settings::getKey_information2())
+            {
+
+                Player* pPlayer = m_pMap->getCurrentViewPlayer();
+                GameEnums::VisionType visionType = pPlayer->getFieldVisibleType(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                if (m_pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()) &&
+                    visionType != GameEnums::VisionType_Shrouded)
+                {
+                    Terrain* pTerrain = m_pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                    Unit* pUnit = pTerrain->getUnit();
+                    if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
+                    {
+                        pUnit = nullptr;
+                    }
+                    spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pUnit);
+                    addChild(fieldinfo);
+                    connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [this]
+                    {
+                        setFocused(true);
+                    });
+                    setFocused(false);
+                }
+
+            }
+        }
+    }
+    InGameMenue::keyInput(event);
 }

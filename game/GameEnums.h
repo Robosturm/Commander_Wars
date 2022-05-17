@@ -316,6 +316,13 @@ public:
     };
     Q_ENUM(MapFilterFlags)
 
+    enum AddinStepType
+    {
+        AddinStepType_Field,
+        AddinStepType_Menu,
+    };
+    Q_ENUM(AddinStepType)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

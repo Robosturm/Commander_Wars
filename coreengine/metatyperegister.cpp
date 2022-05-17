@@ -53,6 +53,8 @@
 #include "game/gamerecording/daytodayrecord.h"
 
 #include "game/ui/customcoboostinfo.h"
+#include "game/ui/movementplanneraddin.h"
+
 #include "game/jsData/terrainflowdata.h"
 #include "game/jsData/campaignmapdata.h"
 
@@ -173,6 +175,7 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<TerrainManager>("TerrainManager", 1);
     qmlRegisterInterface<COPerkManager>("COPerkManager", 1);
 
+    qmlRegisterInterface<MovementPlannerAddIn>("MovementPlannerAddIn", 1);
     qmlRegisterInterface<CampaignMenu>("CampaignMenu", 1);
     qmlRegisterInterface<WikiView>("WikiView", 1);
     qmlRegisterInterface<Mainwindow>("Mainwindow", 1);

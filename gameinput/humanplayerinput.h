@@ -170,7 +170,7 @@ signals:
 public slots:
     void rightClickDown(qint32 x, qint32 y);
     void rightClickUp(qint32 x, qint32 y);
-    void leftClick(qint32 x, qint32 y);
+    virtual void leftClick(qint32 x, qint32 y);
     void cursorMoved(qint32 x, qint32 y);
     void keyDown(oxygine::KeyEvent event);
     void menuItemSelected(const QString & itemID, qint32 cost);

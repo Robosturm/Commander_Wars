@@ -30,3 +30,21 @@ QStringList MoveplannerInput::getEmptyActionList()
 {
     return HumanPlayerInput::getViewplayerActionList();
 }
+
+bool MoveplannerInput::getFocus() const
+{
+    return m_focus;
+}
+
+void MoveplannerInput::setFocus(bool newFocus)
+{
+    m_focus = newFocus;
+}
+
+void MoveplannerInput::leftClick(qint32 x, qint32 y)
+{
+    if (m_focus)
+    {
+        HumanPlayerInput::leftClick(x, y);
+    }
+}

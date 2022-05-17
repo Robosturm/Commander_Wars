@@ -2062,5 +2062,7 @@
         <file>data/records/info.txt</file>
         <file>mods/cow_movement_mod/scripts/actions/ACTION_TRAP.js</file>
         <file>resources/scripts/actions/ACTION_MOVEMENTPLANNER.js</file>
+        <file>resources/scripts/general/movementPlannerAddIn.js</file>
+        <file>resources/scripts/movementPlannerAddIns/dummy.js</file>
     </qresource>
 </RCC>

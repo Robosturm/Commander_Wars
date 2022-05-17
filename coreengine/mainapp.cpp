@@ -40,6 +40,7 @@
 #include "resource_management/shoploader.h"
 #include "resource_management/movementtablemanager.h"
 #include "resource_management/weaponmanager.h"
+#include "resource_management/movementplanneraddinmanager.h"
 
 #include "wiki/wikidatabase.h"
 
@@ -275,6 +276,16 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             }
             AchievementManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading Shop Textures ..."), step  * stepProgress);
+            break;
+        }
+        case MovementPlannerAddInManager:
+        {
+            if (!m_noUi)
+            {
+                update();
+            }
+            MovementPlannerAddInManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Movement planner addin Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::ShopLoader:

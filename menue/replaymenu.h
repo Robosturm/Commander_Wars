@@ -78,6 +78,11 @@ public slots:
      * @brief rewind
      */
     void rewindDay();
+    /**
+     * @brief keyInput
+     * @param event
+     */
+    virtual void keyInput(oxygine::KeyEvent event) override;
 protected slots:
     virtual void onEnter() override;
 protected:

@@ -3290,98 +3290,103 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="143"/>
+        <location filename="../coreengine/mainapp.cpp" line="144"/>
         <source>Loading Building Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="158"/>
+        <location filename="../coreengine/mainapp.cpp" line="159"/>
         <source>Loading CO Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="168"/>
+        <location filename="../coreengine/mainapp.cpp" line="169"/>
         <source>Loading Animation Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="178"/>
+        <location filename="../coreengine/mainapp.cpp" line="179"/>
         <source>Loading Game Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="188"/>
+        <location filename="../coreengine/mainapp.cpp" line="189"/>
         <source>Loading Rule Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="200"/>
+        <location filename="../coreengine/mainapp.cpp" line="201"/>
         <source>Loading Objects Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="210"/>
+        <location filename="../coreengine/mainapp.cpp" line="211"/>
         <source>Loading Terrains Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="220"/>
+        <location filename="../coreengine/mainapp.cpp" line="221"/>
         <source>Loading Units Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="230"/>
+        <location filename="../coreengine/mainapp.cpp" line="231"/>
         <source>Loading Battleanimation Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="237"/>
+        <location filename="../coreengine/mainapp.cpp" line="238"/>
         <source>Loading CO-Perk Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="247"/>
+        <location filename="../coreengine/mainapp.cpp" line="248"/>
         <source>Loading Wiki Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="257"/>
+        <location filename="../coreengine/mainapp.cpp" line="258"/>
         <source>Loading Userdata ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="267"/>
+        <location filename="../coreengine/mainapp.cpp" line="268"/>
         <source>Loading Achievement Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="277"/>
+        <location filename="../coreengine/mainapp.cpp" line="278"/>
         <source>Loading Shop Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="287"/>
+        <location filename="../coreengine/mainapp.cpp" line="288"/>
+        <source>Loading Movement planner addin Textures ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/mainapp.cpp" line="298"/>
         <source>Loading sounds ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="297"/>
+        <location filename="../coreengine/mainapp.cpp" line="308"/>
         <source>Loading Scripts ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="611"/>
+        <location filename="../coreengine/mainapp.cpp" line="622"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="617"/>
+        <location filename="../coreengine/mainapp.cpp" line="628"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="619"/>
+        <location filename="../coreengine/mainapp.cpp" line="630"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
@@ -3512,28 +3517,33 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>MovementPlanner</name>
     <message>
-        <location filename="../menue/movementplanner.cpp" line="16"/>
+        <location filename="../menue/movementplanner.cpp" line="23"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/movementplanner.cpp" line="17"/>
+        <location filename="../menue/movementplanner.cpp" line="24"/>
         <source>Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/movementplanner.cpp" line="17"/>
+        <location filename="../menue/movementplanner.cpp" line="24"/>
         <source>Hides the movementplanner so you can move units and open it in the current state again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/movementplanner.cpp" line="18"/>
+        <location filename="../menue/movementplanner.cpp" line="25"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/movementplanner.cpp" line="18"/>
+        <location filename="../menue/movementplanner.cpp" line="25"/>
         <source>Quits the movementplanner. Opening the movementplanner again resets to the current map state.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/movementplanner.cpp" line="132"/>
+        <source>Updating map</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4244,220 +4254,220 @@ Warning: disabling this on a smaller screen may lead to unplayable game experien
 <context>
     <name>ReplayMenu</name>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="150"/>
+        <location filename="../menue/replaymenu.cpp" line="152"/>
         <source>Do you want to exit the current replay?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="186"/>
+        <location filename="../menue/replaymenu.cpp" line="188"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="312"/>
-        <location filename="../menue/replaymenu.cpp" line="351"/>
+        <location filename="../menue/replaymenu.cpp" line="314"/>
+        <location filename="../menue/replaymenu.cpp" line="353"/>
         <source>Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="497"/>
+        <location filename="../menue/replaymenu.cpp" line="499"/>
         <source>Current Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="498"/>
+        <location filename="../menue/replaymenu.cpp" line="500"/>
         <source>All Teams</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="499"/>
+        <location filename="../menue/replaymenu.cpp" line="501"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="513"/>
+        <location filename="../menue/replaymenu.cpp" line="515"/>
         <source>Team </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="518"/>
+        <location filename="../menue/replaymenu.cpp" line="520"/>
         <source>Teamview:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="538"/>
+        <location filename="../menue/replaymenu.cpp" line="540"/>
         <source>Gameplay Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="545"/>
+        <location filename="../menue/replaymenu.cpp" line="547"/>
         <source>Overworld Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="549"/>
+        <location filename="../menue/replaymenu.cpp" line="551"/>
         <source>If active: walk, capture power animations, and so on will be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="565"/>
+        <location filename="../menue/replaymenu.cpp" line="567"/>
         <source>Select which in-game animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="580"/>
+        <location filename="../menue/replaymenu.cpp" line="582"/>
         <source>Selects which battle animations are played during combat.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="664"/>
+        <location filename="../menue/replaymenu.cpp" line="666"/>
         <source>Selects the speed at which animations are played. Note: This does not include capture or battle animations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="558"/>
-        <location filename="../menue/replaymenu.cpp" line="575"/>
+        <location filename="../menue/replaymenu.cpp" line="560"/>
+        <location filename="../menue/replaymenu.cpp" line="577"/>
         <source>Battle Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="92"/>
+        <location filename="../menue/replaymenu.cpp" line="94"/>
         <source>The current active mods or the current record are invalid or damaged! Exiting the Replay now. Mods used in the Replay:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="561"/>
+        <location filename="../menue/replaymenu.cpp" line="563"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="561"/>
+        <location filename="../menue/replaymenu.cpp" line="563"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="561"/>
+        <location filename="../menue/replaymenu.cpp" line="563"/>
         <source>Own</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="561"/>
+        <location filename="../menue/replaymenu.cpp" line="563"/>
         <source>Ally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="561"/>
+        <location filename="../menue/replaymenu.cpp" line="563"/>
         <source>Enemy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="578"/>
+        <location filename="../menue/replaymenu.cpp" line="580"/>
         <source>Detailed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="578"/>
+        <location filename="../menue/replaymenu.cpp" line="580"/>
         <source>Overworld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="592"/>
+        <location filename="../menue/replaymenu.cpp" line="594"/>
         <source>Dialogs: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="595"/>
-        <location filename="../menue/replaymenu.cpp" line="612"/>
-        <location filename="../menue/replaymenu.cpp" line="629"/>
-        <location filename="../menue/replaymenu.cpp" line="646"/>
+        <location filename="../menue/replaymenu.cpp" line="597"/>
+        <location filename="../menue/replaymenu.cpp" line="614"/>
+        <location filename="../menue/replaymenu.cpp" line="631"/>
+        <location filename="../menue/replaymenu.cpp" line="648"/>
         <source>off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="595"/>
-        <location filename="../menue/replaymenu.cpp" line="612"/>
-        <location filename="../menue/replaymenu.cpp" line="629"/>
-        <location filename="../menue/replaymenu.cpp" line="646"/>
+        <location filename="../menue/replaymenu.cpp" line="597"/>
+        <location filename="../menue/replaymenu.cpp" line="614"/>
+        <location filename="../menue/replaymenu.cpp" line="631"/>
+        <location filename="../menue/replaymenu.cpp" line="648"/>
         <source>on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="597"/>
+        <location filename="../menue/replaymenu.cpp" line="599"/>
         <source>Selects if capture animations are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="609"/>
+        <location filename="../menue/replaymenu.cpp" line="611"/>
         <source>Capture: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="614"/>
+        <location filename="../menue/replaymenu.cpp" line="616"/>
         <source>Selects if the dialogs are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="626"/>
+        <location filename="../menue/replaymenu.cpp" line="628"/>
         <source>Day 2 Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="631"/>
+        <location filename="../menue/replaymenu.cpp" line="633"/>
         <source>Selects if the day to day screen gets skipped or not. Note on fog of war maps the screen is still shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="643"/>
+        <location filename="../menue/replaymenu.cpp" line="645"/>
         <source>Movement: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="648"/>
+        <location filename="../menue/replaymenu.cpp" line="650"/>
         <source>Selects if movement animations get shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="660"/>
+        <location filename="../menue/replaymenu.cpp" line="662"/>
         <source>Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="676"/>
+        <location filename="../menue/replaymenu.cpp" line="678"/>
         <source>Walk Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="680"/>
+        <location filename="../menue/replaymenu.cpp" line="682"/>
         <source>Selects the speed at which units walk across the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="692"/>
+        <location filename="../menue/replaymenu.cpp" line="694"/>
         <source>Battle Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="696"/>
+        <location filename="../menue/replaymenu.cpp" line="698"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="708"/>
+        <location filename="../menue/replaymenu.cpp" line="710"/>
         <source>Capture Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="712"/>
+        <location filename="../menue/replaymenu.cpp" line="714"/>
         <source>Selects the speed at which capture animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="724"/>
+        <location filename="../menue/replaymenu.cpp" line="726"/>
         <source>Dialog Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="728"/>
+        <location filename="../menue/replaymenu.cpp" line="730"/>
         <source>Selects the speed at which dialog animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6891,67 +6901,72 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WorkerThread</name>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="80"/>
+        <location filename="../coreengine/workerthread.cpp" line="81"/>
         <source>Loading Buildings...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="83"/>
+        <location filename="../coreengine/workerthread.cpp" line="84"/>
         <source>Loading COs...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="86"/>
+        <location filename="../coreengine/workerthread.cpp" line="87"/>
         <source>Loading Gamescripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="89"/>
+        <location filename="../coreengine/workerthread.cpp" line="90"/>
         <source>Loading Gamerules...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="92"/>
+        <location filename="../coreengine/workerthread.cpp" line="93"/>
         <source>Loading Movements...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="95"/>
+        <location filename="../coreengine/workerthread.cpp" line="96"/>
         <source>Loading Terrains...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="98"/>
+        <location filename="../coreengine/workerthread.cpp" line="99"/>
         <source>Loading Units...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="101"/>
+        <location filename="../coreengine/workerthread.cpp" line="102"/>
         <source>Loading Weapons...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="104"/>
+        <location filename="../coreengine/workerthread.cpp" line="105"/>
         <source>Loading Battleanimation scripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="107"/>
+        <location filename="../coreengine/workerthread.cpp" line="108"/>
         <source>Loading CO-Perks...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="110"/>
+        <location filename="../coreengine/workerthread.cpp" line="111"/>
         <source>Loading Wikiscripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="112"/>
+        <location filename="../coreengine/workerthread.cpp" line="113"/>
         <source>Loading Shop items...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/workerthread.cpp" line="116"/>
+        <source>Loading Movement Planner addins...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/workerthread.cpp" line="120"/>
         <source>Loading Achievements...</source>
         <translation type="unfinished"></translation>
     </message>

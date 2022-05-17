@@ -45,6 +45,7 @@ public:
         WikiDatabase,
         Userdata,
         Achievementmanager,
+        MovementPlannerAddInManager,
         ShopLoader,
         Sound,
         LoadingScripts,

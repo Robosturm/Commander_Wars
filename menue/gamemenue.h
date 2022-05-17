@@ -282,6 +282,10 @@ public slots:
      */
     void exitMovementPlanner();
     /**
+     * @brief unhideGameMenue
+     */
+    void unhideGameMenue();
+    /**
      * @brief checkMovementPlanner
      */
     void checkMovementPlanner();
