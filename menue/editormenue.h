@@ -1,27 +1,24 @@
-#ifndef EDITORMENUE_H
-#define EDITORMENUE_H
+#pragma once
 
 #include <QObject>
 
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
-#include "menue/ingamemenue.h"
+#include "menue/basegamemenu.h"
 
 #include "objects/dialogs/editor/mapeditdialog.h"
 #include "objects/editorselection.h"
 #include "objects/base/topbar.h"
 #include "objects/base/label.h"
 
-#include "coreengine/LUPDATE_MACROS.h"
-
 class EditorMenue;
 using spEditorMenue = oxygine::intrusive_ptr<EditorMenue>;
 
-class EditorMenue : public InGameMenue
+class EditorMenue final : public BaseGamemenu
 {
     Q_OBJECT
 public:
-    ENUM_CLASS EditorModes
+    enum class EditorModes
     {
         PlaceEditorSelection,
         RemoveUnits,
@@ -30,7 +27,7 @@ public:
         CopySelection,
     };
 
-    ENUM_CLASS CursorModes
+    enum class CursorModes
     {
         Rect,
         Circle,
@@ -38,11 +35,6 @@ public:
 
     explicit EditorMenue();
     virtual ~EditorMenue();
-
-    static inline EditorMenue* getInstance()
-    {
-        return dynamic_cast<EditorMenue*>(m_pInstance.get());
-    }
     /**
      * @brief cleanTemp clean ups undo and redo steps
      * @param step
@@ -320,12 +312,13 @@ public slots:
      * @brief copy
      */
     void copy();
+
+protected slots:
     /**
      * @brief KeyInput called on any key input
      * @param event
      */
     virtual void keyInput(oxygine::KeyEvent event) override;
-protected slots:
     /**
      * @brief newMap
      * @param info
@@ -400,5 +393,3 @@ private:
 };
 
 Q_DECLARE_INTERFACE(EditorMenue, "EditorMenue");
-
-#endif // EDITORMENUE_H

@@ -801,5 +801,5 @@ void ReplayMenu::keyInput(oxygine::KeyEvent event)
             }
         }
     }
-    InGameMenue::keyInput(event);
+    BaseGamemenu::keyInput(event);
 }

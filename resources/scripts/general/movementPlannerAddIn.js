@@ -15,22 +15,30 @@ var MOVEMENTPLANNERADDIN =
     startAddIn : function(addIn)
     {
     },
-    nextInputType : function(addIn, map)
+    nextInputType : function(addIn, map, planner)
     {
         return GameEnums.AddinStepType_Field;
     },
-    onFieldSelected : function(addIn, x, y, map)
+    onFieldSelected : function(addIn, x, y, map, planner)
     {
     },
-    onMenuInputDone : function(addIn, map)
+    onMenuInputDone : function(addIn, map, planner)
     {
     },
-    readyToExecute : function(addIn, map)
+    readyToExecute : function(addIn, map, planner)
     {
         return true;
     },
-    execute : function(addIn, map)
+    execute : function(addIn, map, planner)
     {
         return true;
+    },
+};
+
+var Test =
+{
+    test : function(menu)
+    {
+        menu.test();
     },
 };

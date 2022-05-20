@@ -54,7 +54,7 @@
 #include "game/ui/damagecalculator.h"
 
 GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface)
-    : InGameMenue(pMap),
+    : BaseGamemenu(pMap),
       m_ReplayRecorder(m_pMap.get()),
       m_SaveGame(saveGame),
       m_actionPerformer(m_pMap.get(), this)
@@ -118,12 +118,11 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
 }
 
 GameMenue::GameMenue(QString map, bool saveGame)
-    : InGameMenue(-1, -1, map, saveGame),
+    : BaseGamemenu(-1, -1, map, saveGame),
       m_ReplayRecorder(m_pMap.get()),
       m_gameStarted(false),
       m_SaveGame(saveGame),
       m_actionPerformer(m_pMap.get(), this)
-
 {
     setObjectName("GameMenue");
     Interpreter::setCppOwnerShip(this);
@@ -139,7 +138,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
 }
 
 GameMenue::GameMenue(spGameMap pMap)
-    : InGameMenue(pMap),
+    : BaseGamemenu(pMap),
       m_ReplayRecorder(m_pMap.get()),
       m_actionPerformer(m_pMap.get(), this)
 {
@@ -155,9 +154,9 @@ GameMenue::~GameMenue()
     exitMovementPlanner();
 }
 
-spGameMenue GameMenue::getInstance()
+IngameInfoBar* GameMenue::getGameInfoBar()
 {
-    return oxygine::dynamic_pointer_cast<GameMenue>(m_pInstance);
+    return m_IngameInfoBar.get();
 }
 
 void GameMenue::onEnter()
@@ -847,7 +846,7 @@ void GameMenue::autoScroll(QPoint cursorPosition)
             else
             {
                 m_autoScrollBorder.setWidth(Settings::getWidth() - m_IngameInfoBar->getX());
-                InGameMenue::autoScroll(cursorPosition);
+                BaseGamemenu::autoScroll(cursorPosition);
             }
         }
     }
@@ -956,7 +955,7 @@ void GameMenue::updateGameInfo()
 
 void GameMenue::victory(qint32 team)
 {
-    if (m_pInstance.get() != nullptr)
+    if (BaseGamemenu::getInstance() != nullptr)
     {
         CONSOLE_PRINT("GameMenue::victory for team " + QString::number(team), Console::eDEBUG);
         
@@ -1507,7 +1506,7 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
             keyInputAll(cur);
         }
     }
-    InGameMenue::keyInput(event);
+    BaseGamemenu::keyInput(event);
 }
 
 void GameMenue::keyInputAll(Qt::Key cur)

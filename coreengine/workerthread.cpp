@@ -9,7 +9,7 @@
 #include "coreengine/userdata.h"
 
 #include "menue/mainwindow.h"
-#include "menue/ingamemenue.h"
+#include "menue/basegamemenu.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
 
@@ -199,9 +199,9 @@ void WorkerThread::onQuit()
     {
         oxygine::Stage::getStage()->cleanup();
     }
-    if (InGameMenue::getMenuInstance() != nullptr)
+    if (BaseGamemenu::getInstance() != nullptr)
     {
-        InGameMenue::getMenuInstance()->deleteMenu();
+        BaseGamemenu::getInstance()->deleteMenu();
     }
     GameAnimationFactory::getInstance()->release();
     Interpreter::release();

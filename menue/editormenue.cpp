@@ -40,7 +40,7 @@
 #include "ui_reader/uifactory.h"
 
 EditorMenue::EditorMenue()
-    : InGameMenue (20, 20, "", false),
+    : BaseGamemenu (20, 20, "", false),
       m_autosaveTimer(this)
 {
     setObjectName("EditorMenue");
@@ -400,8 +400,7 @@ void EditorMenue::clickedTopbar(QString itemID)
 }
 
 void EditorMenue::toggleGridLayout()
-{
-    
+{    
     if (m_pMap.get() != nullptr)
     {
         m_gridVisible = !m_gridVisible;
@@ -410,8 +409,7 @@ void EditorMenue::toggleGridLayout()
 }
 
 void EditorMenue::toggleMiddleCrossGrid()
-{
-    
+{    
     if (m_pMap.get() != nullptr)
     {
         m_middleCrossGridVisible = !m_middleCrossGridVisible;
@@ -420,8 +418,7 @@ void EditorMenue::toggleMiddleCrossGrid()
 }
 
 void EditorMenue::updateGrids()
-{
-    
+{    
     if (m_pMap.get() != nullptr)
     {
         m_pMap->showMiddleCrossGrid(m_middleCrossGridVisible);
@@ -931,7 +928,7 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
             }
         }
     }
-    InGameMenue::keyInput(event);
+    BaseGamemenu::keyInput(event);
 }
 
 void EditorMenue::cursorMoved(qint32 x, qint32 y)

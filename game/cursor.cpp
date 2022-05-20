@@ -5,7 +5,7 @@
 #include "game/cursor.h"
 #include "game/createoutline.h"
 
-#include "menue/ingamemenue.h"
+#include "menue/basegamemenu.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -73,7 +73,7 @@ void Cursor::setMapPoint(qint32 x, qint32 y)
 
 void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
 {    
-    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     if (m_pMap != nullptr && pMenu != nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();

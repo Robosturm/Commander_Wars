@@ -4,7 +4,7 @@
 #include "resource_management/cospritemanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "menue/gamemenue.h"
+#include "menue/basegamemenu.h"
 #include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
@@ -306,10 +306,10 @@ void GameAnimationPower::start()
 
 void GameAnimationPower::restart()
 {
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
+    if (pMenu != nullptr)
     {
-        pGameMenue->addChild(spGameAnimationPower(this));
+        pMenu->addChild(spGameAnimationPower(this));
         m_endTimer.start();
     }
 }

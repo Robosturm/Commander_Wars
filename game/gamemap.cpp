@@ -29,7 +29,7 @@
 #include "gameinput/humanplayerinput.h"
 
 #include "menue/gamemenue.h"
-#include "menue/ingamemenue.h"
+#include "menue/basegamemenu.h"
 #include "menue/movementplanner.h"
 
 #include "objects/loadingscreen.h"
@@ -661,7 +661,7 @@ void GameMap::finishUpdateSprites(bool showLoadingScreen)
     {
         m_Rules->createWeatherSprites();
     }
-    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     if (pMenu != nullptr)
     {
         pMenu->updateSlidingActorSize();
@@ -1035,7 +1035,7 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
     if (onMap(x, y))
     {
         // draw point
-        InGameMenue* pMenu = InGameMenue::getMenuInstance();
+        BaseGamemenu* pMenu = BaseGamemenu::getInstance();
         if (pMenu != nullptr)
         {
             oxygine::spSlidingActorNoClipRect pMapSliding = pMenu->getMapSliding();
@@ -1059,7 +1059,7 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
 
 QPoint GameMap::getCenteredPosition()
 {
-    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     qint32 x = 0;
     qint32 y = 0;
     if (pMenu != nullptr)
@@ -1074,7 +1074,7 @@ QPoint GameMap::getCenteredPosition()
 
 void GameMap::moveMap(qint32 x, qint32 y)
 {
-    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     if (pMenu != nullptr)
     {
         // draw point
@@ -1087,7 +1087,7 @@ void GameMap::moveMap(qint32 x, qint32 y)
     }
 }
 
-void GameMap::limitPosition(InGameMenue* pMenu, qint32 & newX, qint32 & newY)
+void GameMap::limitPosition(BaseGamemenu* pMenu, qint32 & newX, qint32 & newY)
 {
     oxygine::RectF bounds = pMenu->getMapSliding()->getDragBounds();
     if (newX < bounds.getLeft())
@@ -1139,7 +1139,7 @@ void GameMap::setZoom(float zoom)
         // all fine
     }
     setScale(curZoom);
-    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     if (pMenu != nullptr)
     {
         pMenu->updateSlidingActorSize();

@@ -159,10 +159,10 @@ void Console::dotask(QString message)
     print(message, Console::eINFO);
     QString order = "GameConsole." + message;
     // ignore console argument and evaluate the String on the Top-Level
-    spGameMenue pGameMenue = GameMenue::getInstance();
+    spGameMenue pMenu = spGameMenue(dynamic_cast<GameMenue*>(GameMenue::getInstance()));
     if (message.startsWith("game:") &&
-        pGameMenue.get() != nullptr &&
-        !pGameMenue->isNetworkGame() &&
+        pMenu.get() != nullptr &&
+        !pMenu->isNetworkGame() &&
         getDeveloperMode())
     {
         order = order.replace("GameConsole.game:", "");

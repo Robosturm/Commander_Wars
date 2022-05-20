@@ -1,10 +1,9 @@
-#ifndef GAMEMENUE_H
-#define GAMEMENUE_H
+#pragma once
 
 #include <QObject>
 #include <QTimer>
 
-#include <menue/ingamemenue.h>
+#include "menue/basegamemenu.h"
 
 #include "network/NetworkInterface.h"
 
@@ -20,8 +19,6 @@
 #include "game/ui/humanquickbuttons.h"
 #include "game/actionperformer.h"
 
-#include "coreengine/LUPDATE_MACROS.h"
-
 class GameMenue;
 using spGameMenue = oxygine::intrusive_ptr<GameMenue>;
 
@@ -31,22 +28,19 @@ using spMovementPlanner = oxygine::intrusive_ptr<MovementPlanner>;
 /**
  * @brief The GameMenue class handles the game
  */
-class GameMenue : public InGameMenue
+class GameMenue : public BaseGamemenu
 {
     Q_OBJECT
 public:
-
     explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface);
     explicit GameMenue(QString map, bool saveGame);
     explicit GameMenue(spGameMap pMap);
     virtual ~GameMenue();
-    static spGameMenue getInstance();
     /**
      * @brief attachInterface
      * @param pNetworkInterface
      */
     void attachInterface(spNetworkInterface pNetworkInterface);
-
     /**
      * @brief getGameStarted
      * @return always true for singleplayer games turns true on multiplayer games once all clients have started the game
@@ -56,16 +50,17 @@ public:
      * @brief getGameInfoBar
      * @return
      */
-    IngameInfoBar* getGameInfoBar()
-    {
-        return m_IngameInfoBar.get();
-    }
+    IngameInfoBar* getGameInfoBar();
+    /**
+     * @brief getChat
+     * @return
+     */
     Chat* getChat() const;
     /**
      * @brief getCurrentViewPlayer
      * @return
      */
-    virtual Player* getCurrentViewPlayer();
+    virtual Player* getCurrentViewPlayer() override;
     /**
      * @brief getSyncCounter
      * @return
@@ -105,6 +100,12 @@ public:
      * @return
      */
     ActionPerformer &getActionPerformer();
+    /**
+     * @brief getIsMultiplayer
+     * @param pGameAction
+     * @return
+     */
+    bool getIsMultiplayer(const spGameAction & pGameAction) const;
 
 signals:
     void sigGameStarted();
@@ -115,7 +116,6 @@ signals:
     void sigShowSurrenderGame();
     void sigNicknameUnit(qint32 x, qint32 y, QString name);
 public slots:
-
     /**
      * @brief updatePlayerinfo
      */
@@ -222,11 +222,6 @@ public slots:
      */
     void nicknameUnit(qint32 x, qint32 y, QString name);
     /**
-     * @brief keyInput
-     * @param event
-     */
-    virtual void keyInput(oxygine::KeyEvent event) override;
-    /**
      * @brief editFinishedCanceled
      */
     void editFinishedCanceled();
@@ -289,14 +284,12 @@ public slots:
      * @brief checkMovementPlanner
      */
     void checkMovementPlanner();
-    /**
-     * @brief getIsMultiplayer
-     * @param pGameAction
-     * @return
-     */
-    bool getIsMultiplayer(const spGameAction & pGameAction) const;
-
 protected slots:
+    /**
+     * @brief keyInput
+     * @param event
+     */
+    virtual void keyInput(oxygine::KeyEvent event) override;
     /**
      * @brief recieveData
      * @param socketID
@@ -384,5 +377,3 @@ protected:
 };
 
 Q_DECLARE_INTERFACE(GameMenue, "GameMenue");
-
-#endif // GAMEMENUE_H

@@ -331,10 +331,11 @@ set(${PROJECT_NAME}_SRCS
 
     #menues
     menue/basemenu.cpp menue/basemenu.h
+    menue/basegamemenu.cpp menue/basegamemenu.h
     menue/mainwindow.cpp menue/mainwindow.h
-    menue/ingamemenue.cpp menue/ingamemenue.h
     menue/editormenue.cpp menue/editormenue.h
-    menue/gamemenue.cpp menue/gamemenue.h
+    menue/gamemenue.cpp menue/gamemenue.h    
+    menue/movementplanner.cpp menue/movementplanner.h
     menue/optionmenue.cpp menue/optionmenue.h
     menue/mapselectionmapsmenue.cpp menue/mapselectionmapsmenue.h
     menue/creditsmenue.cpp menue/creditsmenue.h
@@ -345,7 +346,6 @@ set(${PROJECT_NAME}_SRCS
     menue/replaymenu.cpp menue/replaymenu.h
     menue/achievementmenu.cpp menue/achievementmenu.h
     menue/shopmenu.cpp menue/shopmenu.h
-    menue/movementplanner.h menue/movementplanner.cpp
 
     # ressource management
     resource_management/unitspritemanager.cpp resource_management/unitspritemanager.h

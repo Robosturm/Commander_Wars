@@ -104,10 +104,10 @@ GameAnimationPower* GameAnimationFactory::createAnimationPower(GameMap* pMap, QC
 {    
     spGameAnimationPower pGameAnimationPower = GameAnimationPower::createGameAnimationPower(frameTime, color, powerMode, pCO, pMap);
     pGameAnimationPower->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
+    if (pMenu != nullptr)
     {
-        pGameMenue->addChild(pGameAnimationPower);
+        pMenu->addChild(pGameAnimationPower);
     }
     m_Animations.append(pGameAnimationPower);
     return pGameAnimationPower.get();
@@ -128,11 +128,11 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(GameMap* pM
 
 GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime, quint32 uptimeMs)
 {
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
+    if (pMenu != nullptr)
     {
         spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(pMap, pPlayer, frameTime, false, uptimeMs);
-        pGameMenue->addChild(pAnim);
+        pMenu->addChild(pAnim);
         m_Animations.append(pAnim);
         return pAnim.get();
     }
@@ -235,8 +235,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
             pRet->setScale(scaleFactor);
             pRet->setPosition(static_cast<qint32>(Settings::getWidth() / 2 - pRet->getScaledWidth() / 2),
                               static_cast<qint32>(Settings::getHeight() / 2 - pRet->getScaledHeight() / 2));
-            spGameMenue pMenu = GameMenue::getInstance();
-            if (pMenu.get())
+            BaseGamemenu* pMenu = BaseGamemenu::getInstance();
+            if (pMenu != nullptr)
             {
                 if (pBack.get() != nullptr)
                 {

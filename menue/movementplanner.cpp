@@ -20,17 +20,17 @@ MovementPlanner::MovementPlanner(GameMenue* pOwner, Player* pViewPlayer)
     loadHandling();
     loadGameMenue();
     m_Topbar = spTopbar::create(0, Settings::getWidth() - m_IngameInfoBar->getScaledWidth());
-    m_Topbar->addGroup(tr("Menu"));
-    m_Topbar->addItem(tr("Hide"), "HIDE", 0, tr("Hides the movementplanner so you can move units and open it in the current state again."));
-    m_Topbar->addItem(tr("Exit"), "EXIT", 0, tr("Quits the movementplanner. Opening the movementplanner again resets to the current map state."));
-
-    MovementPlannerAddInManager* pMovementPlannerAddInManager = MovementPlannerAddInManager::getInstance();
     QStringList loadedGroups;
+    loadedGroups.append(tr("Menu"));
+    m_Topbar->addGroup(loadedGroups[0]);
+    MovementPlannerAddInManager* pMovementPlannerAddInManager = MovementPlannerAddInManager::getInstance();
     for (qint32 i = 0; i < pMovementPlannerAddInManager->getCount(); ++i)
     {
         QString id = pMovementPlannerAddInManager->getID(i);
         addAddIn(loadedGroups, id);
     }
+    m_Topbar->addItem(tr("Hide"), "HIDE", 0, tr("Hides the movementplanner so you can move units and open it in the current state again."));
+    m_Topbar->addItem(tr("Exit"), "EXIT", 0, tr("Quits the movementplanner. Opening the movementplanner again resets to the current map state."));
     m_Topbar->finishCreation();
     addChild(m_Topbar);
     connect(m_Topbar.get(), &Topbar::sigItemClicked, this, &MovementPlanner::clickedTopbar, Qt::QueuedConnection);
@@ -88,7 +88,7 @@ void MovementPlanner::addAddIn(QStringList & loadedGroups, QString newAddInId)
             loadedGroups.append(groupName);
             m_Topbar->addGroup(groupName);
         }
-        m_Topbar->addItem(name, newAddInId, index + 1, description);
+        m_Topbar->addItem(name, newAddInId, index, description);
     }
     auto addIn = spMovementPlannerAddIn::create(newAddInId);
     m_addIns.append(addIn);
@@ -216,9 +216,11 @@ void MovementPlanner::startAddIn(QString addInId)
         {
             Interpreter* pInterpreter = Interpreter::getInstance();
             QJSValueList args({pInterpreter->newQObject(addIn.get()),
-                               pInterpreter->newQObject(m_pMap.get())});
+                               pInterpreter->newQObject(m_pMap.get()),
+                               pInterpreter->newQObject(this)});
             pInterpreter->doFunction(addInId, "startAddIn", args);
             m_activeAddIn = addIn;
+            execute();
             break;
         }
     }
@@ -232,7 +234,8 @@ void MovementPlanner::leftClick(qint32 x, qint32 y)
         QJSValueList args({pInterpreter->newQObject(m_activeAddIn.get()),
                            x,
                            y,
-                           pInterpreter->newQObject(m_pMap.get())});
+                           pInterpreter->newQObject(m_pMap.get()),
+                           pInterpreter->newQObject(this)});
         pInterpreter->doFunction(m_activeAddIn->getAddIn(), "readyToExecute", args);
         execute();
     }
@@ -242,11 +245,13 @@ void MovementPlanner::execute()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(m_activeAddIn.get()),
-                       pInterpreter->newQObject(m_pMap.get())});
+                       pInterpreter->newQObject(m_pMap.get()),
+                       pInterpreter->newQObject(this)});
     if (readyToExecute())
     {
         QJSValue erg = pInterpreter->doFunction(m_activeAddIn->getAddIn(), "execute", args);
-        if (erg.isBool() && erg.toBool())
+        if ((erg.isBool() && erg.toBool()) ||
+            !erg.isBool())
         {
             m_activeAddIn = nullptr;
         }
@@ -257,7 +262,7 @@ void MovementPlanner::execute()
         GameEnums::AddinStepType type = static_cast<GameEnums::AddinStepType>(erg.toInt());
         if (type == GameEnums::AddinStepType_Menu)
         {
-
+            // todo show ui
         }
     }
 }
@@ -266,7 +271,8 @@ bool MovementPlanner::readyToExecute()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(m_activeAddIn.get()),
-                       pInterpreter->newQObject(m_pMap.get())});
+                       pInterpreter->newQObject(m_pMap.get()),
+                       pInterpreter->newQObject(this)});
     QJSValue erg = pInterpreter->doFunction(m_activeAddIn->getAddIn(), "readyToExecute", args);
     if (erg.isBool())
     {
@@ -309,5 +315,5 @@ void MovementPlanner::keyInput(oxygine::KeyEvent event)
             }
         }
     }
-    InGameMenue::keyInput(event);
+    BaseGamemenu::keyInput(event);
 }

@@ -1,8 +1,8 @@
-#ifndef BASEMENU_H
-#define BASEMENU_H
+#pragma once
 
 #include <QObject>
 #include <QTimer>
+
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "ui_reader/createdgui.h"
@@ -28,5 +28,3 @@ private:
 };
 
 Q_DECLARE_INTERFACE(Basemenu, "Basemenu");
-
-#endif // BASEMENU_H

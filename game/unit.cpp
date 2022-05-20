@@ -3254,7 +3254,7 @@ void Unit::setAiMode(const GameEnums::GameAi &AiMode)
     unloadIcon("offensive");
     unloadIcon("patrol");
     unloadIcon("patrol_loop");
-    if (EditorMenue::getInstance() != nullptr)
+    if (dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance()) != nullptr)
     {
         switch (m_AiMode)
         {

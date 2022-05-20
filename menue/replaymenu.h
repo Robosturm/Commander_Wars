@@ -2,6 +2,7 @@
 #define REPLAYMENU_H
 
 #include <QMutex>
+#include <QObject>
 
 #include "menue/gamemenue.h"
 
@@ -15,11 +16,12 @@
 class ReplayMenu;
 using spReplayMenu = oxygine::intrusive_ptr<ReplayMenu>;
 
-class ReplayMenu : public GameMenue
+class ReplayMenu final : public GameMenue
 {
     Q_OBJECT
     static constexpr qint32 actionPixelSize = 5;
 public:
+    explicit ReplayMenu() = default;
     ReplayMenu(QString filename);
     virtual ~ReplayMenu();
     /**
@@ -78,13 +80,13 @@ public slots:
      * @brief rewind
      */
     void rewindDay();
+protected slots:
+    virtual void onEnter() override;
     /**
      * @brief keyInput
      * @param event
      */
     virtual void keyInput(oxygine::KeyEvent event) override;
-protected slots:
-    virtual void onEnter() override;
 protected:
     /**
      * @brief loadUIButtons

@@ -3,7 +3,6 @@
 
 #include <QObject>
 
-
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class GameMap;

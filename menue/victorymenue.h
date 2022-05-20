@@ -21,6 +21,8 @@
 #include "coreengine/LUPDATE_MACROS.h"
 #include "menue/basemenu.h"
 
+#include "menue/wikimenu.h"
+
 class VictoryMenue;
 using spVictoryMenue = oxygine::intrusive_ptr<VictoryMenue>;
 
@@ -105,7 +107,7 @@ protected:
      * @param progress
      */
     void drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
-                    QPointF startPoint, qint32 progress);
+                          QPointF startPoint, qint32 progress);
     /**
      * @brief getStepTime
      * @return

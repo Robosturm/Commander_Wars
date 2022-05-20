@@ -305,11 +305,11 @@ void GameAnimationDialog::setTextSpeed(qint32 speed)
 
 void GameAnimationDialog::restart()
 {
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
+    if (pMenu != nullptr)
     {
         m_stopped = false;
-        pGameMenue->addChild(spGameAnimationDialog(this));
+        pMenu->addChild(spGameAnimationDialog(this));
     }
 }
 

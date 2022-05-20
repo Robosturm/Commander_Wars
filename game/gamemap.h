@@ -5,8 +5,7 @@
 
 #include <QObject>
 #include <QVector>
-#include <QRandomGenerator>
-#include "memory"
+#include <memory>
 
 #include "game/terrain.h"
 #include "game/cursor.h"
@@ -28,8 +27,8 @@ using spGameAction = oxygine::intrusive_ptr<GameAction>;
 class GameMap;
 using spGameMap = oxygine::intrusive_ptr<GameMap>;
 
-class InGameMenue;
-using spInGameMenue = oxygine::intrusive_ptr<InGameMenue>;
+class BaseGamemenu;
+using spBaseGamemenu = oxygine::intrusive_ptr<BaseGamemenu>;
 
 class GameMap : public QObject, public FileSerializable, public oxygine::Actor
 {
@@ -243,7 +242,7 @@ public:
      * @param newX
      * @param newY
      */
-    void limitPosition(InGameMenue* pMenu, qint32 & newX, qint32 & newY);
+    void limitPosition(BaseGamemenu* pMenu, qint32 & newX, qint32 & newY);
     /**
      * @brief setIsHumanMatch
      * @param newIsHumanMatch

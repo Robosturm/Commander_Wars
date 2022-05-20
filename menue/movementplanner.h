@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QObject>
+
 #include "menue/gamemenue.h"
 
 #include "game/player.h"
@@ -35,12 +37,13 @@ public slots:
     void startAddIn(QString addIn);
     void hide();
     void exit();
+    void leftClick(qint32 x, qint32 y);
+protected slots:
     /**
      * @brief keyInput
      * @param event
      */
     virtual void keyInput(oxygine::KeyEvent event) override;
-    void leftClick(qint32 x, qint32 y);
 private:
     void addAddIn(QStringList & loadedGroups, QString newAddInId);
     bool readyToExecute();
@@ -56,3 +59,4 @@ private:
     spMovementPlannerAddIn m_activeAddIn;
 };
 
+Q_DECLARE_INTERFACE(MovementPlanner, "MovementPlanner");
