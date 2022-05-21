@@ -48,6 +48,7 @@ EditorMenue::EditorMenue()
     qint32 selectionWidth = Settings::getWidth() / 4;
     bool smallScreen = Settings::getSmallScreenDevice();
     Interpreter::setCppOwnerShip(this);
+    registerAtInterpreter();
     if (smallScreen)
     {
         selectionWidth = Settings::getWidth() * 3 / 4;

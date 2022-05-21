@@ -1388,6 +1388,7 @@ void GameMenue::startGame()
     GameAnimationFactory::clearAllAnimations();
     qint32 count = m_pMap->getPlayerCount();
     m_pMap->setMenu(this);
+    registerAtInterpreter();
     for (qint32 i = 0; i < count; ++i)
     {
         Player* pPlayer = m_pMap->getPlayer(i);

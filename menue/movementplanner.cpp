@@ -16,6 +16,7 @@ MovementPlanner::MovementPlanner(GameMenue* pOwner, Player* pViewPlayer)
 {
     Interpreter::setCppOwnerShip(this);
     setObjectName("MovementPlanner");
+    registerAtInterpreter("planner");
     reloadMap();
     loadHandling();
     loadGameMenue();

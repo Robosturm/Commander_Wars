@@ -13,11 +13,9 @@
 
 spBaseGamemenu m_pInstance(nullptr);
 
-const char* const JS_GAME_NAME = "game";
-
 BaseGamemenu::BaseGamemenu(spGameMap pMap)
-    : m_pMap(pMap),
-      m_MapMoveThread(this)
+    : m_MapMoveThread(this),
+      m_pMap(pMap)
 {
     m_MapMoveThread.setObjectName("MapMoveThread");
     Mainapp* pApp = Mainapp::getInstance();
@@ -31,9 +29,6 @@ BaseGamemenu::BaseGamemenu(spGameMap pMap)
     m_MapMoveThread.start();
     m_Cursor = spCursor::create(m_pMap.get());
     loadBackground();
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue globals = pInterpreter->newQObject(this);
-    pInterpreter->setGlobal(JS_GAME_NAME, globals);
 }
 
 BaseGamemenu::BaseGamemenu(qint32 width, qint32 heigth, QString map, bool savegame)
@@ -60,9 +55,6 @@ BaseGamemenu::BaseGamemenu(qint32 width, qint32 heigth, QString map, bool savega
     }
     m_Cursor = spCursor::create(m_pMap.get());
     loadHandling();
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue globals = pInterpreter->newQObject(this);
-    pInterpreter->setGlobal(JS_GAME_NAME, globals);
 }
 
 BaseGamemenu::~BaseGamemenu()
@@ -74,13 +66,24 @@ BaseGamemenu::~BaseGamemenu()
     m_pMap->detach();
     m_pMap = nullptr;
     m_MapMover = nullptr;
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(JS_GAME_NAME);
+    if (!m_jsName.isEmpty())
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        pInterpreter->deleteObject(m_jsName);
+    }
     if (m_MapMoveThread.isRunning())
     {
         m_MapMoveThread.quit();
         m_MapMoveThread.wait();
     }
+}
+
+void BaseGamemenu::registerAtInterpreter(QString name)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue globals = pInterpreter->newQObject(this);
+    pInterpreter->setGlobal(name, globals);
+    m_jsName = name;
 }
 
 Player* BaseGamemenu::getCurrentViewPlayer()

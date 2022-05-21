@@ -39,6 +39,7 @@ public:
      * @return
      */
     virtual Player* getCurrentViewPlayer();
+    void registerAtInterpreter(QString name = "game");
 signals:
     void sigMouseWheel(float direction);
     void sigRightClick(qint32 x, qint32 y);
@@ -61,18 +62,19 @@ protected:
     void loadHandling();
     void connectMapCursor();
 protected:
+    QThread m_MapMoveThread;
     bool m_moveMap{false};
     QPoint m_MoveMapMousePoint;
     spCursor m_Cursor;
     QRect m_autoScrollBorder{50, 50, 300, 50};
-    QThread m_MapMoveThread;
     spMapMover m_MapMover;
     oxygine::spSprite m_backgroundSprite;
     oxygine::spSlidingActorNoClipRect m_mapSliding;
     oxygine::spActor m_mapSlidingActor;
     QPoint m_lastMapPoint{-1, -1};
     bool m_handlingLoaded{false};
-    spGameMap m_pMap{nullptr};
+    spGameMap m_pMap;
+    QString m_jsName;
 };
 
 Q_DECLARE_INTERFACE(BaseGamemenu, "BaseGamemenu");
