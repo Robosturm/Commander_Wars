@@ -2526,7 +2526,7 @@ void Unit::setHasMoved(bool value)
     }
 }
 
-bool Unit::getHasMoved()
+bool Unit::getHasMoved() const
 {
     return m_Moved;
 }

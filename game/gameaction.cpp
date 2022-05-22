@@ -350,7 +350,12 @@ spCursorData GameAction::getStepCursor()
     QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args);
     if (ret.isString())
     {
-        data->setCursor(ret.toString());
+
+        QString cursor = ret.toString();
+        if (!cursor.isEmpty())
+        {
+            data->setCursor(ret.toString());
+        }
     }
     return data;
 }

@@ -15,7 +15,7 @@ var Constructor = function()
     this.execute = function(addIn, map, planner)
     {
         planner.reloadMap();
-        return false;
+        return true;
     };
 };
 

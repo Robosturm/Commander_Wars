@@ -29,3 +29,12 @@ void CreatedGui::setEnabled(bool value)
         }
     }
 }
+
+void CreatedGui::resetUi()
+{
+    for (auto & item : m_factoryUiItem)
+    {
+        item->detach();
+    }
+    m_factoryUiItem.clear();
+}

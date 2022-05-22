@@ -3,6 +3,11 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
+#include "resource_management/cospritemanager.h"
+#include "resource_management/unitspritemanager.h"
+#include "resource_management/buildingspritemanager.h"
+#include "resource_management/terrainmanager.h"
+
 #include "coreengine/mainapp.h"
 
 #include "objects/base/label.h"
@@ -13,6 +18,10 @@
 #include "objects/base/panel.h"
 #include "objects/base/slider.h"
 #include "objects/base/moveinbutton.h"
+#include "objects/base/dropdownmenu.h"
+#include "objects/base/dropdownmenusprite.h"
+
+#include "game/gamemap.h"
 
 #include "wiki/wikidatabase.h"
 
@@ -30,6 +39,8 @@ static const char* const itemSlider = "Slider";
 static const char* const itemMoveInButton = "MoveInButton";
 static const char* const itemSprite = "Sprite";
 static const char* const itemTextField = "TextField";
+static const char* const itemDropDownMenu = "DropDownMenu";
+static const char* const itemDropDownMenuSprite = "DropDownMenuSprite";
 
 static const char* const attrX = "x";
 static const char* const attrY = "y";
@@ -57,6 +68,10 @@ static const char* const attrScale = "scale";
 static const char* const attrUseY = "useY";
 static const char* const attrStartOffset = "startOffset";
 static const char* const attrMoveInSize = "moveInSize";
+static const char* const attrItems = "items";
+static const char* const attrSpriteType = "spriteType";
+static const char* const attrSpriteSize = "spriteSize";
+
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -82,7 +97,8 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemMoveInButton), std::bind(&UiFactory::createMoveInButton, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemSprite), std::bind(&UiFactory::createSprite, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemTextField), std::bind(&UiFactory::createTextfield, this, _1, _2, _3, _4)});
-
+    m_factoryItems.append({QString(itemDropDownMenu), std::bind(&UiFactory::createDropDownMenu, this, _1, _2, _3, _4)});
+    m_factoryItems.append({QString(itemDropDownMenuSprite), std::bind(&UiFactory::createDropDownMenuSprite, this, _1, _2, _3, _4)});
     connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
 
@@ -93,6 +109,11 @@ QVector<UiFactory::FactoryItem> & UiFactory::getFactoryItems()
 
 void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
 {
+    if (m_dropDownPlayer.get() == nullptr)
+    {
+        m_dropDownPlayer = spPlayer::create(nullptr);
+        m_dropDownPlayer->init();
+    }
     m_creationCount = 0;
     QStringList uiFiles;
     // make sure to overwrite existing js stuff
@@ -626,6 +647,126 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
     return success;
 }
 
+bool UiFactory::createDropDownMenu(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrItems, attrStartValue});
+    if (success)
+    {
+        qint32 x = getIntValue(getAttribute(childs, attrX));
+        qint32 y = getIntValue(getAttribute(childs, attrY));
+        qint32 width = getIntValue(getAttribute(childs, attrWidth));
+        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString onEventLine = getAttribute(childs, attrOnEvent);
+        QString value = getStringValue(getAttribute(childs, attrStartValue));
+        QStringList items = getStringListValue(getAttribute(childs, attrStartValue));
+        spDropDownmenu pDropDownmenu = spDropDownmenu::create(width, items);
+        pDropDownmenu->setPosition(x, y);
+        pDropDownmenu->setTooltipText(tooltip);
+        pDropDownmenu->setCurrentItem(value);
+        DropDownmenu* pDropDownmenuPtr = pDropDownmenu.get();
+        connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [this, onEventLine, pDropDownmenuPtr](qint32 value)
+        {
+            onEvent(onEventLine, value, pDropDownmenuPtr->getCurrentItemText());
+        });
+        parent->addChild(pDropDownmenu);
+        item = pDropDownmenu;
+        m_lastCoordinates = QRect(x, y, width, 40);
+    }
+    return success;
+}
+
+bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrItems,
+                                          attrStartValue, attrSpriteType});
+    if (success)
+    {
+        qint32 x = getIntValue(getAttribute(childs, attrX));
+        qint32 y = getIntValue(getAttribute(childs, attrY));
+        qint32 width = getIntValue(getAttribute(childs, attrWidth));
+        qint32 spriteSize = getIntValue(getAttribute(childs, attrSpriteSize));
+        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString onEventLine = getAttribute(childs, attrOnEvent);
+        QString value = getStringValue(getAttribute(childs, attrStartValue));
+        QStringList items = getStringListValue(getAttribute(childs, attrItems));
+        QString spriteCreator = getStringValue(getAttribute(childs, attrSpriteType));
+
+        std::function<oxygine::spActor(QString item)> creator;
+        if (spriteCreator == "unit")
+        {
+            Player* pPlayer = m_dropDownPlayer.get();
+            creator = [this, pPlayer](QString id)
+            {
+                spUnit pSprite = spUnit::create(id, pPlayer, false, nullptr);
+                return pSprite;
+            };
+        }
+        else if (spriteCreator == "co")
+        {
+            COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+            creator = [this, pCOSpriteManager](QString id)
+            {
+                oxygine::ResAnim* pAnim = nullptr;
+                if (id.isEmpty())
+                {
+                    pAnim = pCOSpriteManager->getResAnim("no_co+info");
+                }
+                else
+                {
+                    pAnim = pCOSpriteManager->getResAnim(id + "+info");
+                }
+                oxygine::spSprite pSprite = oxygine::spSprite::create();
+                pSprite->setResAnim(pAnim);
+                pSprite->setScale(pAnim->getWidth() / 32.0f);
+                pSprite->setSize(pAnim->getSize());
+                return pSprite;
+            };
+        }
+        else
+        {
+            BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
+            QStringList buildingIds = pBuildingSpriteManager->getLoadedBuildings();
+            creator = [this, buildingIds](QString id)
+            {
+                QString terrainId = GameMap::PLAINS;
+                bool isBuilding = buildingIds.contains(id);
+                if (!isBuilding)
+                {
+                    terrainId = id;
+                }
+                spTerrain pTerrain = Terrain::createTerrain(terrainId, -1, -1, "", nullptr);
+                pTerrain->loadSprites();
+                pTerrain->setPriority(-100);
+                oxygine::spSprite pRet = pTerrain;
+                if (isBuilding)
+                {
+                    spBuilding building = spBuilding::create(id, nullptr);
+                    building->setTooltipText(building->getName());
+                    building->updateBuildingSprites(false);
+                    building->addChild(pTerrain);
+                    pRet = building;
+                }
+                return pRet;
+            };
+        }
+        spDropDownmenuSprite pDropDownmenu = spDropDownmenuSprite::create(width, items, creator, spriteSize);
+        pDropDownmenu->setPosition(x, y);
+        pDropDownmenu->setTooltipText(tooltip);
+        pDropDownmenu->setCurrentItem(value);
+        DropDownmenuSprite* pDropDownmenuPtr = pDropDownmenu.get();
+        connect(pDropDownmenu.get(), &DropDownmenuSprite::sigItemChanged, this, [this, onEventLine, pDropDownmenuPtr](qint32 value)
+        {
+            onEvent(onEventLine, value, pDropDownmenuPtr->getCurrentItemText());
+        });
+        parent->addChild(pDropDownmenu);
+        item = pDropDownmenu;
+        m_lastCoordinates = QRect(x, y, width, 40);
+    }
+    return success;
+}
+
 bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu)
 {
     auto childs = element.childNodes();
@@ -807,6 +948,25 @@ QString UiFactory::getStringValue(QString line)
         else
         {
             value = erg.toString();
+        }
+    }
+    return value;
+}
+
+QStringList UiFactory::getStringListValue(QString line)
+{
+    QStringList value;
+    if (!line.isEmpty())
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue erg = pInterpreter->evaluate(line);
+        if (erg.isError())
+        {
+            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+        }
+        else
+        {
+            value = erg.toVariant().toStringList();
         }
     }
     return value;

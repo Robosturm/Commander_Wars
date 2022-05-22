@@ -2064,5 +2064,11 @@
         <file>resources/scripts/actions/ACTION_MOVEMENTPLANNER.js</file>
         <file>resources/scripts/general/movementPlannerAddIn.js</file>
         <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_reset.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_deleteunit.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.xml</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_warpunit.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.xml</file>
     </qresource>
 </RCC>

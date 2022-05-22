@@ -2,6 +2,9 @@
 #include "game/gamemap.h"
 
 #include "coreengine/interpreter.h"
+#include "coreengine/console.h"
+
+#include "ui_reader/uifactory.h"
 
 #include "resource_management/movementplanneraddinmanager.h"
 
@@ -38,12 +41,12 @@ MovementPlanner::MovementPlanner(GameMenue* pOwner, Player* pViewPlayer)
     connect(this, &MovementPlanner::sigExit, pOwner, &GameMenue::exitMovementPlanner, Qt::QueuedConnection);
     connect(this, &MovementPlanner::sigHide, pOwner, &GameMenue::hideMovementPlanner, Qt::QueuedConnection);
     connect(this, &MovementPlanner::sigLeftClick, this, &MovementPlanner::leftClick, Qt::QueuedConnection);
+    connect(this, &MovementPlanner::sigRightClick, this, &MovementPlanner::rightClick, Qt::QueuedConnection);
 
     if (m_pPlayerinfo.get())
     {
         m_pPlayerinfo->setVisible(false);
     }
-    m_pMap->updateSprites();
 }
 
 void MovementPlanner::addAddIn(QStringList & loadedGroups, QString newAddInId)
@@ -91,7 +94,7 @@ void MovementPlanner::addAddIn(QStringList & loadedGroups, QString newAddInId)
         }
         m_Topbar->addItem(name, newAddInId, index, description);
     }
-    auto addIn = spMovementPlannerAddIn::create(newAddInId);
+    auto addIn = spMovementPlannerAddIn::create(newAddInId, m_pMap.get(), this);
     m_addIns.append(addIn);
 }
 
@@ -159,6 +162,7 @@ void MovementPlanner::reloadMap()
             }
         }
     }
+    m_pMap->updateSprites();
     pLoadingScreen->hide();
 }
 
@@ -215,16 +219,38 @@ void MovementPlanner::startAddIn(QString addInId)
     {
         if (addIn->getAddIn() == addInId)
         {
+            m_activeAddIn = addIn;
             Interpreter* pInterpreter = Interpreter::getInstance();
             QJSValueList args({pInterpreter->newQObject(addIn.get()),
                                pInterpreter->newQObject(m_pMap.get()),
                                pInterpreter->newQObject(this)});
             pInterpreter->doFunction(addInId, "startAddIn", args);
-            m_activeAddIn = addIn;
+            changeCursor();
             execute();
             break;
         }
     }
+}
+
+void MovementPlanner::changeCursor()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getStepCursor";
+    CursorData data;
+    QJSValueList args({pInterpreter->newQObject(m_activeAddIn.get()),
+                       pInterpreter->newQObject(&data),
+                       pInterpreter->newQObject(m_pMap.get()),
+                       pInterpreter->newQObject(this)});
+    QJSValue ret = pInterpreter->doFunction(m_activeAddIn->getAddIn(), function1, args);
+    if (ret.isString())
+    {
+        QString cursor = ret.toString();
+        if (!cursor.isEmpty())
+        {
+            data.setCursor(ret.toString());
+        }
+    }
+    getCursor()->changeCursor(data.getCursor(), data.getXOffset(), data.getYOffset(), data.getScale());
 }
 
 void MovementPlanner::leftClick(qint32 x, qint32 y)
@@ -237,9 +263,14 @@ void MovementPlanner::leftClick(qint32 x, qint32 y)
                            y,
                            pInterpreter->newQObject(m_pMap.get()),
                            pInterpreter->newQObject(this)});
-        pInterpreter->doFunction(m_activeAddIn->getAddIn(), "readyToExecute", args);
+        pInterpreter->doFunction(m_activeAddIn->getAddIn(), "onFieldSelected", args);
         execute();
     }
+}
+
+void MovementPlanner::rightClick(qint32 x, qint32 y)
+{
+    stopAddIn();
 }
 
 void MovementPlanner::execute()
@@ -250,11 +281,12 @@ void MovementPlanner::execute()
                        pInterpreter->newQObject(this)});
     if (readyToExecute())
     {
+        CONSOLE_PRINT("Executing active addin " + m_activeAddIn->getAddIn(), Console::eDEBUG);
         QJSValue erg = pInterpreter->doFunction(m_activeAddIn->getAddIn(), "execute", args);
         if ((erg.isBool() && erg.toBool()) ||
             !erg.isBool())
         {
-            m_activeAddIn = nullptr;
+            stopAddIn();
         }
     }
     else
@@ -263,7 +295,17 @@ void MovementPlanner::execute()
         GameEnums::AddinStepType type = static_cast<GameEnums::AddinStepType>(erg.toInt());
         if (type == GameEnums::AddinStepType_Menu)
         {
-            // todo show ui
+            QJSValue erg = pInterpreter->doFunction(m_activeAddIn->getAddIn(), "getUiXml", args);
+            if (erg.isString())
+            {
+                QString path = erg.toString();
+                m_activeAddIn->show();
+                UiFactory::getInstance().createUi(path, m_activeAddIn.get());
+            }
+            else
+            {
+                stopAddIn();
+            }
         }
     }
 }
@@ -280,6 +322,29 @@ bool MovementPlanner::readyToExecute()
         return erg.toBool();
     }
     return false;
+}
+
+void MovementPlanner::onMenuInputDone()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args({pInterpreter->newQObject(m_activeAddIn.get()),
+                       pInterpreter->newQObject(m_pMap.get()),
+                       pInterpreter->newQObject(this)});
+    pInterpreter->doFunction(m_activeAddIn->getAddIn(), "onMenuInputDone", args);
+    execute();
+}
+
+void MovementPlanner::stopAddIn()
+{
+    if (m_activeAddIn.get() != nullptr)
+    {
+        m_input->setFocus(true);
+        m_activeAddIn->removeAllSprites();
+        m_activeAddIn->detach();
+        m_activeAddIn = nullptr;
+        CursorData data;
+        getCursor()->changeCursor(data.getCursor(), data.getXOffset(), data.getYOffset(), data.getScale());
+    }
 }
 
 void MovementPlanner::keyInput(oxygine::KeyEvent event)

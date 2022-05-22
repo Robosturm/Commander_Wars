@@ -33,12 +33,12 @@ var MOVEMENTPLANNERADDIN =
     {
         return true;
     },
-};
-
-var Test =
-{
-    test : function(menu)
+    getStepCursor : function(addIn, cursorData, map, planner)
     {
-        menu.test();
+        return "cursor+default";
+    },
+    getUiXml : function(addIn, map, planner)
+    {
+        return "";
     },
 };

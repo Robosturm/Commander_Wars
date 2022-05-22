@@ -14,6 +14,7 @@ public:
     explicit CreatedGui() = default;
     virtual ~CreatedGui();
     void addFactoryUiItem(oxygine::spActor pItem);
+    void resetUi();
 signals:
     void sigOnUpdate();
 public slots:

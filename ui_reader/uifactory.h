@@ -8,6 +8,8 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/console.h"
 
+#include "game/player.h"
+
 #include "ui_reader/createdgui.h"
 
 class UiFactory : public QObject
@@ -47,7 +49,20 @@ private:
      * optional: tooltip, onUpdate, id, enabled, fontColor
      */
     bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
-
+    /**
+     * Nodename: Label
+     * supported attributes are:
+     * mandatory: x, y, width, items, startValue
+     * optional: tooltip, onEvent, id, enabled
+     */
+    bool createDropDownMenu(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
+    /**
+     * Nodename: Label
+     * supported attributes are:
+     * mandatory: x, y, width, items, spriteType, spriteSize, startValue
+     * optional: tooltip, onEvent, id, enabled
+     */
+    bool createDropDownMenuSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
     /**
      * Nodename: TextField
      * supported attributes are:
@@ -156,6 +171,7 @@ private:
     float getFloatValue(QString line, float defaultValue = 0.0f);
     bool getBoolValue(QString line, bool defaultValue = false);
     QString getStringValue(QString line);
+    QStringList getStringListValue(QString line);
     oxygine::TextStyle getStyle(QString styleName, QColor fontColor);
     QString getId(QString attribute);
     template<typename TType>
@@ -176,6 +192,34 @@ private:
             CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", Console::eERROR);
         }
     }
+
+    template<typename TType, typename TType2>
+    void onEvent(QString line, TType value, TType2 value2)
+    {
+        QString args;
+        if constexpr(std::is_same<QString, TType>::value)
+        {
+            args = "var input = \"" + value + "\";";
+        }
+        else
+        {
+            args = "var input = " + QString::number(value) + ";";
+        }
+        if constexpr(std::is_same<QString, TType2>::value)
+        {
+            args = "var input2 = \"" + value2 + "\";";
+        }
+        else
+        {
+            args = "var input2 = " + QString::number(value2) + ";";
+        }
+        QJSValue erg = Interpreter::getInstance()->evaluate(args + line);
+        if (erg.isError())
+        {
+            CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", Console::eERROR);
+        }
+    }
+
     template<typename TType>
     TType onUpdate(QString line)
     {
@@ -207,6 +251,7 @@ private:
     QVector<FactoryItem> m_factoryItems;
     QRect m_lastCoordinates;
     quint32 m_creationCount{0};
+    spPlayer m_dropDownPlayer;
 };
 
 Q_DECLARE_INTERFACE(UiFactory, "UiFactory");

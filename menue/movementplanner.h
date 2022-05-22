@@ -23,7 +23,7 @@ public:
     MovementPlanner(GameMenue* pOwner, Player* pViewPlayer);
     ~MovementPlanner() = default;
     Player *getViewPlayer() const;
-
+    void onMenuInputDone();
 signals:
     void sigExit();
     void sigHide();
@@ -38,6 +38,8 @@ public slots:
     void hide();
     void exit();
     void leftClick(qint32 x, qint32 y);
+    void rightClick(qint32 x, qint32 y);
+    void stopAddIn();
 protected slots:
     /**
      * @brief keyInput
@@ -48,7 +50,7 @@ private:
     void addAddIn(QStringList & loadedGroups, QString newAddInId);
     bool readyToExecute();
     void execute();
-
+    void changeCursor();
 private:
     GameMenue* m_pOwner{nullptr};
     Player* m_pViewPlayer{nullptr};

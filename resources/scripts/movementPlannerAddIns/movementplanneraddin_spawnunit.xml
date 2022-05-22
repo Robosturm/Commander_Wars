@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>0</x>
+        <y>0</y>
+        <width>settings.getWidth()</width>
+        <height>settings.getHeight()</height>
+        <childs>
+            <Label>
+                <x>settings.getWidth() / 2 - 300</x>
+                <y>10</y>
+                <width>600</width>
+                <height>60</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Spawn Unit")</text>
+                <font>"main48"</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Unit:")</text>
+                <font>"main24"</font>
+            </Label>
+            <DropDownMenuSprite>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>105</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Unit that will be spawned")</tooltip>
+                <startValue>unitSpriteManager.getUnitsSorted()[0]</startValue>
+                <spriteType>"unit"</spriteType>
+                <spriteSize>30</spriteSize>
+                <items>unitSpriteManager.getUnitsSorted()</items>
+                <onEvent>MOVEMENTPLANNERADDIN_SPAWNUNIT.changeUnitId(addIn, input2)</onEvent>
+            </DropDownMenuSprite>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Owner:")</text>
+                <font>"main24"</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Owner of the unit")</tooltip>
+                <startValue>1</startValue>
+                <infinite>0</infinite>
+                <min>1</min>
+                <max>addIn.getMap().getPlayerCount()</max>
+                <onEvent>MOVEMENTPLANNERADDIN_SPAWNUNIT.changeOwner(addIn, input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","HP:")</text>
+                <font>"main24"</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","HP of the unit")</tooltip>
+                <startValue>10</startValue>
+                <infinite>0</infinite>
+                <min>1</min>
+                <max>10</max>
+                <onEvent>MOVEMENTPLANNERADDIN_SPAWNUNIT.changeHp(addIn, input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Has moved:")</text>
+                <font>"main24"</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the unit has moved this turn or not.")</tooltip>
+                <startValue>true</startValue>
+                <onEvent>MOVEMENTPLANNERADDIN_SPAWNUNIT.changeHasMoved(addIn, input)</onEvent>
+            </Checkbox>
+            <Button>
+                <x>settings.getWidth() / 2 + 10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Apply")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Applies the changes to the unit")</tooltip>
+                <onEvent>addIn.onMenuInputDone()</onEvent>
+            </Button>
+            <Button>
+                <x>settings.getWidth() / 2 - 160</x>
+                <y>lastY</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Cancel")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Cancels the dialog")</tooltip>
+                <onEvent>addIn.hide()</onEvent>
+            </Button>
+        </childs>
+    </Panel>
+</ui>
