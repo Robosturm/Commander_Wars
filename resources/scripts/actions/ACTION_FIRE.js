@@ -460,7 +460,7 @@ var Constructor = function()
             // generally attacks on shrouded fields are forbidden
             if (map.onMap(x, y) && owner.getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {
-                if (aiType === GameEnums.AiTypes_Human && detailedForecast)
+                if ((aiType === GameEnums.AiTypes_Human || aiType === GameEnums.AiTypes_MovePlanner) && detailedForecast)
                 {
                     var defUnit = map.getTerrain(x, y).getUnit();
                     if (defUnit !== null)
@@ -496,7 +496,8 @@ var Constructor = function()
                 }
                 else
                 {
-                    if (aiType === GameEnums.AiTypes_Human)
+                    if ((aiType === GameEnums.AiTypes_Human ||
+                         aiType === GameEnums.AiTypes_MovePlanner))
                     {
                         result = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
                                                                    actionTargetField.x, actionTargetField.y, null, x, y, 0,

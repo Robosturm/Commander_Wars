@@ -650,7 +650,7 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
 bool UiFactory::createDropDownMenu(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu)
 {
     auto childs = element.childNodes();
-    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrItems, attrStartValue});
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrItems});
     if (success)
     {
         qint32 x = getIntValue(getAttribute(childs, attrX));
@@ -658,12 +658,19 @@ bool UiFactory::createDropDownMenu(oxygine::spActor parent, QDomElement element,
         qint32 width = getIntValue(getAttribute(childs, attrWidth));
         QString tooltip = translate(getAttribute(childs, attrTooltip));
         QString onEventLine = getAttribute(childs, attrOnEvent);
-        QString value = getStringValue(getAttribute(childs, attrStartValue));
-        QStringList items = getStringListValue(getAttribute(childs, attrStartValue));
+        QString value;
+        if (element.hasAttribute(attrStartValue))
+        {
+            value = getStringValue(getAttribute(childs, attrStartValue));
+        }
+        QStringList items = getStringListValue(getAttribute(childs, attrItems));
         spDropDownmenu pDropDownmenu = spDropDownmenu::create(width, items);
         pDropDownmenu->setPosition(x, y);
         pDropDownmenu->setTooltipText(tooltip);
-        pDropDownmenu->setCurrentItem(value);
+        if (!value.isEmpty())
+        {
+            pDropDownmenu->setCurrentItem(value);
+        }
         DropDownmenu* pDropDownmenuPtr = pDropDownmenu.get();
         connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [this, onEventLine, pDropDownmenuPtr](qint32 value)
         {
@@ -679,8 +686,7 @@ bool UiFactory::createDropDownMenu(oxygine::spActor parent, QDomElement element,
 bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu)
 {
     auto childs = element.childNodes();
-    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrItems,
-                                          attrStartValue, attrSpriteType});
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrItems, attrSpriteType});
     if (success)
     {
         qint32 x = getIntValue(getAttribute(childs, attrX));
@@ -689,7 +695,11 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
         qint32 spriteSize = getIntValue(getAttribute(childs, attrSpriteSize));
         QString tooltip = translate(getAttribute(childs, attrTooltip));
         QString onEventLine = getAttribute(childs, attrOnEvent);
-        QString value = getStringValue(getAttribute(childs, attrStartValue));
+        QString value;
+        if (element.hasAttribute(attrStartValue))
+        {
+            value = getStringValue(getAttribute(childs, attrStartValue));
+        }
         QStringList items = getStringListValue(getAttribute(childs, attrItems));
         QString spriteCreator = getStringValue(getAttribute(childs, attrSpriteType));
 
@@ -754,7 +764,10 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
         spDropDownmenuSprite pDropDownmenu = spDropDownmenuSprite::create(width, items, creator, spriteSize);
         pDropDownmenu->setPosition(x, y);
         pDropDownmenu->setTooltipText(tooltip);
-        pDropDownmenu->setCurrentItem(value);
+        if (!value.isEmpty())
+        {
+            pDropDownmenu->setCurrentItem(value);
+        }
         DropDownmenuSprite* pDropDownmenuPtr = pDropDownmenu.get();
         connect(pDropDownmenu.get(), &DropDownmenuSprite::sigItemChanged, this, [this, onEventLine, pDropDownmenuPtr](qint32 value)
         {

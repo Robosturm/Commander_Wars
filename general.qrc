@@ -2070,5 +2070,7 @@
         <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_warpunit.js</file>
         <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js</file>
         <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.xml</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.xml</file>
     </qresource>
 </RCC>

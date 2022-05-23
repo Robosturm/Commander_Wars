@@ -52,15 +52,15 @@ private:
     /**
      * Nodename: Label
      * supported attributes are:
-     * mandatory: x, y, width, items, startValue
-     * optional: tooltip, onEvent, id, enabled
+     * mandatory: x, y, width, items
+     * optional: tooltip, onEvent, id, enabled, startValue
      */
     bool createDropDownMenu(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
     /**
      * Nodename: Label
      * supported attributes are:
-     * mandatory: x, y, width, items, spriteType, spriteSize, startValue
-     * optional: tooltip, onEvent, id, enabled
+     * mandatory: x, y, width, items, spriteType, spriteSize
+     * optional: tooltip, onEvent, id, enabled, startValue
      */
     bool createDropDownMenuSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
     /**
