@@ -44,6 +44,7 @@ static const char* const itemDropDownMenu = "DropDownMenu";
 static const char* const itemDropDownMenuColor = "DropDownMenuColor";
 static const char* const itemDropDownMenuSprite = "DropDownMenuSprite";
 static const char* const itemLoop = "loop";
+static const char* const itemIf = "if";
 
 static const char* const attrX = "x";
 static const char* const attrY = "y";
@@ -104,6 +105,7 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemDropDownMenuSprite), std::bind(&UiFactory::createDropDownMenuSprite, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemLoop), std::bind(&UiFactory::loop, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemDropDownMenuColor), std::bind(&UiFactory::createDropDownMenuColor, this, _1, _2, _3, _4, _5)});
+    m_factoryItems.append({QString(itemIf), std::bind(&UiFactory::ifCondition, this, _1, _2, _3, _4, _5)});
 
     connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
@@ -196,6 +198,35 @@ bool UiFactory::loop(oxygine::spActor parent, QDomElement element, oxygine::spAc
             {
                 oxygine::spActor loopItem;
                 success = success && createItem(parent, node.toElement(), loopItem, pMenu, i);
+                if (loopItem.get() != nullptr && pPanel != nullptr)
+                {
+                    pPanel->addItem(loopItem);
+                }
+            }
+            node = node.nextSibling();
+        }
+    }
+    return success;
+}
+
+bool UiFactory::ifCondition(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
+{
+    bool create = getBoolValue(element.attribute("condition"), "", loopIdx);
+    bool success = true;
+    if (create)
+    {
+        Panel* pPanel = dynamic_cast<Panel*>(parent.get());
+        auto node = element.firstChild();
+        while (!node.isNull())
+        {
+            while (node.isComment())
+            {
+                node = node.nextSibling();
+            }
+            if (!node.isNull())
+            {
+                oxygine::spActor loopItem;
+                success = success && createItem(parent, node.toElement(), loopItem, pMenu, loopIdx);
                 if (loopItem.get() != nullptr && pPanel != nullptr)
                 {
                     pPanel->addItem(loopItem);

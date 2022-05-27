@@ -1,4 +1,5 @@
 #include "ui_reader/createdgui.h"
+#include "ui_reader/uifactory.h"
 
 #include "coreengine/mainapp.h"
 #include "objects/base/moveinbutton.h"
@@ -37,4 +38,9 @@ void CreatedGui::resetUi()
         item->detach();
     }
     m_factoryUiItem.clear();
+}
+
+void CreatedGui::loadXml(QString xmlFile)
+{
+    UiFactory::getInstance().createUi(xmlFile, this);
 }

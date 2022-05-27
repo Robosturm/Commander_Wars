@@ -14,11 +14,13 @@ public:
     explicit CreatedGui() = default;
     virtual ~CreatedGui();
     void addFactoryUiItem(oxygine::spActor pItem);
-    void resetUi();
 signals:
     void sigOnUpdate();
 public slots:
     virtual void setEnabled(bool value) override;
+    void resetUi();
+    void loadXml(QString xmlFile);
+
 protected:
     QVector<oxygine::spActor> m_factoryUiItem;
 };

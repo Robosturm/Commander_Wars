@@ -162,14 +162,21 @@ private:
      */
     bool createSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
-     * @brief loop
-     * @param parent
-     * @param element
-     * @param item
-     * @param pMenu
-     * @return
+     * Nodename: loop
+     * attribute: count
+     * Example:
+     * <loop count=2>
+     * </loop>
      */
     bool loop(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
+     * Nodename: if
+     * attribute: condition
+     * Example:
+     * <if condition=2>
+     * </if>
+     */
+    bool ifCondition(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
 signals:
     void sigDoEvent(QString command, QString objectId, qint32 loopIdx);
 private slots:
