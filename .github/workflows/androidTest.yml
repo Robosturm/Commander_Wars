@@ -44,7 +44,9 @@ jobs:
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"          
       
-    - name: Configure CMake
+    - name: Configure CMake    
+      env:
+        ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
       run:  |
         cmake \
         -B "${{github.workspace}}/build" \
@@ -52,8 +54,7 @@ jobs:
         -DQt6_DIR="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/" \
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
         -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/qt.toolchain.cmake \
-        -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api }} \
-        -DANDROID_NDK='${{ steps.setup-ndk.outputs.ndk-path }}' \
+        -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api-level }} \
         -DANDROID_ABI=${{ matrix.abi }} \
         -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install'
 
