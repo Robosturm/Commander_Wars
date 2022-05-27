@@ -42,11 +42,11 @@ jobs:
           arch: ${{matrix.COMPILER_VERSION}}
           modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
-          install-deps: "true"          
+          install-deps: "true"
       
     - name: Configure CMake    
       env:
-        ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+        ANDROID_NDK_HOME: ${{github.workspace}}/${{ steps.setup-ndk.outputs.ndk-path }}
       run:  |
         cmake \
         -B "${{github.workspace}}/build" \
