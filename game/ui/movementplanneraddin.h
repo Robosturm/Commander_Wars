@@ -44,7 +44,7 @@ public slots:
      * @param x
      * @param y
      */
-    void addSprite(QString spriteID, qint32 x, qint32 y, float offsetX = 0, float offsetY = 0, qint32 frameTime = 150);
+    void addSprite(QString spriteID, qint32 x, qint32 y, float offsetX = 0, float offsetY = 0, QColor color = Qt::white, qint32 frameTime = 150);
     /**
      * @brief removeAllSprites
      */

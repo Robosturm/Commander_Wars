@@ -2072,5 +2072,7 @@
         <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.xml</file>
         <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js</file>
         <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.xml</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.xml</file>
     </qresource>
 </RCC>

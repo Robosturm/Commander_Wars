@@ -40,12 +40,19 @@ public slots:
     void leftClick(qint32 x, qint32 y);
     void rightClick(qint32 x, qint32 y);
     void stopAddIn();
+    void addActiveAddInToUpdateAddIns();
+    void removeActiveAddInFromUpdateAddIns();
+    void showAddInUi();
 protected slots:
     /**
      * @brief keyInput
      * @param event
      */
     virtual void keyInput(oxygine::KeyEvent event) override;
+    /**
+     * @brief updateUpdateAddIns
+     */
+    void updateUpdateAddIns();
 private:
     void addAddIn(QStringList & loadedGroups, QString newAddInId);
     bool readyToExecute();
@@ -59,6 +66,7 @@ private:
     spMoveplannerInput m_input;
     QVector<spMovementPlannerAddIn> m_addIns;
     spMovementPlannerAddIn m_activeAddIn;
+    QVector<MovementPlannerAddIn*> m_updateAddIns;
 };
 
 Q_DECLARE_INTERFACE(MovementPlanner, "MovementPlanner");

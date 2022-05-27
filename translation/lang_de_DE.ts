@@ -3542,7 +3542,7 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/movementplanner.cpp" line="136"/>
+        <location filename="../menue/movementplanner.cpp" line="137"/>
         <source>Updating map</source>
         <translation type="unfinished"></translation>
     </message>

@@ -14,7 +14,6 @@
                 <text>QT_TRANSLATE_NOOP("GAME","Spawn Unit")</text>
                 <font>"main48"</font>
             </Label>
-
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 20</y>
@@ -80,7 +79,7 @@
                 <width>150</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Cancel")</text>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Cancels the dialog")</tooltip>
-                <onEvent>addIn.hide()</onEvent>
+                <onEvent>addIn.getPlanner().stopAddIn()</onEvent>
             </Button>
         </childs>
     </Panel>

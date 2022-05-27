@@ -16,7 +16,7 @@ class UiFactory : public QObject
 {
     Q_OBJECT
 public:
-    using CreatorFunction = std::function<bool(oxygine::spActor, QDomElement, oxygine::spActor & item, CreatedGui* pMenu)>;
+    using CreatorFunction = std::function<bool(oxygine::spActor, QDomElement, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)>;
     struct FactoryItem
     {
         QString m_id;
@@ -48,113 +48,132 @@ private:
      * mandatory: x, y, width, heigth, text, font,
      * optional: tooltip, onUpdate, id, enabled, fontColor
      */
-    bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
+    bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
-     * Nodename: Label
+     * Nodename: DropDownMenu
      * supported attributes are:
      * mandatory: x, y, width, items
      * optional: tooltip, onEvent, id, enabled, startValue
      */
-    bool createDropDownMenu(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
+    bool createDropDownMenu(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
-     * Nodename: Label
+     * Nodename: DropDownMenuColor
+     * supported attributes are:
+     * mandatory: x, y, width, items
+     * optional: tooltip, onEvent, id, enabled, startValue
+     */
+    bool createDropDownMenuColor(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
+     * Nodename: DropDownMenuSprite
      * supported attributes are:
      * mandatory: x, y, width, items, spriteType, spriteSize
      * optional: tooltip, onEvent, id, enabled, startValue
      */
-    bool createDropDownMenuSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
+    bool createDropDownMenuSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: TextField
      * supported attributes are:
      * mandatory: x, y, text, font
-     * optional: fontColor
+     * optional: fontColor, id
      */
-    bool createTextfield(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
+    bool createTextfield(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Checkbox
       * supported attributes are:
       * mandatory: x, y, onEvent, startValue
       * optional: tooltip, id, enabled
       */
-    bool createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
+    bool createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Spinbox
       * supported attributes are:
       * mandatory: x, y, width, min, max, infinite, onEvent, startValue
       * optional: tooltip, id, enabled
       */
-    bool createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
+    bool createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Slider
       * supported attributes are:
       * mandatory: x, y, width, min, max, onEvent, startValue
       * optional: tooltip, id, enabled
       */
-    bool createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
+    bool createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Textbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
       * optional: tooltip, id, enabled
       */
-    bool createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
+    bool createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: TimeSpinbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
       * optional: tooltip, id, enabled
       */
-    bool createTimeSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
+    bool createTimeSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Panel
       * supported attributes are:
       * mandatory: x, y, width, height, childs
       * optional: tooltip, id, enabled
       */
-    bool createPanel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
+    bool createPanel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Box
       * supported attributes are:
       * mandatory: x, y, width, height, sprite, childs
+     * optional: id
      */
-    bool createBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
+    bool createBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Icon
       * supported attributes are:
       * mandatory: x, y, size, startValue
+     * optional: id
       */
-    bool createIcon(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
+    bool createIcon(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: Button
      * supported attributes are:
      * mandatory: x, y, text, onEvent
-     * optional: tooltip, width enabled
+     * optional: tooltip, width enabled, id
      */
-    bool createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
+    bool createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: IconButton
      * supported attributes are:
      * mandatory: x, y, sprite, onEvent
-     * optional: enabled
+     * optional: enabled, id
      */
-    bool createIconButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
+    bool createIconButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: MoveInButton
      * supported attributes are:
      * mandatory: moveInSize
      * optional: enabled, direction, scale, useY, startOffset
      */
-    bool createMoveInButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
+    bool createMoveInButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: Sprite
      * supported attributes are:
      * mandatory: x, y, sprite, scale
+     * optional: id
      */
-    bool createSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
+    bool createSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
+     * @brief loop
+     * @param parent
+     * @param element
+     * @param item
+     * @param pMenu
+     * @return
+     */
+    bool loop(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
 signals:
-    void sigDoEvent(QString command);
+    void sigDoEvent(QString command, QString objectId, qint32 loopIdx);
 private slots:
-    void doEvent(QString command);
+    void doEvent(QString command, QString objectId, qint32 loopIdx);
 
 private:
     explicit UiFactory();
@@ -163,29 +182,32 @@ private:
      * @param attributes
      * @return
      */
-    bool checkElements(QDomNodeList element, const QStringList & attributes);
-    QString getAttribute(QDomNodeList childs, QString attribute);
-    QDomNode getNode(QDomNodeList childs, QString attribute);
-    bool createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
-    qint32 getIntValue(QString line, qint32 defaultValue = 0);
-    float getFloatValue(QString line, float defaultValue = 0.0f);
-    bool getBoolValue(QString line, bool defaultValue = false);
-    QString getStringValue(QString line);
-    QStringList getStringListValue(QString line);
+    bool checkElements(const QDomNodeList & childs, const QStringList & attributes);
+    QString getAttribute(const QDomNodeList & childs, const QString & attribute);
+    QDomNode getNode(const QDomNodeList & childs, const QString & attribute);
+    bool hasChild(const QDomNodeList & childs, const QString & attribute);
+    bool createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    qint32 getIntValue(QString line, QString objectId, qint32 loopIdx, qint32 defaultValue = 0);
+    float getFloatValue(QString line, QString objectId, qint32 loopIdx, float defaultValue = 0.0f);
+    bool getBoolValue(QString line, QString objectId, qint32 loopIdx, bool defaultValue = false);
+    QString getStringValue(QString line, QString objectId, qint32 loopIdx);
+    QStringList getStringListValue(QString line, QString objectId, qint32 loopIdx);
     oxygine::TextStyle getStyle(QString styleName, QColor fontColor);
     QString getId(QString attribute);
     template<typename TType>
-    void onEvent(QString line, TType value)
+    void onEvent(QString line, TType value, QString objectId, qint32 loopIdx)
     {
         QString args;
         if constexpr(std::is_same<QString, TType>::value)
         {
-            args = "var input = \"" + value + "\";";
+            args += "var input = \"" + value + "\";";
         }
         else
         {
-            args = "var input = " + QString::number(value) + ";";
+            args += "var input = " + QString::number(value) + ";";
         }
+        args += "var objectId = \"" + objectId + "\";";
+        args += "var loopIdx = " + QString::number(loopIdx) + ";";
         QJSValue erg = Interpreter::getInstance()->evaluate(args + line);
         if (erg.isError())
         {
@@ -194,25 +216,27 @@ private:
     }
 
     template<typename TType, typename TType2>
-    void onEvent(QString line, TType value, TType2 value2)
+    void onEvent(QString line, TType value, TType2 value2, QString objectId, qint32 loopIdx)
     {
         QString args;
         if constexpr(std::is_same<QString, TType>::value)
         {
-            args = "var input = \"" + value + "\";";
+            args += "var input = \"" + value + "\";";
         }
         else
         {
-            args = "var input = " + QString::number(value) + ";";
+            args += "var input = " + QString::number(value) + ";";
         }
         if constexpr(std::is_same<QString, TType2>::value)
         {
-            args = "var input2 = \"" + value2 + "\";";
+            args += "var input2 = \"" + value2 + "\";";
         }
         else
         {
-            args = "var input2 = " + QString::number(value2) + ";";
+            args += "var input2 = " + QString::number(value2) + ";";
         }
+        args += "var objectId = \"" + objectId + "\";";
+        args += "var loopIdx = " + QString::number(loopIdx) + ";";
         QJSValue erg = Interpreter::getInstance()->evaluate(args + line);
         if (erg.isError())
         {
@@ -221,11 +245,14 @@ private:
     }
 
     template<typename TType>
-    TType onUpdate(QString line)
+    TType onUpdate(QString line, QString objectId, qint32 loopIdx)
     {
+        QString args;
+        args += "var objectId = \"" + objectId + "\";";
+        args += "var loopIdx = " + QString::number(loopIdx) + ";";
+        args += line;
         TType ret;
-        QJSValue erg = Interpreter::getInstance()->evaluate(line);
-
+        QJSValue erg = Interpreter::getInstance()->evaluate(args);
         if constexpr(std::is_same<QString, TType>::value)
         {
             ret = erg.toString();

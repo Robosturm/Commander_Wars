@@ -6,6 +6,7 @@
 #include "menue/movementplanner.h"
 
 #include "resource_management/gameanimationmanager.h"
+#include "resource_management/gamemanager.h"
 
 constexpr const char* const AddIn = "addIn";
 
@@ -25,10 +26,15 @@ QString MovementPlannerAddIn::getAddIn() const
     return m_addIn;
 }
 
-void MovementPlannerAddIn::addSprite(QString spriteID, qint32 x, qint32 y, float offsetX, float offsetY, qint32 frameTime)
+void MovementPlannerAddIn::addSprite(QString spriteID, qint32 x, qint32 y, float offsetX, float offsetY, QColor color, qint32 frameTime)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
+    if (pAnim == nullptr)
+    {
+        GameManager* pGameManager = GameManager::getInstance();
+        pAnim = pGameManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
+    }
     if (pAnim != nullptr)
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
@@ -41,8 +47,9 @@ void MovementPlannerAddIn::addSprite(QString spriteID, qint32 x, qint32 y, float
         {
             pSprite->setResAnim(pAnim);
         }
+        pSprite->setColor(color);
         pSprite->setPosition(offsetX + x * GameMap::getImageSize(), offsetY + y  * GameMap::getImageSize());
-        m_pMap->addChild(pSprite);
+        m_pMap->getMarkedFieldsLayer()->addChild(pSprite);
         m_sprites.append(pSprite);
     }
 }
@@ -77,6 +84,7 @@ void MovementPlannerAddIn::hide()
     pInterpreter->deleteObject(AddIn);
     resetUi();
     detach();
+    m_pPlanner->setFocused(true);
 }
 
 void MovementPlannerAddIn::show()
@@ -85,4 +93,5 @@ void MovementPlannerAddIn::show()
     pInterpreter->setGlobal(AddIn, pInterpreter->newQObject(this));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
     m_pPlanner->addChild(oxygine::spActor(this));
+    m_pPlanner->setFocused(false);
 }

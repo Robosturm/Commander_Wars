@@ -192,6 +192,7 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<PlayerRecord>("PlayerRecord", 1);
     qmlRegisterInterface<SpecialEvent>("SpecialEvent", 1);
     qmlRegisterInterface<DayToDayRecord>("DayToDayRecord", 1);
+    qmlRegisterInterface<MovementPlanner>("MovementPlanner", 1);
     qmlRegisterInterface<GameMenue>("GameMenue", 1);
     qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
     qmlRegisterInterface<BaseGamemenu>("BaseGamemenu", 1);

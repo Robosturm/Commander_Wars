@@ -42,6 +42,7 @@ MovementPlanner::MovementPlanner(GameMenue* pOwner, Player* pViewPlayer)
     connect(this, &MovementPlanner::sigHide, pOwner, &GameMenue::hideMovementPlanner, Qt::QueuedConnection);
     connect(this, &MovementPlanner::sigLeftClick, this, &MovementPlanner::leftClick, Qt::QueuedConnection);
     connect(this, &MovementPlanner::sigRightClick, this, &MovementPlanner::rightClick, Qt::QueuedConnection);
+    connect(&m_actionPerformer, &ActionPerformer::actionPerformed, this, &MovementPlanner::updateUpdateAddIns, Qt::QueuedConnection);
 
     if (m_pPlayerinfo.get())
     {
@@ -283,6 +284,7 @@ void MovementPlanner::execute()
     {
         CONSOLE_PRINT("Executing active addin " + m_activeAddIn->getAddIn(), Console::eDEBUG);
         QJSValue erg = pInterpreter->doFunction(m_activeAddIn->getAddIn(), "execute", args);
+        updateUpdateAddIns();
         if ((erg.isBool() && erg.toBool()) ||
             !erg.isBool())
         {
@@ -295,18 +297,27 @@ void MovementPlanner::execute()
         GameEnums::AddinStepType type = static_cast<GameEnums::AddinStepType>(erg.toInt());
         if (type == GameEnums::AddinStepType_Menu)
         {
-            QJSValue erg = pInterpreter->doFunction(m_activeAddIn->getAddIn(), "getUiXml", args);
-            if (erg.isString())
-            {
-                QString path = erg.toString();
-                m_activeAddIn->show();
-                UiFactory::getInstance().createUi(path, m_activeAddIn.get());
-            }
-            else
-            {
-                stopAddIn();
-            }
+            showAddInUi();
         }
+    }
+}
+
+void MovementPlanner::showAddInUi()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args({pInterpreter->newQObject(m_activeAddIn.get()),
+                       pInterpreter->newQObject(m_pMap.get()),
+                       pInterpreter->newQObject(this)});
+    QJSValue erg = pInterpreter->doFunction(m_activeAddIn->getAddIn(), "getUiXml", args);
+    if (erg.isString())
+    {
+        QString path = erg.toString();
+        m_activeAddIn->show();
+        UiFactory::getInstance().createUi(path, m_activeAddIn.get());
+    }
+    else
+    {
+        stopAddIn();
     }
 }
 
@@ -339,7 +350,19 @@ void MovementPlanner::stopAddIn()
     if (m_activeAddIn.get() != nullptr)
     {
         m_input->setFocus(true);
-        m_activeAddIn->removeAllSprites();
+        bool isUpdateIn = false;
+        for (qint32 i = 0; i < m_updateAddIns.size(); ++i)
+        {
+            if (m_updateAddIns[i] == m_activeAddIn.get())
+            {
+                isUpdateIn = true;
+                break;
+            }
+        }
+        if (!isUpdateIn)
+        {
+            m_activeAddIn->removeAllSprites();
+        }
         m_activeAddIn->detach();
         m_activeAddIn = nullptr;
         CursorData data;
@@ -382,4 +405,35 @@ void MovementPlanner::keyInput(oxygine::KeyEvent event)
         }
     }
     BaseGamemenu::keyInput(event);
+}
+
+void MovementPlanner::addActiveAddInToUpdateAddIns()
+{
+    if (!m_updateAddIns.contains(m_activeAddIn.get()))
+    {
+        m_updateAddIns.append(m_activeAddIn.get());
+    }
+}
+
+void MovementPlanner::removeActiveAddInFromUpdateAddIns()
+{
+    for (qint32 i = 0; i < m_updateAddIns.size(); ++i)
+    {
+        if (m_updateAddIns[i] == m_activeAddIn.get())
+        {
+            m_updateAddIns.removeAt(i);
+        }
+    }
+}
+
+void MovementPlanner::updateUpdateAddIns()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    for (auto addIn : m_updateAddIns)
+    {
+        QJSValueList args({pInterpreter->newQObject(addIn),
+                           pInterpreter->newQObject(m_pMap.get()),
+                           pInterpreter->newQObject(this)});
+        pInterpreter->doFunction(addIn->getAddIn(), "update", args);
+    }
 }

@@ -33,6 +33,9 @@ var MOVEMENTPLANNERADDIN =
     {
         return true;
     },
+    update : function(addIn, map, planner)
+    {
+    },
     getStepCursor : function(addIn, cursorData, map, planner)
     {
         return "cursor+default";
