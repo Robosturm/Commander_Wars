@@ -3,7 +3,7 @@ on: [push]
 env:
   BUILD_TYPE: Release
   QT_Version: '6.3.0'
-  NDK_Version: r21e
+  NDK_Version: r22b
   
 jobs:
   install:
