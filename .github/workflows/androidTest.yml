@@ -49,14 +49,14 @@ jobs:
       run:  |
         cmake \
         -B "${{github.workspace}}/build" \
-        -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
-        -DCMAKE_TOOLCHAIN_FILE=${{ steps.setup-ndk.outputs.ndk-path }}/build/cmake/android.toolchain.cmake \        
-        -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api }} \
-        -DANDROID_NDK='${{ steps.setup-ndk.outputs.ndk-path }}' \        
-        -DANDROID_ABI=${{ matrix.abi }} \
-        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
-        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
+        -DQt6_DIR="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/" \
+        -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
+        -DCMAKE_TOOLCHAIN_FILE="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/qt.toolchain.cmake"
+        -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api }} \
+        -DANDROID_NDK='${{ steps.setup-ndk.outputs.ndk-path }}' \
+        -DANDROID_ABI=${{ matrix.abi }} \
+        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install'
 
     - name: Build
       working-directory: '${{github.workspace}}/build'
