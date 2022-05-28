@@ -49,7 +49,7 @@ jobs:
         cmake \
         -B "${{github.workspace}}/build" \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/" \
-        -DQt6_DIR="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/" \
+        -DQt6_DIR="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/" \
         -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}" \
         -DQT_HOST_PATH_CMAKE_DIR="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/" \
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
