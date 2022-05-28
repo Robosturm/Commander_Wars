@@ -50,12 +50,14 @@ jobs:
         -B "${{github.workspace}}/build" \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/" \
         -DQt6_DIR="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/" \
+        -DQT_HOST_PATH=${{github.workspace}}/qt/ \
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
         -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/qt.toolchain.cmake \
         -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api-level }} \
         -DANDROID_ABI=${{ matrix.abi }} \
         -DANDROID_NDK_ROOT='${{ steps.setup-ndk.outputs.ndk-path }}' \
         -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install'
+        
 
     - name: Build
       working-directory: '${{github.workspace}}/build'
