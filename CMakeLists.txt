@@ -30,7 +30,9 @@ option(USEAPPCONFIGPATH "use the system location for saving data, instead of the
 
 message("Prefix Path: ${CMAKE_PREFIX_PATH}")
 message("Module Path: ${CMAKE_MODULE_PATH}")
+message("Qt-Host-Path: ${QT_HOST_PATH}")
 message("Qt-Dir: ${Qt6_DIR}")
+message("Qt-Tools Path: ${Qt6CoreTools_DIR}")
 message("C-Compiler Path: ${C_COMPILER_PATH}")
 message("C-Compiler: ${CMAKE_C_COMPILER}")
 message("C++-Compiler Path: ${CXX_COMPILER_PATH}")
