@@ -604,7 +604,8 @@ void GameMenue::disconnected(quint64 socketID)
                 {
                     constexpr qint32 MS_PER_SECOND = 1000;
                     m_slaveDespawnTimer.setSingleShot(true);
-                    m_slaveDespawnTimer.start(Settings::getSlaveDespawnTime().count() * MS_PER_SECOND);
+                    m_slaveDespawnTimer.start(MS_PER_SECOND);
+                    m_slaveDespawnElapseTimer.start();
                 }
                 else
                 {
@@ -619,8 +620,12 @@ void GameMenue::disconnected(quint64 socketID)
 
 void GameMenue::despawnSlave()
 {
-    CONSOLE_PRINT("Closing slave cause a player has disconnected.", Console::eDEBUG);
-    QCoreApplication::exit(0);
+    std::chrono::milliseconds ms = Settings::getSlaveDespawnTime();
+    if (m_slaveDespawnElapseTimer.hasExpired(ms.count()))
+    {
+        CONSOLE_PRINT("Closing slave cause a player has disconnected.", Console::eDEBUG);
+        QCoreApplication::exit(0);
+    }
 }
 
 bool GameMenue::isNetworkGame()

@@ -386,6 +386,7 @@ protected:
     bool m_SaveGame{false};
     bool m_Multiplayer{false};
 
+    QElapsedTimer m_slaveDespawnElapseTimer;
     QTimer m_slaveDespawnTimer{this};
     QTimer m_UpdateTimer{this};
 
