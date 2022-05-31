@@ -212,6 +212,14 @@ protected:
      */
     void recievePlayerArmy(quint64 socketID, QDataStream& stream);
     /**
+     * @brief joinAllowed
+     * @param socketId
+     * @param username
+     * @param eAiType
+     * @return
+     */
+    bool joinAllowed(quint64 socketId, QString username, GameEnums::AiTypes eAiType);
+    /**
      * @brief sendOpenPlayerCount
      */
     void sendOpenPlayerCount();

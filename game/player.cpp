@@ -58,14 +58,14 @@ BaseGameInputIF* Player::getBaseGameInput()
     return m_pBaseGameInput.get();
 }
 
-QString Player::getDisplayName() const
+QString Player::getPlayerNameId() const
 {
-    return m_displayName;
+    return m_playerNameId;
 }
 
-void Player::setDisplayName(const QString &newDisplayName)
+void Player::setPlayerNameId(const QString &newDisplayName)
 {
-    m_displayName = newDisplayName;
+    m_playerNameId = newDisplayName;
 }
 
 const QString Player::getUniqueIdentifier() const
@@ -1910,6 +1910,16 @@ qint32 Player::calculatePlayerStrength(Unit* pUnit) const
     return ret;
 }
 
+GameEnums::AiTypes Player::getControlType() const
+{
+    return m_controlType;
+}
+
+void Player::setControlType(const GameEnums::AiTypes &newControlType)
+{
+    m_controlType = newControlType;
+}
+
 void Player::setMenu(GameMenue *newMenu)
 {
     m_pMenu = newMenu;
@@ -1961,7 +1971,8 @@ void Player::serializeObject(QDataStream& pStream) const
     pStream << m_BuildlistChanged;
     m_Variables.serializeObject(pStream);
     pStream << m_playerArmySelected;
-    pStream << m_displayName;
+    pStream << m_playerNameId;
+    pStream << static_cast<qint32>(m_controlType);
 }
 
 void Player::deserializeObject(QDataStream& pStream)
@@ -2157,6 +2168,12 @@ void Player::deserializer(QDataStream& pStream, bool fast)
     }
     if (version > 15)
     {
-        pStream >> m_displayName;
+        pStream >> m_playerNameId;
+    }
+    if (version > 16)
+    {
+        qint32 type;
+        pStream >> type;
+        m_controlType = static_cast<GameEnums::AiTypes>(type);
     }
 }

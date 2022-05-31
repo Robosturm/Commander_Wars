@@ -79,6 +79,14 @@ void DropDownmenu::setCurrentItemText(QString value)
     
     m_Textfield->setHtmlText(value);
     m_currentItem = -1;
+    for (qint32 i = 0; i < m_ItemTexts.size(); i++)
+    {
+        if (m_ItemTexts[i] == value)
+        {
+            m_currentItem = i;
+            break;
+        }
+    }
     hideTooltip();
     
 }

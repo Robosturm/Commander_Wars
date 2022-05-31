@@ -26,7 +26,7 @@ public:
     static const char* const ARG_SERVERLISTENPORT;
     static const char* const ARG_SERVERSLAVELISTENADDRESS;
     static const char* const ARG_SERVERSLAVELISTENPORT;
-
+    static const char* const ARG_SERVERSLAVEDESPAWNTIME;
     CommandLineParser();
 
     void parseArgs(QApplication & app);
@@ -49,6 +49,7 @@ private:
     QCommandLineOption m_serverListenPort;
     QCommandLineOption m_serverSlaveListenAddress;
     QCommandLineOption m_serverSlaveListenPort;
+    QCommandLineOption m_serverSlaveDespawnTime;
     QCommandLineParser m_parser;
 };
 

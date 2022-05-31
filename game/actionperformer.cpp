@@ -21,6 +21,11 @@ bool ActionPerformer::getActionRunning() const
     return m_actionRunning;
 }
 
+void ActionPerformer::setSyncCounter(qint64 counter)
+{
+    m_syncCounter = counter;
+}
+
 void ActionPerformer::performAction(spGameAction pGameAction)
 {
     if (m_actionRunning)

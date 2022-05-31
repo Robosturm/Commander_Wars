@@ -485,7 +485,7 @@ void CampaignMenu::slotButtonNext()
             pMap->updateSprites();
             // start game
             CONSOLE_PRINT("Leaving Campaign Menue", Console::eDEBUG);
-            auto window = spGameMenue::create(pMap, false, spNetworkInterface());
+            auto window = spGameMenue::create(pMap, false, spNetworkInterface(), false);
             oxygine::Stage::getStage()->addChild(window);
             oxygine::Actor::detach();
         }

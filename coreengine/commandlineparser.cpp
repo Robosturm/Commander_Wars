@@ -26,6 +26,7 @@ const char* const CommandLineParser::ARG_SERVERLISTENADDRESS    = "serverListenA
 const char* const CommandLineParser::ARG_SERVERLISTENPORT       = "serverListenPort";
 const char* const CommandLineParser::ARG_SERVERSLAVELISTENADDRESS    = "serverSlaveListenAddress";
 const char* const CommandLineParser::ARG_SERVERSLAVELISTENPORT       = "serverSlaveListenPort";
+const char* const CommandLineParser::ARG_SERVERSLAVEDESPAWNTIME      = "serverSlaveDespawnTime";
 
 CommandLineParser::CommandLineParser()
     : m_mods(ARG_MODS, tr("mods that should be loaded. As a string list separated by ';'")),
@@ -44,7 +45,8 @@ CommandLineParser::CommandLineParser()
       m_serverListenAddress(ARG_SERVERLISTENADDRESS, tr("The address on which the server will listen for clients. Empty for all addresses.")),
       m_serverListenPort(ARG_SERVERLISTENPORT, tr("Port on which the server will initially listen for clients.")),
       m_serverSlaveListenAddress(ARG_SERVERSLAVELISTENADDRESS, tr("The address on which the server will listen for slave games. Empty for all addresses."), "slaveListenAddress", "::1"),
-      m_serverSlaveListenPort(ARG_SERVERSLAVELISTENPORT, tr("Port on which the server will listen for slave games."))
+      m_serverSlaveListenPort(ARG_SERVERSLAVELISTENPORT, tr("Port on which the server will listen for slave games.")),
+      m_serverSlaveDespawnTime(ARG_SERVERSLAVEDESPAWNTIME, tr("Time in seconds till a slave game with no connected clients get despawned in seconds."))
 {
     m_parser.setApplicationDescription("Commander Wars game");
     m_parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
@@ -67,6 +69,7 @@ CommandLineParser::CommandLineParser()
     m_parser.addOption(m_serverListenPort);
     m_parser.addOption(m_serverSlaveListenAddress);
     m_parser.addOption(m_serverSlaveListenPort);
+    m_parser.addOption(m_serverSlaveDespawnTime);
 }
 
 void CommandLineParser::parseArgs(QApplication & app)
@@ -149,6 +152,10 @@ void CommandLineParser::parseArgs(QApplication & app)
     {
         bool ok = false;
         Settings::setSlaveServerPort(m_parser.value(m_serverSlaveListenPort).toInt(&ok));
+    }
+    if (m_parser.isSet(m_serverSlaveDespawnTime))
+    {
+        Settings::setSlaveDespawnTime(std::chrono::seconds(m_parser.value(m_serverSlaveDespawnTime).toInt()));
     }
 }
 

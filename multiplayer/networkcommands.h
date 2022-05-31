@@ -111,6 +111,14 @@ namespace NetworkCommands
      * @brief PLAYERJOINEDFINISHED
      */
     const char* const PLAYERJOINEDFINISHED = "PLAYERJOINEDFINISHED";
+    /**
+     * @brief REQUESTPLAYERCONTROLLEDINFO
+     */
+    const char* const REQUESTPLAYERCONTROLLEDINFO = "REQUESTPLAYERCONTROLLEDINFO";
+    /**
+     * @brief RECEIVEPLAYERCONTROLLEDINFO
+     */
+    const char* const RECEIVEPLAYERCONTROLLEDINFO = "RECEIVEPLAYERCONTROLLEDINFO";
 
     /*****************************************************************************************************************************/
     // dedicated server commands

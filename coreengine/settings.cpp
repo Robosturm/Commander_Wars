@@ -107,6 +107,7 @@ QString Settings::m_serverListenAdress = "";
 QString Settings::m_slaveListenAdress = "::1";
 bool Settings::m_Server               = false;
 bool Settings::m_record               = true;
+std::chrono::seconds Settings::m_slaveDespawnTime = std::chrono::minutes(0);
 // auto saving
 std::chrono::seconds Settings::m_autoSavingCylceTime = std::chrono::minutes(0);
 qint32 Settings::m_autoSavingCycle = 0;
@@ -335,6 +336,7 @@ Settings::Settings()
         new Value<QString>{"Network", "ServerListenAdress", &m_serverListenAdress, "", "", ""},
         new Value<QString>{"Network", "SlaveListenAdress", &m_slaveListenAdress, "", "", ""},
         new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&10000&20000;::1&50000&65535", "", ""},
+        new Value<std::chrono::seconds>{"Network", "SlaveDespawnTime", &m_slaveDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(60), std::chrono::seconds(60 * 60 * 24 * 24)},
 
         // auto saving
         new Value<std::chrono::seconds>{"Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)},
@@ -345,6 +347,16 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+const std::chrono::seconds &Settings::getSlaveDespawnTime()
+{
+    return m_slaveDespawnTime;
+}
+
+void Settings::setSlaveDespawnTime(const std::chrono::seconds &newSlaveDespawnTime)
+{
+    m_slaveDespawnTime = newSlaveDespawnTime;
 }
 
 const QString &Settings::getDefaultBannlist()

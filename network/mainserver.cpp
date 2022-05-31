@@ -117,6 +117,10 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         {
             joinSlaveGame(socketID, objData);
         }
+        else
+        {
+            CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
+        }
     }
     else if (service == NetworkInterface::NetworkSerives::ServerHosting)
     {
@@ -127,6 +131,10 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         if (messageType == NetworkCommands::LAUNCHGAMEONSERVER)
         {
             spawnSlaveGame(stream, socketID, data);
+        }
+        else
+        {
+            CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
         }
     }
 }
@@ -150,6 +158,10 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         else  if (messageType == NetworkCommands::SERVEROPENPLAYERCOUNT)
         {
             onOpenPlayerCount(socketID, objData);
+        }
+        else
+        {
+            CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
         }
     }
 }

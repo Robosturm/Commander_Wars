@@ -326,6 +326,10 @@ void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkS
              pDialogMessageBox = spDialogMessageBox::create(tr("Host game is no longer available."));
              addChild(pDialogMessageBox);
         }
+        else
+        {
+            CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
+        }
     }
 }
 

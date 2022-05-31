@@ -32,7 +32,7 @@ class GameMenue : public BaseGamemenu
 {
     Q_OBJECT
 public:
-    explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface);
+    explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface, bool rejoin = false);
     explicit GameMenue(QString map, bool saveGame);
     explicit GameMenue(spGameMap pMap);
     virtual ~GameMenue();
@@ -303,11 +303,25 @@ protected slots:
      */
     void disconnected(quint64 socketID);
     /**
+     * @brief despawnSlave
+     */
+    void despawnSlave();
+    /**
      * @brief joinAsObserver
      * @param stream
      * @param socketID
      */
     void joinAsObserver(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief startGameSync
+     */
+    void startGameSync(quint64 socketID);
+    /**
+     * @brief joinAsPlayer
+     * @param stream
+     * @param socketID
+     */
+    void joinAsPlayer(QDataStream & stream, quint64 socketID);
     /**
      * @brief waitForPlayerJoinSyncFinished
      * @param stream
@@ -318,6 +332,16 @@ protected slots:
      * @brief waitingForPlayerJoinSyncFinished
      */
     void waitingForPlayerJoinSyncFinished(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief syncPointReached
+     */
+    void syncPointReached();
+    /**
+     * @brief playerRequestControl
+     * @param stream
+     * @param socketID
+     */
+    void playerRequestControlInfo(QDataStream & stream, quint64 socketId);
     /**
      * @brief removePlayerFromSyncWaitList
      * @param socketID
@@ -362,6 +386,7 @@ protected:
     bool m_SaveGame{false};
     bool m_Multiplayer{false};
 
+    QTimer m_slaveDespawnTimer{this};
     QTimer m_UpdateTimer{this};
 
     bool m_enabledAutosaving{false};

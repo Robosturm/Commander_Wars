@@ -121,6 +121,17 @@ class Settings : public QObject, public oxygine::ref_counter
                     *m_value = m_defaultValue;
                 }
             }
+            else if constexpr (std::is_same<TType, std::chrono::minutes>::value)
+            {
+                bool ok = false;
+                *m_value = std::chrono::minutes(settings.value(m_name, static_cast<qint64>(m_defaultValue.count())).toUInt(&ok));
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
+                {
+                    QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
+                    CONSOLE_PRINT(error, Console::eERROR);
+                    *m_value = m_defaultValue;
+                }
+            }
             else
             {
                 // not implemented data type
@@ -232,6 +243,9 @@ public:
     static void setUsername(const QString &Username);
 
 public slots:
+    static const std::chrono::seconds &getSlaveDespawnTime();
+    static void setSlaveDespawnTime(const std::chrono::seconds &newSlaveDespawnTime);
+
     static const QString &getDefaultBannlist();
     static void setDefaultBannlist(const QString &newDefaultBannlist);
 
@@ -775,6 +789,7 @@ private:
     static QString m_serverListenAdress;
     static QString m_slaveListenAdress;
     static QString m_slaveHostOptions;
+    static std::chrono::seconds m_slaveDespawnTime;
 
     // auto saving
     static std::chrono::seconds m_autoSavingCylceTime;

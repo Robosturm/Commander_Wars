@@ -27,6 +27,11 @@ public:
     {
         return m_multiplayerSyncData;
     }
+    /**
+     * @brief setSyncCounter
+     * @param counter
+     */
+    void setSyncCounter(qint64 counter);
 
 signals:
     void sigActionPerformed();
