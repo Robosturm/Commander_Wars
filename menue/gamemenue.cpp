@@ -465,6 +465,20 @@ void GameMenue::playerRequestControlInfo(QDataStream & stream, quint64 socketId)
             aiTypes.append(GameEnums::AiTypes_Human);
             pPlayer->setSocketId(socketId);
         }
+        else if (pPlayer->getSocketId() == 0 && Mainapp::getSlave())
+        {
+            // redirect unassigned ai's to new player
+            auto ai = pPlayer->getControlType();
+            if (ai != GameEnums::AiTypes_Closed &&
+                ai != GameEnums::AiTypes_Human &&
+                ai != GameEnums::AiTypes_ProxyAi &&
+                ai != GameEnums::AiTypes_Open)
+            {
+                playerAis.append(i);
+                aiTypes.append(ai);
+                pPlayer->setSocketId(socketId);
+            }
+        }
     }
     QString command = NetworkCommands::RECEIVEPLAYERCONTROLLEDINFO;
     QByteArray sendData;

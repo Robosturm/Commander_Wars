@@ -1452,6 +1452,7 @@ void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type, QString d
         Player* pPlayer = m_pMap->getPlayer(player);
         pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, type));
         pPlayer->setPlayerNameId(displayName);
+        pPlayer->setControlType(type);
         if (pPlayer->getBaseGameInput() != nullptr)
         {
             pPlayer->getBaseGameInput()->setEnableNeutralTerrainAttack(m_pMap->getGameRules()->getAiAttackTerrain());
@@ -1706,6 +1707,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             // we need to handle opening a player slightly different here...
             if (eAiType == GameEnums::AiTypes_Open)
             {
+                pPlayer->setControlType(eAiType);
                 pPlayer->setBaseGameInput(spBaseGameInputIF());
                 pPlayer->setPlayerNameId("");
                 pPlayer->setSocketId(0);
@@ -1714,6 +1716,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             }
             else
             {
+                pPlayer->setControlType(eAiType);
                 pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes_ProxyAi));
                 pPlayer->setPlayerNameId(username);
                 pPlayer->setSocketId(socketID);
@@ -1798,6 +1801,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
         if (socket != m_pNetworkInterface->getSocketID() ||
             aiType != GameEnums::AiTypes::AiTypes_ProxyAi)
         {
+            GameEnums::AiTypes originalAiType = static_cast<GameEnums::AiTypes>(aiType);
             m_PlayerSockets[player] = socket;
             if (Mainapp::getSlave())
             {
@@ -1831,6 +1835,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
             m_pMap->getPlayer(player)->deserializeObject(stream);
             m_pMap->getPlayer(player)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, eAiType));
             m_pMap->getPlayer(player)->setPlayerNameId(name);
+            m_pMap->getPlayer(player)->setControlType(originalAiType);
 
             bool humanFound = false;
             for (qint32 i = 0; i < m_playerAIs.size(); i++)

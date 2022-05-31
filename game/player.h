@@ -126,7 +126,10 @@ public:
     void setUniqueIdentifier(const QString &newUniqueIdentifier);
     void setPlayerNameId(const QString &newDisplayName);
     void setMenu(GameMenue *newMenu);
-
+    /**
+     * @brief setControlType
+     * @param newControlType
+     */
     void setControlType(const GameEnums::AiTypes &newControlType);
 
 public slots:
