@@ -2,7 +2,7 @@
 #include <QGuiApplication>
 #include <QScreen>
 #include <QDir>
-#include <QMessagebox>
+#include <QMessageBox>
 #include <QThread>
 #include <QResource>
 #include <QApplication>
