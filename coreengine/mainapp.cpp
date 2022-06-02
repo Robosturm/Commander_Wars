@@ -1,5 +1,5 @@
 #include <QFile>
-#include <QGuiapplication>
+#include <QGuiApplication>
 #include <QScreen>
 #include <QDir>
 #include <QMessagebox>
