@@ -34,7 +34,7 @@
                     <Label>
                         <x>ViewMapStats.getNextLabelX()</x>
                         <y>lastY</y>
-                        <width>40</width>
+                        <width>50</width>
                         <height>30</height>
                         <text>ViewMapStats.getCountOfBuilding()</text>
                         <font>"main24"</font>
@@ -70,7 +70,7 @@
                         <Label>
                             <x>ViewMapStats.getNextLabelX()</x>
                             <y>lastY</y>
-                            <width>40</width>
+                            <width>50</width>
                             <height>30</height>
                             <text>ViewMapStats.getCountOfBuilding()</text>
                             <font>"main24"</font>
@@ -97,7 +97,7 @@
                         <Label>
                             <x>ViewMapStats.getNextLabelX()</x>
                             <y>lastY</y>
-                            <width>40</width>
+                            <width>50</width>
                             <height>30</height>
                             <text>ViewMapStats.getCountOfUnit()</text>
                             <font>"main24"</font>
@@ -124,7 +124,7 @@
                     <Label>
                         <x>ViewMapStats.getNextLabelX()</x>
                         <y>lastY</y>
-                        <width>40</width>
+                        <width>50</width>
                         <height>30</height>
                         <text>ViewMapStats.getCountOfTerrain()</text>
                         <font>"main24"</font>

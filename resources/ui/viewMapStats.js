@@ -54,7 +54,17 @@ var ViewMapStats =
     {
         var buildings = buildingSpriteManager.getLoadedBuildings();
         ViewMapStats.lastId = buildings[loopIdx];
-        return ViewMapStats.getCountOfBuilding() > 0;
+        var hasBuildings = true;
+        if (Global[ViewMapStats.lastId].getBuildingWidth() > 1 ||
+            Global[ViewMapStats.lastId].getBuildingHeigth() > 1)
+        {
+            hasBuildings = false;
+        }
+        else
+        {
+            hasBuildings = ViewMapStats.getCountOfBuilding() > 0;
+        }
+        return hasBuildings;
     },
     hasUnit : function(loopIdx)
     {
