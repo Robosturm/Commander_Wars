@@ -675,29 +675,9 @@ qint32 Player::getFunds() const
 qint32 Player::getBuildingCount(const QString & buildingID)
 {
     qint32 ret = 0;
-    
     if (m_pMap != nullptr)
     {
-        for (qint32 y = 0; y < m_pMap->getMapHeight(); y++)
-        {
-            for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
-            {
-                spBuilding pBuilding = m_pMap->getSpTerrain(x, y)->getSpBuilding();
-                if (pBuilding.get() != nullptr)
-                {
-                    if (pBuilding->getOwner() == this)
-                    {
-                        if (buildingID.isEmpty() || pBuilding->getBuildingID() == buildingID)
-                        {
-                            if (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y)
-                            {
-                                ret++;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        ret = m_pMap->getPlayerBuildingCount(buildingID, this);
     }
     return ret;
 }

@@ -41,7 +41,7 @@ CommandLineParser::CommandLineParser()
       m_masterPort(ARG_MASTERPORT, tr("Port on which the game will connect to the hosting server to exchange data")),
       m_slaveName(ARG_SLAVENAME, tr("Unique name to identify the slave on the server side")),
       m_server(ARG_SERVER, tr("If set the game launches the dedicated server."), "0"),
-      m_serverSlaveHostOptions(ARG_SERVERSLAVEHOSTOPTIONS, tr("Ip-Address and Port range separated by '&' for the 3 parts and ';' for gaps or different addresses on which slave games will be spawned to listen. E.g. ::1&10000&20000;::1&50000&65535. Not the Ip-Address needs to be accessible by connecting clients.")),
+      m_serverSlaveHostOptions(ARG_SERVERSLAVEHOSTOPTIONS, tr("Ip-Address and Port range separated by '&' for the 3 parts and ';' for gaps or different addresses on which slave games will be spawned to listen. E.g. ::1&10000&20000;::1&50000&65535. Note the Ip-Address needs to be accessible by connecting clients.")),
       m_serverListenAddress(ARG_SERVERLISTENADDRESS, tr("The address on which the server will listen for clients. Empty for all addresses.")),
       m_serverListenPort(ARG_SERVERLISTENPORT, tr("Port on which the server will initially listen for clients.")),
       m_serverSlaveListenAddress(ARG_SERVERSLAVELISTENADDRESS, tr("The address on which the server will listen for slave games. Empty for all addresses."), "slaveListenAddress", "::1"),

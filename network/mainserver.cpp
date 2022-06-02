@@ -3,6 +3,8 @@
 #include <QApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QSqlError>
+#include <QSqlQuery>
 
 #include "network/mainserver.h"
 #include "network/JsonKeys.h"
@@ -16,6 +18,8 @@
 #include "game/gamemap.h"
 
 #include "multiplayer/networkcommands.h"
+
+const char* const DRIVER = "QSQLITE";
 
 spMainServer MainServer::m_pInstance;
 
@@ -64,8 +68,48 @@ MainServer::MainServer()
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
     parseSlaveAddressOptions();
 
-    emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort());
-    emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort());
+    bool dataBaseLaunched = true;
+    if(QSqlDatabase::isDriverAvailable(DRIVER))
+    {
+        m_serverData = QSqlDatabase::addDatabase(DRIVER);
+        QString path = Settings::getUserPath() + "/commanderWars.db";
+        if (Settings::getUserPath().isEmpty())
+        {
+            path = QApplication::applicationDirPath() + "/commanderWars.db";
+        }
+        m_serverData.setDatabaseName(path);
+        if (!m_serverData.open())
+        {
+            CONSOLE_PRINT("Unable to open player error: " + m_serverData.lastError().text(), Console::eERROR);
+            CONSOLE_PRINT("Unable to open player native error: " + m_serverData.lastError().nativeErrorCode(), Console::eERROR);
+            dataBaseLaunched = false;
+        }
+//        QSqlQuery query = m_serverData.exec("CREATE TABLE people (id INTEGER PRIMARY KEY, name TEXT)");
+//        if (!query.isActive())
+//        {
+//            qWarning() << "ERROR: " << query.lastError().text();
+//        }
+//        query = m_serverData.exec("INSERT INTO people(name) VALUES('Eddie Guerrero')");
+//        if(!query.isActive())
+//        {
+//            qWarning() << "ERROR: " << query.lastError().text();
+//        }
+        // QSqlQuery query;
+        // query.prepare("SELECT name FROM people WHERE id = ?");
+        // query.addBindValue(mInputText->text().toInt());
+        // if(!query.exec()) qWarning() << "ERROR: " << query.lastError().text();
+        // if(query.first()) mOutputText->setText(query.value(0).toString());
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to detect sql driver. Server won't be started.", Console::eERROR);
+        dataBaseLaunched = false;
+    }
+    if (dataBaseLaunched)
+    {
+        emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort());
+        emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort());
+    }
 }
 
 MainServer::~MainServer()

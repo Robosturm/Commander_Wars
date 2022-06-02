@@ -27,6 +27,7 @@
 #include "resource_management/achievementmanager.h"
 #include "resource_management/shoploader.h"
 #include "resource_management/movementplanneraddinmanager.h"
+#include "resource_management/uimanager.h"
 #include "wiki/wikidatabase.h"
 
 #include "objects/loadingscreen.h"
@@ -114,10 +115,12 @@ void WorkerThread::start()
     ShopLoader* pShopLoader = ShopLoader::getInstance();
     pShopLoader->loadAll();
     pLoadingScreen->setProgress(tr("Loading Movement Planner addins..."), Mainapp::SCRIPT_PROCESS + 24);
-    MovementPlannerAddInManager::getInstance()->loadAll();;
+    MovementPlannerAddInManager::getInstance()->loadAll();
+    pLoadingScreen->setProgress(tr("Loading Ui scripts..."), Mainapp::SCRIPT_PROCESS + 26);
+    UiManager::getInstance()->loadAll();
 
     Userdata::getInstance()->changeUser();
-    pLoadingScreen->setProgress(tr("Loading Achievements..."), Mainapp::SCRIPT_PROCESS + 26);
+    pLoadingScreen->setProgress(tr("Loading Achievements..."), Mainapp::SCRIPT_PROCESS + 28);
     // achievements should be loaded last
     AchievementManager* pAchievementManager = AchievementManager::getInstance();
     pAchievementManager->loadAll();

@@ -46,6 +46,7 @@ public:
         Userdata,
         Achievementmanager,
         MovementPlannerAddInManager,
+        UiManager,
         ShopLoader,
         Sound,
         LoadingScripts,

@@ -40,6 +40,14 @@ public slots:
      * @return
      */
     QStringList getUnitsSorted();
+    /**
+     * @brief getCount
+     * @return
+     */
+    qint32 getUnitCount()
+    {
+        return m_loadedRessources.size();
+    }
 protected:
     friend RessourceManagement<UnitSpriteManager>;
     UnitSpriteManager();

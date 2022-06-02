@@ -129,8 +129,8 @@ private:
     /**
       * Nodename: Icon
       * supported attributes are:
-      * mandatory: x, y, size, startValue
-     * optional: id
+      * mandatory: x, y, size, sprite
+      * optional: id, player
       */
     bool createIcon(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
@@ -198,6 +198,7 @@ private:
     float getFloatValue(QString line, QString objectId, qint32 loopIdx, float defaultValue = 0.0f);
     bool getBoolValue(QString line, QString objectId, qint32 loopIdx, bool defaultValue = false);
     QString getStringValue(QString line, QString objectId, qint32 loopIdx);
+    Player* getPlayerValue(QString line, QString objectId, qint32 loopIdx);
     QStringList getStringListValue(QString line, QString objectId, qint32 loopIdx);
     oxygine::TextStyle getStyle(QString styleName, QColor fontColor);
     QString getId(QString attribute);

@@ -7,6 +7,7 @@
 #include "resource_management/ressourcemanagement.h"
 #include "wiki/wikipage.h"
 
+class Player;
 class GameMap;
 class WikiDatabase;
 using spWikiDatabase = oxygine::intrusive_ptr<WikiDatabase>;
@@ -84,7 +85,7 @@ public:
      * @param file
      * @return
      */
-    oxygine::spSprite getIcon(GameMap* pMap, QString file, qint32 size);
+    oxygine::spSprite getIcon(GameMap* pMap, QString file, qint32 size, Player* pIconPlayer = nullptr);
 
 private:
     friend RessourceManagement<WikiDatabase>;

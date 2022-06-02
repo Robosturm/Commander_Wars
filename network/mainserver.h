@@ -2,7 +2,8 @@
 #define MAINSERVER_H
 
 #include <QObject>
-#include "qprocess.h"
+#include <QSqlDatabase>
+#include <QProcess>
 
 #include "network/tcpserver.h"
 #include "network/tcpclient.h"
@@ -220,6 +221,10 @@ private:
      * @brief m_freeAddresses addresses of slaves that have been used and are now free again
      */
     QVector<SlaveAddress> m_freeAddresses;
+    /**
+     * @brief m_serverData
+     */
+    QSqlDatabase m_serverData;
 };
 
 #endif // MAINSERVER_H

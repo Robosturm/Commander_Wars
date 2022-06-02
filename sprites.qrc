@@ -4758,5 +4758,7 @@
         <file>resources/images/game/battlesprites/background/back_wastestreet+mountain.png</file>
         <file>resources/images/game/battlesprites/background/back_wastestreet+sea.png</file>
         <file>resources/images/game/battlesprites/background/back_wastestreet+town.png</file>
+        <file>resources/ui/viewMapStats.js</file>
+        <file>resources/ui/viewMapStats.xml</file>
     </qresource>
 </RCC>

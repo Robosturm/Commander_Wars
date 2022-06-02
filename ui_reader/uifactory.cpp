@@ -75,7 +75,7 @@ static const char* const attrMoveInSize = "moveInSize";
 static const char* const attrItems = "items";
 static const char* const attrSpriteType = "spriteType";
 static const char* const attrSpriteSize = "spriteSize";
-
+static const char* const attrPlayer = "player";
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -275,8 +275,8 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx);
         qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx);
         qint32 height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx);
-        QString text = translate(getAttribute(childs, attrText));
-        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString text = translate(getStringValue(getAttribute(childs, attrText), id, loopIdx));
+        QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx));
         QString fontColor = getStringValue(getAttribute(childs, attrFontColor), id, loopIdx);
         if (fontColor.isEmpty())
         {
@@ -642,7 +642,7 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
 bool UiFactory::createIcon(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*, qint32 loopIdx)
 {
     auto childs = element.childNodes();
-    bool success = checkElements(childs, {attrX, attrY, attrSize, attrStartValue});
+    bool success = checkElements(childs, {attrX, attrY, attrSize, attrSprite});
     if (success)
     {
         QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx));
@@ -650,9 +650,10 @@ bool UiFactory::createIcon(oxygine::spActor parent, QDomElement element, oxygine
         qint32 y = getIntValue(getAttribute(childs,attrY), id, loopIdx);
         qint32 size = getIntValue(getAttribute(childs,attrSize), id, loopIdx);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, true);
-        QString icon = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx);
+        QString icon = getStringValue(getAttribute(childs, attrSprite), id, loopIdx);
         WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-        oxygine::spSprite pIcon = pWikiDatabase->getIcon(nullptr, icon, size);
+        Player* pPlayer = getPlayerValue(getAttribute(childs, attrPlayer), id, loopIdx);;
+        oxygine::spSprite pIcon = pWikiDatabase->getIcon(nullptr, icon, size, pPlayer);
         pIcon->setPosition(x, y);
         parent->addChild(pIcon);
         pIcon->setEnabled(enabled);
@@ -1100,6 +1101,27 @@ QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx
     return value;
 }
 
+Player* UiFactory::getPlayerValue(QString line, QString objectId, qint32 loopIdx)
+{
+    Player* value = nullptr;
+    if (!line.isEmpty())
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        line = "var objectId = \"" + objectId + "\";" +
+               "var loopIdx = " + QString::number(loopIdx) + ";" + line;
+        QJSValue erg = pInterpreter->evaluate(line);
+        if (erg.isError())
+        {
+            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+        }
+        else
+        {
+            value = erg.toVariant().value<Player*>();
+        }
+    }
+    return value;
+}
+
 QStringList UiFactory::getStringListValue(QString line, QString objectId, qint32 loopIdx)
 {
     QStringList value;
@@ -1148,10 +1170,17 @@ QString UiFactory::getId(QString attribute)
 
 QString UiFactory::translate(QString line)
 {
-    line = line.replace("QT_TRANSLATE_NOOP(\"GAME\", \"", "");
-    line = line.replace("QT_TRANSLATE_NOOP(\"GAME\",\"", "");
-    line = line.trimmed();
-    line.remove(line.length() - 2, 2);
+    if (line.startsWith("QT_TRANSLATE_NOOP"))
+    {
+        line = line.replace("QT_TRANSLATE_NOOP(\"GAME\", \"", "");
+        line = line.replace("QT_TRANSLATE_NOOP(\"GAME\",\"", "");
+        line = line.trimmed();
+        line.remove(line.length() - 2, 2);
+    }
+    else
+    {
+        line = line.trimmed();
+    }
     return Mainapp::qsTr(line);
 }
 

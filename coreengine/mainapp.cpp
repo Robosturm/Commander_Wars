@@ -1,11 +1,10 @@
-#include "qfile.h"
-#include "qguiapplication.h"
-#include "qscreen.h"
-#include "qdir.h"
-#include "qmessagebox.h"
-#include "qthread.h"
-#include "qresource.h"
-
+#include <QFile>
+#include <QGuiapplication>
+#include <QScreen>
+#include <QDir>
+#include <QMessagebox>
+#include <QThread>
+#include <QResource>
 #include <QApplication>
 #include <QGuiApplication>
 #include <QClipboard>
@@ -41,6 +40,7 @@
 #include "resource_management/movementtablemanager.h"
 #include "resource_management/weaponmanager.h"
 #include "resource_management/movementplanneraddinmanager.h"
+#include "resource_management/uimanager.h"
 
 #include "wiki/wikidatabase.h"
 
@@ -287,6 +287,16 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             }
             MovementPlannerAddInManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading Movement planner addin Textures ..."), step  * stepProgress);
+            break;
+        }
+        case UiManager:
+        {
+            if (!m_noUi)
+            {
+                update();
+            }
+            UiManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Ui Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::ShopLoader:

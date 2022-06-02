@@ -54,6 +54,7 @@ find_package(Qt6 COMPONENTS Network REQUIRED)
 find_package(Qt6 COMPONENTS Gui REQUIRED)
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt6 COMPONENTS Xml REQUIRED)
+find_package(Qt6 COMPONENTS Sql REQUIRED)
 find_package(Qt6 COMPONENTS OpenGL REQUIRED)
 find_package(Doxygen OPTIONAL_COMPONENTS mscgen dia dot)
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
@@ -311,6 +312,7 @@ set(${PROJECT_NAME}_SRCS
     objects/dialogs/editor/dialogmodifyterrain.cpp objects/dialogs/editor/dialogmodifyterrain.h
     objects/dialogs/editor/dialograndommap.cpp objects/dialogs/editor/dialograndommap.h
     objects/dialogs/editor/mapeditdialog.cpp objects/dialogs/editor/mapeditdialog.h
+    objects/dialogs/editor/dialogviewmapstats.h objects/dialogs/editor/dialogviewmapstats.cpp
     # objects dialogs rules
     objects/dialogs/rules/actionlistdialog.cpp objects/dialogs/rules/actionlistdialog.h
     objects/dialogs/rules/buildlistdialog.cpp objects/dialogs/rules/buildlistdialog.h
@@ -367,6 +369,7 @@ set(${PROJECT_NAME}_SRCS
     resource_management/achievementmanager.cpp resource_management/achievementmanager.h
     resource_management/shoploader.cpp resource_management/shoploader.h
     resource_management/movementplanneraddinmanager.h resource_management/movementplanneraddinmanager.cpp
+    resource_management/uimanager.h resource_management/uimanager.cpp
     resource_management/ressourcemanagement.h
 
     # core engine
@@ -693,6 +696,7 @@ set(QT_LIBRARIES
     Qt6::Network
     Qt6::Widgets
     Qt6::Xml
+    Qt6::Sql
     Qt6::OpenGL
     )
 
@@ -833,6 +837,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
+        ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
         ${ADDR_2_LINE}
     )
@@ -852,6 +857,7 @@ set(${PROJECT_NAME}_INSTALL_QT_LIBS
     ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
+    ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
     ${ADDR_2_LINE}
 )

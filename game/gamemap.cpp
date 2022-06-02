@@ -384,7 +384,7 @@ spTerrain GameMap::getSpTerrain(qint32 x, qint32 y)
     }
 }
 
-Terrain* GameMap::getTerrain(qint32 x, qint32 y)
+Terrain* GameMap::getTerrain(qint32 x, qint32 y) const
 {
     if (onMap(x, y))
     {
@@ -933,7 +933,7 @@ qint32 GameMap::getMapHeight() const
     return m_fields.size();
 }
 
-qint32 GameMap::getBuildingCount(const QString & buildingID)
+qint32 GameMap::getBuildingCount(const QString & buildingID) const
 {
     qint32 ret = 0;
     qint32 width = getMapWidth();
@@ -950,6 +950,59 @@ qint32 GameMap::getBuildingCount(const QString & buildingID)
                     if (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y)
                     {
                         ret++;
+                    }
+                }
+            }
+        }
+    }
+    return ret;
+}
+
+qint32 GameMap::getTerrainCount(const QString & terrainId) const
+{
+    qint32 ret = 0;
+    qint32 width = getMapWidth();
+    qint32 heigth = getMapHeight();
+    if (terrainId.isEmpty())
+    {
+        ret = width * heigth;
+    }
+    else
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            for (qint32 y = 0; y < heigth; y++)
+            {
+                if (getTerrain(x, y)->getID() == terrainId)
+                {
+                    ret++;
+                }
+            }
+        }
+    }
+    return ret;
+}
+
+qint32 GameMap::getPlayerBuildingCount(const QString & buildingID, Player* pPlayer) const
+{
+    qint32 ret = 0;
+    qint32 width = getMapWidth();
+    qint32 heigth = getMapHeight();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            Building* pBuilding = getTerrain(x, y)->getBuilding();
+            if (pBuilding != nullptr)
+            {
+                if (pBuilding->getOwner() == pPlayer)
+                {
+                    if (buildingID.isEmpty() || pBuilding->getBuildingID() == buildingID)
+                    {
+                        if (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y)
+                        {
+                            ret++;
+                        }
                     }
                 }
             }
@@ -1013,7 +1066,7 @@ void GameMap::getField(qint32& x, qint32& y, GameEnums::Directions direction)
     }
 }
 
-bool GameMap::onMap(qint32 x, qint32 y)
+bool GameMap::onMap(qint32 x, qint32 y) const
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();

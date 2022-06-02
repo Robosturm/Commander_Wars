@@ -483,11 +483,24 @@ public slots:
      */
     void showMovementPlanner();
     /**
+     * @brief getTerrainCount
+     * @param terrainId
+     * @return
+     */
+    qint32 getTerrainCount(const QString & terrainId) const;
+    /**
      * @brief getBuildingCount
      * @param buildingID
      * @return
      */
-    qint32 getBuildingCount(const QString & buildingID);
+    qint32 getBuildingCount(const QString & buildingID) const;
+    /**
+     * @brief getPlayerBuildingCount
+     * @param buildingID
+     * @param pPlayer
+     * @return
+     */
+    qint32 getPlayerBuildingCount(const QString & buildingID, Player* pPlayer) const;
     /**
      * @brief getMapWidth
      * @return width of the map
@@ -570,7 +583,7 @@ public slots:
      * @param y
      * @return true if it's still on the map
      */
-    bool onMap(qint32 x, qint32 y);
+    bool onMap(qint32 x, qint32 y) const;
     /**
      * @brief centerMap centers the view point to the given location
      * @param x
@@ -598,8 +611,7 @@ public slots:
      * @param y
      * @return the real pointer to the given terrain
      */
-    Terrain* getTerrain(qint32 x, qint32 y);
-
+    Terrain* getTerrain(qint32 x, qint32 y) const;
     /**
      * @brief canBePlaced
      * @param terrainID the terrain id you want to place
