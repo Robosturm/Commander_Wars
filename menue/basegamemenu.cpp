@@ -59,7 +59,7 @@ BaseGamemenu::BaseGamemenu(qint32 width, qint32 heigth, QString map, bool savega
 
 BaseGamemenu::~BaseGamemenu()
 {
-    CONSOLE_PRINT("Deleting In Game Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Deleting BaseGamemenu", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     QCursor cursor = pApp->cursor();
     cursor.setShape(Qt::CursorShape::ArrowCursor);

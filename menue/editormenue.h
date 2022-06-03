@@ -57,6 +57,9 @@ signals:
     void sigOnMapClickedRight();
     void sigResizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom);
 public slots:
+    /**
+     * @brief focusEditor
+     */
     void focusEditor();
     /**
      * @brief viewMapStats

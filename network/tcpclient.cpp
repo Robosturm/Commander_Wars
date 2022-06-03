@@ -4,9 +4,6 @@
 #include "network/txtask.h"
 #include "network/tcpclient.h"
 
-#include "coreengine/mainapp.h"
-
-
 TCPClient::TCPClient(QObject* pParent)
     : NetworkInterface(pParent),
       m_pRXTask(nullptr),

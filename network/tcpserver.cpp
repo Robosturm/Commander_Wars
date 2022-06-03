@@ -1,8 +1,6 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 
-#include "coreengine/mainapp.h"
-
 #include "network/tcpserver.h"
 
 TCPServer::TCPServer(QObject* pParent)

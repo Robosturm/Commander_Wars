@@ -65,6 +65,9 @@ signals:
     void sigShowGraph(VictoryMenue::GraphModes mode);
     void sigFinishCurrentGraph();
 public slots:
+    /**
+     * @brief exitMenue
+     */
     void exitMenue();
     /**
      * @brief showGraph

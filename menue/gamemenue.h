@@ -19,6 +19,7 @@
 #include "game/ui/humanquickbuttons.h"
 #include "game/actionperformer.h"
 
+class WikiView;
 class GameMenue;
 using spGameMenue = oxygine::intrusive_ptr<GameMenue>;
 
@@ -115,6 +116,7 @@ signals:
     void sigShowExitGame();
     void sigShowSurrenderGame();
     void sigNicknameUnit(qint32 x, qint32 y, QString name);
+    void sigVictory(qint32 team);
 public slots:
     /**
      * @brief updatePlayerinfo
@@ -259,7 +261,7 @@ public slots:
     /**
      * @brief showWiki
      */
-    void showWiki();
+    WikiView* showWiki();
     /**
      * @brief showDamageCalculator
      */

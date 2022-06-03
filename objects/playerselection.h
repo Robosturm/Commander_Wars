@@ -78,8 +78,6 @@ public:
     void setIsServerGame(bool isServerGame);
     bool getIsCampaign();
     bool getIsArmyCustomizationAllowed();
-
-    GameMap *getMap() const;
     void setMap(GameMap *newPMap);
 
 signals:
@@ -107,8 +105,6 @@ public slots:
      * @param eAiType
      */
     void selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType);
-
-public slots:
     // slots for changing player data
     void allPlayerIncomeChanged(float value);
     void playerIncomeChanged(float value, qint32 playerIdx);
@@ -129,6 +125,7 @@ public slots:
     void slotChangeAllBuildList(qint32, QStringList buildList);
     void slotChangePlayerBuildList(qint32 player, QStringList buildList);
     void selectAI(qint32 player);
+    GameMap *getMap() const;
 
     /**
      * @brief showSelectCOPerks

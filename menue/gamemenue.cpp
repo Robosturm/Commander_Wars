@@ -152,6 +152,7 @@ GameMenue::GameMenue(spGameMap pMap)
 
 GameMenue::~GameMenue()
 {
+    CONSOLE_PRINT("Deleting GameMenue", Console::eDEBUG);
     exitMovementPlanner();
 }
 
@@ -162,6 +163,11 @@ IngameInfoBar* GameMenue::getGameInfoBar()
 
 void GameMenue::onEnter()
 {
+    if (m_pMap.get() != nullptr &&
+        m_pMap->getGameScript() != nullptr)
+    {
+        m_pMap->getGameScript()->onGameLoaded(this);
+    }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString object = "Init";
     QString func = "gameMenu";
@@ -171,12 +177,7 @@ void GameMenue::onEnter()
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
-    
-    if (m_pMap.get() != nullptr &&
-        m_pMap->getGameScript() != nullptr)
-    {
-        m_pMap->getGameScript()->onGameLoaded(this);
-    }
+
 }
 
 void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -682,6 +683,8 @@ void GameMenue::loadGameMenue()
     connect(&m_slaveDespawnTimer, &QTimer::timeout, this, &GameMenue::despawnSlave, Qt::QueuedConnection);
     connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
     connectMap();
+
+    connect(this, &GameMenue::sigVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigShowExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigShowSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
@@ -1493,7 +1496,7 @@ void GameMenue::exitGame()
     {
         GameAnimationFactory::finishAllAnimations();
     }
-    victory(-1);
+    emit sigVictory(-1);
 }
 
 void GameMenue::startGame()
@@ -1681,7 +1684,7 @@ void GameMenue::showExitGame()
     addChild(pExit);
 }
 
-void GameMenue::showWiki()
+WikiView* GameMenue::showWiki()
 {
     CONSOLE_PRINT("showWiki()", Console::eDEBUG);
     m_Focused = false;
@@ -1694,6 +1697,7 @@ void GameMenue::showWiki()
         m_Focused = true;
     });
     addChild(pBox);
+    return pView.get();
 }
 
 void GameMenue::showSurrenderGame()

@@ -951,7 +951,6 @@ void Terrain::removeBuilding()
                     }
                 }
             }
-            m_Building = nullptr;
         }
         else
         {
@@ -962,6 +961,7 @@ void Terrain::removeBuilding()
                 pTerrain->removeBuilding();
             }
         }
+        m_Building = nullptr;
     }
 }
 
