@@ -16,6 +16,8 @@
 #include "coreengine/workerthread.h"
 #include "coreengine/globalutils.h"
 
+#include "ui_reader/uifactory.h"
+
 #include "game/gamerecording/gamemapimagesaver.h"
 
 #include "objects/loadingscreen.h"
@@ -100,6 +102,7 @@ void Mainapp::shutdown()
     ObjectManager::getInstance()->free();
     ShopLoader::getInstance()->free();
     GameWindow::shutdown();
+    UiFactory::shutdown();
 }
 
 bool Mainapp::isWorker()

@@ -30,6 +30,7 @@ public:
         }
         return *m_pUiFactory;
     }
+    static void shutdown();
     /**
      * @brief createUi
      * @param uiXmlFile

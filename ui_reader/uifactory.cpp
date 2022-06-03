@@ -115,6 +115,12 @@ QVector<UiFactory::FactoryItem> & UiFactory::getFactoryItems()
     return m_factoryItems;
 }
 
+void UiFactory::shutdown()
+{
+    delete m_pUiFactory;
+    m_pUiFactory = nullptr;
+}
+
 void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
 {
     if (m_dropDownPlayer.get() == nullptr)

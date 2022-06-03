@@ -12,14 +12,13 @@
 #include "coreengine/fileserializable.h"
 
 #include "game/GameEnums.h"
+#include "game/co.h"
 
 #include "gameinput/basegameinputif.h"
 
-#include "co.h"
-
 class GameMap;
 class Player;
-typedef oxygine::intrusive_ptr<Player> spPlayer;
+using spPlayer = oxygine::intrusive_ptr<Player>;
 
 class Player : public QObject, public oxygine::Actor, public FileSerializable
 {

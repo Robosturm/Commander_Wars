@@ -65,14 +65,15 @@ int main(qint32 argc, char* argv[])
     // give os time to save the settings
     QThread::currentThread()->msleep(350);
     CONSOLE_PRINT("Checking for memory leak during runtime", Console::eDEBUG);
-    static constexpr qint32 finalObjects = 0;
-    if (oxygine::ref_counter::getAlloctedObjectCount() != finalObjects)
+    static constexpr qint32 finalObjects = 2;
+    static constexpr qint32 finalJsObjects = 0;
+    if (oxygine::ref_counter::getAlloctedObjectCount() > finalObjects)
     {
-        oxygine::handleErrorPolicy(oxygine::ep_show_error, "c++ memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()));
+        oxygine::handleErrorPolicy(oxygine::ep_show_warning, "c++ memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()));
     }
-    else if (oxygine::ref_counter::getAlloctedJsObjectCount() != finalObjects)
+    else if (oxygine::ref_counter::getAlloctedJsObjectCount() > finalJsObjects)
     {
-        oxygine::handleErrorPolicy(oxygine::ep_show_error, "js memory leak detected. This happens due to not deleted qml-vectors in a mod. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()));
+        oxygine::handleErrorPolicy(oxygine::ep_show_warning, "js memory leak detected. This happens due to not deleted qml-vectors in a mod. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()));
     }
     //end
     if (!slave)
