@@ -57,9 +57,12 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-           emit m_HScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / getContentHeigth());
-           emit m_VScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.x / getContentWidth());
-           // pTouchEvent->stopPropagation();
+            emit m_HScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / getContentHeigth());
+            emit m_VScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.x / getContentWidth());
+            if (m_stopMouseWheel)
+            {
+                pTouchEvent->stopPropagation();
+            }
         }
     });
     m_hideTimer.setSingleShot(true);
@@ -183,6 +186,16 @@ void Panel::hideChildItems(oxygine::spActor parent)
         }
         hideChildItems(child);
     }
+}
+
+bool Panel::getStopMouseWheel() const
+{
+    return m_stopMouseWheel;
+}
+
+void Panel::setStopMouseWheel(bool newStopMouseWheel)
+{
+    m_stopMouseWheel = newStopMouseWheel;
 }
 
 void Panel::setContentHeigth(qint32 heigth)

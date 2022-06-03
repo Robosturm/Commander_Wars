@@ -38,6 +38,9 @@ public:
     }
     bool getSubComponent() const;
     void setSubComponent(bool subComponent);
+    bool getStopMouseWheel() const;
+    void setStopMouseWheel(bool newStopMouseWheel);
+
 signals:
 
 public slots:
@@ -57,6 +60,7 @@ private:
     spH_Scrollbar m_HScrollbar;
     spV_Scrollbar m_VScrollbar;
     QTimer m_hideTimer;
+    bool m_stopMouseWheel{false};
 };
 
 #endif // PANEL_H
