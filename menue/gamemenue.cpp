@@ -1076,7 +1076,7 @@ void GameMenue::victory(qint32 team)
         
         bool exit = true;
         bool humanWin = false;
-        // create victorysd
+        // create victorys
         if (team >= 0)
         {
             for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -1096,17 +1096,17 @@ void GameMenue::victory(qint32 team)
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("victory.wav");
             }
-            m_pMap->getGameScript()->victory(team);
-            if (GameAnimationFactory::getAnimationCount() == 0)
-            {
-                exit = true;
-            }
-            else
-            {
-                exit = false;
-            }
+            m_pMap->getGameScript()->victory(team);            
         }
-        if (exit == true && !m_isReplay)
+        if (GameAnimationFactory::getAnimationCount() == 0)
+        {
+            exit = true;
+        }
+        else
+        {
+            exit = false;
+        }
+        if (exit && !m_isReplay)
         {
             if (m_pNetworkInterface.get() != nullptr)
             {
