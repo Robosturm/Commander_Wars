@@ -700,7 +700,6 @@ set(QT_LIBRARIES
     Qt6::Xml
     Qt6::Sql
     Qt6::OpenGL
-    openssl
     )
 
 if (AUDIOSUPPORT)
