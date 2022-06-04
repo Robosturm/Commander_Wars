@@ -53,6 +53,7 @@ jobs:
           modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
+          tools: 'tools_openssl'
           
     - name: Install OS Dependencies 1
       run: ${{matrix.installerCommands1}}

@@ -45,7 +45,7 @@ void TCPServer::connectTCP(QString adress, quint16 port, bool secure)
         connect(this, &TCPServer::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
         connect(this, &TCPServer::sigContinueListening, this, &TCPServer::continueListening, Qt::QueuedConnection);
         connect(this, &TCPServer::sigPauseListening, this, &TCPServer::pauseListening, Qt::QueuedConnection);
-        CONSOLE_PRINT("TCP Server is running on adress " + adress + " and port " + QString::number(port) + " and the connection is " + m_secure ? "secure" : "unsecure", Console::eLogLevels::eDEBUG);
+        CONSOLE_PRINT("TCP Server is running on adress " + adress + " and port " + QString::number(port) + " and the connection is " + (m_secure ? "secure" : "unsecure"), Console::eLogLevels::eDEBUG);
     }
     else
     {
@@ -120,9 +120,9 @@ void TCPServer::onConnect()
             if (m_secure)
             {
                 auto* socket = dynamic_cast<QSslSocket*>(nextSocket);
+                quint64 currentId = m_idCounter;
                 if (socket != nullptr)
                 {
-                    quint64 currentId = m_idCounter;
                     connect(socket, &QSslSocket::encrypted, this, [this, currentId]()
                     {
                         ready(currentId);
