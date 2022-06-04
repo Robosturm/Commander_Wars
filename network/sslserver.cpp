@@ -1,13 +1,18 @@
 #include <QSslSocket>
 
 #include "network/sslserver.h"
-
-#include "coreengine/console.h"
+#include "network/rsakeygenerator.h"
 
 SslServer::SslServer(QObject *parent)
     : QTcpServer{parent}
 {
-    // todo add key
+
+    bool success;
+    auto data = RsaKeyGenerator::generatePrivateKey(success);
+    if (success)
+    {
+        m_key = QSslKey(data, QSsl::KeyAlgorithm::Rsa);
+    }
 }
 
 void SslServer::incomingConnection(qintptr socketDescriptor)

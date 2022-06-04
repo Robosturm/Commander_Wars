@@ -4,6 +4,7 @@
 #include "network/rxtask.h"
 #include "network/txtask.h"
 #include "network/tcpclient.h"
+#include "network/rsakeygenerator.h"
 
 TCPClient::TCPClient(QObject* pParent)
     : NetworkInterface(pParent),
@@ -54,8 +55,14 @@ void TCPClient::connectTCP(QString adress, quint16 port, bool secure)
         connect(pSocket.get(), &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
         connect(pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
         connect(pSocket.get(), &QAbstractSocket::stateChanged, this, &TCPClient::displayStateChange, Qt::QueuedConnection);
-        QSslKey key;
-        pSocket->setPrivateKey(key);
+
+        bool success;
+        auto data = RsaKeyGenerator::generatePrivateKey(success);
+        if (success)
+        {
+            QSslKey key(data, QSsl::KeyAlgorithm::Rsa);
+            pSocket->setPrivateKey(key);
+        }
         pSocket->connectToHostEncrypted(adress, port);
         m_pSocket = pSocket;
     }

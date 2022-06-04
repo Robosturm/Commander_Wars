@@ -4,6 +4,7 @@ project (Commander_Wars LANGUAGES CXX)
 # Information for building commander wars on other platforms
 # 1. make sure the CMAKE_PREFIX_PATH targets to the correct qt installation
 # 2. make sure the LIBRARY_PATH targets the library folder of qt e.g. LD_LIBRARY_PATH=$HOME/Qt/5.15.2/gcc_64/lib
+# 3. make sure that -DOPENSSL_ROOT_DIR= targets your local openssl installation e.g. -DOPENSSL_ROOT_DIR=D:/Qt/Tools/OpenSSL
 
 # Special Information for Android
 # ANDROID_NATIVE_API_LEVEL needs to be 27
@@ -20,6 +21,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
+option(OPENSSL_USE_STATIC_LIBS "you may disable linking static against openssl but it's not recommended. The installation process won't deploy the libs." TRUE)
+option(OPENSSL_MSVC_STATIC_RT "you may disable linking static against openssl but it's not recommended. The installation process won't deploy the libs." TRUE)
 option(AUDIOSUPPORT "enables audio support for the game and compiles music/sound into the exe" ON)
 option(GRAPHICSUPPORT "enables sprites for the game and compiles them into the exe" ON)
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
@@ -57,7 +60,6 @@ find_package(Qt6 COMPONENTS Xml REQUIRED)
 find_package(Qt6 COMPONENTS Sql REQUIRED)
 find_package(Qt6 COMPONENTS OpenGL REQUIRED)
 find_package(Doxygen OPTIONAL_COMPONENTS mscgen dia dot)
-# find_package(OpenSSL REQUIRED)
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
 endif()
@@ -73,6 +75,14 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
 endif()
+
+###################################################################################
+# OpenSsl
+###################################################################################
+find_package(OpenSSL REQUIRED)
+message (STATUS "OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
+message (STATUS "OpenSsL All-Libs:" ${OPENSSL_LIBRARIES})
+include_directories(${OPENSSL_INCLUDE_DIR})
 
 ###################################################################################
 # Set build dependend defines
@@ -405,6 +415,7 @@ set(${PROJECT_NAME}_SRCS
     network/mainserver.cpp network/mainserver.h
     network/networkgame.cpp network/networkgame.h
     network/sslserver.h network/sslserver.cpp
+    network/rsakeygenerator.h network/rsakeygenerator.cpp
     network/JsonKeys.h
 
     # game
@@ -700,7 +711,8 @@ set(QT_LIBRARIES
     Qt6::Xml
     Qt6::Sql
     Qt6::OpenGL
-    openssl
+    OpenSSL::SSL
+    OpenSSL::Crypto
     )
 
 if (AUDIOSUPPORT)
@@ -791,7 +803,7 @@ endif()
 # get qt dir
 get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
 get_filename_component(QT_BIN_DIR "${_qmake_executable}" DIRECTORY)
-message(${QT_BIN_DIR})
+message("Qt-Bin-Dir: " ${QT_BIN_DIR})
 
 # those libs are not the same for each platform and need to be selected based on the os
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
@@ -804,6 +816,8 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${QT_BIN_DIR}/libstdc++-6.dll
         ${QT_BIN_DIR}/libwinpthread-1.dll
         ${QT_BIN_DIR}/libgcc_s_seh-1.dll
+        ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1-x64.dll
+        ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1.dll
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/qwindows${LibNameEnd}

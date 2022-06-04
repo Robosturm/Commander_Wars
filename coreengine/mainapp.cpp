@@ -58,8 +58,6 @@ bool Mainapp::m_slave{false};
 QMutex Mainapp::m_crashMutex;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
 
-// #include "openssl/rsa.h"
-
 Mainapp::Mainapp()
 {
     setObjectName("Mainapp");
@@ -77,7 +75,6 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
     connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
-
 }
 
 void Mainapp::createLineEdit()
