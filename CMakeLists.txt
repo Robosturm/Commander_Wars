@@ -403,6 +403,7 @@ set(${PROJECT_NAME}_SRCS
     network/networkgamedata.cpp network/networkgamedata.h
     network/mainserver.cpp network/mainserver.h
     network/networkgame.cpp network/networkgame.h
+    network/sslserver.h network/sslserver.cpp
     network/JsonKeys.h
 
     # game

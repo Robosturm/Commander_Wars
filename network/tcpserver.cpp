@@ -1,7 +1,8 @@
 #include <QTcpServer>
-#include <QTcpSocket>
+#include <QSslSocket>
 
 #include "network/tcpserver.h"
+#include "network/sslserver.h"
 
 TCPServer::TCPServer(QObject* pParent)
     : NetworkInterface(pParent)
@@ -18,11 +19,19 @@ TCPServer::~TCPServer()
     CONSOLE_PRINT("Server is closed", Console::eLogLevels::eDEBUG);
 }
 
-void TCPServer::connectTCP(QString adress, quint16 port)
+void TCPServer::connectTCP(QString adress, quint16 port, bool secure)
 {
     if (m_pTCPServer.get() == nullptr)
     {
-        m_pTCPServer = std::make_shared<QTcpServer>(this);
+        m_secure = secure;
+        if (m_secure)
+        {
+            m_pTCPServer = std::make_shared<SslServer>(this);
+        }
+        else
+        {
+            m_pTCPServer = std::make_shared<QTcpServer>(this);
+        }
         if (adress.isEmpty())
         {
             m_pTCPServer->listen(QHostAddress::Any, port);
@@ -36,7 +45,7 @@ void TCPServer::connectTCP(QString adress, quint16 port)
         connect(this, &TCPServer::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
         connect(this, &TCPServer::sigContinueListening, this, &TCPServer::continueListening, Qt::QueuedConnection);
         connect(this, &TCPServer::sigPauseListening, this, &TCPServer::pauseListening, Qt::QueuedConnection);
-        CONSOLE_PRINT("TCP Server is running on adress " + adress + " and port " + QString::number(port), Console::eLogLevels::eDEBUG);
+        CONSOLE_PRINT("TCP Server is running on adress " + adress + " and port " + QString::number(port) + " and the connection is " + m_secure ? "secure" : "unsecure", Console::eLogLevels::eDEBUG);
     }
     else
     {
@@ -80,7 +89,7 @@ void TCPServer::onConnect()
 {
     if (m_pTCPServer != nullptr)
     {
-        QTcpSocket* nextSocket = m_pTCPServer->nextPendingConnection();
+        auto* nextSocket = m_pTCPServer->nextPendingConnection();
         if (nextSocket != nullptr)
         {
             connect(nextSocket, &QAbstractSocket::errorOccurred, this, &TCPServer::displayTCPError, Qt::QueuedConnection);
@@ -105,14 +114,42 @@ void TCPServer::onConnect()
             {
                 emit sigDisconnectClient(socket);
             });
-
-            QByteArray data;
-            pTXTask->send(m_idCounter, data, NetworkSerives::ServerSocketInfo, false);
             pClient->setIsServer(true);
             m_pClients.insert(m_idCounter, pClient);
             CONSOLE_PRINT("New Client connection. Socket: " + QString::number(m_idCounter), Console::eLogLevels::eDEBUG);
-            emit sigConnected(m_idCounter);
+            if (m_secure)
+            {
+                auto* socket = dynamic_cast<QSslSocket*>(nextSocket);
+                if (socket != nullptr)
+                {
+                    quint64 currentId = m_idCounter;
+                    connect(socket, &QSslSocket::encrypted, this, [this, currentId]()
+                    {
+                        ready(currentId);
+                    }, Qt::QueuedConnection);
+                    socket->startServerEncryption();
+                }
+                else
+                {
+                    disconnectClient(currentId);
+                }
+            }
+            else
+            {
+                ready(m_idCounter);
+            }
         }
+    }
+}
+
+void TCPServer::ready(quint64 idCounter)
+{
+    auto client = getClient(idCounter);
+    if (client.get())
+    {
+        QByteArray data;
+        client->sig_sendData(idCounter, data, NetworkSerives::ServerSocketInfo, false);
+        emit sigConnected(idCounter);
     }
 }
 

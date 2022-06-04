@@ -28,7 +28,7 @@ public:
 
     virtual void setSocketID(const quint64 &socketID) override;
 public slots:
-    virtual void connectTCP(QString adress, quint16 port) override;
+    virtual void connectTCP(QString adress, quint16 port, bool secure = false) override;
     virtual void disconnectTCP() override;
     virtual QVector<quint64> getConnectedSockets() override;
     virtual void changeThread(quint64 socketID, QThread* pThread) override;

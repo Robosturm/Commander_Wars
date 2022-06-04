@@ -1,4 +1,5 @@
-#include <QTcpSocket>
+#include <QSslSocket>
+#include <QSslKey>
 
 #include "network/rxtask.h"
 #include "network/txtask.h"
@@ -36,17 +37,31 @@ TCPClient::~TCPClient()
     }
 }
 
-void TCPClient::connectTCP(QString adress, quint16 port)
+void TCPClient::connectTCP(QString adress, quint16 port, bool secure)
 {
     // Launch Socket
-    m_pSocket = std::make_shared<QTcpSocket>(this);
-    connect(m_pSocket.get(), &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
-    connect(m_pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
-    connect(m_pSocket.get(), &QAbstractSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
-    connect(m_pSocket.get(), &QAbstractSocket::stateChanged, this, &TCPClient::displayStateChange, Qt::QueuedConnection);
-
-    m_pSocket->connectToHost(adress, port);
-
+    if (secure)
+    {
+        auto pSocket = std::make_shared<QSslSocket>(this);
+        pSocket->setPeerVerifyMode(QSslSocket::PeerVerifyMode::VerifyNone);
+        connect(pSocket.get(), &QSslSocket::encrypted, this, &TCPClient::connected, Qt::QueuedConnection);
+        connect(pSocket.get(), &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
+        connect(pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
+        connect(pSocket.get(), &QAbstractSocket::stateChanged, this, &TCPClient::displayStateChange, Qt::QueuedConnection);
+        QSslKey key;
+        pSocket->setPrivateKey(key);
+        pSocket->connectToHostEncrypted(adress, port);
+        m_pSocket = pSocket;
+    }
+    else
+    {
+        m_pSocket = std::make_shared<QTcpSocket>(this);
+        connect(m_pSocket.get(), &QSslSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
+        connect(m_pSocket.get(), &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
+        connect(m_pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
+        connect(m_pSocket.get(), &QAbstractSocket::stateChanged, this, &TCPClient::displayStateChange, Qt::QueuedConnection);
+        m_pSocket->connectToHost(adress, port);
+    }
     // Start RX-Task
     m_pRXTask = spRxTask::create(m_pSocket.get(), 0, this, false);
     connect(m_pSocket.get(), &QTcpSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
@@ -55,7 +70,7 @@ void TCPClient::connectTCP(QString adress, quint16 port)
     m_pTXTask = spTxTask::create(m_pSocket.get(), 0, this, false);
     connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 
-    CONSOLE_PRINT("Client is running and connecting to " + adress + " and port " + QString::number(port), Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client is running and connecting to " + adress + " and port " + QString::number(port) + " and the connection is " + m_secure ? "secure" : "unsecure", Console::eLogLevels::eDEBUG);
 }
 
 void TCPClient::disconnectTCP()
