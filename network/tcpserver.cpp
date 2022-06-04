@@ -21,6 +21,12 @@ TCPServer::~TCPServer()
 
 void TCPServer::connectTCP(QString adress, quint16 port, bool secure)
 {
+    if (QSslSocket::supportsSsl() && secure)
+    {
+        CONSOLE_PRINT("Ssl not supported, aborting connection", Console::eWARNING);
+        return;
+    }
+
     if (m_pTCPServer.get() == nullptr)
     {
         m_secure = secure;

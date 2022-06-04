@@ -39,6 +39,12 @@ TCPClient::~TCPClient()
 
 void TCPClient::connectTCP(QString adress, quint16 port, bool secure)
 {
+    if (QSslSocket::supportsSsl() && secure)
+    {
+        CONSOLE_PRINT("Ssl not supported, aborting connection", Console::eWARNING);
+        return;
+    }
+
     // Launch Socket
     if (secure)
     {

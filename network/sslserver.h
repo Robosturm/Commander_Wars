@@ -11,9 +11,6 @@ class SslServer : public QTcpServer
 public:
     explicit SslServer(QObject *parent = nullptr);
 
-private slots:
-    void sslErrors(const QList<QSslError> &errors);
-
 protected:
     void incomingConnection(qintptr socketDescriptor);
 private:

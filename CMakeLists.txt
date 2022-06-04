@@ -57,6 +57,7 @@ find_package(Qt6 COMPONENTS Xml REQUIRED)
 find_package(Qt6 COMPONENTS Sql REQUIRED)
 find_package(Qt6 COMPONENTS OpenGL REQUIRED)
 find_package(Doxygen OPTIONAL_COMPONENTS mscgen dia dot)
+# find_package(OpenSSL REQUIRED)
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
 endif()
@@ -699,6 +700,7 @@ set(QT_LIBRARIES
     Qt6::Xml
     Qt6::Sql
     Qt6::OpenGL
+    openssl
     )
 
 if (AUDIOSUPPORT)
