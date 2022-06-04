@@ -53,7 +53,7 @@ jobs:
           target: ${{matrix.target}}
           version: ${{env.QT_Version}}
           arch: ${{matrix.COMPILER_VERSION}}
-          modules: 'qtmultimedia qttools'
+          modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
     
