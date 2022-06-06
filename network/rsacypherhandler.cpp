@@ -1,7 +1,6 @@
 #include "network/rsacypherhandler.h"
 
 #include <openssl/bn.h>
-#include <openssl/evp.h>
 #include <openssl/pem.h>
 #include <openssl/rand.h>
 #include<openssl/err.h>
@@ -14,28 +13,12 @@ using BIO_MEM_ptr = std::unique_ptr<BIO, decltype(&::BIO_free)>;
 using EVP_PKEY_ptr = std::unique_ptr<EVP_PKEY, decltype(&::EVP_PKEY_free)>;
 using EVP_PKEY_CTX_ptr = std::unique_ptr<EVP_PKEY_CTX , decltype(&::EVP_PKEY_CTX_free)>;
 
-bool RsaCypherHandler::m_enginesStarted = false;
-
 RsaCypherHandler::RsaCypherHandler()
-    : m_keys(RSA_new(), ::RSA_free)
+    : m_keys(RSA_new(), ::RSA_free),
+      m_rsaEncryptContext(EVP_CIPHER_CTX_new(), ::EVP_CIPHER_CTX_free),
+      m_rsaDecryptContext(EVP_CIPHER_CTX_new(), ::EVP_CIPHER_CTX_free)
 {
     ERR_load_CRYPTO_strings();
-    if (!m_enginesStarted)
-    {
-        ENGINE_load_builtin_engines();
-        m_engine = ENGINE_by_id("dynamic");
-        if (m_engine != nullptr &&
-            ENGINE_set_default_RSA(m_engine) &&
-            ENGINE_set_default_DSA(m_engine) &&
-            ENGINE_set_default_ciphers(m_engine))
-        {
-            m_enginesStarted = true;
-        }
-    }
-    else
-    {
-        m_engine = ENGINE_by_id("dynamic");
-    }
     seedRng();
     generateKeys();
 }
@@ -44,8 +27,6 @@ RsaCypherHandler::~RsaCypherHandler()
 {
     RSA_free(m_privateKey);
     RSA_free(m_publicKey);
-    ENGINE_finish(m_engine);
-    ENGINE_free(m_engine);
 }
 
 void RsaCypherHandler::generateKeys()
@@ -83,7 +64,7 @@ QString RsaCypherHandler::getPublicKey() const
     return QString(QByteArray(publicKeyArray));
 }
 
-void RsaCypherHandler::seedRng()
+void RsaCypherHandler::seedRng() const
 {
     QRandomGenerator rng = QRandomGenerator::securelySeeded();
     constexpr int size = 64;
@@ -100,88 +81,92 @@ bool RsaCypherHandler::getReady() const
     return m_ready;
 }
 
-QByteArray RsaCypherHandler::encryptRSA(QString publicKey, QByteArray &data)
+bool RsaCypherHandler::encryptRSA(const QString & publicKey, const QString & message, QString & encryptedKey, QString & encrpytedMessage, QString & iv)
 {
-    QByteArray buffer;
     QByteArray arrPublicKey = publicKey.toLatin1();
-    size_t inLength = data.length();
-    size_t outLength = 0;
     size_t keyLength = arrPublicKey.length();
-    const unsigned char* inData = reinterpret_cast<const unsigned char*>(data.constData());
     const unsigned char* publicKeyData = reinterpret_cast<const unsigned char*>(arrPublicKey.constData());
     bool success = false;
     BIO_MEM_ptr publicBio(BIO_new(BIO_s_mem()), ::BIO_free);
     if (BIO_write(publicBio.get(), publicKeyData, keyLength) > 0)
     {
-        RSA_ptr publicRsaKey(PEM_read_bio_RSAPublicKey(publicBio.get(), nullptr, nullptr, nullptr), ::RSA_free);
-        EVP_PKEY_ptr key(EVP_PKEY_new(), ::EVP_PKEY_free);
-        if (EVP_PKEY_set1_RSA(key.get(), publicRsaKey.get()) > 0)
+        EVP_PKEY* key = PEM_read_bio_PUBKEY(publicBio.get(), nullptr, nullptr, nullptr);
+        if (key != nullptr)
         {
-            EVP_PKEY_CTX_ptr ctx(EVP_PKEY_CTX_new(key.get(), m_engine), ::EVP_PKEY_CTX_free);
-            if (ctx.get() != nullptr)
+            qint32 blockLength = 0;
+            qint32 encryptedMessageLength = 0;
+            qint32 encryptedKeyLength = 0;
+            const unsigned char* inData = reinterpret_cast<const unsigned char*>(message.constData());
+            qint32 inLength = message.length();
+            unsigned char* internalEncryptedKey = static_cast<unsigned char*>(malloc(EVP_PKEY_size(key)));
+            unsigned char* internalIv = static_cast<unsigned char*>(malloc(EVP_MAX_IV_LENGTH));
+            unsigned char* internalEncryptedMessage = static_cast<unsigned char*>(malloc(inLength + EVP_MAX_IV_LENGTH));
+            if(EVP_SealInit(m_rsaEncryptContext.get(), EVP_aes_256_cbc(), &internalEncryptedKey, &encryptedKeyLength, internalIv, &key, 1) > 0)
             {
-                if (EVP_PKEY_encrypt_init(ctx.get()) > 0 &&
-                    EVP_PKEY_CTX_set_rsa_padding(ctx.get(), RSA_PKCS1_OAEP_PADDING) > 0 &&
-                    EVP_PKEY_encrypt(ctx.get(), nullptr, &outLength, inData, inLength) > 0)
+                if(EVP_SealUpdate(m_rsaEncryptContext.get(), internalEncryptedMessage + encryptedMessageLength, &blockLength, inData, inLength) > 0)
                 {
-                    unsigned char* outData = static_cast<unsigned char*>(OPENSSL_malloc(outLength));
-                    if (outData != nullptr)
+                    encryptedMessageLength += blockLength;
+                    if(!EVP_SealFinal(m_rsaEncryptContext.get(), internalEncryptedMessage + encryptedMessageLength, &blockLength) > 0)
                     {
-                        if (EVP_PKEY_encrypt(ctx.get(), outData, &outLength, inData, inLength) > 0)
-                        {
-                            buffer = QByteArray(reinterpret_cast<char*>(outData), outLength);
-                            OPENSSL_free(outData);
-                            success = true;
-                        }
+                        success = true;
                     }
                 }
             }
+            free(internalEncryptedKey);
+            free(internalIv);
+            free(internalEncryptedMessage);
+            EVP_PKEY_free(key);
         }
     }
     if(!success)
     {
-        char errorMsg[512];
-        ERR_error_string(ERR_get_error(), errorMsg);
-        CONSOLE_PRINT(QString("Could not encyrpt data") + errorMsg, Console::eLogLevels::eWARNING);
+        printLastError();
     }
-    return buffer;
+    return success;
+}
+
+void RsaCypherHandler::printLastError() const
+{
+    char errorMsg[512];
+    ERR_error_string(ERR_get_error(), errorMsg);
+    CONSOLE_PRINT(QString("Could not encyrpt data") + errorMsg, Console::eLogLevels::eWARNING);
 }
 
 QByteArray RsaCypherHandler::decryptRSA(QByteArray &data)
 {
     QByteArray buffer;
-    const unsigned char* inData = reinterpret_cast<const unsigned char*>(data.constData());
-    size_t inLength = data.length();
-    size_t outLength = 0;
-    bool success = false;
-    EVP_PKEY_ptr key(EVP_PKEY_new(), ::EVP_PKEY_free);
-    if (EVP_PKEY_set1_RSA(key.get(), m_privateKey) > 0)
-    {
-        EVP_PKEY_CTX_ptr ctx(EVP_PKEY_CTX_new(key.get(), m_engine), ::EVP_PKEY_CTX_free);
-        if (ctx.get() != nullptr)
-        {
-            if (EVP_PKEY_decrypt_init(ctx.get()) > 0 &&
-                EVP_PKEY_CTX_set_rsa_padding(ctx.get(), RSA_PKCS1_OAEP_PADDING) > 0 &&
-                EVP_PKEY_decrypt(ctx.get(), nullptr, &outLength, inData, inLength) > 0)
-            {
-                unsigned char* outData = static_cast<unsigned char*>(OPENSSL_malloc(outLength));
-                if (outData != nullptr)
-                {
-                    if (EVP_PKEY_decrypt(ctx.get(), outData, &outLength, inData, inLength) > 0)
-                    {
-                        buffer = QByteArray(reinterpret_cast<char*>(outData), outLength);
-                        OPENSSL_free(outData);
-                        success = true;
-                    }
-                }
-            }
-        }
-    }
-    if(!success)
-    {
-        char errorMsg[512];
-        ERR_error_string(ERR_get_error(), errorMsg);
-        CONSOLE_PRINT(QString("Could not decyrpt data") + errorMsg, Console::eLogLevels::eWARNING);
-    }
+//    const unsigned char* inData = reinterpret_cast<const unsigned char*>(data.constData());
+//    size_t inLength = data.length();
+//    size_t outLength = 0;
+//    bool success = false;
+//    EVP_PKEY_ptr key(EVP_PKEY_new(), ::EVP_PKEY_free);
+//    if (EVP_PKEY_set1_RSA(key.get(), m_privateKey) > 0)
+//    {
+//        EVP_PKEY_CTX_ptr ctx(EVP_PKEY_CTX_new(key.get(), m_engine), ::EVP_PKEY_CTX_free);
+//        if (ctx.get() != nullptr)
+//        {
+//            if (EVP_PKEY_decrypt_init(ctx.get()) > 0 &&
+//                EVP_PKEY_CTX_set_rsa_padding(ctx.get(), RSA_PKCS1_OAEP_PADDING) > 0 &&
+//                EVP_PKEY_decrypt(ctx.get(), nullptr, &outLength, inData, inLength) > 0)
+//            {
+//                unsigned char* outData = static_cast<unsigned char*>(OPENSSL_malloc(outLength));
+//                if (outData != nullptr)
+//                {
+//                    if (EVP_PKEY_decrypt(ctx.get(), outData, &outLength, inData, inLength) > 0)
+//                    {
+//                        buffer = QByteArray(reinterpret_cast<char*>(outData), outLength);
+//                        OPENSSL_free(outData);
+//                        success = true;
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    if(!success)
+//    {
+//        char errorMsg[512];
+//        ERR_error_string(ERR_get_error(), errorMsg);
+//        CONSOLE_PRINT(QString("Could not decyrpt data") + errorMsg, Console::eLogLevels::eWARNING);
+//    }
     return buffer;
 }

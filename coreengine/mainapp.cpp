@@ -80,13 +80,16 @@ Mainapp::Mainapp()
 
     RsaCypherHandler one;
     RsaCypherHandler two;
-    QByteArray data("hello");
-    QByteArray encryptedData = one.encryptRSA(two.getPublicKey(), data);
-    QByteArray decryptedData = two.decryptRSA(encryptedData);
-    if (decryptedData == data)
-    {
+    QString data("hello");
+    QString encryptedKey;
+    QString encrpytedMessage;
+    QString iv;
+    one.encryptRSA(two.getPublicKey(), data, encryptedKey, encrpytedMessage, iv);
+    //QByteArray decryptedData = two.decryptRSA(encryptedData);
+//    if (decryptedData == data)
+//    {
 
-    }
+//    }
 }
 
 void Mainapp::createLineEdit()
