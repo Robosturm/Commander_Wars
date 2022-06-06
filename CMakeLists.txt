@@ -47,6 +47,7 @@ message("CFlags: ${CMAKE_C_FLAGS}")
 message("CXX Flags: ${CMAKE_CXX_FLAGS}")
 message("CMake Systemname: ${CMAKE_SYSTEM_NAME}")
 message("CMake Binary dir: ${CMAKE_CURRENT_BINARY_DIR}")
+message("OpenSsL-Dir:" ${OPENSSL_ROOT_DIR})
 
 ###################################################################################
 # Find external libs
@@ -414,8 +415,7 @@ set(${PROJECT_NAME}_SRCS
     network/networkgamedata.cpp network/networkgamedata.h
     network/mainserver.cpp network/mainserver.h
     network/networkgame.cpp network/networkgame.h
-    network/sslserver.h network/sslserver.cpp
-    network/rsakeygenerator.h network/rsakeygenerator.cpp
+    network/rsacypherhandler.h network/rsacypherhandler.cpp
     network/JsonKeys.h
 
     # game

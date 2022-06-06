@@ -22,7 +22,7 @@ public:
 
     spTCPClient getClient(quint64 socketID);
 public slots:
-    virtual void connectTCP(QString adress, quint16 port, bool secure = false) override;
+    virtual void connectTCP(QString adress, quint16 port) override;
     virtual void disconnectTCP() override;
     virtual void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service) override;
     virtual QVector<quint64> getConnectedSockets() override;
@@ -33,13 +33,10 @@ public slots:
     void continueListening();
     virtual void changeThread(quint64 socketID, QThread* pThread) override;
 private:
-    void ready(quint64 ready);
-private:
     QMap<quint64, spTCPClient> m_pClients;
     quint64 m_idCounter = 0;
     std::shared_ptr<QTcpServer> m_pTCPServer{nullptr};
     bool m_gameServer{false};
-    bool m_secure{false};
 };
 
 #endif // TCPSERVER_H

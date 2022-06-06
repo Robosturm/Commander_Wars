@@ -58,6 +58,8 @@ bool Mainapp::m_slave{false};
 QMutex Mainapp::m_crashMutex;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
 
+#include "network/rsacypherhandler.h"
+
 Mainapp::Mainapp()
 {
     setObjectName("Mainapp");
@@ -75,6 +77,16 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
     connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
+
+    RsaCypherHandler one;
+    RsaCypherHandler two;
+    QByteArray data("hello");
+    QByteArray encryptedData = one.encryptRSA(two.getPublicKey(), data);
+    QByteArray decryptedData = two.decryptRSA(encryptedData);
+    if (decryptedData == data)
+    {
+
+    }
 }
 
 void Mainapp::createLineEdit()
