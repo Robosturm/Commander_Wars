@@ -1,6 +1,9 @@
 #ifndef TCPCLIENT_H
 #define TCPCLIENT_H
 
+#include <QSslError>
+#include <QList>
+
 #include "network/NetworkInterface.h"
 #include "network/rxtask.h"
 #include "network/txtask.h"
@@ -28,12 +31,15 @@ public:
 
     virtual void setSocketID(const quint64 &socketID) override;
 public slots:
-    virtual void connectTCP(QString adress, quint16 port, bool secure = false) override;
+    virtual void connectTCP(QString adress, quint16 port) override;
     virtual void disconnectTCP() override;
     virtual QVector<quint64> getConnectedSockets() override;
     virtual void changeThread(quint64 socketID, QThread* pThread) override;
 protected slots:
     void connected();
+private slots:
+    void sslErrors(const QList<QSslError> &errors);
+
 private:
     spRxTask m_pRXTask;
     spTxTask m_pTXTask;
