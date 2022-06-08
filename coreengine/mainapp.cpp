@@ -77,19 +77,6 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
     connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
-
-    RsaCypherHandler one;
-    RsaCypherHandler two;
-    QString data("hello");
-    QString encryptedKey;
-    QString encrpytedMessage;
-    QString iv;
-    one.encryptRSA(two.getPublicKey(), data, encryptedKey, encrpytedMessage, iv);
-    //QByteArray decryptedData = two.decryptRSA(encryptedData);
-//    if (decryptedData == data)
-//    {
-
-//    }
 }
 
 void Mainapp::createLineEdit()

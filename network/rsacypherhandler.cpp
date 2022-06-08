@@ -1,5 +1,3 @@
-#include "network/rsacypherhandler.h"
-
 #include <openssl/bn.h>
 #include <openssl/pem.h>
 #include <openssl/rand.h>
@@ -7,8 +5,13 @@
 #include <openssl/rsa.h>
 
 #include <QRandomGenerator>
+#include <QJsonObject>
+
+#include "network/rsacypherhandler.h"
+#include "network/JsonKeys.h"
 
 #include "coreengine/console.h"
+#include "multiplayer/networkcommands.h"
 
 static const auto* CYPHER = EVP_aes_256_ecb();
 
@@ -93,10 +96,8 @@ bool RsaCypherHandler::getReady() const
     return m_ready;
 }
 
-bool RsaCypherHandler::encryptRSA(const QString & publicKey, const QString & orgMessage, QByteArray & encryptedKey, QByteArray & encrpytedMessage, QByteArray & iv)
+bool RsaCypherHandler::encryptRSA(const QString & publicKey, const QByteArray & message, QByteArray & encryptedKey, QByteArray & encrpytedMessage, QByteArray & iv)
 {
-    QString message = orgMessage + orgMessage;
-
     // setup openssl data
     // read public key
     auto stdPublicKey = publicKey.toStdString();
@@ -155,7 +156,7 @@ void RsaCypherHandler::printLastError() const
     CONSOLE_PRINT(QString("Could not encyrpt data") + errorMsg, Console::eLogLevels::eWARNING);
 }
 
-bool RsaCypherHandler::decryptRSA(const QByteArray & encryptedKey, const QByteArray & encrpytedMessage, const QByteArray & iv, QString & decryptedMessage)
+bool RsaCypherHandler::decryptRSA(const QByteArray & encryptedKey, const QByteArray & encrpytedMessage, const QByteArray & iv, QByteArray & decryptedMessage)
 {
     bool success = false;
 
@@ -175,14 +176,7 @@ bool RsaCypherHandler::decryptRSA(const QByteArray & encryptedKey, const QByteAr
             {
                 decryptedMessageLength += blockLength;
                 internalDecryptedMessage.resize(decryptedMessageLength);
-                decryptedMessage = "";
-                for (qint32 i = 0; i < decryptedMessageLength / 2; ++i)
-                {
-                    if (internalDecryptedMessage[i * 2] != 0)
-                    {
-                        decryptedMessage.append(reinterpret_cast<const char*>(&internalDecryptedMessage[i * 2]));
-                    }
-                }
+                decryptedMessage = QByteArray(reinterpret_cast<const char*>(&internalDecryptedMessage[0]), decryptedMessageLength);
                 success = true;
             }
         }
@@ -193,4 +187,64 @@ bool RsaCypherHandler::decryptRSA(const QByteArray & encryptedKey, const QByteAr
         printLastError();
     }
     return success;
+}
+
+QByteArray RsaCypherHandler::toByteArray(const QJsonArray & jsonArray)
+{
+    QByteArray array;
+    for (auto & item : jsonArray)
+    {
+        array.append(static_cast<char>(item.toInt()));
+    }
+    return array;
+}
+
+QJsonArray RsaCypherHandler::toJsonArray(const QByteArray & byteArray)
+{
+    QJsonArray array;
+    for (qint32 i = 0; i < byteArray.size(); ++i)
+    {
+        array.append(byteArray[i]);
+    }
+    return array;
+}
+
+QByteArray RsaCypherHandler::getPublicKeyMessage(qint32 action)
+{
+    QString command = NetworkCommands::SENDPUBLICKEY;
+    CONSOLE_PRINT("Sending message: " + command, Console::eLogLevels::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_PUBLICKEY, m_publicKeyStr);
+    data.insert(JsonKeys::JSONKEY_PUBLICKEYRECEIVEACTION, action);
+    QJsonDocument doc(data);
+    return doc.toJson();
+}
+
+QByteArray RsaCypherHandler::getDecryptedMessage(const QJsonDocument & encryptedMessage)
+{
+    QJsonObject objData = encryptedMessage.object();
+    auto jsonMessage = objData.value(JsonKeys::JSONKEY_ENCRYPTEDMESSAGE).toArray();
+    auto jsonEncryptedKey = objData.value(JsonKeys::JSONKEY_ENCRYPTEDKEY).toArray();
+    auto jsonIv = objData.value(JsonKeys::JSONKEY_IV).toArray();
+    QByteArray decryptedMessage;
+    decryptRSA(toByteArray(jsonEncryptedKey), toByteArray(jsonMessage), toByteArray(jsonIv), decryptedMessage);
+    return decryptedMessage;
+}
+
+QJsonDocument RsaCypherHandler::getEncryptedMessage(const QString & publicKey, const QByteArray & message)
+{
+    QJsonObject data;
+    QString command = NetworkCommands::CRYPTEDMESSAGE;
+    CONSOLE_PRINT("Sending message: " + command, Console::eLogLevels::eDEBUG);
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    QByteArray encryptedKey;
+    QByteArray encrpytedMessage;
+    QByteArray iv;
+    encryptRSA(publicKey, message, encryptedKey, encrpytedMessage, iv);
+    data.insert(JsonKeys::JSONKEY_ENCRYPTEDMESSAGE, toJsonArray(encrpytedMessage));
+    data.insert(JsonKeys::JSONKEY_ENCRYPTEDKEY, toJsonArray(encryptedKey));
+    data.insert(JsonKeys::JSONKEY_IV, toJsonArray(iv));
+    QJsonDocument doc(data);
+    return doc;
 }

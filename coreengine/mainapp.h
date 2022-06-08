@@ -14,6 +14,8 @@
 #include "coreengine/Gamepad.h"
 #include "coreengine/commandlineparser.h"
 
+#include "network/rsacypherhandler.h"
+
 class WorkerThread;
 using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
 class AudioThread;
@@ -207,6 +209,11 @@ public:
 
     QPoint mapPosFromGlobal(QPoint pos) const;
     QPoint mapPosToGlobal(QPoint pos) const;
+    /**
+     * @brief getCypher
+     * @return
+     */
+    RsaCypherHandler & getCypher();
 
 public slots:
     void changeScreenMode(qint32 mode);
@@ -251,7 +258,6 @@ public slots:
      * @param ret
      */
     void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg);
-
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -308,6 +314,7 @@ private:
     bool m_noAudio{false};
     CommandLineParser m_parser;
     StartupPhase m_startUpPhase{StartupPhase::Start};
+    RsaCypherHandler m_rsaCypher;
 };
 
 Q_DECLARE_INTERFACE(Mainapp, "Mainapp");

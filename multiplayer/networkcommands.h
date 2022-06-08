@@ -119,6 +119,18 @@ namespace NetworkCommands
      * @brief RECEIVEPLAYERCONTROLLEDINFO
      */
     const char* const RECEIVEPLAYERCONTROLLEDINFO = "RECEIVEPLAYERCONTROLLEDINFO";
+    /**
+     * @brief REQUESTPUBLICKEY
+     */
+    const char* const REQUESTPUBLICKEY = "REQUESTPUBLICKEY";
+    /**
+     * @brief SENDPUBLICKEY
+     */
+    const char* const SENDPUBLICKEY = "SENDPUBLICKEY";
+    /**
+     * @brief CRYPTEDMESSAGE
+     */
+    const char* const CRYPTEDMESSAGE = "CRYPTEDMESSAGE";
 
     /*****************************************************************************************************************************/
     // dedicated server commands
