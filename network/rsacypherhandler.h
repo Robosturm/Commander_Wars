@@ -1,8 +1,7 @@
 #pragma once
 
-#include <QByteArray>
-#include "openssl/rsa.h"
- #include <openssl/evp.h>
+#include <QString>
+#include <openssl/evp.h>
 
 class RsaCypherHandler final
 {
@@ -10,8 +9,8 @@ public:
     RsaCypherHandler();
     ~RsaCypherHandler();
 
-    bool encryptRSA(const QString & publicKey, const QString & message, QString & encryptedKey, QString & encrpytedMessage, QString & iv);
-    QByteArray decryptRSA(QByteArray &data);
+    bool encryptRSA(const QString & publicKey, const QString & message, QByteArray & encryptedKey, QByteArray & encrpytedMessage, QByteArray & iv);
+    bool decryptRSA(const QByteArray & encryptedKey, const QByteArray & encrpytedMessage, const QByteArray & iv, QString & decryptedMessage);
     /**
      * @brief getReady Indicates if you can use the handler for crypting or not
      * @return
@@ -30,13 +29,9 @@ private:
     void generateKeys();
     void seedRng() const;
 private:
-    using RSA_ptr = std::unique_ptr<RSA, decltype(&::RSA_free)>;
-    using EVP_CIPHER_CTX_ptr = std::unique_ptr<EVP_CIPHER_CTX, decltype(&::EVP_CIPHER_CTX_free)>;
-    RSA_ptr m_keys;
-    EVP_CIPHER_CTX_ptr m_rsaEncryptContext;
-    EVP_CIPHER_CTX_ptr m_rsaDecryptContext;
-    RSA* m_privateKey{nullptr};
-    RSA* m_publicKey{nullptr};
+    EVP_PKEY* m_privateKey;
+    EVP_PKEY* m_publicKey;
+    QString m_publicKeyStr;
     bool m_ready{false};
 };
 

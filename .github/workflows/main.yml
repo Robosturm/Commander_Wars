@@ -33,7 +33,7 @@ jobs:
             target: 'desktop'
             installerCommands1: ''
             installerCommands2: ''
-            cmakeOptions: '-DOPENSSL_ROOT_DIR=/usr/local/Cellar/openssl'
+            cmakeOptions: '-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
           #- os: ubuntu-latest
           #  COMPILER_VERSION: 'android_armv7'
           #  target: 'android'
