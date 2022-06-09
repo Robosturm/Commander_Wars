@@ -6,11 +6,15 @@
 
 #include <openssl/evp.h>
 
+#include "multiplayer/networkcommands.h"
+
 class RsaCypherHandler final
 {
 public:
     RsaCypherHandler();
     ~RsaCypherHandler();
+    RsaCypherHandler(const RsaCypherHandler &) = delete;
+    RsaCypherHandler & operator=(const RsaCypherHandler &) = delete;
 
     bool encryptRSA(const QString & publicKey, const QByteArray & message, QByteArray & encryptedKey, QByteArray & encrpytedMessage, QByteArray & iv);
     bool decryptRSA(const QByteArray & encryptedKey, const QByteArray & encrpytedMessage, const QByteArray & iv, QByteArray & decryptedMessage);
@@ -31,7 +35,13 @@ public:
     /**
      * @brief getPublicKeyMessage
      */
-    QByteArray getPublicKeyMessage(qint32 action);
+    QByteArray getPublicKeyMessage(NetworkCommands::PublicKeyActions action) const;
+    /**
+     * @brief RsaCypherHandler::getRequestKeyMessage
+     * @param action
+     * @return
+     */
+    QByteArray getRequestKeyMessage(NetworkCommands::PublicKeyActions action) const;
     /**
      * @brief getDecryptedMessage
      * @param encryptedMessage
@@ -43,7 +53,7 @@ public:
      * @param message
      * @return
      */
-    QJsonDocument getEncryptedMessage(const QString & publicKey, const QByteArray & message);
+    QJsonDocument getEncryptedMessage(const QString & publicKey, NetworkCommands::PublicKeyActions action, const QByteArray & message);
     /**
      * @brief toByteArray
      * @param jsonArray

@@ -11,7 +11,6 @@
 #include "network/JsonKeys.h"
 
 #include "coreengine/console.h"
-#include "multiplayer/networkcommands.h"
 
 static const auto* CYPHER = EVP_aes_256_ecb();
 
@@ -209,14 +208,25 @@ QJsonArray RsaCypherHandler::toJsonArray(const QByteArray & byteArray)
     return array;
 }
 
-QByteArray RsaCypherHandler::getPublicKeyMessage(qint32 action)
+QByteArray RsaCypherHandler::getRequestKeyMessage(NetworkCommands::PublicKeyActions action) const
+{
+    QString command = NetworkCommands::REQUESTPUBLICKEY;
+    CONSOLE_PRINT("Sending message: " + command, Console::eLogLevels::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
+    QJsonDocument doc(data);
+    return doc.toJson();
+}
+
+QByteArray RsaCypherHandler::getPublicKeyMessage(NetworkCommands::PublicKeyActions action) const
 {
     QString command = NetworkCommands::SENDPUBLICKEY;
     CONSOLE_PRINT("Sending message: " + command, Console::eLogLevels::eDEBUG);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_PUBLICKEY, m_publicKeyStr);
-    data.insert(JsonKeys::JSONKEY_PUBLICKEYRECEIVEACTION, action);
+    data.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument doc(data);
     return doc.toJson();
 }
@@ -232,12 +242,13 @@ QByteArray RsaCypherHandler::getDecryptedMessage(const QJsonDocument & encrypted
     return decryptedMessage;
 }
 
-QJsonDocument RsaCypherHandler::getEncryptedMessage(const QString & publicKey, const QByteArray & message)
+QJsonDocument RsaCypherHandler::getEncryptedMessage(const QString & publicKey, NetworkCommands::PublicKeyActions action, const QByteArray & message)
 {
     QJsonObject data;
     QString command = NetworkCommands::CRYPTEDMESSAGE;
     CONSOLE_PRINT("Sending message: " + command, Console::eLogLevels::eDEBUG);
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QByteArray encryptedKey;
     QByteArray encrpytedMessage;
     QByteArray iv;

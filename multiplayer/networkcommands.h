@@ -1,8 +1,12 @@
-#ifndef NETWORKCOMMANDS_H
-#define NETWORKCOMMANDS_H
+#pragma once
 
 namespace NetworkCommands
 {
+    enum class PublicKeyActions
+    {
+        SendInitialMapUpdate,
+    };
+
     /**
      * @brief MAPINFO map info of from the host
      */
@@ -184,5 +188,3 @@ namespace NetworkCommands
      */
     const char* const SERVERNOGAMESLOTSAVAILABLE = "SERVERNOGAMESLOTSAVAILABLE";
 }
-
-#endif // NETWORKCOMMANDS_H

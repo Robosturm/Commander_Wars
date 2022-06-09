@@ -41,6 +41,7 @@ public:
         ServerHostingJson,      /**< used for data when starting a game on the host or when communicating between slave and master. Packages are in JSON-Format */
         ServerHosting,          /**< used for data when starting a game on the host or when communicating between slave and master. Packages are in Binary-Format */
         ServerSocketInfo,       /**< used inside the rx-task data is not emitted when recieving this data */
+        CryptedMessage,
         Max,
     };
 

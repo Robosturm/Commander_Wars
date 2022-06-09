@@ -213,7 +213,10 @@ public:
      * @brief getCypher
      * @return
      */
-    RsaCypherHandler & getCypher();
+    RsaCypherHandler & getCypher()
+    {
+        return m_rsaCypher;
+    }
 
 public slots:
     void changeScreenMode(qint32 mode);
