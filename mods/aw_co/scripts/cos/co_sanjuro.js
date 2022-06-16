@@ -5,7 +5,7 @@ CO_SANJURO.init = function(co, map)
 };
 CO_SANJURO.activateSuperpower = function(co, powerMode, map)
 {
-    CO_SANJURO.activatePower(co, powerMode);
+    CO_SANJURO.activatePower(co, powerMode, map);
 };
 CO_SANJURO.getSuperPowerDescription = function()
 {

@@ -5,7 +5,7 @@ CO_DAVIS.init = function(co, map)
 };
 CO_DAVIS.activateSuperpower = function(co, powerMode, map)
 {
-    CO_DAVIS.activatePower(co, powerMode);
+    CO_DAVIS.activatePower(co, powerMode, map);
 };
 CO_DAVIS.getSuperPowerDescription = function()
 {

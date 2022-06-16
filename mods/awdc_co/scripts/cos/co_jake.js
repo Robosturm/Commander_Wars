@@ -5,7 +5,7 @@ CO_JAKE.init = function(co, map)
 };
 CO_JAKE.activateSuperpower = function(co, powerMode, map)
 {
-	CO_JAKE.activatePower(co, powerMode);
+	CO_JAKE.activatePower(co, powerMode, map);
 };
 CO_JAKE.getSuperPowerDescription = function()
 {

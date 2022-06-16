@@ -66,6 +66,7 @@
 #include "objects/dialogs/mapSelection/mapselectionfilterdialog.h"
 #include "objects/dialogs/editor/mapeditdialog.h"
 #include "objects/dialogs/gamepadinfo.h"
+#include "objects/dialogs/customdialog.h"
 
 #include "gameinput/cursordata.h"
 #include "gameinput/basegameinputif.h"
@@ -197,4 +198,5 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
     qmlRegisterInterface<BaseGamemenu>("BaseGamemenu", 1);
     qmlRegisterInterface<Basemenu>("Basemenu", 1);
+    qmlRegisterInterface<CustomDialog>("CustomDialog", 1);
 }

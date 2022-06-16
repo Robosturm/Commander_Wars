@@ -5,7 +5,7 @@ CO_SOPHIE.init = function(co, map)
 };
 CO_SOPHIE.activateSuperpower = function(co, powerMode, map)
 {
-    CO_SOPHIE.activatePower(co, powerMode);
+    CO_SOPHIE.activatePower(co, powerMode, map);
 };
 CO_SOPHIE.getSuperPowerDescription = function()
 {

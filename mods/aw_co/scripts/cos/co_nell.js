@@ -5,7 +5,7 @@ CO_NELL.init = function(co, map)
 };
 CO_NELL.activateSuperpower = function(co, powerMode, map)
 {
-    CO_NELL.activatePower(co, powerMode);
+    CO_NELL.activatePower(co, powerMode, map);
 };
 CO_NELL.getSuperPowerDescription = function()
 {

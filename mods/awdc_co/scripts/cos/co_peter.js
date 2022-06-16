@@ -5,7 +5,7 @@ CO_PETER.init = function(co, map)
 };
 CO_PETER.activateSuperpower = function(co, powerMode, map)
 {
-    CO_PETER.activatePower(co, powerMode);
+    CO_PETER.activatePower(co, powerMode, map);
 };
 CO_PETER.getSuperPowerDescription = function()
 {

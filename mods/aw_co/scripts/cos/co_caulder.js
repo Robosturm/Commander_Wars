@@ -5,7 +5,7 @@ CO_CAULDER.init = function(co, map)
 };
 CO_CAULDER.activateSuperpower = function(co, powerMode, map)
 {
-    CO_CAULDER.activatePower(co, powerMode);
+    CO_CAULDER.activatePower(co, powerMode, map);
 };
 CO_CAULDER.getSuperPowerDescription = function()
 {

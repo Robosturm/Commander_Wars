@@ -5,7 +5,7 @@ CO_VARLOT.init = function(co, map)
 };
 CO_VARLOT.activateSuperpower = function(co, powerMode, map)
 {
-	CO_VARLOT.activatePower(co, powerMode);
+	CO_VARLOT.activatePower(co, powerMode, map);
 };
 CO_VARLOT.getSuperPowerDescription = function()
 {

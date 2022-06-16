@@ -7,7 +7,7 @@ CO_LASH.init = function(co, map)
 };
 CO_LASH.activateSuperpower = function(co, powerMode, map)
 {
-    CO_LASH.activatePower(co, powerMode);
+    CO_LASH.activatePower(co, powerMode, map);
 };
 CO_LASH.getSuperPowerDescription = function()
 {

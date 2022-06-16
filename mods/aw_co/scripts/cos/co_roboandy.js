@@ -5,7 +5,7 @@ CO_ROBOANDY.init = function(co, map)
 };
 CO_ROBOANDY.activateSuperpower = function(co, powerMode, map)
 {
-    CO_ROBOANDY.activatePower(co, powerMode);
+    CO_ROBOANDY.activatePower(co, powerMode, map);
 };
 CO_ROBOANDY.getSuperPowerDescription = function()
 {

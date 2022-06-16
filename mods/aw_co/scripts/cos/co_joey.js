@@ -5,7 +5,7 @@ CO_JOEY.init = function(co, map)
 };
 CO_JOEY.activateSuperpower = function(co, powerMode, map)
 {
-    CO_JOEY.activatePower(co, powerMode);
+    CO_JOEY.activatePower(co, powerMode, map);
 };
 CO_JOEY.getSuperPowerDescription = function()
 {
