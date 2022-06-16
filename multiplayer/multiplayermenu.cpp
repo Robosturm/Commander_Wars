@@ -379,13 +379,12 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             auto action = static_cast<NetworkCommands::PublicKeyActions>(objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt());
             if (action == NetworkCommands::PublicKeyActions::SendInitialMapUpdate)
             {
-                QJsonDocument doc = QJsonDocument::fromJson(data);
                 auto & cypher = Mainapp::getInstance()->getCypher();
                 recieveData(socketID, cypher.getDecryptedMessage(doc), NetworkInterface::NetworkSerives::Multiplayer);
             }
             else
             {
-                CONSOLE_PRINT("Unknown public key action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
+                CONSOLE_PRINT("Unknown crypted message action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
             }
         }
         else

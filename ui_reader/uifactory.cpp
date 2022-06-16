@@ -380,6 +380,7 @@ bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygi
         pButton->setX(x);
         pButton->setY(y);
         pButton->setEnabled(enabled);
+        pButton->setObjectName(id);
         QString onEvent = getAttribute(childs, attrOnEvent);
         pButton->addClickListener([this, onEvent, id, loopIdx](oxygine::Event*)
         {
@@ -408,6 +409,7 @@ bool UiFactory::createIconButton(oxygine::spActor parent, QDomElement element, o
         pButton->setX(x);
         pButton->setY(y);
         pButton->setEnabled(enabled);
+        pButton->setObjectName(id);
         QString onEvent = getAttribute(childs, attrOnEvent);
         pButton->addClickListener([this, onEvent, id, loopIdx](oxygine::Event*)
         {
@@ -436,6 +438,7 @@ bool UiFactory::createMoveInButton(oxygine::spActor parent, QDomElement element,
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, true);
         auto pMoveButton = spMoveInButton::create(parent.get(), moveInSize, direction,
                                                  startOffset, buttonScale, useY);
+        pMoveButton->setObjectName(id);
         pMoveButton->setEnabled(enabled);
         parent->addChild(pMoveButton);
         item = pMoveButton;
@@ -1131,7 +1134,7 @@ bool UiFactory::getBoolValue(QString line, QString objectId, qint32 loopIdx, boo
 
 QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx)
 {
-    QString value;
+    QString value = line;
     if (!line.isEmpty())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
@@ -1140,7 +1143,7 @@ QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx
         QJSValue erg = pInterpreter->evaluate(line);
         if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ". Using \"" + value + "\" as value.", Console::eDEBUG);
         }
         else
         {

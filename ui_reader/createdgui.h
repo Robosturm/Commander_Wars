@@ -20,7 +20,7 @@ public slots:
     virtual void setEnabled(bool value) override;
     void resetUi();
     void loadXml(QString xmlFile);
-
+    void setObjectEnabled(const QString id, bool value);
 protected:
     QVector<oxygine::spActor> m_factoryUiItem;
 };

@@ -2,6 +2,7 @@
 
 #include "coreengine/mainapp.h"
 #include "resource_management/objectmanager.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 #include "ui_reader/uifactory.h"
 
@@ -55,4 +56,10 @@ void CustomDialog::createDialog(const QString & jsName, const QString & uiXml, B
 {
     spCustomDialog pDialog = spCustomDialog::create(jsName, uiXml, pBaseMenu);
     pBaseMenu->addChild(pDialog);
+}
+
+void CustomDialog::showMessageBox(QString text, bool withCancel, QString confirmText, QString cancelText)
+{
+    spDialogMessageBox pDialog = spDialogMessageBox::create(text, withCancel, confirmText, cancelText);
+    m_pBaseMenu->addChild(pDialog);
 }

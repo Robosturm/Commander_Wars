@@ -44,3 +44,16 @@ void CreatedGui::loadXml(QString xmlFile)
 {
     UiFactory::getInstance().createUi(xmlFile, this);
 }
+
+void CreatedGui::setObjectEnabled(const QString id, bool value)
+{
+    for (auto & item : m_factoryUiItem)
+    {
+        auto* pObject = dynamic_cast<QObject*>(item.get());
+        if (pObject != nullptr &&
+            pObject->objectName() == id)
+        {
+            item->setEnabled(value);
+        }
+    }
+}

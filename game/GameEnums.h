@@ -323,6 +323,14 @@ public:
     };
     Q_ENUM(AddinStepType)
 
+    enum LoginError
+    {
+        LoginError_WrongPassword,
+        LoginError_AccountExists,
+        LoginError_InvalidPasswordReset,
+    };
+    Q_ENUM(LoginError)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

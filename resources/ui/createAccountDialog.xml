@@ -39,12 +39,13 @@
                 <font>"main24"</font>
             </Label>
             <Passwordbox>
+                <Id>PasswordBox</Id>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>400</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Password of your account.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Password of your account. Needs to contain 8 letters, one capital one small letter a number and a special char.")</tooltip>
                 <startValue>""</startValue>
-                <onEvent>CreateAccountDialog.primaryPassword(value)</onEvent>
+                <onEvent>CreateAccountDialog.primaryPassword(input);</onEvent>
             </Passwordbox>
             <Label>
                 <x>settings.getWidth() / 2 - 310</x>
@@ -55,30 +56,33 @@
                 <font>"main24"</font>
             </Label>
             <Passwordbox>
+                <Id>ConfirmBox</Id>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>400</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Password of your account.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Password of your account. Needs to contain 8 letters, one capital one small letter a number and a special char.")</tooltip>
                 <startValue>""</startValue>
-                <onEvent>CreateAccountDialog.confirmPassword(value)</onEvent>
+                <onEvent>CreateAccountDialog.confirmPassword(input);</onEvent>
             </Passwordbox>
             <Label>
                 <x>settings.getWidth() / 2 - 310</x>
                 <y>lastY + lastHeight + 20</y>
-                <width>200</width>
+                <width>220</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","E-Mail:")</text>
                 <font>"main24"</font>
             </Label>
             <Textbox>
+                <Id>EmailBox</Id>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>400</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","E-Mail-Adress for your account.")</tooltip>
                 <startValue>""</startValue>
-                <onEvent>CreateAccountDialog.emailAdress(value)</onEvent>
+                <onEvent>CreateAccountDialog.emailAdress(input);</onEvent>
             </Textbox>
             <Button>
+                <Id>AbortButton</Id>
                 <x>settings.getWidth() / 2 - 160</x>
                 <y>lastY + lastHeight + 20</y>
                 <width>150</width>
@@ -87,12 +91,13 @@
                 <onEvent>createAccount.exit();</onEvent>
             </Button>
             <Button>
+                <Id>AccountButton</Id>
                 <x>settings.getWidth() / 2 + 10</x>
                 <y>lastY</y>
                 <width>150</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Create")</text>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Creates a new account on the server.")</tooltip>
-                <onEvent>CreateAccountDialog.createAccount()</onEvent>
+                <onEvent>CreateAccountDialog.createNewAccount()</onEvent>
             </Button>
         </childs>
     </Panel>

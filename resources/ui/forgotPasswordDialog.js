@@ -1,4 +1,4 @@
-var CreateAccountDialog =
+var ForgotPasswordDialog =
 {
 
 };

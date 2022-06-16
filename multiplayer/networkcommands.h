@@ -5,6 +5,9 @@ namespace NetworkCommands
     enum class PublicKeyActions
     {
         SendInitialMapUpdate,
+        CreateAccount,
+        LoginAccount,
+        ResetPassword,
     };
 
     /**

@@ -764,6 +764,19 @@
     </message>
 </context>
 <context>
+    <name>CustomDialog</name>
+    <message>
+        <location filename="../objects/dialogs/customdialog.h" line="39"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/customdialog.h" line="39"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DamageCalculator</name>
     <message>
         <location filename="../game/ui/damagecalculator.cpp" line="30"/>
@@ -3245,64 +3258,64 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="93"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="89"/>
         <source>Join Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="102"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="99"/>
         <source>Observe Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="111"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="109"/>
         <source>Join Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="120"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="118"/>
         <source>Observe Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="196"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="271"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="194"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="269"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="239"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="237"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="251"/>
         <source>Enter Host Adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="335"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="333"/>
         <source>Host game is no longer available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="374"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="392"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="374"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="392"/>
         <source>Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="374"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="392"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="374"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="392"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="374"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="392"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3577,7 +3590,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="83"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="97"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1517"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1516"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3622,43 +3635,43 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="672"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="671"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="817"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="816"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="821"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="820"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="836"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="835"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="986"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="985"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="997"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="996"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1391"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1390"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1513"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1512"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

@@ -33,6 +33,10 @@ public slots:
      * @param pBaseMenu
      */
     void createDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu);
+    /**
+     * @brief showMessageBox
+     */
+    void showMessageBox(QString text, bool withCancel = false, QString confirmText = tr("Ok"), QString cancelText = tr("Cancel"));
 private slots:
     void remove();
 

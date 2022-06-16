@@ -167,6 +167,17 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         {
             joinSlaveGame(socketID, objData);
         }
+        else if (messageType == NetworkCommands::REQUESTPUBLICKEY)
+        {
+            QJsonObject objData = doc.object();
+            auto & cypher = Mainapp::getInstance()->getCypher();
+            auto action = static_cast<NetworkCommands::PublicKeyActions>(objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt());
+            emit m_pGameServer->sig_sendData(socketID, cypher.getPublicKeyMessage(action), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        }
+        else if (messageType == NetworkCommands::CRYPTEDMESSAGE)
+        {
+            handleCryptedMessage(socketID, doc);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
@@ -181,7 +192,7 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         if (messageType == NetworkCommands::LAUNCHGAMEONSERVER)
         {
             spawnSlaveGame(stream, socketID, data);
-        }
+        }        
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
@@ -512,7 +523,65 @@ bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port)
     return success;
 }
 
+void MainServer::handleCryptedMessage(qint64 socketId, const QJsonDocument & doc)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject objData = doc.object();
+    QJsonDocument decryptedDoc = QJsonDocument::fromJson(cypher.getDecryptedMessage(doc));
+    auto action = static_cast<NetworkCommands::PublicKeyActions>(objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt());
+    CONSOLE_PRINT("Handling crypted message action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
+    switch (action)
+    {
+        case NetworkCommands::PublicKeyActions::LoginAccount:
+        {
+            loginToAccount(socketId, decryptedDoc);
+            break;
+        }
+        case NetworkCommands::PublicKeyActions::CreateAccount:
+        {
+            createAccount(socketId, decryptedDoc);
+            break;
+        }
+        case NetworkCommands::PublicKeyActions::ResetPassword:
+        {
+            resetAccountPassword(socketId, decryptedDoc);
+            break;
+        }
+        default:
+        {
+            CONSOLE_PRINT("Unknown crypted message action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
+            break;
+        }
+    }
+}
 
+void MainServer::createAccount(qint64 socketId, const QJsonDocument & doc)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject data = doc.object();
+    QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
+    QString mailAdress = data.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
+    QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
+    CONSOLE_PRINT("Creating account with username " + username + " and email adress " + mailAdress, Console::eDEBUG);
+}
+
+void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject data = doc.object();
+    QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
+    QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
+    CONSOLE_PRINT("Login to account with username " + username, Console::eDEBUG);
+}
+
+void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc)
+{
+    QJsonObject data = doc.object();
+    QString mailAdress = data.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
+    QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
+    CONSOLE_PRINT("Resetting account with username " + username + " and email adress " + mailAdress, Console::eDEBUG);
+
+}
 //        query = m_serverData.exec("INSERT INTO people(name) VALUES('Eddie Guerrero')");
 //        if(!query.isActive())
 //        {

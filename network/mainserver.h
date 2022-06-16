@@ -165,6 +165,31 @@ private:
     void parseSlaveAddressOptions();
 
     bool sqlQueryFailed(const QSqlQuery & query);
+    /**
+     * @brief handleCryptedMessage
+     * @param socketId
+     * @param data
+     * @param action
+     */
+    void handleCryptedMessage(qint64 socketId, const QJsonDocument & doc);
+    /**
+     * @brief createAccount
+     * @param socketId
+     * @param doc
+     */
+    void createAccount(qint64 socketId, const QJsonDocument & doc);
+    /**
+     * @brief loginToAccount
+     * @param socketId
+     * @param doc
+     */
+    void loginToAccount(qint64 socketId, const QJsonDocument & doc);
+    /**
+     * @brief resetAccountPassword
+     * @param socketId
+     * @param doc
+     */
+    void resetAccountPassword(qint64 socketId, const QJsonDocument & doc);
 private:
     class InternNetworkGame;
     using spInternNetworkGame = oxygine::intrusive_ptr<InternNetworkGame>;
