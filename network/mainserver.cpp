@@ -84,21 +84,14 @@ MainServer::MainServer()
             CONSOLE_PRINT("Unable to open player native error: " + m_serverData.lastError().nativeErrorCode(), Console::eERROR);
             dataBaseLaunched = false;
         }
-//        QSqlQuery query = m_serverData.exec("CREATE TABLE people (id INTEGER PRIMARY KEY, name TEXT)");
-//        if (!query.isActive())
-//        {
-//            qWarning() << "ERROR: " << query.lastError().text();
-//        }
-//        query = m_serverData.exec("INSERT INTO people(name) VALUES('Eddie Guerrero')");
-//        if(!query.isActive())
-//        {
-//            qWarning() << "ERROR: " << query.lastError().text();
-//        }
-        // QSqlQuery query;
-        // query.prepare("SELECT name FROM people WHERE id = ?");
-        // query.addBindValue(mInputText->text().toInt());
-        // if(!query.exec()) qWarning() << "ERROR: " << query.lastError().text();
-        // if(query.first()) mOutputText->setText(query.value(0).toString());
+        if (dataBaseLaunched)
+        {
+            QSqlQuery query = m_serverData.exec("CREATE TABLE if not exists players (id INTEGER PRIMARY KEY, username TEXT, password TEXT, mailAdresse TEXT, mmr INTEGER, validPassword INTEGER, lastLogin TEXT)");
+            if (sqlQueryFailed(query))
+            {
+                CONSOLE_PRINT("Unable to create player table " + m_serverData.lastError().nativeErrorCode(), Console::eERROR);
+            }
+        }
     }
     else
     {
@@ -107,6 +100,7 @@ MainServer::MainServer()
     }
     if (dataBaseLaunched)
     {
+        CONSOLE_PRINT("Starting tcp server and listening to new clients.", Console::eDEBUG);
         emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort());
         emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort());
     }
@@ -121,6 +115,18 @@ MainServer::~MainServer()
         game->process->kill();
     }
     m_games.clear();
+}
+
+bool MainServer::sqlQueryFailed(const QSqlQuery & query)
+{
+    auto error = query.lastError();
+    auto type = error.type();
+    bool failed = !query.isActive() && type != QSqlError::NoError;
+    if (failed)
+    {
+       CONSOLE_PRINT("Sql query failed with " + error.text(), Console::eERROR);
+    }
+    return failed;
 }
 
 void MainServer::parseSlaveAddressOptions()
@@ -422,7 +428,8 @@ void MainServer::sendGameDataUpdate()
 
 void MainServer::playerJoined(qint64 socketId)
 {
-    sendGameDataToClient(socketId);
+    CONSOLE_PRINT("Player joined the server " + QString::number(socketId), Console::eDEBUG);
+    emit m_pGameServer->sigSetIsActive(socketId, false);
 }
 
 void MainServer::sendGameDataToClient(qint64 socketId)
@@ -504,3 +511,15 @@ bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port)
     }
     return success;
 }
+
+
+//        query = m_serverData.exec("INSERT INTO people(name) VALUES('Eddie Guerrero')");
+//        if(!query.isActive())
+//        {
+//            qWarning() << "ERROR: " << query.lastError().text();
+//        }
+// QSqlQuery query;
+// query.prepare("SELECT name FROM people WHERE id = ?");
+// query.addBindValue(mInputText->text().toInt());
+// if(!query.exec()) qWarning() << "ERROR: " << query.lastError().text();
+// if(query.first()) mOutputText->setText(query.value(0).toString());

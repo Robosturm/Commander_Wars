@@ -1,5 +1,6 @@
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QRegularExpression>
 
 #include "multiplayer/lobbymenu.h"
 #include "multiplayer/networkcommands.h"
@@ -20,6 +21,7 @@
 
 #include "objects/base/chat.h"
 #include "objects/dialogs/dialogmessagebox.h"
+#include "objects/dialogs/customdialog.h"
 
 #include "network/mainserver.h"
 #include "network/JsonKeys.h"
@@ -151,8 +153,12 @@ LobbyMenu::LobbyMenu()
         pChat->setVisible(false);
     }
     addChild(pChat);
-
     connect(this, &LobbyMenu::sigUpdateGamesView, this, &LobbyMenu::updateGamesView, Qt::QueuedConnection);
+}
+
+void LobbyMenu::leaveServer()
+{
+    m_pTCPClient = nullptr;
 }
 
 void LobbyMenu::exitMenue()
@@ -314,7 +320,10 @@ void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkS
         CONSOLE_PRINT("LobbyMenu Command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::SERVERGAMEDATA)
         {
-            updateGameData(objData);
+            if (m_loggedIn)
+            {
+                updateGameData(objData);
+            }
         }
         else if (messageType == NetworkCommands::SLAVEADDRESSINFO)
         {
@@ -406,5 +415,47 @@ void LobbyMenu::selectGame()
 
 void LobbyMenu::connected(quint64 socket)
 {
+    spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/userLoginDialog.xml", this);
+    addChild(pDialog);
+}
+
+void LobbyMenu::onLogin()
+{
     m_pButtonHostOnServer->setEnabled(true);
+    m_loggedIn = true;
+}
+
+
+void LobbyMenu::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "lobbyMenu";
+    if (pInterpreter->exists(object, func))
+    {
+        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        QJSValueList args({pInterpreter->newQObject(this)});
+        pInterpreter->doFunction(object, func, args);
+    }
+}
+
+bool LobbyMenu::isValidEmailAdress(const QString & emailAdress)
+{
+    QRegularExpression regex("(?:[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+)*|\""
+                             "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]"
+                             "|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9]"
+                             "(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|"
+                             "\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]"
+                             "|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:"
+                             "[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\"
+                             "[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
+    auto match = regex.match(emailAdress);
+    return match.hasMatch() && match.capturedLength() == emailAdress.length();
+}
+
+bool LobbyMenu::isValidPassword(const QString & password)
+{
+    QRegularExpression regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+    auto match = regex.match(password);
+    return match.hasMatch();
 }

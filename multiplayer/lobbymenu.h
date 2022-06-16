@@ -12,10 +12,12 @@
 #include "network/tcpclient.h"
 #include "network/networkgamedata.h"
 
+#include "menue/basemenu.h"
+
 class LobbyMenu;
 using spLobbyMenu = oxygine::intrusive_ptr<LobbyMenu>;
 
-class LobbyMenu : public QObject, public oxygine::Actor
+class LobbyMenu : public Basemenu
 {
     Q_OBJECT
 public:
@@ -47,6 +49,12 @@ public slots:
     void observeGame();
     void observeGamePassword(QString password);
     void connected(quint64 socket);
+    void onLogin();
+    bool isValidEmailAdress(const QString & emailAdress);
+    bool isValidPassword(const QString & password);
+    void leaveServer();
+protected slots:
+    virtual void onEnter() override;
 private:
     void updateGameData(const QJsonObject & objData);
     void joinSlaveGame(const QJsonObject & objData);
@@ -58,6 +66,7 @@ private:
     oxygine::spButton m_pButtonHostOnServer;
     spTableView m_Gamesview;
     QString m_password;
+    bool m_loggedIn{false};
 };
 
 #endif // LOBBYMENU_H

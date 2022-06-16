@@ -107,6 +107,13 @@ private:
       */
     bool createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
+      * Nodename: Passwordbox
+      * supported attributes are:
+      * mandatory: x, y, width, onEvent, startValue
+      * optional: tooltip, id, enabled
+      */
+    bool createPasswordbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
       * Nodename: TimeSpinbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue

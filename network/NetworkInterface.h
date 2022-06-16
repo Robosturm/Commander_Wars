@@ -126,6 +126,14 @@ public:
     {
         m_isObserver = newIsObserver;
     }
+    bool getIsActive() const
+    {
+        return m_active;
+    }
+    void setIsActive(bool isActive)
+    {
+        m_active = isActive;
+    }
 
 signals:
     /**
@@ -256,6 +264,7 @@ protected:
     bool m_isServer{false};
     bool m_isConnected{false};
     bool m_isObserver{false};
+    bool m_active{true};
 };
 
 #endif // NETWORKINTERFACE_H

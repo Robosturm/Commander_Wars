@@ -163,6 +163,8 @@ private:
      * @brief parseSlaveAddressOptions
      */
     void parseSlaveAddressOptions();
+
+    bool sqlQueryFailed(const QSqlQuery & query);
 private:
     class InternNetworkGame;
     using spInternNetworkGame = oxygine::intrusive_ptr<InternNetworkGame>;

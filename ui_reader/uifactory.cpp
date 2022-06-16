@@ -21,6 +21,7 @@
 #include "objects/base/dropdownmenu.h"
 #include "objects/base/dropdownmenusprite.h"
 #include "objects/base/dropdownmenucolor.h"
+#include "objects/base/passwordbox.h"
 
 #include "game/gamemap.h"
 
@@ -30,6 +31,7 @@ static const char* const itemLabel = "Label";
 static const char* const itemCheckbox = "Checkbox";
 static const char* const itemSpinbox = "Spinbox";
 static const char* const itemTextbox = "Textbox";
+static const char* const itemPasswordbox = "Passwordbox";
 static const char* const itemTimeSpinbox = "TimeSpinbox";
 static const char* const itemPanel = "Panel";
 static const char* const itemBox = "Box";
@@ -91,6 +93,7 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemCheckbox), std::bind(&UiFactory::createCheckbox, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemSpinbox), std::bind(&UiFactory::createSpinbox, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemTextbox), std::bind(&UiFactory::createTextbox, this, _1, _2, _3, _4, _5)});
+    m_factoryItems.append({QString(itemPasswordbox), std::bind(&UiFactory::createPasswordbox, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemTimeSpinbox), std::bind(&UiFactory::createTimeSpinbox, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemPanel), std::bind(&UiFactory::createPanel, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemIcon), std::bind(&UiFactory::createIcon, this, _1, _2, _3, _4, _5)});
@@ -593,6 +596,46 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
         QString value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, true);
         spTextbox pTextbox = spTextbox::create(width, height);
+        pTextbox->setPosition(x, y);
+        pTextbox->setTooltipText(tooltip);
+        pTextbox->setCurrentText(value);
+        pTextbox->setObjectName(id);
+        pTextbox->setEnabled(enabled);
+        connect(pTextbox.get(), &Textbox::sigTextChanged, this, [this, onEventLine, id, loopIdx](QString value)
+        {
+            onEvent(onEventLine, value, id, loopIdx);
+        }, Qt::QueuedConnection);
+        parent->addChild(pTextbox);
+        item = pTextbox;
+        if (height <= 0)
+        {
+            height = 40;
+        }
+        m_lastCoordinates = QRect(x, y, width, height);
+    }
+    return success;
+}
+
+bool UiFactory::createPasswordbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*, qint32 loopIdx)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrOnEvent, attrStartValue});
+    if (success)
+    {
+        QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx));
+        qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx);
+        qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx);
+        qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx);
+        qint32 height = -1;
+        if (hasChild(childs, attrHeight))
+        {
+            height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx);
+        }
+        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString onEventLine = getAttribute(childs, attrOnEvent);
+        QString value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx);
+        bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, true);
+        spPasswordbox pTextbox = spPasswordbox::create(width, height);
         pTextbox->setPosition(x, y);
         pTextbox->setTooltipText(tooltip);
         pTextbox->setCurrentText(value);

@@ -318,6 +318,7 @@ set(${PROJECT_NAME}_SRCS
     objects/dialogs/folderdialog.cpp objects/dialogs/folderdialog.h
     objects/dialogs/dialogvaluecounter.cpp objects/dialogs/dialogvaluecounter.h
     objects/dialogs/gamepadinfo.cpp objects/dialogs/gamepadinfo.h
+    objects/dialogs/customdialog.h objects/dialogs/customdialog.cpp
     # objects dialogs editor
     objects/dialogs/editor/dialogmodifyunit.cpp objects/dialogs/editor/dialogmodifyunit.h
     objects/dialogs/editor/dialogmodifybuilding.cpp objects/dialogs/editor/dialogmodifybuilding.h
@@ -821,6 +822,7 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/qwindows${LibNameEnd}
+        ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite${LibNameEnd}
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     set(LibNameStart "../lib/libQt6")
@@ -843,6 +845,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/../plugins/platforms/libqxcb.so
         ${QT_BIN_DIR}/../plugins/platforms/libqminimal.so
         ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
+        ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite.so
     )
 
     set(LibNameEnd ".so.6")

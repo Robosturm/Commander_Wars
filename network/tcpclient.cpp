@@ -50,7 +50,7 @@ void TCPClient::connectTCP(QString adress, quint16 port)
     m_pTXTask = spTxTask::create(m_pSocket.get(), 0, this, false);
     connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 
-    CONSOLE_PRINT("Client is running and connecting to " + adress + " and port " + QString::number(port), Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client is running and connecting to \"" + adress + "\" and port " + QString::number(port), Console::eLogLevels::eDEBUG);
 }
 
 void TCPClient::disconnectTCP()

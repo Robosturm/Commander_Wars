@@ -4760,5 +4760,11 @@
         <file>resources/images/game/battlesprites/background/back_wastestreet+town.png</file>
         <file>resources/ui/viewMapStats.js</file>
         <file>resources/ui/viewMapStats.xml</file>
+        <file>resources/ui/userLoginDialog.js</file>
+        <file>resources/ui/userLoginDialog.xml</file>
+        <file>resources/ui/createAccountDialog.js</file>
+        <file>resources/ui/createAccountDialog.xml</file>
+        <file>resources/ui/forgotPasswordDialog.js</file>
+        <file>resources/ui/forgotPasswordDialog.xml</file>
     </qresource>
 </RCC>
