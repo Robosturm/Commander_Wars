@@ -176,7 +176,9 @@ void GameEnums::registerEnums()
     value.setProperty("AddinStepType_Field", AddinStepType_Field);
     value.setProperty("AddinStepType_Menu", AddinStepType_Menu);
 
+    value.setProperty("LoginError_None", LoginError_None);
     value.setProperty("LoginError_WrongPassword", LoginError_WrongPassword);
+    value.setProperty("LoginError_AccountDoesntExist", LoginError_AccountDoesntExist);
     value.setProperty("LoginError_AccountExists", LoginError_AccountExists);
     value.setProperty("LoginError_InvalidPasswordReset", LoginError_InvalidPasswordReset);
 

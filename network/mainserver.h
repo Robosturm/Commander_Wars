@@ -7,9 +7,10 @@
 
 #include "network/tcpserver.h"
 #include "network/tcpclient.h"
-
 #include "network/networkgamedata.h"
 #include "network/networkgame.h"
+
+#include "multiplayer/networkcommands.h"
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -177,19 +178,26 @@ private:
      * @param socketId
      * @param doc
      */
-    void createAccount(qint64 socketId, const QJsonDocument & doc);
+    void createAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
     /**
      * @brief loginToAccount
      * @param socketId
      * @param doc
      */
-    void loginToAccount(qint64 socketId, const QJsonDocument & doc);
+    void loginToAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
     /**
      * @brief resetAccountPassword
      * @param socketId
      * @param doc
      */
-    void resetAccountPassword(qint64 socketId, const QJsonDocument & doc);
+    void resetAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
+    /**
+     * @brief getAccountInfo
+     * @param username
+     * @param success
+     * @return
+     */
+    QSqlQuery getAccountInfo(const QString & username, bool & success);
 private:
     class InternNetworkGame;
     using spInternNetworkGame = oxygine::intrusive_ptr<InternNetworkGame>;

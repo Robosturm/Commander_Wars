@@ -54,4 +54,22 @@ var CreateAccountDialog =
         createAccount.setObjectEnabled("ConfirmBox", value);
         createAccount.setObjectEnabled("EmailBox", value);
     },
+    onAccountMessage : function(errorCode)
+    {
+        if (errorCode === GameEnums.LoginError_None)
+        {
+            createAccount.showMessageBox(qsTr("Account successfully created."));
+            createAccount.exit();
+        }
+        else if (errorCode === GameEnums.LoginError_AccountExists)
+        {
+            createAccount.showMessageBox(qsTr("An account with the current username exists already. Please change your username in the options menu."));
+            CreateAccountDialog.changeEnableForItems(true);
+        }
+        else
+        {
+            createAccount.showMessageBox(qsTr("Unknown error happened while creating the new account. No account was created."));
+            CreateAccountDialog.changeEnableForItems(true);
+        }
+    },
 };

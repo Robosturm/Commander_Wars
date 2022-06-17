@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QDateTime>
 
 #include "network/mainserver.h"
 #include "network/JsonKeys.h"
@@ -16,10 +17,17 @@
 #include "coreengine/commandlineparser.h"
 
 #include "game/gamemap.h"
-
-#include "multiplayer/networkcommands.h"
+#include "game/GameEnums.h"
 
 const char* const DRIVER = "QSQLITE";
+
+const char* const SQL_TABLE_PLAYERS = "players";
+const char* const SQL_USERNAME = "username";
+const char* const SQL_PASSWORD = "password";
+const char* const SQL_MAILADRESS = "mailAdress";
+const char* const SQL_MMR = "mmr";
+const char* const SQL_VALIDPASSWORD = "validPassword";
+const char* const SQL_LASTLOGIN = "lastLogin";
 
 spMainServer MainServer::m_pInstance;
 
@@ -86,7 +94,13 @@ MainServer::MainServer()
         }
         if (dataBaseLaunched)
         {
-            QSqlQuery query = m_serverData.exec("CREATE TABLE if not exists players (id INTEGER PRIMARY KEY, username TEXT, password TEXT, mailAdresse TEXT, mmr INTEGER, validPassword INTEGER, lastLogin TEXT)");
+            QSqlQuery query = m_serverData.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
+                                                SQL_USERNAME + " TEXT PRIMARY KEY, " +
+                                                SQL_PASSWORD + " TEXT, " +
+                                                SQL_MAILADRESS + " TEXT, " +
+                                                SQL_MMR + " INTEGER, " +
+                                                SQL_VALIDPASSWORD + " INTEGER, " +
+                                                SQL_LASTLOGIN + " TEXT)");
             if (sqlQueryFailed(query))
             {
                 CONSOLE_PRINT("Unable to create player table " + m_serverData.lastError().nativeErrorCode(), Console::eERROR);
@@ -534,17 +548,17 @@ void MainServer::handleCryptedMessage(qint64 socketId, const QJsonDocument & doc
     {
         case NetworkCommands::PublicKeyActions::LoginAccount:
         {
-            loginToAccount(socketId, decryptedDoc);
+            loginToAccount(socketId, decryptedDoc, action);
             break;
         }
         case NetworkCommands::PublicKeyActions::CreateAccount:
         {
-            createAccount(socketId, decryptedDoc);
+            createAccount(socketId, decryptedDoc, action);
             break;
         }
         case NetworkCommands::PublicKeyActions::ResetPassword:
         {
-            resetAccountPassword(socketId, decryptedDoc);
+            resetAccountPassword(socketId, decryptedDoc, action);
             break;
         }
         default:
@@ -555,7 +569,7 @@ void MainServer::handleCryptedMessage(qint64 socketId, const QJsonDocument & doc
     }
 }
 
-void MainServer::createAccount(qint64 socketId, const QJsonDocument & doc)
+void MainServer::createAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
 {
     auto & cypher = Mainapp::getInstance()->getCypher();
     QJsonObject data = doc.object();
@@ -563,32 +577,134 @@ void MainServer::createAccount(qint64 socketId, const QJsonDocument & doc)
     QString mailAdress = data.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Creating account with username " + username + " and email adress " + mailAdress, Console::eDEBUG);
+    bool success = false;
+    QSqlQuery query = getAccountInfo(username, success);
+    GameEnums::LoginError result = GameEnums::LoginError_None;
+    if (!query.first() && success)
+    {
+        auto hexPassword = password.toHex();
+        QString dateTime = QDateTime::currentDateTimeUtc().toString();
+        QString command = QString("INSERT INTO ") + SQL_TABLE_PLAYERS + "(" +
+                          SQL_USERNAME + ", " +
+                          SQL_PASSWORD + ", " +
+                          SQL_MAILADRESS + ", " +
+                          SQL_MMR + ", " +
+                          SQL_VALIDPASSWORD + ", " +
+                          SQL_LASTLOGIN +
+                          ") VALUES(" +
+                          "'" + username + "'," +
+                          "'" + hexPassword + "'," +
+                          "'" + mailAdress + "'," +
+                          "750," +
+                          "1," +
+                          "'" + dateTime + "'" +
+                          ")";
+        query = m_serverData.exec(command);
+        if (sqlQueryFailed(query))
+        {
+            result = GameEnums::LoginError_AccountExists;
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Username is already existing." , Console::eDEBUG);
+        result = GameEnums::LoginError_AccountExists;
+    }
+    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    QJsonObject outData;
+    outData.insert(JsonKeys::JSONKEY_COMMAND, command);
+    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
+    QJsonDocument outDoc(outData);
+    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc)
+void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
 {
     auto & cypher = Mainapp::getInstance()->getCypher();
     QJsonObject data = doc.object();
     QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
+    bool success = false;
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Login to account with username " + username, Console::eDEBUG);
+    QSqlQuery query = getAccountInfo(username, success);
+    GameEnums::LoginError result = GameEnums::LoginError_None;
+    if (query.first() && success)
+    {
+        auto dbPassword = query.value(SQL_PASSWORD);
+        if (dbPassword.toByteArray() != password.toHex())
+        {
+            result = GameEnums::LoginError_WrongPassword;
+        }
+        else
+        {
+            // mark client is logged in
+            m_pGameServer->sigSetIsActive(socketId, true);
+            sendGameDataToClient(socketId);
+        }
+    }
+    else
+    {
+        result = GameEnums::LoginError_AccountDoesntExist;
+    }
+    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    QJsonObject outData;
+    outData.insert(JsonKeys::JSONKEY_COMMAND, command);
+    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
+    QJsonDocument outDoc(outData);
+    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc)
+void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
 {
     QJsonObject data = doc.object();
     QString mailAdress = data.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Resetting account with username " + username + " and email adress " + mailAdress, Console::eDEBUG);
-
+    bool success = false;
+    QSqlQuery query = getAccountInfo(username, success);
+    GameEnums::LoginError result = GameEnums::LoginError_None;
+    if (query.first() && success)
+    {
+        auto dbPassword = query.value(SQL_MAILADRESS);
+        if (dbPassword.toString() == mailAdress)
+        {
+            // todo reset password and send mail
+        }
+        else
+        {
+            result = GameEnums::LoginError_InvalidPasswordReset;
+        }
+    }
+    else
+    {
+        result = GameEnums::LoginError_AccountDoesntExist;
+    }
+    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    QJsonObject outData;
+    outData.insert(JsonKeys::JSONKEY_COMMAND, command);
+    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
+    QJsonDocument outDoc(outData);
+    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
-//        query = m_serverData.exec("INSERT INTO people(name) VALUES('Eddie Guerrero')");
-//        if(!query.isActive())
-//        {
-//            qWarning() << "ERROR: " << query.lastError().text();
-//        }
-// QSqlQuery query;
-// query.prepare("SELECT name FROM people WHERE id = ?");
-// query.addBindValue(mInputText->text().toInt());
-// if(!query.exec()) qWarning() << "ERROR: " << query.lastError().text();
-// if(query.first()) mOutputText->setText(query.value(0).toString());
+
+QSqlQuery MainServer::getAccountInfo(const QString & username, bool & success)
+{
+    QSqlQuery query = m_serverData.exec(QString("SELECT ") +
+                                        SQL_USERNAME + ", " +
+                                        SQL_PASSWORD + ", " +
+                                        SQL_MAILADRESS + ", " +
+                                        SQL_MMR + ", " +
+                                        SQL_VALIDPASSWORD + ", " +
+                                        SQL_LASTLOGIN +
+                                        " from " + SQL_TABLE_PLAYERS +
+                                        " WHERE " + SQL_USERNAME +
+                                        " = '" + username + "';");
+    success = !sqlQueryFailed(query);
+    return query;
+}

@@ -59,6 +59,7 @@ public slots:
     void createServerAccount(const QString & password, const QString & emailAdress);
     void loginToServerAccount(const QString & password);
     void resetPasswordOnServerAccount(const QString & emailAdress);
+    void enableServerButtons(bool enable);
 protected slots:
     virtual void onEnter() override;
 private:
@@ -67,12 +68,15 @@ private:
     void onPublicKeyCreateAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void onPublicKeyLoginAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void onPublicKeyResetAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
+    void handleAccountMessage(quint64 socketID, const QJsonObject & objData);
 private:
     spPanel m_pGamesPanel;
     spNetworkInterface m_pTCPClient{nullptr};
     QVector<spNetworkGameData> m_games;
     spNetworkGameData m_currentGame;
     oxygine::spButton m_pButtonHostOnServer;
+    oxygine::spButton m_pButtonGameObserve;
+    oxygine::spButton m_pButtonGameJoin;
     spTableView m_Gamesview;
     QString m_password;
     bool m_loggedIn{false};

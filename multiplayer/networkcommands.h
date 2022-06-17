@@ -190,4 +190,8 @@ namespace NetworkCommands
      * @brief SERVERNOGAMESLOTSAVAILABLE
      */
     const char* const SERVERNOGAMESLOTSAVAILABLE = "SERVERNOGAMESLOTSAVAILABLE";
+    /**
+     * @brief SERVERACCOUNTMESSAGE
+     */
+    const char* const SERVERACCOUNTMESSAGE = "SERVERACCOUNTMESSAGE";
 }

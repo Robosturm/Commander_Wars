@@ -325,7 +325,9 @@ public:
 
     enum LoginError
     {
+        LoginError_None,
         LoginError_WrongPassword,
+        LoginError_AccountDoesntExist,
         LoginError_AccountExists,
         LoginError_InvalidPasswordReset,
     };

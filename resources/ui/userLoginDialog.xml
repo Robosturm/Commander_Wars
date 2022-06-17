@@ -39,14 +39,16 @@
                 <font>"main24"</font>
             </Label>
             <Passwordbox>
+                <Id>PasswordBox</Id>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>400</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Password of your account.")</tooltip>
                 <startValue>""</startValue>
-                <onEvent></onEvent>
+                <onEvent>UserLoginDialog.primaryPassword(input);</onEvent>
             </Passwordbox>
             <Button>
+                <Id>CreateAccountButton</Id>
                 <x>settings.getWidth() / 2 - 75 - 210</x>
                 <y>lastY + lastHeight + 20</y>
                 <width>200</width>
@@ -55,22 +57,25 @@
                 <onEvent>userLogin.createDialog("createAccount", "ui/createAccountDialog.xml", userLogin.getBaseMenu())</onEvent>
             </Button>
             <Button>
+                <Id>LoginButton</Id>
                 <x>settings.getWidth() / 2 - 75</x>
                 <y>lastY</y>
                 <width>150</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Login")</text>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Logs you onto the server with the given userdata.")</tooltip>
-                <onEvent></onEvent>
+                <onEvent>UserLoginDialog.login();</onEvent>
             </Button>
             <Button>
+                <Id>ForgotPasswordButton</Id>
                 <x>settings.getWidth() / 2 + 75 + 10</x>
                 <y>lastY</y>
                 <width>200</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Forgot password.")</text>
                 <tooltip>QT_TRANSLATE_NOOP("GAME", "Allows you to reset your password.")</tooltip>
-                <onEvent></onEvent>
+                <onEvent>userLogin.createDialog("forgotPassword", "ui/forgotPasswordDialog.xml", userLogin.getBaseMenu())</onEvent>
             </Button>
             <Button>
+                <Id>LocalButton</Id>
                 <x>settings.getWidth() / 2 - 75</x>
                 <y>lastY  + lastHeight + 20</y>
                 <width>150</width>

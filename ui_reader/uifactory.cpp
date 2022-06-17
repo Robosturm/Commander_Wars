@@ -126,6 +126,7 @@ void UiFactory::shutdown()
 
 void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
 {
+    CONSOLE_PRINT("Loading ui " + uiXml, Console::eDEBUG);
     if (m_dropDownPlayer.get() == nullptr)
     {
         m_dropDownPlayer = spPlayer::create(nullptr);

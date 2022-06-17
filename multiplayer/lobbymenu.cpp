@@ -86,25 +86,25 @@ LobbyMenu::LobbyMenu()
     connect(this, &LobbyMenu::sigHostServer, this, &LobbyMenu::hostServer, Qt::QueuedConnection);
     m_pButtonHostOnServer->setEnabled(false);
 
-    oxygine::spButton pButtonJoin = ObjectManager::createButton(tr("Join Game"));
-    addChild(pButtonJoin);
-    pButtonJoin->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
-    pButtonJoin->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+    m_pButtonGameJoin = ObjectManager::createButton(tr("Join Game"));
+    addChild(m_pButtonGameJoin);
+    m_pButtonGameJoin->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
+    m_pButtonGameJoin->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigJoinGame();
     });
     connect(this, &LobbyMenu::sigJoinGame, this, &LobbyMenu::joinGame, Qt::QueuedConnection);
-    pButtonJoin->setEnabled(false);
+    m_pButtonGameJoin->setEnabled(false);
 
-    oxygine::spButton pButtonObserve = ObjectManager::createButton(tr("Observe Game"));
-    addChild(pButtonObserve);
-    pButtonObserve->setPosition(Settings::getWidth() / 2 + 10, pButtonJoin->getY() - pButtonJoin->getHeight());
-    pButtonObserve->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+    m_pButtonGameObserve = ObjectManager::createButton(tr("Observe Game"));
+    addChild(m_pButtonGameObserve);
+    m_pButtonGameObserve->setPosition(Settings::getWidth() / 2 + 10, m_pButtonGameJoin->getY() - m_pButtonGameJoin->getHeight());
+    m_pButtonGameObserve->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigObserveGame();
     });
     connect(this, &LobbyMenu::sigObserveGame, this, &LobbyMenu::observeGame, Qt::QueuedConnection);
-    pButtonObserve->setEnabled(false);
+    m_pButtonGameObserve->setEnabled(false);
 
     oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Address"));
     addChild(pButtonJoinAdress);
@@ -152,6 +152,13 @@ LobbyMenu::LobbyMenu()
     }
     addChild(pChat);
     connect(this, &LobbyMenu::sigUpdateGamesView, this, &LobbyMenu::updateGamesView, Qt::QueuedConnection);
+}
+
+void LobbyMenu::enableServerButtons(bool enable)
+{
+    m_pButtonGameObserve->setEnabled(enable);
+    m_pButtonGameJoin->setEnabled(enable);
+    m_pButtonHostOnServer->setEnabled(enable);
 }
 
 void LobbyMenu::leaveServer()
@@ -353,6 +360,10 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                 CONSOLE_PRINT("Unknown public key action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
             }
         }
+        else if (messageType == NetworkCommands::SERVERACCOUNTMESSAGE)
+        {
+            handleAccountMessage(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
@@ -453,6 +464,31 @@ void LobbyMenu::onEnter()
         CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
+    }
+}
+
+void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject & objData)
+{
+    auto action = objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt();
+    auto accountError = objData.value(JsonKeys::JSONKEY_ACCOUNT_ERROR).toInt();
+    if (action >= static_cast<qint32>(NetworkCommands::PublicKeyActions::CreateAccount) &&
+        action <= static_cast<qint32>(NetworkCommands::PublicKeyActions::ResetPassword))
+    {
+        const char * const jsScripts[] =
+        {
+            "CreateAccountDialog",
+            "UserLoginDialog",
+            "ForgotPasswordDialog",
+        };
+        QString object = jsScripts[action - static_cast<qint32>(NetworkCommands::PublicKeyActions::CreateAccount)];
+        CONSOLE_PRINT("Calling function " + object + ".onAccountMessage(" + QString::number(accountError) + ")", Console::eDEBUG);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValueList args({accountError});
+        pInterpreter->doFunction(object, "onAccountMessage", args);
+    }
+    else
+    {
+        CONSOLE_PRINT("Unknown account message " + QString::number(action) + " received", Console::eDEBUG);
     }
 }
 
