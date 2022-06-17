@@ -255,9 +255,38 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/math/Rect.h
     3rd_party/oxygine-framework/oxygine/math/ScalarMath.h
     3rd_party/oxygine-framework/oxygine/math/Vector2.h
-    )
+)
 ###################################################################################
 # end oxygine stuff -> qoxygine
+###################################################################################
+
+###################################################################################
+# start stmp client stuff
+###################################################################################
+set(${PROJECT_NAME}_SmtpClient_SRCS
+    3rd_party/smtpClient/src/emailaddress.cpp 3rd_party/smtpClient/src/emailaddress.h
+    3rd_party/smtpClient/src/mimeattachment.cpp 3rd_party/smtpClient/src/mimeattachment.h
+    3rd_party/smtpClient/src/mimebase64encoder.cpp 3rd_party/smtpClient/src/mimebase64encoder.h
+    3rd_party/smtpClient/src/mimebase64formatter.cpp 3rd_party/smtpClient/src/mimebase64formatter.h
+    3rd_party/smtpClient/src/mimebytearrayattachment.cpp 3rd_party/smtpClient/src/mimebytearrayattachment.h
+    3rd_party/smtpClient/src/mimecontentencoder.cpp 3rd_party/smtpClient/src/mimecontentencoder.h
+    3rd_party/smtpClient/src/mimecontentformatter.cpp 3rd_party/smtpClient/src/mimecontentformatter.h
+    3rd_party/smtpClient/src/mimefile.cpp 3rd_party/smtpClient/src/mimefile.h
+    3rd_party/smtpClient/src/mimehtml.cpp 3rd_party/smtpClient/src/mimehtml.h
+    3rd_party/smtpClient/src/mimeinlinefile.cpp 3rd_party/smtpClient/src/mimeinlinefile.h
+    3rd_party/smtpClient/src/mimemessage.cpp 3rd_party/smtpClient/src/mimemessage.h
+    3rd_party/smtpClient/src/mimemultipart.cpp 3rd_party/smtpClient/src/mimemultipart.h
+    3rd_party/smtpClient/src/mimepart.cpp 3rd_party/smtpClient/src/mimepart.h
+    3rd_party/smtpClient/src/mimeqpencoder.cpp 3rd_party/smtpClient/src/mimeqpencoder.h
+    3rd_party/smtpClient/src/mimeqpformatter.cpp 3rd_party/smtpClient/src/mimeqpformatter.h
+    3rd_party/smtpClient/src/mimetext.cpp 3rd_party/smtpClient/src/mimetext.h
+    3rd_party/smtpClient/src/quotedprintable.cpp 3rd_party/smtpClient/src/quotedprintable.h
+    3rd_party/smtpClient/src/smtpclient.cpp 3rd_party/smtpClient/src/smtpclient.h
+    3rd_party/smtpClient/src/SmtpMime
+    3rd_party/smtpClient/src/mimeattachment.h
+)
+###################################################################################
+# end stmp client stuff
 ###################################################################################
 
 ###################################################################################
@@ -682,6 +711,7 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_SRCS}
     ${${PROJECT_NAME}_Resource_SRCS}
     ${${PROJECT_NAME}_OS_SRCS}
+    ${${PROJECT_NAME}_SmtpClient_SRCS}
     ICON.rc
     )
 
