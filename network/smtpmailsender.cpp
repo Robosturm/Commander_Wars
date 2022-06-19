@@ -6,9 +6,9 @@ SmtpMailSender::SmtpMailSender(QObject *parent)
     : QObject{parent}
 
 {
-    connect(this, &SmtpMailSender::sigSendMail, this, SmtpMailSender::sendMail, Qt::QueuedConnection);
-    connect(this, &SmtpMailSender::sigConnectToServer, this, SmtpMailSender::connectToServer, Qt::QueuedConnection);
-    connect(this, &SmtpMailSender::sigDisconnectFromServer, this, SmtpMailSender::disconnectFromServer, Qt::QueuedConnection);
+    connect(this, &SmtpMailSender::sigSendMail, this, &SmtpMailSender::sendMail, Qt::QueuedConnection);
+    connect(this, &SmtpMailSender::sigConnectToServer, this, &SmtpMailSender::connectToServer, Qt::QueuedConnection);
+    connect(this, &SmtpMailSender::sigDisconnectFromServer, this, &SmtpMailSender::disconnectFromServer, Qt::QueuedConnection);
 }
 
 SmtpMailSender::~SmtpMailSender()
@@ -37,7 +37,7 @@ void SmtpMailSender::connectToServer()
     if (m_smtpClient == nullptr)
     {
         m_smtpClient = new SmtpClient(Settings::getMailServerAddress(), Settings::getMailServerPort(), static_cast<SmtpClient::ConnectionType>(Settings::getMailServerConnectionType()));
-        connect(m_smtpClient, &SmtpClient::disconnected, this, SmtpMailSender::connectToServer, Qt::QueuedConnection);
+        connect(m_smtpClient, &SmtpClient::disconnected, this, &SmtpMailSender::connectToServer, Qt::QueuedConnection);
     }
     m_smtpClient->connectToHost();
     if (m_smtpClient->waitForReadyConnected())
@@ -64,7 +64,7 @@ void SmtpMailSender::onDisconnectFromMailServer()
     m_connected = false;
     if (m_smtpClient != nullptr)
     {
-        emit sigConnectToServer();
+        connectToServer();
     }
 }
 
