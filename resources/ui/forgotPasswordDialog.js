@@ -6,7 +6,7 @@ var ForgotPasswordDialog =
         var emailVariable = variables.createVariable("email");
         emailVariable.writeDataString(input);
     },
-    forgotPassword : function()
+    resetPassword : function()
     {
         var variables = forgotPassword.getVariables();
         var emailVariable = variables.createVariable("email");
@@ -27,7 +27,6 @@ var ForgotPasswordDialog =
         if (errorCode === GameEnums.LoginError_None)
         {
             forgotPassword.showMessageBox(qsTr("An e-mail with a new password was sent to your e-mail account."));
-            var menu = forgotPassword.getBaseMenu();
             forgotPassword.exit();
         }
         else if (errorCode === GameEnums.LoginError_InvalidPasswordReset)

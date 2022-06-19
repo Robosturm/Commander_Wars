@@ -437,6 +437,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/commandlineparser.cpp coreengine/commandlineparser.h
 
     # network engine
+    network/smtpmailsender.h network/smtpmailsender.cpp
     network/tcpclient.cpp network/tcpclient.h
     network/tcpserver.cpp network/tcpserver.h
     network/txtask.cpp network/txtask.h

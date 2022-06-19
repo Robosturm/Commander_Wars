@@ -8,6 +8,7 @@ namespace NetworkCommands
         CreateAccount,
         LoginAccount,
         ResetPassword,
+        ChangePassword,
     };
 
     /**

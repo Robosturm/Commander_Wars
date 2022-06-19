@@ -7,6 +7,8 @@
 
 #include "network/tcpserver.h"
 
+#include "3rd_party/smtpClient/src/smtpclient.h"
+
 const char* const CommandLineParser::ARG_MODS = "mods";
 const char* const CommandLineParser::ARG_SLAVE = "slave";
 const char* const CommandLineParser::ARG_SLAVENAME = "slaveServer";
@@ -28,6 +30,14 @@ const char* const CommandLineParser::ARG_SERVERSLAVELISTENADDRESS    = "serverSl
 const char* const CommandLineParser::ARG_SERVERSLAVELISTENPORT       = "serverSlaveListenPort";
 const char* const CommandLineParser::ARG_SERVERSLAVEDESPAWNTIME      = "serverSlaveDespawnTime";
 
+const char* const CommandLineParser::ARG_MAILSERVERADDRESS = "mailServerAddress";
+const char* const CommandLineParser::ARG_MAILSERVERPORT = "mailServerPort";
+const char* const CommandLineParser::ARG_MAILSERVERCONNECTIONTYPE = "mailServerConnectionType";
+const char* const CommandLineParser::ARG_MAILSERVERUSERNAME = "mailServerUsername";
+const char* const CommandLineParser::ARG_MAILSERVERPASSWORD = "mailServerPassword";
+const char* const CommandLineParser::ARG_MAILSERVERSENDADDRESS = "mailServerSendAddress";
+const char* const CommandLineParser::ARG_MAILSERVERAUTHMETHOD = "mailServerAuthMethod";
+
 CommandLineParser::CommandLineParser()
     : m_mods(ARG_MODS, tr("mods that should be loaded. As a string list separated by ';'")),
       m_slave(ARG_SLAVE, tr("If the exe is started as a slave process.")),
@@ -45,8 +55,15 @@ CommandLineParser::CommandLineParser()
       m_serverListenAddress(ARG_SERVERLISTENADDRESS, tr("The address on which the server will listen for clients. Empty for all addresses.")),
       m_serverListenPort(ARG_SERVERLISTENPORT, tr("Port on which the server will initially listen for clients.")),
       m_serverSlaveListenAddress(ARG_SERVERSLAVELISTENADDRESS, tr("The address on which the server will listen for slave games. Empty for all addresses."), "slaveListenAddress", "::1"),
-      m_serverSlaveListenPort(ARG_SERVERSLAVELISTENPORT, tr("Port on which the server will listen for slave games.")),
-      m_serverSlaveDespawnTime(ARG_SERVERSLAVEDESPAWNTIME, tr("Time in seconds till a slave game with no connected clients get despawned in seconds."))
+      m_serverSlaveListenPort(ARG_SERVERSLAVELISTENPORT, tr("Port on which the server will listen for slave games.")),      
+      m_serverSlaveDespawnTime(ARG_SERVERSLAVEDESPAWNTIME, tr("Time in seconds till a slave game with no connected clients get despawned in seconds.")),
+      m_mailServerAddress(ARG_MAILSERVERADDRESS, tr("Mail server address for the server for sending mails to accounts.")),
+      m_mailServerPort(ARG_MAILSERVERPORT, tr("Mail server port for the server for sending mails to accounts.")),
+      m_mailServerConnectionType(ARG_MAILSERVERCONNECTIONTYPE, tr("Mail server connection type (TLS, TCP, SSL) for the server for sending mails to accounts.")),
+      m_mailServerUsername(ARG_MAILSERVERUSERNAME, tr("Username on the mail server for the server for sending mails to accounts.")),
+      m_mailServerPassword(ARG_MAILSERVERPASSWORD, tr("Password on the mail server for the server for sending mails to accounts. Must be set cause the password is never stored in the game.")),
+      m_mailServerSendAddress(ARG_MAILSERVERSENDADDRESS, tr("E-Mail address used on the mail server for the server for sending mails to accounts.")),
+      m_mailServerAuthMethod(ARG_MAILSERVERAUTHMETHOD, tr("Mail server authentication type (Plain, Login) for the server for sending mails to accounts."))
 {
     m_parser.setApplicationDescription("Commander Wars game");
     m_parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
@@ -70,6 +87,13 @@ CommandLineParser::CommandLineParser()
     m_parser.addOption(m_serverSlaveListenAddress);
     m_parser.addOption(m_serverSlaveListenPort);
     m_parser.addOption(m_serverSlaveDespawnTime);
+    m_parser.addOption(m_mailServerAddress);
+    m_parser.addOption(m_mailServerPort);
+    m_parser.addOption(m_mailServerConnectionType);
+    m_parser.addOption(m_mailServerUsername);
+    m_parser.addOption(m_mailServerPassword);
+    m_parser.addOption(m_mailServerSendAddress);
+    m_parser.addOption(m_mailServerAuthMethod);
 }
 
 void CommandLineParser::parseArgs(QApplication & app)
@@ -156,6 +180,59 @@ void CommandLineParser::parseArgs(QApplication & app)
     if (m_parser.isSet(m_serverSlaveDespawnTime))
     {
         Settings::setSlaveDespawnTime(std::chrono::seconds(m_parser.value(m_serverSlaveDespawnTime).toInt()));
+    }
+    if (m_parser.isSet(m_mailServerAddress))
+    {
+        Settings::setMailServerAddress(m_parser.value(m_mailServerAddress));
+    }
+    if (m_parser.isSet(m_mailServerPort))
+    {
+        bool ok = false;
+        Settings::setMailServerPort(m_parser.value(m_mailServerPort).toInt(&ok));
+    }
+    if (m_parser.isSet(m_mailServerConnectionType))
+    {
+        auto type = m_parser.value(m_mailServerConnectionType);
+        SmtpClient::ConnectionType value = SmtpClient::TlsConnection;
+        if (type == "TLS")
+        {
+            value = SmtpClient::TlsConnection;
+        }
+        else if (type == "SSL")
+        {
+            value = SmtpClient::SslConnection;
+        }
+        else if (type == "TCP")
+        {
+            value = SmtpClient::TcpConnection;
+        }
+        Settings::setMailServerAuthMethod(static_cast<qint32>(value));
+    }
+    if (m_parser.isSet(m_mailServerUsername))
+    {
+        Settings::setMailServerUsername(m_parser.value(m_mailServerUsername));
+    }
+    if (m_parser.isSet(m_mailServerPassword))
+    {
+        Settings::setMailServerPassword(m_parser.value(m_mailServerPassword));
+    }
+    if (m_parser.isSet(m_mailServerSendAddress))
+    {
+        Settings::setMailServerSendAddress(m_parser.value(m_mailServerSendAddress));
+    }
+    if (m_parser.isSet(m_mailServerAuthMethod))
+    {
+        auto type = m_parser.value(m_mailServerAuthMethod);
+        SmtpClient::AuthMethod value = SmtpClient::AuthLogin;
+        if (type == "Login")
+        {
+            value = SmtpClient::AuthLogin;
+        }
+        else if (type == "Plain")
+        {
+            value = SmtpClient::AuthPlain;
+        }
+        Settings::setMailServerAuthMethod(static_cast<qint32>(value));
     }
 }
 

@@ -12,22 +12,15 @@ var UserLoginDialog =
         var passwordVariable = variables.createVariable("password");
         var password =  passwordVariable.readDataString();
         var menu = userLogin.getBaseMenu();
-        if (menu.isValidPassword(password) === false)
-        {
-            userLogin.showMessageBox(qsTr("Invalid password entered. The password needs to contain 8 letters, one capital one small letter a number and a special char."));
-        }
-        else
-        {
-            UserLoginDialog.changeEnableForItems(false);
-            menu.loginToServerAccount(password);
-        }
+        UserLoginDialog.changeEnableForItems(false);
+        menu.loginToServerAccount(password);
     },
     onAccountMessage : function(errorCode)
     {
+        var menu = userLogin.getBaseMenu();
         if (errorCode === GameEnums.LoginError_None)
         {
             userLogin.showMessageBox(qsTr("Logged onto the server."));
-            var menu = userLogin.getBaseMenu();
             menu.enableServerButtons(true);
             userLogin.exit();
         }
@@ -40,6 +33,12 @@ var UserLoginDialog =
         {
             userLogin.showMessageBox(qsTr("No account with your username was found."));
             UserLoginDialog.changeEnableForItems(true);
+        }
+        else if (errorCode === GameEnums.LoginError_PasswordOutdated)
+        {
+            menu.setServerRequestNewPassword(true);
+            userLogin.createDialog("changePassword", "ui/changePasswordDialog.xml", menu);
+            userLogin.exit();
         }
         else
         {

@@ -27,6 +27,7 @@ namespace JsonKeys
     const char* const JSONKEY_ENCRYPTEDKEY = "EncryptedKey";
     const char* const JSONKEY_ENCRYPTEDMESSAGE = "EncryptedMessage";
     const char* const JSONKEY_PASSWORD = "Password";
+    const char* const JSONKEY_OLDPASSWORD = "OldPassword";
     const char* const JSONKEY_EMAILADRESS = "EmailAdress";
     const char* const JSONKEY_USERNAME = "Username";
     const char* const JSONKEY_ACCOUNT_ERROR = "AccountError";

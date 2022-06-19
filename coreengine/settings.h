@@ -243,6 +243,27 @@ public:
     static void setUsername(const QString &Username);
 
 public slots:
+    static const QString &getMailServerSendAddress();
+    static void setMailServerSendAddress(const QString &newMailServerSendAddress);
+
+    static qint32 getMailServerAuthMethod();
+    static void setMailServerAuthMethod(qint32 newMailServerAuthMethod);
+
+    static const QString &getMailServerAddress();
+    static void setMailServerAddress(const QString &newMailServerAddress);
+
+    static quint16 getMailServerPort();
+    static void setMailServerPort(quint16 newMailServerPort);
+
+    static qint32 getMailServerConnectionType();
+    static void setMailServerConnectionType(qint32 newMailServerConnectionType);
+
+    static QString getMailServerUsername();
+    static void setMailServerUsername(QString newMailServerUsername);
+
+    static QString getMailServerPassword();
+    static void setMailServerPassword(QString newMailServerPassword);
+
     static const std::chrono::seconds &getSlaveDespawnTime();
     static void setSlaveDespawnTime(const std::chrono::seconds &newSlaveDespawnTime);
 
@@ -790,6 +811,15 @@ private:
     static QString m_slaveListenAdress;
     static QString m_slaveHostOptions;
     static std::chrono::seconds m_slaveDespawnTime;
+
+    // mailing
+    static QString m_mailServerAddress;
+    static quint16 m_mailServerPort;
+    static qint32 m_mailServerConnectionType;
+    static QString m_mailServerUsername;
+    static QString m_mailServerPassword;
+    static QString m_mailServerSendAddress;
+    static qint32 m_mailServerAuthMethod;
 
     // auto saving
     static std::chrono::seconds m_autoSavingCylceTime;

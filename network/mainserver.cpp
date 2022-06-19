@@ -114,6 +114,10 @@ MainServer::MainServer()
     }
     if (dataBaseLaunched)
     {
+        m_mailSender.moveToThread(&m_mailSenderThread);
+        m_mailSenderThread.start();
+        emit m_mailSender.sigConnectToServer();
+
         CONSOLE_PRINT("Starting tcp server and listening to new clients.", Console::eDEBUG);
         emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort());
         emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort());
@@ -122,6 +126,13 @@ MainServer::MainServer()
 
 MainServer::~MainServer()
 {
+    if (m_mailSenderThread.isRunning())
+    {
+        emit m_mailSender.sigDisconnectFromServer();
+        m_mailSenderThread.quit();
+        m_mailSenderThread.wait();
+        m_mailSender.moveToThread(QThread::currentThread());
+    }
     m_pGameServer->disconnectTCP();
     // clean up server and client games.
     for (auto & game : m_games)
@@ -561,6 +572,11 @@ void MainServer::handleCryptedMessage(qint64 socketId, const QJsonDocument & doc
             resetAccountPassword(socketId, decryptedDoc, action);
             break;
         }
+        case NetworkCommands::PublicKeyActions::ChangePassword:
+        {
+            changeAccountPassword(socketId, decryptedDoc, action);
+            break;
+        }
         default:
         {
             CONSOLE_PRINT("Unknown crypted message action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
@@ -633,14 +649,19 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, Netw
     if (query.first() && success)
     {
         auto dbPassword = query.value(SQL_PASSWORD);
+        auto outdatedPassword = query.value(SQL_VALIDPASSWORD).toInt();
         if (dbPassword.toByteArray() != password.toHex())
         {
             result = GameEnums::LoginError_WrongPassword;
         }
+        if (outdatedPassword == 0)
+        {
+            result = GameEnums::LoginError_PasswordOutdated;
+        }
         else
         {
-            // mark client is logged in
-            m_pGameServer->sigSetIsActive(socketId, true);
+            // mark client as logged in
+            emit m_pGameServer->sigSetIsActive(socketId, true);
             sendGameDataToClient(socketId);
         }
     }
@@ -669,10 +690,30 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc
     GameEnums::LoginError result = GameEnums::LoginError_None;
     if (query.first() && success)
     {
-        auto dbPassword = query.value(SQL_MAILADRESS);
-        if (dbPassword.toString() == mailAdress)
+        auto dbMailAdress = query.value(SQL_MAILADRESS);
+        if (dbMailAdress.toString() == mailAdress)
         {
-            // todo reset password and send mail
+            QString newPassword = createRandomPassword();
+            Password password;
+            password.setPassword(newPassword);
+            QString message = "Hello " + username + "\n\n" +
+                              "You're password has been reset. \n" +
+                              "You're new password is: " + newPassword + "\n\n" +
+                              "You have to change your password \n" +
+                              "once you logged into the server again\n\n" +
+                              "Kind regards\nThe server crew";
+            auto changeQuery = m_serverData.exec(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
+                                            SQL_PASSWORD + " = " + "'" + password.getHash().toHex() + "', " +
+                                            SQL_VALIDPASSWORD + " = 0 WHERE " +
+                                            SQL_USERNAME + " = '" + username + "';");
+            if (!sqlQueryFailed(changeQuery))
+            {
+                emit m_mailSender.sigSendMail(0, "Commander Wars password reset", message, mailAdress, username);
+            }
+            else
+            {
+                result = GameEnums::LoginError_InvalidPasswordReset;
+            }
         }
         else
         {
@@ -693,6 +734,104 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc
     emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
+void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject data = doc.object();
+    QByteArray oldPassword = cypher.toByteArray(data.value(JsonKeys::JSONKEY_OLDPASSWORD).toArray());
+    QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
+    bool success = false;
+    QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
+    CONSOLE_PRINT("Login to account with username " + username, Console::eDEBUG);
+    QSqlQuery query = getAccountInfo(username, success);
+    GameEnums::LoginError result = GameEnums::LoginError_None;
+    if (query.first() && success)
+    {
+        auto dbPassword = query.value(SQL_PASSWORD);
+        auto outdatedPassword = query.value(SQL_VALIDPASSWORD).toInt();
+        if (dbPassword.toByteArray() != oldPassword.toHex())
+        {
+            result = GameEnums::LoginError_WrongPassword;
+        }
+        else
+        {
+            auto changeQuery = m_serverData.exec(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
+                                            SQL_PASSWORD + " = " + "'" + password.toHex() + "', " +
+                                            SQL_VALIDPASSWORD + " = 1 WHERE " +
+                                            SQL_USERNAME + " = '" + username + "';");
+            if (sqlQueryFailed(changeQuery))
+            {
+                result = GameEnums::LoginError_InvalidPasswordReset;
+            }
+            else
+            {
+                if (outdatedPassword == 0)
+                {
+                    // mark client as logged in
+                    emit m_pGameServer->sigSetIsActive(socketId, true);
+                    sendGameDataToClient(socketId);
+                }
+            }
+        }
+    }
+    else
+    {
+        result = GameEnums::LoginError_AccountDoesntExist;
+    }
+    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    QJsonObject outData;
+    outData.insert(JsonKeys::JSONKEY_COMMAND, command);
+    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
+    QJsonDocument outDoc(outData);
+    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+QString MainServer::createRandomPassword() const
+{
+    QString password;
+    QVector<char> specialChars = {'#', '?', '!', '@', '$', '%', '^', '&', '*', '-'};
+    auto specialCharPos = GlobalUtils::randInt(0, 7);
+    auto numberCharPos = GlobalUtils::randInt(0, 7);
+    while (numberCharPos == specialCharPos)
+    {
+        numberCharPos = GlobalUtils::randInt(0, 7);
+    }
+    bool smallLetter = false;
+    bool capitalLetter = false;
+    for (qint32 i = 0; i < 8; ++i)
+    {
+        if (i == specialCharPos)
+        {
+            password += specialChars[GlobalUtils::randInt(0, specialChars.length() - 1)];
+        }
+        else if (i == numberCharPos)
+        {
+            password += static_cast<char>(GlobalUtils::randInt('0', '9'));
+        }
+        else if (GlobalUtils::randInt(0, 1) == 1)
+        {
+            password += static_cast<char>(GlobalUtils::randInt('A', 'Z'));
+            capitalLetter = true;
+        }
+        else
+        {
+            password += static_cast<char>(GlobalUtils::randInt('a', 'z'));
+            smallLetter = true;
+        }
+    }
+    if (!smallLetter)
+    {
+        password += static_cast<char>(GlobalUtils::randInt('a', 'z'));
+    }
+    if (!capitalLetter)
+    {
+        password += static_cast<char>(GlobalUtils::randInt('A', 'Z'));
+    }
+    return password;
+}
+
 QSqlQuery MainServer::getAccountInfo(const QString & username, bool & success)
 {
     QSqlQuery query = m_serverData.exec(QString("SELECT ") +
@@ -708,3 +847,4 @@ QSqlQuery MainServer::getAccountInfo(const QString & username, bool & success)
     success = !sqlQueryFailed(query);
     return query;
 }
+

@@ -27,7 +27,7 @@ public:
     explicit LobbyMenu();
     virtual ~LobbyMenu() = default;
 
-signals:    
+signals:
     void sigExitMenue();
     void sigHostServer();
     void sigHostLocal();
@@ -37,6 +37,8 @@ signals:
     void sigObserveAdress();
     void sigUpdateGamesView();
 public slots:
+    bool getServerRequestNewPassword() const;
+    void setServerRequestNewPassword(bool newServerRequestNewPassword);
     void exitMenue();    
     void hostLocal();
     void hostServer();
@@ -59,6 +61,7 @@ public slots:
     void createServerAccount(const QString & password, const QString & emailAdress);
     void loginToServerAccount(const QString & password);
     void resetPasswordOnServerAccount(const QString & emailAdress);
+    void changePasswordOnServerAccount(const QString & oldEmailAdress, const QString & newEmailAdress);
     void enableServerButtons(bool enable);
 protected slots:
     virtual void onEnter() override;
@@ -68,6 +71,7 @@ private:
     void onPublicKeyCreateAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void onPublicKeyLoginAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void onPublicKeyResetAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
+    void onPublicKeyChangePassword(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void handleAccountMessage(quint64 socketID, const QJsonObject & objData);
 private:
     spPanel m_pGamesPanel;
@@ -82,7 +86,9 @@ private:
     bool m_loggedIn{false};
 
     Password m_serverPassword;
+    Password m_oldServerPassword;
     QString m_serverEmailAdress;
+    bool m_serverRequestNewPassword;
 };
 
 #endif // LOBBYMENU_H

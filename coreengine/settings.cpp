@@ -108,6 +108,14 @@ QString Settings::m_slaveListenAdress = "::1";
 bool Settings::m_Server               = false;
 bool Settings::m_record               = true;
 std::chrono::seconds Settings::m_slaveDespawnTime = std::chrono::minutes(0);
+// mailing
+QString Settings::m_mailServerAddress = "";
+quint16 Settings::m_mailServerPort = 0;
+qint32 Settings::m_mailServerConnectionType = 2;
+QString Settings::m_mailServerUsername = "";
+QString Settings::m_mailServerPassword = "";
+qint32 Settings::m_mailServerAuthMethod = 1;
+QString Settings::m_mailServerSendAddress = "";
 // auto saving
 std::chrono::seconds Settings::m_autoSavingCylceTime = std::chrono::minutes(0);
 qint32 Settings::m_autoSavingCycle = 0;
@@ -337,6 +345,13 @@ Settings::Settings()
         new Value<QString>{"Network", "SlaveListenAdress", &m_slaveListenAdress, "", "", ""},
         new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&10000&20000;::1&50000&65535", "", ""},
         new Value<std::chrono::seconds>{"Network", "SlaveDespawnTime", &m_slaveDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(60), std::chrono::seconds(60 * 60 * 24 * 24)},
+        // mailing
+        new Value<QString>{"Mailing", "MailServerAddress", &m_mailServerAddress, "", "", ""},
+        new Value<quint16>{"Mailing", "MailServerPort", &m_mailServerPort, 0, 0, std::numeric_limits<quint16>::max()},
+        new Value<qint32>{"Mailing", "MailServerConnectionType", &m_mailServerConnectionType, 2, 0, 2},
+        new Value<QString>{"Mailing", "MailServerUsername", &m_mailServerUsername, "", "", ""},
+        new Value<qint32>{"Mailing", "MailServerAuthMethod", &m_mailServerAuthMethod, 1, 0, 1},
+        new Value<QString>{"Mailing", "MailServerSendAddress", &m_mailServerSendAddress, "", "", ""},
 
         // auto saving
         new Value<std::chrono::seconds>{"Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)},
@@ -347,6 +362,76 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+const QString &Settings::getMailServerSendAddress()
+{
+    return m_mailServerSendAddress;
+}
+
+void Settings::setMailServerSendAddress(const QString &newMailServerSendAddress)
+{
+    m_mailServerSendAddress = newMailServerSendAddress;
+}
+
+qint32 Settings::getMailServerAuthMethod()
+{
+    return m_mailServerAuthMethod;
+}
+
+void Settings::setMailServerAuthMethod(qint32 newMailServerAuthMethod)
+{
+    m_mailServerAuthMethod = newMailServerAuthMethod;
+}
+
+QString Settings::getMailServerPassword()
+{
+    return m_mailServerPassword;
+}
+
+void Settings::setMailServerPassword(QString newMailServerPassword)
+{
+    m_mailServerPassword = newMailServerPassword;
+}
+
+QString Settings::getMailServerUsername()
+{
+    return m_mailServerUsername;
+}
+
+void Settings::setMailServerUsername(QString newMailServerUsername)
+{
+    m_mailServerUsername = newMailServerUsername;
+}
+
+qint32 Settings::getMailServerConnectionType()
+{
+    return m_mailServerConnectionType;
+}
+
+void Settings::setMailServerConnectionType(qint32 newMailServerConnectionType)
+{
+    m_mailServerConnectionType = newMailServerConnectionType;
+}
+
+quint16 Settings::getMailServerPort()
+{
+    return m_mailServerPort;
+}
+
+void Settings::setMailServerPort(quint16 newMailServerPort)
+{
+    m_mailServerPort = newMailServerPort;
+}
+
+const QString &Settings::getMailServerAddress()
+{
+    return m_mailServerAddress;
+}
+
+void Settings::setMailServerAddress(const QString &newMailServerAddress)
+{
+    m_mailServerAddress = newMailServerAddress;
 }
 
 const std::chrono::seconds &Settings::getSlaveDespawnTime()

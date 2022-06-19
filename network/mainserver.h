@@ -9,6 +9,7 @@
 #include "network/tcpclient.h"
 #include "network/networkgamedata.h"
 #include "network/networkgame.h"
+#include "network/smtpmailsender.h"
 
 #include "multiplayer/networkcommands.h"
 
@@ -82,7 +83,11 @@ public slots:
      * @param configuration
      */
     void startRemoteGame(const QString & initScript, const QString & id);
-
+    /**
+     * @brief createRandomPassword
+     * @return
+     */
+    QString createRandomPassword() const;
 private slots:
     /**
      * @brief startRemoteGame used for ai training and to move data from one thread context to this one
@@ -192,12 +197,24 @@ private:
      */
     void resetAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
     /**
+     * @brief changeAccountPassword
+     * @param socketId
+     * @param doc
+     * @param action
+     */
+    void changeAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
+    /**
      * @brief getAccountInfo
      * @param username
      * @param success
      * @return
      */
     QSqlQuery getAccountInfo(const QString & username, bool & success);
+    /**
+     * @brief sendMail
+     * @param message
+     */
+    void sendMail(QString message);
 private:
     class InternNetworkGame;
     using spInternNetworkGame = oxygine::intrusive_ptr<InternNetworkGame>;
@@ -260,6 +277,14 @@ private:
      * @brief m_serverData
      */
     QSqlDatabase m_serverData;
+    /**
+     * @brief m_mailSender
+     */
+    SmtpMailSender m_mailSender;
+    /**
+     * @brief m_mailSenderThread
+     */
+    QThread m_mailSenderThread;
 };
 
 #endif // MAINSERVER_H

@@ -355,6 +355,10 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             {
                 onPublicKeyResetAccount(socketID, objData, action);
             }
+            else if (action == NetworkCommands::PublicKeyActions::ChangePassword)
+            {
+                onPublicKeyChangePassword(socketID, objData, action);
+            }
             else
             {
                 CONSOLE_PRINT("Unknown public key action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
@@ -472,13 +476,14 @@ void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject & objDa
     auto action = objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt();
     auto accountError = objData.value(JsonKeys::JSONKEY_ACCOUNT_ERROR).toInt();
     if (action >= static_cast<qint32>(NetworkCommands::PublicKeyActions::CreateAccount) &&
-        action <= static_cast<qint32>(NetworkCommands::PublicKeyActions::ResetPassword))
+        action <= static_cast<qint32>(NetworkCommands::PublicKeyActions::ChangePassword))
     {
         const char * const jsScripts[] =
         {
             "CreateAccountDialog",
             "UserLoginDialog",
             "ForgotPasswordDialog",
+            "ChangePasswordDialog",
         };
         QString object = jsScripts[action - static_cast<qint32>(NetworkCommands::PublicKeyActions::CreateAccount)];
         CONSOLE_PRINT("Calling function " + object + ".onAccountMessage(" + QString::number(accountError) + ")", Console::eDEBUG);
@@ -490,6 +495,16 @@ void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject & objDa
     {
         CONSOLE_PRINT("Unknown account message " + QString::number(action) + " received", Console::eDEBUG);
     }
+}
+
+bool LobbyMenu::getServerRequestNewPassword() const
+{
+    return m_serverRequestNewPassword;
+}
+
+void LobbyMenu::setServerRequestNewPassword(bool newServerRequestNewPassword)
+{
+    m_serverRequestNewPassword = newServerRequestNewPassword;
 }
 
 bool LobbyMenu::isValidEmailAdress(const QString & emailAdress)
@@ -557,6 +572,18 @@ void LobbyMenu::onPublicKeyResetAccount(quint64 socketID, const QJsonObject & ob
 
 }
 
+void LobbyMenu::onPublicKeyChangePassword(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
+    data.insert(JsonKeys::JSONKEY_OLDPASSWORD, cypher.toJsonArray(m_oldServerPassword.getHash()));
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    QJsonDocument doc(data);
+    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
+    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
 void LobbyMenu::loginToServerAccount(const QString & password)
 {
     m_serverPassword.setPassword(password);
@@ -571,4 +598,13 @@ void LobbyMenu::resetPasswordOnServerAccount(const QString & emailAdress)
     Mainapp* pApp = Mainapp::getInstance();
     auto & cypher = pApp->getCypher();
     emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::ResetPassword), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::changePasswordOnServerAccount(const QString & oldEmailAdress, const QString & newEmailAdress)
+{
+    m_oldServerPassword.setPassword(oldEmailAdress);
+    m_serverPassword.setPassword(newEmailAdress);
+    Mainapp* pApp = Mainapp::getInstance();
+    auto & cypher = pApp->getCypher();
+    emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::ChangePassword), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }

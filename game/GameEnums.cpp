@@ -181,6 +181,7 @@ void GameEnums::registerEnums()
     value.setProperty("LoginError_AccountDoesntExist", LoginError_AccountDoesntExist);
     value.setProperty("LoginError_AccountExists", LoginError_AccountExists);
     value.setProperty("LoginError_InvalidPasswordReset", LoginError_InvalidPasswordReset);
+    value.setProperty("LoginError_PasswordOutdated", LoginError_PasswordOutdated);
 
     pInterpreter->setGlobal("GameEnums", value);
 }

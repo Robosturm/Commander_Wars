@@ -4766,5 +4766,7 @@
         <file>resources/ui/createAccountDialog.xml</file>
         <file>resources/ui/forgotPasswordDialog.js</file>
         <file>resources/ui/forgotPasswordDialog.xml</file>
+        <file>resources/ui/changePasswordDialog.js</file>
+        <file>resources/ui/changePasswordDialog.xml</file>
     </qresource>
 </RCC>
