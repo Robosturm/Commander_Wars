@@ -74,13 +74,23 @@ CO_SANJURO.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
         if (unit.getOwner() === co.getOwner())
         {
-            var variables = co.getVariables();
-            var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());
-            var builded = buildedVar.readDataBool();
-            if (builded === true)
+            switch (co.getPowerMode())
             {
-                // movement boost for builded units
-                return -999;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                var variables = co.getVariables();
+                var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());
+                var builded = buildedVar.readDataBool();
+                if (builded === true)
+                {
+                    // movement boost for builded units
+                    return -999;
+                }
+                break;
+            case GameEnums.PowerMode_Power:
+                break;
+            default:
+                break;
             }
         }
     }
