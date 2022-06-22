@@ -95,7 +95,7 @@ CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, ma
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (attackerValue < defenderValue)
+                if (attackerValue > defenderValue)
                 {
                     return true;
                 }
