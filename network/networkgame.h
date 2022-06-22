@@ -67,6 +67,11 @@ public:
      */
     void slaveRunning(const QJsonObject & objData, spTCPServer & pGameServer);
     /**
+     * @brief slaveGameStarted
+     * @param objData
+     */
+    void slaveGameStarted(const QJsonObject & objData);
+    /**
      * @brief startCloseTimer
      */
     void startCloseTimer();

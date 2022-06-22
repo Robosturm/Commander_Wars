@@ -1,6 +1,7 @@
 #include <QFile>
 #include <QTime>
-#include <qguiapplication.h>
+#include <QGuiApplication>
+#include <QJsonArray>
 
 #include "menue/gamemenue.h"
 #include "menue/victorymenue.h"
@@ -43,6 +44,7 @@
 #include "multiplayer/networkcommands.h"
 
 #include "network/tcpserver.h"
+#include "network/JsonKeys.h"
 
 #include "wiki/fieldinfo.h"
 #include "wiki/wikiview.h"
@@ -1570,7 +1572,32 @@ void GameMenue::startGame()
     }
     m_pMap->setVisible(true);
     m_gameStarted = true;
-    
+    sendGameStartedToServer();
+}
+
+void GameMenue::sendGameStartedToServer()
+{
+    if (Mainapp::getSlaveClient().get() != nullptr)
+    {
+        QString command = QString(NetworkCommands::SLAVEGAMESTARTED);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonArray usernames;
+        qint32 count = m_pMap->getPlayerCount();
+        for (qint32 i = 0; i < count; ++i)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
+            {
+                usernames.append(pPlayer->getPlayerNameId());
+            }
+        }
+        data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
+        QJsonDocument doc(data);
+        emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
 }
 
 void GameMenue::keyInput(oxygine::KeyEvent event)

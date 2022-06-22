@@ -164,6 +164,10 @@ namespace NetworkCommands
      */
     const char* const SERVERGAMEDATA = "SERVERGAMEDATA";
     /**
+     * @brief SERVERGAMESTARTED
+     */
+    const char* const SLAVEGAMESTARTED = "SLAVEGAMESTARTED";
+    /**
      * @brief SERVERJOINGAME
      */
     const char* const SERVERJOINGAME = "SERVERJOINGAME";
@@ -195,4 +199,8 @@ namespace NetworkCommands
      * @brief SERVERACCOUNTMESSAGE
      */
     const char* const SERVERACCOUNTMESSAGE = "SERVERACCOUNTMESSAGE";
+    /**
+     * @brief SERVERREQUESTUSERGAMES
+     */
+    const char* const SERVERREQUESTUSERGAMES = "SERVERREQUESTUSERGAMES";
 }

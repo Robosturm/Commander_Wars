@@ -20,15 +20,16 @@ namespace JsonKeys
     const char* const JSONKEY_ChatSender = "sender";
     const char* const JSONKEY_ChatMessage = "message";
     const char* const JSONKEY_ChatTarget = "target";
-    const char* const JSONKEY_PUBLICKEY = "PublicKey";
-    const char* const JSONKEY_RECEIVEACTION = "ReceiveAction";
-    const char* const JSONKEY_DECRYPTEDMESSAGE = "DecryptedMessage";
+    const char* const JSONKEY_PUBLICKEY = "publicKey";
+    const char* const JSONKEY_RECEIVEACTION = "receiveAction";
+    const char* const JSONKEY_DECRYPTEDMESSAGE = "decryptedMessage";
     const char* const JSONKEY_IV = "iv";
-    const char* const JSONKEY_ENCRYPTEDKEY = "EncryptedKey";
-    const char* const JSONKEY_ENCRYPTEDMESSAGE = "EncryptedMessage";
-    const char* const JSONKEY_PASSWORD = "Password";
-    const char* const JSONKEY_OLDPASSWORD = "OldPassword";
-    const char* const JSONKEY_EMAILADRESS = "EmailAdress";
-    const char* const JSONKEY_USERNAME = "Username";
-    const char* const JSONKEY_ACCOUNT_ERROR = "AccountError";
+    const char* const JSONKEY_ENCRYPTEDKEY = "encryptedKey";
+    const char* const JSONKEY_ENCRYPTEDMESSAGE = "encryptedMessage";
+    const char* const JSONKEY_PASSWORD = "password";
+    const char* const JSONKEY_OLDPASSWORD = "oldPassword";
+    const char* const JSONKEY_EMAILADRESS = "emailAdress";
+    const char* const JSONKEY_USERNAME = "username";
+    const char* const JSONKEY_ACCOUNT_ERROR = "accountError";
+    const char* const JSONKEY_USERNAMES = "usernames";
 }

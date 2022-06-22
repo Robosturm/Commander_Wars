@@ -42,7 +42,7 @@ public:
     QString getDescription() const;
     void setDescription(const QString &value);
 
-    QStringList getMods() const;
+    const QStringList & getMods() const;
     void setMods(const QStringList &Mods);
 
     qint32 getMaxPlayers() const;
@@ -68,10 +68,13 @@ public:
     quint16 getSlavePort() const;
     void setSlavePort(quint16 newPort);
 
+    const QStringList & getPlayerNames() const;
+    void setPlayerNames(const QStringList &playerNames);
 private:
     qint32 m_players{0};
     qint32 m_maxPlayers{0};
     QStringList m_Mods;
+    QStringList m_playerNames;
     QString m_description;
     QString m_mapName;
     QString m_slaveName;

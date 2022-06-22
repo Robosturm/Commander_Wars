@@ -361,7 +361,6 @@ protected slots:
      * @brief onEnter
      */
     virtual void onEnter() override;
-
 protected:
     void loadUIButtons();
     void loadGameMenue();
@@ -369,6 +368,10 @@ protected:
     void keyInputAll(Qt::Key cur);
     QString getSaveFileEnding();
     void showChat();
+    /**
+     * @brief sendGameStartedToServer
+     */
+    void sendGameStartedToServer();
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;

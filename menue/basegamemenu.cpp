@@ -71,7 +71,6 @@ BaseGamemenu::~BaseGamemenu()
         Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->deleteObject(m_jsName);
     }
-    m_MapMover->moveToThread(QThread::currentThread());
     if (m_MapMoveThread.isRunning())
     {
         m_MapMoveThread.quit();

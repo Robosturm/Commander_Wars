@@ -245,6 +245,14 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         {
             onOpenPlayerCount(socketID, objData);
         }
+        else if (messageType == NetworkCommands::SLAVEGAMESTARTED)
+        {
+            onSlaveGameStarted(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::SERVERREQUESTUSERGAMES)
+        {
+            onRequestUsergames(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
@@ -272,6 +280,45 @@ void MainServer::onGameRunningOnServer(quint64 socketID, const QJsonObject & obj
         auto & internGame = iter.value();
         internGame->game->slaveRunning(objData, m_pGameServer);
     }
+}
+
+void MainServer::onSlaveGameStarted(quint64 socketID, const QJsonObject & objData)
+{
+    QString slaveName = objData.value(JsonKeys::JSONKEY_SLAVENAME).toString();
+    auto iter = m_games.find(slaveName);
+    if (iter != m_games.end())
+    {
+        auto & internGame = iter.value();
+        internGame->game->slaveGameStarted(objData);
+    }
+}
+
+void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objData)
+{
+    QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
+    QString command = QString(NetworkCommands::SERVERGAMEDATA);
+    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    QJsonObject games;
+    qint32 i = 0;
+    for (const auto & game : qAsConst(m_games))
+    {
+        if (game->game.get() != nullptr &&
+            game->game->getSlaveRunning())
+        {
+            auto & data = game->game->getData();
+            if (data.getLaunched() &&
+                data.getPlayerNames().contains(username))
+            {
+
+            }
+        }
+    }
+    data.insert(JsonKeys::JSONKEY_GAMES, games);
+    // send server data to all connected clients
+    QJsonDocument doc(data);
+    emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData)
@@ -479,7 +526,8 @@ void MainServer::sendGameDataToClient(qint64 socketId)
     for (const auto & game : qAsConst(m_games))
     {
         if (game->game.get() != nullptr &&
-            game->game->getSlaveRunning())
+            game->game->getSlaveRunning() &&
+            !game->game->getData().getLaunched())
         {
             QJsonObject obj = game->game->getData().toJson();
             games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);

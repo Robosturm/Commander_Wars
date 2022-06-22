@@ -154,6 +154,18 @@ private:
      */
     void onGameRunningOnServer(quint64 socketID, const QJsonObject & objData);
     /**
+     * @brief onSlaveGameStarted
+     * @param socketID
+     * @param objData
+     */
+    void onSlaveGameStarted(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief onRequestUsergames
+     * @param socketID
+     * @param objData
+     */
+    void onRequestUsergames(quint64 socketID, const QJsonObject & objData);
+    /**
      * @brief onOpenPlayerCount
      * @param socketID
      * @param stream
