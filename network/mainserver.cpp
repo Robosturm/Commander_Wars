@@ -311,7 +311,9 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
             if (data.getLaunched() &&
                 data.getPlayerNames().contains(username))
             {
-
+                QJsonObject obj = game->game->getData().toJson();
+                games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+                ++i;
             }
         }
     }

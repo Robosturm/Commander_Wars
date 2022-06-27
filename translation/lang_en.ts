@@ -2244,22 +2244,22 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1538"/>
+        <location filename="../game/gamemap.cpp" line="1540"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1548"/>
+        <location filename="../game/gamemap.cpp" line="1550"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1556"/>
+        <location filename="../game/gamemap.cpp" line="1558"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1568"/>
+        <location filename="../game/gamemap.cpp" line="1570"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>

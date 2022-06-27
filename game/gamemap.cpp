@@ -1505,7 +1505,9 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
         if (showLoadingScreen)
         {
-            pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_heigth), 5 + 75 * y / m_headerInfo.m_heigth);
+            QString title = tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_heigth);
+            qint32 progress = 5 + 75 * y / m_headerInfo.m_heigth;
+            pLoadingScreen->setProgress(title, progress);
         }
         m_fields.push_back(std::vector<spTerrain>(m_headerInfo.m_width, spTerrain()));
         auto pActor = oxygine::spActor::create();

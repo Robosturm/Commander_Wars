@@ -394,7 +394,9 @@ bool Player::colorToTableInTable(QColor baseColor)
             dirIter.next();
             QString path = dirIter.fileInfo().filePath();
             QImage img(path);
-            if (QColor(img.pixel(255, 255)) == baseColor)
+            if (img.width() > 255 &&
+                img.height() > 255 &&
+                QColor(img.pixel(255, 255)) == baseColor)
             {
                 CONSOLE_PRINT("load table " + path, Console::eDEBUG);
                 m_colorTable.load(path);
@@ -2156,4 +2158,5 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         pStream >> type;
         m_controlType = static_cast<GameEnums::AiTypes>(type);
     }
+    CONSOLE_PRINT("Loaded player " + m_playerNameId, Console::eDEBUG);
 }

@@ -23,6 +23,10 @@ LoadingScreen::LoadingScreen()
     Interpreter::setCppOwnerShip(this);
     setPriority(static_cast<quint16>(Mainapp::ZOrder::Loadingscreen));
 }
+LoadingScreen::~LoadingScreen()
+{
+    CONSOLE_PRINT("LoadingScreen::deleted", Console::eDEBUG);
+}
 
 void LoadingScreen::show()
 {    
@@ -72,16 +76,19 @@ void LoadingScreen::show()
     m_workText->setHtmlText("Loading...");
     m_loadingProgress->setHtmlText("0 %");
     m_LoadingBar->setWidth(1);
-    setVisible(true);
-    
+    setVisible(true);    
 }
 
 void LoadingScreen::setProgress(QString workText, qint32 value)
 {
+    CONSOLE_PRINT("LoadingScreen::setProgress " + workText + " " + QString::number(value), Console::eDEBUG);
     m_workText->setHtmlText(workText);
     m_loadingProgress->setHtmlText(QString::number(value) + " %");
     m_LoadingBar->setWidth(value * Settings::getWidth() / 100);
-    QApplication::processEvents();
+    if (Mainapp::getInstance()->isMainThread())
+    {
+        QApplication::processEvents();
+    }
 }
 
 void LoadingScreen::setWorktext(QString workText)
