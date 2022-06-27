@@ -116,8 +116,6 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     {
         m_enabledAutosaving = true;
     }
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->continueRendering();
 }
 
 GameMenue::GameMenue(QString map, bool saveGame)
@@ -136,8 +134,6 @@ GameMenue::GameMenue(QString map, bool saveGame)
     {
         m_enabledAutosaving = true;
     }
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->continueRendering();
 }
 
 GameMenue::GameMenue(spGameMap pMap)
@@ -148,8 +144,6 @@ GameMenue::GameMenue(spGameMap pMap)
     setObjectName("GameMenue");
     CONSOLE_PRINT("Creating game menu singleton", Console::eDEBUG);
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->continueRendering();
 }
 
 GameMenue::~GameMenue()

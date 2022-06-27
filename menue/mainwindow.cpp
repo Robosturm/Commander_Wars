@@ -291,7 +291,6 @@ void Mainwindow::enterLoadCampaign()
 
 void Mainwindow::loadCampaign(QString filename)
 {
-    Mainapp::getInstance()->pauseRendering();
     if (filename.endsWith(".camp"))
     {
         QFile file(filename);
@@ -303,6 +302,7 @@ void Mainwindow::loadCampaign(QString filename)
             pCampaign->deserializeObject(stream);
             spCampaignMenu pMenu = spCampaignMenu::create(pCampaign, false);
             oxygine::Stage::getStage()->addChild(pMenu);
+            leaveMenue();
         }
         else
         {
@@ -313,8 +313,6 @@ void Mainwindow::loadCampaign(QString filename)
     {
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "Mainwindow::loadCampaign illegal savefile was selected");
     }
-    leaveMenue();
-    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::enterReplayGame()
@@ -336,7 +334,6 @@ void Mainwindow::lastSaveGame()
 
 void Mainwindow::loadGame(QString filename)
 {
-    Mainapp::getInstance()->pauseRendering();
     if (filename.endsWith(".sav"))
     {
         QFile file(filename);
@@ -347,6 +344,7 @@ void Mainwindow::loadGame(QString filename)
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->clearPlayList();
             pMenu->startGame();
+            leaveMenue();
         }
         else
         {
@@ -357,13 +355,10 @@ void Mainwindow::loadGame(QString filename)
     {
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "Mainwindow::loadGame illegal savefile was selected");
     }
-    leaveMenue();
-    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::replayGame(QString filename)
 {
-    Mainapp::getInstance()->pauseRendering();
     if (filename.endsWith(".rec"))
     {
         QFile file(filename);
@@ -378,6 +373,7 @@ void Mainwindow::replayGame(QString filename)
             {
                 emit pMenu->sigShowRecordInvalid();
             }
+            leaveMenue();
         }
         else
         {
@@ -388,8 +384,6 @@ void Mainwindow::replayGame(QString filename)
     {
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "Mainwindow::replayGame illegal record file was selected");
     }
-    leaveMenue();
-    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::leaveMenue()

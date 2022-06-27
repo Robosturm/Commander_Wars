@@ -205,7 +205,6 @@ EditorMenue::EditorMenue()
     QJSValue obj = pInterpreter->newQObject(this);
     pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/editormenu.xml", this);
-    pApp->continueRendering();
 }
 
 void EditorMenue::onEnter()
