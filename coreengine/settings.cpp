@@ -22,6 +22,9 @@
 #else
     const QString Settings::m_settingFile = "Commander_Wars.ini";
 #endif
+
+const char* const Settings::DEFAULT_AUDIODEVICE = "@@default@@";
+
 float Settings::m_mouseSensitivity   = -0.75f;
 qint32 Settings::m_x                 = 0;
 qint32 Settings::m_y                 = 0;
@@ -294,7 +297,7 @@ Settings::Settings()
         new Value<qint32>{"Sound", "SoundVolume", &m_SoundVolume, 100, 0, 100},
         new Value<bool>{"Sound", "Muted", &m_muted, false, false, true},
 #ifdef AUDIOSUPPORT
-        new AudioDeviceValue{"Sound", "AudioDevice", &m_audioOutput},
+        new AudioDeviceValue{"Sound", "AudioDevice", &m_audioOutput, DEFAULT_AUDIODEVICE},
 #endif
         // game
         new Value<QString>{"Game", "Username", &m_Username, "", "", "", true},

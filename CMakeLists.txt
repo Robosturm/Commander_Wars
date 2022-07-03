@@ -615,6 +615,9 @@ set(${PROJECT_NAME}_SRCS
     wiki/wikiview.cpp wiki/wikiview.h
     wiki/damagetablepage.cpp wiki/damagetablepage.h
 
+    # table view
+    objects/tableView/basetableitem.h objects/tableView/basetableitem.cpp
+
     # spriting support
     spritingsupport/spritecreator.cpp spritingsupport/spritecreator.h
 

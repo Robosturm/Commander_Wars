@@ -844,15 +844,14 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pOwner->addItem(pTextfield);
     auto currentDevice = Settings::getAudioOutput().value<QAudioDevice>();
     const auto deviceInfos = QMediaDevices::audioOutputs();
-    QStringList items;
+    QStringList items = {tr("Default device")};
     qint32 currentItem = 0;
-
     for (qint32 i = 0; i < deviceInfos.size(); ++i)
     {
         items.append(deviceInfos[i].description());
         if (deviceInfos[i] == currentDevice)
         {
-            currentItem = i;
+            currentItem = i + 1;
         }
     }
     spDropDownmenu pAudioDevice = spDropDownmenu::create(Settings::getWidth() - 20 - sliderOffset, items);
@@ -861,11 +860,20 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pAudioDevice->setCurrentItem(currentItem);
     pAudioDevice->setEnabled(!Settings::getSmallScreenDevice());
     pOwner->addItem(pAudioDevice);
-    connect(pAudioDevice.get(), &DropDownmenu::sigItemChanged, pSignalOwner, [=](qint32 value)
+    connect(pAudioDevice.get(), &DropDownmenu::sigItemChanged, pSignalOwner, [pAudio, deviceInfos](qint32 value)
     {
-        auto item = QVariant::fromValue(deviceInfos[value]);
-        Settings::setAudioOutput(item);
-        pAudio->changeAudioDevice(item);
+        if (value == 0)
+        {
+            auto item = QVariant::fromValue(QMediaDevices::defaultAudioOutput());
+            pAudio->changeAudioDevice(item);
+            Settings::setAudioOutput(QVariant(Settings::DEFAULT_AUDIODEVICE));
+        }
+        else
+        {
+            auto item = QVariant::fromValue(deviceInfos[value - 1]);
+            Settings::setAudioOutput(item);
+            pAudio->changeAudioDevice(item);
+        }
     });
     y += 40;
 

@@ -3835,47 +3835,47 @@ Warning: disabling this on a smaller screen may lead to unplayable game experien
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="859"/>
+        <location filename="../menue/optionmenue.cpp" line="858"/>
         <source>Selects the primary audio output device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="874"/>
+        <location filename="../menue/optionmenue.cpp" line="882"/>
         <source>Master Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="878"/>
+        <location filename="../menue/optionmenue.cpp" line="886"/>
         <source>Selects the master volume for the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="895"/>
+        <location filename="../menue/optionmenue.cpp" line="903"/>
         <source>Selects the music volume for the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="912"/>
+        <location filename="../menue/optionmenue.cpp" line="920"/>
         <source>Selects the sound volume for the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="959"/>
+        <location filename="../menue/optionmenue.cpp" line="967"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="964"/>
+        <location filename="../menue/optionmenue.cpp" line="972"/>
         <source>Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1057"/>
+        <location filename="../menue/optionmenue.cpp" line="1065"/>
         <source>Filters mods by given tags.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1146"/>
+        <location filename="../menue/optionmenue.cpp" line="1154"/>
         <source>The mod author designated this mod as &apos;Cosmetic&apos; and may be used during multiplayer matches based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4035,71 +4035,76 @@ Warning: disabling this on a smaller screen may lead to unplayable game experien
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="891"/>
+        <location filename="../menue/optionmenue.cpp" line="847"/>
+        <source>Default device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="899"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="908"/>
+        <location filename="../menue/optionmenue.cpp" line="916"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="956"/>
+        <location filename="../menue/optionmenue.cpp" line="964"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="960"/>
+        <location filename="../menue/optionmenue.cpp" line="968"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="961"/>
+        <location filename="../menue/optionmenue.cpp" line="969"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="962"/>
+        <location filename="../menue/optionmenue.cpp" line="970"/>
         <source>Advance Wars DC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="973"/>
+        <location filename="../menue/optionmenue.cpp" line="981"/>
         <source>Tag Filter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1055"/>
+        <location filename="../menue/optionmenue.cpp" line="1063"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1148"/>
+        <location filename="../menue/optionmenue.cpp" line="1156"/>
         <source>Compatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1153"/>
+        <location filename="../menue/optionmenue.cpp" line="1161"/>
         <source>Incompatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1158"/>
+        <location filename="../menue/optionmenue.cpp" line="1166"/>
         <source>Required Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1163"/>
+        <location filename="../menue/optionmenue.cpp" line="1171"/>
         <source>Tags:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1168"/>
+        <location filename="../menue/optionmenue.cpp" line="1176"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>

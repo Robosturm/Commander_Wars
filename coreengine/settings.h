@@ -24,8 +24,10 @@ using spSettings = oxygine::intrusive_ptr<Settings>;
 
 class Settings : public QObject, public oxygine::ref_counter
 {
+public:
+    static const char* const DEFAULT_AUDIODEVICE;
+private:
     Q_OBJECT
-
     struct ValueBase
     {
         virtual void readValue(QSettings & settings) = 0;
@@ -176,48 +178,64 @@ class Settings : public QObject, public oxygine::ref_counter
 #ifdef AUDIOSUPPORT
     struct AudioDeviceValue : public ValueBase
     {
-        AudioDeviceValue(const char* const group, const char* const name, QVariant* value)
+        AudioDeviceValue(const char* const group, const char* const name, QVariant* value, QString defaultValue)
             : m_group{group},
               m_name{name},
-              m_value{value}
+              m_value{value},
+              m_defaultValue{defaultValue}
         {
         }
-        virtual void readValue(QSettings & settings)
+        virtual void readValue(QSettings & settings) override
         {
             settings.beginGroup(m_group);
             const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
-            QString description = settings.value(m_name, "").toString();
-            const auto audioDevices = QMediaDevices::audioOutputs();
-            for (const auto & device : audioDevices)
+            QString description = settings.value(m_name, m_defaultValue).toString();
+            if (description == DEFAULT_AUDIODEVICE)
             {
-                if (device.description() == description)
+                *m_value = QVariant(DEFAULT_AUDIODEVICE);
+            }
+            else
+            {
+                const auto audioDevices = QMediaDevices::audioOutputs();
+                for (const auto & device : audioDevices)
                 {
-                    *m_value = QVariant::fromValue(device);
-                    break;
+                    if (device.description() == description)
+                    {
+                        *m_value = QVariant::fromValue(device);
+                        break;
+                    }
+                }
+                if (m_audioOutput.value<QAudioDevice>().isNull())
+                {
+                    *m_value = QVariant::fromValue(defaultDeviceInfo);
                 }
             }
-            if (m_audioOutput.value<QAudioDevice>().isNull())
+            settings.endGroup();
+        }
+        virtual void saveValue(QSettings & settings) override
+        {
+            settings.beginGroup(m_group);
+            if (m_value->typeId() == QMetaType::QString &&
+                m_value->toString() == DEFAULT_AUDIODEVICE)
             {
-                *m_value = QVariant::fromValue(defaultDeviceInfo);
+                settings.setValue(m_name, DEFAULT_AUDIODEVICE);
+            }
+            else
+            {
+                auto device = (*m_value).value<QAudioDevice>();
+                settings.setValue(m_name, device.description());
             }
             settings.endGroup();
         }
-        virtual void saveValue(QSettings & settings)
+        virtual void resetValue() override
         {
-            settings.beginGroup(m_group);
-            auto device = (*m_value).value<QAudioDevice>();
-            settings.setValue(m_name, device.description());
-            settings.endGroup();
-        }
-        virtual void resetValue()
-        {
-            const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
-            *m_value = QVariant::fromValue(defaultDeviceInfo);
+            *m_value = QVariant(Settings::DEFAULT_AUDIODEVICE);
         }
     private:
         const char* const m_group;
         const char* const m_name;
         QVariant* m_value;
+        QString m_defaultValue;
     };
 #endif
 public:
