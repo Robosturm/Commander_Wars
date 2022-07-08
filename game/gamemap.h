@@ -5,8 +5,7 @@
 
 #include <QObject>
 #include <QVector>
-#include <QRandomGenerator>
-#include "memory"
+#include <memory>
 
 #include "game/terrain.h"
 #include "game/cursor.h"
@@ -28,8 +27,8 @@ using spGameAction = oxygine::intrusive_ptr<GameAction>;
 class GameMap;
 using spGameMap = oxygine::intrusive_ptr<GameMap>;
 
-class InGameMenue;
-using spInGameMenue = oxygine::intrusive_ptr<InGameMenue>;
+class BaseGamemenu;
+using spBaseGamemenu = oxygine::intrusive_ptr<BaseGamemenu>;
 
 class GameMap : public QObject, public FileSerializable, public oxygine::Actor
 {
@@ -243,7 +242,7 @@ public:
      * @param newX
      * @param newY
      */
-    void limitPosition(InGameMenue* pMenu, qint32 & newX, qint32 & newY);
+    void limitPosition(BaseGamemenu* pMenu, qint32 & newX, qint32 & newY);
     /**
      * @brief setIsHumanMatch
      * @param newIsHumanMatch
@@ -276,6 +275,11 @@ public:
      * @return
      */
     oxygine::spActor getUnitsLayer() const;
+    /**
+     * @brief setMenu
+     * @param newMenu
+     */
+    void setMenu(GameMenue *newMenu);
 
 signals:
     void signalExitGame();
@@ -296,6 +300,7 @@ signals:
     void sigMovedMap();
     void sigZoomChanged(float zoom);
     void sigShowDamageCalculator();
+    void sigShowMovementPlanner();
 public slots:
     /**
      * @brief getMapTagsText
@@ -474,11 +479,28 @@ public slots:
      */
     void showUnitStatistics(qint32 player);
     /**
+     * @brief showMovementPlanner
+     */
+    void showMovementPlanner();
+    /**
+     * @brief getTerrainCount
+     * @param terrainId
+     * @return
+     */
+    qint32 getTerrainCount(const QString & terrainId) const;
+    /**
      * @brief getBuildingCount
      * @param buildingID
      * @return
      */
-    qint32 getBuildingCount(const QString & buildingID);
+    qint32 getBuildingCount(const QString & buildingID) const;
+    /**
+     * @brief getPlayerBuildingCount
+     * @param buildingID
+     * @param pPlayer
+     * @return
+     */
+    qint32 getPlayerBuildingCount(const QString & buildingID, Player* pPlayer) const;
     /**
      * @brief getMapWidth
      * @return width of the map
@@ -561,7 +583,7 @@ public slots:
      * @param y
      * @return true if it's still on the map
      */
-    bool onMap(qint32 x, qint32 y);
+    bool onMap(qint32 x, qint32 y) const;
     /**
      * @brief centerMap centers the view point to the given location
      * @param x
@@ -589,8 +611,7 @@ public slots:
      * @param y
      * @return the real pointer to the given terrain
      */
-    Terrain* getTerrain(qint32 x, qint32 y);
-
+    Terrain* getTerrain(qint32 x, qint32 y) const;
     /**
      * @brief canBePlaced
      * @param terrainID the terrain id you want to place
@@ -837,6 +858,7 @@ private:
     qint32 m_endLoopMs{-1};
     bool m_savegame{false};
     bool m_isHumanMatch{false};
+    GameMenue* m_pMenu{nullptr};
     static qint32 m_imagesize;
 };
 

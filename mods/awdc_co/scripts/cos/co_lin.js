@@ -5,7 +5,7 @@ CO_LIN.init = function(co, map)
 };
 CO_LIN.activateSuperpower = function(co, powerMode, map)
 {
-	CO_LIN.activatePower(co, powerMode);
+	CO_LIN.activatePower(co, powerMode, map);
 };
 CO_LIN.getSuperPowerDescription = function()
 {

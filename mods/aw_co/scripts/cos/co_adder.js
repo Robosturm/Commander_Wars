@@ -5,7 +5,7 @@ CO_ADDER.init = function(co, map)
 };
 CO_ADDER.activateSuperpower = function(co, powerMode, map)
 {
-    CO_ADDER.activatePower(co, powerMode);
+    CO_ADDER.activatePower(co, powerMode, map);
 };
 CO_ADDER.getSuperPowerDescription = function()
 {
@@ -44,10 +44,4 @@ CO_ADDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         }
     }
     return 0;
-};
-
-CO_ADDER.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
-{
-    var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
-    co.setPowerFilled(co.getPowerFilled() + powerGain * 2 * 1.2);
 };

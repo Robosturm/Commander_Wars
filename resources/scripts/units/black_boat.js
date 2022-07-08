@@ -66,7 +66,7 @@ var Constructor = function()
     {
         return 2;
     };
-    this.transportList = ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "ZCOUNIT_AT_CYCLE", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN"];
+    this.transportList = ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "ZCOUNIT_AT_CYCLE", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN", "ZCOUNIT_RANGER"];
     this.getTerrainAnimationBase = function(unit, terrain, defender, map)
     {
         var weatherModifier = TERRAIN.getWeatherModifier(map);

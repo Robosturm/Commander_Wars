@@ -521,23 +521,34 @@ void UnitInfo::createActionTable(Unit* pUnit, qint32& y, qint32 width)
 {
     qint32 x = 0;
     QStringList actions = pUnit->getActionList();
+    GameMap* pMap = pUnit->getMap();
+    QStringList allowedActions;
+    if (pMap != nullptr)
+    {
+        auto* pRules = pMap->getGameRules();
+        allowedActions = pRules->getAllowedActions();
+    }
     for (const auto & action : actions)
     {
-        // QString text = GameAction::getActionText(action);
-        QString icon = GameAction::getActionIcon(pUnit->getMap(), action);
-        WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-        oxygine::spSprite pSprite = pWikiDatabase->getIcon(pUnit->getMap(), icon, GameMap::getImageSize());
-        pSprite->setPosition(x, y);
-        pSprite->addClickListener([this, action](oxygine::Event*)
+        if (allowedActions.isEmpty() ||
+            allowedActions.contains(action))
         {
-            emit sigShowLink(action);
-        });
-        addChild(pSprite);
-        x += GameMap::getImageSize() * 1.5f;
-        if (x + GameMap::getImageSize() * 1.5f > width)
-        {
-            x = 0;
-            y += 40;
+            // QString text = GameAction::getActionText(action);
+            QString icon = GameAction::getActionIcon(pUnit->getMap(), action);
+            WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+            oxygine::spSprite pSprite = pWikiDatabase->getIcon(pUnit->getMap(), icon, GameMap::getImageSize());
+            pSprite->setPosition(x, y);
+            pSprite->addClickListener([this, action](oxygine::Event*)
+            {
+                emit sigShowLink(action);
+            });
+            addChild(pSprite);
+            x += GameMap::getImageSize() * 1.5f;
+            if (x + GameMap::getImageSize() * 1.5f > width)
+            {
+                x = 0;
+                y += 40;
+            }
         }
     }
 }

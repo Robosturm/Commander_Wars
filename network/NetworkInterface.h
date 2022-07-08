@@ -41,6 +41,7 @@ public:
         ServerHostingJson,      /**< used for data when starting a game on the host or when communicating between slave and master. Packages are in JSON-Format */
         ServerHosting,          /**< used for data when starting a game on the host or when communicating between slave and master. Packages are in Binary-Format */
         ServerSocketInfo,       /**< used inside the rx-task data is not emitted when recieving this data */
+        CryptedMessage,
         Max,
     };
 
@@ -124,6 +125,14 @@ public:
     void setIsObserver(bool newIsObserver)
     {
         m_isObserver = newIsObserver;
+    }
+    bool getIsActive() const
+    {
+        return m_active;
+    }
+    void setIsActive(bool isActive)
+    {
+        m_active = isActive;
     }
 
 signals:
@@ -209,6 +218,15 @@ public slots:
             case QAbstractSocket::UnfinishedSocketOperationError:
                 CONSOLE_PRINT("Unfinished socket operation error.", Console::eDEBUG);
                 break;
+            case QAbstractSocket::SslHandshakeFailedError:
+                CONSOLE_PRINT("Ssl Handshake failed.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::SslInternalError:
+                CONSOLE_PRINT("Ssl internal error.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::SslInvalidUserDataError:
+                CONSOLE_PRINT("Ssl invalid user data errror.", Console::eDEBUG);
+                break;
             default:
                 CONSOLE_PRINT("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
         }
@@ -246,6 +264,7 @@ protected:
     bool m_isServer{false};
     bool m_isConnected{false};
     bool m_isObserver{false};
+    bool m_active{true};
 };
 
 #endif // NETWORKINTERFACE_H

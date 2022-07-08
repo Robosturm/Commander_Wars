@@ -5,7 +5,7 @@ CO_DRAKE.init = function(co, map)
 };
 CO_DRAKE.activateSuperpower = function(co, powerMode, map)
 {
-	CO_DRAKE.activatePower(co, powerMode);
+	CO_DRAKE.activatePower(co, powerMode, map);
 };
 CO_DRAKE.getSuperPowerDescription = function()
 {

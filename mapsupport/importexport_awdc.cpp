@@ -456,7 +456,7 @@ void GameMap::importAWDCMap(QString file)
         m_headerInfo.m_mapName = list[list.size() - 1].remove(list[list.size() - 1].lastIndexOf("."), list[list.size() - 1].size());
         m_headerInfo.m_mapDescription = "";
     }
-    EditorMenue::getInstance()->optimizePlayers();
+    dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance())->optimizePlayers();
     // update the whole fucking map
     updateSprites();
 }

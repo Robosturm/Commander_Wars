@@ -4,7 +4,10 @@
 #include "game/player.h"
 #include "game/co.h"
 
-#include "QMutexLocker"
+#include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
+
+#include <QMutexLocker>
 
 ProxyAi::ProxyAi(GameMap* pMap)
     : CoreAI (pMap, GameEnums::AiTypes_ProxyAi)
@@ -14,11 +17,6 @@ ProxyAi::ProxyAi(GameMap* pMap)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 
-}
-
-void ProxyAi::init()
-{
-    CoreAI::init();
 }
 
 void ProxyAi::readIni(QString)
@@ -75,10 +73,10 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
             spGameAction pAction = spGameAction::create(m_pMap);
             pAction->deserializeObject(stream);
             m_ActionBuffer.append(pAction);
-            if (m_actionRunning == false &&
+            if (m_pMenu != nullptr &&
+                !m_pMenu->getActionRunning() &&
                 m_pPlayer == m_pMap->getCurrentPlayer())
             {
-                m_actionRunning = true;
                 spGameAction pAction = m_ActionBuffer.front();
                 m_ActionBuffer.pop_front();
                 emit performAction(pAction);
@@ -90,12 +88,12 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
 void ProxyAi::nextAction()
 {
     QMutexLocker locker(&m_ActionMutex);
-    m_actionRunning = false;
-    if (m_pPlayer == m_pMap->getCurrentPlayer())
+    if (m_pMenu != nullptr &&
+        !m_pMenu->getActionRunning() &&
+        m_pPlayer == m_pMap->getCurrentPlayer())
     {
         if (m_ActionBuffer.size() > 0)
         {
-            m_actionRunning = true;
             spGameAction pAction = m_ActionBuffer.front();
             m_ActionBuffer.pop_front();
             emit performAction(pAction);

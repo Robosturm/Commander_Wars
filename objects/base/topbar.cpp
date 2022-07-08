@@ -135,6 +135,7 @@ void Topbar::finishCreation()
         spPanel pPanel = spPanel::create(false, size, QSize(size.width(), m_Items[i].size() * 40));
         pPanel->setSubComponent(true);
         pPanel->setVisible(false);
+        pPanel->setStopMouseWheel(true);
         for (auto & item : m_Items[i])
         {
             pPanel->addItem(item);

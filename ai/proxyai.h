@@ -20,7 +20,6 @@ class ProxyAi : public CoreAI
 public:
     explicit ProxyAi(GameMap* pMap);
     virtual ~ProxyAi() = default;
-    virtual void init() override;
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -60,7 +59,6 @@ public slots:
 
 private:
     QList<spGameAction> m_ActionBuffer;
-    bool m_actionRunning{false};
     QMutex m_ActionMutex;
 };
 

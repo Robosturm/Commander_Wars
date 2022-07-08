@@ -7,7 +7,7 @@ name: Commnader_Wars_Release
 
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.2.4'
+  QT_Version: '6.3.1'
   
 jobs:
   create_release:
@@ -44,16 +44,17 @@ jobs:
             installerCommands1: ''
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
-            asset_name: 'Commander_Wars_Win10_x64.zip'            
+            asset_name: 'Commander_Wars_Win10_x64.zip' 
+            cmakeOptions: ''           
           - os: ubuntu-latest
             COMPILER_VERSION: ''
             target: 'desktop'
             qtPath: ''
             installerCommands1: 'sudo apt-get update'
-            installerCommands2: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'                
+            installerCommands2: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Ubuntu.zip'
-            
+            cmakeOptions: ''
           - os: macos-latest
             COMPILER_VERSION: 'clang_64'
             qtPath: 'clang_64'
@@ -62,6 +63,7 @@ jobs:
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_macOS.zip'
+            cmakeOptions: '-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
           #- os: windows-latest
           #  COMPILER_VERSION: 'android_armv7'
           #  target: 'android'
@@ -98,8 +100,9 @@ jobs:
         -B '${{github.workspace}}/build' \
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
         -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install/Commander_Wars_Release' \
-        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
-        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
+        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
+        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/ \
+        ${{matrix.cmakeOptions}}
     
     - name: Build
       working-directory: '${{github.workspace}}/build'

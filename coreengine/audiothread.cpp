@@ -77,7 +77,17 @@ void AudioThread::initAudio()
     if (!m_noAudio)
     {
         CONSOLE_PRINT("AudioThread::initAudio", Console::eDEBUG);
-        m_audioDevice = Settings::getAudioOutput().value<QAudioDevice>();
+        const auto& value = Settings::getAudioOutput();
+        if (value.typeId() == QMetaType::QString &&
+            value.toString() == Settings::DEFAULT_AUDIODEVICE)
+        {
+            const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
+            m_audioOutput.setDevice(defaultDeviceInfo);
+        }
+        else
+        {
+            m_audioDevice = value.value<QAudioDevice>();
+        }
         m_audioOutput.setDevice(m_audioDevice);
         createPlayer();
         SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getMusicVolume())));
@@ -432,9 +442,14 @@ void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoin
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        QString currentPath = Settings::getUserPath() + "/" + file;
+        QString currentPath = file;
+        if (!Settings::getUserPath().isEmpty())
+        {
+            currentPath = Settings::getUserPath() + "/" + file;
+        }
         if (!QFile::exists(currentPath))
         {
+            CONSOLE_PRINT("Unable to locate music file: " + currentPath + " using compiled path.", Console::eERROR);
             currentPath = oxygine::Resource::RCC_PREFIX_PATH + file;
         }
         if (QFile::exists(currentPath))

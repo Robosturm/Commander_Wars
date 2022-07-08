@@ -22,6 +22,8 @@
 #include "objects/dialogs/rules/ruleselectiondialog.h"
 #include "objects/dialogs/editor/dialograndommap.h"
 #include "objects/dialogs/editor/dialogmodifyterrain.h"
+#include "objects/dialogs/editor/dialogviewmapstats.h"
+
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/label.h"
 #include "objects/base/selectkey.h"
@@ -40,7 +42,7 @@
 #include "ui_reader/uifactory.h"
 
 EditorMenue::EditorMenue()
-    : InGameMenue (20, 20, "", false),
+    : BaseGamemenu (20, 20, "", false),
       m_autosaveTimer(this)
 {
     setObjectName("EditorMenue");
@@ -48,6 +50,7 @@ EditorMenue::EditorMenue()
     qint32 selectionWidth = Settings::getWidth() / 4;
     bool smallScreen = Settings::getSmallScreenDevice();
     Interpreter::setCppOwnerShip(this);
+    registerAtInterpreter();
     if (smallScreen)
     {
         selectionWidth = Settings::getWidth() * 3 / 4;
@@ -82,27 +85,28 @@ EditorMenue::EditorMenue()
     pApp->getAudioThread()->playRandom();
 
     m_Topbar->addGroup(tr("Menu"));
-    m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0, tr("Saves a map to a give file."));
-    m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0, tr("Loads a map to a give file."));
+    m_Topbar->addItem(tr("View Map Stats"),     "VIEWMAPSTATS", 0, tr("Shows the general information about the map."));
+    m_Topbar->addItem(tr("Save Map"),           "SAVEMAP",      0, tr("Saves a map to a give file."));
+    m_Topbar->addItem(tr("Load Map"),           "LOADMAP",      0, tr("Loads a map to a give file."));
     if (!Settings::getSmallScreenDevice())
     {
-        m_Topbar->addItem(tr("Edit Script"), "EDITSCRIPT", 0, tr("Edit and create a script for any map."));
-        m_Topbar->addItem(tr("Edit Campaign"), "EDITCAMPAIGN", 0, tr("Edit and create a campaign."));
+        m_Topbar->addItem(tr("Edit Script"),    "EDITSCRIPT",   0, tr("Edit and create a script for any map."));
+        m_Topbar->addItem(tr("Edit Campaign"),  "EDITCAMPAIGN", 0, tr("Edit and create a campaign."));
     }
-    m_Topbar->addItem(tr("Undo Ctrl+Z"), "UNDO", 0, tr("Undo the last map modification."));
-    m_Topbar->addItem(tr("Redo Ctrl+Y"), "REDO", 0, tr("Redo the last undo command."));
-    m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0, tr("Exits the editor"));
+    m_Topbar->addItem(tr("Undo Ctrl+Z"),        "UNDO",         0, tr("Undo the last map modification."));
+    m_Topbar->addItem(tr("Redo Ctrl+Y"),        "REDO",         0, tr("Redo the last undo command."));
+    m_Topbar->addItem(tr("Exit Editor"),        "EXIT",         0, tr("Exits the editor"));
 
     m_Topbar->addGroup(tr("Map Info"));
-    m_Topbar->addItem(tr("New Map"), "NEWMAP", 1, tr("Create a new map"));
-    m_Topbar->addItem(tr("Edit Map"), "EDITMAP", 1, tr("Edit the information for a map"));
-    m_Topbar->addItem(tr("Resize Map"), "RESIZEMAP", 1, tr("Resizes the map using left, top, right and bottom size changes."));
-    m_Topbar->addItem(tr("Flip Map X"), "FLIPX", 1, tr("Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed."));
-    m_Topbar->addItem(tr("Flip Map Y"), "FLIPY", 1, tr("Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed."));
-    m_Topbar->addItem(tr("Rotate Map X"), "ROTATEX", 1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));
-    m_Topbar->addItem(tr("Rotate Map Y"), "ROTATEY", 1, tr("Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed."));
-    m_Topbar->addItem(tr("Random Map"), "RANDOMMAP", 1, tr("Creates a new random map."));
-    m_Topbar->addItem(tr("Toggle Grid Strg+G"), "TOGGLEGRID", 1, tr("Shows or hides a grid layout."));
+    m_Topbar->addItem(tr("New Map"),            "NEWMAP",       1, tr("Create a new map"));
+    m_Topbar->addItem(tr("Edit Map"),           "EDITMAP",      1, tr("Edit the information for a map"));
+    m_Topbar->addItem(tr("Resize Map"),         "RESIZEMAP",    1, tr("Resizes the map using left, top, right and bottom size changes."));
+    m_Topbar->addItem(tr("Flip Map X"),         "FLIPX",        1, tr("Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed."));
+    m_Topbar->addItem(tr("Flip Map Y"),         "FLIPY",        1, tr("Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed."));
+    m_Topbar->addItem(tr("Rotate Map X"),       "ROTATEX",      1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));
+    m_Topbar->addItem(tr("Rotate Map Y"),       "ROTATEY",      1, tr("Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed."));
+    m_Topbar->addItem(tr("Random Map"),         "RANDOMMAP",    1, tr("Creates a new random map."));
+    m_Topbar->addItem(tr("Toggle Grid Strg+G"), "TOGGLEGRID",   1, tr("Shows or hides a grid layout."));
     m_Topbar->addItem(tr("Toggle Cross Strg+M"), "TOGGLEMIDDLECROSS", 1, tr("Shows or hides the cross marking the middle of the map."));
 
     m_Topbar->addGroup(tr("Commands"));
@@ -127,6 +131,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Import AWDC Aw4"), "IMPORTAWDCAW4", 3, tr("Deletes the current map and imports an AW DoR/DC Map Editor from a file."));
     m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWBYWEB", 3, tr("Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/"));
     m_Topbar->finishCreation();
+    addChild(m_Topbar);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
@@ -148,7 +153,6 @@ EditorMenue::EditorMenue()
         pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         addChild(pButtonBox);
     }
-    addChild(m_Topbar);
 
     Cursor* pCursor = m_Cursor.get();
     m_pMap->addEventListener(oxygine::TouchEvent::MOVE, [this, pCursor](oxygine::Event *pEvent )->void
@@ -200,7 +204,6 @@ EditorMenue::EditorMenue()
     QJSValue obj = pInterpreter->newQObject(this);
     pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/editormenu.xml", this);
-    pApp->continueRendering();
 }
 
 void EditorMenue::onEnter()
@@ -386,6 +389,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         MenuItem("RESIZEMAP",           &EditorMenue::showResizeMap),
         MenuItem("TOGGLEGRID",          &EditorMenue::toggleGridLayout),
         MenuItem("TOGGLEMIDDLECROSS",   &EditorMenue::toggleMiddleCrossGrid),
+        MenuItem("VIEWMAPSTATS",        &EditorMenue::viewMapStats),
     };
     for (auto & item : qAsConst(items))
     {
@@ -393,13 +397,27 @@ void EditorMenue::clickedTopbar(QString itemID)
             item.m_func != nullptr)
         {
             (this->*(item.m_func))();
+            break;
         }
     }
 }
 
-void EditorMenue::toggleGridLayout()
+void EditorMenue::viewMapStats()
 {
-    
+    setFocused(false);
+    spDialogViewMapStats pViewMapStats = spDialogViewMapStats::create(m_pMap.get());
+    addChild(pViewMapStats);
+    connect(pViewMapStats.get(),  &DialogViewMapStats::sigClosed, this, &EditorMenue::focusEditor, Qt::QueuedConnection);
+    pViewMapStats->init();
+}
+
+void EditorMenue::focusEditor()
+{
+    setFocused(true);
+}
+
+void EditorMenue::toggleGridLayout()
+{    
     if (m_pMap.get() != nullptr)
     {
         m_gridVisible = !m_gridVisible;
@@ -408,8 +426,7 @@ void EditorMenue::toggleGridLayout()
 }
 
 void EditorMenue::toggleMiddleCrossGrid()
-{
-    
+{    
     if (m_pMap.get() != nullptr)
     {
         m_middleCrossGridVisible = !m_middleCrossGridVisible;
@@ -418,8 +435,7 @@ void EditorMenue::toggleMiddleCrossGrid()
 }
 
 void EditorMenue::updateGrids()
-{
-    
+{    
     if (m_pMap.get() != nullptr)
     {
         m_pMap->showMiddleCrossGrid(m_middleCrossGridVisible);
@@ -928,7 +944,7 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
             }
         }
     }
-    InGameMenue::keyInput(event);
+    BaseGamemenu::keyInput(event);
 }
 
 void EditorMenue::cursorMoved(qint32 x, qint32 y)

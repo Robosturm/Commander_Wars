@@ -28,11 +28,6 @@ public:
      */
     QString getMovementType(const QString & id);
     /**
-     * @brief getUnitsSorted
-     * @return
-     */
-    QStringList getUnitsSorted();
-    /**
      * @brief getUnitTypeText
      * @param type
      * @return
@@ -40,6 +35,19 @@ public:
     static QString getUnitTypeText(qint32 type);
 public slots:
     void removeRessource(QString id);
+    /**
+     * @brief getUnitsSorted
+     * @return
+     */
+    QStringList getUnitsSorted();
+    /**
+     * @brief getCount
+     * @return
+     */
+    qint32 getUnitCount()
+    {
+        return m_loadedRessources.size();
+    }
 protected:
     friend RessourceManagement<UnitSpriteManager>;
     UnitSpriteManager();

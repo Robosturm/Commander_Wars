@@ -12,8 +12,6 @@ public:
         QString name;
         QStringList cos;
     };
-
-    QStringList getSpriteCOIDs();
     /**
      * @brief getCOStyles
      * @param id
@@ -45,6 +43,15 @@ public:
 signals:
     void sigLoadResAnim(const QString & coid, const QString & file, QImage colorTable, QImage maskTable, bool useColorBox);
 public slots:
+    /**
+     * @brief getSpriteCOIDs
+     * @return
+     */
+    QStringList getSpriteCOIDs();
+    /**
+     * @brief getCoIds
+     * @return
+     */
     QStringList getCoIds()
     {
         return m_loadedRessources;

@@ -170,7 +170,7 @@ void Gamepad::handleWheelEvent(qint32 x, qint32 y)
 void Gamepad::handleThumbStickPress(bool left, bool right)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    QPoint cursor = pApp->mapFromGlobal(pApp->cursor().pos());
+    QPoint cursor = pApp->mapPosFromGlobal(pApp->cursor().pos());
     if (left)
     {
         emit pApp->sigMousePressEvent(oxygine::MouseButton_Left, cursor.x(), cursor.y());

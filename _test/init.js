@@ -123,6 +123,7 @@ var Init =
         menu.showEditPlayers();
         menu.showEditRules();
         menu.copy();
+        menu.viewMapStats();
         menu.showExit();
         menu.exitEditor();
     },
@@ -136,8 +137,8 @@ var Init =
         {
             GameConsole.print("Testing ingame menus", 0);
             menu.selectMap("maps/2_player/", "Agitated.map");
-            menu.slotButtonNext();
-            menu.slotButtonNext();
+            menu.buttonNext();
+            menu.buttonNext();
             var selection = menu.getPlayerSelection();
             selection.selectPlayerAi(0, 0);
             selection.selectPlayerAi(1, 2);
@@ -151,11 +152,12 @@ var Init =
         {
             GameConsole.print("Testing ai's and fog of war", 0);
             menu.selectMap("maps/2_player/", "Agitated.map");
-            menu.slotButtonNext();
-            menu.slotButtonNext();
+            menu.buttonNext();
+            menu.buttonNext();
+            var selection = menu.getPlayerSelection();
+            var map = selection.getMap();
             var gameRules = map.getGameRules();
             gameRules.setFogMode(Init.playTest - 1);
-            var selection = menu.getPlayerSelection();
             selection.selectPlayerAi(0, 1);
             selection.selectPlayerAi(1, 2);
             selection.playerCO1Changed("CO_RANDOM", 0);
@@ -182,7 +184,12 @@ var Init =
             menu.showExitGame();
             menu.showSurrenderGame();
             menu.showSaveAndExitGame();
-            menu.showWiki();
+            var wikiView = menu.showWiki();
+            wikiView.tagChanged(0);
+            wikiView.showPage("CO_ANDY");
+            wikiView.showPage("MECH");
+            wikiView.showPage("PLAINS");
+            wikiView.showPage("HQ");
             menu.exitGame();
         }
     },

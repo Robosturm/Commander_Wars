@@ -1,11 +1,10 @@
-#include "qfile.h"
-#include "qguiapplication.h"
-#include "qscreen.h"
-#include "qdir.h"
-#include "qmessagebox.h"
-#include "qthread.h"
-#include "qresource.h"
-
+#include <QFile>
+#include <QGuiApplication>
+#include <QScreen>
+#include <QDir>
+#include <QMessageBox>
+#include <QThread>
+#include <QResource>
 #include <QApplication>
 #include <QGuiApplication>
 #include <QClipboard>
@@ -16,6 +15,8 @@
 #include "coreengine/audiothread.h"
 #include "coreengine/workerthread.h"
 #include "coreengine/globalutils.h"
+
+#include "ui_reader/uifactory.h"
 
 #include "game/gamerecording/gamemapimagesaver.h"
 
@@ -40,6 +41,8 @@
 #include "resource_management/shoploader.h"
 #include "resource_management/movementtablemanager.h"
 #include "resource_management/weaponmanager.h"
+#include "resource_management/movementplanneraddinmanager.h"
+#include "resource_management/uimanager.h"
 
 #include "wiki/wikidatabase.h"
 
@@ -54,6 +57,8 @@ spTCPClient Mainapp::m_slaveClient;
 bool Mainapp::m_slave{false};
 QMutex Mainapp::m_crashMutex;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
+
+#include "network/rsacypherhandler.h"
 
 Mainapp::Mainapp()
 {
@@ -100,6 +105,7 @@ void Mainapp::shutdown()
     ObjectManager::getInstance()->free();
     ShopLoader::getInstance()->free();
     GameWindow::shutdown();
+    UiFactory::shutdown();
 }
 
 bool Mainapp::isWorker()
@@ -279,6 +285,26 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             pLoadingScreen->setProgress(tr("Loading Shop Textures ..."), step  * stepProgress);
             break;
         }
+        case MovementPlannerAddInManager:
+        {
+            if (!m_noUi)
+            {
+                update();
+            }
+            MovementPlannerAddInManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Movement planner addin Textures ..."), step  * stepProgress);
+            break;
+        }
+        case UiManager:
+        {
+            if (!m_noUi)
+            {
+                update();
+            }
+            UiManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Ui Textures ..."), step  * stepProgress);
+            break;
+        }
         case StartupPhase::ShopLoader:
         {
             if (!m_noUi)
@@ -410,12 +436,12 @@ void Mainapp::changeScreenMode(qint32 mode)
             if (screenSize.width() < Settings::getWidth())
             {
                 setWidth(screenSize.width());
-                Settings::setWidth(screenSize.width());
+                Settings::setWidth(screenSize.width() * getActiveDpiFactor());
             }
             if (screenSize.height() < Settings::getHeight())
             {
                 setHeight(screenSize.height());
-                Settings::setHeight(screenSize.height());
+                Settings::setHeight(screenSize.height() * getActiveDpiFactor());
             }
             break;
         }
@@ -427,8 +453,8 @@ void Mainapp::changeScreenMode(qint32 mode)
             // set window info
             Settings::setFullscreen(true);
             Settings::setBorderless(false);
-            Settings::setWidth(screenSize.width());
-            Settings::setHeight(screenSize.height());
+            Settings::setWidth(screenSize.width() * getActiveDpiFactor());
+            Settings::setHeight(screenSize.height() * getActiveDpiFactor());
             setGeometry(screenSize);
             break;
         }
@@ -443,12 +469,12 @@ void Mainapp::changeScreenMode(qint32 mode)
             if (screenSize.width() < Settings::getWidth())
             {
                 setWidth(screenSize.width());
-                Settings::setWidth(screenSize.width());
+                Settings::setWidth(screenSize.width() * getActiveDpiFactor());
             }
             if (screenSize.height() < Settings::getHeight())
             {
                 setHeight(screenSize.height());
-                Settings::setHeight(screenSize.height());
+                Settings::setHeight(screenSize.height() * getActiveDpiFactor());
             }
             showNormal();
         }
@@ -464,18 +490,41 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
         return;
     }
     CONSOLE_PRINT("Changing screen size to width: " + QString::number(width) + " height: " + QString::number(heigth), Console::eDEBUG);
-    resize(width, heigth);
-    setMinimumSize(QSize(width, heigth));
-    setMaximumSize(QSize(width, heigth));
+    auto ratio = getActiveDpiFactor();
+    resize(width / ratio, heigth / ratio);
+    setMinimumSize(QSize(width / ratio, heigth / ratio));
+    setMaximumSize(QSize(width / ratio, heigth / ratio));
+
     Settings::setWidth(width);
     Settings::setHeight(heigth);
-    if (oxygine::Stage::instance.get() != nullptr)
-    {
-        oxygine::Stage::instance->setSize(width, heigth);
-    }
     Settings::saveSettings();
+    if (oxygine::Stage::getStage().get() != nullptr)
+    {
+        oxygine::Stage::getStage()->init (oxygine::Point(width / ratio, heigth / ratio),
+                                          oxygine::Point(width, heigth));
+    }
     emit sigWindowLayoutChanged();
     emit sigChangePosition(QPoint(-1, -1), true);
+}
+
+float Mainapp::getActiveDpiFactor() const
+{
+    auto ratio = devicePixelRatio();
+    if (Settings::getUseHighDpi())
+    {
+        ratio = 1.0f;
+    }
+    return ratio;
+}
+
+QPoint Mainapp::mapPosFromGlobal(QPoint pos) const
+{
+    return mapFromGlobal(pos) * getActiveDpiFactor();
+}
+
+QPoint Mainapp::mapPosToGlobal(QPoint pos) const
+{
+    return mapToGlobal(pos / getActiveDpiFactor());
 }
 
 void Mainapp::changePosition(QPoint pos, bool invert)

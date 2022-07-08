@@ -2526,7 +2526,7 @@ void Unit::setHasMoved(bool value)
     }
 }
 
-bool Unit::getHasMoved()
+bool Unit::getHasMoved() const
 {
     return m_Moved;
 }
@@ -2863,7 +2863,7 @@ GameAnimation* Unit::killUnit()
     {
         if (!m_pOwner->getIsDefeated())
         {
-            m_pMap->getGameRecorder()->lostUnit(m_pOwner->getPlayerID(), m_UnitID);
+            m_pMap->getGameRecorder()->lostUnit(m_pOwner->getPlayerID(), m_UnitID, m_pMap->getCurrentPlayer()->getPlayerID());
         }
     }
     return pRet;
@@ -3254,7 +3254,7 @@ void Unit::setAiMode(const GameEnums::GameAi &AiMode)
     unloadIcon("offensive");
     unloadIcon("patrol");
     unloadIcon("patrol_loop");
-    if (EditorMenue::getInstance() != nullptr)
+    if (dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance()) != nullptr)
     {
         switch (m_AiMode)
         {

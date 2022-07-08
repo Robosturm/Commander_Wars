@@ -13,7 +13,7 @@
 #include "wiki/wikidatabase.h"
 
 class WikiView;
-typedef oxygine::intrusive_ptr<WikiView> spWikiView;
+using spWikiView = oxygine::intrusive_ptr<WikiView>;
 
 class WikiView : public QObject, public oxygine::Actor
 {

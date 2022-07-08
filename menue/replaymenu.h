@@ -2,6 +2,7 @@
 #define REPLAYMENU_H
 
 #include <QMutex>
+#include <QObject>
 
 #include "menue/gamemenue.h"
 
@@ -10,15 +11,17 @@
 #include "gameinput/humanplayerinput.h"
 #include "game/viewplayer.h"
 #include "game/GameEnums.h"
+#include "game/gameanimation/animationskipper.h"
 
 class ReplayMenu;
 using spReplayMenu = oxygine::intrusive_ptr<ReplayMenu>;
 
-class ReplayMenu : public GameMenue
+class ReplayMenu final : public GameMenue
 {
     Q_OBJECT
     static constexpr qint32 actionPixelSize = 5;
 public:
+    explicit ReplayMenu() = default;
     ReplayMenu(QString filename);
     virtual ~ReplayMenu();
     /**
@@ -79,6 +82,11 @@ public slots:
     void rewindDay();
 protected slots:
     virtual void onEnter() override;
+    /**
+     * @brief keyInput
+     * @param event
+     */
+    virtual void keyInput(oxygine::KeyEvent event) override;
 protected:
     /**
      * @brief loadUIButtons
@@ -108,27 +116,13 @@ private:
     oxygine::spButton m_configButton;
     oxygine::spBox9Sprite m_taskBar;
 
-    bool m_seekingOverworldAnimations = false;
-    GameEnums::BattleAnimationMode m_seekingBattleAnimations = GameEnums::BattleAnimationMode_All;
-    bool m_seekingDialog = false;
-    bool m_seekingCapture = false;
-    bool m_seekingMovement = false;
-    bool m_seekingDay2Day = false;
+    AnimationSkipper m_storedSeekingAnimationSettings;
+    AnimationSkipper m_storedAnimationSettings;
+
 
     spHumanPlayerInput m_HumanInput;
     spViewplayer m_Viewplayer;
 
-    bool m_storedOverworldAnimations = false;
-    GameEnums::BattleAnimationMode m_storedBattleAnimMode;
-    GameEnums::BattleAnimationType m_storedBatteAnimType;
-    bool m_storedDialog = false;
-    bool m_storedCaptureAnimation = false;
-    bool m_storedMovementAnimation = false;
-    bool m_storedDay2DayAnimation = false;
-    quint32 m_storedDialogAnimationSpeed = 1;
-    quint32 m_storedAnimationSpeed = 1;
-    quint32 m_storedBattleAnimationSpeed = 1;
-    quint32 m_storedCaptureAnimationSpeed = 1;
     qint64 m_lastRewind = 0;
 
     bool m_seeking{false};

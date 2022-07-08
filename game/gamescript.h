@@ -8,10 +8,10 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
-#include "menue/ingamemenue.h"
 
 #include "game/gameaction.h"
 
+class BaseGamemenu;
 class GameMap;
 class GameScript;
 using spGameScript = oxygine::intrusive_ptr<GameScript>;
@@ -72,7 +72,7 @@ public:
      * @brief onGameLoaded
      * @param pMenu
      */
-    void onGameLoaded(InGameMenue* pMenu);
+    void onGameLoaded(BaseGamemenu* pMenu);
 
     QString getScriptFile() const;
     void setScriptFile(const QString &value);

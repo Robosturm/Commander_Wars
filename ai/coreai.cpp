@@ -10,6 +10,7 @@
 #include "game/co.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -81,22 +82,25 @@ CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType)
     }
 }
 
-void CoreAI::init()
+void CoreAI::init(GameMenue* pMenu)
 {
-    connect(GameMenue::getInstance().get(), &GameMenue::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-    connect(this, &CoreAI::performAction, GameMenue::getInstance().get(), &GameMenue::performAction, Qt::QueuedConnection);
-
-    
-    if (m_pMap != nullptr)
+    if (!m_initDone)
     {
-        qint32 heigth = m_pMap->getMapHeight();
-        qint32 width = m_pMap->getMapWidth();
-        for (qint32 x = 0; x < width; x++)
+        m_initDone = true;
+        m_pMenu = pMenu;
+        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
+        connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+        if (m_pMap != nullptr)
         {
-            m_MoveCostMap.push_back(std::vector<std::tuple<qint32, bool>>());
-            for (qint32 y = 0; y < heigth; y++)
+            qint32 heigth = m_pMap->getMapHeight();
+            qint32 width = m_pMap->getMapWidth();
+            for (qint32 x = 0; x < width; x++)
             {
-                m_MoveCostMap[x].push_back(std::tuple<qint32, bool>(0, false));
+                m_MoveCostMap.push_back(std::vector<std::tuple<qint32, bool>>());
+                for (qint32 y = 0; y < heigth; y++)
+                {
+                    m_MoveCostMap[x].push_back(std::tuple<qint32, bool>(0, false));
+                }
             }
         }
     }
@@ -255,14 +259,13 @@ void CoreAI::nextAction()
 {
     AI_CONSOLE_PRINT("CoreAI::nextAction", Console::eDEBUG);
     // check if it's our turn
-    spGameMenue pMenue = GameMenue::getInstance();
     if (!m_processing)
     {
         m_processing = true;
-        if (pMenue.get() != nullptr &&
+        if (m_pMenu != nullptr &&
             m_pMap != nullptr &&
             m_pPlayer == m_pMap->getCurrentPlayer() &&
-            pMenue->getGameStarted())
+            m_pMenu->getGameStarted())
         {
 
             if (!processPredefinedAi())
@@ -1564,40 +1567,43 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding
     spQmlVectorPoint pTargetFields = spQmlVectorPoint(GlobalUtils::getCircle(firerange, firerange));
     for (auto & pBuilding : pEnemyBuildings->getVector())
     {
-        if (pBuilding->getHp() > 0 &&
-            pUnit->isEnvironmentAttackable(pBuilding->getBuildingID()))
+        if (isAttackOnTerrainAllowed(pBuilding->getTerrain(), pUnit->getEnvironmentDamage(pBuilding->getBuildingID())))
         {
-            qint32 width = pBuilding->getBuildingWidth();
-            qint32 heigth = pBuilding->getBuildingHeigth();
-            QPoint pos = pBuilding->getPosition();
-            std::vector<QPoint> attackPosition;
-            // find all attackable fields
-            for (qint32 x = -width; x <= 0; x++)
+            if (pBuilding->getHp() > 0 &&
+                pUnit->isEnvironmentAttackable(pBuilding->getBuildingID()))
             {
-                for (qint32 y = -heigth; y <= 0; y++)
+                qint32 width = pBuilding->getBuildingWidth();
+                qint32 heigth = pBuilding->getBuildingHeigth();
+                QPoint pos = pBuilding->getPosition();
+                std::vector<QPoint> attackPosition;
+                // find all attackable fields
+                for (qint32 x = -width; x <= 0; x++)
                 {
-                    if (pBuilding->getIsAttackable(x + pos.x(), y + pos.y()))
+                    for (qint32 y = -heigth; y <= 0; y++)
                     {
-                        attackPosition.push_back(QPoint(pos.x() + x, pos.y() + y));
+                        if (pBuilding->getIsAttackable(x + pos.x(), y + pos.y()))
+                        {
+                            attackPosition.push_back(QPoint(pos.x() + x, pos.y() + y));
+                        }
                     }
                 }
-            }
-            // find attackable fields
-            for (auto & target : pTargetFields->getVector())
-            {
-                for (auto & attackPos : attackPosition)
+                // find attackable fields
+                for (auto & target : pTargetFields->getVector())
                 {
-                    qint32 x = target.x() + attackPos.x();
-                    qint32 y = target.y() + attackPos.y();
-                    if (m_pMap->onMap(x, y) &&
-                        m_pMap->getTerrain(x, y)->getUnit() == nullptr)
+                    for (auto & attackPos : attackPosition)
                     {
-                        if (pUnit->canMoveOver(x, y))
+                        qint32 x = target.x() + attackPos.x();
+                        qint32 y = target.y() + attackPos.y();
+                        if (m_pMap->onMap(x, y) &&
+                            m_pMap->getTerrain(x, y)->getUnit() == nullptr)
                         {
-                            QVector3D possibleTarget(x, y, 2);
-                            if (!GlobalUtils::contains(targets, possibleTarget))
+                            if (pUnit->canMoveOver(x, y))
                             {
-                                targets.push_back(possibleTarget);
+                                QVector3D possibleTarget(x, y, 2);
+                                if (!GlobalUtils::contains(targets, possibleTarget))
+                                {
+                                    targets.push_back(possibleTarget);
+                                }
                             }
                         }
                     }

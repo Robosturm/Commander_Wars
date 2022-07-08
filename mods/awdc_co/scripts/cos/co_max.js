@@ -5,7 +5,7 @@ CO_MAX.init = function(co, map)
 };
 CO_MAX.activateSuperpower = function(co, powerMode, map)
 {
-	CO_MAX.activatePower(co, powerMode);
+	CO_MAX.activatePower(co, powerMode, map);
 };
 CO_MAX.getSuperPowerDescription = function()
 {

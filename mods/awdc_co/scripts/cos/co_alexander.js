@@ -5,7 +5,7 @@ CO_ALEXANDER.init = function(co, map)
 };
 CO_ALEXANDER.activateSuperpower = function(co, powerMode, map)
 {
-	CO_ALEXANDER.activatePower(co, powerMode);
+	CO_ALEXANDER.activatePower(co, powerMode, map);
 };
 CO_ALEXANDER.getSuperPowerDescription = function()
 {

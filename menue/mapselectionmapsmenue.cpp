@@ -2,6 +2,7 @@
 #include "menue/mainwindow.h"
 #include "menue/gamemenue.h"
 #include "menue/campaignmenu.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -399,7 +400,7 @@ void MapSelectionMapsMenue::startGame()
     pMap->updateSprites(-1, -1, false, true);
     // start game
     CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
-    auto window = spGameMenue::create(pMap, false, spNetworkInterface());
+    auto window = spGameMenue::create(pMap, false, spNetworkInterface(), false);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }

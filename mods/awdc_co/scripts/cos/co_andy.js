@@ -5,7 +5,7 @@ CO_ANDY.init = function(co, map)
 };
 CO_ANDY.activateSuperpower = function(co, powerMode, map)
 {
-	CO_ANDY.activatePower(co, powerMode);
+	CO_ANDY.activatePower(co, powerMode, map);
 };
 CO_ANDY.getSuperPowerDescription = function()
 {

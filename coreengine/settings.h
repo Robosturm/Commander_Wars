@@ -24,8 +24,10 @@ using spSettings = oxygine::intrusive_ptr<Settings>;
 
 class Settings : public QObject, public oxygine::ref_counter
 {
+public:
+    static const char* const DEFAULT_AUDIODEVICE;
+private:
     Q_OBJECT
-
     struct ValueBase
     {
         virtual void readValue(QSettings & settings) = 0;
@@ -121,6 +123,17 @@ class Settings : public QObject, public oxygine::ref_counter
                     *m_value = m_defaultValue;
                 }
             }
+            else if constexpr (std::is_same<TType, std::chrono::minutes>::value)
+            {
+                bool ok = false;
+                *m_value = std::chrono::minutes(settings.value(m_name, static_cast<qint64>(m_defaultValue.count())).toUInt(&ok));
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
+                {
+                    QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
+                    CONSOLE_PRINT(error, Console::eERROR);
+                    *m_value = m_defaultValue;
+                }
+            }
             else
             {
                 // not implemented data type
@@ -165,48 +178,64 @@ class Settings : public QObject, public oxygine::ref_counter
 #ifdef AUDIOSUPPORT
     struct AudioDeviceValue : public ValueBase
     {
-        AudioDeviceValue(const char* const group, const char* const name, QVariant* value)
+        AudioDeviceValue(const char* const group, const char* const name, QVariant* value, QString defaultValue)
             : m_group{group},
               m_name{name},
-              m_value{value}
+              m_value{value},
+              m_defaultValue{defaultValue}
         {
         }
-        virtual void readValue(QSettings & settings)
+        virtual void readValue(QSettings & settings) override
         {
             settings.beginGroup(m_group);
             const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
-            QString description = settings.value(m_name, "").toString();
-            const auto audioDevices = QMediaDevices::audioOutputs();
-            for (const auto & device : audioDevices)
+            QString description = settings.value(m_name, m_defaultValue).toString();
+            if (description == DEFAULT_AUDIODEVICE)
             {
-                if (device.description() == description)
+                *m_value = QVariant(DEFAULT_AUDIODEVICE);
+            }
+            else
+            {
+                const auto audioDevices = QMediaDevices::audioOutputs();
+                for (const auto & device : audioDevices)
                 {
-                    *m_value = QVariant::fromValue(device);
-                    break;
+                    if (device.description() == description)
+                    {
+                        *m_value = QVariant::fromValue(device);
+                        break;
+                    }
+                }
+                if (m_audioOutput.value<QAudioDevice>().isNull())
+                {
+                    *m_value = QVariant::fromValue(defaultDeviceInfo);
                 }
             }
-            if (m_audioOutput.value<QAudioDevice>().isNull())
+            settings.endGroup();
+        }
+        virtual void saveValue(QSettings & settings) override
+        {
+            settings.beginGroup(m_group);
+            if (m_value->typeId() == QMetaType::QString &&
+                m_value->toString() == DEFAULT_AUDIODEVICE)
             {
-                *m_value = QVariant::fromValue(defaultDeviceInfo);
+                settings.setValue(m_name, DEFAULT_AUDIODEVICE);
+            }
+            else
+            {
+                auto device = (*m_value).value<QAudioDevice>();
+                settings.setValue(m_name, device.description());
             }
             settings.endGroup();
         }
-        virtual void saveValue(QSettings & settings)
+        virtual void resetValue() override
         {
-            settings.beginGroup(m_group);
-            auto device = (*m_value).value<QAudioDevice>();
-            settings.setValue(m_name, device.description());
-            settings.endGroup();
-        }
-        virtual void resetValue()
-        {
-            const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
-            *m_value = QVariant::fromValue(defaultDeviceInfo);
+            *m_value = QVariant(Settings::DEFAULT_AUDIODEVICE);
         }
     private:
         const char* const m_group;
         const char* const m_name;
         QVariant* m_value;
+        QString m_defaultValue;
     };
 #endif
 public:
@@ -232,6 +261,35 @@ public:
     static void setUsername(const QString &Username);
 
 public slots:
+    static const QString &getMailServerSendAddress();
+    static void setMailServerSendAddress(const QString &newMailServerSendAddress);
+
+    static qint32 getMailServerAuthMethod();
+    static void setMailServerAuthMethod(qint32 newMailServerAuthMethod);
+
+    static const QString &getMailServerAddress();
+    static void setMailServerAddress(const QString &newMailServerAddress);
+
+    static quint16 getMailServerPort();
+    static void setMailServerPort(quint16 newMailServerPort);
+
+    static qint32 getMailServerConnectionType();
+    static void setMailServerConnectionType(qint32 newMailServerConnectionType);
+
+    static QString getMailServerUsername();
+    static void setMailServerUsername(QString newMailServerUsername);
+
+    static QString getMailServerPassword();
+    static void setMailServerPassword(QString newMailServerPassword);
+
+    static const std::chrono::seconds &getSlaveDespawnTime();
+    static void setSlaveDespawnTime(const std::chrono::seconds &newSlaveDespawnTime);
+
+    static const QString &getDefaultBannlist();
+    static void setDefaultBannlist(const QString &newDefaultBannlist);
+
+    static bool getUseHighDpi();
+    static void setUseHighDpi(bool newUseHighDpi);
 
     static bool getDay2dayScreen();
     static void setDay2dayScreen(bool newDay2dayScreen);
@@ -692,6 +750,7 @@ private:
     static bool m_gamepadEnabled;
     static float m_gamepadSensitivity;
     static qint32 m_framesPerSecond;
+    static bool m_useHighDpi;
 
     static bool m_borderless;
     static bool m_fullscreen;
@@ -769,6 +828,16 @@ private:
     static QString m_serverListenAdress;
     static QString m_slaveListenAdress;
     static QString m_slaveHostOptions;
+    static std::chrono::seconds m_slaveDespawnTime;
+
+    // mailing
+    static QString m_mailServerAddress;
+    static quint16 m_mailServerPort;
+    static qint32 m_mailServerConnectionType;
+    static QString m_mailServerUsername;
+    static QString m_mailServerPassword;
+    static QString m_mailServerSendAddress;
+    static qint32 m_mailServerAuthMethod;
 
     // auto saving
     static std::chrono::seconds m_autoSavingCylceTime;
@@ -792,6 +861,7 @@ private:
     static quint32 multiTurnCounter;
     static QString m_LastSaveGame;
     static QString m_defaultRuleset;
+    static QString m_defaultBannlist;
     static bool m_ShowCursor;
     static bool m_AutoEndTurn;
     static qint32 m_MenuItemCount;

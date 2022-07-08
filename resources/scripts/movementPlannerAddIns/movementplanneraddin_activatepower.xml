@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>0</x>
+        <y>0</y>
+        <width>settings.getWidth()</width>
+        <height>settings.getHeight()</height>
+        <childs>
+            <Label>
+                <x>settings.getWidth() / 2 - 300</x>
+                <y>10</y>
+                <width>600</width>
+                <height>60</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Spawn Unit")</text>
+                <font>"main48"</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Owner:")</text>
+                <font>"main24"</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Owner of the unit")</tooltip>
+                <startValue>1</startValue>
+                <infinite>0</infinite>
+                <min>1</min>
+                <max>addIn.getMap().getPlayerCount()</max>
+                <onEvent>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.changeOwner(addIn, input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","CO:")</text>
+                <font>"main24"</font>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","CO that should activate it's power")</tooltip>
+                <items>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getCoList()</items>
+                <onEvent>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.changeCo(addIn, input)</onEvent>
+            </DropDownMenu>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Power:")</text>
+                <font>"main24"</font>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Power which should be activated")</tooltip>
+                <items>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getPowerList()</items>
+                <onEvent>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.changePower(addIn, input)</onEvent>
+            </DropDownMenu>
+            <Button>
+                <x>settings.getWidth() / 2 + 10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Apply")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Applies the changes to the unit")</tooltip>
+                <onEvent>addIn.onMenuInputDone()</onEvent>
+            </Button>
+            <Button>
+                <x>settings.getWidth() / 2 - 160</x>
+                <y>lastY</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Cancel")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Cancels the dialog")</tooltip>
+                <onEvent>addIn.getPlanner().stopAddIn()</onEvent>
+            </Button>
+        </childs>
+    </Panel>
+</ui>

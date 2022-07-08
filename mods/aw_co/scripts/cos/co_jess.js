@@ -5,7 +5,7 @@ CO_JESS.init = function(co, map)
 };
 CO_JESS.activateSuperpower = function(co, powerMode, map)
 {
-    CO_JESS.activatePower(co, powerMode);
+    CO_JESS.activatePower(co, powerMode, map);
 };
 CO_JESS.getSuperPowerDescription = function()
 {

@@ -41,7 +41,7 @@ var Constructor = function()
         // used to determine if a trap is in the move path.
         // the engine takes care of checking the path in the correct order and cutting the path.
         if ((targetFieldUnit !== null &&
-             targetFieldUnit.isStealthed(map.getCurrentPlayer()) &&
+             targetFieldUnit.isStealthed(moveUnit.getOwner()) &&
              !targetFieldUnit.getIgnoreUnitCollision()) ||
              moveCost < 0)
         {

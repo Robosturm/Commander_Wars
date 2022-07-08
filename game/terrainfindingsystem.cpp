@@ -44,7 +44,7 @@ bool TerrainFindingSystem::finished(qint32, qint32, qint32)
     return false;
 }
 
-qint32 TerrainFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32, qint32)
+qint32 TerrainFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32, qint32, qint32)
 {
     if (m_movecosts[index][0] == infinite)
     {

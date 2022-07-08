@@ -155,7 +155,10 @@ void Terrain::setSpriteVisibility(bool value)
     {
         m_pBaseTerrain->setSpriteVisibility(value);
     }
-    m_pTerrainSprite->setVisible(value);
+    if (m_pTerrainSprite.get() != nullptr)
+    {
+        m_pTerrainSprite->setVisible(value);
+    }
     for (auto& sprite : m_pOverlaySprites)
     {
         sprite->setVisible(value);
@@ -948,7 +951,6 @@ void Terrain::removeBuilding()
                     }
                 }
             }
-            m_Building = nullptr;
         }
         else
         {
@@ -959,6 +961,7 @@ void Terrain::removeBuilding()
                 pTerrain->removeBuilding();
             }
         }
+        m_Building = nullptr;
     }
 }
 

@@ -1,7 +1,7 @@
-#include <qcursor.h>
-#include <qguiapplication.h>
+#include <QCursor>
+#include <QGuiApplication>
 
-#include "menue/ingamemenue.h"
+#include "menue/basegamemenu.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -11,38 +11,33 @@
 
 #include "game/gamemap.h"
 
-spInGameMenue InGameMenue::m_pInstance(nullptr);
+spBaseGamemenu m_pInstance(nullptr);
 
-const char* const JS_GAME_NAME = "game";
-
-InGameMenue::InGameMenue(spGameMap & pMap)
-    : m_pMap(pMap)
+BaseGamemenu::BaseGamemenu(spGameMap pMap)
+    : m_MapMoveThread(this),
+      m_pMap(pMap)
 {
     m_MapMoveThread.setObjectName("MapMoveThread");
     Mainapp* pApp = Mainapp::getInstance();
-    pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     pApp->getAudioThread()->clearPlayList();
-    m_pInstance = spInGameMenue(this, true);
+    m_pInstance = spBaseGamemenu(this, true);
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
     m_Cursor = spCursor::create(m_pMap.get());
     loadBackground();
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue globals = pInterpreter->newQObject(this);
-    pInterpreter->setGlobal(JS_GAME_NAME, globals);
 }
 
-InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame)
+BaseGamemenu::BaseGamemenu(qint32 width, qint32 heigth, QString map, bool savegame)
+    : m_MapMoveThread(this)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     pApp->getAudioThread()->clearPlayList();
-    m_pInstance = spInGameMenue(this, true);
+    m_pInstance = spBaseGamemenu(this, true);
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
@@ -58,22 +53,22 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame
     }
     m_Cursor = spCursor::create(m_pMap.get());
     loadHandling();
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue globals = pInterpreter->newQObject(this);
-    pInterpreter->setGlobal(JS_GAME_NAME, globals);
 }
 
-InGameMenue::~InGameMenue()
+BaseGamemenu::~BaseGamemenu()
 {
-    CONSOLE_PRINT("Deleting In Game Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Deleting BaseGamemenu", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     QCursor cursor = pApp->cursor();
     cursor.setShape(Qt::CursorShape::ArrowCursor);
     m_pMap->detach();
     m_pMap = nullptr;
     m_MapMover = nullptr;
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(JS_GAME_NAME);
+    if (!m_jsName.isEmpty())
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        pInterpreter->deleteObject(m_jsName);
+    }
     if (m_MapMoveThread.isRunning())
     {
         m_MapMoveThread.quit();
@@ -81,7 +76,25 @@ InGameMenue::~InGameMenue()
     }
 }
 
-void InGameMenue::loadBackground()
+void BaseGamemenu::registerAtInterpreter(QString name)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue globals = pInterpreter->newQObject(this);
+    pInterpreter->setGlobal(name, globals);
+    m_jsName = name;
+}
+
+Player* BaseGamemenu::getCurrentViewPlayer()
+{
+    return nullptr;
+}
+
+BaseGamemenu* BaseGamemenu::getInstance()
+{
+    return m_pInstance.get();
+}
+
+void BaseGamemenu::loadBackground()
 {
     CONSOLE_PRINT("Entering In Game Menue", Console::eDEBUG);
     // load background
@@ -90,7 +103,7 @@ void InGameMenue::loadBackground()
     changeBackground("gamemenu");
 }
 
-void InGameMenue::changeBackground(QString background)
+void BaseGamemenu::changeBackground(QString background)
 {
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim(background);
@@ -104,13 +117,13 @@ void InGameMenue::changeBackground(QString background)
     }
 }
 
-void InGameMenue::deleteMenu()
+void BaseGamemenu::deleteMenu()
 {
     oxygine::Actor::detach();
     m_pInstance = nullptr;
 }
 
-void InGameMenue::loadHandling()
+void BaseGamemenu::loadHandling()
 {
     if (!m_handlingLoaded)
     {
@@ -128,15 +141,14 @@ void InGameMenue::loadHandling()
                 }
             }
         });
-        connect(this, &InGameMenue::sigMouseWheel, m_MapMover.get(), &MapMover::mouseWheel, Qt::QueuedConnection);
-        connect(pApp, &Mainapp::sigKeyDown, this, &InGameMenue::keyInput, Qt::QueuedConnection);
-        connect(pApp, &Mainapp::sigKeyUp, this, &InGameMenue::keyUp, Qt::QueuedConnection);
-        connect(pApp, &Mainapp::sigKeyDown, m_MapMover.get(), &MapMover::keyInput, Qt::QueuedConnection);
+        connect(this, &BaseGamemenu::sigMouseWheel, m_MapMover.get(), &MapMover::mouseWheel, Qt::QueuedConnection);
+        connect(pApp, &Mainapp::sigKeyDown, this, &BaseGamemenu::keyInput, Qt::QueuedConnection);
+        connect(pApp, &Mainapp::sigKeyUp, this, &BaseGamemenu::keyUp, Qt::QueuedConnection);
         connectMapCursor();
     }
 }
 
-void InGameMenue::connectMapCursor()
+void BaseGamemenu::connectMapCursor()
 {
     Mainapp* pApp = Mainapp::getInstance();
     
@@ -149,8 +161,8 @@ void InGameMenue::connectMapCursor()
             //pEvent->stopPropagation();
             if (m_Focused)
             {
-                qint32 curX = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().x);
-                qint32 curY = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().y);
+                qint32 curX = static_cast<qint32>(pTouchEvent->localPosition.x);
+                qint32 curY = static_cast<qint32>(pTouchEvent->localPosition.y);
                 pCursor->updatePosition(curX, curY);
             }
             else
@@ -221,22 +233,22 @@ void InGameMenue::connectMapCursor()
     m_pMap->addChild(m_Cursor);
 }
 
-GameMap* InGameMenue::getMap() const
+GameMap* BaseGamemenu::getMap() const
 {
     return m_pMap.get();
 }
 
-oxygine::spSlidingActorNoClipRect InGameMenue::getMapSliding() const
+oxygine::spSlidingActorNoClipRect BaseGamemenu::getMapSliding() const
 {
     return m_mapSliding;
 }
 
-oxygine::spActor InGameMenue::getMapSlidingActor() const
+oxygine::spActor BaseGamemenu::getMapSlidingActor() const
 {
     return m_mapSlidingActor;
 }
 
-void InGameMenue::autoScroll(QPoint cursorPosition)
+void BaseGamemenu::autoScroll(QPoint cursorPosition)
 {
     Mainapp* pApp = Mainapp::getInstance();
     if (QGuiApplication::focusWindow() == pApp &&
@@ -283,7 +295,7 @@ void InGameMenue::autoScroll(QPoint cursorPosition)
     }
 }
 
-void InGameMenue::MoveMap(qint32 x, qint32 y)
+void BaseGamemenu::MoveMap(qint32 x, qint32 y)
 {
     
     if (m_pMap.get() != nullptr)
@@ -292,7 +304,7 @@ void InGameMenue::MoveMap(qint32 x, qint32 y)
     }
 }
 
-void InGameMenue::setFocused(bool Focused)
+void BaseGamemenu::setFocused(bool Focused)
 {
     if (!Focused)
     {
@@ -301,12 +313,12 @@ void InGameMenue::setFocused(bool Focused)
     Basemenu::setFocused(Focused);
 }
 
-Cursor* InGameMenue::getCursor()
+Cursor* BaseGamemenu::getCursor()
 {
     return m_Cursor.get();
 }
 
-void InGameMenue::keyInput(oxygine::KeyEvent event)
+void BaseGamemenu::keyInput(oxygine::KeyEvent event)
 {
     QPoint mapPoint = m_Cursor->getMapPoint();
     if (m_Focused && (!event.getContinousPress() || m_lastMapPoint != mapPoint))
@@ -332,7 +344,7 @@ void InGameMenue::keyInput(oxygine::KeyEvent event)
     }
 }
 
-void InGameMenue::keyUp(oxygine::KeyEvent event)
+void BaseGamemenu::keyUp(oxygine::KeyEvent event)
 {
     if (m_Focused)
     {
@@ -351,22 +363,22 @@ void InGameMenue::keyUp(oxygine::KeyEvent event)
     }
 }
 
-QPoint InGameMenue::getMousePos(qint32 x, qint32 y)
-{
-    
+QPoint BaseGamemenu::getMousePos(qint32 x, qint32 y)
+{    
     if (m_pMap.get() != nullptr)
     {
         qint32 mapX = m_pMap->getX() + m_mapSliding->getX() + m_mapSlidingActor->getX();
         qint32 mapY = m_pMap->getY() + m_mapSliding->getY() + m_mapSlidingActor->getY();
 
-        qint32 MousePosX = x * (GameMap::getImageSize() * m_pMap->getZoom()) + mapX + (GameMap::getImageSize() * m_pMap->getZoom()) / 2;
-        qint32 MousePosY = y * (GameMap::getImageSize() * m_pMap->getZoom()) + mapY + (GameMap::getImageSize() * m_pMap->getZoom()) / 2;
-        return QPoint(MousePosX, MousePosY);
+        Mainapp* pApp = Mainapp::getInstance();
+        qint32 mousePosX = x * (GameMap::getImageSize() * m_pMap->getZoom()) + mapX + (GameMap::getImageSize() * m_pMap->getZoom()) / 2;
+        qint32 mousePosY = y * (GameMap::getImageSize() * m_pMap->getZoom()) + mapY + (GameMap::getImageSize() * m_pMap->getZoom()) / 2;
+        return QPoint(mousePosX, mousePosY);
     }
     return QPoint(0, 0);
 }
 
-void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
+void BaseGamemenu::calcNewMousePosition(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
     
@@ -375,52 +387,51 @@ void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
         pApp->hasCursor())
     {
         QPoint mousePos = getMousePos(x, y);
-        qint32 MousePosX = mousePos.x();
-        qint32 MousePosY = mousePos.y();
-        if (MousePosX < m_autoScrollBorder.x())
+        qint32 mousePosX = mousePos.x();
+        qint32 mousePosY = mousePos.y();
+        if (mousePosX < m_autoScrollBorder.x())
         {
             qint32 moveX = GameMap::getImageSize() * m_pMap->getZoom();
             m_pMap->moveMap(moveX, 0);
-            MousePosX += moveX;
+            mousePosX += moveX;
         }
-        if (MousePosX > Settings::getWidth() - m_autoScrollBorder.width())
+        if (mousePosX > Settings::getWidth() - m_autoScrollBorder.width())
         {
             qint32 moveX = -GameMap::getImageSize() * m_pMap->getZoom();
             m_pMap->moveMap(moveX, 0);
-            MousePosX += moveX;
+            mousePosX += moveX;
         }
 
-        if (MousePosY < m_autoScrollBorder.y())
+        if (mousePosY < m_autoScrollBorder.y())
         {
             qint32 moveY = GameMap::getImageSize() * m_pMap->getZoom();
             m_pMap->moveMap(0, moveY);
-            MousePosY += moveY;
+            mousePosY += moveY;
         }
-        if (MousePosY > Settings::getHeight() - m_autoScrollBorder.height())
+        if (mousePosY > Settings::getHeight() - m_autoScrollBorder.height())
         {
             qint32 moveY = -GameMap::getImageSize() * m_pMap->getZoom();
             m_pMap->moveMap(0, moveY);
-            MousePosY += moveY;
+            mousePosY += moveY;
         }
         if (Settings::getAutoMoveCursor())
         {
-            QPoint curPos = pApp->mapToGlobal(QPoint(MousePosX, MousePosY));
+            QPoint curPos = pApp->mapPosToGlobal(QPoint(mousePosX, mousePosY));
             pApp->cursor().setPos(curPos);
         }
-        m_Cursor->updatePosition(MousePosX, MousePosY);
+        m_Cursor->updatePosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
     }
 }
 
-void InGameMenue::centerMapOnCursor()
-{
-    
+void BaseGamemenu::centerMapOnCursor()
+{    
     if (m_pMap.get() != nullptr)
     {
         m_pMap->centerMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
     }
 }
 
-void InGameMenue::initSlidingActor(qint32 x, qint32 y, qint32 width, qint32 height)
+void BaseGamemenu::initSlidingActor(qint32 x, qint32 y, qint32 width, qint32 height)
 {
     CONSOLE_PRINT("InGameMenue::initSlidingActor() x " + QString::number(x) + " y " + QString::number(y) + " width " + QString::number(width) + " height "  + QString::number(height), Console::eDEBUG);
     if (m_mapSliding.get() == nullptr)
@@ -446,7 +457,7 @@ void InGameMenue::initSlidingActor(qint32 x, qint32 y, qint32 width, qint32 heig
     setFocused(true);
 }
 
-void InGameMenue::updateSlidingActorSize()
+void BaseGamemenu::updateSlidingActorSize()
 {
     if (m_mapSlidingActor.get() != nullptr &&
         m_mapSliding.get() != nullptr)

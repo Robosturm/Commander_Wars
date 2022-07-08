@@ -1,4 +1,4 @@
-#include "qfile.h"
+#include <QFile>
 
 #include "game/gameanimation/gameanimationdialog.h"
 #include "game/gameanimation/gameanimationfactory.h"
@@ -8,6 +8,7 @@
 #include "coreengine/audiothread.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
@@ -303,11 +304,11 @@ void GameAnimationDialog::setTextSpeed(qint32 speed)
 
 void GameAnimationDialog::restart()
 {
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
+    if (pMenu != nullptr)
     {
         m_stopped = false;
-        pGameMenue->addChild(spGameAnimationDialog(this));
+        pMenu->addChild(spGameAnimationDialog(this));
     }
 }
 

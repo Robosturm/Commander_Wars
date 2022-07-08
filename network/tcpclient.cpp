@@ -1,11 +1,6 @@
-#include <QTcpSocket>
-
 #include "network/rxtask.h"
 #include "network/txtask.h"
 #include "network/tcpclient.h"
-
-#include "coreengine/mainapp.h"
-
 
 TCPClient::TCPClient(QObject* pParent)
     : NetworkInterface(pParent),
@@ -41,15 +36,12 @@ TCPClient::~TCPClient()
 
 void TCPClient::connectTCP(QString adress, quint16 port)
 {
-    // Launch Socket
     m_pSocket = std::make_shared<QTcpSocket>(this);
+    connect(m_pSocket.get(), &QTcpSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
-    connect(m_pSocket.get(), &QAbstractSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QAbstractSocket::stateChanged, this, &TCPClient::displayStateChange, Qt::QueuedConnection);
-
     m_pSocket->connectToHost(adress, port);
-
     // Start RX-Task
     m_pRXTask = spRxTask::create(m_pSocket.get(), 0, this, false);
     connect(m_pSocket.get(), &QTcpSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
@@ -58,7 +50,7 @@ void TCPClient::connectTCP(QString adress, quint16 port)
     m_pTXTask = spTxTask::create(m_pSocket.get(), 0, this, false);
     connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 
-    CONSOLE_PRINT("Client is running and connecting to " + adress + " and port " + QString::number(port), Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client is running and connecting to \"" + adress + "\" and port " + QString::number(port), Console::eLogLevels::eDEBUG);
 }
 
 void TCPClient::disconnectTCP()
@@ -119,4 +111,12 @@ void TCPClient::setSocketID(const quint64 &socketID)
     NetworkInterface::setSocketID(socketID);
     m_pRXTask->setSocketID(socketID);
     m_pTXTask->setSocketID(socketID);
+}
+
+void TCPClient::sslErrors(const QList<QSslError> &errors)
+{
+    for (const auto & error : qAsConst(errors))
+    {
+        CONSOLE_PRINT(error.errorString(), Console::eLogLevels::eDEBUG);
+    }
 }

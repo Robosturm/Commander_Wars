@@ -5,7 +5,7 @@ CO_EAGLE.init = function(co, map)
 };
 CO_EAGLE.activateSuperpower = function(co, powerMode, map)
 {
-	CO_EAGLE.activatePower(co, powerMode);
+	CO_EAGLE.activatePower(co, powerMode, map);
 };
 CO_EAGLE.getSuperPowerDescription = function()
 {

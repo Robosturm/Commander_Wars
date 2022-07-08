@@ -5,7 +5,7 @@ CO_CONRAD.init = function(co, map)
 };
 CO_CONRAD.activateSuperpower = function(co, powerMode, map)
 {
-    CO_CONRAD.activatePower(co, powerMode);
+    CO_CONRAD.activatePower(co, powerMode, map);
 };
 CO_CONRAD.getSuperPowerDescription = function()
 {

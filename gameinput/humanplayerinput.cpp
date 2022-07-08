@@ -7,6 +7,7 @@
 #include "game/building.h"
 #include "game/player.h"
 #include "game/co.h"
+#include "game/actionperformer.h"
 #include "game/gameanimation/gameanimationfactory.h"
 
 #include "resource_management/gamemanager.h"
@@ -20,6 +21,8 @@
 
 #include "ai/coreai.h"
 
+#include "menue/movementplanner.h"
+
 HumanPlayerInput::HumanPlayerInput(GameMap* pMap)
     : BaseGameInputIF(pMap, GameEnums::AiTypes_Human)
 {    
@@ -29,24 +32,27 @@ HumanPlayerInput::HumanPlayerInput(GameMap* pMap)
     Interpreter::setCppOwnerShip(this);
 }
 
-void HumanPlayerInput::init()
+void HumanPlayerInput::init(GameMenue* pMenu)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    spGameMenue pMenu = GameMenue::getInstance();
-    
-    if (pMenu.get() != nullptr)
+    if (!m_initDone)
     {
-        connect(pMenu.get(), &GameMenue::sigRightClickDown, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
-        connect(pMenu.get(), &GameMenue::sigRightClickUp, this, &HumanPlayerInput::rightClickUp, Qt::QueuedConnection);
-        connect(pMenu.get(), &GameMenue::sigLeftClick, this, &HumanPlayerInput::leftClick, Qt::QueuedConnection);
-        connect(pMenu.get(), &GameMenue::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
-        connect(m_pMap, &GameMap::sigZoomChanged, this, &HumanPlayerInput::zoomChanged, Qt::QueuedConnection);
-        connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
-        connect(pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
-        connect(this, &HumanPlayerInput::performAction, pMenu.get(), &GameMenue::performAction, Qt::QueuedConnection);
-        connect(this, &HumanPlayerInput::sigNextTurn, this, &HumanPlayerInput::nextTurn, Qt::QueuedConnection);
-        m_Fields.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
-        m_FieldPoints.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
+        m_initDone = true;
+        Mainapp* pApp = Mainapp::getInstance();
+        m_pMenu = pMenu;
+        if (m_pMenu != nullptr)
+        {
+            connect(m_pMenu, &GameMenue::sigRightClickDown, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
+            connect(m_pMenu, &GameMenue::sigRightClickUp, this, &HumanPlayerInput::rightClickUp, Qt::QueuedConnection);
+            connect(m_pMenu, &GameMenue::sigLeftClick, this, &HumanPlayerInput::leftClick, Qt::QueuedConnection);
+            connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
+            connect(m_pMap, &GameMap::sigZoomChanged, this, &HumanPlayerInput::zoomChanged, Qt::QueuedConnection);
+            connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
+            connect(m_pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
+            connect(this, &HumanPlayerInput::performAction, &pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+            connect(this, &HumanPlayerInput::sigNextTurn, this, &HumanPlayerInput::nextTurn, Qt::QueuedConnection);
+            m_Fields.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
+            m_FieldPoints.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
+        }
     }
 }
 
@@ -58,22 +64,12 @@ HumanPlayerInput::~HumanPlayerInput()
 
 void HumanPlayerInput::rightClickUp(qint32, qint32)
 {
-    // if (m_pMap->getCurrentPlayer() == m_pPlayer ||
-    //     m_pPlayer == nullptr)
-    // {
-    //     if (m_FieldPoints.size() > 0 && m_pGameAction.get() == nullptr)
-    //     {
-    //         cleanUpInput();
-    //     }
-    //
-    // }
 }
 
 void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
 {
     bool isViewPlayer = (m_pMap->getCurrentViewPlayer() == m_pPlayer);
-
-    if (m_pMap->getCurrentPlayer() == m_pPlayer ||
+    if (isCurrentPlayer(m_pPlayer) ||
         m_pPlayer == nullptr)
     {
         if (GameAnimationFactory::getAnimationCount() > 0)
@@ -141,6 +137,16 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
     {
         // do nothing
     }
+}
+
+bool HumanPlayerInput::isCurrentPlayer(Player* pPlayer) const
+{
+    return getPerformingPlayer(pPlayer) == pPlayer;
+}
+
+Player* HumanPlayerInput::getPerformingPlayer(Player*) const
+{
+    return m_pMap->getCurrentPlayer();
 }
 
 void HumanPlayerInput::showVisionFields(qint32 x, qint32 y)
@@ -213,10 +219,9 @@ void HumanPlayerInput::cancelActionInput()
     {
         pUnit = m_pGameAction->getTargetUnit();
     }
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pMenu->getCursor()->changeCursor("cursor+default");
+        m_pMenu->getCursor()->changeCursor("cursor+default");
     }
     if ((pUnit != nullptr) &&
         (!pUnit->isStealthed(m_pPlayer)))
@@ -314,10 +319,9 @@ void HumanPlayerInput::cleanUpInput()
     m_showVisionFields = false;
     clearMarkedFields();
     deleteArrow();
-    spGameMenue pMenue = GameMenue::getInstance();
-    if (pMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        Cursor* pCursor = pMenue->getCursor();
+        Cursor* pCursor = m_pMenu->getCursor();
         pCursor->changeCursor("cursor+default");
         pCursor->resetCursorRangeOutline();
         cursorMoved(pCursor->getMapPointX(), pCursor->getMapPointY());
@@ -328,10 +332,9 @@ void HumanPlayerInput::clearMenu()
 {
     if (m_CurrentMenu.get() != nullptr)
     {
-        spGameMenue pMenue = GameMenue::getInstance();
-        if (pMenue.get() != nullptr)
+        if (m_pMenu != nullptr)
         {
-            pMenue->setFocused(true);
+            m_pMenu->setFocused(true);
         }
         m_CurrentMenu->detach();
         m_CurrentMenu = nullptr;
@@ -364,18 +367,16 @@ void HumanPlayerInput::clearMarkedFields()
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("humanplayer input leftClick() with X " + QString::number(x) + " Y " + QString::number(y), Console::eDEBUG);
-    spGameMenue pMenu = GameMenue::getInstance();
-    Cursor* pCursor = pMenu->getCursor();
-    if (pMenu.get() != nullptr &&
+    if (m_pMenu != nullptr &&
         GameAnimationFactory::getAnimationCount() == 0)
     {
-        
+        Cursor* pCursor = m_pMenu->getCursor();
         bool isViewPlayer = (m_pMap->getCurrentViewPlayer() == m_pPlayer);
         if (!m_pMap->onMap(x, y))
         {
             // do nothing
         }
-        else if (!pMenu->getFocused())
+        else if (!m_pMenu->getFocused())
         {
             if (m_CurrentMenu.get() != nullptr && Settings::getSimpleDeselect())
             {
@@ -383,7 +384,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 cancelActionInput();
             }
         }
-        else if (m_pMap->getCurrentPlayer() == m_pPlayer ||
+        else if (isCurrentPlayer(m_pPlayer) ||
                  m_pPlayer == nullptr)
         {
             if (m_pMarkedFieldData.get() != nullptr &&
@@ -439,13 +440,13 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                     Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
                     QStringList actions;
                     QStringList possibleActions;
-                    if ((pBuilding != nullptr) &&
-                        (pBuilding->getOwner() == m_pPlayer))
+                    if (pBuilding != nullptr &&
+                        isCurrentPlayer(pBuilding->getOwner()))
                     {
                         actions = pBuilding->getActionList();
                         for (auto & action : actions)
                         {
-                            if (m_pGameAction->canBePerformed(action))
+                            if (m_pGameAction->canBePerformed(action, false, getPerformingPlayer(pBuilding->getOwner())))
                             {
                                 possibleActions.append(action);
                             }
@@ -479,7 +480,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                             possibleActions.clear();
                             for (auto & action : actions)
                             {
-                                if (m_pGameAction->canBePerformed(action, true))
+                                if (m_pGameAction->canBePerformed(action, true, getPerformingPlayer(nullptr)))
                                 {
                                     possibleActions.append(action);
                                 }
@@ -540,7 +541,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                         }
                         for (auto & action : actions)
                         {
-                            if (m_pGameAction->canBePerformed(action))
+                            if (m_pGameAction->canBePerformed(action, false, getPerformingPlayer(pUnit->getOwner())))
                             {
                                 possibleActions.append(action);
                             }
@@ -668,10 +669,9 @@ void HumanPlayerInput::getNextStepData()
     CONSOLE_PRINT("HumanPlayerInput::getNextStepData", Console::eDEBUG);
     clearMenu();
     clearMarkedFields();
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        Cursor* pCursor = pMenu->getCursor();
+        Cursor* pCursor = m_pMenu->getCursor();
         pCursor->changeCursor("cursor+default");
         pCursor->resetCursorRangeOutline();
         QString stepType = m_pGameAction->getStepInputType();
@@ -681,7 +681,7 @@ void HumanPlayerInput::getNextStepData()
             spMenuData pData = m_pGameAction->getMenuStepData();
             if (pData->validData())
             {
-                m_CurrentMenu = spHumanPlayerInputMenu::create(m_pMap, pData->getTexts(), pData->getActionIDs(), pData->getIconList(), pData->getCostList(), pData->getEnabledList());
+                m_CurrentMenu = spHumanPlayerInputMenu::create(m_pMenu, m_pMap, pData->getTexts(), pData->getActionIDs(), pData->getIconList(), pData->getCostList(), pData->getEnabledList());
                 attachActionMenu(m_pGameAction->getActionTarget().x(), m_pGameAction->getActionTarget().y());
             }
         }
@@ -697,7 +697,7 @@ void HumanPlayerInput::getNextStepData()
             syncMarkedFields();
             m_pMarkedFieldData = pData;
             spCursorData pCursordata = m_pGameAction->getStepCursor();
-            pMenu->getCursor()->changeCursor(pCursordata->getCursor(), pCursordata->getXOffset(), pCursordata->getYOffset(), pCursordata->getScale());
+            m_pMenu->getCursor()->changeCursor(pCursordata->getCursor(), pCursordata->getXOffset(), pCursordata->getYOffset(), pCursordata->getScale());
             if (!m_pMarkedFieldData->getAllFields())
             {
                 nextMarkedField();
@@ -741,7 +741,7 @@ void HumanPlayerInput::finishAction()
 
         
         bool isViewPlayer = (m_pMap->getCurrentViewPlayer() == m_pPlayer);
-        if (m_pMap->getCurrentPlayer() == m_pPlayer)
+        if (isCurrentPlayer(m_pPlayer))
         {
             emit performAction(m_pGameAction);
         }
@@ -772,22 +772,20 @@ void HumanPlayerInput::createActionMenu(const QStringList & actionIDs, qint32 x,
     {
         data.addData(GameAction::getActionText(m_pMap, action), action, GameAction::getActionIcon(m_pMap, action));
     }
-    m_CurrentMenu = spHumanPlayerInputMenu::create(m_pMap, data.getTexts(), actionIDs, data.getIconList());
+    m_CurrentMenu = spHumanPlayerInputMenu::create(m_pMenu, m_pMap, data.getTexts(), actionIDs, data.getIconList());
     attachActionMenu(x, y);
 }
 
 void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
 {
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
-    {
-        
-        oxygine::spSlidingActorNoClipRect pMapSliding = pMenu->getMapSliding();
-        oxygine::spActor pMapSlidingActor = pMenu->getMapSlidingActor();
+    if (m_pMenu != nullptr)
+    {        
+        oxygine::spSlidingActorNoClipRect pMapSliding = m_pMenu->getMapSliding();
+        oxygine::spActor pMapSlidingActor = m_pMenu->getMapSlidingActor();
         float posX = x * GameMap::getImageSize() * m_pMap->getZoom() + m_pMap->getX() + pMapSliding->getX() + pMapSlidingActor->getX();
-        if (posX + m_CurrentMenu->getWidth() > Settings::getWidth() - 40 - pMenu->getGameInfoBar()->getWidth())
+        if (posX + m_CurrentMenu->getWidth() > Settings::getWidth() - 40 - m_pMenu->getGameInfoBar()->getWidth())
         {
-            posX = Settings::getWidth() - m_CurrentMenu->getWidth() - 40 - pMenu->getGameInfoBar()->getWidth();
+            posX = Settings::getWidth() - m_CurrentMenu->getWidth() - 40 - m_pMenu->getGameInfoBar()->getWidth();
         }
         if (posX < 10)
         {
@@ -803,9 +801,9 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
             posY = Settings::getHeight() - m_CurrentMenu->getHeight() - 10;
         }
         m_CurrentMenu->setPosition(posX, posY);
-        pMenu->addChild(m_CurrentMenu);
+        m_pMenu->addChild(m_CurrentMenu);
         m_CurrentMenu->moveMouseToItem(0, 0);
-        pMenu->setFocused(false);
+        m_pMenu->setFocused(false);
         connect(m_CurrentMenu.get(), &HumanPlayerInputMenu::sigItemSelected, this, &HumanPlayerInput::menuItemSelected, Qt::QueuedConnection);
         connect(m_CurrentMenu.get(), &HumanPlayerInputMenu::sigCanceled, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
     }
@@ -818,7 +816,7 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     
     Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
     m_pUnitPathFindingSystem = spUnitPathFindingSystem::create(m_pMap, pUnit, m_pPlayer);
-    if ((pUnit->getOwner() == m_pPlayer) &&
+    if ((isCurrentPlayer(pUnit->getOwner())) &&
         pUnit->getActionList().contains(CoreAI::ACTION_WAIT))
     {
         qint32 points = pUnit->getMovementpoints(QPoint(x, y)) * static_cast<qint32>(Settings::getMultiTurnCounter());
@@ -835,9 +833,8 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     qint32 maxRange = pUnit->getMaxRange(pUnit->getPosition());
     if (maxRange > 1)
     {
-        spGameMenue pMenue = GameMenue::getInstance();
         qint32 minRange = pUnit->getMinRange(pUnit->getPosition());
-        Cursor* pCursor = pMenue->getCursor();
+        Cursor* pCursor = m_pMenu->getCursor();
         if (minRange > 1)
         {
             pCursor->addCursorRangeOutline(minRange - 1, Qt::green);
@@ -847,8 +844,7 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     qint32 infoRange = pUnit->getCursorInfoRange();
     if (infoRange >= 1)
     {
-        spGameMenue pMenue = GameMenue::getInstance();
-        Cursor* pCursor = pMenue->getCursor();
+        Cursor* pCursor = m_pMenu->getCursor();
         pCursor->addCursorRangeOutline(infoRange, Qt::white);
     }
     m_pUnitPathFindingSystem->explore();
@@ -930,18 +926,16 @@ void HumanPlayerInput::createMarkedMoveFields()
 
 void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 {
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
-    {
-        
-        auto mapPos = pMenu->getMapSlidingActor()->getPosition();
+    if (m_pMenu != nullptr)
+    {        
+        auto mapPos = m_pMenu->getMapSlidingActor()->getPosition();
         m_lastMapView = QPoint(mapPos.x, mapPos.y);
         if (x != m_lastCursorPosition.x() ||
             y != m_lastCursorPosition.y())
         {
-            if ((m_pMap->getCurrentPlayer() == m_pPlayer ||
+            if ((isCurrentPlayer(m_pPlayer) ||
                  m_pPlayer == nullptr) &&
-                m_pMap->onMap(x, y))
+                 m_pMap->onMap(x, y))
             {
                 CONSOLE_PRINT("HumanPlayerInput::cursorMoved" , Console::eDEBUG);
                 if (m_pMarkedFieldData.get() != nullptr)
@@ -1095,13 +1089,11 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
 
 bool HumanPlayerInput::inputAllowed()
 {
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr &&
+    if (m_pMenu != nullptr &&
         GameAnimationFactory::getAnimationCount() == 0 &&
-        pMenu->getFocused())
-    {
-        
-        if (m_pMap->getCurrentPlayer() == m_pPlayer &&
+        m_pMenu->getFocused())
+    {        
+        if (isCurrentPlayer(m_pPlayer) &&
             m_pGameAction.get() == nullptr)
         {
             return true;
@@ -1113,7 +1105,6 @@ bool HumanPlayerInput::inputAllowed()
 void HumanPlayerInput::nextTurn()
 {
     CONSOLE_PRINT("HumanPlayerInput::nextTurn()", Console::eDEBUG);
-    spGameMenue pMenu = GameMenue::getInstance();
     if (inputAllowed())
     {
         spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
@@ -1126,7 +1117,6 @@ void HumanPlayerInput::nextTurn()
 
 void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)
 {
-    
     QString attackInfo = "Info: ";
     for (qint32 i = 0; i < pData->valueNames.size(); ++i)
     {
@@ -1227,11 +1217,10 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
 
 void HumanPlayerInput::zoomChanged(float zoom)
 {
-    spGameMenue pMenu = GameMenue::getInstance();
     if (m_ZInformationLabel.get() != nullptr &&
-        pMenu.get() != nullptr)
+        m_pMenu != nullptr)
     {
-        auto* pCursor = pMenu->getCursor();
+        auto* pCursor = m_pMenu->getCursor();
         m_ZInformationLabel->setScale(1.0f / zoom);
         m_ZInformationLabel->setPosition(pCursor->getMapPointX() * GameMap::getImageSize() + GameMap::getImageSize() / 2 - m_ZInformationLabel->getScaledWidth() / 2,
                                          pCursor->getMapPointY() * GameMap::getImageSize() - 5 - m_ZInformationLabel->getScaledHeight());
@@ -1248,12 +1237,14 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
         lastPoint = points[0];
     }
     deleteArrow();
+    Unit* pTargetUnit = m_pGameAction->getTargetUnit();
     if (m_pGameAction->getTarget() != QPoint(x, y) &&
         m_pUnitPathFindingSystem.get() != nullptr &&
-        !m_pGameAction->getTargetUnit()->getHasMoved() &&
+        pTargetUnit != nullptr &&
+        !pTargetUnit->getHasMoved() &&
         GlobalUtils::contains(m_FieldPoints, QPoint(x, y)))
     {
-        if (m_pUnitPathFindingSystem->getCosts(m_pUnitPathFindingSystem->getIndex(x, y), x, y, x, y) >= 0)
+        if (m_pUnitPathFindingSystem->getCosts(m_pUnitPathFindingSystem->getIndex(x, y), x, y, x, y, 0) >= 0)
         {
             // is it a neighbour field to the last target?
             if (((points.size() > 0) && ((points[0].x() - x + points[0].y() - y) != 0)))
@@ -1264,7 +1255,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
                     {
                         points = m_pUnitPathFindingSystem->getPathFast(x, y);
                     }
-                    else if (m_pUnitPathFindingSystem->getCosts(m_pUnitPathFindingSystem->getIndex(x, y), x, y, points[0].x(), points[0].y()) >= 0)
+                    else if (m_pUnitPathFindingSystem->getCosts(m_pUnitPathFindingSystem->getIndex(x, y), x, y, points[0].x(), points[0].y(), 0) >= 0)
                     {
                         points.insert(points.cbegin(), QPoint(x, y));
                         qint32 movepoints = m_pGameAction->getTargetUnit()->getMovementpoints(QPoint(x, y));
@@ -1338,7 +1329,6 @@ QStringList HumanPlayerInput::getViewplayerActionList()
 
 void HumanPlayerInput::createArrow(std::vector<QPoint>& points)
 {
-    
     GameManager* pGameManager = GameManager::getInstance();
     for (qint32 i = 0; i < points.size() - 1; i++)
     {
@@ -1466,7 +1456,6 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
 {
     if (!event.getContinousPress())
     {
-        spGameMenue pMenu = GameMenue::getInstance();
         bool canInput = inputAllowed();
         // for debugging
         Qt::Key cur = event.getKey();
@@ -1498,14 +1487,13 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
 void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
 {
     CONSOLE_PRINT("HumanPlayerInput::showSelectedUnitAttackableFields", Console::eDEBUG);
-    spGameMenue pMenu = GameMenue::getInstance();
     if (m_pUnitPathFindingSystem.get() != nullptr &&
         m_pGameAction.get() != nullptr &&
         m_CurrentMenu.get() == nullptr &&
-        m_pMap->getCurrentPlayer() == m_pPlayer &&
-        pMenu.get() != nullptr &&
+        isCurrentPlayer(m_pPlayer) &&
+        m_pMenu != nullptr &&
         GameAnimationFactory::getAnimationCount() == 0 &&
-        pMenu->getFocused())
+        m_pMenu->getFocused())
     {
         if (m_InfoFields.size() > 0)
         {
@@ -1604,15 +1592,13 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, std::vector<QPoint> & u
 
 void HumanPlayerInput::nextMarkedField()
 {
-    
-    spGameMenue pGameMenue = GameMenue::getInstance();
     bool center = Settings::getCenterOnMarkedField();
-    if (pGameMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
         qint32 width = m_pMap->getMapWidth();
         qint32 heigth = m_pMap->getMapHeight();
-        qint32 startX = pGameMenue->getCursor()->getMapPointX();
-        qint32 startY = pGameMenue->getCursor()->getMapPointY();
+        qint32 startX = m_pMenu->getCursor()->getMapPointX();
+        qint32 startY = m_pMenu->getCursor()->getMapPointY();
         qint32 x = startX + 1;
         qint32 y = startY;
         bool found = false;
@@ -1629,7 +1615,7 @@ void HumanPlayerInput::nextMarkedField()
                         {
                             m_pMap->centerMap(x, y);
                         }
-                        pGameMenue->calcNewMousePosition(x, y);
+                        m_pMenu->calcNewMousePosition(x, y);
                         found = true;
                         break;
                     }
@@ -1654,7 +1640,7 @@ void HumanPlayerInput::nextMarkedField()
                         {
                             m_pMap->centerMap(x, y);
                         }
-                        pGameMenue->calcNewMousePosition(x, y);
+                        m_pMenu->calcNewMousePosition(x, y);
                         found = true;
                         break;
                     }
@@ -1673,14 +1659,12 @@ void HumanPlayerInput::nextMarkedField()
 
 void HumanPlayerInput::previousMarkedField()
 {
-    
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
         qint32 width = m_pMap->getMapWidth();
         qint32 heigth = m_pMap->getMapHeight();
-        qint32 startX = pGameMenue->getCursor()->getMapPointX();
-        qint32 startY = pGameMenue->getCursor()->getMapPointY();
+        qint32 startX = m_pMenu->getCursor()->getMapPointX();
+        qint32 startY = m_pMenu->getCursor()->getMapPointY();
         qint32 x = startX - 1;
         qint32 y = startY;
         bool found = false;
@@ -1698,7 +1682,7 @@ void HumanPlayerInput::previousMarkedField()
                         {
                             m_pMap->centerMap(x, y);
                         }
-                        pGameMenue->calcNewMousePosition(x, y);
+                        m_pMenu->calcNewMousePosition(x, y);
                         found = true;
                         break;
                     }
@@ -1723,7 +1707,7 @@ void HumanPlayerInput::previousMarkedField()
                         {
                             m_pMap->centerMap(x, y);
                         }
-                        pGameMenue->calcNewMousePosition(x, y);
+                        m_pMenu->calcNewMousePosition(x, y);
                         found = true;
                         break;
                     }
@@ -1742,14 +1726,12 @@ void HumanPlayerInput::previousMarkedField()
 
 void HumanPlayerInput::nextSelectOption()
 {
-    
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
         qint32 width = m_pMap->getMapWidth();
         qint32 heigth = m_pMap->getMapHeight();
-        qint32 startX = pGameMenue->getCursor()->getMapPointX();
-        qint32 startY = pGameMenue->getCursor()->getMapPointY();
+        qint32 startX = m_pMenu->getCursor()->getMapPointX();
+        qint32 startY = m_pMenu->getCursor()->getMapPointY();
         qint32 x = startX + 1;
         qint32 y = startY;
         bool found = false;
@@ -1770,7 +1752,7 @@ void HumanPlayerInput::nextSelectOption()
                         {
                             m_pMap->centerMap(x, y);
                         }
-                        pGameMenue->calcNewMousePosition(x, y);
+                        m_pMenu->calcNewMousePosition(x, y);
                         found = true;
                     }
                     else if ((pBuilding != nullptr) &&
@@ -1787,7 +1769,7 @@ void HumanPlayerInput::nextSelectOption()
                                 {
                                     m_pMap->centerMap(x, y);
                                 }
-                                pGameMenue->calcNewMousePosition(x, y);
+                                m_pMenu->calcNewMousePosition(x, y);
                                 found = true;
                                 break;
                             }
@@ -1814,7 +1796,7 @@ void HumanPlayerInput::nextSelectOption()
                         {
                             m_pMap->centerMap(x, y);
                         }
-                        pGameMenue->calcNewMousePosition(x, y);
+                        m_pMenu->calcNewMousePosition(x, y);
                         found = true;
                     }
                     else if ((pBuilding != nullptr) &&
@@ -1831,7 +1813,7 @@ void HumanPlayerInput::nextSelectOption()
                                 {
                                     m_pMap->centerMap(x, y);
                                 }
-                                pGameMenue->calcNewMousePosition(x, y);
+                                m_pMenu->calcNewMousePosition(x, y);
                                 found = true;
                                 break;
                             }
@@ -1852,14 +1834,12 @@ void HumanPlayerInput::nextSelectOption()
 
 void HumanPlayerInput::previousSelectOption()
 {
-    
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
         qint32 width = m_pMap->getMapWidth();
         qint32 heigth = m_pMap->getMapHeight();
-        qint32 startX = pGameMenue->getCursor()->getMapPointX();
-        qint32 startY = pGameMenue->getCursor()->getMapPointY();
+        qint32 startX = m_pMenu->getCursor()->getMapPointX();
+        qint32 startY = m_pMenu->getCursor()->getMapPointY();
         qint32 x = startX - 1;
         qint32 y = startY;
         bool found = false;
@@ -1880,7 +1860,7 @@ void HumanPlayerInput::previousSelectOption()
                         {
                             m_pMap->centerMap(x, y);
                         }
-                        pGameMenue->calcNewMousePosition(x, y);
+                        m_pMenu->calcNewMousePosition(x, y);
                         found = true;
                     }
                     else if ((pBuilding != nullptr) &&
@@ -1897,7 +1877,7 @@ void HumanPlayerInput::previousSelectOption()
                                 {
                                     m_pMap->centerMap(x, y);
                                 }
-                                pGameMenue->calcNewMousePosition(x, y);
+                                m_pMenu->calcNewMousePosition(x, y);
                                 found = true;
                                 break;
                             }
@@ -1924,7 +1904,7 @@ void HumanPlayerInput::previousSelectOption()
                         {
                             m_pMap->centerMap(x, y);
                         }
-                        pGameMenue->calcNewMousePosition(x, y);
+                        m_pMenu->calcNewMousePosition(x, y);
                         found = true;
                     }
                     else if ((pBuilding != nullptr) &&
@@ -1941,7 +1921,7 @@ void HumanPlayerInput::previousSelectOption()
                                 {
                                     m_pMap->centerMap(x, y);
                                 }
-                                pGameMenue->calcNewMousePosition(x, y);
+                                m_pMenu->calcNewMousePosition(x, y);
                                 found = true;
                                 break;
                             }
@@ -1961,11 +1941,10 @@ void HumanPlayerInput::previousSelectOption()
 }
 
 void HumanPlayerInput::autoEndTurn()
-{
-    
+{    
     if (m_pPlayer != nullptr &&
         m_pMap != nullptr &&
-        m_pMap->getCurrentPlayer() == m_pPlayer)
+        isCurrentPlayer(m_pPlayer))
     {
         CONSOLE_PRINT("HumanPlayerInput::autoEndTurn", Console::eDEBUG);
         CO* pCO0 = m_pPlayer->getCO(0);
@@ -2029,9 +2008,8 @@ void HumanPlayerInput::deserializeObject(QDataStream& stream)
 
 void HumanPlayerInput::centerCameraOnAction(GameAction* pAction)
 {
-    
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (m_pMap != nullptr && pGameMenue.get() != nullptr &&
+
+    if (m_pMap != nullptr && m_pMenu != nullptr &&
         (m_pMap->getCurrentPlayer() == m_pPlayer ||
          m_pPlayer == nullptr))
     {
@@ -2047,7 +2025,7 @@ void HumanPlayerInput::centerCameraOnAction(GameAction* pAction)
                 }
                 case GameEnums::AutoFocusing_LastPos:
                 {
-                    pGameMenue->getMapSlidingActor()->setPosition(m_lastMapView.x(), m_lastMapView.y());
+                    m_pMenu->getMapSlidingActor()->setPosition(m_lastMapView.x(), m_lastMapView.y());
                     break;
                 }
             }

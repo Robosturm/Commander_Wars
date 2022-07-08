@@ -14,7 +14,7 @@
 class GameMap;
 class Player;
 class GameAction;
-
+class GameMenue;
 class BaseGameInputIF;
 using spBaseGameInputIF = oxygine::intrusive_ptr<BaseGameInputIF>;
 
@@ -26,7 +26,7 @@ public:
     virtual ~BaseGameInputIF() = default;
     void setPlayer(Player* pPlayer);
 
-    virtual void init() = 0;
+    virtual void init(GameMenue* pMenu) = 0;
 
     static void serializeInterface(QDataStream& pStream, BaseGameInputIF* input);
 
@@ -87,6 +87,8 @@ protected:
      */
     std::vector<std::vector<std::tuple<qint32, bool>>> m_MoveCostMap;
     GameMap* m_pMap{nullptr};
+    GameMenue* m_pMenu{nullptr};
+    bool m_initDone{false};
 };
 
 Q_DECLARE_INTERFACE(BaseGameInputIF, "BaseGameInputIF");

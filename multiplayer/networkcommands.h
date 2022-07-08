@@ -1,8 +1,16 @@
-#ifndef NETWORKCOMMANDS_H
-#define NETWORKCOMMANDS_H
+#pragma once
 
 namespace NetworkCommands
 {
+    enum class PublicKeyActions
+    {
+        SendInitialMapUpdate,
+        CreateAccount,
+        LoginAccount,
+        ResetPassword,
+        ChangePassword,
+    };
+
     /**
      * @brief MAPINFO map info of from the host
      */
@@ -111,6 +119,26 @@ namespace NetworkCommands
      * @brief PLAYERJOINEDFINISHED
      */
     const char* const PLAYERJOINEDFINISHED = "PLAYERJOINEDFINISHED";
+    /**
+     * @brief REQUESTPLAYERCONTROLLEDINFO
+     */
+    const char* const REQUESTPLAYERCONTROLLEDINFO = "REQUESTPLAYERCONTROLLEDINFO";
+    /**
+     * @brief RECEIVEPLAYERCONTROLLEDINFO
+     */
+    const char* const RECEIVEPLAYERCONTROLLEDINFO = "RECEIVEPLAYERCONTROLLEDINFO";
+    /**
+     * @brief REQUESTPUBLICKEY
+     */
+    const char* const REQUESTPUBLICKEY = "REQUESTPUBLICKEY";
+    /**
+     * @brief SENDPUBLICKEY
+     */
+    const char* const SENDPUBLICKEY = "SENDPUBLICKEY";
+    /**
+     * @brief CRYPTEDMESSAGE
+     */
+    const char* const CRYPTEDMESSAGE = "CRYPTEDMESSAGE";
 
     /*****************************************************************************************************************************/
     // dedicated server commands
@@ -135,6 +163,10 @@ namespace NetworkCommands
      * @brief SERVERGAMEDATA
      */
     const char* const SERVERGAMEDATA = "SERVERGAMEDATA";
+    /**
+     * @brief SERVERGAMESTARTED
+     */
+    const char* const SLAVEGAMESTARTED = "SLAVEGAMESTARTED";
     /**
      * @brief SERVERJOINGAME
      */
@@ -163,6 +195,12 @@ namespace NetworkCommands
      * @brief SERVERNOGAMESLOTSAVAILABLE
      */
     const char* const SERVERNOGAMESLOTSAVAILABLE = "SERVERNOGAMESLOTSAVAILABLE";
+    /**
+     * @brief SERVERACCOUNTMESSAGE
+     */
+    const char* const SERVERACCOUNTMESSAGE = "SERVERACCOUNTMESSAGE";
+    /**
+     * @brief SERVERREQUESTUSERGAMES
+     */
+    const char* const SERVERREQUESTUSERGAMES = "SERVERREQUESTUSERGAMES";
 }
-
-#endif // NETWORKCOMMANDS_H

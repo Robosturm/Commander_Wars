@@ -58,6 +58,7 @@ public slots:
     qint32 getButtonX(qint32 btnI) const;
     qint32 getButtonY(qint32 btnI) const;
     bool isValidSavegame() const;
+
 protected slots:
     void cheatTimeout();
     void unlockAllShopItems();

@@ -8,6 +8,8 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/console.h"
 
+#include "menue/basegamemenu.h"
+
 const QString GameScript::m_scriptName = "gameScript";
 
 GameScript::GameScript(GameMap* pMap)
@@ -176,7 +178,7 @@ void GameScript::turnStart(qint32 turn, qint32 player)
     }
 }
 
-void GameScript::onGameLoaded(InGameMenue* pMenu)
+void GameScript::onGameLoaded(BaseGamemenu* pMenu)
 {
     if (m_loaded)
     {

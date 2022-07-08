@@ -1,12 +1,15 @@
-#include "victoryrulepopup.h"
+#include "objects/dialogs/ingame/victoryrulepopup.h"
+#include "objects/base/label.h"
 
 #include "game/gamemap.h"
 #include "game/gamerules.h"
 #include "game/victoryrule.h"
-#include "resource_management/fontmanager.h"
-#include "menue/gamemenue.h"
+#include "game/actionperformer.h"
 
-#include "objects/base/label.h"
+#include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
+
+#include "resource_management/fontmanager.h"
 
 QStringList VictoryRulePopup::m_popUps;
 
@@ -15,10 +18,10 @@ VictoryRulePopup::VictoryRulePopup(GameMap* pMap, QString rule, qint32 width, qi
       m_rule(rule),
       m_pMap(pMap)
 {
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    GameMenue* pMenu = dynamic_cast<GameMenue*>(BaseGamemenu::getInstance());
+    if (pMenu != nullptr)
     {
-        connect(pMenu.get(), &GameMenue::sigActionPerformed, this, &VictoryRulePopup::updateInfo, Qt::QueuedConnection);
+        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &VictoryRulePopup::updateInfo, Qt::QueuedConnection);
     }
     updateInfo();
     m_popUps.append(m_rule);

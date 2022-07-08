@@ -791,8 +791,7 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
 }
 
 void VictoryMenue::updateGraph()
-{    
-    
+{
     if (m_pMap.get() != nullptr)
     {
         if (m_CurrentGraphMode < GraphModes::Max)
@@ -951,7 +950,6 @@ qint32 VictoryMenue::drawGraphStep(qint32 progress)
 void VictoryMenue::drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
                               QPointF startPoint, qint32 progress)
 {
-    
     GameManager* pGameManager = GameManager::getInstance();
     for (qint32 event = 0; event < pStartRecord->getEventRecordCount(); event++)
     {
@@ -1011,7 +1009,6 @@ void VictoryMenue::drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
 
 qint32 VictoryMenue::getStepTime()
 {
-    
     qint32 stepTime = static_cast<qint32>(15.0 * (20.0 - qExp(m_pMap->getCurrentDay() / 10.0)));
     if (m_pMap->getCurrentDay() < 5)
     {
@@ -1096,11 +1093,11 @@ void VictoryMenue::showPlayerStatistic(qint32 player)
         const auto & playerdata = data[player];
         if (Settings::getSmallScreenDevice())
         {
-            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 180, m_pMap->getPlayer(player));
+            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 180, m_pMap->getPlayer(player), m_pMap.get());
         }
         else
         {
-            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 280, m_pMap->getPlayer(player));
+            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 280, m_pMap->getPlayer(player), m_pMap.get());
         }
         m_statisticsView->setPosition(10, 60);
         m_statisticsBox->addChild(m_statisticsView);

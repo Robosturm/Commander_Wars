@@ -121,7 +121,7 @@ var Constructor = function()
             }
             building.setUnitOwner(ACTION_CAPTURE.postAnimationUnit);
             // achievements
-            var player = map.getCurrentPlayer();
+            var player = ACTION_CAPTURE.postAnimationUnit.getOwner();
             if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
             {
                 ACHIEVEMENT_CAPTURED_BUILDING.buildingCaptured(building.getBuildingID());

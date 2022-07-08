@@ -5,7 +5,7 @@ CO_GAGE.init = function(co, map)
 };
 CO_GAGE.activateSuperpower = function(co, powerMode, map)
 {
-    CO_GAGE.activatePower(co, powerMode);
+    CO_GAGE.activatePower(co, powerMode, map);
 };
 CO_GAGE.getSuperPowerDescription = function()
 {

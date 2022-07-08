@@ -19,12 +19,16 @@ public:
     virtual ~GameplayAndKeys() = default;
 signals:
     void sigShowSelectDefaultRules();
+    void sigShowSelectDefaultBannlist();
 public slots:
     void showSelectDefaultRules();
     void selectDefaultRules(QString filename);
+    void showSelectDefaultBannlist();
+    void selectSelectDefaultBannlist(QString filename);
 private:
     spPanel m_pOptions;
     spTextbox m_pDefaultRuleFile;
+    spTextbox m_pDefaultBannlistFile;
 };
 
 #endif // GAMEPLAYANDKEYS_H

@@ -160,7 +160,7 @@ var Constructor = function()
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+            co.getPowerMode() > GameEnums.PowerMode_Off)
         {
             return 10;
         }
@@ -177,7 +177,8 @@ var Constructor = function()
     };
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
+        if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker) ||
+            co.getPowerMode() > GameEnums.PowerMode_Off)
         {
             if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
             {

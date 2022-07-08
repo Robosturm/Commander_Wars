@@ -632,7 +632,7 @@ public slots:
      * @brief getHasMoveed return if this unit has moved or not
      * @return
      */
-    bool getHasMoved();
+    bool getHasMoved() const;
     /**
      * @brief getMovementFuelCostModifier fuel modification when moving this unit from a to b
      * @param fuelCost

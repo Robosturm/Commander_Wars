@@ -98,6 +98,8 @@ void GameEnums::registerEnums()
     value.setProperty("AiTurnMode_DuringDay", AiTurnMode_DuringDay);
     value.setProperty("AiTurnMode_EndOfDay", AiTurnMode_EndOfDay);
 
+
+    value.setProperty("AiTypes_MovePlanner", AiTypes_MovePlanner);
     value.setProperty("AiTypes_ProxyAi", AiTypes_ProxyAi);
     value.setProperty("AiTypes_Human", AiTypes_Human);
     value.setProperty("AiTypes_VeryEasy", AiTypes_VeryEasy);
@@ -170,6 +172,16 @@ void GameEnums::registerEnums()
     value.setProperty("AttackRangeCheck_None", AttackRangeCheck_None);
     value.setProperty("AttackRangeCheck_OnlyMin", AttackRangeCheck_OnlyMin);
     value.setProperty("AttackRangeCheck_OnlyMax", AttackRangeCheck_OnlyMax);
+
+    value.setProperty("AddinStepType_Field", AddinStepType_Field);
+    value.setProperty("AddinStepType_Menu", AddinStepType_Menu);
+
+    value.setProperty("LoginError_None", LoginError_None);
+    value.setProperty("LoginError_WrongPassword", LoginError_WrongPassword);
+    value.setProperty("LoginError_AccountDoesntExist", LoginError_AccountDoesntExist);
+    value.setProperty("LoginError_AccountExists", LoginError_AccountExists);
+    value.setProperty("LoginError_InvalidPasswordReset", LoginError_InvalidPasswordReset);
+    value.setProperty("LoginError_PasswordOutdated", LoginError_PasswordOutdated);
 
     pInterpreter->setGlobal("GameEnums", value);
 }

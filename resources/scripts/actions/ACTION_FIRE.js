@@ -460,7 +460,7 @@ var Constructor = function()
             // generally attacks on shrouded fields are forbidden
             if (map.onMap(x, y) && owner.getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {
-                if (aiType === GameEnums.AiTypes_Human && detailedForecast)
+                if ((aiType === GameEnums.AiTypes_Human || aiType === GameEnums.AiTypes_MovePlanner) && detailedForecast)
                 {
                     var defUnit = map.getTerrain(x, y).getUnit();
                     if (defUnit !== null)
@@ -496,7 +496,8 @@ var Constructor = function()
                 }
                 else
                 {
-                    if (aiType === GameEnums.AiTypes_Human)
+                    if ((aiType === GameEnums.AiTypes_Human ||
+                         aiType === GameEnums.AiTypes_MovePlanner))
                     {
                         result = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
                                                                    actionTargetField.x, actionTargetField.y, null, x, y, 0,
@@ -793,7 +794,7 @@ var Constructor = function()
                 ACHIEVEMENT_KILL_UNIT.unitKilled(attacker.getUnitID());
             }
             // we destroyed a unit
-            map.getGameRecorder().destroyedUnit(defUnit.getOwner().getPlayerID(), attacker.getUnitID());
+            map.getGameRecorder().destroyedUnit(defUnit.getOwner().getPlayerID(), attacker.getUnitID(), attacker.getOwner().getPlayerID());
             attacker.killUnit();
             UNITRANKINGSYSTEM.increaseRang(defUnit);
         }
@@ -806,7 +807,7 @@ var Constructor = function()
                 ACHIEVEMENT_KILL_UNIT.unitKilled(defUnit.getUnitID());
             }
             // we destroyed a unit nice
-            map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID(), defUnit.getUnitID());
+            map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID(), defUnit.getUnitID(), defUnit.getOwner().getPlayerID());
             defUnit.killUnit();
             UNITRANKINGSYSTEM.increaseRang(attacker);
         }

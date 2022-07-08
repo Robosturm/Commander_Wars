@@ -12,19 +12,17 @@
 #include "coreengine/fileserializable.h"
 
 #include "game/GameEnums.h"
+#include "game/co.h"
 
 #include "gameinput/basegameinputif.h"
 
-#include "co.h"
-
 class GameMap;
 class Player;
-typedef oxygine::intrusive_ptr<Player> spPlayer;
+using spPlayer = oxygine::intrusive_ptr<Player>;
 
 class Player : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
-
 public:
     /**
      * @brief Player
@@ -61,7 +59,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 16;
+        return 17;
     }
     /**
      * @brief setBaseGameInput sets the player input
@@ -125,13 +123,25 @@ public:
      * @param newUniqueIdentifier
      */
     void setUniqueIdentifier(const QString &newUniqueIdentifier);
-    void setDisplayName(const QString &newDisplayName);
+    void setPlayerNameId(const QString &newDisplayName);
+    void setMenu(GameMenue *newMenu);
+    /**
+     * @brief setControlType
+     * @param newControlType
+     */
+    void setControlType(const GameEnums::AiTypes &newControlType);
+
 public slots:
+    /**
+     * @brief getControlType
+     * @return this is the ai type set during game creation this may differ to the instanciated ai type during multiplayer matches
+     */
+    GameEnums::AiTypes getControlType() const;
     /**
      * @brief getDisplayName
      * @return
      */
-    QString getDisplayName() const;
+    QString getPlayerNameId() const;
     /**
      * @brief getUniqueIdentifier
      * @return
@@ -393,7 +403,15 @@ public slots:
      * @return -1, -1 for no target found
      */
     QPoint getRockettarget(qint32 radius, qint32 damage, float ownUnitValue = 1.2f, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money);
-
+    /**
+     * @brief getSiloRockettarget
+     * @param radius
+     * @param damage
+     * @param highestDamage
+     * @param ownUnitValue
+     * @param targetType
+     * @return
+     */
     QPoint getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, float ownUnitValue = 1.2f, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money);
     /**
      * @brief getRocketTargetDamage
@@ -562,7 +580,8 @@ public slots:
      * @param unitID
      * @param remove
      */
-    void changeBuildlist(const QString& unitID, bool remove = false);/**
+    void changeBuildlist(const QString& unitID, bool remove = false);
+    /**
      * @brief getVariables
      * @return
      */
@@ -635,6 +654,8 @@ private:
      * @brief m_pBaseGameInput pointer to the ai or human player
      */
     spBaseGameInputIF m_pBaseGameInput{nullptr};
+    GameEnums::AiTypes m_controlType;
+    GameMenue* m_pMenu{nullptr};
     bool m_isDefeated{false};
     struct VisionFieldInfo
     {
@@ -666,7 +687,7 @@ private:
      * @brief m_uniqueIdentifier
      */
     QString m_uniqueIdentifier;
-    QString m_displayName;
+    QString m_playerNameId;
     static oxygine::spResAnim m_neutralTableAnim;
     static QImage m_neutralTableImage;
 };

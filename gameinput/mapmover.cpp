@@ -4,9 +4,9 @@
 
 #include "game/gamemap.h"
 
-#include "menue/ingamemenue.h"
+#include "menue/basegamemenu.h"
 
-MapMover::MapMover(InGameMenue* pOwner)
+MapMover::MapMover(BaseGamemenu* pOwner)
     : m_pOwner(pOwner),
       m_scrollTimer(this)
 {
@@ -15,6 +15,8 @@ MapMover::MapMover(InGameMenue* pOwner)
     connect(&m_scrollTimer, &QTimer::timeout, this, &MapMover::autoScroll, Qt::QueuedConnection);
     m_scrollTimer.setSingleShot(false);
     m_scrollTimer.start(100);
+    Mainapp* pApp = Mainapp::getInstance();
+    connect(pApp, &Mainapp::sigKeyDown, this, &MapMover::keyInput, Qt::QueuedConnection);
 }
 
 void MapMover::mouseWheel(float direction)
@@ -33,7 +35,7 @@ void MapMover::autoScroll()
     bool posValid = false;
     if (pApp->hasCursor())
     {
-        curPos = pApp->mapFromGlobal(pApp->cursor().pos());
+        curPos = pApp->mapPosFromGlobal(pApp->cursor().pos());
         posValid = true;
     }
     else

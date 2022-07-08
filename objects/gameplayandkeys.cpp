@@ -563,6 +563,30 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     connect(this, &GameplayAndKeys::sigShowSelectDefaultRules, this, &GameplayAndKeys::showSelectDefaultRules, Qt::QueuedConnection);
     y += 40;
 
+    textField = spLabel::create(sliderOffset - 140);
+    textField->setStyle(style);
+    textField->setHtmlText(tr("Default bannlist:"));
+    textField->setPosition(10, y);
+    m_pOptions->addItem(textField);
+    pScriptButton = pObjectManager->createButton(tr("Select File"), 160);
+    pScriptButton->setPosition(Settings::getWidth() - pScriptButton->getWidth() - 100, y);
+    m_pOptions->addItem(pScriptButton);
+    m_pDefaultBannlistFile = spTextbox::create(pScriptButton->getX() - textField->getX() - textField->getWidth() - 20);
+    m_pDefaultBannlistFile->setTooltipText(tr("The relative path from the exe to the default bannlist."));
+    m_pDefaultBannlistFile->setPosition(sliderOffset - 130, textField->getY());
+    m_pDefaultBannlistFile->setCurrentText(Settings::getDefaultBannlist());
+    connect(m_pDefaultRuleFile.get(), &Textbox::sigTextChanged, this, [](QString text)
+    {
+        Settings::setDefaultBannlist(text);
+    });
+    m_pOptions->addItem(m_pDefaultBannlistFile);
+    pScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    {
+        emit sigShowSelectDefaultBannlist();
+    });
+    connect(this, &GameplayAndKeys::sigShowSelectDefaultBannlist, this, &GameplayAndKeys::showSelectDefaultBannlist, Qt::QueuedConnection);
+    y += 40;
+
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Action delay: "));
@@ -1058,5 +1082,24 @@ void GameplayAndKeys::selectDefaultRules(QString filename)
     {
         Settings::setDefaultRuleset(filename);
         m_pDefaultRuleFile->setCurrentText(filename);
+    }
+}
+
+void GameplayAndKeys::showSelectDefaultBannlist()
+{
+    QStringList wildcards;
+    wildcards.append("*.bl");
+    QString path = Settings::getUserPath() + "data/unitbannlist";
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    oxygine::Stage::getStage()->addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &GameplayAndKeys::selectSelectDefaultBannlist, Qt::QueuedConnection);
+}
+
+void GameplayAndKeys::selectSelectDefaultBannlist(QString filename)
+{
+    if (filename.endsWith(".bl") && QFile::exists(filename))
+    {
+        Settings::setDefaultBannlist(filename);
+        m_pDefaultBannlistFile->setCurrentText(filename);
     }
 }

@@ -171,7 +171,6 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     auto unitCreator = [this, pPlayer](QString id)
     {
         spUnit pSprite = spUnit::create(id, pPlayer, false, &m_map);
-        pSprite->setOwner(nullptr);
         return pSprite;
     };
     unitData.m_unit = spDropDownmenuSprite::create(105, unitIds, unitCreator, 30);

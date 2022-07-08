@@ -4,6 +4,7 @@ project (Commander_Wars LANGUAGES CXX)
 # Information for building commander wars on other platforms
 # 1. make sure the CMAKE_PREFIX_PATH targets to the correct qt installation
 # 2. make sure the LIBRARY_PATH targets the library folder of qt e.g. LD_LIBRARY_PATH=$HOME/Qt/5.15.2/gcc_64/lib
+# 3. make sure that -DOPENSSL_ROOT_DIR= targets your local openssl installation e.g. -DOPENSSL_ROOT_DIR=D:/Qt/Tools/OpenSSL
 
 # Special Information for Android
 # ANDROID_NATIVE_API_LEVEL needs to be 27
@@ -20,6 +21,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
+option(OPENSSL_USE_STATIC_LIBS "you may disable linking static against openssl but it's not recommended. The installation process won't deploy the libs." TRUE)
+option(OPENSSL_MSVC_STATIC_RT "you may disable linking static against openssl but it's not recommended. The installation process won't deploy the libs." TRUE)
 option(AUDIOSUPPORT "enables audio support for the game and compiles music/sound into the exe" ON)
 option(GRAPHICSUPPORT "enables sprites for the game and compiles them into the exe" ON)
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
@@ -30,7 +33,9 @@ option(USEAPPCONFIGPATH "use the system location for saving data, instead of the
 
 message("Prefix Path: ${CMAKE_PREFIX_PATH}")
 message("Module Path: ${CMAKE_MODULE_PATH}")
+message("Qt-Host-Path: ${QT_HOST_PATH}")
 message("Qt-Dir: ${Qt6_DIR}")
+message("Qt-Tools Path: ${Qt6CoreTools_DIR}")
 message("C-Compiler Path: ${C_COMPILER_PATH}")
 message("C-Compiler: ${CMAKE_C_COMPILER}")
 message("C++-Compiler Path: ${CXX_COMPILER_PATH}")
@@ -42,6 +47,7 @@ message("CFlags: ${CMAKE_C_FLAGS}")
 message("CXX Flags: ${CMAKE_CXX_FLAGS}")
 message("CMake Systemname: ${CMAKE_SYSTEM_NAME}")
 message("CMake Binary dir: ${CMAKE_CURRENT_BINARY_DIR}")
+message("OpenSsL-Dir:" ${OPENSSL_ROOT_DIR})
 
 ###################################################################################
 # Find external libs
@@ -52,6 +58,7 @@ find_package(Qt6 COMPONENTS Network REQUIRED)
 find_package(Qt6 COMPONENTS Gui REQUIRED)
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt6 COMPONENTS Xml REQUIRED)
+find_package(Qt6 COMPONENTS Sql REQUIRED)
 find_package(Qt6 COMPONENTS OpenGL REQUIRED)
 find_package(Doxygen OPTIONAL_COMPONENTS mscgen dia dot)
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
@@ -69,6 +76,14 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
 endif()
+
+###################################################################################
+# OpenSsl
+###################################################################################
+find_package(OpenSSL REQUIRED)
+message (STATUS "OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
+message (STATUS "OpenSsL All-Libs:" ${OPENSSL_LIBRARIES})
+include_directories(${OPENSSL_INCLUDE_DIR})
 
 ###################################################################################
 # Set build dependend defines
@@ -90,7 +105,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
             #-DHEAVY_AI                 # experimental heavy ai unfinished
-            #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
+            -DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     else()
@@ -135,8 +150,8 @@ endif()
 ###################################################################################
 add_definitions(
     -DMAJOR=0
-    -DMINOR=22
-    -DREVISION=5
+    -DMINOR=23
+    -DREVISION=0
     )
 
 ###################################################################################
@@ -238,9 +253,38 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/math/Rect.h
     3rd_party/oxygine-framework/oxygine/math/ScalarMath.h
     3rd_party/oxygine-framework/oxygine/math/Vector2.h
-    )
+)
 ###################################################################################
 # end oxygine stuff -> qoxygine
+###################################################################################
+
+###################################################################################
+# start stmp client stuff
+###################################################################################
+set(${PROJECT_NAME}_SmtpClient_SRCS
+    3rd_party/smtpClient/src/emailaddress.cpp 3rd_party/smtpClient/src/emailaddress.h
+    3rd_party/smtpClient/src/mimeattachment.cpp 3rd_party/smtpClient/src/mimeattachment.h
+    3rd_party/smtpClient/src/mimebase64encoder.cpp 3rd_party/smtpClient/src/mimebase64encoder.h
+    3rd_party/smtpClient/src/mimebase64formatter.cpp 3rd_party/smtpClient/src/mimebase64formatter.h
+    3rd_party/smtpClient/src/mimebytearrayattachment.cpp 3rd_party/smtpClient/src/mimebytearrayattachment.h
+    3rd_party/smtpClient/src/mimecontentencoder.cpp 3rd_party/smtpClient/src/mimecontentencoder.h
+    3rd_party/smtpClient/src/mimecontentformatter.cpp 3rd_party/smtpClient/src/mimecontentformatter.h
+    3rd_party/smtpClient/src/mimefile.cpp 3rd_party/smtpClient/src/mimefile.h
+    3rd_party/smtpClient/src/mimehtml.cpp 3rd_party/smtpClient/src/mimehtml.h
+    3rd_party/smtpClient/src/mimeinlinefile.cpp 3rd_party/smtpClient/src/mimeinlinefile.h
+    3rd_party/smtpClient/src/mimemessage.cpp 3rd_party/smtpClient/src/mimemessage.h
+    3rd_party/smtpClient/src/mimemultipart.cpp 3rd_party/smtpClient/src/mimemultipart.h
+    3rd_party/smtpClient/src/mimepart.cpp 3rd_party/smtpClient/src/mimepart.h
+    3rd_party/smtpClient/src/mimeqpencoder.cpp 3rd_party/smtpClient/src/mimeqpencoder.h
+    3rd_party/smtpClient/src/mimeqpformatter.cpp 3rd_party/smtpClient/src/mimeqpformatter.h
+    3rd_party/smtpClient/src/mimetext.cpp 3rd_party/smtpClient/src/mimetext.h
+    3rd_party/smtpClient/src/quotedprintable.cpp 3rd_party/smtpClient/src/quotedprintable.h
+    3rd_party/smtpClient/src/smtpclient.cpp 3rd_party/smtpClient/src/smtpclient.h
+    3rd_party/smtpClient/src/SmtpMime
+    3rd_party/smtpClient/src/mimeattachment.h
+)
+###################################################################################
+# end stmp client stuff
 ###################################################################################
 
 ###################################################################################
@@ -301,12 +345,14 @@ set(${PROJECT_NAME}_SRCS
     objects/dialogs/folderdialog.cpp objects/dialogs/folderdialog.h
     objects/dialogs/dialogvaluecounter.cpp objects/dialogs/dialogvaluecounter.h
     objects/dialogs/gamepadinfo.cpp objects/dialogs/gamepadinfo.h
+    objects/dialogs/customdialog.h objects/dialogs/customdialog.cpp
     # objects dialogs editor
     objects/dialogs/editor/dialogmodifyunit.cpp objects/dialogs/editor/dialogmodifyunit.h
     objects/dialogs/editor/dialogmodifybuilding.cpp objects/dialogs/editor/dialogmodifybuilding.h
     objects/dialogs/editor/dialogmodifyterrain.cpp objects/dialogs/editor/dialogmodifyterrain.h
     objects/dialogs/editor/dialograndommap.cpp objects/dialogs/editor/dialograndommap.h
     objects/dialogs/editor/mapeditdialog.cpp objects/dialogs/editor/mapeditdialog.h
+    objects/dialogs/editor/dialogviewmapstats.h objects/dialogs/editor/dialogviewmapstats.cpp
     # objects dialogs rules
     objects/dialogs/rules/actionlistdialog.cpp objects/dialogs/rules/actionlistdialog.h
     objects/dialogs/rules/buildlistdialog.cpp objects/dialogs/rules/buildlistdialog.h
@@ -329,10 +375,11 @@ set(${PROJECT_NAME}_SRCS
 
     #menues
     menue/basemenu.cpp menue/basemenu.h
+    menue/basegamemenu.cpp menue/basegamemenu.h
     menue/mainwindow.cpp menue/mainwindow.h
-    menue/ingamemenue.cpp menue/ingamemenue.h
     menue/editormenue.cpp menue/editormenue.h
-    menue/gamemenue.cpp menue/gamemenue.h
+    menue/gamemenue.cpp menue/gamemenue.h    
+    menue/movementplanner.cpp menue/movementplanner.h
     menue/optionmenue.cpp menue/optionmenue.h
     menue/mapselectionmapsmenue.cpp menue/mapselectionmapsmenue.h
     menue/creditsmenue.cpp menue/creditsmenue.h
@@ -361,6 +408,8 @@ set(${PROJECT_NAME}_SRCS
     resource_management/coperkmanager.cpp resource_management/coperkmanager.h
     resource_management/achievementmanager.cpp resource_management/achievementmanager.h
     resource_management/shoploader.cpp resource_management/shoploader.h
+    resource_management/movementplanneraddinmanager.h resource_management/movementplanneraddinmanager.cpp
+    resource_management/uimanager.h resource_management/uimanager.cpp
     resource_management/ressourcemanagement.h
 
     # core engine
@@ -386,6 +435,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/commandlineparser.cpp coreengine/commandlineparser.h
 
     # network engine
+    network/smtpmailsender.h network/smtpmailsender.cpp
     network/tcpclient.cpp network/tcpclient.h
     network/tcpserver.cpp network/tcpserver.h
     network/txtask.cpp network/txtask.h
@@ -394,6 +444,7 @@ set(${PROJECT_NAME}_SRCS
     network/networkgamedata.cpp network/networkgamedata.h
     network/mainserver.cpp network/mainserver.h
     network/networkgame.cpp network/networkgame.h
+    network/rsacypherhandler.h network/rsacypherhandler.cpp
     network/JsonKeys.h
 
     # game
@@ -413,6 +464,7 @@ set(${PROJECT_NAME}_SRCS
     game/weather.cpp game/weather.h
     game/cursor.cpp game/cursor.h
     game/createoutline.cpp game/createoutline.h
+    game/actionperformer.h game/actionperformer.cpp
     # cool ingame recording
     game/gamerecording/daytodayrecord.cpp game/gamerecording/daytodayrecord.h
     game/gamerecording/playerrecord.cpp game/gamerecording/playerrecord.h
@@ -434,6 +486,7 @@ set(${PROJECT_NAME}_SRCS
     game/gameanimation/gameanimationnextday.cpp game/gameanimation/gameanimationnextday.h
     game/gameanimation/battleanimation.cpp game/gameanimation/battleanimation.h
     game/gameanimation/battleanimationsprite.cpp game/gameanimation/battleanimationsprite.h
+    game/gameanimation/animationskipper.h game/gameanimation/animationskipper.cpp
     # replay/observer
     game/viewplayer.cpp game/viewplayer.h
 
@@ -448,6 +501,7 @@ set(${PROJECT_NAME}_SRCS
     game/ui/customcoboostinfo.cpp game/ui/customcoboostinfo.h
     game/ui/humanquickbuttons.cpp game/ui/humanquickbuttons.h
     game/ui/damagecalculator.cpp game/ui/damagecalculator.h
+    game/ui/movementplanneraddin.h game/ui/movementplanneraddin.cpp
 
     # game input
     gameinput/basegameinputif.cpp gameinput/basegameinputif.h
@@ -457,6 +511,7 @@ set(${PROJECT_NAME}_SRCS
     gameinput/markedfielddata.cpp gameinput/markedfielddata.h
     gameinput/cursordata.cpp gameinput/cursordata.h
     gameinput/mapmover.cpp gameinput/mapmover.h
+    gameinput/moveplannerinput.h gameinput/moveplannerinput.cpp
 
     # map importing/exporting support
     # and resizing etc.
@@ -558,6 +613,13 @@ set(${PROJECT_NAME}_SRCS
     wiki/wikiview.cpp wiki/wikiview.h
     wiki/damagetablepage.cpp wiki/damagetablepage.h
 
+    # table view
+    objects/tableView/basetableitem.h objects/tableView/basetableitem.cpp
+    objects/tableView/stringtableitem.h objects/tableView/stringtableitem.cpp
+    objects/tableView/xofytableitem.h objects/tableView/xofytableitem.cpp
+    objects/tableView/locktableitem.h objects/tableView/locktableitem.cpp
+    objects/tableView/complextableview.h objects/tableView/complextableview.cpp
+
     # spriting support
     spritingsupport/spritecreator.cpp spritingsupport/spritecreator.h
 
@@ -655,6 +717,7 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_SRCS}
     ${${PROJECT_NAME}_Resource_SRCS}
     ${${PROJECT_NAME}_OS_SRCS}
+    ${${PROJECT_NAME}_SmtpClient_SRCS}
     ICON.rc
     )
 
@@ -668,11 +731,11 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_NAME "0.22.5"
+    QT_ANDROID_VERSION_NAME "0.23.0"
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_CODE "15"
+    QT_ANDROID_VERSION_CODE "18"
     )
 
 # link libraries
@@ -683,7 +746,10 @@ set(QT_LIBRARIES
     Qt6::Network
     Qt6::Widgets
     Qt6::Xml
+    Qt6::Sql
     Qt6::OpenGL
+    OpenSSL::SSL
+    OpenSSL::Crypto
     )
 
 if (AUDIOSUPPORT)
@@ -774,7 +840,7 @@ endif()
 # get qt dir
 get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
 get_filename_component(QT_BIN_DIR "${_qmake_executable}" DIRECTORY)
-message(${QT_BIN_DIR})
+message("Qt-Bin-Dir: " ${QT_BIN_DIR})
 
 # those libs are not the same for each platform and need to be selected based on the os
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
@@ -787,9 +853,12 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${QT_BIN_DIR}/libstdc++-6.dll
         ${QT_BIN_DIR}/libwinpthread-1.dll
         ${QT_BIN_DIR}/libgcc_s_seh-1.dll
+        ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1-x64.dll
+        ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1.dll
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/qwindows${LibNameEnd}
+        ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite${LibNameEnd}
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     set(LibNameStart "../lib/libQt6")
@@ -812,6 +881,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/../plugins/platforms/libqxcb.so
         ${QT_BIN_DIR}/../plugins/platforms/libqminimal.so
         ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
+        ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite.so
     )
 
     set(LibNameEnd ".so.6")
@@ -823,6 +893,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
+        ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
         ${ADDR_2_LINE}
     )
@@ -842,6 +913,7 @@ set(${PROJECT_NAME}_INSTALL_QT_LIBS
     ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
+    ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
     ${ADDR_2_LINE}
 )

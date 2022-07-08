@@ -122,11 +122,16 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
         }
         else
         {
+            QJSValueList args =
+            {
+                pInterpreter->newQObject(pMap),
+            };
+
             float terrainChance = std::get<1>(terrains[i]);
             QStringList list = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + terrainID + "TopTerrainIDs").toVariant().toStringList();
-            QList<QVariant> chances = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + terrainID + "TopTerrainChances").toVariant().toList();
-            QJSValue distribution = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + terrainID + "Distribution");
-            QJSValue terrainType = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + terrainID + "CreateType");
+            QList<QVariant> chances = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + terrainID + "TopTerrainChances", args).toVariant().toList();
+            QJSValue distribution = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + terrainID + "Distribution", args);
+            QJSValue terrainType = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + terrainID + "CreateType", args);
             if (list.size() == chances.size())
             {
                 randomMapPlaceTerain(pMap, terrainID, startWidth, startHeigth, terrainChance / 100.0f,
@@ -217,6 +222,10 @@ void RandomMapGenerator::randomMapPlaceTerain(GameMap* pMap, QString terrainID, 
             else if (placeSize.x() == placeSize.y())
             {
                 divider = placeSize.x();
+            }
+            if (divider < 0)
+            {
+                divider = 1;
             }
             qint32 groupSize = baseChance;
             if (groupSize < 10)
@@ -955,7 +964,7 @@ void RandomMapGenerator::randomMapPlaceBuildings(GameMap* pMap, qint32 width, qi
     qint32 maximumBuildingTry = 1000;
     // number of factorys at start
     qint32 playerCount = pMap->getPlayerCount();
-    qint32 mirrorPlacing = 1;
+    qint32 mirrorPlacing = 0;
     if (mirrorX != MirrorMode::none)
     {
         mirrorPlacing += 2;
@@ -965,6 +974,10 @@ void RandomMapGenerator::randomMapPlaceBuildings(GameMap* pMap, qint32 width, qi
     {
         mirrorPlacing += 2;
         playerCount /= 2;
+    }
+    if (mirrorPlacing == 0)
+    {
+        mirrorPlacing = 1;
     }
     qint32 count = static_cast<qint32>(GlobalUtils::roundUp(static_cast<float>(buildings) * chance / static_cast<float>(pMap->getPlayerCount())) * pMap->getPlayerCount() / mirrorPlacing);
     qint32 innerBase = pMap->getPlayerCount() * 2 / mirrorPlacing;

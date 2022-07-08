@@ -5,7 +5,7 @@ CO_WAYLON.init = function(co, map)
 };
 CO_WAYLON.activateSuperpower = function(co, powerMode, map)
 {
-    CO_WAYLON.activatePower(co, powerMode);
+    CO_WAYLON.activatePower(co, powerMode, map);
 };
 CO_WAYLON.getSuperPowerDescription = function()
 {

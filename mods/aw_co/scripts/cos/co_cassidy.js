@@ -5,7 +5,7 @@ CO_CASSIDY.init = function(co, map)
 };
 CO_CASSIDY.activateSuperpower = function(co, powerMode, map)
 {
-    CO_CASSIDY.activatePower(co, powerMode);
+    CO_CASSIDY.activatePower(co, powerMode, map);
 };
 CO_CASSIDY.getSuperPowerDescription = function()
 {

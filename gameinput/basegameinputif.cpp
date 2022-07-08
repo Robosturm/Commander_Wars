@@ -13,6 +13,8 @@
 
 #include "resource_management/gamemanager.h"
 
+#include "menue/movementplanner.h"
+
 BaseGameInputIF::BaseGameInputIF(GameMap* pMap, GameEnums::AiTypes aiType)
     : m_AiType(aiType),
       m_pMap(pMap)
@@ -185,10 +187,9 @@ void BaseGameInputIF::centerCameraOnAction(GameAction* pAction)
         {
             if (pAction != nullptr)
             {
-                spGameMenue pMenu = GameMenue::getInstance();
-                if (pMenu.get() != nullptr)
+                if (m_pMenu != nullptr)
                 {
-                    pMenu->centerMapOnAction(pAction);
+                    m_pMenu->getActionPerformer().centerMapOnAction(pAction);
                 }
             }
             else

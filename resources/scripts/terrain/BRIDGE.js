@@ -16,6 +16,11 @@ var Constructor = function()
     {
         return __BASEBRIDGE.getTerrainAnimationBackgroundRand(unit, terrain, defender, map, 0);
     };
+
+    this.canBePlaced = function(x, y, map)
+    {
+        return __BASEBRIDGE.canBePlacedBaseId(x, y, map, "BRIDGE");
+    };
 };
 Constructor.prototype = __BASEBRIDGE;
 var BRIDGE = new Constructor();

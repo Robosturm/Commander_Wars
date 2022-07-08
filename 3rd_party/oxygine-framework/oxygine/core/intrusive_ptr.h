@@ -25,6 +25,15 @@ namespace oxygine
         {
         }
 
+        virtual ~intrusive_ptr()
+        {
+            if (m_pPointer != nullptr)
+            {
+                m_pPointer->releaseRef();
+                m_pPointer = nullptr;
+            }
+        }
+
         intrusive_ptr(const intrusive_ptr& s)
         {
             // free old pointer
@@ -116,15 +125,6 @@ namespace oxygine
         operator bool ()const
         {
             return m_pPointer != nullptr;
-        }
-
-        virtual ~intrusive_ptr()
-        {
-            if (m_pPointer != nullptr)
-            {
-                m_pPointer->releaseRef();
-                m_pPointer = nullptr;
-            }
         }
     };
 

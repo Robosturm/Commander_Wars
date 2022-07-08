@@ -1,3 +1,5 @@
+#include <QJsonArray>
+
 #include "network/networkgamedata.h"
 #include "network/JsonKeys.h"
 
@@ -44,6 +46,13 @@ QJsonObject NetworkGameData::toJson() const
         mods.insert(JsonKeys::JSONKEY_MOD + QString::number(i), m_Mods[i]);
     }
     obj.insert(JsonKeys::JSONKEY_USEDMODS, mods);
+
+    QJsonArray usernames;
+    for (qint32 i = 0; i < m_playerNames.size(); ++i)
+    {
+        usernames.push_back(m_playerNames[i]);
+    }
+    obj.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
     return obj;
 }
 
@@ -60,6 +69,11 @@ void NetworkGameData::fromJson(const QJsonObject & obj)
     m_mapName = obj.value(JsonKeys::JSONKEY_MAPNAME).toString();
     m_slaveName = obj.value(JsonKeys::JSONKEY_SLAVENAME).toString();
     m_locked = obj.value(JsonKeys::JSONKEY_HASPASSWORD).toBool();
+    QJsonArray usernames = obj.value(JsonKeys::JSONKEY_USERNAMES).toArray();
+    for (const auto & username : usernames)
+    {
+        m_playerNames.append(username.toString());
+    }
 }
 
 QString NetworkGameData::getMapName() const
@@ -82,7 +96,7 @@ void NetworkGameData::setDescription(const QString &value)
     m_description = value;
 }
 
-QStringList NetworkGameData::getMods() const
+const QStringList &  NetworkGameData::getMods() const
 {
     return m_Mods;
 }
@@ -140,4 +154,14 @@ bool NetworkGameData::getLocked() const
 void NetworkGameData::setLocked(bool locked)
 {
     m_locked = locked;
+}
+
+const QStringList &  NetworkGameData::getPlayerNames() const
+{
+    return m_playerNames;
+}
+
+void NetworkGameData::setPlayerNames(const QStringList &playerNames)
+{
+    m_playerNames = playerNames;
 }

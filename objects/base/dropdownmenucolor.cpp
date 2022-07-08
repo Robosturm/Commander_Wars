@@ -97,20 +97,28 @@ void DropDownmenuColor::addDropDownColor(QColor color, qint32 id)
     colorField2->setPosition(3, 3);
 }
 
-void DropDownmenuColor::itemChanged(qint32 item)
+bool DropDownmenuColor::getShowUnitPreview() const
 {
-    
+    return m_showUnitPreview;
+}
+
+void DropDownmenuColor::setShowUnitPreview(bool newShowUnitPreview)
+{
+    m_showUnitPreview = newShowUnitPreview;
+}
+
+void DropDownmenuColor::itemChanged(qint32 item)
+{    
     m_currentColor = m_ItemColors[item];
     m_Colorfield->setColor(m_currentColor.red(), m_currentColor.green(), m_currentColor.blue(), 255);
-    emit sigItemChanged(m_currentColor);
-    
+    emit sigItemChanged(m_currentColor);    
 }
 
 void DropDownmenuColor::showColorDialog()
 {
     if (getEnabled())
     {
-        spColorSelectionDialog pDialog = spColorSelectionDialog::create(m_currentColor);
+        spColorSelectionDialog pDialog = spColorSelectionDialog::create(m_currentColor, m_showUnitPreview);
         oxygine::Stage::getStage()->addChild(pDialog);
         connect(pDialog.get(), &ColorSelectionDialog::editFinished, this, &DropDownmenuColor::changeCurrentItem, Qt::QueuedConnection);
         

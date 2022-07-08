@@ -6,8 +6,8 @@ var Constructor = function()
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
         var unitID = "WATERPLANE";
-        var costs = map.getCurrentPlayer().getCosts(unitID, targetField);
-        var funds = map.getCurrentPlayer().getFunds();
+        var costs = unit.getOwner().getCosts(unitID, targetField);
+        var funds = unit.getOwner().getFunds();
 
         var unitLimit = map.getGameRules().getUnitLimit();
         var unitCount = unit.getOwner().getUnitCount();
@@ -40,7 +40,7 @@ var Constructor = function()
         var unitID = "WATERPLANE";
         var costs = Global[unitID].getBaseCost();
         if (map !== null &&
-                map.getCurrentPlayer() !== null)
+            map.getCurrentPlayer() !== null)
         {
             costs = map.getCurrentPlayer().getCosts(unitID, Qt.point(-1, -1));
         }
@@ -61,13 +61,13 @@ var Constructor = function()
     {
         var unitID = "WATERPLANE";
         // we need to move the unit to the target position
-        var player = map.getCurrentPlayer();
         var unit = action.getTargetUnit();
+        var player = unit.getOwner();
         var costs = player.getCosts(unitID, unit.getPosition());
         unit.reduceAmmo2(1);
         // pay for the unit
         player.addFunds(-costs);
-        map.getGameRecorder().buildUnit(player.getPlayerID(), unitID);
+        map.getGameRecorder().buildUnit(player.getPlayerID(), unitID, player.getPlayerID());
         var spawnUnit = unit.spawnUnit(unitID);
         unit.setHasMoved(true);
         spawnUnit.setHasMoved(true);

@@ -21,7 +21,7 @@ class GameAnimationDialog;
 class GameAnimationPower;
 class GameAction;
 class GameMap;
-
+class GameMenue;
 class CO;
 using spCO = oxygine::intrusive_ptr<CO>;
 
@@ -85,8 +85,11 @@ public:
      * @return
      */
     oxygine::ResAnim* getResAnim(const QString & id, oxygine::error_policy ep = oxygine::ep_ignore_error) const;
-
-
+    /**
+     * @brief setMenu
+     * @param newMenu
+     */
+    void setMenu(GameMenue *newMenu);
 
 public slots:
     /**
@@ -776,6 +779,7 @@ private:
 
     QVector<std::tuple<QString, QString, QImage, QImage, bool>> m_customCOStyles;
     QVector<std::tuple<QString, oxygine::spResAnim>> m_Ressources;
+    GameMenue* m_pMenu{nullptr};
 };
 
 Q_DECLARE_INTERFACE(CO, "CO");

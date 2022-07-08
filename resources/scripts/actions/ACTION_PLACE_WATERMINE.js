@@ -112,23 +112,25 @@ var Constructor = function()
         var y = action.readDataInt32();
         ACTION_PLACE_WATERMINE.postAnimationMinePosX = x;
         ACTION_PLACE_WATERMINE.postAnimationMinePosY = y;
+        ACTION_PLACE_WATERMINE.postAnimationMineOwner = unit.getOwner();
     };
     this.performPostAnimation = function(postAnimation, map)
     {
         // unloading the units here :)
-        var player = map.getCurrentPlayer();
+        var player = ACTION_PLACE_WATERMINE.postAnimationMineOwner;
         var unit = map.spawnUnit(ACTION_PLACE_WATERMINE.postAnimationMinePosX,
                                  ACTION_PLACE_WATERMINE.postAnimationMinePosY,
                                  "WATERMINE", player);
         if (unit !== null)
         {
-            map.getGameRecorder().buildUnit(player.getPlayerID(), unit.getUnitID());
+            map.getGameRecorder().buildUnit(player.getPlayerID(), unit.getUnitID(), player.getPlayerID());
             unit.setHasMoved(true);
         }
         player.buildedUnit(unit);
         audio.playSound("unload.wav");
         ACTION_PLACE_WATERMINE.postAnimationMinePosX = -1;
         ACTION_PLACE_WATERMINE.postAnimationMinePosY = -1;
+        ACTION_PLACE_WATERMINE.postAnimationMineOwner = null;
     };
     this.getDescription = function()
     {

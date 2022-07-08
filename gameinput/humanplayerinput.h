@@ -13,16 +13,16 @@
 
 #include "game/unitpathfindingsystem.h"
 
-#include "menue/gamemenue.h"
-
 #include "coreengine/LUPDATE_MACROS.h"
+
+#include "menue/gamemenue.h"
 
 class GameMap;
 class GameAction;
 class UnitPathFindingSystem;
 
 class HumanPlayerInput;
-typedef oxygine::intrusive_ptr<HumanPlayerInput> spHumanPlayerInput;
+using spHumanPlayerInput = oxygine::intrusive_ptr<HumanPlayerInput>;
 
 
 class HumanPlayerInput : public BaseGameInputIF
@@ -46,7 +46,7 @@ public:
     explicit HumanPlayerInput(GameMap* pMap);
     virtual ~HumanPlayerInput();
 
-    virtual void init() override;
+    virtual void init(GameMenue* pMenu) override;
     /**
      * @brief deleteArrow deletes the current unit path arrow
      */
@@ -150,6 +150,16 @@ public:
     }
 
     virtual void centerCameraOnAction(GameAction* pAction) override;
+    /**
+     * @brief isCurrentPlayer
+     * @return
+     */
+    bool isCurrentPlayer(Player* pPlayer) const;
+    /**
+     * @brief getPerformingPlayer
+     * @return
+     */
+    virtual Player* getPerformingPlayer(Player*) const;
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -160,14 +170,14 @@ signals:
 public slots:
     void rightClickDown(qint32 x, qint32 y);
     void rightClickUp(qint32 x, qint32 y);
-    void leftClick(qint32 x, qint32 y);
+    virtual void leftClick(qint32 x, qint32 y);
     void cursorMoved(qint32 x, qint32 y);
     void keyDown(oxygine::KeyEvent event);
     void menuItemSelected(const QString & itemID, qint32 cost);
     void markedFieldSelected(QPoint point);
-    QStringList getEmptyActionList();
+    virtual QStringList getEmptyActionList();
     QStringList getViewplayerActionList();
-    void autoEndTurn();
+    virtual void autoEndTurn();
     void syncMarkedFields();
     void nextTurn();
     bool inputAllowed();
@@ -225,7 +235,6 @@ private:
 
     QPoint m_lastClickPoint;
     QPoint m_lastCursorPosition;
-
     bool m_showVisionFields;
 };
 

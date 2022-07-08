@@ -169,7 +169,7 @@ var Constructor = function()
             terrainId === "STREET1" ||
             terrainId === "BRIDGE" ||
             terrainId === "BRIDGE1" ||
-            terrainID === "BRIDGE2" ||
+            terrainId === "BRIDGE2" ||
             terrainId === "RUIN" )
         {
             return false;

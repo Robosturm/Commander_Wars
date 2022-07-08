@@ -15,7 +15,7 @@ class LoadingScreen : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     static spLoadingScreen getInstance();
-    virtual ~LoadingScreen() = default;
+    virtual ~LoadingScreen();
     /**
      * @brief show
      */

@@ -84,7 +84,6 @@ namespace oxygine
         bool getShuttingDown() const;
         void setShuttingDown(bool newShuttingDown);
 
-
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         void sigLoadRessources();

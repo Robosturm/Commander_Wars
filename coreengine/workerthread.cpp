@@ -9,7 +9,7 @@
 #include "coreengine/userdata.h"
 
 #include "menue/mainwindow.h"
-#include "menue/ingamemenue.h"
+#include "menue/basegamemenu.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
 
@@ -26,6 +26,8 @@
 #include "resource_management/coperkmanager.h"
 #include "resource_management/achievementmanager.h"
 #include "resource_management/shoploader.h"
+#include "resource_management/movementplanneraddinmanager.h"
+#include "resource_management/uimanager.h"
 #include "wiki/wikidatabase.h"
 
 #include "objects/loadingscreen.h"
@@ -112,8 +114,13 @@ void WorkerThread::start()
     pLoadingScreen->setProgress(tr("Loading Shop items..."), Mainapp::SCRIPT_PROCESS + 22);
     ShopLoader* pShopLoader = ShopLoader::getInstance();
     pShopLoader->loadAll();
+    pLoadingScreen->setProgress(tr("Loading Movement Planner addins..."), Mainapp::SCRIPT_PROCESS + 24);
+    MovementPlannerAddInManager::getInstance()->loadAll();
+    pLoadingScreen->setProgress(tr("Loading Ui scripts..."), Mainapp::SCRIPT_PROCESS + 26);
+    UiManager::getInstance()->loadAll();
+
     Userdata::getInstance()->changeUser();
-    pLoadingScreen->setProgress(tr("Loading Achievements..."), Mainapp::SCRIPT_PROCESS + 24);
+    pLoadingScreen->setProgress(tr("Loading Achievements..."), Mainapp::SCRIPT_PROCESS + 28);
     // achievements should be loaded last
     AchievementManager* pAchievementManager = AchievementManager::getInstance();
     pAchievementManager->loadAll();
@@ -191,13 +198,13 @@ bool WorkerThread::getStarted() const
 void WorkerThread::onQuit()
 {
     CONSOLE_PRINT("Shutting down workerthread", Console::eDEBUG);
-    if (oxygine::Stage::instance)
+    if (oxygine::Stage::getStage())
     {
-        oxygine::Stage::instance->cleanup();
+        oxygine::Stage::getStage()->cleanup();
     }
-    if (InGameMenue::getMenuInstance() != nullptr)
+    if (BaseGamemenu::getInstance() != nullptr)
     {
-        InGameMenue::getMenuInstance()->deleteMenu();
+        BaseGamemenu::getInstance()->deleteMenu();
     }
     GameAnimationFactory::getInstance()->release();
     Interpreter::release();

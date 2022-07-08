@@ -7,9 +7,7 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "objects/base/panel.h"
-
 #include "objects/base/spinbox.h"
-
 #include "objects/base/dropdownmenu.h"
 #include "objects/base/dropdownmenucolor.h"
 #include "objects/base/checkbox.h"
@@ -80,8 +78,6 @@ public:
     void setIsServerGame(bool isServerGame);
     bool getIsCampaign();
     bool getIsArmyCustomizationAllowed();
-
-    GameMap *getMap() const;
     void setMap(GameMap *newPMap);
 
 signals:
@@ -109,8 +105,6 @@ public slots:
      * @param eAiType
      */
     void selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType);
-
-public slots:
     // slots for changing player data
     void allPlayerIncomeChanged(float value);
     void playerIncomeChanged(float value, qint32 playerIdx);
@@ -131,6 +125,7 @@ public slots:
     void slotChangeAllBuildList(qint32, QStringList buildList);
     void slotChangePlayerBuildList(qint32 player, QStringList buildList);
     void selectAI(qint32 player);
+    GameMap *getMap() const;
 
     /**
      * @brief showSelectCOPerks
@@ -213,6 +208,14 @@ protected:
      * @param stream
      */
     void recievePlayerArmy(quint64 socketID, QDataStream& stream);
+    /**
+     * @brief joinAllowed
+     * @param socketId
+     * @param username
+     * @param eAiType
+     * @return
+     */
+    bool joinAllowed(quint64 socketId, QString username, GameEnums::AiTypes eAiType);
     /**
      * @brief sendOpenPlayerCount
      */

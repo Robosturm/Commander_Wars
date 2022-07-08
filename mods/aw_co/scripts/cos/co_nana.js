@@ -5,7 +5,7 @@ CO_NANA.init = function(co, map)
 };
 CO_NANA.activateSuperpower = function(co, powerMode, map)
 {
-    CO_NANA.activatePower(co, powerMode);
+    CO_NANA.activatePower(co, powerMode, map);
 };
 CO_NANA.getSuperPowerDescription = function()
 {

@@ -108,7 +108,7 @@ var Constructor = function()
         building.setFireCount(building.getFireCount() - 2);
         // spawn the unit
         var unit = map.spawnUnit(x, y, unitID, player);
-        map.getGameRecorder().buildUnit(player.getPlayerID(), unitID);
+        map.getGameRecorder().buildUnit(player.getPlayerID(), unitID, player.getPlayerID());
         player.buildedUnit(unit);
 
         // achievements

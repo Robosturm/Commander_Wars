@@ -17,6 +17,7 @@ public:
     explicit TextInput();
     virtual ~TextInput();
 
+public slots:
     QString getCurrentText() const;
     /**
      * @brief setCurrentText changes the text of this textbox
@@ -25,8 +26,6 @@ public:
     void setCurrentText(QString text);
     qint32 getCursorPosition() const;
     void setCursorPosition(qint32 position);
-
-public slots:
     virtual void focusedLost() override;
 private slots:
     void editFinished();

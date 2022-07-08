@@ -155,7 +155,7 @@ public:
     /**
      * @brief init
      */
-    virtual void init() override;
+    virtual void init(GameMenue* pMenu) override;
     /**
      * @brief contains
      * @param points

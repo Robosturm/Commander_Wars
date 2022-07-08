@@ -14,6 +14,7 @@
 #include "game/gameanimation/gameanimation.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "resource_management/unitspritemanager.h"
 
@@ -57,14 +58,14 @@ BaseGameInputIF* Player::getBaseGameInput()
     return m_pBaseGameInput.get();
 }
 
-QString Player::getDisplayName() const
+QString Player::getPlayerNameId() const
 {
-    return m_displayName;
+    return m_playerNameId;
 }
 
-void Player::setDisplayName(const QString &newDisplayName)
+void Player::setPlayerNameId(const QString &newDisplayName)
 {
-    m_displayName = newDisplayName;
+    m_playerNameId = newDisplayName;
 }
 
 const QString Player::getUniqueIdentifier() const
@@ -158,10 +159,9 @@ void Player::swapCOs()
         spCO co0 = m_playerCOs[0];
         m_playerCOs[0] = m_playerCOs[1];
         m_playerCOs[1] = co0;
-        spGameMenue pGameMenue = GameMenue::getInstance();
-        if (pGameMenue.get() != nullptr)
+        if (m_pMenu != nullptr)
         {
-            pGameMenue->updatePlayerinfo();
+            m_pMenu->updatePlayerinfo();
         }
     }
 }
@@ -394,7 +394,9 @@ bool Player::colorToTableInTable(QColor baseColor)
             dirIter.next();
             QString path = dirIter.fileInfo().filePath();
             QImage img(path);
-            if (QColor(img.pixel(255, 255)) == baseColor)
+            if (img.width() > 255 &&
+                img.height() > 255 &&
+                QColor(img.pixel(255, 255)) == baseColor)
             {
                 CONSOLE_PRINT("load table " + path, Console::eDEBUG);
                 m_colorTable.load(path);
@@ -656,10 +658,9 @@ bool Player::isAlly(Player* pOwner)
 void Player::setFunds(const qint32 &value)
 {
     m_funds = value;
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pGameMenue->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
 }
 
@@ -676,29 +677,9 @@ qint32 Player::getFunds() const
 qint32 Player::getBuildingCount(const QString & buildingID)
 {
     qint32 ret = 0;
-    
     if (m_pMap != nullptr)
     {
-        for (qint32 y = 0; y < m_pMap->getMapHeight(); y++)
-        {
-            for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
-            {
-                spBuilding pBuilding = m_pMap->getSpTerrain(x, y)->getSpBuilding();
-                if (pBuilding.get() != nullptr)
-                {
-                    if (pBuilding->getOwner() == this)
-                    {
-                        if (buildingID.isEmpty() || pBuilding->getBuildingID() == buildingID)
-                        {
-                            if (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y)
-                            {
-                                ret++;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        ret = m_pMap->getPlayerBuildingCount(buildingID, this);
     }
     return ret;
 }
@@ -863,10 +844,9 @@ void Player::defeatPlayer(Player* pPlayer, bool units)
             }
         }
     }
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pGameMenue->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
 }
 
@@ -1382,7 +1362,6 @@ bool Player::getFieldDirectVisible(qint32 x, qint32 y)
 qint32 Player::getCosts(const QString & id, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args({pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(id, "getBaseCost");
     qint32 costs = 0;
     if (ret.isNumber())
@@ -1391,16 +1370,19 @@ qint32 Player::getCosts(const QString & id, QPoint position)
     }
 
     qint32 costModifier = 0;
-    qint32 mapHeigth = m_pMap->getMapHeight();
-    qint32 mapWidth = m_pMap->getMapWidth();
-    for (qint32 x = 0; x < mapWidth; x++)
+    if (m_pMap != nullptr)
     {
-        for (qint32 y = 0; y < mapHeigth; y++)
+        qint32 mapHeigth = m_pMap->getMapHeight();
+        qint32 mapWidth = m_pMap->getMapWidth();
+        for (qint32 x = 0; x < mapWidth; x++)
         {
-            Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
-            if ((pBuilding != nullptr) && pBuilding->getOwner() == this)
+            for (qint32 y = 0; y < mapHeigth; y++)
             {
-                costModifier += pBuilding->getCostModifier(id, costs, position);
+                Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
+                if ((pBuilding != nullptr) && pBuilding->getOwner() == this)
+                {
+                    costModifier += pBuilding->getCostModifier(id, costs, position);
+                }
             }
         }
     }
@@ -1424,10 +1406,9 @@ void Player::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage,
             pCO->gainPowerstar(fundsDamage * speed, position, hpDamage * speed, defender, counterAttack);
         }
     }
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pGameMenue->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
 }
 
@@ -1896,7 +1877,6 @@ qint32 Player::calculatePlayerStrength() const
     return ret + calcIncome();
 }
 
-
 qint32 Player::calculatePlayerStrength(Unit* pUnit) const
 {
     qint32 ret = 0;
@@ -1910,6 +1890,21 @@ qint32 Player::calculatePlayerStrength(Unit* pUnit) const
         ret += calculatePlayerStrength(pLoadedUnit);
     }
     return ret;
+}
+
+GameEnums::AiTypes Player::getControlType() const
+{
+    return m_controlType;
+}
+
+void Player::setControlType(const GameEnums::AiTypes &newControlType)
+{
+    m_controlType = newControlType;
+}
+
+void Player::setMenu(GameMenue *newMenu)
+{
+    m_pMenu = newMenu;
 }
 
 void Player::serializeObject(QDataStream& pStream) const
@@ -1958,7 +1953,8 @@ void Player::serializeObject(QDataStream& pStream) const
     pStream << m_BuildlistChanged;
     m_Variables.serializeObject(pStream);
     pStream << m_playerArmySelected;
-    pStream << m_displayName;
+    pStream << m_playerNameId;
+    pStream << static_cast<qint32>(m_controlType);
 }
 
 void Player::deserializeObject(QDataStream& pStream)
@@ -2154,6 +2150,13 @@ void Player::deserializer(QDataStream& pStream, bool fast)
     }
     if (version > 15)
     {
-        pStream >> m_displayName;
+        pStream >> m_playerNameId;
     }
+    if (version > 16)
+    {
+        qint32 type;
+        pStream >> type;
+        m_controlType = static_cast<GameEnums::AiTypes>(type);
+    }
+    CONSOLE_PRINT("Loaded player " + m_playerNameId, Console::eDEBUG);
 }

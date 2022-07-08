@@ -1,5 +1,6 @@
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QRegularExpression>
 
 #include "multiplayer/lobbymenu.h"
 #include "multiplayer/networkcommands.h"
@@ -20,6 +21,7 @@
 
 #include "objects/base/chat.h"
 #include "objects/dialogs/dialogmessagebox.h"
+#include "objects/dialogs/customdialog.h"
 
 #include "network/mainserver.h"
 #include "network/JsonKeys.h"
@@ -82,29 +84,27 @@ LobbyMenu::LobbyMenu()
         emit sigHostServer();
     });
     connect(this, &LobbyMenu::sigHostServer, this, &LobbyMenu::hostServer, Qt::QueuedConnection);
-    if (m_pTCPClient.get() == nullptr ||
-        !m_pTCPClient->getIsConnected())
-    {
-        m_pButtonHostOnServer ->setEnabled(false);
-    }
+    m_pButtonHostOnServer->setEnabled(false);
 
-    oxygine::spButton pButtonJoin = ObjectManager::createButton(tr("Join Game"));
-    addChild(pButtonJoin);
-    pButtonJoin->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
-    pButtonJoin->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+    m_pButtonGameJoin = ObjectManager::createButton(tr("Join Game"));
+    addChild(m_pButtonGameJoin);
+    m_pButtonGameJoin->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
+    m_pButtonGameJoin->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigJoinGame();
     });
     connect(this, &LobbyMenu::sigJoinGame, this, &LobbyMenu::joinGame, Qt::QueuedConnection);
+    m_pButtonGameJoin->setEnabled(false);
 
-    oxygine::spButton pButtonObserve = ObjectManager::createButton(tr("Observe Game"));
-    addChild(pButtonObserve);
-    pButtonObserve->setPosition(Settings::getWidth() / 2 + 10, pButtonJoin->getY() - pButtonJoin->getHeight());
-    pButtonObserve->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+    m_pButtonGameObserve = ObjectManager::createButton(tr("Observe Game"));
+    addChild(m_pButtonGameObserve);
+    m_pButtonGameObserve->setPosition(Settings::getWidth() / 2 + 10, m_pButtonGameJoin->getY() - m_pButtonGameJoin->getHeight());
+    m_pButtonGameObserve->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigObserveGame();
     });
     connect(this, &LobbyMenu::sigObserveGame, this, &LobbyMenu::observeGame, Qt::QueuedConnection);
+    m_pButtonGameObserve->setEnabled(false);
 
     oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Address"));
     addChild(pButtonJoinAdress);
@@ -131,7 +131,7 @@ LobbyMenu::LobbyMenu()
         height = Settings::getHeight() - 120;
     }
     m_pGamesPanel = spPanel::create(true, QSize(Settings::getWidth() - 20, height),
-                              QSize(Settings::getWidth() - 20, height));
+                                    QSize(Settings::getWidth() - 20, height));
     m_pGamesPanel->setPosition(10, 10);
     addChild(m_pGamesPanel);
 
@@ -151,8 +151,19 @@ LobbyMenu::LobbyMenu()
         pChat->setVisible(false);
     }
     addChild(pChat);
-
     connect(this, &LobbyMenu::sigUpdateGamesView, this, &LobbyMenu::updateGamesView, Qt::QueuedConnection);
+}
+
+void LobbyMenu::enableServerButtons(bool enable)
+{
+    m_pButtonGameObserve->setEnabled(enable);
+    m_pButtonGameJoin->setEnabled(enable);
+    m_pButtonHostOnServer->setEnabled(enable);
+}
+
+void LobbyMenu::leaveServer()
+{
+    m_pTCPClient = nullptr;
 }
 
 void LobbyMenu::exitMenue()
@@ -160,14 +171,14 @@ void LobbyMenu::exitMenue()
     CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();    
+    oxygine::Actor::detach();
 }
 
 void LobbyMenu::hostLocal()
 {    
     CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::Stage::getStage()->addChild(spMultiplayermenu::create("", Settings::getGamePort(), "", Multiplayermenu::NetworkMode::Host));
-    oxygine::Actor::detach();    
+    oxygine::Actor::detach();
 }
 
 void LobbyMenu::hostServer()
@@ -177,7 +188,7 @@ void LobbyMenu::hostServer()
     {
         CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
         oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, "",  Multiplayermenu::NetworkMode::Host));
-        oxygine::Actor::detach();        
+        oxygine::Actor::detach();
     }
 }
 
@@ -304,7 +315,7 @@ void LobbyMenu::observeGamePassword(QString password)
     }
 }
 
-void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
+void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
     {
@@ -314,7 +325,10 @@ void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkS
         CONSOLE_PRINT("LobbyMenu Command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::SERVERGAMEDATA)
         {
-            updateGameData(objData);
+            if (m_loggedIn)
+            {
+                updateGameData(objData);
+            }
         }
         else if (messageType == NetworkCommands::SLAVEADDRESSINFO)
         {
@@ -322,9 +336,41 @@ void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkS
         }
         else if (messageType == NetworkCommands::SERVERGAMENOLONGERAVAILABLE)
         {
-             spDialogMessageBox pDialogMessageBox;
-             pDialogMessageBox = spDialogMessageBox::create(tr("Host game is no longer available."));
-             addChild(pDialogMessageBox);
+            spDialogMessageBox pDialogMessageBox;
+            pDialogMessageBox = spDialogMessageBox::create(tr("Host game is no longer available."));
+            addChild(pDialogMessageBox);
+        }
+        else if (messageType == NetworkCommands::SENDPUBLICKEY)
+        {
+            auto action = static_cast<NetworkCommands::PublicKeyActions>(objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt());
+            if (action == NetworkCommands::PublicKeyActions::CreateAccount)
+            {
+                onPublicKeyCreateAccount(socketID, objData, action);
+            }
+            else if (action == NetworkCommands::PublicKeyActions::LoginAccount)
+            {
+                onPublicKeyLoginAccount(socketID, objData, action);
+            }
+            else if (action == NetworkCommands::PublicKeyActions::ResetPassword)
+            {
+                onPublicKeyResetAccount(socketID, objData, action);
+            }
+            else if (action == NetworkCommands::PublicKeyActions::ChangePassword)
+            {
+                onPublicKeyChangePassword(socketID, objData, action);
+            }
+            else
+            {
+                CONSOLE_PRINT("Unknown public key action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
+            }
+        }
+        else if (messageType == NetworkCommands::SERVERACCOUNTMESSAGE)
+        {
+            handleAccountMessage(socketID, objData);
+        }
+        else
+        {
+            CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
         }
     }
 }
@@ -402,5 +448,163 @@ void LobbyMenu::selectGame()
 
 void LobbyMenu::connected(quint64 socket)
 {
+    spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/userLoginDialog.xml", this);
+    addChild(pDialog);
+}
+
+void LobbyMenu::onLogin()
+{
     m_pButtonHostOnServer->setEnabled(true);
+    m_loggedIn = true;
+}
+
+void LobbyMenu::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "lobbyMenu";
+    if (pInterpreter->exists(object, func))
+    {
+        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        QJSValueList args({pInterpreter->newQObject(this)});
+        pInterpreter->doFunction(object, func, args);
+    }
+}
+
+void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject & objData)
+{
+    auto action = objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt();
+    auto accountError = objData.value(JsonKeys::JSONKEY_ACCOUNT_ERROR).toInt();
+    if (action >= static_cast<qint32>(NetworkCommands::PublicKeyActions::CreateAccount) &&
+        action <= static_cast<qint32>(NetworkCommands::PublicKeyActions::ChangePassword))
+    {
+        const char * const jsScripts[] =
+        {
+            "CreateAccountDialog",
+            "UserLoginDialog",
+            "ForgotPasswordDialog",
+            "ChangePasswordDialog",
+        };
+        QString object = jsScripts[action - static_cast<qint32>(NetworkCommands::PublicKeyActions::CreateAccount)];
+        CONSOLE_PRINT("Calling function " + object + ".onAccountMessage(" + QString::number(accountError) + ")", Console::eDEBUG);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValueList args({accountError});
+        pInterpreter->doFunction(object, "onAccountMessage", args);
+    }
+    else
+    {
+        CONSOLE_PRINT("Unknown account message " + QString::number(action) + " received", Console::eDEBUG);
+    }
+}
+
+bool LobbyMenu::getServerRequestNewPassword() const
+{
+    return m_serverRequestNewPassword;
+}
+
+void LobbyMenu::setServerRequestNewPassword(bool newServerRequestNewPassword)
+{
+    m_serverRequestNewPassword = newServerRequestNewPassword;
+}
+
+bool LobbyMenu::isValidEmailAdress(const QString & emailAdress)
+{
+    static const QRegularExpression regex("(?:[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+)*|\""
+                                          "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]"
+                                          "|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9]"
+                                          "(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|"
+                                          "\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]"
+                                          "|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:"
+                                          "[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\"
+                                          "[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
+    auto match = regex.match(emailAdress);
+    return match.hasMatch() && match.capturedLength() == emailAdress.length();
+}
+
+bool LobbyMenu::isValidPassword(const QString & password)
+{
+    static const QRegularExpression regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+    auto match = regex.match(password);
+    return match.hasMatch();
+}
+
+void LobbyMenu::createServerAccount(const QString & password, const QString & emailAdress)
+{
+    m_serverPassword.setPassword(password);
+    m_serverEmailAdress = emailAdress;
+    Mainapp* pApp = Mainapp::getInstance();
+    auto & cypher = pApp->getCypher();
+    emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::CreateAccount), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::onPublicKeyCreateAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
+    data.insert(JsonKeys::JSONKEY_EMAILADRESS, m_serverEmailAdress);
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    QJsonDocument doc(data);
+    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
+    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::onPublicKeyLoginAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    QJsonDocument doc(data);
+    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
+    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::onPublicKeyResetAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_EMAILADRESS, m_serverEmailAdress);
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    QJsonDocument doc(data);
+    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
+    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+
+}
+
+void LobbyMenu::onPublicKeyChangePassword(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
+    data.insert(JsonKeys::JSONKEY_OLDPASSWORD, cypher.toJsonArray(m_oldServerPassword.getHash()));
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    QJsonDocument doc(data);
+    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
+    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::loginToServerAccount(const QString & password)
+{
+    m_serverPassword.setPassword(password);
+    Mainapp* pApp = Mainapp::getInstance();
+    auto & cypher = pApp->getCypher();
+    emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::LoginAccount), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::resetPasswordOnServerAccount(const QString & emailAdress)
+{
+    m_serverEmailAdress = emailAdress;
+    Mainapp* pApp = Mainapp::getInstance();
+    auto & cypher = pApp->getCypher();
+    emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::ResetPassword), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::changePasswordOnServerAccount(const QString & oldEmailAdress, const QString & newEmailAdress)
+{
+    m_oldServerPassword.setPassword(oldEmailAdress);
+    m_serverPassword.setPassword(newEmailAdress);
+    Mainapp* pApp = Mainapp::getInstance();
+    auto & cypher = pApp->getCypher();
+    emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::ChangePassword), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }

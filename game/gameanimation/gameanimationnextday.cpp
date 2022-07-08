@@ -10,7 +10,8 @@
 #include "game/gamemap.h"
 #include "game/gameanimation/gameanimationfactory.h"
 
-#include "menue/gamemenue.h"
+#include "menue/basegamemenu.h"
+#include "menue/movementplanner.h"
 
 GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs)
     : GameAnimation(frameTime, pMap),
@@ -137,8 +138,8 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     }
     else
     {
-        spGameMenue pMenu = GameMenue::getInstance();
-        if (pMenu.get() != nullptr)
+        GameMenue* pMenu = dynamic_cast<GameMenue*>(BaseGamemenu::getInstance());
+        if (pMenu != nullptr)
         {
             oxygine::spButton pButtonSaveAndExit = ObjectManager::createButton(tr("Save and Exit"), 220);
             addChild(pButtonSaveAndExit);
@@ -147,7 +148,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
             {
                 emit sigShowSaveAndExit();
             });
-            connect(this, &GameAnimationNextDay::sigShowSaveAndExit, pMenu.get(), &GameMenue::showSaveAndExitGame, Qt::QueuedConnection);
+            connect(this, &GameAnimationNextDay::sigShowSaveAndExit, pMenu, &GameMenue::showSaveAndExitGame, Qt::QueuedConnection);
 
             oxygine::spButton pButtonContinue = ObjectManager::createButton(tr("Continue"), 220);
             addChild(pButtonContinue);
@@ -182,8 +183,8 @@ void GameAnimationNextDay::stop()
 
 void GameAnimationNextDay::restart()
 {
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
+    if (pMenu != nullptr)
     {
         if (!m_permanent)
         {

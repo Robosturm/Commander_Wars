@@ -9,10 +9,9 @@
 #include "network/txtask.h"
 
 class QTcpServer;
-class QTcpSocket;
 
 class TCPServer;
-typedef oxygine::intrusive_ptr<TCPServer> spTCPServer;
+using spTCPServer = oxygine::intrusive_ptr<TCPServer>;
 
 class TCPServer : public NetworkInterface
 {
@@ -22,7 +21,11 @@ public:
     virtual ~TCPServer();
 
     spTCPClient getClient(quint64 socketID);
+signals:
+    void sigSetIsActive(quint64 socketID, bool active);
+
 public slots:
+    void setIsActive(quint64 socketID, bool active);
     virtual void connectTCP(QString adress, quint16 port) override;
     virtual void disconnectTCP() override;
     virtual void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service) override;

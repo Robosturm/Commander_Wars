@@ -1,7 +1,4 @@
 #include <QTcpServer>
-#include <QTcpSocket>
-
-#include "coreengine/mainapp.h"
 
 #include "network/tcpserver.h"
 
@@ -11,6 +8,7 @@ TCPServer::TCPServer(QObject* pParent)
     setObjectName("TCPServer");
     m_isServer = true;
     m_isConnected = true;
+    connect(this, &TCPServer::sigSetIsActive, this, &TCPServer::setIsActive, Qt::QueuedConnection);
 }
 
 TCPServer::~TCPServer()
@@ -22,6 +20,7 @@ TCPServer::~TCPServer()
 
 void TCPServer::connectTCP(QString adress, quint16 port)
 {
+
     if (m_pTCPServer.get() == nullptr)
     {
         m_pTCPServer = std::make_shared<QTcpServer>(this);
@@ -38,11 +37,11 @@ void TCPServer::connectTCP(QString adress, quint16 port)
         connect(this, &TCPServer::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
         connect(this, &TCPServer::sigContinueListening, this, &TCPServer::continueListening, Qt::QueuedConnection);
         connect(this, &TCPServer::sigPauseListening, this, &TCPServer::pauseListening, Qt::QueuedConnection);
-        CONSOLE_PRINT("TCP Server is running on adress " + adress + " and port " + QString::number(port), Console::eLogLevels::eDEBUG);
+        CONSOLE_PRINT("TCP Server is running on adress \"" + adress + "\" and port " + QString::number(port), Console::eLogLevels::eDEBUG);
     }
     else
     {
-        CONSOLE_PRINT("TCP Server launched ignored on adress " + adress + " and port " + QString::number(port) + " cause the server is already running.", Console::eLogLevels::eFATAL);
+        CONSOLE_PRINT("TCP Server launched ignored on adress \"" + adress + "\" and port " + QString::number(port) + " cause the server is already running.", Console::eLogLevels::eFATAL);
     }
 }
 
@@ -82,7 +81,7 @@ void TCPServer::onConnect()
 {
     if (m_pTCPServer != nullptr)
     {
-        QTcpSocket* nextSocket = m_pTCPServer->nextPendingConnection();
+        auto* nextSocket = m_pTCPServer->nextPendingConnection();
         if (nextSocket != nullptr)
         {
             connect(nextSocket, &QAbstractSocket::errorOccurred, this, &TCPServer::displayTCPError, Qt::QueuedConnection);
@@ -107,12 +106,11 @@ void TCPServer::onConnect()
             {
                 emit sigDisconnectClient(socket);
             });
-
-            QByteArray data;
-            pTXTask->send(m_idCounter, data, NetworkSerives::ServerSocketInfo, false);
             pClient->setIsServer(true);
             m_pClients.insert(m_idCounter, pClient);
             CONSOLE_PRINT("New Client connection. Socket: " + QString::number(m_idCounter), Console::eLogLevels::eDEBUG);
+            QByteArray data;
+            pTXTask->send(m_idCounter, data, NetworkSerives::ServerSocketInfo, false);
             emit sigConnected(m_idCounter);
         }
     }
@@ -122,7 +120,8 @@ void TCPServer::forwardData(quint64 socketID, QByteArray data, NetworkInterface:
 {
     for (auto & client : m_pClients)
     {
-        if (client->getSocketID() != socketID)
+        if (client->getSocketID() != socketID &&
+            client->getIsActive())
         {
             emit client->sig_sendData(0, data, service, false);
         }
@@ -181,4 +180,13 @@ qint32 TCPServer::getObserverCount()
         }
     }
     return count;
+}
+
+void TCPServer::setIsActive(quint64 socketID, bool active)
+{
+    auto client = getClient(socketID);
+    if (client.get())
+    {
+        client->setIsActive(active);
+    }
 }

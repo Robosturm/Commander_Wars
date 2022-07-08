@@ -5,7 +5,7 @@ CO_WALTER.init = function(co, map)
 };
 CO_WALTER.activateSuperpower = function(co, powerMode, map)
 {
-    CO_ADAM.activatePower(co, powerMode);
+    CO_ADAM.activatePower(co, powerMode, map);
 };
 CO_WALTER.getSuperPowerDescription = function()
 {

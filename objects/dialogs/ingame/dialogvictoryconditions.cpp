@@ -1,6 +1,9 @@
-#include "dialogvictoryconditions.h"
+#include "objects/dialogs/ingame/dialogvictoryconditions.h"
+#include "objects/base/panel.h"
+#include "objects/dialogs/ingame/victoryrulepopup.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 
@@ -8,8 +11,6 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "objects/base/panel.h"
-#include "objects/dialogs/ingame/victoryrulepopup.h"
 
 #include "game/gamemap.h"
 #include "game/gamerules.h"
@@ -145,8 +146,8 @@ void DialogVictoryConditions::remove()
 
 void DialogVictoryConditions::showPopup(QString rule)
 {
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr && !VictoryRulePopup::exists(rule))
+    BaseGamemenu* pMenu = GameMenue::getInstance();
+    if (pMenu != nullptr && !VictoryRulePopup::exists(rule))
     {
         spVictoryRulePopup pPopup = spVictoryRulePopup::create(m_pMap, rule, 180, 250);
         pPopup->setY(Settings::getHeight() - pPopup->getHeight());

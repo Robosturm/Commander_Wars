@@ -5,7 +5,7 @@ CO_TASHA.init = function(co, map)
 };
 CO_TASHA.activateSuperpower = function(co, powerMode, map)
 {
-    CO_TASHA.activatePower(co, powerMode);
+    CO_TASHA.activatePower(co, powerMode, map);
 };
 CO_TASHA.getSuperPowerDescription = function()
 {

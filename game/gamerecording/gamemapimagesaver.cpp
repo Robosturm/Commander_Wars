@@ -3,14 +3,14 @@
 #include "game/gamerecording/gamemapimagesaver.h"
 #include "game/gamemap.h"
 
-#include "menue/ingamemenue.h"
+#include "menue/basegamemenu.h"
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 void GamemapImageSaver::saveMapAsImage(QString filename)
 {
     
-    spInGameMenue pMenu(InGameMenue::getMenuInstance());
+    spBaseGamemenu pMenu(BaseGamemenu::getInstance());
 
     if (pMenu.get() != nullptr)
     {

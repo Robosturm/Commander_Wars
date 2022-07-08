@@ -5,9 +5,25 @@ var Constructor = function()
         return 5;
     };
 
+    this.armyData = [["os", "os"],
+                     ["ge", "ge"],
+                     ["ma", "ma"],
+                     ["ti", "ti"],
+                     ["yc", "yc"],];
+
+    this.animationData = [["os", [Qt.point(5, 23),]],
+                          ["ge", [Qt.point(0, 19),]],
+                          ["ma", [Qt.point(22, 32),]],
+                          ["ti", [Qt.point(18, 28),]],
+                          ["yc", [Qt.point(-2, 23),]],];
+
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        sprite.loadSpriteV2("duster+mask", GameEnums.Recoloring_Matrix,
+        var player = unit.getOwner();
+        // get army name
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_DUSTER.armyData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_DUSTER.animationData);
+        sprite.loadSpriteV2("duster+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_DUSTER.getMaxUnitCount(), Qt.point(-40, 20), -1, 1.0, 0, 0,
                             false, false, 30);
         sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
@@ -17,10 +33,16 @@ var Constructor = function()
     {
         BATTLEANIMATION_DUSTER.loadStandingAnimation(sprite, unit, defender, weapon);
         // mg
+        var player = unit.getOwner();
+        // get army name
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_DUSTER.armyData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_DUSTER.animationData);
         var count = sprite.getUnitCount(BATTLEANIMATION_DUSTER.getMaxUnitCount());
-        var offset = Qt.point(26, 28);
+        var offset = data[0];
+
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1, 0, 0);
+        sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         BATTLEANIMATION.showMgBullets(sprite, offset);
         sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         for (var i = 0; i < count; i++)

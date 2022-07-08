@@ -8,6 +8,8 @@
 
 #include "objects/base/panel.h"
 
+#include "menue/movementplanner.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
@@ -172,13 +174,12 @@ void DialogUnitInfo::remove()
 }
 
 void DialogUnitInfo::moveToUnit(qint32 posX, qint32 posY)
-{
-    
-    spGameMenue pGamemenu = GameMenue::getInstance();
-    if (pGamemenu.get() != nullptr)
+{    
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
+    if (pMenu != nullptr)
     {
-        pGamemenu->MoveMap(posX, posY);
-        pGamemenu->calcNewMousePosition(posX, posY);
+        pMenu->MoveMap(posX, posY);
+        pMenu->calcNewMousePosition(posX, posY);
     }
     emit sigFinished();
     oxygine::Actor::detach();

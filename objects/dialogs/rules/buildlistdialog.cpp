@@ -15,6 +15,7 @@
 #include "objects/base/panel.h"
 
 #include "objects/dialogs/dialogtextinput.h"
+#include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/label.h"
 
 BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList buildList)
@@ -305,4 +306,11 @@ void BuildListDialog::saveBannlist(QString filename)
     Filesupport::storeList(filename, m_CurrentBuildList, "data/unitbannlist/");
     auto items = getNameList();
     m_PredefinedLists->changeList(items);
+
+    spDialogMessageBox pMessageBox = spDialogMessageBox::create(tr("Do you want to make the saved build list the default ruleset?"), true, tr("Yes"), tr("No"));
+    addChild(pMessageBox);
+    connect(pMessageBox.get(),  &DialogMessageBox::sigOk, this, [=]()
+    {
+        Settings::setDefaultBannlist("data/unitbannlist/" + filename + ".bl");
+    }, Qt::QueuedConnection);
 }

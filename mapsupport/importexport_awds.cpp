@@ -1609,7 +1609,7 @@ void GameMap::importAWDSMap(QString file)
             m_headerInfo.m_mapDescription += static_cast<char>(sign);
         }
         m_headerInfo.m_mapDescription = m_headerInfo.m_mapDescription.replace("\n", " ");
-        EditorMenue::getInstance()->optimizePlayers();
+        dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance())->optimizePlayers();
         // update the whole fucking map
         updateSprites();
     }

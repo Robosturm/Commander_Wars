@@ -46,7 +46,7 @@ namespace oxygine
         void freeObject();
         ref_counter(const ref_counter&) = delete ;
         const ref_counter& operator=(const ref_counter&) = delete;
-        ref_counter(const ref_counter&&) = delete ;
+        ref_counter(const ref_counter&&) = delete;
         const ref_counter&& operator=(const ref_counter&&) = delete;
     private:
         std::atomic<qint32> m_ref_counter{0};

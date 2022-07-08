@@ -345,4 +345,9 @@ var BUILDING =
     {
         return false;
     },
+
+    getCostReduction : function(building, unitId, baseCost, x, y, map)
+    {
+        return 0;
+    },
 };

@@ -1,4 +1,5 @@
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
@@ -614,10 +615,10 @@ QColor BattleAnimation::getHealthBarColor(float hp)
 
 void BattleAnimation::restart()
 {
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
+    if (pMenu != nullptr)
     {
-        pGameMenue->addChild(spBattleAnimation(this));
+        pMenu->addChild(spBattleAnimation(this));
         m_battleTimer.start();
     }
 }

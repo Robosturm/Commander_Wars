@@ -26,6 +26,15 @@ public:
     static const char* const ARG_SERVERLISTENPORT;
     static const char* const ARG_SERVERSLAVELISTENADDRESS;
     static const char* const ARG_SERVERSLAVELISTENPORT;
+    static const char* const ARG_SERVERSLAVEDESPAWNTIME;
+
+    static const char* const ARG_MAILSERVERADDRESS;
+    static const char* const ARG_MAILSERVERPORT;
+    static const char* const ARG_MAILSERVERCONNECTIONTYPE;
+    static const char* const ARG_MAILSERVERUSERNAME;
+    static const char* const ARG_MAILSERVERPASSWORD;
+    static const char* const ARG_MAILSERVERSENDADDRESS;
+    static const char* const ARG_MAILSERVERAUTHMETHOD;
 
     CommandLineParser();
 
@@ -49,6 +58,15 @@ private:
     QCommandLineOption m_serverListenPort;
     QCommandLineOption m_serverSlaveListenAddress;
     QCommandLineOption m_serverSlaveListenPort;
+    QCommandLineOption m_serverSlaveDespawnTime;
+    QCommandLineOption m_mailServerAddress;
+    QCommandLineOption m_mailServerPort;
+    QCommandLineOption m_mailServerConnectionType;
+    QCommandLineOption m_mailServerUsername;
+    QCommandLineOption m_mailServerPassword;
+    QCommandLineOption m_mailServerSendAddress;
+    QCommandLineOption m_mailServerAuthMethod;
+
     QCommandLineParser m_parser;
 };
 

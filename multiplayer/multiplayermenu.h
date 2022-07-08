@@ -129,6 +129,9 @@ protected:
     void sendJoinReason(QDataStream & stream, quint64 socketID);
     void receiveCurrentGameState(QDataStream & stream, quint64 socketID);
     void connectToSlave(const QJsonObject & objData, quint64 socketID);
+    void startRejoinedGame(qint64 syncCounter);
+    void receivePlayerControlledInfo(QDataStream & stream, quint64 socketID);
+    void sendMapInfoUpdate(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
 private:
     /**
      * @brief init
