@@ -1,6 +1,7 @@
-#include "tableview.h"
+#include "objects/base/tableview.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -11,6 +12,7 @@ TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> 
       m_data(data),
       m_widths(widths)
 {
+    Interpreter::setCppOwnerShip(this);
     setObjectName("TableView");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

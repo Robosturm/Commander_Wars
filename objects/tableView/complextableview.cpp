@@ -1,12 +1,19 @@
-#include "objects/tableView/basetableitem.h"
+#include "objects/tableView/complextableview.h"
+
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
-BaseTableItem::BaseTableItem(QObject *parent)
+ComplexTableView::ComplexTableView(QObject *parent)
     : QObject{parent}
 {
     Interpreter::setCppOwnerShip(this);
-    setObjectName("BaseTableItem");
+    setObjectName("ComplexTableView");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+
+}
+
+void ComplexTableView::setItems(const Items & items)
+{
+    m_items = items;
 }

@@ -617,6 +617,10 @@ set(${PROJECT_NAME}_SRCS
 
     # table view
     objects/tableView/basetableitem.h objects/tableView/basetableitem.cpp
+    objects/tableView/stringtableitem.h objects/tableView/stringtableitem.cpp
+    objects/tableView/xofytableitem.h objects/tableView/xofytableitem.cpp
+    objects/tableView/locktableitem.h objects/tableView/locktableitem.cpp
+    objects/tableView/complextableview.h objects/tableView/complextableview.cpp
 
     # spriting support
     spritingsupport/spritecreator.cpp spritingsupport/spritecreator.h

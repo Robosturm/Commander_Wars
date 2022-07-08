@@ -109,6 +109,7 @@ Mainwindow::Mainwindow()
 
     m_cheatTimeout.setSingleShot(true);
     connect(&m_cheatTimeout, &QTimer::timeout, this, &Mainwindow::cheatTimeout, Qt::QueuedConnection);
+
     pApp->continueRendering();
 }
 
