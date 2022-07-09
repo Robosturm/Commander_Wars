@@ -12,13 +12,10 @@ class ComplexTableView : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    using Items = QVector<QVector<BaseTableItem>>;
+    using Items = QVector<QVector<spBaseTableItem>>;
 
     explicit ComplexTableView(QObject *parent = nullptr);
 
-signals:
-
-public slots:
     void setItems(const Items & items);
 
 private:

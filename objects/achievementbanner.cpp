@@ -24,8 +24,8 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     setSize(bannerWidth, 60);
     addChild(pButtonBox);
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-    oxygine::spSprite pIcon = pWikiDatabase->getIcon(nullptr, achievement.icon, GameMap::defaultImageSize * 2);
-    pIcon->setPosition(5, 5);
+    oxygine::spSprite pIcon = pWikiDatabase->getIcon(nullptr, achievement.icon, GameMap::defaultImageSize);
+    pIcon->setPosition(10, pButtonBox->getHeight() / 2 - GameMap::defaultImageSize / 2);
     pButtonBox->addChild(pIcon);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());

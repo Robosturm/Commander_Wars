@@ -436,12 +436,15 @@ void Unit::updateSprites(bool editor)
     {
         m_TransportUnits[i]->updateSprites(false);
     }
-    CO* pCO1 = m_pOwner->getCO(0);
-    CO* pCO2 = m_pOwner->getCO(1);
-    if ((pCO1 != nullptr && pCO1->getPowerMode() > GameEnums::PowerMode_Off) ||
-        (pCO2 != nullptr && pCO2->getPowerMode() > GameEnums::PowerMode_Off))
+    if (m_pOwner != nullptr)
     {
-        addShineTween();
+        CO* pCO1 = m_pOwner->getCO(0);
+        CO* pCO2 = m_pOwner->getCO(1);
+        if ((pCO1 != nullptr && pCO1->getPowerMode() > GameEnums::PowerMode_Off) ||
+            (pCO2 != nullptr && pCO2->getPowerMode() > GameEnums::PowerMode_Off))
+        {
+            addShineTween();
+        }
     }
 }
 

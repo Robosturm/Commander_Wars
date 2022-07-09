@@ -298,11 +298,12 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
         BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
         TerrainManager* pTerrainManager = TerrainManager::getInstance();
         Player* pFinalIconPlayer = pIconPlayer;
+        spPlayer pPlayer;
         if (pUnitSpriteManager->exists(file))
         {
             if (pFinalIconPlayer == nullptr)
             {
-                spPlayer pPlayer = spPlayer::create(nullptr);
+                pPlayer = spPlayer::create(nullptr);
                 pPlayer->init();
                 pFinalIconPlayer = pPlayer.get();
             }
@@ -316,7 +317,6 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
             // check buildings?
             if (pFinalIconPlayer == nullptr)
             {
-                spPlayer pPlayer;
                 if (pMap != nullptr)
                 {
                     pPlayer = pMap->getCurrentPlayer();
