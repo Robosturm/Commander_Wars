@@ -9,6 +9,7 @@
 #include "objects/base/label.h"
 
 quint32 AchievementBanner::m_activeBanners = 0;
+constexpr quint32 bannerHeight = 45;
 
 AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     : m_showTimer(this)
@@ -20,8 +21,8 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
     pButtonBox->setResAnim(pAnim);
-    pButtonBox->setSize(bannerWidth, 60);
-    setSize(bannerWidth, 60);
+    pButtonBox->setSize(bannerWidth, bannerHeight);
+    setSize(bannerWidth, bannerHeight);
     addChild(pButtonBox);
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
     oxygine::spSprite pIcon = pWikiDatabase->getIcon(nullptr, achievement.icon, GameMap::defaultImageSize);
@@ -43,8 +44,8 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
 void AchievementBanner::init()
 {
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Achievement));
-    setPosition(0, Settings::getHeight() + 60);
-    oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() - 60 * (m_activeBanners + 1)), oxygine::timeMS(200 * (m_activeBanners + 1)));
+    setPosition(0, Settings::getHeight() + bannerHeight);
+    oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() - bannerHeight * (m_activeBanners + 1)), oxygine::timeMS(200 * (m_activeBanners + 1)));
     addTween(tween);
 
     m_activeBanners++;

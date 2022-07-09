@@ -67,7 +67,7 @@ var Constructor = function()
     };
     this.unitProduced = function(unitID)
     {
-        userdata.increaseAchievement("BUILD_UNIT_" + unitID, 9000);
+        userdata.increaseAchievement("BUILD_UNIT_" + unitID, 1);
     };
 };
 
