@@ -3,6 +3,9 @@
 #include "basetableitem.h"
 #include <QObject>
 
+class LockTableItem;
+using spLockTableItem = oxygine::intrusive_ptr<LockTableItem>;
+
 class LockTableItem : public BaseTableItem
 {
     Q_OBJECT

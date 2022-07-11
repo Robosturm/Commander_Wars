@@ -4768,5 +4768,7 @@
         <file>resources/ui/forgotPasswordDialog.xml</file>
         <file>resources/ui/changePasswordDialog.js</file>
         <file>resources/ui/changePasswordDialog.xml</file>
+        <file>resources/objects/h_table_divider.png</file>
+        <file>resources/objects/v_table_divider.png</file>
     </qresource>
 </RCC>

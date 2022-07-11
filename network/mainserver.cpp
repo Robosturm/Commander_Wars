@@ -296,7 +296,7 @@ void MainServer::onSlaveGameStarted(quint64 socketID, const QJsonObject & objDat
 void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objData)
 {
     QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
-    QString command = QString(NetworkCommands::SERVERGAMEDATA);
+    QString command = QString(NetworkCommands::SERVERUSERGAMEDATA);
     CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);

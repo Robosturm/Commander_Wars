@@ -160,7 +160,7 @@ namespace oxygine
 
     template<class T, class U> intrusive_ptr<T> static_pointer_cast(intrusive_ptr<U> const& p)
     {
-        return static_cast<T*>(p.get());
+        return intrusive_ptr<T>(static_cast<T*>(p.get()));
     }
 
     template<class T, class U> intrusive_ptr<T> const_pointer_cast(intrusive_ptr<U> const& p)

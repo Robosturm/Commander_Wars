@@ -7,7 +7,7 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "objects/base/panel.h"
-#include "objects/base/tableview.h"
+#include "objects/tableView/complextableview.h"
 
 #include "network/tcpclient.h"
 #include "network/networkgamedata.h"
@@ -74,14 +74,13 @@ private:
     void onPublicKeyChangePassword(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void handleAccountMessage(quint64 socketID, const QJsonObject & objData);
 private:
-    spPanel m_pGamesPanel;
     spNetworkInterface m_pTCPClient{nullptr};
     QVector<spNetworkGameData> m_games;
     spNetworkGameData m_currentGame;
     oxygine::spButton m_pButtonHostOnServer;
     oxygine::spButton m_pButtonGameObserve;
     oxygine::spButton m_pButtonGameJoin;
-    spTableView m_Gamesview;
+    spComplexTableView m_gamesview;
     QString m_password;
     bool m_loggedIn{false};
 

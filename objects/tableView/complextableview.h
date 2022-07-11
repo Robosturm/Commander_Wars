@@ -1,9 +1,12 @@
 #pragma once
 
+#include <QColor>
 #include <QObject>
 #include <QVector>
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "objects/tableView/basetableitem.h"
+#include "objects/base/label.h"
+#include "objects/base/panel.h"
 
 class ComplexTableView;
 using spComplexTableView = oxygine::intrusive_ptr<ComplexTableView>;
@@ -12,13 +15,57 @@ class ComplexTableView : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    using Items = QVector<QVector<spBaseTableItem>>;
+    struct Item
+    {
+        using ViewItems = QVector<spBaseTableItem>;
+        ViewItems items;
+        void * pData{nullptr};
+    };
+    using Items = QVector<Item>;
 
-    explicit ComplexTableView(QObject *parent = nullptr);
+    explicit ComplexTableView(const QVector<qint32> & widths, const QStringList & header, qint32 heigth, QObject *parent = nullptr);
 
-    void setItems(const Items & items);
 
+    void setItems(const Items & items)
+    {
+        m_pPanel->clearContent();
+        m_VLines.clear();
+        m_HLines.clear();
+        m_columns.clear();
+        m_items = items;
+        sortItems(0, false);
+        createItems();
+    }
+
+    template<typename TData>
+    TData* getDataItem(qint32 i) const
+    {
+        Q_ASSERT(i >= 0 && i < m_items.size());
+        return static_cast<TData*>(m_items[i].pData);
+    }
+
+    const QVector<qint32> & getWidths() const;
+    const Item & getItem(qint32 i) const;
+signals:
+    void sigItemClicked();
+    void sigSortItems(qint32 column, bool up);
+public slots:
+    void setCurrentItem(qint32 i);
+    qint32 getCurrentItem() const;
+    void sortItems(qint32 column, bool up);
+private:
+    void createItems();
+    void updateItemPositions();
 private:
     Items m_items;
+    QVector<qint32> m_widths;
+    QVector<bool> m_sortUp;
+    QVector<oxygine::spBox9Sprite> m_VLines;
+    QVector<oxygine::spBox9Sprite> m_HLines;
+    qint32 m_currentItem{-1};
+    QVector<oxygine::spActor> m_columns;
+    QVector<spLabel> m_Labels;
+    spPanel m_pPanel;
+    QColor m_selectColor{32, 200, 32, 0};
 };
 

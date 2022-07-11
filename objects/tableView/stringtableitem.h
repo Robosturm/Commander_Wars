@@ -3,6 +3,9 @@
 #include "objects/tableView/basetableitem.h"
 #include <QObject>
 
+class StringTableItem;
+using spStringTableItem = oxygine::intrusive_ptr<StringTableItem>;
+
 class StringTableItem : public BaseTableItem
 {
     Q_OBJECT
