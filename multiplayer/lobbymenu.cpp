@@ -137,7 +137,7 @@ LobbyMenu::LobbyMenu()
     m_pButtonSwapLobbyMode->setEnabled(false);
     connect(this, &LobbyMenu::sigChangeLobbyMode, this, &LobbyMenu::changeLobbyMode, Qt::QueuedConnection);
 
-    qint32 height = Settings::getHeight() - 420 - 10 - m_pButtonSwapLobbyMode->getHeight();
+    qint32 height = Settings::getHeight() - 320 - 10 - m_pButtonSwapLobbyMode->getHeight();
     if (Settings::getSmallScreenDevice())
     {
         height = Settings::getHeight() - 120- 10 - m_pButtonSwapLobbyMode->getHeight();
@@ -186,17 +186,20 @@ void LobbyMenu::changeLobbyMode()
         data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::SERVERREQUESTUSERGAMES);
         data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
         m_mode = GameViewMode::OwnGames;
-        newLabel = tr("Show my games");
+        newLabel = tr("Show open games");
     }
     else
     {
         data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::SERVERREQUESTGAMES);
         m_mode = GameViewMode::OpenGames;
-        newLabel = tr("Show open games");
+        newLabel = tr("Show my games");
     }
     static_cast<Label*>(m_pButtonSwapLobbyMode->getFirstChild().get())->setText(newLabel);
     QJsonDocument doc(data);
-    emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    if (m_pTCPClient.get() != nullptr)
+    {
+        emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
 }
 
 void LobbyMenu::leaveServer()

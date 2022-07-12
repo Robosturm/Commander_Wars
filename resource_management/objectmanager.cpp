@@ -47,11 +47,7 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
     }
     textField->setTooltipText(tooltip);
     pButton->setSize(width, 40);
-    oxygine::spClipRectActor clipRect = oxygine::spClipRectActor::create();
-    clipRect->setSize(pButton->getSize());
-    textField->setSize(pButton->getSize());
-    clipRect->addChild(textField);
-    pButton->addChild(clipRect);
+    pButton->addChild(textField);
 
     oxygine::Sprite* ptr = pButton.get();
     pButton->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
