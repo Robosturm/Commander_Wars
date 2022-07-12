@@ -127,13 +127,20 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigObserveAdress, this, &LobbyMenu::observeAdress, Qt::QueuedConnection);
 
-    // todo add own games open games button
+    m_pButtonSwapLobbyMode = ObjectManager::createButton(tr("Show my games"));
+    addChild(m_pButtonSwapLobbyMode);
+    m_pButtonSwapLobbyMode->setPosition(Settings::getWidth() / 2 - m_pButtonSwapLobbyMode->getWidth() / 2, 10);
+    m_pButtonSwapLobbyMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+    {
+        emit sigChangeLobbyMode();
+    });
+    m_pButtonSwapLobbyMode->setEnabled(false);
+    connect(this, &LobbyMenu::sigChangeLobbyMode, this, &LobbyMenu::changeLobbyMode, Qt::QueuedConnection);
 
-
-    qint32 height = Settings::getHeight() - 420 - 10 - pButtonJoinAdress->getHeight();
+    qint32 height = Settings::getHeight() - 420 - 10 - m_pButtonSwapLobbyMode->getHeight();
     if (Settings::getSmallScreenDevice())
     {
-        height = Settings::getHeight() - 120- 10 - pButtonJoinAdress->getHeight();
+        height = Settings::getHeight() - 120- 10 - m_pButtonSwapLobbyMode->getHeight();
     }
 
     QStringList header = {tr("Map"), tr("Players"), tr("Description"), tr("Mods"), tr("Locked")};
@@ -167,6 +174,29 @@ void LobbyMenu::enableServerButtons(bool enable)
     m_pButtonGameObserve->setEnabled(enable);
     m_pButtonGameJoin->setEnabled(enable);
     m_pButtonHostOnServer->setEnabled(enable);
+    m_pButtonSwapLobbyMode->setEnabled(enable);
+}
+
+void LobbyMenu::changeLobbyMode()
+{
+    QString newLabel;
+    QJsonObject data;
+    if (m_mode == GameViewMode::OpenGames)
+    {
+        data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::SERVERREQUESTUSERGAMES);
+        data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+        m_mode = GameViewMode::OwnGames;
+        newLabel = tr("Show my games");
+    }
+    else
+    {
+        data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::SERVERREQUESTGAMES);
+        m_mode = GameViewMode::OpenGames;
+        newLabel = tr("Show open games");
+    }
+    static_cast<Label*>(m_pButtonSwapLobbyMode->getFirstChild().get())->setText(newLabel);
+    QJsonDocument doc(data);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void LobbyMenu::leaveServer()
@@ -333,14 +363,14 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         CONSOLE_PRINT("LobbyMenu Command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::SERVERGAMEDATA)
         {
-            if (m_loggedIn )
+            if (m_loggedIn && m_mode == GameViewMode::OpenGames)
             {
                 updateGameData(objData);
             }
         }
         else if (messageType == NetworkCommands::SERVERUSERGAMEDATA)
         {
-            if (m_loggedIn )
+            if (m_loggedIn  && m_mode == GameViewMode::OwnGames)
             {
                 updateGameData(objData);
             }

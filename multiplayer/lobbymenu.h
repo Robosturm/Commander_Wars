@@ -24,6 +24,12 @@ class LobbyMenu : public Basemenu
 {
     Q_OBJECT
 public:
+    enum class GameViewMode
+    {
+        OpenGames,
+        OwnGames,
+    };
+
     explicit LobbyMenu();
     virtual ~LobbyMenu() = default;
 
@@ -36,6 +42,7 @@ signals:
     void sigObserveGame();
     void sigObserveAdress();
     void sigUpdateGamesView();
+    void sigChangeLobbyMode();
 public slots:
     bool getServerRequestNewPassword() const;
     void setServerRequestNewPassword(bool newServerRequestNewPassword);
@@ -63,6 +70,7 @@ public slots:
     void resetPasswordOnServerAccount(const QString & emailAdress);
     void changePasswordOnServerAccount(const QString & oldEmailAdress, const QString & newEmailAdress);
     void enableServerButtons(bool enable);
+    void changeLobbyMode();
 protected slots:
     virtual void onEnter() override;
 private:
@@ -78,8 +86,9 @@ private:
     QVector<spNetworkGameData> m_games;
     spNetworkGameData m_currentGame;
     oxygine::spButton m_pButtonHostOnServer;
-    oxygine::spButton m_pButtonGameObserve;
+    oxygine::spButton m_pButtonGameObserve;    
     oxygine::spButton m_pButtonGameJoin;
+    oxygine::spButton m_pButtonSwapLobbyMode;
     spComplexTableView m_gamesview;
     QString m_password;
     bool m_loggedIn{false};
@@ -88,6 +97,7 @@ private:
     Password m_oldServerPassword;
     QString m_serverEmailAdress;
     bool m_serverRequestNewPassword;
+    GameViewMode m_mode{GameViewMode::OpenGames};
 };
 
 #endif // LOBBYMENU_H
