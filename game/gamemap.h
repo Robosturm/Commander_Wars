@@ -283,7 +283,7 @@ public:
 
 signals:
     void signalExitGame();
-    void signalSaveGame();
+    void sigSaveGame();
     void sigVictoryInfo();
     void signalShowCOInfo();
     void sigShowGameInfo(qint32 player);
@@ -301,6 +301,7 @@ signals:
     void sigZoomChanged(float zoom);
     void sigShowDamageCalculator();
     void sigShowMovementPlanner();
+    void sigShowLoadSaveGame();
 public slots:
     /**
      * @brief getMapTagsText
@@ -446,6 +447,10 @@ public slots:
      * @brief saveGame
      */
     void saveGame();
+    /**
+     * @brief loadGame
+     */
+    void loadGame();
     /**
      * @brief victoryInfo
      */

@@ -686,6 +686,7 @@ void GameMenue::loadGameMenue()
     connect(this, &GameMenue::sigShowSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigNicknameUnit, this, &GameMenue::nicknameUnit, Qt::QueuedConnection);
+    connect(this, &GameMenue::sigLoadSaveGame, this, &GameMenue::loadSaveGame, Qt::QueuedConnection);
     connect(&m_actionPerformer, &ActionPerformer::sigActionPerformed, this, &GameMenue::checkMovementPlanner, Qt::QueuedConnection);
 
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, &m_actionPerformer, &ActionPerformer::actionPerformed, Qt::QueuedConnection);
@@ -704,7 +705,7 @@ void GameMenue::connectMap()
     connect(m_pMap->getGameRules()->getRoundTimer(), &Timer::timeout, &m_actionPerformer, &ActionPerformer::nextTurnPlayerTimeout, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
-    connect(m_pMap.get(), &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
+    connect(m_pMap.get(), &GameMap::sigSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowGameInfo, this, &GameMenue::showGameInfo, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigVictoryInfo, this, &GameMenue::victoryInfo, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
@@ -720,6 +721,7 @@ void GameMenue::connectMap()
     connect(m_pMap.get(), &GameMap::sigShowDamageCalculator, this, &GameMenue::showDamageCalculator, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigMovedMap, m_IngameInfoBar.get(), &IngameInfoBar::syncMinimapPosition, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowMovementPlanner, this, &GameMenue::showMovementPlanner, Qt::QueuedConnection);
+    connect(m_pMap.get(), &GameMap::sigShowLoadSaveGame, this, &GameMenue::showLoadSaveGame, Qt::QueuedConnection);
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, m_pMap.get(), &GameMap::centerMap, Qt::QueuedConnection);
 }
 
@@ -1612,29 +1614,11 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
             }
             else if (cur == Settings::getKey_quickload1())
             {
-                if (QFile::exists("savegames/quicksave1.sav"))
-                {
-                    Mainapp* pApp = Mainapp::getInstance();
-                    CONSOLE_PRINT("Leaving Game Menue", Console::eDEBUG);
-                    spGameMenue pMenue = spGameMenue::create("savegames/quicksave1.sav", true);
-                    oxygine::Stage::getStage()->addChild(pMenue);
-                    pApp->getAudioThread()->clearPlayList();
-                    pMenue->startGame();
-                    oxygine::Actor::detach();
-                }
+                emit sigLoadSaveGame("savegames/quicksave1.sav");
             }
             else if (cur == Settings::getKey_quickload2())
             {
-                if (QFile::exists("savegames/quicksave2.sav"))
-                {
-                    CONSOLE_PRINT("Leaving Game Menue", Console::eDEBUG);
-                    spGameMenue pMenue = spGameMenue::create("savegames/quicksave1.sav", true);
-                    oxygine::Stage::getStage()->addChild(pMenue);
-                    Mainapp* pApp = Mainapp::getInstance();
-                    pApp->getAudioThread()->clearPlayList();
-                    pMenue->startGame();
-                    oxygine::Actor::detach();
-                }
+                emit sigLoadSaveGame("savegames/quicksave2.sav");
             }
             else
             {
@@ -1918,4 +1902,37 @@ bool GameMenue::getIsReplay() const
 void GameMenue::setIsReplay(bool isReplay)
 {
     m_isReplay = isReplay;
+}
+
+void GameMenue::showLoadSaveGame()
+{
+    QStringList wildcards;
+    wildcards.append("*.sav");
+    QString path = Settings::getUserPath() + "savegames";
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    addChild(saveDialog);
+    connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::loadSaveGame, Qt::QueuedConnection);
+    connect(saveDialog.get(), &FileDialog::sigCancel, this, [this]()
+    {
+        setFocused(true);
+    }, Qt::QueuedConnection);
+    setFocused(false);
+}
+
+void GameMenue::loadSaveGame(const QString savefile)
+{
+    if (QFile::exists(savefile))
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        spGameMenue pMenue = spGameMenue::create(savefile, true);
+        oxygine::Stage::getStage()->addChild(pMenue);
+        pApp->getAudioThread()->clearPlayList();
+        pMenue->startGame();
+        CONSOLE_PRINT("Leaving Game Menue", Console::eDEBUG);
+        oxygine::Actor::detach();
+    }
+    else
+    {
+        setFocused(true);
+    }
 }

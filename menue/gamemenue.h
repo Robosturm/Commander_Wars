@@ -117,6 +117,7 @@ signals:
     void sigShowSurrenderGame();
     void sigNicknameUnit(qint32 x, qint32 y, QString name);
     void sigVictory(qint32 team);
+    void sigLoadSaveGame(const QString savefile);
 public slots:
     /**
      * @brief updatePlayerinfo
@@ -286,6 +287,14 @@ public slots:
      * @brief checkMovementPlanner
      */
     void checkMovementPlanner();
+    /**
+     * @brief showLoadSaveGame
+     */
+    void showLoadSaveGame();
+    /**
+     * @brief loadSaveGame
+     */
+    void loadSaveGame(const QString savefile);
 protected slots:
     /**
      * @brief keyInput
