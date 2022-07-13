@@ -137,10 +137,10 @@ LobbyMenu::LobbyMenu()
     m_pButtonSwapLobbyMode->setEnabled(false);
     connect(this, &LobbyMenu::sigChangeLobbyMode, this, &LobbyMenu::changeLobbyMode, Qt::QueuedConnection);
 
-    qint32 height = Settings::getHeight() - 320 - 10 - m_pButtonSwapLobbyMode->getHeight();
+    qint32 height = m_pButtonHostOnServer->getY() - 220 - 10 - m_pButtonSwapLobbyMode->getHeight();
     if (Settings::getSmallScreenDevice())
     {
-        height = Settings::getHeight() - 120- 10 - m_pButtonSwapLobbyMode->getHeight();
+        height = m_pButtonHostOnServer->getY() - 20 - m_pButtonSwapLobbyMode->getHeight();
     }
 
     QStringList header = {tr("Map"), tr("Players"), tr("Description"), tr("Mods"), tr("Locked")};
@@ -155,10 +155,9 @@ LobbyMenu::LobbyMenu()
     {
         pInterface = MainServer::getInstance()->getGameServer();
     }
-    if (!Settings::getSmallScreenDevice())
-    {
-        height = 300;
-    }
+
+    height = m_pButtonHostOnServer->getY() - m_gamesview->getY() - m_gamesview->getHeight() - 20;
+
     spChat pChat = spChat::create(pInterface, QSize(Settings::getWidth() - 20, height), NetworkInterface::NetworkSerives::LobbyChat);
     pChat->setPosition(10, m_gamesview->getY() + m_gamesview->getHeight() + 10);
     if (Settings::getSmallScreenDevice())

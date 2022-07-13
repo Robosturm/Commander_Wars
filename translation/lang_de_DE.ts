@@ -3319,29 +3319,29 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="130"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="195"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="194"/>
         <source>Show my games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="189"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="188"/>
         <source>Show open games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="242"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="317"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="241"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="316"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="285"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="299"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="284"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="298"/>
         <source>Enter Host Adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="388"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="387"/>
         <source>Host game is no longer available.</source>
         <translation type="unfinished"></translation>
     </message>
