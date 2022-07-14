@@ -1723,15 +1723,24 @@ qint32 Unit::getAttackHpBonus(QPoint position)
 qint32 Unit::getBonusMisfortune(QPoint position)
 {
     qint32 bonus = 0;
-    CO* pCO = m_pOwner->getCO(0);
-    if (pCO != nullptr)
+    if (m_pMap != nullptr)
     {
-        bonus += pCO->getBonusMisfortune(this, position);
-    }
-    pCO = m_pOwner->getCO(1);
-    if (pCO != nullptr)
-    {
-        bonus += pCO->getBonusMisfortune(this, position);
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            if (pPlayer != nullptr)
+            {
+                if (pPlayer->isEnemy(m_pOwner))
+
+                {
+                    bonus += pPlayer->getEnemyBonusMisfortune(this, position);
+                }
+                else if ( m_pOwner == pPlayer)
+                {
+                    bonus += pPlayer->getBonusMisfortune(this, position);
+                }
+            }
+        }
     }
     return bonus;
 }
@@ -1811,19 +1820,29 @@ void Unit::makeCOUnit(quint8 co, bool force)
 qint32 Unit::getBonusLuck(QPoint position)
 {
     qint32 bonus = 0;
-    CO* pCO0 = m_pOwner->getCO(0);
-    if (pCO0 != nullptr)
+    if (m_pMap != nullptr)
     {
-        bonus += pCO0->getBonusLuck(this, position);
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            if (pPlayer != nullptr)
+            {
+                if (pPlayer->isEnemy(m_pOwner))
+
+                {
+                    bonus += pPlayer->getEnemyBonusLuck(this, position);
+                }
+                else if ( m_pOwner == pPlayer)
+                {
+                    bonus += pPlayer->getBonusLuck(this, position);
+                }
+            }
+        }
     }
-    CO* pCO1 = m_pOwner->getCO(1);
-    if (pCO1 != nullptr)
-    {
-        bonus += pCO1->getBonusLuck(this, position);
-    }
+
     // apply star bonus
-    pCO0 = m_pOwner->getCO(0);
-    pCO1 = m_pOwner->getCO(1);
+    auto* pCO0 = m_pOwner->getCO(0);
+    auto* pCO1 = m_pOwner->getCO(1);
     if (pCO0 != nullptr && pCO1 != nullptr &&
         pCO0->getPowerMode() == GameEnums::PowerMode_Tagpower)
     {

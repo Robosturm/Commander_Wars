@@ -362,7 +362,17 @@ var TAGPOWER =
         return 0;
     },
 
+    getEnemyBonusLuck : function(co, unit, posX, posY, map)
+    {
+        return 0;
+    },
+
     getBonusMisfortune : function(co, unit, posX, posY, map)
+    {
+        return 0;
+    },
+
+    getEnemyBonusMisfortune : function(co, unit, posX, posY, map)
     {
         return 0;
     },

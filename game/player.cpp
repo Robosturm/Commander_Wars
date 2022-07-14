@@ -1425,6 +1425,58 @@ qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
     return modifier;
 }
 
+qint32 Player::getBonusMisfortune(Unit* pUnit, QPoint position)
+{
+    qint32 modifier = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getBonusMisfortune(pUnit, position);
+        }
+    }
+    return modifier;
+}
+
+qint32 Player::getBonusLuck(Unit* pUnit, QPoint position)
+{
+    qint32 modifier = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getBonusLuck(pUnit, position);
+        }
+    }
+    return modifier;
+}
+
+qint32 Player::getEnemyBonusLuck(Unit* pUnit, QPoint position)
+{
+    qint32 modifier = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getEnemyBonusLuck(pUnit, position);
+        }
+    }
+    return modifier;
+}
+
+qint32 Player::getEnemyBonusMisfortune(Unit* pUnit, QPoint position)
+{
+    qint32 modifier = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getEnemyBonusMisfortune(pUnit, position);
+        }
+    }
+    return modifier;
+}
+
 qint32 Player::getWeatherMovementCostModifier(Unit* pUnit, QPoint position)
 {
     qint32 modifier = 0;
