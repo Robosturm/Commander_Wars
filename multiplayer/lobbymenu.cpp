@@ -22,6 +22,9 @@
 #include "objects/base/chat.h"
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/dialogs/customdialog.h"
+#include "objects/tableView/stringtableitem.h"
+#include "objects/tableView/xofytableitem.h"
+#include "objects/tableView/locktableitem.h"
 
 #include "network/mainserver.h"
 #include "network/JsonKeys.h"
@@ -124,28 +127,39 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigObserveAdress, this, &LobbyMenu::observeAdress, Qt::QueuedConnection);
 
+    m_pButtonSwapLobbyMode = ObjectManager::createButton(tr("Show my games"));
+    addChild(m_pButtonSwapLobbyMode);
+    m_pButtonSwapLobbyMode->setPosition(Settings::getWidth() / 2 - m_pButtonSwapLobbyMode->getWidth() / 2, 10);
+    m_pButtonSwapLobbyMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+    {
+        emit sigChangeLobbyMode();
+    });
+    m_pButtonSwapLobbyMode->setEnabled(false);
+    connect(this, &LobbyMenu::sigChangeLobbyMode, this, &LobbyMenu::changeLobbyMode, Qt::QueuedConnection);
 
-    qint32 height = Settings::getHeight() - 420;
+    qint32 height = m_pButtonHostOnServer->getY() - 220 - 10 - m_pButtonSwapLobbyMode->getHeight();
     if (Settings::getSmallScreenDevice())
     {
-        height = Settings::getHeight() - 120;
+        height = m_pButtonHostOnServer->getY() - 20 - m_pButtonSwapLobbyMode->getHeight();
     }
-    m_pGamesPanel = spPanel::create(true, QSize(Settings::getWidth() - 20, height),
-                                    QSize(Settings::getWidth() - 20, height));
-    m_pGamesPanel->setPosition(10, 10);
-    addChild(m_pGamesPanel);
+
+    QStringList header = {tr("Map"), tr("Players"), tr("Description"), tr("Mods"), tr("Locked")};
+    qint32 itemWidth = (Settings::getWidth() - 20 - 80 - 100 - 90) / 3;
+    QVector<qint32> widths = {itemWidth, 100, itemWidth, itemWidth, 90};
+    m_gamesview = spComplexTableView::create(widths, header, height);
+    m_gamesview->setPosition(10, 10 + 10 + pButtonJoinAdress->getHeight());
+    addChild(m_gamesview);
 
     spNetworkInterface pInterface = m_pTCPClient;
     if (Settings::getServer())
     {
         pInterface = MainServer::getInstance()->getGameServer();
     }
-    if (!Settings::getSmallScreenDevice())
-    {
-        height = 300;
-    }
+
+    height = m_pButtonHostOnServer->getY() - m_gamesview->getY() - m_gamesview->getHeight() - 20;
+
     spChat pChat = spChat::create(pInterface, QSize(Settings::getWidth() - 20, height), NetworkInterface::NetworkSerives::LobbyChat);
-    pChat->setPosition(10, m_pGamesPanel->getHeight() + 20);
+    pChat->setPosition(10, m_gamesview->getY() + m_gamesview->getHeight() + 10);
     if (Settings::getSmallScreenDevice())
     {
         pChat->setVisible(false);
@@ -159,6 +173,32 @@ void LobbyMenu::enableServerButtons(bool enable)
     m_pButtonGameObserve->setEnabled(enable);
     m_pButtonGameJoin->setEnabled(enable);
     m_pButtonHostOnServer->setEnabled(enable);
+    m_pButtonSwapLobbyMode->setEnabled(enable);
+}
+
+void LobbyMenu::changeLobbyMode()
+{
+    QString newLabel;
+    QJsonObject data;
+    if (m_mode == GameViewMode::OpenGames)
+    {
+        data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::SERVERREQUESTUSERGAMES);
+        data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+        m_mode = GameViewMode::OwnGames;
+        newLabel = tr("Show open games");
+    }
+    else
+    {
+        data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::SERVERREQUESTGAMES);
+        m_mode = GameViewMode::OpenGames;
+        newLabel = tr("Show my games");
+    }
+    static_cast<Label*>(m_pButtonSwapLobbyMode->getFirstChild().get())->setText(newLabel);
+    QJsonDocument doc(data);
+    if (m_pTCPClient.get() != nullptr)
+    {
+        emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
 }
 
 void LobbyMenu::leaveServer()
@@ -325,7 +365,14 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         CONSOLE_PRINT("LobbyMenu Command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::SERVERGAMEDATA)
         {
-            if (m_loggedIn)
+            if (m_loggedIn && m_mode == GameViewMode::OpenGames)
+            {
+                updateGameData(objData);
+            }
+        }
+        else if (messageType == NetworkCommands::SERVERUSERGAMEDATA)
+        {
+            if (m_loggedIn  && m_mode == GameViewMode::OwnGames)
             {
                 updateGameData(objData);
             }
@@ -398,52 +445,33 @@ void LobbyMenu::joinSlaveGame(const QJsonObject & objData)
 }
 
 void LobbyMenu::updateGamesView()
-{    
-    if (m_Gamesview.get() != nullptr)
+{
+    const auto & widths = m_gamesview->getWidths();
+    ComplexTableView::Items items;
+    for (auto & game : m_games)
     {
-        m_Gamesview->detach();
-        m_Gamesview = nullptr;
-    }
-    QStringList header = {tr("Map"), tr("Players"), tr("Description"), tr("Mods"), tr("Locked")};
-    qint32 itemWidth = (m_pGamesPanel->getWidth() - 80 - 100 - 90) / 3;
-    QVector<qint32> widths = {itemWidth, 100, itemWidth, itemWidth, 90};
-    QVector<QStringList> items;
-    for (const auto & game : qAsConst(m_games))
-    {
-        QStringList data;
-        data.append(game->getMapName());
-        data.append(QString::number(game->getPlayers()) + "/" +
-                    QString::number(game->getMaxPlayers()));
-        data.append(game->getDescription());
+        ComplexTableView::Item item;
+        item.pData = &game;
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game->getMapName(), widths[0])));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spXofYTableItem::create(game->getPlayers(), game->getMaxPlayers(), widths[1])));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game->getDescription(), widths[2])));
         QStringList mods = game->getMods();
         QString modString;
         for (const auto & mod : mods)
         {
             modString.append(Settings::getModName(mod) + "; ");
         }
-        data.append(modString);
-        char lockChar = FontManager::SpecialChars::unlockChar;
-        if (game->getLocked())
-        {
-            lockChar = FontManager::SpecialChars::lockChar;
-        }
-        data.append(QString(lockChar));
-        items.append(data);
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(modString, widths[3])));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spLockTableItem::create(game->getLocked(), widths[4])));
+        items.append(item);
     }
-    m_Gamesview = spTableView::create(widths, items, header, true);
-    connect(m_Gamesview.get(), &TableView::sigItemClicked, this, &LobbyMenu::selectGame, Qt::QueuedConnection);
-    m_pGamesPanel->addItem(m_Gamesview);
-    m_pGamesPanel->setContentHeigth(m_Gamesview->getHeight() + 40);
-    
+    m_gamesview->setItems(items);
+    connect(m_gamesview.get(), &ComplexTableView::sigItemClicked, this, &LobbyMenu::selectGame, Qt::QueuedConnection);
 }
 
 void LobbyMenu::selectGame()
 {
-    qint32 game = m_Gamesview->getCurrentItem();
-    if (game >= 0 && game < m_games.size())
-    {
-        m_currentGame = m_games[game];
-    }
+    m_currentGame = spNetworkGameData(m_gamesview->getDataItem<NetworkGameData>(m_gamesview->getCurrentItem()));
 }
 
 void LobbyMenu::connected(quint64 socket)

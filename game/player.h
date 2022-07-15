@@ -380,6 +380,34 @@ public slots:
      */
     qint32 getMovementcostModifier(Unit* pUnit, QPoint position);
     /**
+     * @brief getEnemyBonusLuck
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getBonusLuck(Unit* pUnit, QPoint position);
+    /**
+     * @brief getEnemyBonusLuck
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getEnemyBonusLuck(Unit* pUnit, QPoint position);
+    /**
+     * @brief getEnemyBonusLuck
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getBonusMisfortune(Unit* pUnit, QPoint position);
+    /**
+     * @brief getEnemyBonusLuck
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getEnemyBonusMisfortune(Unit* pUnit, QPoint position);
+    /**
      * @brief getWeatherMovementCostModifier
      * @param pUnit
      * @param position

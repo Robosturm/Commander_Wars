@@ -226,12 +226,26 @@ public slots:
      */
     qint32 getBonusLuck(Unit* pUnit, QPoint position);
     /**
+     * @brief getBonusLuck
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getEnemyBonusLuck(Unit* pUnit, QPoint position);
+    /**
      * @brief getBonusMisfortune
      * @param pUnit
      * @param position
      * @return
      */
     qint32 getBonusMisfortune(Unit* pUnit, QPoint position);
+    /**
+     * @brief getEnemyBonusMisfortune
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getEnemyBonusMisfortune(Unit* pUnit, QPoint position);
     /**
      * @brief getTerrainDefenseModifier the bonus defense of this co for a terrain
      * @param pUnit the unit we want to get the bonus points from

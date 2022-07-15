@@ -14,8 +14,8 @@ typedef oxygine::intrusive_ptr<Panel> spPanel;
 class Panel : public QObject, public oxygine::Actor
 {
     Q_OBJECT
-    static constexpr qint32 sliderSize = 33;
 public:
+    static constexpr qint32 sliderSize = 33;
     explicit Panel(bool useBox, QSize size, QSize contentSize, QString resAnim = "panel");
     virtual ~Panel();
     void addItem(oxygine::spActor pActor);

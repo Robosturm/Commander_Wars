@@ -170,12 +170,9 @@ qint32 TableView::getCurrentItem() const
     return m_currentItem;
 }
 
-QStringList TableView::getItem(qint32 i)
+const QStringList & TableView::getItem(qint32 i) const
 {
-    if (i >= 0 && i < m_data.size())
-    {
-        return m_data[i];
-    }
-    return QStringList();
+    Q_ASSERT(i >= 0 && i < m_data.size());
+    return m_data[i];
 }
 

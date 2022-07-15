@@ -203,6 +203,14 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         {
             handleCryptedMessage(socketID, doc);
         }
+        else if (messageType == NetworkCommands::SERVERREQUESTUSERGAMES)
+        {
+            onRequestUsergames(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::SERVERREQUESTGAMES)
+        {
+            onRequestGameData(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
@@ -249,10 +257,6 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         {
             onSlaveGameStarted(socketID, objData);
         }
-        else if (messageType == NetworkCommands::SERVERREQUESTUSERGAMES)
-        {
-            onRequestUsergames(socketID, objData);
-        }
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
@@ -296,7 +300,7 @@ void MainServer::onSlaveGameStarted(quint64 socketID, const QJsonObject & objDat
 void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objData)
 {
     QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
-    QString command = QString(NetworkCommands::SERVERGAMEDATA);
+    QString command = QString(NetworkCommands::SERVERUSERGAMEDATA);
     CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
@@ -321,6 +325,11 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
     // send server data to all connected clients
     QJsonDocument doc(data);
     emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void MainServer::onRequestGameData(quint64 socketId, const QJsonObject & objData)
+{
+    sendGameDataToClient(socketId);
 }
 
 void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData)

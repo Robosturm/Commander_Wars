@@ -3,6 +3,9 @@
 #include "basetableitem.h"
 #include <QObject>
 
+class XofYTableItem;
+using spXofYTableItem = oxygine::intrusive_ptr<XofYTableItem>;
+
 class XofYTableItem : public BaseTableItem
 {
     Q_OBJECT

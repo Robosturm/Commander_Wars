@@ -72,6 +72,11 @@
         <image file="no_co.png"/>
         <image file="co_background.png"/>
         <image file="co_cursor.png"/>
+        
+        <!-- complex table view -->
+        <image file="h_table_divider.png"  guideX1="2" guideX2="6"  guideY1="8"  guideY2="126"/>
+        <image file="v_table_divider.png"  guideX1="8" guideX2="122"  guideY1="2"  guideY2="6"/>
+        
         <!-- ingame stuff -->
         <image file="barforeground.png"/>
         <image file="gamepad.png"/>

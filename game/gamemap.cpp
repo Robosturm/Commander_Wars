@@ -1132,11 +1132,14 @@ void GameMap::moveMap(qint32 x, qint32 y)
     {
         // draw point
         oxygine::spActor pActor = pMenu->getMapSlidingActor();
-        qint32 newX = pActor->getX() + x;
-        qint32 newY = pActor->getY() + y;
-        limitPosition(pMenu, newX, newY);
-        pActor->setPosition(newX, newY);
-        emit sigMovedMap();
+        if (pActor.get() != nullptr)
+        {
+            qint32 newX = pActor->getX() + x;
+            qint32 newY = pActor->getY() + y;
+            limitPosition(pMenu, newX, newY);
+            pActor->setPosition(newX, newY);
+            emit sigMovedMap();
+        }
     }
 }
 
@@ -1632,7 +1635,12 @@ void GameMap::nicknameUnit(qint32 x, qint32 y)
 
 void GameMap::saveGame()
 {
-    emit signalSaveGame();
+    emit sigSaveGame();
+}
+
+void GameMap::loadGame()
+{
+    emit sigShowLoadSaveGame();
 }
 
 void GameMap::victoryInfo()

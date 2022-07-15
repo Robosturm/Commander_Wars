@@ -203,4 +203,12 @@ namespace NetworkCommands
      * @brief SERVERREQUESTUSERGAMES
      */
     const char* const SERVERREQUESTUSERGAMES = "SERVERREQUESTUSERGAMES";
+    /**
+     * @brief SERVERUSERGAMEDATA
+     */
+    const char* const SERVERUSERGAMEDATA = "SERVERUSERGAMEDATA";
+    /**
+     * @brief SERVERREQUESTGAMES
+     */
+    const char* const SERVERREQUESTGAMES = "SERVERREQUESTGAMES";
 }

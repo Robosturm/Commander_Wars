@@ -22,7 +22,7 @@ signals:
 public slots:
     void setCurrentItem(qint32 i);
     qint32 getCurrentItem() const;
-    QStringList getItem(qint32 i);
+    const QStringList & getItem(qint32 i) const;
 private:
     void addRow(qint32 i, qint32 i2, qint32 x, bool selectable);
 private:

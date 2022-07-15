@@ -71,7 +71,7 @@ bool CO::isJsFunctionEnabled(QString perk) const
     return perk != m_coID || // perks are always enabled
            m_PowerMode != GameEnums::PowerMode_Off || // d2d is active during if no power is active
            m_pMap == nullptr || // no map means no rules
-                          m_pMap->getGameRules()->getEnableDayToDayCoAbilities(); // or if d2d is active
+           m_pMap->getGameRules()->getEnableDayToDayCoAbilities(); // or if d2d is active
 }
 
 void CO::setMenu(GameMenue *newMenu)
@@ -579,10 +579,58 @@ qint32 CO::getBonusLuck(Unit* pUnit, QPoint position)
     return ergValue;
 }
 
+qint32 CO::getEnemyBonusLuck(Unit* pUnit, QPoint position)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getEnemyBonusLuck";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       position.x(),
+                       position.y(),
+                       pInterpreter->newQObject(m_pMap)});
+    qint32 ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toInt();
+            }
+        }
+    }
+    return ergValue;
+}
+
 qint32 CO::getBonusMisfortune(Unit* pUnit, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBonusMisfortune";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       position.x(),
+                       position.y(),
+                       pInterpreter->newQObject(m_pMap)});
+    qint32 ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toInt();
+            }
+        }
+    }
+    return ergValue;
+}
+
+qint32 CO::getEnemyBonusMisfortune(Unit* pUnit, QPoint position)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getEnemyBonusMisfortune";
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(pUnit),
                        position.x(),

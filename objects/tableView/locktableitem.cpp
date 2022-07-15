@@ -2,6 +2,7 @@
 #include "objects/base/label.h"
 
 #include "resource_management/fontmanager.h"
+#include "resource_management/objectmanager.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
@@ -15,17 +16,15 @@ LockTableItem::LockTableItem(bool locked, qint32 itemWidth, QObject *parent)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 
-    spLabel pTextfield = spLabel::create(itemWidth);
-    QString text;
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::spSprite pSprite = oxygine::spSprite::create();
     if (locked)
     {
-        text = QString(static_cast<char>(FontManager::SpecialChars::lockChar));
+        pSprite->setResAnim(pObjectManager->getResAnim("lock"));
     }
     else
     {
-        text = QString(static_cast<char>(FontManager::SpecialChars::unlockChar));
+        pSprite->setResAnim(pObjectManager->getResAnim("unlock"));
     }
-    pTextfield->setText(text);
-    pTextfield->setTooltipText(text);
-    addChild(pTextfield);
+    addChild(pSprite);
 }

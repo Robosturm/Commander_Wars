@@ -133,6 +133,16 @@ var CO =
         return 0;
     },
 
+    getEnemyBonusLuck : function(co, unit, posX, posY, map)
+    {
+        return 0;
+    },
+
+    getEnemyBonusMisfortune : function(co, unit, posX, posY, map)
+    {
+        return 0;
+    },
+
     getActionModifierList : function(co, unit, map)
     {
         // return empty list as default

@@ -235,12 +235,39 @@ var Constructor = function()
             {
                 var luck = 10 + attacker.getBonusLuck(attackerPosition);
                 var misfortune = attacker.getBonusMisfortune(attackerPosition);
+                // only roll if we have valid luck misfortune pair
                 if (luck > -misfortune)
-                {
+                {                    
                     if (luckMode === GameEnums.LuckDamageMode_On)
                     {
-                        var luckValue = globals.randInt(0, luck);
-                        var misfortuneValue = globals.randInt(-misfortune, 0);
+                        var luckValue = 0;
+                        // roll luck?
+                        if (luck > 0)
+                        {
+                            // roll against zero or against negative misfortune?
+                            if (misfortune < 0)
+                            {
+                                luckValue = globals.randInt(-misfortune, luck);
+                            }
+                            else
+                            {
+                                luckValue = globals.randInt(0, luck);
+                            }
+                        }
+                        var misfortuneValue = 0;
+                        // roll misfortune?
+                        if (misfortune > 0)
+                        {
+                            // roll against zero or against luck?
+                            if (luck < 0)
+                            {
+                                misfortuneValue = globals.randInt(-misfortune, luck);
+                            }
+                            else
+                            {
+                                misfortuneValue = globals.randInt(-misfortune, 0);
+                            }
+                        }
                         luckDamage += (luckValue + misfortuneValue);
                     }
                     else if (luckMode === GameEnums.LuckDamageMode_Average)

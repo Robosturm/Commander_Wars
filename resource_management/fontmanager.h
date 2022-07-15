@@ -10,11 +10,6 @@ class FontManager : public QObject
 {
     Q_OBJECT
 public:
-    enum SpecialChars
-    {
-        unlockChar = 1,
-        lockChar = 2
-    };
 
     static const char* const MAINFONT;
     static const char* const LOGOFONT;

@@ -4758,5 +4758,6 @@
         <file>resources/objects/lock.png</file>
         <file>resources/objects/unlock.png</file>
         <file>resources/fonts/res.xml</file>
-    </qresource>
+        <file>resources/objects/h_table_divider.png</file>
+        <file>resources/objects/v_table_divider.png</file>    </qresource>
 </RCC>

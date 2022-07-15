@@ -166,6 +166,12 @@ private:
      */
     void onRequestUsergames(quint64 socketID, const QJsonObject & objData);
     /**
+     * @brief onRequestGameData
+     * @param socketId
+     * @param objData
+     */
+    void onRequestGameData(quint64 socketId, const QJsonObject & objData);
+    /**
      * @brief onOpenPlayerCount
      * @param socketID
      * @param stream

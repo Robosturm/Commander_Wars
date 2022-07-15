@@ -7,7 +7,7 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "objects/base/panel.h"
-#include "objects/base/tableview.h"
+#include "objects/tableView/complextableview.h"
 
 #include "network/tcpclient.h"
 #include "network/networkgamedata.h"
@@ -24,6 +24,12 @@ class LobbyMenu : public Basemenu
 {
     Q_OBJECT
 public:
+    enum class GameViewMode
+    {
+        OpenGames,
+        OwnGames,
+    };
+
     explicit LobbyMenu();
     virtual ~LobbyMenu() = default;
 
@@ -36,6 +42,7 @@ signals:
     void sigObserveGame();
     void sigObserveAdress();
     void sigUpdateGamesView();
+    void sigChangeLobbyMode();
 public slots:
     bool getServerRequestNewPassword() const;
     void setServerRequestNewPassword(bool newServerRequestNewPassword);
@@ -63,6 +70,7 @@ public slots:
     void resetPasswordOnServerAccount(const QString & emailAdress);
     void changePasswordOnServerAccount(const QString & oldEmailAdress, const QString & newEmailAdress);
     void enableServerButtons(bool enable);
+    void changeLobbyMode();
 protected slots:
     virtual void onEnter() override;
 private:
@@ -74,14 +82,14 @@ private:
     void onPublicKeyChangePassword(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void handleAccountMessage(quint64 socketID, const QJsonObject & objData);
 private:
-    spPanel m_pGamesPanel;
     spNetworkInterface m_pTCPClient{nullptr};
     QVector<spNetworkGameData> m_games;
     spNetworkGameData m_currentGame;
     oxygine::spButton m_pButtonHostOnServer;
-    oxygine::spButton m_pButtonGameObserve;
+    oxygine::spButton m_pButtonGameObserve;    
     oxygine::spButton m_pButtonGameJoin;
-    spTableView m_Gamesview;
+    oxygine::spButton m_pButtonSwapLobbyMode;
+    spComplexTableView m_gamesview;
     QString m_password;
     bool m_loggedIn{false};
 
@@ -89,6 +97,7 @@ private:
     Password m_oldServerPassword;
     QString m_serverEmailAdress;
     bool m_serverRequestNewPassword;
+    GameViewMode m_mode{GameViewMode::OpenGames};
 };
 
 #endif // LOBBYMENU_H
