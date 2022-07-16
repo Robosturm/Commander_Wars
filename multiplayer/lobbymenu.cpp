@@ -476,8 +476,13 @@ void LobbyMenu::selectGame()
 
 void LobbyMenu::connected(quint64 socket)
 {
+    QString password = Settings::getServerPassword();
     spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/userLoginDialog.xml", this);
     addChild(pDialog);
+    if (!password.isEmpty())
+    {
+        loginToServerAccount(password);
+    }
 }
 
 void LobbyMenu::onLogin()

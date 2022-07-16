@@ -217,8 +217,11 @@ public:
     {
         return m_rsaCypher;
     }
-
 public slots:
+    /**
+     * @brief createBaseDirs
+     */
+    void createBaseDirs();
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);
     void changePosition(QPoint pos, bool invert);
@@ -294,8 +297,7 @@ protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;
     bool keyInputMethodEvent(QInputMethodEvent *event);
-    virtual bool event(QEvent *ev) override;
-    void createBaseDirs();
+    virtual bool event(QEvent *ev) override;    
     virtual void onQuit() override;
 
 private:

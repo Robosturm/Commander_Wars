@@ -140,7 +140,7 @@ void NetworkGame::setDataBuffer(const QByteArray &dataBuffer)
 
 void NetworkGame::processFinished(int value, QProcess::ExitStatus)
 {
-    CONSOLE_PRINT("Networkgame Closing game cause slave game has been terminated.", Console::eDEBUG);
+    CONSOLE_PRINT("Networkgame Closing game cause slave game has been terminated with code " + QString::number(value), Console::eDEBUG);
     closeGame();
     Interpreter* pInterpreter = Interpreter::getInstance();
     emit pInterpreter->sigNetworkGameFinished(value - 1, m_id);

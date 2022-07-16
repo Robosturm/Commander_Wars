@@ -120,6 +120,7 @@ namespace oxygine
         // check for termination
         if (m_quit)
         {
+            CONSOLE_PRINT("Quiting game normally", Console::eDEBUG);
             QApplication::exit();
         }
     }

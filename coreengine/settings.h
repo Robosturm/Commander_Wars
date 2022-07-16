@@ -260,7 +260,11 @@ public:
 
     static void setUsername(const QString &Username);
 
+
 public slots:
+    static const QString &getServerPassword();
+    static void setServerPassword(const QString &newServerPassword);
+
     static const QString &getMailServerSendAddress();
     static void setMailServerSendAddress(const QString &newMailServerSendAddress);
 
@@ -820,6 +824,7 @@ private:
     static quint16 m_GamePort;
     static QString m_Username;
     static QString m_slaveServerName;
+    static QString m_serverPassword;
 
     static bool m_Server;
     static quint16 m_ServerPort;

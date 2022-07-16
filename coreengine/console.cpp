@@ -348,7 +348,6 @@ void Console::setLogLevel(eLogLevels newLogLevel)
 
 void Console::help(qint32 start, qint32 end)
 {
-
     qint32 index = 0;
     while (functions[index] != "" && ((end >= 0 && index <= end) ||  end < 0))
     {

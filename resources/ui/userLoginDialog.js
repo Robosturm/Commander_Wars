@@ -14,6 +14,7 @@ var UserLoginDialog =
         var menu = userLogin.getBaseMenu();
         UserLoginDialog.changeEnableForItems(false);
         menu.loginToServerAccount(password);
+        settings.setServerPassword(password);
     },
     onAccountMessage : function(errorCode)
     {
@@ -26,22 +27,26 @@ var UserLoginDialog =
         }
         else if (errorCode === GameEnums.LoginError_WrongPassword)
         {
+            settings.setServerPassword("");
             userLogin.showMessageBox(qsTr("Your password isn't correct."));
             UserLoginDialog.changeEnableForItems(true);
         }
         else if (errorCode === GameEnums.LoginError_AccountDoesntExist)
         {
+            settings.setServerPassword("");
             userLogin.showMessageBox(qsTr("No account with your username was found."));
             UserLoginDialog.changeEnableForItems(true);
         }
         else if (errorCode === GameEnums.LoginError_PasswordOutdated)
         {
+            settings.setServerPassword("");
             menu.setServerRequestNewPassword(true);
             userLogin.createDialog("changePassword", "ui/changePasswordDialog.xml", menu);
             userLogin.exit();
         }
         else
         {
+            settings.setServerPassword("");
             userLogin.showMessageBox(qsTr("Unknown error happened."));
             UserLoginDialog.changeEnableForItems(true);
         }

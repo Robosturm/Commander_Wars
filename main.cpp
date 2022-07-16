@@ -23,13 +23,15 @@ int main(qint32 argc, char* argv[])
     app.setApplicationName("Commander Wars");
     app.setApplicationVersion(Mainapp::getGameVersion());
 
-    Settings::getInstance();
-    Settings::loadSettings();
 
     Mainapp window;
     window.setTitle("Commander Wars");
     auto & parser = window.getParser();
-    window.getParser().parseArgs(app);
+    parser.parseArgs(app);
+    Settings::getInstance();
+    Settings::loadSettings();
+    window.createBaseDirs();
+
     // start crash report handler
     CrashReporter::setSignalHandler(&Mainapp::showCrashReport);
     MetaTypeRegister::registerInterfaceData();

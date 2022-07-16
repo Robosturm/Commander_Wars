@@ -66,7 +66,6 @@ Mainapp::Mainapp()
     m_pMainThread = QThread::currentThread();
     m_pMainapp = this;
     Interpreter::setCppOwnerShip(this);
-    createBaseDirs();
     m_pMainThread->setObjectName("Mainthread");
     m_Workerthread.setObjectName("Workerthread");
     m_Networkthread.setObjectName("Networkthread");
@@ -687,6 +686,7 @@ void Mainapp::actAsSlave()
     Settings::setUsername("Server");
     m_slaveClient = spTCPClient::create(nullptr);
     m_slaveClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
+    CONSOLE_PRINT("Running as slave with name : " + Settings::getSlaveServerName(), Console::eDEBUG);
 }
 
 void Mainapp::onActiveChanged()

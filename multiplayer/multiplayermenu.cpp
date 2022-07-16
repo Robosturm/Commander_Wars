@@ -481,10 +481,11 @@ void Multiplayermenu::onSlaveConnectedToMaster(quint64 socketID)
     spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
     QString command = NetworkCommands::SLAVEREADY;
     QJsonObject data;
+    QString slavename = Settings::getSlaveServerName();
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
-    data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+    data.insert(JsonKeys::JSONKEY_SLAVENAME, slavename);
     QJsonDocument doc(data);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command + " for slave " + slavename, Console::eDEBUG);
     emit pSlaveMasterConnection->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
@@ -1035,11 +1036,12 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
 void Multiplayermenu::sendSlaveReady()
 {
     QString command = QString(NetworkCommands::GAMERUNNINGONSERVER);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    QString slavename = Settings::getSlaveServerName();
+    CONSOLE_PRINT("Sending command " + command + " for slave " + slavename, Console::eDEBUG);
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
-    data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+    data.insert(JsonKeys::JSONKEY_SLAVENAME, slavename);
     data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, pMap->getGameRules()->getDescription());
     if (pMap->getGameRules()->getPassword().isValidPassword(""))
     {

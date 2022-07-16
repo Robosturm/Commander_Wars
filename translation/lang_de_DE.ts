@@ -670,6 +670,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="42"/>
+        <source>mod list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../coreengine/commandlineparser.cpp" line="43"/>
         <source>If the exe is started as a slave process.</source>
         <translation type="unfinished"></translation>
@@ -690,6 +695,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="46"/>
+        <source>script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../coreengine/commandlineparser.cpp" line="47"/>
         <source>If the game should create logs for spawned slave processes</source>
         <translation type="unfinished"></translation>
@@ -700,8 +710,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="48"/>
+        <source>ip-adress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../coreengine/commandlineparser.cpp" line="49"/>
         <source>Port on which the game will listen for new clients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="49"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="51"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="56"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="58"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="61"/>
+        <source>port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -720,8 +744,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="52"/>
+        <source>name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../coreengine/commandlineparser.cpp" line="53"/>
         <source>If set the game launches the dedicated server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="53"/>
+        <source>server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -730,8 +764,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="54"/>
+        <source>options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../coreengine/commandlineparser.cpp" line="55"/>
         <source>The address on which the server will listen for clients. Empty for all addresses.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="55"/>
+        <source>ip-address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -755,8 +799,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="59"/>
+        <source>time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../coreengine/commandlineparser.cpp" line="60"/>
         <source>Mail server address for the server for sending mails to accounts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="60"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="65"/>
+        <source>address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -770,13 +825,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="62"/>
+        <source>connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../coreengine/commandlineparser.cpp" line="63"/>
         <source>Username on the mail server for the server for sending mails to accounts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="63"/>
+        <source>username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../coreengine/commandlineparser.cpp" line="64"/>
         <source>Password on the mail server for the server for sending mails to accounts. Must be set cause the password is never stored in the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="64"/>
+        <source>password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -787,6 +857,11 @@
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="66"/>
         <source>Mail server authentication type (Plain, Login) for the server for sending mails to accounts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="66"/>
+        <source>method</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3374,108 +3449,108 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="150"/>
+        <location filename="../coreengine/mainapp.cpp" line="149"/>
         <source>Loading Building Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="165"/>
+        <location filename="../coreengine/mainapp.cpp" line="164"/>
         <source>Loading CO Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="175"/>
+        <location filename="../coreengine/mainapp.cpp" line="174"/>
         <source>Loading Animation Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="185"/>
+        <location filename="../coreengine/mainapp.cpp" line="184"/>
         <source>Loading Game Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="195"/>
+        <location filename="../coreengine/mainapp.cpp" line="194"/>
         <source>Loading Rule Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="207"/>
+        <location filename="../coreengine/mainapp.cpp" line="206"/>
         <source>Loading Objects Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="217"/>
+        <location filename="../coreengine/mainapp.cpp" line="216"/>
         <source>Loading Terrains Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="227"/>
+        <location filename="../coreengine/mainapp.cpp" line="226"/>
         <source>Loading Units Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="237"/>
+        <location filename="../coreengine/mainapp.cpp" line="236"/>
         <source>Loading Battleanimation Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="244"/>
+        <location filename="../coreengine/mainapp.cpp" line="243"/>
         <source>Loading CO-Perk Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="254"/>
+        <location filename="../coreengine/mainapp.cpp" line="253"/>
         <source>Loading Wiki Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="264"/>
+        <location filename="../coreengine/mainapp.cpp" line="263"/>
         <source>Loading Userdata ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="274"/>
+        <location filename="../coreengine/mainapp.cpp" line="273"/>
         <source>Loading Achievement Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="284"/>
+        <location filename="../coreengine/mainapp.cpp" line="283"/>
         <source>Loading Shop Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="294"/>
+        <location filename="../coreengine/mainapp.cpp" line="293"/>
         <source>Loading Movement planner addin Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="304"/>
+        <location filename="../coreengine/mainapp.cpp" line="303"/>
         <source>Loading Ui Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="314"/>
+        <location filename="../coreengine/mainapp.cpp" line="313"/>
         <source>Loading sounds ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="324"/>
+        <location filename="../coreengine/mainapp.cpp" line="323"/>
         <source>Loading Scripts ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="641"/>
+        <location filename="../coreengine/mainapp.cpp" line="640"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="647"/>
+        <location filename="../coreengine/mainapp.cpp" line="646"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="649"/>
+        <location filename="../coreengine/mainapp.cpp" line="648"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
@@ -3641,7 +3716,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="83"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="97"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1516"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1518"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3686,43 +3761,43 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="671"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="672"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="816"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="817"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="820"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="821"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="835"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="836"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="985"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="986"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="996"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="997"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1390"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1392"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1512"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1514"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

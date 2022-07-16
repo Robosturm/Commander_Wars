@@ -39,31 +39,31 @@ const char* const CommandLineParser::ARG_MAILSERVERSENDADDRESS = "mailServerSend
 const char* const CommandLineParser::ARG_MAILSERVERAUTHMETHOD = "mailServerAuthMethod";
 
 CommandLineParser::CommandLineParser()
-    : m_mods(ARG_MODS, tr("mods that should be loaded. As a string list separated by ';'")),
+    : m_mods(ARG_MODS, tr("mods that should be loaded. As a string list separated by ';'"), tr("mod list"), ""),
       m_slave(ARG_SLAVE, tr("If the exe is started as a slave process.")),
       m_noUi(ARG_NOUI, tr("If the exe is started in headless mode")),
       m_noAudio(ARG_NOAUDIO, tr("If the exe is started muted and sound can't be turned on")),
-      m_iniScript(ARG_INITSCRIPT, tr("Path to a js script that gets triggered by the game to automate or test things")),
+      m_iniScript(ARG_INITSCRIPT, tr("Path to a js script that gets triggered by the game to automate or test things"), tr("script"), ""),
       m_createSlaveLogs(ARG_CREATESLAVELOGS, tr("If the game should create logs for spawned slave processes")),
-      m_slaveAddress(ARG_SLAVEADDRESS, tr("Address on which the game will listen for new clients")),
-      m_slavePort(ARG_SLAVEPORT, tr("Port on which the game will listen for new clients")),
+      m_slaveAddress(ARG_SLAVEADDRESS, tr("Address on which the game will listen for new clients"), tr("ip-adress"), ""),
+      m_slavePort(ARG_SLAVEPORT, tr("Port on which the game will listen for new clients"), tr("port"), "0"),
       m_masterAddress(ARG_MASTERADDRESS, tr("Address on which the game will connect to the hosting server to exchange data"), "ip-address", "::1"),
-      m_masterPort(ARG_MASTERPORT, tr("Port on which the game will connect to the hosting server to exchange data")),
-      m_slaveName(ARG_SLAVENAME, tr("Unique name to identify the slave on the server side")),
-      m_server(ARG_SERVER, tr("If set the game launches the dedicated server."), "0"),
-      m_serverSlaveHostOptions(ARG_SERVERSLAVEHOSTOPTIONS, tr("Ip-Address and Port range separated by '&' for the 3 parts and ';' for gaps or different addresses on which slave games will be spawned to listen. E.g. ::1&10000&20000;::1&50000&65535. Note the Ip-Address needs to be accessible by connecting clients.")),
-      m_serverListenAddress(ARG_SERVERLISTENADDRESS, tr("The address on which the server will listen for clients. Empty for all addresses.")),
-      m_serverListenPort(ARG_SERVERLISTENPORT, tr("Port on which the server will initially listen for clients.")),
+      m_masterPort(ARG_MASTERPORT, tr("Port on which the game will connect to the hosting server to exchange data"), tr("port"), ""),
+      m_slaveName(ARG_SLAVENAME, tr("Unique name to identify the slave on the server side"), tr("name"), "SlaveLog"),
+      m_server(ARG_SERVER, tr("If set the game launches the dedicated server."), tr("server"), "0"),
+      m_serverSlaveHostOptions(ARG_SERVERSLAVEHOSTOPTIONS, tr("Ip-Address and Port range separated by '&' for the 3 parts and ';' for gaps or different addresses on which slave games will be spawned to listen. E.g. ::1&10000&20000;::1&50000&65535. Note the Ip-Address needs to be accessible by connecting clients."), tr("options"), ""),
+      m_serverListenAddress(ARG_SERVERLISTENADDRESS, tr("The address on which the server will listen for clients. Empty for all addresses."), tr("ip-address"), ""),
+      m_serverListenPort(ARG_SERVERLISTENPORT, tr("Port on which the server will initially listen for clients."), tr("port"), ""),
       m_serverSlaveListenAddress(ARG_SERVERSLAVELISTENADDRESS, tr("The address on which the server will listen for slave games. Empty for all addresses."), "slaveListenAddress", "::1"),
-      m_serverSlaveListenPort(ARG_SERVERSLAVELISTENPORT, tr("Port on which the server will listen for slave games.")),      
-      m_serverSlaveDespawnTime(ARG_SERVERSLAVEDESPAWNTIME, tr("Time in seconds till a slave game with no connected clients get despawned in seconds.")),
-      m_mailServerAddress(ARG_MAILSERVERADDRESS, tr("Mail server address for the server for sending mails to accounts.")),
-      m_mailServerPort(ARG_MAILSERVERPORT, tr("Mail server port for the server for sending mails to accounts.")),
-      m_mailServerConnectionType(ARG_MAILSERVERCONNECTIONTYPE, tr("Mail server connection type (TLS, TCP, SSL) for the server for sending mails to accounts.")),
-      m_mailServerUsername(ARG_MAILSERVERUSERNAME, tr("Username on the mail server for the server for sending mails to accounts.")),
-      m_mailServerPassword(ARG_MAILSERVERPASSWORD, tr("Password on the mail server for the server for sending mails to accounts. Must be set cause the password is never stored in the game.")),
-      m_mailServerSendAddress(ARG_MAILSERVERSENDADDRESS, tr("E-Mail address used on the mail server for the server for sending mails to accounts.")),
-      m_mailServerAuthMethod(ARG_MAILSERVERAUTHMETHOD, tr("Mail server authentication type (Plain, Login) for the server for sending mails to accounts."))
+      m_serverSlaveListenPort(ARG_SERVERSLAVELISTENPORT, tr("Port on which the server will listen for slave games."), tr("port"), ""),
+      m_serverSlaveDespawnTime(ARG_SERVERSLAVEDESPAWNTIME, tr("Time in seconds till a slave game with no connected clients get despawned in seconds."), tr("time"), "60000"),
+      m_mailServerAddress(ARG_MAILSERVERADDRESS, tr("Mail server address for the server for sending mails to accounts."), tr("address"), ""),
+      m_mailServerPort(ARG_MAILSERVERPORT, tr("Mail server port for the server for sending mails to accounts."), tr("port"), ""),
+      m_mailServerConnectionType(ARG_MAILSERVERCONNECTIONTYPE, tr("Mail server connection type (TLS, TCP, SSL) for the server for sending mails to accounts."), tr("connection"), ""),
+      m_mailServerUsername(ARG_MAILSERVERUSERNAME, tr("Username on the mail server for the server for sending mails to accounts."), tr("username"), ""),
+      m_mailServerPassword(ARG_MAILSERVERPASSWORD, tr("Password on the mail server for the server for sending mails to accounts. Must be set cause the password is never stored in the game."), tr("password"), ""),
+      m_mailServerSendAddress(ARG_MAILSERVERSENDADDRESS, tr("E-Mail address used on the mail server for the server for sending mails to accounts."), tr("address"), ""),
+      m_mailServerAuthMethod(ARG_MAILSERVERAUTHMETHOD, tr("Mail server authentication type (Plain, Login) for the server for sending mails to accounts."), tr("method"), "")
 {
     m_parser.setApplicationDescription("Commander Wars game");
     m_parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
@@ -100,6 +100,19 @@ void CommandLineParser::parseArgs(QApplication & app)
 {
     m_parser.process(app);
     Mainapp* pApp = Mainapp::getInstance();
+    if (m_parser.isSet(m_createSlaveLogs))
+    {
+        pApp->setCreateSlaveLogs(true);
+    }
+    if (m_parser.isSet(m_slaveName))
+    {
+        QString value = m_parser.value(m_slaveName);
+        Settings::setSlaveServerName(value);
+    }
+    if (m_parser.isSet(m_slave))
+    {
+        pApp->actAsSlave();
+    }
     if (m_parser.isSet(m_noUi))
     {
         Settings::setOverworldAnimations(false);
@@ -135,21 +148,9 @@ void CommandLineParser::parseArgs(QApplication & app)
         CONSOLE_PRINT("Using injected mod list: " + mods, Console::eDEBUG);
         Settings::setActiveMods(modList);
     }
-    if (m_parser.isSet(m_slave))
-    {
-        pApp->actAsSlave();
-    }
-    if (m_parser.isSet(m_slaveName))
-    {
-        Settings::setSlaveServerName(m_parser.value(m_slaveName));
-    }
     if (m_parser.isSet(m_iniScript))
     {
         pApp->setInitScript(m_parser.value(m_iniScript));
-    }
-    if (m_parser.isSet(m_createSlaveLogs))
-    {
-        pApp->setCreateSlaveLogs(true);
     }
     if (m_parser.isSet(m_server))
     {
@@ -170,16 +171,22 @@ void CommandLineParser::parseArgs(QApplication & app)
     }
     if (m_parser.isSet(m_serverSlaveListenAddress))
     {
-        Settings::setSlaveListenAdress(m_parser.value(m_serverSlaveListenAddress));
+        QString value = m_parser.value(m_serverSlaveListenAddress);
+        CONSOLE_PRINT("Using slave listen adress " + value, Console::eDEBUG);
+        Settings::setSlaveListenAdress(value);
     }
     if (m_parser.isSet(m_serverSlaveListenPort))
     {
+        QString value = m_parser.value(m_serverSlaveListenPort);
+        CONSOLE_PRINT("Using slave listen port " + value, Console::eDEBUG);
         bool ok = false;
-        Settings::setSlaveServerPort(m_parser.value(m_serverSlaveListenPort).toInt(&ok));
+        Settings::setSlaveServerPort(value.toInt(&ok));
     }
     if (m_parser.isSet(m_serverSlaveDespawnTime))
     {
-        Settings::setSlaveDespawnTime(std::chrono::seconds(m_parser.value(m_serverSlaveDespawnTime).toInt()));
+        QString value = m_parser.value(m_serverSlaveDespawnTime);
+        CONSOLE_PRINT("Using slave despawn time adress " + value, Console::eDEBUG);
+        Settings::setSlaveDespawnTime(std::chrono::seconds(value.toInt()));
     }
     if (m_parser.isSet(m_mailServerAddress))
     {
@@ -266,6 +273,8 @@ void CommandLineParser::startSlaveGame() const
             masterAddress = "::1";
         }
     }
+    CONSOLE_PRINT("Slave adress " + slaveAddress + " port " + QString::number(slavePort) +
+                  " master adress " + masterAddress + " port " + QString::number(masterPort), Console::eDEBUG);
     if (!slaveAddress.isEmpty() && masterPort > 0 && slavePort > 0 && !masterAddress.isEmpty())
     {
         // init multiplayer menu
@@ -284,6 +293,7 @@ void CommandLineParser::startSlaveGame() const
     }
     else
     {
+        CONSOLE_PRINT("Despawning game cause slave game configuration is invalid", Console::eDEBUG);
         QApplication::exit(-3);
     }
 }

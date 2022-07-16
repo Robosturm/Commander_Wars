@@ -111,6 +111,8 @@ QString Settings::m_slaveListenAdress = "::1";
 bool Settings::m_Server               = false;
 bool Settings::m_record               = true;
 std::chrono::seconds Settings::m_slaveDespawnTime = std::chrono::minutes(0);
+QString Settings::m_serverPassword = "";
+
 // mailing
 QString Settings::m_mailServerAddress = "";
 quint16 Settings::m_mailServerPort = 0;
@@ -365,6 +367,16 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+const QString &Settings::getServerPassword()
+{
+    return m_serverPassword;
+}
+
+void Settings::setServerPassword(const QString &newServerPassword)
+{
+    m_serverPassword = newServerPassword;
 }
 
 const QString &Settings::getMailServerSendAddress()

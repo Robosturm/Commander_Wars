@@ -187,7 +187,7 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         QJsonDocument doc = QJsonDocument::fromJson(data);
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
-        CONSOLE_PRINT("Network Server Command received: " + messageType, Console::eDEBUG);
+        CONSOLE_PRINT("Network json hosting client server command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::SERVERJOINGAME)
         {
             joinSlaveGame(socketID, objData);
@@ -221,7 +221,7 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
-        CONSOLE_PRINT("Network Server Command received: " + messageType, Console::eDEBUG);
+        CONSOLE_PRINT("Network hosting client server command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::LAUNCHGAMEONSERVER)
         {
             spawnSlaveGame(stream, socketID, data);
@@ -240,7 +240,7 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         QJsonDocument doc = QJsonDocument::fromJson(data);
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
-        CONSOLE_PRINT("Network Server Command received: " + messageType, Console::eDEBUG);
+        CONSOLE_PRINT("Network json hosting slave server command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::SLAVEREADY)
         {
             onSlaveReady(socketID, objData);
@@ -273,6 +273,10 @@ void MainServer::onSlaveReady(quint64 socketID, const QJsonObject & objData)
         auto & internGame = iter.value();
         internGame->game->onConnectToLocalServer(socketID, m_pSlaveServer);
     }
+    else
+    {
+        CONSOLE_PRINT("Unable to find slave game: " + slaveName + " running games: " + QString::number(m_games.size()), Console::eDEBUG);
+    }
 }
 
 void MainServer::onGameRunningOnServer(quint64 socketID, const QJsonObject & objData)
@@ -284,6 +288,10 @@ void MainServer::onGameRunningOnServer(quint64 socketID, const QJsonObject & obj
         auto & internGame = iter.value();
         internGame->game->slaveRunning(objData, m_pGameServer);
     }
+    else
+    {
+        CONSOLE_PRINT("Unable to find slave game: " + slaveName + " running games: " + QString::number(m_games.size()), Console::eDEBUG);
+    }
 }
 
 void MainServer::onSlaveGameStarted(quint64 socketID, const QJsonObject & objData)
@@ -294,6 +302,10 @@ void MainServer::onSlaveGameStarted(quint64 socketID, const QJsonObject & objDat
     {
         auto & internGame = iter.value();
         internGame->game->slaveGameStarted(objData);
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to find slave game: " + slaveName + " running games: " + QString::number(m_games.size()), Console::eDEBUG);
     }
 }
 
@@ -343,6 +355,10 @@ void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData
         auto & data = internGame->game->getData();
         data.setPlayers(data.getMaxPlayers() - openPlayerCount);
         m_updateGameData = true;
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to find slave game: " + slaveName + " running games: " + QString::number(m_games.size()), Console::eDEBUG);
     }
 }
 
@@ -439,7 +455,9 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
     quint16 slavePort;
     if (getNextFreeSlaveAddress(slaveAddress, slavePort))
     {
+        bool createLogs = Mainapp::getInstance()->getCreateSlaveLogs();
         QString slaveName = "Commander_Wars_Slave_" + QString::number(m_slaveGameIterator);
+        CONSOLE_PRINT("Launching slave game " + slaveName + " creating logs: " + (createLogs ? "true" : "false"), Console::eDEBUG);
         auto game = spInternNetworkGame::create();
         QString program = "Commander_Wars.exe";
         game->process = std::make_shared<QProcess>();
@@ -462,10 +480,10 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
                           QString::number(Settings::getSlaveServerPort()),
                           QString(prefix) + CommandLineParser::ARG_INITSCRIPT,
                           initScript});
-        if (Mainapp::getInstance()->getCreateSlaveLogs())
-        {
-            args << QString(prefix) + CommandLineParser::ARG_CREATESLAVELOGS;
-        }
+        //if (createLogs)
+        //{
+        args << QString(prefix) + CommandLineParser::ARG_CREATESLAVELOGS;
+        //}
         game->game = spNetworkGame::create(nullptr);
         game->game->setDataBuffer(data);
         game->game->setServerName(slaveName);
