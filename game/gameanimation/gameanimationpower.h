@@ -23,12 +23,18 @@ signals:
     void sigRightClick();
 public slots:
     void rightClick();
+    void createPowerDescription(CO* pCo, GameEnums::PowerMode powerMode, bool onTop);
+    void createRotatingBackground(const QString & resAnim, const QColor & color);
+    void setDuration(qint32 timeMs);
+    void createMovingText(const QString & font, const QString & text, qint32 delay, QPoint startPos, QPoint endPos, qint32 duration);
+    void addMovingCoSprite(const QString & sprite, float scale, QPoint startPos, QPoint endPos, qint32 duration, qint32 delay = 0);
+    QPoint getCoSpriteSize(const QString & sprite) const;
 protected slots:
     virtual void start() override;
 private:
     friend class oxygine::intrusive_ptr<GameAnimationPower>;
-    GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO, GameMap * pMap);
-    void createPowerDescription(CO* pCo, GameEnums::PowerMode powerMode, bool onTop);
+    GameAnimationPower(quint32 frameTime, CO* pCO, GameMap * pMap);
+
 private:
     QTimer m_endTimer;
     CO* m_pCO{nullptr};

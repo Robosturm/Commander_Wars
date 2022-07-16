@@ -32,6 +32,13 @@ signals:
     void sigStart();
 public slots:
     /**
+     * @brief getFontWidth
+     * @param font
+     * @param text
+     * @return
+     */
+    qint32 getFontWidth(const QString & font, const QString & text) const;
+    /**
      * @brief getMap
      * @return
      */
@@ -291,6 +298,11 @@ public slots:
      * @param shakePauseMs
      */
     void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delay = 0, qint32 shakePauseMs = 30);
+    /**
+     * @brief getFrameTime
+     * @return
+     */
+    quint32 getFrameTime() const;
 protected:
     void emitFinished();
 

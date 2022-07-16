@@ -2075,5 +2075,6 @@
         <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.js</file>
         <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.xml</file>
         <file>resources/scripts/actions/ACTION_LOADGAME.js</file>
+        <file>resources/scripts/general/gameanimationpower.js</file>
     </qresource>
 </RCC>

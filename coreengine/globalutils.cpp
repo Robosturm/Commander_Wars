@@ -266,16 +266,7 @@ QmlVectorPoint* GlobalUtils::getEmptyPointArray()
 
 bool GlobalUtils::isEven(qint32 value)
 {
-    float val = value/2.0f;
-    qint32 val2 = value/2;
-    if(val == val2)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return (value % 2 == 0);
 }
 
 bool GlobalUtils::getUseSeed()

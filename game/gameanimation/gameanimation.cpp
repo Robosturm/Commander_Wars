@@ -86,6 +86,19 @@ void GameAnimation::stop()
     setVisible(false);
 }
 
+qint32 GameAnimation::getFontWidth(const QString & font, const QString & text) const
+{
+    oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getInstance()->getResFont(font));
+    headline.color = FontManager::getFontColor();
+    headline.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headline.multiline = false;
+    oxygine::TextField testField;
+    testField.setStyle(headline);
+    testField.setHtmlText(text);
+    return testField.getTextRect().getWidth();;
+}
+
 void GameAnimation::setRotation(float angle)
 {
     setRotationDegrees(angle);
@@ -496,4 +509,9 @@ void GameAnimation::addScreenshake(qint32 startIntensity, float decay, qint32 du
     m_stageTweens.append(tween);
     oxygine::Stage::getStage()->addTween(tween);
 
+}
+
+quint32 GameAnimation::getFrameTime() const
+{
+    return m_frameTime;
 }
