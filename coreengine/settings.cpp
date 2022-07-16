@@ -345,7 +345,6 @@ Settings::Settings()
         new Value<quint16>{"Network", "SlaveServerPort", &m_slaveServerPort, 9003, 0, std::numeric_limits<quint16>::max()},
         new Value<quint16>{"Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()},
         new Value<bool>{"Network", "Server", &m_Server, false, false, true},
-        new Value<QString>{"Network", "SlaveServerName", &m_slaveServerName, "", "", ""},
         new Value<QString>{"Network", "ServerListenAdress", &m_serverListenAdress, "", "", ""},
         new Value<QString>{"Network", "SlaveListenAdress", &m_slaveListenAdress, "", "", ""},
         new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&10000&20000;::1&50000&65535", "", ""},
