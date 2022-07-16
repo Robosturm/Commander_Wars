@@ -69,6 +69,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, CO* pCO, GameMap * pMa
         }
     });
     connect(this, &GameAnimationPower::sigRightClick, this, &GameAnimationPower::rightClick, Qt::QueuedConnection);
+    m_finishQueued = true;
 }
 
 GameAnimationPower::~GameAnimationPower()
