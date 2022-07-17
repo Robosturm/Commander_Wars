@@ -33,7 +33,8 @@ public:
         m_HLines.clear();
         m_columns.clear();
         m_items = items;
-        sortItems(0, false);
+        m_currentItem = -1;
+        sortItems(1, false);
         createItems();
     }
 

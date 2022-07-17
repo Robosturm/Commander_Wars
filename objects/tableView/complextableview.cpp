@@ -110,11 +110,11 @@ void ComplexTableView::sortItems(qint32 column, bool up)
     {
         if (up)
         {
-            return *(lhs.items[column].get()) < *(rhs.items[column].get());
+            return *(lhs.items[column].get()) > *(rhs.items[column].get());
         }
         else
         {
-            return *(lhs.items[column].get()) > *(rhs.items[column].get());
+            return *(lhs.items[column].get()) < *(rhs.items[column].get());
         }
     });
     if (m_columns.size() > 0)
@@ -175,6 +175,7 @@ void ComplexTableView::createItems()
             setCurrentItem(count);
             emit sigItemClicked();
         });
+        m_columns.append(column);
         ++count;
         y += ITEM_HEIGHT + DIVIDER_SIZE;
     }
@@ -217,12 +218,12 @@ void ComplexTableView::setCurrentItem(qint32 item)
 
 void ComplexTableView::updateItemPositions()
 {
-    qint32 y = 0;
-    for (auto & item : m_columns)
-    {
-        item->setY(y);
-        y += ITEM_HEIGHT + DIVIDER_SIZE;
-    }
+    m_pPanel->clearContent();
+    m_VLines.clear();
+    m_HLines.clear();
+    m_columns.clear();
+    m_currentItem = -1;
+    createItems();
 }
 
 qint32 ComplexTableView::getCurrentItem() const

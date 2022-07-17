@@ -22,7 +22,7 @@ var UserLoginDialog =
         if (errorCode === GameEnums.LoginError_None)
         {
             userLogin.showMessageBox(qsTr("Logged onto the server."));
-            menu.enableServerButtons(true);
+            menu.onLogin();
             userLogin.exit();
         }
         else if (errorCode === GameEnums.LoginError_WrongPassword)

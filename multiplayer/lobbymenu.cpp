@@ -451,7 +451,7 @@ void LobbyMenu::updateGamesView()
     for (auto & game : m_games)
     {
         ComplexTableView::Item item;
-        item.pData = &game;
+        item.pData = game.get();
         item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game->getMapName(), widths[0])));
         item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spXofYTableItem::create(game->getPlayers(), game->getMaxPlayers(), widths[1])));
         item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game->getDescription(), widths[2])));
@@ -471,7 +471,10 @@ void LobbyMenu::updateGamesView()
 
 void LobbyMenu::selectGame()
 {
-    m_currentGame = spNetworkGameData(m_gamesview->getDataItem<NetworkGameData>(m_gamesview->getCurrentItem()));
+    if (m_gamesview->getCurrentItem() >= 0)
+    {
+        m_currentGame = spNetworkGameData(m_gamesview->getDataItem<NetworkGameData>(m_gamesview->getCurrentItem()));
+    }
 }
 
 void LobbyMenu::connected(quint64 socket)
@@ -487,7 +490,7 @@ void LobbyMenu::connected(quint64 socket)
 
 void LobbyMenu::onLogin()
 {
-    m_pButtonHostOnServer->setEnabled(true);
+    enableServerButtons(true);
     m_loggedIn = true;
 }
 

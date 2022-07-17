@@ -480,10 +480,10 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
                           QString::number(Settings::getSlaveServerPort()),
                           QString(prefix) + CommandLineParser::ARG_INITSCRIPT,
                           initScript});
-        //if (createLogs)
-        //{
-        args << QString(prefix) + CommandLineParser::ARG_CREATESLAVELOGS;
-        //}
+        if (createLogs)
+        {
+            args << QString(prefix) + CommandLineParser::ARG_CREATESLAVELOGS;
+        }
         game->game = spNetworkGame::create(nullptr);
         game->game->setDataBuffer(data);
         game->game->setServerName(slaveName);
@@ -739,7 +739,6 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, Netw
         {
             // mark client as logged in
             emit m_pGameServer->sigSetIsActive(socketId, true);
-            sendGameDataToClient(socketId);
         }
     }
     else
@@ -754,6 +753,10 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, Netw
     outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
     emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    if (result == GameEnums::LoginError_None)
+    {
+        sendGameDataToClient(socketId);
+    }
 }
 
 void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
