@@ -324,12 +324,18 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
             game->game->getSlaveRunning())
         {
             auto & data = game->game->getData();
-            if (data.getLaunched() &&
-                data.getPlayerNames().contains(username))
+            if (data.getPlayerNames().contains(username))
             {
-                QJsonObject obj = game->game->getData().toJson();
-                games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
-                ++i;
+                if (data.getLaunched())
+                {
+                    QJsonObject obj = game->game->getData().toJson();
+                    games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+                    ++i;
+                }
+                else
+                {
+                    CONSOLE_PRINT("Found game which isn't started for username " + username, Console::eDEBUG);
+                }
             }
         }
     }

@@ -67,9 +67,12 @@ void NetworkGame::slaveGameStarted(const QJsonObject & objData)
     m_data.setLaunched(true);
     QStringList playerNames;
     QJsonArray usernames = objData.value(JsonKeys::JSONKEY_USERNAMES).toArray();
+    CONSOLE_PRINT("Adding players to slavegame " + m_serverName, Console::eDEBUG);
     for (const auto & username : usernames)
     {
-        playerNames.append(username.toString());
+        QString user = username.toString();
+        playerNames.append(user);
+        CONSOLE_PRINT("user: " + user, Console::eDEBUG);
     }
     m_data.setPlayerNames(playerNames);
 }

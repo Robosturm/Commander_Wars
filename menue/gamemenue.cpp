@@ -1591,7 +1591,12 @@ void GameMenue::sendGameStartedToServer()
             Player* pPlayer = m_pMap->getPlayer(i);
             if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
             {
+                CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), Console::eDEBUG);
                 usernames.append(pPlayer->getPlayerNameId());
+            }
+            else
+            {
+                CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), Console::eDEBUG);
             }
         }
         data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);

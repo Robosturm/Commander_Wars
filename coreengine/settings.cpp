@@ -375,6 +375,7 @@ const QString &Settings::getServerPassword()
 
 void Settings::setServerPassword(const QString &newServerPassword)
 {
+    CONSOLE_PRINT("Changed buffered server login password", Console::eDEBUG);
     m_serverPassword = newServerPassword;
 }
 
