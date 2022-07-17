@@ -488,6 +488,10 @@ void GameMenue::playerRequestControlInfo(QDataStream & stream, quint64 socketId)
         sendStream << static_cast<qint32>(aiTypes[i]);
     }
     sendStream << m_actionPerformer.getSyncCounter();
+    if (playerAis.size() > 0 && m_slaveDespawnTimer.isActive())
+    {
+        m_slaveDespawnTimer.stop();
+    }
     emit m_pNetworkInterface->sig_sendData(socketId, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 
