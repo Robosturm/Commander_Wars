@@ -15,6 +15,7 @@ jobs:
           - os: ubuntu-latest
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
+            qtCoreToolsPath: 'msvc2019_64'
             target: 'android'
             target-api-level: '27'
             abi : "armeabi-v7a"
@@ -50,7 +51,7 @@ jobs:
         -B "${{github.workspace}}/build" \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DQt6_DIR="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/" \
-        -DQt6CoreTools_DIR="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6CoreTools/" \
+        -DQt6CoreTools_DIR="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/lib/cmake/Qt6CoreTools/" \
         -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}" \
         -DQT_HOST_PATH_CMAKE_DIR="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/" \
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
