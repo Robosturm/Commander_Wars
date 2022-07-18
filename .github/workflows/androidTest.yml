@@ -59,8 +59,7 @@ jobs:
         -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api-level }} \
         -DANDROID_ABI=${{ matrix.abi }} \
         -DANDROID_NDK_ROOT='${{ steps.setup-ndk.outputs.ndk-path }}' \
-        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install'
-        
+        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install'        
 
     - name: Build
       working-directory: '${{github.workspace}}/build'
