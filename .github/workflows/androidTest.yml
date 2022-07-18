@@ -15,7 +15,7 @@ jobs:
           - os: ubuntu-latest
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
-            qtCoreToolsPath: 'msvc2019_64'
+            qtCoreToolsPath: ''
             target: 'android'
             target-api-level: '27'
             abi : "armeabi-v7a"
