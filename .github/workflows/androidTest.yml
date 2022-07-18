@@ -44,6 +44,16 @@ jobs:
           modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
+            
+    - name: Install os qt
+      uses: jurplel/install-qt-action@v2.14.0
+      with:      
+          aqtversion: '==2.0.2'
+          target: 'desktop'
+          version: ${{env.QT_Version}}
+          arch: ${{matrix.COMPILER_VERSION}}
+          dir: '${{github.workspace}}/qt/'
+          install-deps: "true"
       
     - name: Configure CMake
       run:  |
