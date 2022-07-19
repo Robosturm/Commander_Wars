@@ -25,6 +25,7 @@ option(OPENSSL_USE_STATIC_LIBS "you may disable linking static against openssl b
 option(OPENSSL_MSVC_STATIC_RT "you may disable linking static against openssl but it's not recommended. The installation process won't deploy the libs." TRUE)
 option(AUDIOSUPPORT "enables audio support for the game and compiles music/sound into the exe" ON)
 option(GRAPHICSUPPORT "enables sprites for the game and compiles them into the exe" ON)
+option(PRECOMPILEDOPENSSL "if the openssl are precompiled libs or or package exists" OFF)
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
 
 ###################################################################################
@@ -80,11 +81,26 @@ endif()
 ###################################################################################
 # OpenSsl
 ###################################################################################
-find_package(OpenSSL REQUIRED)
-message (STATUS "OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
-message (STATUS "OpenSsL All-Libs:" ${OPENSSL_LIBRARIES})
-include_directories(${OPENSSL_INCLUDE_DIR})
 
+if(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    message("Using local pre-compiled openssl version from path: ${OPENSSL_LIB_PATH}")
+    set(OPENSSL_LIBS
+        ${OPENSSL_LIB_PATH}/libcrypto_${ANDROID_ABI}.a
+        ${OPENSSL_LIB_PATH}/libssl_${ANDROID_ABI}.a
+    CACHE INTERNAL "")
+    include_directories(${OPENSSL_INCLUDE_DIR})
+    message (STATUS "OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
+else()
+    find_package(OpenSSL REQUIRED)
+    message (STATUS "OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
+    message (STATUS "OpenSsL All-Libs:" ${OPENSSL_LIBRARIES})
+    include_directories(${OPENSSL_INCLUDE_DIR})
+    set(OPENSSL_LIBS
+        OpenSSL::SSL
+        OpenSSL::Crypto
+    )
+
+endif()
 ###################################################################################
 # Set build dependend defines
 ###################################################################################
@@ -750,13 +766,12 @@ set(QT_LIBRARIES
     Qt6::Xml
     Qt6::Sql
     Qt6::OpenGL
-    OpenSSL::SSL
-    OpenSSL::Crypto
     )
 
 if (AUDIOSUPPORT)
     set(QT_LIBRARIES
         ${QT_LIBRARIES}
+        ${OPENSSL_LIBS}
         Qt6::Multimedia
     )
 endif()
