@@ -275,13 +275,18 @@ void DialogCOStyle::changeCOStyle(qint32 index)
                 pixel->setColor(color.red(), color.green(), color.blue(), 255);
                 pixel->setPosition(xStep * 22 + 5, y);
                 oxygine::Actor* pActor = m_PixelsSelector.get();
-                pixel->addClickListener([this, pActor, xStep, y, i](oxygine::Event* pEvent)
+                auto* pPixelAxtor = pixel.get();
+                pixel->addClickListener([this, pActor, pPixelAxtor, xStep, y, i](oxygine::Event* pEvent)
                 {
                     pEvent->stopPropagation();
                     pActor->setPosition(xStep * 22 - 2 + 5, y - 2);
                     m_currentPixel = i;
+                    emit m_pColorSelector->sigSelecetedColorChanged(pPixelAxtor->getColor());
                 });
-
+                if (i == 0)
+                {
+                    emit m_pColorSelector->sigSelecetedColorChanged(pPixelAxtor->getColor());
+                }
                 m_pPixelPanel->addItem(pixel);
                 m_Pixels.append(pixel);
                 xStep++;
