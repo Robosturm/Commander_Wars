@@ -68,7 +68,7 @@ void GameAnimationFactory::release()
     m_pInstance = nullptr;
 }
 
-GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, quint32 x, quint32 y, quint32 frameTime, bool mapPosition)
+GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime, bool mapPosition)
 {    
     spGameAnimation animation = spGameAnimation::create(frameTime, pMap);
     if (mapPosition)

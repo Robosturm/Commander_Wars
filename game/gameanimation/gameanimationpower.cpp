@@ -84,7 +84,7 @@ GameAnimationPower::~GameAnimationPower()
     m_pGameAnimationPower = nullptr;
 }
 
-void GameAnimationPower::createMovingText(const QString & font, const QString & text, qint32 delay, QPoint startPos, QPoint endPos, qint32 duration)
+void GameAnimationPower::createMovingText(const QString & font, const QString & text, qint32 delay, QPoint startPos, QPoint endPos, qint32 duration, QEasingCurve::Type easeType)
 {
     oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getInstance()->getResFont(font));
     headline.color = FontManager::getFontColor();
@@ -96,16 +96,16 @@ void GameAnimationPower::createMovingText(const QString & font, const QString & 
     textField->setPosition(startPos.x(), startPos.y());
     textField->setStyle(headline);
     textField->setHtmlText(text);
-    oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
+    m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
     oxygine::spTween tween3 = oxygine::createTween(TweenToggleVisibility(0, 1.0f), oxygine::timeMS(1), 1, false, oxygine::timeMS(delay));
-    oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endPos.x(), endPos.y())), oxygine::timeMS(duration));
-    queue->add(tween3);
-    queue->add(tween4);
-    textField->addTween(queue);
+    oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endPos.x(), endPos.y())), oxygine::timeMS(duration), 1, false, oxygine::timeMS(0), easeType);
+    m_lastCreatedTweenQueue->add(tween3);
+    m_lastCreatedTweenQueue->add(tween4);
+    textField->addTween(m_lastCreatedTweenQueue);
     addChild(textField);
 }
 
-void GameAnimationPower::addMovingCoSprite(const QString & sprite, float scale, QPoint startPos, QPoint endPos, qint32 duration, qint32 delay)
+void GameAnimationPower::addMovingCoSprite(const QString & sprite, float scale, QPoint startPos, QPoint endPos, qint32 duration, qint32 delay, QEasingCurve::Type easeType)
 {
     oxygine::ResAnim* pAnim = m_pCO->getResAnim(sprite);
      if (pAnim != nullptr)
@@ -115,8 +115,10 @@ void GameAnimationPower::addMovingCoSprite(const QString & sprite, float scale, 
          pSprite->setScale(scale);
          pSprite->setSize(pAnim->getWidth(), pAnim->getHeight());
          pSprite->setPosition(startPos.x(), startPos.y());
-         oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endPos.x(), endPos.y())), oxygine::timeMS(duration), 1, false, oxygine::timeMS(delay));
-         pSprite->addTween(tween1);
+         m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
+         oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endPos.x(), endPos.y())), oxygine::timeMS(duration), 1, false, oxygine::timeMS(delay), easeType);
+         m_lastCreatedTweenQueue->add(tween1);
+         pSprite->addTween(m_lastCreatedTweenQueue);
          addChild(pSprite);
      }
 
@@ -144,7 +146,6 @@ void GameAnimationPower::createRotatingBackground(const QString & resAnim, const
     firstSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     firstSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     firstSpriteMask->setColor(color);
-
 
     // second sprite for rotating
     oxygine::spBox9Sprite secondSpriteMask = oxygine::spBox9Sprite::create();

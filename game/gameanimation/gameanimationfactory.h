@@ -66,7 +66,7 @@ public slots:
      * @param frameTime in ms
      * @return
      */
-    static GameAnimation* createAnimation(GameMap* pMap, quint32 x, quint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
+    static GameAnimation* createAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
     /**
      * @brief createBattleAnimation
      * @param pAtkTerrain
