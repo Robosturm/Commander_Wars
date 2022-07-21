@@ -75,4 +75,4 @@ jobs:
         
     - name: Build
       working-directory: '${{github.workspace}}/build'
-      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j16
+      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j4
