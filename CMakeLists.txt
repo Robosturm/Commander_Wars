@@ -103,6 +103,7 @@ else()
 endif()
 
 Set(ZLIB_USE_STATIC_LIBS ON)
+find_package(ZLIB)
 message ("Zlib All-Libs:" ${ZLIB_LIBRARIES})
 
 ###################################################################################
@@ -874,9 +875,6 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${QT_BIN_DIR}/libstdc++-6.dll
         ${QT_BIN_DIR}/libwinpthread-1.dll
         ${QT_BIN_DIR}/libgcc_s_seh-1.dll
-        ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1-x64.dll
-        ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1-x64__.dll
-        ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1.dll
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/qwindows${LibNameEnd}
@@ -937,6 +935,8 @@ set(${PROJECT_NAME}_INSTALL_QT_LIBS
     ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
+    ${OPENSSL_LIBRARIES}
+    ${ZLIB_LIBRARIES}
     ${ADDR_2_LINE}
 )
 
