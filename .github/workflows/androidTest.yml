@@ -10,17 +10,18 @@ jobs:
     name: Android Build
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [windows-latest]
         include:
-          - os: ubuntu-latest
+          - os: windows-latest
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
             target: 'android'
             target-api-level: '27'
             abi : "armeabi-v7a"
-            COMPILER_TOOLS_VERSION: ''
-            qtCoreToolsPath: ''
-        
+            COMPILER_TOOLS_VERSION: 'win64_mingw'
+            qtCoreToolsPath: 'mingw_64'
+            NdkRoot: '${{ANDROID_NDK_ROOT}}'
+            
     runs-on: ${{matrix.os}}
     defaults:
       run:
@@ -28,13 +29,7 @@ jobs:
         
     steps:
     - uses: actions/checkout@v2
-          
-    - uses: nttld/setup-ndk@v1
-      id: setup-ndk
-      with:
-        ndk-version: ${{env.NDK_Version}}
-        add-to-path: false
-          
+                    
     - name: Install Qt
       uses: jurplel/install-qt-action@v2.14.0
       with:      
@@ -69,7 +64,7 @@ jobs:
         -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/qt.toolchain.cmake \
         -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api-level }} \
         -DANDROID_ABI=${{ matrix.abi }} \
-        -DANDROID_NDK_ROOT='${{ steps.setup-ndk.outputs.ndk-path }}' \
+        -DANDROID_NDK_ROOT='${{ matrix.NdkRoot }}' \
         -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install'        
 
     - name: Build
