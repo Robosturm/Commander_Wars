@@ -878,6 +878,8 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1-x64.dll
         ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1-x64__.dll
         ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1.dll
+        ${OPENSSL_LIBRARIES}
+        ${ZLIB_LIBRARIES}
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/qwindows${LibNameEnd}
