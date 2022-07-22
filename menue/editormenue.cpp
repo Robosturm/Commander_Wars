@@ -2001,8 +2001,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                     if (pMovementTableManager->getBaseMovementPoints(movementType, m_pMap->getTerrain(x + xPos, y + yPos), m_pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
                                     {
                                         spUnit pCopyUnit = spUnit::create(pUnit->getUnitID(), pUnit->getOwner(), false, m_pMap.get());
-                                        spUnit pUnit;
-                                        m_pMap->getTerrain(x + xPos, y + yPos)->setUnit(pUnit);
+                                        m_pMap->getTerrain(x + xPos, y + yPos)->setUnit(spUnit());
                                         m_pMap->getTerrain(x + xPos, y + yPos)->setUnit(pCopyUnit);
                                         pCopyUnit->setHp(pUnit->getHp());
                                         pCopyUnit->setAmmo1(pUnit->getAmmo1());
@@ -2010,7 +2009,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                         pCopyUnit->setFuel(pUnit->getFuel());
                                         pCopyUnit->setAiMode(pUnit->getAiMode());
                                         pCopyUnit->setUnitRank(pUnit->getUnitRank());
-                                        pCopyUnit->setModdingFlags(pCopyUnit->getModdingFlags());
+                                        pCopyUnit->setModdingFlags(pUnit->getModdingFlags());
                                     }
                                 }
                                 if (selection != EditorSelection::EditorMode::All)

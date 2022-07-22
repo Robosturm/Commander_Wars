@@ -2881,7 +2881,8 @@ GameAnimation* Unit::killUnit()
     }
     // record destruction of this unit
     GameRecorder* pRecorder = m_pMap->getGameRecorder();
-    if (pRecorder != nullptr)
+    if (pRecorder != nullptr &&
+        m_pMap->getCurrentPlayer() != nullptr)
     {
         if (!m_pOwner->getIsDefeated())
         {

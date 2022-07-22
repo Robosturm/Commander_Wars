@@ -14,7 +14,6 @@ jobs:
         include:
           - os: windows-latest
             COMPILER_VERSION: 'win64_mingw'
-            # 'win64_mingw90
             target: 'desktop'
             qtPath: 'mingw_64'
             installerCommands1: ''
