@@ -15,10 +15,11 @@ jobs:
           - os: ubuntu-latest
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
-            qtCoreToolsPath: ''
             target: 'android'
             target-api-level: '27'
             abi : "armeabi-v7a"
+            COMPILER_TOOLS_VERSION: ''
+            qtCoreToolsPath: ''
         
     runs-on: ${{matrix.os}}
     defaults:
@@ -51,7 +52,7 @@ jobs:
           aqtversion: '==2.0.2'
           target: 'desktop'
           version: ${{env.QT_Version}}
-          arch: ${{matrix.COMPILER_VERSION}}
+          arch: ${{matrix.COMPILER_TOOLS_VERSION}}
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
       
