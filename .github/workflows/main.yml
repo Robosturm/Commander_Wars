@@ -18,7 +18,7 @@ jobs:
             qtPath: 'mingw_64'
             installerCommands1: ''
             installerCommands2: ''
-            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles"'
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL"'
           - os: ubuntu-latest
             COMPILER_VERSION: ''
             target: 'desktop'
