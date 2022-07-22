@@ -20,7 +20,7 @@ jobs:
             abi : "armeabi-v7a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
-            NdkRoot: '${{ANDROID_NDK_ROOT}}'
+            NdkRoot: 'C:/Android/android-sdk/ndk-bundle'
             
     runs-on: ${{matrix.os}}
     defaults:
