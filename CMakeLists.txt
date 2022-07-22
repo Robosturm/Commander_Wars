@@ -89,11 +89,11 @@ if(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         ${OPENSSL_LIB_PATH}/libssl_${ANDROID_ABI}.a
     CACHE INTERNAL "")
     include_directories(${OPENSSL_INCLUDE_DIR})
-    message (STATUS "OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
+    message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
 else()
     find_package(OpenSSL REQUIRED)
-    message (STATUS "OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
-    message (STATUS "OpenSsL All-Libs:" ${OPENSSL_LIBRARIES})
+    message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
+    message ("OpenSsL All-Libs:" ${OPENSSL_LIBRARIES})
     include_directories(${OPENSSL_INCLUDE_DIR})
     set(OPENSSL_LIBS
         OpenSSL::SSL
@@ -101,6 +101,10 @@ else()
     )
 
 endif()
+
+Set(ZLIB_USE_STATIC_LIBS ON)
+message ("Zlib All-Libs:" ${ZLIB_LIBRARIES})
+
 ###################################################################################
 # Set build dependend defines
 ###################################################################################
