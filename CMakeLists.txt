@@ -32,6 +32,8 @@ option(USEAPPCONFIGPATH "use the system location for saving data, instead of the
 # show configuration
 ###################################################################################
 
+get_filename_component(CXX_COMPILER_PATH "${CMAKE_CXX_COMPILER}" DIRECTORY)
+get_filename_component(C_COMPILER_PATH "${CMAKE_C_COMPILER}" DIRECTORY)
 message("Prefix Path: ${CMAKE_PREFIX_PATH}")
 message("Module Path: ${CMAKE_MODULE_PATH}")
 message("Qt-Host-Path: ${QT_HOST_PATH}")
@@ -69,8 +71,6 @@ endif()
 # the binaries
 get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
 get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
-get_filename_component(CXX_COMPILER_PATH "${CMAKE_CXX_COMPILER}" DIRECTORY)
-get_filename_component(C_COMPILER_PATH "${CMAKE_C_COMPILER}" DIRECTORY)
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
@@ -90,6 +90,16 @@ if(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     CACHE INTERNAL "")
     include_directories(${OPENSSL_INCLUDE_DIR})
     message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
+elseif(PRECOMPILEDOPENSSL)
+    message("Using compiler open-ssl lib path: " ${CXX_COMPILER_PATH}/../opt)
+    set(ZLIB_USE_STATIC_LIBS ON)
+    find_package(ZLIB REQUIRED)
+    set(OPENSSL_LIBS
+        ${CXX_COMPILER_PATH}/../opt/lib/libcrypto.a
+        ${CXX_COMPILER_PATH}/../opt/lib/libssl.a
+        ${ZLIB_LIBRARIES}
+    CACHE INTERNAL "")
+    include_directories(${CXX_COMPILER_PATH}/../opt/include)
 else()
     find_package(OpenSSL REQUIRED)
     message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
@@ -99,12 +109,7 @@ else()
         OpenSSL::SSL
         OpenSSL::Crypto
     )
-
 endif()
-
-Set(ZLIB_USE_STATIC_LIBS ON)
-find_package(ZLIB)
-message ("Zlib All-Libs:" ${ZLIB_LIBRARIES})
 
 ###################################################################################
 # Set build dependend defines
@@ -878,8 +883,6 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1-x64.dll
         ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1-x64__.dll
         ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1.dll
-        ${OPENSSL_LIBRARIES}
-        ${ZLIB_LIBRARIES}
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/qwindows${LibNameEnd}
