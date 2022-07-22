@@ -90,6 +90,7 @@ if(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     CACHE INTERNAL "")
     include_directories(${OPENSSL_INCLUDE_DIR})
     message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
+    message ("OpenSsL libs:" ${OPENSSL_LIBS})
 elseif(PRECOMPILEDOPENSSL)
     message("Using compiler open-ssl lib path: " ${CXX_COMPILER_PATH}/../opt)
     set(ZLIB_USE_STATIC_LIBS ON)
@@ -100,6 +101,8 @@ elseif(PRECOMPILEDOPENSSL)
         ${ZLIB_LIBRARIES}
     CACHE INTERNAL "")
     include_directories(${CXX_COMPILER_PATH}/../opt/include)
+    message ("OpenSsL Include directories:" ${CXX_COMPILER_PATH}/../opt/include)
+    message ("OpenSsL libs:" ${OPENSSL_LIBS})
 else()
     find_package(OpenSSL REQUIRED)
     message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
@@ -881,7 +884,6 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${QT_BIN_DIR}/libwinpthread-1.dll
         ${QT_BIN_DIR}/libgcc_s_seh-1.dll
         ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1-x64.dll
-        ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1-x64__.dll
         ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1.dll
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
