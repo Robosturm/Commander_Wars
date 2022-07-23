@@ -91,18 +91,6 @@ if(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     include_directories(${OPENSSL_INCLUDE_DIR})
     message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
     message ("OpenSsL libs:" ${OPENSSL_LIBS})
-elseif(PRECOMPILEDOPENSSL)
-    message("Using compiler open-ssl lib path: " ${CXX_COMPILER_PATH}/../opt)
-    set(ZLIB_USE_STATIC_LIBS ON)
-    find_package(ZLIB REQUIRED)
-    set(OPENSSL_LIBS
-        ${CXX_COMPILER_PATH}/../opt/lib/libcrypto.a
-        ${CXX_COMPILER_PATH}/../opt/lib/libssl.a
-        ${ZLIB_LIBRARIES}
-    CACHE INTERNAL "")
-    include_directories(${CXX_COMPILER_PATH}/../opt/include)
-    message ("OpenSsL Include directories:" ${CXX_COMPILER_PATH}/../opt/include)
-    message ("OpenSsL libs:" ${OPENSSL_LIBS})
 else()
     find_package(OpenSSL REQUIRED)
     message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})

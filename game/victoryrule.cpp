@@ -58,7 +58,8 @@ QString VictoryRule::getRuleName(qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleName";
-    QJSValueList args({itemNumber,
+    QJSValueList args({pInterpreter->newQObject(this),
+                       itemNumber,
                        pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isString())
@@ -138,7 +139,8 @@ QString VictoryRule::getRuleDescription(qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleDescription";
-    QJSValueList args({itemNumber,
+    QJSValueList args({pInterpreter->newQObject(this),
+                       itemNumber,
                        pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isString())

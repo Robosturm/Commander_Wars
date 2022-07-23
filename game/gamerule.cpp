@@ -51,7 +51,9 @@ QString GameRule::getRuleName(qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleName";
-    QJSValueList args({QJSValue(itemNumber)});
+    QJSValueList args({pInterpreter->newQObject(nullptr),
+                       QJSValue(itemNumber),
+                       pInterpreter->newQObject(this),});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isString())
     {
@@ -126,7 +128,9 @@ QString GameRule::getRuleDescription(qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleDescription";
-    QJSValueList args({QJSValue(itemNumber)});
+    QJSValueList args({pInterpreter->newQObject(nullptr),
+                       QJSValue(itemNumber),
+                       pInterpreter->newQObject(nullptr)});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isString())
     {
