@@ -37,7 +37,7 @@ QString TextInput::getCurrentText() const
     return m_lineEdit->text().trimmed();
 }
 
-void TextInput::setCurrentText(QString text)
+void TextInput::setCurrentText(const QString & text)
 {
     m_lineEdit->setText(text);
 }
@@ -99,7 +99,7 @@ void TextInput::looseFocusInternal()
     Tooltip::looseFocusInternal();
 }
 
-QString TextInput::getDrawText(QString text)
+QString TextInput::getDrawText(const QString & text)
 {
     QString drawText = text;
     if(m_focused)

@@ -33,6 +33,8 @@ protected:
 protected:
     oxygine::spBox9Sprite m_Textbox;
     oxygine::spTextField m_Textfield;
+private:
+    QString m_lastDrawText;
 };
 
 #endif // TEXTBOX_H

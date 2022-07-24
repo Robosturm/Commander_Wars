@@ -3825,11 +3825,6 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="151"/>
-        <source>Gameplay &amp;amp; Keys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="401"/>
         <source>Screen Settings</source>
         <translation type="unfinished"></translation>
@@ -3973,6 +3968,11 @@ Warning: disabling this on a smaller screen may lead to unplayable game experien
     <message>
         <location filename="../menue/optionmenue.cpp" line="432"/>
         <source>Screen Mode: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="151"/>
+        <source>Gameplay &amp; Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

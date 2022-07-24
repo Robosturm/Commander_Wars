@@ -78,7 +78,7 @@ var GAMEANIMATIONPOWER =
             var delay = frameTime * 2 * i + 1;
             var duration = frameTime * 4;
             var subtext = text[i];
-            animation.createMovingText(font, subtext, delay, Qt.point(xPos, startY), Qt.point(xPos, endY), duration);
+            animation.createMovingText(font, subtext, delay, Qt.point(xPos, startY), Qt.point(xPos, endY), duration, GameEnums.QEasingCurve_OutQuad);
             var letterWidth = animation.getFontWidth(font, subtext);
             if (letterWidth <= 0)
             {
@@ -108,7 +108,7 @@ var GAMEANIMATIONPOWER =
             startPos = Qt.point(settings.getWidth() - size.x * scale * offsetXMult - 20 * offsetXMult, - size.y * scale);
         }
 
-        animation.addMovingCoSprite(sprite, scale, startPos, Qt.point(startPos.x, settings.getHeight() / 2 - size.y * scale / 2), frameTime * coMovingDuration);
+        animation.addMovingCoSprite(sprite, scale, startPos, Qt.point(startPos.x, settings.getHeight() / 2 - size.y * scale / 2), frameTime * coMovingDuration, 0, GameEnums.QEasingCurve_OutQuad);
 
     }
 };

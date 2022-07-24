@@ -139,7 +139,8 @@ void ActionPerformer::performAction(spGameAction pGameAction)
                 performAction(pAction);
             }
         }
-        if (pCurrentPlayer != m_pMap->getCurrentPlayer())
+        if (pCurrentPlayer != m_pMap->getCurrentPlayer() &&
+            m_pMenu != nullptr)
         {
             auto* baseGameInput = m_pMap->getCurrentPlayer()->getBaseGameInput();
             if (baseGameInput != nullptr &&

@@ -29,7 +29,17 @@ jobs:
         
     steps:
     - uses: actions/checkout@v2
-                    
+             
+    - name: Install os qt
+      uses: jurplel/install-qt-action@v2.14.0
+      with:      
+          aqtversion: '==2.0.2'
+          target: 'desktop'
+          version: ${{env.QT_Version}}
+          arch: ${{matrix.COMPILER_TOOLS_VERSION}}
+          dir: '${{github.workspace}}/qt/'
+          install-deps: "true"
+          
     - name: Install Qt
       uses: jurplel/install-qt-action@v2.14.0
       with:      
@@ -41,31 +51,24 @@ jobs:
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
             
-    - name: Install os qt
-      uses: jurplel/install-qt-action@v2.14.0
-      with:      
-          aqtversion: '==2.0.2'
-          target: 'desktop'
-          version: ${{env.QT_Version}}
-          arch: ${{matrix.COMPILER_TOOLS_VERSION}}
-          dir: '${{github.workspace}}/qt/'
-          install-deps: "true"
       
     - name: Configure CMake
       run:  |
         cmake \
         -B "${{github.workspace}}/build" \
-        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
-        -DQt6_DIR="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/" \
-        -DQt6CoreTools_DIR="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/lib/cmake/Qt6CoreTools/" \
-        -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}" \
-        -DQT_HOST_PATH_CMAKE_DIR="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/" \
-        -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
-        -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/qt.toolchain.cmake \
-        -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api-level }} \
-        -DANDROID_ABI=${{ matrix.abi }} \
-        -DANDROID_NDK_ROOT='${{ matrix.NdkRoot }}' \
-        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install'        
+        "-DCMAKE_GENERATOR:STRING=NMake Makefiles JOM" \
+        -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \        
+        "-DQT_QMAKE_EXECUTABLE:FILEPATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
+        "-DCMAKE_PREFIX_PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \        
+        "-DQT_HOST_PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
+        "-DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api-level }}" \
+        "-DANDROID_ABI=${{ matrix.abi }}" \
+        "-DANDROID_STL:STRING=c++_shared" \ 
+        "-DCMAKE_FIND_ROOT_PATH:PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
+        "-DCMAKE_TOOLCHAIN_FILE:FILEPATH=${{matrix.NdkRoot}}/build/cmake/android.toolchain.cmake" \        
+        "-DANDROID_NDK:PATH=${{matrix.NdkRoot}}" \
+        "-DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL:BOOL=ON" \
+        "-DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install"
 
     - name: Build
       working-directory: '${{github.workspace}}/build'

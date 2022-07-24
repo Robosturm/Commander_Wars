@@ -148,7 +148,7 @@ OptionMenue::OptionMenue()
     connect(this, &OptionMenue::sigReloadSettings, this, &OptionMenue::reloadSettings, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigWindowLayoutChanged, this, &OptionMenue::reloadSettings, Qt::QueuedConnection);
 
-    oxygine::spButton pButtonGameplayAndKeys = ObjectManager::createButton(tr("Gameplay &amp; Keys"), 220);
+    oxygine::spButton pButtonGameplayAndKeys = ObjectManager::createButton(tr("Gameplay & Keys"), 220);
     addChild(pButtonGameplayAndKeys);
     pButtonGameplayAndKeys->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f, 10);
     pButtonGameplayAndKeys->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void

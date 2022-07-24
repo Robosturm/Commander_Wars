@@ -108,19 +108,19 @@ void GameAnimationPower::createMovingText(const QString & font, const QString & 
 void GameAnimationPower::addMovingCoSprite(const QString & sprite, float scale, QPoint startPos, QPoint endPos, qint32 duration, qint32 delay, QEasingCurve::Type easeType)
 {
     oxygine::ResAnim* pAnim = m_pCO->getResAnim(sprite);
-     if (pAnim != nullptr)
-     {
-         oxygine::spSprite pSprite = oxygine::spSprite::create();
-         pSprite->setResAnim(pAnim);
-         pSprite->setScale(scale);
-         pSprite->setSize(pAnim->getWidth(), pAnim->getHeight());
-         pSprite->setPosition(startPos.x(), startPos.y());
-         m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
-         oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endPos.x(), endPos.y())), oxygine::timeMS(duration), 1, false, oxygine::timeMS(delay), easeType);
-         m_lastCreatedTweenQueue->add(tween1);
-         pSprite->addTween(m_lastCreatedTweenQueue);
-         addChild(pSprite);
-     }
+    if (pAnim != nullptr)
+    {
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        pSprite->setResAnim(pAnim);
+        pSprite->setScale(scale);
+        pSprite->setSize(pAnim->getWidth(), pAnim->getHeight());
+        pSprite->setPosition(startPos.x(), startPos.y());
+        m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
+        oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endPos.x(), endPos.y())), oxygine::timeMS(duration), 1, false, oxygine::timeMS(delay), easeType);
+        m_lastCreatedTweenQueue->add(tween1);
+        pSprite->addTween(m_lastCreatedTweenQueue);
+        addChild(pSprite);
+    }
 
 }
 
