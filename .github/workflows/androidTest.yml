@@ -57,17 +57,19 @@ jobs:
         cmake \
         -B "${{github.workspace}}/build" \
         "-DCMAKE_GENERATOR:STRING=NMake Makefiles JOM" \
-        -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \        
+        -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
         "-DQT_QMAKE_EXECUTABLE:FILEPATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
-        "-DCMAKE_PREFIX_PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \        
+        "-DCMAKE_PREFIX_PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \     
         "-DQT_HOST_PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
         "-DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api-level }}" \
         "-DANDROID_ABI=${{ matrix.abi }}" \
-        "-DANDROID_STL:STRING=c++_shared" \ 
+        "-DANDROID_STL:STRING=c++_shared" \
         "-DCMAKE_FIND_ROOT_PATH:PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
-        "-DCMAKE_TOOLCHAIN_FILE:FILEPATH=${{matrix.NdkRoot}}/build/cmake/android.toolchain.cmake" \        
+        "-DCMAKE_TOOLCHAIN_FILE:FILEPATH=${{matrix.NdkRoot}}/build/cmake/android.toolchain.cmake" \      
         "-DANDROID_NDK:PATH=${{matrix.NdkRoot}}" \
         "-DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL:BOOL=ON" \
+        "-DCMAKE_C_COMPILER:FILEPATH=${{matrix.NdkRoot}}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe" \
+        "-DCMAKE_CXX_COMPILER:FILEPATH=${{matrix.NdkRoot}}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe" \
         "-DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install"
 
     - name: Build
