@@ -315,7 +315,7 @@ void CampaignEditor::updateCampaignData()
         pBox->setTooltipText(tr("All maps marked as last map need to be won in order to finish the campaign."));
         pBox->setPosition(940, 10 + i * 40);
         m_Panel->addItem(pBox);
-        connect(pBox.get(), &Checkbox::checkChanged, [this, i](bool value)
+        connect(pBox.get(), &Checkbox::checkChanged, this, [this, i](bool value)
         {
             mapDatas[i].lastMap = value;
         });
@@ -692,7 +692,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     spinBox->setTooltipText(tr("Number of maps that leads to this map and that need to be won in order to play this map. Can be smaller so multiple campaign paths lead to this map."));
     spinBox->setPosition(300, 10);
     spinBox->setCurrentValue(mapDatas[index].previousCount);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this, index](qreal value)
     {
         mapDatas[index].previousCount = static_cast<qint32>(value);
@@ -721,7 +721,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
             {
                 pCheckbox->setChecked(false);
             }
-            connect(pCheckbox.get(), &Checkbox::checkChanged, [this, index, i](bool value)
+            connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, index, i](bool value)
             {
                 if (value)
                 {
@@ -764,7 +764,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     spinBox->setTooltipText(tr("Number of maps that disable this map again. When they are one this map is made unplayable. Can be used to make a map no longer playable after a Victory."));
     spinBox->setPosition(300, 10);
     spinBox->setCurrentValue(mapDatas[index].disableCount);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this, index](qreal value)
     {
         mapDatas[index].disableCount = static_cast<qint32>(value);
@@ -791,7 +791,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
         {
             pCheckbox->setChecked(false);
         }
-        connect(pCheckbox.get(), &Checkbox::checkChanged, [this, index, i](bool value)
+        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, index, i](bool value)
         {
             if (value)
             {
@@ -851,7 +851,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     textBox->setTooltipText(tr("Name of the Variable that should be checked. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, y);
     textBox->setCurrentText(mapDatas[index].scriptVariableEnableName);
-    connect(textBox.get(), &Textbox::sigTextChanged,
+    connect(textBox.get(), &Textbox::sigTextChanged, this,
             [this, index](QString value)
     {
         mapDatas[index].scriptVariableEnableName = value;
@@ -886,7 +886,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     spinBox->setTooltipText(tr("The value that the variable gets checked against."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(mapDatas[index].scriptVariableEnableValue);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this, index](qreal value)
     {
         mapDatas[index].scriptVariableEnableValue = value;
@@ -903,7 +903,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     checkBox->setTooltipText(tr("If checked the enable variable needs to fullfil the condition to allow this map to be playable."));
     checkBox->setPosition(width, y);
     checkBox->setChecked(mapDatas[index].scriptVariableEnableActive);
-    connect(checkBox.get(), &Checkbox::checkChanged,
+    connect(checkBox.get(), &Checkbox::checkChanged, this,
             [this, index](bool value)
     {
         mapDatas[index].scriptVariableEnableActive = value;
@@ -927,7 +927,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     textBox->setTooltipText(tr("Name of the Variable that should be checked. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, y);
     textBox->setCurrentText(mapDatas[index].scriptVariableDisableName);
-    connect(textBox.get(), &Textbox::sigTextChanged,
+    connect(textBox.get(), &Textbox::sigTextChanged, this,
             [this, index](QString value)
     {
         mapDatas[index].scriptVariableDisableName = value;
@@ -960,7 +960,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     spinBox->setTooltipText(tr("The value that the variable gets checked against."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(mapDatas[index].scriptVariableDisableValue);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this, index](qreal value)
     {
         mapDatas[index].scriptVariableDisableValue = value;
@@ -977,7 +977,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     checkBox->setTooltipText(tr("If checked and if the disable variable has been fullfiled this map can't be played."));
     checkBox->setPosition(width, y);
     checkBox->setChecked(mapDatas[index].scriptVariableDisableActive);
-    connect(checkBox.get(), &Checkbox::checkChanged,
+    connect(checkBox.get(), &Checkbox::checkChanged, this,
             [this, index](bool value)
     {
         mapDatas[index].scriptVariableDisableActive = value;

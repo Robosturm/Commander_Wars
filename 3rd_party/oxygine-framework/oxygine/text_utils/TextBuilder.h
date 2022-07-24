@@ -23,8 +23,9 @@ namespace oxygine
             virtual ~TextBuilder() = default;
             text::spNode parse(const QString & str);
         private:
-            void ReplaceHtmlSigns(QString & text) const;
-            bool FixSign(QString & text, qint32 pos) const;
+            void ReplaceXmlSignsToSigns(QString & text) const;
+            QString & ReplaceSignsToXmlSigns(QString & text) const;
+            void FixSigns(QString & text) const;
             text::spNode create(QDomNode& reader);
         };
     }

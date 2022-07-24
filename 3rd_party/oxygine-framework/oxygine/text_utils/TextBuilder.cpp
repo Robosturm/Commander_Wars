@@ -10,7 +10,7 @@ namespace oxygine
     namespace text
     {
 
-        void TextBuilder::ReplaceHtmlSigns(QString & text) const
+        void TextBuilder::ReplaceXmlSignsToSigns(QString & text) const
         {
             text.replace(AND_AMP_XML_SIGN, "&");
             text.replace(SMALLER_AMP_XML_SIGN, "<");
@@ -19,35 +19,84 @@ namespace oxygine
             text.replace(APOS_AMP_XML_SIGN, "'");
         }
 
-        bool TextBuilder::FixSign(QString & text, qint32 pos) const
+        QString & TextBuilder::ReplaceSignsToXmlSigns(QString & text) const
         {
-            auto sign = text[pos];
-            bool fixed = true;
-            if (sign == '&')
+            text.replace("&", AND_AMP_XML_SIGN);
+            text.replace("<", SMALLER_AMP_XML_SIGN);
+            text.replace(">", GREATER_AMP_XML_SIGN);
+            text.replace("\"", QOUT_AMP_XML_SIGN);
+            text.replace("'", APOS_AMP_XML_SIGN);
+            return text;
+        }
+
+        void TextBuilder::FixSigns(QString & text) const
+        {
+            if (text.contains("</br>"))
             {
-                text.replace(pos, 1, AND_AMP_XML_SIGN);
+                QStringList items = text.split("</br>");
+                text = "";
+                for (qint32 i = 0; i < items.size() - 1; i++)
+                {
+                    QStringList subParts = items[i].split("<br>");
+                    if (subParts.length() == 2)
+                    {
+                        text += subParts[0];
+                        text += "<br>";
+                        text += ReplaceSignsToXmlSigns(subParts[1]);
+                        text += "</br>";
+                    }
+                    else
+                    {
+                        text += items[i] + "</br>";
+                    }
+                }
+                text += items[items.size() - 1];
             }
-            else if (sign == '<')
+            if (text.contains("</r>"))
             {
-                text.replace(pos, 1, SMALLER_AMP_XML_SIGN);
+                QStringList items = text.split("</r>");
+                text = "";
+                for (qint32 i = 0; i < items.size() - 1; ++i)
+                {
+                    QStringList subParts = items[i].split("<r>");
+                    if (subParts.length() == 2)
+                    {
+                        text += subParts[0];
+                        text += "<r>";
+                        text += ReplaceSignsToXmlSigns(subParts[1]);
+                        text += "</r>";
+                    }
+                    else
+                    {
+                        text += items[i] + "</r>";
+                    }
+                }
+                text += items[items.size() - 1];
             }
-            else if (sign == '>')
+            if (text.contains("</div>"))
             {
-                text.replace(pos, 1, GREATER_AMP_XML_SIGN);
+                QStringList items = text.split("</div>");
+                text = "";
+                for (qint32 i = 0; i < items.size() - 1; ++i)
+                {
+                    QStringList subParts = items[i].split("<div");
+                    if (subParts.length() == 2)
+                    {
+                        text += subParts[0];
+                        text += "<div";
+                        auto end = subParts[1].indexOf('>');
+                        text += subParts[1].section('>', 0, 0) + ">";
+                        subParts[1].remove(0, end + 1);
+                        text += ReplaceSignsToXmlSigns(subParts[1]);
+                        text += "</div>";
+                    }
+                    else
+                    {
+                        text += items[i] + "</r>";
+                    }
+                }
+                text += items[items.size() - 1];
             }
-            else if (sign == '\"')
-            {
-                text.replace(pos, 1, QOUT_AMP_XML_SIGN);
-            }
-            else if (sign == '\'')
-            {
-                text.replace(pos, 1, APOS_AMP_XML_SIGN);
-            }
-            else
-            {
-                fixed = false;
-            }
-            return fixed;
         }
 
         text::spNode TextBuilder::create(QDomNode& reader)
@@ -61,20 +110,20 @@ namespace oxygine
                 {
                     tn = text::spDivNode::create(element);
                     QString text = element.text();
-                    ReplaceHtmlSigns(text);
+                    ReplaceXmlSignsToSigns(text);
                     tn->appendNode(text::spTextNode::create(text));
                 }
                 else if (name == "br")
                 {
                     tn = text::spBrNode::create();
                     QString text = element.text();
-                    ReplaceHtmlSigns(text);
+                    ReplaceXmlSignsToSigns(text);
                     tn->appendNode(text::spTextNode::create(text));
                 }
                 else if (name == "r")
                 {
                     QString text = element.text();
-                    ReplaceHtmlSigns(text);
+                    ReplaceXmlSignsToSigns(text);
                     tn = text::spTextNode::create(text);
                 }
                 else if (name == "data")
@@ -119,31 +168,9 @@ namespace oxygine
             {
                 str = "<data><r>" + str + "</r></data>";
             }
+            FixSigns(str);
             QDomDocument doc;
-            qint32 line;
-            qint32 column;
-            qint32 lastFixPos = -1;
-            QString msg;
-            bool fixed = true;
-
-            while (!doc.setContent(str, &msg, &line, &column) && fixed)
-            {
-                if (lastFixPos != column)
-                {
-                    fixed = FixSign(str, column - 2);
-                    if (!fixed)
-                    {
-                        fixed = FixSign(str, column - 1);
-                    }
-                }
-                else
-                {
-                    doc = QDomDocument();
-                    CONSOLE_PRINT("Unable to parse xml-text-input for: " + st + " Please use correct xml syntax input.", Console::eERROR);
-                    break;
-                }
-                lastFixPos = column;
-            }
+            doc.setContent(str);
             QDomElement root = doc.documentElement();
             QDomNode node = root.firstChild();
             // loop through root childs

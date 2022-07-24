@@ -710,7 +710,7 @@ void MainServer::createAccount(qint64 socketId, const QJsonDocument & doc, Netwo
         result = GameEnums::LoginError_AccountExists;
     }
     QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
@@ -752,7 +752,7 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, Netw
         result = GameEnums::LoginError_AccountDoesntExist;
     }
     QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
@@ -811,7 +811,7 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc
         result = GameEnums::LoginError_AccountDoesntExist;
     }
     QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
@@ -865,7 +865,7 @@ void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument & do
         result = GameEnums::LoginError_AccountDoesntExist;
     }
     QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);

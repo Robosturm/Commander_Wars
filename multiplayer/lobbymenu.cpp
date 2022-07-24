@@ -524,7 +524,8 @@ void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject & objDa
         QString object = jsScripts[action - static_cast<qint32>(NetworkCommands::PublicKeyActions::CreateAccount)];
         CONSOLE_PRINT("Calling function " + object + ".onAccountMessage(" + QString::number(accountError) + ")", Console::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValueList args({accountError});
+        QJSValueList args;
+        args.append(accountError);
         pInterpreter->doFunction(object, "onAccountMessage", args);
     }
     else
