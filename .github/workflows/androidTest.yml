@@ -21,6 +21,7 @@ jobs:
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
             NdkRoot: 'C:/Android/android-sdk/ndk-bundle'
+            ClangPath: "C:/msys64/mingw64/bin"
             
     runs-on: ${{matrix.os}}
     defaults:
@@ -68,8 +69,8 @@ jobs:
         "-DCMAKE_TOOLCHAIN_FILE:FILEPATH=${{matrix.NdkRoot}}/build/cmake/android.toolchain.cmake" \      
         "-DANDROID_NDK:PATH=${{matrix.NdkRoot}}" \
         "-DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL:BOOL=ON" \
-        "-DCMAKE_C_COMPILER:FILEPATH=${{matrix.NdkRoot}}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe" \
-        "-DCMAKE_CXX_COMPILER:FILEPATH=${{matrix.NdkRoot}}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe" \
+        "-DCMAKE_C_COMPILER:FILEPATH=${{matrix.ClangPath}}/clang.exe" \
+        "-DCMAKE_CXX_COMPILER:FILEPATH=${{matrix.ClangPath}}/clang++.exe" \
         "-DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install"
 
     - name: Build
