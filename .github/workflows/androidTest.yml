@@ -55,14 +55,14 @@ jobs:
     - name: setup clang      
       uses: msys2/setup-msys2@v2
       with:
-        install: make mingw-w64-x86_64-clang            
+        install: make mingw-w64-x86_64-clang        
       
     - name: Configure CMake
       run:  |
         cmake \
-        -B "${{github.workspace}}/build" \
+        "-B ${{github.workspace}}/build" \
         "-DCMAKE_GENERATOR:STRING=NMake Makefiles JOM" \
-        -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
+        "-DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}" \
         "-DQT_QMAKE_EXECUTABLE:FILEPATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
         "-DCMAKE_PREFIX_PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \     
         "-DQT_HOST_PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
@@ -73,6 +73,8 @@ jobs:
         "-DCMAKE_TOOLCHAIN_FILE:FILEPATH=${{matrix.NdkRoot}}/build/cmake/android.toolchain.cmake" \      
         "-DANDROID_NDK:PATH=${{matrix.NdkRoot}}" \
         "-DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL:BOOL=ON" \
+        "-DCMAKE_C_COMPILER:FILEPATH=${{matrix.ClangPath}}/clang.exe" \
+        "-DCMAKE_CXX_COMPILER:FILEPATH=${{matrix.ClangPath}}/clang++.exe" \
         "-DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install"
 
     - name: Build
