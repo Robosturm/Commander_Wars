@@ -163,13 +163,17 @@ else()
 endif()
 
 ###################################################################################
-# General defines
+# General version information
 ###################################################################################
 add_definitions(
-    -DMAJOR=0
-    -DMINOR=24
-    -DREVISION=0
+    -DVERSION_MAJOR=0
+    -DVERSION_MINOR=24
+    -DVERSION_REVISION=1
+    -DVERSION_SUFFIX="main"
     )
+
+set(COW_ANDROID_VERSION_NAME "0.24.1-main")
+set(COW_ANDROID_VERSION_CODE "20")
 
 ###################################################################################
 # Set up some compiler and linking options
@@ -750,11 +754,11 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_NAME "0.24.0"
+    QT_ANDROID_VERSION_NAME ${COW_ANDROID_VERSION_NAME}
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_CODE "19"
+    QT_ANDROID_VERSION_CODE ${COW_ANDROID_VERSION_CODE}
     )
 
 # link libraries

@@ -232,7 +232,7 @@ public slots:
      */
     static QString getGameVersion()
     {
-        return "Version: " + QString::number(MAJOR) + "." + QString::number(MINOR) + "." + QString::number(REVISION);
+        return "Version: " + QString::number(VERSION_MAJOR) + "." + QString::number(VERSION_MINOR) + "." + QString::number(VERSION_REVISION)+ "-" + QString(VERSION_SUFFIX);
     }
     /**
      * @brief showCrashReport
