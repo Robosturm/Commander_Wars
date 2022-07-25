@@ -147,11 +147,15 @@ void MovementPlanner::reloadMap()
     {
         for (qint32 y = 0; y < mapHeight; ++y)
         {
+            auto * pTerrain = m_pMap->getTerrain(x, y);
+            auto * pUnit = pTerrain->getUnit();
+            if (pUnit != nullptr)
+            {
+                pUnit->setMultiTurnPath(QVector<QPoint>());
+            }
             if (!pPlayer->getFieldVisible(x, y))
             {
-                auto * pTerrain = m_pMap->getTerrain(x, y);
                 auto * pBuilding = pTerrain->getBuilding();
-                auto * pUnit = pTerrain->getUnit();
                 if (pBuilding != nullptr && pBuilding->isEnemyBuilding(pPlayer))
                 {
                     pBuilding->setOwner(nullptr);
