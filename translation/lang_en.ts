@@ -1051,9 +1051,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="280"/>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="298"/>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="307"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="281"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="299"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="308"/>
         <source>CO Style </source>
         <translation type="unfinished"></translation>
     </message>

@@ -4,8 +4,7 @@ var Constructor = function()
     {
         wikipage.loadHeadline(LOADEDWIKIPAGE.getName());
         wikipage.loadImage("icon_yc", 2);
-        wikipage.loadText(qsTr("Yellow Comet is on a group of islands on the far east. They're also the smallest nation of the Allied Nations, but their strong army deters any ") +
-		                  qsTr("outside forces from invading them. "));
+        wikipage.loadText(qsTr("Yellow Comet is on a group of islands on the far east. They're also the smallest nation of the Allied Nations, but their strong army deters any outside forces from invading them. "));
     };
 
     this.getTags = function()

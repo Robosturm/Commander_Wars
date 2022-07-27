@@ -245,6 +245,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
                 });
                 if (i == 0)
                 {
+                    m_currentPixel = 0;
                     emit m_pColorSelector->sigSelecetedColorChanged(pPixelAxtor->getColor());
                 }
                 m_pPixelPanel->addItem(pixel);
