@@ -96,7 +96,7 @@ CommandLineParser::CommandLineParser()
     m_parser.addOption(m_mailServerAuthMethod);
 }
 
-void CommandLineParser::parseArgs(QApplication & app)
+void CommandLineParser::parseArgsPhaseOne(QApplication & app)
 {
     m_parser.process(app);
     Mainapp* pApp = Mainapp::getInstance();
@@ -113,6 +113,17 @@ void CommandLineParser::parseArgs(QApplication & app)
     {
         pApp->actAsSlave();
     }
+}
+
+void CommandLineParser::parseArgsPhaseTwo()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    if (m_parser.isSet(m_slaveName))
+    {
+        QString value = m_parser.value(m_slaveName);
+        Settings::setSlaveServerName(value);
+    }
+
     if (m_parser.isSet(m_noUi))
     {
         Settings::setOverworldAnimations(false);

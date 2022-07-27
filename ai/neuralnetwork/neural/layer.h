@@ -4,7 +4,7 @@
 #include <QMap>
 #include <vector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "ai/neuralnetwork/neural/neuron.h"
 

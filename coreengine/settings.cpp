@@ -15,7 +15,7 @@
 #include <QDir>
 #include <QFileInfoList>
 #include <QInputDevice>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
 #ifdef USEAPPCONFIGPATH
     const QString Settings::m_settingFile = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + "/Commander_Wars.ini";

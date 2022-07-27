@@ -176,6 +176,7 @@ void MainServer::parseSlaveAddressOptions()
             {
                 m_lastUsedPort = info.minPort -1;
             }
+            CONSOLE_PRINT("Slave host option: " + info.address + " from port " + QString::number(info.minPort) + " to " + QString::number(info.maxPort), Console::eDEBUG);
         }
     }
 }

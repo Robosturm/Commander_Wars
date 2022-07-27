@@ -8,6 +8,7 @@
 #include <QLineEdit>
 #include <QMutex>
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 #include "coreengine/settings.h"
 #include "coreengine/LUPDATE_MACROS.h"

@@ -1,9 +1,11 @@
+#include <QClipboard>
+#include <QGuiApplication>
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/base/focusableobject.h"
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
-
-#include <QClipboard>
-#include <QGuiApplication>
 
 FocusableObject* FocusableObject::m_focusedObject = nullptr;
 bool FocusableObject::m_registeredAtStage = false;

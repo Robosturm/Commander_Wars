@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QDomDocument>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 #include "coreengine/interpreter.h"
 #include "coreengine/console.h"

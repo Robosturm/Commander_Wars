@@ -6,7 +6,7 @@
 #include <QTimer>
 #include <qdir.h>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/chat.h"
 

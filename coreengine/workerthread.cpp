@@ -1,7 +1,11 @@
 #include <QDirIterator>
 #include <QApplication>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/Input.h"
+#include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/workerthread.h"
@@ -12,7 +16,6 @@
 #include "menue/basegamemenu.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
-
 
 #include "resource_management/terrainmanager.h"
 #include "resource_management/buildingspritemanager.h"

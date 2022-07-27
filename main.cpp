@@ -27,9 +27,10 @@ int main(qint32 argc, char* argv[])
     Mainapp window;
     window.setTitle("Commander Wars");
     auto & parser = window.getParser();
-    parser.parseArgs(app);
+    parser.parseArgsPhaseOne(app);
     Settings::getInstance();
     Settings::loadSettings();
+    parser.parseArgsPhaseTwo();
     window.createBaseDirs();
 
     // start crash report handler

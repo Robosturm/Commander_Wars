@@ -14,7 +14,6 @@
 #include <QTimer>
 
 #include "coreengine/globalutils.h"
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class AudioThread : public QObject
 {

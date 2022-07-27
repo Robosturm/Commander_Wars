@@ -726,6 +726,7 @@ void Mainapp::createBaseDirs()
         "data/gamerules",
         "data/randommaps",
         "data/records",
+        "data/customStyles",
         "maps",
         "customTerrainImages",
         "resources",

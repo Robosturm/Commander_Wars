@@ -6,6 +6,7 @@
 
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
+
 #include "game/GameEnums.h"
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"

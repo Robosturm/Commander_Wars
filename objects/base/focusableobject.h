@@ -2,9 +2,10 @@
 #define FOCUSABLEOBJECT_H
 
 #include <QObject>
+#include <QVariant>
 #include <memory>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 class FocusableObject;
 using spFocusableObject = oxygine::intrusive_ptr<FocusableObject>;

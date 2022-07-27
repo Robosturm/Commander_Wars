@@ -25,17 +25,22 @@ public:
 signals:
     void sigFinished();
     void sigCancel();
-
     void sigCOStyleChanged(qint32 index);
+    void sigSaveCustomStyle();
+    void sigDeleteCustomStyle();
 public slots:
     void changeCOStyle(qint32 index);
     void selecetedColorChanged(QColor color);
+    void saveCustomStyle();
+    void deleteCustomStyle();
 private slots:
     void remove();
 private:
     void updateSprites();
+    void loadAltsForStyle();
 private:
     oxygine::spButton m_pOkButton;
+    oxygine::spButton m_pDeleteButton;
     oxygine::spBox9Sprite m_pSpriteBox;
     spColorSelector m_pColorSelector;
     spPanel m_pCOPanel;
@@ -54,6 +59,7 @@ private:
     QString m_ResFilePath;
     QImage m_colorTable;
     QImage m_maskTable;
+    QImage m_customMaskTable;
     qint32 m_CurrentIndex{-1};
     bool m_useColorBox{false};
 

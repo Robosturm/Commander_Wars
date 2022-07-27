@@ -1,7 +1,9 @@
-#include "qdir.h"
-#include "qfile.h"
-#include "qfileinfo.h"
-#include "qdiriterator.h"
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QDirIterator>
+
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
@@ -306,23 +308,21 @@ QImage SpriteCreator::createSprite(QString input, QImage& colorTableImg, const Q
             // color pixel or another one?
             QColor org = orgImg.pixelColor(x, y);
             QColor orgBox = getColorBox(org);
-            bool colorSet = false;
             for (qint32 i = 0; i < colorTableImg.width(); i++)
             {
                 QColor pixel = colorTableImg.pixelColor(i, 0);
                 QColor boxColor = getColorBox(pixel);
                 if (useColorBox)
                 {
-                    if (boxColor.rgba() == orgBox.rgba())
+                    if (boxColor.rgba() == orgBox.rgba() ||
+                        pixel.rgba() == org.rgba())
                     {
                         mainImg.setPixelColor(x, y, getImageColor(maskTableImg.pixelColor(i, 0), org));
-                        colorSet = true;
                         break;
                     }
                     else if (i == colorTableImg.width() - 1)
                     {
-                        mainImg.setPixelColor(x, y, orgImg.pixelColor(x, y));
-                        colorSet = true;
+                        mainImg.setPixelColor(x, y, org);
                     }
                 }
                 else
@@ -330,19 +330,13 @@ QImage SpriteCreator::createSprite(QString input, QImage& colorTableImg, const Q
                     if (pixel.rgba() == org.rgba())
                     {
                         mainImg.setPixelColor(x, y, maskTableImg.pixelColor(i, 0));
-                        colorSet = true;
                         break;
                     }
                     else if (i == colorTableImg.width() - 1)
                     {
-                        mainImg.setPixelColor(x, y, orgImg.pixelColor(x, y));
-                        colorSet = true;
+                        mainImg.setPixelColor(x, y, org);
                     }
                 }
-            }
-            if (!colorSet)
-            {
-                mainImg.setPixelColor(x, y, orgImg.pixelColor(x, y));
             }
         }
     }

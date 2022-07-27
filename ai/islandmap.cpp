@@ -9,6 +9,8 @@
 #include "game/co.h"
 #include "game/unitpathfindingsystem.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
+
 IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
       : m_pOwner(pOwner),
         m_pMap(pMap)

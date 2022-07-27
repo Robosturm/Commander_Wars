@@ -38,7 +38,9 @@ public:
 
     CommandLineParser();
 
-    void parseArgs(QApplication & app);
+    void parseArgsPhaseOne(QApplication & app);
+    void parseArgsPhaseTwo();
+
     void startSlaveGame() const;
 private:
     QCommandLineOption m_mods;

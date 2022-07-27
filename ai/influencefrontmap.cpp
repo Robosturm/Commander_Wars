@@ -14,6 +14,8 @@
 
 #include "objects/base/label.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
+
 InfluenceFrontMap::InfluenceFrontMap(GameMap* pMap, const std::vector<spIslandMap> & islands)
     : m_islands(islands),
       m_pMap(pMap)

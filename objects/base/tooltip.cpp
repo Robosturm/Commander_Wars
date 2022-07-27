@@ -1,3 +1,8 @@
+#include <QGuiApplication>
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/base/tooltip.h"
 
 #include "coreengine/mainapp.h"
@@ -5,8 +10,6 @@
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
-
-#include <qguiapplication.h>
 
 Tooltip::Tooltip()
     : m_TooltipTimer(this),

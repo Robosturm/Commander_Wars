@@ -7,10 +7,10 @@
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class Interpreter;
-typedef oxygine::intrusive_ptr<Interpreter> spInterpreter;
+using spInterpreter = oxygine::intrusive_ptr<Interpreter>;
 /**
  * @brief The Interpreter class java-script interpreter with easy access functions
  */

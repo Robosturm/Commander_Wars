@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 
 #include "game/unit.h"
 #include "game/building.h"
