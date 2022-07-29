@@ -894,107 +894,107 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="87"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="73"/>
         <source>Calculate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="142"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="128"/>
         <source>CO for the player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="147"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="133"/>
         <source>Power level of the co.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="153"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="139"/>
         <source>Zone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="158"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="144"/>
         <source>If the unit is in the co-zone of this co.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="177"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="163"/>
         <source>Unit to be used.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="204"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="190"/>
         <source>Terrain the unit is currently sitting on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="227"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="213"/>
         <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="235"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="221"/>
         <source>HP:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="239"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="225"/>
         <source>HP of the unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="245"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="231"/>
         <source>Towers:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="249"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="235"/>
         <source>Amount of towers owned by the player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="255"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="241"/>
         <source>Towns:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="259"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="245"/>
         <source>Amount of towns owned by the player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="265"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="251"/>
         <source>Funds:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="269"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="255"/>
         <source>Amount of funds owned by the player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="282"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="268"/>
         <source>Battle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="288"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="274"/>
         <source>Min:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="292"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="278"/>
         <source>Avg:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="296"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="282"/>
         <source>Max:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="317"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="303"/>
         <source>Post battle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6274,8 +6274,8 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventGeneric</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="172"/>
-        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="194"/>
+        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="173"/>
+        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="214"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6470,32 +6470,32 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventSpawnBuilding</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="14"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="18"/>
         <source>Building that gets spawned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="15"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="19"/>
         <source>Owner: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="29"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="42"/>
         <source>X Position of the Building</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="32"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="45"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="38"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="51"/>
         <source>Y Position of the Building</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="41"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="54"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>

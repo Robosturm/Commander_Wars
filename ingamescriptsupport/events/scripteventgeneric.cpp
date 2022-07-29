@@ -12,6 +12,7 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/checkbox.h"
 #include "objects/base/dropdownmenu.h"
+#include "objects/base/dropdownmenusprite.h"
 #include "objects/base/textbox.h"
 #include "objects/base/label.h"
 #include "objects/dialogs/filedialog.h"
@@ -177,6 +178,25 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 {
                      emit sigShowSelectFile (m_Items[i].filter, m_Items[i].startFolder, m_Items[i].item, spTextbox(pPtrTextbox));
                 });
+                break;
+            }
+            case EditTypes::IconSelection:
+            {
+                spDropDownmenuSprite dropDown = spDropDownmenuSprite::create(105, m_Items[i].items, m_Items[i].creator, -1, false);
+                dropDown->setTooltipText(m_Items[i].tooltip);
+                dropDown->setPosition(width, y);
+                for (qint32 i2  = 0; i2 < m_Items[i].data.size(); i2++)
+                {
+                    if (m_Items[i].data[i2] == m_Items[i].item)
+                    {
+                        dropDown->setCurrentItem(i2);
+                    }
+                }
+                connect(dropDown.get(), &DropDownmenuSprite::sigItemChanged, this, [this, i](qint32 item)
+                {
+                    m_Items[i].item = m_Items[i].data[item];
+                });
+                pBox->addItem(dropDown);
                 break;
             }
         }

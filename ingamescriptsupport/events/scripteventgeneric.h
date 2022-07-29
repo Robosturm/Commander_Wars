@@ -21,7 +21,8 @@ public:
         String,
         Bool,
         Selection,
-        File
+        File,
+        IconSelection,
     };
 
     struct Data
@@ -33,6 +34,7 @@ public:
         QString tooltip;
         QString labelText;
 
+
         // spinbox
         qreal min{1};
         qreal max{9999};
@@ -40,6 +42,8 @@ public:
         // dropdown
         QStringList items;
         QStringList data;
+        // drop down with icon
+        std::function<oxygine::spActor(QString item)> creator;
         // file selection
         QString filter;
         QString startFolder;

@@ -56,21 +56,7 @@ DamageCalculator::DamageCalculator()
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     auto unitIds = pUnitSpriteManager->getUnitsSorted();
     QStringList terrainIds = pTerrainManager->getTerrainsSorted();
-    QStringList buildingIds = pBuildingSpriteManager->getLoadedBuildings();
-    qint32 i = 0;
-    while (i < buildingIds.size())
-    {
-        Building building(buildingIds[i], &m_map);
-        if (building.getBuildingWidth() > 1 ||
-            building.getBuildingHeigth() > 1)
-        {
-            buildingIds.removeAt(i);
-        }
-        else
-        {
-            ++i;
-        }
-    }
+    QStringList buildingIds = pBuildingSpriteManager->getLoadedBuildings();    
     terrainIds.append(buildingIds);
 
     y = 50;
@@ -200,7 +186,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
         }
         return pRet;
     };
-    unitData.m_Terrain = spDropDownmenuSprite::create(105, terrainIds, terrainCreator, 30);
+    unitData.m_Terrain = spDropDownmenuSprite::create(105, terrainIds, terrainCreator, -1, false);
     unitData.m_Terrain->setTooltipText(tr("Terrain the unit is currently sitting on."));
     unitData.m_Terrain->setPosition(x, y);
     addItem(unitData.m_Terrain);

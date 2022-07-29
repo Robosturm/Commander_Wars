@@ -20,8 +20,9 @@ Tooltip::Tooltip()
     moveToThread(pApp->getWorkerthread());
     m_TooltipTimer.setSingleShot(true);
     m_TooltipPauseTimer.setSingleShot(true);
-    addEventListener(oxygine::TouchEvent::MOVE, [this](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::MOVE, [this](oxygine::Event* pEvent)
     {
+        pEvent->stopPropagation();
         if (m_mouseHovered)
         {
             emit sigStartTooltip();
@@ -31,8 +32,9 @@ Tooltip::Tooltip()
             emit sigStartHoveredTimer();
         }
     });
-    addEventListener(oxygine::TouchEvent::OVER, [this](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::OVER, [this](oxygine::Event* pEvent)
     {
+        pEvent->stopPropagation();
         if (m_mouseHovered)
         {
             emit sigStartTooltip();
@@ -42,14 +44,16 @@ Tooltip::Tooltip()
             emit sigStartHoveredTimer();
         }
     });
-    addEventListener(oxygine::TouchEvent::OUTX, [this](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::OUTX, [this](oxygine::Event* pEvent)
     {
+        pEvent->stopPropagation();
         m_mouseHovered = false;
         emit sigStartHoveredTimer();
         emit sigHideTooltip();
     });
     addEventListener(oxygine::TouchEvent::WHEEL_DIR, [this](oxygine::Event* pEvent)
     {
+        pEvent->stopPropagation();
         m_mouseHovered = false;
         emit sigStartHoveredTimer();
         emit sigHideTooltip();
