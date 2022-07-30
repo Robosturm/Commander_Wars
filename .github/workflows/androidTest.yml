@@ -72,7 +72,7 @@ jobs:
       run:  |
         cmake \
         "-B ${{github.workspace}}/build" \
-        "-DCMAKE_GENERATOR:STRING=NMake Makefiles JOM" \
+        "-G Ninja" \
         "-DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}" \
         "-DQT_QMAKE_EXECUTABLE:FILEPATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
         "-DCMAKE_PREFIX_PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \     
