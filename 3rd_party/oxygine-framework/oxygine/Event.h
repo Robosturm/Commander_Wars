@@ -35,7 +35,6 @@ namespace oxygine
         qint32 listenerID;
         eventType type;
         Phase phase;
-        quint32 handleCount{0};
         bool bubbles;
         bool stopsImmediatePropagation;
         bool stopsPropagation;

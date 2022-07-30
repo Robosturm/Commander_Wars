@@ -46,6 +46,10 @@ private:
     spPanel m_pCOPanel;
     QVector<oxygine::spResAnim> m_pResAnims;
     QVector<oxygine::spSprite> m_pCOSprites;
+    QVector<oxygine::spResAnim> m_pMiniResAnims;
+    QVector<oxygine::spSprite> m_pMiniCOSprites;
+    QVector<oxygine::spResAnim> m_pFaceResAnims;
+    QVector<oxygine::spSprite> m_pFaceCOSprites;
     QVector<oxygine::spBox9Sprite> m_pCOBoxes;
     QStringList m_Styles;
     spDropDownmenu m_pPredefinedStyles;

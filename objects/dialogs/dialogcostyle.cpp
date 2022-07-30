@@ -361,8 +361,8 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+nrm", oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        float scale = (m_pCOPanel->getHeight() - 100) / pAnim->getHeight();
-        pBox->setSize(scale * pAnim->getWidth() + 20, scale * pAnim->getHeight() + 40);
+        float scale = (m_pCOPanel->getHeight() - 150) / pAnim->getHeight();
+        pBox->setSize(scale * pAnim->getWidth() + 70, scale * pAnim->getHeight() + 40);
         pBox->setPosition(m_boxWidth, 10);
         m_boxWidth += pBox->getWidth() + 10;
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -400,19 +400,48 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
         pBox->addChild(pCO);
         m_pCOPanel->setContentWidth(pBox->getX() + pBox->getWidth() + 50);
 
+        pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+mini", oxygine::ep_ignore_error);
+        oxygine::spSprite pMiniCO = oxygine::spSprite::create();
+        pMiniCO->setResAnim(pAnim);
+        pMiniCO->setScale(1.0f);
+        pMiniCO->setPosition(10, pBox->getHeight() - pAnim->getHeight() - 10);
+        pBox->addChild(pMiniCO);
+
+        pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+face", oxygine::ep_ignore_error);
+        oxygine::spSprite pFaceCO = oxygine::spSprite::create();
+        pFaceCO->setResAnim(pAnim);
+        pFaceCO->setScale(1.0f);
+        pFaceCO->setPosition(pBox->getWidth() - 10 - pAnim->getWidth(), pBox->getHeight() - pAnim->getHeight() - 10);
+        pBox->addChild(pFaceCO);
+
         m_pCOSprites.append(pCO);
-        m_pCOBoxes.append(pBox);
         m_pResAnims.append(oxygine::spResAnim());
+        m_pMiniCOSprites.append(pMiniCO);
+        m_pMiniResAnims.append(oxygine::spResAnim());
+        m_pFaceCOSprites.append(pFaceCO);
+        m_pFaceResAnims.append(oxygine::spResAnim());
+
+        m_pCOBoxes.append(pBox);
     }
 }
 
 void DialogCOStyle::updateSprites()
 {
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + m_Styles[m_CurrentIndex] + "+nrm"));
+    oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + m_Styles[m_CurrentIndex] + "+nrm");
     float scale = pAnim->getScaleFactor();
     m_pResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+nrm.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale, false);
     m_pCOSprites[m_CurrentIndex]->setResAnim(m_pResAnims[m_CurrentIndex].get());
+
+    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + m_Styles[m_CurrentIndex] + "+mini");
+    scale = pAnim->getScaleFactor();
+    m_pMiniResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+mini.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale, false);
+    m_pMiniCOSprites[m_CurrentIndex]->setResAnim(m_pMiniResAnims[m_CurrentIndex].get());
+
+    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + m_Styles[m_CurrentIndex] + "+face");
+    scale = pAnim->getScaleFactor();
+    m_pFaceResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+face.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale, false);
+    m_pFaceCOSprites[m_CurrentIndex]->setResAnim(m_pFaceResAnims[m_CurrentIndex].get());
 }
 
 void DialogCOStyle::saveCustomStyle()
