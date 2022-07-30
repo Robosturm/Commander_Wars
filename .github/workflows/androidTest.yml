@@ -73,6 +73,7 @@ jobs:
         cmake \
         "-B ${{github.workspace}}/build" \
         "-G Ninja" \
+        "-DCMAKE_SYSTEM_NAME=Android" \
         "-DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}" \
         "-DQT_QMAKE_EXECUTABLE:FILEPATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
         "-DCMAKE_PREFIX_PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \     
