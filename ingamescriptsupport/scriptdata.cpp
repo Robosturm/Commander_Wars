@@ -156,6 +156,7 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
             }
             continue;
         }
+        CONSOLE_PRINT("Adding new top condition", Console::eDEBUG);
         spScriptCondition pCondition = ScriptCondition::createReadCondition(m_pMap, rStream, line);
         if (pCondition.get() != nullptr)
         {

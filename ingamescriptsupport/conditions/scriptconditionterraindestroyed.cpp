@@ -33,7 +33,7 @@ void ScriptConditionTerrainDestroyed::readCondition(QTextStream& rStream, QStrin
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(m_pMap, rStream, ConditionBuildingDestroyed, line))
+        if (readSubCondition(m_pMap, rStream, ConditionTerrainDestroyed, line))
         {
             break;
         }

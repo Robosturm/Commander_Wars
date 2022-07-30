@@ -73,6 +73,7 @@ bool ScriptCondition::readSubCondition(GameMap* pMap, QTextStream& rStream, QStr
     }
     if (subCondition.get() != nullptr)
     {
+        CONSOLE_PRINT("Added sub condition to current condition", Console::eDEBUG);
         line = rStream.readLine();
         line = line.simplified();
         if (line.endsWith(id + " End"))
@@ -152,6 +153,7 @@ spScriptCondition ScriptCondition::createCondition(GameMap* pMap, ConditionType 
 spScriptCondition ScriptCondition::createReadCondition(GameMap* pMap, QTextStream& rStream, QString & line)
 {
     line = line.simplified();
+    CONSOLE_PRINT("Creating condition for line " + line, Console::eDEBUG);
     spScriptCondition ret;
     if (line.endsWith(ConditionEachDay))
     {
@@ -207,6 +209,7 @@ spScriptCondition ScriptCondition::createReadCondition(GameMap* pMap, QTextStrea
     }
     if (ret.get() != nullptr)
     {
+        CONSOLE_PRINT("Found valid condition of type " + QString::number(static_cast<qint32>(ret->getType())), Console::eDEBUG);
         ret->readCondition(rStream, line);
     }    
     return ret;

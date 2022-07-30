@@ -45,7 +45,7 @@ void ScriptConditionCheckVariable::readCondition(QTextStream& rStream, QString l
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(m_pMap, rStream, ConditionVictory, line))
+        if (readSubCondition(m_pMap, rStream, ConditionCheckVariable, line))
         {
             break;
         }

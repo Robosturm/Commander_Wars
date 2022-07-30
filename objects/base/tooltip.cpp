@@ -22,46 +22,63 @@ Tooltip::Tooltip()
     m_TooltipPauseTimer.setSingleShot(true);
     addEventListener(oxygine::TouchEvent::MOVE, [this](oxygine::Event* pEvent)
     {
-        pEvent->stopPropagation();
-        if (m_mouseHovered)
+        if (handleCount == 0)
         {
-            emit sigStartTooltip();
-        }
-        else if (!m_TooltipPauseTimer.isActive())
-        {
-            emit sigStartHoveredTimer();
+            ++handleCount;
+            if (m_mouseHovered)
+            {
+                emit sigStartTooltip();
+            }
+            else if (!m_TooltipPauseTimer.isActive())
+            {
+                emit sigStartHoveredTimer();
+            }
         }
     });
     addEventListener(oxygine::TouchEvent::OVER, [this](oxygine::Event* pEvent)
     {
-        pEvent->stopPropagation();
-        if (m_mouseHovered)
+        if (handleCount == 0)
         {
-            emit sigStartTooltip();
-        }
-        else if (!m_TooltipPauseTimer.isActive())
-        {
-            emit sigStartHoveredTimer();
+            ++handleCount;
+            if (m_mouseHovered)
+            {
+                emit sigStartTooltip();
+            }
+            else if (!m_TooltipPauseTimer.isActive())
+            {
+                emit sigStartHoveredTimer();
+            }
         }
     });
     addEventListener(oxygine::TouchEvent::OUTX, [this](oxygine::Event* pEvent)
     {
-        pEvent->stopPropagation();
-        m_mouseHovered = false;
-        emit sigStartHoveredTimer();
-        emit sigHideTooltip();
+
+        if (handleCount == 0)
+        {
+            ++handleCount;
+            m_mouseHovered = false;
+            emit sigStartHoveredTimer();
+            emit sigHideTooltip();
+        }
     });
     addEventListener(oxygine::TouchEvent::WHEEL_DIR, [this](oxygine::Event* pEvent)
     {
-        pEvent->stopPropagation();
-        m_mouseHovered = false;
-        emit sigStartHoveredTimer();
-        emit sigHideTooltip();
+        if (handleCount == 0)
+        {
+            ++handleCount;
+            m_mouseHovered = false;
+            emit sigStartHoveredTimer();
+            emit sigHideTooltip();
+        }
     });
 
     addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
-        emit sigStopTooltip();
+        if (handleCount == 0)
+        {
+            ++handleCount;
+            emit sigStopTooltip();
+        }
     });
 
     connect(this, &Tooltip::sigHideTooltip, this, &Tooltip::hideTooltip, Qt::QueuedConnection);
