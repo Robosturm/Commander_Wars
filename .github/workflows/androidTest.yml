@@ -3,7 +3,6 @@ on: [push]
 env:
   BUILD_TYPE: Release
   QT_Version: '6.3.0'
-  NDK_Version: r22b
   
 jobs:
   install:
@@ -20,9 +19,9 @@ jobs:
             abi : "armeabi-v7a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
-            NdkRoot: 'C:/Android/android-sdk/ndk/23.2.8568313/'
             ClangCompiler: 'clang64'
             OpenSslType: 'clang-x86_64'
+            NDK_Version: r22b
             
     runs-on: ${{matrix.os}}
     defaults:
@@ -66,6 +65,12 @@ jobs:
         pacboy: >-
           toolchain:p
           cmake:p
+         
+    - name: setup-ndk
+      uses: nttld/setup-ndk@v1
+      
+      with:
+        ndk-version: ${{matrix.NDK_Version}}
       
     - name: Configure CMake
       run:  |
@@ -81,8 +86,8 @@ jobs:
         "-DANDROID_ABI=${{ matrix.abi }}" \
         "-DANDROID_STL:STRING=c++_shared" \
         "-DCMAKE_FIND_ROOT_PATH:PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
-        "-DCMAKE_TOOLCHAIN_FILE:FILEPATH=${{matrix.NdkRoot}}/build/cmake/android.toolchain.cmake" \      
-        "-DANDROID_NDK:PATH=${{matrix.NdkRoot}}" \
+        "-DCMAKE_TOOLCHAIN_FILE:FILEPATH=${{steps.setup-ndk.outputs.ndk-path}}/build/cmake/android.toolchain.cmake" \      
+        "-DANDROID_NDK:PATH=${{steps.setup-ndk.outputs.ndk-path}}" \
         "-DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL:BOOL=ON" \
         "-DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install"
 
