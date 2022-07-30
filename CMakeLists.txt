@@ -51,7 +51,11 @@ message("CXX Flags: ${CMAKE_CXX_FLAGS}")
 message("CMake Systemname: ${CMAKE_SYSTEM_NAME}")
 message("CMake Binary dir: ${CMAKE_CURRENT_BINARY_DIR}")
 message("OpenSsL-Dir:" ${OPENSSL_ROOT_DIR})
-
+message("Toolchain-file: ${CMAKE_TOOLCHAIN_FILE}")
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    message("SDK: ${ANDROID_SDK}")
+    message("NDK: ${ANDROID_SDK_ROOT}")
+endif()
 ###################################################################################
 # Find external libs
 ###################################################################################

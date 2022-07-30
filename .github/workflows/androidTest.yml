@@ -63,6 +63,7 @@ jobs:
           git
           make
           mingw-w64-${{matrix.OpenSslType}}-openssl
+          mingw-w64-x86_64-jom
         pacboy: >-
           toolchain:p
           cmake:p
@@ -72,7 +73,7 @@ jobs:
       run:  |
         cmake \
         "-B ${{github.workspace}}/build" \
-        "-G Ninja" \
+        "-DCMAKE_GENERATOR:STRING=NMake Makefiles JOM" \
         "-DCMAKE_SYSTEM_NAME=Android" \
         "-DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}" \
         "-DQT_QMAKE_EXECUTABLE:FILEPATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
