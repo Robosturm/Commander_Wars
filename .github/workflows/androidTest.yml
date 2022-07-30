@@ -22,6 +22,7 @@ jobs:
             qtCoreToolsPath: 'mingw_64'
             NdkRoot: 'C:/Android/android-sdk/ndk-bundle'
             ClangCompiler: 'clang64'
+            OpenSslType: 'clang-x86_64'
             ClangPath: 'C:/msys64/'
             
     runs-on: ${{matrix.os}}
@@ -57,7 +58,7 @@ jobs:
       uses: msys2/setup-msys2@v2
       with:
         msystem: ${{matrix.ClangCompiler}}
-        install: mingw-w64-${{matrix.ClangCompiler}}-openssl
+        install: mingw-w64-${{matrix.OpenSslType}}-openssl
       
     - name: Configure CMake
       run:  |
