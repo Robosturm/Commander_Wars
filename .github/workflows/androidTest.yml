@@ -68,7 +68,7 @@ jobs:
          
     - name: setup-ndk
       uses: nttld/setup-ndk@v1
-      
+      id: setup-ndk
       with:
         ndk-version: ${{matrix.NDK_Version}}
       
