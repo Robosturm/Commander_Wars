@@ -1,5 +1,4 @@
 cmake_minimum_required (VERSION 3.19.0)
-project (Commander_Wars LANGUAGES CXX)
 
 # Information for building commander wars on other platforms
 # 1. make sure the CMAKE_PREFIX_PATH targets to the correct qt installation
@@ -56,6 +55,9 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     message("SDK: ${ANDROID_SDK}")
     message("NDK: ${ANDROID_SDK_ROOT}")
 endif()
+
+project (Commander_Wars LANGUAGES CXX)
+
 ###################################################################################
 # Find external libs
 ###################################################################################
