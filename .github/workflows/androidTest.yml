@@ -58,11 +58,11 @@ jobs:
       uses: msys2/setup-msys2@v2
       with:
         msystem: ${{matrix.ClangCompiler}}
-        install: mingw-w64-${{matrix.OpenSslType}}-openssl
         update: true
         install: >-
           git
           make
+          mingw-w64-${{matrix.OpenSslType}}-openssl
         pacboy: >-
           toolchain:p
           cmake:p
