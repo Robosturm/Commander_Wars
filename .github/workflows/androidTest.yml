@@ -21,8 +21,8 @@ jobs:
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
             NdkRoot: 'C:/Android/android-sdk/ndk/23.2.8568313/'
-            ClangCompiler: 'clang64'
-            OpenSslType: 'clang-x86_64'
+            ClangCompiler: 'clangarm64'
+            OpenSslType: 'clang-aarch64'
             ClangPath: 'C:/msys64/'
             
     runs-on: ${{matrix.os}}
