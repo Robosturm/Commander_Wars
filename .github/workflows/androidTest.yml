@@ -59,6 +59,14 @@ jobs:
       with:
         msystem: ${{matrix.ClangCompiler}}
         install: mingw-w64-${{matrix.OpenSslType}}-openssl
+        update: true
+        install: >-
+          git
+          make
+        pacboy: >-
+          toolchain:p
+          cmake:p
+          ninja:p
       
     - name: Configure CMake
       run:  |
