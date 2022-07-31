@@ -21,7 +21,7 @@ jobs:
             qtCoreToolsPath: 'mingw_64'
             NDK_Version: r22b
             installerCommands1: 'choco install jom'
-            installerCommands2: ''
+            installerCommands2: 'choco install openssl.light'
             cmakeOptions: ''
             
     runs-on: ${{matrix.os}}
@@ -52,7 +52,6 @@ jobs:
           modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
-          tools: 'qt.tools.cmake_64'
          
     - name: Install OS Dependencies 1
       run: ${{matrix.installerCommands1}}
