@@ -20,6 +20,9 @@ jobs:
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
             NDK_Version: r22b
+            installerCommands1: 'choco install jom'
+            installerCommands2: ''
+            cmakeOptions: ''
             
     runs-on: ${{matrix.os}}
     defaults:
@@ -49,7 +52,13 @@ jobs:
           modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
-          tools: 'qt.tools.cmake'
+          tools: 'qt.tools.cmake_64'
+         
+    - name: Install OS Dependencies 1
+      run: ${{matrix.installerCommands1}}
+    
+    - name: Install OS Dependencies 2
+      run: ${{matrix.installerCommands2}}
          
     - name: setup-ndk
       uses: nttld/setup-ndk@v1
@@ -73,7 +82,8 @@ jobs:
         -DCMAKE_TOOLCHAIN_FILE="C:/hostedtoolcache/windows/ndk/r22b/x64/build/cmake/android.toolchain.cmake" \
         -DANDROID_NDK="C:/hostedtoolcache/windows/ndk/r22b/x64" \
         -DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL="ON" \
-        -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install"
+        -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" \
+        ${{matrix.cmakeOptions}}
 
     - name: Build
       working-directory: '${{github.workspace}}/build'
