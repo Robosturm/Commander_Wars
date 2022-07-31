@@ -19,14 +19,12 @@ jobs:
             abi : "armeabi-v7a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
-            ClangCompiler: 'clang64'
-            OpenSslType: 'clang-x86_64'
             NDK_Version: r22b
             
     runs-on: ${{matrix.os}}
     defaults:
       run:
-        shell: msys2 {0}
+        shell:bash
         
     steps:
     - uses: actions/checkout@v2
@@ -51,20 +49,6 @@ jobs:
           modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
-            
-    - name: setup clang      
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: ${{matrix.ClangCompiler}}
-        update: true
-        install: >-
-          git
-          make
-          mingw-w64-${{matrix.OpenSslType}}-openssl
-          mingw-w64-x86_64-jom
-        pacboy: >-
-          toolchain:p
-          cmake:p
          
     - name: setup-ndk
       uses: nttld/setup-ndk@v1
