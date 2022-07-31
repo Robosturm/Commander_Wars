@@ -35,8 +35,9 @@ jobs:
 
     - name: Checkout openssl
       uses: actions/checkout@v3
-      repository: 'KDAB/android_openssl'
-      ref: '1.1.1l_1.0.2u'
+      with:
+          repository: 'KDAB/android_openssl'
+          ref: '1.1.1l_1.0.2u'
 
     - name: Install android qt
       uses: jurplel/install-qt-action@v2.14.0
