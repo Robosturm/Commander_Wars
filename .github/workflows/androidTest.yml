@@ -22,7 +22,7 @@ jobs:
             NDK_Version: r22b
             installerCommands1: 'choco install jom'
             installerCommands2: 'choco install openssl.light'
-            cmakeOptions: ''
+            cmakeOptions: '"-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64"'
             
     runs-on: ${{matrix.os}}
     defaults:
