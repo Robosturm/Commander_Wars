@@ -49,6 +49,7 @@ jobs:
           modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
+          tools: 'qt.tools.cmake'
          
     - name: setup-ndk
       uses: nttld/setup-ndk@v1
