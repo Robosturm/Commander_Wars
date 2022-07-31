@@ -35,6 +35,7 @@ jobs:
       with:
           repository: 'KDAB/android_openssl'
           ref: '1.1.1l_1.0.2u'
+          path: 'android_openssl'
 
     - name: Checkout source code
       uses: actions/checkout@v3
