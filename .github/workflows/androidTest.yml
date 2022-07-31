@@ -30,14 +30,15 @@ jobs:
         shell: bash
         
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@v3
-
     - name: Checkout openssl
       uses: actions/checkout@v3
       with:
           repository: 'KDAB/android_openssl'
           ref: '1.1.1l_1.0.2u'
+
+    - name: Checkout source code
+      uses: actions/checkout@v3
+
 
     - name: Install android qt
       uses: jurplel/install-qt-action@v2.14.0
