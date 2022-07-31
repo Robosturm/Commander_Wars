@@ -32,13 +32,13 @@ jobs:
     steps:
     - name: Checkout source code
       uses: actions/checkout@v3
-      
+
     - name: Checkout openssl
       uses: actions/checkout@v3
       repository: 'KDAB/android_openssl'
-       ref: '1.1.1l_1.0.2u'
-             
-    - name: Install os qt
+      ref: '1.1.1l_1.0.2u'
+
+    - name: Install android qt
       uses: jurplel/install-qt-action@v2.14.0
       with:      
           aqtversion: '==2.0.2'
@@ -47,8 +47,8 @@ jobs:
           arch: ${{matrix.COMPILER_TOOLS_VERSION}}
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
-          
-    - name: Install Qt
+
+    - name: Install host os Qt
       uses: jurplel/install-qt-action@v2.14.0
       with:      
           aqtversion: '==2.0.2'
@@ -58,19 +58,19 @@ jobs:
           modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
-         
+
     - name: Install OS Dependencies 1
       run: ${{matrix.installerCommands1}}
-    
+
     - name: Install OS Dependencies 2
       run: ${{matrix.installerCommands2}}
-         
+
     - name: setup-ndk
       uses: nttld/setup-ndk@v1
       id: setup-ndk
       with:
         ndk-version: ${{matrix.NDK_Version}}
-      
+
     - name: Configure CMake
       run:  |
         cmake \
@@ -94,4 +94,4 @@ jobs:
 
     - name: Build
       working-directory: '${{github.workspace}}/build'
-      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j16
+      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j4
