@@ -76,19 +76,19 @@ jobs:
       run:  |
         cmake \
         "-B ${{github.workspace}}/build" \
-        "-DCMAKE_GENERATOR:STRING=NMake Makefiles JOM" \
+        "-DCMAKE_GENERATOR=NMake Makefiles JOM" \
         "-DCMAKE_SYSTEM_NAME=Android" \
         "-DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}" \
-        "-DQT_QMAKE_EXECUTABLE:FILEPATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
+        "-DQT_QMAKE_EXECUTABLE=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
         "-DCMAKE_PREFIX_PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \     
         "-DQT_HOST_PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
         "-DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api-level }}" \
         "-DANDROID_ABI=${{ matrix.abi }}" \
-        "-DANDROID_STL:STRING=c++_shared" \
-        "-DCMAKE_FIND_ROOT_PATH:PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
-        "-DCMAKE_TOOLCHAIN_FILE:FILEPATH=${{steps.setup-ndk.outputs.ndk-path}}/build/cmake/android.toolchain.cmake" \      
-        "-DANDROID_NDK:PATH=${{steps.setup-ndk.outputs.ndk-path}}" \
-        "-DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL:BOOL=ON" \
+        "-DANDROID_STL=c++_shared" \
+        "-DCMAKE_FIND_ROOT_PATH=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
+        "-DCMAKE_TOOLCHAIN_FILE=${{steps.setup-ndk.outputs.ndk-path}}/build/cmake/android.toolchain.cmake" \      
+        "-DANDROID_NDK=${{steps.setup-ndk.outputs.ndk-path}}" \
+        "-DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL=ON" \
         "-DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install"
 
     - name: Build
