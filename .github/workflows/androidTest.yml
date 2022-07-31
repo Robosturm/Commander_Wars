@@ -21,8 +21,8 @@ jobs:
             qtCoreToolsPath: 'mingw_64'
             NDK_Version: r22b
             installerCommands1: 'choco install jom'
-            installerCommands2: 'choco install openssl'
-            cmakeOptions: '"-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64"'
+            installerCommands2: ''
+            cmakeOptions: ''            
             
     runs-on: ${{matrix.os}}
     defaults:
@@ -30,7 +30,13 @@ jobs:
         shell: bash
         
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout source code
+      uses: actions/checkout@v3
+      
+    - name: Checkout openssl
+      uses: actions/checkout@v3
+      repository: 'KDAB/android_openssl'
+       ref: '1.1.1l_1.0.2u'
              
     - name: Install os qt
       uses: jurplel/install-qt-action@v2.14.0
@@ -82,7 +88,9 @@ jobs:
         -DANDROID_NDK="C:/hostedtoolcache/windows/ndk/r22b/x64" \
         -DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL="ON" \
         -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" \
-        ${{matrix.cmakeOptions}}
+        -DOPENSSL_USE_STATIC_LIBS="ON" \
+        -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include"
+        -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi"
 
     - name: Build
       working-directory: '${{github.workspace}}/build'
