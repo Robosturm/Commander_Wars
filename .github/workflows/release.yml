@@ -73,7 +73,7 @@ jobs:
             asset_name: 'Commander_Wars_macOS.zip'
             cmakeOptions: '-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
           - target: android-armv7
-            os: os: windows-latest
+            os: windows-latest
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
             target: 'android'
@@ -87,7 +87,7 @@ jobs:
             asset_name: 'Commander_Wars_armeabi-v7a.apk'
             cmakeOptions: ''
           - target: android-arm64_v8a
-            os: os: windows-latest
+            os: windows-latest
             COMPILER_VERSION: 'android_arm64_v8a'
             qtPath: 'android_arm64_v8a'
             target: 'android'
