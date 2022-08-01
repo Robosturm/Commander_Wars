@@ -3,6 +3,11 @@ on: [push]
 env:
   BUILD_TYPE: Release
   QT_Version: '6.3.0'
+  NDK_Version: r22b
+  # paths which are given with \ instead of / via windows crashing some command tools
+  NDK_Root: 'C:/hostedtoolcache/windows/ndk/r22b/x64'
+  workspace: 'D:/a/Commander_Wars/Commander_Wars'
+  javaVersion: '17'
   
 jobs:
   install:
@@ -19,10 +24,9 @@ jobs:
             abi : "armeabi-v7a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
-            NDK_Version: r22b
             installerCommands1: 'choco install jom'
             installerCommands2: ''
-            cmakeOptions: ''            
+            cmakeOptions: ''
             
     runs-on: ${{matrix.os}}
     defaults:
@@ -31,6 +35,7 @@ jobs:
         
     steps:
     - name: Checkout openssl
+      if: matrix.target == 'android'        
       uses: actions/checkout@v3
       with:
           repository: 'KDAB/android_openssl'
@@ -42,7 +47,8 @@ jobs:
       with:
           path: 'source'
 
-    - name: Install android qt
+    - name: Install host os qt
+      if: matrix.target == 'android'
       uses: jurplel/install-qt-action@v2.14.0
       with:      
           aqtversion: '==2.0.2'
@@ -52,7 +58,7 @@ jobs:
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
 
-    - name: Install host os Qt
+    - name: Install Qt
       uses: jurplel/install-qt-action@v2.14.0
       with:      
           aqtversion: '==2.0.2'
@@ -70,18 +76,21 @@ jobs:
       run: ${{matrix.installerCommands2}}
 
     - name: setup-ndk
+      if: matrix.target == 'android'        
       uses: nttld/setup-ndk@v1
       id: setup-ndk
       with:
-        ndk-version: ${{matrix.NDK_Version}}
+        ndk-version: ${{env.NDK_Version}}
 
     - name: Setup JDK 11
+      if: matrix.target == 'android'
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
-        java-version: '17'
+        java-version: ${{env.javaVersion}}
 
     - name: Configure CMake
+      if: matrix.target == 'android'
       run:  |
         cmake \
         -S "${{github.workspace}}/source" \
@@ -95,9 +104,9 @@ jobs:
         -DANDROID_ABI="${{matrix.abi}}" \
         -DANDROID_STL="c++_shared" \
         -DCMAKE_FIND_ROOT_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
-        -DCMAKE_TOOLCHAIN_FILE="C:/hostedtoolcache/windows/ndk/r22b/x64/build/cmake/android.toolchain.cmake" \
-        -DANDROID_NDK="C:/hostedtoolcache/windows/ndk/r22b/x64" \
-        -DANDROID_SDK_ROOT="C:/Android/android-sdk" \
+        -DCMAKE_TOOLCHAIN_FILE="${{env.NDK_Root}}/build/cmake/android.toolchain.cmake" \
+        -DANDROID_NDK="${{env.NDK_Root}}" \
+        -DANDROID_SDK_ROOT="${ANDROID_SDK_ROOT}" \
         -DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL=ON \
         -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" \
         -DOPENSSL_USE_STATIC_LIBS=ON \
@@ -109,15 +118,16 @@ jobs:
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target all -j4
       
-    - name: Bundle APK      
+    - name: Bundle APK
+      if: matrix.target == 'android'
       run:  |
         "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
-        --input D:/a/Commander_Wars/Commander_Wars/build/android-Commander_Wars-deployment-settings.json \
-        --output D:/a/Commander_Wars/Commander_Wars/build/android-build \
+        --input ${{matrix.workspace}}/build/android-Commander_Wars-deployment-settings.json \
+        --output ${{matrix.workspace}}/build/android-build \
         --android-platform android-31 \
-        --gradle
-      
+        --gradle      
       
     - name: install
+      if: matrix.target == 'android'
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j4
