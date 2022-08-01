@@ -89,6 +89,7 @@ jobs:
         -DCMAKE_FIND_ROOT_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DCMAKE_TOOLCHAIN_FILE="C:/hostedtoolcache/windows/ndk/r22b/x64/build/cmake/android.toolchain.cmake" \
         -DANDROID_NDK="C:/hostedtoolcache/windows/ndk/r22b/x64" \
+        -DANDROID_SDK_ROOT="C:/Android/android-sdk" \
         -DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL=ON \
         -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" \
         -DOPENSSL_USE_STATIC_LIBS=ON \
