@@ -249,5 +249,5 @@ jobs:
       with:
         upload_url: '${{needs.create_release.outputs.upload_url}}'
         asset_name: 'UnofficialCommanderWars_Win7CompatiblePack.zip'
-        asset_path: '${{github.workspace}}/3rd_party/unofficialWin7Support/UnofficialCommanderWars_Win7CompatiblePack.zip'
+        asset_path: '${{github.workspace}}/source/3rd_party/unofficialWin7Support/UnofficialCommanderWars_Win7CompatiblePack.zip'
         asset_content_type: application/zip
