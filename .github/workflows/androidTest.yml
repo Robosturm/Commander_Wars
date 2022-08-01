@@ -112,8 +112,8 @@ jobs:
     - name: Bundle APK      
       run:  |
         "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" 
-        --input ${{github.workspace}}/build/android-Commander_Wars-deployment-settings.json 
-        --output ${{github.workspace}}/build/android-build 
+        --input D:/a/Commander_Wars/Commander_Wars/build/android-Commander_Wars-deployment-settings.json 
+        --output D:/a/Commander_Wars/Commander_Wars/build/android-build 
         --android-platform android-31 
         --gradle
       
