@@ -75,12 +75,6 @@ jobs:
       with:
         ndk-version: ${{matrix.NDK_Version}}
 
-    - name: Setup JDK 11
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '17'
-
     - name: Configure CMake
       run:  |
         cmake \
@@ -111,10 +105,10 @@ jobs:
       
     - name: Bundle APK      
       run:  |
-        "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" 
-        --input D:/a/Commander_Wars/Commander_Wars/build/android-Commander_Wars-deployment-settings.json 
-        --output D:/a/Commander_Wars/Commander_Wars/build/android-build 
-        --android-platform android-31 
+        "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
+        --input ${{github.workspace}}/build/android-Commander_Wars-deployment-settings.json \
+        --output ${{github.workspace}}/build/android-build \
+        --android-platform android-31 \
         --gradle
       
       
