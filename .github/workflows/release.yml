@@ -8,6 +8,11 @@ name: Commnader_Wars_Release
 env:
   BUILD_TYPE: Release
   QT_Version: '6.3.1'
+  NDK_Version: r22b
+  # paths which are given with \ instead of / via windows crashing some command tools
+  NDK_Root: 'C:/hostedtoolcache/windows/ndk/r22b/x64'
+  workspace: 'D:/a/Commander_Wars/Commander_Wars'
+  javaVersion: '17'
   
 jobs:
   create_release:
@@ -64,10 +69,32 @@ jobs:
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_macOS.zip'
             cmakeOptions: '-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
-          #- os: windows-latest
-          #  COMPILER_VERSION: 'android_armv7'
-          #  target: 'android'
-          #  asset_name: 'Commander_Wars_Android.apk'
+          - os: windows-latest
+            COMPILER_VERSION: 'android_armv7'
+            qtPath: 'android_armv7'
+            target: 'android'
+            target-api-level: '27'
+            abi : "armeabi-v7a"
+            COMPILER_TOOLS_VERSION: 'win64_mingw'
+            qtCoreToolsPath: 'mingw_64'
+            installerCommands1: 'choco install jom'
+            installerCommands2: ''
+            source_asset: 'Commander_Wars_armeabi-v7a.apk'
+            asset_name: 'Commander_Wars_armeabi-v7a.apk'
+            cmakeOptions: ''
+          - os: windows-latest
+            COMPILER_VERSION: 'android_arm64_v8a'
+            qtPath: 'android_arm64_v8a'
+            target: 'android'
+            target-api-level: '27'
+            abi : "arm64-v8a"
+            COMPILER_TOOLS_VERSION: 'win64_mingw'
+            qtCoreToolsPath: 'mingw_64'
+            installerCommands1: 'choco install jom'
+            installerCommands2: ''
+            source_asset: 'Commander_Wars_arm64-v8a.apk'
+            asset_name: 'Commander_Wars_arm64-v8a.apk'
+            cmakeOptions: ''
 
     needs: create_release
     runs-on: ${{matrix.os}}
@@ -75,8 +102,30 @@ jobs:
       run:
         shell: bash
     steps:
-    - uses: actions/checkout@v2
-          
+    - name: Checkout openssl
+      if: matrix.target == 'android'
+      uses: actions/checkout@v3
+      with:
+          repository: 'KDAB/android_openssl'
+          ref: '1.1.1l_1.0.2u'
+          path: 'android_openssl'
+
+    - name: Checkout source code
+      uses: actions/checkout@v3
+      with:
+          path: 'source'
+
+    - name: Install host os qt
+      if: matrix.target == 'android'
+      uses: jurplel/install-qt-action@v2.14.0
+      with:      
+          aqtversion: '==2.0.2'
+          target: 'desktop'
+          version: ${{env.QT_Version}}
+          arch: ${{matrix.COMPILER_TOOLS_VERSION}}
+          dir: '${{github.workspace}}/qt/'
+          install-deps: "true"
+
     - name: Install Qt
       uses: jurplel/install-qt-action@v2.14.0
       with:      
@@ -93,21 +142,82 @@ jobs:
     
     - name: Install OS Dependencies 2
       run: ${{matrix.installerCommands2}}
-      
-    - name: Configure CMake
+
+    - name: setup-ndk
+      if: matrix.target == 'android'        
+      uses: nttld/setup-ndk@v1
+      id: setup-ndk
+      with:
+        ndk-version: ${{env.NDK_Version}}
+
+    - name: Setup JDK
+      if: matrix.target == 'android'
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: ${{env.javaVersion}}
+
+    - name: Configure other cmake
+      if: matrix.target != 'android'
       run: |
         cmake \
+        -S "${{github.workspace}}/source" \
         -B '${{github.workspace}}/build' \
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
         -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install/Commander_Wars_Release' \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DQt6_DIR=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/ \
         ${{matrix.cmakeOptions}}
-    
-    - name: Build
+
+    - name: Configure android cmake
+      if: matrix.target == 'android'
+      run:  |
+        cmake \
+        -S "${{github.workspace}}/source" \
+        -B "${{github.workspace}}/build" \
+        -DCMAKE_GENERATOR="NMake Makefiles JOM" \
+        -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" \
+        -DQT_QMAKE_EXECUTABLE="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
+        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
+        -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
+        -DANDROID_NATIVE_API_LEVEL="${{ matrix.target-api-level }}" \
+        -DANDROID_ABI="${{matrix.abi}}" \
+        -DANDROID_STL="c++_shared" \
+        -DCMAKE_FIND_ROOT_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
+        -DCMAKE_TOOLCHAIN_FILE="${{env.NDK_Root}}/build/cmake/android.toolchain.cmake" \
+        -DANDROID_NDK="${{env.NDK_Root}}" \
+        -DANDROID_SDK_ROOT="${ANDROID_SDK_ROOT}" \
+        -DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL=ON \
+        -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" \
+        -DOPENSSL_USE_STATIC_LIBS=ON \
+        -DPRECOMPILEDOPENSSL=ON \
+        -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include" \
+        -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi"
+
+    - name: Build other
+      if: matrix.target != 'android'
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j4
 
+    - name: Build android
+      if: matrix.target == 'android'
+      working-directory: '${{github.workspace}}/build'
+      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target all -j4
+
+    - name: Bundle APK
+      if: matrix.target == 'android'
+      run:  |
+        "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
+        --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
+        --output ${{env.workspace}}/build/android-build \
+        --android-platform android-31 \
+        --gradle
+
+    - name: install
+      if: matrix.target == 'android'
+      working-directory: '${{github.workspace}}/build'
+      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j4
+      
 #----------------------------------------------------------------------------------------------------------------------------------------------
 # release creation and upload part
 #----------------------------------------------------------------------------------------------------------------------------------------------
@@ -127,7 +237,7 @@ jobs:
 
     - name: upload unofficial compatible pack
       uses: actions/upload-release-asset@v1.0.2
-      if: ${{ matrix.os == 'windows-latest' }}
+      if: matrix.os == 'windows-latest' && matrix.target != 'android'
       env:
         GITHUB_TOKEN: ${{github.token}}
       with:

@@ -35,7 +35,7 @@ jobs:
         
     steps:
     - name: Checkout openssl
-      if: matrix.target == 'android'        
+      if: matrix.target == 'android'
       uses: actions/checkout@v3
       with:
           repository: 'KDAB/android_openssl'
@@ -82,7 +82,7 @@ jobs:
       with:
         ndk-version: ${{env.NDK_Version}}
 
-    - name: Setup JDK 11
+    - name: Setup JDK
       if: matrix.target == 'android'
       uses: actions/setup-java@v3
       with:
@@ -115,6 +115,7 @@ jobs:
         -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi"
 
     - name: Build
+      if: matrix.target == 'android'
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target all -j4
       
@@ -122,10 +123,10 @@ jobs:
       if: matrix.target == 'android'
       run:  |
         "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
-        --input ${{matrix.workspace}}/build/android-Commander_Wars-deployment-settings.json \
-        --output ${{matrix.workspace}}/build/android-build \
+        --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
+        --output ${{env.workspace}}/build/android-build \
         --android-platform android-31 \
-        --gradle      
+        --gradle
       
     - name: install
       if: matrix.target == 'android'
