@@ -15,9 +15,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [windows-desktop, ubuntu-desktop, macos-desktop, android-armv7, android-arm64_v8a]
+        buildTarget: [windows-desktop, ubuntu-desktop, macos-desktop, android-armv7, android-arm64_v8a]
         include:
-          - target: windows-desktop
+          - buildTarget: windows-desktop
             os: windows-latest
             COMPILER_VERSION: 'win64_mingw'
             target: 'desktop'
@@ -25,7 +25,7 @@ jobs:
             installerCommands1: 'choco install openssl'
             installerCommands2: ''
             cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64"'
-          - target: ubuntu-desktop
+          - buildTarget: ubuntu-desktop
             os: ubuntu-latest
             COMPILER_VERSION: ''
             target: 'desktop'
@@ -33,7 +33,7 @@ jobs:
             installerCommands1: 'sudo apt-get update'
             installerCommands2: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
             cmakeOptions: ''
-           - target: macos-desktop
+           - buildTarget: macos-desktop
             os: macos-latest
             COMPILER_VERSION: 'clang_64'
             qtPath: 'clang_64'
@@ -41,7 +41,7 @@ jobs:
             installerCommands1: ''
             installerCommands2: ''
             cmakeOptions: '-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
-          - target: android-armv7
+          - buildTarget: android-armv7
             os: windows-latest
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
@@ -53,7 +53,7 @@ jobs:
             installerCommands1: 'choco install jom'
             installerCommands2: ''
             cmakeOptions: ''
-          - target: android-arm64_v8a
+          - buildTarget: android-arm64_v8a
             os: windows-latest
             COMPILER_VERSION: 'android_arm64_v8a'
             qtPath: 'android_arm64_v8a'

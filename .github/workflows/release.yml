@@ -40,9 +40,9 @@ jobs:
     name: All
     strategy:
       matrix:
-        target: [windows-desktop, ubuntu-desktop, macos-desktop, android-armv7, android-arm64_v8a]
+        buildTarget: [windows-desktop, ubuntu-desktop, macos-desktop, android-armv7, android-arm64_v8a]
         include:
-          - target: windows-desktop
+          - buildTarget: windows-desktop
             os: windows-latest
             COMPILER_VERSION: 'win64_mingw'
             target: 'desktop'
@@ -52,7 +52,7 @@ jobs:
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Win10_x64.zip' 
             cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64"'
-          - target: ubuntu-desktop
+          - buildTarget: ubuntu-desktop
             os: ubuntu-latest
             COMPILER_VERSION: ''
             target: 'desktop'
@@ -62,7 +62,7 @@ jobs:
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Ubuntu.zip'
             cmakeOptions: ''
-          - target: macos-desktop
+          - buildTarget: macos-desktop
             os: macos-latest
             COMPILER_VERSION: 'clang_64'
             qtPath: 'clang_64'
@@ -72,7 +72,7 @@ jobs:
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_macOS.zip'
             cmakeOptions: '-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
-          - target: android-armv7
+          - buildTarget: android-armv7
             os: windows-latest
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
@@ -86,7 +86,7 @@ jobs:
             source_asset: 'Commander_Wars_armeabi-v7a.apk'
             asset_name: 'Commander_Wars_armeabi-v7a.apk'
             cmakeOptions: ''
-          - target: android-arm64_v8a
+          - buildTarget: android-arm64_v8a
             os: windows-latest
             COMPILER_VERSION: 'android_arm64_v8a'
             qtPath: 'android_arm64_v8a'
