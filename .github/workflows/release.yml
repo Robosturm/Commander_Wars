@@ -40,9 +40,10 @@ jobs:
     name: All
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        target: [windows-desktop, ubuntu-desktop, macos-desktop, android-armv7, android-arm64_v8a]
         include:
-          - os: windows-latest
+          - target: windows-desktop
+            os: windows-latest
             COMPILER_VERSION: 'win64_mingw'
             target: 'desktop'
             qtPath: 'mingw_64'
@@ -51,7 +52,8 @@ jobs:
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Win10_x64.zip' 
             cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64"'
-          - os: ubuntu-latest
+          - target: ubuntu-desktop
+            os: ubuntu-latest
             COMPILER_VERSION: ''
             target: 'desktop'
             qtPath: ''
@@ -60,7 +62,8 @@ jobs:
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Ubuntu.zip'
             cmakeOptions: ''
-          - os: macos-latest
+          - target: macos-desktop
+            os: macos-latest
             COMPILER_VERSION: 'clang_64'
             qtPath: 'clang_64'
             target: 'desktop'
@@ -69,7 +72,8 @@ jobs:
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_macOS.zip'
             cmakeOptions: '-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
-          - os: windows-latest
+          - target: android-armv7
+            os: os: windows-latest
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
             target: 'android'
@@ -82,7 +86,8 @@ jobs:
             source_asset: 'Commander_Wars_armeabi-v7a.apk'
             asset_name: 'Commander_Wars_armeabi-v7a.apk'
             cmakeOptions: ''
-          - os: windows-latest
+          - target: android-arm64_v8a
+            os: os: windows-latest
             COMPILER_VERSION: 'android_arm64_v8a'
             qtPath: 'android_arm64_v8a'
             target: 'android'
