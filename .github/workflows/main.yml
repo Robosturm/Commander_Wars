@@ -178,6 +178,7 @@ jobs:
       if: matrix.target == 'android'
       env: # Set the secret as an input
         ANDROID_STORE_PASS: ${{secrets.ANDROIDSTOREPASS}}
+        ANDROID_ALIAS:  ${{secrets.ANDROIDALIAS}}
       run:  |
         "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
         --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
@@ -185,8 +186,8 @@ jobs:
         --android-platform android-31 \
         --gradle \
         --release \
-        --sign "file:///${{env.workspace}}/source/android/android_release.keystore" \
-        --storepass "$ANDROID_STORE_PASS"
+        --sign "file:///${{env.workspace}}/source/android/android_release.keystore" $ANDROID_ALIAS \
+        --storepass "$ANDROID_STORE_PASS" \
         --verbose
                 
     - name: install
