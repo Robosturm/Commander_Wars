@@ -987,8 +987,13 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     install(FILES "icon.png"                                    DESTINATION "share/pixmaps"       RENAME "${PROJECT_NAME_LOWER}.png" OPTIONAL)
     install(FILES "Commander_Wars.desktop"                      DESTINATION "share/applications"  RENAME "${PROJECT_NAME}.desktop"   OPTIONAL)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/debug/android-build-debug.apk"
-            DESTINATION "."                   RENAME "${PROJECT_NAME}_${ANDROID_ABI}.apk" OPTIONAL)
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/debug/android-build-debug.apk"
+                DESTINATION "."                   RENAME "${PROJECT_NAME}_${ANDROID_ABI}.apk" OPTIONAL)
+    else("Release")
+        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/release/android-build-release-signed.apk"
+                DESTINATION "."                   RENAME "${PROJECT_NAME}_${ANDROID_ABI}.apk" OPTIONAL)
+    endif()
 else()
     install(TARGETS ${PROJECT_NAME}
         RUNTIME         DESTINATION         "."

@@ -176,6 +176,8 @@ jobs:
 
     - name: Bundle APK
       if: matrix.target == 'android'
+      env: # Set the secret as an input
+        ANDROID_STORE_PASS: ${{secrets.ANDROIDSTOREPASS}}
       run:  |
         "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
         --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
@@ -184,7 +186,8 @@ jobs:
         --gradle \
         --release \
         --sign "file:///${{env.workspace}}/source/android/android_release.keystore" \
-        --storepass ${{secrets.ANDROIDSTOREPASS}}
+        --storepass "$ANDROID_STORE_PASS"
+        --verbose
                 
     - name: install
       if: matrix.target == 'android'
