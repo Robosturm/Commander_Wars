@@ -6,11 +6,14 @@
 #include <QVector>
 #include <QElapsedTimer>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+
 #include "mapsupport/mapfilter.h"
 
 class MapSelection;
-typedef oxygine::intrusive_ptr<MapSelection> spMapSelection;
+using spMapSelection = oxygine::intrusive_ptr<MapSelection>;
 
 class MapSelection : public QObject, public oxygine::Actor
 {

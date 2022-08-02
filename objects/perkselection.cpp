@@ -1,3 +1,6 @@
+#include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
+
 #include "objects/perkselection.h"
 
 #include "coreengine/globalutils.h"

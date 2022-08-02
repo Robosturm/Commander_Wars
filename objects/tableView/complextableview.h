@@ -3,7 +3,8 @@
 #include <QColor>
 #include <QObject>
 #include <QVector>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 #include "objects/tableView/basetableitem.h"
 #include "objects/base/label.h"
 #include "objects/base/panel.h"

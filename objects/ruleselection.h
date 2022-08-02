@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 #include "objects/base/multislider.h"
 #include "objects/base/textbox.h"
@@ -12,7 +12,7 @@
 
 class GameMap;
 class RuleSelection;
-typedef oxygine::intrusive_ptr<RuleSelection> spRuleSelection;
+using spRuleSelection = oxygine::intrusive_ptr<RuleSelection>;
 
 class RuleSelection : public QObject, public oxygine::Actor
 {

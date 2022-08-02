@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QObject>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 class BaseTableItem;
 using spBaseTableItem = oxygine::intrusive_ptr<BaseTableItem>;

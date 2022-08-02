@@ -1,5 +1,6 @@
 #include "objects/editorselection.h"
 #include "objects/base/moveinbutton.h"
+#include "objects/base/label.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/terrainmanager.h"
@@ -11,8 +12,6 @@
 #include "coreengine/mainapp.h"
 
 #include "game/co.h"
-
-#include "objects/base/label.h"
 
 const float EditorSelection::m_xFactor = 1.5f;
 const float EditorSelection::m_yFactor = 2.5f;

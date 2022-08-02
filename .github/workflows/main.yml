@@ -150,7 +150,7 @@ jobs:
         -DQT_QMAKE_EXECUTABLE="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
-        -DANDROID_NATIVE_API_LEVEL="${{ matrix.target-api-level }}" \
+        -DANDROID_NATIVE_API_LEVEL="${{matrix.target-api-level}}" \
         -DANDROID_ABI="${{matrix.abi}}" \
         -DANDROID_STL="c++_shared" \
         -DCMAKE_FIND_ROOT_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
@@ -181,8 +181,13 @@ jobs:
         --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
         --output ${{env.workspace}}/build/android-build \
         --android-platform android-31 \
-        --gradle
-
+        --gradle \
+        --release \
+        --sign "file:///${{env.workspace}}/source/android/android_release.keystore" \
+        --storepass ${{secrets.ANDROIDSTOREPASS}}
+        
+Generating Android Package
+        
     - name: install
       if: matrix.target == 'android'
       working-directory: '${{github.workspace}}/build'

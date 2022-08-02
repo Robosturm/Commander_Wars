@@ -1,6 +1,6 @@
-#include "mapselectionview.h"
+#include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
-#include "game/gamemap.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
@@ -12,6 +12,7 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/console.h"
 
+#include "objects/mapselectionview.h"
 #include "objects/base/moveinbutton.h"
 
 #include "game/gamemap.h"

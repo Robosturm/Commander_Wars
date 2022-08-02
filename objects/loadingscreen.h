@@ -5,7 +5,9 @@
 #include <QSemaphore>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 class LoadingScreen;
 using spLoadingScreen = oxygine::intrusive_ptr<LoadingScreen>;
@@ -16,7 +18,7 @@ class LoadingScreen : public QObject, public oxygine::Actor
 public:
     static spLoadingScreen getInstance();
     virtual ~LoadingScreen();
-    /**
+    /**w
      * @brief show
      */
     void show();

@@ -1,4 +1,4 @@
-#include "ruleselection.h"
+#include "objects/ruleselection.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"

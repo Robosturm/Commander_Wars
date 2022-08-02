@@ -1,4 +1,4 @@
-#include "playerselectiondialog.h"
+#include "objects/dialogs/rules/playerselectiondialog.h"
 
 #include "coreengine/mainapp.h"
 
