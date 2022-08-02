@@ -185,9 +185,7 @@ jobs:
         --release \
         --sign "file:///${{env.workspace}}/source/android/android_release.keystore" \
         --storepass ${{secrets.ANDROIDSTOREPASS}}
-        
-Generating Android Package
-        
+                
     - name: install
       if: matrix.target == 'android'
       working-directory: '${{github.workspace}}/build'
