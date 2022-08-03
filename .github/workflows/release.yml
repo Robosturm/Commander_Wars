@@ -182,6 +182,7 @@ jobs:
         -B "${{github.workspace}}/build" \
         -DCMAKE_GENERATOR="NMake Makefiles JOM" \
         -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" \
+        -DCMAKE_PROJECT_INCLUDE_BEFORE="${{github.workspace}}/qt/Qt/Tools/QtCreator/share/qtcreator/package-manager/auto-setup.cmake" \
         -DQT_QMAKE_EXECUTABLE="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
@@ -196,6 +197,7 @@ jobs:
         -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" \
         -DOPENSSL_USE_STATIC_LIBS=ON \
         -DPRECOMPILEDOPENSSL=ON \
+        -DOPENSSL_ROOT_DIR="${{github.workspace}}/android_openssl" \
         -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include" \
         -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi"
 
@@ -211,12 +213,20 @@ jobs:
 
     - name: Bundle APK
       if: matrix.target == 'android'
+      env:
+        QT_ANDROID_KEYSTORE_PATH: ${{env.workspace}}/source/android/android_release.keystore
+        QT_ANDROID_KEYSTORE_ALIAS: ${{secrets.ANDROIDALIAS}}
+        QT_ANDROID_KEYSTORE_STORE_PASS: ${{secrets.ANDROIDSTOREPASS}}
+        QT_ANDROID_KEYSTORE_KEY_PASS: ${{secrets.ANDROIDSTOREPASS}}
       run:  |
         "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
         --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
         --output ${{env.workspace}}/build/android-build \
         --android-platform android-31 \
-        --gradle
+        --gradle \
+        --release \
+        --sign \
+        --verbose
 
     - name: install
       if: matrix.target == 'android'
