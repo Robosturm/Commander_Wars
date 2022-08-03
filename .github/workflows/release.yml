@@ -13,6 +13,7 @@ env:
   NDK_Root: 'C:/hostedtoolcache/windows/ndk/r22b/x64'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
   javaVersion: '17'
+  javaDistribution: 'temurin'
   
 jobs:
   create_release:
@@ -159,7 +160,7 @@ jobs:
       if: matrix.target == 'android'
       uses: actions/setup-java@v3
       with:
-        distribution: 'temurin'
+        distribution: ${{env.javaDistribution}}
         java-version: ${{env.javaVersion}}
 
     - name: Configure other cmake
