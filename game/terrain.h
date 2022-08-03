@@ -4,9 +4,6 @@
 #include <QObject>
 #include <QVector>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
 #include "coreengine/fileserializable.h"
 #include "coreengine/JsCallback.h"
 #include "coreengine/LUPDATE_MACROS.h"

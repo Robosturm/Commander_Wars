@@ -1,13 +1,11 @@
 #ifndef CREDITSMENUE_H
 #define CREDITSMENUE_H
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-#include "menue/basemenu.h"
-
 #include <QVector>
 #include <QElapsedTimer>
-
 #include <QObject>
+
+#include "menue/basemenu.h"
 
 class CreditsMenue;
 using spCreditsMenue = oxygine::intrusive_ptr<CreditsMenue>;

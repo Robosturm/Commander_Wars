@@ -1,5 +1,5 @@
-#include "qfileinfo.h"
-#include "qimage.h"
+#include <QFileInfo>
+#include <QImage>
 
 #include "ingamescriptsupport/scriptdialogdialog.h"
 
@@ -11,8 +11,9 @@
 #include "coreengine/globalutils.h"
 
 #include "objects/dialogs/filedialog.h"
-
 #include "objects/base/dropdownmenusprite.h"
+
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
 ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     : m_Event(scriptEventDialog)

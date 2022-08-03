@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "ui_reader/createdgui.h"
 
 class GamepadInfo;

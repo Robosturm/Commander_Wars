@@ -340,12 +340,12 @@
 <context>
     <name>COStyleMenu</name>
     <message>
-        <location filename="../menue/costylemenu.cpp" line="48"/>
+        <location filename="../menue/costylemenu.cpp" line="50"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/costylemenu.cpp" line="57"/>
+        <location filename="../menue/costylemenu.cpp" line="59"/>
         <source>Edit CO</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1632,12 +1632,12 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>DialogUnitInfo</name>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="39"/>
+        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="41"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="154"/>
+        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="156"/>
         <source>Go to Unit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1676,7 +1676,7 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>DropDownmenu</name>
     <message>
-        <location filename="../objects/base/dropdownmenu.cpp" line="35"/>
+        <location filename="../objects/base/dropdownmenu.cpp" line="37"/>
         <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2105,17 +2105,17 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="../objects/dialogs/filedialog.h" line="30"/>
+        <location filename="../objects/dialogs/filedialog.h" line="32"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/filedialog.cpp" line="55"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="57"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/filedialog.cpp" line="302"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="304"/>
         <source>Do you want to delete the item </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3238,12 +3238,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>GenericBox</name>
     <message>
-        <location filename="../ingamescriptsupport/genericbox.cpp" line="26"/>
+        <location filename="../ingamescriptsupport/genericbox.cpp" line="28"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/genericbox.cpp" line="36"/>
+        <location filename="../ingamescriptsupport/genericbox.cpp" line="38"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5661,63 +5661,63 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>ScriptDialogDialog</name>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="38"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="39"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="47"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="48"/>
         <source>add Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="55"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="56"/>
         <source>remove Last</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="116"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="117"/>
         <source>The text the CO should talk.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="125"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="126"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="125"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="126"/>
         <source>Happy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="125"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="126"/>
         <source>Sad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="127"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="128"/>
         <source>The CO Mood/Icon that will be used for the dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="181"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="182"/>
         <source>The ID of the CO that should talk.
 Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="203"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="204"/>
         <source>The background color of the dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="212"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="213"/>
         <source>Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="255"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="256"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5846,122 +5846,122 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventAnimation</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="85"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="87"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="89"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="91"/>
         <source>Field X on which the animation will be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="101"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="103"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="105"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="107"/>
         <source>Field Y on which the animation will be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="117"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="119"/>
         <source>Offset X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="122"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="124"/>
         <source>X-Offset of the animation. Moving it away from the center.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="134"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="136"/>
         <source>Offset Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="139"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="141"/>
         <source>Y-Offset of the animation. Moving it away from the center.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="151"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="153"/>
         <source>Color: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="156"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="158"/>
         <source>Recoloring color for the animation sprite.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="168"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="170"/>
         <source>Sleep after finish: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="173"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="175"/>
         <source>Time in ms the animation remains visible after all frames were played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="185"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="187"/>
         <source>Scale X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="190"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="192"/>
         <source>X-Scaling of the actual sprite.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="202"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="204"/>
         <source>Scale Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="207"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="209"/>
         <source>Y-Scaling of the actual sprite.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="219"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="221"/>
         <source>Delay: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="224"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="226"/>
         <source>Time in ms before the animation gets played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="236"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="238"/>
         <source>Sprite: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="240"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="242"/>
         <source>Current select animation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="248"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="250"/>
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="259"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="261"/>
         <source>Frames: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="264"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="266"/>
         <source>Amount of frames for the animation. Only has an effect on custom animations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="283"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="285"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6274,8 +6274,8 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventGeneric</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="173"/>
-        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="214"/>
+        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="175"/>
+        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="216"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6574,158 +6574,158 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>SelectKey</name>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="23"/>
+        <location filename="../objects/base/selectkey.cpp" line="24"/>
         <source>Press Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="69"/>
-        <location filename="../objects/base/selectkey.cpp" line="198"/>
+        <location filename="../objects/base/selectkey.cpp" line="70"/>
+        <location filename="../objects/base/selectkey.cpp" line="199"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="73"/>
+        <location filename="../objects/base/selectkey.cpp" line="74"/>
         <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="77"/>
+        <location filename="../objects/base/selectkey.cpp" line="78"/>
         <source>F2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="81"/>
+        <location filename="../objects/base/selectkey.cpp" line="82"/>
         <source>F3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="85"/>
+        <location filename="../objects/base/selectkey.cpp" line="86"/>
         <source>F4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="89"/>
+        <location filename="../objects/base/selectkey.cpp" line="90"/>
         <source>F5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="93"/>
+        <location filename="../objects/base/selectkey.cpp" line="94"/>
         <source>F6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="97"/>
+        <location filename="../objects/base/selectkey.cpp" line="98"/>
         <source>F7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="101"/>
+        <location filename="../objects/base/selectkey.cpp" line="102"/>
         <source>F8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="105"/>
+        <location filename="../objects/base/selectkey.cpp" line="106"/>
         <source>F9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="109"/>
+        <location filename="../objects/base/selectkey.cpp" line="110"/>
         <source>F10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="113"/>
+        <location filename="../objects/base/selectkey.cpp" line="114"/>
         <source>F11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="117"/>
+        <location filename="../objects/base/selectkey.cpp" line="118"/>
         <source>F12</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="121"/>
+        <location filename="../objects/base/selectkey.cpp" line="122"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="125"/>
+        <location filename="../objects/base/selectkey.cpp" line="126"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="129"/>
+        <location filename="../objects/base/selectkey.cpp" line="130"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="133"/>
+        <location filename="../objects/base/selectkey.cpp" line="134"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="137"/>
+        <location filename="../objects/base/selectkey.cpp" line="138"/>
         <source>Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="141"/>
+        <location filename="../objects/base/selectkey.cpp" line="142"/>
         <source>Enter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="145"/>
+        <location filename="../objects/base/selectkey.cpp" line="146"/>
         <source>Backspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="149"/>
+        <location filename="../objects/base/selectkey.cpp" line="150"/>
         <source>Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="153"/>
+        <location filename="../objects/base/selectkey.cpp" line="154"/>
         <source>Ctrl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="157"/>
+        <location filename="../objects/base/selectkey.cpp" line="158"/>
         <source>Alt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="161"/>
+        <location filename="../objects/base/selectkey.cpp" line="162"/>
         <source>AltGr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="165"/>
+        <location filename="../objects/base/selectkey.cpp" line="166"/>
         <source>+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="169"/>
+        <location filename="../objects/base/selectkey.cpp" line="170"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="173"/>
+        <location filename="../objects/base/selectkey.cpp" line="174"/>
         <source>*</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="177"/>
+        <location filename="../objects/base/selectkey.cpp" line="178"/>
         <source>/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="181"/>
+        <location filename="../objects/base/selectkey.cpp" line="182"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="202"/>
+        <location filename="../objects/base/selectkey.cpp" line="203"/>
         <source>Key </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6733,62 +6733,62 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Shopmenu</name>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="53"/>
+        <location filename="../menue/shopmenu.cpp" line="55"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="79"/>
+        <location filename="../menue/shopmenu.cpp" line="81"/>
         <source>Filter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="82"/>
+        <location filename="../menue/shopmenu.cpp" line="84"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="82"/>
+        <location filename="../menue/shopmenu.cpp" line="84"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="82"/>
+        <location filename="../menue/shopmenu.cpp" line="84"/>
         <source>CO Skins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="82"/>
+        <location filename="../menue/shopmenu.cpp" line="84"/>
         <source>Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="82"/>
+        <location filename="../menue/shopmenu.cpp" line="84"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="82"/>
+        <location filename="../menue/shopmenu.cpp" line="84"/>
         <source>Perks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="89"/>
+        <location filename="../menue/shopmenu.cpp" line="91"/>
         <source>Buy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="101"/>
+        <location filename="../menue/shopmenu.cpp" line="103"/>
         <source>Points:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="112"/>
+        <location filename="../menue/shopmenu.cpp" line="114"/>
         <source>Total Price:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="165"/>
+        <location filename="../menue/shopmenu.cpp" line="167"/>
         <source>Check any items you&apos;d like to buy from the shop, then click &apos;Buy&apos; to confirm your purchase.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7065,7 +7065,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Wikimenu</name>
     <message>
-        <location filename="../menue/wikimenu.cpp" line="41"/>
+        <location filename="../menue/wikimenu.cpp" line="43"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>

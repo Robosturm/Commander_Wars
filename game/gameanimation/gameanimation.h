@@ -9,11 +9,12 @@
 
 #include "game/GameEnums.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/TweenQueue.h"
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
 class Player;
 class GameMap;
-
 class GameAnimation;
 using spGameAnimation = oxygine::intrusive_ptr<GameAnimation>;
 

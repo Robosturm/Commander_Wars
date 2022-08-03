@@ -4,13 +4,12 @@
 #include <QObject>
 #include <QVector>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 class Player;
 
 class DialogUnitInfo;
-typedef oxygine::intrusive_ptr<DialogUnitInfo> spDialogUnitInfo;
+using spDialogUnitInfo = oxygine::intrusive_ptr<DialogUnitInfo>;
 
 class DialogUnitInfo : public QObject, public oxygine::Actor
 {

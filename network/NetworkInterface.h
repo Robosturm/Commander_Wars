@@ -11,15 +11,14 @@
 #include <QNetworkInterface>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "coreengine/console.h"
 #include "coreengine/LUPDATE_MACROS.h"
 
 class Serializable;
-
 class NetworkInterface;
-typedef oxygine::intrusive_ptr<NetworkInterface> spNetworkInterface;
+using spNetworkInterface = oxygine::intrusive_ptr<NetworkInterface>;
 
 /**
  * @brief The NetworkInterface class use this in the Context of a Network-Task

@@ -2,21 +2,19 @@
 #define COSELECTION_H
 
 #include <QObject>
-
 #include <QStringList>
-
 #include <QVector>
-
 #include <QColor>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/label.h"
 
 class COSelection;
-typedef oxygine::intrusive_ptr<COSelection> spCOSelection;
+using spCOSelection = oxygine::intrusive_ptr<COSelection>;
 
 class COSelection : public QObject, public oxygine::Actor
 {

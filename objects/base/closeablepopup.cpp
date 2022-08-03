@@ -1,4 +1,4 @@
-#include "closeablepopup.h"
+#include "objects/base/closeablepopup.h"
 
 #include "resource_management/objectmanager.h"
 

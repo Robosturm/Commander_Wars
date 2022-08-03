@@ -2,7 +2,7 @@
 
 #include <QTimer>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 #include "menue/basemenu.h"
 
 class Mainwindow;

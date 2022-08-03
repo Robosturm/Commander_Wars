@@ -1,4 +1,5 @@
 #include "objects/base/timespinbox.h"
+
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 
@@ -6,6 +7,8 @@
 #include "resource_management/fontmanager.h"
 
 #include <QTime>
+
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
 TimeSpinBox::TimeSpinBox(qint32 width)
 {

@@ -1,4 +1,4 @@
-#include "progressinfobar.h"
+#include "objects/base/progressinfobar.h"
 #include "resource_management/fontmanager.h"
 
 ProgressInfoBar::ProgressInfoBar(qint32 width, qint32 heigth, QString text, float progress)

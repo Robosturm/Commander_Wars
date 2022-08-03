@@ -3,11 +3,10 @@
 
 #include <QObject>
 #include <QPoint>
+#include <QImage>
 
 #include "game/GameEnums.h"
 #include "game/ui/customcoboostinfo.h"
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"

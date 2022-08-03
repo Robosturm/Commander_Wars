@@ -7,6 +7,8 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
+
 const char* const ROOT = "::::";
 
 FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, QString startFile, bool preview, QString acceptButtonName)

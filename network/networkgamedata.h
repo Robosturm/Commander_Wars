@@ -4,12 +4,12 @@
 #include <QObject>
 #include <QJsonObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "coreengine/fileserializable.h"
 
 class NetworkGameData;
-typedef oxygine::intrusive_ptr<NetworkGameData> spNetworkGameData;
+using spNetworkGameData = oxygine::intrusive_ptr<NetworkGameData>;
 
 class NetworkGameData : public QObject, public oxygine::ref_counter
 {

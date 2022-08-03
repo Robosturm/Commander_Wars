@@ -4,8 +4,9 @@
 #include <QObject>
 #include <QImage>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 #include "objects/base/colorselector.h"
 #include "objects/base/panel.h"

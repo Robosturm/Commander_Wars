@@ -15,6 +15,8 @@
 #include "objects/base/dropdownmenu.h"
 #include "objects/base/checkbox.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 Shopmenu::Shopmenu()
 {
     setObjectName("Shopmenu");

@@ -4,12 +4,15 @@
 #include <QObject>
 #include <QSize>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
+
 #include "objects/base/h_scrollbar.h"
 #include "objects/base/v_scrollbar.h"
 
 class Panel;
-typedef oxygine::intrusive_ptr<Panel> spPanel;
+using spPanel = oxygine::intrusive_ptr<Panel>;
 
 class Panel : public QObject, public oxygine::Actor
 {

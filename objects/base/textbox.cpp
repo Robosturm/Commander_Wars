@@ -6,6 +6,8 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
+
 Textbox::Textbox(qint32 width, qint32 heigth)
 {
     setObjectName("Textbox");

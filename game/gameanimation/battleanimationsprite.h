@@ -5,13 +5,14 @@
 #include <QTimer>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
 #include "game/unit.h"
 #include "game/gamemap.h"
 
 class BattleAnimationSprite;
-typedef oxygine::intrusive_ptr<BattleAnimationSprite> spBattleAnimationSprite;
+using spBattleAnimationSprite = oxygine::intrusive_ptr<BattleAnimationSprite>;
 
 class BattleAnimationSprite : public QObject, public oxygine::Sprite
 {

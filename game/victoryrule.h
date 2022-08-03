@@ -4,15 +4,12 @@
 #include <QObject>
 
 #include "coreengine/fileserializable.h"
-
 #include "coreengine/scriptvariables.h"
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class Player;
 class GameMap;
-
 class VictoryRule;
 using spVictoryRule = oxygine::intrusive_ptr<VictoryRule>;
 

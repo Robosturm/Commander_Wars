@@ -1,7 +1,8 @@
 #ifndef CAMPAIGNMENU_H
 #define CAMPAIGNMENU_H
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "game/campaign.h"
 #include "game/jsData/campaignmapdata.h"

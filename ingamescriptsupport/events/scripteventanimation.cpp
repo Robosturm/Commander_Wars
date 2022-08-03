@@ -1,4 +1,6 @@
-#include "qcoreapplication.h"
+#include <QCoreApplication>
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "ingamescriptsupport/events/scripteventanimation.h"
 

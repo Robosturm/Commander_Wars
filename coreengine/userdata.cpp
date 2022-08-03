@@ -1,4 +1,4 @@
-#include "qfile.h"
+#include <QFile>
 
 #include "coreengine/userdata.h"
 #include "coreengine/settings.h"
@@ -11,6 +11,8 @@
 #include "resource_management/shoploader.h"
 
 #include "objects/achievementbanner.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 spUserdata Userdata::m_pInstance;
 

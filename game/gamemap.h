@@ -1,11 +1,12 @@
 #ifndef GAMEMAP_H
 #define GAMEMAP_H
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 #include <QObject>
 #include <QVector>
 #include <memory>
+#include <vector>
 
 #include "game/terrain.h"
 #include "game/cursor.h"
@@ -18,8 +19,6 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/qmlvector.h"
-
-#include <vector>
 
 class GameAction;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;

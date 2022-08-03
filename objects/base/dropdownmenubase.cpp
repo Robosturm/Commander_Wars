@@ -1,7 +1,11 @@
-#include "dropdownmenubase.h"
+#include "objects/base/dropdownmenubase.h"
+
 #include "coreengine/mainapp.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
 {

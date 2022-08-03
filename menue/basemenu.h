@@ -3,8 +3,6 @@
 #include <QObject>
 #include <QTimer>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
 #include "ui_reader/createdgui.h"
 
 class Basemenu;

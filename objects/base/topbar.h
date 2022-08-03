@@ -1,15 +1,17 @@
 #ifndef TOPBAR_H
 #define TOPBAR_H
 
-#include "objects/base/focusableobject.h"
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+
 #include "objects/base/tooltip.h"
 #include "objects/base/panel.h"
+#include "objects/base/focusableobject.h"
 
 class Topbar;
-typedef oxygine::intrusive_ptr<Topbar> spTopbar;
+using spTopbar = oxygine::intrusive_ptr<Topbar>;
 
 class Topbar : public FocusableObject
 {

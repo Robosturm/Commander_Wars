@@ -3,13 +3,12 @@
 
 #include <QObject>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
+
 #include "objects/base/label.h"
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
 class ProgressInfoBar;
-typedef oxygine::intrusive_ptr<ProgressInfoBar> spProgressInfoBar;
+using spProgressInfoBar = oxygine::intrusive_ptr<ProgressInfoBar>;
 
 class ProgressInfoBar : public Tooltip
 {

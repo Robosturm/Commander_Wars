@@ -4,6 +4,8 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
+
 SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     : m_MinValue(min),
       m_MaxValue(max),

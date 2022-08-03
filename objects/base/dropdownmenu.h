@@ -4,13 +4,14 @@
 #include <QObject>
 #include <QVector>
 #include <QString>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/dropdownmenubase.h"
 
 class DropDownmenu;
-typedef oxygine::intrusive_ptr<DropDownmenu> spDropDownmenu;
+using spDropDownmenu = oxygine::intrusive_ptr<DropDownmenu>;
 
 class DropDownmenu : public DropDownmenuBase
 {

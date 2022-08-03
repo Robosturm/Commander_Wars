@@ -4,12 +4,14 @@
 #include <QObject>
 #include <QElapsedTimer>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/textinput.h"
 
 class SpinBox;
-typedef oxygine::intrusive_ptr<SpinBox> spSpinBox;
+using spSpinBox = oxygine::intrusive_ptr<SpinBox>;
 
 class SpinBox : public TextInput
 {

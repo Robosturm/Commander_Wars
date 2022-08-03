@@ -1,11 +1,16 @@
-#include "achievementbanner.h"
+#include "objects/achievementbanner.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/settings.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
-#include "coreengine/settings.h"
+
 #include "wiki/wikidatabase.h"
 #include "game/gamemap.h"
+
 #include "objects/base/label.h"
 
 quint32 AchievementBanner::m_activeBanners = 0;

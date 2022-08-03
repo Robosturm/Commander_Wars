@@ -13,7 +13,7 @@
 
 #include "multiplayer/networkcommands.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class MainServer;
 using spMainServer = oxygine::intrusive_ptr<MainServer>;

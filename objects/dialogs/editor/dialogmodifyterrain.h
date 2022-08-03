@@ -3,18 +3,15 @@
 
 #include <QObject>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/panel.h"
-
 #include "objects/base/textbox.h"
 
 class GameMap;
 class Terrain;
-
 class DialogModifyTerrain;
-typedef oxygine::intrusive_ptr<DialogModifyTerrain> spDialogModifyTerrain;
+using spDialogModifyTerrain = oxygine::intrusive_ptr<DialogModifyTerrain>;
 
 class DialogModifyTerrain : public QObject, public oxygine::Actor
 {

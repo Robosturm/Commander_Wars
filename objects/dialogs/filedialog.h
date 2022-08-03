@@ -4,14 +4,16 @@
 #include <QObject>
 #include <QDir>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
+
 #include "objects/base/textbox.h"
 #include "objects/base/panel.h"
 #include "objects/base/dropdownmenu.h"
 
-
 class FileDialog;
-typedef oxygine::intrusive_ptr<FileDialog> spFileDialog;
+using spFileDialog = oxygine::intrusive_ptr<FileDialog>;
 
 /**
  * @brief The FileDialog class file dialog for accessing folder and files.

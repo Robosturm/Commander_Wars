@@ -1,13 +1,14 @@
-#include "selectkey.h"
+#include <QGuiApplication>
+
+#include "objects/base/selectkey.h"
+#include "objects/base/label.h"
 
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "objects/base/label.h"
-
-#include <qguiapplication.h>
+#include "3rd_party/oxygine-framework/oxygine/res/ResFont.h"
 
 SelectKey::SelectKey(Qt::Key code)
 {

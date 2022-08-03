@@ -1,8 +1,9 @@
 #include "objects/base/v_scrollbar.h"
-#include "coreengine/mainapp.h"
+
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/console.h"
+#include "coreengine/mainapp.h"
 
 V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     : m_Width(width),

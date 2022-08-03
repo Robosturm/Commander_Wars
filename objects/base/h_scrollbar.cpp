@@ -1,9 +1,9 @@
 #include "objects/base/h_scrollbar.h"
-#include "coreengine/mainapp.h"
+
 #include "resource_management/objectmanager.h"
 
+#include "coreengine/mainapp.h"
 #include "coreengine/console.h"
-
 #include "coreengine/mainapp.h"
 
 H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)

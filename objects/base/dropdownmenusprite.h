@@ -4,13 +4,12 @@
 #include <QObject>
 #include <QVector>
 #include <QString>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/dropdownmenubase.h"
 
 class DropDownmenuSprite;
-typedef oxygine::intrusive_ptr<DropDownmenuSprite> spDropDownmenuSprite;
+using spDropDownmenuSprite = oxygine::intrusive_ptr<DropDownmenuSprite>;
 
 class DropDownmenuSprite : public DropDownmenuBase
 {

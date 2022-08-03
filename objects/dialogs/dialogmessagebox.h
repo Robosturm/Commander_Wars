@@ -3,8 +3,8 @@
 
 #include <QObject>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 
 class DialogMessageBox;
 using spDialogMessageBox = oxygine::intrusive_ptr<DialogMessageBox>;

@@ -182,7 +182,6 @@ jobs:
         -B "${{github.workspace}}/build" \
         -DCMAKE_GENERATOR="NMake Makefiles JOM" \
         -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" \
-        -DCMAKE_PROJECT_INCLUDE_BEFORE="${{github.workspace}}/qt/Qt/Tools/QtCreator/share/qtcreator/package-manager/auto-setup.cmake" \
         -DQT_QMAKE_EXECUTABLE="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \

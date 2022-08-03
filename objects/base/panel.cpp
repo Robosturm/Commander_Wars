@@ -1,8 +1,9 @@
-#include "panel.h"
-#include "coreengine/mainapp.h"
-#include "resource_management/objectmanager.h"
-
+#include "objects/base/panel.h"
 #include "objects/base/dropdownmenubase.h"
+
+#include "coreengine/mainapp.h"
+
+#include "resource_management/objectmanager.h"
 
 Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
     : m_hideTimer(this)

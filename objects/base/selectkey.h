@@ -3,13 +3,13 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
+
 #include "objects/base/tooltip.h"
 
 class SelectKey;
-typedef oxygine::intrusive_ptr<SelectKey> spSelectKey;
+using spSelectKey = oxygine::intrusive_ptr<SelectKey>;
 
 class SelectKey : public Tooltip
 {

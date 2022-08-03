@@ -17,6 +17,8 @@
 #include "objects/base/label.h"
 #include "objects/dialogs/filedialog.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 ScriptEventGeneric::ScriptEventGeneric(GameMap* pMap, EventType type, QString eventIdentifier)
     : ScriptEvent(pMap, type),
       m_eventIdentifier(eventIdentifier)
