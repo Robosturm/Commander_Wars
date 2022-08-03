@@ -176,6 +176,11 @@ jobs:
 
     - name: Bundle APK
       if: matrix.target == 'android'
+      env:
+        QT_ANDROID_KEYSTORE_PATH: ${{env.workspace}}/source/android/android_release.keystore
+        QT_ANDROID_KEYSTORE_ALIAS: ${{secrets.ANDROIDALIAS}}
+        QT_ANDROID_KEYSTORE_STORE_PASS: ${{secrets.ANDROIDSTOREPASS}}
+        QT_ANDROID_KEYSTORE_KEY_PASS: ${{secrets.ANDROIDSTOREPASS}}
       run:  |
         "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
         --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
@@ -183,8 +188,7 @@ jobs:
         --android-platform android-31 \
         --gradle \
         --release \
-        --sign "file:///${{env.workspace}}/source/android/android_release.keystore" ${{secrets.ANDROIDALIAS}} \
-        --storepass "${{secrets.ANDROIDSTOREPASS}}" \
+        --sign \
         --verbose
                 
     - name: install
