@@ -212,12 +212,13 @@ jobs:
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target all -j4
 
     # we need some more space on the github runner in certain scenarios
-    - name: make space
-      if: matrix.target == 'android'
-      run: |
-        "rm -r ${{env.workspace}}/build/CMakeFiles"
-        "rm -r ${{env.workspace}}/android_openssl"
-        "rm -r ${{env.workspace}}/source/resources"
+    #- name: make space
+    #  if: matrix.target == 'android'
+    #  run: |
+    #    "${{github.workspace}}"
+    #    "rm -r build/CMakeFiles"
+    #    "rm -r android_openssl"
+    #    "rm -r source/resources"
 
     - name: Bundle APK
       if: matrix.target == 'android'

@@ -96,7 +96,6 @@ jobs:
           arch: ${{matrix.COMPILER_TOOLS_VERSION}}
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
-          tools: 'qt.tools.qtcreator'
 
     - name: Install Qt
       uses: jurplel/install-qt-action@v2.14.0
@@ -122,13 +121,6 @@ jobs:
       with:
         ndk-version: ${{env.NDK_Version}}
 
-    - name: Setup JDK
-      if: matrix.target == 'android'
-      uses: actions/setup-java@v3
-      with:
-        distribution: ${{env.javaDistribution}}
-        java-version: ${{env.javaVersion}}
-        
     - name: Configure other cmake
       if: matrix.target != 'android'
       run: |
@@ -178,12 +170,21 @@ jobs:
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target all -j4
 
     # we need some more space on the github runner in certain scenarios
-    - name: make space
-      if: matrix.target == 'android'
-      run: |
-        "rm -r ${{env.workspace}}/android_openssl"
-        "rm -r ${{env.workspace}}/source/resources"
+    #- name: make space
+    #  if: matrix.target == 'android'
+    #  run: |
+    #    "${{github.workspace}}"
+    #    "rm -r build/CMakeFiles"
+    #    "rm -r android_openssl"
+    #    "rm -r source/resources"
             
+    - name: Setup JDK
+      if: matrix.target == 'android'
+      uses: actions/setup-java@v3
+      with:
+        distribution: ${{env.javaDistribution}}
+        java-version: ${{env.javaVersion}}
+        
     - name: Bundle APK
       if: matrix.target == 'android'
       env:
