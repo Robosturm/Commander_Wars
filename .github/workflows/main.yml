@@ -181,7 +181,6 @@ jobs:
     - name: make space
       if: matrix.target == 'android'
       run: |
-        "rm -r ${{env.workspace}}/build/CMakeFiles"
         "rm -r ${{env.workspace}}/android_openssl"
         "rm -r ${{env.workspace}}/source/resources"
             
