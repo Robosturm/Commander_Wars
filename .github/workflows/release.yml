@@ -142,14 +142,7 @@ jobs:
           modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
-        
-    # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace
-    - name: Clean up unneed win dll
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/lib"
-        
+                
     - name: Install OS Dependencies 1
       run: ${{matrix.installerCommands1}}
     
@@ -230,6 +223,13 @@ jobs:
       with:
         path: "${{github.workspace}}/source/resources"
 
+    # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace
+    - name: Clean up unneed win dll
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/lib"
+        
     # apk preparation and signing
     - name: Setup JDK
       if: matrix.target == 'android'
