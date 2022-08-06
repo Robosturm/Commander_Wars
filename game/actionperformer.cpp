@@ -46,7 +46,7 @@ void ActionPerformer::performAction(spGameAction pGameAction)
     else if (pGameAction.get() != nullptr)
     {
         CONSOLE_PRINT("GameMenue::performAction " + pGameAction->getActionID() + " at X: " + QString::number(pGameAction->getTarget().x())
-                       + " at Y: " + QString::number(pGameAction->getTarget().y()), Console::eDEBUG);
+                      + " at Y: " + QString::number(pGameAction->getTarget().y()), Console::eDEBUG);
 
         Mainapp::getInstance()->pauseRendering();
         bool multiplayer = false;
@@ -158,9 +158,9 @@ bool ActionPerformer::requiresForwarding(const spGameAction & pGameAction) const
     Player* pCurrentPlayer = m_pMap->getCurrentPlayer();
     auto* baseGameInput = pCurrentPlayer->getBaseGameInput();
     return m_pMenu != nullptr &&
-           m_pMenu->getIsMultiplayer(pGameAction) &&
-           baseGameInput != nullptr &&
-           baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi;
+                      m_pMenu->getIsMultiplayer(pGameAction) &&
+                      baseGameInput != nullptr &&
+                                       baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi;
 }
 
 spGameAction ActionPerformer::doMultiTurnMovement(spGameAction pGameAction)
@@ -190,36 +190,39 @@ spGameAction ActionPerformer::doMultiTurnMovement(spGameAction pGameAction)
                         QVector<QPoint> currentMultiTurnPath = pUnit->getMultiTurnPath();
                         if (currentMultiTurnPath.size() > 0)
                         {
-                            // replace current action with auto moving none moved units
-                            m_pStoredAction = pGameAction;
-                            spGameAction multiTurnMovement = spGameAction::create(CoreAI::ACTION_WAIT, m_pMap);
-                            if (pUnit->getActionList().contains(CoreAI::ACTION_HOELLIUM_WAIT))
+                            qint32 movepoints = pUnit->getMovementpoints(pUnit->getPosition());
+                            if (movepoints > 0)
                             {
-                                multiTurnMovement->setActionID(CoreAI::ACTION_HOELLIUM_WAIT);
-                            }
-                            multiTurnMovement->setTarget(pUnit->getPosition());
-                            UnitPathFindingSystem pfs(m_pMap, pUnit, pPlayer);
-                            pfs.setMovepoints(pUnit->getFuel());
-                            pfs.explore();
-                            qint32 movepoints = pUnit->getMovementpoints(multiTurnMovement->getTarget());
-                            // shorten path
-                            auto newPath = pfs.getClosestReachableMovePath(currentMultiTurnPath, movepoints);
-                            multiTurnMovement->setMovepath(newPath, pfs.getCosts(newPath));
-                            QVector<QPoint> multiTurnPath;
-                            // still some path ahead?
-                            if (newPath.size() == 0)
-                            {
-                                multiTurnPath = currentMultiTurnPath;
-                            }
-                            else if (currentMultiTurnPath.size() > newPath.size())
-                            {
-                                for (qint32 i = 0; i <= currentMultiTurnPath.size() - newPath.size(); i++)
+                                // shorten path
+                                UnitPathFindingSystem pfs(m_pMap, pUnit, pPlayer);
+                                pfs.setMovepoints(pUnit->getFuel());
+                                pfs.explore();
+                                auto newPath = pfs.getClosestReachableMovePath(currentMultiTurnPath, movepoints);
+                                if (newPath.size() > 0)
                                 {
-                                    multiTurnPath.append(currentMultiTurnPath[i]);
+                                    // replace current action with auto moving none moved units
+                                    m_pStoredAction = pGameAction;
+                                    spGameAction multiTurnMovement = spGameAction::create(CoreAI::ACTION_WAIT, m_pMap);
+                                    if (pUnit->getActionList().contains(CoreAI::ACTION_HOELLIUM_WAIT))
+                                    {
+                                        multiTurnMovement->setActionID(CoreAI::ACTION_HOELLIUM_WAIT);
+                                    }
+                                    multiTurnMovement->setTarget(pUnit->getPosition());
+                                    multiTurnMovement->setMovepath(newPath, pfs.getCosts(newPath));
+                                    QVector<QPoint> multiTurnPath;
+                                    // still some path ahead?
+                                    multiTurnPath = QVector<QPoint>();
+                                    if (currentMultiTurnPath.size() > newPath.size())
+                                    {
+                                        for (qint32 i = 0; i <= currentMultiTurnPath.size() - newPath.size(); i++)
+                                        {
+                                            multiTurnPath.append(currentMultiTurnPath[i]);
+                                        }
+                                    }
+                                    multiTurnMovement->setMultiTurnPath(multiTurnPath);
+                                    return multiTurnMovement;
                                 }
                             }
-                            multiTurnMovement->setMultiTurnPath(multiTurnPath);
-                            return multiTurnMovement;
                         }
                         else if (pUnit->getActionList().contains(CoreAI::ACTION_CAPTURE))
                         {
