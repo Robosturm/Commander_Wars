@@ -211,14 +211,24 @@ jobs:
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target all -j4
 
-    # we need some more space on the github runner in certain scenarios
-    - name: make space
+    # we need some more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace    
+    - name: Make space 1
       if: matrix.target == 'android'
-      run: |
-        "${{github.workspace}}"
-        "rm -r build/CMakeFiles"
-        "rm -r android_openssl"
-        "rm -r source/resources"
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/build/CMakeFiles"
+        
+    - name: Make space 2
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/android_openssl"
+        
+    - name: Make space 3
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/source/resources"
 
     - name: Bundle APK
       if: matrix.target == 'android'
