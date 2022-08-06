@@ -108,6 +108,13 @@ jobs:
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
     
+    # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace
+    - name: Clean up unneed win dll
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/lib"
+    
     - name: Install OS Dependencies 1
       run: ${{matrix.installerCommands1}}
     
@@ -120,13 +127,6 @@ jobs:
       id: setup-ndk
       with:
         ndk-version: ${{env.NDK_Version}}
-
-    - name: Setup JDK
-      if: matrix.target == 'android'
-      uses: actions/setup-java@v3
-      with:
-        distribution: ${{env.javaDistribution}}
-        java-version: ${{env.javaVersion}}
 
     - name: Configure other cmake
       if: matrix.target != 'android'
@@ -176,7 +176,7 @@ jobs:
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target all -j4
 
-    # we need some more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace
+    # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace
     - name: Make space 1
       if: matrix.target == 'android'
       uses: JesseTG/rm@v1.0.3
@@ -194,7 +194,15 @@ jobs:
       uses: JesseTG/rm@v1.0.3
       with:
         path: "${{github.workspace}}/source/resources"
-                        
+           
+    # apk preparation and signing
+    - name: Setup JDK
+      if: matrix.target == 'android'
+      uses: actions/setup-java@v3
+      with:
+        distribution: ${{env.javaDistribution}}
+        java-version: ${{env.javaVersion}}
+        
     - name: Bundle APK
       if: matrix.target == 'android'
       env:

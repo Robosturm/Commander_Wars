@@ -13,7 +13,7 @@ env:
   NDK_Root: 'C:/hostedtoolcache/windows/ndk/r22b/x64'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
   javaVersion: '17'
-  javaDistribution: 'temurin'
+  javaDistribution: 'microsoft'
   
 jobs:
   create_release:
@@ -84,7 +84,7 @@ jobs:
             qtCoreToolsPath: 'mingw_64'
             installerCommands1: 'choco install jom'
             installerCommands2: ''
-            source_asset: 'Commander_Wars_armeabi-v7a.apk'
+            source_asset: 'android-build/build/outputs/apk/release/android-build-release-signed.apk'
             asset_name: 'Commander_Wars_armeabi-v7a.apk'
             cmakeOptions: ''
           - buildTarget: android-arm64_v8a
@@ -98,7 +98,7 @@ jobs:
             qtCoreToolsPath: 'mingw_64'
             installerCommands1: 'choco install jom'
             installerCommands2: ''
-            source_asset: 'Commander_Wars_arm64-v8a.apk'
+            source_asset: 'android-build/build/outputs/apk/release/android-build-release-signed.apk'
             asset_name: 'Commander_Wars_arm64-v8a.apk'
             cmakeOptions: ''
 
@@ -142,7 +142,14 @@ jobs:
           modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
-          
+        
+    # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace
+    - name: Clean up unneed win dll
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/lib"
+        
     - name: Install OS Dependencies 1
       run: ${{matrix.installerCommands1}}
     
@@ -155,13 +162,6 @@ jobs:
       id: setup-ndk
       with:
         ndk-version: ${{env.NDK_Version}}
-
-    - name: Setup JDK
-      if: matrix.target == 'android'
-      uses: actions/setup-java@v3
-      with:
-        distribution: ${{env.javaDistribution}}
-        java-version: ${{env.javaVersion}}
 
     - name: Configure other cmake
       if: matrix.target != 'android'
@@ -211,7 +211,7 @@ jobs:
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target all -j4
 
-    # we need some more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace    
+    # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace    
     - name: Make space 1
       if: matrix.target == 'android'
       uses: JesseTG/rm@v1.0.3
@@ -230,6 +230,14 @@ jobs:
       with:
         path: "${{github.workspace}}/source/resources"
 
+    # apk preparation and signing
+    - name: Setup JDK
+      if: matrix.target == 'android'
+      uses: actions/setup-java@v3
+      with:
+        distribution: ${{env.javaDistribution}}
+        java-version: ${{env.javaVersion}}
+
     - name: Bundle APK
       if: matrix.target == 'android'
       env:
@@ -246,11 +254,6 @@ jobs:
         --release \
         --sign \
         --verbose
-
-    - name: install
-      if: matrix.target == 'android'
-      working-directory: '${{github.workspace}}/build'
-      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j4
       
 #----------------------------------------------------------------------------------------------------------------------------------------------
 # release creation and upload part
@@ -260,7 +263,19 @@ jobs:
       if: matrix.target != 'android'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createReleaseZip
       
-    - name: upload artifact
+    - name: upload artifact android
+      if: matrix.target == 'android'
+      uses: actions/upload-release-asset@v1.0.2
+      env:
+        GITHUB_TOKEN: ${{github.token}}
+      with:
+        upload_url: '${{needs.create_release.outputs.upload_url}}'
+        asset_path: '${{github.workspace}}/build/${{matrix.source_asset}}'
+        asset_name: '${{matrix.asset_name}}'
+        asset_content_type: application/zip
+        
+    - name: upload other artifacts
+      if: matrix.target != 'android'
       uses: actions/upload-release-asset@v1.0.2
       env:
         GITHUB_TOKEN: ${{github.token}}
