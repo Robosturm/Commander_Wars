@@ -78,7 +78,7 @@ Mainwindow::Mainwindow()
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    spLabel pTextfield = spLabel::create(250);
+    spLabel pTextfield = spLabel::create(300);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(Mainapp::getGameVersion());
     pTextfield->setPosition(Settings::getWidth() - 10 - pTextfield->getTextRect().getWidth(), Settings::getHeight() - 10 - pTextfield->getTextRect().getHeight());

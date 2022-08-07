@@ -172,12 +172,12 @@ endif()
 add_definitions(
     -DVERSION_MAJOR=0
     -DVERSION_MINOR=24
-    -DVERSION_REVISION=1
+    -DVERSION_REVISION=2
     -DVERSION_SUFFIX="main"
     )
 
-set(COW_ANDROID_VERSION_NAME "0.24.1-main")
-set(COW_ANDROID_VERSION_CODE "20")
+set(COW_ANDROID_VERSION_NAME "0.24.2-main")
+set(COW_ANDROID_VERSION_CODE "21")
 
 ###################################################################################
 # Set up some compiler and linking options
