@@ -299,42 +299,50 @@ oxygine::spResAnim SpriteCreator::createAnim(QString input, QImage& colorTableIm
 
 QImage SpriteCreator::createSprite(QString input, QImage& colorTableImg, const QImage & maskTableImg, bool useColorBox, bool save)
 {
-    QImage orgImg(input);
-    QImage mainImg(orgImg.size(), QImage::Format_RGBA8888);
-    for (qint32 x = 0; x < orgImg.width(); x++)
+    QImage mainImg;
+    if (colorTableImg.isNull())
     {
-        for (qint32 y = 0; y < orgImg.height(); y++)
+        mainImg = QImage(input);
+    }
+    else
+    {
+        QImage orgImg(input);
+        mainImg = QImage(orgImg.size(), QImage::Format_RGBA8888);
+        for (qint32 x = 0; x < orgImg.width(); x++)
         {
-            // color pixel or another one?
-            QColor org = orgImg.pixelColor(x, y);
-            QColor orgBox = getColorBox(org);
-            for (qint32 i = 0; i < colorTableImg.width(); i++)
+            for (qint32 y = 0; y < orgImg.height(); y++)
             {
-                QColor pixel = colorTableImg.pixelColor(i, 0);
-                QColor boxColor = getColorBox(pixel);
-                if (useColorBox)
+                // color pixel or another one?
+                QColor org = orgImg.pixelColor(x, y);
+                QColor orgBox = getColorBox(org);
+                for (qint32 i = 0; i < colorTableImg.width(); i++)
                 {
-                    if (boxColor.rgba() == orgBox.rgba() ||
-                        pixel.rgba() == org.rgba())
+                    QColor pixel = colorTableImg.pixelColor(i, 0);
+                    QColor boxColor = getColorBox(pixel);
+                    if (useColorBox)
                     {
-                        mainImg.setPixelColor(x, y, getImageColor(maskTableImg.pixelColor(i, 0), org));
-                        break;
+                        if (boxColor.rgba() == orgBox.rgba() ||
+                            pixel.rgba() == org.rgba())
+                        {
+                            mainImg.setPixelColor(x, y, getImageColor(maskTableImg.pixelColor(i, 0), org));
+                            break;
+                        }
+                        else if (i == colorTableImg.width() - 1)
+                        {
+                            mainImg.setPixelColor(x, y, org);
+                        }
                     }
-                    else if (i == colorTableImg.width() - 1)
+                    else
                     {
-                        mainImg.setPixelColor(x, y, org);
-                    }
-                }
-                else
-                {
-                    if (pixel.rgba() == org.rgba())
-                    {
-                        mainImg.setPixelColor(x, y, maskTableImg.pixelColor(i, 0));
-                        break;
-                    }
-                    else if (i == colorTableImg.width() - 1)
-                    {
-                        mainImg.setPixelColor(x, y, org);
+                        if (pixel.rgba() == org.rgba())
+                        {
+                            mainImg.setPixelColor(x, y, maskTableImg.pixelColor(i, 0));
+                            break;
+                        }
+                        else if (i == colorTableImg.width() - 1)
+                        {
+                            mainImg.setPixelColor(x, y, org);
+                        }
                     }
                 }
             }
@@ -754,29 +762,29 @@ void SpriteCreator::preProcessMask(QImage & mask, const QImage & overlay, qint32
 
 
                 if (y + 1 < mask.height() &&
-                   (y + 1) % frameHeigth != 0 &&
-                   mask.pixelColor(x, y + 1).alpha() != alpha)
+                    (y + 1) % frameHeigth != 0 &&
+                    mask.pixelColor(x, y + 1).alpha() != alpha)
                 {
                     QColor color = mask.pixelColor(x, y + 1);
                     newPicture.setPixelColor(x, y, color);
                 }
                 else if (y - 1 >= 0 &&
-                        ((y - 1) % frameHeigth != 0 || y == 0) &&
-                        mask.pixelColor(x, y - 1).alpha() != alpha)
+                         ((y - 1) % frameHeigth != 0 || y == 0) &&
+                         mask.pixelColor(x, y - 1).alpha() != alpha)
                 {
                     QColor color = mask.pixelColor(x, y - 1);
                     newPicture.setPixelColor(x, y, color);
                 }
                 else if (x + 1 < mask.width() &&
-                        (x + 1) % frameWidth != 0 &&
+                         (x + 1) % frameWidth != 0 &&
                          mask.pixelColor(x + 1, y).alpha() != alpha)
                 {
                     QColor color = mask.pixelColor(x + 1, y);
                     newPicture.setPixelColor(x, y, color);
                 }
                 else if (x - 1 >= 0 &&
-                        ((x - 1) % frameWidth != 0 || x == 0) &&
-                        mask.pixelColor(x - 1, y).alpha() != alpha)
+                         ((x - 1) % frameWidth != 0 || x == 0) &&
+                         mask.pixelColor(x - 1, y).alpha() != alpha)
                 {
                     QColor color = mask.pixelColor(x - 1, y);
                     newPicture.setPixelColor(x, y, color);

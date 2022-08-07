@@ -4770,5 +4770,7 @@
         <file>resources/ui/changePasswordDialog.xml</file>
         <file>resources/objects/h_table_divider.png</file>
         <file>resources/objects/v_table_divider.png</file>
+        <file>resources/images/battleanimations/bomber/bomber+ac+mask.png</file>
+        <file>resources/images/battleanimations/bomber/bomber+ti+mask.png</file>
     </qresource>
 </RCC>

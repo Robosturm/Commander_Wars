@@ -55,6 +55,7 @@ var Constructor = function()
         data.setMapBackground("maps/commander_wars.camp/alphaLand.png");
         data.setMapWidth(3072);
         data.setMapHeight(1444);
+        // sprite flag offset 16 64
         var variables = campaign.getVariables();
         var lastWon = variables.createVariable("LastWonMap");
         var lastWonMapName = lastWon.readDataString();
@@ -63,6 +64,8 @@ var Constructor = function()
         var openMapNames = [];
         var newMapPositions = [];
 
+        // --------------------------------------------------------------
+        // Oil in the deset
         // --------------------------------------------------------------
         var oilInTheDesertName = "Oil in the desert";
         var oilInTheDesert = variables.createVariable(oilInTheDesertName);
@@ -86,12 +89,33 @@ var Constructor = function()
             }
             wonMaps.push(oilInTheDesertPos);
         }
-        // --------------------------------------------------------------
 
-        // test code
-        // var wonMaps = [Qt.point(0.5, 0.5), Qt.point(0.25, 0.25), Qt.point(0.75, 0.75)];
-        // var openMaps = [Qt.point(0.25, 0.5), Qt.point(0.5, 0.25), Qt.point(0.25, 0.75)];
-        // var newMapPositions = [0, 1, 2];
+        // --------------------------------------------------------------
+        // Day at the beach
+        // --------------------------------------------------------------
+        var dayAtTheBeachName = "Day at the beach";
+        var dayAtTheBeach = variables.createVariable(dayAtTheBeachName);
+        var dayAtTheBeachPos = Qt.point(0.712565, 0.54778);
+        if (dayAtTheBeach.readDataBool() === false)
+        {
+            openMaps.push(dayAtTheBeachPos);
+            openMapNames.push("dayAtTheBeach.map");
+            var newDayAtTheBeach = variables.createVariable("new" + dayAtTheBeachName);
+            if (newDayAtTheBeach.readDataBool() === false)
+            {
+                newMapPositions.push(newMapPositions.length);
+                newDayAtTheBeach.writeDataBool(true);
+            }
+        }
+        else
+        {
+            if (lastWonMapName === dayAtTheBeachName)
+            {
+                data.setNewlyWonMap(wonMaps.length);
+            }
+            wonMaps.push(dayAtTheBeachPos);
+        }
+        // --------------------------------------------------------------
 
         data.setOpenMapPositions(openMaps);
         data.setNewMapPosition(newMapPositions);

@@ -152,6 +152,7 @@ void MovementPlanner::reloadMap()
             if (pUnit != nullptr)
             {
                 pUnit->setMultiTurnPath(QVector<QPoint>());
+                pUnit->setAiMovePath(QVector<QPoint>());
             }
             if (!pPlayer->getFieldVisible(x, y))
             {

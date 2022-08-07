@@ -75,7 +75,7 @@ bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits
                     turnPfs.explore();
                     spGameAction pAction = spGameAction::create(ACTION_HOELLIUM_WAIT, m_pMap);
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                    auto path = turnPfs.getClosestReachableMovePath(targetFields);
+                    auto path = turnPfs.getClosestReachableMovePath(targetFields, movepoints);
                     pAction->setMovepath(path, turnPfs.getCosts(path));
                     if (pAction->canBePerformed())
                     {
@@ -164,7 +164,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
                         if (targetFields.x() >= 0)
                         {
                             pAction->setActionID(ACTION_WAIT);
-                            auto path = turnPfs.getClosestReachableMovePath(targetFields);
+                            auto path = turnPfs.getClosestReachableMovePath(targetFields, movepoints);
                             pAction->setMovepath(path, turnPfs.getCosts(path));
                             if (pAction->canBePerformed())
                             {
@@ -478,11 +478,11 @@ void CoreAI::processPredefinedAiPatrol(Unit* pUnit)
             targets.push_back(QVector3D(nextTarget.x(), nextTarget.y(), 1));
             TargetedUnitPathFindingSystem targetPfs(m_pMap, pUnit, targets, &m_MoveCostMap);
             targetPfs.explore();
-            qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+            qint32 movepoints = pUnit->getMovementpoints(pUnit->getPosition());
             QPoint targetFields = targetPfs.getReachableTargetField(movepoints);
             if (targetFields.x() >= 0)
             {
-                auto path = pfs.getClosestReachableMovePath(targetFields);
+                auto path = pfs.getClosestReachableMovePath(targetFields, movepoints);
                 pAction->setMovepath(path, pfs.getCosts(path));
                 if (path[0] == nextTarget)
                 {

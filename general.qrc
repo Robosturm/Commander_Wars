@@ -2077,5 +2077,7 @@
         <file>resources/scripts/actions/ACTION_LOADGAME.js</file>
         <file>resources/scripts/general/gameanimationpower.js</file>
         <file>resources/scripts/wiki/pinkfrontier.js</file>
+        <file>maps/commander_wars.camp/dayAtTheBeach.js</file>
+        <file>maps/commander_wars.camp/dayAtTheBeach.map</file>
     </qresource>
 </RCC>
