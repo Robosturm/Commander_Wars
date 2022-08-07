@@ -223,10 +223,10 @@ public slots:
      * @brief createBaseDirs
      */
     void createBaseDirs();
-    void changeScreenMode(qint32 mode);
+    void changeScreenMode(Settings::ScreenModes mode);
     void changeScreenSize(qint32 width, qint32 heigth);
     void changePosition(QPoint pos, bool invert);
-    qint32 getScreenMode();
+    Settings::ScreenModes getScreenMode();
     /**
      * @brief getGameVersion
      * @return

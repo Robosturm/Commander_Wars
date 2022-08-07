@@ -39,11 +39,16 @@ int main(qint32 argc, char* argv[])
     /*************************************************************************************************/
     // show window according to window mode
     window.setPosition(Settings::getX(), Settings::getY());
+    if (Settings::getSmallScreenDevice())
+    {
+        // force a resolution reset
+        window.changeScreenMode(Settings::ScreenModes::FullScreen);
+    }
+    // show as normal borderless
     window.changeScreenMode(window.getScreenMode());
-
     window.setBrightness(Settings::getBrightness());
     window.setGamma(Settings::getGamma());
-    if (window.getScreenMode() != 0)
+    if (window.getScreenMode() != Settings::ScreenModes::Window)
     {
         window.setPosition(Settings::getX(), Settings::getY());
     }

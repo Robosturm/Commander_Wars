@@ -411,17 +411,17 @@ void Mainapp::doMapshot()
     }
 }
 
-void Mainapp::changeScreenMode(qint32 mode)
+void Mainapp::changeScreenMode(Settings::ScreenModes mode)
 {
     if (m_noUi)
     {
         return;
     }
-    CONSOLE_PRINT("Changing screen mode to " + QString::number(mode), Console::eDEBUG);
+    CONSOLE_PRINT("Changing screen mode to " + QString::number(static_cast<qint32>(mode)), Console::eDEBUG);
     hide();
     switch (mode)
     {
-        case 1:
+        case Settings::ScreenModes::Borderless:
         {
             setWindowState(Qt::WindowState::WindowNoState);
             setFlag(Qt::FramelessWindowHint);
@@ -443,7 +443,7 @@ void Mainapp::changeScreenMode(qint32 mode)
             }
             break;
         }
-        case 2:
+        case Settings::ScreenModes::FullScreen:
         {
             showFullScreen();
             QScreen* screen = QGuiApplication::primaryScreen();
@@ -538,19 +538,19 @@ void Mainapp::changePosition(QPoint pos, bool invert)
     }
 }
 
-qint32 Mainapp::getScreenMode()
+Settings::ScreenModes Mainapp::getScreenMode()
 {
     if (Settings::getFullscreen())
     {
-        return 2;
+        return Settings::ScreenModes::FullScreen;
     }
     else if (Settings::getBorderless())
     {
-        return 1;
+        return Settings::ScreenModes::Borderless;
     }
     else
     {
-        return 0;
+        return Settings::ScreenModes::Window;
     }
 }
 

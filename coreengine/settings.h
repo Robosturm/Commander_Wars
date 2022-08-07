@@ -239,6 +239,13 @@ private:
     };
 #endif
 public:
+    enum class ScreenModes
+    {
+        Window,
+        Borderless,
+        FullScreen,
+    };
+
     virtual ~Settings() = default;
     static Settings* getInstance();
     static void shutdown();

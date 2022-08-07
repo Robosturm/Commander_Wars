@@ -436,10 +436,13 @@ void OptionMenue::showSettings()
     spDropDownmenu pScreenModes = spDropDownmenu::create(400, items);
     pScreenModes->setTooltipText(tr("Selects the screen mode for the game."));
     pScreenModes->setPosition(sliderOffset - 130, y);
-    pScreenModes->setCurrentItem(pApp->getScreenMode());
+    pScreenModes->setCurrentItem(static_cast<qint32>(pApp->getScreenMode()));
     pScreenModes->setEnabled(!Settings::getSmallScreenDevice());
     m_pOptions->addItem(pScreenModes);
-    connect(pScreenModes.get(), &DropDownmenu::sigItemChanged, pApp, &Mainapp::changeScreenMode, Qt::QueuedConnection);
+    connect(pScreenModes.get(), &DropDownmenu::sigItemChanged, pApp, [pApp](qint32 value)
+    {
+        pApp->changeScreenMode(static_cast<Settings::ScreenModes>(value));
+    }, Qt::QueuedConnection);
     y += 40;
 
     pTextfield = spLabel::create(sliderOffset - 140);
