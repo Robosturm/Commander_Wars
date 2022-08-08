@@ -18,66 +18,61 @@
         <x>settings.getWidth() / 2.0 - 100</x>
         <y>MainMenu.getButtonY(0)</y>
         <width>200</width>
-        <text>QT_TRANSLATE_NOOP("GAME","Singleplayer")</text>
-        <tooltip>QT_TRANSLATE_NOOP("GAME","Singleplayer")</tooltip>
-        <onEvent>MainMenu.loadMainSingleMenu(currentMenu)</onEvent>
+        <text>QT_TRANSLATE_NOOP("GAME","Video")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Video")</tooltip>
+        <enabled>false</enabled>
+        <onEvent></onEvent>
     </Button>
     <Button>
         <x>settings.getWidth() / 2.0 - 100</x>
         <y>MainMenu.getButtonY(1)</y>
         <width>200</width>
-        <text>QT_TRANSLATE_NOOP("GAME","Multiplayer")</text>
-        <tooltip>QT_TRANSLATE_NOOP("GAME","Multiplayer")</tooltip>
-        <onEvent>currentMenu.enterMultiplayer();</onEvent>
+        <text>QT_TRANSLATE_NOOP("GAME","Audio")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Audio")</tooltip>
+        <enabled>false</enabled>
+        <onEvent></onEvent>
     </Button>
     <Button>
         <x>settings.getWidth() / 2.0 - 100</x>
         <y>MainMenu.getButtonY(2)</y>
         <width>200</width>
-        <text>QT_TRANSLATE_NOOP("GAME","Map Editor")</text>
-        <tooltip>QT_TRANSLATE_NOOP("GAME","Map Editor")</tooltip>
-        <onEvent>currentMenu.enterEditor();</onEvent>
+        <text>QT_TRANSLATE_NOOP("GAME","Gameplay")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Gameplay")</tooltip>
+        <enabled>false</enabled>
+        <onEvent></onEvent>
     </Button>
     <Button>
         <x>settings.getWidth() / 2.0 - 100</x>
         <y>MainMenu.getButtonY(3)</y>
         <width>200</width>
-        <text>QT_TRANSLATE_NOOP("GAME","Personal")</text>
-        <tooltip>QT_TRANSLATE_NOOP("GAME","Personal")</tooltip>
-        <onEvent>MainMenu.loadPlayermenu(currentMenu)</onEvent>
+        <text>QT_TRANSLATE_NOOP("GAME","Controls")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Controls")</tooltip>
+        <enabled>false</enabled>
+        <onEvent></onEvent>
     </Button>
     <Button>
         <x>settings.getWidth() / 2.0 - 100</x>
         <y>MainMenu.getButtonY(4)</y>
         <width>200</width>
-        <text>QT_TRANSLATE_NOOP("GAME","Wiki")</text>
-        <tooltip>QT_TRANSLATE_NOOP("GAME","Wiki")</tooltip>
-        <onEvent>currentMenu.enterWikimenue();</onEvent>
+        <text>QT_TRANSLATE_NOOP("GAME","Mods")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Mods")</tooltip>
+        <onEvent>currentMenu.enterOptionmenue("")</onEvent>
     </Button>
     <Button>
         <x>settings.getWidth() / 2.0 - 100</x>
         <y>MainMenu.getButtonY(5)</y>
         <width>200</width>
-        <text>QT_TRANSLATE_NOOP("GAME","Options")</text>
-        <tooltip>QT_TRANSLATE_NOOP("GAME","Options")</tooltip>
-        <onEvent>currentMenu.enterOptionmenue();</onEvent>
-    </Button>
-<!-- todo move to options
-    <Button>
-        <x>settings.getWidth() / 2.0 - 85</x>
-        <y>MainMenu.getButtonY(6)</y>
-        <width>170</width>
         <text>QT_TRANSLATE_NOOP("GAME","Credits")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Credits")</tooltip>
         <onEvent>currentMenu.enterCreditsmenue();</onEvent>
     </Button>
--->
     <Button>
         <x>settings.getWidth() / 2.0 - 100</x>
         <y>MainMenu.getButtonY(6)</y>
         <width>200</width>
-        <text>QT_TRANSLATE_NOOP("GAME","Quit")</text>
-        <tooltip>QT_TRANSLATE_NOOP("GAME","Quit")</tooltip>
-        <onEvent>currentMenu.quitGame();</onEvent>
+        <text>QT_TRANSLATE_NOOP("GAME","Back")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Back")</tooltip>
+        <onEvent>MainMenu.loadMainMenu(currentMenu);</onEvent>
     </Button>
+    <!-- currentMenu.enterOptionmenue(); -->
 </ui>

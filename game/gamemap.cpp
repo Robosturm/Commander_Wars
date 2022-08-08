@@ -1506,6 +1506,13 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     m_rowSprites.reserve(m_headerInfo.m_heigth);
     for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
     {
+        auto pActor = oxygine::spActor::create();
+        pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
+        m_rowSprites.push_back(pActor);
+        addChild(pActor);
+    }
+    for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
+    {
         if (showLoadingScreen)
         {
             QString title = tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_heigth);
@@ -1513,10 +1520,6 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
             pLoadingScreen->setProgress(title, progress);
         }
         m_fields.push_back(std::vector<spTerrain>(m_headerInfo.m_width, spTerrain()));
-        auto pActor = oxygine::spActor::create();
-        pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
-        m_rowSprites.push_back(pActor);
-        addChild(pActor);
         for (qint32 x = 0; x < m_headerInfo.m_width; x++)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y, "", this);

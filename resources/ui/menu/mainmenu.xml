@@ -60,18 +60,8 @@
         <width>200</width>
         <text>QT_TRANSLATE_NOOP("GAME","Options")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Options")</tooltip>
-        <onEvent>currentMenu.enterOptionmenue();</onEvent>
+        <onEvent>MainMenu.loadMainOptionMenu(currentMenu)</onEvent>
     </Button>
-<!-- todo move to options
-    <Button>
-        <x>settings.getWidth() / 2.0 - 85</x>
-        <y>MainMenu.getButtonY(6)</y>
-        <width>170</width>
-        <text>QT_TRANSLATE_NOOP("GAME","Credits")</text>
-        <tooltip>QT_TRANSLATE_NOOP("GAME","Credits")</tooltip>
-        <onEvent>currentMenu.enterCreditsmenue();</onEvent>
-    </Button>
--->
     <Button>
         <x>settings.getWidth() / 2.0 - 100</x>
         <y>MainMenu.getButtonY(6)</y>

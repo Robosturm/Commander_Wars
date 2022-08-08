@@ -32,6 +32,11 @@ var MainMenu =
         currentMenu.resetUi();
         currentMenu.loadXml("ui/menu/mainmenu.xml");
     },
+    loadMainOptionMenu : function(currentMenu)
+    {
+        currentMenu.resetUi();
+        currentMenu.loadXml("ui/menu/mainoptionmenu.xml");
+    },
     loadMainSingleMenu : function(currentMenu)
     {
         currentMenu.resetUi();

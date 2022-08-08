@@ -197,10 +197,10 @@ void Mainwindow::enterEditor()
     Mainapp::getInstance()->continueRendering();
 }
 
-void Mainwindow::enterOptionmenue()
+void Mainwindow::enterOptionmenue(const QString & xmlFile)
 {
     Mainapp::getInstance()->pauseRendering();
-    auto window = spOptionMenue::create();
+    auto window = spOptionMenue::create(xmlFile);
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();

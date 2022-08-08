@@ -20,7 +20,7 @@ signals:
 public slots:
     void enterSingleplayer(const QStringList & filter);
     void enterEditor();
-    void enterOptionmenue();
+    void enterOptionmenue(const QString & xmlFile);
     void enterWikimenue();
     void enterLoadGame();
     void enterReplayGame();

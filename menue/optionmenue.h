@@ -19,7 +19,7 @@ class OptionMenue : public Basemenu
 {
     Q_OBJECT
 public:
-    explicit OptionMenue();
+    explicit OptionMenue(const QString & xmlFile);
     virtual ~OptionMenue() = default;
 
     static void showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 & y, QObject* pSignalOwner);
@@ -45,7 +45,7 @@ public slots:
     void showSettings();
     void showGameplayAndKeys();
     void selectMods(qint32 item);
-    void reloadSettings();
+    void reloadSettings(const QString & xmlFile);
     void updateModCheckboxes();
     void updateModFilter(QString tag);
     void onReset();
@@ -60,7 +60,12 @@ private slots:
     void showGamepadInfo();
 private:
     void updateModSelection();
+    void loadModPanels();
 private:
+    QString m_xmlFile;
+    // spGameplayAndKeys m_pGameplayAndKeys;
+    // spPanel m_pOptions;
+
     struct GamemodeMods
     {
         GamemodeMods(QStringList enableMods, QStringList disableMods)
@@ -72,10 +77,6 @@ private:
         QStringList m_disableMods;
     };
     static QVector<GamemodeMods> m_gamemodeMods;
-
-    spGameplayAndKeys m_pGameplayAndKeys;
-
-    spPanel m_pOptions;
     spPanel m_pMods;
     spPanel m_pModDescription;
     spDropDownmenu m_pModSelection;

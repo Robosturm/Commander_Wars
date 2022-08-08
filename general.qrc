@@ -2079,5 +2079,7 @@
         <file>resources/scripts/wiki/pinkfrontier.js</file>
         <file>maps/commander_wars.camp/dayAtTheBeach.js</file>
         <file>maps/commander_wars.camp/dayAtTheBeach.map</file>
+        <file>resources/scripts/actions/ACTION_NEST_LASER.js</file>
+        <file>resources/scripts/actions/ACTION_NEST_MORTAR.js</file>
     </qresource>
 </RCC>

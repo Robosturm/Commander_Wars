@@ -1724,27 +1724,52 @@ qint32 Player::getCoCount() const
     return ret;
 }
 
-QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType)
+QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
 {
     
     spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, radius));
     qint32 highestDamage = -1;
     QVector<QPoint> targets;
-
-    for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
+    if (pSearchArea == nullptr)
     {
-        for (qint32 y = 0; y < m_pMap->getMapHeight(); y++)
+        for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
         {
-            qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, true);
-            if (damageDone > highestDamage)
+            for (qint32 y = 0; y < m_pMap->getMapHeight(); y++)
             {
-                highestDamage = damageDone;
-                targets.clear();
-                targets.append(QPoint(x, y));
+                qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, true);
+                if (damageDone > highestDamage)
+                {
+                    highestDamage = damageDone;
+                    targets.clear();
+                    targets.append(QPoint(x, y));
+                }
+                else if ((damageDone == highestDamage) && highestDamage >= 0)
+                {
+                    targets.append(QPoint(x, y));
+                }
             }
-            else if ((damageDone == highestDamage) && highestDamage >= 0)
+        }
+    }
+    else
+    {
+        const auto & vector = pSearchArea->getVector();
+        for (auto iter = vector.begin(); iter != vector.end(); ++iter)
+        {
+            qint32 x = iter->x();
+            qint32 y = iter->y();
+            if (m_pMap->onMap(x, y))
             {
-                targets.append(QPoint(x, y));
+                qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, true);
+                if (damageDone > highestDamage)
+                {
+                    highestDamage = damageDone;
+                    targets.clear();
+                    targets.append(QPoint(x, y));
+                }
+                else if ((damageDone == highestDamage) && highestDamage >= 0)
+                {
+                    targets.append(QPoint(x, y));
+                }
             }
         }
     }
@@ -1759,18 +1784,39 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
     }
 }
 
-QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, float ownUnitValue, GameEnums::RocketTarget targetType)
-{
-    
+QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, float ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
+{    
     spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, radius));
     highestDamage = -1;
     QVector<QPoint> targets;
-
-    for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
+    if (pSearchArea == nullptr)
     {
-        for (qint32 y = 0; y < m_pMap->getMapHeight(); y++)
+        for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
         {
-            qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, false);
+            for (qint32 y = 0; y < m_pMap->getMapHeight(); y++)
+            {
+                qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, false);
+                if (damageDone > highestDamage)
+                {
+                    highestDamage = damageDone;
+                    targets.clear();
+                    targets.append(QPoint(x, y));
+                }
+                else if ((damageDone == highestDamage) && highestDamage >= 0)
+                {
+                    targets.append(QPoint(x, y));
+                }
+            }
+        }
+    }
+    else
+    {
+        const auto & vector = pSearchArea->getVector();
+        for (auto iter = vector.begin(); iter != vector.end(); ++iter)
+        {
+            qint32 x = iter->x();
+            qint32 y = iter->y();
+            qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, true);
             if (damageDone > highestDamage)
             {
                 highestDamage = damageDone;
@@ -1783,7 +1829,6 @@ QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highes
             }
         }
     }
-
     if (targets.size() >= 0)
     {
         return targets[GlobalUtils::randInt(0, targets.size() - 1)];
