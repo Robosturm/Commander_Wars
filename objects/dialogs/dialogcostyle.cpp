@@ -401,11 +401,14 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
         m_pCOPanel->setContentWidth(pBox->getX() + pBox->getWidth() + 50);
 
         pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+mini", oxygine::ep_ignore_error);
-        oxygine::spSprite pMiniCO = oxygine::spSprite::create();
+        oxygine::spSprite pMiniCO = oxygine::spSprite::create();        
         pMiniCO->setResAnim(pAnim);
-        pMiniCO->setScale(1.0f);
-        pMiniCO->setPosition(10, pBox->getHeight() - pAnim->getHeight() - 10);
-        pBox->addChild(pMiniCO);
+        if (pAnim != nullptr)
+        {
+            pMiniCO->setScale(1.0f);
+            pMiniCO->setPosition(10, pBox->getHeight() - pAnim->getHeight() - 10);
+            pBox->addChild(pMiniCO);
+        }
 
         pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+face", oxygine::ep_ignore_error);
         oxygine::spSprite pFaceCO = oxygine::spSprite::create();
@@ -434,10 +437,12 @@ void DialogCOStyle::updateSprites()
     m_pCOSprites[m_CurrentIndex]->setResAnim(m_pResAnims[m_CurrentIndex].get());
 
     pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + m_Styles[m_CurrentIndex] + "+mini");
-    scale = pAnim->getScaleFactor();
-    m_pMiniResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+mini.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale, false);
-    m_pMiniCOSprites[m_CurrentIndex]->setResAnim(m_pMiniResAnims[m_CurrentIndex].get());
-
+    if (pAnim != nullptr)
+    {
+        scale = pAnim->getScaleFactor();
+        m_pMiniResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+mini.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale, false);
+        m_pMiniCOSprites[m_CurrentIndex]->setResAnim(m_pMiniResAnims[m_CurrentIndex].get());
+    }
     pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + m_Styles[m_CurrentIndex] + "+face");
     scale = pAnim->getScaleFactor();
     m_pFaceResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+face.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale, false);
