@@ -12,27 +12,13 @@ class Mainwindow : public Basemenu
 {
     Q_OBJECT
 public:
-    explicit Mainwindow();
+    explicit Mainwindow(const QString & initialView);
     virtual ~Mainwindow() = default;
 signals:
-    void sigEnterSingleplayer();
-    void sigEnterMultiplayer();
-    void sigEnterEditor();
-    void sigEnterOptionmenue();
-    void sigEnterCreditsmenue();
-    void sigQuit();
-    void sigEnterLoadGame();
-    void sigEnterReplayGame();
-    void sigLastSaveGame();
-    void sigEnterWikimenue();
-    void sigEnterCOStyleMenu();
-    void sigEnterLoadCampaign();
-    void sigEnterAchievementmenue();
     void sigImport();
-    void sigEnterShopMenu();
     void sigVersionClicked();
 public slots:
-    void enterSingleplayer();
+    void enterSingleplayer(const QStringList & filter);
     void enterEditor();
     void enterOptionmenue();
     void enterWikimenue();
@@ -55,8 +41,6 @@ public slots:
     void importFromDirectory(QString file);
     virtual void onEnter() override;
     void versionClicked();
-    qint32 getButtonX(qint32 btnI) const;
-    qint32 getButtonY(qint32 btnI) const;
     bool isValidSavegame() const;
 
 protected slots:

@@ -206,10 +206,13 @@ private:
     float getFloatValue(QString line, QString objectId, qint32 loopIdx, float defaultValue = 0.0f);
     bool getBoolValue(QString line, QString objectId, qint32 loopIdx, bool defaultValue = false);
     QString getStringValue(QString line, QString objectId, qint32 loopIdx);
+
     Player* getPlayerValue(QString line, QString objectId, qint32 loopIdx);
     QStringList getStringListValue(QString line, QString objectId, qint32 loopIdx);
-    oxygine::TextStyle getStyle(QString styleName, QColor fontColor);
+    oxygine::TextStyle getStyle(QString styleName, QColor fontColor, oxygine::TextStyle::HorizontalAlign hAlign);
     QString getId(QString attribute);
+    oxygine::TextStyle::HorizontalAlign getHAlignment(QString line, QString objectId, qint32 loopIdx);
+
     template<typename TType>
     void onEvent(QString line, TType value, QString objectId, qint32 loopIdx)
     {
@@ -288,6 +291,20 @@ private:
         return ret;
     }
     static QString translate(QString line);
+
+    template<typename TEnum>
+    TEnum getEnumValue(QString line, QString objectId, qint32 loopIdx, QStringList values, TEnum defaultValue = 0)
+    {
+        TEnum ret = defaultValue;
+        QString value = getStringValue(line, objectId, loopIdx);
+        auto index = values.indexOf(value);
+        if (index >= 0)
+        {
+            ret = static_cast<TEnum>(index);
+        }
+        return ret;
+    }
+
 private:
 
     static UiFactory* m_pUiFactory;

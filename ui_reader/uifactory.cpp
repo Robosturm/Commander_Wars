@@ -78,6 +78,7 @@ static const char* const attrItems = "items";
 static const char* const attrSpriteType = "spriteType";
 static const char* const attrSpriteSize = "spriteSize";
 static const char* const attrPlayer = "player";
+static const char* const attrHAlign = "hAlign";
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -292,7 +293,8 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         {
             fontColor = FontManager::getFontColor().name();
         }
-        auto style = getStyle(getStringValue(getAttribute(childs, attrFont), id, loopIdx), fontColor);
+        auto hAlign = getHAlignment(getAttribute(childs, attrHAlign), id, loopIdx);
+        auto style = getStyle(getStringValue(getAttribute(childs, attrFont), id, loopIdx), fontColor, hAlign);
         float fontScale = getFloatValue(getAttribute(childs, attrFontScale), id, loopIdx, 1.0f);
         spLabel pLabel = spLabel::create(width);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, true);
@@ -337,7 +339,8 @@ bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, ox
         {
             fontColor = FontManager::getFontColor().name();
         }
-        auto style = getStyle(getStringValue(getAttribute(childs, attrFont), id, loopIdx), fontColor);
+        auto hAlign = getHAlignment(getAttribute(childs, attrHAlign), id, loopIdx);
+        auto style = getStyle(getStringValue(getAttribute(childs, attrFont), id, loopIdx), fontColor, hAlign);
         float fontScale = getFloatValue(getAttribute(childs, attrFontScale), id, loopIdx, 1.0f);
         oxygine::spTextField pLabel = oxygine::spTextField::create();
         pLabel->setX(x);
@@ -1197,14 +1200,19 @@ QStringList UiFactory::getStringListValue(QString line, QString objectId, qint32
     return value;
 }
 
-oxygine::TextStyle UiFactory::getStyle(QString styleName, QColor fontColor)
+oxygine::TextStyle UiFactory::getStyle(QString styleName, QColor fontColor, oxygine::TextStyle::HorizontalAlign hAlign)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getInstance()->getResFont(styleName));
     style.color = fontColor;
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.hAlign = hAlign;
     style.multiline = false;
     return style;
+}
+
+oxygine::TextStyle::HorizontalAlign UiFactory::getHAlignment(QString line, QString objectId, qint32 loopIdx)
+{
+    return getEnumValue(line, objectId, loopIdx, {"Default", "Left", "Middle", "Right"}, oxygine::TextStyle::HALIGN_LEFT);
 }
 
 QString UiFactory::getId(QString attribute)

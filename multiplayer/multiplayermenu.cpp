@@ -14,6 +14,7 @@
 
 #include "menue/gamemenue.h"
 #include "menue/movementplanner.h"
+#include "menue/mainwindow.h"
 
 #include "network/tcpclient.h"
 #include "network/tcpserver.h"
@@ -36,7 +37,7 @@
 #include "network/JsonKeys.h"
 
 Multiplayermenu::Multiplayermenu(QString adress, quint16 port, QString password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 380),
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 380),
       m_networkMode(networkMode),
       m_local(true),
       m_password(password)
@@ -67,7 +68,7 @@ Multiplayermenu::Multiplayermenu(QString adress, quint16 port, QString password,
 }
 
 Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(Settings::getHeight() - 380),
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getHeight() - 380),
       m_networkMode(networkMode),
       m_local(false),
       m_password(password)
@@ -1278,6 +1279,14 @@ void Multiplayermenu::showPlayerSelection()
     {
         m_pButtonStart->setVisible(false);
     }
+}
+
+void Multiplayermenu::exitMenu()
+{
+    CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+    spMainwindow window = spMainwindow::create("ui/menu/mainmenu.xml");
+    oxygine::Stage::getStage()->addChild(window);
+    oxygine::Actor::detach();
 }
 
 void Multiplayermenu::disconnected(quint64 socket)

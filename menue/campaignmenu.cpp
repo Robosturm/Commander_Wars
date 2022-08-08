@@ -101,7 +101,8 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
 
 void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
 {
-    m_pMapSelectionView = spMapSelectionView::create(Settings::getHeight() / 3 - 30);
+    QStringList filter = {".map"};
+    m_pMapSelectionView = spMapSelectionView::create(filter, Settings::getHeight() / 3 - 30);
     m_pMapSelectionView->setCurrentSetCampaign(campaign);
     GameManager* pGameManager = GameManager::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
@@ -409,7 +410,8 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
 
 void CampaignMenu::createMapSelection(spCampaign & campaign)
 {
-    m_pMapSelectionView = spMapSelectionView::create();
+    QStringList filter = {".map"};
+    m_pMapSelectionView = spMapSelectionView::create(filter);
     m_pMapSelectionView->setCurrentSetCampaign(campaign);
     addChild(m_pMapSelectionView);
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &CampaignMenu::mapSelectionItemChanged, Qt::QueuedConnection);
@@ -419,9 +421,11 @@ void CampaignMenu::createMapSelection(spCampaign & campaign)
 }
 
 void CampaignMenu::exitMenue()
-{    
+{
+    QStringList filter = {".jsm"};
     CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
-    auto window = spMapSelectionMapsMenue::create();
+    auto mapSelectionView = spMapSelectionView::create(filter);
+    auto window = spMapSelectionMapsMenue::create(mapSelectionView);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
 }
@@ -495,7 +499,7 @@ void CampaignMenu::slotButtonNext()
         }
         else
         {
-            auto window = spMapSelectionMapsMenue::create(-1, m_pMapSelectionView);
+            auto window = spMapSelectionMapsMenue::create(m_pMapSelectionView);
             oxygine::Stage::getStage()->addChild(window);
             oxygine::Actor::detach();
         }

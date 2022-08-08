@@ -566,7 +566,7 @@
     </message>
     <message>
         <location filename="../menue/campaignmenu.cpp" line="73"/>
-        <location filename="../menue/campaignmenu.cpp" line="510"/>
+        <location filename="../menue/campaignmenu.cpp" line="514"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3570,29 +3570,29 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="71"/>
+        <location filename="../menue/mainwindow.cpp" line="69"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="95"/>
+        <location filename="../menue/mainwindow.cpp" line="93"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="95"/>
+        <location filename="../menue/mainwindow.cpp" line="93"/>
         <source>Imports all data from an other Commander Wars release to the current release.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="278"/>
-        <location filename="../menue/mainwindow.cpp" line="288"/>
-        <location filename="../menue/mainwindow.cpp" line="325"/>
+        <location filename="../menue/mainwindow.cpp" line="250"/>
+        <location filename="../menue/mainwindow.cpp" line="260"/>
+        <location filename="../menue/mainwindow.cpp" line="297"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="437"/>
+        <location filename="../menue/mainwindow.cpp" line="409"/>
         <source>Do you want to enable all current items in the shop?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3608,60 +3608,60 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="75"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="67"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="84"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="76"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="93"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="85"/>
         <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="102"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="94"/>
         <source>Map filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="111"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="471"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="103"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="468"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="121"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="482"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="530"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="113"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="479"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="527"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="131"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="123"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="142"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="134"/>
         <source>Start Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="513"/>
         <source>Do you want to make the saved ruleset the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="513"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="513"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3669,22 +3669,22 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>MapSelectionView</name>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="95"/>
+        <location filename="../objects/mapselectionview.cpp" line="96"/>
         <source>Name: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="106"/>
+        <location filename="../objects/mapselectionview.cpp" line="107"/>
         <source>Author: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="117"/>
+        <location filename="../objects/mapselectionview.cpp" line="118"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="128"/>
+        <location filename="../objects/mapselectionview.cpp" line="129"/>
         <source>Description </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3725,90 +3725,90 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="83"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="97"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1518"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="84"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="98"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1527"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="108"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="109"/>
         <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="120"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="121"/>
         <source>Load Savegame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="155"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="156"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="348"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="349"/>
         <source>Server doesn&apos;t have the given mods installed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="145"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="146"/>
         <source>Please use one of the following IP-Addresses to connect to this Host. Not all IP-Addresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="146"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="147"/>
         <source> may work for each client depending on their network settings. Please use CMD and the ping command to verify if an IP-Address will work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="170"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="171"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="355"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="356"/>
         <source>Server doesn&apos;t have any more slots for players.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="672"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="673"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="817"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="818"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="821"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="822"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="836"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="837"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="986"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="987"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="997"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="998"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1392"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1401"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1514"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1523"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

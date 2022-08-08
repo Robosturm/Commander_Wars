@@ -18,7 +18,8 @@
 #include "game/gamemap.h"
 #include "game/gamerecording/gamerecorder.h"
 
-MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
+MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
+    : m_filter(filter)
 {
     setObjectName("MapSelectionView");
     Interpreter::setCppOwnerShip(this);
@@ -45,7 +46,7 @@ MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
         width = Settings::getWidth() / 2;
     }
 
-    m_pMapSelection = spMapSelection::create(Settings::getHeight() - 40, width, "");
+    m_pMapSelection = spMapSelection::create(Settings::getHeight() - 40, width, "", m_filter);
     m_pMapSelection->setPosition(10, 10);
     addChild(m_pMapSelection);
     m_pMinimap = spMinimap::create();
@@ -245,7 +246,7 @@ void MapSelectionView::loadCurrentMap()
     loadMap(m_currentMapFile, false);
 }
 
-void MapSelectionView::loadMap(QFileInfo info, bool fast)
+void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
 {
     CONSOLE_PRINT("MapSelectionView::loadMap " + info.filePath(), Console::eDEBUG);
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -257,6 +258,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
     if (info.exists())
     {
         if (info.isFile() &&
+            (info != m_currentMapFile || !fast) &&
             (info != m_currentMapFile || !fast) &&
             (info.fileName().endsWith(".map") ||
              info.fileName().endsWith(".msav")))

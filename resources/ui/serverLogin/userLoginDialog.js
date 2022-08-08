@@ -41,7 +41,7 @@ var UserLoginDialog =
         {
             settings.setServerPassword("");
             menu.setServerRequestNewPassword(true);
-            userLogin.createDialog("changePassword", "ui/changePasswordDialog.xml", menu);
+            userLogin.createDialog("changePassword", "ui/serverLogin/changePasswordDialog.xml", menu);
             userLogin.exit();
         }
         else

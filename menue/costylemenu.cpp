@@ -95,7 +95,7 @@ void COStyleMenu::onEnter()
 void COStyleMenu::exitMenue()
 {    
     CONSOLE_PRINT("Leaving CO Style Menue", Console::eDEBUG);
-    auto window = spMainwindow::create();
+    auto window = spMainwindow::create("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
 }

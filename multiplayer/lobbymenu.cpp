@@ -209,7 +209,7 @@ void LobbyMenu::leaveServer()
 void LobbyMenu::exitMenue()
 {    
     CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
-    auto window = spMainwindow::create();
+    auto window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
@@ -480,7 +480,7 @@ void LobbyMenu::selectGame()
 void LobbyMenu::connected(quint64 socket)
 {
     QString password = Settings::getServerPassword();
-    spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/userLoginDialog.xml", this);
+    spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/serverLogin/userLoginDialog.xml", this);
     addChild(pDialog);
     if (!password.isEmpty())
     {

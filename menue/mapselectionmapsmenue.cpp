@@ -32,8 +32,9 @@
 
 #include "ui_reader/uifactory.h"
 
-MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView pMapSelectionView)
-    : Basemenu()
+MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionView, qint32 heigth)
+    : Basemenu(),
+      m_pMapSelectionView(pMapSelectionView)
 {
     setObjectName("MapSelectionMapsMenue");
     Mainapp* pApp = Mainapp::getInstance();
@@ -58,15 +59,6 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/mapselection");
     pApp->getAudioThread()->playRandom();
-
-    if (pMapSelectionView.get() == nullptr)
-    {
-        m_pMapSelectionView = spMapSelectionView::create();
-    }
-    else
-    {
-        m_pMapSelectionView = pMapSelectionView;
-    }
     addChild(m_pMapSelectionView);
 
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &MapSelectionMapsMenue::mapSelectionItemChanged, Qt::QueuedConnection);
@@ -189,10 +181,7 @@ void MapSelectionMapsMenue::buttonBack()
     {
         case MapSelectionStep::selectMap:
         {
-            CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
-            auto window = spMainwindow::create();
-            oxygine::Stage::getStage()->addChild(window);
-            oxygine::Actor::detach();
+            exitMenu();
             break;
         }
         case MapSelectionStep::selectRules:
@@ -298,6 +287,14 @@ void MapSelectionMapsMenue::buttonNext()
         }
     }
     Mainapp::getInstance()->continueRendering();
+}
+
+void MapSelectionMapsMenue::exitMenu()
+{
+    CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+    spMainwindow window = spMainwindow::create("ui/menu/mainsinglemenu.xml");
+    oxygine::Stage::getStage()->addChild(window);
+    oxygine::Actor::detach();
 }
 
 void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)

@@ -54,7 +54,7 @@
                 <width>200</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Create account")</text>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Creates a new account on the server.")</tooltip>
-                <onEvent>userLogin.createDialog("createAccount", "ui/createAccountDialog.xml", userLogin.getBaseMenu())</onEvent>
+                <onEvent>userLogin.createDialog("createAccount", "ui/serverLogin/createAccountDialog.xml", userLogin.getBaseMenu())</onEvent>
             </Button>
             <Button>
                 <Id>LoginButton</Id>
@@ -72,7 +72,7 @@
                 <width>200</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Forgot password.")</text>
                 <tooltip>QT_TRANSLATE_NOOP("GAME", "Allows you to reset your password.")</tooltip>
-                <onEvent>userLogin.createDialog("forgotPassword", "ui/forgotPasswordDialog.xml", userLogin.getBaseMenu())</onEvent>
+                <onEvent>userLogin.createDialog("forgotPassword", "ui/serverLogin/forgotPasswordDialog.xml", userLogin.getBaseMenu())</onEvent>
             </Button>
             <Button>
                 <Id>LocalButton</Id>

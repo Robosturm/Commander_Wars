@@ -10,8 +10,9 @@
 
 #include "game/gamemap.h"
 
-MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
-    : m_currentFolder(Settings::getUserPath() + "maps"),
+MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QStringList & filter)
+    : m_filter(filter),
+      m_currentFolder(Settings::getUserPath() + "maps"),
       m_itemChangedTimer(this)
 {
     setObjectName("MapSelection");
@@ -310,7 +311,12 @@ void MapSelection::changeFolder(QString folder)
             m_Files.append("..");
         }
         QFileInfo upFolder(newFolder + "..");
-        QStringList list = {"*.map", "*.jsm"};
+        QStringList list;
+        list.reserve(m_filter.size());
+        for (const auto & ending : qAsConst(m_filter))
+        {
+            list.append("*" + ending);
+        }
         QFileInfoList infoList = GlobalUtils::getInfoList(newFolder, list);
         Userdata* pUserdata = Userdata::getInstance();
         auto hideList = pUserdata->getShopItemsList(GameEnums::ShopItemType_Map, false);
@@ -329,6 +335,12 @@ void MapSelection::changeFolder(QString folder)
             if (infoList[i].isDir())
             {
                 QString path = infoList[i].absoluteFilePath();
+                QDirIterator iter(path, list, QDir::Files, QDirIterator::Subdirectories);
+                if (!iter.hasNext())
+                {
+                    // skip folders which don't contain files we want to show
+                    continue;
+                }
                 m_Files.append(path);
             }
             else if (infoList[i].isFile())
@@ -356,7 +368,6 @@ void MapSelection::update(const oxygine::UpdateState& us)
         m_timer.start();
         emit changeSelection(m_currentStartIndex + m_spin);
     }
-
     oxygine::Actor::update(us);
 }
 

@@ -4110,7 +4110,6 @@
         <file>resources/images/terrain/riverend_lake+W.png</file>
         <file>resources/images/units/icons/rank+hidden.png</file>
         <file>resources/images/co/bd/co_cairn+mini.png</file>
-        <file>resources/ui/mainmenu.xml</file>
         <file>resources/fonts/logoFont.png</file>
         <file>resources/fonts/logoFont.xml</file>
         <file>resources/objects/logo.png</file>
@@ -4760,17 +4759,22 @@
         <file>resources/images/game/battlesprites/background/back_wastestreet+town.png</file>
         <file>resources/ui/viewMapStats.js</file>
         <file>resources/ui/viewMapStats.xml</file>
-        <file>resources/ui/userLoginDialog.js</file>
-        <file>resources/ui/userLoginDialog.xml</file>
-        <file>resources/ui/createAccountDialog.js</file>
-        <file>resources/ui/createAccountDialog.xml</file>
-        <file>resources/ui/forgotPasswordDialog.js</file>
-        <file>resources/ui/forgotPasswordDialog.xml</file>
-        <file>resources/ui/changePasswordDialog.js</file>
-        <file>resources/ui/changePasswordDialog.xml</file>
         <file>resources/objects/h_table_divider.png</file>
         <file>resources/objects/v_table_divider.png</file>
         <file>resources/images/battleanimations/bomber/bomber+ac+mask.png</file>
         <file>resources/images/battleanimations/bomber/bomber+ti+mask.png</file>
+        <file>resources/ui/serverLogin/changePasswordDialog.js</file>
+        <file>resources/ui/serverLogin/changePasswordDialog.xml</file>
+        <file>resources/ui/serverLogin/createAccountDialog.js</file>
+        <file>resources/ui/serverLogin/createAccountDialog.xml</file>
+        <file>resources/ui/serverLogin/forgotPasswordDialog.js</file>
+        <file>resources/ui/serverLogin/forgotPasswordDialog.xml</file>
+        <file>resources/ui/serverLogin/userLoginDialog.js</file>
+        <file>resources/ui/serverLogin/userLoginDialog.xml</file>
+        <file>resources/ui/menu/mainmenu.xml</file>
+        <file>resources/ui/menu/mainmenu.js</file>
+        <file>resources/ui/menu/playermenu.xml</file>
+        <file>resources/ui/menu/mainsinglemenu.xml</file>
+        <file>resources/ui/menu/mainoptionmenu.xml</file>
     </qresource>
 </RCC>

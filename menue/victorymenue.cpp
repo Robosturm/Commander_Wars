@@ -736,7 +736,7 @@ void VictoryMenue::exitMenue()
     else
     {
         m_pMap->detach();
-        auto window = spMainwindow::create();
+        auto window = spMainwindow::create("ui/menu/mainmenu.xml");
         oxygine::Stage::getStage()->addChild(window);
     }
     oxygine::Actor::detach();

@@ -139,7 +139,7 @@ void Shopmenu::onEnter()
 void Shopmenu::exitMenue()
 {
     CONSOLE_PRINT("Leaving Shop Menue", Console::eDEBUG);
-    auto window = spMainwindow::create();
+    auto window = spMainwindow::create("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
