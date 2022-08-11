@@ -52,5 +52,20 @@ var MainMenu =
         var filter = [".jsm"];
         currentMenu.enterSingleplayer(filter);
     },
+    changeUsername : function(currentMenu)
+    {
+        currentMenu.showTextInputDialog(qsTr("Select Username"), false, settings.getUsername(), "MainMenu", "usernameChanged");
+    },
+    usernameChanged : function(currentMenu, username)
+    {
+        if (username !== "")
+        {
+            if (username !== settings.getUsername())
+            {
+                settings.setUsername(username);
+                currentMenu.restart();
+            }
+        }
+    },
 };
 

@@ -120,7 +120,7 @@ void ScriptData::readScript(QTextStream& rStream)
             else
             {
                 CONSOLE_PRINT("Reading custom code", Console::eDEBUG);
-                customCode += line;
+                customCode += line + "\n";
             }
         }
     }

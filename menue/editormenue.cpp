@@ -200,10 +200,6 @@ EditorMenue::EditorMenue()
     m_autosaveTimer.setSingleShot(false);
     connect(&m_autosaveTimer, &QTimer::timeout, this, &EditorMenue::autosave, Qt::QueuedConnection);
     m_autosaveTimer.start(60 * 1000);
-
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue obj = pInterpreter->newQObject(this);
-    pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/editormenu.xml", this);
 }
 

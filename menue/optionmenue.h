@@ -7,7 +7,6 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 #include "objects/base/panel.h"
-#include "objects/gameplayandkeys.h"
 #include "objects/base/checkbox.h"
 #include "objects/base/dropdownmenu.h"
 #include "menue/basemenu.h"
@@ -21,13 +20,8 @@ class OptionMenue : public Basemenu
 public:
     explicit OptionMenue(const QString & xmlFile);
     virtual ~OptionMenue() = default;
-
-    static void showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 & y, QObject* pSignalOwner);
 signals:
     void sigExitMenue();
-    void sigShowMods();
-    void sigShowSettings();
-    void sigShowGameplayAndKeys();
     void sigChangeScreenSize(qint32 width, qint32 heigth);
     void sigReloadSettings();
     void sigUpdateModCheckboxes();
@@ -36,20 +30,21 @@ signals:
                         QString name, QString description, QString version,
                         QStringList compatibleMods, QStringList incompatibleMods, QStringList requiredMods,
                         bool isComsetic, QStringList modTags, QString thumbnail);
-    void sigShowGamepadInfo();
     void sigShowResetBox();
 public slots:
     void exitMenue();
     void showMods();
     void restart();
-    void showSettings();
-    void showGameplayAndKeys();
     void selectMods(qint32 item);
-    void reloadSettings(const QString & xmlFile);
+    void reloadSettings();
+    void changeScreenSize(QSize size);
+    void changeHighDpi(bool value);
     void updateModCheckboxes();
     void updateModFilter(QString tag);
     void onReset();
     void showResetBox();
+    void showGamepadInfo();
+    void markRestartNeeded();
 protected slots:
     virtual void onEnter() override;
 private slots:
@@ -57,15 +52,11 @@ private slots:
                      QString name, QString description, QString version,
                      QStringList compatibleMods, QStringList incompatibleMods, QStringList requiredMods,
                      bool isComsetic, QStringList modTags, QString thumbnail);
-    void showGamepadInfo();
 private:
     void updateModSelection();
     void loadModPanels();
 private:
     QString m_xmlFile;
-    // spGameplayAndKeys m_pGameplayAndKeys;
-    // spPanel m_pOptions;
-
     struct GamemodeMods
     {
         GamemodeMods(QStringList enableMods, QStringList disableMods)

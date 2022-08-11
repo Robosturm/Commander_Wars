@@ -4776,5 +4776,11 @@
         <file>resources/ui/menu/playermenu.xml</file>
         <file>resources/ui/menu/mainsinglemenu.xml</file>
         <file>resources/ui/menu/mainoptionmenu.xml</file>
+        <file>resources/ui/options/optionaudiomenu.xml</file>
+        <file>resources/ui/options/optionmenu.js</file>
+        <file>resources/ui/options/optionvideomenu.xml</file>
+        <file>resources/ui/options/optioncontrolsmenu.xml</file>
+        <file>resources/ui/options/optiongameplaymenu.xml</file>
+        <file>resources/ui/options/optionnetworkmenu.xml</file>
     </qresource>
 </RCC>

@@ -145,9 +145,16 @@ private:
      * Nodename: Button
      * supported attributes are:
      * mandatory: x, y, text, onEvent
-     * optional: tooltip, width enabled, id
+     * optional: tooltip, enabled, id
      */
     bool createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
+     * Nodename: SelectKey
+     * supported attributes are:
+     * mandatory: x, y, startValue, onEvent
+     * optional: tooltip, enabled, id
+     */
+    bool createSelectKey(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: IconButton
      * supported attributes are:
@@ -186,9 +193,9 @@ private:
      */
     bool ifCondition(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
 signals:
-    void sigDoEvent(QString command, QString objectId, qint32 loopIdx);
+    void sigDoEvent(QString command, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
 private slots:
-    void doEvent(QString command, QString objectId, qint32 loopIdx);
+    void doEvent(QString command, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
 
 private:
     explicit UiFactory();
@@ -203,6 +210,7 @@ private:
     bool hasChild(const QDomNodeList & childs, const QString & attribute);
     bool createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     qint32 getIntValue(QString line, QString objectId, qint32 loopIdx, qint32 defaultValue = 0);
+    quint64 getUInt64Value(QString line, QString objectId, qint32 loopIdx, quint64 defaultValue = 0);
     float getFloatValue(QString line, QString objectId, qint32 loopIdx, float defaultValue = 0.0f);
     bool getBoolValue(QString line, QString objectId, qint32 loopIdx, bool defaultValue = false);
     QString getStringValue(QString line, QString objectId, qint32 loopIdx);
@@ -214,7 +222,7 @@ private:
     oxygine::TextStyle::HorizontalAlign getHAlignment(QString line, QString objectId, qint32 loopIdx);
 
     template<typename TType>
-    void onEvent(QString line, TType value, QString objectId, qint32 loopIdx)
+    void onEvent(QString line, TType value, QString objectId, qint32 loopIdx, CreatedGui* pMenu)
     {
         QString args;
         if constexpr(std::is_same<QString, TType>::value)
@@ -227,7 +235,10 @@ private:
         }
         args += "var objectId = \"" + objectId + "\";";
         args += "var loopIdx = " + QString::number(loopIdx) + ";";
-        QJSValue erg = Interpreter::getInstance()->evaluate(args + line);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue obj = pInterpreter->newQObject(pMenu);
+        pInterpreter->setGlobal("currentMenu", obj);
+        QJSValue erg = pInterpreter->evaluate(args + line);
         if (erg.isError())
         {
             CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", Console::eERROR);
@@ -235,7 +246,7 @@ private:
     }
 
     template<typename TType, typename TType2>
-    void onEvent(QString line, TType value, TType2 value2, QString objectId, qint32 loopIdx)
+    void onEvent(QString line, TType value, TType2 value2, QString objectId, qint32 loopIdx, CreatedGui* pMenu)
     {
         QString args;
         if constexpr(std::is_same<QString, TType>::value)
@@ -256,7 +267,10 @@ private:
         }
         args += "var objectId = \"" + objectId + "\";";
         args += "var loopIdx = " + QString::number(loopIdx) + ";";
-        QJSValue erg = Interpreter::getInstance()->evaluate(args + line);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue obj = pInterpreter->newQObject(pMenu);
+        pInterpreter->setGlobal("currentMenu", obj);
+        QJSValue erg = pInterpreter->evaluate(args + line);
         if (erg.isError())
         {
             CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", Console::eERROR);
@@ -264,14 +278,17 @@ private:
     }
 
     template<typename TType>
-    TType onUpdate(QString line, QString objectId, qint32 loopIdx)
+    TType onUpdate(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu)
     {
         QString args;
         args += "var objectId = \"" + objectId + "\";";
         args += "var loopIdx = " + QString::number(loopIdx) + ";";
         args += line;
         TType ret;
-        QJSValue erg = Interpreter::getInstance()->evaluate(args);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue obj = pInterpreter->newQObject(pMenu);
+        pInterpreter->setGlobal("currentMenu", obj);
+        QJSValue erg = pInterpreter->evaluate(args);
         if constexpr(std::is_same<QString, TType>::value)
         {
             ret = erg.toString();

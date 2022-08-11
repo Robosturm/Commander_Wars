@@ -9,7 +9,14 @@
         <font>"main48"</font>
         <hAlign>"Middle"</hAlign>
     </Label>
-    <!-- todo add edit username button -->
+    <Button>
+        <x>settings.getWidth() / 2.0 - 100</x>
+        <y>MainMenu.getButtonY(0)</y>
+        <width>200</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Change username")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Change username")</tooltip>
+        <onEvent>MainMenu.changeUsername(currentMenu)</onEvent>
+    </Button>
     <Button>
         <x>settings.getWidth() / 2.0 - 100</x>
         <y>MainMenu.getButtonY(1)</y>

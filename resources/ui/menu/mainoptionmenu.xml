@@ -20,8 +20,7 @@
         <width>200</width>
         <text>QT_TRANSLATE_NOOP("GAME","Video")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Video")</tooltip>
-        <enabled>false</enabled>
-        <onEvent></onEvent>
+        <onEvent>currentMenu.enterOptionmenue("ui/options/optionvideomenu.xml")</onEvent>
     </Button>
     <Button>
         <x>settings.getWidth() / 2.0 - 100</x>
@@ -29,8 +28,7 @@
         <width>200</width>
         <text>QT_TRANSLATE_NOOP("GAME","Audio")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Audio")</tooltip>
-        <enabled>false</enabled>
-        <onEvent></onEvent>
+        <onEvent>currentMenu.enterOptionmenue("ui/options/optionaudiomenu.xml")</onEvent>
     </Button>
     <Button>
         <x>settings.getWidth() / 2.0 - 100</x>
@@ -38,8 +36,7 @@
         <width>200</width>
         <text>QT_TRANSLATE_NOOP("GAME","Gameplay")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Gameplay")</tooltip>
-        <enabled>false</enabled>
-        <onEvent></onEvent>
+        <onEvent>currentMenu.enterOptionmenue("ui/options/optiongameplaymenu.xml")</onEvent>
     </Button>
     <Button>
         <x>settings.getWidth() / 2.0 - 100</x>
@@ -47,8 +44,7 @@
         <width>200</width>
         <text>QT_TRANSLATE_NOOP("GAME","Controls")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Controls")</tooltip>
-        <enabled>false</enabled>
-        <onEvent></onEvent>
+        <onEvent>currentMenu.enterOptionmenue("ui/options/optioncontrolsmenu.xml")</onEvent>
     </Button>
     <Button>
         <x>settings.getWidth() / 2.0 - 100</x>
@@ -57,6 +53,14 @@
         <text>QT_TRANSLATE_NOOP("GAME","Mods")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Mods")</tooltip>
         <onEvent>currentMenu.enterOptionmenue("")</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getWidth() / 2.0 - 100</x>
+        <y>MainMenu.getButtonY(3)</y>
+        <width>200</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Controls")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Controls")</tooltip>
+        <onEvent>currentMenu.enterOptionmenue("ui/options/optionnetworkmenu.xml")</onEvent>
     </Button>
     <Button>
         <x>settings.getWidth() / 2.0 - 100</x>
@@ -74,5 +78,4 @@
         <tooltip>QT_TRANSLATE_NOOP("GAME","Back")</tooltip>
         <onEvent>MainMenu.loadMainMenu(currentMenu);</onEvent>
     </Button>
-    <!-- currentMenu.enterOptionmenue(); -->
 </ui>

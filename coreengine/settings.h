@@ -265,9 +265,6 @@ public:
     static QString getLastSaveGame();
     static void setLastSaveGame(const QString &LastSaveGame);
 
-    static void setUsername(const QString &Username);
-
-
 public slots:
     static const QString &getServerPassword();
     static void setServerPassword(const QString &newServerPassword);
@@ -296,7 +293,7 @@ public slots:
     static const std::chrono::seconds &getSlaveDespawnTime();
     static void setSlaveDespawnTime(const std::chrono::seconds &newSlaveDespawnTime);
 
-    static const QString &getDefaultBannlist();
+    static QString getDefaultBannlist();
     static void setDefaultBannlist(const QString &newDefaultBannlist);
 
     static bool getUseHighDpi();
@@ -344,7 +341,7 @@ public slots:
     static float getGamepadSensitivity();
     static void setGamepadSensitivity(float newGamepadSensitivity);
 
-    static const QString &getDefaultRuleset();
+    static QString getDefaultRuleset();
     static void setDefaultRuleset(const QString &newDefaultRuleset);
 
     static bool getUseCoMinis();
@@ -365,7 +362,7 @@ public slots:
     static bool getShowDetailedBattleForcast();
     static void setShowDetailedBattleForcast(bool newShowDetailedBattleForcast);
 
-    static const QString &getUserPath();
+    static QString getUserPath();
     static void setUserPath(const QString &newUserPath);
 
     static bool getTouchScreen();
@@ -505,6 +502,8 @@ public slots:
 
     static std::chrono::seconds getAutoSavingCylceTime();
     static void setAutoSavingCylceTime(const std::chrono::seconds &value);
+    static quint64 getAutoSavingCylceTimeRaw();
+    static void setAutoSavingCylceTimeRaw(quint64 &value);
 
     static qint32 getAutoSavingCycle();
     static void setAutoSavingCycle(const qint32 &value);
@@ -542,6 +541,7 @@ public slots:
     static GameEnums::BattleAnimationType getBattleAnimationType();
     static void setBattleAnimationType(const GameEnums::BattleAnimationType &value);
 
+    static void setUsername(const QString &Username);
     static QString getUsername();
     static void setX(const qint32 &x);
     inline static qint32 getX()
@@ -741,6 +741,71 @@ public slots:
      * @return
      */
     static bool getIsCosmetic(QString mod);
+    /**
+     * @brief getAudioDevices
+     * @return
+     */
+    static QStringList getAudioDevices();
+    /**
+     * @brief getCurrentDevice
+     * @return
+     */
+    static qint32 getCurrentDevice();
+    /**
+     * @brief setAudioDevice
+     * @param value
+     */
+    static void setAudioDevice(qint32 value);
+    /**
+     * @brief getScreenSize
+     * @return
+     */
+    static QSize getScreenSize();
+    /**
+     * @brief Settings::getDpiFactor
+     * @return
+     */
+    static float getDpiFactor();
+    /**
+     * @brief getScreenMode
+     * @return
+     */
+    static qint32 getScreenMode();
+    /**
+     * @brief setScreenMode
+     * @param value
+     */
+    static void setScreenMode(qint32 value);
+    /**
+     * @brief changeBrightness
+     * @param value
+     */
+    static void changeBrightness(qint32 value);
+    /**
+     * @brief changeGamma
+     * @param value
+     */
+    static void changeGamma(float value);
+    /**
+     * @brief isGamepadSupported
+     * @return
+     */
+    static bool isGamepadSupported();
+    /**
+     * @brief getLanguageNames
+     * @return
+     */
+    static QStringList getLanguageNames();
+    /**
+     * @brief getLanguageIds
+     * @return
+     */
+    static QStringList getLanguageIds();
+    /**
+     * @brief getCurrentLanguageIndex
+     * @return
+     */
+    static qint32 getCurrentLanguageIndex();
 private:
     friend class oxygine::intrusive_ptr<Settings>;
     explicit Settings();

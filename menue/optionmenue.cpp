@@ -12,8 +12,8 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
-#include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/audiothread.h"
 #include "coreengine/Gamepad.h"
 
 #include "game/gamemap.h"
@@ -31,6 +31,8 @@
 #include "objects/base/moveinbutton.h"
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/dialogs/gamepadinfo.h"
+
+#include "ui_reader/uifactory.h"
 
 QVector<OptionMenue::GamemodeMods> OptionMenue::m_gamemodeMods =
 {
@@ -106,7 +108,6 @@ OptionMenue::OptionMenue(const QString & xmlFile)
     pApp->getAudioThread()->loadFolder("resources/music/credits_options");
     pApp->getAudioThread()->playRandom();
 
-
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"), 200);
     addChild(pButtonExit);
     pButtonExit->setPosition(Settings::getWidth()  / 2.0f + 10,
@@ -127,56 +128,17 @@ OptionMenue::OptionMenue(const QString & xmlFile)
     });
     connect(this, &OptionMenue::sigShowResetBox, this, &OptionMenue::showResetBox, Qt::QueuedConnection);
     connect(this, &OptionMenue::sigUpdateModCheckboxes, this, &OptionMenue::updateModCheckboxes, Qt::QueuedConnection);
+    connect(this, &OptionMenue::sigChangeScreenSize, pApp, &Mainapp::changeScreenSize, Qt::QueuedConnection);
+    connect(this, &OptionMenue::sigReloadSettings, this, &OptionMenue::reloadSettings, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigWindowLayoutChanged, this, &OptionMenue::reloadSettings, Qt::QueuedConnection);
 
-
-    // oxygine::spButton pButtonMods = ObjectManager::createButton(tr("Mods"));
-    // addChild(pButtonMods);
-    // pButtonMods->setPosition(Settings::getWidth() - pButtonMods->getWidth() - 10, 10);
-    // pButtonMods->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    // {
-    //     emit sigShowMods();
-    // });
-    // connect(this, &OptionMenue::sigShowMods, this, &OptionMenue::showMods, Qt::QueuedConnection);
-
-    // oxygine::spButton pButtonSettings = ObjectManager::createButton(tr("Settings"));
-    // addChild(pButtonSettings);
-    // pButtonSettings->setPosition(10, 10);
-    // pButtonSettings->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    // {
-    //     emit sigShowSettings();
-    // });
-    // connect(this, &OptionMenue::sigShowSettings, this, &OptionMenue::showSettings, Qt::QueuedConnection);
-    // connect(this, &OptionMenue::sigChangeScreenSize, pApp, &Mainapp::changeScreenSize, Qt::QueuedConnection);
-    // connect(this, &OptionMenue::sigReloadSettings, this, &OptionMenue::reloadSettings, Qt::QueuedConnection);
-    // connect(pApp, &Mainapp::sigWindowLayoutChanged, this, &OptionMenue::reloadSettings, Qt::QueuedConnection);
-
-    // oxygine::spButton pButtonGameplayAndKeys = ObjectManager::createButton(tr("Gameplay & Keys"), 220);
-    // addChild(pButtonGameplayAndKeys);
-    // pButtonGameplayAndKeys->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f, 10);
-    // pButtonGameplayAndKeys->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    // {
-    //     emit sigShowGameplayAndKeys();
-    // });
-    // connect(this, &OptionMenue::sigShowGameplayAndKeys, this, &OptionMenue::showGameplayAndKeys, Qt::QueuedConnection);
-
-    // m_pOptions = spPanel::create(true,  size, size);
-    // m_pOptions->setPosition(10, 10);
-    // if (size.width() < 750)
-    // {
-    //     m_pOptions->setContentWidth(750);
-    // }
-    // addChild(m_pOptions);
-
-    // m_pGameplayAndKeys = spGameplayAndKeys::create(size.height());
-    // m_pGameplayAndKeys->setPosition(10, 20 + pButtonMods->getHeight());
-    // addChild(m_pGameplayAndKeys);
     if (xmlFile.isEmpty())
     {
         showMods();
     }
     else
     {
-
+        UiFactory::getInstance().createUi(xmlFile, this);
     }
     pApp->continueRendering();
 }
@@ -213,716 +175,51 @@ void OptionMenue::exitMenue()
     }
 }
 
-void OptionMenue::showGameplayAndKeys()
-{    
-    // m_pOptions->setVisible(false);
-    m_pMods->setVisible(false);
-    m_pModDescription->setVisible(false);
-    m_ModSelector->setVisible(false);
-    // m_pGameplayAndKeys->setVisible(true);
-}
-
-void OptionMenue::reloadSettings(const QString & xmlFile)
+void OptionMenue::reloadSettings()
 {    
     CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
-    spOptionMenue newMenu = spOptionMenue::create(xmlFile);
+    spOptionMenue newMenu = spOptionMenue::create(m_xmlFile);
     // carry over restart flag
     newMenu->m_restartNeeded = m_restartNeeded;
     oxygine::Stage::getStage()->addChild(newMenu);
     oxygine::Actor::detach();
 }
 
-void OptionMenue::showSettings()
-{    
-    // m_pOptions->setVisible(true);
-    // m_pMods->setVisible(false);
-    // m_pModDescription->setVisible(false);
-    // m_ModSelector->setVisible(false);
-    // m_pGameplayAndKeys->setVisible(false);
-    // m_pOptions->clearContent();
-    // Mainapp* pApp = Mainapp::getInstance();
-    // oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    // style.color = FontManager::getFontColor();
-    // style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    // style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    // style.multiline = false;
-
-    // qint32 y = 10;
-    // // cache all supported display modes
-    // // we're cheating here little bit since qt offers no way to get the screen resolutions from the hardware driver
-    // QVector<QSize> supportedSizes = {QSize(15360, 8640),
-    //                                  QSize(8192 , 8192),
-    //                                  QSize(10240, 4320),
-    //                                  QSize(8192 , 4608),
-    //                                  QSize(8192 , 4320),
-    //                                  QSize(7680 , 4800),
-    //                                  QSize(7680 , 4320),
-    //                                  QSize(6400 , 4800),
-    //                                  QSize(6400 , 4096),
-    //                                  QSize(5120 , 4096),
-    //                                  QSize(5120 , 3200),
-    //                                  QSize(5120 , 2880),
-    //                                  QSize(5120 , 2160),
-    //                                  QSize(4500 , 3000),
-    //                                  QSize(4096 , 3072),
-    //                                  QSize(4096 , 2160),
-    //                                  QSize(3840 , 2400),
-    //                                  QSize(3840 , 2160),
-    //                                  QSize(3840 , 1600),
-    //                                  QSize(3440 , 1440),
-    //                                  QSize(3240 , 2160),
-    //                                  QSize(3200 , 2400),
-    //                                  QSize(3200 , 2048),
-    //                                  QSize(3200 , 1800),
-    //                                  QSize(3000 , 2000),
-    //                                  QSize(2960 , 1440),
-    //                                  QSize(2880 , 1800),
-    //                                  QSize(2880 , 1620),
-    //                                  QSize(2880 , 1440),
-    //                                  QSize(2880 , 900 ),
-    //                                  QSize(2800 , 2100),
-    //                                  QSize(2736 , 1824),
-    //                                  QSize(2732 , 2048),
-    //                                  QSize(2560 , 2048),
-    //                                  QSize(2560 , 1920),
-    //                                  QSize(2560 , 1800),
-    //                                  QSize(2560 , 1700),
-    //                                  QSize(2560 , 1600),
-    //                                  QSize(2560 , 1440),
-    //                                  QSize(2560 , 1080),
-    //                                  QSize(2538 , 1080),
-    //                                  QSize(2436 , 1125),
-    //                                  QSize(2304 , 1728),
-    //                                  QSize(2256 , 1504),
-    //                                  QSize(2304 , 1440),
-    //                                  QSize(2280 , 1080),
-    //                                  QSize(2160 , 1440),
-    //                                  QSize(2160 , 1200),
-    //                                  QSize(2160 , 1080),
-    //                                  QSize(2048 , 1536),
-    //                                  QSize(2048 , 1280),
-    //                                  QSize(2048 , 1152),
-    //                                  QSize(2048 , 1080),
-    //                                  QSize(1920 , 1440),
-    //                                  QSize(1920 , 1400),
-    //                                  QSize(1920 , 1280),
-    //                                  QSize(1920 , 1200),
-    //                                  QSize(1920 , 1080),
-    //                                  QSize(1856 , 1392),
-    //                                  QSize(1800 , 1440),
-    //                                  QSize(1792 , 1344),
-    //                                  QSize(1776 , 1000),
-    //                                  QSize(1680 , 1050),
-    //                                  QSize(1600 , 1280),
-    //                                  QSize(1600 , 1200),
-    //                                  QSize(1600 , 1024),
-    //                                  QSize(1600 , 900 ),
-    //                                  QSize(1600 , 768 ),
-    //                                  QSize(1440 , 1440),
-    //                                  QSize(1440 , 1080),
-    //                                  QSize(1440 , 1024),
-    //                                  QSize(1440 , 960 ),
-    //                                  QSize(1440 , 900 ),
-    //                                  QSize(1400 , 1050),
-    //                                  QSize(1366 , 768 ),
-    //                                  QSize(1334 , 750 ),
-    //                                  QSize(1280 , 1024),
-    //                                  QSize(1280 , 960 ),
-    //                                  QSize(1280 , 854 ),
-    //                                  QSize(1280 , 800 ),
-    //                                  QSize(1280 , 768 ),
-    //                                  QSize(1280 , 720 ),
-    //                                  QSize(1152 , 900 ),
-    //                                  QSize(1152 , 864 ),
-    //                                  QSize(1152 , 768 ),
-    //                                  QSize(1152 , 720 ),
-    //                                  QSize(1136 , 640 ),
-    //                                  QSize(1120 , 832 ),
-    //                                  QSize(1080 , 1200),
-    //                                  QSize(1024 , 1024),
-    //                                  QSize(1024 , 800 ),
-    //                                  QSize(1024 , 768 ),
-    //                                  QSize(1024 , 640 ),
-    //                                  QSize(1024 , 600 ),
-    //                                  QSize(960 ,  720 ),
-    //                                  QSize(960 ,  640 )};
-    // QScreen *screen = QGuiApplication::primaryScreen();
-    // QRect screenSize;
-    // if (Settings::getFullscreen())
-    // {
-    //     screenSize  = screen->geometry();
-    // }
-    // else
-    // {
-    //     screenSize  = screen->availableGeometry();
-    // }
-    // supportedSizes.push_front(screenSize.size());
-    // qint32 count = 0;
-    // while  (count < supportedSizes.size())
-    // {
-    //     if (supportedSizes[count].width() <= screenSize.width() &&
-    //         supportedSizes[count].height() <= screenSize.height())
-    //     {
-    //         count++;
-    //     }
-    //     else
-    //     {
-    //         supportedSizes.removeAt(count);
-    //     }
-    // }
-    // QStringList displaySizes;
-    // qint32 currentDisplayMode = 0;
-    // for  (qint32 i = 0; i < supportedSizes.size(); i++)
-    // {
-    //     if (supportedSizes[i].width() == Settings::getWidth() / pApp->getActiveDpiFactor() &&
-    //         supportedSizes[i].height() == Settings::getHeight() / pApp->getActiveDpiFactor())
-    //     {
-    //         currentDisplayMode = i;
-    //     }
-    //     displaySizes.append(QString::number(supportedSizes[i].width()) + " x " + QString::number(supportedSizes[i].height()));
-    // }
-    // qint32 sliderOffset = 400;
-
-    // spLabel pTextfield = spLabel::create(800);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Screen Settings"));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Screen Resolution: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // spDropDownmenu pScreenResolution = spDropDownmenu::create(400, displaySizes);
-    // pScreenResolution->setPosition(sliderOffset - 130, y);
-    // pScreenResolution->setCurrentItem(currentDisplayMode);
-    // pScreenResolution->setTooltipText(tr("Selects the screen resolution for the game."));
-    // m_pOptions->addItem(pScreenResolution);
-    // auto* pPtrScreenResolution = pScreenResolution.get();
-    // connect(pScreenResolution.get(), &DropDownmenu::sigItemChanged, this, [this, pPtrScreenResolution, pApp](qint32)
-    // {
-    //     QStringList itemData = pPtrScreenResolution->getCurrentItemText().split(" x ");
-    //     qint32 width = itemData[0].toInt() * pApp->getActiveDpiFactor();
-    //     qint32 heigth = itemData[1].toInt() * pApp->getActiveDpiFactor();
-    //     Settings::setWidth(width);
-    //     Settings::setHeight(heigth);
-    //     emit sigChangeScreenSize(width, heigth);
-    //     emit sigReloadSettings();
-    // });
-    // pScreenResolution->setEnabled(!Settings::getSmallScreenDevice());
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Screen Mode: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // QStringList items = {tr("Window"), tr("Bordered"), tr("Fullscreen")};
-    // spDropDownmenu pScreenModes = spDropDownmenu::create(400, items);
-    // pScreenModes->setTooltipText(tr("Selects the screen mode for the game."));
-    // pScreenModes->setPosition(sliderOffset - 130, y);
-    // pScreenModes->setCurrentItem(static_cast<qint32>(pApp->getScreenMode()));
-    // pScreenModes->setEnabled(!Settings::getSmallScreenDevice());
-    // m_pOptions->addItem(pScreenModes);
-    // connect(pScreenModes.get(), &DropDownmenu::sigItemChanged, pApp, [pApp](qint32 value)
-    // {
-    //     pApp->changeScreenMode(static_cast<Settings::ScreenModes>(value));
-    // }, Qt::QueuedConnection);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Brightness: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // spSlider pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, -50, 50);
-    // pSlider->setTooltipText(tr("Selects the brightness for the game."));
-    // pSlider->setPosition(sliderOffset - 130, y);
-    // pSlider->setCurrentValue(Settings::getBrightness());
-    // connect(pSlider.get(), &Slider::sliderValueChanged, this, [=](qint32 value)
-    // {
-    //     Settings::setBrightness(-value);
-    //     pApp->setBrightness(-value);
-    // });
-    // m_pOptions->addItem(pSlider);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Gamma: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 1, 160, "");
-    // pSlider->setTooltipText(tr("Selects the gamma factor for the game."));
-    // pSlider->setPosition(sliderOffset - 130, y);
-    // pSlider->setCurrentValue(Settings::getGamma() * 30.0f);
-    // connect(pSlider.get(), &Slider::sliderValueChanged, this, [=](qint32 value)
-    // {
-    //     Settings::setGamma(value / 30.0f);
-    //     pApp->setGamma(value / 30.0f);
-    // });
-    // m_pOptions->addItem(pSlider);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Small screen: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // spCheckbox pCheckbox = spCheckbox::create();
-    // pCheckbox->setTooltipText(tr("If checked several UI elements are hidden and accessible with an additional button.\nWarning: disabling this on a smaller screen may lead to unplayable game experience."));
-    // pCheckbox->setChecked(Settings::getSmallScreenDevice());
-    // pCheckbox->setPosition(sliderOffset - 130, y);
-    // connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setSmallScreenDevice, Qt::QueuedConnection);
-    // if (Settings::hasSmallScreen())
-    // {
-    //     pCheckbox->setEnabled(false);
-    // }
-    // else
-    // {
-    //     pCheckbox->setEnabled(true);
-    // }
-    // m_pOptions->addItem(pCheckbox);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Use High DPI: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // pCheckbox = spCheckbox::create();
-    // pCheckbox->setTooltipText(tr("If checked the game will use the high dpi option of the screen"));
-    // pCheckbox->setChecked(Settings::getUseHighDpi());
-    // pCheckbox->setPosition(sliderOffset - 130, y);
-    // connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), [this, pApp](bool value)
-    // {
-    //     qint32 newWidth = 0;
-    //     qint32 newHeigth  = 0;
-    //     if (value)
-    //     {
-    //         newWidth = Settings::getWidth() / pApp->getActiveDpiFactor();
-    //         newHeigth = Settings::getHeight() / pApp->getActiveDpiFactor();
-    //         Settings::setUseHighDpi(value);
-    //     }
-    //     else
-    //     {
-    //         Settings::setUseHighDpi(value);
-    //         newWidth = Settings::getWidth() * pApp->getActiveDpiFactor();
-    //         newHeigth = Settings::getHeight() * pApp->getActiveDpiFactor();
-    //     }
-    //     Settings::setWidth(newWidth);
-    //     Settings::setHeight(newHeigth);
-    //     emit sigChangeScreenSize(newWidth, newHeigth);
-    //     emit sigReloadSettings();
-    // }, Qt::QueuedConnection);
-    // m_pOptions->addItem(pCheckbox);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Max FPS: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 30, 60, "");
-    // pSlider->setTooltipText(tr("Selects the maximum FPS, use it to reduce power consumption on smartphones."));
-    // pSlider->setPosition(sliderOffset - 130, y);
-    // pSlider->setCurrentValue(Settings::getFramesPerSecond());
-    // connect(pSlider.get(), &Slider::sliderValueChanged, Settings::getInstance(), &Settings::setFramesPerSecond, Qt::QueuedConnection);
-    // m_pOptions->addItem(pSlider);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Touch screen: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // pCheckbox = spCheckbox::create();
-    // pCheckbox->setTooltipText(tr("If checked some ingame inputs require double clicks or other gestures. This is automatically detected and changing it isn't recommended."));
-    // pCheckbox->setChecked(Settings::getTouchScreen());
-    // pCheckbox->setPosition(sliderOffset - 130, y);
-    // connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setTouchScreen, Qt::QueuedConnection);
-    // m_pOptions->addItem(pCheckbox);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Touch Sensitivity: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // spSpinBox touchPointSensitivity = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
-    // touchPointSensitivity->setTooltipText(tr("Selects how long a touch is treated as the same point. Used for detecting long-press events."));
-    // touchPointSensitivity->setCurrentValue(Settings::getTouchPointSensitivity());
-    // touchPointSensitivity->setPosition(sliderOffset - 130, y);
-    // connect(touchPointSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setTouchPointSensitivity);
-    // m_pOptions->addItem(touchPointSensitivity);
-    // y += 40;
-
-    // if (Gamepad::isSupported())
-    // {
-    //     pTextfield = spLabel::create(sliderOffset - 140);
-    //     pTextfield->setStyle(style);
-    //     pTextfield->setHtmlText(tr("Gamepad: "));
-    //     pTextfield->setPosition(10, y);
-    //     m_pOptions->addItem(pTextfield);
-    //     pCheckbox = spCheckbox::create();
-    //     pCheckbox->setTooltipText(tr("Enables Gamepad support for controllers. Note: This is an experimental feature and won't work 100% with all controllers. This feature isn't supported for Android, iOS, MacOS and Linux."));
-    //     pCheckbox->setChecked(Settings::getGamepadEnabled());
-    //     pCheckbox->setPosition(sliderOffset - 130, y);
-    //     connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setGamepadEnabled, Qt::QueuedConnection);
-    //     m_pOptions->addItem(pCheckbox);
-    //     // gamepad button
-    //     oxygine::spButton pButtonGamepad = ObjectManager::createButton(tr("Info"), 100);
-    //     pButtonGamepad->setPosition(pCheckbox->getX() + 80, y);
-    //     m_pOptions->addItem(pButtonGamepad);
-    //     pButtonGamepad->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    //     {
-    //         emit sigShowGamepadInfo();
-    //     });
-    //     connect(this, &OptionMenue::sigShowGamepadInfo, this, &OptionMenue::showGamepadInfo, Qt::QueuedConnection);
-    //     y += 40;
-
-    //     pTextfield = spLabel::create(sliderOffset - 140);
-    //     pTextfield->setStyle(style);
-    //     pTextfield->setHtmlText(tr("Gamepad Sensitivity: "));
-    //     pTextfield->setPosition(10, y);
-    //     m_pOptions->addItem(pTextfield);
-    //     spSpinBox gamepadSensitivity = spSpinBox::create(200, 0.1, 100);
-    //     gamepadSensitivity->setTooltipText(tr("Selects how often events are sent by a gamepad. Lowering this value will increase cursor speed."));
-    //     gamepadSensitivity->setCurrentValue(Settings::getGamepadSensitivity());
-    //     gamepadSensitivity->setPosition(sliderOffset - 130, y);
-    //     connect(gamepadSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setGamepadSensitivity);
-    //     m_pOptions->addItem(gamepadSensitivity);
-    //     y += 40;
-    // }
-    // showSoundOptions(m_pOptions, sliderOffset, y, this);
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Language: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // items.clear();
-    // QLocale english("en");
-    // items.append(english.nativeLanguageName());
-    // m_languages.append("en");
-    // qint32 current = 0;
-    // QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
-    // QStringList filter;
-    // filter << "*.qm";
-    // for (const QString & path : qAsConst(paths))
-    // {
-    //     QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
-    //     while (dirIter.hasNext())
-    //     {
-    //         dirIter.next();
-    //         QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
-    //         if (lang != "en")
-    //         {
-    //             m_languages.append(lang);
-    //             QLocale langLoc(lang);
-    //             items.append(langLoc.nativeLanguageName());
-    //             if (lang == Settings::getLanguage())
-    //             {
-    //                 current = items.size() - 1;
-    //             }
-    //         }
-    //     }
-    // }
-    // spDropDownmenu pLanguageMenu = spDropDownmenu::create(400, items);
-    // pLanguageMenu->setTooltipText(tr("Selects the language for the game. Note: Not everything may be translated."));
-    // pLanguageMenu->setPosition(sliderOffset - 130, y);
-    // pLanguageMenu->setCurrentItem(current);
-    // m_pOptions->addItem(pLanguageMenu);
-    // connect(pLanguageMenu.get(), &DropDownmenu::sigItemChanged, pApp,
-    //         [this](qint32 item)
-    // {
-    //     CONSOLE_PRINT("Marking restart cause language changed.", Console::eDEBUG);
-    //     Settings::setLanguage(m_languages[item]);
-    //     m_restartNeeded = true;
-    //     emit sigReloadSettings();
-    // });
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Auto Saving Time: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // spTimeSpinBox autoSavingCycleTime = spTimeSpinBox::create(200);
-    // autoSavingCycleTime->setTooltipText(tr("Selects the time between auto saves in hours:minutes:seconds"));
-    // autoSavingCycleTime->setCurrentValue(std::chrono::duration_cast<std::chrono::milliseconds>(Settings::getAutoSavingCylceTime()).count());
-    // autoSavingCycleTime->setPosition(sliderOffset - 130, y);
-    // connect(autoSavingCycleTime.get(), &TimeSpinBox::sigValueChanged, [=](qint32 value)
-    // {
-    //     Settings::setAutoSavingCylceTime(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::milliseconds(value)));
-    // });
-    // m_pOptions->addItem(autoSavingCycleTime);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Auto Saving Cycle: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // spSpinBox autoSavingCycle = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
-    // autoSavingCycle->setTooltipText(tr("Selects the number of auto saves that are kept during games. A value of 0 disables this feature."));
-    // autoSavingCycle->setCurrentValue(Settings::getAutoSavingCycle());
-    // autoSavingCycle->setPosition(sliderOffset - 130, y);
-    // connect(autoSavingCycle.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setAutoSavingCycle);
-    // m_pOptions->addItem(autoSavingCycle);
-    // y += 40;
-
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Record Games: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // pCheckbox = spCheckbox::create();
-    // pCheckbox->setTooltipText(tr("If checked: games will be recorded and you can rewatch them in the replay section."));
-    // pCheckbox->setChecked(Settings::getRecord());
-    // pCheckbox->setPosition(sliderOffset - 130, y);
-    // connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setRecord, Qt::QueuedConnection);
-    // m_pOptions->addItem(pCheckbox);
-    // y += 40;
-
-    // pTextfield = spLabel::create(800);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Network Settings"));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Username: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // spTextbox pTextbox = spTextbox::create(Settings::getWidth() - 20 - sliderOffset);
-    // pTextbox->setTooltipText(tr("Select your Username that is shown in-game and in multiplayer lobbies."));
-    // pTextbox->setCurrentText(Settings::getUsername());
-    // Textbox* pPtrTextbox = pTextbox.get();
-    // connect(pTextbox.get(), &Textbox::sigTextChanged, this, [this, pPtrTextbox](QString value)
-    // {
-    //     if (value.isEmpty())
-    //     {
-    //         pPtrTextbox->setCurrentText(Settings::getUsername());
-    //     }
-    //     else
-    //     {
-    //         if (value != Settings::getUsername())
-    //         {
-    //             CONSOLE_PRINT("Marking restart cause user changed.", Console::eDEBUG);
-    //             m_restartNeeded = true;
-    //         }
-    //         Settings::setUsername(value);
-    //     }
-    // });
-    // pTextbox->setPosition(sliderOffset - 130, y);
-    // m_pOptions->addItem(pTextbox);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Dedicated address: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // pTextbox = spTextbox::create(Settings::getWidth() - 20 - sliderOffset);
-    // pTextbox->setTooltipText(tr("Provide the address to the multiplayer game server you want to connect to."));
-    // pTextbox->setCurrentText(Settings::getServerAdress());
-    // connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString value)
-    // {
-    //     Settings::setServerAdress(value);
-    // });
-    // pTextbox->setPosition(sliderOffset - 130, y);
-    // m_pOptions->addItem(pTextbox);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Dedicated port: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // spSpinBox portBox = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
-    // portBox->setTooltipText(tr("Selects the port dedicated server use for the lobby chat."));
-    // portBox->setCurrentValue(Settings::getServerPort());
-    // portBox->setPosition(sliderOffset - 130, y);
-    // connect(portBox.get(), &SpinBox::sigValueChanged, [=](float value)
-    // {
-    //     Settings::setServerPort(static_cast<quint16>(value));
-    // });
-    // m_pOptions->addItem(portBox);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Dedicated server: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // pCheckbox = spCheckbox::create();
-    // pCheckbox->setTooltipText(tr("Enables this game as global server."));
-    // pCheckbox->setChecked(Settings::getServer());
-    // connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this](bool value)
-    // {
-    //     CONSOLE_PRINT("Marking restart cause server settings changed.", Console::eDEBUG);
-    //     Settings::setServer(value);
-    //     m_restartNeeded = true;
-    // });
-    // pCheckbox->setPosition(sliderOffset - 130, y);
-    // m_pOptions->addItem(pCheckbox);
-    // y += 40;
-
-    // pTextfield = spLabel::create(sliderOffset - 140);
-    // pTextfield->setStyle(style);
-    // pTextfield->setHtmlText(tr("Game port: "));
-    // pTextfield->setPosition(10, y);
-    // m_pOptions->addItem(pTextfield);
-    // portBox = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
-    // portBox->setTooltipText(tr("Selects the game port used to play on a dedicated server or through a direct connection."));
-    // portBox->setCurrentValue(Settings::getGamePort());
-    // portBox->setPosition(sliderOffset - 130, y);
-    // connect(portBox.get(), &SpinBox::sigValueChanged, [=](float value)
-    // {
-    //     Settings::setGamePort(static_cast<quint16>(value));
-    // });
-    // m_pOptions->addItem(portBox);
-    // y += 40;
-
-    // m_pOptions->setContentHeigth(20 + y);
+void OptionMenue::changeScreenSize(QSize size)
+{
+    Settings::setWidth(size.width());
+    Settings::setHeight(size.height());
+    emit sigChangeScreenSize(size.width(), size.height());
+    emit sigReloadSettings();
 }
 
-void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 & y, QObject* pSignalOwner)
-{    
-#ifdef AUDIOSUPPORT
-    AudioThread* pAudio = Mainapp::getInstance()->getAudioThread();
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
-
-    spLabel pTextfield = spLabel::create(sliderOffset - 140);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Audio Settings"));
-    pTextfield->setPosition(10, y);
-    pOwner->addItem(pTextfield);
-    y += 40;
-
-    pTextfield = spLabel::create(sliderOffset - 140);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Muted: "));
-    pTextfield->setPosition(10, y);
-    pOwner->addItem(pTextfield);
-    spCheckbox pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If checked: mutes all sounds and music."));
-    pCheckbox->setChecked(Settings::getMuted());
-    pCheckbox->setPosition(sliderOffset - 130, y);
-    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), [=](bool checked)
+void OptionMenue::changeHighDpi(bool value)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    qint32 newWidth = 0;
+    qint32 newHeigth  = 0;
+    if (value)
     {
-        Settings::setMuted(checked);
-        pAudio->setVolume(Settings::getMusicVolume());
-    }, Qt::QueuedConnection);
-    pOwner->addItem(pCheckbox);
-    y += 40;
-
-    pTextfield = spLabel::create(sliderOffset - 140);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Audio Device: "));
-    pTextfield->setPosition(10, y);
-    pOwner->addItem(pTextfield);
-    auto currentDevice = Settings::getAudioOutput().value<QAudioDevice>();
-    const auto deviceInfos = QMediaDevices::audioOutputs();
-    QStringList items = {tr("Default device")};
-    qint32 currentItem = 0;
-    for (qint32 i = 0; i < deviceInfos.size(); ++i)
-    {
-        items.append(deviceInfos[i].description());
-        if (deviceInfos[i] == currentDevice)
-        {
-            currentItem = i + 1;
-        }
+        newWidth = Settings::getWidth() / pApp->getActiveDpiFactor();
+        newHeigth = Settings::getHeight() / pApp->getActiveDpiFactor();
+        Settings::setUseHighDpi(value);
     }
-    spDropDownmenu pAudioDevice = spDropDownmenu::create(Settings::getWidth() - 20 - sliderOffset, items);
-    pAudioDevice->setTooltipText(tr("Selects the primary audio output device."));
-    pAudioDevice->setPosition(sliderOffset - 130, y);
-    pAudioDevice->setCurrentItem(currentItem);
-    pAudioDevice->setEnabled(!Settings::getSmallScreenDevice());
-    pOwner->addItem(pAudioDevice);
-    connect(pAudioDevice.get(), &DropDownmenu::sigItemChanged, pSignalOwner, [pAudio, deviceInfos](qint32 value)
+    else
     {
-        if (value == 0)
-        {
-            auto item = QVariant::fromValue(QMediaDevices::defaultAudioOutput());
-            pAudio->changeAudioDevice(item);
-            Settings::setAudioOutput(QVariant(Settings::DEFAULT_AUDIODEVICE));
-        }
-        else
-        {
-            auto item = QVariant::fromValue(deviceInfos[value - 1]);
-            Settings::setAudioOutput(item);
-            pAudio->changeAudioDevice(item);
-        }
-    });
-    y += 40;
-
-    pTextfield = spLabel::create(sliderOffset - 140);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Master Volume: "));
-    pTextfield->setPosition(10, y);
-    pOwner->addItem(pTextfield);
-    spSlider pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 0, 100);
-    pSlider->setTooltipText(tr("Selects the master volume for the game."));
-    pSlider->setPosition(sliderOffset - 130, y);
-    pSlider->setCurrentValue(Settings::getTotalVolume());
-    connect(pSlider.get(), &Slider::sliderValueChanged, pSignalOwner, [=](qint32 value)
-    {
-        Settings::setTotalVolume(value);
-        pAudio->setVolume(Settings::getMusicVolume());
-    });
-    pOwner->addItem(pSlider);
-
-    y += 40;
-    pTextfield = spLabel::create(sliderOffset - 140);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Music Volume: "));
-    pTextfield->setPosition(10, y);
-    pOwner->addItem(pTextfield);
-    pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 0, 100);
-    pSlider->setTooltipText(tr("Selects the music volume for the game."));
-    pSlider->setPosition(sliderOffset - 130, y);
-    pSlider->setCurrentValue(Settings::getMusicVolume());
-    connect(pSlider.get(), &Slider::sliderValueChanged, pSignalOwner, [=](qint32 value)
-    {
-        Settings::setMusicVolume(value);
-        pAudio->setVolume(value);
-    });
-    pOwner->addItem(pSlider);
-
-    y += 40;
-    pTextfield = spLabel::create(sliderOffset - 140);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Sound Volume: "));
-    pTextfield->setPosition(10, y);
-    pOwner->addItem(pTextfield);
-    pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 0, 100);
-    pSlider->setTooltipText(tr("Selects the sound volume for the game."));
-    pSlider->setPosition(sliderOffset - 130, y);
-    pSlider->setCurrentValue(Settings::getSoundVolume());
-    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
-    {
-        Settings::setSoundVolume(value);
-    });
-    pOwner->addItem(pSlider);
-    y += 40;
-#endif
+        Settings::setUseHighDpi(value);
+        newWidth = Settings::getWidth() * pApp->getActiveDpiFactor();
+        newHeigth = Settings::getHeight() * pApp->getActiveDpiFactor();
+    }
+    Settings::setWidth(newWidth);
+    Settings::setHeight(newHeigth);
+    emit sigChangeScreenSize(newWidth, newHeigth);
+    emit sigReloadSettings();
 }
 
 void OptionMenue::loadModPanels()
 {
     QSize size(Settings::getWidth() - 20,
-               Settings::getHeight() - 60);
+               Settings::getHeight() - 70);
     size.setWidth(Settings::getWidth() - 60);
     size.setHeight(size.height() - 50);
     m_pMods = spPanel::create(true,  size - QSize(0, 50), size);
@@ -1215,14 +512,6 @@ void OptionMenue::selectMods(qint32 item)
     }
 }
 
-void OptionMenue::restart()
-{
-    CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", Console::eDEBUG);
-    removeChildren();
-    detach();
-    emit Mainapp::getInstance()->sigQuit(1);
-}
-
 void OptionMenue::updateModCheckboxes()
 {
     const auto availableMods = Settings::getAvailableMods();
@@ -1331,6 +620,14 @@ void OptionMenue::updateModFilter(QString tag)
     m_pMods->setContentHeigth(50 + visibleCounter * 50);
 }
 
+void OptionMenue::restart()
+{
+    CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", Console::eDEBUG);
+    removeChildren();
+    detach();
+    emit Mainapp::getInstance()->sigQuit(1);
+}
+
 void OptionMenue::showGamepadInfo()
 {
     spGamepadInfo pGamepadInfo = spGamepadInfo::create();
@@ -1348,5 +645,10 @@ void OptionMenue::onReset()
 {
     Settings::resetSettings();
     m_restartNeeded = true;
-    reloadSettings(m_xmlFile);
+    reloadSettings();
+}
+
+void OptionMenue::markRestartNeeded()
+{
+    m_restartNeeded = true;
 }

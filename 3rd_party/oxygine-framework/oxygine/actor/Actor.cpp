@@ -722,7 +722,8 @@ namespace oxygine
     {
         QMutexLocker lock(&m_Locked);
         QMutexLocker lockActor(&(actor->m_Locked));
-        if (!GameWindow::getWindow()->isWorker())
+        if (!GameWindow::getWindow()->isWorker() &&
+            dynamic_cast<QObject*>(this) != nullptr)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove actor from wrong thread");
         }

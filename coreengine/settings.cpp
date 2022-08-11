@@ -1,20 +1,24 @@
-#include "coreengine/settings.h"
-#include "coreengine/mainapp.h"
-#include "coreengine/globalutils.h"
-#include "coreengine/userdata.h"
-
-#include "game/gamemap.h"
-
 #include <QSettings>
 #include <QTranslator>
 #include <QLocale>
-#include <qguiapplication.h>
-#include <qscreen.h>
-#include <qlocale.h>
+#include <QGuiApplication>
+#include <QScreen>
+#include <QLocale>
 #include <QStandardPaths>
 #include <QDir>
 #include <QFileInfoList>
 #include <QInputDevice>
+#include <QDirIterator>
+
+#include "coreengine/settings.h"
+#include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
+#include "coreengine/userdata.h"
+#include "coreengine/audiothread.h"
+#include "coreengine/Gamepad.h"
+
+#include "game/gamemap.h"
+
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
 #ifdef USEAPPCONFIGPATH
@@ -459,7 +463,7 @@ void Settings::setSlaveDespawnTime(const std::chrono::seconds &newSlaveDespawnTi
     m_slaveDespawnTime = newSlaveDespawnTime;
 }
 
-const QString &Settings::getDefaultBannlist()
+QString Settings::getDefaultBannlist()
 {
     return m_defaultBannlist;
 }
@@ -613,7 +617,7 @@ void Settings::setSupplyWarning(float newSupplyWarning)
     m_supplyWarning = newSupplyWarning;
 }
 
-const QString &Settings::getDefaultRuleset()
+QString Settings::getDefaultRuleset()
 {
     return m_defaultRuleset;
 }
@@ -717,7 +721,7 @@ void Settings::setTouchScreen(bool newTouchScreen)
     m_touchScreen = newTouchScreen;
 }
 
-const QString &Settings::getUserPath()
+QString Settings::getUserPath()
 {
     return m_userPath;
 }
@@ -1226,6 +1230,16 @@ std::chrono::seconds Settings::getAutoSavingCylceTime()
 void Settings::setAutoSavingCylceTime(const std::chrono::seconds &value)
 {
     m_autoSavingCylceTime = value;
+}
+
+quint64 Settings::getAutoSavingCylceTimeRaw()
+{
+    return std::chrono::duration_cast<std::chrono::milliseconds>(getAutoSavingCylceTime()).count();
+}
+
+void Settings::setAutoSavingCylceTimeRaw(quint64 &value)
+{
+    setAutoSavingCylceTime(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::milliseconds(value)));
 }
 
 Qt::Key Settings::getKey_ShowAttackFields()
@@ -1907,4 +1921,179 @@ bool Settings::hasSmallScreen()
         return true;
     }
     return false;
+}
+
+QStringList Settings::getAudioDevices()
+{
+    QStringList items = {tr("Default device")};
+#ifdef AUDIOSUPPORT
+    const auto deviceInfos = QMediaDevices::audioOutputs();
+    for (qint32 i = 0; i < deviceInfos.size(); ++i)
+    {
+        items.append(deviceInfos[i].description());
+    }
+#endif
+    return items;
+}
+
+qint32 Settings::getCurrentDevice()
+{
+    qint32 currentItem = 0;
+#ifdef AUDIOSUPPORT
+    auto currentDevice = Settings::getAudioOutput().value<QAudioDevice>();
+    const auto deviceInfos = QMediaDevices::audioOutputs();
+
+    for (qint32 i = 0; i < deviceInfos.size(); ++i)
+    {
+        if (deviceInfos[i] == currentDevice)
+        {
+            currentItem = i + 1;
+        }
+    }
+#endif
+    return currentItem;
+}
+
+void Settings::setAudioDevice(qint32 value)
+{
+#ifdef AUDIOSUPPORT
+    AudioThread* pAudio = Mainapp::getInstance()->getAudioThread();
+    if (value == 0)
+    {
+        auto item = QVariant::fromValue(QMediaDevices::defaultAudioOutput());
+        pAudio->changeAudioDevice(item);
+        Settings::setAudioOutput(QVariant(Settings::DEFAULT_AUDIODEVICE));
+    }
+    else
+    {
+        const auto deviceInfos = QMediaDevices::audioOutputs();
+        if (value <= deviceInfos.size())
+        {
+            auto item = QVariant::fromValue(deviceInfos[value - 1]);
+            Settings::setAudioOutput(item);
+            pAudio->changeAudioDevice(item);
+        }
+    }
+#endif
+}
+
+QSize Settings::getScreenSize()
+{
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QRect screenSize;
+    if (Settings::getFullscreen())
+    {
+        screenSize  = screen->geometry();
+    }
+    else
+    {
+        screenSize  = screen->availableGeometry();
+    }
+    return screenSize.size();
+}
+
+float Settings::getDpiFactor()
+{
+    return Mainapp::getInstance()->getActiveDpiFactor();
+}
+
+qint32 Settings::getScreenMode()
+{
+    return static_cast<qint32>(Mainapp::getInstance()->getScreenMode());
+}
+
+void Settings::setScreenMode(qint32 value)
+{
+    Mainapp::getInstance()->changeScreenMode(static_cast<Settings::ScreenModes>(value));
+}
+
+void Settings::changeBrightness(qint32 value)
+{
+    setBrightness(value);
+    Mainapp::getInstance()->setBrightness(value);
+}
+
+void Settings::changeGamma(float value)
+{
+    setGamma(value);
+    Mainapp::getInstance()->setGamma(value);
+}
+
+bool Settings::isGamepadSupported()
+{
+    return Gamepad::isSupported();
+}
+
+QStringList Settings::getLanguageNames()
+{
+     QLocale english("en");
+     QStringList items = {english.nativeLanguageName()};
+     QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
+     QStringList filter;
+     filter << "*.qm";
+     for (const QString & path : qAsConst(paths))
+     {
+         QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+         while (dirIter.hasNext())
+         {
+             dirIter.next();
+             QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
+             if (lang != "en")
+             {
+                 QLocale langLoc(lang);
+                 items.append(langLoc.nativeLanguageName());
+             }
+         }
+     }
+     return items;
+}
+
+QStringList Settings::getLanguageIds()
+{
+     QStringList languages = {"en"};
+     QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
+     QStringList filter;
+     filter << "*.qm";
+     for (const QString & path : qAsConst(paths))
+     {
+         QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+         while (dirIter.hasNext())
+         {
+             dirIter.next();
+             QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
+             if (lang != "en")
+             {
+                 languages.append(lang);
+             }
+         }
+     }
+     return languages;
+}
+
+qint32 Settings::getCurrentLanguageIndex()
+{
+     qint32 current = 0;
+     QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
+     QStringList filter;
+     filter << "*.qm";
+     qint32 i = 0;
+     for (const QString & path : qAsConst(paths))
+     {
+         QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+         while (dirIter.hasNext())
+         {
+             dirIter.next();
+             QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
+             if (lang != "en")
+             {
+                 ++i;
+                 if (lang == Settings::getLanguage())
+                 {
+                     current = i;
+                     break;
+                 }
+             }
+         }
+     }
+     return current;
 }

@@ -166,9 +166,6 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
         MapSelectionMapsMenue::showPlayerSelection();
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
     }
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue obj = pInterpreter->newQObject(this);
-    pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/mapselectionmapsmenu.xml", this);
     pApp->continueRendering();
 }

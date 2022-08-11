@@ -589,7 +589,12 @@ void Mainapp::keyReleaseEvent(QKeyEvent *event)
 
 bool Mainapp::event(QEvent *event)
 {
-    bool handled = FocusableObject::handleEvent(event);
+    spFocusableObject pObj(FocusableObject::getFocusedObject());
+    bool handled = false;
+    if (pObj.get() != nullptr)
+    {
+        handled = FocusableObject::handleEvent(event);
+    }
     if (!handled)
     {
         if (event->type() == QEvent::InputMethod)

@@ -125,13 +125,13 @@ void Tooltip::showTooltip()
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->pauseRendering();
-        hideTooltip();
         if (oxygine::Stage::getStage()->isDescendant(oxygine::spActor(this)) &&
             m_enabled &&
             pApp->hasCursor() &&
             QGuiApplication::focusWindow() == pApp &&
             !m_tooltipText.isEmpty())
         {
+            hideTooltip();
             CONSOLE_PRINT("Showing tooltip", Console::eDEBUG);
             QPoint curPos = pApp->mapPosFromGlobal(pApp->cursor().pos());
             m_Tooltip = oxygine::spActor::create();

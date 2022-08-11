@@ -172,12 +172,12 @@ endif()
 add_definitions(
     -DVERSION_MAJOR=0
     -DVERSION_MINOR=24
-    -DVERSION_REVISION=2
-    -DVERSION_SUFFIX="main"
+    -DVERSION_REVISION=3
+    -DVERSION_SUFFIX="dev"
     )
 
-set(COW_ANDROID_VERSION_NAME "0.24.2-main")
-set(COW_ANDROID_VERSION_CODE "21")
+set(COW_ANDROID_VERSION_NAME "0.24.3-dev")
+set(COW_ANDROID_VERSION_CODE "22")
 
 ###################################################################################
 # Set up some compiler and linking options
@@ -328,7 +328,6 @@ set(${PROJECT_NAME}_SRCS
     objects/perkselection.cpp objects/perkselection.h
     objects/mapselectionview.cpp objects/mapselectionview.h
     objects/loadingscreen.cpp objects/loadingscreen.h
-    objects/gameplayandkeys.cpp objects/gameplayandkeys.h
     objects/editorselection.cpp objects/editorselection.h
     objects/mapselection.cpp objects/mapselection.h
     objects/coselection.cpp objects/coselection.h

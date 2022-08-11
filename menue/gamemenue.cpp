@@ -36,7 +36,7 @@
 #include "objects/dialogs/ingame/dialogattacklog.h"
 #include "objects/dialogs/ingame/dialogunitinfo.h"
 #include "objects/dialogs/rules/ruleselectiondialog.h"
-#include "objects/gameplayandkeys.h"
+#include "objects/dialogs/customdialog.h"
 #include "objects/unitstatisticview.h"
 
 #include "ingamescriptsupport/genericbox.h"
@@ -697,9 +697,6 @@ void GameMenue::loadGameMenue()
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, m_IngameInfoBar.get(), &IngameInfoBar::updateCursorInfo, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &GameMenue::cursorMoved, Qt::QueuedConnection);
 
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue obj = pInterpreter->newQObject(this);
-    pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/gamemenu.xml", this);
 }
 
@@ -1193,11 +1190,8 @@ void GameMenue::showOptions()
 {    
     m_Focused = false;
     CONSOLE_PRINT("showOptions()", Console::eDEBUG);
-    spGenericBox pDialogOptions = spGenericBox::create();
-    spGameplayAndKeys pGameplayAndKeys = spGameplayAndKeys::create(Settings::getHeight() - 80);
-    pGameplayAndKeys->setY(0);
-    pDialogOptions->addItem(pGameplayAndKeys);
-    connect(pDialogOptions.get(), &GenericBox::sigFinished, this, [this]()
+    spCustomDialog pDialogOptions = spCustomDialog::create("", "ui/options/optiongameplaymenu.xml", this, "Ok");
+    connect(pDialogOptions.get(), &CustomDialog::sigFinished, this, [this]()
     {
         Settings::saveSettings();
         m_Focused = true;
@@ -1209,17 +1203,8 @@ void GameMenue::showChangeSound()
 {
     m_Focused = false;
     CONSOLE_PRINT("showChangeSound()", Console::eDEBUG);
-    spGenericBox pDialogOptions = spGenericBox::create();
-    QSize size(Settings::getWidth() - 20,
-               Settings::getHeight() - 100);
-    spPanel pPanel = spPanel::create(true, size, size);
-    qint32 y = 10;
-    qint32 sliderOffset = 400;
-    OptionMenue::showSoundOptions(pPanel, sliderOffset, y, this);
-    pPanel->setContentHeigth(y + 40);
-    pPanel->setPosition(10, 10);
-    pDialogOptions->addItem(pPanel);
-    connect(pDialogOptions.get(), &GenericBox::sigFinished, this, [this]()
+    spCustomDialog pDialogOptions = spCustomDialog::create("", "ui/options/optionaudiomenu.xml", this, "Ok");
+    connect(pDialogOptions.get(), &CustomDialog::sigFinished, this, [this]()
     {
         Settings::saveSettings();
         m_Focused = true;

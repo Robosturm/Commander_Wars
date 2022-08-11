@@ -32,9 +32,9 @@ FocusableObject::FocusableObject()
 
 bool FocusableObject::handleEvent(QEvent *event)
 {
+    auto* pObj = FocusableObject::getFocusedObject();
     bool handled = false;
-    spFocusableObject pObj(FocusableObject::getFocusedObject());
-    if (pObj.get() != nullptr)
+    if (pObj != nullptr)
     {
         switch (event->type())
         {

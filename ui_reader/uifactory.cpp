@@ -22,6 +22,7 @@
 #include "objects/base/dropdownmenusprite.h"
 #include "objects/base/dropdownmenucolor.h"
 #include "objects/base/passwordbox.h"
+#include "objects/base/selectkey.h"
 
 #include "game/gamemap.h"
 
@@ -45,6 +46,7 @@ static const char* const itemTextField = "TextField";
 static const char* const itemDropDownMenu = "DropDownMenu";
 static const char* const itemDropDownMenuColor = "DropDownMenuColor";
 static const char* const itemDropDownMenuSprite = "DropDownMenuSprite";
+static const char* const itemSelectKey = "SelectKey";
 static const char* const itemLoop = "loop";
 static const char* const itemIf = "if";
 
@@ -79,6 +81,7 @@ static const char* const attrSpriteType = "spriteType";
 static const char* const attrSpriteSize = "spriteSize";
 static const char* const attrPlayer = "player";
 static const char* const attrHAlign = "hAlign";
+static const char* const attrMode = "mode";
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -100,6 +103,7 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemIcon), std::bind(&UiFactory::createIcon, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemBox), std::bind(&UiFactory::createBox, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemButton), std::bind(&UiFactory::createButton, this, _1, _2, _3, _4, _5)});
+    m_factoryItems.append({QString(itemSelectKey), std::bind(&UiFactory::createSelectKey, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemIconButton), std::bind(&UiFactory::createIconButton, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemSlider), std::bind(&UiFactory::createSlider, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemMoveInButton), std::bind(&UiFactory::createMoveInButton, this, _1, _2, _3, _4, _5)});
@@ -169,6 +173,10 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                     {
                         oxygine::spActor item;
                         success = createItem(root, node.toElement(), item, pMenu);
+                        if (!success)
+                        {
+                            CONSOLE_PRINT("Unknown item: " + node.toElement().nodeName() + " found. UI creation failed.", Console::eERROR);
+                        }
                     }
                     node = node.nextSibling();
                 }
@@ -311,9 +319,9 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         if (!onUpdateLine.isEmpty())
         {
             Label* pPtr = pLabel.get();
-            connect(pMenu, &CreatedGui::sigOnUpdate, pLabel.get(), [this, pPtr, onUpdateLine, id, loopIdx]()
+            connect(pMenu, &CreatedGui::sigOnUpdate, pLabel.get(), [this, pPtr, onUpdateLine, id, loopIdx, pMenu]()
             {
-                pPtr->setHtmlText(onUpdate<QString>(onUpdateLine, id, loopIdx));
+                pPtr->setHtmlText(onUpdate<QString>(onUpdateLine, id, loopIdx, pMenu));
             }, Qt::QueuedConnection);
         }
         parent->addChild(pLabel);
@@ -356,7 +364,7 @@ bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, ox
     return success;
 }
 
-bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*, qint32 loopIdx)
+bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrText, attrOnEvent});
@@ -386,9 +394,9 @@ bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygi
         pButton->setEnabled(enabled);
         pButton->setObjectName(id);
         QString onEvent = getAttribute(childs, attrOnEvent);
-        pButton->addClickListener([this, onEvent, id, loopIdx](oxygine::Event*)
+        pButton->addClickListener([this, onEvent, id, loopIdx, pMenu](oxygine::Event*)
         {
-            emit sigDoEvent(onEvent, id, loopIdx);
+            emit sigDoEvent(onEvent, id, loopIdx, pMenu);
         });
         parent->addChild(pButton);
         item = pButton;
@@ -398,7 +406,38 @@ bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygi
     return success;
 }
 
-bool UiFactory::createIconButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*, qint32 loopIdx)
+bool UiFactory::createSelectKey(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrStartValue, attrOnEvent});
+    if (success)
+    {
+        QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx));
+        qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx);
+        qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx);
+        qint32 startValue = getIntValue(getAttribute(childs, attrStartValue), id, loopIdx);
+        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, true);
+        QString onEventLine = getAttribute(childs, attrOnEvent);
+        spSelectKey pButton = spSelectKey::create(static_cast<Qt::Key>(startValue));
+        pButton->setX(x);
+        pButton->setY(y);
+        pButton->setEnabled(enabled);
+        pButton->setObjectName(id);
+        pButton->setTooltipText(tooltip);
+        connect(pButton.get(), &SelectKey::sigKeyChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](Qt::Key key)
+        {
+            qint32 item = static_cast<qint32>(key);
+            onEvent(onEventLine, item, id, loopIdx, pMenu);
+        }, Qt::QueuedConnection);
+        parent->addChild(pButton);
+        item = pButton;
+        m_lastCoordinates = QRect(x, y, pButton->getWidth(), 40);
+    }
+    return success;
+}
+
+bool UiFactory::createIconButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrSprite, attrOnEvent});
@@ -415,9 +454,9 @@ bool UiFactory::createIconButton(oxygine::spActor parent, QDomElement element, o
         pButton->setEnabled(enabled);
         pButton->setObjectName(id);
         QString onEvent = getAttribute(childs, attrOnEvent);
-        pButton->addClickListener([this, onEvent, id, loopIdx](oxygine::Event*)
+        pButton->addClickListener([this, onEvent, id, loopIdx, pMenu](oxygine::Event*)
         {
-            emit sigDoEvent(onEvent, id, loopIdx);
+            emit sigDoEvent(onEvent, id, loopIdx, pMenu);
         });
         parent->addChild(pButton);
         item = pButton;
@@ -474,7 +513,7 @@ bool UiFactory::createSprite(oxygine::spActor parent, QDomElement element, oxygi
     return success;
 }
 
-bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*, qint32 loopIdx)
+bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrOnEvent, attrStartValue});
@@ -495,9 +534,9 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
         pCheckbox->setObjectName(id);
         pCheckbox->setEnabled(enabled);
         parent->addChild(pCheckbox);
-        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, onEventLine, id, loopIdx](bool value)
+        connect(pCheckbox.get(), &Checkbox::checkChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](bool value)
         {
-            onEvent(onEventLine, value, id, loopIdx);
+            onEvent(onEventLine, value, id, loopIdx, pMenu);
         }, Qt::QueuedConnection);
         item = pCheckbox;
         m_lastCoordinates = QRect(x, y, 40, 40);
@@ -505,7 +544,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
     return success;
 }
 
-bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*, qint32 loopIdx)
+bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrMin,
@@ -516,14 +555,21 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
         qint32 x = getIntValue(getAttribute(childs,attrX), id, loopIdx);
         qint32 y = getIntValue(getAttribute(childs,attrY), id, loopIdx);
         qint32 width = getIntValue(getAttribute(childs,attrWidth), id, loopIdx);
-        qint32 min = getIntValue(getAttribute(childs,attrMin), id, loopIdx);
-        qint32 max = getIntValue(getAttribute(childs,attrMax), id, loopIdx);
-        qint32 infinite = getIntValue(getAttribute(childs, attrInfinite), id, loopIdx);
+        float min = getFloatValue(getAttribute(childs,attrMin), id, loopIdx);
+        float max = getFloatValue(getAttribute(childs,attrMax), id, loopIdx);
+        float infinite = getFloatValue(getAttribute(childs, attrInfinite), id, loopIdx);
         QString tooltip = translate(getAttribute(childs,attrTooltip));
         QString onEventLine = getAttribute(childs,attrOnEvent);
         qint32 value = getIntValue(getAttribute(childs,attrStartValue), id, loopIdx);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, true);
-        spSpinBox pSpinBox = spSpinBox::create(width, min, max, SpinBox::Mode::Int);
+        QString test = getAttribute(childs, attrMode);
+        SpinBox::Mode mode = SpinBox::Mode::Int;
+        if (!test.isEmpty())
+        {
+            mode = getEnumValue(test, id, loopIdx, {"Int", "Float", "Real,"}, SpinBox::Mode::Int);
+        }
+
+        spSpinBox pSpinBox = spSpinBox::create(width, min, max, mode);
         pSpinBox->setX(x);
         pSpinBox->setY(y);
         pSpinBox->setInfinityValue(infinite);
@@ -531,9 +577,9 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
         pSpinBox->setCurrentValue(value);
         pSpinBox->setObjectName(id);
         pSpinBox->setEnabled(enabled);
-        connect(pSpinBox.get(), &SpinBox::sigValueChanged, this, [this, onEventLine, id, loopIdx](qreal value)
+        connect(pSpinBox.get(), &SpinBox::sigValueChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](qreal value)
         {
-            onEvent(onEventLine, value, id, loopIdx);
+            onEvent(onEventLine, value, id, loopIdx, pMenu);
         }, Qt::QueuedConnection);
         parent->addChild(pSpinBox);
         item = pSpinBox;
@@ -542,7 +588,7 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
     return success;
 }
 
-bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*, qint32 loopIdx)
+bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrMin,
@@ -572,9 +618,9 @@ bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygi
         pSlider->setCurrentValue(value);
         pSlider->setObjectName(id);
         pSlider->setEnabled(enabled);
-        connect(pSlider.get(), &Slider::sliderValueChanged, this, [this, onEventLine, id, loopIdx](qint32 value)
+        connect(pSlider.get(), &Slider::sliderValueChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](qint32 value)
         {
-            onEvent(onEventLine, value, id, loopIdx);
+            onEvent(onEventLine, value, id, loopIdx, pMenu);
         }, Qt::QueuedConnection);
         parent->addChild(pSlider);
         item = pSlider;
@@ -583,7 +629,7 @@ bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygi
     return success;
 }
 
-bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*, qint32 loopIdx)
+bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrOnEvent, attrStartValue});
@@ -608,9 +654,9 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
         pTextbox->setCurrentText(value);
         pTextbox->setObjectName(id);
         pTextbox->setEnabled(enabled);
-        connect(pTextbox.get(), &Textbox::sigTextChanged, this, [this, onEventLine, id, loopIdx](QString value)
+        connect(pTextbox.get(), &Textbox::sigTextChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](QString value)
         {
-            onEvent(onEventLine, value, id, loopIdx);
+            onEvent(onEventLine, value, id, loopIdx, pMenu);
         }, Qt::QueuedConnection);
         parent->addChild(pTextbox);
         item = pTextbox;
@@ -623,7 +669,7 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
     return success;
 }
 
-bool UiFactory::createPasswordbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*, qint32 loopIdx)
+bool UiFactory::createPasswordbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrOnEvent, attrStartValue});
@@ -648,9 +694,9 @@ bool UiFactory::createPasswordbox(oxygine::spActor parent, QDomElement element, 
         pTextbox->setCurrentText(value);
         pTextbox->setObjectName(id);
         pTextbox->setEnabled(enabled);
-        connect(pTextbox.get(), &Textbox::sigTextChanged, this, [this, onEventLine, id, loopIdx](QString value)
+        connect(pTextbox.get(), &Textbox::sigTextChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](QString value)
         {
-            onEvent(onEventLine, value, id, loopIdx);
+            onEvent(onEventLine, value, id, loopIdx, pMenu);
         }, Qt::QueuedConnection);
         parent->addChild(pTextbox);
         item = pTextbox;
@@ -663,7 +709,7 @@ bool UiFactory::createPasswordbox(oxygine::spActor parent, QDomElement element, 
     return success;
 }
 
-bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*, qint32 loopIdx)
+bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrOnEvent, attrStartValue});
@@ -675,7 +721,7 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
         qint32 width = getIntValue(getAttribute(childs,attrWidth), id, loopIdx);
         QString tooltip = translate(getAttribute(childs,attrTooltip));
         QString onEventLine = getAttribute(childs,attrOnEvent);
-        qint32 value = getIntValue(getAttribute(childs, attrStartValue), id, loopIdx);
+        quint64 value = getUInt64Value(getAttribute(childs, attrStartValue), id, loopIdx);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, true);
         spTimeSpinBox pSpinBox = spTimeSpinBox::create(width);
         pSpinBox->setX(x);
@@ -684,9 +730,9 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
         pSpinBox->setCurrentValue(value);
         pSpinBox->setObjectName(id);
         pSpinBox->setEnabled(enabled);
-        connect(pSpinBox.get(), &TimeSpinBox::sigValueChanged, this, [this, onEventLine, id, loopIdx](qint32 value)
+        connect(pSpinBox.get(), &TimeSpinBox::sigValueChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](qint32 value)
         {
-            onEvent(onEventLine, value, id, loopIdx);
+            onEvent(onEventLine, value, id, loopIdx, pMenu);
         }, Qt::QueuedConnection);
         parent->addChild(pSpinBox);
         item = pSpinBox;
@@ -794,12 +840,21 @@ bool UiFactory::createDropDownMenu(oxygine::spActor parent, QDomElement element,
         pDropDownmenu->setTooltipText(tooltip);
         if (!value.isEmpty())
         {
-            pDropDownmenu->setCurrentItem(value);
+            bool ok = false;
+            qint32 item = value.toInt(&ok);
+            if (ok)
+            {
+                pDropDownmenu->setCurrentItem(item);
+            }
+            else
+            {
+                pDropDownmenu->setCurrentItem(value);
+            }
         }
         DropDownmenu* pDropDownmenuPtr = pDropDownmenu.get();
-        connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [this, onEventLine, pDropDownmenuPtr, id, loopIdx](qint32 value)
+        connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, pMenu, [this, onEventLine, pDropDownmenuPtr, id, loopIdx, pMenu](qint32 value)
         {
-            onEvent(onEventLine, value, pDropDownmenuPtr->getCurrentItemText(), id, loopIdx);
+            onEvent(onEventLine, value, pDropDownmenuPtr->getCurrentItemText(), id, loopIdx, pMenu);
         }, Qt::QueuedConnection);
         parent->addChild(pDropDownmenu);
         item = pDropDownmenu;
@@ -840,9 +895,9 @@ bool UiFactory::createDropDownMenuColor(oxygine::spActor parent, QDomElement ele
             pDropDownmenu->setCurrentItem(value);
         }
         DropDownmenuColor* pDropDownmenuPtr = pDropDownmenu.get();
-        connect(pDropDownmenu.get(), &DropDownmenuColor::sigItemChanged, this, [this, onEventLine, pDropDownmenuPtr, id, loopIdx](QColor value)
+        connect(pDropDownmenu.get(), &DropDownmenuColor::sigItemChanged, pMenu, [this, onEventLine, pDropDownmenuPtr, id, loopIdx, pMenu](QColor value)
         {
-            onEvent(onEventLine, value.name(), id, loopIdx);
+            onEvent(onEventLine, value.name(), id, loopIdx, pMenu);
         }, Qt::QueuedConnection);
         parent->addChild(pDropDownmenu);
         item = pDropDownmenu;
@@ -938,9 +993,9 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
             pDropDownmenu->setCurrentItem(value);
         }
         DropDownmenuSprite* pDropDownmenuPtr = pDropDownmenu.get();
-        connect(pDropDownmenu.get(), &DropDownmenuSprite::sigItemChanged, this, [this, onEventLine, pDropDownmenuPtr, id, loopIdx](qint32 value)
+        connect(pDropDownmenu.get(), &DropDownmenuSprite::sigItemChanged, pMenu, [this, onEventLine, pDropDownmenuPtr, id, loopIdx, pMenu](qint32 value)
         {
-            onEvent(onEventLine, value, pDropDownmenuPtr->getCurrentItemText(), id, loopIdx);
+            onEvent(onEventLine, value, pDropDownmenuPtr->getCurrentItemText(), id, loopIdx, pMenu);
         }, Qt::QueuedConnection);
         parent->addChild(pDropDownmenu);
         item = pDropDownmenu;
@@ -1071,6 +1126,34 @@ qint32 UiFactory::getIntValue(QString line, QString objectId, qint32 loopIdx, qi
         if (erg.isNumber())
         {
             value = erg.toInt();
+        }
+        else if (erg.isError())
+        {
+            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+        }
+        else
+        {
+            CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
+        }
+    }
+    return value;
+}
+
+quint64 UiFactory::getUInt64Value(QString line, QString objectId, qint32 loopIdx, quint64 defaultValue)
+{
+    quint64 value = defaultValue;
+    if (!line.isEmpty())
+    {
+        QString coordinates = "var lastX = " + QString::number(m_lastCoordinates.x()) + ";" +
+                              "var lastY = " + QString::number(m_lastCoordinates.y()) + ";" +
+                              "var lastWidth = " + QString::number(m_lastCoordinates.width()) + ";" +
+                              "var lastHeight = " + QString::number(m_lastCoordinates.height()) + ";"; +
+                              "var objectId = \"" + objectId + "\";" +
+                              "var loopIdx = " + QString::number(loopIdx) + ";";
+        QJSValue erg = Interpreter::getInstance()->evaluate(coordinates + line);
+        if (erg.isNumber())
+        {
+            value = erg.toNumber();
         }
         else if (erg.isError())
         {
@@ -1245,13 +1328,16 @@ QString UiFactory::translate(QString line)
     return Mainapp::qsTr(line);
 }
 
-void UiFactory::doEvent(QString command, QString objectId, qint32 loopIdx)
+void UiFactory::doEvent(QString command, QString objectId, qint32 loopIdx, CreatedGui* pMenu)
 {
     QString args;
     args += "var objectId = \"" + objectId + "\";";
     args += "var loopIdx = " + QString::number(loopIdx) + ";";
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue obj = pInterpreter->newQObject(pMenu);
+    pInterpreter->setGlobal("currentMenu", obj);
     args += command;
-    QJSValue erg = Interpreter::getInstance()->evaluate(args);
+    QJSValue erg = pInterpreter->evaluate(args);
     if (erg.isError())
     {
         CONSOLE_PRINT("Error while parsing " + command + " Error: " + erg.toString() + ".", Console::eERROR);

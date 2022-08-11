@@ -11,7 +11,7 @@ class CustomDialog final : public CreatedGui
 {
     Q_OBJECT
 public:
-    CustomDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu);
+    CustomDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu, const QString & confirmText = "");
     ~CustomDialog();
 signals:
     void sigFinished();

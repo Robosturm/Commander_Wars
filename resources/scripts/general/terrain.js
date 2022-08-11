@@ -155,6 +155,12 @@ var TERRAIN =
                 else
                 {
                     rand = variable.readDataInt32();
+                    if (rand > 1)
+                    {
+                        rand = globals.randInt(0, 1);
+                        variable = variables.createVariable("FOREGROUND_ID");
+                        variable.writeDataInt32(rand);
+                    }
                 }
                 return "fore_factory+" + rand.toString();
             }
