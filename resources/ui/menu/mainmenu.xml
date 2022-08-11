@@ -2,13 +2,13 @@
 <ui>
     <Sprite>
         <x>settings.getWidth() / 2 - 134 * 2</x>
-        <y>MainMenu.getButtonY(0) - 60 * 2</y>
+        <y>MainMenu.getButtonY(0) - 60 * 2 - 15</y>
         <scale>2</scale>
         <sprite>"logo"</sprite>
     </Sprite>
     <TextField>
         <x>settings.getWidth() / 2 - 134 * 2 + 70 * 2</x>
-        <y>MainMenu.getButtonY(0) - 60 * 2 + 24 * 2</y>
+        <y>MainMenu.getButtonY(0) - 60 * 2 + 24 * 2 - 15</y>
         <text>"DARK HORIZONS"</text>
         <font>"logoFont"</font>
         <fontScale>2</fontScale>

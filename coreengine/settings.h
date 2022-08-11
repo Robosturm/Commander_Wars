@@ -254,18 +254,16 @@ public:
     static void saveSettings();
     static void resetSettings();
 
-    static quint16 getServerPort();
-    static void setServerPort(const quint16 &ServerPort);
-
-    static QString getServerAdress();
-    static void setServerAdress(const QString &ServerAdress);
-
-    static void setServer(bool Server);
-
     static QString getLastSaveGame();
     static void setLastSaveGame(const QString &LastSaveGame);
 
 public slots:
+    static QString getServerAdress();
+    static void setServerAdress(const QString &ServerAdress);
+
+    static quint16 getServerPort();
+    static void setServerPort(const quint16 &ServerPort);
+
     static const QString &getServerPassword();
     static void setServerPassword(const QString &newServerPassword);
 
@@ -612,6 +610,7 @@ public slots:
     {
         m_GamePort = value;
     }
+    static void setServer(bool Server);
     static inline bool getServer()
     {
         return m_Server;

@@ -197,12 +197,12 @@ jobs:
     - name: Build other
       if: matrix.target != 'android'
       working-directory: '${{github.workspace}}/build'
-      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j4
+      run: cmake --build '${{github.workspace}}/build' --config ${{env.BUILD_TYPE}} --target install -j4
 
     - name: Build android
       if: matrix.target == 'android'
       working-directory: '${{github.workspace}}/build'
-      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target all -j4
+      run: cmake --build '${{github.workspace}}/build' --config ${{env.BUILD_TYPE}} --target all -j4
 
     # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace    
     - name: Make space 1
@@ -261,7 +261,7 @@ jobs:
         
     - name: build artifacts
       if: matrix.target != 'android'
-      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createReleaseZip
+      run: cmake --build '${{github.workspace}}/build' --config ${{env.BUILD_TYPE}} --target createReleaseZip
       
     - name: upload artifact android
       if: matrix.target == 'android'
