@@ -163,13 +163,9 @@ public slots:
      */
     void showGameInfo(qint32 player);
     /**
-     * @brief showOptions
+     * @brief showXmlFileDialog
      */
-    void showOptions();
-    /**
-     * @brief showChangeSound
-     */
-    void showChangeSound();
+    void showXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
     /**
      * @brief showAttackLog
      */

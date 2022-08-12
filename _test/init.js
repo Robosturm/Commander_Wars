@@ -175,8 +175,8 @@ var Init =
             menu.victoryInfo();
             menu.showCOInfo();
             menu.showGameInfo(0);
-            menu.showOptions();
-            menu.showChangeSound();
+            menu.showXmlFileDialog("ui/options/optiongameplaymenu.xml", true);
+            menu.showXmlFileDialog("ui/options/optionaudiomenu.xml", true);
             menu.showAttackLog(0);
             menu.showRules();
             menu.showUnitInfo(0);

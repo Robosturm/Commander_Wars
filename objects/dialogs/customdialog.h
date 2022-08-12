@@ -16,6 +16,15 @@ public:
 signals:
     void sigFinished();
 public slots:
+    /**
+     * @brief loadXmlFile
+     * @param uiXml
+     */
+    void loadXmlFile(const QString& uiXml);
+    /**
+     * @brief getBaseMenu
+     * @return
+     */
     Basemenu* getBaseMenu();
     /**
      * @brief getVariables

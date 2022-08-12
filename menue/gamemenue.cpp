@@ -714,8 +714,7 @@ void GameMenue::connectMap()
     connect(m_pMap.get(), &GameMap::sigShowUnitInfo, this, &GameMenue::showUnitInfo, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigQueueAction, &m_actionPerformer, &ActionPerformer::performAction, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowNicknameUnit, this, &GameMenue::showNicknameUnit, Qt::QueuedConnection);
-    connect(m_pMap.get(), &GameMap::sigShowOptions, this, &GameMenue::showOptions, Qt::QueuedConnection);
-    connect(m_pMap.get(), &GameMap::sigShowChangeSound, this, &GameMenue::showChangeSound, Qt::QueuedConnection);
+    connect(m_pMap.get(), &GameMap::sigShowXmlFileDialog, this, &GameMenue::showXmlFileDialog, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowWiki, this, &GameMenue::showWiki, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowRules, this, &GameMenue::showRules, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowUnitStatistics, this, &GameMenue::showUnitStatistics, Qt::QueuedConnection);
@@ -1186,27 +1185,17 @@ void GameMenue::showPlayerUnitStatistics(Player* pPlayer)
     addChild(pBox);
 }
 
-void GameMenue::showOptions()
+void GameMenue::showXmlFileDialog(const QString & xmlFile, bool saveSettings)
 {    
     m_Focused = false;
-    CONSOLE_PRINT("showOptions()", Console::eDEBUG);
-    spCustomDialog pDialogOptions = spCustomDialog::create("", "ui/options/optiongameplaymenu.xml", this, "Ok");
-    connect(pDialogOptions.get(), &CustomDialog::sigFinished, this, [this]()
+    CONSOLE_PRINT("showXmlFile() " + xmlFile, Console::eDEBUG);
+    spCustomDialog pDialogOptions = spCustomDialog::create("", xmlFile, this, "Ok");
+    connect(pDialogOptions.get(), &CustomDialog::sigFinished, this, [this, saveSettings]()
     {
-        Settings::saveSettings();
-        m_Focused = true;
-    });
-    addChild(pDialogOptions);
-}
-
-void GameMenue::showChangeSound()
-{
-    m_Focused = false;
-    CONSOLE_PRINT("showChangeSound()", Console::eDEBUG);
-    spCustomDialog pDialogOptions = spCustomDialog::create("", "ui/options/optionaudiomenu.xml", this, "Ok");
-    connect(pDialogOptions.get(), &CustomDialog::sigFinished, this, [this]()
-    {
-        Settings::saveSettings();
+        if (saveSettings)
+        {
+            Settings::saveSettings();
+        }
         m_Focused = true;
     });
     addChild(pDialogOptions);

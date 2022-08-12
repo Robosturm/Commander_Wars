@@ -408,7 +408,7 @@ void Terrain::loadBaseTerrain(const QString & terrainID)
     addChild(m_pBaseTerrain);
 }
 
-void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime)
+void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 startFrame, qint32 endFrame)
 {
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
@@ -417,8 +417,16 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime)
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * frameTime), -1);
-            pSprite->addTween(tween);
+            if (startFrame >= 0 && endFrame >= 0)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, endFrame), oxygine::timeMS(pAnim->getTotalFrames() * frameTime), -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * frameTime), -1);
+                pSprite->addTween(tween);
+            }
         }
         else
         {
@@ -719,7 +727,7 @@ QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bo
     return ret;
 }
 
-void Terrain::loadOverlaySprite(const QString & spriteID)
+void Terrain::loadOverlaySprite(const QString & spriteID, qint32 startFrame, qint32 endFrame)
 {
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::ep_ignore_error);
@@ -728,8 +736,16 @@ void Terrain::loadOverlaySprite(const QString & spriteID)
     {
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
-            pSprite->addTween(tween);
+            if (startFrame >= 0 && endFrame >= 0)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, endFrame), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                pSprite->addTween(tween);
+            }
         }
         else
         {

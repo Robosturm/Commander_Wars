@@ -1616,14 +1616,9 @@ void GameMap::exitGame()
     emit signalExitGame();
 }
 
-void GameMap::options()
+void GameMap::showXmlFileDialog(const QString & xmlFile, bool saveSettings)
 {
-    emit sigShowOptions();
-}
-
-void GameMap::changeSound()
-{
-    emit sigShowChangeSound();
+    emit sigShowXmlFileDialog(xmlFile, saveSettings);
 }
 
 void GameMap::surrenderGame()

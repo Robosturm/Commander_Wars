@@ -291,8 +291,7 @@ signals:
     void sigQueueAction(spGameAction pAction);
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
-    void sigShowOptions();
-    void sigShowChangeSound();
+    void sigShowXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
     void sigShowWiki();
     void sigShowRules();
     void sigShowUnitStatistics(qint32 player);
@@ -437,11 +436,7 @@ public slots:
     /**
      * @brief options
      */
-    void options();
-    /**
-     * @brief changeSound
-     */
-    void changeSound();
+    void showXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
     /**
      * @brief saveGame
      */

@@ -4782,5 +4782,7 @@
         <file>resources/ui/options/optioncontrolsmenu.xml</file>
         <file>resources/ui/options/optiongameplaymenu.xml</file>
         <file>resources/ui/options/optionnetworkmenu.xml</file>
+        <file>resources/images/co/yc/co_grimm+alt+mini.png</file>
+        <file>resources/images/co/yc/co_grimm+mini.png</file>
     </qresource>
 </RCC>
