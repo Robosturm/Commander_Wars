@@ -208,7 +208,10 @@
         <image file="destroyer/destroyer+flak+fire+mask.png" cols = "4" />
         <image file="destroyer/destroyer+flak+mask.png" />
         <!-- duster -->
+        <image file="duster/duster+ac+mask.png" cols = "2" />
+        <image file="duster/duster+bd+mask.png" cols = "2" />
         <image file="duster/duster+ge+mask.png" cols = "2" />
+        <image file="duster/duster+pf+mask.png" cols = "2" />
         <image file="duster/duster+ma+mask.png" />
         <image file="duster/duster+os+mask.png" cols = "2" />
         <image file="duster/duster+ti+mask.png" cols = "2" />
@@ -224,7 +227,7 @@
         <image file="fighter/fighter+gs+mask.png" />
         <image file="fighter/fighter+os+mask.png" />
         <image file="fighter/fighter+yc+mask.png" cols = "2" />
-        <image file="fighter/fighter+pf+mask.png" cols = "2" />
+        <image file="fighter/fighter+pf+mask.png" />
         <image file="fighter/fighter+ma+mask.png" />
         <image file="fighter/fighter+ti+mask.png" />
         <image file="fighter/fighter+ac+fire+mask.png" />
@@ -237,7 +240,7 @@
         <image file="fighter/fighter+gs+fire+mask.png" />
         <image file="fighter/fighter+os+fire+mask.png" />
         <image file="fighter/fighter+yc+fire+mask.png" cols = "2" />
-        <image file="fighter/fighter+pf+fire+mask.png" cols = "2" />
+        <image file="fighter/fighter+pf+fire+mask.png" />
         <image file="fighter/fighter+ma+fire+mask.png" />
         <image file="fighter/fighter+ti+fire+mask.png" />
         <!-- flak -->

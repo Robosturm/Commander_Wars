@@ -4784,5 +4784,8 @@
         <file>resources/ui/options/optionnetworkmenu.xml</file>
         <file>resources/images/co/yc/co_grimm+alt+mini.png</file>
         <file>resources/images/co/yc/co_grimm+mini.png</file>
+        <file>resources/images/battleanimations/duster/duster+ac+mask.png</file>
+        <file>resources/images/battleanimations/duster/duster+bd+mask.png</file>
+        <file>resources/images/battleanimations/duster/duster+pf+mask.png</file>
     </qresource>
 </RCC>
