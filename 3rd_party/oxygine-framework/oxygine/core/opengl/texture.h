@@ -4,13 +4,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 
-#ifdef GRAPHICSUPPORT
 #include <QOpenGLShader>
-#else
-#ifndef GLuint
-#define GLuint quint32
-#endif
-#endif
 
 #include <QObject>
 #include <QImage>
@@ -34,7 +28,7 @@ namespace oxygine
         {
             return m_image.height();
         }
-        GLuint getHandle() const
+        quint32 getHandle() const
         {
             return m_id;
         }
@@ -52,7 +46,7 @@ namespace oxygine
             m_CreationTime = time;
         }
         void release();
-        static GLuint getHighestTextureCount();
+        static quint32 getHighestTextureCount();
         const QImage & getImage() const
         {
             return m_image;

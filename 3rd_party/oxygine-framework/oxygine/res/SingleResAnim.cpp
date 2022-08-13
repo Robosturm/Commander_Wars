@@ -1,7 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
-#include "3rd_party/oxygine-framework/oxygine/core/texture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "texture.h"
 
 #include "spritingsupport/spritecreator.h"
 

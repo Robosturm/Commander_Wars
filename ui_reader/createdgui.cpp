@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "ui_reader/createdgui.h"
 #include "ui_reader/uifactory.h"
 

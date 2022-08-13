@@ -1,3 +1,8 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenwait.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
+
 #include "game/gameanimation/gameanimation.h"
 #include "game/gameanimation/gameanimationfactory.h"
 

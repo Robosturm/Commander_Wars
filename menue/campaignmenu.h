@@ -3,6 +3,7 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
 #include "game/campaign.h"
 #include "game/jsData/campaignmapdata.h"

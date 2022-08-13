@@ -1,8 +1,8 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResFont.h"
-#include "3rd_party/oxygine-framework/oxygine/core/texture.h"
 #include "3rd_party/oxygine-framework/oxygine/Font.h"
+#include "texture.h"
 
 namespace oxygine
 {

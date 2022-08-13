@@ -1,5 +1,7 @@
 #include "game/ui/copowermeter.h"
 
+#include "3rd_party/oxygine-framework/oxygine/tween/TweenQueue.h"
+
 #include "game/gamemap.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"

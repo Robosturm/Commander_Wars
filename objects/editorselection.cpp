@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
+
 #include "objects/editorselection.h"
 #include "objects/base/moveinbutton.h"
 #include "objects/base/label.h"

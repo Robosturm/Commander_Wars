@@ -1,13 +1,9 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
-#include "3rd_party/oxygine-framework/oxygine/core/texture.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 #include <vector>
-
-#ifndef GL_NEAREST
-#define GL_NEAREST 0
-#endif
+#include "texture.h"
 
 namespace oxygine
 {
@@ -22,7 +18,7 @@ namespace oxygine
 
         virtual void init(const QString & file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         virtual void init(QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder,
-                          bool clamp2Edge = true, quint32 linearFilter = GL_NEAREST);
+                          bool clamp2Edge = true, quint32 linearFilter = 0);
         void init(qint32 columns, float scaleFactor, float appliedScale = 1);
         /**creates animation frames from Texture*/
         void init(spTexture & texture, const QSize& originalSize, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);

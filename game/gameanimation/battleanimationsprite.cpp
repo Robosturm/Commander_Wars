@@ -1,4 +1,8 @@
-#include "qcolor.h"
+#include "QColor"
+
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenshakey.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"

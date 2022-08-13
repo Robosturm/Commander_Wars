@@ -1,5 +1,7 @@
 #include <QMutexLocker>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/replaymenu.h"
 #include "menue/victorymenue.h"
 #include "menue/movementplanner.h"

@@ -1,5 +1,8 @@
-#include <qfile.h>
-#include <qtextstream.h>
+#include <QFile>
+#include <QTextStream>
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "menue/creditsmenue.h"
 #include "menue/mainwindow.h"

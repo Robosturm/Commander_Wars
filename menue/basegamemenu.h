@@ -5,6 +5,9 @@
 #include <QRect>
 #include <QThread>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/SlidingActorNoClipRect.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
+
 #include "menue/basemenu.h"
 
 #include "game/cursor.h"

@@ -1,8 +1,9 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
-#include "3rd_party/oxygine-framework/oxygine/core/texture.h"
+#include "texture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
+#include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 
 namespace oxygine
@@ -27,7 +28,7 @@ namespace oxygine
               m_blend(other->m_blend),
               m_uberShader(other->m_uberShader),
               m_addColor(other->m_addColor),
-              m_flags(other->m_flags)
+              m_fracShader(other->m_fracShader)
         {
         }
         virtual ~Material() = default;
@@ -58,6 +59,6 @@ namespace oxygine
         VideoDriver::blend_mode m_blend;
         UberShaderProgram* m_uberShader;
         QColor             m_addColor;
-        qint32             m_flags;
+        UberShaderProgram::ColorMode m_fracShader;
     };    
 }

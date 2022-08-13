@@ -1562,11 +1562,6 @@
         <file>resources/images/co/yc/co_sonja+table.png</file>
         <file>system/frac_shader.glsl</file>
         <file>system/frac_table_shader.glsl</file>
-        <file>system/pp_blit_fs.glsl</file>
-        <file>system/pp_blit_vs.glsl</file>
-        <file>system/pp_hblur_vs.glsl</file>
-        <file>system/pp_rast_fs.glsl</file>
-        <file>system/pp_vblur_vs.glsl</file>
         <file>system/vertex_shader.glsl</file>
         <file>customTerrainImages/plane+0.png</file>
         <file>customTerrainImages/plane+1.png</file>

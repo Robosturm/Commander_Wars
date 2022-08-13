@@ -1,6 +1,7 @@
 #include "objects/dialogs/editor/dialogviewmapstats.h"
 
 #include "ui_reader/uifactory.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"

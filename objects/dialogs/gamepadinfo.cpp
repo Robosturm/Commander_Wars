@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+
 #include "objects/dialogs/gamepadinfo.h"
 
 #include "coreengine/mainapp.h"

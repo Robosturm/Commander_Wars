@@ -4,8 +4,8 @@
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
-#include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
-#include "3rd_party/oxygine-framework/oxygine/core/texture.h"
+#include "ShaderProgram.h"
+#include "texture.h"
 
 #include <QMatrix4x4>
 

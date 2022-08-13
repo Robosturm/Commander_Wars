@@ -1,6 +1,8 @@
 #include <QFile>
 #include <QDir>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/editormenue.h"
 #include "menue/mainwindow.h"
 

@@ -1,4 +1,6 @@
-#include "coinfoactor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
+#include "objects/coinfoactor.h"
 
 #include "coreengine/mainapp.h"
 

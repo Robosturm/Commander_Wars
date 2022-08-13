@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "wiki/unitinfo.h"
 #include "wiki/wikidatabase.h"
 

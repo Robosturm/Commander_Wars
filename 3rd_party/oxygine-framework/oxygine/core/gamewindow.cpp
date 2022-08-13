@@ -69,14 +69,6 @@ namespace oxygine
         m_window = nullptr;
     }
 
-#ifdef GRAPHICSUPPORT
-    void GameWindow::timerEvent(QTimerEvent *)
-    {
-        // Request an update
-        update();
-    }
-#endif
-
     void GameWindow::updateData()
     {
         timeMS duration = VideoDriver::m_stats.duration;
@@ -114,64 +106,6 @@ namespace oxygine
         return ratio;
     }
 
-#ifdef GRAPHICSUPPORT
-    void GameWindow::paintGL()
-    {
-        updateData();
-        if (m_pauseMutex.tryLock())
-        {
-            oxygine::Stage::getStage()->updateStage();
-            if (beginRendering())
-            {
-                QColor clearColor(0, 0, 0, 255);
-                QSize size = oxygine::GameWindow::getWindow()->size();
-                oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(size.width(), size.height()));
-                // Render all actors inside the stage. Actor::render will also be called for all its children
-                oxygine::Stage::getStage()->renderStage(clearColor, viewport);
-                swapDisplayBuffers();
-                m_repeatedFramesDropped = 0;
-            }
-            m_pauseMutex.unlock();
-        }
-        else
-        {
-            ++m_repeatedFramesDropped;
-            if (m_repeatedFramesDropped > 10)
-            {
-                update();
-            }
-        }
-        // check for termination
-        if (m_quit)
-        {
-            CONSOLE_PRINT("Quiting game normally", Console::eDEBUG);
-            QCoreApplication::exit();
-        }
-    }
-#endif
-
-    bool GameWindow::beginRendering()
-    {
-        if (!m_renderEnabled)
-        {
-            return false;
-        }
-
-        bool ready = STDRenderer::isReady();
-        if (ready)
-        {
-            rsCache().reset();
-            VideoDriver::m_stats.start = Clock::getTimeMS();
-            rsCache().reset();
-        }
-        else
-        {
-            CONSOLE_PRINT("!ready", Console::eDEBUG);
-        }
-
-        return ready;
-    }
-
     bool GameWindow::isReady2Render()
     {
         if (!m_renderEnabled)
@@ -179,11 +113,6 @@ namespace oxygine
             return false;
         }
         return STDRenderer::isReady();
-    }
-
-    void GameWindow::swapDisplayBuffers()
-    {
-        VideoDriver::m_stats.duration = Clock::getTimeMS() - VideoDriver::m_stats.start;
     }
 
     float GameWindow::getGamma() const
@@ -224,46 +153,6 @@ namespace oxygine
         }
     }
 
-#ifdef GRAPHICSUPPORT
-    void GameWindow::initializeGL()
-    {
-        initializeOpenGLFunctions();
-        if (!hasOpenGLFeature(QOpenGLFunctions::Shaders))
-        {
-            CONSOLE_PRINT("Shaders are not supported by open gl. This may result in a black screen.", Console::eWARNING);
-        }
-        if (!hasOpenGLFeature(QOpenGLFunctions::Multitexture))
-        {
-            CONSOLE_PRINT("Multitextures are not supported by open gl. This may result in a black screen.", Console::eWARNING);
-        }
-        // init oxygine engine
-        CONSOLE_PRINT("initialize oxygine", Console::eDEBUG);
-        VideoDriver::instance = spVideoDriver::create();
-        VideoDriver::instance->setDefaultSettings();
-        rsCache().setDriver(VideoDriver::instance.get());
-
-        STDRenderer::initialize();
-
-        STDRenderer::instance = spSTDRenderer::create();
-        RenderDelegate::instance = spRenderDelegate::create();
-        Material::null = spMaterial::create();
-        Material::current = Material::null;
-
-        STDRenderer::current = STDRenderer::instance;
-        launchGame();
-    }
-#endif
-
-    void GameWindow::redrawUi()
-    {
-        if (!m_noUi)
-        {
-#ifdef GRAPHICSUPPORT
-            update();
-#endif
-        }
-    }
-
     void GameWindow::launchGame()
     {
         if (!m_launched)
@@ -276,16 +165,6 @@ namespace oxygine
             emit sigLoadRessources();
         }
     }
-
-#ifdef GRAPHICSUPPORT
-    void GameWindow::resizeGL(qint32 w, qint32 h)
-    {
-        CONSOLE_PRINT("core::restore()", Console::eDEBUG);
-        VideoDriver::instance->restore();
-        STDRenderer::restore();
-        CONSOLE_PRINT("core::restore() done", Console::eDEBUG);
-    }
-#endif
 
     void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
@@ -310,7 +189,6 @@ namespace oxygine
         }
     }
 
-#ifdef GRAPHICSUPPORT
     void GameWindow::mousePressEvent(QMouseEvent *event)
     {
         MouseButton b = MouseButton_Left;
@@ -440,7 +318,6 @@ namespace oxygine
                 break;
         }
     }
-#endif
 
     bool GameWindow::sameTouchpoint(QPointF pos1, QPointF pos2) const
     {
@@ -491,13 +368,6 @@ namespace oxygine
         return m_timerCycle;
     }
 
-#ifdef GRAPHICSUPPORT
-    QOpenGLContext* GameWindow::getGLContext()
-    {
-        return m_window->context();
-    }
-#endif
-
     GameWindow* GameWindow::getWindow()
     {
         return m_window;
@@ -515,7 +385,7 @@ namespace oxygine
         return false;
     }
 
-    bool GameWindow::hasCursor()
+    bool GameWindow::hasCursor() const
     {
 #ifdef GRAPHICSUPPORT
         QPoint position = cursor().pos();

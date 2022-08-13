@@ -1,6 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
-#include "3rd_party/oxygine-framework/oxygine/MaskedRenderer.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"

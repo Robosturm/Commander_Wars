@@ -1,3 +1,6 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
+
 #include "objects/mapselection.h"
 
 #include "coreengine/mainapp.h"

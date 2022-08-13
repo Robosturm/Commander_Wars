@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "game/gameanimation/gameanimationfactory.h"
 #include "game/gamemap.h"
 #include "game/gameanimation/gameanimationwalk.h"

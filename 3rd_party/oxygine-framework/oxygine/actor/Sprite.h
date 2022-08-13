@@ -3,10 +3,10 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
 #include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
-#include "3rd_party/oxygine-framework/oxygine/core/texture.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/TweenAnim.h"
+#include "texture.h"
 
 namespace oxygine
 {

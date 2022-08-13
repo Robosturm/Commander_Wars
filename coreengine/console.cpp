@@ -4,13 +4,17 @@
 #include <QDir>
 #include <qlogging.h>
 #include <QLoggingCategory>
-#include <qdatetime.h>
+#include <QDateTime>
+
+#include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResFont.h"
 
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
+
 #include "resource_management/fontmanager.h"
 
 #include "menue/gamemenue.h"

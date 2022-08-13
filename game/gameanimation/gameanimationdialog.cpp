@@ -1,5 +1,7 @@
 #include <QFile>
 
+#include "3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.h"
+
 #include "game/gameanimation/gameanimationdialog.h"
 #include "game/gameanimation/gameanimationfactory.h"
 #include "game/gamemap.h"

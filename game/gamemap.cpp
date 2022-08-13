@@ -1,5 +1,8 @@
 #include <QFile>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
+
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"

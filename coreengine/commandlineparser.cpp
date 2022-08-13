@@ -1,5 +1,7 @@
 #include <QCoreApplication>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "coreengine/commandlineparser.h"
 #include "coreengine/mainapp.h"
 

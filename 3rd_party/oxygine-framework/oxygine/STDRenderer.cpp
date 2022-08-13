@@ -7,11 +7,6 @@
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
-#include "coreengine/console.h"
-
-#include <QFile>
-#include <QTextStream>
-
 class STDRenderer;
 using spSTDRenderer = oxygine::intrusive_ptr<STDRenderer>;
 
@@ -24,10 +19,6 @@ namespace oxygine
     std::vector<unsigned short> STDRenderer::indices16;
     size_t STDRenderer::maxVertices = 0;
     UberShaderProgram STDRenderer::uberShader;
-    QString STDRenderer::fracShaderBody;
-    QString STDRenderer::fracTableShaderBody;
-    QString STDRenderer::fracMatrixShaderBody;
-    QString STDRenderer::vertexShaderBody;
 
     RenderStateCache& rsCache()
     {
@@ -128,72 +119,7 @@ namespace oxygine
             indices16.push_back(i + 3u);
         }
         maxVertices = indices16.size() * 2u / 3u;
-
-        QString filepath = "system/frac_shader.glsl";
-        if (!QFile::exists(filepath))
-        {
-            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
-        }
-        if (QFile::exists(filepath))
-        {
-            QFile file(filepath);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            fracShaderBody = stream.readAll();
-        }
-        else
-        {
-            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eFATAL);
-        }
-        filepath = "system/vertex_shader.glsl";
-        if (!QFile::exists(filepath))
-        {
-            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
-        }
-        if (QFile::exists(filepath))
-        {
-            QFile file(filepath);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            vertexShaderBody = stream.readAll();
-        }
-        else
-        {
-            CONSOLE_PRINT("Unable to find vertex shader: " + filepath, Console::eFATAL);
-        }
-        filepath = "system/frac_table_shader.glsl";
-        if (!QFile::exists(filepath))
-        {
-            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
-        }
-        if (QFile::exists(filepath))
-        {
-            QFile file(filepath);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            fracTableShaderBody = stream.readAll();
-        }
-        else
-        {
-            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eFATAL);
-        }
-        filepath = "system/frac_matrix_shader.glsl";
-        if (!QFile::exists(filepath))
-        {
-            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
-        }
-        if (QFile::exists(filepath))
-        {
-            QFile file(filepath);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            fracMatrixShaderBody = stream.readAll();
-        }
-        else
-        {
-            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eFATAL);
-        }
-        uberShader.init(fracShaderBody, vertexShaderBody, fracTableShaderBody, fracMatrixShaderBody);
+        uberShader.init();
 
         restore();
     }
@@ -202,9 +128,6 @@ namespace oxygine
     {
         indices16.clear();
         uberShader.release();
-        fracShaderBody.clear();
-        vertexShaderBody.clear();
-        fracTableShaderBody.clear();
         if (white)
         {
             white->release();
@@ -345,7 +268,6 @@ namespace oxygine
         m_vp.setToIdentity();
         m_vdecl = m_driver->getVertexDeclaration();
         m_uberShader = &uberShader;
-        m_baseShaderFlags = 0;
         m_sphookFirst = this;
         m_sphookLast  = this;
 
@@ -375,9 +297,9 @@ namespace oxygine
     }
 
 
-    void STDRenderer::setShaderFlags(quint32 flags)
+    void STDRenderer::setFracShader(UberShaderProgram::ColorMode fracShader)
     {
-        ShaderProgram* sp = m_uberShader->getShaderProgram(m_baseShaderFlags | flags);
+        ShaderProgram* sp = m_uberShader->getShaderProgram(fracShader);
         setShader(sp);
     }
 
@@ -403,10 +325,4 @@ namespace oxygine
         }
         m_uberShader = pr;
     }
-
-    void STDRenderer::setBaseShaderFlags(quint32 fl)
-    {
-        m_baseShaderFlags = fl;
-    }
-
 }

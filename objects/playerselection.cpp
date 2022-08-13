@@ -1,6 +1,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/playerselection.h"
 
 #include "game/gamemap.h"

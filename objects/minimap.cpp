@@ -1,6 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
 
 #include "objects/minimap.h"
 

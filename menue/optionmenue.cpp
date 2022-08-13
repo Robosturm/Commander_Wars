@@ -4,6 +4,9 @@
 #include <QProcess>
 #include <QScreen>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
+
 #include "menue/optionmenue.h"
 #include "menue/mainwindow.h"
 

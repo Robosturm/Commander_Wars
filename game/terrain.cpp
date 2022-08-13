@@ -1,6 +1,8 @@
 #include <QFileInfo>
 #include <QFile>
 
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
+
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 

@@ -1,5 +1,6 @@
-#include "objects/unitstatisticview.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
+#include "objects/unitstatisticview.h"
 #include "objects/base/label.h"
 
 #include "resource_management/unitspritemanager.h"

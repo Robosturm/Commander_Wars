@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/base/dropdownmenucolor.h"
 #include "objects/dialogs/colorselectiondialog.h"
 

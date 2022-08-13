@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/slidingsprite.h"
+
 #include "game/ui/ingameinfobar.h"
 
 #include "coreengine/mainapp.h"

@@ -228,7 +228,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/EventDispatcher.cpp 3rd_party/oxygine-framework/oxygine/EventDispatcher.h
     3rd_party/oxygine-framework/oxygine/Font.cpp 3rd_party/oxygine-framework/oxygine/Font.h
     3rd_party/oxygine-framework/oxygine/Input.cpp 3rd_party/oxygine-framework/oxygine/Input.h
-    3rd_party/oxygine-framework/oxygine/MaskedRenderer.cpp 3rd_party/oxygine-framework/oxygine/MaskedRenderer.h
     3rd_party/oxygine-framework/oxygine/Material.cpp 3rd_party/oxygine-framework/oxygine/Material.h
     3rd_party/oxygine-framework/oxygine/MaterialCache.cpp 3rd_party/oxygine-framework/oxygine/MaterialCache.h
     3rd_party/oxygine-framework/oxygine/PointerState.cpp 3rd_party/oxygine-framework/oxygine/PointerState.h
@@ -240,13 +239,11 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     #core
     3rd_party/oxygine-framework/oxygine/core/Object.cpp 3rd_party/oxygine-framework/oxygine/core/Object.h
     3rd_party/oxygine-framework/oxygine/core/oxygine.cpp 3rd_party/oxygine-framework/oxygine/core/oxygine.h
-    3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h
-    3rd_party/oxygine-framework/oxygine/core/VideoDriver.cpp 3rd_party/oxygine-framework/oxygine/core/VideoDriver.h
+    3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h
     3rd_party/oxygine-framework/oxygine/core/gamewindow.cpp 3rd_party/oxygine-framework/oxygine/core/gamewindow.h
     3rd_party/oxygine-framework/oxygine/core/ref_counter.cpp 3rd_party/oxygine-framework/oxygine/core/ref_counter.h
-    3rd_party/oxygine-framework/oxygine/core/texture.cpp 3rd_party/oxygine-framework/oxygine/core/texture.h
-    3rd_party/oxygine-framework/oxygine/core/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h
     3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h
+    3rd_party/oxygine-framework/oxygine/core/VideoDriver.h
     # actor
     3rd_party/oxygine-framework/oxygine/actor/Actor.cpp 3rd_party/oxygine-framework/oxygine/actor/Actor.h
     3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.cpp 3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h
@@ -290,6 +287,29 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/math/ScalarMath.h
     3rd_party/oxygine-framework/oxygine/math/Vector2.h
 )
+
+if (GRAPHICSUPPORT)
+    include_directories("3rd_party/oxygine-framework/oxygine/core/opengl")
+    set(${PROJECT_NAME}_OXYGINE_SRCS
+        ${${PROJECT_NAME}_OXYGINE_SRCS}
+        3rd_party/oxygine-framework/oxygine/core/opengl/windowBase.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/windowBase.h
+        3rd_party/oxygine-framework/oxygine/core/opengl/texture.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/texture.h
+        3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.h
+        3rd_party/oxygine-framework/oxygine/core/opengl/VideoDriver.cpp
+        3rd_party/oxygine-framework/oxygine/core/opengl/UberShaderProgram.cpp
+    )
+else()
+    include_directories("3rd_party/oxygine-framework/oxygine/core/none")
+    set(${PROJECT_NAME}_OXYGINE_SRCS
+        ${${PROJECT_NAME}_OXYGINE_SRCS}
+        3rd_party/oxygine-framework/oxygine/core/none/windowBase.cpp 3rd_party/oxygine-framework/oxygine/core/none/windowBase.h
+        3rd_party/oxygine-framework/oxygine/core/none/texture.cpp 3rd_party/oxygine-framework/oxygine/core/none/texture.h
+        3rd_party/oxygine-framework/oxygine/core/none/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/none/ShaderProgram.h
+        3rd_party/oxygine-framework/oxygine/core/none/VideoDriver.cpp
+        3rd_party/oxygine-framework/oxygine/core/none/UberShaderProgram.cpp
+    )
+endif()
+
 ###################################################################################
 # end oxygine stuff -> qoxygine
 ###################################################################################
@@ -468,6 +488,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/GamepadShared.cpp coreengine/Gamepad.h
     coreengine/sha256hash.cpp coreengine/sha256hash.h
     coreengine/commandlineparser.cpp coreengine/commandlineparser.h
+    coreengine/JsCallback.h
 
     # network engine
     network/smtpmailsender.h network/smtpmailsender.cpp
@@ -752,18 +773,9 @@ if (AUDIOSUPPORT)
 endif()
 
 if (GRAPHICSUPPORT)
-    set(${PROJECT_NAME}_SRCS
-        ${${PROJECT_NAME}_SRCS}
-        3rd_party/oxygine-framework/oxygine/core/windowOpenglBase.cpp 3rd_party/oxygine-framework/oxygine/core/windowOpenglBase.h
-    )
     set(QT_LIBRARIES
         ${QT_LIBRARIES}
         Qt6::OpenGL
-    )
-else()
-    set(${PROJECT_NAME}_SRCS
-        ${${PROJECT_NAME}_SRCS}
-        3rd_party/oxygine-framework/oxygine/core/windowBase.cpp 3rd_party/oxygine-framework/oxygine/core/windowBase.h
     )
 endif()
 

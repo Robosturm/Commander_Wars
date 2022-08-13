@@ -2,6 +2,8 @@
 #include <QJsonDocument>
 #include <QRegularExpression>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "multiplayer/lobbymenu.h"
 #include "multiplayer/networkcommands.h"
 #include "multiplayer/dialogpassword.h"

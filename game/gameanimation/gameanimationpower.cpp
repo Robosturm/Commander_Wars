@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
+
 #include "objects/rotatingsprite.h"
 
 #include "resource_management/gamemanager.h"

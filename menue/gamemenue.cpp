@@ -5,6 +5,8 @@
 #endif
 #include <QJsonArray>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/gamemenue.h"
 #include "menue/victorymenue.h"
 #include "menue/optionmenue.h"
