@@ -1,4 +1,4 @@
-#include <QApplication>
+#include <QCoreApplication>
 #include <QVariant>
 #include <QFile>
 
@@ -28,7 +28,7 @@ namespace oxygine
         std::vector<spResAnim> anims;
         while (true)
         {
-            QApplication::processEvents();
+            QCoreApplication::processEvents();
             XmlWalker walker = context.m_walker.next();
             if (walker.empty())
             {

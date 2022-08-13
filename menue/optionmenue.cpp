@@ -2,8 +2,6 @@
 #include <QFileInfoList>
 #include <QTextStream>
 #include <QProcess>
-#include <QGuiApplication>
-#include <QApplication>
 #include <QScreen>
 
 #include "menue/optionmenue.h"

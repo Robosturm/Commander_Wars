@@ -1,5 +1,7 @@
 #include <QCursor>
-#include <QGuiApplication>
+#ifdef GRAPHICSUPPORT
+#include <QApplication>
+#endif
 
 #include "menue/basegamemenu.h"
 
@@ -58,9 +60,11 @@ BaseGamemenu::BaseGamemenu(qint32 width, qint32 heigth, QString map, bool savega
 BaseGamemenu::~BaseGamemenu()
 {
     CONSOLE_PRINT("Deleting BaseGamemenu", Console::eDEBUG);
+#ifdef GRAPHICSUPPORT
     Mainapp* pApp = Mainapp::getInstance();
     QCursor cursor = pApp->cursor();
     cursor.setShape(Qt::CursorShape::ArrowCursor);
+#endif
     m_pMap->detach();
     m_pMap = nullptr;
     m_MapMover = nullptr;
@@ -150,8 +154,6 @@ void BaseGamemenu::loadHandling()
 
 void BaseGamemenu::connectMapCursor()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    
     Cursor* pCursor = m_Cursor.get();
     m_pMap->addEventListener(oxygine::TouchEvent::MOVE, [this, pCursor](oxygine::Event *pEvent )->void
     {
@@ -217,12 +219,14 @@ void BaseGamemenu::connectMapCursor()
             }
         }
     });
-    m_pMap->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event *)->void
+#ifdef GRAPHICSUPPORT
+    Mainapp* pApp = Mainapp::getInstance();
+    m_pMap->addEventListener(oxygine::TouchEvent::OUTX, [pApp](oxygine::Event *)->void
     {
         QCursor cursor = pApp->cursor();
         cursor.setShape(Qt::CursorShape::BlankCursor);
     });
-    m_pMap->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *)->void
+    m_pMap->addEventListener(oxygine::TouchEvent::OVER, [pApp](oxygine::Event *)->void
     {
         if (!Settings::getShowCursor())
         {
@@ -230,6 +234,7 @@ void BaseGamemenu::connectMapCursor()
             cursor.setShape(Qt::CursorShape::ArrowCursor);
         }
     });
+#endif
     m_pMap->addChild(m_Cursor);
 }
 
@@ -250,8 +255,9 @@ oxygine::spActor BaseGamemenu::getMapSlidingActor() const
 
 void BaseGamemenu::autoScroll(QPoint cursorPosition)
 {
+#ifdef GRAPHICSUPPORT
     Mainapp* pApp = Mainapp::getInstance();
-    if (QGuiApplication::focusWindow() == pApp &&
+    if (QApplication::focusWindow() == pApp &&
         m_Focused &&
         Settings::getAutoScrolling())
     {
@@ -293,6 +299,7 @@ void BaseGamemenu::autoScroll(QPoint cursorPosition)
             }
         }
     }
+#endif
 }
 
 void BaseGamemenu::MoveMap(qint32 x, qint32 y)
@@ -369,8 +376,6 @@ QPoint BaseGamemenu::getMousePos(qint32 x, qint32 y)
     {
         qint32 mapX = m_pMap->getX() + m_mapSliding->getX() + m_mapSlidingActor->getX();
         qint32 mapY = m_pMap->getY() + m_mapSliding->getY() + m_mapSlidingActor->getY();
-
-        Mainapp* pApp = Mainapp::getInstance();
         qint32 mousePosX = x * (GameMap::getImageSize() * m_pMap->getZoom()) + mapX + (GameMap::getImageSize() * m_pMap->getZoom()) / 2;
         qint32 mousePosY = y * (GameMap::getImageSize() * m_pMap->getZoom()) + mapY + (GameMap::getImageSize() * m_pMap->getZoom()) / 2;
         return QPoint(mousePosX, mousePosY);
@@ -414,11 +419,13 @@ void BaseGamemenu::calcNewMousePosition(qint32 x, qint32 y)
             m_pMap->moveMap(0, moveY);
             mousePosY += moveY;
         }
+#ifdef GRAPHICSUPPORT
         if (Settings::getAutoMoveCursor())
         {
             QPoint curPos = pApp->mapPosToGlobal(QPoint(mousePosX, mousePosY));
             pApp->cursor().setPos(curPos);
         }
+#endif
         m_Cursor->updatePosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
     }
 }

@@ -9,7 +9,6 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QList>
-#include <QApplication>
 #ifdef AUDIOSUPPORT
 #include <QAudioDevice>
 #endif

@@ -1,6 +1,8 @@
 #include <QFile>
 #include <QTime>
-#include <QGuiApplication>
+#ifdef GRAPHICSUPPORT
+#include <QApplication>
+#endif
 #include <QJsonArray>
 
 #include "menue/gamemenue.h"
@@ -928,6 +930,7 @@ void GameMenue::updateQuickButtons()
 
 void GameMenue::autoScroll(QPoint cursorPosition)
 {
+#ifdef GRAPHICSUPPORT
     Mainapp* pApp = Mainapp::getInstance();
     if (QGuiApplication::focusWindow() == pApp &&
         m_Focused &&
@@ -966,6 +969,7 @@ void GameMenue::autoScroll(QPoint cursorPosition)
             }
         }
     }
+#endif
 }
 
 void GameMenue::cursorMoved(qint32 x, qint32 y)

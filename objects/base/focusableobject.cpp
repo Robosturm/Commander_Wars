@@ -1,5 +1,7 @@
 #include <QClipboard>
-#include <QGuiApplication>
+#ifdef GRAPHICSUPPORT
+#include <QApplication>
+#endif
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
@@ -82,11 +84,13 @@ void FocusableObject::looseFocus()
         m_focusedObject->m_focused = false;
         emit m_focusedObject->sigFocusedLost();
         m_focusedObject = nullptr;
-        auto virtualKeyboard = QGuiApplication::inputMethod();
+#ifdef GRAPHICSUPPORT
+        auto virtualKeyboard = QApplication::inputMethod();
         if (virtualKeyboard != nullptr)
         {
             virtualKeyboard->hide();
         }
+#endif
     }
 }
 
@@ -97,11 +101,13 @@ void FocusableObject::looseFocusInternal()
         CONSOLE_PRINT("Loosing focus forced by object", Console::eDEBUG);
         m_focusedObject->m_focused = false;
         m_focusedObject = nullptr;
-        auto virtualKeyboard = QGuiApplication::inputMethod();
+#ifdef GRAPHICSUPPORT
+        auto virtualKeyboard = QApplication::inputMethod();
         if (virtualKeyboard != nullptr)
         {
             virtualKeyboard->hide();
         }
+#endif
     }
 }
 

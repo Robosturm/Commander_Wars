@@ -4,7 +4,14 @@
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 
+#ifdef GRAPHICSUPPORT
 #include <QOpenGLShader>
+#else
+#ifndef GLuint
+#define GLuint quint32
+#endif
+#endif
+
 #include <QObject>
 #include <QImage>
 
@@ -57,6 +64,7 @@ namespace oxygine
         GLuint createTexture();
     private:
         GLuint m_id{0};
+
         QImage m_image;
         timeMS m_CreationTime;
         static GLuint m_highestTextureCount;

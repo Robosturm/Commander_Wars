@@ -1,4 +1,4 @@
-#include <QApplication>
+#include <QCoreApplication>
 
 #include "ai/influencefrontmap.h"
 
@@ -67,7 +67,7 @@ void InfluenceFrontMap::addBuildingInfluence()
             QPoint curPos(x, y);
             for (qint32 building = 0; building < buildingPositions.size(); building++)
             {
-                QApplication::processEvents();
+                QCoreApplication::processEvents();
                 QPoint pos = buildingPositions[building];
                 for (auto & unitId : buildLists[building])
                 {
@@ -222,7 +222,7 @@ void InfluenceFrontMap::addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPf
 {
     if (pUnit->hasWeapons() || pUnit->getLoadedUnitCount() > 0)
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         qint32 value = pUnit->getCoUnitValue();
         qint32 owner = pUnit->getOwner()->getPlayerID();
         auto points = pPfs->getAllNodePointsFast();

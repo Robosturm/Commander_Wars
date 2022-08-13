@@ -1,4 +1,4 @@
-#include <QApplication>
+#include <QCoreApplication>
 
 #include "ai/islandmap.h"
 
@@ -43,7 +43,7 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
                 {                    
                     if (pUnit->canMoveOver(x, y))
                     {
-                        QApplication::processEvents();
+                        QCoreApplication::processEvents();
                         UnitPathFindingSystem pfs(m_pMap, pUnit.get());
                         pfs.setMovepoints(-2);
                         pfs.setFast(true);

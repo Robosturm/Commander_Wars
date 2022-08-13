@@ -5,6 +5,10 @@
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 #include <vector>
 
+#ifndef GL_NEAREST
+#define GL_NEAREST 0
+#endif
+
 namespace oxygine
 {
     using animationFrames = std::vector<AnimationFrame>;

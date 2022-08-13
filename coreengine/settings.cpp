@@ -1,7 +1,11 @@
 #include <QSettings>
 #include <QTranslator>
 #include <QLocale>
-#include <QGuiApplication>
+#ifdef GRAPHICSUPPORT
+#include <QApplication>
+#else
+#include <QCoreApplication>
+#endif
 #include <QScreen>
 #include <QLocale>
 #include <QStandardPaths>
@@ -199,7 +203,10 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
-    QSize size = QGuiApplication::primaryScreen()->availableSize() * QGuiApplication::primaryScreen()->devicePixelRatio();
+    QSize size;
+#ifdef GRAPHICSUPPORT
+    size = QApplication::primaryScreen()->availableSize() * QApplication::primaryScreen()->devicePixelRatio();
+#endif
     bool smallScreenDevice = hasSmallScreen();
     QString defaultPath = "";
     qint32 defaultCoCount = 0;
@@ -1279,7 +1286,7 @@ QString Settings::getLanguage()
 
 void Settings::setLanguage(const QString &language)
 {
-    QGuiApplication::removeTranslator(&m_Translator);
+    QCoreApplication::removeTranslator(&m_Translator);
     m_language = language;
     QString languageFile = "resources/translation/lang_" + m_language + ".qm";
     if (!QFile::exists(languageFile))
@@ -1301,7 +1308,7 @@ void Settings::setLanguage(const QString &language)
             CONSOLE_PRINT("Loaded language " + language, Console::eDEBUG);
         }
     }
-    QGuiApplication::installTranslator(&m_Translator);
+    QCoreApplication::installTranslator(&m_Translator);
     Interpreter* pInterpreter = Interpreter::getInstance();
     if (pInterpreter != nullptr)
     {
@@ -1913,13 +1920,15 @@ QStringList Settings::getAvailableMods()
 
 bool Settings::hasSmallScreen()
 {
-    QScreen* screen = QGuiApplication::primaryScreen();
+#ifdef GRAPHICSUPPORT
+    QScreen* screen = QApplication::primaryScreen();
     QRect screenSize = screen->availableGeometry();
     if (screenSize.width() < 960 ||
         screenSize.height() < 640)
     {
         return true;
     }
+#endif
     return false;
 }
 
@@ -1979,8 +1988,9 @@ void Settings::setAudioDevice(qint32 value)
 
 QSize Settings::getScreenSize()
 {
-    QScreen *screen = QGuiApplication::primaryScreen();
     QRect screenSize;
+#ifdef GRAPHICSUPPORT
+    QScreen *screen = QApplication::primaryScreen();
     if (Settings::getFullscreen())
     {
         screenSize  = screen->geometry();
@@ -1989,6 +1999,7 @@ QSize Settings::getScreenSize()
     {
         screenSize  = screen->availableGeometry();
     }
+#endif
     return screenSize.size();
 }
 

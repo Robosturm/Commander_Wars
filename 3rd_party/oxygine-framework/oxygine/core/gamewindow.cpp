@@ -17,7 +17,11 @@
 #include <QMouseEvent>
 #include <QTimerEvent>
 #include <QMutexLocker>
-#include <qapplication.h>
+#ifdef GRAPHICSUPPORT
+#include <QApplication>
+#else
+#include <QCoreApplication>
+#endif
 #include <limits>
 
 #include "coreengine/console.h"
@@ -30,22 +34,24 @@ namespace oxygine
     GameWindow::GameWindow()
     {
         setObjectName("GameWindow");
+#ifdef GRAPHICSUPPORT
         QSurfaceFormat newFormat = format();
         newFormat.setProfile(QSurfaceFormat::CoreProfile);
         newFormat.setSamples(2);    // Set the number of samples used for multisampling
         setFormat(newFormat);
+#endif
         m_window = this;
         m_mainHandle = QThread::currentThreadId();
-        connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
-        connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
-        connect(this, &GameWindow::sigQuit, this, &GameWindow::quit, Qt::QueuedConnection);
-        connect(QApplication::instance(), &QApplication::aboutToQuit, this, &GameWindow::quitApp);
-        connect(this, &GameWindow::sigShowKeyboard, this, &GameWindow::showKeyboard, Qt::QueuedConnection);
+        QObject::connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
+        QObject::connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
+        QObject::connect(this, &GameWindow::sigQuit, this, &GameWindow::quit, Qt::QueuedConnection);
+        QObject::connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &GameWindow::quitApp);
+        QObject::connect(this, &GameWindow::sigShowKeyboard, this, &GameWindow::showKeyboard, Qt::QueuedConnection);
     }
 
     void GameWindow::shutdown()
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         m_timerCycle = -1;
         m_Timer.stop();
         rsCache().reset();
@@ -63,11 +69,13 @@ namespace oxygine
         m_window = nullptr;
     }
 
+#ifdef GRAPHICSUPPORT
     void GameWindow::timerEvent(QTimerEvent *)
     {
         // Request an update
         update();
     }
+#endif
 
     void GameWindow::updateData()
     {
@@ -91,6 +99,7 @@ namespace oxygine
         QCoreApplication::exit(exitCode);
     }
 
+#ifdef GRAPHICSUPPORT
     void GameWindow::paintGL()
     {
         updateData();
@@ -121,9 +130,10 @@ namespace oxygine
         if (m_quit)
         {
             CONSOLE_PRINT("Quiting game normally", Console::eDEBUG);
-            QApplication::exit();
+            QCoreApplication::exit();
         }
     }
+#endif
 
     bool GameWindow::beginRendering()
     {
@@ -187,6 +197,7 @@ namespace oxygine
         Resources::registerResourceType(ResFontBM::create, "font");
     }
 
+#ifdef GRAPHICSUPPORT
     void GameWindow::initializeGL()
     {
         initializeOpenGLFunctions();
@@ -214,11 +225,23 @@ namespace oxygine
         STDRenderer::current = STDRenderer::instance;
         launchGame();
     }
+#endif
+
+    void GameWindow::redrawUi()
+    {
+        if (!m_noUi)
+        {
+#ifdef GRAPHICSUPPORT
+            update();
+#endif
+        }
+    }
 
     void GameWindow::launchGame()
     {
         if (!m_launched)
         {
+            m_launched = true;
             registerResourceTypes();
             // Create the stage. Stage is a root node for all updateable and drawable objects
             oxygine::Stage::setStage(oxygine::spStage::create());
@@ -226,6 +249,7 @@ namespace oxygine
         }
     }
 
+#ifdef GRAPHICSUPPORT
     void GameWindow::resizeGL(qint32 w, qint32 h)
     {
         CONSOLE_PRINT("core::restore()", Console::eDEBUG);
@@ -233,6 +257,7 @@ namespace oxygine
         STDRenderer::restore();
         CONSOLE_PRINT("core::restore() done", Console::eDEBUG);
     }
+#endif
 
     void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
@@ -257,6 +282,7 @@ namespace oxygine
         }
     }
 
+#ifdef GRAPHICSUPPORT
     void GameWindow::mousePressEvent(QMouseEvent *event)
     {
         MouseButton b = MouseButton_Left;
@@ -386,6 +412,7 @@ namespace oxygine
                 break;
         }
     }
+#endif
 
     bool GameWindow::sameTouchpoint(QPointF pos1, QPointF pos2) const
     {
@@ -436,10 +463,12 @@ namespace oxygine
         return m_timerCycle;
     }
 
+#ifdef GRAPHICSUPPORT
     QOpenGLContext* GameWindow::getGLContext()
     {
         return m_window->context();
     }
+#endif
 
     GameWindow* GameWindow::getWindow()
     {
@@ -460,6 +489,7 @@ namespace oxygine
 
     bool GameWindow::hasCursor()
     {
+#ifdef GRAPHICSUPPORT
         QPoint position = cursor().pos();
         if (position.x() < x() || position.y() < y() ||
             position.x() > x() + width() || position.y() > y() + height())
@@ -467,11 +497,15 @@ namespace oxygine
             return false;
         }
         return true;
+#else
+        return false;
+#endif
     }
 
     void GameWindow::showKeyboard(bool visible)
     {
-        auto virtualKeyboard = QGuiApplication::inputMethod();
+#ifdef GRAPHICSUPPORT
+        auto virtualKeyboard = QApplication::inputMethod();
         if (virtualKeyboard != nullptr)
         {
             if (visible)
@@ -488,6 +522,7 @@ namespace oxygine
                 }
             }
         }
+#endif
     }
 
 }

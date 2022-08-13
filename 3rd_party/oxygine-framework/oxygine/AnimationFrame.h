@@ -110,6 +110,5 @@ namespace oxygine
         short m_width{0};
         short m_height{0};
     };
-
 }
 

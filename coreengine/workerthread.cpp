@@ -1,5 +1,5 @@
 #include <QDirIterator>
-#include <QApplication>
+#include <QCoreApplication>
 
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
@@ -184,7 +184,7 @@ void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 
 void WorkerThread::showMainwindow()
 {
-    QApplication::processEvents();
+    QCoreApplication::processEvents();
     QThread::msleep(5);
 
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();

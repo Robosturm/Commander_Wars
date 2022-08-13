@@ -1,6 +1,6 @@
 #include <QBuffer>
 #include <QFile>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QSqlError>
@@ -83,7 +83,7 @@ MainServer::MainServer()
         QString path = Settings::getUserPath() + "/commanderWars.db";
         if (Settings::getUserPath().isEmpty())
         {
-            path = QApplication::applicationDirPath() + "/commanderWars.db";
+            path = QCoreApplication::applicationDirPath() + "/commanderWars.db";
         }
         m_serverData.setDatabaseName(path);
         if (!m_serverData.open())

@@ -1,4 +1,6 @@
-#include <QGuiApplication>
+#ifdef GRAPHICSUPPORT
+#include <QApplication>
+#endif
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
@@ -121,6 +123,7 @@ void Tooltip::setTooltipText(const QString &tooltipText)
 
 void Tooltip::showTooltip()
 {
+#ifdef GRAPHICSUPPORT
     if (!m_disabled && m_mouseHovered)
     {
         Mainapp* pApp = Mainapp::getInstance();
@@ -178,6 +181,7 @@ void Tooltip::showTooltip()
         }
         pApp->continueRendering();
     }
+#endif
 }
 
 void Tooltip::enableTooltip()

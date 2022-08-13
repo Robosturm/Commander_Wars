@@ -1,4 +1,4 @@
-#include <QApplication>
+#include <QCoreApplication>
 
 #include "coreengine/commandlineparser.h"
 #include "coreengine/mainapp.h"
@@ -96,7 +96,7 @@ CommandLineParser::CommandLineParser()
     m_parser.addOption(m_mailServerAuthMethod);
 }
 
-void CommandLineParser::parseArgsPhaseOne(QApplication & app)
+void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
 {
     m_parser.process(app);
     Mainapp* pApp = Mainapp::getInstance();
@@ -123,19 +123,14 @@ void CommandLineParser::parseArgsPhaseTwo()
         QString value = m_parser.value(m_slaveName);
         Settings::setSlaveServerName(value);
     }
-
+#ifdef GRAPHICSUPPORT
     if (m_parser.isSet(m_noUi))
     {
-        Settings::setOverworldAnimations(false);
-        Settings::setBattleAnimationType(GameEnums::BattleAnimationType_Overworld);
-        Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode_None);
-        Settings::setAnimationSpeed(100);
-        Settings::setWalkAnimationSpeed(100);
-        Settings::setBattleAnimationSpeed(100);
-        Settings::setDialogAnimation(false);
-        Settings::setDialogAnimationSpeed(100);
-        pApp->setNoUi();
+        disableUi();
     }
+#else
+    disableUi();
+#endif
     if (m_parser.isSet(m_noAudio))
     {
         pApp->setNoAudio();
@@ -254,6 +249,21 @@ void CommandLineParser::parseArgsPhaseTwo()
     }
 }
 
+void CommandLineParser::disableUi()
+{
+    CONSOLE_PRINT("Running without ui", Console::eDEBUG);
+    Mainapp* pApp = Mainapp::getInstance();
+    Settings::setOverworldAnimations(false);
+    Settings::setBattleAnimationType(GameEnums::BattleAnimationType_Overworld);
+    Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode_None);
+    Settings::setAnimationSpeed(100);
+    Settings::setWalkAnimationSpeed(100);
+    Settings::setBattleAnimationSpeed(100);
+    Settings::setDialogAnimation(false);
+    Settings::setDialogAnimationSpeed(100);
+    pApp->setNoUi();
+}
+
 void CommandLineParser::startSlaveGame() const
 {
     QString slaveAddress;
@@ -305,6 +315,6 @@ void CommandLineParser::startSlaveGame() const
     else
     {
         CONSOLE_PRINT("Despawning game cause slave game configuration is invalid", Console::eDEBUG);
-        QApplication::exit(-3);
+        QCoreApplication::exit(-3);
     }
 }

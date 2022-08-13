@@ -35,8 +35,10 @@ void MapMover::autoScroll()
     bool posValid = false;
     if (pApp->hasCursor())
     {
+#ifdef GRAPHICSUPPORT
         curPos = pApp->mapPosFromGlobal(pApp->cursor().pos());
         posValid = true;
+#endif
     }
     else
     {

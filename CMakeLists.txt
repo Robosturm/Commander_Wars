@@ -65,7 +65,6 @@ find_package(Qt6 COMPONENTS Gui REQUIRED)
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt6 COMPONENTS Xml REQUIRED)
 find_package(Qt6 COMPONENTS Sql REQUIRED)
-find_package(Qt6 COMPONENTS OpenGL REQUIRED)
 find_package(Doxygen OPTIONAL_COMPONENTS mscgen dia dot)
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
@@ -155,6 +154,16 @@ if (AUDIOSUPPORT)
     )
 else()
     message("Building without Audio")
+endif()
+
+if (GRAPHICSUPPORT)
+    message("Building with UI")
+    find_package(Qt6 COMPONENTS OpenGL REQUIRED)
+    add_definitions(
+        -DGRAPHICSUPPORT
+    )
+else()
+    message("Building without UI")
 endif()
 
 if (USEAPPCONFIGPATH)
@@ -720,6 +729,45 @@ if (NOT DEPLOY_RESOURCES_AS_FOLDER)
 endif()
 
 ##############################################################################
+# Lib setup                                                                  #
+##############################################################################
+
+# link libraries
+set(QT_LIBRARIES
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Qml
+    Qt6::Network
+    Qt6::Widgets
+    Qt6::Xml
+    Qt6::Sql
+    ${OPENSSL_LIBS}
+    )
+
+if (AUDIOSUPPORT)
+    set(QT_LIBRARIES
+        ${QT_LIBRARIES}
+        Qt6::Multimedia
+    )
+endif()
+
+if (GRAPHICSUPPORT)
+    set(${PROJECT_NAME}_SRCS
+        ${${PROJECT_NAME}_SRCS}
+        3rd_party/oxygine-framework/oxygine/core/windowOpenglBase.cpp 3rd_party/oxygine-framework/oxygine/core/windowOpenglBase.h
+    )
+    set(QT_LIBRARIES
+        ${QT_LIBRARIES}
+        Qt6::OpenGL
+    )
+else()
+    set(${PROJECT_NAME}_SRCS
+        ${${PROJECT_NAME}_SRCS}
+        3rd_party/oxygine-framework/oxygine/core/windowBase.cpp 3rd_party/oxygine-framework/oxygine/core/windowBase.h
+    )
+endif()
+
+##############################################################################
 # This section finds all resources so they can be linked to a rcc file later #
 ##############################################################################
 # this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
@@ -763,26 +811,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 set_target_properties(${PROJECT_NAME} PROPERTIES
     QT_ANDROID_VERSION_CODE ${COW_ANDROID_VERSION_CODE}
     )
-
-# link libraries
-set(QT_LIBRARIES
-    Qt6::Core
-    Qt6::Gui
-    Qt6::Qml
-    Qt6::Network
-    Qt6::Widgets
-    Qt6::Xml
-    Qt6::Sql
-    Qt6::OpenGL
-    )
-
-if (AUDIOSUPPORT)
-    set(QT_LIBRARIES
-        ${QT_LIBRARIES}
-        ${OPENSSL_LIBS}
-        Qt6::Multimedia
-    )
-endif()
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     target_link_libraries(${PROJECT_NAME} PUBLIC

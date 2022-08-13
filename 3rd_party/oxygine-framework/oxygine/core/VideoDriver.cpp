@@ -10,6 +10,7 @@ namespace oxygine
 
     void VideoDriver::setUniform(const char* id, const QMatrix4x4& mat)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         GLint  p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
@@ -17,6 +18,7 @@ namespace oxygine
             return;
         }
         window->glUniformMatrix4fv(p, 1, GL_FALSE, mat.constData());
+#endif
     }
 
     void VideoDriver::setUniform(const char* id, const Vector2& v)
@@ -41,8 +43,10 @@ namespace oxygine
 
     VideoDriver::~VideoDriver()
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glUseProgram(0);
+#endif
     }
 
     quint32 VideoDriver::getPT(VideoDriver::PRIMITIVE_TYPE pt)
@@ -111,16 +115,19 @@ namespace oxygine
 
     void VideoDriver::getViewport(Rect& r) const
     {
+#ifdef GRAPHICSUPPORT
         GLint vp[4];
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glGetIntegerv(GL_VIEWPORT, vp);
         qreal ratio = window->devicePixelRatio();
         r = Rect(vp[0] / ratio, vp[1] / ratio,
                  vp[2] / ratio, vp[3] / ratio);
+#endif
     }
 
     void VideoDriver::setScissorRect(const Rect* rect)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         if (rect)
         {
@@ -133,10 +140,12 @@ namespace oxygine
         {
             window->glDisable(GL_SCISSOR_TEST);
         }
+#endif
     }
 
     bool VideoDriver::getScissorRect(Rect& r) const
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         GLboolean scrTest = window->glIsEnabled(GL_SCISSOR_TEST);
 
@@ -147,6 +156,9 @@ namespace oxygine
                  box[2] / ratio, box[3] / ratio);
 
         return scrTest ? true : false;
+#else
+        return false;
+#endif
     }
 
     void VideoDriver::setRenderTarget(spTexture & rt)
@@ -156,6 +168,7 @@ namespace oxygine
 
     void VideoDriver::_begin(const Rect& viewport, const QColor* clearColor)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         qreal ratio = window->devicePixelRatio();
         window->glViewport(viewport.getX() * ratio, viewport.getY() * ratio,
@@ -170,16 +183,20 @@ namespace oxygine
         {
             window->glClear(GL_DEPTH_BUFFER_BIT);
         }
+#endif
     }
 
     void VideoDriver::setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glBlendFunc(getBT(src), getBT(dest));
+#endif
     }
 
     void VideoDriver::setState(STATE state, quint32 value)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         switch (state)
         {
@@ -216,6 +233,7 @@ namespace oxygine
             default:
                 oxygine::handleErrorPolicy(oxygine::ep_show_error, "VideoDriver::setState unknown state");
         }
+#endif
     }
 
     void VideoDriver::restore()
@@ -244,17 +262,21 @@ namespace oxygine
 
     void VideoDriver::clear(const QColor& color)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glClearColor(color.redF(), color.greenF(), color.blueF(), color.alphaF());
         window->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+#endif
     }
 
     void VideoDriver::setViewport(const Rect& viewport)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         qreal ratio = window->devicePixelRatio();
         window->glViewport(viewport.getX() * ratio, viewport.getY() * ratio,
                            viewport.getWidth() * ratio, viewport.getHeight() * ratio);
+#endif
     }
 
     void VideoDriver::setShaderProgram(ShaderProgram* prog_)
@@ -266,6 +288,7 @@ namespace oxygine
 
     void VideoDriver::setTexture(qint32 sampler, spTexture & t)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glActiveTexture(GL_TEXTURE0 + sampler);
         if (t)
@@ -276,10 +299,12 @@ namespace oxygine
         {
             window->glBindTexture(GL_TEXTURE_2D, 0);
         }
+#endif
     }
 
-    void VideoDriver::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, GLsizei primitives)
+    void VideoDriver::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, qint32 primitives)
     {
+#ifdef GRAPHICSUPPORT
         OXY_ASSERT(primitives > 0);
         GameWindow* window = oxygine::GameWindow::getWindow();
         const unsigned char* vData = reinterpret_cast<const unsigned char*>(verticesData);
@@ -293,10 +318,12 @@ namespace oxygine
         {
             window->glDisableVertexAttribArray(el.index);
         }
+#endif
     }
 
     void VideoDriver::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, const quint16* indicesData, quint32 numIndices)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         const unsigned char* vData = reinterpret_cast<const unsigned char*>(verticesData);
         for (const auto & el : decl->m_elements)
@@ -311,10 +338,12 @@ namespace oxygine
         {
             window->glDisableVertexAttribArray(el.index);
         }
+#endif
     }
 
     void VideoDriver::setDefaultSettings()
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glDisable(GL_SCISSOR_TEST);
         window->glDisable(GL_DEPTH_TEST);
@@ -324,10 +353,12 @@ namespace oxygine
 #ifdef GL_MULTISAMPLE
         window->glEnable(GL_MULTISAMPLE);
 #endif
+#endif
     }
 
     void VideoDriver::setUniformInt(const char* id, qint32 v)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         GLint location = window->glGetUniformLocation(m_programID, id);
         if (location == -1)
@@ -335,10 +366,12 @@ namespace oxygine
             return;
         }
         window->glUniform1i(location, v);
+#endif
     }
 
     void VideoDriver::setUniform(const char* id, const Uniform4f* v, qint32 num)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         GLint p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
@@ -346,10 +379,12 @@ namespace oxygine
             return;
         }
         window->glUniform4fv(p, num, v->data);
+#endif
     }
 
     void VideoDriver::setUniform(const char* id, const Vector2* v, qint32 num)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         GLint  p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
@@ -357,10 +392,12 @@ namespace oxygine
             return;
         }
         window->glUniform2fv(p, num, &v->x);
+#endif
     }
 
     void VideoDriver::setUniform(const char* id, const Uniform3f* v, qint32 num)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         GLint  p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
@@ -368,10 +405,12 @@ namespace oxygine
             return;
         }
         window->glUniform3fv(p, num, v->data);
+#endif
     }
 
     void VideoDriver::setUniform(const char* id, float val)
     {
+#ifdef GRAPHICSUPPORT
         GameWindow* window = oxygine::GameWindow::getWindow();
         GLint  p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
@@ -379,5 +418,6 @@ namespace oxygine
             return;
         }
         window->glUniform1f(p, val);
+#endif
     }
 }

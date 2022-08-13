@@ -1,5 +1,5 @@
 #include <QElapsedTimer>
-#include <QApplication>
+#include <QCoreApplication>
 
 #include "coreengine/qmlvector.h"
 #include "coreengine/globalutils.h"
@@ -366,7 +366,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
     bool fireSilos = hasMissileTarget();
     for (qint32 i = 0; i < m_OwnUnits.size(); ++i)
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         auto & unitData = m_OwnUnits[i];
         Unit* pUnit = unitData.pUnit.get();
         if (!pUnit->getHasMoved() && unitData.actions.contains(ACTION_CAPTURE))
@@ -410,7 +410,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
     {
         for (qint32 i = 0; i < m_OwnUnits.size(); ++i)
         {
-            QApplication::processEvents();
+            QCoreApplication::processEvents();
             auto & unitData = m_OwnUnits[i];
             Unit* pUnit = unitData.pUnit.get();
             if (!pUnit->getHasMoved() && unitData.actions.contains(ACTION_CAPTURE))
@@ -539,7 +539,7 @@ bool NormalAi::joinCaptureBuildings(spQmlVectorUnit & pUnits)
     AI_CONSOLE_PRINT("NormalAi::joinCaptureBuildings()", Console::eDEBUG);
     for (auto & unitData : m_OwnUnits)
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         Unit* pUnit = unitData.pUnit.get();
         if (!pUnit->getHasMoved() &&
             unitData.actions.contains(ACTION_CAPTURE) &&
@@ -576,7 +576,7 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint
     AI_CONSOLE_PRINT("NormalAi::fireWithUnits()", Console::eDEBUG);
     for (auto & unitData : m_OwnUnits)
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         Unit* pUnit = unitData.pUnit.get();
         if (!pUnit->getHasMoved() &&
             pUnit->getBaseMaxRange() >= minfireRange &&
@@ -625,7 +625,7 @@ bool NormalAi::refillUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
     m_aiStep = AISteps::moveToTargets;
     for (auto & unitData : m_OwnUnits)
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         Unit* pUnit = unitData.pUnit.get();
         // can we use the unit?
         if (isUsingUnit(pUnit) &&
@@ -792,7 +792,7 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
     AI_CONSOLE_PRINT("NormalAi::moveUnits()", Console::eDEBUG);
     for (auto & unitData : m_OwnUnits)
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         Unit* pUnit = unitData.pUnit.get();
         // can we use the unit?
         if ((isUsingUnit(pUnit) || m_usedTransportSystem) &&
@@ -851,7 +851,7 @@ bool NormalAi::loadUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
     m_aiStep = AISteps::loadUnits;
     for (auto & unitData : m_OwnUnits)
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         Unit* pUnit = unitData.pUnit.get();
         // can we use the unit?
         if (!pUnit->getHasMoved())
@@ -883,7 +883,7 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
     m_aiStep = AISteps::moveTransporters;
     for (auto & unitData : m_OwnUnits)
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         Unit* pUnit = unitData.pUnit.get();
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getLoadingPlace() > 0)
@@ -1105,7 +1105,7 @@ bool NormalAi::repairUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
     m_aiStep = AISteps::moveUnits;
     for (auto & unitData : m_OwnUnits)
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         Unit* pUnit = unitData.pUnit.get();
         // can we use the unit?
         if (!isUsingUnit(pUnit) && !pUnit->getHasMoved())
@@ -1662,7 +1662,7 @@ float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPos
                                        bool ignoreOutOfVisionRange) const
 {
     AI_CONSOLE_PRINT("NormalAi calculateCounterDamage", Console::eDEBUG);
-    QApplication::processEvents();
+    QCoreApplication::processEvents();
     Unit* pUnit = curUnitData.pUnit.get();
     std::map<QString, qint32> unitDamageData;
     float counterDamage = 0;
@@ -1895,12 +1895,12 @@ void NormalAi::createUnitInfluenceMap()
     m_InfluenceFrontMap.addBuildingInfluence();
     for (auto & unit : m_OwnUnits)
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         m_InfluenceFrontMap.addUnitInfluence(unit.pUnit.get(), unit.pUnitPfs.get(), unit.movementPoints);
     }
     for (auto & unit : m_EnemyUnits)
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         m_InfluenceFrontMap.addUnitInfluence(unit.pUnit.get(), unit.pUnitPfs.get(), unit.movementPoints);
     }
     m_InfluenceFrontMap.updateOwners();
@@ -1915,7 +1915,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
         pUnitData.reserve(pUnits->size());
         for (auto & pUnit : pUnits->getVector())
         {
-            QApplication::processEvents();
+            QCoreApplication::processEvents();
             MoveUnitData data;
             createUnitData(pUnit.get(), data, enemy, m_influenceUnitRange);
             pUnitData.push_back(data);
@@ -1942,7 +1942,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
         pUnitData.reserve(pUnits->size());
         for (auto & pUnit : pUnits->getVector())
         {
-            QApplication::processEvents();
+            QCoreApplication::processEvents();
             bool found = false;
             for (auto & unitData : pUnitData)
             {
@@ -1967,7 +1967,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
         {
             if (!GlobalUtils::contains(updated, i2))
             {
-                QApplication::processEvents();
+                QCoreApplication::processEvents();
                 auto & unitData = pUnitData[i2];
                 Unit* pUnit = unitData.pUnit.get();
                 if (pUnit != nullptr &&
@@ -2236,7 +2236,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     spQmlVectorPoint pFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
     for (qint32 i = 0; i < pBuildings->size(); i++)
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         Building* pBuilding = pBuildings->at(i);
         if (pBuilding->isProductionBuilding() &&
             pBuilding->getTerrain()->getUnit() == nullptr)
@@ -2254,7 +2254,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
                     auto & buildingData = m_productionData[index];
                     for (qint32 i2 = 0; i2 < pData->getActionIDs().size(); i2++)
                     {
-                        QApplication::processEvents();
+                        QCoreApplication::processEvents();
                         if (enableList[i2])
                         {
                             float score = 0.0f;
@@ -2474,7 +2474,7 @@ void NormalAi::createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuild
                                    spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                                    std::vector<NotAttackableData> & attackCount, std::vector<float> & buildData, const QStringList & buildList)
 {
-    QApplication::processEvents();
+    QCoreApplication::processEvents();
     AI_CONSOLE_PRINT("NormalAi::createUnitBuildData()", Console::eDEBUG);
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     Unit dummy(unitBuildData.unitId, m_pPlayer, false, m_pMap);
@@ -2982,7 +2982,7 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
     qint32 i = 0;
     while ( i < loadingUnits.size())
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         if (canTransportToEnemy(&dummy, loadingUnits[i], pEnemyUnits, pEnemyBuildings))
         {
             qint32 transporter = 0;

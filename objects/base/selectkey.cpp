@@ -1,4 +1,6 @@
-#include <QGuiApplication>
+#ifdef GRAPHICSUPPORT
+#include <QApplication>
+#endif
 
 #include "objects/base/selectkey.h"
 #include "objects/base/label.h"
@@ -39,20 +41,24 @@ SelectKey::SelectKey(Qt::Key code)
 void SelectKey::focusedLost()
 {
     setKeycode(m_currentCode);
-    auto virtualKeyboard = QGuiApplication::inputMethod();
+#ifdef GRAPHICSUPPORT
+    auto virtualKeyboard = QApplication::inputMethod();
     if (virtualKeyboard != nullptr)
     {
         virtualKeyboard->hide();
     }
+#endif
 }
 
 void SelectKey::focused()
 {
-    auto virtualKeyboard = QGuiApplication::inputMethod();
+#ifdef GRAPHICSUPPORT
+    auto virtualKeyboard = QApplication::inputMethod();
     if (virtualKeyboard != nullptr)
     {
         virtualKeyboard->show();
     }
+#endif
 }
 
 void SelectKey::keyInput(oxygine::KeyEvent event)

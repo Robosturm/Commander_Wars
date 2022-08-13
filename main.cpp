@@ -1,7 +1,11 @@
 #include <QObject>
 #include <QProcess>
 #include <QDir>
+#ifdef GRAPHICSUPPORT
 #include <QApplication>
+#else
+#include <QCoreApplication>
+#endif
 #include <QFile>
 
 #include "coreengine/mainapp.h"
@@ -19,10 +23,13 @@ int main(qint32 argc, char* argv[])
     srand(static_cast<unsigned>(time(nullptr)));
     QThread::currentThread()->setPriority(QThread::NormalPriority);
     QThread::currentThread()->setObjectName("RenderThread");
+#ifdef GRAPHICSUPPORT
     QApplication app(argc, argv);
+#else
+    QCoreApplication app(argc, argv);
+#endif
     app.setApplicationName("Commander Wars");
     app.setApplicationVersion(Mainapp::getGameVersion());
-
 
     Mainapp window;
     window.setTitle("Commander Wars");
@@ -52,10 +59,14 @@ int main(qint32 argc, char* argv[])
     {
         window.setPosition(Settings::getX(), Settings::getY());
     }
+#ifdef GRAPHICSUPPORT
     if (window.getNoUi())
     {
         window.launchGame();
     }
+#else
+    window.launchGame();
+#endif
     qint32 returncode = app.exec();
     /*************************************************************************************************/
     // shutting down

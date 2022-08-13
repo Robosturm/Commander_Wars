@@ -2,7 +2,7 @@
 
 #include <QCommandLineParser>
 #include <QObject>
-#include <QApplication>
+#include <QCoreApplication>
 
 class CommandLineParser : public QObject
 {
@@ -38,10 +38,12 @@ public:
 
     CommandLineParser();
 
-    void parseArgsPhaseOne(QApplication & app);
+    void parseArgsPhaseOne(QCoreApplication & app);
     void parseArgsPhaseTwo();
 
     void startSlaveGame() const;
+private:
+    void disableUi();
 private:
     QCommandLineOption m_mods;
     QCommandLineOption m_slave;

@@ -1,5 +1,4 @@
 #include <QFile>
-#include <QGuiApplication>
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"

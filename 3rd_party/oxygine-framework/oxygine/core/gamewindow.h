@@ -2,24 +2,30 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 
-#include <qopenglwindow.h>
-#include <qopenglfunctions.h>
-#include <qmutex.h>
-#include <qbasictimer.h>
-#include <qthread.h>
+#ifdef GRAPHICSUPPORT
+#include "3rd_party/oxygine-framework/oxygine/core/windowOpenGlBase.h"
+#else
+#include "3rd_party/oxygine-framework/oxygine/core/windowBase.h"
+#endif
+
+#include <QMutex>
+#include <QBasicTimer>
+#include <QThread>
 #include <QKeyEvent>
 #include <QElapsedTimer>
 
 namespace oxygine
 {
-    class GameWindow : public QOpenGLWindow, public QOpenGLFunctions
+    class GameWindow : public WindowBaseClass
     {
         Q_OBJECT
     public:
         explicit GameWindow();
         virtual ~GameWindow() = default;
-
+#ifdef GRAPHICSUPPORT
         static QOpenGLContext* getGLContext();
+#endif
+
         static GameWindow* getWindow();
         bool isReady2Render();
         /**
@@ -83,7 +89,7 @@ namespace oxygine
         qint32 getTimerCycle() const;
         bool getShuttingDown() const;
         void setShuttingDown(bool newShuttingDown);
-
+        void redrawUi();
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         void sigLoadRessources();
@@ -116,7 +122,9 @@ namespace oxygine
          * @param gamma
          */
         void setGamma(float gamma);
+#ifdef GRAPHICSUPPORT
         virtual void initializeGL() override;
+#endif
         bool isMainThread() const
         {
             return QThread::currentThreadId() == m_mainHandle;
@@ -133,9 +141,9 @@ namespace oxygine
         void showKeyboard(bool visible);
     protected:
         virtual void registerResourceTypes();
+#ifdef GRAPHICSUPPORT
         virtual void timerEvent(QTimerEvent *) override;
         virtual void paintGL() override;
-
         virtual void resizeGL(qint32 w, qint32 h) override;
         // input events
         virtual void mousePressEvent(QMouseEvent *event) override;
@@ -143,6 +151,7 @@ namespace oxygine
         virtual void wheelEvent(QWheelEvent *event) override;
         virtual void mouseMoveEvent(QMouseEvent *event)override;        
         virtual void touchEvent(QTouchEvent *event) override;
+#endif
 
         void updateData();
         bool beginRendering();

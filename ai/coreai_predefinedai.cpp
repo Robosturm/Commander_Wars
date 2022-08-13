@@ -1,4 +1,4 @@
-#include <QApplication>
+#include <QCoreApplication>
 
 #include "ai/coreai.h"
 #include "ai/targetedunitpathfindingsystem.h"
@@ -19,7 +19,7 @@ bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
     for (auto & spUnit : pUnits->getVector())
     {
         Unit* pUnit = spUnit.get();
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         if (!pUnit->getHasMoved())
         {
             if (pUnit->getActionList().contains(ACTION_FLARE))
@@ -60,7 +60,7 @@ bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits
     for (auto & spUnit : pUnits->getVector())
     {
         Unit* pUnit = spUnit.get();
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         if (!pUnit->getHasMoved())
         {
             if (pUnit->getActionList().contains(ACTION_HOELLIUM_WAIT))
@@ -115,7 +115,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
         for (auto & spUnit : pUnits->getVector())
         {
             Unit* pUnit = spUnit.get();
-            QApplication::processEvents();
+            QCoreApplication::processEvents();
             if (!pUnit->getHasMoved())
             {
                 if (pUnit->getActionList().contains(ACTION_EXPLODE))
@@ -193,7 +193,7 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
         for (auto & spUnit : pUnits->getVector())
         {
             Unit* pUnit = spUnit.get();
-            QApplication::processEvents();
+            QCoreApplication::processEvents();
             if (pUnit->getHpRounded() < Unit::MAX_UNIT_HP && pUnit->getUnitCosts() / Unit::MAX_UNIT_HP <= m_pPlayer->getFunds())
             {
                 for (auto & field : unitFields->getVector())
@@ -282,7 +282,7 @@ bool CoreAI::processPredefinedAi()
     for (auto & spUnit : pUnits->getVector())
     {
         Unit* pUnit = spUnit.get();
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         if (!pUnit->getHasMoved())
         {
             switch (pUnit->getAiMode())
