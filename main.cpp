@@ -58,7 +58,7 @@ int main(qint32 argc, char* argv[])
     if (window.getScreenMode() != Settings::ScreenModes::Window)
     {
         window.setPosition(Settings::getX(), Settings::getY());
-    }
+    }    
 #ifdef GRAPHICSUPPORT
     if (window.getNoUi())
     {

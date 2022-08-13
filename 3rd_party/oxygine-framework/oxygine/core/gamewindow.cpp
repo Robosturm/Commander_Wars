@@ -99,6 +99,21 @@ namespace oxygine
         QCoreApplication::exit(exitCode);
     }
 
+
+    float GameWindow::getActiveDpiFactor() const
+    {
+        auto ratio = devicePixelRatio();
+        if (Settings::getUseHighDpi())
+        {
+            ratio = 1.0f;
+        }
+        if (ratio < 1.0f)
+        {
+            ratio = 1.0f;
+        }
+        return ratio;
+    }
+
 #ifdef GRAPHICSUPPORT
     void GameWindow::paintGL()
     {
@@ -197,6 +212,18 @@ namespace oxygine
         Resources::registerResourceType(ResFontBM::create, "font");
     }
 
+    void GameWindow::initStage()
+    {
+        if (oxygine::Stage::getStage().get() != nullptr)
+        {
+            auto ratio = getActiveDpiFactor();
+            auto width = Settings::getWidth();
+            auto heigth = Settings::getHeight();
+            oxygine::Stage::getStage()->init (oxygine::Point(width / ratio, heigth / ratio),
+                                              oxygine::Point(width, heigth));
+        }
+    }
+
 #ifdef GRAPHICSUPPORT
     void GameWindow::initializeGL()
     {
@@ -245,6 +272,7 @@ namespace oxygine
             registerResourceTypes();
             // Create the stage. Stage is a root node for all updateable and drawable objects
             oxygine::Stage::setStage(oxygine::spStage::create());
+            initStage();
             emit sigLoadRessources();
         }
     }

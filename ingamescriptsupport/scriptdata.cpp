@@ -22,20 +22,20 @@ void ScriptData::clearData()
     m_Victory.clear();
     m_DayConditions.clear();
     m_ActionConditions.clear();
-    customCode = "";
-    customStartOfTurnCode = "";
-    customActionConditions = "";
-    customVictoryCode = "";
+    m_customCode = "";
+    m_customStartOfTurnCode = "";
+    m_customActionConditions = "";
+    m_customVictoryCode = "";
 }
 
 bool ScriptData::getStartMode() const
 {
-    return startMode;
+    return m_startMode;
 }
 
 void ScriptData::setStartMode(bool value)
 {
-    startMode = value;
+    m_startMode = value;
 }
 
 QString ScriptData::getVariableName()
@@ -51,7 +51,8 @@ void ScriptData::readScript(QTextStream& rStream)
     bool started = false;
     while (!rStream.atEnd())
     {
-        QString line = rStream.readLine();
+        QString orgLine = rStream.readLine();
+        QString line = orgLine;
         if (line.endsWith(scriptStart) && started == false)
         {
             started = true;
@@ -81,11 +82,11 @@ void ScriptData::readScript(QTextStream& rStream)
                     line = line.simplified();
                     if (line.endsWith("return true;"))
                     {
-                        startMode = true;
+                        m_startMode = true;
                     }
                     else if (line.endsWith("return false;"))
                     {
-                        startMode = false;
+                        m_startMode = false;
                     }
                     if (line.endsWith(immediateStart))
                     {
@@ -97,19 +98,19 @@ void ScriptData::readScript(QTextStream& rStream)
             else if (line.endsWith(victory))
             {
                 CONSOLE_PRINT("Reading victory code", Console::eDEBUG);
-                readData(victory, rStream, customVictoryCode, &m_Victory);
+                readData(victory, rStream, m_customVictoryCode, &m_Victory);
                 CONSOLE_PRINT("Read victory code", Console::eDEBUG);
             }
             else if (line.endsWith(turnStart))
             {
                 CONSOLE_PRINT("Reading turn start code", Console::eDEBUG);
-                readData(turnStart, rStream, customStartOfTurnCode, &m_DayConditions);
+                readData(turnStart, rStream, m_customStartOfTurnCode, &m_DayConditions);
                 CONSOLE_PRINT("Read turn start code", Console::eDEBUG);
             }
             else if (line.endsWith(actionConditions))
             {
                 CONSOLE_PRINT("Reading action code", Console::eDEBUG);
-                readData(actionConditions, rStream, customActionConditions, &m_ActionConditions);
+                readData(actionConditions, rStream, m_customActionConditions, &m_ActionConditions);
                 CONSOLE_PRINT("Read action code", Console::eDEBUG);
             }
             else if (line.endsWith(scriptEnd))
@@ -120,7 +121,7 @@ void ScriptData::readScript(QTextStream& rStream)
             else
             {
                 CONSOLE_PRINT("Reading custom code", Console::eDEBUG);
-                customCode += line + "\n";
+                m_customCode += orgLine + "\n";
             }
         }
     }
@@ -134,7 +135,8 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
 {
     while (!rStream.atEnd())
     {
-        QString line = rStream.readLine();
+        QString orgLine = rStream.readLine();
+        QString line = orgLine;
         QString trimmedLine = line.simplified();
         if (trimmedLine.endsWith(id))
         {
@@ -164,7 +166,7 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
         }
         else
         {
-            customCode += line + "\n";
+            customCode += orgLine + "\n";
         }
     }
 }
@@ -175,7 +177,7 @@ void ScriptData::writeScript(QTextStream& rStream)
     m_variableCounter = 0;
     rStream << "var Constructor = function() { // " + scriptStart + "\n";
     rStream << "    this.immediateStart = function(map) { // " + immediateStart + "\n";
-    rStream << "        return " + QVariant(startMode).toString() +  ";\n";
+    rStream << "        return " + QVariant(m_startMode).toString() +  ";\n";
     rStream << "    }; // " + immediateStart + "\n";
 
     rStream << "    this.getVictoryInfo = function(map) // " + victoryInfo + "\n";
@@ -202,7 +204,7 @@ void ScriptData::writeScript(QTextStream& rStream)
     {
         m_Victory[i]->writeCondition(rStream);
     }
-    rStream << customVictoryCode;
+    rStream << m_customVictoryCode;
     rStream << "    }; // " + victory + "\n";
 
 
@@ -223,7 +225,7 @@ void ScriptData::writeScript(QTextStream& rStream)
     {
         m_DayConditions[i]->writeCondition(rStream);
     }
-    rStream << customStartOfTurnCode;
+    rStream << m_customStartOfTurnCode;
     rStream << "    }; // " + turnStart + "\n";
 
     // action conditions
@@ -243,10 +245,10 @@ void ScriptData::writeScript(QTextStream& rStream)
     {
         m_ActionConditions[i]->writeCondition(rStream);
     }
-    rStream << customActionConditions;
+    rStream << m_customActionConditions;
     rStream << "    }; // " + actionConditions + "\n";
 
-    rStream << customCode;
+    rStream << m_customCode;
     rStream << "// " + scriptEnd + "\n};\n";
     rStream << "Constructor.prototype = BASEGAMESCRIPT;\n";
     rStream << "var gameScript = new Constructor();\n";

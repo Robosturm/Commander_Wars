@@ -7,11 +7,13 @@
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
-#include "qfile.h"
-#include "qtextstream.h"
+#include "coreengine/console.h"
+
+#include <QFile>
+#include <QTextStream>
 
 class STDRenderer;
-typedef oxygine::intrusive_ptr<STDRenderer> spSTDRenderer;
+using spSTDRenderer = oxygine::intrusive_ptr<STDRenderer>;
 
 namespace oxygine
 {
@@ -139,6 +141,10 @@ namespace oxygine
             QTextStream stream(&file);
             fracShaderBody = stream.readAll();
         }
+        else
+        {
+            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eFATAL);
+        }
         filepath = "system/vertex_shader.glsl";
         if (!QFile::exists(filepath))
         {
@@ -150,6 +156,10 @@ namespace oxygine
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             vertexShaderBody = stream.readAll();
+        }
+        else
+        {
+            CONSOLE_PRINT("Unable to find vertex shader: " + filepath, Console::eFATAL);
         }
         filepath = "system/frac_table_shader.glsl";
         if (!QFile::exists(filepath))
@@ -163,6 +173,10 @@ namespace oxygine
             QTextStream stream(&file);
             fracTableShaderBody = stream.readAll();
         }
+        else
+        {
+            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eFATAL);
+        }
         filepath = "system/frac_matrix_shader.glsl";
         if (!QFile::exists(filepath))
         {
@@ -174,6 +188,10 @@ namespace oxygine
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             fracMatrixShaderBody = stream.readAll();
+        }
+        else
+        {
+            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eFATAL);
         }
         uberShader.init(fracShaderBody, vertexShaderBody, fracTableShaderBody, fracMatrixShaderBody);
 

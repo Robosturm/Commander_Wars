@@ -2786,18 +2786,18 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="613"/>
+        <location filename="../coreengine/mainapp.cpp" line="595"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="619"/>
+        <location filename="../coreengine/mainapp.cpp" line="601"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="621"/>
+        <location filename="../coreengine/mainapp.cpp" line="603"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>

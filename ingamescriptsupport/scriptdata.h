@@ -137,14 +137,14 @@ public:
     static QString getVariableName();
 private:
     QVector<spScriptCondition> m_Victory;
-    QString customVictoryCode;
+    QString m_customVictoryCode;
     QVector<spScriptCondition> m_DayConditions;
-    QString customStartOfTurnCode;
+    QString m_customStartOfTurnCode;
     QVector<spScriptCondition> m_ActionConditions;
-    QString customActionConditions;
+    QString m_customActionConditions;
 
-    QString customCode;
-    bool startMode{false};
+    QString m_customCode;
+    bool m_startMode{false};
     GameMap* m_pMap{nullptr};
 
     static quint32 m_variableCounter;

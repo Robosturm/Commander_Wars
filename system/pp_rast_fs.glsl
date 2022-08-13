@@ -20,8 +20,6 @@ varying mediump vec2 v_blurTexCoords11;
 varying mediump vec2 v_blurTexCoords12;
 varying mediump vec2 v_blurTexCoords13;
  
- 
- 
 void main()
 {
     const mediump float M = 3.0;

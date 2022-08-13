@@ -206,7 +206,6 @@ public:
     {
         return m_parser;
     }
-    float getActiveDpiFactor() const;
 
     QPoint mapPosFromGlobal(QPoint pos) const;
     QPoint mapPosToGlobal(QPoint pos) const;

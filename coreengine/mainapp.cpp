@@ -455,28 +455,10 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
     Settings::setWidth(width);
     Settings::setHeight(heigth);
     Settings::saveSettings();
-    if (oxygine::Stage::getStage().get() != nullptr)
-    {
-        oxygine::Stage::getStage()->init (oxygine::Point(width / ratio, heigth / ratio),
-                                          oxygine::Point(width, heigth));
-    }
+    initStage();
     emit sigWindowLayoutChanged();
     emit sigChangePosition(QPoint(-1, -1), true);
 #endif
-}
-
-float Mainapp::getActiveDpiFactor() const
-{
-    auto ratio = devicePixelRatio();
-    if (Settings::getUseHighDpi())
-    {
-        ratio = 1.0f;
-    }
-    if (ratio < 1.0f)
-    {
-        ratio = 1.0f;
-    }
-    return ratio;
 }
 
 QPoint Mainapp::mapPosFromGlobal(QPoint pos) const
