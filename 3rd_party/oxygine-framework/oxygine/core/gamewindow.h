@@ -3,7 +3,7 @@
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 
 #ifdef GRAPHICSUPPORT
-#include "3rd_party/oxygine-framework/oxygine/core/windowOpenGlBase.h"
+#include "3rd_party/oxygine-framework/oxygine/core/windowOpenglBase.h"
 #else
 #include "3rd_party/oxygine-framework/oxygine/core/windowBase.h"
 #endif
