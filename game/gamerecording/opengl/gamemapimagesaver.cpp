@@ -1,6 +1,4 @@
-#ifdef GRAPHICSUPPORT
 #include <QOpenGLFramebufferObject>
-#endif
 
 #include "game/gamerecording/gamemapimagesaver.h"
 #include "game/gamemap.h"
@@ -14,7 +12,6 @@
 
 void GamemapImageSaver::saveMapAsImage(QString filename)
 {
-#ifdef GRAPHICSUPPORT
     spBaseGamemenu pMenu(BaseGamemenu::getInstance());
     if (pMenu.get() != nullptr)
     {
@@ -50,5 +47,4 @@ void GamemapImageSaver::saveMapAsImage(QString filename)
             buffer.release();
         }
     }
-#endif
 }

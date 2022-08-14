@@ -25,6 +25,7 @@ option(OPENSSL_USE_STATIC_LIBS "you may disable linking static against openssl b
 option(OPENSSL_MSVC_STATIC_RT "you may disable linking static against openssl but it's not recommended. The installation process won't deploy the libs." TRUE)
 option(AUDIOSUPPORT "enables audio support for the game and compiles music/sound into the exe" ON)
 option(GRAPHICSUPPORT "enables sprites for the game and compiles them into the exe" ON)
+option(USEVULKAN "This swaps from opengl to vulkan rendering. Incompatible with GRAPHICSUPPORT OFF. In development don't use" OFF)
 option(PRECOMPILEDOPENSSL "if the openssl are precompiled libs or or package exists" OFF)
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
 
@@ -156,9 +157,14 @@ else()
     message("Building without Audio")
 endif()
 
-if (GRAPHICSUPPORT)
-    message("Building with UI")
-    find_package(Qt6 COMPONENTS OpenGL REQUIRED)
+if(GRAPHICSUPPORT)
+    if (USEVULKAN)
+        message("Building with vulkan")
+        find_package(Vulkan REQUIRED)
+    else()
+        message("Building with OpenGl")
+        find_package(Qt6 COMPONENTS openGL REQUIRED)
+    endif()
     add_definitions(
         -DGRAPHICSUPPORT
     )
@@ -289,15 +295,30 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
 )
 
 if (GRAPHICSUPPORT)
-    include_directories("3rd_party/oxygine-framework/oxygine/core/opengl")
-    set(${PROJECT_NAME}_OXYGINE_SRCS
-        ${${PROJECT_NAME}_OXYGINE_SRCS}
-        3rd_party/oxygine-framework/oxygine/core/opengl/windowBase.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/windowBase.h
-        3rd_party/oxygine-framework/oxygine/core/opengl/texture.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/texture.h
-        3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.h
-        3rd_party/oxygine-framework/oxygine/core/opengl/VideoDriver.cpp
-        3rd_party/oxygine-framework/oxygine/core/opengl/UberShaderProgram.cpp
-    )
+    if (USEVULKAN)
+        include_directories("3rd_party/oxygine-framework/oxygine/core/vulkan")
+        set(${PROJECT_NAME}_OXYGINE_SRCS
+            ${${PROJECT_NAME}_OXYGINE_SRCS}
+            3rd_party/oxygine-framework/oxygine/core/vulkan/vulkanrenderer.cpp 3rd_party/oxygine-framework/oxygine/core/vulkan/vulkanrenderer.h
+            3rd_party/oxygine-framework/oxygine/core/vulkan/windowBase.cpp 3rd_party/oxygine-framework/oxygine/core/vulkan/windowBase.h
+            3rd_party/oxygine-framework/oxygine/core/vulkan/texture.cpp 3rd_party/oxygine-framework/oxygine/core/vulkan/texture.h
+            3rd_party/oxygine-framework/oxygine/core/vulkan/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/vulkan/ShaderProgram.h
+            3rd_party/oxygine-framework/oxygine/core/vulkan/VideoDriver.cpp
+            3rd_party/oxygine-framework/oxygine/core/vulkan/UberShaderProgram.cpp
+            game/gamerecording/vulkan/gamemapimagesaver.cpp
+        )
+    else()
+        include_directories("3rd_party/oxygine-framework/oxygine/core/opengl")
+        set(${PROJECT_NAME}_OXYGINE_SRCS
+            ${${PROJECT_NAME}_OXYGINE_SRCS}
+            3rd_party/oxygine-framework/oxygine/core/opengl/windowBase.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/windowBase.h
+            3rd_party/oxygine-framework/oxygine/core/opengl/texture.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/texture.h
+            3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.h
+            3rd_party/oxygine-framework/oxygine/core/opengl/VideoDriver.cpp
+            3rd_party/oxygine-framework/oxygine/core/opengl/UberShaderProgram.cpp
+            game/gamerecording/opengl/gamemapimagesaver.cpp
+        )
+    endif()
 else()
     include_directories("3rd_party/oxygine-framework/oxygine/core/none")
     set(${PROJECT_NAME}_OXYGINE_SRCS
@@ -307,6 +328,7 @@ else()
         3rd_party/oxygine-framework/oxygine/core/none/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/none/ShaderProgram.h
         3rd_party/oxygine-framework/oxygine/core/none/VideoDriver.cpp
         3rd_party/oxygine-framework/oxygine/core/none/UberShaderProgram.cpp
+        game/gamerecording/none/gamemapimagesaver.cpp
     )
 endif()
 
@@ -527,7 +549,7 @@ set(${PROJECT_NAME}_SRCS
     game/gamerecording/specialevent.cpp game/gamerecording/specialevent.h
     game/gamerecording/gamerecorder.cpp game/gamerecording/gamerecorder.h
     game/gamerecording/replayrecorder.cpp game/gamerecording/replayrecorder.h
-    game/gamerecording/gamemapimagesaver.cpp game/gamerecording/gamemapimagesaver.h
+    game/gamerecording/gamemapimagesaver.h
 
     # cool ingame script support
     game/gamescript.cpp game/gamescript.h
@@ -773,10 +795,13 @@ if (AUDIOSUPPORT)
 endif()
 
 if (GRAPHICSUPPORT)
-    set(QT_LIBRARIES
-        ${QT_LIBRARIES}
-        Qt6::OpenGL
-    )
+    if (USEVULKAN)
+    else()
+        set(QT_LIBRARIES
+            ${QT_LIBRARIES}
+            Qt6::OpenGL
+        )
+    endif()
 endif()
 
 ##############################################################################
@@ -959,9 +984,18 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
         ${ADDR_2_LINE}
     )
+
+    if (GRAPHICSUPPORT)
+        if (USEVULKAN)
+        else()
+            set(${PROJECT_NAME}_INSTALL_OS_LIBS
+                ${${PROJECT_NAME}_INSTALL_OS_LIBS}
+                ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
+            )
+        endif()
+    endif()
     set(LibNameEnd ".so")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
 else()
@@ -979,9 +1013,18 @@ set(${PROJECT_NAME}_INSTALL_QT_LIBS
     ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
-    ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
     ${ADDR_2_LINE}
 )
+
+if (GRAPHICSUPPORT)
+    if (USEVULKAN)
+    else()
+        set(${PROJECT_NAME}_INSTALL_QT_LIBS
+            ${${PROJECT_NAME}_INSTALL_QT_LIBS}
+            ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
+        )
+    endif()
+endif()
 
 message("install lib dir: ${CMAKE_INSTALL_PREFIX}")
 # install folders and executable

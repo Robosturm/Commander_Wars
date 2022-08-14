@@ -1,4 +1,4 @@
-#include "3rd_party/oxygine-framework/oxygine/core/none/texture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/vulkan/texture.h"
 
 namespace oxygine
 {

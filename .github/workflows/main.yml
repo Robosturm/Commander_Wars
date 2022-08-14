@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        buildTarget: [windows-desktop, ubuntu-desktop, macos-desktop, android-armv7, android-arm64_v8a]
+        buildTarget: [windows-desktop, windows-server, ubuntu-desktop, macos-desktop, android-armv7, android-arm64_v8a]
         include:
           - buildTarget: windows-desktop
             os: windows-latest
@@ -26,6 +26,14 @@ jobs:
             installerCommands1: 'choco install openssl'
             installerCommands2: ''
             cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64"'
+          - buildTarget: windows-server # test build to check if the server configuration compiles as well
+            os: windows-latest
+            COMPILER_VERSION: 'win64_mingw'
+            target: 'desktop'
+            qtPath: 'mingw_64'
+            installerCommands1: 'choco install openssl'
+            installerCommands2: ''
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF'
           - buildTarget: ubuntu-desktop
             os: ubuntu-latest
             COMPILER_VERSION: ''

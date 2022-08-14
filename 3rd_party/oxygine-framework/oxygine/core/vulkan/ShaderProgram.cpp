@@ -1,5 +1,4 @@
-#include "3rd_party/oxygine-framework/oxygine/core/none/ShaderProgram.h"
-
+#include "3rd_party/oxygine-framework/oxygine/core/vulkan/ShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
