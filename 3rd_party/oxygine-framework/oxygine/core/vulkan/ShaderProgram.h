@@ -2,6 +2,8 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 
+#include <QVulkanFunctions>
+
 namespace oxygine
 {
     class ShaderProgram;
@@ -9,10 +11,12 @@ namespace oxygine
     class ShaderProgram: public Object
     {
     public:
-        explicit ShaderProgram();
+        explicit ShaderProgram(const QString & vsShader, const QString & fsShader);
         virtual ~ShaderProgram() = default;
-        void bind();
-        quint32 getID() const;
-        qint32 getUniformLocation(const char* id) const;
+    private:
+        VkShaderModule createShader(const QString &name);
+    private:
+        VkShaderModule m_vertexShaderModule;
+        VkShaderModule m_fracmentShaderModule;
     };
 }

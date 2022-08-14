@@ -163,7 +163,7 @@ if(GRAPHICSUPPORT)
         find_package(Vulkan REQUIRED)
     else()
         message("Building with OpenGl")
-        find_package(Qt6 COMPONENTS openGL REQUIRED)
+        find_package(Qt6 COMPONENTS OpenGL REQUIRED)
     endif()
     add_definitions(
         -DGRAPHICSUPPORT

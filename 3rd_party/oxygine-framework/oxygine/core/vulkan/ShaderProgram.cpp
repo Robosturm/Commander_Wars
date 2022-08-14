@@ -1,24 +1,41 @@
 #include "3rd_party/oxygine-framework/oxygine/core/vulkan/ShaderProgram.h"
+#include "3rd_party/oxygine-framework/oxygine/core/vulkan/vulkanrenderer.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
+#include "coreengine/console.h"
+
 namespace oxygine
 {
-    ShaderProgram::ShaderProgram()
+    ShaderProgram::ShaderProgram(const QString & vsShader, const QString & fsShader)
     {
+        m_vertexShaderModule = createShader(vsShader);
+        m_fracmentShaderModule = createShader(fsShader);
     }
 
-    quint32 ShaderProgram::getID() const
+    VkShaderModule ShaderProgram::createShader(const QString &name)
     {
-        return 0;
-    }
+        QFile file(name);
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            CONSOLE_PRINT("Unable to load shader: " + name, Console::eFATAL);
+            return VK_NULL_HANDLE;
+        }
 
-    void ShaderProgram::bind()
-    {
-    }
+        QByteArray data = file.readAll();
+        file.close();
 
-    qint32 ShaderProgram::getUniformLocation(const char* id) const
-    {
-        return 0;
+        VkShaderModuleCreateInfo shaderInfo;
+        memset(&shaderInfo, 0, sizeof(shaderInfo));
+        shaderInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+        shaderInfo.codeSize = data.size();
+        shaderInfo.pCode = reinterpret_cast<const uint32_t *>(data.constData());
+        VkShaderModule shaderModule;
+        VkResult err = m_devFuncs->vkCreateShaderModule(m_window->device(), &shaderInfo, nullptr, &shaderModule);
+        if (err != VK_SUCCESS) {
+            CONSOLE_PRINT("Failed to create shader module: " + QString::number(err), Console::eFATAL);
+            return VK_NULL_HANDLE;
+        }
+        return shaderModule;
     }
 }
