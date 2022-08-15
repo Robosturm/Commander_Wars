@@ -1,4 +1,4 @@
-#include "qfile.h"
+#include <QFile>
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -7,6 +7,8 @@
 
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
+
+#include "objects/base/label.h"
 
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 #include "ingamescriptsupport/events/scriptevent.h"
@@ -47,18 +49,19 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     m_ConditionPanel->setPosition(30, 110);
     pSpriteBox->addChild(m_ConditionPanel);
     QStringList items = {tr(ScriptCondition::ConditionStartOfTurn.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionVictory.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionEachDay.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionUnitDestroyed.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionBuildingDestroyed.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionTerrainDestroyed.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionBuildingCaptured.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionPlayerDefeated.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionUnitsDestroyed.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionBuildingsOwned.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionPlayerReachedArea.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionUnitReachedArea.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionCheckVariable.toStdString().c_str())};
+                         tr(ScriptCondition::ConditionVictory.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionEachDay.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionUnitDestroyed.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionBuildingDestroyed.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionTerrainDestroyed.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionBuildingCaptured.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionPlayerDefeated.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionUnitsDestroyed.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionBuildingsOwned.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionPlayerReachedArea.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionUnitReachedArea.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionCheckVariable.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionIsCo.toStdString().c_str())};
     m_Conditions = spDropDownmenu::create(300, items);
     m_Conditions->setTooltipText(tr("Condition type you want to create. If another condition is selected both must be fulfilled to activate the event."));
     m_Conditions->setPosition(30, Settings::getHeight() / 2 - 45);
@@ -239,8 +242,7 @@ void ScriptEditor::changeImmediateStart()
 }
 
 void ScriptEditor::updateConditios()
-{
-    
+{    
     m_ImmediateStart->setChecked(m_Data->getStartMode());
 
     m_ConditionPanel->clearContent();
@@ -267,8 +269,7 @@ void ScriptEditor::updateConditios()
 
     m_CurrentCondition = nullptr;
     updateEvents();
-    m_ConditionPanel->setContentHeigth(y + 40);
-    
+    m_ConditionPanel->setContentHeigth(y + 40);    
 }
 
 void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
@@ -293,7 +294,7 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
     spScriptCondition condition = pCondition;
     while (condition.get() != nullptr)
     {
-        oxygine::spTextField text = oxygine::spTextField::create();
+        spLabel text = spLabel::create(420);
         text->setStyle(style);
         text->setHtmlText(condition->getDescription());
         text->setPosition(10, boxY);
@@ -379,7 +380,7 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    oxygine::spTextField text = oxygine::spTextField::create();
+    spLabel text = spLabel::create(420);
     text->setStyle(style);
     text->setHtmlText(pEvent->getDescription());
     text->setPosition(10, y);
@@ -510,6 +511,7 @@ void ScriptEditor::addConditionToData(spScriptCondition pCondition)
         case ScriptCondition::ConditionType::unitReachedArea:
         case ScriptCondition::ConditionType::playerReachedArea:
         case ScriptCondition::ConditionType::checkVariable:
+        case ScriptCondition::ConditionType::isCo:
         {
             m_Data->addActionCondition(pCondition);
             break;

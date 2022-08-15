@@ -1,18 +1,15 @@
-#ifndef SCRIPTCONDITIONBUILDINGCAPTURED_H
-#define SCRIPTCONDITIONBUILDINGCAPTURED_H
-
+#pragma once
 
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
-class ScriptConditionBuildingCaptured;
-using spScriptConditionBuildingCaptured = oxygine::intrusive_ptr<ScriptConditionBuildingCaptured>;
+class ScriptConditionIsCo;
+using spScriptConditionIsCo = oxygine::intrusive_ptr<ScriptConditionIsCo>;
 
-class ScriptConditionBuildingCaptured : public ScriptCondition
+class ScriptConditionIsCo : public ScriptCondition
 {
     Q_OBJECT
 public:
-    explicit ScriptConditionBuildingCaptured(GameMap* pMap);
-
+    explicit ScriptConditionIsCo(GameMap* pMap);
     /**
      * @brief readCondition
      * @param rStream
@@ -39,42 +36,12 @@ public:
      */
     virtual QString getDescription() override
     {
-        return tr("Building Captured X: ") + QString::number(m_x) + " Y: " + QString::number(m_y);
+        return tr("Is co player: ") + QString::number(m_player) + ": " + QString::number(m_playerCo) + " equal " + m_coid;
     }
     /**
      * @brief showEditConditin
      */
     virtual void showEditCondition(spScriptEditor pScriptEditor) override;
-    /**
-     * @brief getX
-     * @return
-     */
-    qint32 getX() const;
-    /**
-     * @brief setX
-     * @param x
-     */
-    void setX(const qint32 &x);
-    /**
-     * @brief getY
-     * @return
-     */
-    qint32 getY() const;
-    /**
-     * @brief setY
-     * @param y
-     */
-    void setY(const qint32 &y);
-    /**
-     * @brief getPlayer
-     * @return
-     */
-    qint32 getPlayer() const;
-    /**
-     * @brief setPlayer
-     * @param player
-     */
-    void setPlayer(const qint32 &player);
     /**
      * @brief getVersion
      * @return
@@ -84,10 +51,9 @@ public:
         return 0;
     }
 private:
-    qint32 m_x{0};
-    qint32 m_y{0};
     qint32 m_player{0};
+    qint32 m_playerCo{0};
+    QString m_coid{"CO_ANDY"};
     QString m_executed;
 };
 
-#endif // SCRIPTCONDITIONBUILDINGCAPTURED_H

@@ -12,7 +12,6 @@ var Constructor = function()
                         ["LANDER", 120],
                         ["BLACK_BOAT", 120],
                         ["AIRCRAFTCARRIER", 120],
-                        ["WATERMINE", 400],
                         // destroyer can attack ground units
                         ["INFANTRY", 125],
                         ["MECH", 75],

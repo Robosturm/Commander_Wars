@@ -658,6 +658,7 @@ set(${PROJECT_NAME}_SRCS
     ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp ingamescriptsupport/conditions/scriptconditionplayerreachedarea.h
     ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.h
     ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp ingamescriptsupport/conditions/scriptconditioncheckvariable.h
+    ingamescriptsupport/conditions/scriptconditionisco.cpp ingamescriptsupport/conditions/scriptconditionisco.h
     # event stuff
     ingamescriptsupport/events/scriptevent.cpp ingamescriptsupport/events/scriptevent.h
     ingamescriptsupport/events/scripteventdialog.cpp ingamescriptsupport/events/scripteventdialog.h

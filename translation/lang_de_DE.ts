@@ -4265,6 +4265,44 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     </message>
 </context>
 <context>
+    <name>ScriptConditionIsCo</name>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionisco.h" line="39"/>
+        <source>Is co player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionisco.cpp" line="112"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionisco.cpp" line="116"/>
+        <source>Player of which a co should be checked.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionisco.cpp" line="128"/>
+        <source>CO Position: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionisco.cpp" line="132"/>
+        <source>CO of the player which should be checked.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionisco.cpp" line="144"/>
+        <source>CO: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionisco.cpp" line="170"/>
+        <source>CO which should be selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ScriptConditionPlayerDefeated</name>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="119"/>
@@ -4655,87 +4693,87 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEditor</name>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="42"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="44"/>
         <source>Conditions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="67"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="70"/>
         <source>Add Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="76"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="404"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="79"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="405"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="87"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="90"/>
         <source>Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="115"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="118"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="119"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="122"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="131"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="134"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="63"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="66"/>
         <source>Condition type you want to create. If another condition is selected both must be fulfilled to activate the event.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="135"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="138"/>
         <source>If checked the game starts without being able to change rules, players or CO&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="142"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="145"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="150"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="192"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="153"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="195"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="157"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="202"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="160"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="205"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="176"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="179"/>
         <source>Do you want to exit the script editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="302"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="388"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="303"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="389"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="309"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="396"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="310"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="397"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="317"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="318"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>

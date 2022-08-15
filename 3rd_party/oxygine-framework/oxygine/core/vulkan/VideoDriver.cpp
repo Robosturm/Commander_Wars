@@ -77,7 +77,6 @@ namespace oxygine
 
     void VideoDriver::_begin(const Rect& viewport, const QColor* clearColor)
     {
-
         if (clearColor)
         {
             clear(*clearColor);
@@ -146,8 +145,6 @@ namespace oxygine
 
     void VideoDriver::setShaderProgram(ShaderProgram* prog_)
     {
-        prog_->bind();
-        m_programID = prog_->getID();
         m_pShaderProgram = prog_;
     }
 

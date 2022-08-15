@@ -2081,5 +2081,6 @@
         <file>maps/commander_wars.camp/dayAtTheBeach.map</file>
         <file>resources/scripts/actions/ACTION_NEST_LASER.js</file>
         <file>resources/scripts/actions/ACTION_NEST_MORTAR.js</file>
+        <file>resources/scripts/actions/ACTION_DISABLE_MINE.js</file>
     </qresource>
 </RCC>
