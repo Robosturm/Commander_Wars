@@ -2084,8 +2084,9 @@ void NormalAi::calcVirtualDamage()
 
 float NormalAi::getMapInfluenceModifier(Unit* pUnit, qint32 x, qint32 y) const
 {
-    float enemyInfluence = m_InfluenceFrontMap.getInfluenceInfo(x, y).enemyInfluence;
-    float ownInfluence = m_InfluenceFrontMap.getInfluenceInfo(x, y).ownInfluence;
+    const auto * info = m_InfluenceFrontMap.getInfluenceInfo(x, y);
+    float enemyInfluence = info->getEnemyInfluence();
+    float ownInfluence = info->getOwnInfluence();
     float influence = 0.0f;
     float influenceDamage = 0.0f;
     if (enemyInfluence > ownInfluence && ownInfluence > 0)

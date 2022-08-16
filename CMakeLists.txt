@@ -116,7 +116,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
-            #-DHEAVY_AI                 # experimental heavy ai unfinished
+            -DHEAVY_AI                 # experimental heavy ai unfinished
             #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
@@ -125,8 +125,8 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
-            #-DHEAVY_AI                 # experimental heavy ai unfinished
-            -DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
+            -DHEAVY_AI                 # experimental heavy ai unfinished
+            #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     else()
@@ -134,7 +134,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
-            #-DHEAVY_AI                 # experimental heavy ai unfinished
+            -DHEAVY_AI                 # experimental heavy ai unfinished
             #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )

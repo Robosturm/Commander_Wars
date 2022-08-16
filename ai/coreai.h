@@ -364,7 +364,83 @@ public slots:
      * @param targets
      */
     void appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets);
-
+    /**
+     * @brief onSameIsland checks if unit1 can reach unit 2. This may be vice versa but isn't checked here
+     * @param pUnit1
+     * @param pUnit2
+     * @return
+     */
+    bool onSameIsland(Unit* pUnit1, Unit* pUnit2) const;
+    /**
+     * @brief onSameIsland checks if unit1 can reach the building. This may be vice versa but isn't checked here
+     * @param pUnit1
+     * @param pBuilding
+     * @return
+     */
+    bool onSameIsland(Unit* pUnit1, Building* pBuilding) const;
+    /**
+     * @brief onSameIsland
+     * @param movemnetType
+     * @param x
+     * @param y
+     * @param x1
+     * @param y1
+     * @return
+     */
+    bool onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
+    /**
+     * @brief onSameIsland
+     * @param islandIdx
+     * @param x
+     * @param y
+     * @param x1
+     * @param y1
+     * @return
+     */
+    bool onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
+    /**
+     * @brief getIsland
+     * @param pUnit1
+     * @return
+     */
+    qint32 getIsland(Unit* pUnit) const;
+    /**
+     * @brief getIslandIndex
+     * @param pUnit1
+     * @return
+     */
+    qint32 getIslandIndex(Unit* pUnit) const;
+    /**
+     * @brief isUnloadTerrain
+     * @param pUnit
+     * @param pTerrain
+     * @return
+     */
+    bool isUnloadTerrain(Unit* pUnit, Terrain* pTerrain);
+    /**
+     * @brief createIslandMap
+     * @param movementType
+     * @param unitID
+     */
+    void createIslandMap(const QString & movementType, const QString & unitID);
+    /**
+     * @brief needsRefuel
+     * @param pUnit
+     * @return
+     */
+    bool needsRefuel(const Unit* pUnit) const;
+    /**
+     * @brief isRefuelUnit
+     * @param actionList
+     * @return
+     */
+    bool isRefuelUnit(const QStringList & actionList) const;
+    /**
+     * @brief isMoveableBuilding
+     * @param pBuilding
+     * @return
+     */
+    bool isMoveableTile(Building* pBuilding) const;
 protected:
     void sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
     void addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost);
@@ -482,82 +558,12 @@ protected:
      * @return
      */
     qint32 getFlareTargetScore(const QPoint& moveTarget, const QPoint& flareTarget, const spQmlVectorPoint& pUnfogCircle);
-    /**
-     * @brief isUnloadTerrain
-     * @param pUnit
-     * @param pTerrain
-     * @return
-     */
-    bool isUnloadTerrain(Unit* pUnit, Terrain* pTerrain);
+
     /**
      * @brief createIslandMap
      * @param pUnits
      */
-    void rebuildIsland(spQmlVectorUnit & pUnits);
-    /**
-     * @brief onSameIsland checks if unit1 can reach unit 2. This may be vice versa but isn't checked here
-     * @param pUnit1
-     * @param pUnit2
-     * @return
-     */
-    bool onSameIsland(Unit* pUnit1, Unit* pUnit2) const;
-    /**
-     * @brief onSameIsland checks if unit1 can reach the building. This may be vice versa but isn't checked here
-     * @param pUnit1
-     * @param pBuilding
-     * @return
-     */
-    bool onSameIsland(Unit* pUnit1, Building* pBuilding) const;
-    /**
-     * @brief onSameIsland
-     * @param movemnetType
-     * @param x
-     * @param y
-     * @param x1
-     * @param y1
-     * @return
-     */
-    bool onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
-    /**
-     * @brief onSameIsland
-     * @param islandIdx
-     * @param x
-     * @param y
-     * @param x1
-     * @param y1
-     * @return
-     */
-    bool onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
-    /**
-     * @brief getIsland
-     * @param pUnit1
-     * @return
-     */
-    qint32 getIsland(Unit* pUnit) const;
-    /**
-     * @brief getIslandIndex
-     * @param pUnit1
-     * @return
-     */
-    qint32 getIslandIndex(Unit* pUnit) const;
-    /**
-     * @brief createIslandMap
-     * @param movementType
-     * @param unitID
-     */
-    void createIslandMap(const QString & movementType, const QString & unitID);
-    /**
-     * @brief needsRefuel
-     * @param pUnit
-     * @return
-     */
-    bool needsRefuel(const Unit* pUnit) const;
-    /**
-     * @brief isRefuelUnit
-     * @param actionList
-     * @return
-     */
-    bool isRefuelUnit(const QStringList & actionList) const;
+    void rebuildIsland(spQmlVectorUnit & pUnits);    
     /**
      * @brief hasMissileTarget
      * @return
@@ -565,7 +571,7 @@ protected:
     bool hasMissileTarget()
     {
         return m_missileTarget;
-    };
+    }
     /**
      * @brief getAiCoUnitMultiplier
      * @param pCO
@@ -603,12 +609,6 @@ protected:
      * @return
      */
     bool canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
-    /**
-     * @brief isMoveableBuilding
-     * @param pBuilding
-     * @return
-     */
-    bool isMoveableTile(Building* pBuilding) const;
     /**
      * @brief deserializeObjectVersion
      * @param stream

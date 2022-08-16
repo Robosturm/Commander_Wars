@@ -36,7 +36,7 @@ public:
      */
     virtual QString getDescription() override
     {
-        return tr("Is co player: ") + QString::number(m_player) + ": " + QString::number(m_playerCo) + " equal " + m_coid;
+        return tr("Is co player: ") + QString::number(m_player) + " co index: " + QString::number(m_playerCo) + " equal " + m_coid;
     }
     /**
      * @brief showEditConditin

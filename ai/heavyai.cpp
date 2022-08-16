@@ -45,7 +45,7 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
 
     m_iniData = { // General
-                  {"MinActionScore", "General", &m_minActionScore, 0.2f, 0.0f, 1.0f},
+                  {"MinActionScore", "General", &m_minActionScore, 0.2f, 0.0f, 10.0f},
                   {"ActionScoreVariant", "General", &m_actionScoreVariant, 0.05f, 0.01f, 0.5f},
                   {"StealthDistanceMultiplier", "General", &m_stealthDistanceMultiplier, 2.0f, 1.0f, 10.0f},
                   {"AlliedDistanceModifier", "General", &m_alliedDistanceModifier, 5.0f, 1.0f, 10.0f},
@@ -59,7 +59,7 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
                   {"EnemyUnitThread", "General", &m_notAttackableDamage, 5.0f, 1.0f, 10.0f},
                   {"MaxVision", "General", &m_notAttackableDamage, 10.0f, 10.0f, 10.0f},
                   {"MaxUnitValue", "General", &m_maxUnitValue, 40000.0f, 40000.0f, 40000.0f},
-                  {"MaxScore", "General", &m_maxScore, 10.0f, 10.0f, 10.0f},
+                  {"MaxScore", "General", &m_maxScore, 10.0f, 0.0f, 10.0f},
                   {"MaxTerrainDefense", "General", &m_maxTerrainDefense, 15.0f, 15.0f, 15.0f},
                   {"MaxCapturePoints", "General", &m_maxCapturePoints, 20.0f, 20.0f, 20.0f},
                   {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
@@ -693,7 +693,8 @@ bool HeavyAi::mutateAction(ScoreData & data, MoveUnitData & unitData, std::vecto
             case FunctionType::JavaScript:
             {
                 Interpreter* pInterpreter = Interpreter::getInstance();
-                QJSValueList args({pInterpreter->newQObject(data.m_gameAction.get())});
+                QJSValueList args({pInterpreter->newQObject(this),
+                                   pInterpreter->newQObject(data.m_gameAction.get())});
                 QJSValue erg = pInterpreter->doFunction(m_aiName, data.m_gameAction->getActionID(), args);
                 if (erg.isNumber())
                 {
@@ -829,7 +830,7 @@ void HeavyAi::getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, dou
         Building* pBuildingTarget = pTerrainTarget->getBuilding();
         qint32 playerId = m_pPlayer->getPlayerID();
         const double highestInfluece = m_InfluenceFrontMap.getTotalHighestInfluence();
-        const auto & info = m_InfluenceFrontMap.getInfluenceInfo(moveTarget.x(), moveTarget.y());
+        const auto * info = m_InfluenceFrontMap.getInfluenceInfo(moveTarget.x(), moveTarget.y());
         double notMovedUnitCount = 0;
         double protectionValue = 0;
         double ownValue = pMoveUnit->getCoUnitValue();
@@ -854,8 +855,8 @@ void HeavyAi::getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, dou
                 threadValue += pUnit.pUnit->getCoUnitValue();
             }
         }
-        data[BasicFieldInfo::OwnInfluenceValue] = static_cast<double>(info.ownInfluence) / highestInfluece;
-        data[BasicFieldInfo::EnemyInfluenceValue] = static_cast<double>(info.enemyInfluence) / highestInfluece;
+        data[BasicFieldInfo::OwnInfluenceValue] = static_cast<double>(info->getOwnInfluence()) / highestInfluece;
+        data[BasicFieldInfo::EnemyInfluenceValue] = static_cast<double>(info->getEnemyInfluence()) / highestInfluece;
         data[BasicFieldInfo::MoveTurnProgress] = notMovedUnitCount / static_cast<double>(m_ownUnits.size());
         spQmlVectorPoint pCircle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
         double wallCount = 0;
@@ -937,11 +938,12 @@ void HeavyAi::getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, dou
                 }
             }
         }
-        if (GlobalUtils::contains(info.frontOwners, playerId))
+        const auto & frontOwners = info->getFrontOwners();
+        if (GlobalUtils::contains(frontOwners, playerId))
         {
             data[BasicFieldInfo::FrontTile] = 1;
         }
-        else if (info.frontOwners.size() > 0)
+        else if (frontOwners.size() > 0)
         {
             data[BasicFieldInfo::FrontTile] = -1;
         }

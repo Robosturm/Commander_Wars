@@ -282,6 +282,11 @@ public slots:
      * @param unitId
      */
     void hideIslandMap(QString unitId);
+    /**
+     * @brief getInfluenceFrontMap
+     * @return
+     */
+    InfluenceFrontMap* getInfluenceFrontMap();
 protected:
     /**
      * @brief scoreActions
