@@ -28,6 +28,7 @@ option(GRAPHICSUPPORT "enables sprites for the game and compiles them into the e
 option(USEVULKAN "This swaps from opengl to vulkan rendering. Incompatible with GRAPHICSUPPORT OFF. In development don't use" OFF)
 option(PRECOMPILEDOPENSSL "if the openssl are precompiled libs or or package exists" OFF)
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
+option(DEPLOY_RESOURCES_AS_FOLDER "if files should be compiled into the exe or deployed as folder" OFF)
 
 ###################################################################################
 # show configuration
@@ -112,7 +113,6 @@ endif()
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     message("Compiling as Debug")
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-        set(DEPLOY_RESOURCES_AS_FOLDER false)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
@@ -121,7 +121,6 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        set(DEPLOY_RESOURCES_AS_FOLDER true)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
@@ -130,7 +129,6 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     else()
-        set(DEPLOY_RESOURCES_AS_FOLDER false)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
@@ -141,7 +139,6 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     endif()
 else("Release")
     message("Compiling as Release")
-    set(DEPLOY_RESOURCES_AS_FOLDER false)
     add_definitions(
         -DDEBUG_LEVEL=1             # default console log level
     )

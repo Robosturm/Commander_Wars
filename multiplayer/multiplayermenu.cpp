@@ -1242,7 +1242,7 @@ bool Multiplayermenu::findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, b
     while (dirIter.hasNext() && !found)
     {
         dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
+        QString file = dirIter.fileInfo().canonicalFilePath();
         QFile mapFile(file);
         mapFile.open(QIODevice::ReadOnly);
         Sha256Hash myHash;

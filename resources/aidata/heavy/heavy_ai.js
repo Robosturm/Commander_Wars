@@ -7,9 +7,9 @@ var HEAVY_AI =
 
     // for modding implement a function named after the action to modify or implement the behaviour for
     // it will given the following input on which you can return the score for the function
-    // the score is capped at 1 and actions with a to low score won't be considered to be executed
+    // the score is capped at 10 and actions with a to low score won't be considered to be executed
     // example for capture
-    // ACTION_CAPTURE : function(action)
+    // ACTION_CAPTURE : function(ai, action)
     // {
     //     return 0.99;
     // },

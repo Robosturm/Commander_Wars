@@ -191,7 +191,7 @@ QStringList ActionListDialog::getNameList()
     while (dirIter.hasNext())
     {
         dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
+        QString file = dirIter.fileInfo().canonicalFilePath();
         auto data = Filesupport::readList(file);
         items.append(data.name);
     }

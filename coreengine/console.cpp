@@ -390,9 +390,9 @@ void Console::extractResources()
     {
         dirIter.next();
         count++;
-        QFile file(dirIter.fileInfo().absoluteFilePath());
-        QString relativePath = GlobalUtils::makePathRelative(dirIter.fileInfo().absoluteFilePath());
-        QString dir = GlobalUtils::makePathRelative(dirIter.fileInfo().absoluteDir().absolutePath());
+        QFile file(dirIter.fileInfo().canonicalFilePath());
+        QString relativePath = GlobalUtils::makePathRelative(dirIter.fileInfo().canonicalFilePath());
+        QString dir = GlobalUtils::makePathRelative(dirIter.fileInfo().absoluteDir().canonicalPath());
         QDir newDir(targetDir + dir);
         newDir.mkpath(".");
         file.copy(targetDir + relativePath);

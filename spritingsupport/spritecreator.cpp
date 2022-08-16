@@ -21,7 +21,7 @@ void SpriteCreator::createColorTableSprites(const QString& folder, const QString
     while (dirIter.hasNext())
     {
         dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
+        QString file = dirIter.fileInfo().canonicalFilePath();
         createColorTableSprite(file, startIndex, maxColors);
     }
 }
@@ -103,7 +103,7 @@ void SpriteCreator::applyImagesTable(QString input, QString inTable, QString out
         while (dirIter.hasNext())
         {
             dirIter.next();
-            applyImageTable(dirIter.fileInfo().absoluteFilePath(), inTableImg, outTableImg, eraseColor);
+            applyImageTable(dirIter.fileInfo().canonicalFilePath(), inTableImg, outTableImg, eraseColor);
         }
     }
     else if (inputInfo.isFile() && input.endsWith(".png"))
@@ -203,7 +203,7 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
         while (dirIter.hasNext())
         {
             dirIter.next();
-            createSprites(dirIter.fileInfo().absoluteFilePath(), colorTableImg, maskTableImg);
+            createSprites(dirIter.fileInfo().canonicalFilePath(), colorTableImg, maskTableImg);
         }
     }
     else if (inputInfo.isFile() && input.endsWith(".png"))
@@ -469,7 +469,7 @@ void SpriteCreator::updateMaskImages(QString& folder, QString& filter, qint32 mi
     while (dirIter.hasNext())
     {
         dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
+        QString file = dirIter.fileInfo().canonicalFilePath();
         updateMaskImage(file, min);
     }
 }
@@ -560,7 +560,7 @@ void SpriteCreator::inversImagesFrames(QString& folder, QString& filter, qint32 
     while (dirIter.hasNext())
     {
         dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
+        QString file = dirIter.fileInfo().canonicalFilePath();
         inversImageFrames(file, frames);
     }
 }
@@ -594,7 +594,7 @@ void SpriteCreator::extendMaskImages(QString& folder, QString& filter)
     while (dirIter.hasNext())
     {
         dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
+        QString file = dirIter.fileInfo().canonicalFilePath();
         extendMaskImage(file);
     }
 }

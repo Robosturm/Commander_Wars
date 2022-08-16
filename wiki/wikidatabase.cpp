@@ -91,7 +91,7 @@ void WikiDatabase::load()
         while (dirIter.hasNext())
         {
             dirIter.next();
-            QString file = dirIter.fileInfo().absoluteFilePath();
+            QString file = dirIter.fileInfo().canonicalFilePath();
             if (!hasEntry(file))
             {
                 Interpreter* pInterpreter = Interpreter::getInstance();

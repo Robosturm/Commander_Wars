@@ -698,7 +698,7 @@ void Mainapp::createBaseDirs()
     auto virtList = QDir(QString(oxygine::Resource::RCC_PREFIX_PATH) + "maps").entryInfoList(QDir::Dirs);
     for (const auto & item : qAsConst(virtList))
     {
-        QString path = GlobalUtils::makePathRelative(item.absoluteFilePath());
+        QString path = GlobalUtils::makePathRelative(item.canonicalFilePath());
         if (!path.endsWith(".camp"))
         {
             QDir newDir(userPath + path);

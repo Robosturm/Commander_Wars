@@ -306,7 +306,7 @@ void MapSelection::changeFolder(QString folder)
     if (dir.exists() || virtDir.exists())
     {
         QFileInfo newFolderInfo(newFolder);
-        newFolder = GlobalUtils::makePathRelative(newFolderInfo.absoluteFilePath());
+        newFolder = GlobalUtils::makePathRelative(newFolderInfo.canonicalFilePath());
         CONSOLE_PRINT("MapSelection::changeFolder. Relative Path: " + newFolder, Console::eDEBUG);
         m_Files.clear();
         if (newFolder != "maps")
@@ -325,30 +325,32 @@ void MapSelection::changeFolder(QString folder)
         auto hideList = pUserdata->getShopItemsList(GameEnums::ShopItemType_Map, false);
         for (qint32 i = 1; i < infoList.size(); i++)
         {
-            QString myPath = infoList[i].absoluteFilePath();
+            auto & infoItem = infoList[i];
+            QString myPath = infoItem.canonicalFilePath();
             QString item = GlobalUtils::makePathRelative(myPath);
-            if ((myPath == newFolder) ||
-                (upFolder == infoList[i] ||
-                (infoList[i].isDir() && myPath.endsWith(".camp"))) ||
+            bool isDir = infoItem.isDir();
+            if ((item == newFolder) ||
+                (upFolder == infoItem) ||
+                (isDir && myPath.endsWith(".camp")) ||
                 (hideList.contains(item)))
             {
                 // skip ourself
                 continue;
             }
-            if (infoList[i].isDir())
+            if (isDir)
             {
-                QString path = infoList[i].absoluteFilePath();
+                QString path = infoItem.canonicalFilePath();
                 QDirIterator iter(path, list, QDir::Files, QDirIterator::Subdirectories);
-                if (!iter.hasNext())
+                QDirIterator iter2(oxygine::Resources::RCC_PREFIX_PATH + item, list, QDir::Files, QDirIterator::Subdirectories);
+                if (!iter.hasNext() && !iter2.hasNext())
                 {
-                    // skip folders which don't contain files we want to show
                     continue;
                 }
                 m_Files.append(path);
             }
-            else if (infoList[i].isFile())
+            else if (infoItem.isFile())
             {
-                m_Files.append(infoList[i].absoluteFilePath());
+                m_Files.append(infoItem.canonicalFilePath());
             }
         }
         m_currentFolder = newFolder;

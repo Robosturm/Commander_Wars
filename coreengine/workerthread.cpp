@@ -78,7 +78,7 @@ void WorkerThread::start()
         while (dirIter.hasNext())
         {
             dirIter.next();
-            QString file = dirIter.fileInfo().absoluteFilePath();
+            QString file = dirIter.fileInfo().canonicalFilePath();
             pInterpreter->openScript(file, true);
         }
     }

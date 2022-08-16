@@ -270,7 +270,7 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
                 m_pCurrentMap = nullptr;
             }
             bool savegame = info.fileName().endsWith(".msav");
-            QString file = info.absoluteFilePath();
+            QString file = info.canonicalFilePath();
             m_pCurrentMap = spGameMap::create(file, true, fast, savegame);
             m_pCurrentMap->setMapPath(GlobalUtils::makePathRelative(file, false));
             m_pCurrentMap->getGameScript()->init();
@@ -326,7 +326,7 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
             }
             m_pMinimap->updateMinimap(nullptr);
             m_CurrentLoadedCampaign = nullptr;
-            m_CurrentLoadedCampaign = spCampaign::create(info.absoluteFilePath());
+            m_CurrentLoadedCampaign = spCampaign::create(info.canonicalFilePath());
             m_MapDescription->setHtmlText(m_CurrentLoadedCampaign->getDescription());
             m_MapAuthor->setHtmlText(m_CurrentLoadedCampaign->getAuthor());
             m_MapPlayerCount->setVisible(false);

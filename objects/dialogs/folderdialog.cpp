@@ -112,16 +112,16 @@ void FolderDialog::showFolder(QString folder)
         QString myPath;
         if (folder == ROOT)
         {
-            myPath = infoList[i].absoluteFilePath();
+            myPath = infoList[i].canonicalFilePath();
         }
-        else if (infoList[i].absoluteFilePath() != QCoreApplication::applicationDirPath() &&
-                 infoList[i].absoluteFilePath() != QCoreApplication::applicationDirPath() + "/")
+        else if (infoList[i].canonicalFilePath() != QCoreApplication::applicationDirPath() &&
+                 infoList[i].canonicalFilePath() != QCoreApplication::applicationDirPath() + "/")
         {
-           myPath = GlobalUtils::makePathRelative(infoList[i].absoluteFilePath());
+           myPath = GlobalUtils::makePathRelative(infoList[i].canonicalFilePath());
         }
         else
         {
-            myPath = infoList[i].absoluteFilePath();
+            myPath = infoList[i].canonicalFilePath();
         }
         if (myPath == folder)
         {
@@ -165,7 +165,7 @@ void FolderDialog::showFolder(QString folder)
         {
             if (folder == ROOT)
             {
-                textField->setHtmlText(infoList[i].absoluteFilePath());
+                textField->setHtmlText(infoList[i].canonicalFilePath());
             }
             else
             {
