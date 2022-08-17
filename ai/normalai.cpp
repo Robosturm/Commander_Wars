@@ -2387,9 +2387,12 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
         // produce the unit
         if (pAction->isFinalStep())
         {
-            m_updatePoints.push_back(pAction->getActionTarget());
-            emit performAction(pAction);
-            return true;
+            if (pAction->canBePerformed())
+            {
+                m_updatePoints.push_back(pAction->getActionTarget());
+                emit performAction(pAction);
+                return true;
+            }
         }
     }
     return false;

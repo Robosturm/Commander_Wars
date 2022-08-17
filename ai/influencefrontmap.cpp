@@ -20,12 +20,6 @@ InfluenceInfo::InfluenceInfo(GameMap* pMap)
     : m_pMap(pMap)
 {
     Interpreter::setCppOwnerShip(this);
-    qint32 playerCount = pMap->getPlayerCount();
-    playerValues.reserve(playerCount);
-    for (qint32 x = 0; x < playerCount; x++)
-    {
-        playerValues.push_back(0);
-    }
 }
 
 void InfluenceInfo::updateOwner(Player* pOwner)
@@ -76,11 +70,24 @@ qint32 InfluenceInfo::getPlayerInfluence(qint32 playerId)
     return influence;
 }
 
-void InfluenceInfo::reset()
+void InfluenceInfo::reset(GameMap* pMap)
 {
-    for (auto & value : playerValues)
+    m_pMap = pMap;
+    qint32 playerCount = m_pMap->getPlayerCount();
+    if (playerValues.size() == 0)
     {
-        value = 0;
+        playerValues.reserve(playerCount);
+        for (qint32 i = 0; i < playerCount; ++i)
+        {
+            playerValues.push_back(0);
+        }
+    }
+    else
+    {
+        for (auto & value : playerValues)
+        {
+            value = 0;
+        }
     }
     highestInfluence = 0;
     owners.clear();
@@ -238,8 +245,7 @@ void InfluenceFrontMap::reset()
     {
         for (qint32 y = 0; y < m_InfluenceMap[x].size(); ++y)
         {
-            m_InfluenceMap[x][y].reset();
-            m_InfluenceMap[x][y].m_pMap = m_pMap;
+            m_InfluenceMap[x][y].reset(m_pMap);
         }
     }
     m_totalHighestInfluence = 0;

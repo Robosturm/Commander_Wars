@@ -21,7 +21,7 @@ public:
     explicit InfluenceInfo(GameMap* pMap);
     virtual ~InfluenceInfo() = default;
 
-    void reset();
+    void reset(GameMap* pMap);
     void updateOwner(Player* pOwner);
     qint32 getPlayerInfluence(qint32 playerId);
     void increaseInfluence(qint32 player, qint32 value);

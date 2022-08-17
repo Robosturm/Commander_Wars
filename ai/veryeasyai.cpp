@@ -719,8 +719,11 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
                                         // produce the unit
                                         if (pAction->isFinalStep())
                                         {
-                                            emit performAction(pAction);
-                                            return true;
+                                            if (pAction->canBePerformed())
+                                            {
+                                                emit performAction(pAction);
+                                                return true;
+                                            }
                                         }
                                     }
                                 }

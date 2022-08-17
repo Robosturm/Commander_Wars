@@ -385,7 +385,7 @@ void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
         }
         else
         {
-            pAction->setActionID(ACTION_WAIT);
+            pAction->setActionID(ACTION_WAIT);            
             emit performAction(pAction);
         }
     }

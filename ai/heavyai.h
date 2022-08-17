@@ -122,15 +122,18 @@ class HeavyAi : public CoreAI
         WaitTargetTypes_Enemy,
         WaitTargetTypes_Terrain,
         WaitTargetTypes_CaptureLoad,
+        WaitTargetTypes_Transport,
         WaitTargetTypes_Load,
         WaitTargetTypes_Unload,
         WaitTargetTypesMaxSize,
     };
 
-    // flare?
-    // place watermine
+    // flare / explode
+
+    // place watermine / disable mine
     // support repair and ration actions
     // wait / stealth / unstealth
+    // build waterplane
 
     enum NeuralNetworks
     {
@@ -154,6 +157,7 @@ public:
     {
         JavaScript,
         CPlusPlus,
+        Undefined,
     };
 
     struct UnitBuildData
@@ -412,6 +416,19 @@ private:
     void addCaptureTransporterTargets(Unit* pUnit, const QStringList & actions,
                                       Terrain* pTerrain, std::vector<QVector3D>& targets);
     /**
+     * @brief addUnloadTargets
+     * @param pUnit
+     * @param pEnemyUnits
+     * @param targets
+     */
+    void addUnloadTargets(Unit* pUnit, std::vector<QVector3D>& targets);
+    /**
+     * @brief addLoadingTargets
+     * @param pUnit
+     * @param targets
+     */
+    void addLoadingTargets(Unit* pUnit, const QStringList & actions, std::vector<QVector3D>& targets);
+    /**
      * @brief getBasicFieldInputVector
      * @param action
      * @param data
@@ -577,10 +594,11 @@ private:
     InfluenceFrontMap m_InfluenceFrontMap;
     spQmlVectorUnit m_pUnits = spQmlVectorUnit();
     spQmlVectorUnit m_pEnemyUnits = spQmlVectorUnit();
+    spQmlVectorBuilding m_pEnemyBuildings = spQmlVectorBuilding();
     Player* m_pPrimaryEnemy{nullptr};
     QTimer m_timer;
     bool m_pause{false};
-    QStringList m_secondyActions
+    QStringList m_secondActions
     {
         ACTION_WAIT,
         ACTION_LOAD,
@@ -591,7 +609,7 @@ private:
     {
         ACTION_UNLOAD,
     };
-    spTargetedUnitPathFindingSystem m_currentTargetedfPfs;
+    spTargetedUnitPathFindingSystem m_currentTargetedPfs;
     std::vector<QPoint> m_possibleCaptureTargets;
 
     double m_minActionScore{0.2};
