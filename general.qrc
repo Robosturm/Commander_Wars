@@ -2082,5 +2082,9 @@
         <file>resources/scripts/actions/ACTION_NEST_LASER.js</file>
         <file>resources/scripts/actions/ACTION_NEST_MORTAR.js</file>
         <file>resources/scripts/actions/ACTION_DISABLE_MINE.js</file>
+        <file>maps/commander_wars.camp/UprisingAtTheDocks.js</file>
+        <file>maps/commander_wars.camp/uprisingAtTheDocks.map</file>
+        <file>maps/commander_wars.camp/mechaInTheMiddle.js</file>
+        <file>maps/commander_wars.camp/mechaInTheMiddle.map</file>
     </qresource>
 </RCC>

@@ -56,6 +56,7 @@ var Constructor = function()
         data.setMapWidth(3072);
         data.setMapHeight(1444);
         // sprite flag offset 16 64
+        // 3072 1444
         var variables = campaign.getVariables();
         var lastWon = variables.createVariable("LastWonMap");
         var lastWonMapName = lastWon.readDataString();
@@ -63,6 +64,8 @@ var Constructor = function()
         var openMaps = [];
         var openMapNames = [];
         var newMapPositions = [];
+        var mapCount = 0;
+        var mapWinCount = 0;
 
         // --------------------------------------------------------------
         // Oil in the deset
@@ -77,25 +80,29 @@ var Constructor = function()
             var newOilInTheDesert = variables.createVariable("new" + oilInTheDesertName);
             if (newOilInTheDesert.readDataBool() === false)
             {
-                newMapPositions.push(newMapPositions.length);
+                newMapPositions.push(mapCount);
                 newOilInTheDesert.writeDataBool(true);
             }
+            ++mapCount;
         }
         else
         {
             if (lastWonMapName === oilInTheDesertName)
             {
-                data.setNewlyWonMap(wonMaps.length);
+                data.setNewlyWonMap(mapWinCount);
             }
             wonMaps.push(oilInTheDesertPos);
+            ++mapWinCount;
         }
+        // --------------------------------------------------------------
 
         // --------------------------------------------------------------
         // Day at the beach
         // --------------------------------------------------------------
-        var dayAtTheBeachName = "Day at the beach";
+        // 2080 805
+        var dayAtTheBeachName = "Day at the Beach";
         var dayAtTheBeach = variables.createVariable(dayAtTheBeachName);
-        var dayAtTheBeachPos = Qt.point(0.712565, 0.54778);
+        var dayAtTheBeachPos = Qt.point(0.671875, 0.513158);
         if (dayAtTheBeach.readDataBool() === false)
         {
             openMaps.push(dayAtTheBeachPos);
@@ -103,17 +110,83 @@ var Constructor = function()
             var newDayAtTheBeach = variables.createVariable("new" + dayAtTheBeachName);
             if (newDayAtTheBeach.readDataBool() === false)
             {
-                newMapPositions.push(newMapPositions.length);
+                newMapPositions.push(mapCount);
                 newDayAtTheBeach.writeDataBool(true);
             }
+            ++mapCount;
         }
         else
         {
             if (lastWonMapName === dayAtTheBeachName)
             {
-                data.setNewlyWonMap(wonMaps.length);
+                data.setNewlyWonMap(mapWinCount);
             }
             wonMaps.push(dayAtTheBeachPos);
+            ++mapWinCount;
+        }
+        // --------------------------------------------------------------
+
+        // --------------------------------------------------------------
+        // Urprising at the docks
+        // --------------------------------------------------------------
+        var uprisingAtTheDocksName = "Uprising at the Docks";
+        var uprisingAtTheDocks = variables.createVariable(uprisingAtTheDocksName);
+        if (dayAtTheBeach.readDataBool() === true)
+        {
+            var uprisingAtTheDocksPos = Qt.point(0.712565, 0.54778);
+            if (uprisingAtTheDocks.readDataBool() === false)
+            {
+                openMaps.push(uprisingAtTheDocksPos);
+                openMapNames.push("uprisingAtTheDocks.map");
+                var newUprisingAtTheDocks = variables.createVariable("new" + uprisingAtTheDocksName);
+                if (newUprisingAtTheDocks.readDataBool() === false)
+                {
+                    newMapPositions.push(mapCount);
+                    newUprisingAtTheDocks.writeDataBool(true);
+                }
+                ++mapCount;
+            }
+            else
+            {
+                if (lastWonMapName === uprisingAtTheDocksName)
+                {
+                    data.setNewlyWonMap(mapWinCount);
+                }
+                wonMaps.push(uprisingAtTheDocksPos);
+                ++mapWinCount;
+            }
+        }
+        // --------------------------------------------------------------
+
+        // --------------------------------------------------------------
+        // Mecha in the Middle
+        // --------------------------------------------------------------
+        var mechaInTheMiddleName = "Mecha in the Middle";
+        var mechaInTheMiddle = variables.createVariable(mechaInTheMiddleName);
+        if (uprisingAtTheDocks.readDataBool() === true)
+        {
+            var mechaInTheMiddlePos = Qt.point(0.7630208, 0.5166205);
+            if (mechaInTheMiddle.readDataBool() === false)
+            {
+                openMaps.push(mechaInTheMiddlePos);
+                openMapNames.push("mechaInTheMiddle.map");
+                var newMechaInTheMiddle = variables.createVariable("new" + mechaInTheMiddleName);
+                if (newMechaInTheMiddle.readDataBool() === false)
+                {
+                    newMapPositions.push(mapCount);
+                    newMechaInTheMiddle.writeDataBool(true);
+                }
+                ++mapCount;
+            }
+            else
+            {
+                if (lastWonMapName === mechaInTheMiddleName)
+                {
+                    data.setNewlyWonMap(mapWinCount);
+                }
+                wonMaps.push(uprisingAtTheDocksPos);
+                ++mapWinCount;
+            }
         }
         // --------------------------------------------------------------
 

@@ -125,19 +125,6 @@ void ActionPerformer::performAction(spGameAction pGameAction)
             m_pCurrentAction = pGameAction;
             pGameAction = nullptr;
             skipAnimations(false);
-            if (!m_pMap->anyPlayerAlive() &&
-                m_pMenu != nullptr)
-            {
-                CONSOLE_PRINT("Forcing exiting the game cause no player is alive", Console::eDEBUG);
-                emit m_pMenu->sigExitGame();
-            }
-            else if (m_pMap->getCurrentPlayer()->getIsDefeated())
-            {
-                CONSOLE_PRINT("Triggering next player cause current player is defeated", Console::eDEBUG);
-                spGameAction pAction = spGameAction::create(m_pMap);
-                pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
-                performAction(pAction);
-            }
         }
         if (pCurrentPlayer != m_pMap->getCurrentPlayer() &&
             m_pMenu != nullptr)

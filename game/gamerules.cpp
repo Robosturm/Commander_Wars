@@ -219,8 +219,7 @@ qint32 GameRules::getVictoryTeam()
 }
 
 void GameRules::checkVictory()
-{
-    
+{    
     if (m_pMap != nullptr)
     {
         for (qint32 i = 0; i < m_VictoryRules.size(); i++)
@@ -273,7 +272,6 @@ void GameRules::checkVictory()
             }
         }
     }
-
 }
 
 void GameRules::addWeather(const QString & weatherId, qint32 weatherChance)
