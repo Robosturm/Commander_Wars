@@ -17,7 +17,6 @@
 #include "coreengine/commandlineparser.h"
 
 #include "game/gamemap.h"
-#include "game/GameEnums.h"
 
 const char* const DRIVER = "QSQLITE";
 
@@ -678,7 +677,7 @@ void MainServer::createAccount(qint64 socketId, const QJsonDocument & doc, Netwo
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Creating account with username " + username + " and email adress " + mailAdress, Console::eDEBUG);
     bool success = false;
-    QSqlQuery query = getAccountInfo(username, success);
+    QSqlQuery query = getAccountInfo(m_serverData, username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;
     if (!query.first() && success)
     {
@@ -725,32 +724,13 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, Netw
     auto & cypher = Mainapp::getInstance()->getCypher();
     QJsonObject data = doc.object();
     QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
-    bool success = false;
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Login to account with username " + username, Console::eDEBUG);
-    QSqlQuery query = getAccountInfo(username, success);
-    GameEnums::LoginError result = GameEnums::LoginError_None;
-    if (query.first() && success)
+    auto result = checkPassword(m_serverData, username, password);
+    if (result == GameEnums::LoginError_None)
     {
-        auto dbPassword = query.value(SQL_PASSWORD);
-        auto outdatedPassword = query.value(SQL_VALIDPASSWORD).toInt();
-        if (dbPassword.toByteArray() != password.toHex())
-        {
-            result = GameEnums::LoginError_WrongPassword;
-        }
-        if (outdatedPassword == 0)
-        {
-            result = GameEnums::LoginError_PasswordOutdated;
-        }
-        else
-        {
-            // mark client as logged in
-            emit m_pGameServer->sigSetIsActive(socketId, true);
-        }
-    }
-    else
-    {
-        result = GameEnums::LoginError_AccountDoesntExist;
+        // mark client as logged in
+        emit m_pGameServer->sigSetIsActive(socketId, true);
     }
     QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
     CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
@@ -766,6 +746,59 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, Netw
     }
 }
 
+GameEnums::LoginError MainServer::checkPassword(QSqlDatabase & database, const QString & username, const QByteArray & password)
+{
+    bool success = false;
+    QSqlQuery query = getAccountInfo(database, username, success);
+    GameEnums::LoginError result = GameEnums::LoginError_None;
+    if (query.first() && success)
+    {
+        CONSOLE_PRINT("Checking password for : " + username, Console::eDEBUG);
+        auto dbPassword = query.value(SQL_PASSWORD);
+        auto outdatedPassword = query.value(SQL_VALIDPASSWORD).toInt();
+        if (dbPassword.toByteArray() != password.toHex())
+        {
+            result = GameEnums::LoginError_WrongPassword;
+        }
+        if (outdatedPassword == 0)
+        {
+            CONSOLE_PRINT("Account info for : " + username + " is out dated.", Console::eDEBUG);
+            result = GameEnums::LoginError_PasswordOutdated;
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Account info for : " + username + " not found.", Console::eDEBUG);
+        result = GameEnums::LoginError_AccountDoesntExist;
+    }
+    return result;
+}
+
+bool MainServer::verifyLoginData(const QString & username, const QByteArray & password)
+{
+    bool valid = false;
+    if(QSqlDatabase::isDriverAvailable(DRIVER))
+    {
+        QSqlDatabase serverData = QSqlDatabase::addDatabase(DRIVER);
+        QString path = Settings::getUserPath() + "/commanderWars.db";
+        if (Settings::getUserPath().isEmpty())
+        {
+            path = QCoreApplication::applicationDirPath() + "/commanderWars.db";
+        }
+        serverData.setDatabaseName(path);
+        if (!serverData.open())
+        {
+            CONSOLE_PRINT("Unable to open player error: " + serverData.lastError().text(), Console::eERROR);
+            CONSOLE_PRINT("Unable to open player native error: " + serverData.lastError().nativeErrorCode(), Console::eERROR);
+        }
+        else
+        {
+            valid = checkPassword(serverData, username, password) == GameEnums::LoginError_None;
+        }
+    }
+    return valid;
+}
+
 void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
 {
     QJsonObject data = doc.object();
@@ -773,7 +806,7 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Resetting account with username " + username + " and email adress " + mailAdress, Console::eDEBUG);
     bool success = false;
-    QSqlQuery query = getAccountInfo(username, success);
+    QSqlQuery query = getAccountInfo(m_serverData, username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;
     if (query.first() && success)
     {
@@ -830,7 +863,7 @@ void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument & do
     bool success = false;
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Login to account with username " + username, Console::eDEBUG);
-    QSqlQuery query = getAccountInfo(username, success);
+    QSqlQuery query = getAccountInfo(m_serverData, username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;
     if (query.first() && success)
     {
@@ -919,18 +952,18 @@ QString MainServer::createRandomPassword() const
     return password;
 }
 
-QSqlQuery MainServer::getAccountInfo(const QString & username, bool & success)
+QSqlQuery MainServer::getAccountInfo(QSqlDatabase & database, const QString & username, bool & success)
 {
-    QSqlQuery query = m_serverData.exec(QString("SELECT ") +
-                                        SQL_USERNAME + ", " +
-                                        SQL_PASSWORD + ", " +
-                                        SQL_MAILADRESS + ", " +
-                                        SQL_MMR + ", " +
-                                        SQL_VALIDPASSWORD + ", " +
-                                        SQL_LASTLOGIN +
-                                        " from " + SQL_TABLE_PLAYERS +
-                                        " WHERE " + SQL_USERNAME +
-                                        " = '" + username + "';");
+    QSqlQuery query = database.exec(QString("SELECT ") +
+                                    SQL_USERNAME + ", " +
+                                    SQL_PASSWORD + ", " +
+                                    SQL_MAILADRESS + ", " +
+                                    SQL_MMR + ", " +
+                                    SQL_VALIDPASSWORD + ", " +
+                                    SQL_LASTLOGIN +
+                                    " from " + SQL_TABLE_PLAYERS +
+                                    " WHERE " + SQL_USERNAME +
+                                    " = '" + username + "';");
     success = !sqlQueryFailed(query);
     return query;
 }

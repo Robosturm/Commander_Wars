@@ -49,6 +49,7 @@
 
 #include "network/tcpserver.h"
 #include "network/JsonKeys.h"
+#include "network/mainserver.h"
 
 #include "wiki/fieldinfo.h"
 #include "wiki/wikiview.h"
@@ -276,6 +277,42 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
         }
     }    
+    else if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
+    {
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject objData = doc.object();
+        QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
+        CONSOLE_PRINT("Server Network Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
+        if (messageType == NetworkCommands::VERIFYLOGINDATA)
+        {
+            verifyLoginData(objData, socketID);
+        }
+        else if (messageType == NetworkCommands::SENDPUBLICKEY)
+        {
+            auto action = static_cast<NetworkCommands::PublicKeyActions>(objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt());
+            if (action == NetworkCommands::PublicKeyActions::RequestLoginData)
+            {
+                sendLoginData(socketID, objData, action);
+            }
+            else
+            {
+                CONSOLE_PRINT("Unknown public key action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
+            }
+        }
+        else if (messageType == NetworkCommands::CRYPTEDMESSAGE)
+        {
+            auto action = static_cast<NetworkCommands::PublicKeyActions>(objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt());
+            if (action == NetworkCommands::PublicKeyActions::RequestLoginData)
+            {
+                auto & cypher = Mainapp::getInstance()->getCypher();
+                recieveData(socketID, cypher.getDecryptedMessage(doc), NetworkInterface::NetworkSerives::ServerHostingJson);
+            }
+            else
+            {
+                CONSOLE_PRINT("Unknown crypted message action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
+            }
+        }
+    }
     else if (service == NetworkInterface::NetworkSerives::GameChat)
     {
         if (m_pChat->getVisible() == false)
@@ -287,6 +324,45 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             m_chatButtonShineTween = oxygine::createTween(oxygine::VStyleActor::TweenAddColor(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
             m_ChatButton->addTween(m_chatButtonShineTween);
         }
+    }
+    else
+    {
+        CONSOLE_PRINT("Unknown command " + QString::number(static_cast<qint32>(service)) + " received", Console::eDEBUG);
+    }
+}
+
+void GameMenue::sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::VERIFYLOGINDATA);
+    Password serverPassword;
+    serverPassword.setPassword(Settings::getServerPassword());
+    data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(serverPassword.getHash()));
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    // send map data to client and make sure password message is crypted
+    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
+    QJsonDocument doc(data);
+    CONSOLE_PRINT("Sending login data to slave", Console::eDEBUG);
+    emit m_pNetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void GameMenue::verifyLoginData(const QJsonObject & objData, quint64 socketID)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
+    QByteArray password = cypher.toByteArray(objData.value(JsonKeys::JSONKEY_USERNAME).toArray());
+    bool valid = MainServer::verifyLoginData(username, password);
+    if (valid)
+    {
+        CONSOLE_PRINT("Client login data are valid. Requesting join reason", Console::eDEBUG);
+        sendRequestJoinReason(socketID);
+    }
+    else
+    {
+        CONSOLE_PRINT("Client login data are invalid. Closing connection.", Console::eDEBUG);
+        // todo error handling
+        emit m_pNetworkInterface->sigDisconnectClient(socketID);
     }
 }
 
@@ -338,12 +414,12 @@ void GameMenue::joinAsObserver(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            emit m_pNetworkInterface.get()->sigDisconnectClient(socketID);
+            emit m_pNetworkInterface->sigDisconnectClient(socketID);
         }
     }
     else
     {
-        emit m_pNetworkInterface.get()->sigDisconnectClient(socketID);
+        emit m_pNetworkInterface->sigDisconnectClient(socketID);
     }
 }
 
@@ -386,7 +462,8 @@ void GameMenue::joinAsPlayer(QDataStream & stream, quint64 socketID)
     }
     else
     {
-        emit m_pNetworkInterface.get()->sigDisconnectClient(socketID);
+        // todo error handling
+        emit m_pNetworkInterface->sigDisconnectClient(socketID);
     }
 }
 
@@ -545,13 +622,28 @@ void GameMenue::playerJoined(quint64 socketID)
     if (m_pNetworkInterface->getIsServer())
     {
         CONSOLE_PRINT("Player joined with socket: " + QString::number(socketID), Console::eDEBUG);
-        QString command = QString(NetworkCommands::REQUESTJOINREASON);
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-        QByteArray data;
-        QDataStream stream(&data, QIODevice::WriteOnly);
-        stream << command;
-        emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+
+        if (Mainapp::getSlave())
+        {
+            CONSOLE_PRINT("Slave requesting login data", Console::eDEBUG);
+            auto & cypher = Mainapp::getInstance()->getCypher();
+            emit m_pNetworkInterface->sig_sendData(socketID, cypher.getPublicKeyMessage(NetworkCommands::PublicKeyActions::RequestLoginData), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        }
+        else
+        {
+            sendRequestJoinReason(socketID);
+        }
     }
+}
+
+void GameMenue::sendRequestJoinReason(quint64 socketID)
+{
+    QString command = QString(NetworkCommands::REQUESTJOINREASON);
+    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << command;
+    emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 
 void GameMenue::disconnected(quint64 socketID)

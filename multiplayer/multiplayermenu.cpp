@@ -20,6 +20,8 @@
 
 #include "network/tcpclient.h"
 #include "network/tcpserver.h"
+#include "network/mainserver.h"
+#include "network/JsonKeys.h"
 
 #include "game/gamemap.h"
 #include "game/player.h"
@@ -35,8 +37,6 @@
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
-
-#include "network/JsonKeys.h"
 
 Multiplayermenu::Multiplayermenu(QString adress, quint16 port, QString password, NetworkMode networkMode)
     : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 380),
@@ -224,7 +224,16 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
     {
         m_hostSocket = socketID;
     }
-    emit m_NetworkInterface->sig_sendData(socketID, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::SendInitialMapUpdate), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    if (Mainapp::getSlave())
+    {
+        CONSOLE_PRINT("Slave requesting login data", Console::eDEBUG);
+        emit m_NetworkInterface->sig_sendData(socketID, cypher.getPublicKeyMessage(NetworkCommands::PublicKeyActions::RequestLoginData), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
+    else
+    {
+        CONSOLE_PRINT("Requesting public key for initial map update", Console::eDEBUG);
+        emit m_NetworkInterface->sig_sendData(socketID, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::SendInitialMapUpdate), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
 }
 
 void Multiplayermenu::filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter)
@@ -344,6 +353,10 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         if (messageType == NetworkCommands::SLAVEADDRESSINFO)
         {
             connectToSlave(objData, socketID);
+        }        
+        else if (messageType == NetworkCommands::VERIFYLOGINDATA)
+        {
+            verifyLoginData(objData, socketID);
         }
         else if (messageType == NetworkCommands::SERVERINVALIDMODCONFIG)
         {
@@ -372,6 +385,10 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             {
                 sendMapInfoUpdate(socketID, objData, action);
             }
+            else if (action == NetworkCommands::PublicKeyActions::RequestLoginData)
+            {
+                sendLoginData(socketID, objData, action);
+            }
             else
             {
                 CONSOLE_PRINT("Unknown public key action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
@@ -385,6 +402,11 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 auto & cypher = Mainapp::getInstance()->getCypher();
                 recieveData(socketID, cypher.getDecryptedMessage(doc), NetworkInterface::NetworkSerives::Multiplayer);
             }
+            else if (action == NetworkCommands::PublicKeyActions::RequestLoginData)
+            {
+                auto & cypher = Mainapp::getInstance()->getCypher();
+                recieveData(socketID, cypher.getDecryptedMessage(doc), NetworkInterface::NetworkSerives::ServerHostingJson);
+            }
             else
             {
                 CONSOLE_PRINT("Unknown crypted message action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
@@ -394,6 +416,41 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
         }
+    }
+}
+
+void Multiplayermenu::sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::VERIFYLOGINDATA);
+    Password serverPassword;
+    serverPassword.setPassword(Settings::getServerPassword());
+    data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(serverPassword.getHash()));
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    // send map data to client and make sure password message is crypted
+    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
+    QJsonDocument doc(data);
+    CONSOLE_PRINT("Sending login data to slave", Console::eDEBUG);
+    emit m_NetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socketID)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QString username =  objData.value(JsonKeys::JSONKEY_USERNAME).toString();
+    QByteArray password = cypher.toByteArray(objData.value(JsonKeys::JSONKEY_PASSWORD).toArray());
+    bool valid = MainServer::verifyLoginData(username, password);
+    if (valid)
+    {
+        CONSOLE_PRINT("Client login data are valid. Requesting public key for initial map update", Console::eDEBUG);
+        emit m_NetworkInterface->sig_sendData(socketID, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::SendInitialMapUpdate), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
+    else
+    {
+        CONSOLE_PRINT("Client login data are invalid. Closing connection.", Console::eDEBUG);
+        // todo error handling
+        emit m_NetworkInterface->sigDisconnectClient(socketID);
     }
 }
 
@@ -1403,6 +1460,7 @@ void Multiplayermenu::startGameOnServer()
     spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Launching game on server"), 1000 * 60 * 5);
     addChild(pDialogConnecting);
     connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);
+    connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);
     connect(this, &Multiplayermenu::sigHostGameLaunched, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
     connect(pDialogConnecting.get(), &DialogConnecting::sigConnected, this, &Multiplayermenu::slotHostGameLaunched);
 }

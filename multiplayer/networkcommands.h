@@ -9,6 +9,7 @@ namespace NetworkCommands
         LoginAccount,
         ResetPassword,
         ChangePassword,
+        RequestLoginData,
     };
 
     /**
@@ -139,6 +140,10 @@ namespace NetworkCommands
      * @brief CRYPTEDMESSAGE
      */
     const char* const CRYPTEDMESSAGE = "CRYPTEDMESSAGE";
+    /**
+     * @brief CRYPTEDMESSAGE
+     */
+    const char* const VERIFYLOGINDATA = "VERIFYLOGINDATA";
 
     /*****************************************************************************************************************************/
     // dedicated server commands

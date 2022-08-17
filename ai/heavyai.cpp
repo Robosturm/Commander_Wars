@@ -579,7 +579,7 @@ void HeavyAi::scoreActions(MoveUnitData & unit)
                 FunctionType type = FunctionType::CPlusPlus;
                 qint32 index = -1;
                 getFunctionType(action, type, index);
-                if (index >= 0)
+                if (type != FunctionType::Undefined)
                 {
                     mutateActionForFields(unit, moveTargets, action, type, index,
                                           bestScore, scoreInfos);
@@ -810,7 +810,6 @@ void HeavyAi::getFunctionType(const QString & action, FunctionType & type, qint3
     if (pInterpreter->exists(m_aiName, action))
     {
         type = FunctionType::JavaScript;
-        index = 0;
     }
     else
     {
@@ -1254,14 +1253,14 @@ void HeavyAi::scoreMoveToTargets()
             prepareWaitPfs(unit, actions);
             std::vector<ScoreData> scoreInfos;
             float bestScore = m_minActionScore - 1.0;
+            auto moveTargets = unit.pUnitPfs->getAllNodePointsFast(unit.movementPoints + 1);
             for (const auto & action : qAsConst(actions))
             {
                 FunctionType type = FunctionType::CPlusPlus;
                 qint32 index = -1;
                 getFunctionType(action, type, index);
-                if (index >= 0)
+                if (type != FunctionType::Undefined)
                 {
-                    auto moveTargets = unit.pUnitPfs->getAllNodePointsFast(unit.movementPoints + 1);
                     mutateActionForFields(unit, moveTargets, action, type, index,
                                           bestScore, scoreInfos);
                 }                

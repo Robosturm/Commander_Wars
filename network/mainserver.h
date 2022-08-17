@@ -15,6 +15,8 @@
 
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
+#include "game/GameEnums.h"
+
 class MainServer;
 using spMainServer = oxygine::intrusive_ptr<MainServer>;
 
@@ -39,6 +41,7 @@ class MainServer : public QObject, public oxygine::ref_counter
 public:
     static MainServer* getInstance();
     static bool exists();
+    static bool verifyLoginData(const QString & username, const QByteArray & password);
     void release();
     virtual ~MainServer();
 
@@ -187,8 +190,6 @@ private:
      * @brief parseSlaveAddressOptions
      */
     void parseSlaveAddressOptions();
-
-    bool sqlQueryFailed(const QSqlQuery & query);
     /**
      * @brief handleCryptedMessage
      * @param socketId
@@ -209,6 +210,14 @@ private:
      */
     void loginToAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
     /**
+     * @brief checkPassword
+     * @param database
+     * @param username
+     * @param password
+     * @return
+     */
+    static GameEnums::LoginError checkPassword(QSqlDatabase & database, const QString & username, const QByteArray & password);
+    /**
      * @brief resetAccountPassword
      * @param socketId
      * @param doc
@@ -227,7 +236,13 @@ private:
      * @param success
      * @return
      */
-    QSqlQuery getAccountInfo(const QString & username, bool & success);
+    static QSqlQuery getAccountInfo(QSqlDatabase & database, const QString & username, bool & success);
+    /**
+     * @brief sqlQueryFailed
+     * @param query
+     * @return
+     */
+    static bool sqlQueryFailed(const QSqlQuery & query);
     /**
      * @brief sendMail
      * @param message

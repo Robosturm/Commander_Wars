@@ -235,6 +235,24 @@ public slots:
      */
     void playerJoined(quint64 socketID);
     /**
+     * @brief sendLoginData
+     * @param socketID
+     * @param objData
+     * @param action
+     */
+    void sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
+    /**
+     * @brief verifyLoginData
+     * @param objData
+     * @param socketID
+     */
+    void verifyLoginData(const QJsonObject & objData, quint64 socketID);
+    /**
+     * @brief sendRequestJoinReason
+     * @param socketID
+     */
+    void sendRequestJoinReason(quint64 socketID);
+    /**
      * @brief continueAfterSyncGame
      */
     void continueAfterSyncGame();

@@ -137,24 +137,32 @@ void CommandLineParser::parseArgsPhaseTwo()
     {
         pApp->setNoAudio();
     }
-    QString mods = m_parser.value(m_mods);
-    if (!mods.isEmpty())
+    if (m_parser.isSet(m_mods))
     {
-        QStringList modList = mods.split(",");
-        qint32 i= 0;
-        while (i < modList.size())
+        QString mods = m_parser.value(m_mods);
+        if (!mods.isEmpty())
         {
-            if (modList[i].isEmpty())
+            QStringList modList = mods.split(",");
+            qint32 i= 0;
+            while (i < modList.size())
             {
-                modList.removeAt(i);
+                if (modList[i].isEmpty())
+                {
+                    modList.removeAt(i);
+                }
+                else
+                {
+                    ++i;
+                }
             }
-            else
-            {
-                ++i;
-            }
+            CONSOLE_PRINT("Using injected mod list: " + mods, Console::eDEBUG);
+            Settings::setActiveMods(modList);
         }
-        CONSOLE_PRINT("Using injected mod list: " + mods, Console::eDEBUG);
-        Settings::setActiveMods(modList);
+        else
+        {
+            CONSOLE_PRINT("Using no mods", Console::eDEBUG);
+            Settings::setActiveMods(QStringList());
+        }
     }
     if (m_parser.isSet(m_iniScript))
     {
