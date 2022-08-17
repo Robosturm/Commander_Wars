@@ -32,4 +32,5 @@ namespace JsonKeys
     const char* const JSONKEY_USERNAME = "username";
     const char* const JSONKEY_ACCOUNT_ERROR = "accountError";
     const char* const JSONKEY_USERNAMES = "usernames";
+    const char* const JSONKEY_DISCONNECTREASON = "disconnectReason";
 }

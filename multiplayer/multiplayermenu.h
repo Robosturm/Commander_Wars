@@ -132,6 +132,7 @@ protected:
     void connectToSlave(const QJsonObject & objData, quint64 socketID);
     void startRejoinedGame(qint64 syncCounter);
     void receivePlayerControlledInfo(QDataStream & stream, quint64 socketID);
+    void showDisconnectReason(quint64 socketID, const QJsonObject & objData);
     void sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void verifyLoginData(const QJsonObject & objData, quint64 socketID);
     void sendMapInfoUpdate(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
@@ -176,7 +177,7 @@ private:
     void changeButtonText();
 private:
     NetworkMode m_networkMode{NetworkMode::Client};
-    spNetworkInterface m_NetworkInterface;
+    spNetworkInterface m_pNetworkInterface;
     oxygine::spButton m_pHostAdresse;
     spChat m_Chat;
     QTimer m_GameStartTimer;

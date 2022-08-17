@@ -36,6 +36,7 @@ TCPClient::~TCPClient()
 
 void TCPClient::connectTCP(QString adress, quint16 port)
 {
+    m_socketID = 1;
     m_pSocket = std::make_shared<QTcpSocket>(this);
     connect(m_pSocket.get(), &QTcpSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
@@ -99,7 +100,6 @@ spTxTask TCPClient::getTXTask() const
 {
     return m_pTXTask;
 }
-
 
 spRxTask TCPClient::getRXTask() const
 {

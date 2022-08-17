@@ -312,6 +312,14 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                 CONSOLE_PRINT("Unknown crypted message action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
             }
         }
+        else if (messageType == NetworkCommands::DISCONNECTINGFOFROMSERVER)
+        {
+            showDisconnectReason(socketID, objData);
+        }
+        else
+        {
+            CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
+        }
     }
     else if (service == NetworkInterface::NetworkSerives::GameChat)
     {
@@ -329,6 +337,21 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
     {
         CONSOLE_PRINT("Unknown command " + QString::number(static_cast<qint32>(service)) + " received", Console::eDEBUG);
     }
+}
+
+void GameMenue::showDisconnectReason(quint64 socketID, const QJsonObject & objData)
+{
+    QStringList reasons =
+    {
+        tr("Connection failed.Reason: Invalid login data."),
+        tr("Connection failed.Reason: No more observers available."),
+        tr("Connection failed.Reason: No valid player available."),
+        tr("Connection failed.Reason: Invalid connection."),
+    };
+    NetworkCommands::DisconnectReason type = static_cast<NetworkCommands::DisconnectReason>(objData.value(JsonKeys::JSONKEY_DISCONNECTREASON).toInt());
+    spDialogMessageBox pDialog = spDialogMessageBox::create(reasons[type]);
+    oxygine::Stage::getStage()->addChild(pDialog);
+    emit m_pNetworkInterface->sigDisconnected(0);
 }
 
 void GameMenue::sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
@@ -361,8 +384,13 @@ void GameMenue::verifyLoginData(const QJsonObject & objData, quint64 socketID)
     else
     {
         CONSOLE_PRINT("Client login data are invalid. Closing connection.", Console::eDEBUG);
-        // todo error handling
-        emit m_pNetworkInterface->sigDisconnectClient(socketID);
+        QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::InvalidLoginData);
+        QJsonDocument doc(data);
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -414,12 +442,24 @@ void GameMenue::joinAsObserver(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            emit m_pNetworkInterface->sigDisconnectClient(socketID);
+            QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
+            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            QJsonObject data;
+            data.insert(JsonKeys::JSONKEY_COMMAND, command);
+            data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::NoMoreObservers);
+            QJsonDocument doc(data);
+            emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         }
     }
     else
     {
-        emit m_pNetworkInterface->sigDisconnectClient(socketID);
+        QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::InvalidConnection);
+        QJsonDocument doc(data);
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -462,8 +502,13 @@ void GameMenue::joinAsPlayer(QDataStream & stream, quint64 socketID)
     }
     else
     {
-        // todo error handling
-        emit m_pNetworkInterface->sigDisconnectClient(socketID);
+        QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::InvalidConnection);
+        QJsonDocument doc(data);
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -679,7 +724,7 @@ void GameMenue::disconnected(quint64 socketID)
                 {
                     m_pNetworkInterface = nullptr;
                 }
-                if (showDisconnect)
+                if (showDisconnect && socketID > 0)
                 {
                     m_gameStarted = false;
                     spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));

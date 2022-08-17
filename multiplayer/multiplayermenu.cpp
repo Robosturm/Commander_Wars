@@ -47,12 +47,12 @@ Multiplayermenu::Multiplayermenu(QString adress, quint16 port, QString password,
     init();
     if (m_networkMode != NetworkMode::Host)
     {
-        m_NetworkInterface = spTCPClient::create(nullptr);
-        m_NetworkInterface->setIsObserver(m_networkMode == NetworkMode::Observer);
-        m_NetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
+        m_pNetworkInterface = spTCPClient::create(nullptr);
+        m_pNetworkInterface->setIsObserver(m_networkMode == NetworkMode::Observer);
+        m_pNetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
+        m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
         initClientAndWaitForConnection();
-        emit m_NetworkInterface->sig_connect(adress, port);
+        emit m_pNetworkInterface->sig_connect(adress, port);
     }
     else
     {
@@ -75,7 +75,7 @@ Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, QString p
       m_local(false),
       m_password(password)
 {
-    m_NetworkInterface = pNetworkInterface;
+    m_pNetworkInterface = pNetworkInterface;
     init();
     if (m_networkMode != NetworkMode::Host)
     {
@@ -104,8 +104,8 @@ void Multiplayermenu::initClientAndWaitForConnection()
         m_pButtonStart->setVisible(false);
     }
     // quit on host connection lost
-    connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
-    connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
+    connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
+    connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
     connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
     // wait 10 minutes till timeout
     spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Connecting"), 1000 * 60 * 5);
@@ -208,7 +208,7 @@ void Multiplayermenu::showMapSelection()
 void Multiplayermenu::playerJoined(quint64 socketID)
 {
     CONSOLE_PRINT("Multiplayermenu::playerJoined", Console::eDEBUG);
-    if (m_NetworkInterface->getIsServer() &&
+    if (m_pNetworkInterface->getIsServer() &&
        (m_local || Mainapp::getSlave()))
     {
         acceptNewConnection(socketID);
@@ -227,12 +227,12 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
     if (Mainapp::getSlave())
     {
         CONSOLE_PRINT("Slave requesting login data", Console::eDEBUG);
-        emit m_NetworkInterface->sig_sendData(socketID, cypher.getPublicKeyMessage(NetworkCommands::PublicKeyActions::RequestLoginData), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, cypher.getPublicKeyMessage(NetworkCommands::PublicKeyActions::RequestLoginData), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
     else
     {
         CONSOLE_PRINT("Requesting public key for initial map update", Console::eDEBUG);
-        emit m_NetworkInterface->sig_sendData(socketID, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::SendInitialMapUpdate), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::SendInitialMapUpdate), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -278,7 +278,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
     {
         if (!m_pPlayerSelection->hasNetworkInterface())
         {
-            m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
+            m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
         }
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
@@ -307,7 +307,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         else if (messageType == NetworkCommands::INITGAME)
         {
             // initializes the game on the client
-            if (!m_NetworkInterface->getIsServer() ||
+            if (!m_pNetworkInterface->getIsServer() ||
                 !m_local)
             {
                 initClientGame(socketID, stream);
@@ -376,7 +376,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             auto & cypher = Mainapp::getInstance()->getCypher();
             auto action = static_cast<NetworkCommands::PublicKeyActions>(objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt());
-            emit m_NetworkInterface->sig_sendData(socketID, cypher.getPublicKeyMessage(action), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+            emit m_pNetworkInterface->sig_sendData(socketID, cypher.getPublicKeyMessage(action), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         }
         else if (messageType == NetworkCommands::SENDPUBLICKEY)
         {
@@ -412,11 +412,30 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 CONSOLE_PRINT("Unknown crypted message action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
             }
         }
+        else if (messageType == NetworkCommands::DISCONNECTINGFOFROMSERVER)
+        {
+            showDisconnectReason(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
         }
     }
+}
+
+void Multiplayermenu::showDisconnectReason(quint64 socketID, const QJsonObject & objData)
+{
+    QStringList reasons =
+    {
+        tr("Connection failed.Reason: Invalid login data."),
+        tr("Connection failed.Reason: No more observers available."),
+        tr("Connection failed.Reason: No valid player available."),
+        tr("Connection failed.Reason: Invalid connection."),
+    };
+    NetworkCommands::DisconnectReason type = static_cast<NetworkCommands::DisconnectReason>(objData.value(JsonKeys::JSONKEY_DISCONNECTREASON).toInt());
+    spDialogMessageBox pDialog = spDialogMessageBox::create(reasons[type]);
+    oxygine::Stage::getStage()->addChild(pDialog);
+    emit m_pNetworkInterface->sigDisconnected(0);
 }
 
 void Multiplayermenu::sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
@@ -432,7 +451,7 @@ void Multiplayermenu::sendLoginData(quint64 socketID, const QJsonObject & objDat
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
     QJsonDocument doc(data);
     CONSOLE_PRINT("Sending login data to slave", Console::eDEBUG);
-    emit m_NetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pNetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socketID)
@@ -444,13 +463,18 @@ void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socke
     if (valid)
     {
         CONSOLE_PRINT("Client login data are valid. Requesting public key for initial map update", Console::eDEBUG);
-        emit m_NetworkInterface->sig_sendData(socketID, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::SendInitialMapUpdate), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::SendInitialMapUpdate), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
     else
     {
         CONSOLE_PRINT("Client login data are invalid. Closing connection.", Console::eDEBUG);
-        // todo error handling
-        emit m_NetworkInterface->sigDisconnectClient(socketID);
+        QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::InvalidLoginData);
+        QJsonDocument doc(data);
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -461,9 +485,12 @@ void Multiplayermenu::sendMapInfoUpdate(quint64 socketID, const QJsonObject & ob
     QString fileName = m_pMapSelectionView->getCurrentFile().fileName();
     QString scriptFile = m_pMapSelectionView->getCurrentMap()->getGameScript()->getScriptFile();
     QFile mapFile(file);
-    mapFile.open(QIODevice::ReadOnly);
-    myHash.addData(mapFile.readAll());
-    mapFile.close();
+    if (mapFile.exists())
+    {
+        mapFile.open(QIODevice::ReadOnly);
+        myHash.addData(mapFile.readAll());
+        mapFile.close();
+    }
     QString command = QString(NetworkCommands::MAPINFO);
     CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
     QByteArray hash = myHash.result();
@@ -517,7 +544,7 @@ void Multiplayermenu::sendMapInfoUpdate(quint64 socketID, const QJsonObject & ob
     // send map data to client and make sure password message is crypted
     auto & cypher = Mainapp::getInstance()->getCypher();
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
-    emit m_NetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, data).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pNetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, data).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void Multiplayermenu::connectToSlave(const QJsonObject & objData, quint64 socketID)
@@ -526,13 +553,13 @@ void Multiplayermenu::connectToSlave(const QJsonObject & objData, quint64 socket
     QString address = objData.value(JsonKeys::JSONKEY_ADDRESS).toString();
     quint16 port = objData.value(JsonKeys::JSONKEY_PORT).toInteger();
     disconnectNetworkSlots();
-    m_NetworkInterface = spTCPClient::create(nullptr);
-    m_NetworkInterface->setIsObserver(m_networkMode == NetworkMode::Observer);
-    m_NetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
+    m_pNetworkInterface = spTCPClient::create(nullptr);
+    m_pNetworkInterface->setIsObserver(m_networkMode == NetworkMode::Observer);
+    m_pNetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
+    m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
     createChat();
     connectNetworkSlots();
-    emit m_NetworkInterface->sig_connect(address, port);
+    emit m_pNetworkInterface->sig_connect(address, port);
 }
 
 void Multiplayermenu::onSlaveConnectedToMaster(quint64 socketID)
@@ -585,7 +612,7 @@ void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 sock
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << command;
         sendStream << Settings::getUsername();
-        emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
@@ -631,7 +658,7 @@ void Multiplayermenu::startRejoinedGame(qint64 syncCounter)
     // start game
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
-    auto window = spGameMenue::create(pMap, true, m_NetworkInterface, true);
+    auto window = spGameMenue::create(pMap, true, m_pNetworkInterface, true);
     window->getActionPerformer().setSyncCounter(syncCounter);
     oxygine::Stage::getStage()->addChild(window);
 
@@ -640,7 +667,7 @@ void Multiplayermenu::startRejoinedGame(qint64 syncCounter)
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << command;
     CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-    emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+    emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     oxygine::Actor::detach();
 }
 
@@ -653,7 +680,7 @@ void Multiplayermenu::sendJoinReason(QDataStream & stream, quint64 socketID)
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << command;
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-        emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
     else
     {
@@ -662,14 +689,14 @@ void Multiplayermenu::sendJoinReason(QDataStream & stream, quint64 socketID)
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << command;
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-        emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
 void Multiplayermenu::requestRule(quint64 socketID)
 {
     // a client requested the current map rules set by the server
-    if (m_NetworkInterface->getIsServer())
+    if (m_pNetworkInterface->getIsServer())
     {
         QString command = QString(NetworkCommands::SENDINITUPDATE);
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
@@ -713,14 +740,14 @@ void Multiplayermenu::requestRule(quint64 socketID)
             }
             m_pMapSelectionView->getCurrentMap()->getPlayer(i)->serializeObject(sendStream);
         }
-        emit m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
 void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
 {
     // the client recieved the initial map data read it and make it visible
-    if (!m_NetworkInterface->getIsServer() || !m_local)
+    if (!m_pNetworkInterface->getIsServer() || !m_local)
     {
         m_pMapSelectionView->getCurrentMap()->getGameRules()->deserializeObject(stream);
         if (!m_password.areEqualPassword(m_pMapSelectionView->getCurrentMap()->getGameRules()->getPassword()))
@@ -770,7 +797,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
                 QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                 sendStream << command;
                 CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-                emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
             }
             else
             {
@@ -785,7 +812,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
 void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
 {
     // we recieved map info from a server check if we have this map already
-    if (!m_NetworkInterface->getIsServer() || !m_local)
+    if (!m_pNetworkInterface->getIsServer() || !m_local)
     {
         QString version;
         stream >> version;
@@ -830,7 +857,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
                 QByteArray sendData;
                 QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                 sendStream << command;
-                emit m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                emit m_pNetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
             }
             else
             {
@@ -855,7 +882,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                     sendStream << command;
-                    emit m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    emit m_pNetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
                 }
                 else
                 {
@@ -864,7 +891,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                     sendStream << command;
-                    emit m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    emit m_pNetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
                 }
             }
         }
@@ -952,7 +979,7 @@ bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & ve
 void Multiplayermenu::requestMap(quint64 socketID)
 {
     // someone requested the current map data from the server
-    if (m_NetworkInterface->getIsServer())
+    if (m_pNetworkInterface->getIsServer())
     {
         QString command = QString(NetworkCommands::MAPDATA);
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
@@ -985,13 +1012,13 @@ void Multiplayermenu::requestMap(quint64 socketID)
             Filesupport::writeByteArray(sendStream, data);
             script.close();
         }
-        emit m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
 void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
 {
-    if (!m_NetworkInterface->getIsServer())
+    if (!m_pNetworkInterface->getIsServer())
     {
         QString mapFile;
         stream >> mapFile;
@@ -1071,7 +1098,7 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << command;
-        emit m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
@@ -1084,7 +1111,7 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     spGameMap pMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
     m_pMapSelectionView->setCurrentMap(pMap);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::SERVERMAPIDENTIFIER);
-    m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
+    m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
     m_pPlayerSelection->setIsServerGame(true);
     loadMultiplayerMap();
     createChat();
@@ -1123,7 +1150,7 @@ void Multiplayermenu::slotCancelHostConnection()
 void Multiplayermenu::slotHostGameLaunched()
 {
     // we're hosting a game so we get the same rights as a local host
-    m_NetworkInterface->setIsServer(true);
+    m_pNetworkInterface->setIsServer(true);
     createChat();
     MapSelectionMapsMenue::buttonNext();
 }
@@ -1222,9 +1249,9 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     }
     pMap->updateSprites();
     // start game
-    m_NetworkInterface->setIsServer(false);
+    m_pNetworkInterface->setIsServer(false);
     CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
-    auto window = spGameMenue::create(pMap, m_saveGame, m_NetworkInterface, false);
+    auto window = spGameMenue::create(pMap, m_saveGame, m_pNetworkInterface, false);
     oxygine::Stage::getStage()->addChild(window);
     // send game started
     QString command = QString(NetworkCommands::CLIENTINITGAME);
@@ -1232,8 +1259,8 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << command;
-    sendStream << m_NetworkInterface->getSocketID();
-    emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+    sendStream << m_pNetworkInterface->getSocketID();
+    emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 
 bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& scriptFileName, QByteArray& scriptHash)
@@ -1409,12 +1436,12 @@ void Multiplayermenu::buttonNext()
         if (m_local)
         {
             m_pHostAdresse->setVisible(true);
-            m_NetworkInterface = spTCPServer::create(nullptr);
-            m_NetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
-            m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
+            m_pNetworkInterface = spTCPServer::create(nullptr);
+            m_pNetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
+            m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
             createChat();
             connectNetworkSlots();
-            emit m_NetworkInterface->sig_connect("", Settings::getGamePort());
+            emit m_pNetworkInterface->sig_connect("", Settings::getGamePort());
             MapSelectionMapsMenue::buttonNext();
         }
         else
@@ -1432,16 +1459,16 @@ void Multiplayermenu::buttonNext()
 
 void Multiplayermenu::connectNetworkSlots()
 {
-    connect(m_NetworkInterface.get(), &NetworkInterface::sigConnected, this, &Multiplayermenu::playerJoined, Qt::QueuedConnection);
-    connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
-    connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
+    connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &Multiplayermenu::playerJoined, Qt::QueuedConnection);
+    connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
+    connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
 }
 
 void Multiplayermenu::disconnectNetworkSlots()
 {
-    disconnect(m_NetworkInterface.get(), &NetworkInterface::sigConnected, this, &Multiplayermenu::playerJoined);
-    disconnect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData);
-    disconnect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected);
+    disconnect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &Multiplayermenu::playerJoined);
+    disconnect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData);
+    disconnect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected);
 }
 
 void Multiplayermenu::startGameOnServer()
@@ -1455,12 +1482,12 @@ void Multiplayermenu::startGameOnServer()
 
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     pMap->serializeObject(sendStream);
-    emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
+    emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
 
     spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Launching game on server"), 1000 * 60 * 5);
     addChild(pDialogConnecting);
     connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);
-    connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);
+    connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);
     connect(this, &Multiplayermenu::sigHostGameLaunched, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
     connect(pDialogConnecting.get(), &DialogConnecting::sigConnected, this, &Multiplayermenu::slotHostGameLaunched);
 }
@@ -1469,7 +1496,7 @@ void Multiplayermenu::createChat()
 {
     if (Settings::getSmallScreenDevice())
     {
-        m_Chat = spChat::create(m_NetworkInterface,
+        m_Chat = spChat::create(m_pNetworkInterface,
                                 QSize(Settings::getWidth() - 60, Settings::getHeight() - 90),
                                 NetworkInterface::NetworkSerives::GameChat);
         m_Chat->setPosition(-m_Chat->getWidth() + 1, 10);
@@ -1478,7 +1505,7 @@ void Multiplayermenu::createChat()
     }
     else
     {
-        m_Chat = spChat::create(m_NetworkInterface,
+        m_Chat = spChat::create(m_pNetworkInterface,
                                 QSize(Settings::getWidth() - 20, 300),
                                 NetworkInterface::NetworkSerives::GameChat);
         m_Chat->setPosition(10, Settings::getHeight() - 360);
@@ -1489,7 +1516,7 @@ void Multiplayermenu::createChat()
 void Multiplayermenu::disconnectNetwork()
 {    
     m_GameStartTimer.stop();
-    if (m_NetworkInterface.get() != nullptr)
+    if (m_pNetworkInterface.get() != nullptr)
     {
         if (m_Chat.get())
         {
@@ -1497,7 +1524,7 @@ void Multiplayermenu::disconnectNetwork()
             m_Chat = nullptr;
         }
         m_pPlayerSelection->attachNetworkInterface(spNetworkInterface());
-        m_NetworkInterface = nullptr;
+        m_pNetworkInterface = nullptr;
     }    
 }
 
@@ -1560,7 +1587,7 @@ void Multiplayermenu::startGame()
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << command;
-        emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
@@ -1573,7 +1600,7 @@ void Multiplayermenu::markGameReady()
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << command;
     sendStream << m_pPlayerSelection->getPlayerReady();
-    emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+    emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 
 void Multiplayermenu::changeButtonText()
@@ -1614,15 +1641,15 @@ void Multiplayermenu::startCountdown()
 
 void Multiplayermenu::sendServerReady(bool value)
 {
-    if (m_NetworkInterface->getIsServer())
+    if (m_pNetworkInterface->getIsServer())
     {
         if (value)
         {
-            emit m_NetworkInterface->sigPauseListening();
+            emit m_pNetworkInterface->sigPauseListening();
         }
         else
         {
-            emit m_NetworkInterface->sigContinueListening();
+            emit m_pNetworkInterface->sigContinueListening();
         }
         QVector<qint32> player;
         for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
@@ -1651,7 +1678,7 @@ void Multiplayermenu::countdown()
             CONSOLE_PRINT("Sending game counter..." + QString::number(m_counter), Console::eDEBUG);
             emit m_Chat->sigSendText(QString::number(m_counter) + "...");
         }
-        if (m_counter == 0 && m_NetworkInterface.get() != nullptr)
+        if (m_counter == 0 && m_pNetworkInterface.get() != nullptr)
         {
             CONSOLE_PRINT("Starting game on server", Console::eDEBUG);
             defeatClosedPlayers();
@@ -1683,11 +1710,11 @@ void Multiplayermenu::countdown()
             pMap->updateSprites(-1, -1, false, true);
             // start game
             CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
-            auto window = spGameMenue::create(pMap, m_saveGame, m_NetworkInterface, false);
+            auto window = spGameMenue::create(pMap, m_saveGame, m_pNetworkInterface, false);
             oxygine::Stage::getStage()->addChild(window);
             QThread::msleep(200);
             CONSOLE_PRINT("Sending init game to clients", Console::eDEBUG);
-            emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+            emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
             oxygine::Actor::detach();
         }
     }

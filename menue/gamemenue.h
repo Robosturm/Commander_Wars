@@ -235,6 +235,12 @@ public slots:
      */
     void playerJoined(quint64 socketID);
     /**
+     * @brief showDisconnectReason
+     * @param socketID
+     * @param objData
+     */
+    void showDisconnectReason(quint64 socketID, const QJsonObject & objData);
+    /**
      * @brief sendLoginData
      * @param socketID
      * @param objData

@@ -12,6 +12,15 @@ namespace NetworkCommands
         RequestLoginData,
     };
 
+    enum DisconnectReason
+    {
+        InvalidLoginData,
+        NoMoreObservers,
+        NoValidPlayerAvailable,
+        InvalidConnection,
+        Max,
+    };
+
     /**
      * @brief MAPINFO map info of from the host
      */
@@ -144,6 +153,10 @@ namespace NetworkCommands
      * @brief CRYPTEDMESSAGE
      */
     const char* const VERIFYLOGINDATA = "VERIFYLOGINDATA";
+    /**
+     * @brief DISCONNECTINFOFROMSERVER
+     */
+    const char* const DISCONNECTINGFOFROMSERVER = "DISCONNECTINGFOFROMSERVER";
 
     /*****************************************************************************************************************************/
     // dedicated server commands

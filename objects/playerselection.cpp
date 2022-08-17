@@ -18,6 +18,8 @@
 #include "objects/dialogs/rules/coselectiondialog.h"
 #include "objects/dialogs/rules/perkselectiondialog.h"
 
+#include "objects/dialogs/dialogmessagebox.h"
+
 #include "gameinput/humanplayerinput.h"
 
 #include "menue/movementplanner.h"
@@ -1548,7 +1550,13 @@ void PlayerSelection::joinObserver(quint64 socketID)
         }
         else
         {
-            emit m_pNetworkInterface.get()->sigDisconnectClient(socketID);
+            QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
+            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            QJsonObject data;
+            data.insert(JsonKeys::JSONKEY_COMMAND, command);
+            data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::NoMoreObservers);
+            QJsonDocument doc(data);
+            emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         }
     }
 }
@@ -1559,7 +1567,9 @@ void PlayerSelection::playerAccessDenied()
         !m_pNetworkInterface->getIsObserver() &&
         !hasHumanPlayer())
     {
-        emit m_pNetworkInterface->sigDisconnected(-1);
+        spDialogMessageBox pDialog = spDialogMessageBox::create(tr("Connection failed.Reason: No valid player available."));
+        oxygine::Stage::getStage()->addChild(pDialog);
+        emit m_pNetworkInterface->sigDisconnected(0);
     }
 }
 
