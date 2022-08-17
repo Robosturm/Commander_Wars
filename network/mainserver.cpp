@@ -465,7 +465,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         QString slaveName = "Commander_Wars_Slave_" + QString::number(m_slaveGameIterator);
         CONSOLE_PRINT("Launching slave game " + slaveName + " creating logs: " + (createLogs ? "true" : "false"), Console::eDEBUG);
         auto game = spInternNetworkGame::create();
-        QString program = "Commander_Wars.exe";
+        QString program = QCoreApplication::applicationFilePath();
         game->process = std::make_shared<QProcess>();
         game->process->setObjectName(slaveName + "Slaveprocess");
         const char* const prefix = "--";
