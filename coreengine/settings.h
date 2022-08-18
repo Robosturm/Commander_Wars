@@ -525,6 +525,7 @@ public slots:
     static void setMenuItemCount(const qint32 &MenuItemCount);
 
     static QString getModString();
+    static void filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter);
     static QString getConfigString(QStringList mods);
 
     static quint32 getMultiTurnCounter();

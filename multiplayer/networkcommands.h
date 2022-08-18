@@ -106,6 +106,14 @@ namespace NetworkCommands
      */
     const char* const REQUESTJOINREASON = "REQUESTJOINREASON";
     /**
+     * @brief VERIFYGAMEDATA
+     */
+    const char* const VERIFYGAMEDATA = "VERIFYGAMEDATA";
+    /**
+     * @brief GAMEDATAVERIFIED
+     */
+    const char* const GAMEDATAVERIFIED = "GAMEDATAVERIFIED";
+    /**
      * @brief JOINASPLAYER
      */
     const char* const JOINASPLAYER = "JOINASPLAYER";

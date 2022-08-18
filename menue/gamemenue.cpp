@@ -16,6 +16,7 @@
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/settings.h"
+#include "coreengine/filesupport.h"
 
 #include "ai/proxyai.h"
 
@@ -272,6 +273,10 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             playerRequestControlInfo(stream, socketID);
         }
+        else if (messageType == NetworkCommands::GAMEDATAVERIFIED)
+        {
+            sendRequestJoinReason(socketID);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
@@ -351,7 +356,7 @@ void GameMenue::showDisconnectReason(quint64 socketID, const QJsonObject & objDa
     NetworkCommands::DisconnectReason type = static_cast<NetworkCommands::DisconnectReason>(objData.value(JsonKeys::JSONKEY_DISCONNECTREASON).toInt());
     spDialogMessageBox pDialog = spDialogMessageBox::create(reasons[type]);
     oxygine::Stage::getStage()->addChild(pDialog);
-    emit m_pNetworkInterface->sigDisconnected(0);
+    emit m_pNetworkInterface->sigDisconnectClient(0);
 }
 
 void GameMenue::sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
@@ -378,8 +383,8 @@ void GameMenue::verifyLoginData(const QJsonObject & objData, quint64 socketID)
     bool valid = MainServer::verifyLoginData(username, password);
     if (valid)
     {
-        CONSOLE_PRINT("Client login data are valid. Requesting join reason", Console::eDEBUG);
-        sendRequestJoinReason(socketID);
+        CONSOLE_PRINT("Client login data are valid. Verifying versions", Console::eDEBUG);
+        sendVerifyGameData(socketID);
     }
     else
     {
@@ -392,6 +397,35 @@ void GameMenue::verifyLoginData(const QJsonObject & objData, quint64 socketID)
         QJsonDocument doc(data);
         emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
+}
+
+void GameMenue::sendVerifyGameData(quint64 socketID)
+{
+    QString command = QString(NetworkCommands::VERIFYGAMEDATA);
+    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << command;
+    stream << Mainapp::getGameVersion();
+    QStringList mods = Settings::getMods();
+    QStringList versions = Settings::getActiveModVersions();
+    bool filter = m_pMap->getGameRules()->getCosmeticModsAllowed();
+    Settings::filterCosmeticMods(mods, versions, filter);
+    stream << filter;
+    stream << static_cast<qint32>(mods.size());
+    for (qint32 i = 0; i < mods.size(); i++)
+    {
+        stream << mods[i];
+        stream << versions[i];
+    }
+    auto hostHash = Filesupport::getRuntimeHash(mods);
+    if (Console::eDEBUG >= Console::getLogLevel())
+    {
+        QString hostString = GlobalUtils::getByteArrayString(hostHash);
+        CONSOLE_PRINT("Sending host hash: " + hostString, Console::eDEBUG);
+    }
+    Filesupport::writeByteArray(stream, hostHash);
+    emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 
 Player* GameMenue::getCurrentViewPlayer()
@@ -667,7 +701,6 @@ void GameMenue::playerJoined(quint64 socketID)
     if (m_pNetworkInterface->getIsServer())
     {
         CONSOLE_PRINT("Player joined with socket: " + QString::number(socketID), Console::eDEBUG);
-
         if (Mainapp::getSlave())
         {
             CONSOLE_PRINT("Slave requesting login data", Console::eDEBUG);
@@ -676,7 +709,7 @@ void GameMenue::playerJoined(quint64 socketID)
         }
         else
         {
-            sendRequestJoinReason(socketID);
+            sendVerifyGameData(socketID);
         }
     }
 }

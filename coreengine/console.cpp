@@ -1521,7 +1521,6 @@ bool Console::onEditFinished()
 
 void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-
     static QMutex messageOutputMutex;
     QMutexLocker lock(&messageOutputMutex);
     static QFile file(Settings::getUserPath() + "console.log");
@@ -1531,9 +1530,12 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         if (pApp->getSlave() && pApp->getCreateSlaveLogs())
         {
             QString slaveName = Settings::getSlaveServerName();
-            file.setFileName(Settings::getUserPath() + slaveName + ".log");            
+            file.setFileName(Settings::getUserPath() + slaveName + ".log");
         }
-        file.open(QIODevice::WriteOnly);
+        else if (!pApp->getSlave())
+        {
+            file.open(QIODevice::WriteOnly);
+        }
     }
     static QTextStream stream(&file);
     QByteArray localMsg = msg.toLocal8Bit();

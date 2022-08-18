@@ -1380,6 +1380,27 @@ QString Settings::getModString()
     return getConfigString(m_activeMods);
 }
 
+
+void Settings::filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter)
+{
+    if (filter)
+    {
+        qint32 i = 0;
+        while (i < mods.length())
+        {
+            if (Settings::getIsCosmetic(mods[i]))
+            {
+                mods.removeAt(i);
+                versions.removeAt(i);
+            }
+            else
+            {
+                ++i;
+            }
+        }
+    }
+}
+
 QString Settings::getConfigString(QStringList list)
 {
     QString listString = "";

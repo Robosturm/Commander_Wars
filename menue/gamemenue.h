@@ -254,6 +254,11 @@ public slots:
      */
     void verifyLoginData(const QJsonObject & objData, quint64 socketID);
     /**
+     * @brief sendVerifyGameData
+     * @param socketID
+     */
+    void sendVerifyGameData(quint64 socketID);
+    /**
      * @brief sendRequestJoinReason
      * @param socketID
      */

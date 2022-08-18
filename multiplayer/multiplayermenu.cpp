@@ -27,7 +27,6 @@
 #include "game/player.h"
 #include "game/co.h"
 
-#include "objects/dialogs/dialogconnecting.h"
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/moveinbutton.h"
@@ -236,26 +235,6 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
     }
 }
 
-void Multiplayermenu::filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter)
-{
-    if (filter)
-    {
-        qint32 i = 0;
-        while (i < mods.length())
-        {
-            if (Settings::getIsCosmetic(mods[i]))
-            {
-                mods.removeAt(i);
-                versions.removeAt(i);
-            }
-            else
-            {
-                ++i;
-            }
-        }
-    }
-}
-
 void Multiplayermenu::recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     if (service == NetworkInterface::NetworkSerives::ServerHosting)
@@ -326,6 +305,10 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 CONSOLE_PRINT("Checking if server game should start", Console::eDEBUG);
                 startCountdown();
             }
+        }
+        else if (messageType == NetworkCommands::VERIFYGAMEDATA)
+        {
+            verifyGameData(stream, socketID);
         }
         else if (messageType == NetworkCommands::REQUESTJOINREASON)
         {
@@ -435,7 +418,13 @@ void Multiplayermenu::showDisconnectReason(quint64 socketID, const QJsonObject &
     NetworkCommands::DisconnectReason type = static_cast<NetworkCommands::DisconnectReason>(objData.value(JsonKeys::JSONKEY_DISCONNECTREASON).toInt());
     spDialogMessageBox pDialog = spDialogMessageBox::create(reasons[type]);
     oxygine::Stage::getStage()->addChild(pDialog);
-    emit m_pNetworkInterface->sigDisconnected(0);
+    if (m_pDialogConnecting.get() != nullptr)
+    {
+        m_pDialogConnecting->detach();
+        m_pDialogConnecting = nullptr;
+    }
+    emit m_pNetworkInterface->sigDisconnectClient(0);
+    buttonBack();
 }
 
 void Multiplayermenu::sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
@@ -501,7 +490,7 @@ void Multiplayermenu::sendMapInfoUpdate(quint64 socketID, const QJsonObject & ob
     QStringList mods = Settings::getMods();
     QStringList versions = Settings::getActiveModVersions();
     bool filter = m_pMapSelectionView->getCurrentMap()->getGameRules()->getCosmeticModsAllowed();
-    filterCosmeticMods(mods, versions, filter);
+    Settings::filterCosmeticMods(mods, versions, filter);
     stream << filter;
     stream << static_cast<qint32>(mods.size());
     for (qint32 i = 0; i < mods.size(); i++)
@@ -585,34 +574,47 @@ void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 sock
     }
     m_pMapSelectionView->setCurrentMap(spGameMap());
     pMap = spGameMap::create<QDataStream &, bool>(stream, true);
-    pMap->updateSprites(-1, -1, false, true);
-    m_pMapSelectionView->setCurrentMap(pMap);
-    if (m_networkMode == NetworkMode::Observer)
+    if (m_password.areEqualPassword(pMap->getGameRules()->getPassword()))
     {
-        for (qint32 i = 0; i < pMap->getPlayerCount(); ++i)
+        pMap->updateSprites(-1, -1, false, true);
+        m_pMapSelectionView->setCurrentMap(pMap);
+        if (m_networkMode == NetworkMode::Observer)
         {
-            Player* pPlayer = pMap->getPlayer(i);
-            BaseGameInputIF* pInput = pPlayer->getBaseGameInput();
-            if (pInput != nullptr &&
-                pInput->getAiType() != GameEnums::AiTypes_ProxyAi &&
-                pInput->getAiType() != GameEnums::AiTypes_Closed &&
-                pInput->getAiType() != GameEnums::AiTypes_Open)
+            for (qint32 i = 0; i < pMap->getPlayerCount(); ++i)
             {
-                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(pMap.get(), GameEnums::AiTypes_ProxyAi));
+                Player* pPlayer = pMap->getPlayer(i);
+                BaseGameInputIF* pInput = pPlayer->getBaseGameInput();
+                if (pInput != nullptr &&
+                    pInput->getAiType() != GameEnums::AiTypes_ProxyAi &&
+                    pInput->getAiType() != GameEnums::AiTypes_Closed &&
+                    pInput->getAiType() != GameEnums::AiTypes_Open)
+                {
+                    pPlayer->setBaseGameInput(BaseGameInputIF::createAi(pMap.get(), GameEnums::AiTypes_ProxyAi));
+                }
             }
+            qint64 syncCounter = 0;
+            stream >> syncCounter;
+            startRejoinedGame(syncCounter);
         }
-        qint64 syncCounter = 0;
-        stream >> syncCounter;
-        startRejoinedGame(syncCounter);
+        else
+        {
+            QString command = NetworkCommands::REQUESTPLAYERCONTROLLEDINFO;
+            QByteArray sendData;
+            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+            sendStream << command;
+            sendStream << Settings::getUsername();
+            emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        }
     }
     else
     {
-        QString command = NetworkCommands::REQUESTPLAYERCONTROLLEDINFO;
-        QByteArray sendData;
-        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-        sendStream << command;
-        sendStream << Settings::getUsername();
-        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        CONSOLE_PRINT("Incorrect Password found.", Console::eDEBUG);
+        CONSOLE_PRINT("Entered password hash: " + GlobalUtils::getByteArrayString(m_password.getHash()), Console::eDEBUG);
+        CONSOLE_PRINT("Host    password hash: " + GlobalUtils::getByteArrayString(m_pMapSelectionView->getCurrentMap()->getGameRules()->getPassword().getHash()), Console::eDEBUG);
+        spDialogMessageBox pDialogMessageBox;
+        pDialogMessageBox = spDialogMessageBox::create(tr("Wrong password entered for joining the game."));
+        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+        addChild(pDialogMessageBox);
     }
 }
 
@@ -809,41 +811,121 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
     }
 }
 
+void Multiplayermenu::verifyGameData(QDataStream & stream, quint64 socketID)
+{
+    if (!m_pNetworkInterface->getIsServer() || !m_local)
+    {
+        bool sameMods = false;
+        bool differentHash = false;
+        bool sameVersion = false;
+        QStringList mods;
+        readHashInfo(stream, socketID, mods, sameMods, differentHash, sameVersion);
+        if (sameVersion && sameMods && !differentHash)
+        {
+            QString command = QString(NetworkCommands::GAMEDATAVERIFIED);
+            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            QByteArray data;
+            QDataStream stream(&data, QIODevice::WriteOnly);
+            stream << command;
+            emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+        }
+        else
+        {
+            handleVersionMissmatch(mods, sameMods, differentHash, sameVersion);
+        }
+    }
+}
+
+bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & versions, bool filter)
+{
+    QStringList myVersions = Settings::getActiveModVersions();
+    QStringList myMods = Settings::getMods();
+    Settings::filterCosmeticMods(myMods, myVersions, filter);
+    bool sameMods = true;
+    if (myMods.size() != mods.size())
+    {
+        sameMods = false;
+    }
+    else
+    {
+        // check mods in both directions
+        for (qint32 i = 0; i < myMods.size(); i++)
+        {
+            if (!mods.contains(myMods[i]))
+            {
+                sameMods = false;
+                break;
+            }
+            else
+            {
+                for (qint32 i2 = 0; i2 < mods.size(); i2++)
+                {
+                    if (mods[i2] == myMods[i])
+                    {
+                        if (versions[i2] != myVersions[i])
+                        {
+                            sameMods = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        for (qint32 i = 0; i < mods.size(); i++)
+        {
+            if (!myMods.contains(mods[i]))
+            {
+                sameMods = false;
+                break;
+            }
+        }
+    }
+    return sameMods;
+}
+
+void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, bool & sameMods, bool & differentHash, bool & sameVersion)
+{
+    QString version;
+    stream >> version;
+    bool filter = false;
+    stream >> filter;
+    qint32 size = 0;
+    stream >> size;
+    QStringList versions;
+    for (qint32 i = 0; i < size; i++)
+    {
+        QString mod;
+        stream >> mod;
+        mods.append(mod);
+        QString version;
+        stream >> version;
+        versions.append(version);
+    }
+    sameMods = checkMods(mods, versions, filter);
+    QByteArray hostRuntime = Filesupport::readByteArray(stream);
+    QByteArray ownRuntime = Filesupport::getRuntimeHash(mods);
+    if (Console::eDEBUG >= Console::getLogLevel())
+    {
+        QString hostString = GlobalUtils::getByteArrayString(hostRuntime);
+        QString ownString = GlobalUtils::getByteArrayString(ownRuntime);
+        CONSOLE_PRINT("Received host hash: " + hostString, Console::eDEBUG);
+        CONSOLE_PRINT("Own hash:           " + ownString, Console::eDEBUG);
+    }
+    differentHash = (hostRuntime != ownRuntime);
+    sameVersion = version == Mainapp::getGameVersion();
+}
+
 void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
 {
     // we recieved map info from a server check if we have this map already
     if (!m_pNetworkInterface->getIsServer() || !m_local)
     {
-        QString version;
-        stream >> version;
-        bool filter = false;
-        stream >> filter;
-        qint32 size = 0;
-        stream >> size;
-        QStringList mods;
-        QStringList versions;
-        for (qint32 i = 0; i < size; i++)
-        {
-            QString mod;
-            stream >> mod;
-            mods.append(mod);
-            QString version;
-            stream >> version;
-            versions.append(version);
-        }
-        bool sameMods = checkMods(mods, versions, filter);
+        bool sameMods = false;
         bool differentHash = false;
-        QByteArray hostRuntime = Filesupport::readByteArray(stream);
-        QByteArray ownRuntime = Filesupport::getRuntimeHash(mods);
-        if (Console::eDEBUG >= Console::getLogLevel())
-        {
-            QString hostString = GlobalUtils::getByteArrayString(hostRuntime);
-            QString ownString = GlobalUtils::getByteArrayString(ownRuntime);
-            CONSOLE_PRINT("Received host hash: " + hostString, Console::eDEBUG);
-            CONSOLE_PRINT("Own hash:           " + ownString, Console::eDEBUG);
-        }
-        differentHash = (hostRuntime != ownRuntime);
-        if (version == Mainapp::getGameVersion() && sameMods && !differentHash)
+        bool sameVersion = false;
+        QStringList mods;
+        readHashInfo(stream, socketID, mods, sameMods, differentHash, sameVersion);
+        if (sameVersion && sameMods && !differentHash)
         {
             stream >> m_saveGame;
             m_pPlayerSelection->setSaveGame(m_saveGame);
@@ -897,83 +979,40 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            // quit game with wrong version
-            spDialogMessageBox pDialogMessageBox;
-            if (differentHash && sameMods)
-            {
-                pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different version of a mod or the game resource folder has been modified by one of the games."));
-            }
-            else  if (sameMods)
-            {
-                pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different game version. Leaving the game again."));
-            }
-            else
-            {
-                QString hostMods;
-                for (auto & mod : mods)
-                {
-                    hostMods += Settings::getModName(mod) + "\n";
-                }
-                mods = Settings::getMods();
-                QString myMods;
-                for (auto & mod : mods)
-                {
-                    myMods += Settings::getModName(mod) + "\n";
-                }
-                pDialogMessageBox = spDialogMessageBox::create(tr("Host has  different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods:" + myMods);
-            }
-            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
-            addChild(pDialogMessageBox);
-            
+            handleVersionMissmatch(mods, sameMods, differentHash, sameVersion);
         }
     }
 }
 
-bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & versions, bool filter)
+void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, bool sameMods, bool differentHash, bool sameVersion)
 {
-    QStringList myVersions = Settings::getActiveModVersions();
-    QStringList myMods = Settings::getMods();
-    filterCosmeticMods(myMods, myVersions, filter);
-    bool sameMods = true;
-    if (myMods.size() != mods.size())
+    // quit game with wrong version
+    spDialogMessageBox pDialogMessageBox;
+    if (differentHash && sameMods)
     {
-        sameMods = false;
+        pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different version of a mod or the game resource folder has been modified by one of the games."));
+    }
+    else  if (sameMods)
+    {
+        pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different game version. Leaving the game again."));
     }
     else
     {
-        // check mods in both directions
-        for (qint32 i = 0; i < myMods.size(); i++)
+        QString hostMods;
+        for (auto & mod : mods)
         {
-            if (!mods.contains(myMods[i]))
-            {
-                sameMods = false;
-                break;
-            }
-            else
-            {
-                for (qint32 i2 = 0; i2 < mods.size(); i2++)
-                {
-                    if (mods[i2] == myMods[i])
-                    {
-                        if (versions[i2] != myVersions[i])
-                        {
-                            sameMods = false;
-                            break;
-                        }
-                    }
-                }
-            }
+            hostMods += Settings::getModName(mod) + "\n";
         }
-        for (qint32 i = 0; i < mods.size(); i++)
+        QStringList myModsList = Settings::getMods();
+        QString myMods;
+        for (auto & mod : myModsList)
         {
-            if (!myMods.contains(mods[i]))
-            {
-                sameMods = false;
-                break;
-            }
+            myMods += Settings::getModName(mod) + "\n";
         }
+        pDialogMessageBox = spDialogMessageBox::create(tr("Host has  different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods:" + myMods);
     }
-    return sameMods;
+    connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+    addChild(pDialogMessageBox);
 }
 
 void Multiplayermenu::requestMap(quint64 socketID)
@@ -1484,12 +1523,12 @@ void Multiplayermenu::startGameOnServer()
     pMap->serializeObject(sendStream);
     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
 
-    spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Launching game on server"), 1000 * 60 * 5);
-    addChild(pDialogConnecting);
-    connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);
-    connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);
-    connect(this, &Multiplayermenu::sigHostGameLaunched, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
-    connect(pDialogConnecting.get(), &DialogConnecting::sigConnected, this, &Multiplayermenu::slotHostGameLaunched);
+    m_pDialogConnecting = spDialogConnecting::create(tr("Launching game on server"), 1000 * 60 * 5);
+    addChild(m_pDialogConnecting);
+    connect(m_pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);
+    connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);    
+    connect(this, &Multiplayermenu::sigHostGameLaunched, m_pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+    connect(m_pDialogConnecting.get(), &DialogConnecting::sigConnected, this, &Multiplayermenu::slotHostGameLaunched);
 }
 
 void Multiplayermenu::createChat()

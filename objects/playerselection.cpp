@@ -1569,7 +1569,7 @@ void PlayerSelection::playerAccessDenied()
     {
         spDialogMessageBox pDialog = spDialogMessageBox::create(tr("Connection failed.Reason: No valid player available."));
         oxygine::Stage::getStage()->addChild(pDialog);
-        emit m_pNetworkInterface->sigDisconnected(0);
+        emit m_pNetworkInterface->sigDisconnectClient(0);
     }
 }
 

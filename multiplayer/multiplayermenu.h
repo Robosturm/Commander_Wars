@@ -4,17 +4,18 @@
 #include "memory.h"
 #include <QObject>
 #include <QTimer>
-#include <qdir.h>
+#include <QDir>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
-
-#include "objects/base/chat.h"
 
 #include "menue/mapselectionmapsmenue.h"
 
 #include "network/NetworkInterface.h"
 
 #include "multiplayer/password.h"
+
+#include "objects/base/chat.h"
+#include "objects/dialogs/dialogconnecting.h"
 
 class Multiplayermenu;
 using spMultiplayermenu = oxygine::intrusive_ptr<Multiplayermenu>;
@@ -112,15 +113,18 @@ protected:
     void loadMultiplayerMap();
     void showIPs();
     spGameMap createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
-    QString getNewFileName(QString filename);
+    QString getNewFileName(QString filename);    
     void clientMapInfo(QDataStream & stream, quint64 socketID);
+    void readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, bool & sameMods, bool & differentHash, bool & sameVersion);
+    void handleVersionMissmatch(const QStringList & mods, bool sameMods, bool differentHash, bool sameVersion);
+    bool checkMods(const QStringList & mods, const QStringList & versions, bool filter);
+    void verifyGameData(QDataStream & stream, quint64 socketID);
     /**
      * @brief filterCosmeticMods
      * @param mods
      * @param versions
      */
     void filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter);
-    bool checkMods(const QStringList & mods, const QStringList & versions, bool filter);
     void requestRule(quint64 socketID);
     void sendInitUpdate(QDataStream & stream, quint64 socketID);
     void requestMap(quint64 socketID);
@@ -188,6 +192,7 @@ private:
     bool m_slaveGameReady{false};
     Password m_password;
     quint64 m_hostSocket{0};
+    spDialogConnecting m_pDialogConnecting;
 };
 
 #endif // MULTIPLAYERMENU_H
