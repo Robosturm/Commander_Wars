@@ -42,7 +42,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Depot which provides some defence and </r><div c='#00ff00'>ground </div><r>units can </r><div c='#00ff00'>resupply</div><r> half their supplies each turn.</r>.");
+        return qsTr("<r>A civilian cargo depot that provides adequate cover and </r><div c='#00ff00'>ground </div><r>units can </r><div c='#00ff00'>resupply</div><r> half their supplies each turn.</r>.");
     };
 
     this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
