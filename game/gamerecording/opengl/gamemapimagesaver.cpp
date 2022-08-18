@@ -20,6 +20,7 @@ void GamemapImageSaver::saveMapAsImage(QString filename)
         {
             oxygine::GameWindow* window = oxygine::GameWindow::getWindow();
             qreal ratio = window->devicePixelRatio();
+            auto oldSize = oxygine::Stage::getStage()->getSize();
             QSize size(GameMap::getImageSize() * pMap->getMapWidth() * pMap->getScaleX() * ratio, GameMap::getImageSize() * pMap->getMapHeight() * pMap->getScaleY() * ratio);
             QOpenGLFramebufferObject buffer(size);
             buffer.bind();
@@ -45,6 +46,7 @@ void GamemapImageSaver::saveMapAsImage(QString filename)
             auto img = buffer.toImage();
             img.save(filename);
             buffer.release();
+            oxygine::Stage::getStage()->setSize(oldSize);
         }
     }
 }

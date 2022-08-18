@@ -4790,5 +4790,9 @@
         <file>resources/images/building/powerplant+shadow+snow.png</file>
         <file>resources/images/building/powerplant+shadow+waste.png</file>
         <file>resources/images/building/powerplant+snow.png</file>
+        <file>resources/images/building/depot+shadow+desert.png</file>
+        <file>resources/images/building/depot+shadow+plains.png</file>
+        <file>resources/images/building/depot+shadow+snow.png</file>
+        <file>resources/images/building/depot+shadow+waste.png</file>
     </qresource>
 </RCC>

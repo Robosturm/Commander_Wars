@@ -2069,6 +2069,10 @@ void Unit::setFuel(const qint32 &value)
     {
         m_fuel = value;
     }
+    if (m_fuel > m_maxFuel)
+    {
+        m_fuel = m_maxFuel;
+    }
     if (m_maxFuel > 0 && static_cast<float>(m_fuel) / static_cast<float>(m_maxFuel) <= Settings::getSupplyWarning())
     {
         loadIcon("fuel", GameMap::getImageSize() / 2, 0);
@@ -2126,6 +2130,10 @@ void Unit::setAmmo2(const qint32 &value)
     else  if (m_maxAmmo2 > 0 && m_ammo2 < 0)
     {
         m_ammo2 = 0;
+    }
+    if (m_ammo2 > m_maxAmmo2)
+    {
+        m_ammo2 = m_maxAmmo2;
     }
     if (m_maxAmmo2 > 0 && static_cast<float>(m_ammo2) / static_cast<float>(m_maxAmmo2) <= Settings::getSupplyWarning())
     {
@@ -2188,6 +2196,10 @@ void Unit::setAmmo1(const qint32 &value)
     else if (m_maxAmmo1 > 0 && m_ammo1 < 0)
     {
         m_ammo1 = 0;
+    }
+    if (m_ammo1 > m_maxAmmo1)
+    {
+        m_ammo1 = m_maxAmmo1;
     }
 
     if (m_maxAmmo1 > 0 && static_cast<float>(m_ammo1) / static_cast<float>(m_maxAmmo1) <= Settings::getSupplyWarning())
@@ -2518,16 +2530,16 @@ qint32 Unit::getY() const
     }
 }
 
-void Unit::refill(bool noMaterial)
+void Unit::refill(bool noMaterial, float fuelAmount, float ammo1Amount, float ammo2Amount)
 {
-    setFuel(m_maxFuel);
+    setFuel(m_fuel + m_maxFuel * fuelAmount);
     if (!(noMaterial && m_weapon1ID.isEmpty()))
     {
-        setAmmo1(m_maxAmmo1);
+        setAmmo1(m_ammo1 + m_maxAmmo1 * ammo1Amount);
     }
     if (!(noMaterial && m_weapon2ID.isEmpty()))
     {
-        setAmmo2(m_maxAmmo2);
+        setAmmo2(m_ammo2 + m_maxAmmo2 * ammo2Amount);
     }
 }
 
