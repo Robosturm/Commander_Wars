@@ -120,6 +120,22 @@ public:
         return 9;
     }
     /**
+     * @brief isValid
+     * @return
+     */
+    bool isValid();
+    /**
+     * @brief getMapTerrainDrawPriority
+     * @return
+     */
+    qint32 getMapTerrainDrawPriority();
+public slots:
+    /**
+     * @brief setSpriteVisibility
+     * @param value
+     */
+    void setSpriteVisibility(bool value);
+    /**
      * @brief setFixedSprite only avaible for ingame editor
      * @return
      */
@@ -129,27 +145,6 @@ public:
      * @return
      */
     void setTerrainSpriteName(const QString &terrainSpriteName);
-    /**
-     * @brief setSpriteVisibility
-     * @param value
-     */
-    void setSpriteVisibility(bool value);
-    /**
-     * @brief isValid
-     * @return
-     */
-    bool isValid();
-
-
-    QPoint getTest() const;
-    void setTest(QPoint newTest);
-    /**
-     * @brief getMapTerrainDrawPriority
-     * @return
-     */
-    qint32 getMapTerrainDrawPriority();
-public slots:
-
     /**
      * @brief getShowInEditor
      * @param unitId
