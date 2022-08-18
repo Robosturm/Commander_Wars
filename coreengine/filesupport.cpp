@@ -54,7 +54,8 @@ void Filesupport::addHash(Sha256Hash & hash, const QString & folder, const QStri
 QByteArray Filesupport::getRuntimeHash(const QStringList & mods)
 {
     QStringList folders = mods;
-    folders.append("/resources");
+    folders.append("/resources/scripts");
+    folders.append("/resources/aidata");
     QStringList filter = {"*.js", "*.csv"};
     return getHash(filter, folders);
 }
