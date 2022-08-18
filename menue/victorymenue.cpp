@@ -38,6 +38,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     CONSOLE_PRINT("Entering Victory Menue", Console::eDEBUG);
+    m_pMap->setMenu(nullptr); // remove outdated link
     
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
