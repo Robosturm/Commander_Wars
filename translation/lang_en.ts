@@ -5969,88 +5969,88 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>VictoryMenue</name>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="134"/>
+        <location filename="../menue/victorymenue.cpp" line="135"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="227"/>
-        <location filename="../menue/victorymenue.cpp" line="629"/>
+        <location filename="../menue/victorymenue.cpp" line="228"/>
+        <location filename="../menue/victorymenue.cpp" line="630"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="236"/>
-        <location filename="../menue/victorymenue.cpp" line="634"/>
+        <location filename="../menue/victorymenue.cpp" line="237"/>
+        <location filename="../menue/victorymenue.cpp" line="635"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="245"/>
-        <location filename="../menue/victorymenue.cpp" line="639"/>
+        <location filename="../menue/victorymenue.cpp" line="246"/>
+        <location filename="../menue/victorymenue.cpp" line="640"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="254"/>
-        <location filename="../menue/victorymenue.cpp" line="644"/>
+        <location filename="../menue/victorymenue.cpp" line="255"/>
+        <location filename="../menue/victorymenue.cpp" line="645"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="263"/>
-        <location filename="../menue/victorymenue.cpp" line="649"/>
+        <location filename="../menue/victorymenue.cpp" line="264"/>
+        <location filename="../menue/victorymenue.cpp" line="650"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="272"/>
-        <location filename="../menue/victorymenue.cpp" line="717"/>
+        <location filename="../menue/victorymenue.cpp" line="273"/>
+        <location filename="../menue/victorymenue.cpp" line="718"/>
         <source>Player Statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="283"/>
+        <location filename="../menue/victorymenue.cpp" line="284"/>
         <source>Ranking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="323"/>
+        <location filename="../menue/victorymenue.cpp" line="324"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="356"/>
+        <location filename="../menue/victorymenue.cpp" line="357"/>
         <source>Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="361"/>
+        <location filename="../menue/victorymenue.cpp" line="362"/>
         <source>Force</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="366"/>
+        <location filename="../menue/victorymenue.cpp" line="367"/>
         <source>Tech.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="371"/>
+        <location filename="../menue/victorymenue.cpp" line="372"/>
         <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="549"/>
+        <location filename="../menue/victorymenue.cpp" line="550"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="552"/>
+        <location filename="../menue/victorymenue.cpp" line="553"/>
         <source>Select which player&apos;s statistics you&apos;d like to see.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="705"/>
+        <location filename="../menue/victorymenue.cpp" line="706"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>
