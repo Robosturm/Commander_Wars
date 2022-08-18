@@ -40,11 +40,11 @@ var Constructor = function()
         }
         if (baseTerrainId === "WASTE")
         {
-            return 1;
+            return 2;
         }
         else
         {
-            return 2;
+            return 3;
         }
     };
     this.getBonusVision = function(unit, terrain)
