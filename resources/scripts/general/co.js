@@ -89,6 +89,11 @@ var CO =
         return 0;
     },
 
+    getPowerChargeBonus : function(co, map)
+    {
+        return 0;
+    },
+
     getPerfectVision : function(co, map)
     {
         return false;
@@ -292,7 +297,8 @@ var CO =
                 powerGain = 0;
             }
         }
-        return powerGain;
+        var chargeBonus = co.getPowerChargeBonus();
+        return powerGain * (100 + chargeBonus) / 100;
     },
 
     getStarCost : function(co, map)

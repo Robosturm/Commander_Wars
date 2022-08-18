@@ -323,6 +323,11 @@ var TAGPOWER =
         return 0;
     },
 
+    getPowerChargeBonus : function(co, map)
+    {
+        return 0;
+    },
+
     getPerfectVision : function(co, map)
     {
         return false;

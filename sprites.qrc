@@ -4782,5 +4782,13 @@
         <file>resources/images/battleanimations/duster/duster+ac+mask.png</file>
         <file>resources/images/battleanimations/duster/duster+bd+mask.png</file>
         <file>resources/images/battleanimations/duster/duster+pf+mask.png</file>
+        <file>resources/images/building/powerplant.png</file>
+        <file>resources/images/building/powerplant+mask.png</file>
+        <file>resources/images/building/powerplant+neutral.png</file>
+        <file>resources/images/building/powerplant+shadow+desert.png</file>
+        <file>resources/images/building/powerplant+shadow+plains.png</file>
+        <file>resources/images/building/powerplant+shadow+snow.png</file>
+        <file>resources/images/building/powerplant+shadow+waste.png</file>
+        <file>resources/images/building/powerplant+snow.png</file>
     </qresource>
 </RCC>

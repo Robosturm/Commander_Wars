@@ -2086,5 +2086,6 @@
         <file>maps/commander_wars.camp/uprisingAtTheDocks.map</file>
         <file>maps/commander_wars.camp/mechaInTheMiddle.js</file>
         <file>maps/commander_wars.camp/mechaInTheMiddle.map</file>
+        <file>resources/scripts/building/powerplant.js</file>
     </qresource>
 </RCC>

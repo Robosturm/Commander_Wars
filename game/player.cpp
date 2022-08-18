@@ -1938,6 +1938,26 @@ void Player::defineArmy()
     }
 }
 
+qint32 Player::getPowerChargeBonus() const
+{
+    qint32 bonus = 0;
+    qint32 mapHeigth = m_pMap->getMapHeight();
+    qint32 mapWidth = m_pMap->getMapWidth();
+    for (qint32 x = 0; x < mapWidth; x++)
+    {
+        for (qint32 y = 0; y < mapHeigth; y++)
+        {
+            Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
+            if (pBuilding != nullptr &&
+                pBuilding->getOwner() == this)
+            {
+                bonus += pBuilding->getPowerChargeBonus();
+            }
+        }
+    }
+    return bonus;
+}
+
 float Player::getFundsModifier() const
 {
     return m_fundsModifier;

@@ -149,6 +149,10 @@ var BUILDING =
     {
         return 0;
     },
+    getPowerChargeBonus : function(building, map)
+    {
+        return 0;
+    },
     getActionTargetFields : function(building, map)
     {
         // targets of a building. For most things this is a null pointer

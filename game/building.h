@@ -334,6 +334,11 @@ public slots:
      */
     qint32 getOffensiveBonus();
     /**
+     * @brief getPowerChargeBonus
+     * @return
+     */
+    qint32 getPowerChargeBonus();
+    /**
      * @brief getCostReduction
      * @return
      */

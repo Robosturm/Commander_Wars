@@ -462,6 +462,11 @@ public slots:
      */
     float getFundsModifier() const;
     /**
+     * @brief getPowerChargeBonus
+     * @return
+     */
+    qint32 getPowerChargeBonus() const;
+    /**
      * @brief setFundsModifier
      * @param value
      */

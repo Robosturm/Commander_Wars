@@ -480,7 +480,7 @@ public slots:
      */
     inline Player* getOwner()
     {
-        return m_Owner;
+        return m_pOwner;
     }
     /**
      * @brief getCOUnit
@@ -539,6 +539,11 @@ public slots:
      * @return
      */
     qint32 getIncomeReduction(Building* pBuilding, qint32 income);
+    /**
+     * @brief getPowerChargeBonus
+     * @return
+     */
+    qint32 getPowerChargeBonus();
     /**
      * @brief getPerfectVision
      * @return
@@ -753,7 +758,6 @@ public slots:
      * @return
      */
     float getStarCost();
-
 protected:
     void limitPowerbar(float previousValue);
 
@@ -766,7 +770,7 @@ private:
      */
     bool isJsFunctionEnabled(QString perk) const;
 private:
-    Player* m_Owner;
+    Player* m_pOwner;
     QString m_coID;
     qint32 m_powerStars{0};
     qint32 m_superpowerStars{0};

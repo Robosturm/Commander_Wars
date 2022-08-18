@@ -88,6 +88,11 @@ var CO_PERK =
         return 0;
     },
 
+    getPowerChargeBonus : function(co, map)
+    {
+        return 0;
+    },
+
     canCounterAttack : function(co, attacker, atkPosX, atkPosY,
                                 defender, defPosX, defPosY, luckMode, map)
     {
