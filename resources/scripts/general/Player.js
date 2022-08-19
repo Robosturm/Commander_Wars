@@ -427,6 +427,11 @@ var PLAYER =
                 "CO_YUKIO", "CO_RANDOM"];
     },
 
+    endOfTurn : function(player, map)
+    {
+        // do custom end of turn action for a player here.
+    },
+
     startOfTurn : function(player, map)
     {
         // do custom start of turn action for a player here.

@@ -1527,6 +1527,22 @@ void Player::startOfTurn()
     }
 }
 
+void Player::endOfTurn()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "endOfTurn";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction("PLAYER", function1, args);
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            pCO->endOfTurn();
+        }
+    }
+}
+
 QmlVectorUnit* Player::getUnits()
 {
     

@@ -1863,6 +1863,19 @@ qint32 Unit::getBonusLuck(QPoint position)
     return bonus;
 }
 
+void Unit::endOfTurn()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "endOfTurn";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(m_UnitID, function1, args);
+    for (qint32 i = 0; i < m_TransportUnits.size(); i++)
+    {
+        m_TransportUnits[i]->endOfTurn();
+    }
+}
+
 void Unit::startOfTurn()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

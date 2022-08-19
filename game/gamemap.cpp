@@ -1976,6 +1976,49 @@ Player* GameMap::getCurrentViewPlayer()
     return getCurrentPlayer();
 }
 
+void GameMap::endOfTurn(Player* pPlayer)
+{
+    if (pPlayer != nullptr)
+    {
+        pPlayer->endOfTurn();
+        endOfTurnPlayer(pPlayer);
+        enableUnits(pPlayer);
+    }
+}
+
+void GameMap::endOfTurnPlayer(Player* pPlayer)
+{
+    CONSOLE_PRINT("Doing end of turn for player " + QString::number(pPlayer->getPlayerID()), Console::eDEBUG);
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    auto xValues = GlobalUtils::getRandomizedArray(0, width - 1);
+    auto yValues = GlobalUtils::getRandomizedArray(0, heigth - 1);
+    // update start of turn
+    for (auto y : yValues)
+    {
+        for (auto x : xValues)
+        {
+            spUnit pUnit = m_fields[y][x]->getSpUnit();
+            if (pUnit.get() != nullptr)
+            {
+                if (pUnit->getOwner() == pPlayer)
+                {
+                    pUnit->endOfTurn();
+                }
+            }
+            spBuilding pBuilding = m_fields[y][x]->getSpBuilding();
+            if (pBuilding.get() != nullptr)
+            {
+                if (pBuilding->getOwner() == pPlayer &&
+                    (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y))
+                {
+                    pBuilding->endOfTurn();
+                }
+            }
+        }
+    }
+}
+
 void GameMap::startOfTurn(Player* pPlayer)
 {    
     if (pPlayer != nullptr)
@@ -2262,7 +2305,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
     {
         CONSOLE_PRINT("GameMap::nextTurn", Console::eDEBUG);
         m_Rules->checkVictory();
-        enableUnits(m_CurrentPlayer.get());
+        endOfTurn(m_CurrentPlayer.get());
         bool nextDay = nextPlayer();
         bool permanent = false;
         bool found = false;

@@ -391,6 +391,11 @@ var CO =
         // gotAttacked means we own the unit which got damage dealt.
     },
 
+    endOfTurn : function(co, map)
+    {
+        // called at the end of the turn use it to do cool co stuff like caulder's healing :)
+    },
+
     startOfTurn : function(co, map)
     {
         // called at the start of the turn use it to do cool co stuff like caulder's healing :)

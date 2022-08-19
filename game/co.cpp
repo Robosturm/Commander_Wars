@@ -125,6 +125,21 @@ double CO::getPowerFilled() const
     return m_powerFilled;
 }
 
+void CO::endOfTurn()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "endOfTurn";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            pInterpreter->doFunction(perk, function1, args);
+        }
+    }
+}
+
 void CO::startOfTurn()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

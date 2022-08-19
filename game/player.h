@@ -340,6 +340,10 @@ public slots:
      */
     void gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender, bool counterAttack);
     /**
+     * @brief endOfTurn
+     */
+    void endOfTurn();
+    /**
      * @brief startOfTurn
      */
     void startOfTurn();

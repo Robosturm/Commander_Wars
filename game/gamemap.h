@@ -696,6 +696,16 @@ public slots:
      */
     void enableUnits(Player* pPlayer);
     /**
+     * @brief endOfTurn
+     * @param pPlayer
+     */
+    void endOfTurn(Player* pPlayer);
+    /**
+     * @brief endOfTurnPlayer
+     * @param pPlayer
+     */
+    void endOfTurnPlayer(Player* pPlayer);
+    /**
      * @brief startOfTurn calls all start of turn calls of each unit and building owned by this player
      * @param pPlayer
      */

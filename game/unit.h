@@ -696,6 +696,10 @@ public slots:
      */
     void unloadIcon(const QString & iconID);
     /**
+     * @brief endOfTurn
+     */
+    void endOfTurn();
+    /**
      * @brief startOfTurn
      */
     void startOfTurn();

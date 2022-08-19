@@ -776,6 +776,15 @@ QStringList Building::getConstructionList()
     return buildList;
 }
 
+void Building::endOfTurn()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "endOfTurn";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(m_BuildingID, function1, args);
+}
+
 void Building::startOfTurn()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

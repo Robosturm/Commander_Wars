@@ -320,6 +320,10 @@ public slots:
      */
     QList<qint32> getRepairTypes();
     /**
+     * @brief endOfTurn
+     */
+    void endOfTurn();
+    /**
      * @brief startOfTurn
      */
     void startOfTurn();

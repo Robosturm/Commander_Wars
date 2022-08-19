@@ -128,6 +128,12 @@ var BUILDING =
     {
         return Global[building.getBuildingID()].actionList;
     },
+
+    endOfTurn : function(building, map)
+    {
+        // gets called at the end of a turn
+    },
+
     startOfTurn : function(building, map)
     {
         var owner = building.getOwner();
