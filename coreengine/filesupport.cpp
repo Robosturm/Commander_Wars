@@ -37,11 +37,6 @@ void Filesupport::addHash(Sha256Hash & hash, const QString & folder, const QStri
             hash.addData(file.readLine().trimmed());
         }
         file.close();
-        if (Console::eDEBUG >= Console::getLogLevel())
-        {
-            QString hostString = GlobalUtils::getByteArrayString(hash.result());
-            CONSOLE_PRINT("Hash after file is: " + hostString, Console::eDEBUG);
-        }
     }
     list = dir.entryInfoList(QStringList(), QDir::Dirs | QDir::NoDotAndDotDot);
     for (auto & item : list)

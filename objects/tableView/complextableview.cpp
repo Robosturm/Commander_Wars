@@ -27,6 +27,11 @@ ComplexTableView::ComplexTableView(const QVector<qint32> & widths, const QString
     setHeight(heigth);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::spBox9Sprite pBackground = oxygine::spBox9Sprite::create();
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
+    pBackground->setResAnim(pAnim);
+    pBackground->setSize(getSize());
+    addChild(pBackground);
     oxygine::ResAnim* phAnim =pObjectManager->getResAnim("h_table_divider");
     oxygine::ResAnim* pvAnim =pObjectManager->getResAnim("v_table_divider");
 
