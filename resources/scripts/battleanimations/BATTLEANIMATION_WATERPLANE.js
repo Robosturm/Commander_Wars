@@ -1,5 +1,26 @@
 var Constructor = function()
 {
+    this.armyData = [["ac", "ac"],
+                     ["bd", ""],
+                     ["bh", ""],
+                     ["bg", ""],
+                     ["bm", "bm"],
+                     ["dm", ""],
+                     ["ge", "ge"],
+                     ["gs", ""],
+                     ["ma", ""],
+                     ["os", "os"],
+                     ["pf", ""],
+                     ["ti", ""],
+                     ["yc", "yc"],];
+
+    this.animationData = [["ac", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
+                          ["bm", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
+                          ["ge", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
+                          ["os", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
+                          ["yc", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
+                          ["",   [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],];
+
     this.getMaxUnitCount = function()
     {
         return 5;
@@ -7,26 +28,46 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        sprite.loadSpriteV2("waterplane+mask", GameEnums.Recoloring_Matrix,
-                            BATTLEANIMATION_WATERPLANE.getMaxUnitCount(), Qt.point(-50, 20), -1, 1.0, 0, 0,
+        BATTLEANIMATION_WATERPLANE.loadSprite(sprite, unit, defender, weapon, "");
+    };
+    this.loadSprite = function(sprite, unit, defender, weapon, ending)
+    {
+        var player = unit.getOwner();
+        // get army name
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_WATERPLANE.armyData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_WATERPLANE.animationData);
+        var offset = data[0];
+
+        var spriteId = "waterplane+mask";
+        if (armyName !== "")
+        {
+            spriteId = "waterplane+" + armyName + ending + "+mask";
+        }
+        sprite.loadSpriteV2(spriteId, GameEnums.Recoloring_Matrix,
+                            BATTLEANIMATION_WATERPLANE.getMaxUnitCount(), offset, -1, 1.0, 0, 0,
                             false, false, 30);
         sprite.addMoveTweenToLastLoadedSprites(0, -5, 1200);
     };
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_WATERPLANE.loadStandingAnimation(sprite, unit, defender, weapon);
-        var offset = Qt.point(15, 48);
+        BATTLEANIMATION_WATERPLANE.loadSprite(sprite, unit, defender, weapon, "+fire");
+        var player = unit.getOwner();
+        // get army name
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_WATERPLANE.armyData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_WATERPLANE.animationData);
         var count = sprite.getUnitCount(BATTLEANIMATION_WATERPLANE.getMaxUnitCount());
         if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
+            var offset = data[1];
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), offset,
-                                    Qt.point(100, 0), 400, false,
+                                    Qt.point(227, 0), 800, false,
                                     -1, 1, -1);
         }
         else
         {
+            var offset = data[2];
             sprite.loadMovingSprite("rocket_down", false, sprite.getMaxUnitCount(), offset,
-                                    Qt.point(100, -50), 400, false,
+                                    Qt.point(150, -75), 800, false,
                                     -1, 1, -1);
         }
         for (var i = 0; i < count; i++)

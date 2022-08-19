@@ -1247,7 +1247,17 @@
         <!-- transportplane -->
         <image file="transportplane/transportplane+mask.png" />        
         <!-- waterplane -->
-        <image file="waterplane/waterplane+mask.png" cols = "2" />        
+        <image file="waterplane/waterplane+mask.png" cols = "2" />
+        <image file="waterplane/waterplane+ac+fire+mask.png" />
+        <image file="waterplane/waterplane+ac+mask.png" />
+        <image file="waterplane/waterplane+bm+fire+mask.png" />
+        <image file="waterplane/waterplane+bm+mask.png" />
+        <image file="waterplane/waterplane+ge+fire+mask.png" />
+        <image file="waterplane/waterplane+ge+mask.png" />
+        <image file="waterplane/waterplane+os+fire+mask.png" />
+        <image file="waterplane/waterplane+os+mask.png" />
+        <image file="waterplane/waterplane+yc+fire+mask.png" cols = "2" />
+        <image file="waterplane/waterplane+yc+mask.png" cols = "2" />
         <!-- zeppelin -->
         <image file="zeppelin/zeppelin+mask.png" />        
         <!-- repair_tank -->

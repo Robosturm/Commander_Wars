@@ -4794,5 +4794,15 @@
         <file>resources/images/building/depot+shadow+plains.png</file>
         <file>resources/images/building/depot+shadow+snow.png</file>
         <file>resources/images/building/depot+shadow+waste.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ac+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ac+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+bm+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+bm+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ge+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ge+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+os+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+os+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+yc+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+yc+mask.png</file>
     </qresource>
 </RCC>
