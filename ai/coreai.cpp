@@ -1901,7 +1901,8 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
                         {
                             while (!pAction->isFinalStep())
                             {
-                                if (pAction->getStepInputType() == "FIELD")
+                                QString stepType = pAction->getStepInputType();
+                                if (stepType == GameAction::INPUTSTEP_FIELD)
                                 {
                                     spMarkedFieldData pData = pAction->getMarkedFieldStepData();
                                     QVector<QPoint> & points = *pData->getPoints();
@@ -1928,7 +1929,7 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
                                     }
                                     addSelectedFieldData(pAction, target);
                                 }
-                                else if (pAction->getStepInputType() == "MENU")
+                                else if (stepType == "MENU")
                                 {
                                     spMenuData pData = pAction->getMenuStepData();
                                     if (pData->validData())
@@ -1954,6 +1955,7 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
                                 }
                                 else
                                 {
+                                    CONSOLE_PRINT("Uknown action step type: " + stepType, Console::eERROR);
                                     break;
                                 }
                             }

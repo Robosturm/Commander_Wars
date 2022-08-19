@@ -675,7 +675,7 @@ void HumanPlayerInput::getNextStepData()
         pCursor->changeCursor("cursor+default");
         pCursor->resetCursorRangeOutline();
         QString stepType = m_pGameAction->getStepInputType();
-        if (stepType.toUpper() == "MENU")
+        if (stepType == GameAction::INPUTSTEP_MENU)
         {
             CONSOLE_PRINT("HumanPlayerInput::getNextStepData show menu", Console::eDEBUG);
             spMenuData pData = m_pGameAction->getMenuStepData();
@@ -685,7 +685,7 @@ void HumanPlayerInput::getNextStepData()
                 attachActionMenu(m_pGameAction->getActionTarget().x(), m_pGameAction->getActionTarget().y());
             }
         }
-        else if (stepType.toUpper() == "FIELD")
+        else if (stepType == GameAction::INPUTSTEP_FIELD)
         {
             CONSOLE_PRINT("HumanPlayerInput::getNextStepData show fields", Console::eDEBUG);
             spMarkedFieldData pData = m_pGameAction->getMarkedFieldStepData();
@@ -705,7 +705,7 @@ void HumanPlayerInput::getNextStepData()
         }
         else
         {
-            CONSOLE_PRINT("Unknown step type detected. This will lead to an undefined behaviour. Action " + m_pGameAction->getActionID() + " at step " + QString::number(m_pGameAction->getInputStep()), Console::eERROR);
+            CONSOLE_PRINT("Unknown step type detected. This will lead to an undefined behaviour. Action " + m_pGameAction->getActionID() + " at step " + QString::number(m_pGameAction->getInputStep()) + " step type " + stepType, Console::eERROR);
         }
     }
     Mainapp::getInstance()->continueRendering();

@@ -318,7 +318,8 @@ private:
                                QString action, FunctionType type, qint32 index,
                                float & bestScore, std::vector<ScoreData> & scoreInfos);
     bool mutateAction(ScoreData & data, MoveUnitData & MoveUnitData, std::vector<double> & baseData, FunctionType type, qint32 functionIndex,
-                      qint32 & step, std::vector<qint32> & stepPosition);
+                      qint32 & step, std::vector<qint32> & stepPosition, std::vector<qint32> & maxStepOtions);
+    qint32 getNextMutateStep(qint32 step, std::vector<qint32> & stepPosition, std::vector<qint32> & maxStepOtions, qint32 maxOptions);
     /**
      * @brief scoreWait
      * @param unit

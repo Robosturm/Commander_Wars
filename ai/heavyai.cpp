@@ -633,6 +633,9 @@ void HeavyAi::mutateActionForFields(MoveUnitData & unitData, const std::vector<Q
         qint32 costs = unitData.pUnitPfs->getCosts(path);
         bool mutate = true;
         std::vector<qint32> stepPosition;
+        stepPosition.reserve(40);
+        std::vector<qint32> maxStepOtions;
+        maxStepOtions.reserve(40);
         std::vector<double> baseData(static_cast<qsizetype>(BasicFieldInfo::BasicFieldInfoMaxSize));
         spGameAction pDummy  = spGameAction::create(m_pMap);
         pDummy->setActionID(action);
@@ -650,7 +653,7 @@ void HeavyAi::mutateActionForFields(MoveUnitData & unitData, const std::vector<Q
             {
                 ScoreData data;
                 data.m_gameAction = pAction;
-                mutate = mutateAction(data, unitData, baseData, type, index, step, stepPosition);
+                mutate = mutateAction(data, unitData, baseData, type, index, step, stepPosition, maxStepOtions);
                 if (data.m_score > m_maxScore)
                 {
                     data.m_score = m_maxScore;
@@ -690,7 +693,7 @@ void HeavyAi::mutateActionForFields(MoveUnitData & unitData, const std::vector<Q
 }
 
 bool HeavyAi::mutateAction(ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData, FunctionType type, qint32 functionIndex, qint32 & step,
-                           std::vector<qint32> & stepPosition)
+                           std::vector<qint32> & stepPosition, std::vector<qint32> & maxStepOtions)
 {
     bool ret = false;
     if (data.m_gameAction->isFinalStep())
@@ -728,78 +731,121 @@ bool HeavyAi::mutateAction(ScoreData & data, MoveUnitData & unitData, std::vecto
     }
     else
     {
-        // reset mutation for following steps
-        for (qint32 i = step + 1; i < stepPosition.size(); ++i)
-        {
-            stepPosition[i] = 0;
-        }
         QString stepType = data.m_gameAction->getStepInputType();
-        if (stepType.toUpper() == "MENU")
+        if (stepType == GameAction::INPUTSTEP_MENU)
         {
             spMenuData pData = data.m_gameAction->getMenuStepData();
             if (pData->validData())
             {
-                qint32 nextStep = 0;
-                if (step < stepPosition.size())
-                {
-                    nextStep = stepPosition[step] + 1;
-                }
-                else
-                {
-                    stepPosition.push_back(0);
-                }
                 const auto & enableList = pData->getEnabledList();
                 const auto & costList = pData->getCostList();
                 const auto & actionList = pData->getActionIDs();
+                qint32 nextStep = getNextMutateStep(step, stepPosition, maxStepOtions, actionList.size());
                 for (qint32 i = nextStep; i < actionList.size(); ++i)
                 {
                     if (enableList[i])
                     {
                         CoreAI::addMenuItemData(data.m_gameAction, actionList[i], costList[i]);
                         stepPosition[step] = i;
-                        ret = mutateAction(data, unitData, baseData, type, functionIndex, step, stepPosition);
+                        ++step;
+                        ret = mutateAction(data, unitData, baseData, type, functionIndex, step, stepPosition, maxStepOtions);
                         break;
                     }
                 }
             }
         }
-        else if (stepType.toUpper() == "FIELD")
+        else if (stepType == GameAction::INPUTSTEP_FIELD)
         {
-            qint32 nextStep = 0;
-            if (step < stepPosition.size())
+            spMarkedFieldData pData = data.m_gameAction->getMarkedFieldStepData();
+            QVector<QPoint>* pFields = pData->getPoints();
+            qint32 maxOptions = 1;
+            if (data.m_gameAction->getActionID() != ACTION_MISSILE)
             {
-                nextStep = stepPosition[step] + 1;
+                maxOptions = pFields->size();
             }
-            else
-            {
-                stepPosition.push_back(0);
-            }
-            if (data.m_gameAction->getActionID() == ACTION_MISSILE)
+            qint32 nextStep = getNextMutateStep(step, stepPosition, maxStepOtions, maxOptions);
+            if (pData->getAllFields())
             {
                 // special case for missile
-                if (nextStep == 0)
+                if (nextStep == 0 &&
+                    data.m_gameAction->getActionID() == ACTION_MISSILE)
                 {
                     qint32 cost = 0;
                     QPoint rocketTarget = m_pPlayer->getSiloRockettarget(2, 3, cost);
                     CoreAI::addSelectedFieldData(data.m_gameAction, rocketTarget);
-                    ret = mutateAction(data, unitData, baseData, type, functionIndex, step, stepPosition);
+                    ++step;
+                    ret = mutateAction(data, unitData, baseData, type, functionIndex, step, stepPosition, maxStepOtions);
+                }
+                else
+                {
+                    Interpreter* pInterpreter = Interpreter::getInstance();
+                    QJSValueList args({pInterpreter->newQObject(this),
+                                       pInterpreter->newQObject(data.m_gameAction.get())});
+                    QJSValue erg = pInterpreter->doFunction(m_aiName, data.m_gameAction->getActionID() + "GetBestField", args);
+                    QPoint target = erg.toVariant().toPoint();
+                    CoreAI::addSelectedFieldData(data.m_gameAction, target);
+                    ++step;
+                    ret = mutateAction(data, unitData, baseData, type, functionIndex, step, stepPosition, maxStepOtions);
                 }
             }
             else
             {
-                spMarkedFieldData pData = data.m_gameAction->getMarkedFieldStepData();
-                QVector<QPoint>* pFields = pData->getPoints();
                 for (qint32 i = nextStep; i < pFields->size(); ++i)
                 {
                     CoreAI::addSelectedFieldData(data.m_gameAction, (*pFields)[i]);
                     stepPosition[step] = i;
-                    ret = mutateAction(data, unitData, baseData, type, functionIndex, step, stepPosition);
+                    ++step;
+                    ret = mutateAction(data, unitData, baseData, type, functionIndex, step, stepPosition, maxStepOtions);
                     break;
                 }
             }
         }
-    }
+        else
+        {
+            CONSOLE_PRINT("Uknown action step type: " + stepType, Console::eERROR);
+        }
+    }    
     return ret;
+}
+
+qint32 HeavyAi::getNextMutateStep(qint32 step, std::vector<qint32> & stepPosition, std::vector<qint32> & maxStepOtions, qint32 maxOptions)
+{
+    qint32 nextStep = 0;
+    if (step < stepPosition.size())
+    {
+        if (step + 1 < stepPosition.size())
+        {
+            if (stepPosition[step + 1] + 1 < maxStepOtions[step + 1])
+            {
+                nextStep = stepPosition[step];
+            }
+            else
+            {
+                nextStep = ++stepPosition[step];
+                // reset mutation for following steps
+                for (qint32 i = step + 1; i < stepPosition.size(); ++i)
+                {
+                    stepPosition[i] = 0;
+                }
+            }
+        }
+        else
+        {
+            nextStep = ++stepPosition[step];
+            // reset mutation for following steps
+            for (qint32 i = step + 1; i < stepPosition.size(); ++i)
+            {
+                stepPosition[i] = 0;
+            }
+        }
+        maxStepOtions[step] = maxOptions;
+    }
+    else
+    {
+        stepPosition.push_back(0);
+        maxStepOtions.push_back(maxOptions);
+    }
+    return nextStep;
 }
 
 void HeavyAi::getFunctionType(const QString & action, FunctionType & type, qint32 & index)
@@ -1185,23 +1231,24 @@ void HeavyAi::scoreUnload(ScoreData & data, MoveUnitData & unitData, std::vector
     // we got a transporter is it a good one
     Unit* pTransporter = data.m_gameAction->getTargetUnit();
     if (pTransporter != nullptr &&
-        !pTransporter->getHasMoved())
+        !pTransporter->getHasMoved() &&
+        m_aiStep >= AISteps::moveTransporters)
     {
         static double halfPercent = 0.5;
         double loadingCount = pTransporter->getLoadedUnitCount();
         double variableCount = data.m_gameAction->getVariableCount();
-        double unloadingCount = static_cast<qint32>(static_cast<double>(variableCount - 1.0) / 2.0);
+        double unloadingCount = static_cast<qint32>(static_cast<double>(variableCount - 1.0) / 3.0);
         double score = 0;
         auto targetPath = m_currentTargetedPfs->getTargetPathFast();
         double maxBonusScore = m_actionScoreVariant * loadingCount;
         double unloadingPercent = unloadingCount / loadingCount;
         if (targetPath.size() > 0 && targetPath[0] == m_currentTargetedPfs->getTarget())
         {
-            data.m_score += maxBonusScore * unloadingPercent;
+            score += maxBonusScore * unloadingPercent;
         }
         else
         {
-            data.m_score += maxBonusScore * unloadingPercent * halfPercent;
+            score += maxBonusScore * unloadingPercent * halfPercent;
         }
         const double maxBonus = m_maxScore * halfPercent - 1;
         if (score > maxBonus)
@@ -1209,7 +1256,6 @@ void HeavyAi::scoreUnload(ScoreData & data, MoveUnitData & unitData, std::vector
             score = maxBonus;
         }
         scoreWaitGeneric(data, unitData, baseData);
-        data.m_score *= halfPercent;
         data.m_score += score;
     }
     else
@@ -1598,8 +1644,8 @@ void HeavyAi::scoreWaitGeneric(ScoreData & data, MoveUnitData & unitData, std::v
     if (movePathSize > 0)
     {
         double distance = getDistanceToMovepath(targetPath, target);
-        score += m_maxScore * 0.5 / distance;
-        score += m_maxScore * 0.5 * movePathSize / static_cast<double>(unitData.movementPoints);
+        score += m_maxScore * 0.3 / distance;
+        score += m_maxScore * 0.3 * movePathSize / static_cast<double>(unitData.movementPoints);
     }
     // todo calculate
     data.m_score = score;

@@ -2671,19 +2671,19 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="243"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="318"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="244"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="319"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="286"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="300"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="287"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="301"/>
         <source>Enter Host Adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="389"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="390"/>
         <source>Host game is no longer available.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -9,6 +9,9 @@
 #include "game/player.h"
 #include "game/co.h"
 
+const char* const GameAction::INPUTSTEP_FIELD = "FIELD";
+const char* const GameAction::INPUTSTEP_MENU = "MENU";
+
 GameAction::GameAction(GameMap* pMap)
     : m_target(-1, -1),
       m_pMap{pMap}
@@ -547,5 +550,85 @@ void GameAction::deserializeObject(QDataStream& stream)
     if (version > 2)
     {
         stream >> m_roundTimerTime;
+    }
+}
+
+void GameAction::revertLastInputStep(const QString & stepType)
+{
+    qint32 revertCount = 0;
+    if (stepType == INPUTSTEP_FIELD)
+    {
+        revertCount = 2;
+    }
+    else if (stepType == INPUTSTEP_MENU)
+    {
+        revertCount = 1;
+    }
+    else
+    {
+        CONSOLE_PRINT("Uknown action step type: " + stepType, Console::eERROR);
+    }
+    if (revertCount > 0)
+    {
+        std::vector<qint32> intFields;
+        qint32 intCount = 0;
+        std::vector<float> floatFields;
+        qint32 floatCount = 0;
+        std::vector<QString> stringFields;
+        qint32 stringCount = 0;
+        startReading();
+        for (qint32 i = 0; i < m_storedDataTypes.size() - 2; ++i)
+        {
+            switch (m_storedDataTypes[i])
+            {
+                case InputData::Int:
+                {
+                    intFields.push_back(readDataInt32());
+                    break;
+                }
+                case InputData::Float:
+                {
+                    floatFields.push_back(readDataFloat());
+                    break;
+                }
+                case InputData::String:
+                {
+                    stringFields.push_back(readDataString());
+                    break;
+                }
+                default:
+                {
+                    CONSOLE_PRINT("Uknown input data: " + QString::number(static_cast<qint32>(m_storedDataTypes[i])), Console::eFATAL);
+                }
+            }
+        }
+        for (qint32 i = 0; i < m_storedDataTypes.size() - 2; ++i)
+        {
+            switch (m_storedDataTypes[i])
+            {
+                case InputData::Int:
+                {
+                    writeDataInt32(intFields[intCount]);
+                    ++intCount;
+                    break;
+                }
+                case InputData::Float:
+                {
+                    writeDataFloat(floatFields[floatCount]);
+                    ++floatCount;
+                    break;
+                }
+                case InputData::String:
+                {
+                    writeDataString(stringFields[stringCount]);
+                    ++stringCount;
+                    break;
+                }
+                default:
+                {
+                    CONSOLE_PRINT("Uknown input data: " + QString::number(static_cast<qint32>(m_storedDataTypes[i])), Console::eFATAL);
+                }
+            }
+        }
     }
 }
