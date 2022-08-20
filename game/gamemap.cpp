@@ -1250,8 +1250,11 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
             for (qint32 xPos = x + 1; xPos < mapWidth; xPos++)
             {
                 spTerrain pTerrain = m_fields[y][xPos];
-                pTerrain->detach();
-                m_rowSprites[y]->addChild(pTerrain);
+                if (pTerrain.get() != nullptr)
+                {
+                    pTerrain->detach();
+                    m_rowSprites[y]->addChild(pTerrain);
+                }
             }
         }
         else
