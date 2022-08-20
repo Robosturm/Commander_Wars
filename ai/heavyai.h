@@ -188,6 +188,21 @@ public slots:
     virtual void process() override;
 
     /*******************************************************************/
+    // processing section for js scripts use the following functions
+    /*******************************************************************/
+    /**
+     * @brief getInfluenceFrontMap
+     * @return
+     */
+    InfluenceFrontMap* getInfluenceFrontMap();
+    /**
+     * @brief addCustomTarget
+     * @param x
+     * @param y
+     * @param priority
+     */
+    void addCustomTarget(qint32 x, qint32 y, qint32 priority);
+    /*******************************************************************/
     // training section
     /*******************************************************************/
     /**
@@ -286,11 +301,6 @@ public slots:
      * @param unitId
      */
     void hideIslandMap(QString unitId);
-    /**
-     * @brief getInfluenceFrontMap
-     * @return
-     */
-    InfluenceFrontMap* getInfluenceFrontMap();
 protected:
     /**
      * @brief scoreActions
@@ -429,6 +439,17 @@ private:
      * @param targets
      */
     void addLoadingTargets(Unit* pUnit, const QStringList & actions, std::vector<QVector3D>& targets);
+    /**
+     * @brief addCustomTargets
+     * @param pUnit
+     */
+    void addCustomTargets(Unit* pUnit);
+    /**
+     * @brief addRepairTargets
+     * @param pUnit
+     * @param targets
+     */
+    void addRepairTargets(Unit* pUnit, std::vector<QVector3D>& targets);
     /**
      * @brief getBasicFieldInputVector
      * @param action
@@ -578,6 +599,12 @@ private:
      * @param target
      */
     qint32 getDistanceToMovepath(const std::vector<QPoint> & targetPath, const QPoint & target) const;
+    /**
+     * @brief isUsingUnit
+     * @param pUnit
+     * @return
+     */
+    bool isUsingUnit(Unit* pUnit) const;
 private:
     // function for scoring a function
     using scoreFunction = std::function<void (ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData)>;
@@ -594,6 +621,7 @@ private:
     std::vector<QPoint> m_planedCaptureTargets;
     InfluenceFrontMap m_InfluenceFrontMap;
     spQmlVectorUnit m_pUnits = spQmlVectorUnit();
+    spQmlVectorBuilding m_pBuildings = spQmlVectorBuilding();
     spQmlVectorUnit m_pEnemyUnits = spQmlVectorUnit();
     spQmlVectorBuilding m_pEnemyBuildings = spQmlVectorBuilding();
     Player* m_pPrimaryEnemy{nullptr};
@@ -612,6 +640,7 @@ private:
     };
     spTargetedUnitPathFindingSystem m_currentTargetedPfs;
     std::vector<QPoint> m_possibleCaptureTargets;
+    std::vector<QVector3D> m_currentTargetedPfsTargets;
 
     double m_minActionScore{0.2};
     double m_actionScoreVariant{0.05};
@@ -632,6 +661,7 @@ private:
     double m_maxCapturePoints = 20;
     double m_earlyGameDays{6.0f};
     double m_usedCapturePointIncrease{1.5f};
+    double m_minUnitHealth{3};
 
     // storable stuff
     QString m_aiName{"HEAVY_AI"};

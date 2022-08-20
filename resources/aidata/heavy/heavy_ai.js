@@ -19,4 +19,10 @@ var HEAVY_AI =
     //     // return the best field for an action in case all map fields are selectable
     //     return Qt.point(0, 0);
     // },
+    // addCustomTargets : function(ai, unit)
+    // {
+    //      add custom targets for units that need to move more than one turn ahead.
+    //      a higher priority value means the unit is less likely to move towards a position must be an number greater 1.
+    //      ai.addCustomTarget(x, y, priority);
+    // },
 };

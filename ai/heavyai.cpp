@@ -62,10 +62,14 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
                   {"MaxTerrainDefense", "General", &m_maxTerrainDefense, 15.0f, 15.0f, 15.0f},
                   {"MaxCapturePoints", "General", &m_maxCapturePoints, 20.0f, 20.0f, 20.0f},
                   {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
+                  {"MinUnitHealth", "General", &m_minUnitHealth, 3.0f, 0.0f, 10.0f},
                   {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
                   {"UsedCapturePointIncrease", "General", &m_usedCapturePointIncrease, 1.5f, 1.5f, 1.5f},
                 };
-    
+    if (m_pMap != nullptr)
+    {
+        m_currentTargetedPfsTargets.reserve(m_pMap->getMapHeight() * m_pMap->getMapWidth());
+    }
     if (m_pMap != nullptr &&
         !m_pMap->getSavegame())
     {
@@ -146,13 +150,13 @@ void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint
 
 void HeavyAi::process()
 {
-    spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
-    pBuildings->randomize();
+    m_pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
+    m_pBuildings->randomize();
     m_pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
     m_pEnemyBuildings->randomize();
     if (m_pause)
     {
-        setupTurn(pBuildings);
+        setupTurn(m_pBuildings);
         m_timer.start(1000);
         return;
     }
@@ -170,11 +174,11 @@ void HeavyAi::process()
     FunctionType explodeType = FunctionType::Undefined;
     getFunctionType(CoreAI::ACTION_EXPLODE, explodeType, index);
 
-    if (useBuilding(pBuildings)){}
+    if (useBuilding(m_pBuildings)){}
     else if (useCOPower(pUnits, pEnemyUnits)){}
     else
     {
-        setupTurn(pBuildings);
+        setupTurn(m_pBuildings);
         turnMode = GameEnums::AiTurnMode_DuringDay;
         if (CoreAI::buildCOUnit(m_pUnits)){}
         // use core ai here for the start
@@ -198,7 +202,7 @@ void HeavyAi::process()
                 }
                 if (!selectActionToPerform())
                 {
-                    if (!buildUnits(pBuildings, m_pUnits, m_pEnemyUnits, m_pEnemyBuildings))
+                    if (!buildUnits(m_pBuildings, m_pUnits, m_pEnemyUnits, m_pEnemyBuildings))
                     {
                         endTurn();
                     }
@@ -553,7 +557,8 @@ bool HeavyAi::isCaptureTransporterOrCanCapture(Unit* pUnit)
 void HeavyAi::scoreActions(MoveUnitData & unit)
 {
     AI_CONSOLE_PRINT("HeavyAi::scoreActions", Console::eDEBUG);
-    if (!unit.pUnit->getHasMoved())
+    if (!unit.pUnit->getHasMoved() &&
+        isUsingUnit(unit.pUnit.get()))
     {
         if (unit.pUnit->getTerrain() == nullptr ||
             unit.pUnit->getHp() <= 0)
@@ -1327,17 +1332,15 @@ void HeavyAi::prepareWaitPfs(MoveUnitData & unitData, QStringList & actions)
 {
     if (m_currentTargetedPfs.get() == nullptr)
     {
-        std::vector<QVector3D> targets;
-        getMoveTargets(unitData, actions, targets);
-        m_currentTargetedPfs = spTargetedUnitPathFindingSystem::create(m_pMap, unitData.pUnit.get(), targets, &m_MoveCostMap);
+        m_currentTargetedPfsTargets.clear();
+        getMoveTargets(unitData, actions, m_currentTargetedPfsTargets);
+        m_currentTargetedPfs = spTargetedUnitPathFindingSystem::create(m_pMap, unitData.pUnit.get(), m_currentTargetedPfsTargets, &m_MoveCostMap);
         m_currentTargetedPfs->explore();
     }
 }
 
 void HeavyAi::getMoveTargets(MoveUnitData & unit, QStringList & actions, std::vector<QVector3D> & targets)
 {
-    // todo
-    
     if (m_pMap != nullptr)
     {
         qint32 mapWidth = m_pMap->getMapWidth();
@@ -1351,33 +1354,83 @@ void HeavyAi::getMoveTargets(MoveUnitData & unit, QStringList & actions, std::ve
         // todo create input vector
         m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier]->predict(input);
 
-        for (qint32 x = 0; x < mapWidth; ++x)
+        addRepairTargets(unit.pUnit.get(), targets);
+        Unit* pUnit = unit.pUnit.get();
+        if (isUsingUnit(pUnit))
         {
-            for (qint32 y = 0; y < mapHeight; ++y)
+            addLoadingTargets(pUnit, unit.actions, targets);
+            addUnloadTargets(pUnit, targets);
+            addCustomTargets(pUnit);
+            for (qint32 x = 0; x < mapWidth; ++x)
             {
-                if (unit.pUnit->canMoveOver(x, y) &&
-                    onSameIsland(unitIslandIdx, unit.pUnit->Unit::getX(), unit.pUnit->Unit::getY(), x, y))
+                for (qint32 y = 0; y < mapHeight; ++y)
                 {
-                    Terrain* pTerrain = m_pMap->getTerrain(x, y);
-                    addCaptureTargets(actions, pTerrain, targets);
-                    addAttackTargets(unit.pUnit.get(), pTerrain, pTargetFields.get(), targets);
-                    addCaptureTransporterTargets(unit.pUnit.get(), actions, pTerrain, targets);
-                    addTransporterTargets(unit.pUnit.get(), pTerrain, targets);
-                    addLoadingTargets(unit.pUnit.get(), unit.actions, targets);
-                    addUnloadTargets(unit.pUnit.get(), targets);
-                    // todo implement that list
-                    //                addRepairTargets();
-                    //                addSupportTargets();
-                    //                // we need reparing / supplying
-                    //                addRepairTargets();
-                    //                addRefillTargets();
-                    //                addFlareTargets();                    
-                    //                addOoziumTargets();
-                    //                addBlackbombTargets();
-                    //                addCustomTargets();
+                    if (unit.pUnit->canMoveOver(x, y) &&
+                        onSameIsland(unitIslandIdx, unit.pUnit->Unit::getX(), unit.pUnit->Unit::getY(), x, y))
+                    {
+                        Terrain* pTerrain = m_pMap->getTerrain(x, y);
+                        addCaptureTargets(actions, pTerrain, targets);
+                        addAttackTargets(pUnit, pTerrain, pTargetFields.get(), targets);
+                        addCaptureTransporterTargets(pUnit, actions, pTerrain, targets);
+                        addTransporterTargets(pUnit, pTerrain, targets);
+
+                        // todo implement that list
+                        // // we need reparing / supplying
+                        // addRefillTargets();
+                        // addSupportTargets();
+
+                        // currently using predefined ai
+                        // addFlareTargets();
+                        // addOoziumTargets();
+                        // addBlackbombTargets();
+                    }
                 }
             }
         }
+    }
+}
+
+void HeavyAi::addCustomTargets(Unit* pUnit)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    const char* const CB_NAME = "addCustomTargets";
+    if (pInterpreter->exists(m_aiName, CB_NAME))
+    {
+        QJSValueList args({pInterpreter->newQObject(this),
+                           pInterpreter->newQObject(pUnit)});
+        pInterpreter->doFunction(m_aiName, CB_NAME, args);
+    }
+}
+
+void HeavyAi::addRepairTargets(Unit* pUnit, std::vector<QVector3D>& targets)
+{
+    bool requiresRefuel = needsRefuel(pUnit);
+    if (requiresRefuel || pUnit->getHp() < m_minUnitHealth)
+    {
+        appendRepairTargets(pUnit, m_pBuildings, targets);
+        if (requiresRefuel)
+        {
+            appendTransporterTargets(pUnit, m_pUnits, targets);
+        }
+    }
+}
+
+void HeavyAi::addCustomTarget(qint32 x, qint32 y, qint32 priority)
+{
+    if (priority >= 1)
+    {
+        if (m_pMap->onMap(x, y))
+        {
+            m_currentTargetedPfsTargets.push_back(QVector3D(x, y, priority));
+        }
+        else
+        {
+            CONSOLE_PRINT("Position in addCustomTarget x: " + QString::number(x) + " y: " + QString::number(y) + " isn't  on the map", Console::eERROR);
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Priority: " + QString::number(priority) + " in addCustomTarget is not greater than 1", Console::eERROR);
     }
 }
 
@@ -1681,4 +1734,9 @@ bool HeavyAi::isPrimaryEnemy(Unit* pUnit) const
 bool HeavyAi::isPrimaryEnemy(Building* pBuilding) const
 {
     return isPrimaryEnemy(pBuilding->getOwner());
+}
+
+bool HeavyAi::isUsingUnit(Unit* pUnit) const
+{
+    return !needsRefuel(pUnit) && pUnit->getHp() >= m_minUnitHealth;
 }
