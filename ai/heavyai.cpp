@@ -823,20 +823,16 @@ qint32 HeavyAi::getNextMutateStep(qint32 step, std::vector<qint32> & stepPositio
             {
                 nextStep = ++stepPosition[step];
                 // reset mutation for following steps
-                for (qint32 i = step + 1; i < stepPosition.size(); ++i)
-                {
-                    stepPosition[i] = 0;
-                }
+                stepPosition.resize(step + 1);
+                maxStepOtions.resize(step + 1);
             }
         }
         else
         {
             nextStep = ++stepPosition[step];
             // reset mutation for following steps
-            for (qint32 i = step + 1; i < stepPosition.size(); ++i)
-            {
-                stepPosition[i] = 0;
-            }
+            stepPosition.resize(step + 1);
+            maxStepOtions.resize(step + 1);
         }
         maxStepOtions[step] = maxOptions;
     }
