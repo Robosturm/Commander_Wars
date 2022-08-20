@@ -248,13 +248,12 @@ void PerkSelection::setPerks(const QStringList &perks)
     {
         m_pCO->setPerkList(perks);
     }
-    COPerkManager* pCOPerkManager = COPerkManager::getInstance();
-    qint32 count = pCOPerkManager->getCount();
-    
-    for (qint32 i = 0; i < count; i++)
+    COPerkManager* pCOPerkManager = COPerkManager::getInstance();    
+    qint32 count = m_perkIds.size();
+    for (qint32 i = 0; i < count; ++i)
     {
-        QString id = pCOPerkManager->getID(i);
-        if (pCOPerkManager->isSelectable(i) &&
+        QString id = m_perkIds[i];
+        if (pCOPerkManager->isSelectable(id) &&
             (m_banning || m_pMap->getGameRules()->getAllowedPerks().contains(id)))
         {
             if (m_perks.contains(id))

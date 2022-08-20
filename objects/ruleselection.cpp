@@ -1054,8 +1054,6 @@ void RuleSelection::weatherChancesChanged()
 
 void RuleSelection::showCOBannlist()
 {
-    
-    
     spCOBannListDialog pBannlist = spCOBannListDialog::create(m_pMap->getGameRules()->getCOBannlist());
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &COBannListDialog::editFinished, m_pMap->getGameRules(), &GameRules::setCOBannlist, Qt::QueuedConnection);
@@ -1063,16 +1061,14 @@ void RuleSelection::showCOBannlist()
 }
 
 void RuleSelection::showPerkBannlist()
-{
-    
+{    
     spPerkSelectionDialog pBannlist = spPerkSelectionDialog::create(m_pMap, nullptr, -1, true, QStringList());
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &PerkSelectionDialog::editFinished, m_pMap->getGameRules(), &GameRules::setAllowedPerks, Qt::QueuedConnection);
 }
 
 void RuleSelection::showActionBannlist()
-{
-    
+{    
     spActionListDialog pBannlist = spActionListDialog::create(m_pMap->getGameRules()->getAllowedActions(), m_pMap);
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &ActionListDialog::editFinished, m_pMap->getGameRules(), &GameRules::setAllowedActions, Qt::QueuedConnection);
