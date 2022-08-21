@@ -111,10 +111,11 @@ bool Settings::m_muted = false;
 quint16 Settings::m_GamePort          = 9001;
 quint16 Settings::m_ServerPort        = 9002;
 quint16 Settings::m_slaveServerPort   = 9003;
-QString Settings::m_ServerAdress      = "";
+QString Settings::m_ServerAdress      = "2600:3c00::f03c:93ff:fe86:009e";
 QString Settings::m_slaveServerName   = "";
-QString Settings::m_slaveHostOptions      = "::1&10000&20000;::1&50000&65535";
+QString Settings::m_slaveHostOptions      = "::1&&10000&20000;::1&&50000&65535";
 QString Settings::m_serverListenAdress = "";
+QString Settings::m_serverSecondaryListenAdress = "";
 QString Settings::m_slaveListenAdress = "::1";
 bool Settings::m_Server               = false;
 bool Settings::m_record               = true;
@@ -357,8 +358,9 @@ Settings::Settings()
         new Value<quint16>{"Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()},
         new Value<bool>{"Network", "Server", &m_Server, false, false, true},
         new Value<QString>{"Network", "ServerListenAdress", &m_serverListenAdress, "", "", ""},
+        new Value<QString>{"Network", "ServerSecondaryListenAdress", &m_serverSecondaryListenAdress, "", "", ""},
         new Value<QString>{"Network", "SlaveListenAdress", &m_slaveListenAdress, "", "", ""},
-        new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&10000&20000;::1&50000&65535", "", ""},
+        new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&&10000&20000;::1&&50000&65535", "", ""},
         new Value<std::chrono::seconds>{"Network", "SlaveDespawnTime", &m_slaveDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(60), std::chrono::seconds(60 * 60 * 24 * 24)},
         // mailing
         new Value<QString>{"Mailing", "MailServerAddress", &m_mailServerAddress, "", "", ""},
@@ -377,6 +379,16 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+const QString &Settings::getServerSecondaryListenAdress()
+{
+    return m_serverSecondaryListenAdress;
+}
+
+void Settings::setServerSecondaryListenAdress(const QString &newServerSecondaryListenAdress)
+{
+    m_serverSecondaryListenAdress = newServerSecondaryListenAdress;
 }
 
 const QString &Settings::getServerPassword()

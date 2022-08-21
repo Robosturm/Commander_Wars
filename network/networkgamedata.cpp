@@ -165,3 +165,13 @@ void NetworkGameData::setPlayerNames(const QStringList &playerNames)
 {
     m_playerNames = playerNames;
 }
+
+const QString &NetworkGameData::getSlaveSecondaryAddress() const
+{
+    return m_slaveSecondaryAddress;
+}
+
+void NetworkGameData::setSlaveSecondaryAddress(const QString &newSlaveSecondaryAddress)
+{
+    m_slaveSecondaryAddress = newSlaveSecondaryAddress;
+}

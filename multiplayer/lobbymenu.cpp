@@ -44,7 +44,7 @@ LobbyMenu::LobbyMenu()
         m_pTCPClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
         connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, Qt::QueuedConnection);
         connect(m_pTCPClient.get(), &TCPClient::sigConnected, this, &LobbyMenu::connected, Qt::QueuedConnection);
-        emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort());
+        emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort(), "");
     }
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
@@ -219,7 +219,7 @@ void LobbyMenu::exitMenue()
 void LobbyMenu::hostLocal()
 {    
     CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create("", Settings::getGamePort(), "", Multiplayermenu::NetworkMode::Host));
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create("", "", Settings::getGamePort(), "", Multiplayermenu::NetworkMode::Host));
     oxygine::Actor::detach();
 }
 
@@ -292,7 +292,7 @@ void LobbyMenu::joinAdress()
 void LobbyMenu::join(QString adress, QString password)
 {    
     CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", Console::eDEBUG);
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), Settings::getGamePort(), password, Multiplayermenu::NetworkMode::Client));
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), "", Settings::getGamePort(), password, Multiplayermenu::NetworkMode::Client));
     oxygine::Actor::detach();
 }
 
@@ -306,7 +306,7 @@ void LobbyMenu::observeAdress()
 void LobbyMenu::observe(QString adress, QString password)
 {
     CONSOLE_PRINT("Leaving Lobby Menue to observe game by adress", Console::eDEBUG);
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), Settings::getGamePort(), password, Multiplayermenu::NetworkMode::Observer));
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), "", Settings::getGamePort(), password, Multiplayermenu::NetworkMode::Observer));
     oxygine::Actor::detach();
 }
 
@@ -441,9 +441,10 @@ void LobbyMenu::updateGameData(const QJsonObject & objData)
 void LobbyMenu::joinSlaveGame(const QJsonObject & objData)
 {
     QString slaveAddress = objData.value(JsonKeys::JSONKEY_ADDRESS).toString();
+    QString secondarySlaveAddress = objData.value(JsonKeys::JSONKEY_SECONDARYADDRESS).toString();
     quint16 slavePort = objData.value(JsonKeys::JSONKEY_PORT).toInteger();
     CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", Console::eDEBUG);
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(slaveAddress.trimmed(), slavePort, m_password, Multiplayermenu::NetworkMode::Client));
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(slaveAddress.trimmed(), secondarySlaveAddress.trimmed(), slavePort, m_password, Multiplayermenu::NetworkMode::Client));
     oxygine::Actor::detach();
 }
 

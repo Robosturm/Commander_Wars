@@ -26,12 +26,11 @@ public:
      */
     void moveClientToThread(QThread* pThread);
     spRxTask getRXTask() const;
-
     spTxTask getTXTask() const;
-
     virtual void setSocketID(const quint64 &socketID) override;
+
 public slots:
-    virtual void connectTCP(QString adress, quint16 port) override;
+    virtual void connectTCP(QString address, quint16 port, QString /* secondaryAdress */) override;
     virtual void disconnectTCP() override;
     virtual QVector<quint64> getConnectedSockets() override;
     virtual void changeThread(quint64 socketID, QThread* pThread) override;
@@ -45,6 +44,9 @@ private:
     spTxTask m_pTXTask;
     std::shared_ptr<QTcpSocket> m_pSocket;
     bool m_onServer{false};
+    QString m_secondaryAdress;
+    quint16 m_port{0};
+    bool m_testedSecondaryAddress{false};
 };
 
 #endif // TCPCLIENT_H

@@ -118,8 +118,8 @@ MainServer::MainServer()
         emit m_mailSender.sigConnectToServer();
 
         CONSOLE_PRINT("Starting tcp server and listening to new clients.", Console::eDEBUG);
-        emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort());
-        emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort());
+        emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort(), Settings::getServerSecondaryListenAdress());
+        emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort(), "");
     }
 }
 
@@ -156,26 +156,38 @@ bool MainServer::sqlQueryFailed(const QSqlQuery & query)
 void MainServer::parseSlaveAddressOptions()
 {
     QStringList addressOptions = Settings::getSlaveHostOptions().split(";");
-    for (auto & option : addressOptions)
+    if (addressOptions.size() == 0)
     {
-        QStringList values = option.split("&");
-        if (values.size() == 3)
+        CONSOLE_PRINT("Slave host option: " + Settings::getSlaveHostOptions() + " contains no valid slave spawn options. Server will be unusable.", Console::eWARNING);
+    }
+    else
+    {
+        for (auto & option : addressOptions)
         {
-            bool ok = false;
-            AddressInfo info;
-            info.address = values[0];
-            info.minPort = values[1].toUInt(&ok);
-            if (info.minPort == 0)
+            QStringList values = option.split("&");
+            if (values.size() == 4)
             {
-                info.minPort = 1;
+                bool ok = false;
+                AddressInfo info;
+                info.address = values[0];
+                info.secondaryAddress = values[1];
+                info.minPort = values[2].toUInt(&ok);
+                if (info.minPort == 0)
+                {
+                    info.minPort = 2;
+                }
+                info.maxPort = values[3].toUInt(&ok);
+                m_slaveAddressOptions.append(info);
+                if (m_slaveAddressOptions.size() == 1)
+                {
+                    m_lastUsedPort = info.minPort -1;
+                }
+                CONSOLE_PRINT("Slave host option: " + info.address + " from port " + QString::number(info.minPort) + " to " + QString::number(info.maxPort), Console::eDEBUG);
             }
-            info.maxPort = values[2].toUInt(&ok);
-            m_slaveAddressOptions.append(info);
-            if (m_slaveAddressOptions.size() == 1)
+            else
             {
-                m_lastUsedPort = info.minPort -1;
+                CONSOLE_PRINT("Slave host option: " + option + " couldn't be parsed and will be ignored", Console::eWARNING);
             }
-            CONSOLE_PRINT("Slave host option: " + info.address + " from port " + QString::number(info.minPort) + " to " + QString::number(info.maxPort), Console::eDEBUG);
         }
     }
 }
@@ -390,6 +402,7 @@ void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject & objData)
             QJsonObject data;
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
             data.insert(JsonKeys::JSONKEY_ADDRESS, game->game->getData().getSlaveAddress());
+            data.insert(JsonKeys::JSONKEY_SECONDARYADDRESS, game->game->getData().getSlaveSecondaryAddress());
             data.insert(JsonKeys::JSONKEY_PORT, static_cast<qint64>(game->game->getData().getSlavePort()));
             QJsonDocument doc(data);
             emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
@@ -458,8 +471,9 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
     m_slaveGameIterator++;
 
     QString slaveAddress;
+    QString slaveSecondaryAddress;
     quint16 slavePort;
-    if (getNextFreeSlaveAddress(slaveAddress, slavePort))
+    if (getNextFreeSlaveAddress(slaveAddress, slavePort, slaveSecondaryAddress))
     {
         bool createLogs = Mainapp::getInstance()->getCreateSlaveLogs();
         QString slaveName = "Commander_Wars_Slave_" + QString::number(m_slaveGameIterator);
@@ -478,6 +492,8 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
                           Settings::getConfigString(mods),
                           QString(prefix) + CommandLineParser::ARG_SLAVEADDRESS,
                           slaveAddress,
+                          QString(prefix) + CommandLineParser::ARG_SLAVESECONDARYADDRESS,
+                          slaveSecondaryAddress,
                           QString(prefix) + CommandLineParser::ARG_SLAVEPORT,
                           QString::number(slavePort),
                           QString(prefix) + CommandLineParser::ARG_MASTERADDRESS,
@@ -495,6 +511,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         game->game->setServerName(slaveName);
         game->game->setHostingSocket(socketID);
         game->game->getData().setSlaveAddress(slaveAddress);
+        game->game->getData().setSlaveSecondaryAddress(slaveSecondaryAddress);
         game->game->getData().setSlavePort(slavePort);
         connect(game->process.get(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), game->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
         connect(game->game.get(), &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);
@@ -585,6 +602,7 @@ void MainServer::closeGame(NetworkGame* pGame)
         const auto & game = iter.value();
         SlaveAddress freeAddress;
         freeAddress.address = game->game->getData().getSlaveAddress();
+        freeAddress.secondaryAddress = game->game->getData().getSlaveSecondaryAddress();
         freeAddress.port = game->game->getData().getSlavePort();
         m_freeAddresses.append(freeAddress);
         game->process->kill();
@@ -594,13 +612,14 @@ void MainServer::closeGame(NetworkGame* pGame)
     }
 }
 
-bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port)
+bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port, QString & secondaryAddress)
 {
     bool success = false;
     if (m_freeAddresses.size() > 0)
     {
         auto & newAddress = m_freeAddresses.constLast();
         address = newAddress.address;
+        secondaryAddress = newAddress.secondaryAddress;
         port = newAddress.port;
         m_freeAddresses.removeLast();
         success = true;
@@ -613,6 +632,7 @@ bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port)
             if (m_lastUsedPort < options.maxPort)
             {
                 address = options.address;
+                secondaryAddress = options.secondaryAddress;
                 ++m_lastUsedPort;
                 port = m_lastUsedPort;
                 success = true;
@@ -623,7 +643,7 @@ bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port)
                 if (m_lastUsedAddressIndex < m_slaveAddressOptions.size())
                 {
                     m_lastUsedPort = m_slaveAddressOptions[m_lastUsedAddressIndex].minPort - 1;
-                    success = getNextFreeSlaveAddress(address, port);
+                    success = getNextFreeSlaveAddress(address, port, secondaryAddress);
                 }
             }
         }

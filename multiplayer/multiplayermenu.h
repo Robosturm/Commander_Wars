@@ -31,7 +31,7 @@ public:
         Observer,
     };
 
-    explicit Multiplayermenu(QString adress, quint16 port, QString password, NetworkMode host);
+    explicit Multiplayermenu(QString address, QString secondaryAddress, quint16 port, QString password, NetworkMode host);
     explicit Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, NetworkMode host);
     virtual ~Multiplayermenu() = default;
 

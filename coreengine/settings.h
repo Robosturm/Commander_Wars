@@ -315,6 +315,9 @@ public slots:
     static const QString &getServerListenAdress();
     static void setServerListenAdress(const QString &newServerListenAdress);
 
+    static const QString &getServerSecondaryListenAdress();
+    static void setServerSecondaryListenAdress(const QString &newServerSecondaryListenAdress);
+
     static quint16 getSlaveServerPort();
     static void setSlaveServerPort(quint16 newSlaveServerPort);
 
@@ -903,6 +906,7 @@ private:
     static quint16 m_slaveServerPort;
     static QString m_ServerAdress;
     static QString m_serverListenAdress;
+    static QString m_serverSecondaryListenAdress;
     static QString m_slaveListenAdress;
     static QString m_slaveHostOptions;
     static std::chrono::seconds m_slaveDespawnTime;

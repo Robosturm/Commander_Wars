@@ -37,7 +37,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-Multiplayermenu::Multiplayermenu(QString adress, quint16 port, QString password, NetworkMode networkMode)
+Multiplayermenu::Multiplayermenu(QString address, QString secondaryAddress, quint16 port, QString password, NetworkMode networkMode)
     : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 380),
       m_networkMode(networkMode),
       m_local(true),
@@ -51,7 +51,7 @@ Multiplayermenu::Multiplayermenu(QString adress, quint16 port, QString password,
         m_pNetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
         m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
         initClientAndWaitForConnection();
-        emit m_pNetworkInterface->sig_connect(adress, port);
+        emit m_pNetworkInterface->sig_connect(address, port, secondaryAddress);
     }
     else
     {
@@ -540,6 +540,7 @@ void Multiplayermenu::connectToSlave(const QJsonObject & objData, quint64 socket
 {
     CONSOLE_PRINT("Connected to slave", Console::eDEBUG);
     QString address = objData.value(JsonKeys::JSONKEY_ADDRESS).toString();
+    QString secondarySlaveAddress = objData.value(JsonKeys::JSONKEY_SECONDARYADDRESS).toString();
     quint16 port = objData.value(JsonKeys::JSONKEY_PORT).toInteger();
     disconnectNetworkSlots();
     m_pNetworkInterface = spTCPClient::create(nullptr);
@@ -548,7 +549,7 @@ void Multiplayermenu::connectToSlave(const QJsonObject & objData, quint64 socket
     m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
     createChat();
     connectNetworkSlots();
-    emit m_pNetworkInterface->sig_connect(address, port);
+    emit m_pNetworkInterface->sig_connect(address, port, secondarySlaveAddress);
 }
 
 void Multiplayermenu::onSlaveConnectedToMaster(quint64 socketID)
@@ -1480,7 +1481,7 @@ void Multiplayermenu::buttonNext()
             m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
             createChat();
             connectNetworkSlots();
-            emit m_pNetworkInterface->sig_connect("", Settings::getGamePort());
+            emit m_pNetworkInterface->sig_connect("", Settings::getGamePort(), "");
             MapSelectionMapsMenue::buttonNext();
         }
         else

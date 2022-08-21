@@ -29,12 +29,14 @@ class MainServer : public QObject, public oxygine::ref_counter
     struct AddressInfo
     {
         QString address;
+        QString secondaryAddress;
         quint16 minPort;
         quint16 maxPort;
     };
     struct SlaveAddress
     {
         QString address;
+        QString secondaryAddress;
         quint16 port;
     };
 
@@ -185,7 +187,7 @@ private:
      * @param address
      * @param port
      */
-    bool getNextFreeSlaveAddress(QString & address, quint16 & port);
+    bool getNextFreeSlaveAddress(QString & address, quint16 & port, QString & secondaryAddress);
     /**
      * @brief parseSlaveAddressOptions
      */

@@ -11,26 +11,28 @@
 
 #include "3rd_party/smtpClient/src/smtpclient.h"
 
-const char* const CommandLineParser::ARG_MODS = "mods";
-const char* const CommandLineParser::ARG_SLAVE = "slave";
-const char* const CommandLineParser::ARG_SLAVENAME = "slaveServer";
-const char* const CommandLineParser::ARG_NOUI = "noUi";
-const char* const CommandLineParser::ARG_NOAUDIO = "noAudio";
-const char* const CommandLineParser::ARG_INITSCRIPT = "initScript";
-const char* const CommandLineParser::ARG_CREATESLAVELOGS = "createSlaveLogs";
-const char* const CommandLineParser::ARG_SLAVEADDRESS = "slaveAdress";
-const char* const CommandLineParser::ARG_SLAVEPORT = "slavePort";
-const char* const CommandLineParser::ARG_MASTERADDRESS = "masterAdress";
-const char* const CommandLineParser::ARG_MASTERPORT= "masterPort";
+const char* const CommandLineParser::ARG_MODS                   = "mods";
+const char* const CommandLineParser::ARG_SLAVE                  = "slave";
+const char* const CommandLineParser::ARG_SLAVENAME              = "slaveServer";
+const char* const CommandLineParser::ARG_NOUI                   = "noUi";
+const char* const CommandLineParser::ARG_NOAUDIO                = "noAudio";
+const char* const CommandLineParser::ARG_INITSCRIPT             = "initScript";
+const char* const CommandLineParser::ARG_CREATESLAVELOGS        = "createSlaveLogs";
+const char* const CommandLineParser::ARG_SLAVEADDRESS           = "slaveAdress";
+const char* const CommandLineParser::ARG_SLAVESECONDARYADDRESS  = "slaveSecondaryAdress";
+const char* const CommandLineParser::ARG_SLAVEPORT              = "slavePort";
+const char* const CommandLineParser::ARG_MASTERADDRESS          = "masterAdress";
+const char* const CommandLineParser::ARG_MASTERPORT             = "masterPort";
 
 // options required for hosting a dedicated server
-const char* const CommandLineParser::ARG_SERVER = "server";
-const char* const CommandLineParser::ARG_SERVERSLAVEHOSTOPTIONS = "slaveOptions";
-const char* const CommandLineParser::ARG_SERVERLISTENADDRESS    = "serverListenAddress";
-const char* const CommandLineParser::ARG_SERVERLISTENPORT       = "serverListenPort";
-const char* const CommandLineParser::ARG_SERVERSLAVELISTENADDRESS    = "serverSlaveListenAddress";
-const char* const CommandLineParser::ARG_SERVERSLAVELISTENPORT       = "serverSlaveListenPort";
-const char* const CommandLineParser::ARG_SERVERSLAVEDESPAWNTIME      = "serverSlaveDespawnTime";
+const char* const CommandLineParser::ARG_SERVER                     = "server";
+const char* const CommandLineParser::ARG_SERVERSLAVEHOSTOPTIONS         = "slaveOptions";
+const char* const CommandLineParser::ARG_SERVERLISTENADDRESS            = "serverListenAddress";
+const char* const CommandLineParser::ARG_SERVERSECONDARYLISTENADDRESS   = "serverSecondaryListenAddress";
+const char* const CommandLineParser::ARG_SERVERLISTENPORT               = "serverListenPort";
+const char* const CommandLineParser::ARG_SERVERSLAVELISTENADDRESS       = "serverSlaveListenAddress";
+const char* const CommandLineParser::ARG_SERVERSLAVELISTENPORT          = "serverSlaveListenPort";
+const char* const CommandLineParser::ARG_SERVERSLAVEDESPAWNTIME         = "serverSlaveDespawnTime";
 
 const char* const CommandLineParser::ARG_MAILSERVERADDRESS = "mailServerAddress";
 const char* const CommandLineParser::ARG_MAILSERVERPORT = "mailServerPort";
@@ -48,6 +50,7 @@ CommandLineParser::CommandLineParser()
       m_iniScript(ARG_INITSCRIPT, tr("Path to a js script that gets triggered by the game to automate or test things"), tr("script"), ""),
       m_createSlaveLogs(ARG_CREATESLAVELOGS, tr("If the game should create logs for spawned slave processes")),
       m_slaveAddress(ARG_SLAVEADDRESS, tr("Address on which the game will listen for new clients"), tr("ip-adress"), ""),
+      m_secondarySlaveAddress(ARG_SLAVESECONDARYADDRESS, tr("Secondary address on which the game will listen for new clients"), tr("ip-adress"), ""),
       m_slavePort(ARG_SLAVEPORT, tr("Port on which the game will listen for new clients"), tr("port"), "0"),
       m_masterAddress(ARG_MASTERADDRESS, tr("Address on which the game will connect to the hosting server to exchange data"), "ip-address", "::1"),
       m_masterPort(ARG_MASTERPORT, tr("Port on which the game will connect to the hosting server to exchange data"), tr("port"), ""),
@@ -55,6 +58,7 @@ CommandLineParser::CommandLineParser()
       m_server(ARG_SERVER, tr("If set the game launches the dedicated server."), tr("server"), "0"),
       m_serverSlaveHostOptions(ARG_SERVERSLAVEHOSTOPTIONS, tr("Ip-Address and Port range separated by '&' for the 3 parts and ';' for gaps or different addresses on which slave games will be spawned to listen. E.g. ::1&10000&20000;::1&50000&65535. Note the Ip-Address needs to be accessible by connecting clients."), tr("options"), ""),
       m_serverListenAddress(ARG_SERVERLISTENADDRESS, tr("The address on which the server will listen for clients. Empty for all addresses."), tr("ip-address"), ""),
+      m_serverSecondaryListenAddress(ARG_SERVERSECONDARYLISTENADDRESS, tr("The secondary address on which the server will listen for clients. Empty for all addresses."), tr("ip-address"), ""),
       m_serverListenPort(ARG_SERVERLISTENPORT, tr("Port on which the server will initially listen for clients."), tr("port"), ""),
       m_serverSlaveListenAddress(ARG_SERVERSLAVELISTENADDRESS, tr("The address on which the server will listen for slave games. Empty for all addresses."), "slaveListenAddress", "::1"),
       m_serverSlaveListenPort(ARG_SERVERSLAVELISTENPORT, tr("Port on which the server will listen for slave games."), tr("port"), ""),
@@ -78,6 +82,7 @@ CommandLineParser::CommandLineParser()
     m_parser.addOption(m_iniScript);
     m_parser.addOption(m_createSlaveLogs);
     m_parser.addOption(m_slaveAddress);
+    m_parser.addOption(m_secondarySlaveAddress);
     m_parser.addOption(m_slavePort);
     m_parser.addOption(m_masterAddress);
     m_parser.addOption(m_masterPort);
@@ -180,6 +185,10 @@ void CommandLineParser::parseArgsPhaseTwo()
     {
         Settings::setServerListenAdress(m_parser.value(m_serverListenAddress));
     }
+    if (m_parser.isSet(m_serverSecondaryListenAddress))
+    {
+        Settings::setServerSecondaryListenAdress(m_parser.value(m_serverSecondaryListenAddress));
+    }
     if (m_parser.isSet(m_serverListenPort))
     {
         bool ok = false;
@@ -277,11 +286,16 @@ void CommandLineParser::disableUi()
 void CommandLineParser::startSlaveGame() const
 {
     QString slaveAddress;
+    QString secondarySlaveAddress;
     quint16 slavePort = 0;
     if (m_parser.isSet(m_slaveAddress) && m_parser.isSet(m_slavePort))
     {
         bool ok = false;
         slaveAddress = m_parser.value(m_slaveAddress);
+        if (m_parser.isSet(m_secondarySlaveAddress))
+        {
+            secondarySlaveAddress = m_parser.value(m_secondarySlaveAddress);
+        }
         slavePort = m_parser.value(m_slavePort).toInt(&ok);
         if (!ok)
         {
@@ -304,8 +318,8 @@ void CommandLineParser::startSlaveGame() const
             masterAddress = "::1";
         }
     }
-    CONSOLE_PRINT("Slave adress " + slaveAddress + " port " + QString::number(slavePort) +
-                  " master adress " + masterAddress + " port " + QString::number(masterPort), Console::eDEBUG);
+    CONSOLE_PRINT("Slave address " + slaveAddress + " port " + QString::number(slavePort) + " secondary slave address " + secondarySlaveAddress +
+                  " master address " + masterAddress + " port " + QString::number(masterPort), Console::eDEBUG);
     if (!slaveAddress.isEmpty() && masterPort > 0 && slavePort > 0 && !masterAddress.isEmpty())
     {
         // init multiplayer menu
@@ -314,12 +328,12 @@ void CommandLineParser::startSlaveGame() const
         spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", Multiplayermenu::NetworkMode::Host);
         pMenu->connectNetworkSlots();
         oxygine::Stage::getStage()->addChild(pMenu);
-        emit pServer->sig_connect(slaveAddress, slavePort);
+        emit pServer->sig_connect(slaveAddress, slavePort, secondarySlaveAddress);
         // connect to server
         spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
         connect(pSlaveMasterConnection.get(), &TCPClient::sigConnected, pMenu.get(), &Multiplayermenu::onSlaveConnectedToMaster, Qt::QueuedConnection);
         connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, pMenu.get(), &Multiplayermenu::recieveServerData, Qt::QueuedConnection);
-        emit pSlaveMasterConnection->sig_connect(masterAddress, masterPort);
+        emit pSlaveMasterConnection->sig_connect(masterAddress, masterPort, "");
 
     }
     else

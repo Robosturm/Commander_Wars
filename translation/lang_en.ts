@@ -665,202 +665,214 @@
 <context>
     <name>CommandLineParser</name>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="44"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="46"/>
         <source>mods that should be loaded. As a string list separated by &apos;;&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="44"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="46"/>
         <source>mod list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="45"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="47"/>
         <source>If the exe is started as a slave process.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="46"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="48"/>
         <source>If the exe is started in headless mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="47"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="49"/>
         <source>If the exe is started muted and sound can&apos;t be turned on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="48"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="50"/>
         <source>Path to a js script that gets triggered by the game to automate or test things</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="48"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="50"/>
         <source>script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="49"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="51"/>
         <source>If the game should create logs for spawned slave processes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="50"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="52"/>
         <source>Address on which the game will listen for new clients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="50"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="52"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="53"/>
         <source>ip-adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="51"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="53"/>
+        <source>Secondary address on which the game will listen for new clients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="54"/>
         <source>Port on which the game will listen for new clients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="51"/>
-        <location filename="../coreengine/commandlineparser.cpp" line="53"/>
-        <location filename="../coreengine/commandlineparser.cpp" line="58"/>
-        <location filename="../coreengine/commandlineparser.cpp" line="60"/>
-        <location filename="../coreengine/commandlineparser.cpp" line="63"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="54"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="56"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="62"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="64"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="67"/>
         <source>port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="52"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="55"/>
         <source>Address on which the game will connect to the hosting server to exchange data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="53"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="56"/>
         <source>Port on which the game will connect to the hosting server to exchange data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="54"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="57"/>
         <source>Unique name to identify the slave on the server side</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="54"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="57"/>
         <source>name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="55"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="58"/>
         <source>If set the game launches the dedicated server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="55"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="58"/>
         <source>server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="56"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="59"/>
         <source>Ip-Address and Port range separated by &apos;&amp;&apos; for the 3 parts and &apos;;&apos; for gaps or different addresses on which slave games will be spawned to listen. E.g. ::1&amp;10000&amp;20000;::1&amp;50000&amp;65535. Note the Ip-Address needs to be accessible by connecting clients.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="56"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="59"/>
         <source>options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="57"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="60"/>
         <source>The address on which the server will listen for clients. Empty for all addresses.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="57"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="60"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="61"/>
         <source>ip-address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="58"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="61"/>
+        <source>The secondary address on which the server will listen for clients. Empty for all addresses.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="62"/>
         <source>Port on which the server will initially listen for clients.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="59"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="63"/>
         <source>The address on which the server will listen for slave games. Empty for all addresses.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="60"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="64"/>
         <source>Port on which the server will listen for slave games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="61"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="65"/>
         <source>Time in seconds till a slave game with no connected clients get despawned in seconds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="61"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="65"/>
         <source>time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="62"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="66"/>
         <source>Mail server address for the server for sending mails to accounts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="62"/>
-        <location filename="../coreengine/commandlineparser.cpp" line="67"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="66"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="71"/>
         <source>address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="63"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="67"/>
         <source>Mail server port for the server for sending mails to accounts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="64"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="68"/>
         <source>Mail server connection type (TLS, TCP, SSL) for the server for sending mails to accounts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="64"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="68"/>
         <source>connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="65"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="69"/>
         <source>Username on the mail server for the server for sending mails to accounts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="65"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="69"/>
         <source>username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="66"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="70"/>
         <source>Password on the mail server for the server for sending mails to accounts. Must be set cause the password is never stored in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="66"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="70"/>
         <source>password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="67"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="71"/>
         <source>E-Mail address used on the mail server for the server for sending mails to accounts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="68"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="72"/>
         <source>Mail server authentication type (Plain, Login) for the server for sending mails to accounts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="68"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="72"/>
         <source>method</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2983,7 +2995,7 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="85"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="99"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1653"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1654"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3048,44 +3060,44 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="615"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="761"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="616"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="762"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="993"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="994"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="997"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="998"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1012"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1013"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1112"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1113"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1123"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1124"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1526"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1527"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1649"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1650"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5747,7 +5759,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="1958"/>
+        <location filename="../coreengine/settings.cpp" line="1970"/>
         <source>Default device</source>
         <translation type="unfinished"></translation>
     </message>

@@ -50,6 +50,7 @@ void NetworkGame::slaveRunning(const QJsonObject & objData, spTCPServer & pGameS
             QJsonObject data;
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
             data.insert(JsonKeys::JSONKEY_ADDRESS, m_data.getSlaveAddress());
+            data.insert(JsonKeys::JSONKEY_SECONDARYADDRESS, m_data.getSlaveSecondaryAddress());
             data.insert(JsonKeys::JSONKEY_PORT, static_cast<qint64>(m_data.getSlavePort()));
             QJsonDocument doc(data);
             emit pClient->sig_sendData(m_hostingSocket, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);

@@ -140,7 +140,7 @@ signals:
      * @param data
      */
     void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
-    void sig_connect(QString adress, quint16 port);
+    void sig_connect(QString primaryAdress, quint16 port, QString secondaryAdress);
     void sigConnected(quint64 socket);
     void sigDisconnected(quint64 socket);
     void sig_sendData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData);
@@ -171,7 +171,7 @@ signals:
      */
     void sigChangeThread(quint64 socketID, QThread* pThread);
 public slots:
-    virtual void connectTCP(QString adress, quint16 port) = 0;
+    virtual void connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress) = 0;
     virtual void disconnectTCP() = 0;
     virtual void forwardData(quint64, QByteArray, NetworkInterface::NetworkSerives){}
     virtual QVector<quint64> getConnectedSockets() = 0;

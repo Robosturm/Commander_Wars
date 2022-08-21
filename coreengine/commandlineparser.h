@@ -16,6 +16,7 @@ public:
     static const char* const ARG_INITSCRIPT;
     static const char* const ARG_CREATESLAVELOGS;
     static const char* const ARG_SLAVEADDRESS;
+    static const char* const ARG_SLAVESECONDARYADDRESS;
     static const char* const ARG_SLAVEPORT;
     static const char* const ARG_MASTERADDRESS;
     static const char* const ARG_MASTERPORT;
@@ -23,6 +24,7 @@ public:
     static const char* const ARG_SERVER;
     static const char* const ARG_SERVERSLAVEHOSTOPTIONS;
     static const char* const ARG_SERVERLISTENADDRESS;
+    static const char* const ARG_SERVERSECONDARYLISTENADDRESS;
     static const char* const ARG_SERVERLISTENPORT;
     static const char* const ARG_SERVERSLAVELISTENADDRESS;
     static const char* const ARG_SERVERSLAVELISTENPORT;
@@ -52,6 +54,7 @@ private:
     QCommandLineOption m_iniScript;
     QCommandLineOption m_createSlaveLogs;
     QCommandLineOption m_slaveAddress;
+    QCommandLineOption m_secondarySlaveAddress;
     QCommandLineOption m_slavePort;
     QCommandLineOption m_masterAddress;
     QCommandLineOption m_masterPort;
@@ -59,6 +62,7 @@ private:
     QCommandLineOption m_server;
     QCommandLineOption m_serverSlaveHostOptions;
     QCommandLineOption m_serverListenAddress;
+    QCommandLineOption m_serverSecondaryListenAddress;
     QCommandLineOption m_serverListenPort;
     QCommandLineOption m_serverSlaveListenAddress;
     QCommandLineOption m_serverSlaveListenPort;
