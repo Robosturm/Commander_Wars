@@ -3263,7 +3263,7 @@ Host mods: </source>
     <message>
         <location filename="../objects/playerselection.cpp" line="368"/>
         <location filename="../objects/playerselection.cpp" line="498"/>
-        <location filename="../objects/playerselection.cpp" line="872"/>
+        <location filename="../objects/playerselection.cpp" line="873"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3303,17 +3303,17 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="817"/>
+        <location filename="../objects/playerselection.cpp" line="818"/>
         <source>Select how much funds this player starts the game with.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="891"/>
+        <location filename="../objects/playerselection.cpp" line="892"/>
         <source>Shows which players are ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1570"/>
+        <location filename="../objects/playerselection.cpp" line="1571"/>
         <source>Connection failed.Reason: No valid player available.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3362,22 +3362,22 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="730"/>
+        <location filename="../objects/playerselection.cpp" line="731"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="836"/>
+        <location filename="../objects/playerselection.cpp" line="837"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="855"/>
+        <location filename="../objects/playerselection.cpp" line="856"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="929"/>
+        <location filename="../objects/playerselection.cpp" line="930"/>
         <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
         <translation type="unfinished"></translation>
     </message>

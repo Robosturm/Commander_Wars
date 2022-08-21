@@ -710,7 +710,8 @@ void PlayerSelection::showPlayerSelection()
         playerColor->setTooltipText(tr("Select the Color for this player's army."));
         playerColor->setPosition(xPositions[itemIndex], y);
         playerColor->setShowUnitPreview(true);
-        playerColor->setCurrentItem(tableColorToDisplayColor(m_pMap->getPlayer(i)->getColor()));
+        QColor startColor = tableColorToDisplayColor(m_pMap->getPlayer(i)->getColor());
+        playerColor->setCurrentItem(startColor);
         m_pPlayerSelection->addItem(playerColor);
         DropDownmenuColor* pPlayerColor = playerColor.get();
         connect(playerColor.get(), &DropDownmenuColor::sigItemChanged, this, [this, i, pPlayerColor](QColor value)
@@ -2060,7 +2061,9 @@ void PlayerSelection::updatePlayerData(qint32 player)
             coid = pCO->getCoID();
         }
         updateCO2Sprite(coid, player);
-        m_playerColors[player]->setCurrentItem(pPlayer->getColor());
+
+        QColor itemColor = tableColorToDisplayColor(pPlayer->getColor());
+        m_playerColors[player]->setCurrentItem(itemColor);
         m_playerStartFunds[player]->setCurrentValue(pPlayer->getFunds());
         m_playerIncomes[player]->setCurrentValue(pPlayer->getFundsModifier());
         m_playerTeams[player]->setCurrentItem(pPlayer->getTeam());
