@@ -25,11 +25,26 @@
             <Textbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <Id>"RulesetTextbox"</Id>
                 <width>settings.getWidth() - 90 - lastWidth - lastX</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Provide the address to the multiplayer game server you want to connect to.")</tooltip>
                 <startValue>settings.getServerAdress()</startValue>
                 <onEvent>settings.setServerAdress(input)</onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Dedicated secondary address:")</text>
+                <font>"main24"</font>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Provide the address to the multiplayer game server you want to connect used when the first address fails to connect.")</tooltip>
+                <startValue>settings.getSecondaryServerAdress()</startValue>
+                <onEvent>settings.setSecondaryServerAdress(input)</onEvent>
             </Textbox>
             <Label>
                 <x>10</x>

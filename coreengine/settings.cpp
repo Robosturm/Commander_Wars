@@ -108,19 +108,20 @@ qint32 Settings::m_SoundVolume       = 100;
 QVariant Settings::m_audioOutput = QVariant();
 bool Settings::m_muted = false;
 // Network
-quint16 Settings::m_GamePort          = 9001;
-quint16 Settings::m_ServerPort        = 9002;
-quint16 Settings::m_slaveServerPort   = 9003;
-QString Settings::m_ServerAdress      = "2600:3c00::f03c:93ff:fe86:009e";
-QString Settings::m_slaveServerName   = "";
-QString Settings::m_slaveHostOptions      = "::1&&10000&20000;::1&&50000&65535";
-QString Settings::m_serverListenAdress = "";
-QString Settings::m_serverSecondaryListenAdress = "";
-QString Settings::m_slaveListenAdress = "::1";
-bool Settings::m_Server               = false;
-bool Settings::m_record               = true;
-std::chrono::seconds Settings::m_slaveDespawnTime = std::chrono::minutes(0);
-QString Settings::m_serverPassword = "";
+quint16 Settings::m_GamePort                        = 9001;
+quint16 Settings::m_ServerPort                      = 9002;
+quint16 Settings::m_slaveServerPort                 = 9003;
+QString Settings::m_ServerAdress                    = "2600:3c00::f03c:93ff:fe86:009e";
+QString Settings::m_secondaryServerAdress           = "";
+QString Settings::m_slaveServerName                 = "";
+QString Settings::m_slaveHostOptions                = "::1&&10000&20000;::1&&50000&65535";
+QString Settings::m_serverListenAdress              = "";
+QString Settings::m_serverSecondaryListenAdress     = "";
+QString Settings::m_slaveListenAdress               = "::1";
+bool Settings::m_Server                             = false;
+bool Settings::m_record                             = true;
+std::chrono::seconds Settings::m_slaveDespawnTime   = std::chrono::minutes(0);
+QString Settings::m_serverPassword                  = "";
 
 // mailing
 QString Settings::m_mailServerAddress = "";
@@ -353,7 +354,8 @@ Settings::Settings()
 
         // network
         new Value<quint16>{"Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()},
-        new Value<QString>{"Network", "ServerAdress", &m_ServerAdress, "", "", ""},
+        new Value<QString>{"Network", "ServerAdress", &m_ServerAdress, "2600:3c00::f03c:93ff:fe86:009e", "", ""},
+        new Value<QString>{"Network", "SecondaryServerAdress", &m_secondaryServerAdress, "", "", ""},
         new Value<quint16>{"Network", "SlaveServerPort", &m_slaveServerPort, 9003, 0, std::numeric_limits<quint16>::max()},
         new Value<quint16>{"Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()},
         new Value<bool>{"Network", "Server", &m_Server, false, false, true},
@@ -379,6 +381,16 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+QString Settings::getSecondaryServerAdress()
+{
+    return m_secondaryServerAdress;
+}
+
+void Settings::setSecondaryServerAdress(const QString &newSecondaryServerAdress)
+{
+    m_secondaryServerAdress = newSecondaryServerAdress;
 }
 
 const QString &Settings::getServerSecondaryListenAdress()

@@ -261,6 +261,9 @@ public slots:
     static QString getServerAdress();
     static void setServerAdress(const QString &ServerAdress);
 
+    static QString getSecondaryServerAdress();
+    static void setSecondaryServerAdress(const QString &newSecondaryServerAdress);
+
     static quint16 getServerPort();
     static void setServerPort(const quint16 &ServerPort);
 
@@ -905,6 +908,7 @@ private:
     static quint16 m_ServerPort;
     static quint16 m_slaveServerPort;
     static QString m_ServerAdress;
+    static QString m_secondaryServerAdress;
     static QString m_serverListenAdress;
     static QString m_serverSecondaryListenAdress;
     static QString m_slaveListenAdress;

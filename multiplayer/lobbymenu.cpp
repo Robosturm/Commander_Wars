@@ -44,7 +44,7 @@ LobbyMenu::LobbyMenu()
         m_pTCPClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
         connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, Qt::QueuedConnection);
         connect(m_pTCPClient.get(), &TCPClient::sigConnected, this, &LobbyMenu::connected, Qt::QueuedConnection);
-        emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort(), "");
+        emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort(), Settings::getSecondaryServerAdress());
     }
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
