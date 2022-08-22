@@ -1568,7 +1568,8 @@ void PlayerSelection::playerAccessDenied()
         !m_pNetworkInterface->getIsObserver() &&
         !hasHumanPlayer())
     {
-        spDialogMessageBox pDialog = spDialogMessageBox::create(tr("Connection failed.Reason: No valid player available."));
+        QString message = tr("Connection failed.Reason: No more players available or user is already in the game.");
+        spDialogMessageBox pDialog = spDialogMessageBox::create(message);
         oxygine::Stage::getStage()->addChild(pDialog);
         emit m_pNetworkInterface->sigDisconnectClient(0);
     }

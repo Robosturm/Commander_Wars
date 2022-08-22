@@ -43,7 +43,7 @@ class MainServer : public QObject, public oxygine::ref_counter
 public:
     static MainServer* getInstance();
     static bool exists();
-    static bool verifyLoginData(const QString & username, const QByteArray & password);
+    static GameEnums::LoginError verifyLoginData(const QString & username, const QByteArray & password);
     void release();
     virtual ~MainServer();
 

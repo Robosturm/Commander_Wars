@@ -321,6 +321,10 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             showDisconnectReason(socketID, objData);
         }
+        else if (messageType == NetworkCommands::SENDUSERNAME)
+        {
+            receivedUsername(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
@@ -380,8 +384,8 @@ void GameMenue::verifyLoginData(const QJsonObject & objData, quint64 socketID)
     auto & cypher = Mainapp::getInstance()->getCypher();
     QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
     QByteArray password = cypher.toByteArray(objData.value(JsonKeys::JSONKEY_USERNAME).toArray());
-    bool valid = MainServer::verifyLoginData(username, password);
-    if (valid)
+    GameEnums::LoginError valid = MainServer::verifyLoginData(username, password);
+    if (valid == GameEnums::LoginError_None)
     {
         CONSOLE_PRINT("Client login data are valid. Verifying versions", Console::eDEBUG);
         sendVerifyGameData(socketID);
@@ -393,9 +397,33 @@ void GameMenue::verifyLoginData(const QJsonObject & objData, quint64 socketID)
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
-        data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::InvalidLoginData);
+        auto reason = NetworkCommands::DisconnectReason::InvalidPassword;
+        switch (valid)
+        {
+            case GameEnums::LoginError_WrongPassword:
+            {
+                reason = NetworkCommands::DisconnectReason::InvalidPassword;
+                break;
+            }
+            case GameEnums::LoginError_DatabaseNotAccesible:
+            {
+                reason = NetworkCommands::DisconnectReason::DatabaseAccessError;
+                break;
+            }
+            case GameEnums::LoginError_AccountDoesntExist:
+            {
+                reason = NetworkCommands::DisconnectReason::InvalidUsername;
+                break;
+            }
+            case GameEnums::LoginError_PasswordOutdated:
+            {
+                reason = NetworkCommands::DisconnectReason::PasswordOutdated;
+                break;
+            }
+        }
+        data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, reason);
         QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -607,12 +635,77 @@ void GameMenue::syncPointReached()
     }
 }
 
+void GameMenue::receivedUsername(quint64 socketID, const QJsonObject & objData)
+{
+    Userdata data;
+    data.socket = socketID;
+    data.username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
+    m_userData.append(data);
+    checkSendPlayerRequestControlInfo();
+}
+
 void GameMenue::playerRequestControlInfo(QDataStream & stream, quint64 socketId)
+{
+    QString playerNameId;
+    stream >> playerNameId;
+    Userdata data;
+    data.socket = socketId;
+    data.username = playerNameId;
+    m_requestData.append(data);
+    checkSendPlayerRequestControlInfo();
+    if (m_requestData.size() > 0)
+    {
+        QString command = QString(NetworkCommands::REQUESTUSERNAME);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonDocument doc(data);
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
+}
+
+void GameMenue::checkSendPlayerRequestControlInfo()
+{
+    auto sockets = m_pNetworkInterface->getConnectedSockets();
+    if (m_userData.size() == sockets.size())
+    {
+        for (const auto & entry : m_requestData)
+        {
+            bool unique = true;
+            for (const auto & user : m_userData)
+            {
+                if (user.username == entry.username &&
+                    user.socket != entry.socket)
+                {
+                    unique = false;
+                    break;
+                }
+            }
+            if (unique)
+            {
+                sendPlayerRequestControlInfo(entry.username, entry.socket);
+            }
+            else
+            {
+                CONSOLE_PRINT("Client login data are invalid. Closing connection.", Console::eDEBUG);
+                QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
+                CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+                QJsonObject data;
+                data.insert(JsonKeys::JSONKEY_COMMAND, command);
+                data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::UsernameAlreadyInGame);
+                QJsonDocument doc(data);
+                emit m_pNetworkInterface->sig_sendData(entry.socket, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+            }
+        }
+        m_userData.clear();
+        m_requestData.clear();
+    }
+}
+
+void GameMenue::sendPlayerRequestControlInfo(const QString & playerNameId, quint64 socketId)
 {
     QVector<qint32> playerAis;
     QVector<GameEnums::AiTypes> aiTypes;
-    QString playerNameId;
-    stream >> playerNameId;
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = m_pMap->getPlayer(i);

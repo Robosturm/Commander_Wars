@@ -125,20 +125,100 @@ protected:
      * @param versions
      */
     void filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter);
+    /**
+     * @brief requestRule
+     * @param socketID
+     */
     void requestRule(quint64 socketID);
+    /**
+     * @brief sendInitUpdate
+     * @param stream
+     * @param socketID
+     */
     void sendInitUpdate(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief requestMap
+     * @param socketID
+     */
     void requestMap(quint64 socketID);
+    /**
+     * @brief recieveMap
+     * @param stream
+     * @param socketID
+     */
     void recieveMap(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief playerJoinedServer
+     * @param stream
+     * @param socketID
+     */
     void playerJoinedServer(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief findAndLoadMap
+     * @param dirIter
+     * @param hash
+     * @param m_saveGame
+     * @return
+     */
     bool findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, bool m_saveGame);
+    /**
+     * @brief sendJoinReason
+     * @param stream
+     * @param socketID
+     */
     void sendJoinReason(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief receiveCurrentGameState
+     * @param stream
+     * @param socketID
+     */
     void receiveCurrentGameState(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief connectToSlave
+     * @param objData
+     * @param socketID
+     */
     void connectToSlave(const QJsonObject & objData, quint64 socketID);
+    /**
+     * @brief startRejoinedGame
+     * @param syncCounter
+     */
     void startRejoinedGame(qint64 syncCounter);
+    /**
+     * @brief receivePlayerControlledInfo
+     * @param stream
+     * @param socketID
+     */
     void receivePlayerControlledInfo(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief showDisconnectReason
+     * @param socketID
+     * @param objData
+     */
     void showDisconnectReason(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief sendUsername
+     */
+    void sendUsername(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief sendLoginData
+     * @param socketID
+     * @param objData
+     * @param action
+     */
     void sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
+    /**
+     * @brief verifyLoginData
+     * @param objData
+     * @param socketID
+     */
     void verifyLoginData(const QJsonObject & objData, quint64 socketID);
+    /**
+     * @brief sendMapInfoUpdate
+     * @param socketID
+     * @param objData
+     * @param action
+     */
     void sendMapInfoUpdate(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
 private:
     /**

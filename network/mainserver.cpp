@@ -794,9 +794,9 @@ GameEnums::LoginError MainServer::checkPassword(QSqlDatabase & database, const Q
     return result;
 }
 
-bool MainServer::verifyLoginData(const QString & username, const QByteArray & password)
+GameEnums::LoginError MainServer::verifyLoginData(const QString & username, const QByteArray & password)
 {
-    bool valid = false;
+    GameEnums::LoginError valid = GameEnums::LoginError_DatabaseNotAccesible;
     if(QSqlDatabase::isDriverAvailable(DRIVER))
     {
         QSqlDatabase serverData = QSqlDatabase::addDatabase(DRIVER);
@@ -813,7 +813,7 @@ bool MainServer::verifyLoginData(const QString & username, const QByteArray & pa
         }
         else
         {
-            valid = checkPassword(serverData, username, password) == GameEnums::LoginError_None;
+            valid = checkPassword(serverData, username, password);
         }
     }
     return valid;

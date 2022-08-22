@@ -14,10 +14,14 @@ namespace NetworkCommands
 
     enum DisconnectReason
     {
-        InvalidLoginData,
+        InvalidPassword,
         NoMoreObservers,
         NoValidPlayerAvailable,
         InvalidConnection,
+        InvalidUsername,
+        PasswordOutdated,
+        DatabaseAccessError,
+        UsernameAlreadyInGame,
         Max,
     };
 
@@ -165,7 +169,14 @@ namespace NetworkCommands
      * @brief DISCONNECTINFOFROMSERVER
      */
     const char* const DISCONNECTINGFOFROMSERVER = "DISCONNECTINGFOFROMSERVER";
-
+    /**
+     * @brief REQUESTUSERNAME
+     */
+    const char* const REQUESTUSERNAME = "REQUESTUSERNAME";
+    /**
+     * @brief SENDUSERNAME
+     */
+    const char* const SENDUSERNAME = "SENDUSERNAME";
     /*****************************************************************************************************************************/
     // dedicated server commands
     /*****************************************************************************************************************************/

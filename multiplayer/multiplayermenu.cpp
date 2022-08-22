@@ -399,6 +399,10 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             showDisconnectReason(socketID, objData);
         }
+        else if (messageType == NetworkCommands::REQUESTUSERNAME)
+        {
+            sendUsername(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
@@ -410,10 +414,14 @@ void Multiplayermenu::showDisconnectReason(quint64 socketID, const QJsonObject &
 {
     QStringList reasons =
     {
-        tr("Connection failed.Reason: Invalid login data."),
+        tr("Connection failed.Reason: Invalid username password."),
         tr("Connection failed.Reason: No more observers available."),
-        tr("Connection failed.Reason: No valid player available."),
+        tr("Connection failed.Reason: No more players available."),
         tr("Connection failed.Reason: Invalid connection."),
+        tr("Connection failed.Reason: Invalid username."),
+        tr("Connection failed.Reason: Password outdated."),
+        tr("Connection failed.Reason: Server failed to access database."),
+        tr("Connection failed.Reason: Player with same username already connected to the game."),
     };
     NetworkCommands::DisconnectReason type = static_cast<NetworkCommands::DisconnectReason>(objData.value(JsonKeys::JSONKEY_DISCONNECTREASON).toInt());
     spDialogMessageBox pDialog = spDialogMessageBox::create(reasons[type]);
@@ -425,6 +433,17 @@ void Multiplayermenu::showDisconnectReason(quint64 socketID, const QJsonObject &
     }
     emit m_pNetworkInterface->sigDisconnectClient(0);
     buttonBack();
+}
+
+void Multiplayermenu::sendUsername(quint64 socketID, const QJsonObject & objData)
+{
+    QString command = QString(NetworkCommands::SENDUSERNAME);
+    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    QJsonDocument doc(data);
+    emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void Multiplayermenu::sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
@@ -448,8 +467,8 @@ void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socke
     auto & cypher = Mainapp::getInstance()->getCypher();
     QString username =  objData.value(JsonKeys::JSONKEY_USERNAME).toString();
     QByteArray password = cypher.toByteArray(objData.value(JsonKeys::JSONKEY_PASSWORD).toArray());
-    bool valid = MainServer::verifyLoginData(username, password);
-    if (valid)
+    GameEnums::LoginError valid = MainServer::verifyLoginData(username, password);
+    if (valid == GameEnums::LoginError_None)
     {
         CONSOLE_PRINT("Client login data are valid. Requesting public key for initial map update", Console::eDEBUG);
         emit m_pNetworkInterface->sig_sendData(socketID, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::SendInitialMapUpdate), NetworkInterface::NetworkSerives::ServerHostingJson, false);
@@ -461,7 +480,31 @@ void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socke
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
-        data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::InvalidLoginData);
+        auto reason = NetworkCommands::DisconnectReason::InvalidPassword;
+        switch (valid)
+        {
+            case GameEnums::LoginError_WrongPassword:
+            {
+                reason = NetworkCommands::DisconnectReason::InvalidPassword;
+                break;
+            }
+            case GameEnums::LoginError_DatabaseNotAccesible:
+            {
+                reason = NetworkCommands::DisconnectReason::DatabaseAccessError;
+                break;
+            }
+            case GameEnums::LoginError_AccountDoesntExist:
+            {
+                reason = NetworkCommands::DisconnectReason::InvalidUsername;
+                break;
+            }
+            case GameEnums::LoginError_PasswordOutdated:
+            {
+                reason = NetworkCommands::DisconnectReason::PasswordOutdated;
+                break;
+            }
+        }
+        data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, reason);
         QJsonDocument doc(data);
         emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }

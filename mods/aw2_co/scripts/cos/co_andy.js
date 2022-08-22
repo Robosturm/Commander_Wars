@@ -1,4 +1,6 @@
 CO_ANDY.coZoneBonus = 0;
+CO_ANDY.coPowerBonus = 0;
+CO_ANDY.coSuperPowerBonus = 20;
 CO_ANDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
@@ -7,7 +9,7 @@ CO_ANDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
             co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
-            return 20;
+            return CO_ANDY.coSuperPowerBonus;
         }
     }
     return 0;

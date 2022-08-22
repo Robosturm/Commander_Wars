@@ -331,6 +331,7 @@ public:
         LoginError_AccountExists,
         LoginError_InvalidPasswordReset,
         LoginError_PasswordOutdated,
+        LoginError_DatabaseNotAccesible,
     };
     Q_ENUM(LoginError)
 
