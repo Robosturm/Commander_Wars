@@ -169,7 +169,7 @@ void Multiplayermenu::showLoadSaveGameDialog()
     QStringList wildcards;
     wildcards.append("*.msav");
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, "", false, tr("Save"));
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Multiplayermenu::loadSaveGame, Qt::QueuedConnection);
 }
@@ -1192,6 +1192,7 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
     spGameMap pMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
+    pMap >> m_saveGame;
     m_pMapSelectionView->setCurrentMap(pMap);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::SERVERMAPIDENTIFIER);
     m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
@@ -1565,6 +1566,7 @@ void Multiplayermenu::startGameOnServer()
 
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     pMap->serializeObject(sendStream);
+    sendStream << m_saveGame;
     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
 
     m_pDialogConnecting = spDialogConnecting::create(tr("Launching game on server"), 1000 * 60 * 5);
