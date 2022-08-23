@@ -91,6 +91,8 @@ CommandLineParser::CommandLineParser()
     m_parser.addOption(m_server);
     m_parser.addOption(m_serverSlaveHostOptions);
     m_parser.addOption(m_serverListenAddress);
+    m_parser.addOption(m_serverSecondaryListenAddress);
+
     m_parser.addOption(m_serverListenPort);
     m_parser.addOption(m_serverSlaveListenAddress);
     m_parser.addOption(m_serverSlaveListenPort);
