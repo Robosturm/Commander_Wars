@@ -2475,22 +2475,22 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1935"/>
+        <location filename="../menue/gamemenue.cpp" line="1937"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1966"/>
+        <location filename="../menue/gamemenue.cpp" line="1968"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1992"/>
+        <location filename="../menue/gamemenue.cpp" line="1994"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2164"/>
+        <location filename="../menue/gamemenue.cpp" line="2166"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2995,7 +2995,7 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="85"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="99"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1697"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1700"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3030,11 +3030,6 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="172"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="354"/>
         <source>Server doesn&apos;t have any more slots for players.</source>
         <translation type="unfinished"></translation>
@@ -3047,6 +3042,11 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="417"/>
         <source>Connection failed.Reason: Invalid username password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="172"/>
+        <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3112,12 +3112,12 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1570"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1573"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1693"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1696"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

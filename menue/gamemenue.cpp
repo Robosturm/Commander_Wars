@@ -1768,6 +1768,7 @@ void GameMenue::startGame()
     }
     if (!m_SaveGame)
     {
+        CONSOLE_PRINT("Launching game from start", Console::eDEBUG);
         m_pMap->startGame();
         m_pMap->setCurrentPlayer(m_pMap->getPlayerCount() - 1);
         if (m_pNetworkInterface.get() == nullptr)
@@ -1798,6 +1799,7 @@ void GameMenue::startGame()
     }
     else
     {
+        CONSOLE_PRINT("Launching game as save game", Console::eDEBUG);
         pApp->getAudioThread()->clearPlayList();
         m_pMap->playMusic();
         m_pMap->updateUnitIcons();

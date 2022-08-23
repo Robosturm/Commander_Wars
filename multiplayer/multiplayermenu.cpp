@@ -1192,7 +1192,8 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
     spGameMap pMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
-    pMap >> m_saveGame;
+    stream >> m_saveGame;
+    CONSOLE_PRINT("Is save game" + QString::number(m_saveGame), Console::eDEBUG);
     m_pMapSelectionView->setCurrentMap(pMap);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::SERVERMAPIDENTIFIER);
     m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
