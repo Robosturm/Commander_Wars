@@ -158,7 +158,7 @@ void Mainwindow::changeUsername(QString name)
     Settings::saveSettings();
 }
 
-bool Mainwindow::isValidSavegame() const
+bool Mainwindow::isValidSavegame()
 {
     QString lastSaveGame = Settings::getLastSaveGame();
     if (!QFile::exists(lastSaveGame) ||
