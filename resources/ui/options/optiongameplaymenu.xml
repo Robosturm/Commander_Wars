@@ -324,7 +324,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: games will be recorded and you can rewatch them in the replay section.")</tooltip>
                 <startValue>settings.getRecord()</startValue>
-                <onEvent>currentMenu.setRecord(input)</onEvent>
+                <onEvent>settings.setRecord(input)</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>

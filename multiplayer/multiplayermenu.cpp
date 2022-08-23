@@ -414,14 +414,14 @@ void Multiplayermenu::showDisconnectReason(quint64 socketID, const QJsonObject &
 {
     QStringList reasons =
     {
-        tr("Connection failed.Reason: Invalid username password."),
-        tr("Connection failed.Reason: No more observers available."),
-        tr("Connection failed.Reason: No more players available."),
-        tr("Connection failed.Reason: Invalid connection."),
-        tr("Connection failed.Reason: Invalid username."),
-        tr("Connection failed.Reason: Password outdated."),
-        tr("Connection failed.Reason: Server failed to access database."),
-        tr("Connection failed.Reason: Player with same username already connected to the game."),
+        tr("Connection failed. Reason: Invalid username password."),
+        tr("Connection failed. Reason: No more observers available."),
+        tr("Connection failed. Reason: No more players available."),
+        tr("Connection failed. Reason: Invalid connection."),
+        tr("Connection failed. Reason: Invalid username."),
+        tr("Connection failed. Reason: Password outdated."),
+        tr("Connection failed. Reason: Server failed to access database."),
+        tr("Connection failed. Reason: Player with same username already connected to the game."),
     };
     NetworkCommands::DisconnectReason type = static_cast<NetworkCommands::DisconnectReason>(objData.value(JsonKeys::JSONKEY_DISCONNECTREASON).toInt());
     spDialogMessageBox pDialog = spDialogMessageBox::create(reasons[type]);
@@ -452,7 +452,8 @@ void Multiplayermenu::sendLoginData(quint64 socketID, const QJsonObject & objDat
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::VERIFYLOGINDATA);
     Password serverPassword;
-    serverPassword.setPassword(Settings::getServerPassword());
+    QString password = Settings::getServerPassword();
+    serverPassword.setPassword(password);
     data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(serverPassword.getHash()));
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
     // send map data to client and make sure password message is crypted
@@ -504,6 +505,7 @@ void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socke
                 break;
             }
         }
+        CONSOLE_PRINT("Login error: " + QString::number(valid) + " reported reason: " + QString::number(reason), Console::eDEBUG);
         data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, reason);
         QJsonDocument doc(data);
         emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);

@@ -41,7 +41,7 @@ public slots:
     void importFromDirectory(QString file);
     virtual void onEnter() override;
     void versionClicked();
-    bool isValidSavegame() const;
+    bool isValidSavegame();
 
 protected slots:
     void cheatTimeout();

@@ -1531,6 +1531,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         {
             QString slaveName = Settings::getSlaveServerName();
             file.setFileName(Settings::getUserPath() + slaveName + ".log");
+            file.open(QIODevice::WriteOnly);
         }
         else if (!pApp->getSlave())
         {

@@ -369,7 +369,8 @@ void GameMenue::sendLoginData(quint64 socketID, const QJsonObject & objData, Net
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::VERIFYLOGINDATA);
     Password serverPassword;
-    serverPassword.setPassword(Settings::getServerPassword());
+    QString password = Settings::getServerPassword();
+    serverPassword.setPassword(password);
     data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(serverPassword.getHash()));
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
     // send map data to client and make sure password message is crypted
@@ -421,6 +422,7 @@ void GameMenue::verifyLoginData(const QJsonObject & objData, quint64 socketID)
                 break;
             }
         }
+        CONSOLE_PRINT("Login error: " + QString::number(valid) + " reported reason: " + QString::number(reason), Console::eDEBUG);
         data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, reason);
         QJsonDocument doc(data);
         emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
