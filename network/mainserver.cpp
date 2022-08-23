@@ -29,6 +29,8 @@ const char* const SQL_VALIDPASSWORD = "validPassword";
 const char* const SQL_LASTLOGIN = "lastLogin";
 
 spMainServer MainServer::m_pInstance;
+QSqlDatabase MainServer::m_serverData;
+bool MainServer::m_dataBaseLaunched = false;
 
 MainServer* MainServer::getInstance()
 {
@@ -42,6 +44,33 @@ MainServer* MainServer::getInstance()
 bool MainServer::exists()
 {
     return m_pInstance.get() != nullptr;
+}
+
+void MainServer::initDatabase()
+{
+    if(QSqlDatabase::isDriverAvailable(DRIVER))
+    {
+        m_serverData = QSqlDatabase::addDatabase(DRIVER);
+        QString path = Settings::getUserPath() + "/commanderWars.db";
+        if (Settings::getUserPath().isEmpty())
+        {
+            path = QCoreApplication::applicationDirPath() + "/commanderWars.db";
+        }
+        m_serverData.setDatabaseName(path);
+        if (!m_serverData.open())
+        {
+            CONSOLE_PRINT("Unable to open player error: " + m_serverData.lastError().text(), Console::eERROR);
+            CONSOLE_PRINT("Unable to open player native error: " + m_serverData.lastError().nativeErrorCode(), Console::eERROR);
+        }
+        else
+        {
+            m_dataBaseLaunched = true;
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to detect sql driver. Server won't be started.", Console::eERROR);
+    }
 }
 
 void MainServer::release()
@@ -75,43 +104,22 @@ MainServer::MainServer()
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
     parseSlaveAddressOptions();
 
-    bool dataBaseLaunched = true;
-    if(QSqlDatabase::isDriverAvailable(DRIVER))
+    initDatabase();
+    if (m_dataBaseLaunched)
     {
-        m_serverData = QSqlDatabase::addDatabase(DRIVER);
-        QString path = Settings::getUserPath() + "/commanderWars.db";
-        if (Settings::getUserPath().isEmpty())
+        QSqlQuery query = m_serverData.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
+                                            SQL_USERNAME + " TEXT PRIMARY KEY, " +
+                                            SQL_PASSWORD + " TEXT, " +
+                                            SQL_MAILADRESS + " TEXT, " +
+                                            SQL_MMR + " INTEGER, " +
+                                            SQL_VALIDPASSWORD + " INTEGER, " +
+                                            SQL_LASTLOGIN + " TEXT)");
+        if (sqlQueryFailed(query))
         {
-            path = QCoreApplication::applicationDirPath() + "/commanderWars.db";
-        }
-        m_serverData.setDatabaseName(path);
-        if (!m_serverData.open())
-        {
-            CONSOLE_PRINT("Unable to open player error: " + m_serverData.lastError().text(), Console::eERROR);
-            CONSOLE_PRINT("Unable to open player native error: " + m_serverData.lastError().nativeErrorCode(), Console::eERROR);
-            dataBaseLaunched = false;
-        }
-        if (dataBaseLaunched)
-        {
-            QSqlQuery query = m_serverData.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
-                                                SQL_USERNAME + " TEXT PRIMARY KEY, " +
-                                                SQL_PASSWORD + " TEXT, " +
-                                                SQL_MAILADRESS + " TEXT, " +
-                                                SQL_MMR + " INTEGER, " +
-                                                SQL_VALIDPASSWORD + " INTEGER, " +
-                                                SQL_LASTLOGIN + " TEXT)");
-            if (sqlQueryFailed(query))
-            {
-                CONSOLE_PRINT("Unable to create player table " + m_serverData.lastError().nativeErrorCode(), Console::eERROR);
-            }
+            CONSOLE_PRINT("Unable to create player table " + m_serverData.lastError().nativeErrorCode(), Console::eERROR);
         }
     }
-    else
-    {
-        CONSOLE_PRINT("Unable to detect sql driver. Server won't be started.", Console::eERROR);
-        dataBaseLaunched = false;
-    }
-    if (dataBaseLaunched)
+    if (m_dataBaseLaunched)
     {
         m_mailSender.moveToThread(&m_mailSenderThread);
         m_mailSenderThread.start();
@@ -797,24 +805,9 @@ GameEnums::LoginError MainServer::checkPassword(QSqlDatabase & database, const Q
 GameEnums::LoginError MainServer::verifyLoginData(const QString & username, const QByteArray & password)
 {
     GameEnums::LoginError valid = GameEnums::LoginError_DatabaseNotAccesible;
-    if(QSqlDatabase::isDriverAvailable(DRIVER))
+    if (m_dataBaseLaunched)
     {
-        QSqlDatabase serverData = QSqlDatabase::addDatabase(DRIVER);
-        QString path = Settings::getUserPath() + "/commanderWars.db";
-        if (Settings::getUserPath().isEmpty())
-        {
-            path = QCoreApplication::applicationDirPath() + "/commanderWars.db";
-        }
-        serverData.setDatabaseName(path);
-        if (!serverData.open())
-        {
-            CONSOLE_PRINT("Unable to open player error: " + serverData.lastError().text(), Console::eERROR);
-            CONSOLE_PRINT("Unable to open player native error: " + serverData.lastError().nativeErrorCode(), Console::eERROR);
-        }
-        else
-        {
-            valid = checkPassword(serverData, username, password);
-        }
+        valid = checkPassword(m_serverData, username, password);
     }
     return valid;
 }

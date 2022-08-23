@@ -43,6 +43,7 @@ class MainServer : public QObject, public oxygine::ref_counter
 public:
     static MainServer* getInstance();
     static bool exists();
+    static void initDatabase();
     static GameEnums::LoginError verifyLoginData(const QString & username, const QByteArray & password);
     void release();
     virtual ~MainServer();
@@ -311,7 +312,11 @@ private:
     /**
      * @brief m_serverData
      */
-    QSqlDatabase m_serverData;
+    static QSqlDatabase m_serverData;
+    /**
+     * @brief m_dataBaseLaunched
+     */
+    static bool m_dataBaseLaunched;
     /**
      * @brief m_mailSender
      */

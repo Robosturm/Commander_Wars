@@ -8,6 +8,7 @@
 #include "multiplayer/multiplayermenu.h"
 
 #include "network/tcpserver.h"
+#include "network/mainserver.h"
 
 #include "3rd_party/smtpClient/src/smtpclient.h"
 
@@ -322,6 +323,7 @@ void CommandLineParser::startSlaveGame() const
                   " master address " + masterAddress + " port " + QString::number(masterPort), Console::eDEBUG);
     if (!slaveAddress.isEmpty() && masterPort > 0 && slavePort > 0 && !masterAddress.isEmpty())
     {
+        MainServer::initDatabase();
         // init multiplayer menu
         spTCPServer pServer = spTCPServer::create(nullptr);
         pServer->moveToThread(Mainapp::getInstance()->getNetworkThread());

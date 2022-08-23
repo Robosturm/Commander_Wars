@@ -325,6 +325,10 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             receivedUsername(socketID, objData);
         }
+        else if (messageType == NetworkCommands::REQUESTUSERNAME)
+        {
+            sendUsername(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
@@ -363,6 +367,17 @@ void GameMenue::showDisconnectReason(quint64 socketID, const QJsonObject & objDa
     emit m_pNetworkInterface->sigDisconnectClient(0);
 }
 
+void GameMenue::sendUsername(quint64 socketID, const QJsonObject & objData)
+{
+    QString command = QString(NetworkCommands::SENDUSERNAME);
+    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    QJsonDocument doc(data);
+    emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
 void GameMenue::sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
 {
     auto & cypher = Mainapp::getInstance()->getCypher();
@@ -384,7 +399,7 @@ void GameMenue::verifyLoginData(const QJsonObject & objData, quint64 socketID)
 {
     auto & cypher = Mainapp::getInstance()->getCypher();
     QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
-    QByteArray password = cypher.toByteArray(objData.value(JsonKeys::JSONKEY_USERNAME).toArray());
+    QByteArray password = cypher.toByteArray(objData.value(JsonKeys::JSONKEY_PASSWORD).toArray());
     GameEnums::LoginError valid = MainServer::verifyLoginData(username, password);
     if (valid == GameEnums::LoginError_None)
     {
