@@ -209,17 +209,16 @@ private:
     QDomNode getNode(const QDomNodeList & childs, const QString & attribute);
     bool hasChild(const QDomNodeList & childs, const QString & attribute);
     bool createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
-    qint32 getIntValue(QString line, QString objectId, qint32 loopIdx, qint32 defaultValue = 0);
-    quint64 getUInt64Value(QString line, QString objectId, qint32 loopIdx, quint64 defaultValue = 0);
-    float getFloatValue(QString line, QString objectId, qint32 loopIdx, float defaultValue = 0.0f);
-    bool getBoolValue(QString line, QString objectId, qint32 loopIdx, bool defaultValue = false);
-    QString getStringValue(QString line, QString objectId, qint32 loopIdx);
-
-    Player* getPlayerValue(QString line, QString objectId, qint32 loopIdx);
-    QStringList getStringListValue(QString line, QString objectId, qint32 loopIdx);
+    qint32 getIntValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, qint32 defaultValue = 0);
+    quint64 getUInt64Value(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, quint64 defaultValue = 0);
+    float getFloatValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, float defaultValue = 0.0f);
+    bool getBoolValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, bool defaultValue = false);
+    QString getStringValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
+    Player* getPlayerValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
+    QStringList getStringListValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
     oxygine::TextStyle getStyle(QString styleName, QColor fontColor, oxygine::TextStyle::HorizontalAlign hAlign);
     QString getId(QString attribute);
-    oxygine::TextStyle::HorizontalAlign getHAlignment(QString line, QString objectId, qint32 loopIdx);
+    oxygine::TextStyle::HorizontalAlign getHAlignment(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
 
     template<typename TType>
     void onEvent(QString line, TType value, QString objectId, qint32 loopIdx, CreatedGui* pMenu)
@@ -310,10 +309,10 @@ private:
     static QString translate(QString line);
 
     template<typename TEnum>
-    TEnum getEnumValue(QString line, QString objectId, qint32 loopIdx, QStringList values, TEnum defaultValue = 0)
+    TEnum getEnumValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, QStringList values, TEnum defaultValue = 0)
     {
         TEnum ret = defaultValue;
-        QString value = getStringValue(line, objectId, loopIdx);
+        QString value = getStringValue(line, objectId, loopIdx, pMenu);
         auto index = values.indexOf(value);
         if (index >= 0)
         {
