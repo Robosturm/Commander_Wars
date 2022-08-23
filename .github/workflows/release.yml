@@ -41,7 +41,7 @@ jobs:
     name: All
     strategy:
       matrix:
-        buildTarget: [windows-desktop, ubuntu-desktop, macos-desktop, android-armv7, android-arm64_v8a]
+        buildTarget: [windows-desktop, windows-server, ubuntu-desktop, ubuntu-server, macos-desktop, android-armv7, android-arm64_v8a]
         include:
           - buildTarget: windows-desktop
             os: windows-latest
@@ -53,6 +53,15 @@ jobs:
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Win10_x64.zip' 
             cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64"'
+          - buildTarget: windows-server
+            os: windows-latest
+            COMPILER_VERSION: 'win64_mingw'
+            target: 'desktop'
+            qtPath: 'mingw_64'
+            installerCommands1: 'choco install openssl'
+            installerCommands2: ''
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF'
+            asset_name: 'Commander_Wars_Win10_x64_Server.zip' 
           - buildTarget: ubuntu-desktop
             os: ubuntu-latest
             COMPILER_VERSION: ''
@@ -63,6 +72,16 @@ jobs:
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Ubuntu.zip'
             cmakeOptions: ''
+          - buildTarget: ubuntu-server
+            os: ubuntu-latest
+            COMPILER_VERSION: ''
+            target: 'desktop'
+            qtPath: ''
+            installerCommands1: 'sudo apt-get update'
+            installerCommands2: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            source_asset: 'Commander_Wars.zip'
+            asset_name: 'Commander_Wars_Ubuntu_Server.zip'
+            cmakeOptions: '-DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF'
           - buildTarget: macos-desktop
             os: macos-latest
             COMPILER_VERSION: 'clang_64'
@@ -287,7 +306,7 @@ jobs:
 
     - name: upload unofficial compatible pack
       uses: actions/upload-release-asset@v1.0.2
-      if: matrix.os == 'windows-latest' && matrix.target != 'android'
+      if: matrix.buildTarget == 'windows-server'
       env:
         GITHUB_TOKEN: ${{github.token}}
       with:
