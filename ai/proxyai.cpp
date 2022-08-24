@@ -68,7 +68,7 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
         stream >> player;
         if (m_pPlayer->getPlayerID() == player)
         {
-            AI_CONSOLE_PRINT("Received action from network for player " + QString::number(player), Console::eDEBUG);
+            CONSOLE_PRINT("Received action from network for player " + QString::number(player), Console::eDEBUG);
             QMutexLocker locker(&m_ActionMutex);
             spGameAction pAction = spGameAction::create(m_pMap);
             pAction->deserializeObject(stream);

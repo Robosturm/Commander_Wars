@@ -346,9 +346,12 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             m_ChatButton->addTween(m_chatButtonShineTween);
         }
     }
+    else if (service == NetworkInterface::NetworkSerives::Game)
+    {
+    }
     else
     {
-        CONSOLE_PRINT("Unknown command " + QString::number(static_cast<qint32>(service)) + " received", Console::eDEBUG);
+        CONSOLE_PRINT("Unknown service " + QString::number(static_cast<qint32>(service)) + " received", Console::eDEBUG);
     }
 }
 

@@ -111,8 +111,8 @@ bool Settings::m_muted = false;
 quint16 Settings::m_GamePort                        = 9001;
 quint16 Settings::m_ServerPort                      = 9002;
 quint16 Settings::m_slaveServerPort                 = 9003;
-QString Settings::m_ServerAdress                    = "2600:3c00::f03c:93ff:fe86:009e";
-QString Settings::m_secondaryServerAdress           = "";
+QString Settings::m_ServerAdress                    = "192.46.216.113";
+QString Settings::m_secondaryServerAdress           = "2600:3c00::f03c:93ff:fe86:009e";
 QString Settings::m_slaveServerName                 = "";
 QString Settings::m_slaveHostOptions                = "::1&&10000&20000;::1&&50000&65535";
 QString Settings::m_serverListenAdress              = "";
@@ -354,8 +354,8 @@ Settings::Settings()
 
         // network
         new Value<quint16>{"Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()},
-        new Value<QString>{"Network", "ServerAdress", &m_ServerAdress, "2600:3c00::f03c:93ff:fe86:009e", "", ""},
-        new Value<QString>{"Network", "SecondaryServerAdress", &m_secondaryServerAdress, "", "", ""},
+        new Value<QString>{"Network", "ServerAdress", &m_ServerAdress, "192.46.216.113", "", ""},
+        new Value<QString>{"Network", "SecondaryServerAdress", &m_secondaryServerAdress, "2600:3c00::f03c:93ff:fe86:009e", "", ""},
         new Value<quint16>{"Network", "SlaveServerPort", &m_slaveServerPort, 9003, 0, std::numeric_limits<quint16>::max()},
         new Value<quint16>{"Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()},
         new Value<bool>{"Network", "Server", &m_Server, false, false, true},

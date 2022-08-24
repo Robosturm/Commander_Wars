@@ -5,6 +5,8 @@
 #include "coreengine/commandlineparser.h"
 #include "coreengine/mainapp.h"
 
+#include "game/gameanimation/animationskipper.h"
+
 #include "multiplayer/multiplayermenu.h"
 
 #include "network/tcpserver.h"
@@ -273,15 +275,8 @@ void CommandLineParser::parseArgsPhaseTwo()
 void CommandLineParser::disableUi()
 {
     CONSOLE_PRINT("Running without ui", Console::eDEBUG);
+    AnimationSkipper::disableAllAnimations();
     Mainapp* pApp = Mainapp::getInstance();
-    Settings::setOverworldAnimations(false);
-    Settings::setBattleAnimationType(GameEnums::BattleAnimationType_Overworld);
-    Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode_None);
-    Settings::setAnimationSpeed(100);
-    Settings::setWalkAnimationSpeed(100);
-    Settings::setBattleAnimationSpeed(100);
-    Settings::setDialogAnimation(false);
-    Settings::setDialogAnimationSpeed(100);
     pApp->setNoUi();
 }
 

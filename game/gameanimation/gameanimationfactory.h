@@ -182,6 +182,10 @@ public slots:
       * @return
       */
      static bool shouldSkipMovement(GameAnimationWalk* pGameAnimationWalk);
+     /**
+      * @brief printActiveAnimations
+      */
+     static void printActiveAnimations();
 private:
     friend class oxygine::intrusive_ptr<GameAnimationFactory>;
     explicit GameAnimationFactory();

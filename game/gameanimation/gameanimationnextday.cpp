@@ -18,8 +18,13 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
       m_permanent(permanent),
       m_endTimer(this)
 {
+
     setObjectName("GameAnimationNextDay");
     Mainapp* pApp = Mainapp::getInstance();
+    if (pApp->getSlave())
+    {
+        m_permanent = false;
+    }
     moveToThread(pApp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);
     setSize(Settings::getWidth(), Settings::getHeight());

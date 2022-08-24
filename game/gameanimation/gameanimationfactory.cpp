@@ -72,6 +72,7 @@ void GameAnimationFactory::release()
 
 GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime, bool mapPosition)
 {    
+    CONSOLE_PRINT("Creating new animation", Console::eDEBUG);
     spGameAnimation animation = spGameAnimation::create(frameTime, pMap);
     if (mapPosition)
     {
@@ -91,7 +92,8 @@ GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, qint32 x, qi
 }
 
 GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(GameMap* pMap, Unit* pUnit, GameAction* pAction)
-{    
+{
+    CONSOLE_PRINT("Creating new walking animation", Console::eDEBUG);
     spGameAnimationWalk pGameAnimationWalk = spGameAnimationWalk::create(pUnit, pAction->getMovePath(), pMap);
     pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     if (pMap != nullptr)
@@ -104,6 +106,7 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(GameMap* pMap, U
 
 GameAnimationPower* GameAnimationFactory::createAnimationPower(GameMap* pMap, QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime)
 {    
+    CONSOLE_PRINT("Creating new power animation", Console::eDEBUG);
     spGameAnimationPower pGameAnimationPower = GameAnimationPower::createGameAnimationPower(frameTime, color, powerMode, pCO, pMap);
     pGameAnimationPower->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     BaseGamemenu* pMenu = BaseGamemenu::getInstance();
@@ -117,7 +120,7 @@ GameAnimationPower* GameAnimationFactory::createAnimationPower(GameMap* pMap, QC
 
 GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(GameMap* pMap, const QString & text, const QString & coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
 {
-    
+    CONSOLE_PRINT("Creating new dialog animation", Console::eDEBUG);
     spGameAnimationDialog pGameAnimationDialog = spGameAnimationDialog::create(frameTime, pMap);
     pGameAnimationDialog->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     pGameAnimationDialog->setDialog(text);
@@ -130,6 +133,7 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(GameMap* pM
 
 GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime, quint32 uptimeMs)
 {
+    CONSOLE_PRINT("Creating new next day animation", Console::eDEBUG);
     BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     if (pMenu != nullptr)
     {
@@ -143,7 +147,7 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(GameMap* 
 
 GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(GameMap* pMap, qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints)
 {
-    
+    CONSOLE_PRINT("Creating new capture animation", Console::eDEBUG);
     spGameAnimationCapture pGameAnimationCapture = spGameAnimationCapture::create(startPoints, endPoints, maxPoints, pMap);
     pGameAnimationCapture->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     pGameAnimationCapture->setPosition(x, y);
@@ -156,6 +160,7 @@ GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(GameMap* 
 GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                                            Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
 {    
+    CONSOLE_PRINT("Creating new battle animation", Console::eDEBUG);
     spGameAnimation pRet;    
     if (pDefUnit != nullptr && pMap != nullptr)
     {
@@ -267,6 +272,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
 GameAnimation* GameAnimationFactory::createOverworldBattleAnimation(GameMap* pMap, Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                                                     Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
 {
+    CONSOLE_PRINT("Creating new overworld battle animation", Console::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(pAtkTerrain),
                        pInterpreter->newQObject(pAtkUnit),
@@ -410,6 +416,18 @@ void GameAnimationFactory::skipAllAnimations()
         }
     }
     CONSOLE_PRINT("skipAllAnimations remaining Animations=" + QString::number(GameAnimationFactory::getAnimationCount()), Console::eDEBUG);
+    GameAnimationFactory::printActiveAnimations();
+}
+
+void GameAnimationFactory::printActiveAnimations()
+{
+    if (Console::getInstance()->getLogLevel() <= Console::eDEBUG )
+    {
+        for (auto & animation : m_Animations)
+        {
+            CONSOLE_PRINT("Currently running animation: " + animation->objectName(), Console::eDEBUG);
+        }
+    }
 }
 
 bool GameAnimationFactory::shouldSkipDialog(GameAnimationDialog* pDialogAnimation)

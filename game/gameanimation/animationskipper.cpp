@@ -4,6 +4,11 @@
 void AnimationSkipper::startSeeking()
 {
     storeAnimationSettings();
+    disableAllAnimations();
+}
+
+void AnimationSkipper::disableAllAnimations()
+{
     Settings::setOverworldAnimations(false);
     Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode::BattleAnimationMode_None);
     Settings::setDialogAnimation(false);
