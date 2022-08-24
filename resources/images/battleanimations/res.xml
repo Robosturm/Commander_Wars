@@ -1252,8 +1252,14 @@
         <image file="waterplane/waterplane+ac+mask.png" />
         <image file="waterplane/waterplane+bm+fire+mask.png" />
         <image file="waterplane/waterplane+bm+mask.png" />
+        <image file="waterplane/waterplane+bh+fire+mask.png" />
+        <image file="waterplane/waterplane+bh+mask.png" />
+        <image file="waterplane/waterplane+bg+fire+mask.png" />
+        <image file="waterplane/waterplane+bg+mask.png" />
         <image file="waterplane/waterplane+ge+fire+mask.png" />
         <image file="waterplane/waterplane+ge+mask.png" />
+        <image file="waterplane/waterplane+gs+fire+mask.png" />
+        <image file="waterplane/waterplane+gs+mask.png" />
         <image file="waterplane/waterplane+os+fire+mask.png" />
         <image file="waterplane/waterplane+os+mask.png" />
         <image file="waterplane/waterplane+yc+fire+mask.png" cols = "2" />
