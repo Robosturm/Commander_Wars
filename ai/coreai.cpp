@@ -766,7 +766,8 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
             {
                 Terrain* pNewTerrain = m_pMap->getTerrain(point.x(), point.y());
                 if (pNewTerrain->getUnit() == nullptr &&
-                    !pNewTerrain->isLoadingTile())
+                    !pNewTerrain->isLoadingTile() &&
+                    turnPfs.getTargetCosts(point.x(), point.y()) > 0)
                 {
                     if (pNewTerrain->getBuilding() == nullptr)
                     {

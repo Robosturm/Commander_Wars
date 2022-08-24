@@ -116,7 +116,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked several UI elements are hidden and accessible with an additional button.\nWarning: disabling this on a smaller screen may lead to unplayable game experience.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked several UI elements are hidden and accessible with an additional button. Warning: disabling this on a smaller screen may lead to unplayable game experience.")</tooltip>
                 <startValue>settings.getSmallScreenDevice()</startValue>
                 <enabled>!settings.hasSmallScreen()</enabled>
                 <onEvent>settings.setSmallScreenDevice(input)</onEvent>

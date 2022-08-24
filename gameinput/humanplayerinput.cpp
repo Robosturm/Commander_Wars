@@ -23,6 +23,13 @@
 
 #include "menue/movementplanner.h"
 
+oxygine::spActor HumanPlayerInput::m_ZInformationLabel;
+spHumanPlayerInputMenu HumanPlayerInput::m_CurrentMenu;
+std::vector<oxygine::spActor> HumanPlayerInput::m_Fields;
+std::vector<QPoint> HumanPlayerInput::m_FieldPoints;
+spMarkedFieldData HumanPlayerInput::m_pMarkedFieldData;
+std::vector<oxygine::spActor> HumanPlayerInput::m_InfoFields;
+
 HumanPlayerInput::HumanPlayerInput(GameMap* pMap)
     : BaseGameInputIF(pMap, GameEnums::AiTypes_Human)
 {    
@@ -680,7 +687,7 @@ void HumanPlayerInput::getNextStepData()
             CONSOLE_PRINT("HumanPlayerInput::getNextStepData show menu", Console::eDEBUG);
             spMenuData pData = m_pGameAction->getMenuStepData();
             if (pData->validData())
-            {
+            {                
                 m_CurrentMenu = spHumanPlayerInputMenu::create(m_pMenu, m_pMap, pData->getTexts(), pData->getActionIDs(), pData->getIconList(), pData->getCostList(), pData->getEnabledList());
                 attachActionMenu(m_pGameAction->getActionTarget().x(), m_pGameAction->getActionTarget().y());
             }
@@ -767,6 +774,7 @@ void HumanPlayerInput::createActionMenu(const QStringList & actionIDs, qint32 x,
 {
     CONSOLE_PRINT("HumanPlayerInput::createActionMenu", Console::eDEBUG);
     clearMarkedFields();
+    clearMenu();
     MenuData data(m_pMap);
     for (auto & action : actionIDs)
     {

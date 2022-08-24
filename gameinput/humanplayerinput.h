@@ -216,18 +216,17 @@ private:
     spGameAction m_pGameAction{nullptr};
     spUnitPathFindingSystem m_pUnitPathFindingSystem{nullptr};
 
-    std::vector<oxygine::spActor> m_Fields;
-    std::vector<QPoint> m_FieldPoints;
-    spMarkedFieldData m_pMarkedFieldData{nullptr};
+    static oxygine::spActor m_ZInformationLabel;
+    static spHumanPlayerInputMenu m_CurrentMenu;
 
-    std::vector<oxygine::spActor> m_InfoFields;
+    static std::vector<oxygine::spActor> m_Fields;
+    static std::vector<QPoint> m_FieldPoints;
+    static spMarkedFieldData m_pMarkedFieldData;
+    static std::vector<oxygine::spActor> m_InfoFields;
 
     std::vector<oxygine::spActor> m_Arrows;
     std::vector<QPoint> m_ArrowPoints;
 
-    oxygine::spActor m_ZInformationLabel;
-
-    spHumanPlayerInputMenu m_CurrentMenu{nullptr};
 
     QPoint m_lastMapView{std::numeric_limits<qint32>::min(),
                 std::numeric_limits<qint32>::min()};
