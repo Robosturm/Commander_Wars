@@ -106,6 +106,14 @@ private slots:
      * @param socketId
      */
     void disconnected(qint64 socketId);
+    /**
+     * @brief onMailSendResult
+     * @param socketId
+     * @param receiverAddress
+     * @param username
+     * @param result
+     */
+    void onMailSendResult(quint64 socketId, const QString & receiverAddress, const QString & username, bool result, NetworkCommands::PublicKeyActions action);
 private:
     /**
      * @brief spawnSlaveGame checks if a slave game can be spawned and spawns a slave game on the server

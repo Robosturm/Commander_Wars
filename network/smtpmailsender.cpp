@@ -36,6 +36,7 @@ void SmtpMailSender::connectToServer()
 {
     if (m_smtpClient == nullptr)
     {
+        CONSOLE_PRINT("Start connecting to mail server.", Console::eDEBUG);
         m_smtpClient = new SmtpClient(Settings::getMailServerAddress(), Settings::getMailServerPort(), static_cast<SmtpClient::ConnectionType>(Settings::getMailServerConnectionType()));
         connect(m_smtpClient, &SmtpClient::disconnected, this, &SmtpMailSender::connectToServer, Qt::QueuedConnection);
     }
@@ -46,16 +47,16 @@ void SmtpMailSender::connectToServer()
         if (m_smtpClient->waitForAuthenticated())
         {
             m_connected = true;
-            CONSOLE_PRINT("Connect to mail server." , Console::eDEBUG);
+            CONSOLE_PRINT("Connect to mail server.", Console::eDEBUG);
         }
         else
         {
-            CONSOLE_PRINT("Unable to login to mail server account." , Console::eWARNING);
+            CONSOLE_PRINT("Unable to login to mail server account.", Console::eWARNING);
         }
     }
     else
     {
-        CONSOLE_PRINT("Unable to connect to mail server." , Console::eWARNING);
+        CONSOLE_PRINT("Unable to connect to mail server.", Console::eWARNING);
     }
 }
 
@@ -68,7 +69,7 @@ void SmtpMailSender::onDisconnectFromMailServer()
     }
 }
 
-void SmtpMailSender::sendMail(quint64 socketId, const QString & subject, const QString & content, const QString & receiverAddress, const QString & username)
+void SmtpMailSender::sendMail(quint64 socketId, const QString & subject, const QString & content, const QString & receiverAddress, const QString & username, NetworkCommands::PublicKeyActions action)
 {
     bool result = false;
     if (m_connected)
@@ -86,5 +87,5 @@ void SmtpMailSender::sendMail(quint64 socketId, const QString & subject, const Q
         m_smtpClient->sendMail(message);
         result = !m_smtpClient->waitForMailSent();
     }
-    emit sigMailResult(socketId, receiverAddress, username, result);
+    emit sigMailResult(socketId, receiverAddress, username, result, action);
 }

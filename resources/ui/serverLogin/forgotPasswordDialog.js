@@ -34,6 +34,11 @@ var ForgotPasswordDialog =
             forgotPassword.showMessageBox(qsTr("Invalid e-mail adress which is linked to your account."));
             ForgotPasswordDialog.changeEnableForItems(true);
         }
+        else if (errorCode === GameEnums.LoginError_SendingMailFailed)
+        {
+            forgotPassword.showMessageBox(qsTr("Password has been reset, but the server failed to send a mail with the new password."));
+            ForgotPasswordDialog.changeEnableForItems(true);
+        }
         else
         {
             forgotPassword.showMessageBox(qsTr("Unknown error happened."));

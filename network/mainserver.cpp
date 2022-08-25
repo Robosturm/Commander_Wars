@@ -124,6 +124,7 @@ MainServer::MainServer()
         m_mailSender.moveToThread(&m_mailSenderThread);
         m_mailSenderThread.start();
         emit m_mailSender.sigConnectToServer();
+        connect(&m_mailSender, &SmtpMailSender::sigMailResult, this, &MainServer::onMailSendResult, Qt::QueuedConnection);
 
         CONSOLE_PRINT("Starting tcp server and listening to new clients.", Console::eDEBUG);
         emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort(), Settings::getServerSecondaryListenAdress());
@@ -841,7 +842,8 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc
                                             SQL_USERNAME + " = '" + username + "';");
             if (!sqlQueryFailed(changeQuery))
             {
-                emit m_mailSender.sigSendMail(0, "Commander Wars password reset", message, mailAdress, username);
+                CONSOLE_PRINT("Try sending reset password mail", Console::eDEBUG);
+                emit m_mailSender.sigSendMail(socketId, "Commander Wars password reset", message, mailAdress, username, action);
             }
             else
             {
@@ -857,14 +859,79 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc
     {
         result = GameEnums::LoginError_AccountDoesntExist;
     }
+    if (result != GameEnums::LoginError_None)
+    {
+        QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+        CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
+        QJsonObject outData;
+        outData.insert(JsonKeys::JSONKEY_COMMAND, command);
+        outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+        outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
+        QJsonDocument outDoc(outData);
+        emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
+}
+
+void MainServer::onMailSendResult(quint64 socketId, const QString & receiverAddress, const QString & username, bool result, NetworkCommands::PublicKeyActions action)
+{
+    GameEnums::LoginError mailSendResult = GameEnums::LoginError_None;
+    if (!result)
+    {
+        mailSendResult = GameEnums::LoginError_SendingMailFailed;
+    }
     QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
-    CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(mailSendResult), Console::eDEBUG);
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
-    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, mailSendResult);
     outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
     emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+
+}
+
+QString MainServer::createRandomPassword() const
+{
+    QString password;
+    QVector<char> specialChars = {'#', '?', '!', '@', '$', '%', '^', '&', '*', '-'};
+    auto specialCharPos = GlobalUtils::randInt(0, 7);
+    auto numberCharPos = GlobalUtils::randInt(0, 7);
+    while (numberCharPos == specialCharPos)
+    {
+        numberCharPos = GlobalUtils::randInt(0, 7);
+    }
+    bool smallLetter = false;
+    bool capitalLetter = false;
+    for (qint32 i = 0; i < 8; ++i)
+    {
+        if (i == specialCharPos)
+        {
+            password += specialChars[GlobalUtils::randInt(0, specialChars.length() - 1)];
+        }
+        else if (i == numberCharPos)
+        {
+            password += static_cast<char>(GlobalUtils::randInt('0', '9'));
+        }
+        else if (GlobalUtils::randInt(0, 1) == 1)
+        {
+            password += static_cast<char>(GlobalUtils::randInt('A', 'Z'));
+            capitalLetter = true;
+        }
+        else
+        {
+            password += static_cast<char>(GlobalUtils::randInt('a', 'z'));
+            smallLetter = true;
+        }
+    }
+    if (!smallLetter)
+    {
+        password += static_cast<char>(GlobalUtils::randInt('a', 'z'));
+    }
+    if (!capitalLetter)
+    {
+        password += static_cast<char>(GlobalUtils::randInt('A', 'Z'));
+    }
+    return password;
 }
 
 void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
@@ -911,58 +978,14 @@ void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument & do
     {
         result = GameEnums::LoginError_AccountDoesntExist;
     }
-    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
-    CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
-    QJsonObject outData;
-    outData.insert(JsonKeys::JSONKEY_COMMAND, command);
-    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
-    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
-    QJsonDocument outDoc(outData);
-    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-}
-
-QString MainServer::createRandomPassword() const
-{
-    QString password;
-    QVector<char> specialChars = {'#', '?', '!', '@', '$', '%', '^', '&', '*', '-'};
-    auto specialCharPos = GlobalUtils::randInt(0, 7);
-    auto numberCharPos = GlobalUtils::randInt(0, 7);
-    while (numberCharPos == specialCharPos)
-    {
-        numberCharPos = GlobalUtils::randInt(0, 7);
-    }
-    bool smallLetter = false;
-    bool capitalLetter = false;
-    for (qint32 i = 0; i < 8; ++i)
-    {
-        if (i == specialCharPos)
-        {
-            password += specialChars[GlobalUtils::randInt(0, specialChars.length() - 1)];
-        }
-        else if (i == numberCharPos)
-        {
-            password += static_cast<char>(GlobalUtils::randInt('0', '9'));
-        }
-        else if (GlobalUtils::randInt(0, 1) == 1)
-        {
-            password += static_cast<char>(GlobalUtils::randInt('A', 'Z'));
-            capitalLetter = true;
-        }
-        else
-        {
-            password += static_cast<char>(GlobalUtils::randInt('a', 'z'));
-            smallLetter = true;
-        }
-    }
-    if (!smallLetter)
-    {
-        password += static_cast<char>(GlobalUtils::randInt('a', 'z'));
-    }
-    if (!capitalLetter)
-    {
-        password += static_cast<char>(GlobalUtils::randInt('A', 'Z'));
-    }
-    return password;
+        QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+        CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
+        QJsonObject outData;
+        outData.insert(JsonKeys::JSONKEY_COMMAND, command);
+        outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+        outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
+        QJsonDocument outDoc(outData);
+        emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 QSqlQuery MainServer::getAccountInfo(QSqlDatabase & database, const QString & username, bool & success)
