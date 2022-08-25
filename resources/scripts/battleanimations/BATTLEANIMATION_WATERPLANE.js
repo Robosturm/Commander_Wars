@@ -8,10 +8,10 @@ var Constructor = function()
                      ["dm", ""],
                      ["ge", "ge"],
                      ["gs", "gs"],
-                     ["ma", ""],
+                     ["ma", "ma"],
                      ["os", "os"],
-                     ["pf", ""],
-                     ["ti", ""],
+                     ["pf", "pf"],
+                     ["ti", "ti"],
                      ["yc", "yc"],];
 
     this.animationData = [["ac", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
@@ -19,6 +19,12 @@ var Constructor = function()
                           ["ge", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
                           ["os", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
                           ["yc", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
+                          ["bh", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
+                          ["bg", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
+                          ["gs", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
+                          ["ma", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
+                          ["pf", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
+                          ["ti", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
                           ["",   [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],];
 
     this.getMaxUnitCount = function()

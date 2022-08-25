@@ -4810,5 +4810,11 @@
         <file>resources/images/battleanimations/waterplane/waterplane+bh+mask.png</file>
         <file>resources/images/battleanimations/waterplane/waterplane+gs+fire+mask.png</file>
         <file>resources/images/battleanimations/waterplane/waterplane+gs+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ma+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ma+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+pf+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+pf+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ti+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ti+mask.png</file>
     </qresource>
 </RCC>
