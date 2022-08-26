@@ -264,6 +264,10 @@ public slots:
      * @param ret
      */
     void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg);
+    /**
+     * @brief createLineEdit
+     */
+    void createLineEdit();
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -291,8 +295,6 @@ signals:
      */
     void cursorPositionChanged(int oldPos, int newPos);
     void cursorPositionChanged();
-private slots:
-    void createLineEdit();
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;
