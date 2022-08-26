@@ -12,11 +12,12 @@
 ProxyAi::ProxyAi(GameMap* pMap)
     : CoreAI (pMap, GameEnums::AiTypes_ProxyAi)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ProxyAi");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-
 }
 
 void ProxyAi::readIni(QString)

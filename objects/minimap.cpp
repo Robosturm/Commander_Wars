@@ -18,7 +18,9 @@
 
 Minimap::Minimap()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Minimap");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

@@ -37,7 +37,9 @@ BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrai
       m_nextFrameTimer(this),
       m_playSound(playSound)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("BattleAnimationSprite");
+#endif
     Interpreter::setCppOwnerShip(this);
     if (m_hpRounded < 0.0f)
     {

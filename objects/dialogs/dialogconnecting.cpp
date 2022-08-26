@@ -12,7 +12,9 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
       m_Timer(this),
       m_TimerConnectionTimeout(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogConnecting");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

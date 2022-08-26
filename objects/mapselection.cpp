@@ -18,7 +18,9 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
       m_currentFolder(Settings::getUserPath() + "maps"),
       m_itemChangedTimer(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MapSelection");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

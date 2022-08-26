@@ -11,7 +11,9 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
       m_MaxValue(max),
       m_Mode(mode)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("SpinBox");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 

@@ -15,7 +15,9 @@
 Wikimenu::Wikimenu()
     : Basemenu()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Wikimenu");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);

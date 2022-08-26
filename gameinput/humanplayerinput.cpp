@@ -32,8 +32,10 @@ std::vector<oxygine::spActor> HumanPlayerInput::m_InfoFields;
 
 HumanPlayerInput::HumanPlayerInput(GameMap* pMap)
     : BaseGameInputIF(pMap, GameEnums::AiTypes_Human)
-{    
+{
+#ifdef GRAPHICSUPPORT
     setObjectName("HumanPlayerInput");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

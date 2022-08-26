@@ -58,7 +58,9 @@ const QString CoreAI::UNIT_INFANTRY = "INFANTRY";
 CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType)
     : BaseGameInputIF(pMap, aiType)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CoreAI");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

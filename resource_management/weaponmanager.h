@@ -33,7 +33,9 @@ protected:
         : RessourceManagement<WeaponManager>("",
                                              "/scripts/weapons")
     {
+#ifdef GRAPHICSUPPORT
         setObjectName("WeaponManager");
+#endif
     }
 private:
     virtual ~WeaponManager() = default;

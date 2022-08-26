@@ -67,7 +67,9 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
       m_SaveGame(saveGame),
       m_actionPerformer(m_pMap.get(), this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");
+#endif
     CONSOLE_PRINT("Creating game menu singleton", Console::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     loadHandling();
@@ -131,7 +133,9 @@ GameMenue::GameMenue(QString map, bool saveGame)
       m_SaveGame(saveGame),
       m_actionPerformer(m_pMap.get(), this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");
+#endif
     Interpreter::setCppOwnerShip(this);
     loadHandling();
     loadGameMenue();
@@ -147,7 +151,9 @@ GameMenue::GameMenue(spGameMap pMap)
       m_ReplayRecorder(m_pMap.get()),
       m_actionPerformer(m_pMap.get(), this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");
+#endif
     CONSOLE_PRINT("Creating game menu singleton", Console::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 }

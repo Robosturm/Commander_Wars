@@ -10,7 +10,9 @@
 
 Textbox::Textbox(qint32 width, qint32 heigth)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Textbox");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 

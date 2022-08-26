@@ -3,8 +3,10 @@
 GameRuleManager::GameRuleManager()
     : RessourceManagement<GameRuleManager>("", "")
 {
-    Interpreter::setCppOwnerShip(this);
+    Interpreter::setCppOwnerShip(this);    
+#ifdef GRAPHICSUPPORT
     setObjectName("GameRuleManager");
+#endif
 }
 
 void GameRuleManager::reset()

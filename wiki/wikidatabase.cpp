@@ -34,7 +34,9 @@ WikiDatabase::WikiDatabase()
     : RessourceManagement<WikiDatabase>("/resources/images/wiki/res.xml",
       "")
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("WikiDatabase");
+#endif
     Mainapp* pMainapp = Mainapp::getInstance();
     moveToThread(pMainapp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);

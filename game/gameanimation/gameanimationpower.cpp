@@ -50,7 +50,9 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, CO* pCO, GameMap * pMa
       m_endTimer(this),
       m_pCO(pCO)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationPower");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

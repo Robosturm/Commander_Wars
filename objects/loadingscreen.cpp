@@ -21,7 +21,9 @@ spLoadingScreen LoadingScreen::getInstance()
 
 LoadingScreen::LoadingScreen()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("LoadingScreen");
+#endif
     Interpreter::setCppOwnerShip(this);
     setPriority(static_cast<quint16>(Mainapp::ZOrder::Loadingscreen));
 }

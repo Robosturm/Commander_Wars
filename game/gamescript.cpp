@@ -15,7 +15,9 @@ const QString GameScript::m_scriptName = "gameScript";
 GameScript::GameScript(GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameScript");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

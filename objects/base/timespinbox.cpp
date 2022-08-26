@@ -12,7 +12,9 @@
 
 TimeSpinBox::TimeSpinBox(qint32 width)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("TimeSpinBox");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 

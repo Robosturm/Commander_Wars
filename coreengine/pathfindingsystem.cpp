@@ -25,7 +25,9 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
       m_DirectionMap(new Directions[static_cast<quint32>(width * heigth)]),
       m_movecosts(new std::array<qint32, Directions::Max>[static_cast<quint32>(width * heigth)])
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("PathFindingSystem");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

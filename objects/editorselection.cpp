@@ -21,7 +21,9 @@ const float EditorSelection::m_yFactor = 2.5f;
 EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("EditorSelection");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

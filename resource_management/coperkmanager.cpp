@@ -5,7 +5,9 @@ COPerkManager::COPerkManager()
                                          "/scripts/co_perks")
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("COPerkManager");
+#endif
 }
 
 QString COPerkManager::getIcon(qint32 position)

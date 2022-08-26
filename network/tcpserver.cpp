@@ -5,7 +5,9 @@
 TCPServer::TCPServer(QObject* pParent)
     : NetworkInterface(pParent)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("TCPServer");
+#endif
     m_isServer = true;
     m_isConnected = true;
     connect(this, &TCPServer::sigSetIsActive, this, &TCPServer::setIsActive, Qt::QueuedConnection);

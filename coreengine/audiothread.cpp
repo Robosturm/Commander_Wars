@@ -22,7 +22,9 @@ AudioThread::AudioThread(bool noAudio)
       m_noAudio(noAudio)
 
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("AudioThread");
+#endif
     Interpreter::setCppOwnerShip(this);
     if (!m_noAudio)
     {

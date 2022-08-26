@@ -7,7 +7,9 @@
 ScriptVariableFile::ScriptVariableFile(const QString & filename)
     : m_filename(filename)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ScriptVariableFile");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

@@ -10,7 +10,9 @@ MapMover::MapMover(BaseGamemenu* pOwner)
     : m_pOwner(pOwner),
       m_scrollTimer(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MapMover");
+#endif
     Interpreter::setCppOwnerShip(this);
     connect(&m_scrollTimer, &QTimer::timeout, this, &MapMover::autoScroll, Qt::QueuedConnection);
     m_scrollTimer.setSingleShot(false);

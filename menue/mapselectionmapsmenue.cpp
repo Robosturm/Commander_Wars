@@ -38,7 +38,9 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
     : Basemenu(),
       m_pMapSelectionView(pMapSelectionView)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MapSelectionMapsMenue");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());

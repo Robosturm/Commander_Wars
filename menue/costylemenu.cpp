@@ -22,7 +22,9 @@
 COStyleMenu::COStyleMenu()
     : Basemenu()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("COStyleMenu");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());

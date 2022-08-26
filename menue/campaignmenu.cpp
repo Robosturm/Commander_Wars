@@ -29,7 +29,9 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     : Basemenu(),
       m_Multiplayer(multiplayer)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CampaignMenu");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());

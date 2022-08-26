@@ -15,7 +15,9 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
       : m_pOwner(pOwner),
         m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("IslandMap");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

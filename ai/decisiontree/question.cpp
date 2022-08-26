@@ -3,7 +3,9 @@
 
 Question::Question()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Question");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -13,7 +15,9 @@ Question::Question(float value, qint32 index, GameEnums::AIQuestionType Question
       m_Index(index),
       m_QuestionType(QuestionType)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Question");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -23,7 +27,9 @@ Question::Question(float minValue, float maxValue, qint32 index, GameEnums::AIQu
       m_Index(index),
       m_QuestionType(QuestionType)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Question");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

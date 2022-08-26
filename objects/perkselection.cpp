@@ -18,7 +18,9 @@ PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool bannin
       m_hiddenPerks(hiddenList),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("PerkSelection");
+#endif
     Interpreter::setCppOwnerShip(this);
     setWidth(width);
     Mainapp* pApp = Mainapp::getInstance();

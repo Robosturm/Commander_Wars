@@ -22,7 +22,9 @@
 Achievementmenu::Achievementmenu()
     : Basemenu()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Achievementmenu");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();

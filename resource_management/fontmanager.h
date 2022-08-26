@@ -79,7 +79,9 @@ protected:
     FontManager()
         : RessourceManagement<FontManager>("/fonts/fonts.xml", "")
     {
+#ifdef GRAPHICSUPPORT
         setObjectName("FontManager");
+#endif
     }
 private:
     virtual ~FontManager() = default;

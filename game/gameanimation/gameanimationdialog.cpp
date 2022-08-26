@@ -21,7 +21,9 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
       m_finishTimer(this),
       m_textSpeed(100 / Settings::getDialogAnimationSpeed())
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

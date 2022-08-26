@@ -7,7 +7,9 @@ Weather::Weather(QString weatherId, GameMap* pMap)
     : m_WeatherId(weatherId),
       m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Weather");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

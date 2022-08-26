@@ -10,7 +10,9 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     : m_Heigth(heigth),
       m_ContentHeigth(contentHeigth)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("H_Scrollbar");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 

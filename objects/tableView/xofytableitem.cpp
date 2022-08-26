@@ -10,7 +10,9 @@ XofYTableItem::XofYTableItem(qint32 currentValue, qint32 maxValue, qint32 itemWi
       m_maxValue(maxValue)
 {
     Interpreter::setCppOwnerShip(this);
-    setObjectName("LockTableItem");
+#ifdef GRAPHICSUPPORT
+    setObjectName("XofYTableItem");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 

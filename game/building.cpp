@@ -18,7 +18,9 @@ Building::Building(QString BuildingID, GameMap* pMap)
       m_pTerrain(nullptr),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Building");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

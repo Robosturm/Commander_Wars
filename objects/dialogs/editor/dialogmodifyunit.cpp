@@ -27,7 +27,9 @@ DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
     : m_pUnit(pUnit),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogModifyUnit");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     m_dropDownPlayer = spPlayer::create(m_pMap);

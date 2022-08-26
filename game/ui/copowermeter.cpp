@@ -10,7 +10,9 @@ CoPowermeter::CoPowermeter(GameMap* pMap, CO* pCO)
     : m_pCO(pCO),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CoPowermeter");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

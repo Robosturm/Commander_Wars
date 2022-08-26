@@ -39,7 +39,9 @@
 
 WorkerThread::WorkerThread()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("WorkerThread");
+#endif
     Interpreter::setCppOwnerShip(this);
     moveToThread(Mainapp::getWorkerthread());
     connect(this, &WorkerThread::sigStart, this, &WorkerThread::start, Qt::QueuedConnection);

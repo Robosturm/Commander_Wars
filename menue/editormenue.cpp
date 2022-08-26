@@ -47,7 +47,9 @@ EditorMenue::EditorMenue()
     : BaseGamemenu (20, 20, "", false),
       m_autosaveTimer(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("EditorMenue");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     qint32 selectionWidth = Settings::getWidth() / 4;
     bool smallScreen = Settings::getSmallScreenDevice();

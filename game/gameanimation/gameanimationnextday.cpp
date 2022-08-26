@@ -17,9 +17,10 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     : GameAnimation(frameTime, pMap),
       m_permanent(permanent),
       m_endTimer(this)
-{
-
+{    
+#ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationNextDay");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     if (pApp->getSlave())
     {

@@ -10,7 +10,9 @@ const char* const ROOT = "::::";
 
 FolderDialog::FolderDialog(QString startFolder)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("FolderDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());

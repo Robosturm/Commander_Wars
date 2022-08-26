@@ -13,7 +13,9 @@ TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> 
       m_widths(widths)
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("TableView");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

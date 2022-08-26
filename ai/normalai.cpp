@@ -24,7 +24,9 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
     : CoreAI(pMap, aiType),
       m_InfluenceFrontMap(pMap, m_IslandMaps)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("NormalAi");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

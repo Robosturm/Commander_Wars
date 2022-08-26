@@ -65,14 +65,18 @@ const char* const Mainapp::GAME_CONTEXT = "GAME";
 
 Mainapp::Mainapp()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Mainapp");
+#endif
     m_pMainThread = QThread::currentThread();
     m_pMainapp = this;
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     m_pMainThread->setObjectName("Mainthread");
     m_Workerthread.setObjectName("Workerthread");
     m_Networkthread.setObjectName("Networkthread");
     m_GameServerThread.setObjectName("GameServerThread");
+#endif
 
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
@@ -280,8 +284,10 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::LoadingScripts:
         {
             // start after ressource loading
+#ifdef GRAPHICSUPPORT
             m_Networkthread.setObjectName("NetworkThread");
             m_Workerthread.setObjectName("WorkerThread");
+#endif
             m_Networkthread.start(QThread::Priority::NormalPriority);
             m_Workerthread.start(QThread::Priority::NormalPriority);
             emit m_Worker->sigStart();

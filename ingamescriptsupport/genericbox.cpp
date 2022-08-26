@@ -9,7 +9,9 @@
 
 GenericBox::GenericBox(bool cancel)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GenericBox");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

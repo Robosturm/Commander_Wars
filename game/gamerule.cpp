@@ -8,7 +8,9 @@ const QString GameRule::spinbox = "spinbox";
 
 GameRule::GameRule()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameRule");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -17,7 +19,9 @@ GameRule::GameRule()
 GameRule::GameRule(QString ruleID)
     : m_RuleID(ruleID)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameRule");
+#endif
     Interpreter::setCppOwnerShip(this);
     init();
 }

@@ -31,7 +31,9 @@ RuleSelection::RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enable
       m_ruleChangeEabled(enabled),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("RuleSelection");
+#endif
     Interpreter::setCppOwnerShip(this);
     setWidth(width);
     showRuleSelection();

@@ -29,7 +29,9 @@ void Player::releaseStaticData()
 Player::Player(GameMap* pMap)
     : m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Player");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

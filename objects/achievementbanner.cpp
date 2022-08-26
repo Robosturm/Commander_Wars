@@ -19,7 +19,9 @@ constexpr quint32 bannerHeight = 45;
 AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     : m_showTimer(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("AchievementBanner");
+#endif
     Interpreter::setCppOwnerShip(this);
     qint32 bannerWidth = 350;
     ObjectManager* pObjectManager = ObjectManager::getInstance();

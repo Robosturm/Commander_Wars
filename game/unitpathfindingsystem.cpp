@@ -19,7 +19,9 @@ UnitPathFindingSystem::UnitPathFindingSystem(GameMap* pMap, Unit* pUnit, Player*
       m_pMap(pMap)
 
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("UnitPathFindingSystem");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

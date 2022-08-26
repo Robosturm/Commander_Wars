@@ -23,7 +23,9 @@ CO::CO(QString coID, Player* owner, GameMap* pMap)
       m_coID(coID),
       m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CO");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

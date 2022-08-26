@@ -19,7 +19,9 @@ BaseGameInputIF::BaseGameInputIF(GameMap* pMap, GameEnums::AiTypes aiType)
     : m_AiType(aiType),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("BaseGameInputIF");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

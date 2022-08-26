@@ -34,7 +34,9 @@ const QString CampaignEditor::campaignFinished = "campaignFinished";
 
 CampaignEditor::CampaignEditor()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CampaignEditor");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

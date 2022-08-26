@@ -51,7 +51,9 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     : m_CurrentPlayer(nullptr),
       m_Rules(spGameRules::create(this))
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     m_headerInfo.m_mapAuthor = Settings::getUsername();
@@ -65,7 +67,9 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
       m_Rules(spGameRules::create(this)),
       m_savegame(savegame)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     loadMapData();
@@ -78,7 +82,9 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
       m_Rules(spGameRules::create(this)),
       m_savegame(savegame)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
+#endif
     CONSOLE_PRINT("Loading map: " + map, Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

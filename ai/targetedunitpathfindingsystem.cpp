@@ -10,7 +10,9 @@ TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit
       m_Targets(targets),
       m_pMoveCostMap(pMoveCostMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("TargetedUnitPathFindingSystem");
+#endif
     Interpreter::setCppOwnerShip(this);
     setFast(true);
     for (auto & target : m_Targets)

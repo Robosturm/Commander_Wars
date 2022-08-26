@@ -13,7 +13,9 @@ const QString VictoryRule::spinbox = "spinbox";
 VictoryRule::VictoryRule(GameMap* pMap)
     : m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("VictoryRule");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -23,7 +25,9 @@ VictoryRule::VictoryRule(QString ruleID, GameMap* pMap)
     : m_RuleID(ruleID),
       m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("VictoryRule");
+#endif
     init();
 }
 

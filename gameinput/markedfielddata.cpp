@@ -5,7 +5,9 @@
 
 MarkedFieldData::MarkedFieldData()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MarkedFieldData");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

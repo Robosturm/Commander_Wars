@@ -15,13 +15,17 @@
 DecisionTree::DecisionTree(spDecisionNode & pRootNode)
 	: m_pRootNode(pRootNode)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DecisionTree");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 
 DecisionTree::DecisionTree(std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DecisionTree");
+#endif
     Interpreter::setCppOwnerShip(this);
 	m_pRootNode = train(trainingData, questions);
 }
@@ -33,7 +37,9 @@ DecisionTree::DecisionTree(std::vector<std::vector<float>>& trainingData, std::v
  */
 DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDataFile)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DecisionTree");
+#endif
     Interpreter::setCppOwnerShip(this);
     QFile file(treeFile);
     QFile trainingFile(trainingDataFile);

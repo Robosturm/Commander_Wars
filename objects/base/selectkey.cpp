@@ -14,7 +14,9 @@
 
 SelectKey::SelectKey(Qt::Key code)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("SelectKey");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setWidth(180);

@@ -20,7 +20,9 @@ QString Interpreter::m_runtimeData;
 Interpreter::Interpreter()
     : QQmlEngine()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Interpreter");
+#endif
     setCppOwnerShip(this);
     connect(this, &Interpreter::sigNetworkGameFinished, this, &Interpreter::networkGameFinished, Qt::QueuedConnection);
 }
@@ -83,6 +85,10 @@ void Interpreter::init()
 
 QString Interpreter::getRuntimeData()
 {
+#ifndef GRAPHICSUPPORT
+    CONSOLE_PRINT("Trying to access not loaded runtime data in no ui mode", Console::eFATAL);
+    Q_ASSERT(false);
+#endif
     return m_runtimeData;
 }
 
@@ -105,6 +111,7 @@ bool Interpreter::openScript(const QString & script, bool setup)
         CONSOLE_PRINT("Loading script " + script, Console::eDEBUG);
         QTextStream stream(&scriptFile);
         QString contents = stream.readAll();
+#ifdef GRAPHICSUPPORT
         if (setup)
         {
             stream.seek(0);
@@ -114,6 +121,7 @@ bool Interpreter::openScript(const QString & script, bool setup)
                 m_runtimeData += line + "\n";
             }
         }
+#endif
         scriptFile.close();
         QJSValue value = evaluate(contents, script);
         if (value.isError())

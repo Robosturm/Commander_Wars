@@ -35,7 +35,9 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
       m_DefWeapon(defWeapon),
       m_DefenderDamage(defenderDamage)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("BattleAnimation");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

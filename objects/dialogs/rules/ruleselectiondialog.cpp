@@ -11,7 +11,9 @@
 RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode, bool enabled)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("RuleSelectionDialog");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

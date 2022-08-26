@@ -5,5 +5,7 @@ UiManager::UiManager()
                                      "/ui")
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("UiManager");
+#endif
 }

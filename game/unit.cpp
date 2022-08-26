@@ -26,7 +26,9 @@
 Unit::Unit(GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Unit");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -39,7 +41,10 @@ Unit::Unit(const QString & unitID, Player* pOwner, bool aquireId, GameMap* pMap)
       m_pOwner(pOwner),
       m_pMap{pMap}
 {
+
+#ifdef GRAPHICSUPPORT
     setObjectName("Unit");
+#endif
     setHeight(GameMap::getImageSize());
     setWidth(GameMap::getImageSize());
     Mainapp* pApp = Mainapp::getInstance();

@@ -8,7 +8,9 @@ TCPClient::TCPClient(QObject* pParent)
       m_pTXTask(nullptr),
       m_pSocket(nullptr)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("TCPClient");
+#endif
     m_isServer = false;
 }
 
@@ -19,7 +21,9 @@ TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, QTcpS
       m_pSocket(pSocket),
       m_onServer(true)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("TCPClient");
+#endif
     TCPClient::setSocketID(socketId);
     connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 }

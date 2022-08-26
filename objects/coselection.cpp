@@ -12,7 +12,9 @@
 COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     : m_Coids(coids)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("COSelection");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPosition(position.x(), position.y());

@@ -3,7 +3,9 @@
 
 ProgressInfoBar::ProgressInfoBar(qint32 width, qint32 heigth, QString text, float progress)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ProgressInfoBar");
+#endif
     m_Background = oxygine::spColorRectSprite::create();
     m_Background->setSize(width, heigth);
     m_Background->setColor(QColor(100, 100, 100, 150));

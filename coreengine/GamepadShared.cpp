@@ -9,7 +9,9 @@ Gamepad::Gamepad(qint32 gamepadId)
     : m_timer(this),
       m_gamepadId(gamepadId)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Gamepad");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

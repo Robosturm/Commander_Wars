@@ -33,8 +33,8 @@ namespace oxygine
 
     GameWindow::GameWindow()
     {
-        setObjectName("GameWindow");
 #ifdef GRAPHICSUPPORT
+        setObjectName("GameWindow");
         QSurfaceFormat newFormat = format();
         newFormat.setProfile(QSurfaceFormat::CoreProfile);
         newFormat.setSamples(2);    // Set the number of samples used for multisampling

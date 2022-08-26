@@ -11,7 +11,9 @@ DropDownmenuSprite::DropDownmenuSprite(qint32 width, QStringList& items, std::fu
       m_autoScale(autoScale)
 
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DropDownmenuSprite");
+#endif
     if (items.size() < 0)
     {
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "DropDownmenuSprite item count is below 0");

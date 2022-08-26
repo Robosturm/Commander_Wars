@@ -15,7 +15,9 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, QStri
     : m_preview(preview),
       m_pathPrefix(Settings::getUserPath())
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("FileDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());

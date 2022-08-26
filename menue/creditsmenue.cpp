@@ -20,7 +20,9 @@
 CreditsMenue::CreditsMenue()
     : Basemenu()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CreditsMenue");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());

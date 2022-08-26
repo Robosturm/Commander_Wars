@@ -10,7 +10,9 @@ CustomDialog::CustomDialog(const QString & jsName, const QString & uiXml, Baseme
     : m_jsName(jsName),
       m_pBaseMenu(pBaseMenu)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CustomDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

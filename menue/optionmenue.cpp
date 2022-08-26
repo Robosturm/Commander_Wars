@@ -84,7 +84,9 @@ QVector<OptionMenue::GamemodeMods> OptionMenue::m_gamemodeMods =
 OptionMenue::OptionMenue(const QString & xmlFile)
     : m_xmlFile(xmlFile)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("OptionMenue");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);

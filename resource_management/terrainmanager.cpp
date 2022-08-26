@@ -5,7 +5,9 @@ TerrainManager::TerrainManager()
     : RessourceManagement<TerrainManager>("/images/terrain/res.xml",
                                           "/scripts/terrain", false)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("TerrainManager");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

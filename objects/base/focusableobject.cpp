@@ -14,7 +14,9 @@ bool FocusableObject::m_registeredAtStage = false;
 
 FocusableObject::FocusableObject()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("FocusableObject");
+#endif
     connect(this, &FocusableObject::sigFocused, this, &FocusableObject::focusedInternal);
     connect(this, &FocusableObject::sigFocusedLost, this, &FocusableObject::focusedLost);
     connect(this, &FocusableObject::sigLooseFocusInternal, this, &FocusableObject::looseFocusInternal);

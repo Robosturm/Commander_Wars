@@ -16,7 +16,9 @@
 
 UnitStatisticView::UnitStatisticView(const GameRecorder::PlayerData & data, qint32 width, qint32 heigth, Player* pPlayer, GameMap* pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("UnitStatisticView");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

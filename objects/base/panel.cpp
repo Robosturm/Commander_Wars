@@ -8,7 +8,9 @@
 Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
     : m_hideTimer(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Panel");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

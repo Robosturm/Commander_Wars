@@ -9,7 +9,9 @@
 
 Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Multislider");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     qint32 textWidth = 0;

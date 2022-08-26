@@ -13,7 +13,9 @@ constexpr const char* const ViewMapStats = "viewMapStats";
 DialogViewMapStats::DialogViewMapStats(GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogViewMapStats");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

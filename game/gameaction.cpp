@@ -16,7 +16,9 @@ GameAction::GameAction(GameMap* pMap)
     : m_target(-1, -1),
       m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameAction");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -29,7 +31,9 @@ GameAction::GameAction(const QString & actionID, GameMap* pMap)
       m_target(-1, -1),
       m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameAction");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

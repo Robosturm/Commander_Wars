@@ -4,7 +4,9 @@
 
 CampaignMapData::CampaignMapData()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CampaignMapData");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

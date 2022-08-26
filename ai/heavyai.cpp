@@ -38,7 +38,9 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
       m_timer(this),
       m_aiName(type)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("HeavyAi");
+#endif
     Interpreter::setCppOwnerShip(this);
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);

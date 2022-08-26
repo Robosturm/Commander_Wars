@@ -6,7 +6,9 @@
 
 PlayerSelectionDialog::PlayerSelectionDialog(GameMap* pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("PlayerSelectionDialog");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

@@ -65,7 +65,9 @@ const char* const Console::compileDate = __DATE__;
 
 Console::Console()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Console");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

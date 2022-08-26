@@ -26,7 +26,9 @@ IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
     : m_pMap(pMap),
       m_pMenu(pMenu)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("IngameInfoBar");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

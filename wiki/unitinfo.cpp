@@ -22,7 +22,9 @@
 
 UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("UnitInfo");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

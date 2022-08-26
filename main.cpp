@@ -22,8 +22,8 @@ int main(qint32 argc, char* argv[])
     qInstallMessageHandler(Console::messageOutput);
     srand(static_cast<unsigned>(time(nullptr)));
     QThread::currentThread()->setPriority(QThread::NormalPriority);
-    QThread::currentThread()->setObjectName("RenderThread");
 #ifdef GRAPHICSUPPORT
+    QThread::currentThread()->setObjectName("RenderThread");
     QApplication app(argc, argv);
 #else
     QCoreApplication app(argc, argv);

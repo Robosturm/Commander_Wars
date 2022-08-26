@@ -10,7 +10,9 @@
 
 WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("WikiView");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();

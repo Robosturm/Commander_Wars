@@ -19,7 +19,9 @@ BaseGamemenu::BaseGamemenu(spGameMap pMap)
     : m_MapMoveThread(this),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     m_MapMoveThread.setObjectName("MapMoveThread");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

@@ -38,7 +38,9 @@ constexpr const char* const CO_ARMY = "CO_ARMY";
 
 PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("PlayerSelection");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

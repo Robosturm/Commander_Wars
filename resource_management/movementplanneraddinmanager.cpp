@@ -5,5 +5,7 @@ MovementPlannerAddInManager::MovementPlannerAddInManager()
                                               "/scripts/movementPlannerAddIns")
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("MovementPlannerAddInManager");
+#endif
 }

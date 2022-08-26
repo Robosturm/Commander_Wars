@@ -23,7 +23,9 @@ GameRules::GameRules(GameMap* pMap)
     : m_RoundTimer(this),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameRules");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

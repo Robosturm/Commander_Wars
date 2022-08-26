@@ -9,7 +9,9 @@
 
 DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DropDownmenuBase");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

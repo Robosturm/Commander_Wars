@@ -4,7 +4,9 @@ UnitSpriteManager::UnitSpriteManager()
     : RessourceManagement<UnitSpriteManager>("/images/units/res.xml",
                                              "/scripts/units")
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("UnitSpriteManager");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

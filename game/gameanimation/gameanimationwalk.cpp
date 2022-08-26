@@ -15,7 +15,9 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePa
       m_pUnit(pUnit),
       m_movePath(movePath)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationWalk");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

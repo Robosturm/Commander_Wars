@@ -10,7 +10,9 @@ namespace oxygine
 
     SingleResAnim::SingleResAnim()
     {
+#ifdef GRAPHICSUPPORT
         setObjectName("SingleResAnim");
+#endif
     }
 
     SingleResAnim::~SingleResAnim()

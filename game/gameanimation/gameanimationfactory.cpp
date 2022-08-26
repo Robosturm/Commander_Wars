@@ -24,7 +24,9 @@ QVector<spGameAnimation> GameAnimationFactory::m_Animations;
 
 GameAnimationFactory::GameAnimationFactory()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationFactory");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

@@ -5,7 +5,9 @@
 
 Label::Label(qint32 width)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Label");
+#endif
     m_clipRect = oxygine::spClipRectActor::create();
     m_clipRect->setWidth(width);
     m_clipRect->setHeight(28);

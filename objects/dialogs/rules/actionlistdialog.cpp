@@ -21,7 +21,9 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     : m_CurrentActionList(bannlist),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ActionListDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

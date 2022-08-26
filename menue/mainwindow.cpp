@@ -42,7 +42,9 @@
 Mainwindow::Mainwindow(const QString & initialView)
     : m_cheatTimeout(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Mainwindow");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);

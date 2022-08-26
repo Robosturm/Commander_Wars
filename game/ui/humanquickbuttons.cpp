@@ -10,7 +10,9 @@ constexpr const char* const quickButtonsMenu = "quickButtonsMenu";
 
 HumanQuickButtons::HumanQuickButtons(GameMenue* pMenu)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MapSelectionFilterDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

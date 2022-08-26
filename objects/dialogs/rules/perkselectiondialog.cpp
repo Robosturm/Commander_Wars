@@ -16,7 +16,9 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
       m_banning(banning),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("PerkSelectionDialog");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

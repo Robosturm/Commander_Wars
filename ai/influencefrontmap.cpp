@@ -130,7 +130,9 @@ InfluenceFrontMap::InfluenceFrontMap(GameMap* pMap, const std::vector<spIslandMa
     : m_islands(islands),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("InfluenceFrontMap");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

@@ -18,7 +18,9 @@
 
 DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogUnitInfo");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

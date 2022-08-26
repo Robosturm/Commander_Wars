@@ -26,7 +26,9 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
       m_pMap(pMap),
       m_pMenu(pMenu)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("HumanPlayerInputMenu");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

@@ -27,7 +27,9 @@ Userdata* Userdata::getInstance()
 
 Userdata::Userdata()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Userdata");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

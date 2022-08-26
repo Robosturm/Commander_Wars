@@ -10,7 +10,9 @@
 ObjectManager::ObjectManager()
     : RessourceManagement<ObjectManager>("/objects/res.xml", "")
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ObjectManager");
+#endif
     Interpreter::setCppOwnerShip(this);
     loadRessources("/cursor/res.xml");
 }

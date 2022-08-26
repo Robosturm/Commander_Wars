@@ -13,7 +13,9 @@ constexpr const char* const GamepadInfoItem = "gamepadInfo";
 
 GamepadInfo::GamepadInfo()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GamepadInfo");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

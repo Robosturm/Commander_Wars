@@ -14,7 +14,9 @@ ComplexTableView::ComplexTableView(const QVector<qint32> & widths, const QString
       m_widths(widths)
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("ComplexTableView");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

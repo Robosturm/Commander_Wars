@@ -53,7 +53,9 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
       m_Building{nullptr},
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Terrain");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

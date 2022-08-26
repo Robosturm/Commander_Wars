@@ -21,7 +21,9 @@
 MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     : m_filter(filter)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MapSelectionView");
+#endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();

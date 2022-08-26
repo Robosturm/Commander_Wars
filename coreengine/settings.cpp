@@ -203,7 +203,9 @@ void Settings::shutdown()
 
 Settings::Settings()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Settings");
+#endif
     Interpreter::setCppOwnerShip(this);
     QSize size;
 #ifdef GRAPHICSUPPORT

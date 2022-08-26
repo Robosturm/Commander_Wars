@@ -13,7 +13,9 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
     : DropDownmenuBase(width, items.size()),
       m_ItemColors(items)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DropDownmenuColor");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

@@ -16,7 +16,9 @@
 
 Wikipage::Wikipage()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Wikipage");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

@@ -19,7 +19,9 @@ GameAnimation::GameAnimation(quint32 frameTime, GameMap* pMap)
     : m_frameTime(frameTime / Settings::getAnimationSpeed()),
       m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameAnimation");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

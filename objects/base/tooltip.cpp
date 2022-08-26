@@ -21,10 +21,10 @@ Tooltip::Tooltip()
       m_TooltipPauseTimer(this)
 #endif
 {
-    setObjectName("Tooltip");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 #ifdef GRAPHICSUPPORT
+    setObjectName("Tooltip");
     m_TooltipTimer.setSingleShot(true);
     m_TooltipPauseTimer.setSingleShot(true);
     addEventListener(oxygine::TouchEvent::MOVE, [this](oxygine::Event* pEvent)

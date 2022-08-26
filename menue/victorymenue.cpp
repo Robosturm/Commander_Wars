@@ -32,7 +32,9 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
       m_pMap(pMap),
       m_isReplay(isReplay)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("VictoryMenue");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());

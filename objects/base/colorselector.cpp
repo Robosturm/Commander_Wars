@@ -13,7 +13,9 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     : m_CurrentColor(color),
       m_pixelSize(pixelSize)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ColorSelector");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 
