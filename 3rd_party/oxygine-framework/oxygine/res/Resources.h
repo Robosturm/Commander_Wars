@@ -1,7 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/closure.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 #include <QDomDocument>
 #include <QString>

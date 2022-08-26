@@ -1,6 +1,6 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"

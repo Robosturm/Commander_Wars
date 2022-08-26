@@ -2,6 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
 #include <qopengl.h>
+#include <QString>
 
 namespace oxygine
 {

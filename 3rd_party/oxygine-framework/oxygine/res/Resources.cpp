@@ -110,7 +110,7 @@ namespace oxygine
 
     bool Resources::loadXML(const QString & xmlFile, bool addTransparentBorder)
     {
-#ifndef GRAPHICSUPPORT
+#ifdef GRAPHICSUPPORT
         m_name = xmlFile;
         QFile file(xmlFile);
 
@@ -209,7 +209,7 @@ namespace oxygine
 
     Resource* Resources::get(const QString & id_, error_policy ep) const
     {
-#ifndef GRAPHICSUPPORT
+#ifdef GRAPHICSUPPORT
         if (id_.isEmpty())
         {
             return nullptr;

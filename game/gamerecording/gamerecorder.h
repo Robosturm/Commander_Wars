@@ -7,6 +7,7 @@
 #include "game/gamerecording/daytodayrecord.h"
 
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
 

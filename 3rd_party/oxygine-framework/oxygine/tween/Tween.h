@@ -5,7 +5,7 @@
 #include "3rd_party/oxygine-framework/oxygine/Property.h"
 #include "3rd_party/oxygine-framework/oxygine/UpdateState.h"
 #include "3rd_party/oxygine-framework/oxygine/core/closure.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include <limits>
 
 #include <QEasingCurve>

@@ -3,10 +3,10 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
+#include <QMutex>
 #include <vector>
 
 namespace oxygine
@@ -498,6 +498,7 @@ namespace oxygine
         mutable AffineTransform m_transform;
         mutable AffineTransform m_transformInvert;
         tweens m_tweens;
+        QMutex m_Locked;
 #else
         static Vector2 m_dummyVector;
         static RectF m_dummyRectF;

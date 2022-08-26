@@ -6,9 +6,8 @@ namespace oxygine
 {
     class SingleResAnim;
     using spSingleResAnim = intrusive_ptr<SingleResAnim>;
-    class SingleResAnim : public QObject, public ResAnim
+    class SingleResAnim : public ResAnim
     {
-        Q_OBJECT
     public:
         explicit SingleResAnim();
         virtual ~SingleResAnim();

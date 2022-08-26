@@ -1,19 +1,16 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 
-#include <QObject>
 #include <QImage>
 
 namespace oxygine
 {
     class Texture;
     using spTexture = intrusive_ptr<Texture>;
-    class Texture : public QObject, public Object
+    class Texture : public ref_counter
     {
-        Q_OBJECT
     public:
         virtual ~Texture();
         void init(const QImage & image);
@@ -48,6 +45,5 @@ namespace oxygine
         friend class VideoDriver;
         friend class intrusive_ptr<Texture>;
         explicit Texture() = default;
-    private:
     };
 }

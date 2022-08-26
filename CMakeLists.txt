@@ -240,7 +240,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/RenderState.h
     3rd_party/oxygine-framework/oxygine/oxygine-forwards.h
     #core
-    3rd_party/oxygine-framework/oxygine/core/Object.cpp 3rd_party/oxygine-framework/oxygine/core/Object.h
     3rd_party/oxygine-framework/oxygine/core/oxygine.cpp 3rd_party/oxygine-framework/oxygine/core/oxygine.h
     3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h
     3rd_party/oxygine-framework/oxygine/core/gamewindow.cpp 3rd_party/oxygine-framework/oxygine/core/gamewindow.h

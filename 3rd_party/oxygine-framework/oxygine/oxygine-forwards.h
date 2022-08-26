@@ -1,9 +1,7 @@
 #pragma once
-
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/core/closure.h"
 #include <chrono>
-#include <qglobal.h>
+#include <QtGlobal>
 
 #ifdef GAMEDEBUG
 #define OXY_ASSERT(check) Q_ASSERT(check)

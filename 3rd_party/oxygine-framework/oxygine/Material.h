@@ -1,6 +1,6 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "texture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"

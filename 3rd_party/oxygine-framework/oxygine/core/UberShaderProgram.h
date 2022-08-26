@@ -1,6 +1,7 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "ShaderProgram.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+#include <QString>
 
 namespace oxygine
 {
