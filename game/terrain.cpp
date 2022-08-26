@@ -226,6 +226,7 @@ void Terrain::setTerrainName(const QString &value)
 
 void Terrain::syncAnimation(oxygine::timeMS syncTime)
 {
+#ifdef GRAPHICSUPPORT
     if (m_pTerrainSprite.get() != nullptr)
     {
         auto & tweens = m_pTerrainSprite->getTweens();
@@ -246,6 +247,7 @@ void Terrain::syncAnimation(oxygine::timeMS syncTime)
     {
         m_pBaseTerrain->syncAnimation(syncTime);
     }
+#endif
 }
 
 Unit* Terrain::getUnit()

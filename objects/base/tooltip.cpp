@@ -16,12 +16,15 @@
 oxygine::spActor Tooltip::m_Tooltip = oxygine::spActor();
 
 Tooltip::Tooltip()
+#ifdef GRAPHICSUPPORT
     : m_TooltipTimer(this),
       m_TooltipPauseTimer(this)
+#endif
 {
     setObjectName("Tooltip");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+#ifdef GRAPHICSUPPORT
     m_TooltipTimer.setSingleShot(true);
     m_TooltipPauseTimer.setSingleShot(true);
     addEventListener(oxygine::TouchEvent::MOVE, [this](oxygine::Event* pEvent)
@@ -63,11 +66,6 @@ Tooltip::Tooltip()
     {
         emit sigStopTooltip();
     });
-
-    connect(this, &Tooltip::sigHideTooltip, this, &Tooltip::hideTooltip, Qt::QueuedConnection);
-    connect(this, &Tooltip::sigStopTooltip, this, &Tooltip::stopTooltiptimer, Qt::QueuedConnection);
-    connect(this, &Tooltip::sigStartTooltip, this, &Tooltip::restartTooltiptimer, Qt::QueuedConnection);
-    connect(this, &Tooltip::sigStartHoveredTimer, this, &Tooltip::startHoveredTimer, Qt::QueuedConnection);
     connect(&m_TooltipTimer, &QTimer::timeout, this, &Tooltip::showTooltip, Qt::QueuedConnection);
     connect(&m_TooltipPauseTimer, &QTimer::timeout, this, [this]()
     {
@@ -75,11 +73,18 @@ Tooltip::Tooltip()
         hideTooltip();
         m_mouseHovered = true;
     }, Qt::QueuedConnection);
+#endif
+    connect(this, &Tooltip::sigHideTooltip, this, &Tooltip::hideTooltip, Qt::QueuedConnection);
+    connect(this, &Tooltip::sigStopTooltip, this, &Tooltip::stopTooltiptimer, Qt::QueuedConnection);
+    connect(this, &Tooltip::sigStartTooltip, this, &Tooltip::restartTooltiptimer, Qt::QueuedConnection);
+    connect(this, &Tooltip::sigStartHoveredTimer, this, &Tooltip::startHoveredTimer, Qt::QueuedConnection);
 }
 
 Tooltip::~Tooltip()
 {
+#ifdef GRAPHICSUPPORT
     m_TooltipTimer.stop();
+#endif
     if (m_Tooltip.get() != nullptr)
     {
         m_Tooltip->detach();
@@ -89,11 +94,14 @@ Tooltip::~Tooltip()
 
 void Tooltip::startHoveredTimer()
 {
+#ifdef GRAPHICSUPPORT
     m_TooltipPauseTimer.start(100);
+#endif
 }
 
 void Tooltip::restartTooltiptimer()
 {
+#ifdef GRAPHICSUPPORT
     if (!m_disabled && m_mouseHovered)
     {
         m_TooltipTimer.start(std::chrono::milliseconds(1000));
@@ -102,23 +110,32 @@ void Tooltip::restartTooltiptimer()
     {
         m_TooltipTimer.stop();
     }
+#endif
     removeTooltip();
 }
 
 void Tooltip::stopTooltiptimer()
 {
+#ifdef GRAPHICSUPPORT
     m_mouseHovered = false;
     m_TooltipTimer.stop();
+#endif
 }
 
 QString Tooltip::getTooltipText() const
 {
+#ifdef GRAPHICSUPPORT
     return m_tooltipText;
+#else
+    return QString();
+#endif
 }
 
 void Tooltip::setTooltipText(const QString &tooltipText)
 {
+#ifdef GRAPHICSUPPORT
     m_tooltipText = tooltipText;
+#endif
 }
 
 void Tooltip::showTooltip()
@@ -186,21 +203,27 @@ void Tooltip::showTooltip()
 
 void Tooltip::enableTooltip()
 {
+#ifdef GRAPHICSUPPORT
     m_mouseHovered = true;
     m_disabled = false;
+#endif
 }
 
 void Tooltip::disableTooltip()
 {
+#ifdef GRAPHICSUPPORT
     m_disabled = true;
     stopTooltiptimer();
+#endif
     emit sigHideTooltip();
 }
 
 void Tooltip::hideTooltip()
 {    
+#ifdef GRAPHICSUPPORT
     stopTooltiptimer();
     removeTooltip();
+#endif
 }
 
 void Tooltip::removeTooltip()

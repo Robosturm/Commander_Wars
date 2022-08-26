@@ -234,10 +234,13 @@ void Console::print(const QString & message, eLogLevels logLevel)
                 break;
         }
         msg.replace("&", "&amp;");
-        m_output.append(prefix + msg);
-        while (m_output.size() > m_outputSize)
+        if (!Mainapp::getInstance()->getNoUi())
         {
-            m_output.removeFirst();
+            m_output.append(prefix + msg);
+            while (m_output.size() > m_outputSize)
+            {
+                m_output.removeFirst();
+            }
         }
     }
 }

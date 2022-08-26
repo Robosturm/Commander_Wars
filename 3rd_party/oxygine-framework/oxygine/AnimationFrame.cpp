@@ -18,6 +18,7 @@ namespace oxygine
 
     void AnimationFrame::updateHittestdata()
     {
+#ifdef GRAPHICSUPPORT
         constexpr qint32 alpha = 0;
         const QImage & image = m_texture->getImage();
         m_width = m_srcRect.getWidth() * image.width();
@@ -41,6 +42,7 @@ namespace oxygine
                 }
             }
         }
+#endif
     }
 
     AnimationFrame AnimationFrame::getClipped(const RectF& rect) const

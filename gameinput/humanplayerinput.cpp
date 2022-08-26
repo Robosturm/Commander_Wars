@@ -306,6 +306,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
 
 void HumanPlayerInput::syncMarkedFields()
 {
+#ifdef GRAPHICSUPPORT
     for (auto & field : m_Fields)
     {
         auto & tweens = field->getTweens();
@@ -315,6 +316,7 @@ void HumanPlayerInput::syncMarkedFields()
             pTween->start(*field);
         }
     }
+#endif
 }
 
 void HumanPlayerInput::cleanUpInput()

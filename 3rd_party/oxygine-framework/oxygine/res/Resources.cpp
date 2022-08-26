@@ -110,6 +110,7 @@ namespace oxygine
 
     bool Resources::loadXML(const QString & xmlFile, bool addTransparentBorder)
     {
+#ifndef GRAPHICSUPPORT
         m_name = xmlFile;
         QFile file(xmlFile);
 
@@ -176,6 +177,7 @@ namespace oxygine
         {
             CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
         }
+#endif
         return true;
     }
 
@@ -207,6 +209,7 @@ namespace oxygine
 
     Resource* Resources::get(const QString & id_, error_policy ep) const
     {
+#ifndef GRAPHICSUPPORT
         if (id_.isEmpty())
         {
             return nullptr;
@@ -218,6 +221,7 @@ namespace oxygine
             return it.value().get();
         }
         handleErrorPolicy(ep, "can't find resource: '" + id + "' in '" + m_name + "'");
+#endif
         return nullptr;
     }
 

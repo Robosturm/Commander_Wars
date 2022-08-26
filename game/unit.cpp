@@ -292,6 +292,7 @@ void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bo
 
 void Unit::syncAnimation(oxygine::timeMS syncTime)
 {
+#ifdef GRAPHICSUPPORT
     for (auto & sprite : m_pUnitSprites)
     {
         auto & tweens = sprite->getTweens();
@@ -316,6 +317,7 @@ void Unit::syncAnimation(oxygine::timeMS syncTime)
             pTween->setElapsed(syncTime);
         }
     }
+#endif
 }
 
 Player* Unit::getOwner()

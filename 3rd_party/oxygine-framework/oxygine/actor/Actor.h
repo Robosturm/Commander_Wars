@@ -98,68 +98,127 @@ namespace oxygine
         {
             return m_children.back();
         }
+
+#ifdef GRAPHICSUPPORT
         tweens& getTweens()
         {
             return m_tweens;
         }
+#endif
 
         const Vector2& getAnchor() const
         {
+#ifdef GRAPHICSUPPORT
             return m_anchor;
+#else
+            return m_dummyVector;
+#endif
         }
         float getAnchorX() const
         {
+#ifdef GRAPHICSUPPORT
             return m_anchor.x;
+#else
+            return 0.0f;
+#endif
         }
         float getAnchorY() const
         {
+#ifdef GRAPHICSUPPORT
             return m_anchor.y;
+#else
+            return 0.0f;
+#endif
         }
         bool getIsAnchorInPixels()
         {
+#ifdef GRAPHICSUPPORT
             return (m_flags & flag_anchorInPixels) != 0;
+#else
+            return true;
+#endif
         }
         const Vector2& getPosition() const
         {
+#ifdef GRAPHICSUPPORT
             return m_pos;
+#else
+            return m_dummyVector;
+#endif
         }
         float getX() const
         {
+#ifdef GRAPHICSUPPORT
             return m_pos.x;
+#else
+            return 0.0f;
+#endif
         }
         float getY() const
         {
+#ifdef GRAPHICSUPPORT
             return m_pos.y;
+#else
+            return 0.0f;
+#endif
         }
         const Vector2& getScale() const
         {
+#ifdef GRAPHICSUPPORT
             return m_scale;
+#else
+            return m_dummyVector;
+#endif
         }
         float getScaleX() const
         {
+#ifdef GRAPHICSUPPORT
             return m_scale.x;
+#else
+            return 0.0f;
+#endif
         }
         float getScaleY() const
         {
+#ifdef GRAPHICSUPPORT
             return m_scale.y;
+#else
+            return 0.0f;
+#endif
         }
         /**Returns rotation angle in radians*/
         float getRotation() const
         {
+#ifdef GRAPHICSUPPORT
             return m_rotation;
+#else
+            return 0;
+#endif
         }
         /**Returns rotation angle in degrees*/
         float getRotationDegrees() const
         {
+#ifdef GRAPHICSUPPORT
             return m_rotation / M_PI * 180.0f;
+#else
+            return 0.0f;
+#endif
         }
         qint32 getPriority() const
         {
+#ifdef GRAPHICSUPPORT
             return m_zOrder;
+#else
+            return 0;
+#endif
         }
         virtual bool getVisible() const
         {
+#ifdef GRAPHICSUPPORT
             return (m_flags & flag_visible) != 0;
+#else
+            return false;
+#endif
         }
         Actor* getParent()
         {
@@ -171,22 +230,38 @@ namespace oxygine
         }
         const Vector2& getSize() const
         {
+#ifdef GRAPHICSUPPORT
             return m_size;
+#else
+            return m_dummyVector;
+#endif
         }
         /**Returns Size*Scale*/
         Vector2 getScaledSize() const
         {
+#ifdef GRAPHICSUPPORT
             return m_size.mult(m_scale);
+#else
+            return Vector2();
+#endif
         }
         float getWidth() const;
         float getScaledWidth() const
         {
+#ifdef GRAPHICSUPPORT
             return m_size.x * m_scale.x;
+#else
+            return 0;
+#endif
         }
         float getHeight() const;
         float getScaledHeight() const
         {
+#ifdef GRAPHICSUPPORT
             return m_size.y * m_scale.y;
+#else
+            return 0;
+#endif
         }
         unsigned char getAlpha() const;
         const spClock& getClock() const;
@@ -194,17 +269,15 @@ namespace oxygine
         /**returns touch id if actor is pressed down*/
         pointer_index getPressed(MouseButton b = MouseButton_Touch) const;
         /**returns touch id if actor is moused overred*/
-        pointer_index getOvered() const;        
-        RenderDelegate* getRenderDelegate()
-        {
-            return m_rdelegate;
-        }
+        pointer_index getOvered() const;
 
+#ifdef GRAPHICSUPPORT
         /**return local actor transformation*/
         const AffineTransform& getTransform() const;
         const AffineTransform& getTransformInvert() const;
         /**computes global actor transformation*/
         AffineTransform computeGlobalTransform(Actor* parent = nullptr) const;
+#endif
         /**computes actor Bounds rectangle. Iterates children*/
         RectF computeBounds(const AffineTransform& transform = AffineTransform()) const;
 
@@ -246,40 +319,54 @@ namespace oxygine
         void setExtendedClickArea(char add) {m_extendedIsOn = add;}
 
         void setClock(spClock & clock);
-        void setRenderDelegate(RenderDelegate* mat);
 
         /**Show/Hide actor and children. Invisible Actor doesn't receive Touch events.*/
         virtual void setVisible(bool vis)
         {
+#ifdef GRAPHICSUPPORT
             m_flags &= ~flag_visible;
             if (vis)
             {
                 m_flags |= flag_visible;
             }
+#endif
         }
         /**Enable/Disable culling this actor outside of clip area (use it in pair with ClipRectActor)*/
-        void setCull(bool enable) {m_flags &= ~flag_cull; if (enable) m_flags |= flag_cull;}
+        void setCull(bool enable)
+        {
+#ifdef GRAPHICSUPPORT
+            m_flags &= ~flag_cull;
+            if (enable)
+            {
+                m_flags |= flag_cull;
+            }
+#endif
+        }
         /**Sets transparency. if alpha is 0 actor and children are completely invisible. Invisible Actor doesn't receive Touch events.*/
         void setAlpha(unsigned char alpha);
 
         /**By default Actor doesn't has bounds, this will set it to Actor::getDestRect*/
         void setHasOwnBounds(bool enable = true)
         {
+#ifdef GRAPHICSUPPORT
             m_flags &= ~flag_actorHasBounds;
             if (enable)
             {
                 m_flags |= flag_actorHasBounds;
             }
+#endif
         }
         /**by default actor with Alpha = 0 not clickable*/
         void setClickableWithZeroAlpha(bool enable)
         {
+#ifdef GRAPHICSUPPORT
             m_flags &= ~flag_clickableWithZeroAlpha;
             if (enable)
             {
                 m_flags |= flag_clickableWithZeroAlpha;
             }
-        }        
+#endif
+        }
         virtual bool isOn(const Vector2& localPosition, float localScale = 1.0f);
         /**Returns true if actor is child or located deeper in current subtree*/
         bool isDescendant(const spActor& actor) const;
@@ -374,10 +461,6 @@ namespace oxygine
         static void setParent(Actor* actor, Actor* parent);
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchMoveEvent(Event*);
-        const Vector2& _getSize() const
-        {
-            return m_size;
-        }
         void __setSize(const Vector2&);
         virtual void sizeChanged(const Vector2& size);
         spTween __addTween(spTween tween, bool rel);
@@ -396,10 +479,7 @@ namespace oxygine
         static Vector2 convert_local2global_(const Actor* child, const Actor* parent, Vector2 pos);
         static Vector2 convert_local2global(spActor & child, spActor & parent, const Vector2& pos);
     protected:
-        RenderDelegate* m_rdelegate;
-        Stage* m_stage;
-        mutable AffineTransform m_transform;
-        mutable AffineTransform m_transformInvert;
+#ifdef GRAPHICSUPPORT
         enum flags
         {
             flag_anchorInPixels         = 1,
@@ -414,12 +494,17 @@ namespace oxygine
             flag_reserved               = 1 << 9,
             flag_last                   = flag_reserved
         };
-        mutable quint32 m_flags;
-        unsigned char   m_alpha;
-        char    m_extendedIsOn;
+        mutable quint32 m_flags{flag_visible | flag_fastTransform};
+        mutable AffineTransform m_transform;
+        mutable AffineTransform m_transformInvert;
+        tweens m_tweens;
+#else
+        static Vector2 m_dummyVector;
+        static RectF m_dummyRectF;
+#endif
+        Stage* m_stage;
         spClock m_clock;
         Actor* m_parent;
-        tweens m_tweens;
         children m_children;
         union
         {
@@ -430,17 +515,20 @@ namespace oxygine
             };
             int32_t m_pressedOvered;
         };
+        char    m_extendedIsOn{0};
     private:
+#ifdef GRAPHICSUPPORT
+        unsigned char   m_alpha{255};
         Vector2 m_pos;
         Vector2 m_anchor;
-        Vector2 m_scale;
+        Vector2 m_scale{1.0f, 1.0f};
         Vector2 m_size;
-        float  m_rotation;
-        qint32 m_zOrder;
+        float  m_rotation{0};
+        qint32 m_zOrder{0};
         qint32 m_onGlobalTouchUpEvent{-1};
         qint32 m_onGlobalTouchMoveEvent{-1};
         bool m_onScreen{true};
-
+#endif
     };
 
 }

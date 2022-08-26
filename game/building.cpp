@@ -377,6 +377,7 @@ qint32 Building::getImageSize()
 
 void Building::syncAnimation(oxygine::timeMS syncTime)
 {
+#ifdef GRAPHICSUPPORT
     for (auto & sprite : m_pBuildingSprites)
     {
         auto & tweens = sprite->getTweens();
@@ -393,6 +394,7 @@ void Building::syncAnimation(oxygine::timeMS syncTime)
             pTween->setElapsed(syncTime);
         }
     }
+#endif
 }
 
 void Building::updatePlayerColor(bool visible)

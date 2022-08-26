@@ -14,7 +14,9 @@ namespace oxygine
         explicit Object() = default;
         virtual ~Object() = default;
     protected:
+#ifdef GRAPHICSUPPORT
         mutable QMutex m_Locked;
+#endif
     };
 
     template <class dest, class src>

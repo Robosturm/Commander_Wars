@@ -37,11 +37,13 @@ protected:
     void removeTooltip();
 private:
     static oxygine::spActor m_Tooltip;
+#ifdef GRAPHICSUPPORT
     QString m_tooltipText;
     QTimer m_TooltipTimer;
     QTimer m_TooltipPauseTimer;
     bool m_disabled{false};
     bool m_mouseHovered{true};
+#endif
 };
 
 #endif // TOOLTIP_H

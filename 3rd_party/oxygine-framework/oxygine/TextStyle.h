@@ -29,7 +29,7 @@ namespace oxygine
         {
         }
 
-        const ResFont* font;
+        const ResFont* font{nullptr};
         HorizontalAlign hAlign{HALIGN_DEFAULT};
         VerticalAlign vAlign{VALIGN_DEFAULT};
         qint32 linesOffset{0};      /**<vertical distance offset between lines */

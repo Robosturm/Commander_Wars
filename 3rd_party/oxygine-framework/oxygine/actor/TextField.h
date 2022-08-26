@@ -12,13 +12,17 @@ namespace oxygine
     class TextField : public VStyleActor
     {
     public:
-        explicit TextField();
+        explicit TextField() = default;
         virtual ~TextField() = default;
 
         /**Returns current text style*/
         const TextStyle& getStyle() const
         {
+#ifdef GRAPHICSUPPORT
             return m_style;
+#else
+            return m_dummyTextStyle;
+#endif
         }
         /**Returns text bounds*/
         const Rect& getTextRect() const;
@@ -81,12 +85,18 @@ namespace oxygine
         void rebuildText();
 
     protected:
+#ifdef GRAPHICSUPPORT
         QString  m_text;
         TextStyle m_style;
 
         text::spNode m_root;
-        Rect m_textRect;
-        float m_rtscale;
+        Rect m_textRect{0, 0, 0, 0};
+        float m_rtscale{1.0f};
         bool m_htmlText = false;
+#else
+        static TextStyle m_dummyTextStyle;
+        static Rect m_dummyRect;
+        static QString m_dummyText;
+#endif
     };
 }

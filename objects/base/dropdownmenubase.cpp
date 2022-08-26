@@ -86,7 +86,8 @@ void DropDownmenuBase::focusedLost()
 }
 
 void DropDownmenuBase::showDropDown()
-{    
+{
+#ifdef GRAPHICSUPPORT
     setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
     m_OriginalOwner = getParent();
@@ -110,7 +111,7 @@ void DropDownmenuBase::showDropDown()
     {
         m_Panel->setY(m_Box->getHeight());
     }
-    
+#endif
 }
 
 void DropDownmenuBase::hideDropDown()

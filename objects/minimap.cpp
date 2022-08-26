@@ -225,6 +225,7 @@ void Minimap::updateMinimap(GameMap* pMap, bool useVision)
                                 }
                                 else
                                 {
+#ifdef GRAPHICSUPPORT
                                     if (m_Items[item].unit.get() != nullptr)
                                     {
                                         auto & tweens = m_Items[item].unit->getTweens();
@@ -234,6 +235,7 @@ void Minimap::updateMinimap(GameMap* pMap, bool useVision)
                                             tween->start(*m_Items[item].unit);
                                         }
                                     }
+#endif
                                 }
                             }
                         }

@@ -1,11 +1,18 @@
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/Event.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
 
 namespace oxygine
 {
     qint32 EventDispatcher::addEventListener(eventType et, const EventCallback& cb)
     {
+#ifndef GRAPHICSUPPORT
+        if (TouchEvent::isTouchEvent(et))
+        {
+            return -1;
+        }
+#endif
         if (!oxygine::GameWindow::getWindow()->isWorker())
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "trying to add listener outside worker thread");

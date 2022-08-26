@@ -20,11 +20,11 @@ namespace oxygine
 
         qint32 getWidth() const
         {
-            return m_image.width();
+            return 0;
         }
         qint32 getHeight() const
         {
-            return m_image.height();
+            return 0;
         }
         quint32 getHandle() const
         {
@@ -37,24 +37,17 @@ namespace oxygine
 
         timeMS getCreationTime()
         {
-            return m_CreationTime;
+            return timeMS();
         }
         void setCreationTime(timeMS time)
         {
-            m_CreationTime = time;
         }
         void release();
         static quint32 getHighestTextureCount();
-        const QImage & getImage() const
-        {
-            return m_image;
-        }
     protected:
         friend class VideoDriver;
         friend class intrusive_ptr<Texture>;
         explicit Texture() = default;
     private:
-        QImage m_image;
-        timeMS m_CreationTime;
     };
 }
