@@ -247,7 +247,7 @@ Settings::Settings()
         new Value<bool>{"Resolution", "fullscreen", &m_fullscreen, false, false, true, true},
         new Value<bool>{"Resolution", "recordgames", &m_record, false, false, true},
         new Value<bool>{"Resolution", "SmallScreenDevice", &m_smallScreenDevice, smallScreenDevice, false, true},
-        new Value<bool>{"Resolution", "UseHighDpi", &m_useHighDpi, true, false, true},
+        new Value<bool>{"Resolution", "UseHighDpi", &m_useHighDpi, false, false, true},
 
         // general
         new Value<QString>{"General", "language", &m_language, "en", "", ""},

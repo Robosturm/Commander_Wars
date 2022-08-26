@@ -131,7 +131,14 @@ void GameAnimationPower::addMovingCoSprite(const QString & sprite, float scale, 
 QPoint GameAnimationPower::getCoSpriteSize(const QString & sprite) const
 {
     oxygine::ResAnim* pAnim = m_pCO->getResAnim(sprite);
-    return QPoint(pAnim->getWidth(), pAnim->getHeight());
+    if (pAnim != nullptr)
+    {
+        return QPoint(pAnim->getWidth(), pAnim->getHeight());
+    }
+    else
+    {
+        return QPoint(1, 1);
+    }
 }
 
 void GameAnimationPower::setDuration(qint32 timeMs)
@@ -141,30 +148,33 @@ void GameAnimationPower::setDuration(qint32 timeMs)
 
 void GameAnimationPower::createRotatingBackground(const QString & resAnim, const QColor & color)
 {
-    oxygine::ResAnim* pAnimMask = GameManager::getInstance()->getResAnim(resAnim);
+    oxygine::ResAnim* pAnimMask = GameManager::getInstance()->getResAnim(resAnim);    
     setSize(Settings::getWidth(), Settings::getHeight());
-    // first sprite for rotating
-    oxygine::spBox9Sprite firstSpriteMask = oxygine::spBox9Sprite::create();
-    firstSpriteMask->setResAnim(pAnimMask);
-    firstSpriteMask->setSize(Settings::getWidth(), Settings::getHeight());
-    firstSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    firstSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-    firstSpriteMask->setColor(color);
+    if (pAnimMask != nullptr)
+    {
+        // first sprite for rotating
+        oxygine::spBox9Sprite firstSpriteMask = oxygine::spBox9Sprite::create();
+        firstSpriteMask->setResAnim(pAnimMask);
+        firstSpriteMask->setSize(Settings::getWidth(), Settings::getHeight());
+        firstSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
+        firstSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
+        firstSpriteMask->setColor(color);
 
-    // second sprite for rotating
-    oxygine::spBox9Sprite secondSpriteMask = oxygine::spBox9Sprite::create();
-    secondSpriteMask->setResAnim(pAnimMask);
-    secondSpriteMask->setSize(Settings::getWidth(), Settings::getHeight());
-    secondSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    secondSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-    secondSpriteMask->setColor(color);
+        // second sprite for rotating
+        oxygine::spBox9Sprite secondSpriteMask = oxygine::spBox9Sprite::create();
+        secondSpriteMask->setResAnim(pAnimMask);
+        secondSpriteMask->setSize(Settings::getWidth(), Settings::getHeight());
+        secondSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
+        secondSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
+        secondSpriteMask->setColor(color);
 
-    // rotating sprite
-    spRotatingSprite rotSprite = spRotatingSprite::create();
-    rotSprite->setSize(Settings::getWidth(), Settings::getHeight());
-    rotSprite->setSprite(firstSpriteMask, secondSpriteMask);
-    rotSprite->setDirection(3);
-    addChild(rotSprite);
+        // rotating sprite
+        spRotatingSprite rotSprite = spRotatingSprite::create();
+        rotSprite->setSize(Settings::getWidth(), Settings::getHeight());
+        rotSprite->setSprite(firstSpriteMask, secondSpriteMask);
+        rotSprite->setDirection(3);
+        addChild(rotSprite);
+    }
 }
 
 void GameAnimationPower::createPowerDescription(CO* pCo, GameEnums::PowerMode powerMode, bool onTop)

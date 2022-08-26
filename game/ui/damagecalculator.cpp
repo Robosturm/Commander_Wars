@@ -107,17 +107,23 @@ void DamageCalculator::loadCoData(qint32 & x, qint32 & y, CosData & cosData,
             pAnim = pCOSpriteManager->getResAnim(id + "+info");
         }
         oxygine::spSprite pSprite = oxygine::spSprite::create();
-        pSprite->setResAnim(pAnim);
-        pSprite->setScale(pAnim->getWidth() / 32.0f);
-        pSprite->setSize(pAnim->getSize());
+        if (pAnim != nullptr)
+        {
+            pSprite->setResAnim(pAnim);
+            pSprite->setScale(pAnim->getWidth() / 32.0f);
+            pSprite->setSize(pAnim->getSize());
+        }
         return pSprite;
     };
     auto powerCreator = [this, pGameManager](QString id)
     {
         oxygine::spSprite pSprite = pGameManager->getIcon(&m_map, id);
         const oxygine::ResAnim* pAnim = pSprite->getResAnim();
-        pSprite->setScale(1.0f);
-        pSprite->setSize(pAnim->getSize());
+        if (pAnim != nullptr)
+        {
+            pSprite->setScale(1.0f);
+            pSprite->setSize(pAnim->getSize());
+        }
         return pSprite;
     };
     for (auto & coData : cosData)
@@ -203,9 +209,12 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
             pAnim = UnitSpriteManager::getInstance()->getResAnim(id);
         }
         oxygine::spSprite pSprite = oxygine::spSprite::create();
-        pSprite->setResAnim(pAnim);
-        pSprite->setScale(pAnim->getWidth() / 30.0f);
-        pSprite->setSize(pAnim->getSize());
+        if (pAnim != nullptr)
+        {
+            pSprite->setResAnim(pAnim);
+            pSprite->setScale(pAnim->getWidth() / 30.0f);
+            pSprite->setSize(pAnim->getSize());
+        }
         return pSprite;
     };
 

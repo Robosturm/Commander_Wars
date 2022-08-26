@@ -239,41 +239,43 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
 
 void GameAnimation::addBox(QString spriteID, float offsetX, float offsetY, qint32 width, qint32 heigth,  qint32 sleepAfterFinish, QColor color)
 {
-    oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
-    m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
-    pBox->setResAnim(pAnim);
-    pBox->setSize(width, heigth);
-    setSize(width, heigth);
-    if (sleepAfterFinish > 0)
+    if (pAnim != nullptr)
     {
-        oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(sleepAfterFinish / Settings::getAnimationSpeed())), 1);
-        m_lastCreatedTweenQueue->add(tween1);
-    }
-    pBox->addTween(m_lastCreatedTweenQueue);
-    if (color != Qt::white)
-    {
-        pBox->setColor(color);
-    }
-    addChild(pBox);
-    pBox->setPosition(offsetX, offsetY);
-    if (pBox->getScaledWidth() - offsetX > getWidth())
-    {
-        setWidth(pBox->getScaledWidth() - offsetX);
-    }
-    if (pBox->getScaledHeight() - offsetY > getHeight())
-    {
-        setHeight(pBox->getScaledHeight() - offsetY);
-    }
-    if(!m_finishQueued)
-    {
-        m_finishQueued = true;
-        m_lastCreatedTweenQueue->setDoneCallback([this](oxygine::Event *)->void
+        oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+        m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
+        pBox->setResAnim(pAnim);
+        pBox->setSize(width, heigth);
+        setSize(width, heigth);
+        if (sleepAfterFinish > 0)
         {
-            emitFinished();
-        });
-
+            oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(sleepAfterFinish / Settings::getAnimationSpeed())), 1);
+            m_lastCreatedTweenQueue->add(tween1);
+        }
+        pBox->addTween(m_lastCreatedTweenQueue);
+        if (color != Qt::white)
+        {
+            pBox->setColor(color);
+        }
+        addChild(pBox);
+        pBox->setPosition(offsetX, offsetY);
+        if (pBox->getScaledWidth() - offsetX > getWidth())
+        {
+            setWidth(pBox->getScaledWidth() - offsetX);
+        }
+        if (pBox->getScaledHeight() - offsetY > getHeight())
+        {
+            setHeight(pBox->getScaledHeight() - offsetY);
+        }
+        if(!m_finishQueued)
+        {
+            m_finishQueued = true;
+            m_lastCreatedTweenQueue->setDoneCallback([this](oxygine::Event *)->void
+            {
+                emitFinished();
+            });
+        }
     }
 }
 
@@ -317,52 +319,51 @@ void GameAnimation::loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, 
 
 void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, qint32 loops, QEasingCurve::Type easeType)
 {
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
-    m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
-    qint32 totalFrames = 0;
     if (pAnim != nullptr)
     {
-        totalFrames = pAnim->getTotalFrames();
-    }
-    oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(totalFrames * m_frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())), easeType);
-    m_lastCreatedTweenQueue->add(tween);
-    if (sleepAfterFinish > 0)
-    {
-        oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(sleepAfterFinish / Settings::getAnimationSpeed())), 1);
-        m_lastCreatedTweenQueue->add(tween1);
-    }
-    if (pAnim != nullptr)
-    {
-        setSize(pAnim->getSize());
-    }
-    pSprite->setScaleX(scaleX);
-    pSprite->setScaleY(scaleY);
-    pSprite->setSize(pAnim->getSize());
-    pSprite->addTween(m_lastCreatedTweenQueue);
-    if (color != Qt::white)
-    {
-        pSprite->setColor(color);
-    }
-    addChild(pSprite);
-    pSprite->setPosition(offsetX, offsetY);
-
-    if (pSprite->getScaledWidth() - offsetX > getWidth())
-    {
-        setWidth(pSprite->getScaledWidth() - offsetX);
-    }
-    if (pSprite->getScaledHeight() - offsetY > getHeight())
-    {
-        setHeight(pSprite->getScaledHeight() - offsetY);
-    }
-
-    if(!m_finishQueued)
-    {
-        m_finishQueued = true;
-        m_lastCreatedTweenQueue->setDoneCallback([this](oxygine::Event *)->void
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
+        qint32 totalFrames = 0;
+        if (pAnim != nullptr)
         {
-            emitFinished();
-        });
+            totalFrames = pAnim->getTotalFrames();
+        }
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(totalFrames * m_frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())), easeType);
+        m_lastCreatedTweenQueue->add(tween);
+        if (sleepAfterFinish > 0)
+        {
+            oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(sleepAfterFinish / Settings::getAnimationSpeed())), 1);
+            m_lastCreatedTweenQueue->add(tween1);
+        }
+        setSize(pAnim->getSize());
+        pSprite->setScaleX(scaleX);
+        pSprite->setScaleY(scaleY);
+        pSprite->setSize(pAnim->getSize());
+        pSprite->addTween(m_lastCreatedTweenQueue);
+        if (color != Qt::white)
+        {
+            pSprite->setColor(color);
+        }
+        addChild(pSprite);
+        pSprite->setPosition(offsetX, offsetY);
 
+        if (pSprite->getScaledWidth() - offsetX > getWidth())
+        {
+            setWidth(pSprite->getScaledWidth() - offsetX);
+        }
+        if (pSprite->getScaledHeight() - offsetY > getHeight())
+        {
+            setHeight(pSprite->getScaledHeight() - offsetY);
+        }
+
+        if(!m_finishQueued)
+        {
+            m_finishQueued = true;
+            m_lastCreatedTweenQueue->setDoneCallback([this](oxygine::Event *)->void
+            {
+                emitFinished();
+            });
+        }
     }
 }
 

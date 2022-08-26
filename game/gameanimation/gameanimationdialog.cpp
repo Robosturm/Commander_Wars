@@ -287,7 +287,10 @@ void GameAnimationDialog::setPlayerCO(qint32 player, quint8 co, GameEnums::COMoo
             {
                 QString resAnim = pCo->getCoID().toLower() + "+face";
                 oxygine::ResAnim* pAnim = pCo->getResAnim(resAnim);
-                m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+                if (pAnim != nullptr)
+                {
+                    m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+                }
             }
             else
             {

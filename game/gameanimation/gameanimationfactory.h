@@ -211,4 +211,6 @@ private:
     static QVector<spGameAnimation> m_Animations;
 };
 
+Q_DECLARE_INTERFACE(GameAnimationFactory, "GameAnimationFactory");
+
 #endif // GameAnimationFactory_H

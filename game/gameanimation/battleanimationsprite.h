@@ -604,4 +604,6 @@ private:
     GameMap* m_pMap{nullptr};
 };
 
+Q_DECLARE_INTERFACE(BattleAnimationSprite, "BattleAnimationSprite");
+
 #endif // BATTLEANIMATIONSPRITE_H

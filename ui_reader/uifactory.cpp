@@ -952,9 +952,12 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
                     pAnim = pCOSpriteManager->getResAnim(id + "+info");
                 }
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
-                pSprite->setResAnim(pAnim);
-                pSprite->setScale(pAnim->getWidth() / 32.0f);
-                pSprite->setSize(pAnim->getSize());
+                if (pAnim != nullptr)
+                {
+                    pSprite->setResAnim(pAnim);
+                    pSprite->setScale(pAnim->getWidth() / 32.0f);
+                    pSprite->setSize(pAnim->getSize());
+                }
                 return pSprite;
             };
         }
