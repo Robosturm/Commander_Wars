@@ -1268,8 +1268,12 @@
         <image file="waterplane/waterplane+ti+mask.png" />
         <image file="waterplane/waterplane+yc+fire+mask.png" cols = "2" />
         <image file="waterplane/waterplane+yc+mask.png" cols = "2" />
+        <image file="waterplane/waterplane+bd+fire+mask.png" cols = "2" />
+        <image file="waterplane/waterplane+bd+mask.png" cols = "2" />
         <image file="waterplane/waterplane+ma+fire+mask.png" cols = "4" />
         <image file="waterplane/waterplane+ma+mask.png" cols = "4" />
+        <image file="waterplane/waterplane+dm+fire+mask.png" />
+        <image file="waterplane/waterplane+dm+mask.png" />
         <!-- zeppelin -->
         <image file="zeppelin/zeppelin+mask.png" />        
         <!-- repair_tank -->

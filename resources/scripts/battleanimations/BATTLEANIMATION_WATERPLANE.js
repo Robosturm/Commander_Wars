@@ -1,11 +1,11 @@
 var Constructor = function()
 {
     this.armyData = [["ac", "ac"],
-                     ["bd", ""],
+                     ["bd", "bd"],
                      ["bh", "bh"],
                      ["bg", "bg"],
                      ["bm", "bm"],
-                     ["dm", ""],
+                     ["dm", "dm"],
                      ["ge", "ge"],
                      ["gs", "gs"],
                      ["ma", "ma"],
@@ -25,7 +25,8 @@ var Constructor = function()
                           ["ma", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
                           ["pf", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
                           ["ti", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
-                          ["",   [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],];
+                          ["dm", [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],
+                          ["bd",   [Qt.point(-50, 20),  Qt.point(-84, 30), Qt.point(-50, 30)]],];
 
     this.getMaxUnitCount = function()
     {
@@ -35,6 +36,10 @@ var Constructor = function()
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_WATERPLANE.loadSprite(sprite, unit, defender, weapon, "");
+    };
+    this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_WATERPLANE.loadSprite(sprite, unit, defender, weapon, "+fire");
     };
     this.loadSprite = function(sprite, unit, defender, weapon, ending)
     {
