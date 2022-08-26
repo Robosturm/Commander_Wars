@@ -1106,8 +1106,7 @@ void PlayerSelection::playerColorChanged(QColor displayColor, qint32 playerIdx, 
 }
 
 void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
-{
-    
+{    
     if (!m_saveGame)
     {
         CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(1);
@@ -1230,8 +1229,7 @@ void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
 void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
 {    
     if (!m_saveGame)
-    {
-        
+    {        
         CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(0);
         if (coid == "" ||
             coid == CO::CO_RANDOM ||
@@ -1958,22 +1956,28 @@ void PlayerSelection::recievedCOData(quint64, QDataStream& stream)
     stream >> playerIdx;
     stream >> coid;
     QStringList perks = Filesupport::readVectorList<QString, QList>(stream);
-    m_pMap->getPlayer(playerIdx)->setCO(coid, 0);
-    CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(0);
-    if (pCO != nullptr)
+    if (!m_saveGame)
     {
-        pCO->setPerkList(perks);
-        pCO->readCoStyleFromStream(stream);
+        m_pMap->getPlayer(playerIdx)->setCO(coid, 0);
+        CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(0);
+        if (pCO != nullptr)
+        {
+            pCO->setPerkList(perks);
+            pCO->readCoStyleFromStream(stream);
+        }
     }
     updateCO1Sprite(coid, playerIdx);
     stream >> coid;
     perks = Filesupport::readVectorList<QString, QList>(stream);
-    m_pMap->getPlayer(playerIdx)->setCO(coid, 1);
-    pCO = m_pMap->getPlayer(playerIdx)->getCO(1);
-    if (pCO != nullptr)
+    if (!m_saveGame)
     {
-        pCO->setPerkList(perks);
-        pCO->readCoStyleFromStream(stream);
+        m_pMap->getPlayer(playerIdx)->setCO(coid, 1);
+        CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(1);
+        if (pCO != nullptr)
+        {
+            pCO->setPerkList(perks);
+            pCO->readCoStyleFromStream(stream);
+        }
     }
     updateCO2Sprite(coid, playerIdx);
 }

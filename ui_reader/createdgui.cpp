@@ -69,7 +69,7 @@ void CreatedGui::setObjectEnabled(const QString id, bool value)
 void CreatedGui::showFileDialog(const QStringList & wildcards, const QString & startFolder, const QString & jsObject, const QString & jsCallback, QString startFile, bool preview, QString acceptButtonName)
 {
     spFileDialog fileDialog = spFileDialog::create(startFolder, wildcards, startFile, preview, acceptButtonName);
-    oxygine::Stage::getStage()->addChild(fileDialog);
+    addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, [this, jsObject, jsCallback](QString filename)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
@@ -82,7 +82,7 @@ void CreatedGui::showFileDialog(const QStringList & wildcards, const QString & s
 void CreatedGui::showFolderDialog(const QString & startFolder, const QString & jsObject, const QString & jsCallback)
 {
     spFolderDialog folderDialog = spFolderDialog::create(startFolder);
-    oxygine::Stage::getStage()->addChild(folderDialog);
+    addChild(folderDialog);
     connect(folderDialog.get(),  &FolderDialog::sigFolderSelected, this, [this, jsObject, jsCallback](QString foldername)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
@@ -95,7 +95,7 @@ void CreatedGui::showFolderDialog(const QString & startFolder, const QString & j
 void CreatedGui::showTextInputDialog(const QString & text, bool showCancel, const QString & startInput, const QString & jsObject, const QString & jsCallback)
 {
     spDialogTextInput pDialogTextInput = spDialogTextInput::create(text, showCancel, startInput);
-    oxygine::Stage::getStage()->addChild(pDialogTextInput);
+    addChild(pDialogTextInput);
     connect(pDialogTextInput.get(),  &DialogTextInput::sigTextChanged, this, [this, jsObject, jsCallback](QString foldername)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();

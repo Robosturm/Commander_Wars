@@ -366,7 +366,7 @@ void GameMenue::showDisconnectReason(quint64 socketID, const QJsonObject & objDa
     };
     NetworkCommands::DisconnectReason type = static_cast<NetworkCommands::DisconnectReason>(objData.value(JsonKeys::JSONKEY_DISCONNECTREASON).toInt());
     spDialogMessageBox pDialog = spDialogMessageBox::create(reasons[type]);
-    oxygine::Stage::getStage()->addChild(pDialog);
+    addChild(pDialog);
     emit m_pNetworkInterface->sigDisconnectClient(0);
 }
 

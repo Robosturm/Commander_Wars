@@ -2410,6 +2410,7 @@ void GameMap::playMusic()
 
 void GameMap::initPlayersAndSelectCOs()
 {
+    CONSOLE_PRINT("GameMap::initPlayersAndSelectCOs", Console::eDEBUG);
     bool singleCO = m_Rules->getSingleRandomCO();
     QStringList bannList = m_Rules->getCOBannlist();
     for (qint32 i = 0; i < getPlayerCount(); i++)

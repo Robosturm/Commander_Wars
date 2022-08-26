@@ -425,7 +425,7 @@ void Multiplayermenu::showDisconnectReason(quint64 socketID, const QJsonObject &
     };
     NetworkCommands::DisconnectReason type = static_cast<NetworkCommands::DisconnectReason>(objData.value(JsonKeys::JSONKEY_DISCONNECTREASON).toInt());
     spDialogMessageBox pDialog = spDialogMessageBox::create(reasons[type]);
-    oxygine::Stage::getStage()->addChild(pDialog);
+    addChild(pDialog);
     if (m_pDialogConnecting.get() != nullptr)
     {
         m_pDialogConnecting->detach();
@@ -1194,8 +1194,9 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
     spGameMap pMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
-    stream >> m_saveGame;
+    stream >> m_saveGame;    
     CONSOLE_PRINT("Is save game" + QString::number(m_saveGame), Console::eDEBUG);
+    m_pPlayerSelection->setSaveGame(m_saveGame);
     m_pMapSelectionView->setCurrentMap(pMap);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::SERVERMAPIDENTIFIER);
     m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
