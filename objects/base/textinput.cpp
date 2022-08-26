@@ -6,7 +6,14 @@
 TextInput::TextInput()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    emit pApp->sigCreateLineEdit();
+    if (pApp->isMainThread())
+    {
+        pApp->createLineEdit();
+    }
+    else
+    {
+        emit pApp->sigCreateLineEdit();
+    }
     m_lineEdit = pApp->getLastCreateLineEdit();    
     if (m_lineEdit != nullptr)
     {

@@ -87,7 +87,7 @@ Mainapp::Mainapp()
 
 void Mainapp::createLineEdit()
 {
-#ifdef GRAPHICSUPPORT
+#ifdef GRAPHICSUPPORT    
     m_pLineEdit = new QLineEdit();
 #endif
 }
