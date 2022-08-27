@@ -222,7 +222,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A young enigmatic girl who serves Pink Frontier. Deceptively dangerous.");
+        return qsTr("Mina is very protective of those around her, and willing to fight to keep them safe. Don't let her cute appearance deceive you.");
     };
     this.getHits = function(co)
     {
@@ -260,23 +260,23 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Enemy is in range. Activating counter-measures..."),
-                qsTr("Please stop fighting! I don't want to do this!"),
-                qsTr("Stop! ... ... Ignore that outburst, activate the weapons."),
-                qsTr("The target will be eliminated shortly."),
-                qsTr("A battle with me is a greater honor than you deserve!"),
-                qsTr("Your defeat is now certain."),
-                qsTr("I'm sorry...")];
+                qsTr("You're done hurting my troops!"),
+                qsTr("You shouldn't have ticked me off."),
+                qsTr("Let me show you something I learned fighting Black Hole."),
+                qsTr("You want to storm my defenses? I am the storm!"),
+                qsTr("I once let someone I loved get hurt. I'm not making that mistake again!"),
+                qsTr("Let me show you why they call it girl power.")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("No... What... ... ... The battle is over."),
-                qsTr("What have I done?"),
-                qsTr("The enemy has been routed. It is done.")];
+        return [qsTr("You'll never hurt my friends again."),
+                qsTr("Well done girls. Let's go home."),
+                qsTr("They paid the price for their aggression.")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("I hate losing like this."),
-                qsTr("This result is wrong.")];
+                qsTr("No, I need to be stronger than this.")];
     };
     this.getName = function()
     {
