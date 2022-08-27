@@ -797,6 +797,8 @@ void GameMenue::continueAfterSyncGame()
         multiplayerSyncData.m_connectingSockets.size() <= 0 &&
         multiplayerSyncData.m_waitingForSyncFinished)
     {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->getAudioThread()->playSound("connect.wav");
         multiplayerSyncData.m_waitingForSyncFinished = false;
         if (m_pNetworkInterface->getIsServer())
         {
@@ -859,6 +861,8 @@ void GameMenue::disconnected(quint64 socketID)
         }
         else
         {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->getAudioThread()->playSound("disconnect.wav");
             if (!m_pNetworkInterface->getIsServer())
             {
                 for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
