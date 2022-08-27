@@ -737,6 +737,7 @@ bool AudioThread::stopSoundAtIndex(SoundData* soundData, qint32 index)
 
 void AudioThread::stopOldestSound(SoundData* soundData)
 {
+    CONSOLE_PRINT("Stopping oldest sound sound of " + soundData->cacheUrl.toString(), Console::eDEBUG);
     bool stopped = false;
     for (qint32 i = soundData->nextSoundToUse; i < SoundData::MAX_SAME_SOUNDS; ++i)
     {
