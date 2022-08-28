@@ -290,22 +290,22 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Amazing what a little gust can do..."),
-                qsTr("You cannot hope to face the power of the wind."),
+                qsTr("Huh? Oh, wind's about to change."),
                 qsTr("The only surpises I like are the ones that help me win."),
                 qsTr("The winds will help me blow through this battle."),
-                qsTr("I can stand tall with the flow of wind, I cannot say the same for you."),
-                qsTr("I am certain that my determination will grant me the favor of the winds.")];
+                qsTr("Wind is coming in from the southeast. And the north. And the west."),
+                qsTr("You're about to see why my troops don't wear skirts.")];
     };
     this.getVictorySentences = function(co)
     {
         return [qsTr("...Huh? Oh, right. I won. Woohoo?"),
-                qsTr("This win was expected. Losing would have been a surprise, and I hate both."),
+                qsTr("I tore through you like a tornado."),
                 qsTr("You could say... you were swept under the wind.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("The wind blew in the wrong direction."),
-                qsTr("Luckily for you it was not windy today.")];
+        return [qsTr("You caught me by surprise. I hate that."),
+                qsTr("The winds weren't with me today.")];
     };
     this.getName = function()
     {
