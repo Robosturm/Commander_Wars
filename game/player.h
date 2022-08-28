@@ -168,6 +168,11 @@ public slots:
      */
     void setPlayerArmy(const QString &value);
     /**
+     * @brief getPlayerArmy
+     * @return
+     */
+    QString getPlayerArmy() const;
+    /**
      * @brief getPlayerArmySelected
      * @return
      */

@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>0</x>
+        <y>0</y>
+        <width>settings.getWidth()</width>
+        <height>settings.getHeight()</height>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>settings.getWidth() - 60</width>
+                <height>50</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Edit player data")</text>
+                <font>"main48"</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Start funds:")</text>
+                <font>"main24"</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Select how much funds this player starts the game with.")</tooltip>
+                <startValue>currentMenu.getUiParent().getMap().getPlayer(PlayerSelection.readCurrentPlayer()).getFunds()</startValue>
+                <infinite>-1</infinite>
+                <spinSpeed>500</spinSpeed>
+                <min>0</min>
+                <max>100000</max>
+                <onEvent>currentMenu.getUiParent().playerStartFundsChanged(input, PlayerSelection.readCurrentPlayer())</onEvent>
+                <enabled>PlayerSelection.getIsServerOrSavegameOrCampaignEnabled(currentMenu.getUiParent())</enabled>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Income modifier:")</text>
+                <font>"main24"</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.")</tooltip>
+                <startValue>currentMenu.getUiParent().getMap().getPlayer(PlayerSelection.readCurrentPlayer()).getFundsModifier()</startValue>
+                <mode>"Float"</mode>
+                <infinite>-1</infinite>
+                <spinSpeed>0.1</spinSpeed>
+                <min>0</min>
+                <max>20</max>
+                <onEvent>currentMenu.getUiParent().playerIncomeChanged(input, PlayerSelection.readCurrentPlayer())</onEvent>
+                <enabled>PlayerSelection.getIsServerOrSavegameOrCampaignEnabled(currentMenu.getUiParent())</enabled>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Player army:")</text>
+                <font>"main24"</font>
+                <enabled>PlayerSelection.getArmySelectable()</enabled>
+            </Label>
+            <DropDownMenuSprite>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>105</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the army for the player. CO means the army of the first CO is selected.")</tooltip>
+                <startValue>PlayerSelection.getSelectedArmy()</startValue>
+                <spriteType>"army"</spriteType>
+                <spriteSize>30</spriteSize>
+                <items>currentMenu.getUiParent().getSelectableArmies()</items>
+                <onEvent>currentMenu.getUiParent().selectedArmyChanged(PlayerSelection.readCurrentPlayer(), input2)</onEvent>
+                <enabled>PlayerSelection.getIsArmyOrPerkSelectionEnabled(currentMenu.getUiParent())</enabled>
+            </DropDownMenuSprite>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","CO Perks:")</text>
+                <font>"main24"</font>
+            </Label>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Edit")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects which units this players can build.")</tooltip>
+                <onEvent>currentMenu.getUiParent().showSelectCOPerks(PlayerSelection.readCurrentPlayer());</onEvent>
+                <enabled>PlayerSelection.getIsArmyOrPerkSelectionEnabled(currentMenu.getUiParent())</enabled>
+            </Button>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Build List:")</text>
+                <font>"main24"</font>
+            </Label>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Edit")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects which units this players can build.")</tooltip>
+                <onEvent>currentMenu.getUiParent().slotShowPlayerBuildList(PlayerSelection.readCurrentPlayer());</onEvent>
+                <enabled>PlayerSelection.getIsServerOrSavegameOrCampaignEnabled(currentMenu.getUiParent())</enabled>
+            </Button>
+            <Button>
+                <x>settings.getWidth() / 2 - 75</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Ok")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Closes this dialog.")</tooltip>
+                <onEvent>currentMenu.exit();</onEvent>
+            </Button>
+        </childs>
+    </Panel>
+</ui>

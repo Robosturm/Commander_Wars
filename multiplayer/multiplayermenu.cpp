@@ -1643,7 +1643,9 @@ bool Multiplayermenu::getGameReady()
                 break;
             }
         }
-        if (aiType == GameEnums::AiTypes_ProxyAi)
+        if (aiType == GameEnums::AiTypes_ProxyAi ||
+            (pInput != nullptr &&
+             pInput->getAiType() == GameEnums::AiTypes_ProxyAi))
         {
             hasRemotePlayer = true;
         }

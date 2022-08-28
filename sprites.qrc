@@ -4820,5 +4820,9 @@
         <file>resources/images/battleanimations/waterplane/waterplane+bd+mask.png</file>
         <file>resources/images/battleanimations/waterplane/waterplane+dm+fire+mask.png</file>
         <file>resources/images/battleanimations/waterplane/waterplane+dm+mask.png</file>
+        <file>resources/ui/game/playerSelection.js</file>
+        <file>resources/ui/game/playerSelection.xml</file>
+        <file>resources/ui/game/allAdvancedPlayerChanges.xml</file>
+        <file>resources/ui/game/advancedPlayerChanges.xml</file>
     </qresource>
 </RCC>

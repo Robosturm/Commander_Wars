@@ -484,6 +484,11 @@ void Player::setPlayerArmy(const QString &value)
     m_playerArmy = value;
 }
 
+QString Player::getPlayerArmy() const
+{
+    return m_playerArmy;
+}
+
 bool Player::getPlayerArmySelected() const
 {
     return m_playerArmySelected;

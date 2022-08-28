@@ -47,133 +47,133 @@ private:
      * Nodename: Label
      * supported attributes are:
      * mandatory: x, y, width, heigth, text, font,
-     * optional: tooltip, onUpdate, id, enabled, fontColor
+     * optional: tooltip, onUpdate, id, enabled, fontColor, visible
      */
     bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: DropDownMenu
      * supported attributes are:
      * mandatory: x, y, width, items
-     * optional: tooltip, onEvent, id, enabled, startValue
+     * optional: tooltip, onEvent, id, enabled, startValue, visible
      */
     bool createDropDownMenu(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: DropDownMenuColor
      * supported attributes are:
      * mandatory: x, y, width, items
-     * optional: tooltip, onEvent, id, enabled, startValue
+     * optional: tooltip, onEvent, id, enabled, startValue, visible, showUnitPreview
      */
     bool createDropDownMenuColor(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: DropDownMenuSprite
      * supported attributes are:
      * mandatory: x, y, width, items, spriteType, spriteSize
-     * optional: tooltip, onEvent, id, enabled, startValue
+     * optional: tooltip, onEvent, id, enabled, startValue, visible
      */
     bool createDropDownMenuSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: TextField
      * supported attributes are:
      * mandatory: x, y, text, font
-     * optional: fontColor, id
+     * optional: fontColor, id, visible
      */
     bool createTextfield(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Checkbox
       * supported attributes are:
       * mandatory: x, y, onEvent, startValue
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible
       */
     bool createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Spinbox
       * supported attributes are:
       * mandatory: x, y, width, min, max, infinite, onEvent, startValue
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible, spinSpeed
       */
     bool createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Slider
       * supported attributes are:
       * mandatory: x, y, width, min, max, onEvent, startValue
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible
       */
     bool createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Textbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible
       */
     bool createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Passwordbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible
       */
     bool createPasswordbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: TimeSpinbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible
       */
     bool createTimeSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Panel
       * supported attributes are:
       * mandatory: x, y, width, height, childs
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible
       */
     bool createPanel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Box
       * supported attributes are:
       * mandatory: x, y, width, height, sprite, childs
-     * optional: id
+      * optional: id, visible
      */
     bool createBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Icon
       * supported attributes are:
       * mandatory: x, y, size, sprite
-      * optional: id, player
+      * optional: id, player, visible
       */
     bool createIcon(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: Button
      * supported attributes are:
      * mandatory: x, y, text, onEvent
-     * optional: tooltip, enabled, id
+     * optional: tooltip, enabled, id, visible
      */
     bool createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: SelectKey
      * supported attributes are:
      * mandatory: x, y, startValue, onEvent
-     * optional: tooltip, enabled, id
+     * optional: tooltip, enabled, id, visible
      */
     bool createSelectKey(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: IconButton
      * supported attributes are:
      * mandatory: x, y, sprite, onEvent
-     * optional: enabled, id
+     * optional: enabled, id, visible
      */
     bool createIconButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: MoveInButton
      * supported attributes are:
      * mandatory: moveInSize
-     * optional: enabled, direction, scale, useY, startOffset
+     * optional: enabled, direction, scale, useY, startOffset, visible
      */
     bool createMoveInButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: Sprite
      * supported attributes are:
      * mandatory: x, y, sprite, scale
-     * optional: id
+     * optional: id, visible, onEvent, width, height
      */
     bool createSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**

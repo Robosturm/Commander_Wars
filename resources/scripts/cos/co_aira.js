@@ -20,10 +20,15 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
+
+        var whiteAnimation = GameAnimationFactory.createAnimation(map, 0, 0);
+        whiteAnimation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
+        whiteAnimation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+        powerNameAnimation.queueAnimation(whiteAnimation);
+        map.getGameRules().changeWeather("WEATHER_1SUN", map.getPlayerCount() * 1);
 
         var player = co.getOwner();
         var counter = 0;
@@ -58,9 +63,9 @@ var Constructor = function()
                     if (animations.length < 5)
                     {
                         animation.addSprite("power14", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        if (powerNameAnimation !== null)
+                        if (whiteAnimation !== null)
                         {
-                            powerNameAnimation.queueAnimation(animation);
+                            whiteAnimation.queueAnimation(animation);
                         }
                         animations.push(animation);
                     }
@@ -87,7 +92,15 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_AIRA.airaDamage(co, 3, powerNameAnimation, map);
+        var animation = GameAnimationFactory.createAnimation(map, 0, 0);
+        animation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
+        animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+        powerNameAnimation.queueAnimation(animation);
+        map.getGameRules().changeWeather("WEATHER_1SUN", map.getPlayerCount() * 1);
+
+        CO_AIRA.airaDamage(co, 3, animation, map);
+
+
     };
 
     this.airaDamage = function(co, value, animation2, map)
@@ -260,7 +273,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
         {
-            return qsTr("Enemies expend 6 times more fuel when they move for their next turn.");
+            return qsTr("Enemies expend 6 times more fuel when they move for their next turn and the weather changes to sun.");
         };
     this.getPowerName = function(co)
     {
@@ -268,7 +281,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
         {
-            return qsTr("The cheapest enemy ground and sea units suffer 3 HP of damage while all enemy air units suffer 3 HP of damage. Lastly, all enemy units have half of their movement range.");
+            return qsTr("The cheapest enemy ground and sea units suffer 3 HP of damage while all enemy air units suffer 3 HP of damage. All enemy units have half of their movement range and the weather changes to sun.");
         };
     this.getSuperPowerName = function(co)
     {

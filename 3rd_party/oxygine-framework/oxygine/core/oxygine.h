@@ -24,7 +24,7 @@ namespace oxygine
     {
         if (!ptr)
         {
-            return 0;
+            return nullptr;
         }
 #ifdef OXYGINE_DEBUG_SAFECAST
         dest cast = dynamic_cast<dest>(ptr);

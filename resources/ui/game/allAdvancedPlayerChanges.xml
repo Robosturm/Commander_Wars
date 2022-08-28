@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>0</x>
+        <y>0</y>
+        <width>settings.getWidth()</width>
+        <height>settings.getHeight()</height>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>settings.getWidth() - 60</width>
+                <height>50</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Edit all player data")</text>
+                <font>"main48"</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Start funds:")</text>
+                <font>"main24"</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Select how much funds all player start the game with.")</tooltip>
+                <startValue>0</startValue>
+                <infinite>-1</infinite>
+                <spinSpeed>500</spinSpeed>
+                <min>0</min>
+                <max>100000</max>
+                <onEvent>currentMenu.getUiParent().allPlayerStartFundsChanged(input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Income modifier:")</text>
+                <font>"main24"</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.")</tooltip>
+                <startValue>1</startValue>
+                <mode>"Float"</mode>
+                <infinite>-1</infinite>
+                <spinSpeed>0.1</spinSpeed>
+                <min>0</min>
+                <max>20</max>
+                <onEvent>currentMenu.getUiParent().allPlayerIncomeChanged(input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Preset teams:")</text>
+                <font>"main24"</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Automatically changes the teams of all players so the teams are equally distributed, according to the team count. Teams are assigned in a way that the first turn advantage is the least relevant.")</tooltip>
+                <startValue>currentMenu.getUiParent().getMap().getPlayerCount()</startValue>
+                <infinite>-1</infinite>
+                <spinSpeed>1</spinSpeed>
+                <min>2</min>
+                <max>currentMenu.getUiParent().getMap().getPlayerCount()</max>
+                <onEvent>currentMenu.getUiParent().changeAllTeams(input)</onEvent>
+                <enabled>!(currentMenu.getUiParent().getIsCampaign() || currentMenu.getUiParent().hasNetworkInterface())</enabled>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","All buildlists:")</text>
+                <font>"main24"</font>
+            </Label>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Edit")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects which units all players can build.")</tooltip>
+                <onEvent>currentMenu.getUiParent().slotShowAllBuildList();</onEvent>
+            </Button>
+            <Button>
+                <x>settings.getWidth() / 2 - 75</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Ok")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Closes this dialog.")</tooltip>
+                <onEvent>currentMenu.exit();</onEvent>
+            </Button>
+        </childs>
+    </Panel>
+</ui>

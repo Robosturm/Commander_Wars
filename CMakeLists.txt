@@ -408,6 +408,7 @@ set(${PROJECT_NAME}_SRCS
     objects/base/tableview.cpp objects/base/tableview.h
     objects/base/closeablepopup.cpp objects/base/closeablepopup.h
     objects/base/moveinbutton.cpp objects/base/moveinbutton.h
+    objects/base/spriteobject.cpp objects/base/spriteobject.h
     # objects dialogs
     objects/dialogs/colorselectiondialog.cpp objects/dialogs/colorselectiondialog.h
     objects/dialogs/dialogconnecting.cpp objects/dialogs/dialogconnecting.h
