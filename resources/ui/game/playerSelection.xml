@@ -92,14 +92,16 @@
                 <text>QT_TRANSLATE_NOOP("GAME","Advanced")</text>
                 <font>"main24"</font>
             </Label>
-            <Label>
-                <x>lastX + lastWidth + 10</x>
-                <y>lastY</y>
-                <width>80</width>
-                <height>24</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Ready")</text>
-                <font>"main24"</font>
-            </Label>
+            <if condition="currentMenu.hasNetworkInterface()">
+                <Label>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>80</width>
+                    <height>24</height>
+                    <text>QT_TRANSLATE_NOOP("GAME","Ready")</text>
+                    <font>"main24"</font>
+                </Label>
+            </if>
             <loop count="currentMenu.getMap().getPlayerCount()">
                 <Sprite>
                     <Id>"CO1_" + loopIdx</Id>
