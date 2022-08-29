@@ -412,6 +412,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
 
 void Multiplayermenu::showDisconnectReason(quint64 socketID, const QJsonObject & objData)
 {
+    CONSOLE_PRINT("Showing disconnect reason and exiting menu", Console::eDEBUG);
     QStringList reasons =
     {
         tr("Connection failed. Reason: Invalid username password."),
@@ -705,7 +706,7 @@ void Multiplayermenu::startRejoinedGame(qint64 syncCounter)
 {
     // start game
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-    CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Map Selection Menue and rejoining game", Console::eDEBUG);
     auto window = spGameMenue::create(pMap, true, m_pNetworkInterface, true);
     window->getActionPerformer().setSyncCounter(syncCounter);
     oxygine::Stage::getStage()->addChild(window);
@@ -1232,11 +1233,13 @@ void Multiplayermenu::sendSlaveReady()
 
 void Multiplayermenu::slotCancelHostConnection()
 {
+    CONSOLE_PRINT("Canceled host connection", Console::eDEBUG);
     buttonBack();
 }
 
 void Multiplayermenu::slotHostGameLaunched()
 {
+    m_pDialogConnecting = nullptr;
     // we're hosting a game so we get the same rights as a local host
     m_pNetworkInterface->setIsServer(true);
     createChat();
@@ -1338,7 +1341,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     pMap->updateSprites();
     // start game
     m_pNetworkInterface->setIsServer(false);
-    CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Map Selection Menue and init client game", Console::eDEBUG);
     auto window = spGameMenue::create(pMap, m_saveGame, m_pNetworkInterface, false);
     oxygine::Stage::getStage()->addChild(window);
     // send game started
@@ -1457,7 +1460,7 @@ void Multiplayermenu::showPlayerSelection()
 
 void Multiplayermenu::exitMenu()
 {
-    CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Map Selection Menue and going back to main menu", Console::eDEBUG);
     spMainwindow window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
@@ -1490,8 +1493,8 @@ void Multiplayermenu::buttonBack()
         m_MapSelectionStep == MapSelectionStep::selectMap ||
         !m_local)
     {
+        CONSOLE_PRINT("Leaving Map Selection Menue button back pressed", Console::eDEBUG);
         disconnectNetwork();
-        CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
         oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
         oxygine::Actor::detach();
     }
@@ -1800,7 +1803,7 @@ void Multiplayermenu::countdown()
             }
             pMap->updateSprites(-1, -1, false, true);
             // start game
-            CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+            CONSOLE_PRINT("Leaving Map Selection Menue after countdown", Console::eDEBUG);
             auto window = spGameMenue::create(pMap, m_saveGame, m_pNetworkInterface, false);
             oxygine::Stage::getStage()->addChild(window);
             QThread::msleep(200);

@@ -10,10 +10,16 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
 {
     Sha256Hash myHash;
     QStringList fullList;
+
+    QString userPath = Settings::getUserPath();
+    if (!userPath.isEmpty())
+    {
+        userPath += "/";
+    }
     for (const auto & folder : qAsConst(folders))
     {
         fullList.append(oxygine::Resource::RCC_PREFIX_PATH + folder);
-        fullList.append(Settings::getUserPath() + folder);
+        fullList.append(userPath + folder);
     }
     for (const auto & folder : qAsConst(fullList))
     {
@@ -49,8 +55,8 @@ void Filesupport::addHash(Sha256Hash & hash, const QString & folder, const QStri
 QByteArray Filesupport::getRuntimeHash(const QStringList & mods)
 {
     QStringList folders = mods;
-    folders.append("/resources/scripts");
-    folders.append("/resources/aidata");
+    folders.append("resources/scripts");
+    folders.append("resources/aidata");
     QStringList filter = {"*.js", "*.csv"};
     return getHash(filter, folders);
 }

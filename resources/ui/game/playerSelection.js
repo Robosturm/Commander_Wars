@@ -31,6 +31,7 @@ var PlayerSelection =
         var playerSelection = currentMenu.getUiParent();
         return !playerSelection.getIsServerNetworkInterface() ||
                 playerSelection.getSaveGame() ||
+                playerSelection.getIsObserverNetworkInterface() ||
                 (playerSelection.getPlayerAiType(playerIdx) > GameEnums.AiTypes_Human && !playerSelection.getIsArmyCustomizationAllowed());
 
     },
@@ -38,27 +39,31 @@ var PlayerSelection =
     {
         return !((!menu.getIsServerNetworkInterface() && menu.hasNetworkInterface()) ||
                  menu.getSaveGame() ||
+                 menu.getIsObserverNetworkInterface() ||
                  menu.getIsCampaign());
     },
     getIsServerOrSavegameOrCampaignAiEnabled : function(menu)
     {
         return !((!menu.getIsServerNetworkInterface() && menu.hasNetworkInterface()) ||
-                 menu.getSaveGame() ||
-                 (menu.getMap().getPlayer(loopIdx).getControlType() > GameEnums.AiTypes_Human && menu.getIsCampaign()));
+                   menu.getSaveGame() ||
+                   menu.getIsObserverNetworkInterface() ||
+                  (menu.getMap().getPlayer(loopIdx).getControlType() > GameEnums.AiTypes_Human && menu.getIsCampaign()));
     },
     getIsServerOrSavegameOrCampaignAiOrSingleCoEnabled : function(menu)
     {
         var map = menu.getMap();
         return !((!menu.getIsServerNetworkInterface() && menu.hasNetworkInterface()) ||
                    menu.getSaveGame() ||
+                   menu.getIsObserverNetworkInterface() ||
                   map.getGameRules().getSingleCo() ||
                  (map.getPlayer(loopIdx).getControlType() > GameEnums.AiTypes_Human && menu.getIsCampaign()));
     },
     getIsServerOrSavegameOrArmyCustomizationEnabled : function(menu)
     {
         return !((!menu.getIsServerNetworkInterface() && menu.hasNetworkInterface()) ||
-                  menu.getSaveGame() ||
-                 !menu.getIsArmyCustomizationAllowed());
+                   menu.getSaveGame() ||
+                   menu.getIsObserverNetworkInterface() ||
+                  !menu.getIsArmyCustomizationAllowed());
     },
     getIsArmyOrPerkSelectionEnabled : function(menu)
     {
@@ -71,7 +76,8 @@ var PlayerSelection =
             aiType = ai.getAiType();
         }
         var isServer = menu.getIsServerNetworkInterface();
-        return !(menu.getSaveGame() ||
+        return !(menu.getSaveGame() ||                 
+                 menu.getIsObserverNetworkInterface() ||
                 (player.getControlType() > GameEnums.AiTypes_Human && menu.getIsCampaign()) ||
                 (isServer && !menu.isNotServerChangeable(player)) ||
                 (!isServer && aiType !== GameEnums.AiTypes_Human))

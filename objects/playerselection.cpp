@@ -121,8 +121,8 @@ bool PlayerSelection::isClosedPlayer(qint32 player)
             }
         }
         else if (player >= 0 &&
-            player < m_pMap->getPlayerCount() &&
-            m_pMap->getPlayer(player)->getControlType() == GameEnums::AiTypes_Closed)
+                 player < m_pMap->getPlayerCount() &&
+                 m_pMap->getPlayer(player)->getControlType() == GameEnums::AiTypes_Closed)
         {
             ret = true;
         }
@@ -750,7 +750,7 @@ void PlayerSelection::playerDataChanged()
                 sendStream << buildList[i2];
             }
         }
-        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
     }
 }
 
@@ -1361,7 +1361,7 @@ void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream& stream)
 {
     if (m_pNetworkInterface->getIsServer())
     {
-        bool value = false;;
+        bool value = false;
         stream >> value;
         QVector<qint32> player;
         for  (qint32 i = 0; i < m_playerSockets.size(); i++)
