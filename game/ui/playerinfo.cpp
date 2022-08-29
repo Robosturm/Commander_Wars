@@ -56,12 +56,19 @@ void PlayerInfo::updateData()
         maxCount = Settings::getShowCoCount();
     }
     qint32 playerShown = 0;
+    bool hasShownTurnStartInfo = false;
     for (qint32 i = 0; i < count; i++)
     {
         currentPlayer = playerIdx + i;
         if (currentPlayer >= m_pMap->getPlayerCount())
         {
             currentPlayer -= m_pMap->getPlayerCount();
+        }
+
+        if (currentPlayer == 0)
+        {
+            showTurnStartInfo(yPos);
+            hasShownTurnStartInfo = true;
         }
 
         spPlayer pPlayer = m_pMap->getspPlayer(currentPlayer);
@@ -199,8 +206,59 @@ void PlayerInfo::updateData()
             break;
         }
     }
+
+    if (!hasShownTurnStartInfo)
+    {
+        showTurnStartInfo(yPos);
+    }
     setHeight(yPos);
     Mainapp::getInstance()->continueRendering();
+}
+
+void PlayerInfo::showTurnStartInfo(qint32 & yPos)
+{
+    GameManager* pGameManager = GameManager::getInstance();
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("turnStartInfo");
+    if (pAnim != nullptr)
+    {
+        Player* pPlayer = m_pMap->getPlayer(0);
+        qint32 itemHeigth = static_cast<qint32>(pAnim->getHeight()) + 5;
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        pSprite->setResAnim(pAnim);
+        pSprite->setColorTable(pPlayer->getColorTableAnim(), true);
+        pSprite->setY(yPos);
+        pSprite->setFlippedX(m_flippedX);
+        if (m_flippedX)
+        {
+            pSprite->setX(-pSprite->getScaledWidth());
+        }
+        addChild(pSprite);
+        if (m_pMap->getGameRules()->getWeatherPrediction())
+        {
+            pSprite = oxygine::spSprite::create();
+            Weather* pWeather = m_pMap->getGameRules()->getWeatherAtDay(1, 0);
+            if (pWeather != nullptr)
+            {
+                pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()));
+                if (pAnim != nullptr)
+                {
+                    pSprite->setResAnim(pAnim);
+                    pSprite->setY(yPos + 2);
+                    pSprite->setScale(16 / pAnim->getWidth());
+                    if (m_flippedX)
+                    {
+                        pSprite->setX(-pSprite->getScaledWidth() - 2);
+                    }
+                    else
+                    {
+                        pSprite->setX(2);
+                    }
+                    addChild(pSprite);
+                }
+            }
+        }
+        yPos += itemHeigth;
+    }
 }
 
 bool PlayerInfo::getFlippedX() const

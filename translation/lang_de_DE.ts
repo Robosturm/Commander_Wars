@@ -3257,51 +3257,51 @@ Host mods: </source>
     <name>PlayerSelection</name>
     <message>
         <location filename="../objects/playerselection.cpp" line="113"/>
-        <location filename="../objects/playerselection.cpp" line="1164"/>
+        <location filename="../objects/playerselection.cpp" line="1165"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1198"/>
+        <location filename="../objects/playerselection.cpp" line="1199"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1319"/>
+        <location filename="../objects/playerselection.cpp" line="1320"/>
         <source>Connection failed.Reason: No more players available or user is already in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1152"/>
-        <location filename="../objects/playerselection.cpp" line="1173"/>
-        <location filename="../objects/playerselection.cpp" line="1187"/>
+        <location filename="../objects/playerselection.cpp" line="1153"/>
+        <location filename="../objects/playerselection.cpp" line="1174"/>
+        <location filename="../objects/playerselection.cpp" line="1188"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1152"/>
+        <location filename="../objects/playerselection.cpp" line="1153"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1152"/>
+        <location filename="../objects/playerselection.cpp" line="1153"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1152"/>
+        <location filename="../objects/playerselection.cpp" line="1153"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1152"/>
+        <location filename="../objects/playerselection.cpp" line="1153"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1176"/>
-        <location filename="../objects/playerselection.cpp" line="1183"/>
-        <location filename="../objects/playerselection.cpp" line="1187"/>
+        <location filename="../objects/playerselection.cpp" line="1177"/>
+        <location filename="../objects/playerselection.cpp" line="1184"/>
+        <location filename="../objects/playerselection.cpp" line="1188"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>

@@ -378,7 +378,7 @@
                 <width>200</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the amount of players shown in-game on the sidebar.")</tooltip>
                 <startValue>settings.getShowCoCount()</startValue>
-                <infinite>-1</infinite>
+                <infinite>0</infinite>
                 <min>0</min>
                 <max>65535</max>
                 <onEvent>settings.setShowCoCount(input)</onEvent>

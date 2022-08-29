@@ -27,6 +27,8 @@ public slots:
     void setFlippedX(bool value);
     bool getFlippedX() const;
 private:
+    void showTurnStartInfo(qint32 & yPos);
+private:
     QVector<oxygine::spSprite> m_playerBackground;
     bool m_flippedX{false};
     GameMap* m_pMap{nullptr};
