@@ -5,14 +5,20 @@ var Constructor = function()
         return 5;
     };
 
-    this.armyData = [["os", "os"],
+    this.armyData = [["ac", "ac"],
+                     ["bd", "bd"],
+                     ["os", "os"],
                      ["ge", "ge"],
+                     ["pf", "pf"],
                      ["ma", "ma"],
                      ["ti", "ti"],
                      ["yc", "yc"],];
 
-    this.animationData = [["os", [Qt.point(5, 23),]],
+    this.animationData = [["ac", [Qt.point(-4, 22),]],
+                          ["bd", [Qt.point(-3, 19),]],
+                          ["os", [Qt.point(5, 23),]],
                           ["ge", [Qt.point(0, 19),]],
+                          ["pf", [Qt.point(2, 20),]],
                           ["ma", [Qt.point(22, 32),]],
                           ["ti", [Qt.point(18, 28),]],
                           ["yc", [Qt.point(-2, 23),]],];

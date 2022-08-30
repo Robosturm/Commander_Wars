@@ -1,14 +1,17 @@
 #include "objects/base/v_scrollbar.h"
-#include "coreengine/mainapp.h"
+
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/console.h"
+#include "coreengine/mainapp.h"
 
 V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     : m_Width(width),
       m_ContentWidth(contentWidth)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("V_Scrollbar");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 
@@ -44,7 +47,6 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
-            pEvent->stopPropagation();
             m_scroll = 1;
             m_currentScrollspeed = m_Scrollspeed;
             m_speedCounter = 0;
@@ -55,7 +57,6 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
-            pEvent->stopPropagation();
             m_scroll = 0;
             emit sigEndEditValue(m_Scrollvalue);
         }
@@ -87,7 +88,6 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
-            pEvent->stopPropagation();
             m_scroll = -1;
             m_currentScrollspeed = m_Scrollspeed;
             m_speedCounter = 0;
@@ -98,7 +98,6 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
-            pEvent->stopPropagation();
             m_scroll = 0;
             emit sigEndEditValue(m_Scrollvalue);
         }
@@ -135,18 +134,18 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             pSlider->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
         }
     });
-    addEventListener(oxygine::TouchEvent::OUTX, [this](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::OUTX, [this, pSlider](oxygine::Event*)
     {
         if (m_enabled)
         {
             setSliding(getSliding());
+            pSlider->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
         }
     });
     m_slider->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event* event)
     {
         if (m_enabled)
         {
-            event->stopPropagation();
             setSliding(true);
             emit sigStartEditValue();
             emit sigFocused();
@@ -156,7 +155,6 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
-            event->stopPropagation();
             if (getSliding())
             {
                 setSliding(false);
@@ -165,18 +163,10 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             emit sigFocusedLost();
         }
     });
-    m_slider->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* pEvent)
-    {
-        if (m_enabled)
-        {
-            pEvent->stopPropagation();
-        }
-    });
     m_pBox->addEventListener(oxygine::TouchEvent::MOVE, [this](oxygine::Event* pEvent)
     {
         if (m_enabled)
         {
-            pEvent->stopPropagation();
             scroll(pEvent);
         }
     });
@@ -198,10 +188,11 @@ void V_Scrollbar::scroll(oxygine::Event* pEvent)
 {
     if (m_sliding)
     {
-        pEvent->stopPropagation();
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
+            Tooltip::hideTooltip();
+            pTouchEvent->stopPropagation();
             qint32 x = pTouchEvent->localPosition.x - m_slider->getWidth() / 2;
             if (x < 20)
             {

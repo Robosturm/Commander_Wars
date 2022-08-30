@@ -12,7 +12,8 @@
                 <width>600</width>
                 <height>60</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Modify Unit")</text>
-                <font>"main48"</font>
+                <font>"main"</font>
+                <fontSize>48</fontSize>
             </Label>
 
             <Label>
@@ -21,7 +22,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","HP:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
@@ -40,7 +42,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Ammo 1:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
@@ -59,7 +62,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Ammo 2:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
@@ -78,7 +82,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Fuel:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
@@ -97,7 +102,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Has moved:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>

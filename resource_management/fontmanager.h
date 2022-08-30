@@ -2,7 +2,7 @@
 #define FONTMANAGER_H
 
 #include <QColor>
-#include <QFont>
+#include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
 
 #include "resource_management/ressourcemanagement.h"
 
@@ -27,68 +27,87 @@ public:
      * @brief getMainFont16
      * @return
      */
-    inline static QFont getMainFont16()
+    inline static const oxygine::Font & getMainFont16()
     {
-        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 16);
-        return font;
+        return m_mainFont16;
     }
     /**
      * @brief getMainFont24
      * @return
      */
-    inline static QFont getMainFont24()
+    inline static const oxygine::Font & getMainFont24()
     {
-        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 24);
-        return font;
+        return m_mainFont24;
     }
     /**
      * @brief getMainFont32
      * @return
      */
-    inline static QFont getMainFont32()
+    inline static const oxygine::Font & getMainFont32()
     {
-        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 32);
-        return font;
+        return m_mainFont32;
     }
     /**
      * @brief getMainFont48
      * @return
      */
-    inline static QFont getMainFont48()
+    inline static const oxygine::Font & getMainFont48()
     {
-        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 48);
-        return font;
+        return m_mainFont48;
     }
     /**
      * @brief getMainFont72
      * @return
      */
-    inline static QFont getMainFont72()
+    inline static const oxygine::Font & getMainFont72()
     {
-        static const QFont font = getFontWithPixelSize(m_fonts[MAINFONT], 72);
-        return font;
+        return m_mainFont72;
     }
     /**
      * @brief getLogoFont
      * @return
      */
-    inline static QFont getLogoFont()
+    inline static const oxygine::Font & getLogoFont()
     {
-        static const QFont font = getFontWithPixelSize(m_fonts[LOGOFONT], 16);
-        return font;
+        return m_logoFont;
     }
     /**
-     * @brief getMainFontName
+     * @brief getFont
+     * @param fontType
+     * @param size
      * @return
      */
-    static const QString &getMainFontName();
+    static const oxygine::Font & getFont(QString fontType, qint32 size)
+    {
+        QString key = fontType + QString::number(size);
+        if (m_fonts.contains(key))
+        {
+            return m_fonts[key];
+        }
+        else
+        {
+            static oxygine::Font dummy;
+            return dummy;
+        }
+    }
     /**
-     * @brief getLogoFontName
+     * @brief getFont
+     * @param fontType
      * @return
      */
-    static const QString &getLogoFontName();
-
-    static QFont getFontWithPixelSize(const QString & font, qint32 size);
+    static const oxygine::Font & getFont(QString fontType)
+    {
+        QString key = fontType;
+        if (m_fonts.contains(key))
+        {
+            return m_fonts[key];
+        }
+        else
+        {
+            static oxygine::Font dummy;
+            return dummy;
+        }
+    }
 public slots:
     /**
      * @brief setFontColor
@@ -100,26 +119,22 @@ public slots:
      * @return
      */
     static QColor getFontColor();
-    /**
-     * @brief getFont
-     * @param fontType
-     * @param size
-     * @return
-     */
-    static QFont getFont(QString fontType, qint32 size)
-    {
-        return QFont(m_fonts[fontType], size);
-    }
-
 protected:
     friend RessourceManagement<FontManager>;
-    FontManager();
+    explicit FontManager();
 private:
 
     virtual ~FontManager() = default;
     static QColor m_defaultColor;
-    static QMap<QString, QString> m_fonts;
     static FontManager* m_pInstance;
+    static QMap<QString, oxygine::Font> m_fonts;
+
+    static oxygine::Font m_mainFont16;
+    static oxygine::Font m_mainFont24;
+    static oxygine::Font m_mainFont32;
+    static oxygine::Font m_mainFont48;
+    static oxygine::Font m_mainFont72;
+    static oxygine::Font m_logoFont;
 };
 
 #endif // FONTMANAGER_H

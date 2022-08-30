@@ -58,6 +58,7 @@ var Constructor = function()
         {
             building.loadSprite("nest_laser+SW", false, 400, Qt.point(0, building.getImageSize()));
         }
+        building.setFireCount(1);
     };
     this.getActionTargetFields = function(building)
     {
@@ -116,6 +117,7 @@ var Constructor = function()
     {
         return 8;
     };
+    this.actionList = ["ACTION_NEST_LASER"];
 }
 
 Constructor.prototype = BUILDING;

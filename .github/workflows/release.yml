@@ -8,6 +8,12 @@ name: Commnader_Wars_Release
 env:
   BUILD_TYPE: Release
   QT_Version: '6.3.1'
+  NDK_Version: r22b
+  # paths which are given with \ instead of / via windows crashing some command tools
+  NDK_Root: 'C:/hostedtoolcache/windows/ndk/r22b/x64'
+  workspace: 'D:/a/Commander_Wars/Commander_Wars'
+  javaVersion: '17'
+  javaDistribution: 'microsoft'
   
 jobs:
   create_release:
@@ -35,18 +41,30 @@ jobs:
     name: All
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        buildTarget: [windows-desktop, windows-server, ubuntu-desktop, ubuntu-server, macos-desktop, android-armv7, android-arm64_v8a]
         include:
-          - os: windows-latest
-            COMPILER_VERSION: 'win64_msvc2019_64'
+          - buildTarget: windows-desktop
+            os: windows-latest
+            COMPILER_VERSION: 'win64_mingw'
             target: 'desktop'
-            qtPath: 'msvc2019_64'
-            installerCommands1: ''
+            qtPath: 'mingw_64'
+            installerCommands1: 'choco install openssl'
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Win10_x64.zip' 
-            cmakeOptions: ''           
-          - os: ubuntu-latest
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64"'
+          - buildTarget: windows-server
+            os: windows-latest
+            COMPILER_VERSION: 'win64_mingw'
+            target: 'desktop'
+            qtPath: 'mingw_64'
+            installerCommands1: 'choco install openssl'
+            installerCommands2: ''
+            source_asset: 'Commander_Wars.zip'
+            asset_name: 'Commander_Wars_Win10_x64_Server.zip' 
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF'
+          - buildTarget: ubuntu-desktop
+            os: ubuntu-latest
             COMPILER_VERSION: ''
             target: 'desktop'
             qtPath: ''
@@ -55,7 +73,18 @@ jobs:
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Ubuntu.zip'
             cmakeOptions: ''
-          - os: macos-latest
+          - buildTarget: ubuntu-server
+            os: ubuntu-latest
+            COMPILER_VERSION: ''
+            target: 'desktop'
+            qtPath: ''
+            installerCommands1: 'sudo apt-get update'
+            installerCommands2: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            source_asset: 'Commander_Wars.zip'
+            asset_name: 'Commander_Wars_Ubuntu_Server.zip'
+            cmakeOptions: '-DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF'
+          - buildTarget: macos-desktop
+            os: macos-latest
             COMPILER_VERSION: 'clang_64'
             qtPath: 'clang_64'
             target: 'desktop'
@@ -64,10 +93,34 @@ jobs:
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_macOS.zip'
             cmakeOptions: '-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
-          #- os: windows-latest
-          #  COMPILER_VERSION: 'android_armv7'
-          #  target: 'android'
-          #  asset_name: 'Commander_Wars_Android.apk'
+          - buildTarget: android-armv7
+            os: windows-latest
+            COMPILER_VERSION: 'android_armv7'
+            qtPath: 'android_armv7'
+            target: 'android'
+            target-api-level: '27'
+            abi : "armeabi-v7a"
+            COMPILER_TOOLS_VERSION: 'win64_mingw'
+            qtCoreToolsPath: 'mingw_64'
+            installerCommands1: 'choco install jom'
+            installerCommands2: ''
+            source_asset: 'android-build/build/outputs/apk/release/android-build-release-signed.apk'
+            asset_name: 'Commander_Wars_armeabi-v7a.apk'
+            cmakeOptions: ''
+          - buildTarget: android-arm64_v8a
+            os: windows-latest
+            COMPILER_VERSION: 'android_arm64_v8a'
+            qtPath: 'android_arm64_v8a'
+            target: 'android'
+            target-api-level: '27'
+            abi : "arm64-v8a"
+            COMPILER_TOOLS_VERSION: 'win64_mingw'
+            qtCoreToolsPath: 'mingw_64'
+            installerCommands1: 'choco install jom'
+            installerCommands2: ''
+            source_asset: 'android-build/build/outputs/apk/release/android-build-release-signed.apk'
+            asset_name: 'Commander_Wars_arm64-v8a.apk'
+            cmakeOptions: ''
 
     needs: create_release
     runs-on: ${{matrix.os}}
@@ -75,8 +128,30 @@ jobs:
       run:
         shell: bash
     steps:
-    - uses: actions/checkout@v2
-          
+    - name: Checkout openssl
+      if: matrix.target == 'android'
+      uses: actions/checkout@v3
+      with:
+          repository: 'KDAB/android_openssl'
+          ref: '1.1.1l_1.0.2u'
+          path: 'android_openssl'
+
+    - name: Checkout source code
+      uses: actions/checkout@v3
+      with:
+          path: 'source'
+
+    - name: Install host os qt
+      if: matrix.target == 'android'
+      uses: jurplel/install-qt-action@v2.14.0
+      with:      
+          aqtversion: '==2.0.2'
+          target: 'desktop'
+          version: ${{env.QT_Version}}
+          arch: ${{matrix.COMPILER_TOOLS_VERSION}}
+          dir: '${{github.workspace}}/qt/'
+          install-deps: "true"
+
     - name: Install Qt
       uses: jurplel/install-qt-action@v2.14.0
       with:      
@@ -87,35 +162,140 @@ jobs:
           modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
-          
+                
     - name: Install OS Dependencies 1
       run: ${{matrix.installerCommands1}}
     
     - name: Install OS Dependencies 2
       run: ${{matrix.installerCommands2}}
-      
-    - name: Configure CMake
+
+    - name: setup-ndk
+      if: matrix.target == 'android'        
+      uses: nttld/setup-ndk@v1
+      id: setup-ndk
+      with:
+        ndk-version: ${{env.NDK_Version}}
+
+    - name: Configure other cmake
+      if: matrix.target != 'android'
       run: |
         cmake \
+        -S "${{github.workspace}}/source" \
         -B '${{github.workspace}}/build' \
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
         -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install/Commander_Wars_Release' \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DQt6_DIR=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/ \
         ${{matrix.cmakeOptions}}
-    
-    - name: Build
-      working-directory: '${{github.workspace}}/build'
-      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j16
 
+    - name: Configure android cmake
+      if: matrix.target == 'android'
+      run:  |
+        cmake \
+        -S "${{github.workspace}}/source" \
+        -B "${{github.workspace}}/build" \
+        -DCMAKE_GENERATOR="NMake Makefiles JOM" \
+        -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" \
+        -DQT_QMAKE_EXECUTABLE="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
+        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
+        -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
+        -DANDROID_NATIVE_API_LEVEL="${{ matrix.target-api-level }}" \
+        -DANDROID_ABI="${{matrix.abi}}" \
+        -DANDROID_STL="c++_shared" \
+        -DCMAKE_FIND_ROOT_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
+        -DCMAKE_TOOLCHAIN_FILE="${{env.NDK_Root}}/build/cmake/android.toolchain.cmake" \
+        -DANDROID_NDK="${{env.NDK_Root}}" \
+        -DANDROID_SDK_ROOT="${ANDROID_SDK_ROOT}" \
+        -DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL=ON \
+        -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" \
+        -DOPENSSL_USE_STATIC_LIBS=ON \
+        -DPRECOMPILEDOPENSSL=ON \
+        -DOPENSSL_ROOT_DIR="${{github.workspace}}/android_openssl" \
+        -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include" \
+        -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi"
+
+    - name: Build other
+      if: matrix.target != 'android'
+      working-directory: '${{github.workspace}}/build'
+      run: cmake --build '${{github.workspace}}/build' --config ${{env.BUILD_TYPE}} --target install -j4
+
+    - name: Build android
+      if: matrix.target == 'android'
+      working-directory: '${{github.workspace}}/build'
+      run: cmake --build '${{github.workspace}}/build' --config ${{env.BUILD_TYPE}} --target all -j4
+
+    # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace    
+    - name: Make space 1
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/build/CMakeFiles"
+        
+    - name: Make space 2
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/android_openssl"
+        
+    - name: Make space 3
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/source/resources"
+
+    # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace
+    - name: Clean up unneed win dll
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/lib"
+        
+    # apk preparation and signing
+    - name: Setup JDK
+      if: matrix.target == 'android'
+      uses: actions/setup-java@v3
+      with:
+        distribution: ${{env.javaDistribution}}
+        java-version: ${{env.javaVersion}}
+
+    - name: Bundle APK
+      if: matrix.target == 'android'
+      env:
+        QT_ANDROID_KEYSTORE_PATH: ${{env.workspace}}/source/android/android_release.keystore
+        QT_ANDROID_KEYSTORE_ALIAS: ${{secrets.ANDROIDALIAS}}
+        QT_ANDROID_KEYSTORE_STORE_PASS: ${{secrets.ANDROIDSTOREPASS}}
+        QT_ANDROID_KEYSTORE_KEY_PASS: ${{secrets.ANDROIDSTOREPASS}}
+      run:  |
+        "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
+        --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
+        --output ${{env.workspace}}/build/android-build \
+        --android-platform android-31 \
+        --gradle \
+        --release \
+        --sign \
+        --verbose
+      
 #----------------------------------------------------------------------------------------------------------------------------------------------
 # release creation and upload part
 #----------------------------------------------------------------------------------------------------------------------------------------------
         
     - name: build artifacts
-      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createReleaseZip
+      if: matrix.target != 'android'
+      run: cmake --build '${{github.workspace}}/build' --config ${{env.BUILD_TYPE}} --target createReleaseZip
       
-    - name: upload artifact
+    - name: upload artifact android
+      if: matrix.target == 'android'
+      uses: actions/upload-release-asset@v1.0.2
+      env:
+        GITHUB_TOKEN: ${{github.token}}
+      with:
+        upload_url: '${{needs.create_release.outputs.upload_url}}'
+        asset_path: '${{github.workspace}}/build/${{matrix.source_asset}}'
+        asset_name: '${{matrix.asset_name}}'
+        asset_content_type: application/zip
+        
+    - name: upload other artifacts
+      if: matrix.target != 'android'
       uses: actions/upload-release-asset@v1.0.2
       env:
         GITHUB_TOKEN: ${{github.token}}
@@ -127,11 +307,11 @@ jobs:
 
     - name: upload unofficial compatible pack
       uses: actions/upload-release-asset@v1.0.2
-      if: ${{ matrix.os == 'windows-latest' }}
+      if: matrix.buildTarget == 'windows-server'
       env:
         GITHUB_TOKEN: ${{github.token}}
       with:
         upload_url: '${{needs.create_release.outputs.upload_url}}'
         asset_name: 'UnofficialCommanderWars_Win7CompatiblePack.zip'
-        asset_path: '${{github.workspace}}/3rd_party/unofficialWin7Support/UnofficialCommanderWars_Win7CompatiblePack.zip'
+        asset_path: '${{github.workspace}}/source/3rd_party/unofficialWin7Support/UnofficialCommanderWars_Win7CompatiblePack.zip'
         asset_content_type: application/zip

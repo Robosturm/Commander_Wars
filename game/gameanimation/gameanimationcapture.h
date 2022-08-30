@@ -45,7 +45,9 @@ private:
     qint32 m_startPoints{0};
     qint32 m_endPoints{0};
     qint32 m_maxPoints{0};
-    bool m_audioCbAdded{false};
+    bool m_audioJumpAdded{false};
+    bool m_audioCbDownAdded{false};
+    bool m_audioCbCapturedAdded{false};
     float m_BuildingStartPos{20.0f};
     float m_BuildingEndPos{58.0f};
     static const qint32 m_capturingFactor;

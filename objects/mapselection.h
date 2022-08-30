@@ -6,17 +6,20 @@
 #include <QVector>
 #include <QElapsedTimer>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+
 #include "mapsupport/mapfilter.h"
 
 class MapSelection;
-typedef oxygine::intrusive_ptr<MapSelection> spMapSelection;
+using spMapSelection = oxygine::intrusive_ptr<MapSelection>;
 
 class MapSelection : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit MapSelection(qint32 heigth, qint32 width, QString folder);
+    explicit MapSelection(qint32 heigth, qint32 width, QString folder, const QStringList & filter);
     virtual ~MapSelection() = default;
 
     QString getCurrentFolder()
@@ -61,6 +64,7 @@ public slots:
     void createItemContainer(qint32 y, qint32 width, qint32 height);
     void filterChanged();
 private:
+    QStringList m_filter;
     QString m_currentFolder;
     QString m_currentItem;
     QString m_lastItem;

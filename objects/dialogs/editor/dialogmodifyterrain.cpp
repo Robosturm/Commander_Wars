@@ -16,7 +16,9 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     : m_pTerrain(pTerrain),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogModifyTerrain");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

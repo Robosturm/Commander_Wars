@@ -2,22 +2,18 @@
 #define COINFODIALOG_H
 
 #include <QObject>
-
 #include <QVector>
 
 #include "game/player.h"
-
 #include "game/co.h"
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/panel.h"
-
 #include "objects/coinfoactor.h"
 
 class COInfoDialog;
-typedef oxygine::intrusive_ptr<COInfoDialog> spCOInfoDialog;
+using spCOInfoDialog = oxygine::intrusive_ptr<COInfoDialog>;
 
 class COInfoDialog : public QObject, public oxygine::Actor
 {
@@ -27,7 +23,6 @@ public:
                           std::function<void (spCO& m_CurrrentCO, spPlayer& pPlayer, qint32 direction)> stepFunction,
                           bool ingame);
     virtual ~COInfoDialog() = default;
-
     /**
      * @brief showCO
      */

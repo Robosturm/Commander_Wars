@@ -1,3 +1,8 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/slidingsprite.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
+
 #include "menue/gamemenue.h"
 #include "menue/movementplanner.h"
 
@@ -5,7 +10,6 @@
 #include "coreengine/globalutils.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/cospritemanager.h"
-#include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
 
 #include "game/gameanimation/battleanimation.h"
 #include "game/gamemap.h"
@@ -31,7 +35,9 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
       m_DefWeapon(defWeapon),
       m_DefenderDamage(defenderDamage)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("BattleAnimation");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

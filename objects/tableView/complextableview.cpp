@@ -14,7 +14,9 @@ ComplexTableView::ComplexTableView(const QVector<qint32> & widths, const QString
       m_widths(widths)
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("ComplexTableView");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -27,6 +29,11 @@ ComplexTableView::ComplexTableView(const QVector<qint32> & widths, const QString
     setHeight(heigth);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::spBox9Sprite pBackground = oxygine::spBox9Sprite::create();
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
+    pBackground->setResAnim(pAnim);
+    pBackground->setSize(getSize());
+    addChild(pBackground);
     oxygine::ResAnim* phAnim =pObjectManager->getResAnim("h_table_divider");
     oxygine::ResAnim* pvAnim =pObjectManager->getResAnim("v_table_divider");
 
@@ -110,11 +117,11 @@ void ComplexTableView::sortItems(qint32 column, bool up)
     {
         if (up)
         {
-            return *(lhs.items[column].get()) < *(rhs.items[column].get());
+            return *(lhs.items[column].get()) > *(rhs.items[column].get());
         }
         else
         {
-            return *(lhs.items[column].get()) > *(rhs.items[column].get());
+            return *(lhs.items[column].get()) < *(rhs.items[column].get());
         }
     });
     if (m_columns.size() > 0)
@@ -175,6 +182,7 @@ void ComplexTableView::createItems()
             setCurrentItem(count);
             emit sigItemClicked();
         });
+        m_columns.append(column);
         ++count;
         y += ITEM_HEIGHT + DIVIDER_SIZE;
     }
@@ -217,12 +225,12 @@ void ComplexTableView::setCurrentItem(qint32 item)
 
 void ComplexTableView::updateItemPositions()
 {
-    qint32 y = 0;
-    for (auto & item : m_columns)
-    {
-        item->setY(y);
-        y += ITEM_HEIGHT + DIVIDER_SIZE;
-    }
+    m_pPanel->clearContent();
+    m_VLines.clear();
+    m_HLines.clear();
+    m_columns.clear();
+    m_currentItem = -1;
+    createItems();
 }
 
 qint32 ComplexTableView::getCurrentItem() const

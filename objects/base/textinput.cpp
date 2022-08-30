@@ -6,16 +6,29 @@
 TextInput::TextInput()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    emit pApp->sigCreateLineEdit();
+    if (pApp->isMainThread())
+    {
+        pApp->createLineEdit();
+    }
+    else
+    {
+        emit pApp->sigCreateLineEdit();
+    }
     m_lineEdit = pApp->getLastCreateLineEdit();    
-    connect(m_lineEdit, &QLineEdit::returnPressed, this, &TextInput::editFinished, Qt::QueuedConnection);
-    connect(m_lineEdit, &QLineEdit::cursorPositionChanged, pApp, &Mainapp::slotCursorPositionChanged);
+    if (m_lineEdit != nullptr)
+    {
+        connect(m_lineEdit, &QLineEdit::returnPressed, this, &TextInput::editFinished, Qt::QueuedConnection);
+        connect(m_lineEdit, &QLineEdit::cursorPositionChanged, pApp, &Mainapp::slotCursorPositionChanged);
+    }
     m_toggle.start();
 }
 
 TextInput::~TextInput()
 {
-    m_lineEdit->deleteLater();
+    if (m_lineEdit != nullptr)
+    {
+        m_lineEdit->deleteLater();
+    }
 }
 
 void TextInput::editFinished()
@@ -29,27 +42,50 @@ void TextInput::editFinished()
 
 void TextInput::inputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
 {
-    m_lineEdit->inputMethodQuery(query, arg);
+    if (m_lineEdit != nullptr)
+    {
+        m_lineEdit->inputMethodQuery(query, arg);
+    }
 }
 
 QString TextInput::getCurrentText() const
 {
-    return m_lineEdit->text().trimmed();
+    if (m_lineEdit != nullptr)
+    {
+        return m_lineEdit->text().trimmed();
+    }
+    else
+    {
+        return "";
+    }
 }
 
-void TextInput::setCurrentText(QString text)
+void TextInput::setCurrentText(const QString & text)
 {
-    m_lineEdit->setText(text);
+    if (m_lineEdit != nullptr)
+    {
+        m_lineEdit->setText(text);
+    }
 }
 
 qint32 TextInput::getCursorPosition() const
 {
-    return m_lineEdit->cursorPosition();
+    if (m_lineEdit != nullptr)
+    {
+        return m_lineEdit->cursorPosition();
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 void TextInput::setCursorPosition(qint32 position)
 {
-    m_lineEdit->setCursorPosition(position);
+    if (m_lineEdit != nullptr)
+    {
+        m_lineEdit->setCursorPosition(position);
+    }
 }
 
 bool TextInput::doHandleEvent(QEvent *event)
@@ -67,7 +103,10 @@ bool TextInput::doHandleEvent(QEvent *event)
             case QEvent::Shortcut:
             case QEvent::ShortcutOverride:
             {
-                ret = m_lineEdit->event(event);
+                if (m_lineEdit != nullptr)
+                {
+                    ret = m_lineEdit->event(event);
+                }
                 break;
             }
             default:
@@ -83,7 +122,10 @@ bool TextInput::doHandleEvent(QEvent *event)
 void TextInput::focused()
 {
     Tooltip::disableTooltip();
-    m_lineEdit->setCursorPosition(m_lineEdit->text().size());
+    if (m_lineEdit != nullptr)
+    {
+        m_lineEdit->setCursorPosition(m_lineEdit->text().size());
+    }
     emit Mainapp::getInstance()->sigShowKeyboard(true);
 }
 
@@ -99,10 +141,10 @@ void TextInput::looseFocusInternal()
     Tooltip::looseFocusInternal();
 }
 
-QString TextInput::getDrawText(QString text)
+QString TextInput::getDrawText(const QString & text)
 {
     QString drawText = text;
-    if(m_focused)
+    if(m_focused && m_lineEdit != nullptr)
     {
         qint32 curmsgpos = getCursorPosition();
         // create output text

@@ -6,11 +6,10 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class GameMap;
 class CampaignMapData;
-
 class Campaign;
 using spCampaign = oxygine::intrusive_ptr<Campaign>;
 

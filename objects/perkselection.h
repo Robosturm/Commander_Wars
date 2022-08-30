@@ -6,12 +6,12 @@
 
 #include "objects/base/checkbox.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "game/co.h"
 
 class GameMap;
 class PerkSelection;
-typedef oxygine::intrusive_ptr<PerkSelection> spPerkSelection;
+using spPerkSelection = oxygine::intrusive_ptr<PerkSelection>;
 
 class PerkSelection : public QObject, public oxygine::Actor
 {

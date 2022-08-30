@@ -66,7 +66,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("<r>In Fog of War, Radars make a </r><div c='#00ff00'>5 square </div><r>area around them visible.</r>");
+        return qsTr("<r>In Fog of War, fire make a </r><div c='#00ff00'>5 square </div><r>area around them visible.</r>");
     };
 };
 Constructor.prototype = TERRAIN;

@@ -5,10 +5,14 @@
 #include "coreengine/mainapp.h"
 #include "objects/base/label.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+
 ObjectManager::ObjectManager()
     : RessourceManagement<ObjectManager>("/objects/res.xml", "")
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ObjectManager");
+#endif
     Interpreter::setCppOwnerShip(this);
     loadRessources("/cursor/res.xml");
 }

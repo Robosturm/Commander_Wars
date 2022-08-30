@@ -4,9 +4,6 @@
 #include <QObject>
 #include <QVector>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
 #include "coreengine/fileserializable.h"
 #include "coreengine/JsCallback.h"
 #include "coreengine/LUPDATE_MACROS.h"
@@ -123,6 +120,22 @@ public:
         return 9;
     }
     /**
+     * @brief isValid
+     * @return
+     */
+    bool isValid();
+    /**
+     * @brief getMapTerrainDrawPriority
+     * @return
+     */
+    qint32 getMapTerrainDrawPriority();
+public slots:
+    /**
+     * @brief setSpriteVisibility
+     * @param value
+     */
+    void setSpriteVisibility(bool value);
+    /**
      * @brief setFixedSprite only avaible for ingame editor
      * @return
      */
@@ -132,27 +145,6 @@ public:
      * @return
      */
     void setTerrainSpriteName(const QString &terrainSpriteName);
-    /**
-     * @brief setSpriteVisibility
-     * @param value
-     */
-    void setSpriteVisibility(bool value);
-    /**
-     * @brief isValid
-     * @return
-     */
-    bool isValid();
-
-
-    QPoint getTest() const;
-    void setTest(QPoint newTest);
-    /**
-     * @brief getMapTerrainDrawPriority
-     * @return
-     */
-    qint32 getMapTerrainDrawPriority();
-public slots:
-
     /**
      * @brief getShowInEditor
      * @param unitId
@@ -357,7 +349,7 @@ public slots:
      * @brief loadBaseSprite loads the sprite for this terrain
      * @param spriteID
      */
-    void loadBaseSprite(const QString & spriteID, qint32 frameTime = 100);
+    void loadBaseSprite(const QString & spriteID, qint32 frameTime = 100, qint32 startFrame = -1, qint32 endFrame = -1);
     /**
      * @brief getSurroundings returns a string containing the directions which fulfill the given rule
      * @param list the list as string split with ,
@@ -374,7 +366,7 @@ public slots:
      * @brief loadOverlaySprite loads overlay sprites of this terrain
      * @param spriteID
      */
-    void loadOverlaySprite(const QString & spriteID);
+    void loadOverlaySprite(const QString & spriteID, qint32 startFrame = -1, qint32 endFrame = -1);
     /**
      * @brief getBaseTerrainID finds the base terrain id of the real base terrain recursivly
      * @return the base terrainID

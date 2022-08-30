@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>0</x>
+        <y>0</y>
+        <width>currentMenu.getUiWidth()</width>
+        <height>currentMenu.getUiHeight()</height>
+        <childs>
+            <Label>
+                <x>5</x>
+                <y>5</y>
+                <width>50</width>
+                <height>24</height>
+                <text>QT_TRANSLATE_NOOP("GAME","All")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>5</y>
+                <width>170</width>
+                <text>QT_TRANSLATE_NOOP("GAME","All Random")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Changes all co's to random.")</tooltip>
+                <onEvent>currentMenu.slotCOsRandom(-1);</onEvent>
+                <enabled>!currentMenu.getMap().getGameRules().getSingleCo()</enabled>
+                <visible>!(currentMenu.getIsCampaign() || currentMenu.hasNetworkInterface())</visible>
+            </Button>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>5</y>
+                <width>170</width>
+                <text>QT_TRANSLATE_NOOP("GAME","CO 1 Random")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Changes the first co of all players to random.")</tooltip>
+                <onEvent>currentMenu.slotCOsRandom(0);</onEvent>
+                <visible>!(currentMenu.getIsCampaign() || currentMenu.hasNetworkInterface())</visible>
+            </Button>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>5</y>
+                <width>170</width>
+                <text>QT_TRANSLATE_NOOP("GAME","CO 2 Random")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Changes the second co of all players to random.")</tooltip>
+                <onEvent>currentMenu.slotCOsRandom(1);</onEvent>
+                <enabled>!currentMenu.getMap().getGameRules().getSingleCo()</enabled>
+                <visible>!(currentMenu.getIsCampaign() || currentMenu.hasNetworkInterface())</visible>
+            </Button>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>5</y>
+                <width>170</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Advanced")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Allows you to change several values for all players.")</tooltip>
+                <onEvent>currentMenu.createSubUi("ui/game/allAdvancedPlayerChanges.xml", currentMenu)</onEvent>
+                <enabled>PlayerSelection.getIsServerOrSavegameOrCampaignEnabled(currentMenu)</enabled>
+            </Button>
+            <Label>
+                <x>5</x>
+                <y>lastY + lastHeight + 5</y>
+                <width>70</width>
+                <height>24</height>
+                <text>QT_TRANSLATE_NOOP("GAME","CO's")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>110</width>
+                <height>24</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Color")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>220</width>
+                <height>24</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Controller")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>160</width>
+                <height>24</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Team")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>170</width>
+                <height>24</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Advanced")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <if condition="currentMenu.hasNetworkInterface()">
+                <Label>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>80</width>
+                    <height>24</height>
+                    <text>QT_TRANSLATE_NOOP("GAME","Ready")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+            </if>
+            <loop count="currentMenu.getMap().getPlayerCount()">
+                <Sprite>
+                    <Id>"CO1_" + loopIdx</Id>
+                    <x>5</x>
+                    <y>lastY + 30</y>
+                    <width>32</width>
+                    <height>12</height>
+                    <scale>2</scale>
+                    <sprite>"no_co+info"</sprite>
+                    <onEvent>currentMenu.showSelectCO(loopIdx, 0)</onEvent>
+                    <enabled>PlayerSelection.getIsServerOrSavegameOrCampaignAiEnabled(currentMenu)</enabled>
+                </Sprite>
+                <DropDownMenuColor>
+                    <Id>"PlayerColor_" + loopIdx</Id>
+                    <x>lastX + 80</x>
+                    <y>lastY</y>
+                    <width>110</width>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Select the color for this player's army.")</tooltip>
+                    <showUnitPreview>true</showUnitPreview>
+                    <startValue>currentMenu.getStartColorName(loopIdx)</startValue>
+                    <items>currentMenu.getDropDownColorNames()</items>
+                    <onEvent>currentMenu.playerColorChanged(input, loopIdx, input2)</onEvent>
+                    <enabled>PlayerSelection.getIsServerOrSavegameOrArmyCustomizationEnabled(currentMenu)</enabled>
+                </DropDownMenuColor>
+                <DropDownMenu>
+                    <Id>"AI_" + loopIdx</Id>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>220</width>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Select who controls this player.")</tooltip>
+                    <startValue>0</startValue>
+                    <items>currentMenu.getAiNames()</items>
+                    <onEvent>currentMenu.selectAI(loopIdx)</onEvent>
+                </DropDownMenu>
+                <DropDownMenu>
+                    <Id>"Team_" + loopIdx</Id>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>160</width>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Select the team of this player. The team can't be changed and players of the same team can't attack each other.")</tooltip>
+                    <startValue>currentMenu.getMap().getPlayer(loopIdx).getTeam()</startValue>
+                    <items>currentMenu.getTeamNames()</items>
+                    <onEvent>currentMenu.playerTeamChanged(input, loopIdx)</onEvent>
+                    <enabled>PlayerSelection.getIsServerOrSavegameOrCampaignEnabled(currentMenu)</enabled>
+                </DropDownMenu>
+                <Button>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>170</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Advanced")</text>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Allows you to change several values for this player.")</tooltip>
+                    <onEvent>PlayerSelection.storeCurrentPlayer(loopIdx);currentMenu.createSubUi("ui/game/advancedPlayerChanges.xml", currentMenu)</onEvent>
+                </Button>
+                <if condition="currentMenu.hasNetworkInterface()">
+                    <Checkbox>
+                        <Id>"Ready_" + loopIdx</Id>
+                        <x>lastX + lastWidth + 10</x>
+                        <y>lastY</y>
+                        <tooltip>QT_TRANSLATE_NOOP("GAME","Shows which players are ready to start the game. All players need to be checked in order to start a game.")</tooltip>
+                        <startValue>false</startValue>
+                        <onEvent></onEvent>
+                        <enabled>false</enabled>
+                    </Checkbox>
+                </if>
+                <Sprite>
+                    <Id>"CO2_" + loopIdx</Id>
+                    <x>5</x>
+                    <y>lastY + 24</y>
+                    <width>32</width>
+                    <height>12</height>
+                    <scale>2</scale>
+                    <sprite>"no_co+info"</sprite>
+                    <onEvent>currentMenu.showSelectCO(loopIdx, 1)</onEvent>
+                    <enabled>PlayerSelection.getIsServerOrSavegameOrCampaignAiOrSingleCoEnabled(currentMenu)</enabled>
+                </Sprite>
+            </loop>
+        </childs>
+    </Panel>
+</ui>

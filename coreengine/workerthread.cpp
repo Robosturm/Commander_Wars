@@ -1,7 +1,11 @@
 #include <QDirIterator>
-#include <QApplication>
+#include <QCoreApplication>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/Input.h"
+#include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/workerthread.h"
@@ -12,7 +16,6 @@
 #include "menue/basegamemenu.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
-
 
 #include "resource_management/terrainmanager.h"
 #include "resource_management/buildingspritemanager.h"
@@ -36,7 +39,9 @@
 
 WorkerThread::WorkerThread()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("WorkerThread");
+#endif
     Interpreter::setCppOwnerShip(this);
     moveToThread(Mainapp::getWorkerthread());
     connect(this, &WorkerThread::sigStart, this, &WorkerThread::start, Qt::QueuedConnection);
@@ -75,7 +80,7 @@ void WorkerThread::start()
         while (dirIter.hasNext())
         {
             dirIter.next();
-            QString file = dirIter.fileInfo().absoluteFilePath();
+            QString file = dirIter.fileInfo().canonicalFilePath();
             pInterpreter->openScript(file, true);
         }
     }
@@ -181,12 +186,12 @@ void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 
 void WorkerThread::showMainwindow()
 {
-    QApplication::processEvents();
+    QCoreApplication::processEvents();
     QThread::msleep(5);
 
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
-    auto window = spMainwindow::create();
+    auto window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
 }
 

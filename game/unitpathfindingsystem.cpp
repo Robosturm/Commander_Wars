@@ -19,7 +19,9 @@ UnitPathFindingSystem::UnitPathFindingSystem(GameMap* pMap, Unit* pUnit, Player*
       m_pMap(pMap)
 
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("UnitPathFindingSystem");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -230,6 +232,7 @@ std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(std::vect
         {
             for (qint32 i = path.size() - 2; i >= 0; i--)
             {
+
                 Unit* pNodeUnit = m_pMap->getTerrain(path[i].x(), path[i].y())->getUnit();
                 currentCosts += getCosts(getIndex(path[i].x(), path[i].y()), path[i].x(), path[i].y(),
                                          path[i + 1].x(), path[i + 1].y(), currentCosts);
@@ -268,7 +271,8 @@ std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(std::vect
 
 std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoint>& path, qint32 movepoints)
 {
-    std::vector<QPoint> stdPath(path.size());
+    std::vector<QPoint> stdPath;
+    stdPath.reserve(path.size());
     for (auto & point : path)
     {
         stdPath.push_back(point);

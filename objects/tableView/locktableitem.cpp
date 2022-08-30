@@ -12,7 +12,9 @@ LockTableItem::LockTableItem(bool locked, qint32 itemWidth, QObject *parent)
       m_locked(locked)
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("LockTableItem");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 

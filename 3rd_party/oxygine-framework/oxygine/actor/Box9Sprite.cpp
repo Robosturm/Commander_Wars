@@ -22,6 +22,7 @@ namespace oxygine
 
     oxygine::RectF Box9Sprite::getInnerArea()
     {
+#ifdef GRAPHICSUPPORT
         if (!m_prepared)
         {
             prepare();
@@ -35,7 +36,10 @@ namespace oxygine
 
         rect.setSize(rb - rect.pos);
 
-        return rect;                             
+        return rect;
+#else
+        return oxygine::RectF();
+#endif
     }
 
     void Box9Sprite::setVerticalMode(StretchMode m)
@@ -149,6 +153,7 @@ namespace oxygine
 
     void Box9Sprite::prepare()
     {
+#ifdef GRAPHICSUPPORT
         m_guidesX.resize(4);
         m_guidesY.resize(4);
         m_pointsX.clear();
@@ -260,7 +265,7 @@ namespace oxygine
                 }
             }
         }
-
+#endif
         m_prepared = true;
     }
 
@@ -271,6 +276,7 @@ namespace oxygine
 
     void Box9Sprite::doRender(const RenderState& rs)
     {
+#ifdef GRAPHICSUPPORT
         // no guides means we are a normal sprite
         if (isNormalSprite())
         {
@@ -340,6 +346,7 @@ namespace oxygine
                 }
             }
         }
+#endif
     }
 
     RectF Box9Sprite::getDestRect() const

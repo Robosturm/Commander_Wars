@@ -26,7 +26,7 @@ signals:
 
 public slots:
     void setIsActive(quint64 socketID, bool active);
-    virtual void connectTCP(QString adress, quint16 port) override;
+    virtual void connectTCP(QString adress, quint16 port, QString secondaryAdress) override;
     virtual void disconnectTCP() override;
     virtual void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service) override;
     virtual QVector<quint64> getConnectedSockets() override;
@@ -39,7 +39,7 @@ public slots:
 private:
     QMap<quint64, spTCPClient> m_pClients;
     quint64 m_idCounter = 0;
-    std::shared_ptr<QTcpServer> m_pTCPServer{nullptr};
+    std::shared_ptr<QTcpServer> m_pTCPServer[2];
     bool m_gameServer{false};
 };
 

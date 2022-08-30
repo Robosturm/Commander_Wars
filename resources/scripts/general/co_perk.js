@@ -88,6 +88,11 @@ var CO_PERK =
         return 0;
     },
 
+    getPowerChargeBonus : function(co, map)
+    {
+        return 0;
+    },
+
     canCounterAttack : function(co, attacker, atkPosX, atkPosY,
                                 defender, defPosX, defPosY, luckMode, map)
     {
@@ -290,6 +295,11 @@ var CO_PERK =
         // called after damage was dealt to the defender unit.
         // the damage given is the damage was dealt to the unit.
         // gotAttacked means we own the unit which got damage dealt.
+    },
+
+    endOfTurn : function(co, map)
+    {
+        // called at the end of the turn use it to do cool co stuff like caulder's healing :)
     },
 
     startOfTurn : function(co, map)

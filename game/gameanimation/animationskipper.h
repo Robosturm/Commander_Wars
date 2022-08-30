@@ -11,6 +11,7 @@ public:
     explicit AnimationSkipper() = default;
     ~AnimationSkipper() = default;
     void startSeeking();
+    static void disableAllAnimations();
     void storeAnimationSettings();
     void restoreAnimationSettings();
 

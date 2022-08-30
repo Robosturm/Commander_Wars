@@ -8,7 +8,9 @@
 
 Checkbox::Checkbox()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Checkbox");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

@@ -2075,5 +2075,17 @@
         <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.js</file>
         <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.xml</file>
         <file>resources/scripts/actions/ACTION_LOADGAME.js</file>
+        <file>resources/scripts/general/gameanimationpower.js</file>
+        <file>resources/scripts/wiki/pinkfrontier.js</file>
+        <file>maps/commander_wars.camp/dayAtTheBeach.js</file>
+        <file>maps/commander_wars.camp/dayAtTheBeach.map</file>
+        <file>resources/scripts/actions/ACTION_NEST_LASER.js</file>
+        <file>resources/scripts/actions/ACTION_NEST_MORTAR.js</file>
+        <file>resources/scripts/actions/ACTION_DISABLE_MINE.js</file>
+        <file>maps/commander_wars.camp/UprisingAtTheDocks.js</file>
+        <file>maps/commander_wars.camp/uprisingAtTheDocks.map</file>
+        <file>maps/commander_wars.camp/mechaInTheMiddle.js</file>
+        <file>maps/commander_wars.camp/mechaInTheMiddle.map</file>
+        <file>resources/scripts/building/powerplant.js</file>
     </qresource>
 </RCC>

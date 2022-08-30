@@ -7,11 +7,14 @@
 #include <QDateTime>
 #include <QFontMetrics>
 
+#include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
+
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
+
 #include "resource_management/fontmanager.h"
 
 #include "menue/gamemenue.h"
@@ -62,7 +65,9 @@ const char* const Console::compileDate = __DATE__;
 
 Console::Console()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Console");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -264,8 +269,9 @@ void Console::update(const oxygine::UpdateState& us)
     {
         QMutexLocker locker(&m_datalocker);
         qint32 screenheight = Settings::getHeight();
-        QFontMetrics metrics(FontManager::getMainFont16());
-        qint32 h = metrics.height();
+        auto font = FontManager::getMainFont16();
+        QFontMetrics metrics(font.font);
+        qint32 h = metrics.height() + font.borderWidth * 2;
         // pre calc message start
         qint32 num = screenheight / h - 4;
         m_outputSize = num + 2;
@@ -350,7 +356,6 @@ void Console::setLogLevel(eLogLevels newLogLevel)
 
 void Console::help(qint32 start, qint32 end)
 {
-
     qint32 index = 0;
     while (functions[index] != "" && ((end >= 0 && index <= end) ||  end < 0))
     {
@@ -389,9 +394,9 @@ void Console::extractResources()
     {
         dirIter.next();
         count++;
-        QFile file(dirIter.fileInfo().absoluteFilePath());
-        QString relativePath = GlobalUtils::makePathRelative(dirIter.fileInfo().absoluteFilePath());
-        QString dir = GlobalUtils::makePathRelative(dirIter.fileInfo().absoluteDir().absolutePath());
+        QFile file(dirIter.fileInfo().canonicalFilePath());
+        QString relativePath = GlobalUtils::makePathRelative(dirIter.fileInfo().canonicalFilePath());
+        QString dir = GlobalUtils::makePathRelative(dirIter.fileInfo().absoluteDir().canonicalPath());
         QDir newDir(targetDir + dir);
         newDir.mkpath(".");
         file.copy(targetDir + relativePath);
@@ -1520,7 +1525,6 @@ bool Console::onEditFinished()
 
 void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-
     static QMutex messageOutputMutex;
     QMutexLocker lock(&messageOutputMutex);
     static QFile file(Settings::getUserPath() + "console.log");
@@ -1530,9 +1534,13 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         if (pApp->getSlave() && pApp->getCreateSlaveLogs())
         {
             QString slaveName = Settings::getSlaveServerName();
-            file.setFileName(Settings::getUserPath() + slaveName + ".log");            
+            file.setFileName(Settings::getUserPath() + slaveName + ".log");
+            file.open(QIODevice::WriteOnly);
         }
-        file.open(QIODevice::WriteOnly);
+        else if (!pApp->getSlave())
+        {
+            file.open(QIODevice::WriteOnly);
+        }
     }
     static QTextStream stream(&file);
     QByteArray localMsg = msg.toLocal8Bit();

@@ -3,7 +3,7 @@
 
 #include <QFileInfo>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/mapselectionview.h"
 #include "objects/minimap.h"
@@ -35,7 +35,7 @@ public:
         selectPlayer
     };
 
-    explicit MapSelectionMapsMenue(qint32 heigth = -1, spMapSelectionView pMapSelectionView = spMapSelectionView());
+    explicit MapSelectionMapsMenue(spMapSelectionView pMapSelectionView, qint32 heigth = -1);
     virtual ~MapSelectionMapsMenue() = default;
     // functions for swapping between the inputs
     virtual void hideMapSelection();
@@ -43,8 +43,7 @@ public:
     void hideRuleSelection();
     virtual void showRuleSelection();
     void hidePlayerSelection();
-    virtual void showPlayerSelection();
-
+    virtual void showPlayerSelection();    
 signals:
     void sigButtonBack();
     void sigButtonNext();
@@ -61,6 +60,7 @@ public slots:
     // general slots
     virtual void buttonBack();
     virtual void buttonNext();
+    virtual void exitMenu();
     /**
      * @brief startGame starts a game for a single player mode
      */

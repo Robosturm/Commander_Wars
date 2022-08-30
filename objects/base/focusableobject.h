@@ -2,9 +2,10 @@
 #define FOCUSABLEOBJECT_H
 
 #include <QObject>
+#include <QVariant>
 #include <memory>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 class FocusableObject;
 using spFocusableObject = oxygine::intrusive_ptr<FocusableObject>;
@@ -31,8 +32,8 @@ signals:
     void sigFocused();
     void sigLooseFocusInternal();
 protected:
-    virtual void focused(){};
-    virtual void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg){};
+    virtual void focused(){}
+    virtual void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg){}
     /**
      * @brief keyInputMethodQueryEvent called in case a focused object shows a virtual key board
      * @param event
@@ -40,11 +41,11 @@ protected:
     virtual bool doHandleEvent(QEvent *event)
     {
         return false;
-    };
+    }
 protected slots:
     virtual void looseFocusInternal();
 public slots:
-    virtual void focusedLost(){};
+    virtual void focusedLost(){}
 private slots:
     void focusedInternal();
 protected:

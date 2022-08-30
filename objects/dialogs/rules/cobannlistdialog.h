@@ -5,13 +5,13 @@
 #include <QVector>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/checkbox.h"
 #include "objects/base/dropdownmenu.h"
 
 class COBannListDialog;
-typedef oxygine::intrusive_ptr<COBannListDialog> spCOBannListDialog;
+using spCOBannListDialog = oxygine::intrusive_ptr<COBannListDialog>;
 
 class COBannListDialog : public QObject, public oxygine::Actor
 {

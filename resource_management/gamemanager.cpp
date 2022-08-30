@@ -10,7 +10,9 @@ GameManager::GameManager()
                                        "")
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("GameManager");
+#endif
 }
 
 void GameManager::reset()

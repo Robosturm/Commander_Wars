@@ -11,11 +11,20 @@ class CustomDialog final : public CreatedGui
 {
     Q_OBJECT
 public:
-    CustomDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu);
+    CustomDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu, const QString & confirmText = "");
     ~CustomDialog();
 signals:
     void sigFinished();
 public slots:
+    /**
+     * @brief loadXmlFile
+     * @param uiXml
+     */
+    void loadXmlFile(const QString& uiXml);
+    /**
+     * @brief getBaseMenu
+     * @return
+     */
     Basemenu* getBaseMenu();
     /**
      * @brief getVariables
@@ -27,16 +36,16 @@ public slots:
     }
     void exit();
     /**
+     * @brief showMessageBox
+     */
+    void showMessageBox(QString text, bool withCancel = false, QString confirmText = tr("Ok"), QString cancelText = tr("Cancel"));
+    /**
      * @brief createDialog
      * @param jsName
      * @param uiXml
      * @param pBaseMenu
      */
     void createDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu);
-    /**
-     * @brief showMessageBox
-     */
-    void showMessageBox(QString text, bool withCancel = false, QString confirmText = tr("Ok"), QString cancelText = tr("Cancel"));
 private slots:
     void remove();
 

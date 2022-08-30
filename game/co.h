@@ -3,11 +3,10 @@
 
 #include <QObject>
 #include <QPoint>
+#include <QImage>
 
 #include "game/GameEnums.h"
 #include "game/ui/customcoboostinfo.h"
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
@@ -467,6 +466,10 @@ public slots:
      */
     void gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender, bool counterAttack);
     /**
+     * @brief endOfTurn
+     */
+    void endOfTurn();
+    /**
      * @brief startOfTurn called at the start of our turn
      */
     void startOfTurn();
@@ -481,7 +484,7 @@ public slots:
      */
     inline Player* getOwner()
     {
-        return m_Owner;
+        return m_pOwner;
     }
     /**
      * @brief getCOUnit
@@ -540,6 +543,11 @@ public slots:
      * @return
      */
     qint32 getIncomeReduction(Building* pBuilding, qint32 income);
+    /**
+     * @brief getPowerChargeBonus
+     * @return
+     */
+    qint32 getPowerChargeBonus();
     /**
      * @brief getPerfectVision
      * @return
@@ -754,7 +762,6 @@ public slots:
      * @return
      */
     float getStarCost();
-
 protected:
     void limitPowerbar(float previousValue);
 
@@ -767,7 +774,7 @@ private:
      */
     bool isJsFunctionEnabled(QString perk) const;
 private:
-    Player* m_Owner;
+    Player* m_pOwner;
     QString m_coID;
     qint32 m_powerStars{0};
     qint32 m_superpowerStars{0};

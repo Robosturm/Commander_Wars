@@ -12,7 +12,7 @@ var Constructor = function()
 
     this.getCampaignName = function()
     {
-        return qsTr("Warroom");
+        return qsTr("War room");
     };
 
     this.getCurrentCampaignMaps = function(campaign)

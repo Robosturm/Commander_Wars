@@ -5,7 +5,9 @@ BuildingSpriteManager::BuildingSpriteManager()
                                                   "/scripts/building")
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("BuildingSpriteManager");
+#endif
 }
 
 void BuildingSpriteManager::removeRessource(QString id)

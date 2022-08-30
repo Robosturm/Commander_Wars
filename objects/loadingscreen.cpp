@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/loadingscreen.h"
 
 #include "coreengine/mainapp.h"
@@ -19,7 +21,9 @@ spLoadingScreen LoadingScreen::getInstance()
 
 LoadingScreen::LoadingScreen()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("LoadingScreen");
+#endif
     Interpreter::setCppOwnerShip(this);
     setPriority(static_cast<quint16>(Mainapp::ZOrder::Loadingscreen));
 }
@@ -86,7 +90,7 @@ void LoadingScreen::setProgress(QString workText, qint32 value)
     m_LoadingBar->setWidth(value * Settings::getWidth() / 100);
     if (Mainapp::getInstance()->isMainThread())
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
     }
 }
 

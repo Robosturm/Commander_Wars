@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 #include "coreengine/LUPDATE_MACROS.h"
@@ -621,7 +619,7 @@ public slots:
      * @brief refill fills up all ammo and fuel to max
      * @param noMaterial if true material will not be refilled.
      */
-    void refill(bool noMaterial = false);
+    void refill(bool noMaterial = false, float fuelAmount = 1, float ammo1Amount = 1, float ammo2Amount = 1);
 
     /**
      * @brief setHasMoved  changes if the unit has been moved or not
@@ -697,6 +695,10 @@ public slots:
      * @param iconID
      */
     void unloadIcon(const QString & iconID);
+    /**
+     * @brief endOfTurn
+     */
+    void endOfTurn();
     /**
      * @brief startOfTurn
      */

@@ -2,12 +2,12 @@
 #define GAMERECORDER_H
 
 #include <QObject>
-#include <qvector3d.h>
+#include <QVector3D>
 
 #include "game/gamerecording/daytodayrecord.h"
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
 

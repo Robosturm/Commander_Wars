@@ -7,7 +7,7 @@
 #include <QBuffer>
 #include <QDataStream>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "gameinput/menudata.h"
 #include "gameinput/markedfielddata.h"
@@ -27,6 +27,15 @@ class GameAction : public QObject, public FileSerializable, public oxygine::ref_
     Q_OBJECT
 
 public:
+    enum class InputData
+    {
+        Int,
+        Float,
+        String
+    };
+    static const char* const INPUTSTEP_FIELD;
+    static const char* const INPUTSTEP_MENU;
+
     explicit GameAction(GameMap* pMap);
     explicit GameAction(const QString & actionID, GameMap* pMap);
     virtual ~GameAction() = default;
@@ -262,7 +271,7 @@ public slots:
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
-        ++m_variableCount;
+        m_storedDataTypes.push_back(InputData::String);
     }
     /**
      * @brief readDataString
@@ -282,7 +291,7 @@ public slots:
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
-        ++m_variableCount;
+        m_storedDataTypes.push_back(InputData::Int);
     }
     /**
      * @brief readDataInt32
@@ -302,7 +311,7 @@ public slots:
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
-        ++m_variableCount;
+        m_storedDataTypes.push_back(InputData::Float);
     }
     /**
      * @brief readDataFloat
@@ -356,8 +365,12 @@ public slots:
     }
     qint32 getVariableCount() const
     {
-        return m_variableCount;
+        return m_storedDataTypes.size();
     }
+    /**
+     * @brief revertLastInputStep
+     */
+    void revertLastInputStep(const QString & stepType);
 protected:
     void printAction();
 private:
@@ -383,6 +396,7 @@ private:
      */
     QBuffer m_buffer;
     QDataStream m_actionData{&m_buffer};
+    std::vector<InputData> m_storedDataTypes;
 
     quint32 m_seed;
     /**
@@ -395,7 +409,6 @@ private:
     qint64 m_syncCounter{0};
     qint64 m_roundTimerTime{0};
     qint32 m_player{-1};
-    qint32 m_variableCount{0};
     GameMap* m_pMap{nullptr};
 };
 

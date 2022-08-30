@@ -11,7 +11,9 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
       m_pointsToAdd(pointsToAdd),
       m_updateTimer(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogValueCounter");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());

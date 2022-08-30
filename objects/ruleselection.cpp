@@ -1,4 +1,6 @@
-#include "ruleselection.h"
+#include "objects/ruleselection.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -29,7 +31,9 @@ RuleSelection::RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enable
       m_ruleChangeEabled(enabled),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("RuleSelection");
+#endif
     Interpreter::setCppOwnerShip(this);
     setWidth(width);
     showRuleSelection();
@@ -1049,8 +1053,6 @@ void RuleSelection::weatherChancesChanged()
 
 void RuleSelection::showCOBannlist()
 {
-    
-    
     spCOBannListDialog pBannlist = spCOBannListDialog::create(m_pMap->getGameRules()->getCOBannlist());
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &COBannListDialog::editFinished, m_pMap->getGameRules(), &GameRules::setCOBannlist, Qt::QueuedConnection);
@@ -1058,16 +1060,14 @@ void RuleSelection::showCOBannlist()
 }
 
 void RuleSelection::showPerkBannlist()
-{
-    
+{    
     spPerkSelectionDialog pBannlist = spPerkSelectionDialog::create(m_pMap, nullptr, -1, true, QStringList());
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &PerkSelectionDialog::editFinished, m_pMap->getGameRules(), &GameRules::setAllowedPerks, Qt::QueuedConnection);
 }
 
 void RuleSelection::showActionBannlist()
-{
-    
+{    
     spActionListDialog pBannlist = spActionListDialog::create(m_pMap->getGameRules()->getAllowedActions(), m_pMap);
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &ActionListDialog::editFinished, m_pMap->getGameRules(), &GameRules::setAllowedActions, Qt::QueuedConnection);

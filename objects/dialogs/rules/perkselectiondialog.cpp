@@ -16,7 +16,9 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
       m_banning(banning),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("PerkSelectionDialog");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -247,7 +249,7 @@ QStringList PerkSelectionDialog::getNameList(QString path)
     while (dirIter.hasNext())
     {
         dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
+        QString file = dirIter.fileInfo().canonicalFilePath();
         auto data = Filesupport::readList(file);
         items.append(data.name);
     }

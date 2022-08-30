@@ -6,13 +6,17 @@ DecisionNode::DecisionNode(spDecisionQuestion & pQuestion, const std::vector<spD
 	: m_pQuestion(pQuestion),
       m_pNodes(pNodes)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DecisionNode");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 
 DecisionNode::DecisionNode()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DecisionNode");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

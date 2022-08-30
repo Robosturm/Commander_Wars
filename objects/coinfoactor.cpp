@@ -1,4 +1,6 @@
-#include "coinfoactor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
+#include "objects/coinfoactor.h"
 
 #include "coreengine/mainapp.h"
 
@@ -19,7 +21,9 @@
 COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("COInfoActor");
+#endif
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();

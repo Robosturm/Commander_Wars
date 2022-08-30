@@ -23,7 +23,7 @@ public slots:
      * @brief setCurrentText changes the text of this textbox
      * @param text
      */
-    void setCurrentText(QString text);
+    void setCurrentText(const QString & text);
     qint32 getCursorPosition() const;
     void setCursorPosition(qint32 position);
     virtual void focusedLost() override;
@@ -39,7 +39,7 @@ protected:
      * @param text
      * @return the draw text in pseudo html format
      */
-    QString getDrawText(QString text);
+    QString getDrawText(const QString & text);
     virtual void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg) override;
 private:
     QLineEdit* m_lineEdit;

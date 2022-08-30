@@ -11,7 +11,9 @@
 
 DialogRandomMap::DialogRandomMap()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogRandomMap");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

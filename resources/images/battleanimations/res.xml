@@ -155,13 +155,15 @@
         <!-- black_bomb -->
         <image file="black_bomb/black_bomb+mask.png" />        
         <!-- bomber -->
+        <image file="bomber/bomber+ac+mask.png" />
         <image file="bomber/bomber+bh+mask.png" />
         <image file="bomber/bomber+bm+mask.png" />
         <image file="bomber/bomber+dm+mask.png" />
         <image file="bomber/bomber+ge+mask.png" />
         <image file="bomber/bomber+os+mask.png" />
         <image file="bomber/bomber+yc+mask.png" />
-        <image file="bomber/bomber+ma+mask.png" />        
+        <image file="bomber/bomber+ma+mask.png" />
+        <image file="bomber/bomber+ti+mask.png" />
         <!-- cannonboat -->
         <image file="cannonboat/cannonboat.png" cols = "4" />
         <image file="cannonboat/cannonboat+mask.png" cols = "4" />        
@@ -206,7 +208,10 @@
         <image file="destroyer/destroyer+flak+fire+mask.png" cols = "4" />
         <image file="destroyer/destroyer+flak+mask.png" />
         <!-- duster -->
+        <image file="duster/duster+ac+mask.png" cols = "2" />
+        <image file="duster/duster+bd+mask.png" cols = "2" />
         <image file="duster/duster+ge+mask.png" cols = "2" />
+        <image file="duster/duster+pf+mask.png" cols = "2" />
         <image file="duster/duster+ma+mask.png" />
         <image file="duster/duster+os+mask.png" cols = "2" />
         <image file="duster/duster+ti+mask.png" cols = "2" />
@@ -222,7 +227,7 @@
         <image file="fighter/fighter+gs+mask.png" />
         <image file="fighter/fighter+os+mask.png" />
         <image file="fighter/fighter+yc+mask.png" cols = "2" />
-        <image file="fighter/fighter+pf+mask.png" cols = "2" />
+        <image file="fighter/fighter+pf+mask.png" />
         <image file="fighter/fighter+ma+mask.png" />
         <image file="fighter/fighter+ti+mask.png" />
         <image file="fighter/fighter+ac+fire+mask.png" />
@@ -235,7 +240,7 @@
         <image file="fighter/fighter+gs+fire+mask.png" />
         <image file="fighter/fighter+os+fire+mask.png" />
         <image file="fighter/fighter+yc+fire+mask.png" cols = "2" />
-        <image file="fighter/fighter+pf+fire+mask.png" cols = "2" />
+        <image file="fighter/fighter+pf+fire+mask.png" />
         <image file="fighter/fighter+ma+fire+mask.png" />
         <image file="fighter/fighter+ti+fire+mask.png" />
         <!-- flak -->
@@ -1242,7 +1247,33 @@
         <!-- transportplane -->
         <image file="transportplane/transportplane+mask.png" />        
         <!-- waterplane -->
-        <image file="waterplane/waterplane+mask.png" cols = "2" />        
+        <image file="waterplane/waterplane+mask.png" cols = "2" />
+        <image file="waterplane/waterplane+ac+fire+mask.png" />
+        <image file="waterplane/waterplane+ac+mask.png" />
+        <image file="waterplane/waterplane+bm+fire+mask.png" />
+        <image file="waterplane/waterplane+bm+mask.png" />
+        <image file="waterplane/waterplane+bh+fire+mask.png" />
+        <image file="waterplane/waterplane+bh+mask.png" />
+        <image file="waterplane/waterplane+bg+fire+mask.png" />
+        <image file="waterplane/waterplane+bg+mask.png" />
+        <image file="waterplane/waterplane+ge+fire+mask.png" />
+        <image file="waterplane/waterplane+ge+mask.png" />
+        <image file="waterplane/waterplane+gs+fire+mask.png" />
+        <image file="waterplane/waterplane+gs+mask.png" />
+        <image file="waterplane/waterplane+os+fire+mask.png" />
+        <image file="waterplane/waterplane+os+mask.png" />
+        <image file="waterplane/waterplane+pf+fire+mask.png" />
+        <image file="waterplane/waterplane+pf+mask.png" />
+        <image file="waterplane/waterplane+ti+fire+mask.png" />
+        <image file="waterplane/waterplane+ti+mask.png" />
+        <image file="waterplane/waterplane+yc+fire+mask.png" cols = "2" />
+        <image file="waterplane/waterplane+yc+mask.png" cols = "2" />
+        <image file="waterplane/waterplane+bd+fire+mask.png" cols = "2" />
+        <image file="waterplane/waterplane+bd+mask.png" cols = "2" />
+        <image file="waterplane/waterplane+ma+fire+mask.png" cols = "4" />
+        <image file="waterplane/waterplane+ma+mask.png" cols = "4" />
+        <image file="waterplane/waterplane+dm+fire+mask.png" />
+        <image file="waterplane/waterplane+dm+mask.png" />
         <!-- zeppelin -->
         <image file="zeppelin/zeppelin+mask.png" />        
         <!-- repair_tank -->

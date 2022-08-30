@@ -5,6 +5,8 @@
 
 #include "resource_management/objectmanager.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
+
 void CreateOutline::addCursorRangeOutline(oxygine::spActor pOutlineSprite, const QString & prefix, qint32 range, QColor color)
 {    
     for (qint32 i = 0; i <= range; i++)

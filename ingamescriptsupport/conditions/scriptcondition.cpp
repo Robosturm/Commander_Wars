@@ -12,6 +12,7 @@
 #include "ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.h"
 #include "ingamescriptsupport/conditions/scriptconditionplayerreachedarea.h"
 #include "ingamescriptsupport/conditions/scriptconditioncheckvariable.h"
+#include "ingamescriptsupport/conditions/scriptconditionisco.h"
 
 #include "coreengine/console.h"
 
@@ -28,6 +29,7 @@ const QString ScriptCondition::ConditionBuildingsOwned = "Buildings Owned";
 const QString ScriptCondition::ConditionPlayerReachedArea = "Player in Area";
 const QString ScriptCondition::ConditionUnitReachedArea = "Unit in Area";
 const QString ScriptCondition::ConditionCheckVariable = "Check Variable";
+const QString ScriptCondition::ConditionIsCo = "Is selected Co";
 
 ScriptCondition::ScriptCondition(GameMap* pMap, ConditionType type)
     : m_Type(type),
@@ -73,6 +75,7 @@ bool ScriptCondition::readSubCondition(GameMap* pMap, QTextStream& rStream, QStr
     }
     if (subCondition.get() != nullptr)
     {
+        CONSOLE_PRINT("Added sub condition to current condition", Console::eDEBUG);
         line = rStream.readLine();
         line = line.simplified();
         if (line.endsWith(id + " End"))
@@ -144,6 +147,10 @@ spScriptCondition ScriptCondition::createCondition(GameMap* pMap, ConditionType 
         {
             return spScriptConditionCheckVariable::create(pMap);
         }
+        case ConditionType::isCo:
+        {
+            return spScriptConditionIsCo::create(pMap);
+        }
     }
     return spScriptCondition();
 }
@@ -152,6 +159,7 @@ spScriptCondition ScriptCondition::createCondition(GameMap* pMap, ConditionType 
 spScriptCondition ScriptCondition::createReadCondition(GameMap* pMap, QTextStream& rStream, QString & line)
 {
     line = line.simplified();
+    CONSOLE_PRINT("Creating condition for line " + line, Console::eDEBUG);
     spScriptCondition ret;
     if (line.endsWith(ConditionEachDay))
     {
@@ -205,8 +213,13 @@ spScriptCondition ScriptCondition::createReadCondition(GameMap* pMap, QTextStrea
     {
         ret = spScriptConditionCheckVariable::create(pMap);
     }
+    else if (line.endsWith(ConditionIsCo))
+    {
+        ret = spScriptConditionIsCo::create(pMap);
+    }
     if (ret.get() != nullptr)
     {
+        CONSOLE_PRINT("Found valid condition of type " + QString::number(static_cast<qint32>(ret->getType())), Console::eDEBUG);
         ret->readCondition(rStream, line);
     }    
     return ret;
@@ -241,6 +254,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
 {
     switch (type1)
     {
+        case ScriptCondition::ConditionType::isCo:
         case ScriptCondition::ConditionType::checkVariable:
         {
             return true;
@@ -251,6 +265,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
             {
                 case ScriptCondition::ConditionType::victory:
                 case ScriptCondition::ConditionType::checkVariable:
+                case ScriptCondition::ConditionType::isCo:
                 {
                     return true;
                 }
@@ -268,6 +283,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
                 case ScriptCondition::ConditionType::startOfTurn:
                 case ScriptCondition::ConditionType::eachDay:
                 case ScriptCondition::ConditionType::checkVariable:
+                case ScriptCondition::ConditionType::isCo:
                 {
                     return true;
                 }
@@ -299,6 +315,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
                 case ScriptCondition::ConditionType::unitReachedArea:
                 case ScriptCondition::ConditionType::playerReachedArea:
                 case ScriptCondition::ConditionType::checkVariable:
+                case ScriptCondition::ConditionType::isCo:
                 {
                     return true;
                 }

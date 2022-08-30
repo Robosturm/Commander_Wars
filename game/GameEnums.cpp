@@ -1,3 +1,5 @@
+#include <QEasingCurve>
+
 #include "game/GameEnums.h"
 
 #include "coreengine/mainapp.h"
@@ -182,6 +184,54 @@ void GameEnums::registerEnums()
     value.setProperty("LoginError_AccountExists", LoginError_AccountExists);
     value.setProperty("LoginError_InvalidPasswordReset", LoginError_InvalidPasswordReset);
     value.setProperty("LoginError_PasswordOutdated", LoginError_PasswordOutdated);
+    value.setProperty("LoginError_DatabaseNotAccesible", LoginError_DatabaseNotAccesible);
+    value.setProperty("LoginError_SendingMailFailed", LoginError_SendingMailFailed);
+
+    value.setProperty("QEasingCurve_Linear", QEasingCurve::Linear);
+    value.setProperty("QEasingCurve_InQuad", QEasingCurve::InQuad);
+    value.setProperty("QEasingCurve_OutQuad", QEasingCurve::OutQuad);
+    value.setProperty("QEasingCurve_InOutQuad", QEasingCurve::InOutQuad);
+    value.setProperty("QEasingCurve_OutInQuad", QEasingCurve::OutInQuad);
+    value.setProperty("QEasingCurve_InCubic", QEasingCurve::InCubic);
+    value.setProperty("QEasingCurve_OutCubic", QEasingCurve::OutCubic);
+    value.setProperty("QEasingCurve_InOutCubic", QEasingCurve::InOutCubic);
+    value.setProperty("QEasingCurve_OutInCubic", QEasingCurve::OutInCubic);
+    value.setProperty("QEasingCurve_InQuart", QEasingCurve::InQuart);
+    value.setProperty("QEasingCurve_OutQuart", QEasingCurve::OutQuart);
+    value.setProperty("QEasingCurve_InOutQuart", QEasingCurve::InOutQuart);
+    value.setProperty("QEasingCurve_OutInQuart", QEasingCurve::OutInQuart);
+    value.setProperty("QEasingCurve_InQuint", QEasingCurve::InQuint);
+    value.setProperty("QEasingCurve_OutQuint", QEasingCurve::OutQuint);
+    value.setProperty("QEasingCurve_InOutQuint", QEasingCurve::InOutQuint);
+    value.setProperty("QEasingCurve_OutInQuint", QEasingCurve::OutInQuint);
+    value.setProperty("QEasingCurve_InSine", QEasingCurve::InSine);
+    value.setProperty("QEasingCurve_OutSine", QEasingCurve::OutSine);
+    value.setProperty("QEasingCurve_InOutSine", QEasingCurve::InOutSine);
+    value.setProperty("QEasingCurve_OutInSine", QEasingCurve::OutInSine);
+    value.setProperty("QEasingCurve_InExpo", QEasingCurve::InExpo);
+    value.setProperty("QEasingCurve_OutExpo", QEasingCurve::OutExpo);
+    value.setProperty("QEasingCurve_InOutExpo", QEasingCurve::InOutExpo);
+    value.setProperty("QEasingCurve_OutInExpo", QEasingCurve::OutInExpo);
+    value.setProperty("QEasingCurve_InCirc", QEasingCurve::InCirc);
+    value.setProperty("QEasingCurve_OutCirc", QEasingCurve::OutCirc);
+    value.setProperty("QEasingCurve_InOutCirc", QEasingCurve::InOutCirc);
+    value.setProperty("QEasingCurve_OutInirc", QEasingCurve::OutInCirc);
+    value.setProperty("QEasingCurve_InElastic", QEasingCurve::InElastic);
+    value.setProperty("QEasingCurve_OutElastic", QEasingCurve::OutElastic);
+    value.setProperty("QEasingCurve_InOutElastic", QEasingCurve::InOutElastic);
+    value.setProperty("QEasingCurve_OutInElastic", QEasingCurve::OutInElastic);
+    value.setProperty("QEasingCurve_InBack", QEasingCurve::InBack);
+    value.setProperty("QEasingCurve_OutBack", QEasingCurve::OutBack);
+    value.setProperty("QEasingCurve_InOutBack", QEasingCurve::InOutBack);
+    value.setProperty("QEasingCurve_OutInBack", QEasingCurve::OutInBack);
+    value.setProperty("QEasingCurve_InBounce", QEasingCurve::InBounce);
+    value.setProperty("QEasingCurve_OutBounce", QEasingCurve::OutBounce);
+    value.setProperty("QEasingCurve_InOutBounce", QEasingCurve::InOutBounce);
+    value.setProperty("QEasingCurve_OutInBounce", QEasingCurve::OutInBounce);
+    value.setProperty("QEasingCurve_InElastic", QEasingCurve::InCurve);
+    value.setProperty("QEasingCurve_OutElastic", QEasingCurve::OutCurve);
+    value.setProperty("QEasingCurve_InOutElastic", QEasingCurve::SineCurve);
+    value.setProperty("QEasingCurve_OutInElastic", QEasingCurve::CosineCurve);
 
     pInterpreter->setGlobal("GameEnums", value);
 }

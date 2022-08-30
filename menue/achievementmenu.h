@@ -1,8 +1,6 @@
 #ifndef ACHIEVEMENTMENU_H
 #define ACHIEVEMENTMENU_H
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "menue/basemenu.h"
 
 #include "objects/base/panel.h"

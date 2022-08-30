@@ -1,9 +1,5 @@
-#ifndef COSTYLEMENU_H
-#define COSTYLEMENU_H
 #pragma once
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "menue/basemenu.h"
 
 class COStyleMenu;
@@ -26,8 +22,5 @@ public slots:
 protected slots:
     virtual void onEnter() override;
 private:
-
     QString m_currentCOID;
 };
-
-#endif // COSTYLEMENU_H

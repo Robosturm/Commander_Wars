@@ -16,6 +16,7 @@ namespace JsonKeys
     const char* const JSONKEY_GAMEDATA = "gameData";
     const char* const JSONKEY_OPENPLAYERCOUNT = "openPlayerCount";
     const char* const JSONKEY_ADDRESS = "address";
+    const char* const JSONKEY_SECONDARYADDRESS = "secondaryAddress";
     const char* const JSONKEY_PORT = "port";
     const char* const JSONKEY_ChatSender = "sender";
     const char* const JSONKEY_ChatMessage = "message";
@@ -32,4 +33,5 @@ namespace JsonKeys
     const char* const JSONKEY_USERNAME = "username";
     const char* const JSONKEY_ACCOUNT_ERROR = "accountError";
     const char* const JSONKEY_USERNAMES = "usernames";
+    const char* const JSONKEY_DISCONNECTREASON = "disconnectReason";
 }

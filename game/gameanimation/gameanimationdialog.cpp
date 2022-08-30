@@ -1,5 +1,7 @@
 #include <QFile>
 
+#include "3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.h"
+
 #include "game/gameanimation/gameanimationdialog.h"
 #include "game/gameanimation/gameanimationfactory.h"
 #include "game/gamemap.h"
@@ -19,7 +21,9 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
       m_finishTimer(this),
       m_textSpeed(100 / Settings::getDialogAnimationSpeed())
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -282,7 +286,10 @@ void GameAnimationDialog::setPlayerCO(qint32 player, quint8 co, GameEnums::COMoo
             {
                 QString resAnim = pCo->getCoID().toLower() + "+face";
                 oxygine::ResAnim* pAnim = pCo->getResAnim(resAnim);
-                m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+                if (pAnim != nullptr)
+                {
+                    m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+                }
             }
             else
             {

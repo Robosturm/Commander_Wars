@@ -23,10 +23,19 @@
 
 #include "menue/movementplanner.h"
 
+oxygine::spActor HumanPlayerInput::m_ZInformationLabel;
+spHumanPlayerInputMenu HumanPlayerInput::m_CurrentMenu;
+std::vector<oxygine::spActor> HumanPlayerInput::m_Fields;
+std::vector<QPoint> HumanPlayerInput::m_FieldPoints;
+spMarkedFieldData HumanPlayerInput::m_pMarkedFieldData;
+std::vector<oxygine::spActor> HumanPlayerInput::m_InfoFields;
+
 HumanPlayerInput::HumanPlayerInput(GameMap* pMap)
     : BaseGameInputIF(pMap, GameEnums::AiTypes_Human)
-{    
+{
+#ifdef GRAPHICSUPPORT
     setObjectName("HumanPlayerInput");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -299,6 +308,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
 
 void HumanPlayerInput::syncMarkedFields()
 {
+#ifdef GRAPHICSUPPORT
     for (auto & field : m_Fields)
     {
         auto & tweens = field->getTweens();
@@ -308,6 +318,7 @@ void HumanPlayerInput::syncMarkedFields()
             pTween->start(*field);
         }
     }
+#endif
 }
 
 void HumanPlayerInput::cleanUpInput()
@@ -675,17 +686,17 @@ void HumanPlayerInput::getNextStepData()
         pCursor->changeCursor("cursor+default");
         pCursor->resetCursorRangeOutline();
         QString stepType = m_pGameAction->getStepInputType();
-        if (stepType.toUpper() == "MENU")
+        if (stepType == GameAction::INPUTSTEP_MENU)
         {
             CONSOLE_PRINT("HumanPlayerInput::getNextStepData show menu", Console::eDEBUG);
             spMenuData pData = m_pGameAction->getMenuStepData();
             if (pData->validData())
-            {
+            {                
                 m_CurrentMenu = spHumanPlayerInputMenu::create(m_pMenu, m_pMap, pData->getTexts(), pData->getActionIDs(), pData->getIconList(), pData->getCostList(), pData->getEnabledList());
                 attachActionMenu(m_pGameAction->getActionTarget().x(), m_pGameAction->getActionTarget().y());
             }
         }
-        else if (stepType.toUpper() == "FIELD")
+        else if (stepType == GameAction::INPUTSTEP_FIELD)
         {
             CONSOLE_PRINT("HumanPlayerInput::getNextStepData show fields", Console::eDEBUG);
             spMarkedFieldData pData = m_pGameAction->getMarkedFieldStepData();
@@ -705,7 +716,7 @@ void HumanPlayerInput::getNextStepData()
         }
         else
         {
-            CONSOLE_PRINT("Unknown step type detected. This will lead to an undefined behaviour. Action " + m_pGameAction->getActionID() + " at step " + QString::number(m_pGameAction->getInputStep()), Console::eERROR);
+            CONSOLE_PRINT("Unknown step type detected. This will lead to an undefined behaviour. Action " + m_pGameAction->getActionID() + " at step " + QString::number(m_pGameAction->getInputStep()) + " step type " + stepType, Console::eERROR);
         }
     }
     Mainapp::getInstance()->continueRendering();
@@ -767,6 +778,7 @@ void HumanPlayerInput::createActionMenu(const QStringList & actionIDs, qint32 x,
 {
     CONSOLE_PRINT("HumanPlayerInput::createActionMenu", Console::eDEBUG);
     clearMarkedFields();
+    clearMenu();
     MenuData data(m_pMap);
     for (auto & action : actionIDs)
     {

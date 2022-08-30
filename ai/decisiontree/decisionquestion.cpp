@@ -4,7 +4,9 @@
 
 DecisionQuestion::DecisionQuestion()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DecisionQuestion");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

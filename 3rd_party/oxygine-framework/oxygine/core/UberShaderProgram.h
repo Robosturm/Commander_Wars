@@ -1,27 +1,19 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
-#include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
+#include "ShaderProgram.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+#include <QString>
 
 namespace oxygine
 {
     class UberShaderProgram
     {
     public:
-        struct shader
+        enum ColorMode
         {
-            spShaderProgram program;
-            qint32 flags{0};
-        };
-        enum
-        {
-            ALPHA_PREMULTIPLY = 1,
-            SEPARATE_ALPHA =    1 << 1,
-            MASK_R_CHANNEL =    1 << 2,
-            MASK =              1 << 3,
-            ADD_COLOR =         1 << 4,
-            COLOR_TABLE =       1 << 5,
-            COLOR_MATRIX =      1 << 6,
-            _SIZE =             1 << 7
+            COLOR_DEFAULT,
+            COLOR_TABLE,
+            COLOR_MATRIX,
+            _SIZE,
         };
         enum
         {
@@ -30,11 +22,16 @@ namespace oxygine
             SAMPLER_MASK,
             SAMPLER_NUM,
         };
+        struct shader
+        {
+            spShaderProgram program;
+            ColorMode fracShader{COLOR_DEFAULT};
+        };
         explicit UberShaderProgram() = default;
         virtual ~UberShaderProgram();
-        ShaderProgram* getShaderProgram(qint32 flags);
+        ShaderProgram* getShaderProgram(ColorMode fracShader);
         void apply(VideoDriver* driver, spTexture & base);
-        void init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader, const QString& fracMatrixShader);
+        void init();
         void release();
     protected:
         void releaseShaders();

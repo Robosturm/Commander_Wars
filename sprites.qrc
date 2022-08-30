@@ -1553,11 +1553,6 @@
         <file>resources/images/co/yc/co_sonja+table.png</file>
         <file>system/frac_shader.glsl</file>
         <file>system/frac_table_shader.glsl</file>
-        <file>system/pp_blit_fs.glsl</file>
-        <file>system/pp_blit_vs.glsl</file>
-        <file>system/pp_hblur_vs.glsl</file>
-        <file>system/pp_rast_fs.glsl</file>
-        <file>system/pp_vblur_vs.glsl</file>
         <file>system/vertex_shader.glsl</file>
         <file>customTerrainImages/plane+0.png</file>
         <file>customTerrainImages/plane+1.png</file>
@@ -4099,7 +4094,6 @@
         <file>resources/images/terrain/riverend_lake+W.png</file>
         <file>resources/images/units/icons/rank+hidden.png</file>
         <file>resources/images/co/bd/co_cairn+mini.png</file>
-        <file>resources/ui/mainmenu.xml</file>
         <file>resources/objects/logo.png</file>
         <file>resources/images/units/motorbike++mask.png</file>
         <file>resources/images/units/motorbike++walk+mask.png</file>
@@ -4747,17 +4741,80 @@
         <file>resources/images/game/battlesprites/background/back_wastestreet+town.png</file>
         <file>resources/ui/viewMapStats.js</file>
         <file>resources/ui/viewMapStats.xml</file>
-        <file>resources/ui/userLoginDialog.js</file>
-        <file>resources/ui/userLoginDialog.xml</file>
-        <file>resources/ui/createAccountDialog.js</file>
-        <file>resources/ui/createAccountDialog.xml</file>
-        <file>resources/ui/forgotPasswordDialog.js</file>
-        <file>resources/ui/forgotPasswordDialog.xml</file>
-        <file>resources/ui/changePasswordDialog.js</file>
-        <file>resources/ui/changePasswordDialog.xml</file>
         <file>resources/objects/lock.png</file>
         <file>resources/objects/unlock.png</file>
         <file>resources/fonts/res.xml</file>
         <file>resources/objects/h_table_divider.png</file>
-        <file>resources/objects/v_table_divider.png</file>    </qresource>
+        <file>resources/objects/v_table_divider.png</file>
+        <file>resources/images/battleanimations/bomber/bomber+ac+mask.png</file>
+        <file>resources/images/battleanimations/bomber/bomber+ti+mask.png</file>
+        <file>resources/ui/serverLogin/changePasswordDialog.js</file>
+        <file>resources/ui/serverLogin/changePasswordDialog.xml</file>
+        <file>resources/ui/serverLogin/createAccountDialog.js</file>
+        <file>resources/ui/serverLogin/createAccountDialog.xml</file>
+        <file>resources/ui/serverLogin/forgotPasswordDialog.js</file>
+        <file>resources/ui/serverLogin/forgotPasswordDialog.xml</file>
+        <file>resources/ui/serverLogin/userLoginDialog.js</file>
+        <file>resources/ui/serverLogin/userLoginDialog.xml</file>
+        <file>resources/ui/menu/mainmenu.xml</file>
+        <file>resources/ui/menu/mainmenu.js</file>
+        <file>resources/ui/menu/playermenu.xml</file>
+        <file>resources/ui/menu/mainsinglemenu.xml</file>
+        <file>resources/ui/menu/mainoptionmenu.xml</file>
+        <file>resources/ui/options/optionaudiomenu.xml</file>
+        <file>resources/ui/options/optionmenu.js</file>
+        <file>resources/ui/options/optionvideomenu.xml</file>
+        <file>resources/ui/options/optioncontrolsmenu.xml</file>
+        <file>resources/ui/options/optiongameplaymenu.xml</file>
+        <file>resources/ui/options/optionnetworkmenu.xml</file>
+        <file>resources/images/co/yc/co_grimm+alt+mini.png</file>
+        <file>resources/images/co/yc/co_grimm+mini.png</file>
+        <file>resources/images/battleanimations/duster/duster+ac+mask.png</file>
+        <file>resources/images/battleanimations/duster/duster+bd+mask.png</file>
+        <file>resources/images/battleanimations/duster/duster+pf+mask.png</file>
+        <file>resources/images/building/powerplant.png</file>
+        <file>resources/images/building/powerplant+mask.png</file>
+        <file>resources/images/building/powerplant+neutral.png</file>
+        <file>resources/images/building/powerplant+shadow+desert.png</file>
+        <file>resources/images/building/powerplant+shadow+plains.png</file>
+        <file>resources/images/building/powerplant+shadow+snow.png</file>
+        <file>resources/images/building/powerplant+shadow+waste.png</file>
+        <file>resources/images/building/powerplant+snow.png</file>
+        <file>resources/images/building/depot+shadow+desert.png</file>
+        <file>resources/images/building/depot+shadow+plains.png</file>
+        <file>resources/images/building/depot+shadow+snow.png</file>
+        <file>resources/images/building/depot+shadow+waste.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ac+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ac+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+bm+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+bm+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ge+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ge+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+os+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+os+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+yc+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+yc+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+bg+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+bg+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+bh+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+bh+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+gs+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+gs+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ma+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ma+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+pf+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+pf+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ti+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+ti+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+bd+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+bd+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+dm+fire+mask.png</file>
+        <file>resources/images/battleanimations/waterplane/waterplane+dm+mask.png</file>
+        <file>resources/ui/game/playerSelection.js</file>
+        <file>resources/ui/game/playerSelection.xml</file>
+        <file>resources/ui/game/allAdvancedPlayerChanges.xml</file>
+        <file>resources/ui/game/advancedPlayerChanges.xml</file>
+        <file>resources/images/game/turnStartInfo.png</file>
+        <file>resources/fonts/segoeuiBold.TTF</file>
+    </qresource>
 </RCC>

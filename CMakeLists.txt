@@ -25,12 +25,17 @@ option(OPENSSL_USE_STATIC_LIBS "you may disable linking static against openssl b
 option(OPENSSL_MSVC_STATIC_RT "you may disable linking static against openssl but it's not recommended. The installation process won't deploy the libs." TRUE)
 option(AUDIOSUPPORT "enables audio support for the game and compiles music/sound into the exe" ON)
 option(GRAPHICSUPPORT "enables sprites for the game and compiles them into the exe" ON)
+option(USEVULKAN "This swaps from opengl to vulkan rendering. Incompatible with GRAPHICSUPPORT OFF. In development don't use" OFF)
+option(PRECOMPILEDOPENSSL "if the openssl are precompiled libs or or package exists" OFF)
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
+option(DEPLOY_RESOURCES_AS_FOLDER "if files should be compiled into the exe or deployed as folder" OFF)
 
 ###################################################################################
 # show configuration
 ###################################################################################
 
+get_filename_component(CXX_COMPILER_PATH "${CMAKE_CXX_COMPILER}" DIRECTORY)
+get_filename_component(C_COMPILER_PATH "${CMAKE_C_COMPILER}" DIRECTORY)
 message("Prefix Path: ${CMAKE_PREFIX_PATH}")
 message("Module Path: ${CMAKE_MODULE_PATH}")
 message("Qt-Host-Path: ${QT_HOST_PATH}")
@@ -40,14 +45,17 @@ message("C-Compiler Path: ${C_COMPILER_PATH}")
 message("C-Compiler: ${CMAKE_C_COMPILER}")
 message("C++-Compiler Path: ${CXX_COMPILER_PATH}")
 message("C++-Compiler: ${CMAKE_CXX_COMPILER}")
-message("C-Compiler ${CMAKEXX_COMPILER_ID}")
-message("C++-Compiler ${CMAKE_CXX_COMPILER_ID}")
-message("OS: ${CMAKE_SYSTEM_NAME}")
 message("CFlags: ${CMAKE_C_FLAGS}")
 message("CXX Flags: ${CMAKE_CXX_FLAGS}")
 message("CMake Systemname: ${CMAKE_SYSTEM_NAME}")
 message("CMake Binary dir: ${CMAKE_CURRENT_BINARY_DIR}")
 message("OpenSsL-Dir:" ${OPENSSL_ROOT_DIR})
+message("Toolchain-file: ${CMAKE_TOOLCHAIN_FILE}")
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    message("SDK: ${ANDROID_SDK}")
+    message("NDK: ${ANDROID_SDK_ROOT}")
+endif()
+
 
 ###################################################################################
 # Find external libs
@@ -59,7 +67,6 @@ find_package(Qt6 COMPONENTS Gui REQUIRED)
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt6 COMPONENTS Xml REQUIRED)
 find_package(Qt6 COMPONENTS Sql REQUIRED)
-find_package(Qt6 COMPONENTS OpenGL REQUIRED)
 find_package(Doxygen OPTIONAL_COMPONENTS mscgen dia dot)
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
@@ -68,8 +75,6 @@ endif()
 # the binaries
 get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
 get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
-get_filename_component(CXX_COMPILER_PATH "${CMAKE_CXX_COMPILER}" DIRECTORY)
-get_filename_component(C_COMPILER_PATH "${CMAKE_C_COMPILER}" DIRECTORY)
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
@@ -80,10 +85,27 @@ endif()
 ###################################################################################
 # OpenSsl
 ###################################################################################
-find_package(OpenSSL REQUIRED)
-message (STATUS "OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
-message (STATUS "OpenSsL All-Libs:" ${OPENSSL_LIBRARIES})
-include_directories(${OPENSSL_INCLUDE_DIR})
+
+if(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    message("Using local pre-compiled openssl version from path: ${OPENSSL_LIB_PATH}")
+    set(OPENSSL_LIBS
+        ${OPENSSL_LIB_PATH}/libcrypto_${ANDROID_ABI}.a
+        ${OPENSSL_LIB_PATH}/libssl_${ANDROID_ABI}.a
+    CACHE INTERNAL "")
+    include_directories(${OPENSSL_INCLUDE_DIR})
+    message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
+    message ("OpenSsL libs:" ${OPENSSL_LIBS})
+else()
+    message("Using openssl package")
+    find_package(OpenSSL REQUIRED)
+    message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
+    message ("OpenSsL All-Libs:" ${OPENSSL_LIBRARIES})
+    include_directories(${OPENSSL_INCLUDE_DIR})
+    set(OPENSSL_LIBS
+        OpenSSL::SSL
+        OpenSSL::Crypto
+    )
+endif()
 
 ###################################################################################
 # Set build dependend defines
@@ -91,36 +113,32 @@ include_directories(${OPENSSL_INCLUDE_DIR})
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     message("Compiling as Debug")
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-        set(DEPLOY_RESOURCES_AS_FOLDER false)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
-            #-DHEAVY_AI                 # experimental heavy ai unfinished
+            -DHEAVY_AI                 # experimental heavy ai unfinished
             #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        set(DEPLOY_RESOURCES_AS_FOLDER true)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
-            #-DHEAVY_AI                 # experimental heavy ai unfinished
-            -DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
+            -DHEAVY_AI                 # experimental heavy ai unfinished
+            #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     else()
-        set(DEPLOY_RESOURCES_AS_FOLDER false)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
-            #-DHEAVY_AI                 # experimental heavy ai unfinished
+            -DHEAVY_AI                 # experimental heavy ai unfinished
             #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     endif()
 else("Release")
     message("Compiling as Release")
-    set(DEPLOY_RESOURCES_AS_FOLDER false)
     add_definitions(
         -DDEBUG_LEVEL=1             # default console log level
     )
@@ -136,6 +154,21 @@ else()
     message("Building without Audio")
 endif()
 
+if(GRAPHICSUPPORT)
+    if (USEVULKAN)
+        message("Building with vulkan")
+        find_package(Vulkan REQUIRED)
+    else()
+        message("Building with OpenGl")
+        find_package(Qt6 COMPONENTS OpenGL REQUIRED)
+    endif()
+    add_definitions(
+        -DGRAPHICSUPPORT
+    )
+else()
+    message("Building without UI")
+endif()
+
 if (USEAPPCONFIGPATH)
     message("Building with user config path")
     add_definitions(
@@ -146,13 +179,17 @@ else()
 endif()
 
 ###################################################################################
-# General defines
+# General version information
 ###################################################################################
 add_definitions(
-    -DMAJOR=0
-    -DMINOR=23
-    -DREVISION=0
+    -DVERSION_MAJOR=0
+    -DVERSION_MINOR=24
+    -DVERSION_REVISION=3
+    -DVERSION_SUFFIX="dev"
     )
+
+set(COW_ANDROID_VERSION_NAME "0.24.3-dev")
+set(COW_ANDROID_VERSION_CODE "22")
 
 ###################################################################################
 # Set up some compiler and linking options
@@ -193,7 +230,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/Draggable.cpp 3rd_party/oxygine-framework/oxygine/Draggable.h
     3rd_party/oxygine-framework/oxygine/EventDispatcher.cpp 3rd_party/oxygine-framework/oxygine/EventDispatcher.h
     3rd_party/oxygine-framework/oxygine/Input.cpp 3rd_party/oxygine-framework/oxygine/Input.h
-    3rd_party/oxygine-framework/oxygine/MaskedRenderer.cpp 3rd_party/oxygine-framework/oxygine/MaskedRenderer.h
     3rd_party/oxygine-framework/oxygine/Material.cpp 3rd_party/oxygine-framework/oxygine/Material.h
     3rd_party/oxygine-framework/oxygine/MaterialCache.cpp 3rd_party/oxygine-framework/oxygine/MaterialCache.h
     3rd_party/oxygine-framework/oxygine/PointerState.cpp 3rd_party/oxygine-framework/oxygine/PointerState.h
@@ -204,15 +240,12 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/oxygine-forwards.h
     3rd_party/oxygine-framework/oxygine/TextStyle.h
     #core
-    3rd_party/oxygine-framework/oxygine/core/Object.cpp 3rd_party/oxygine-framework/oxygine/core/Object.h
     3rd_party/oxygine-framework/oxygine/core/oxygine.cpp 3rd_party/oxygine-framework/oxygine/core/oxygine.h
-    3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h
-    3rd_party/oxygine-framework/oxygine/core/VideoDriver.cpp 3rd_party/oxygine-framework/oxygine/core/VideoDriver.h
+    3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h
     3rd_party/oxygine-framework/oxygine/core/gamewindow.cpp 3rd_party/oxygine-framework/oxygine/core/gamewindow.h
     3rd_party/oxygine-framework/oxygine/core/ref_counter.cpp 3rd_party/oxygine-framework/oxygine/core/ref_counter.h
-    3rd_party/oxygine-framework/oxygine/core/texture.cpp 3rd_party/oxygine-framework/oxygine/core/texture.h
-    3rd_party/oxygine-framework/oxygine/core/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h
     3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h
+    3rd_party/oxygine-framework/oxygine/core/VideoDriver.h
     # actor
     3rd_party/oxygine-framework/oxygine/actor/Actor.cpp 3rd_party/oxygine-framework/oxygine/actor/Actor.h
     3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.cpp 3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h
@@ -254,6 +287,45 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/math/ScalarMath.h
     3rd_party/oxygine-framework/oxygine/math/Vector2.h
 )
+
+if (GRAPHICSUPPORT)
+    if (USEVULKAN)
+        include_directories("3rd_party/oxygine-framework/oxygine/core/vulkan")
+        set(${PROJECT_NAME}_OXYGINE_SRCS
+            ${${PROJECT_NAME}_OXYGINE_SRCS}
+            3rd_party/oxygine-framework/oxygine/core/vulkan/vulkanrenderer.cpp 3rd_party/oxygine-framework/oxygine/core/vulkan/vulkanrenderer.h
+            3rd_party/oxygine-framework/oxygine/core/vulkan/windowBase.cpp 3rd_party/oxygine-framework/oxygine/core/vulkan/windowBase.h
+            3rd_party/oxygine-framework/oxygine/core/vulkan/texture.cpp 3rd_party/oxygine-framework/oxygine/core/vulkan/texture.h
+            3rd_party/oxygine-framework/oxygine/core/vulkan/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/vulkan/ShaderProgram.h
+            3rd_party/oxygine-framework/oxygine/core/vulkan/VideoDriver.cpp
+            3rd_party/oxygine-framework/oxygine/core/vulkan/UberShaderProgram.cpp
+            game/gamerecording/vulkan/gamemapimagesaver.cpp
+        )
+    else()
+        include_directories("3rd_party/oxygine-framework/oxygine/core/opengl")
+        set(${PROJECT_NAME}_OXYGINE_SRCS
+            ${${PROJECT_NAME}_OXYGINE_SRCS}
+            3rd_party/oxygine-framework/oxygine/core/opengl/windowBase.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/windowBase.h
+            3rd_party/oxygine-framework/oxygine/core/opengl/texture.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/texture.h
+            3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.h
+            3rd_party/oxygine-framework/oxygine/core/opengl/VideoDriver.cpp
+            3rd_party/oxygine-framework/oxygine/core/opengl/UberShaderProgram.cpp
+            game/gamerecording/opengl/gamemapimagesaver.cpp
+        )
+    endif()
+else()
+    include_directories("3rd_party/oxygine-framework/oxygine/core/none")
+    set(${PROJECT_NAME}_OXYGINE_SRCS
+        ${${PROJECT_NAME}_OXYGINE_SRCS}
+        3rd_party/oxygine-framework/oxygine/core/none/windowBase.cpp 3rd_party/oxygine-framework/oxygine/core/none/windowBase.h
+        3rd_party/oxygine-framework/oxygine/core/none/texture.cpp 3rd_party/oxygine-framework/oxygine/core/none/texture.h
+        3rd_party/oxygine-framework/oxygine/core/none/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/none/ShaderProgram.h
+        3rd_party/oxygine-framework/oxygine/core/none/VideoDriver.cpp
+        3rd_party/oxygine-framework/oxygine/core/none/UberShaderProgram.cpp
+        game/gamerecording/none/gamemapimagesaver.cpp
+    )
+endif()
+
 ###################################################################################
 # end oxygine stuff -> qoxygine
 ###################################################################################
@@ -301,7 +373,6 @@ set(${PROJECT_NAME}_SRCS
     objects/perkselection.cpp objects/perkselection.h
     objects/mapselectionview.cpp objects/mapselectionview.h
     objects/loadingscreen.cpp objects/loadingscreen.h
-    objects/gameplayandkeys.cpp objects/gameplayandkeys.h
     objects/editorselection.cpp objects/editorselection.h
     objects/mapselection.cpp objects/mapselection.h
     objects/coselection.cpp objects/coselection.h
@@ -335,6 +406,7 @@ set(${PROJECT_NAME}_SRCS
     objects/base/tableview.cpp objects/base/tableview.h
     objects/base/closeablepopup.cpp objects/base/closeablepopup.h
     objects/base/moveinbutton.cpp objects/base/moveinbutton.h
+    objects/base/spriteobject.cpp objects/base/spriteobject.h
     # objects dialogs
     objects/dialogs/colorselectiondialog.cpp objects/dialogs/colorselectiondialog.h
     objects/dialogs/dialogconnecting.cpp objects/dialogs/dialogconnecting.h
@@ -433,6 +505,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/GamepadShared.cpp coreengine/Gamepad.h
     coreengine/sha256hash.cpp coreengine/sha256hash.h
     coreengine/commandlineparser.cpp coreengine/commandlineparser.h
+    coreengine/JsCallback.h
 
     # network engine
     network/smtpmailsender.h network/smtpmailsender.cpp
@@ -471,7 +544,7 @@ set(${PROJECT_NAME}_SRCS
     game/gamerecording/specialevent.cpp game/gamerecording/specialevent.h
     game/gamerecording/gamerecorder.cpp game/gamerecording/gamerecorder.h
     game/gamerecording/replayrecorder.cpp game/gamerecording/replayrecorder.h
-    game/gamerecording/gamemapimagesaver.cpp game/gamerecording/gamemapimagesaver.h
+    game/gamerecording/gamemapimagesaver.h
 
     # cool ingame script support
     game/gamescript.cpp game/gamescript.h
@@ -580,6 +653,7 @@ set(${PROJECT_NAME}_SRCS
     ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp ingamescriptsupport/conditions/scriptconditionplayerreachedarea.h
     ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.h
     ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp ingamescriptsupport/conditions/scriptconditioncheckvariable.h
+    ingamescriptsupport/conditions/scriptconditionisco.cpp ingamescriptsupport/conditions/scriptconditionisco.h
     # event stuff
     ingamescriptsupport/events/scriptevent.cpp ingamescriptsupport/events/scriptevent.h
     ingamescriptsupport/events/scripteventdialog.cpp ingamescriptsupport/events/scripteventdialog.h
@@ -694,6 +768,39 @@ if (NOT DEPLOY_RESOURCES_AS_FOLDER)
 endif()
 
 ##############################################################################
+# Lib setup                                                                  #
+##############################################################################
+
+# link libraries
+set(QT_LIBRARIES
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Qml
+    Qt6::Network
+    Qt6::Widgets
+    Qt6::Xml
+    Qt6::Sql
+    ${OPENSSL_LIBS}
+    )
+
+if (AUDIOSUPPORT)
+    set(QT_LIBRARIES
+        ${QT_LIBRARIES}
+        Qt6::Multimedia
+    )
+endif()
+
+if (GRAPHICSUPPORT)
+    if (USEVULKAN)
+    else()
+        set(QT_LIBRARIES
+            ${QT_LIBRARIES}
+            Qt6::OpenGL
+        )
+    endif()
+endif()
+
+##############################################################################
 # This section finds all resources so they can be linked to a rcc file later #
 ##############################################################################
 # this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
@@ -731,33 +838,12 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_NAME "0.23.0"
+    QT_ANDROID_VERSION_NAME ${COW_ANDROID_VERSION_NAME}
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_CODE "18"
+    QT_ANDROID_VERSION_CODE ${COW_ANDROID_VERSION_CODE}
     )
-
-# link libraries
-set(QT_LIBRARIES
-    Qt6::Core
-    Qt6::Gui
-    Qt6::Qml
-    Qt6::Network
-    Qt6::Widgets
-    Qt6::Xml
-    Qt6::Sql
-    Qt6::OpenGL
-    OpenSSL::SSL
-    OpenSSL::Crypto
-    )
-
-if (AUDIOSUPPORT)
-    set(QT_LIBRARIES
-        ${QT_LIBRARIES}
-        Qt6::Multimedia
-    )
-endif()
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     target_link_libraries(${PROJECT_NAME} PUBLIC
@@ -894,9 +980,18 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
         ${ADDR_2_LINE}
     )
+
+    if (GRAPHICSUPPORT)
+        if (USEVULKAN)
+        else()
+            set(${PROJECT_NAME}_INSTALL_OS_LIBS
+                ${${PROJECT_NAME}_INSTALL_OS_LIBS}
+                ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
+            )
+        endif()
+    endif()
     set(LibNameEnd ".so")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
 else()
@@ -914,9 +1009,18 @@ set(${PROJECT_NAME}_INSTALL_QT_LIBS
     ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
-    ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
     ${ADDR_2_LINE}
 )
+
+if (GRAPHICSUPPORT)
+    if (USEVULKAN)
+    else()
+        set(${PROJECT_NAME}_INSTALL_QT_LIBS
+            ${${PROJECT_NAME}_INSTALL_QT_LIBS}
+            ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
+        )
+    endif()
+endif()
 
 message("install lib dir: ${CMAKE_INSTALL_PREFIX}")
 # install folders and executable
@@ -961,8 +1065,13 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     install(FILES "icon.png"                                    DESTINATION "share/pixmaps"       RENAME "${PROJECT_NAME_LOWER}.png" OPTIONAL)
     install(FILES "Commander_Wars.desktop"                      DESTINATION "share/applications"  RENAME "${PROJECT_NAME}.desktop"   OPTIONAL)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/debug/android-build-debug.apk"
-            DESTINATION "."                   RENAME "${PROJECT_NAME}_${ANDROID_ABI}.apk" OPTIONAL)
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/debug/android-build-debug.apk"
+                DESTINATION "."                   RENAME "${PROJECT_NAME}_${ANDROID_ABI}.apk" OPTIONAL)
+    else("Release")
+        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/release/android-build-release-signed.apk"
+                DESTINATION "."                   RENAME "${PROJECT_NAME}_${ANDROID_ABI}.apk" OPTIONAL)
+    endif()
 else()
     install(TARGETS ${PROJECT_NAME}
         RUNTIME         DESTINATION         "."

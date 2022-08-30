@@ -1,6 +1,8 @@
 #include <QFile>
 #include <QDir>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/editormenue.h"
 #include "menue/mainwindow.h"
 
@@ -45,7 +47,9 @@ EditorMenue::EditorMenue()
     : BaseGamemenu (20, 20, "", false),
       m_autosaveTimer(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("EditorMenue");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     qint32 selectionWidth = Settings::getWidth() / 4;
     bool smallScreen = Settings::getSmallScreenDevice();
@@ -199,10 +203,6 @@ EditorMenue::EditorMenue()
     m_autosaveTimer.setSingleShot(false);
     connect(&m_autosaveTimer, &QTimer::timeout, this, &EditorMenue::autosave, Qt::QueuedConnection);
     m_autosaveTimer.start(60 * 1000);
-
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue obj = pInterpreter->newQObject(this);
-    pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/editormenu.xml", this);
 }
 
@@ -1999,8 +1999,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                     if (pMovementTableManager->getBaseMovementPoints(movementType, m_pMap->getTerrain(x + xPos, y + yPos), m_pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
                                     {
                                         spUnit pCopyUnit = spUnit::create(pUnit->getUnitID(), pUnit->getOwner(), false, m_pMap.get());
-                                        spUnit pUnit;
-                                        m_pMap->getTerrain(x + xPos, y + yPos)->setUnit(pUnit);
+                                        m_pMap->getTerrain(x + xPos, y + yPos)->setUnit(spUnit());
                                         m_pMap->getTerrain(x + xPos, y + yPos)->setUnit(pCopyUnit);
                                         pCopyUnit->setHp(pUnit->getHp());
                                         pCopyUnit->setAmmo1(pUnit->getAmmo1());
@@ -2008,7 +2007,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                         pCopyUnit->setFuel(pUnit->getFuel());
                                         pCopyUnit->setAiMode(pUnit->getAiMode());
                                         pCopyUnit->setUnitRank(pUnit->getUnitRank());
-                                        pCopyUnit->setModdingFlags(pCopyUnit->getModdingFlags());
+                                        pCopyUnit->setModdingFlags(pUnit->getModdingFlags());
                                     }
                                 }
                                 if (selection != EditorSelection::EditorMode::All)
@@ -2028,7 +2027,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
 void EditorMenue::exitEditor()
 {    
     CONSOLE_PRINT("Leaving Editor Menue", Console::eDEBUG);
-    auto window = spMainwindow::create();
+    auto window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
     deleteMenu();

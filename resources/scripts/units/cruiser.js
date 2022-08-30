@@ -78,18 +78,16 @@ var Constructor = function()
         var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "base_" + weatherModifier + "air";
     };
-
     this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
-
     this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
         var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "back_" + weatherModifier +"sea";
     };
-
+    this.actionList = ["ACTION_DISABLE_MINE", "ACTION_FIRE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
     this.getTerrainAnimationMoveSpeed = function()
     {
         return 1;

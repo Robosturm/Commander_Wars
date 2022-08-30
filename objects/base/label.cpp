@@ -5,7 +5,9 @@
 
 Label::Label(qint32 width)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Label");
+#endif
     m_clipRect = oxygine::spClipRectActor::create();
     m_clipRect->setWidth(width);
     m_clipRect->setHeight(28);
@@ -43,14 +45,14 @@ void Label::setText(QString str)
 void Label::setHtmlText(QString str)
 {    
     m_textField->setHtmlText(str);
-    m_clipRect->setHeight(getTextRect().getHeight() + m_textField->getStyle().borderWidth * 2);
+    m_clipRect->setHeight(getTextRect().getHeight() + m_textField->getStyle().font.borderWidth * 2);
     setTooltipText(str);    
 }
 
 void Label::setStyle(const oxygine::TextStyle& st)
 {    
     m_textField->setStyle(st);
-    m_clipRect->setHeight(getTextRect().getHeight() + m_textField->getStyle().borderWidth * 2);
+    m_clipRect->setHeight(getTextRect().getHeight() + m_textField->getStyle().font.borderWidth * 2);
 }
 
 oxygine::TextStyle Label::getStyle()

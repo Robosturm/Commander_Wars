@@ -16,7 +16,9 @@ MovementTableManager::MovementTableManager()
                                                 "/scripts/movementtables")
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("MovementTableManager");
+#endif
 }
 
 void MovementTableManager::loadAll()

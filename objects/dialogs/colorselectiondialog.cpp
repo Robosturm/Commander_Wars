@@ -8,7 +8,9 @@
 
 ColorSelectionDialog::ColorSelectionDialog(QColor color, bool showUnitPreview)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ColorSelectionDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

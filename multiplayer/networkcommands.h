@@ -9,6 +9,20 @@ namespace NetworkCommands
         LoginAccount,
         ResetPassword,
         ChangePassword,
+        RequestLoginData,
+    };
+
+    enum DisconnectReason
+    {
+        InvalidPassword,
+        NoMoreObservers,
+        NoValidPlayerAvailable,
+        InvalidConnection,
+        InvalidUsername,
+        PasswordOutdated,
+        DatabaseAccessError,
+        UsernameAlreadyInGame,
+        Max,
     };
 
     /**
@@ -96,6 +110,14 @@ namespace NetworkCommands
      */
     const char* const REQUESTJOINREASON = "REQUESTJOINREASON";
     /**
+     * @brief VERIFYGAMEDATA
+     */
+    const char* const VERIFYGAMEDATA = "VERIFYGAMEDATA";
+    /**
+     * @brief GAMEDATAVERIFIED
+     */
+    const char* const GAMEDATAVERIFIED = "GAMEDATAVERIFIED";
+    /**
      * @brief JOINASPLAYER
      */
     const char* const JOINASPLAYER = "JOINASPLAYER";
@@ -139,7 +161,22 @@ namespace NetworkCommands
      * @brief CRYPTEDMESSAGE
      */
     const char* const CRYPTEDMESSAGE = "CRYPTEDMESSAGE";
-
+    /**
+     * @brief CRYPTEDMESSAGE
+     */
+    const char* const VERIFYLOGINDATA = "VERIFYLOGINDATA";
+    /**
+     * @brief DISCONNECTINFOFROMSERVER
+     */
+    const char* const DISCONNECTINGFOFROMSERVER = "DISCONNECTINGFOFROMSERVER";
+    /**
+     * @brief REQUESTUSERNAME
+     */
+    const char* const REQUESTUSERNAME = "REQUESTUSERNAME";
+    /**
+     * @brief SENDUSERNAME
+     */
+    const char* const SENDUSERNAME = "SENDUSERNAME";
     /*****************************************************************************************************************************/
     // dedicated server commands
     /*****************************************************************************************************************************/

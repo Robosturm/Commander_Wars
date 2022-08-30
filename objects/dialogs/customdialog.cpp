@@ -6,11 +6,13 @@
 
 #include "ui_reader/uifactory.h"
 
-CustomDialog::CustomDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu)
+CustomDialog::CustomDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu, const QString & confirmText)
     : m_jsName(jsName),
       m_pBaseMenu(pBaseMenu)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CustomDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -26,15 +28,37 @@ CustomDialog::CustomDialog(const QString & jsName, const QString & uiXml, Baseme
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     connect(this, &CustomDialog::sigFinished, this, &CustomDialog::remove, Qt::QueuedConnection);
 
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->setGlobal(jsName, pInterpreter->newQObject(this));
+    if (!jsName.isEmpty())
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        pInterpreter->setGlobal(jsName, pInterpreter->newQObject(this));
+    }
+    loadXmlFile(uiXml);
+    if (!confirmText.isEmpty())
+    {
+        oxygine::spButton pOkButton = pObjectManager->createButton(confirmText, 150);
+        pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2,
+                              Settings::getHeight() - 10 - pOkButton->getHeight());
+        addChild(pOkButton);
+        pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+        {
+            exit();
+        });
+    }
+}
+
+void CustomDialog::loadXmlFile(const QString& uiXml)
+{
     UiFactory::getInstance().createUi(uiXml, this);
 }
 
 CustomDialog::~CustomDialog()
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(m_jsName);
+    if (!m_jsName.isEmpty())
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        pInterpreter->deleteObject(m_jsName);
+    }
 }
 
 Basemenu* CustomDialog::getBaseMenu()

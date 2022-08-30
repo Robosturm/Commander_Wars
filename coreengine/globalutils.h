@@ -5,7 +5,7 @@
 #include <QDir>
 #include <QRandomGenerator>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class QmlVectorPoint;
 using spQmlVectorPoint = oxygine::intrusive_ptr<QmlVectorPoint>;

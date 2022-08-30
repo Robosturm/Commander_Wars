@@ -5,13 +5,13 @@
 #include <QTimer>
 #include <QColor>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/checkbox.h"
 #include "objects/base/dropdownmenu.h"
-
 #include "objects/unitstatisticview.h"
 
 #include "network/NetworkInterface.h"
@@ -19,8 +19,8 @@
 #include "game/gamemap.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
-#include "menue/basemenu.h"
 
+#include "menue/basemenu.h"
 #include "menue/wikimenu.h"
 
 class VictoryMenue;
@@ -97,6 +97,10 @@ protected slots:
      * @brief onEnter
      */
     virtual void onEnter() override;
+    /**
+     * @brief despawn
+     */
+    void despawnSlave();
 protected:
     /**
      * @brief drawGraphStep
@@ -152,6 +156,7 @@ private:
      * @brief m_ProgressTimer tick timer for updating the graph
      */
     QTimer m_ProgressTimer;
+    QTimer m_despawnSlaveTimer;
 
     float m_lineLength{0};
 

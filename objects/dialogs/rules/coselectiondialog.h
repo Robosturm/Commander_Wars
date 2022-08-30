@@ -3,15 +3,11 @@
 
 #include <QObject>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 #include "objects/base/panel.h"
-
 #include "objects/base/textbox.h"
-
 #include "objects/base/spinbox.h"
-
 #include "objects/coselection.h"
 
 #include "game/gamemap.h"

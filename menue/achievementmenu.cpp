@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/achievementmenu.h"
 #include "menue/mainwindow.h"
 
@@ -20,7 +22,9 @@
 Achievementmenu::Achievementmenu()
     : Basemenu()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Achievementmenu");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
@@ -171,7 +175,7 @@ void Achievementmenu::onEnter()
 void Achievementmenu::exitMenue()
 {    
     CONSOLE_PRINT("Leaving Achievement Menue", Console::eDEBUG);
-    auto window = spMainwindow::create();
+    auto window = spMainwindow::create("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
 }

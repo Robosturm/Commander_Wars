@@ -15,7 +15,9 @@
 DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     : m_pBuilding(pBuilding)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogModifyBuilding");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

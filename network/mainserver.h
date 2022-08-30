@@ -13,7 +13,9 @@
 
 #include "multiplayer/networkcommands.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+
+#include "game/GameEnums.h"
 
 class MainServer;
 using spMainServer = oxygine::intrusive_ptr<MainServer>;
@@ -27,18 +29,22 @@ class MainServer : public QObject, public oxygine::ref_counter
     struct AddressInfo
     {
         QString address;
+        QString secondaryAddress;
         quint16 minPort;
         quint16 maxPort;
     };
     struct SlaveAddress
     {
         QString address;
+        QString secondaryAddress;
         quint16 port;
     };
 
 public:
     static MainServer* getInstance();
     static bool exists();
+    static void initDatabase();
+    static GameEnums::LoginError verifyLoginData(const QString & username, const QByteArray & password);
     void release();
     virtual ~MainServer();
 
@@ -100,6 +106,14 @@ private slots:
      * @param socketId
      */
     void disconnected(qint64 socketId);
+    /**
+     * @brief onMailSendResult
+     * @param socketId
+     * @param receiverAddress
+     * @param username
+     * @param result
+     */
+    void onMailSendResult(quint64 socketId, const QString & receiverAddress, const QString & username, bool result, NetworkCommands::PublicKeyActions action);
 private:
     /**
      * @brief spawnSlaveGame checks if a slave game can be spawned and spawns a slave game on the server
@@ -182,13 +196,11 @@ private:
      * @param address
      * @param port
      */
-    bool getNextFreeSlaveAddress(QString & address, quint16 & port);
+    bool getNextFreeSlaveAddress(QString & address, quint16 & port, QString & secondaryAddress);
     /**
      * @brief parseSlaveAddressOptions
      */
     void parseSlaveAddressOptions();
-
-    bool sqlQueryFailed(const QSqlQuery & query);
     /**
      * @brief handleCryptedMessage
      * @param socketId
@@ -209,6 +221,14 @@ private:
      */
     void loginToAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
     /**
+     * @brief checkPassword
+     * @param database
+     * @param username
+     * @param password
+     * @return
+     */
+    static GameEnums::LoginError checkPassword(QSqlDatabase & database, const QString & username, const QByteArray & password);
+    /**
      * @brief resetAccountPassword
      * @param socketId
      * @param doc
@@ -227,7 +247,13 @@ private:
      * @param success
      * @return
      */
-    QSqlQuery getAccountInfo(const QString & username, bool & success);
+    static QSqlQuery getAccountInfo(QSqlDatabase & database, const QString & username, bool & success);
+    /**
+     * @brief sqlQueryFailed
+     * @param query
+     * @return
+     */
+    static bool sqlQueryFailed(const QSqlQuery & query);
     /**
      * @brief sendMail
      * @param message
@@ -294,7 +320,11 @@ private:
     /**
      * @brief m_serverData
      */
-    QSqlDatabase m_serverData;
+    static QSqlDatabase m_serverData;
+    /**
+     * @brief m_dataBaseLaunched
+     */
+    static bool m_dataBaseLaunched;
     /**
      * @brief m_mailSender
      */

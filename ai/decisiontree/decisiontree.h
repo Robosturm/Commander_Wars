@@ -2,6 +2,7 @@
 #include <QObject>
 #include <QVector>
 #include <QString>
+#include <QTextStream>
 
 #include "ai/decisiontree/decisionnode.h"
 #include "ai/decisiontree/decisionquestion.h"

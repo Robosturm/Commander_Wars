@@ -18,13 +18,17 @@ namespace oxygine
         /**Returns current text style*/
         const TextStyle& getStyle() const
         {
+#ifdef GRAPHICSUPPORT
             return m_style;
+#else
+            return m_dummyTextStyle;
+#endif
         }
         /**Returns text bounds*/
         const Rect& getTextRect() const;
         /**Returns current text*/
         const QString & getText() const;
-        const QFont & getFont() const;
+        const Font & getFont() const;
 
         TextStyle::HorizontalAlign getHAlign() const;
         bool getMultiline() const;
@@ -39,7 +43,7 @@ namespace oxygine
         const QColor& getStyleColor() const;
 
         /**Overwrites TextStyle font.*/
-        void setFont(QFont & rs);
+        void setFont(Font & rs);
 
         void setStyle(const TextStyle& st);
         /**Changes text utf-8 string*/
@@ -62,11 +66,18 @@ namespace oxygine
         void rebuildText();
 
     protected:
+#ifdef GRAPHICSUPPORT
         QString  m_text;
         TextStyle m_style;
 
         text::spNode m_root;
-        Rect m_textRect;
+        Rect m_textRect{0, 0, 0, 0};
         bool m_htmlText = false;
+#else
+        static TextStyle m_dummyTextStyle;
+        static Rect m_dummyRect;
+        static QString m_dummyText;
+        static QColor m_dummyColor;
+#endif
     };
 }

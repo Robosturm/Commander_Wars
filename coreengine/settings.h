@@ -14,7 +14,7 @@
 
 #include "coreengine/console.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "game/GameEnums.h"
 
@@ -239,6 +239,13 @@ private:
     };
 #endif
 public:
+    enum class ScreenModes
+    {
+        Window,
+        Borderless,
+        FullScreen,
+    };
+
     virtual ~Settings() = default;
     static Settings* getInstance();
     static void shutdown();
@@ -247,20 +254,22 @@ public:
     static void saveSettings();
     static void resetSettings();
 
-    static quint16 getServerPort();
-    static void setServerPort(const quint16 &ServerPort);
-
-    static QString getServerAdress();
-    static void setServerAdress(const QString &ServerAdress);
-
-    static void setServer(bool Server);
-
     static QString getLastSaveGame();
     static void setLastSaveGame(const QString &LastSaveGame);
 
-    static void setUsername(const QString &Username);
-
 public slots:
+    static QString getServerAdress();
+    static void setServerAdress(const QString &ServerAdress);
+
+    static QString getSecondaryServerAdress();
+    static void setSecondaryServerAdress(const QString &newSecondaryServerAdress);
+
+    static quint16 getServerPort();
+    static void setServerPort(const quint16 &ServerPort);
+
+    static const QString &getServerPassword();
+    static void setServerPassword(const QString &newServerPassword);
+
     static const QString &getMailServerSendAddress();
     static void setMailServerSendAddress(const QString &newMailServerSendAddress);
 
@@ -285,7 +294,7 @@ public slots:
     static const std::chrono::seconds &getSlaveDespawnTime();
     static void setSlaveDespawnTime(const std::chrono::seconds &newSlaveDespawnTime);
 
-    static const QString &getDefaultBannlist();
+    static QString getDefaultBannlist();
     static void setDefaultBannlist(const QString &newDefaultBannlist);
 
     static bool getUseHighDpi();
@@ -308,6 +317,9 @@ public slots:
 
     static const QString &getServerListenAdress();
     static void setServerListenAdress(const QString &newServerListenAdress);
+
+    static const QString &getServerSecondaryListenAdress();
+    static void setServerSecondaryListenAdress(const QString &newServerSecondaryListenAdress);
 
     static quint16 getSlaveServerPort();
     static void setSlaveServerPort(quint16 newSlaveServerPort);
@@ -333,7 +345,7 @@ public slots:
     static float getGamepadSensitivity();
     static void setGamepadSensitivity(float newGamepadSensitivity);
 
-    static const QString &getDefaultRuleset();
+    static QString getDefaultRuleset();
     static void setDefaultRuleset(const QString &newDefaultRuleset);
 
     static bool getUseCoMinis();
@@ -354,7 +366,7 @@ public slots:
     static bool getShowDetailedBattleForcast();
     static void setShowDetailedBattleForcast(bool newShowDetailedBattleForcast);
 
-    static const QString &getUserPath();
+    static QString getUserPath();
     static void setUserPath(const QString &newUserPath);
 
     static bool getTouchScreen();
@@ -494,6 +506,8 @@ public slots:
 
     static std::chrono::seconds getAutoSavingCylceTime();
     static void setAutoSavingCylceTime(const std::chrono::seconds &value);
+    static quint64 getAutoSavingCylceTimeRaw();
+    static void setAutoSavingCylceTimeRaw(quint64 &value);
 
     static qint32 getAutoSavingCycle();
     static void setAutoSavingCycle(const qint32 &value);
@@ -517,6 +531,7 @@ public slots:
     static void setMenuItemCount(const qint32 &MenuItemCount);
 
     static QString getModString();
+    static void filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter);
     static QString getConfigString(QStringList mods);
 
     static quint32 getMultiTurnCounter();
@@ -531,6 +546,7 @@ public slots:
     static GameEnums::BattleAnimationType getBattleAnimationType();
     static void setBattleAnimationType(const GameEnums::BattleAnimationType &value);
 
+    static void setUsername(const QString &Username);
     static QString getUsername();
     static void setX(const qint32 &x);
     inline static qint32 getX()
@@ -601,6 +617,7 @@ public slots:
     {
         m_GamePort = value;
     }
+    static void setServer(bool Server);
     static inline bool getServer()
     {
         return m_Server;
@@ -730,6 +747,71 @@ public slots:
      * @return
      */
     static bool getIsCosmetic(QString mod);
+    /**
+     * @brief getAudioDevices
+     * @return
+     */
+    static QStringList getAudioDevices();
+    /**
+     * @brief getCurrentDevice
+     * @return
+     */
+    static qint32 getCurrentDevice();
+    /**
+     * @brief setAudioDevice
+     * @param value
+     */
+    static void setAudioDevice(qint32 value);
+    /**
+     * @brief getScreenSize
+     * @return
+     */
+    static QSize getScreenSize();
+    /**
+     * @brief Settings::getDpiFactor
+     * @return
+     */
+    static float getDpiFactor();
+    /**
+     * @brief getScreenMode
+     * @return
+     */
+    static qint32 getScreenMode();
+    /**
+     * @brief setScreenMode
+     * @param value
+     */
+    static void setScreenMode(qint32 value);
+    /**
+     * @brief changeBrightness
+     * @param value
+     */
+    static void changeBrightness(qint32 value);
+    /**
+     * @brief changeGamma
+     * @param value
+     */
+    static void changeGamma(float value);
+    /**
+     * @brief isGamepadSupported
+     * @return
+     */
+    static bool isGamepadSupported();
+    /**
+     * @brief getLanguageNames
+     * @return
+     */
+    static QStringList getLanguageNames();
+    /**
+     * @brief getLanguageIds
+     * @return
+     */
+    static QStringList getLanguageIds();
+    /**
+     * @brief getCurrentLanguageIndex
+     * @return
+     */
+    static qint32 getCurrentLanguageIndex();
 private:
     friend class oxygine::intrusive_ptr<Settings>;
     explicit Settings();
@@ -820,12 +902,15 @@ private:
     static quint16 m_GamePort;
     static QString m_Username;
     static QString m_slaveServerName;
+    static QString m_serverPassword;
 
     static bool m_Server;
     static quint16 m_ServerPort;
     static quint16 m_slaveServerPort;
     static QString m_ServerAdress;
+    static QString m_secondaryServerAdress;
     static QString m_serverListenAdress;
+    static QString m_serverSecondaryListenAdress;
     static QString m_slaveListenAdress;
     static QString m_slaveHostOptions;
     static std::chrono::seconds m_slaveDespawnTime;

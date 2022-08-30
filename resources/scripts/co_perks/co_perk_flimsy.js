@@ -9,13 +9,12 @@ var Constructor = function()
 		}
         return 0;
     };
-	this.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
+    this.getPowerChargeBonus = function(co, map)
     {
-		if (CO_PERK.isActive(co))
-		{
-            var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map);
-            co.setPowerFilled(co.getPowerFilled() + powerGain * 0.1);
-		}
+        if (CO_PERK.isActive(co))
+        {
+            return 10;
+        }
         return 0;
     };
 	// Perk - Intel

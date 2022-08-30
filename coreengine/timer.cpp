@@ -4,7 +4,9 @@
 Timer::Timer(QObject* pParent)
     : QTimer(pParent)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Timer");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

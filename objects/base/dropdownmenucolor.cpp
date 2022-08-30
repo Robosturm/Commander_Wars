@@ -1,20 +1,21 @@
-#include "dropdownmenucolor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
+#include "objects/base/dropdownmenucolor.h"
+#include "objects/dialogs/colorselectiondialog.h"
 
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
-
-#include "objects/dialogs/colorselectiondialog.h"
 
 DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
     : DropDownmenuBase(width, items.size()),
       m_ItemColors(items)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DropDownmenuColor");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

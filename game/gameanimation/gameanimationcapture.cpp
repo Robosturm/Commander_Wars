@@ -20,7 +20,9 @@ GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints,
       m_endPoints(endPoints),
       m_maxPoints(maxPoints)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationCapture");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -129,12 +131,13 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
         oxygine::timeMS jumpingDuration = oxygine::timeMS(m_frameTime * m_jumpSprites * m_jumpingCount + m_frameTime * m_ayeAyeSprites);
         // dummy tween doing nothing except sync the animation
         oxygine::spTween dummyTween = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f - startPercent), jumpingDuration, 1);
-        if (!m_audioCbAdded)
+        if (!m_audioCbDownAdded)
         {
             dummyTween->setDoneCallback([=](oxygine::Event *)
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("capture_down.wav");
             });
+            m_audioCbDownAdded = true;
         }
         queueAnimating->add(dummyTween);
         oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f - percentDone), oxygine::timeMS(m_capturingFactor * m_frameTime), 1);
@@ -149,14 +152,7 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
         if (m_endPoints == 0)
         {
             oxygine::Sprite* pSrite = m_buildingSprites.get();
-            if (!m_audioCbAdded)
-            {
-                tween2->addDoneCallback([this, pSrite, capturedPlayer](oxygine::Event *)
-                {
-                    pSrite->setResAnim(m_captureBuildingResAnim.get());
-                });
-            }
-            else
+            if (!m_audioCbCapturedAdded)
             {
                 tween2->addDoneCallback([this, pSrite, capturedPlayer](oxygine::Event *)
                 {
@@ -171,6 +167,14 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
                     }
                 });
             }
+            else
+            {
+                m_audioCbCapturedAdded = true;
+                tween2->addDoneCallback([this, pSrite, capturedPlayer](oxygine::Event *)
+                {
+                    pSrite->setResAnim(m_captureBuildingResAnim.get());
+                });
+            }
             oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f), oxygine::timeMS(m_capturingFactor * m_frameTime), 1, false);
             queueAnimating->add(tween3);
 
@@ -179,7 +183,6 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
         }
         m_buildingSprites->addTween(queueAnimating);
         m_buildingSprites->addTween(queueMoving);
-        m_audioCbAdded = true;
     }
 }
 
@@ -208,9 +211,13 @@ void GameAnimationCapture::addSoldierSprite(const QString & spriteID, Player*  p
             // jumping
             oxygine::spTweenQueue queueAnimating = oxygine::spTweenQueue::create();
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, 0, m_jumpSprites - 1), oxygine::timeMS(m_jumpSprites * m_frameTime), m_jumpingCount);
-            for (qint32 i = 0; i < m_jumpingCount; ++i)
+            if (!m_audioJumpAdded)
             {
-                addSound("capture_jump.wav", 1, m_jumpSprites * m_frameTime * i);
+                for (qint32 i = 0; i < m_jumpingCount; ++i)
+                {
+                    addSound("capture_jump.wav", 1, m_jumpSprites * m_frameTime * i);
+                }
+                m_audioJumpAdded = true;
             }
             queueAnimating->add(tween);
             // cool aye aye sir

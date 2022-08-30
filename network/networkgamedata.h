@@ -4,12 +4,12 @@
 #include <QObject>
 #include <QJsonObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "coreengine/fileserializable.h"
 
 class NetworkGameData;
-typedef oxygine::intrusive_ptr<NetworkGameData> spNetworkGameData;
+using spNetworkGameData = oxygine::intrusive_ptr<NetworkGameData>;
 
 class NetworkGameData : public QObject, public oxygine::ref_counter
 {
@@ -65,11 +65,15 @@ public:
     const QString &getSlaveAddress() const;
     void setSlaveAddress(const QString &newAddress);
 
+    const QString &getSlaveSecondaryAddress() const;
+    void setSlaveSecondaryAddress(const QString &newSlaveSecondaryAddress);
+
     quint16 getSlavePort() const;
     void setSlavePort(quint16 newPort);
 
     const QStringList & getPlayerNames() const;
     void setPlayerNames(const QStringList &playerNames);
+
 private:
     qint32 m_players{0};
     qint32 m_maxPlayers{0};
@@ -81,6 +85,7 @@ private:
     bool m_locked{false};
     bool m_launched{false};
     QString m_slaveAddress;
+    QString m_slaveSecondaryAddress;
     quint16 m_slavePort{0};
 };
 

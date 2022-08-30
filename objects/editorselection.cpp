@@ -1,5 +1,8 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
+
 #include "objects/editorselection.h"
 #include "objects/base/moveinbutton.h"
+#include "objects/base/label.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/terrainmanager.h"
@@ -12,15 +15,15 @@
 
 #include "game/co.h"
 
-#include "objects/base/label.h"
-
 const float EditorSelection::m_xFactor = 1.5f;
 const float EditorSelection::m_yFactor = 2.5f;
 
 EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("EditorSelection");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

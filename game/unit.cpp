@@ -1,4 +1,7 @@
 #include <QColor>
+
+#include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
+
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/weaponmanager.h"
@@ -23,7 +26,9 @@
 Unit::Unit(GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Unit");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -36,7 +41,10 @@ Unit::Unit(const QString & unitID, Player* pOwner, bool aquireId, GameMap* pMap)
       m_pOwner(pOwner),
       m_pMap{pMap}
 {
+
+#ifdef GRAPHICSUPPORT
     setObjectName("Unit");
+#endif
     setHeight(GameMap::getImageSize());
     setWidth(GameMap::getImageSize());
     Mainapp* pApp = Mainapp::getInstance();
@@ -289,6 +297,7 @@ void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bo
 
 void Unit::syncAnimation(oxygine::timeMS syncTime)
 {
+#ifdef GRAPHICSUPPORT
     for (auto & sprite : m_pUnitSprites)
     {
         auto & tweens = sprite->getTweens();
@@ -313,6 +322,7 @@ void Unit::syncAnimation(oxygine::timeMS syncTime)
             pTween->setElapsed(syncTime);
         }
     }
+#endif
 }
 
 Player* Unit::getOwner()
@@ -1860,6 +1870,19 @@ qint32 Unit::getBonusLuck(QPoint position)
     return bonus;
 }
 
+void Unit::endOfTurn()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "endOfTurn";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(m_UnitID, function1, args);
+    for (qint32 i = 0; i < m_TransportUnits.size(); i++)
+    {
+        m_TransportUnits[i]->endOfTurn();
+    }
+}
+
 void Unit::startOfTurn()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -2066,6 +2089,10 @@ void Unit::setFuel(const qint32 &value)
     {
         m_fuel = value;
     }
+    if (m_fuel > m_maxFuel)
+    {
+        m_fuel = m_maxFuel;
+    }
     if (m_maxFuel > 0 && static_cast<float>(m_fuel) / static_cast<float>(m_maxFuel) <= Settings::getSupplyWarning())
     {
         loadIcon("fuel", GameMap::getImageSize() / 2, 0);
@@ -2123,6 +2150,10 @@ void Unit::setAmmo2(const qint32 &value)
     else  if (m_maxAmmo2 > 0 && m_ammo2 < 0)
     {
         m_ammo2 = 0;
+    }
+    if (m_ammo2 > m_maxAmmo2)
+    {
+        m_ammo2 = m_maxAmmo2;
     }
     if (m_maxAmmo2 > 0 && static_cast<float>(m_ammo2) / static_cast<float>(m_maxAmmo2) <= Settings::getSupplyWarning())
     {
@@ -2185,6 +2216,10 @@ void Unit::setAmmo1(const qint32 &value)
     else if (m_maxAmmo1 > 0 && m_ammo1 < 0)
     {
         m_ammo1 = 0;
+    }
+    if (m_ammo1 > m_maxAmmo1)
+    {
+        m_ammo1 = m_maxAmmo1;
     }
 
     if (m_maxAmmo1 > 0 && static_cast<float>(m_ammo1) / static_cast<float>(m_maxAmmo1) <= Settings::getSupplyWarning())
@@ -2515,16 +2550,16 @@ qint32 Unit::getY() const
     }
 }
 
-void Unit::refill(bool noMaterial)
+void Unit::refill(bool noMaterial, float fuelAmount, float ammo1Amount, float ammo2Amount)
 {
-    setFuel(m_maxFuel);
+    setFuel(m_fuel + m_maxFuel * fuelAmount);
     if (!(noMaterial && m_weapon1ID.isEmpty()))
     {
-        setAmmo1(m_maxAmmo1);
+        setAmmo1(m_ammo1 + m_maxAmmo1 * ammo1Amount);
     }
     if (!(noMaterial && m_weapon2ID.isEmpty()))
     {
-        setAmmo2(m_maxAmmo2);
+        setAmmo2(m_ammo2 + m_maxAmmo2 * ammo2Amount);
     }
 }
 
@@ -2881,7 +2916,8 @@ GameAnimation* Unit::killUnit()
     }
     // record destruction of this unit
     GameRecorder* pRecorder = m_pMap->getGameRecorder();
-    if (pRecorder != nullptr)
+    if (pRecorder != nullptr &&
+        m_pMap->getCurrentPlayer() != nullptr)
     {
         if (!m_pOwner->getIsDefeated())
         {

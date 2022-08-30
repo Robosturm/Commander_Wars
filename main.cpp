@@ -1,7 +1,11 @@
 #include <QObject>
 #include <QProcess>
 #include <QDir>
+#ifdef GRAPHICSUPPORT
 #include <QApplication>
+#else
+#include <QCoreApplication>
+#endif
 #include <QFile>
 
 #include "coreengine/mainapp.h"
@@ -18,36 +22,51 @@ int main(qint32 argc, char* argv[])
     qInstallMessageHandler(Console::messageOutput);
     srand(static_cast<unsigned>(time(nullptr)));
     QThread::currentThread()->setPriority(QThread::NormalPriority);
+#ifdef GRAPHICSUPPORT
     QThread::currentThread()->setObjectName("RenderThread");
     QApplication app(argc, argv);
+#else
+    QCoreApplication app(argc, argv);
+#endif
     app.setApplicationName("Commander Wars");
     app.setApplicationVersion(Mainapp::getGameVersion());
-
-    Settings::getInstance();
-    Settings::loadSettings();
 
     Mainapp window;
     window.setTitle("Commander Wars");
     auto & parser = window.getParser();
-    window.getParser().parseArgs(app);
+    parser.parseArgsPhaseOne(app);
+    Settings::getInstance();
+    Settings::loadSettings();
+    parser.parseArgsPhaseTwo();
+    window.createBaseDirs();
+
     // start crash report handler
     CrashReporter::setSignalHandler(&Mainapp::showCrashReport);
     MetaTypeRegister::registerInterfaceData();
     /*************************************************************************************************/
     // show window according to window mode
     window.setPosition(Settings::getX(), Settings::getY());
+    if (Settings::getSmallScreenDevice())
+    {
+        // force a resolution reset
+        window.changeScreenMode(Settings::ScreenModes::FullScreen);
+    }
+    // show as normal borderless
     window.changeScreenMode(window.getScreenMode());
-
     window.setBrightness(Settings::getBrightness());
     window.setGamma(Settings::getGamma());
-    if (window.getScreenMode() != 0)
+    if (window.getScreenMode() != Settings::ScreenModes::Window)
     {
         window.setPosition(Settings::getX(), Settings::getY());
-    }
+    }    
+#ifdef GRAPHICSUPPORT
     if (window.getNoUi())
     {
         window.launchGame();
     }
+#else
+    window.launchGame();
+#endif
     qint32 returncode = app.exec();
     /*************************************************************************************************/
     // shutting down

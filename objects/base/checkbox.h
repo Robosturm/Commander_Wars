@@ -3,11 +3,8 @@
 
 #include "objects/base/tooltip.h"
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
 class Checkbox;
-typedef oxygine::intrusive_ptr<Checkbox> spCheckbox;
+using spCheckbox = oxygine::intrusive_ptr<Checkbox>;
 
 class Checkbox : public Tooltip
 {
@@ -19,7 +16,7 @@ public:
     void setChecked(bool Checked);
 signals:
     void checkChanged(bool value);
-public slots:
+
 private:
     bool m_Checked{false};
 };

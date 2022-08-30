@@ -1,5 +1,6 @@
-#include "objects/unitstatisticview.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
+#include "objects/unitstatisticview.h"
 #include "objects/base/label.h"
 
 #include "resource_management/unitspritemanager.h"
@@ -15,7 +16,9 @@
 
 UnitStatisticView::UnitStatisticView(const GameRecorder::PlayerData & data, qint32 width, qint32 heigth, Player* pPlayer, GameMap* pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("UnitStatisticView");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

@@ -1,4 +1,8 @@
-#include "qcolor.h"
+#include "QColor"
+
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenshakey.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
@@ -33,7 +37,9 @@ BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrai
       m_nextFrameTimer(this),
       m_playSound(playSound)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("BattleAnimationSprite");
+#endif
     Interpreter::setCppOwnerShip(this);
     if (m_hpRounded < 0.0f)
     {

@@ -20,10 +20,10 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
     : m_pPlayer(pPlayer),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogAttackLog");
-    
+#endif
     m_Log = m_pMap->getGameRecorder()->getAttackLog(pPlayer->getPlayerID());
-
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

@@ -12,9 +12,9 @@ namespace oxygine
               m_height(size.y),
               m_x(0),
               m_y(0),
-              m_metrics(style.font)
+              m_metrics(style.font.font)
         {
-            m_lineSkip = m_metrics.height() + style.borderWidth / 2;
+            m_lineSkip = m_metrics.height() + style.font.borderWidth / 2;
             m_lineNodes.reserve(50);
         }
 

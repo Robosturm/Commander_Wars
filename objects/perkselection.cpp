@@ -1,3 +1,6 @@
+#include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
+
 #include "objects/perkselection.h"
 
 #include "coreengine/globalutils.h"
@@ -15,7 +18,9 @@ PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool bannin
       m_hiddenPerks(hiddenList),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("PerkSelection");
+#endif
     Interpreter::setCppOwnerShip(this);
     setWidth(width);
     Mainapp* pApp = Mainapp::getInstance();
@@ -243,13 +248,12 @@ void PerkSelection::setPerks(const QStringList &perks)
     {
         m_pCO->setPerkList(perks);
     }
-    COPerkManager* pCOPerkManager = COPerkManager::getInstance();
-    qint32 count = pCOPerkManager->getCount();
-    
-    for (qint32 i = 0; i < count; i++)
+    COPerkManager* pCOPerkManager = COPerkManager::getInstance();    
+    qint32 count = m_perkIds.size();
+    for (qint32 i = 0; i < count; ++i)
     {
-        QString id = pCOPerkManager->getID(i);
-        if (pCOPerkManager->isSelectable(i) &&
+        QString id = m_perkIds[i];
+        if (pCOPerkManager->isSelectable(id) &&
             (m_banning || m_pMap->getGameRules()->getAllowedPerks().contains(id)))
         {
             if (m_perks.contains(id))

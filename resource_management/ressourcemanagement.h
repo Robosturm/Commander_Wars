@@ -7,7 +7,7 @@
 #include <QDirIterator>
 #include <QCoreApplication>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 
 #include "coreengine/interpreter.h"
 #include "coreengine/settings.h"
@@ -232,7 +232,7 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
 {    
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths = getSearchPaths();
-    QApplication::processEvents();
+    QCoreApplication::processEvents();
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString path = searchPaths[i];

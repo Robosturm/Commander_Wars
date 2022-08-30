@@ -1,5 +1,8 @@
-#include <qfile.h>
-#include <qtextstream.h>
+#include <QFile>
+#include <QTextStream>
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "menue/creditsmenue.h"
 #include "menue/mainwindow.h"
@@ -17,7 +20,9 @@
 CreditsMenue::CreditsMenue()
     : Basemenu()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CreditsMenue");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
@@ -167,7 +172,7 @@ void CreditsMenue::onEnter()
 void CreditsMenue::exitMenue()
 {    
     CONSOLE_PRINT("Leaving Credits Menue", Console::eDEBUG);
-    auto window = spMainwindow::create();
+    auto window = spMainwindow::create("ui/menu/mainoptionmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
 }

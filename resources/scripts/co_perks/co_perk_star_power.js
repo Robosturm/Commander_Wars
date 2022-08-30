@@ -1,12 +1,11 @@
 var Constructor = function()
 {
-    this.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
+    this.getPowerChargeBonus = function(co, map)
     {
-		if (CO_PERK.isActive(co))
-		{
-            var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map);
-            co.setPowerFilled(co.getPowerFilled() + powerGain * 0.2);
-		}
+        if (CO_PERK.isActive(co))
+        {
+            return 20;
+        }
         return 0;
     };
 	// Perk - Intel

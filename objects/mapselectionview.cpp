@@ -1,6 +1,6 @@
-#include "mapselectionview.h"
+#include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
-#include "game/gamemap.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
@@ -12,14 +12,18 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/console.h"
 
+#include "objects/mapselectionview.h"
 #include "objects/base/moveinbutton.h"
 
 #include "game/gamemap.h"
 #include "game/gamerecording/gamerecorder.h"
 
-MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
+MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
+    : m_filter(filter)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MapSelectionView");
+#endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -43,7 +47,7 @@ MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
         width = Settings::getWidth() / 2;
     }
 
-    m_pMapSelection = spMapSelection::create(Settings::getHeight() - 40, width, "");
+    m_pMapSelection = spMapSelection::create(Settings::getHeight() - 40, width, "", m_filter);
     m_pMapSelection->setPosition(10, 10);
     addChild(m_pMapSelection);
     m_pMinimap = spMinimap::create();
@@ -242,7 +246,7 @@ void MapSelectionView::loadCurrentMap()
     loadMap(m_currentMapFile, false);
 }
 
-void MapSelectionView::loadMap(QFileInfo info, bool fast)
+void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
 {
     CONSOLE_PRINT("MapSelectionView::loadMap " + info.filePath(), Console::eDEBUG);
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -255,6 +259,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
     {
         if (info.isFile() &&
             (info != m_currentMapFile || !fast) &&
+            (info != m_currentMapFile || !fast) &&
             (info.fileName().endsWith(".map") ||
              info.fileName().endsWith(".msav")))
         {
@@ -265,7 +270,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
                 m_pCurrentMap = nullptr;
             }
             bool savegame = info.fileName().endsWith(".msav");
-            QString file = info.absoluteFilePath();
+            QString file = info.canonicalFilePath();
             m_pCurrentMap = spGameMap::create(file, true, fast, savegame);
             m_pCurrentMap->setMapPath(GlobalUtils::makePathRelative(file, false));
             m_pCurrentMap->getGameScript()->init();
@@ -321,7 +326,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
             }
             m_pMinimap->updateMinimap(nullptr);
             m_CurrentLoadedCampaign = nullptr;
-            m_CurrentLoadedCampaign = spCampaign::create(info.absoluteFilePath());
+            m_CurrentLoadedCampaign = spCampaign::create(info.canonicalFilePath());
             m_MapDescription->setHtmlText(m_CurrentLoadedCampaign->getDescription());
             m_MapAuthor->setHtmlText(m_CurrentLoadedCampaign->getAuthor());
             m_MapPlayerCount->setVisible(false);

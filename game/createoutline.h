@@ -1,12 +1,13 @@
 #ifndef CREATEOUTLINE_H
 #define CREATEOUTLINE_H
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 class CreateOutline
 {
 public:
+    CreateOutline() = delete;
+
     static void addCursorRangeOutline(oxygine::spActor pOutlineSprite, const QString & prefix, qint32 range, QColor color);
 private:
     static void createOuterLeftRightOutline(oxygine::spActor pOutlineSprite, const QString & prefix, qint32 range, QColor color);

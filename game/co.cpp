@@ -19,11 +19,13 @@
 #include "spritingsupport/spritecreator.h"
 
 CO::CO(QString coID, Player* owner, GameMap* pMap)
-    : m_Owner(owner),
+    : m_pOwner(owner),
       m_coID(coID),
       m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CO");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -125,6 +127,21 @@ double CO::getPowerFilled() const
     return m_powerFilled;
 }
 
+void CO::endOfTurn()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "endOfTurn";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            pInterpreter->doFunction(perk, function1, args);
+        }
+    }
+}
+
 void CO::startOfTurn()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -168,7 +185,7 @@ void CO::setPowerFilled(const double &value)
         {
             limitPowerbar(currentValue);
         }
-        CONSOLE_PRINT("Powerbar changed by: " + QString::number(value - currentValue), Console::eDEBUG);
+        CONSOLE_PRINT("Powerbar changed by: " + QString::number(value - currentValue) + " for co " + m_coID + " of player " + QString::number(m_pOwner->getPlayerID()), Console::eDEBUG);
     }
     if (m_pMenu != nullptr)
     {
@@ -977,7 +994,7 @@ void CO::addUnitShines()
             {
                 Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
                 if (pUnit != nullptr &&
-                    pUnit->getOwner() == m_Owner)
+                    pUnit->getOwner() == m_pOwner)
                 {
                     pUnit->addShineTween();
                 }
@@ -1389,6 +1406,27 @@ qint32 CO::getIncomeReduction(Building* pBuilding, qint32 income)
     return ergValue;
 }
 
+qint32 CO::getPowerChargeBonus()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getPowerChargeBonus";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    qint32 ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toInt();
+            }
+        }
+    }
+    return ergValue + m_pOwner->getPowerChargeBonus();
+}
+
 qint32 CO::getBonusIncome(Building* pBuilding, qint32 income)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -1605,7 +1643,7 @@ GameAnimationDialog* CO::createPowerSentence()
     QStringList sentences = pInterpreter->doFunction(m_coID, "getPowerSentences", args).toVariant().toStringList();
     QString sentence = sentences[GlobalUtils::randInt(0, sentences.size() - 1)];
 
-    GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(m_pMap, sentence, m_coID, GameEnums::COMood_Normal, m_Owner->getColor());
+    GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(m_pMap, sentence, m_coID, GameEnums::COMood_Normal, m_pOwner->getColor());
     pGameAnimationDialog->setFinishDelay(500);
 
     return pGameAnimationDialog;
@@ -1641,13 +1679,13 @@ QString CO::getVictorySentence()
 
 GameAnimationPower* CO::createPowerScreen(GameEnums::PowerMode powerMode, quint32 frameTime)
 {
-    GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_pMap, m_Owner->getColor(), powerMode, this, frameTime);
+    GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_pMap, m_pOwner->getColor(), powerMode, this, frameTime);
     return pGameAnimationPower;
 }
 
 bool CO::getIsCO0()
 {
-    if (this == m_Owner->getCO(0) || m_pMenu == nullptr)
+    if (this == m_pOwner->getCO(0) || m_pMenu == nullptr)
     {
         return true;
     }

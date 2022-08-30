@@ -8,7 +8,10 @@
 #include "objects/base/panel.h"
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
 
 #include "objects/mapselection.h"
 
@@ -26,7 +29,7 @@ class MapSelectionView : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit MapSelectionView(qint32 mapInfoHeight = -1);
+    explicit MapSelectionView(QStringList filter, qint32 mapInfoHeight = -1);
     virtual ~MapSelectionView() = default;
 
     inline MapSelection* getMapSelection()
@@ -65,7 +68,7 @@ public:
     void setCurrentMap(spGameMap newCurrentMap);
 
 public slots:
-    void loadMap(QFileInfo info, bool fast = true);
+    void loadMap(const QFileInfo & info, bool fast = true);
     void loadCurrentMap();
     void updateMapData();
 private:
@@ -73,8 +76,8 @@ private:
      * @brief loadMapVictoryInfo
      */
     void loadMapVictoryInfo();
-
 private:
+    QStringList m_filter;
     spCampaign m_CurrentSetCampaign;
     spCampaign m_CurrentLoadedCampaign;
     /**

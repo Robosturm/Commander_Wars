@@ -1,4 +1,4 @@
-#include "playerselectiondialog.h"
+#include "objects/dialogs/rules/playerselectiondialog.h"
 
 #include "coreengine/mainapp.h"
 
@@ -6,7 +6,9 @@
 
 PlayerSelectionDialog::PlayerSelectionDialog(GameMap* pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("PlayerSelectionDialog");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

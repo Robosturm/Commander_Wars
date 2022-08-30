@@ -1,7 +1,8 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/texture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+#include "texture.h"
 
 namespace oxygine
 {
@@ -110,6 +111,5 @@ namespace oxygine
         short m_width{0};
         short m_height{0};
     };
-
 }
 

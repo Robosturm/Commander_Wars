@@ -1,3 +1,8 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
+#include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
+
 #include "objects/minimap.h"
 
 #include "game/gamemap.h"
@@ -13,7 +18,9 @@
 
 Minimap::Minimap()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Minimap");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -220,6 +227,7 @@ void Minimap::updateMinimap(GameMap* pMap, bool useVision)
                                 }
                                 else
                                 {
+#ifdef GRAPHICSUPPORT
                                     if (m_Items[item].unit.get() != nullptr)
                                     {
                                         auto & tweens = m_Items[item].unit->getTweens();
@@ -229,6 +237,7 @@ void Minimap::updateMinimap(GameMap* pMap, bool useVision)
                                             tween->start(*m_Items[item].unit);
                                         }
                                     }
+#endif
                                 }
                             }
                         }

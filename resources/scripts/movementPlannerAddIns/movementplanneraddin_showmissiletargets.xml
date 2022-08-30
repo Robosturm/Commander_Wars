@@ -12,7 +12,8 @@
                 <width>600</width>
                 <height>60</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Missile targets")</text>
-                <font>"main48"</font>
+                <font>"main"</font>
+                <fontSize>48</fontSize>
             </Label>
             <Label>
                 <x>10</x>
@@ -20,7 +21,8 @@
                 <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Missile count:")</text>
-                <font>"main24"</font>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
@@ -40,7 +42,8 @@
                     <width>600</width>
                     <height>60</height>
                     <text>QT_TRANSLATE_NOOP("GAME","Missile Info")</text>
-                    <font>"main48"</font>
+                    <font>"main"</font>
+                    <fontSize>48</fontSize>
                 </Label>
                 <Label>
                     <x>10</x>
@@ -48,7 +51,8 @@
                     <width>200</width>
                     <height>30</height>
                     <text>QT_TRANSLATE_NOOP("GAME","Color:")</text>
-                    <font>"main24"</font>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
                 </Label>
                 <DropDownMenuColor>
                     <x>lastX + lastWidth + 10</x>
@@ -65,7 +69,8 @@
                     <width>200</width>
                     <height>30</height>
                     <text>QT_TRANSLATE_NOOP("GAME","Target Type:")</text>
-                    <font>"main24"</font>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
                 </Label>
                 <DropDownMenu>
                     <x>lastX + lastWidth + 10</x>
@@ -82,7 +87,8 @@
                     <width>200</width>
                     <height>30</height>
                     <text>QT_TRANSLATE_NOOP("GAME","Range:")</text>
-                    <font>"main24"</font>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
                 </Label>
                 <Spinbox>
                     <x>lastX + lastWidth + 10</x>
@@ -101,7 +107,8 @@
                     <width>200</width>
                     <height>30</height>
                     <text>QT_TRANSLATE_NOOP("GAME","Damage:")</text>
-                    <font>"main24"</font>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
                 </Label>
                 <Spinbox>
                     <x>lastX + lastWidth + 10</x>
@@ -120,7 +127,8 @@
                     <width>200</width>
                     <height>30</height>
                     <text>QT_TRANSLATE_NOOP("GAME","Owner:")</text>
-                    <font>"main24"</font>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
                 </Label>
                 <Spinbox>
                     <x>lastX + lastWidth + 10</x>

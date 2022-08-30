@@ -1,12 +1,12 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
-#include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
-#include "3rd_party/oxygine-framework/oxygine/core/texture.h"
-#include <qopengl.h>
+#include "ShaderProgram.h"
+#include "texture.h"
+
 #include <QMatrix4x4>
 
 namespace oxygine
@@ -114,7 +114,7 @@ namespace oxygine
         spTexture createTexture();
         void clear(const QColor& color);
         void begin(const Rect& viewport, const QColor* color);
-        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, GLsizei primitives);
+        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, qint32 primitives);
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, const quint16* indicesData, quint32 numIndices);
         void getViewport(Rect& r) const;
         bool getScissorRect(Rect&) const;

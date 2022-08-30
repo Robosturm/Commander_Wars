@@ -6,7 +6,9 @@ BaseTableItem::BaseTableItem(QObject *parent)
     : QObject{parent}
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("BaseTableItem");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 }

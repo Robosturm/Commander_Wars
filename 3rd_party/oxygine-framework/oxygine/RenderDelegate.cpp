@@ -1,6 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
-#include "3rd_party/oxygine-framework/oxygine/MaskedRenderer.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
@@ -20,6 +20,7 @@ namespace oxygine
 
     void RenderDelegate::render(Actor* parent, const RenderState& parentRS)
     {
+#ifdef GRAPHICSUPPORT
         RenderState rs;
         if (!parent->internalRender(rs, parentRS))
         {
@@ -30,10 +31,12 @@ namespace oxygine
         {
             child->render(rs);
         }
+#endif
     }
 
     void RenderDelegate::render(ClipRectActor* actor, const RenderState& parentRS)
     {
+#ifdef GRAPHICSUPPORT
         STDRenderer* renderer = STDRenderer::getCurrent();
         VideoDriver* driver = renderer->getDriver();
 
@@ -84,10 +87,12 @@ namespace oxygine
             renderer->flush();
             driver->setScissorRect(scissorEnabled ? &scissorRect : nullptr);
         }
+#endif
     }
 
     void RenderDelegate::doRender(Sprite* sprite, const RenderState& rs)
     {
+#ifdef GRAPHICSUPPORT
         if (!sprite->getAnimFrame().getTexture())
         {
             return;
@@ -95,10 +100,12 @@ namespace oxygine
         QColor color = rs.getFinalColor(sprite->getColor());
         sprite->getMaterial()->apply();
         sprite->getMaterial()->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
+#endif
     }
 
     void RenderDelegate::doRender(TextField* tf, const RenderState& rs)
     {
+#ifdef GRAPHICSUPPORT
         text::Node* root = tf->getRootNode();
         if (!root)
         {
@@ -134,12 +141,15 @@ namespace oxygine
         {
             driver->setScissorRect(&scissorRect);
         }
+#endif
     }
 
     void RenderDelegate::doRender(ColorRectSprite* sprite, const RenderState& rs)
     {
+#ifdef GRAPHICSUPPORT
         QColor color = rs.getFinalColor(sprite->getColor());
         sprite->getMaterial()->apply();
         sprite->getMaterial()->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
+#endif
     }
 }

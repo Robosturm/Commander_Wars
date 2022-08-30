@@ -21,7 +21,6 @@ class ReplayMenu final : public GameMenue
     Q_OBJECT
     static constexpr qint32 actionPixelSize = 5;
 public:
-    explicit ReplayMenu() = default;
     ReplayMenu(QString filename);
     virtual ~ReplayMenu();
     /**

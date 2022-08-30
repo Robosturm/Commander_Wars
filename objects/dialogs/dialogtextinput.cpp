@@ -9,7 +9,9 @@
 DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInput)
     : QObject()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogTextInput");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

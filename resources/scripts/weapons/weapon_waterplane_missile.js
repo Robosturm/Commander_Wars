@@ -60,8 +60,7 @@ var Constructor = function()
                         ["SUBMARINE", 55],
                         ["LANDER", 105],
                         ["BLACK_BOAT", 105],
-                        ["AIRCRAFTCARRIER", 65],
-                        ["WATERMINE", 400]];
+                        ["AIRCRAFTCARRIER", 65]];
 
     this.getBaseDamage = function(unit)
     {

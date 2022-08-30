@@ -5,13 +5,12 @@
 #include <QVector>
 #include <QString>
 #include <QColor>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/dropdownmenubase.h"
 
 class DropDownmenuColor;
-typedef oxygine::intrusive_ptr<DropDownmenuColor> spDropDownmenuColor;
+using spDropDownmenuColor = oxygine::intrusive_ptr<DropDownmenuColor>;
 
 class DropDownmenuColor : public DropDownmenuBase
 {

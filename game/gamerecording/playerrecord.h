@@ -6,11 +6,10 @@
 
 #include "coreengine/fileserializable.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class PlayerRecord;
 using spPlayerRecord = oxygine::intrusive_ptr<PlayerRecord>;
-
 
 class PlayerRecord : public QObject, public FileSerializable, public oxygine::ref_counter
 {

@@ -1,11 +1,17 @@
-#include "dropdownmenubase.h"
+#include "objects/base/dropdownmenubase.h"
+
 #include "coreengine/mainapp.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DropDownmenuBase");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -82,7 +88,8 @@ void DropDownmenuBase::focusedLost()
 }
 
 void DropDownmenuBase::showDropDown()
-{    
+{
+#ifdef GRAPHICSUPPORT
     setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
     m_OriginalOwner = getParent();
@@ -106,7 +113,7 @@ void DropDownmenuBase::showDropDown()
     {
         m_Panel->setY(m_Box->getHeight());
     }
-    
+#endif
 }
 
 void DropDownmenuBase::hideDropDown()

@@ -12,7 +12,9 @@
 Cursor::Cursor(GameMap* pMap)
     : m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Cursor");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

@@ -1,4 +1,4 @@
-#include "closeablepopup.h"
+#include "objects/base/closeablepopup.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -6,7 +6,9 @@
 
 CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CloseablePopUp");
+#endif
     setSize(width, heigth);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

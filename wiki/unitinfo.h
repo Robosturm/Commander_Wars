@@ -4,12 +4,12 @@
 #include <QObject>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 #include "game/unit.h"
 
 class UnitInfo;
-typedef oxygine::intrusive_ptr<UnitInfo> spUnitInfo;
+using spUnitInfo = oxygine::intrusive_ptr<UnitInfo>;
 
 class UnitInfo : public QObject, public oxygine::Actor
 {

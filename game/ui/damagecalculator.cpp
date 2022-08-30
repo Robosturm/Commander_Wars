@@ -56,21 +56,7 @@ DamageCalculator::DamageCalculator()
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     auto unitIds = pUnitSpriteManager->getUnitsSorted();
     QStringList terrainIds = pTerrainManager->getTerrainsSorted();
-    QStringList buildingIds = pBuildingSpriteManager->getLoadedBuildings();
-    qint32 i = 0;
-    while (i < buildingIds.size())
-    {
-        Building building(buildingIds[i], &m_map);
-        if (building.getBuildingWidth() > 1 ||
-            building.getBuildingHeigth() > 1)
-        {
-            buildingIds.removeAt(i);
-        }
-        else
-        {
-            ++i;
-        }
-    }
+    QStringList buildingIds = pBuildingSpriteManager->getLoadedBuildings();    
     terrainIds.append(buildingIds);
 
     y = 50;
@@ -121,17 +107,23 @@ void DamageCalculator::loadCoData(qint32 & x, qint32 & y, CosData & cosData,
             pAnim = pCOSpriteManager->getResAnim(id + "+info");
         }
         oxygine::spSprite pSprite = oxygine::spSprite::create();
-        pSprite->setResAnim(pAnim);
-        pSprite->setScale(pAnim->getWidth() / 32.0f);
-        pSprite->setSize(pAnim->getSize());
+        if (pAnim != nullptr)
+        {
+            pSprite->setResAnim(pAnim);
+            pSprite->setScale(pAnim->getWidth() / 32.0f);
+            pSprite->setSize(pAnim->getSize());
+        }
         return pSprite;
     };
     auto powerCreator = [this, pGameManager](QString id)
     {
         oxygine::spSprite pSprite = pGameManager->getIcon(&m_map, id);
         const oxygine::ResAnim* pAnim = pSprite->getResAnim();
-        pSprite->setScale(1.0f);
-        pSprite->setSize(pAnim->getSize());
+        if (pAnim != nullptr)
+        {
+            pSprite->setScale(1.0f);
+            pSprite->setSize(pAnim->getSize());
+        }
         return pSprite;
     };
     for (auto & coData : cosData)
@@ -200,7 +192,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
         }
         return pRet;
     };
-    unitData.m_Terrain = spDropDownmenuSprite::create(105, terrainIds, terrainCreator, 30);
+    unitData.m_Terrain = spDropDownmenuSprite::create(105, terrainIds, terrainCreator, -1, false);
     unitData.m_Terrain->setTooltipText(tr("Terrain the unit is currently sitting on."));
     unitData.m_Terrain->setPosition(x, y);
     addItem(unitData.m_Terrain);
@@ -217,9 +209,12 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
             pAnim = UnitSpriteManager::getInstance()->getResAnim(id);
         }
         oxygine::spSprite pSprite = oxygine::spSprite::create();
-        pSprite->setResAnim(pAnim);
-        pSprite->setScale(pAnim->getWidth() / 30.0f);
-        pSprite->setSize(pAnim->getSize());
+        if (pAnim != nullptr)
+        {
+            pSprite->setResAnim(pAnim);
+            pSprite->setScale(pAnim->getWidth() / 30.0f);
+            pSprite->setSize(pAnim->getSize());
+        }
         return pSprite;
     };
 

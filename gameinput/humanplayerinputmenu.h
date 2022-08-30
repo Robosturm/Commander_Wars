@@ -5,8 +5,8 @@
 #include <QVector>
 #include <QStringList>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 #include "objects/base/h_scrollbar.h"
@@ -62,7 +62,6 @@ private:
     qint32 m_rowCount{0};
     qint32 m_columnCount{0};
     qint32 m_startItem{0};
-
 
     bool m_moveScrolling{false};
     oxygine::Vector2 m_lastScrollPoint;

@@ -1,5 +1,7 @@
 #include <QtMath>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/victorymenue.h"
 #include "menue/mainwindow.h"
 #include "menue/campaignmenu.h"
@@ -26,16 +28,20 @@
 
 VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface, bool isReplay)
     : m_ProgressTimer(this),
+      m_despawnSlaveTimer(this),
       m_pNetworkInterface(pNetworkInterface),
       m_pMap(pMap),
       m_isReplay(isReplay)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("VictoryMenue");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     CONSOLE_PRINT("Entering Victory Menue", Console::eDEBUG);
+    m_pMap->setMenu(nullptr); // remove outdated link
     
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
@@ -500,23 +506,29 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     pApp->continueRendering();
     if (Mainapp::getSlave())
     {
-        // despawn slave process on finish
-        CONSOLE_PRINT("Closing slave cause the game is finished.", Console::eDEBUG);
-        qint32 ret = m_pMap->getWinnerTeam() + 1;
-        QString object = "Init";
-        QString func = "onMasterValue";
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        if (pInterpreter->exists(object, func))
-        {
-            QJSValue erg = pInterpreter->doFunction(object, func);
-            ret = erg.toInt();
-        }
-        QCoreApplication::exit(ret);
+        connect(&m_despawnSlaveTimer, QTimer::timeout, this, despawnSlave, Qt::QueuedConnection);
+        m_despawnSlaveTimer.start(20000);
     }
     else
     {
         AddScoreToUserdata();
     }
+}
+
+void VictoryMenue::despawnSlave()
+{
+    // despawn slave process on finish
+    CONSOLE_PRINT("Closing slave cause the game is finished.", Console::eDEBUG);
+    qint32 ret = m_pMap->getWinnerTeam() + 1;
+    QString object = "Init";
+    QString func = "onMasterValue";
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValue erg = pInterpreter->doFunction(object, func);
+        ret = erg.toInt();
+    }
+    QCoreApplication::exit(ret);
 }
 
 void VictoryMenue::createStatisticsView()
@@ -733,7 +745,7 @@ void VictoryMenue::exitMenue()
     else
     {
         m_pMap->detach();
-        auto window = spMainwindow::create();
+        auto window = spMainwindow::create("ui/menu/mainmenu.xml");
         oxygine::Stage::getStage()->addChild(window);
     }
     oxygine::Actor::detach();

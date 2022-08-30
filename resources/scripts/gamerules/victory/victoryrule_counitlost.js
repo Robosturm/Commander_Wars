@@ -1,10 +1,10 @@
 var Constructor = function()
 {
-    this.getRuleDescription = function(itemNumber)
+    this.getRuleDescription = function(rule, itemNumber, map)
     {
         return qsTr("A player loses if he lost the given amount of co units.")
     };
-    this.getRuleName = function(itemNumber)
+    this.getRuleName = function(rule, itemNumber, map)
     {
         return qsTr("Co Units lost");
     };

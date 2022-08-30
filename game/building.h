@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QVector>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "game/GameEnums.h"
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
@@ -13,14 +11,12 @@
 #include "objects/base/tooltip.h"
 
 class QmlVectorPoint;
-
 class Player;
 class Unit;
 class Terrain;
 class GameAction;
 class Weather;
 class GameMap;
-
 class Building;
 using spBuilding = oxygine::intrusive_ptr<Building>;
 
@@ -324,6 +320,10 @@ public slots:
      */
     QList<qint32> getRepairTypes();
     /**
+     * @brief endOfTurn
+     */
+    void endOfTurn();
+    /**
      * @brief startOfTurn
      */
     void startOfTurn();
@@ -337,6 +337,11 @@ public slots:
      * @return
      */
     qint32 getOffensiveBonus();
+    /**
+     * @brief getPowerChargeBonus
+     * @return
+     */
+    qint32 getPowerChargeBonus();
     /**
      * @brief getCostReduction
      * @return

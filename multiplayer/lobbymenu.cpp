@@ -2,6 +2,8 @@
 #include <QJsonDocument>
 #include <QRegularExpression>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "multiplayer/lobbymenu.h"
 #include "multiplayer/networkcommands.h"
 #include "multiplayer/dialogpassword.h"
@@ -42,7 +44,7 @@ LobbyMenu::LobbyMenu()
         m_pTCPClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
         connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, Qt::QueuedConnection);
         connect(m_pTCPClient.get(), &TCPClient::sigConnected, this, &LobbyMenu::connected, Qt::QueuedConnection);
-        emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort());
+        emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort(), Settings::getSecondaryServerAdress());
     }
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
@@ -209,7 +211,7 @@ void LobbyMenu::leaveServer()
 void LobbyMenu::exitMenue()
 {    
     CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
-    auto window = spMainwindow::create();
+    auto window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
@@ -217,7 +219,7 @@ void LobbyMenu::exitMenue()
 void LobbyMenu::hostLocal()
 {    
     CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create("", Settings::getGamePort(), "", Multiplayermenu::NetworkMode::Host));
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create("", "", Settings::getGamePort(), "", Multiplayermenu::NetworkMode::Host));
     oxygine::Actor::detach();
 }
 
@@ -234,7 +236,8 @@ void LobbyMenu::hostServer()
 
 void LobbyMenu::joinGame()
 {
-    if (m_currentGame.get() && m_currentGame->hasOpenPlayers())
+    if (m_currentGame.get() &&
+       (m_mode == GameViewMode::OwnGames || m_currentGame->hasOpenPlayers()))
     {
         if (m_currentGame->getLocked())
         {
@@ -289,7 +292,7 @@ void LobbyMenu::joinAdress()
 void LobbyMenu::join(QString adress, QString password)
 {    
     CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", Console::eDEBUG);
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), Settings::getGamePort(), password, Multiplayermenu::NetworkMode::Client));
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), "", Settings::getGamePort(), password, Multiplayermenu::NetworkMode::Client));
     oxygine::Actor::detach();
 }
 
@@ -303,7 +306,7 @@ void LobbyMenu::observeAdress()
 void LobbyMenu::observe(QString adress, QString password)
 {
     CONSOLE_PRINT("Leaving Lobby Menue to observe game by adress", Console::eDEBUG);
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), Settings::getGamePort(), password, Multiplayermenu::NetworkMode::Observer));
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), "", Settings::getGamePort(), password, Multiplayermenu::NetworkMode::Observer));
     oxygine::Actor::detach();
 }
 
@@ -438,9 +441,10 @@ void LobbyMenu::updateGameData(const QJsonObject & objData)
 void LobbyMenu::joinSlaveGame(const QJsonObject & objData)
 {
     QString slaveAddress = objData.value(JsonKeys::JSONKEY_ADDRESS).toString();
+    QString secondarySlaveAddress = objData.value(JsonKeys::JSONKEY_SECONDARYADDRESS).toString();
     quint16 slavePort = objData.value(JsonKeys::JSONKEY_PORT).toInteger();
     CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", Console::eDEBUG);
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(slaveAddress.trimmed(), slavePort, m_password, Multiplayermenu::NetworkMode::Client));
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(slaveAddress.trimmed(), secondarySlaveAddress.trimmed(), slavePort, m_password, Multiplayermenu::NetworkMode::Client));
     oxygine::Actor::detach();
 }
 
@@ -451,7 +455,7 @@ void LobbyMenu::updateGamesView()
     for (auto & game : m_games)
     {
         ComplexTableView::Item item;
-        item.pData = &game;
+        item.pData = game.get();
         item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game->getMapName(), widths[0])));
         item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spXofYTableItem::create(game->getPlayers(), game->getMaxPlayers(), widths[1])));
         item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game->getDescription(), widths[2])));
@@ -471,18 +475,26 @@ void LobbyMenu::updateGamesView()
 
 void LobbyMenu::selectGame()
 {
-    m_currentGame = spNetworkGameData(m_gamesview->getDataItem<NetworkGameData>(m_gamesview->getCurrentItem()));
+    if (m_gamesview->getCurrentItem() >= 0)
+    {
+        m_currentGame = spNetworkGameData(m_gamesview->getDataItem<NetworkGameData>(m_gamesview->getCurrentItem()));
+    }
 }
 
 void LobbyMenu::connected(quint64 socket)
 {
-    spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/userLoginDialog.xml", this);
+    QString password = Settings::getServerPassword();
+    spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/serverLogin/userLoginDialog.xml", this);
     addChild(pDialog);
+    if (!password.isEmpty())
+    {
+        loginToServerAccount(password);
+    }
 }
 
 void LobbyMenu::onLogin()
 {
-    m_pButtonHostOnServer->setEnabled(true);
+    enableServerButtons(true);
     m_loggedIn = true;
 }
 
@@ -516,7 +528,8 @@ void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject & objDa
         QString object = jsScripts[action - static_cast<qint32>(NetworkCommands::PublicKeyActions::CreateAccount)];
         CONSOLE_PRINT("Calling function " + object + ".onAccountMessage(" + QString::number(accountError) + ")", Console::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValueList args({accountError});
+        QJSValueList args;
+        args.append(accountError);
         pInterpreter->doFunction(object, "onAccountMessage", args);
     }
     else

@@ -17,7 +17,9 @@
 ReplayRecorder::ReplayRecorder(GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ReplayRecorder");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

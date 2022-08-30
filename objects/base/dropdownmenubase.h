@@ -4,13 +4,16 @@
 #include <QObject>
 #include <QVector>
 #include <QString>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/tooltip.h"
 
 class DropDownmenuBase;
-typedef oxygine::intrusive_ptr<DropDownmenuBase> spDropDownmenuBase;
+using spDropDownmenuBase = oxygine::intrusive_ptr<DropDownmenuBase>;
 
 class DropDownmenuBase : public Tooltip
 {

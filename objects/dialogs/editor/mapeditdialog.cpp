@@ -15,7 +15,9 @@ constexpr const char* const MapEdit = "mapEdit";
 MapEditDialog::MapEditDialog(MapEditInfo info)
     : m_info(info)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MapEditDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

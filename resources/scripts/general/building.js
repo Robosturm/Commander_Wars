@@ -128,6 +128,12 @@ var BUILDING =
     {
         return Global[building.getBuildingID()].actionList;
     },
+
+    endOfTurn : function(building, map)
+    {
+        // gets called at the end of a turn
+    },
+
     startOfTurn : function(building, map)
     {
         var owner = building.getOwner();
@@ -146,6 +152,10 @@ var BUILDING =
     },
 
     getDefensiveBonus : function(building, map)
+    {
+        return 0;
+    },
+    getPowerChargeBonus : function(building, map)
     {
         return 0;
     },
@@ -170,7 +180,7 @@ var BUILDING =
         return[];
     },
 
-    replenishUnit : function(building, map)
+    replenishUnit : function(building, map, health = 2, fuelAmount = 1, ammo1Amount = 1, ammo2Amount = 1, always = false)
     {
         // default impl replenishes our units
         // gets called at the start of a turn
@@ -178,33 +188,50 @@ var BUILDING =
         var repairList = building.getRepairTypes();
         var unit = building.getTerrain().getUnit();
         if ((unit !== null) &&
-                (unit.getOwner() === building.getOwner()) &&
-                ((repairList.indexOf(unit.getUnitType()) >= 0) ||
-                 (constructionList.indexOf(unit.getUnitID()) >= 0)))
+            (unit.getOwner() === building.getOwner() || always) &&
+            ((repairList.indexOf(unit.getUnitType()) >= 0) ||
+             (constructionList.indexOf(unit.getUnitID()) >= 0)))
         {
             var x = unit.getX();
             var y = unit.getY();
             if (unit.canBeRepaired(Qt.point(x, y)))
             {
-                BUILDING.repairUnit(unit, x, y, map);
+                BUILDING.repairUnit(unit, x, y, map, health, fuelAmount, ammo1Amount, ammo2Amount);
             }
         }
     },
 
-    repairUnit : function(unit, x, y, map)
+    repairUnit : function(unit, x, y, map, health = 2, fuelAmount = 1, ammo1Amount = 1, ammo2Amount = 1)
     {
         // our unit and a repairable one
         // replenish it
         var refillRule = map.getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL");
         var refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set
-        unit.refill(refillMaterial);
-        var repairAmount = 2 + unit.getRepairBonus(Qt.point(x, y));
+        unit.refill(refillMaterial, fuelAmount, ammo1Amount, ammo2Amount);
+        var repairAmount = 0;
+        if (health !== 0)
+        {
+            repairAmount = health + unit.getRepairBonus(Qt.point(x, y));
+        }
         UNIT.repairUnit(unit, repairAmount, map);
         if (!unit.isStealthed(map.getCurrentViewPlayer()))
         {
             var animationCount = GameAnimationFactory.getAnimationCount();
             var animation = GameAnimationFactory.createAnimation(map, x, y);
-            var width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, 2, 1);
+            var width = 0;
+            if (repairAmount > 0)
+            {
+                width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, 2, 1);
+            }
+            else if (repairAmount < 0)
+            {
+                width = animation.addText(qsTr("DAMAGE"), map.getImageSize() / 2 + 25, 2, 1);
+            }
+            else
+            {
+                width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
+            }
+
             animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
             animation.addSprite("repair", map.getImageSize() / 2 + 4, 4, 400, 2);
             animation.addSound("repair_2.wav");

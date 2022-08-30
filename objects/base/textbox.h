@@ -4,12 +4,13 @@
 #include <QObject>
 #include <QElapsedTimer>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 
 #include "objects/base/textinput.h"
 
 class Textbox;
-typedef oxygine::intrusive_ptr<Textbox> spTextbox;
+using spTextbox = oxygine::intrusive_ptr<Textbox>;
 
 class Textbox : public TextInput
 {
@@ -33,6 +34,8 @@ protected:
 protected:
     oxygine::spBox9Sprite m_Textbox;
     oxygine::spTextField m_Textfield;
+private:
+    QString m_lastDrawText;
 };
 
 #endif // TEXTBOX_H

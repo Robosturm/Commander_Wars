@@ -1,5 +1,7 @@
 #include <QMutexLocker>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/replaymenu.h"
 #include "menue/victorymenue.h"
 #include "menue/movementplanner.h"
@@ -23,7 +25,9 @@ ReplayMenu::ReplayMenu(QString filename)
     : GameMenue(spGameMap::create(1, 1, 2))
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("ReplayMenu");
+#endif
     registerAtInterpreter();
     setIsReplay(true);
     connect(this, &ReplayMenu::sigExitReplay, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);

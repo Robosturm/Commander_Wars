@@ -2,14 +2,14 @@
 #define TABLEVIEW_H
 
 #include <QObject>
-#include "qvector.h"
-#include "qstringlist.h"
+#include <QVector>
+#include <QStringList>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 #include "objects/base/label.h"
 
 class TableView;
-typedef oxygine::intrusive_ptr<TableView> spTableView;
+using spTableView = oxygine::intrusive_ptr<TableView>;
 
 class TableView : public QObject, public oxygine::Actor
 {

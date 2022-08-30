@@ -6,9 +6,19 @@
 
 namespace oxygine
 {
-    class TextStyle
+    struct Font
     {
-    public:
+        QFont font;
+        qint32 borderWidth{2};
+        Qt::PenCapStyle borderCapStyle{Qt::RoundCap};
+        Qt::PenJoinStyle borderJoin{Qt::RoundJoin};
+        qint32 offsetX{0};
+        qint32 offsetY{0};
+
+    };
+
+    struct TextStyle
+    {
         enum HorizontalAlign
         {
             HALIGN_DEFAULT,
@@ -17,15 +27,14 @@ namespace oxygine
             HALIGN_RIGHT
         };
 
-        explicit TextStyle(QFont rs)
+        explicit TextStyle(const Font & rs)
             : font(rs)
         {
         }
-        QFont font;
+        Font font;
         HorizontalAlign hAlign{HALIGN_DEFAULT};
         bool multiline{false};
         QColor color{Qt::white};
-        qint32 borderWidth{2};
         Qt::TextElideMode elideText{Qt::TextElideMode::ElideRight};
     };
 }

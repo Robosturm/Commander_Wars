@@ -16,7 +16,11 @@
 #include <QMouseEvent>
 #include <QTimerEvent>
 #include <QMutexLocker>
-#include <qapplication.h>
+#ifdef GRAPHICSUPPORT
+#include <QApplication>
+#else
+#include <QCoreApplication>
+#endif
 #include <limits>
 
 #include "coreengine/console.h"
@@ -28,23 +32,25 @@ namespace oxygine
 
     GameWindow::GameWindow()
     {
+#ifdef GRAPHICSUPPORT
         setObjectName("GameWindow");
         QSurfaceFormat newFormat = format();
         newFormat.setProfile(QSurfaceFormat::CoreProfile);
         newFormat.setSamples(2);    // Set the number of samples used for multisampling
         setFormat(newFormat);
+#endif
         m_window = this;
         m_mainHandle = QThread::currentThreadId();
-        connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
-        connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
-        connect(this, &GameWindow::sigQuit, this, &GameWindow::quit, Qt::QueuedConnection);
-        connect(QApplication::instance(), &QApplication::aboutToQuit, this, &GameWindow::quitApp);
-        connect(this, &GameWindow::sigShowKeyboard, this, &GameWindow::showKeyboard, Qt::QueuedConnection);
+        QObject::connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
+        QObject::connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
+        QObject::connect(this, &GameWindow::sigQuit, this, &GameWindow::quit, Qt::QueuedConnection);
+        QObject::connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &GameWindow::quitApp);
+        QObject::connect(this, &GameWindow::sigShowKeyboard, this, &GameWindow::showKeyboard, Qt::QueuedConnection);
     }
 
     void GameWindow::shutdown()
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         m_timerCycle = -1;
         m_Timer.stop();
         rsCache().reset();
@@ -59,12 +65,6 @@ namespace oxygine
         Stage::setStage(spStage());
         Resources::unregisterResourceType("atlas");
         m_window = nullptr;
-    }
-
-    void GameWindow::timerEvent(QTimerEvent *)
-    {
-        // Request an update
-        update();
     }
 
     void GameWindow::updateData()
@@ -89,60 +89,19 @@ namespace oxygine
         QCoreApplication::exit(exitCode);
     }
 
-    void GameWindow::paintGL()
+
+    float GameWindow::getActiveDpiFactor() const
     {
-        updateData();
-        if (m_pauseMutex.tryLock())
+        auto ratio = devicePixelRatio();
+        if (Settings::getUseHighDpi())
         {
-            oxygine::Stage::getStage()->updateStage();
-            if (beginRendering())
-            {
-                STDRenderer* renderer = STDRenderer::getCurrent();
-                QColor clearColor(0, 0, 0, 255);
-                QSize size = oxygine::GameWindow::getWindow()->size();
-                oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(size.width(), size.height()));
-                // Render all actors inside the stage. Actor::render will also be called for all its children
-                oxygine::Stage::getStage()->renderStage(clearColor, viewport);
-                swapDisplayBuffers();
-                m_repeatedFramesDropped = 0;
-            }
-            m_pauseMutex.unlock();
+            ratio = 1.0f;
         }
-        else
+        if (ratio < 1.0f)
         {
-            ++m_repeatedFramesDropped;
-            if (m_repeatedFramesDropped > 10)
-            {
-                update();
-            }
+            ratio = 1.0f;
         }
-        // check for termination
-        if (m_quit)
-        {
-            QApplication::exit();
-        }
-    }
-
-    bool GameWindow::beginRendering()
-    {
-        if (!m_renderEnabled)
-        {
-            return false;
-        }
-
-        bool ready = STDRenderer::isReady();
-        if (ready)
-        {
-            rsCache().reset();
-            VideoDriver::m_stats.start = Clock::getTimeMS();
-            rsCache().reset();
-        }
-        else
-        {
-            CONSOLE_PRINT("!ready", Console::eDEBUG);
-        }
-
-        return ready;
+        return ratio;
     }
 
     bool GameWindow::isReady2Render()
@@ -152,11 +111,6 @@ namespace oxygine
             return false;
         }
         return STDRenderer::isReady();
-    }
-
-    void GameWindow::swapDisplayBuffers()
-    {
-        VideoDriver::m_stats.duration = Clock::getTimeMS() - VideoDriver::m_stats.start;
     }
 
     float GameWindow::getGamma() const
@@ -184,51 +138,29 @@ namespace oxygine
         Resources::registerResourceType(ResAtlas::create, "atlas");
     }
 
-    void GameWindow::initializeGL()
+    void GameWindow::initStage()
     {
-        initializeOpenGLFunctions();
-        if (!hasOpenGLFeature(QOpenGLFunctions::Shaders))
+        if (oxygine::Stage::getStage().get() != nullptr)
         {
-            CONSOLE_PRINT("Shaders are not supported by open gl. This may result in a black screen.", Console::eWARNING);
+            auto ratio = getActiveDpiFactor();
+            auto width = Settings::getWidth();
+            auto heigth = Settings::getHeight();
+            oxygine::Stage::getStage()->init (oxygine::Point(width / ratio, heigth / ratio),
+                                              oxygine::Point(width, heigth));
         }
-        if (!hasOpenGLFeature(QOpenGLFunctions::Multitexture))
-        {
-            CONSOLE_PRINT("Multitextures are not supported by open gl. This may result in a black screen.", Console::eWARNING);
-        }
-        // init oxygine engine
-        CONSOLE_PRINT("initialize oxygine", Console::eDEBUG);
-        VideoDriver::instance = spVideoDriver::create();
-        VideoDriver::instance->setDefaultSettings();
-        rsCache().setDriver(VideoDriver::instance.get());
-
-        STDRenderer::initialize();
-
-        STDRenderer::instance = spSTDRenderer::create();
-        RenderDelegate::instance = spRenderDelegate::create();
-        Material::null = spMaterial::create();
-        Material::current = Material::null;
-
-        STDRenderer::current = STDRenderer::instance;
-        launchGame();
     }
 
     void GameWindow::launchGame()
     {
         if (!m_launched)
         {
+            m_launched = true;
             registerResourceTypes();
             // Create the stage. Stage is a root node for all updateable and drawable objects
             oxygine::Stage::setStage(oxygine::spStage::create());
+            initStage();
             emit sigLoadRessources();
         }
-    }
-
-    void GameWindow::resizeGL(qint32 w, qint32 h)
-    {
-        CONSOLE_PRINT("core::restore()", Console::eDEBUG);
-        VideoDriver::instance->restore();
-        STDRenderer::restore();
-        CONSOLE_PRINT("core::restore() done", Console::eDEBUG);
     }
 
     void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
@@ -433,11 +365,6 @@ namespace oxygine
         return m_timerCycle;
     }
 
-    QOpenGLContext* GameWindow::getGLContext()
-    {
-        return m_window->context();
-    }
-
     GameWindow* GameWindow::getWindow()
     {
         return m_window;
@@ -455,8 +382,9 @@ namespace oxygine
         return false;
     }
 
-    bool GameWindow::hasCursor()
+    bool GameWindow::hasCursor() const
     {
+#ifdef GRAPHICSUPPORT
         QPoint position = cursor().pos();
         if (position.x() < x() || position.y() < y() ||
             position.x() > x() + width() || position.y() > y() + height())
@@ -464,11 +392,15 @@ namespace oxygine
             return false;
         }
         return true;
+#else
+        return false;
+#endif
     }
 
     void GameWindow::showKeyboard(bool visible)
     {
-        auto virtualKeyboard = QGuiApplication::inputMethod();
+#ifdef GRAPHICSUPPORT
+        auto virtualKeyboard = QApplication::inputMethod();
         if (virtualKeyboard != nullptr)
         {
             if (visible)
@@ -485,6 +417,7 @@ namespace oxygine
                 }
             }
         }
+#endif
     }
 
 }

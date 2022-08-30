@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "wiki/unitinfo.h"
 #include "wiki/wikidatabase.h"
 
@@ -20,7 +22,9 @@
 
 UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("UnitInfo");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

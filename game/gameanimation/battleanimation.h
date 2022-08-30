@@ -251,4 +251,6 @@ private:
     AnimationProgress m_currentState{AnimationProgress::MoveIn};
 };
 
+Q_DECLARE_INTERFACE(BattleAnimation, "BattleAnimation");
+
 #endif // BATTLEANIMATION_H

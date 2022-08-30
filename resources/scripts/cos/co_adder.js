@@ -178,12 +178,11 @@ var Constructor = function()
         return 0;
     };
 
-    this.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
+    this.getPowerChargeBonus = function(co, map)
     {
-        // adder gains more power than other co's
-        var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
-        co.setPowerFilled(co.getPowerFilled() + powerGain * 1.2);
+        return 20;
     };
+
     this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();

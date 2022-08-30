@@ -8,7 +8,9 @@ MoveplannerInput::MoveplannerInput(GameMap* pMap)
     : HumanPlayerInput(pMap)
 {
     m_AiType = GameEnums::AiTypes_MovePlanner;
+#ifdef GRAPHICSUPPORT
     setObjectName("MoveplannerInput");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

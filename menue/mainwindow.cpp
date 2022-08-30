@@ -1,5 +1,7 @@
 #include <QFile>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/mainwindow.h"
 #include "menue/campaignmenu.h"
 #include "menue/gamemenue.h"
@@ -37,12 +39,12 @@
 
 #include "ui_reader/uifactory.h"
 
-static constexpr qint32 buttonCount = 7;
-
-Mainwindow::Mainwindow()
+Mainwindow::Mainwindow(const QString & initialView)
     : m_cheatTimeout(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Mainwindow");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
@@ -82,7 +84,7 @@ Mainwindow::Mainwindow()
     style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    spLabel pTextfield = spLabel::create(250);
+    spLabel pTextfield = spLabel::create(300);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(Mainapp::getGameVersion());
     pTextfield->setPosition(Settings::getWidth() - 10 - pTextfield->getTextRect().getWidth(), Settings::getHeight() - 10 - pTextfield->getTextRect().getHeight());
@@ -105,6 +107,8 @@ Mainwindow::Mainwindow()
         });
         connect(this, &Mainwindow::sigImport, this, &Mainwindow::import, Qt::QueuedConnection);
     }
+
+    UiFactory::getInstance().createUi(initialView, this);
 
     m_cheatTimeout.setSingleShot(true);
     connect(&m_cheatTimeout, &QTimer::timeout, this, &Mainwindow::cheatTimeout, Qt::QueuedConnection);
@@ -160,34 +164,7 @@ void Mainwindow::changeUsername(QString name)
     Settings::saveSettings();
 }
 
-qint32 Mainwindow::getButtonX(qint32 btnI) const
-{
-    qint32 col = btnI % 3;
-    qint32 x = 0;
-    const qint32 width = 170;
-    if (col == 0)
-    {
-        x = (Settings::getWidth() / 2.0f - width * 1.5f - 10);
-    }
-    else if (col == 1)
-    {
-        x = (Settings::getWidth() / 2.0f - width * 0.5f);
-    }
-    else if (col == 2)
-    {
-        x = (Settings::getWidth() / 2.0f + width * 0.5f + 10);
-    }
-    return x;
-}
-
-qint32 Mainwindow::getButtonY(qint32 btnI) const
-{
-    float buttonHeigth = 45;
-    btnI = btnI / 3;
-    return Settings::getHeight() / 2.0f - buttonCount  / 2 * buttonHeigth + buttonHeigth * btnI;
-}
-
-bool Mainwindow::isValidSavegame() const
+bool Mainwindow::isValidSavegame()
 {
     QString lastSaveGame = Settings::getLastSaveGame();
     if (!QFile::exists(lastSaveGame) ||
@@ -198,10 +175,11 @@ bool Mainwindow::isValidSavegame() const
     return true;
 }
 
-void Mainwindow::enterSingleplayer()
+void Mainwindow::enterSingleplayer(const QStringList & filter)
 {    
     Mainapp::getInstance()->pauseRendering();
-    auto window = spMapSelectionMapsMenue::create();
+    auto view = spMapSelectionView::create(filter);
+    auto window = spMapSelectionMapsMenue::create(view);
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -224,10 +202,10 @@ void Mainwindow::enterEditor()
     Mainapp::getInstance()->continueRendering();
 }
 
-void Mainwindow::enterOptionmenue()
+void Mainwindow::enterOptionmenue(const QString & xmlFile)
 {
     Mainapp::getInstance()->pauseRendering();
-    auto window = spOptionMenue::create();
+    auto window = spOptionMenue::create(xmlFile);
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();

@@ -163,13 +163,9 @@ public slots:
      */
     void showGameInfo(qint32 player);
     /**
-     * @brief showOptions
+     * @brief showXmlFileDialog
      */
-    void showOptions();
-    /**
-     * @brief showChangeSound
-     */
-    void showChangeSound();
+    void showXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
     /**
      * @brief showAttackLog
      */
@@ -238,6 +234,41 @@ public slots:
      * @param socketID
      */
     void playerJoined(quint64 socketID);
+    /**
+     * @brief showDisconnectReason
+     * @param socketID
+     * @param objData
+     */
+    void showDisconnectReason(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief sendUsername
+     * @param socketID
+     * @param objData
+     */
+    void sendUsername(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief sendLoginData
+     * @param socketID
+     * @param objData
+     * @param action
+     */
+    void sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
+    /**
+     * @brief verifyLoginData
+     * @param objData
+     * @param socketID
+     */
+    void verifyLoginData(const QJsonObject & objData, quint64 socketID);
+    /**
+     * @brief sendVerifyGameData
+     * @param socketID
+     */
+    void sendVerifyGameData(quint64 socketID);
+    /**
+     * @brief sendRequestJoinReason
+     * @param socketID
+     */
+    void sendRequestJoinReason(quint64 socketID);
     /**
      * @brief continueAfterSyncGame
      */
@@ -348,11 +379,27 @@ protected slots:
      */
     void syncPointReached();
     /**
+     * @brief receivedUsername
+     * @param socketID
+     * @param objData
+     */
+    void receivedUsername(quint64 socketID, const QJsonObject & objData);
+    /**
      * @brief playerRequestControl
      * @param stream
      * @param socketID
      */
     void playerRequestControlInfo(QDataStream & stream, quint64 socketId);
+    /**
+     * @brief checkSendPlayerRequestControlInfo
+     */
+    void checkSendPlayerRequestControlInfo();
+    /**
+     * @brief sendPlayerRequestControlInfo
+     * @param playerNameId
+     * @param socketId
+     */
+    void sendPlayerRequestControlInfo(const QString & playerNameId, quint64 socketId);
     /**
      * @brief removePlayerFromSyncWaitList
      * @param socketID
@@ -392,17 +439,25 @@ protected:
     spChat m_pChat{nullptr};
     oxygine::spButton m_ChatButton{nullptr};
     oxygine::spTween m_chatButtonShineTween{nullptr};
-    spNetworkInterface m_pNetworkInterface;
     bool m_gameStarted{false};
-    QVector<quint64> m_PlayerSockets;
-    QVector<quint64> m_ReadySockets;
     oxygine::spTextField m_CurrentRoundTime;
     bool m_SaveGame{false};
-    bool m_Multiplayer{false};
 
+    // multiplayer data
+    QVector<quint64> m_PlayerSockets;
+    QVector<quint64> m_ReadySockets;
+    spNetworkInterface m_pNetworkInterface;
+    bool m_Multiplayer{false};
     QElapsedTimer m_slaveDespawnElapseTimer;
     QTimer m_slaveDespawnTimer{this};
     QTimer m_UpdateTimer{this};
+    struct Userdata
+    {
+        QString username;
+        quint64 socket;
+    };
+    QVector<Userdata> m_userData;
+    QVector<Userdata> m_requestData;
 
     bool m_enabledAutosaving{false};
 

@@ -5,9 +5,6 @@
 #include <QVector>
 #include <QPoint>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
 #include "game/gameanimation/gameanimation.h"
 #include "game/gamemap.h"
 #include "game/GameEnums.h"

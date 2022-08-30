@@ -1,9 +1,7 @@
 #ifndef JSCALLBACK_H
 #define JSCALLBACK_H
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-#include "coreengine/interpreter.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "coreengine/interpreter.h"
 
 template<class TClass>

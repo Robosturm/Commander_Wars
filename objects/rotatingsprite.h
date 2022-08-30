@@ -4,10 +4,11 @@
 #include <QElapsedTimer>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
 class RotatingSprite;
-typedef oxygine::intrusive_ptr<RotatingSprite> spRotatingSprite;
+using spRotatingSprite = oxygine::intrusive_ptr<RotatingSprite>;
 
 class RotatingSprite : public oxygine::Actor
 {

@@ -58,7 +58,9 @@ const QString CoreAI::UNIT_INFANTRY = "INFANTRY";
 CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType)
     : BaseGameInputIF(pMap, aiType)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CoreAI");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -766,7 +768,8 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
             {
                 Terrain* pNewTerrain = m_pMap->getTerrain(point.x(), point.y());
                 if (pNewTerrain->getUnit() == nullptr &&
-                    !pNewTerrain->isLoadingTile())
+                    !pNewTerrain->isLoadingTile() &&
+                    turnPfs.getTargetCosts(point.x(), point.y()) > 0)
                 {
                     if (pNewTerrain->getBuilding() == nullptr)
                     {
@@ -786,8 +789,11 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 auto path = turnPfs.getPathFast(target.x(), target.y());
                 pAction->setMovepath(path, turnPfs.getCosts(path));
-                emit performAction(pAction);
-                return true;
+                if (pAction->canBePerformed())
+                {
+                    emit performAction(pAction);
+                    return true;
+                }
             }
         }
     }
@@ -814,7 +820,7 @@ void CoreAI::addSelectedFieldData(spGameAction & pGameAction, const QPoint & poi
 std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
                                             spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                                             bool addCaptureTargets, bool virtualLoading, std::vector<QVector3D>& targets,
-                                            bool all)
+                                            bool all, qint32 distanceModifier)
 {
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
@@ -884,9 +890,9 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
                             break;
                         }
                     }
-                    if (found && (virtualLoading || !GlobalUtils::contains(targets, QVector3D(targetX, targetY, 1))))
+                    if (found && (virtualLoading || !GlobalUtils::contains(targets, QVector3D(targetX, targetY, distanceModifier))))
                     {
-                        targets.push_back(QVector3D(targetX, targetY, 1));
+                        targets.push_back(QVector3D(targetX, targetY, distanceModifier));
                         transportUnits.push_back(pLoadingUnit);
                         if (!all)
                         {
@@ -1012,7 +1018,7 @@ void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUni
     }
 }
 
-void CoreAI::appendCaptureTargets(const QStringList & actions, Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets)
+void CoreAI::appendCaptureTargets(const QStringList & actions, Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     if (actions.contains(ACTION_CAPTURE) ||
         actions.contains(ACTION_MISSILE))
@@ -1020,13 +1026,12 @@ void CoreAI::appendCaptureTargets(const QStringList & actions, Unit* pUnit, spQm
         bool missileTarget = hasMissileTarget();
         for (auto & pBuilding : pEnemyBuildings->getVector())
         {
-            QPoint point(pBuilding->Building::getX(), pBuilding->Building::getY());
             if (pUnit->canMoveOver(pBuilding->Building::getX(), pBuilding->Building::getY()))
             {
                 if (pBuilding->isCaptureOrMissileBuilding(missileTarget) &&
                     pBuilding->getTerrain()->getUnit() == nullptr)
                 {
-                    targets.push_back(QVector3D(pBuilding->Building::getX(), pBuilding->Building::getY(), 1));
+                    targets.push_back(QVector3D(pBuilding->Building::getX(), pBuilding->Building::getY(), distanceModifier));
                 }
             }
         }
@@ -1209,7 +1214,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
     }
 }
 
-void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets)
+void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     AI_CONSOLE_PRINT("CoreAI::appendNearestUnloadTargets", Console::eDEBUG);
     std::vector<std::vector<qint32>> checkedIslands;
@@ -1245,7 +1250,7 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUni
                     pLoadedUnit->getLoadedUnitCount() > 0)
                 {
                     checkIslandForUnloading(pUnit, pLoadedUnit, checkedIslands[i2], unitIslandIdx, unitIsland,
-                                            loadedUnitIslandIdx[i2], targetIsland, pUnloadArea.get(), targets);
+                                            loadedUnitIslandIdx[i2], targetIsland, pUnloadArea.get(), targets, distanceModifier);
                 }
             }
         }
@@ -1267,7 +1272,7 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUni
                     if (pEnemyBuilding->isCaptureOrMissileBuilding(missileTarget))
                     {
                         checkIslandForUnloading(pUnit, pLoadedUnit, checkedIslands[i2], unitIslandIdx, unitIsland,
-                                                loadedUnitIslandIdx[i2], targetIsland, pUnloadArea.get(), targets);
+                                                loadedUnitIslandIdx[i2], targetIsland, pUnloadArea.get(), targets, distanceModifier);
                     }
                 }
             }
@@ -1385,7 +1390,7 @@ qint32 CoreAI::getFlareTargetScore(const QPoint& moveTarget, const QPoint& flare
 void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, std::vector<qint32>& checkedIslands,
                                      qint32 unitIslandIdx, qint32 unitIsland,
                                      qint32 loadedUnitIslandIdx, qint32 targetIsland,
-                                     QmlVectorPoint* pUnloadArea, std::vector<QVector3D>& targets)
+                                     QmlVectorPoint* pUnloadArea, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     
     qint32 width = m_pMap->getMapWidth();
@@ -1413,10 +1418,10 @@ void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, std::vector
                         if (m_pMap->onMap(unloadX, unloadY) &&
                             m_pMap->getTerrain(unloadX, unloadY)->getUnit() == nullptr &&
                             pLoadedUnit->getBaseMovementCosts(unloadX, unloadY, unloadX, unloadY) > 0 &&
-                            !GlobalUtils::contains(targets, QVector3D(x, y, 1)) &&
+                            !GlobalUtils::contains(targets, QVector3D(x, y, distanceModifier)) &&
                             pUnit->getBaseMovementCosts(x, y, x, y) > 0)
                         {
-                            targets.push_back(QVector3D(x, y, 1));
+                            targets.push_back(QVector3D(x, y, distanceModifier));
                             break;
                         }
                     }
@@ -1426,7 +1431,7 @@ void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, std::vector
     }
 }
 
-void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets)
+void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
@@ -1465,7 +1470,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
                         qint32 y = point.y() + unloadPos.y();
                         if (m_pMap->onMap(x, y) &&
                             m_pMap->getTerrain(x, y)->getUnit() == nullptr &&
-                            !GlobalUtils::contains(targets, QVector3D(x, y, 1)))
+                            !GlobalUtils::contains(targets, QVector3D(x, y, distanceModifier)))
                         {
                             if (isUnloadTerrain(pUnit, m_pMap->getTerrain(x, y)))
                             {
@@ -1476,7 +1481,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
                                     {
                                         if (captureUnit->canMoveOver(x, y))
                                         {
-                                            targets.push_back(QVector3D(x, y, 1));
+                                            targets.push_back(QVector3D(x, y, distanceModifier));
                                             break;
                                         }
                                     }
@@ -1491,7 +1496,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
     }
 }
 
-void CoreAI::appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 rangeMultiplier)
+void CoreAI::appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 rangeMultiplier, qint32 distanceModifier)
 {
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
@@ -1532,7 +1537,7 @@ void CoreAI::appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEne
                         qint32 y = enemyY + rangePos.y() + unloadPos.y();
                         if (m_pMap->onMap(x, y) &&
                             m_pMap->getTerrain(x, y)->getUnit() == nullptr &&
-                            !GlobalUtils::contains(targets, QVector3D(x, y, 1)))
+                            !GlobalUtils::contains(targets, QVector3D(x, y, distanceModifier)))
                         {
                             if (isUnloadTerrain(pUnit, m_pMap->getTerrain(x, y)))
                             {
@@ -1546,7 +1551,7 @@ void CoreAI::appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEne
                                             m_IslandMaps[attackerIslandIdx]->getIsland(x, y) ==
                                             m_IslandMaps[attackerIslandIdx]->getIsland(enemyX, enemyY))
                                         {
-                                            targets.push_back(QVector3D(x, y, 1));
+                                            targets.push_back(QVector3D(x, y, distanceModifier));
                                             break;
                                         }
                                     }
@@ -1899,7 +1904,8 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
                         {
                             while (!pAction->isFinalStep())
                             {
-                                if (pAction->getStepInputType() == "FIELD")
+                                QString stepType = pAction->getStepInputType();
+                                if (stepType == GameAction::INPUTSTEP_FIELD)
                                 {
                                     spMarkedFieldData pData = pAction->getMarkedFieldStepData();
                                     QVector<QPoint> & points = *pData->getPoints();
@@ -1926,7 +1932,7 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
                                     }
                                     addSelectedFieldData(pAction, target);
                                 }
-                                else if (pAction->getStepInputType() == "MENU")
+                                else if (stepType == "MENU")
                                 {
                                     spMenuData pData = pAction->getMenuStepData();
                                     if (pData->validData())
@@ -1952,13 +1958,17 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
                                 }
                                 else
                                 {
+                                    CONSOLE_PRINT("Uknown action step type: " + stepType, Console::eERROR);
                                     break;
                                 }
                             }
                             if (pAction->isFinalStep())
                             {
-                                emit performAction(pAction);
-                                return true;
+                                if (pAction->canBePerformed())
+                                {
+                                    emit performAction(pAction);
+                                    return true;
+                                }
                             }
                         }
                     }
@@ -2101,8 +2111,11 @@ bool CoreAI::buildCOUnit(spQmlVectorUnit & pUnits)
             {
                 Unit* pUnit = pUnits->at(unitIdx);
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                emit performAction(pAction);
-                return true;
+                if (pAction->canBePerformed())
+                {
+                    emit performAction(pAction);
+                    return true;
+                }
             }
         }
     }

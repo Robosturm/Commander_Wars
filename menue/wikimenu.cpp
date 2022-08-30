@@ -10,10 +10,14 @@
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 Wikimenu::Wikimenu()
     : Basemenu()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Wikimenu");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
@@ -68,7 +72,7 @@ void Wikimenu::onEnter()
 void Wikimenu::exitMenue()
 {
     CONSOLE_PRINT("Leaving Wiki Menue", Console::eDEBUG);
-    auto window = spMainwindow::create();
+    auto window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
 }

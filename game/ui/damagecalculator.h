@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QPoint>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "game/gamemap.h"
 
@@ -63,13 +63,10 @@ private:
     QRectF calculatePostBattleDamage(spUnit pAttacker, spUnit pDefender, QRectF & info);
 private:
     GameMap m_map;
-
     UnitData m_atkUnit;
     CosData m_atkCos;
-
     UnitData m_defUnit;
     CosData m_defCos;
-
     spPlayer m_dropDownPlayer;
 };
 

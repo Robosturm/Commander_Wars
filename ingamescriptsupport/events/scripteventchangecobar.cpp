@@ -95,7 +95,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("Player who earns CO-Power Stars."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this](qreal value)
     {
         setPlayer(static_cast<qint32>(value) - 1);
@@ -111,7 +111,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("CO who earns CO-Power Stars."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(co + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this](qreal value)
     {
         setCo(static_cast<qint32>(value) - 1);
@@ -128,7 +128,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("The amount of Stars that will be changed."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(stars);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this](qreal value)
     {
         setStars(static_cast<qint32>(value));

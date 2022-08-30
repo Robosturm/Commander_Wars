@@ -4,63 +4,86 @@
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.h"
-
 #include "resource_management/fontmanager.h"
 
 #include <QMutexLocker>
 
 namespace oxygine
 {
-    TextField::TextField():
-        m_root(nullptr),
-        m_style(FontManager::getMainFont24()),
-        m_textRect(0, 0, 0, 0)
+#ifndef GRAPHICSUPPORT
+        QColor TextField::m_dummyColor;
+        TextStyle TextField::m_dummyTextStyle;
+        Rect TextField::m_dummyRect;
+        QString TextField::m_dummyText;
+#endif
+    TextField::TextField()
+        : m_style(FontManager::getMainFont24())
     {
-        setText("");
     }
 
     bool TextField::isOn(const Vector2& localPosition, float)
     {
+#ifdef GRAPHICSUPPORT
         Rect r = getTextRect();
         r.expand(Point(m_extendedIsOn, m_extendedIsOn), Point(m_extendedIsOn, m_extendedIsOn));
         return r.pointIn(Point((int)localPosition.x, (int)localPosition.y));
+#else
+        return false;
+#endif
     }
 
     void TextField::setMultiline(bool multiline)
     {
+#ifdef GRAPHICSUPPORT
         m_style.multiline = multiline;
         rebuildText();
+#endif
     }
 
     void TextField::setStyleColor(const QColor& color)
     {
+#ifdef GRAPHICSUPPORT
         m_style.color = color;
+#endif
     }
 
     const QColor& TextField::getStyleColor() const
     {
+#ifdef GRAPHICSUPPORT
         return m_style.color;
+#else
+        return m_dummyColor;
+#endif
     }
 
-    const QFont & TextField::getFont() const
+    const Font & TextField::getFont() const
     {
+#ifdef GRAPHICSUPPORT
         return m_style.font;
+#else
+        return m_dummyTextStyle.font;
+#endif
     }
 
-    void TextField::setFont(QFont & font)
+    void TextField::setFont(Font & font)
     {
+#ifdef GRAPHICSUPPORT
         m_style.font = font;
         rebuildText();
+#endif
     }
 
     void TextField::setHAlign(TextStyle::HorizontalAlign align)
     {
+#ifdef GRAPHICSUPPORT
         m_style.hAlign = align;
         rebuildText();
+#endif
     }
 
     void TextField::setStyle(const TextStyle& st)
     {
+#ifdef GRAPHICSUPPORT
         TextStyle::HorizontalAlign halign = m_style.hAlign;
         m_style = st;
 
@@ -69,6 +92,7 @@ namespace oxygine
             m_style.hAlign = halign;
         }
         rebuildText();
+#endif
     }
 
     void TextField::sizeChanged(const Vector2&)
@@ -78,58 +102,85 @@ namespace oxygine
 
     void TextField::setText(const QString & str)
     {
+#ifdef GRAPHICSUPPORT
         m_htmlText = false;
         if (m_text != str)
         {
             m_text = str;
             rebuildText();
         }
+#endif
     }
 
     const QString & TextField::getText() const
     {
+#ifdef GRAPHICSUPPORT
          return m_text;
+#else
+        return m_dummyText;
+#endif
     }
 
     void TextField::setHtmlText(const QString & str)
     {
+#ifdef GRAPHICSUPPORT
         m_htmlText = true;
         if (m_text != str)
         {
             m_text = str;
             rebuildText();
         }
+#endif
     }
 
     TextStyle::HorizontalAlign TextField::getHAlign() const
     {
+#ifdef GRAPHICSUPPORT
         return m_style.hAlign;
+#else
+        return TextStyle::HorizontalAlign::HALIGN_DEFAULT;
+#endif
     }
 
     bool TextField::getMultiline() const
     {
+#ifdef GRAPHICSUPPORT
         return m_style.multiline;
+#else
+        return false;
+#endif
     }
 
     const Rect& TextField::getTextRect() const
     {
+#ifdef GRAPHICSUPPORT
         const_cast<TextField*>(this)->getRootNode();
         return m_textRect;
+#else
+        return m_dummyRect;
+#endif
     }
 
     bool TextField::getBounds(RectF& r) const
     {
+#ifdef GRAPHICSUPPORT
         r = getTextRect().cast<RectF>();
+#endif
         return true;
     }
 
     text::Node* TextField::getRootNode()
     {
+#ifdef GRAPHICSUPPORT
         return m_root.get();
+#else
+        return nullptr;
+#endif
     }
 
     void TextField::rebuildText()
     {
+#ifdef GRAPHICSUPPORT
         QMutexLocker lock(&m_Locked);
         m_root = nullptr;
         if (m_htmlText)
@@ -144,10 +195,11 @@ namespace oxygine
         text::Aligner rd(m_style, getSize());
         rd.align(*m_root.get());
         m_textRect = rd.getBounds().cast<Rect>();
+#endif
     }
 
     void TextField::doRender(RenderState const& rs)
     {
-        m_rdelegate->doRender(this, rs);
+        RenderDelegate::instance->doRender(this, rs);
     }
 }

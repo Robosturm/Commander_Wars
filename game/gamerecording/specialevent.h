@@ -7,7 +7,7 @@
 
 #include "coreengine/fileserializable.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class SpecialEvent;
 using spSpecialEvent = oxygine::intrusive_ptr<SpecialEvent>;

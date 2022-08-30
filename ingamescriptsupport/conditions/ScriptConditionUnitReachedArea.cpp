@@ -13,7 +13,9 @@
 ScriptConditionUnitReachedArea::ScriptConditionUnitReachedArea(GameMap* pMap)
     : ScriptCondition(pMap, ConditionType::unitReachedArea)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ScriptConditionUnitReachedArea");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

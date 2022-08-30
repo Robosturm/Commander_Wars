@@ -5,7 +5,9 @@
 
 CursorData::CursorData()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CursorData");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

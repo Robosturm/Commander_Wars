@@ -2,7 +2,6 @@
 
 #include <QObject>
 #include <QTimer>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class Gamepad : public QObject
 {

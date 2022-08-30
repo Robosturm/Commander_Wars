@@ -17,9 +17,15 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     : GameAnimation(frameTime, pMap),
       m_permanent(permanent),
       m_endTimer(this)
-{
+{    
+#ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationNextDay");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
+    if (pApp->getSlave())
+    {
+        m_permanent = false;
+    }
     moveToThread(pApp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);
     setSize(Settings::getWidth(), Settings::getHeight());

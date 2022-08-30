@@ -1,6 +1,10 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
+#include "ui_reader/uifactory.h"
+
 #include "objects/playerselection.h"
 
 #include "game/gamemap.h"
@@ -15,12 +19,13 @@
 #include "objects/dialogs/rules/buildlistdialog.h"
 #include "objects/dialogs/rules/coselectiondialog.h"
 #include "objects/dialogs/rules/perkselectiondialog.h"
+#include "objects/dialogs/dialogmessagebox.h"
+
+#include "objects/base/dropdownmenu.h"
+#include "objects/base/dropdownmenucolor.h"
+#include "objects/base/spriteobject.h"
 
 #include "gameinput/humanplayerinput.h"
-
-#include "menue/movementplanner.h"
-
-#include "ai/veryeasyai.h"
 
 #include "multiplayer/networkcommands.h"
 
@@ -31,38 +36,23 @@
 #include "network/JsonKeys.h"
 
 constexpr const char* const CO_ARMY = "CO_ARMY";
+constexpr const char* const OBJECT_AI_PREFIX = "AI_";
+constexpr const char* const OBJECT_COLOR_PREFIX = "PlayerColor_";
+constexpr const char* const OBJECT_TEAM_PREFIX = "Team_";
+constexpr const char* const OBJECT_READY_PREFIX = "Ready_";
+constexpr const char* const OBJECT_CO1_PREFIX = "CO1_";
+constexpr const char* const OBJECT_CO2_PREFIX = "CO2_";
+
 
 PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("PlayerSelection");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-
-
-    m_pPlayerSelection = spPanel::create(true,
-                                         QSize(width,
-                                               heigth),
-                                         QSize(Settings::getWidth() - 70, 100));
-    connect(this, &PlayerSelection::sigShowSelectCO, this, &PlayerSelection::showSelectCO, Qt::QueuedConnection);
-    connect(this, &PlayerSelection::sigShowSelectCOPerks, this, &PlayerSelection::showSelectCOPerks, Qt::QueuedConnection);
-    connect(this, &PlayerSelection::buttonShowPlayerBuildList, this, &PlayerSelection::slotShowPlayerBuildList, Qt::QueuedConnection);
-    connect(this, &PlayerSelection::sigAiChanged, this, &PlayerSelection::selectAI, Qt::QueuedConnection);
-    connect(this, &PlayerSelection::sigCOsRandom, this, &PlayerSelection::slotCOsRandom, Qt::QueuedConnection);
-    connect(this, &PlayerSelection::sigSelectedArmyChanged, this, &PlayerSelection::selectedArmyChanged, Qt::QueuedConnection);
-    connect(this, &PlayerSelection::sigChangeAllTeams, this, &PlayerSelection::changeAllTeams, Qt::QueuedConnection);
-    connect(this, &PlayerSelection::buttonShowAllBuildList, this, &PlayerSelection::slotShowAllBuildList, Qt::QueuedConnection);
-
-    addChild(m_pPlayerSelection);
-}
-
-PlayerSelection::~PlayerSelection()
-{
-    for (auto & playerColors : m_playerColors)
-    {
-        playerColors->detach();
-    }
-    m_playerColors.clear();
+    setSize(width, heigth);
 }
 
 void PlayerSelection::attachNetworkInterface(spNetworkInterface pNetworkInterface)
@@ -84,9 +74,17 @@ bool PlayerSelection::isOpenPlayer(qint32 player)
 {
     if (m_pNetworkInterface.get() != nullptr &&
         player >= 0 &&
-        player < m_playerAIs.size())
+        player < m_pMap->getPlayerCount())
     {
-        if (m_playerAIs[player]->getCurrentItem() == m_playerAIs[player]->getItemCount() - 1)
+        DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+        if (pDropDownmenu != nullptr)
+        {
+            if (pDropDownmenu->getCurrentItem() == pDropDownmenu->getItemCount() - 1)
+            {
+                return true;
+            }
+        }
+        else if (m_pMap->getPlayer(player)->getControlType() == GameEnums::AiTypes_Open)
         {
             return true;
         }
@@ -99,24 +97,32 @@ bool PlayerSelection::isClosedPlayer(qint32 player)
     bool ret = false;
     if (!getIsCampaign())
     {
-        if (m_pNetworkInterface.get() != nullptr &&
-            player >= 0 &&
-            player < m_playerAIs.size())
+        DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+        if (pDropDownmenu != nullptr)
         {
-            if (m_playerAIs[player]->getCurrentItem() == m_playerAIs[player]->getItemCount() - 2 &&
-                m_pNetworkInterface->getIsServer())
+            if (m_pNetworkInterface.get() != nullptr)
+            {
+                if (pDropDownmenu->getCurrentItem() == pDropDownmenu->getItemCount() - 2 &&
+                    m_pNetworkInterface->getIsServer())
+                {
+                    ret = true;
+                }
+                else
+                {
+                    QString aiName = pDropDownmenu->getCurrentItemText();
+                    ret = (aiName == tr("Closed"));
+                }
+            }
+            else if (m_pNetworkInterface.get() == nullptr &&
+                     pDropDownmenu->getCurrentItem() == pDropDownmenu->getItemCount() - 1 &&
+                     pDropDownmenu->getItemCount() > 1)
             {
                 ret = true;
             }
-            else
-            {
-                QString aiName = m_playerAIs[player]->getCurrentItemText();
-                ret = (aiName == tr("Closed"));
-            }
         }
-        else if (m_pNetworkInterface.get() == nullptr &&
-                 m_playerAIs[player]->getCurrentItem() == m_playerAIs[player]->getItemCount() - 1 &&
-                 m_playerAIs[player]->getItemCount() > 1)
+        else if (player >= 0 &&
+                 player < m_pMap->getPlayerCount() &&
+                 m_pMap->getPlayer(player)->getControlType() == GameEnums::AiTypes_Closed)
         {
             ret = true;
         }
@@ -126,7 +132,7 @@ bool PlayerSelection::isClosedPlayer(qint32 player)
 
 bool PlayerSelection::hasOpenPlayer()
 {
-    for (qint32 i = 0; i < m_playerAIs.size(); i++)
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         if (isOpenPlayer(i))
         {
@@ -138,7 +144,7 @@ bool PlayerSelection::hasOpenPlayer()
 
 bool PlayerSelection::hasHumanPlayer()
 {
-    for (qint32 i = 0; i < m_playerAIs.size(); i++)
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         if (m_pMap->getPlayer(i) != nullptr &&
             m_pMap->getPlayer(i)->getBaseGameInput() != nullptr &&
@@ -152,57 +158,42 @@ bool PlayerSelection::hasHumanPlayer()
 
 QString PlayerSelection::getPlayerAiName(qint32 player)
 {
-    return m_playerAIs[player]->getCurrentItemText();
+    if (player >= 0 &&
+        player < m_pMap->getPlayerCount())
+    {
+        return m_pMap->getPlayer(player)->getPlayerNameId();
+    }
+    else
+    {
+        return "";
+    }
 }
 
 void PlayerSelection::setPlayerAiName(qint32 player, QString name)
 {
-    return m_playerAIs[player]->setCurrentItemText(name);
+    if (player >= 0 &&
+        player < m_pMap->getPlayerCount())
+    {
+        m_pMap->getPlayer(player)->setPlayerNameId(name);
+        DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+        if (pDropDownmenu != nullptr)
+        {
+            pDropDownmenu->setCurrentItemText(name);
+        }
+    }
 }
 
 GameEnums::AiTypes PlayerSelection::getPlayerAiType(qint32 player)
 {
-    if (isClosedPlayer(player))
+    if (player >= 0 &&
+        player < m_pMap->getPlayerCount())
     {
-        return GameEnums::AiTypes_Closed;
-    }
-    else if (m_pNetworkInterface.get() == nullptr)
-    {
-        return static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem());
+        return m_pMap->getPlayer(player)->getControlType();
     }
     else
     {
-        if (isOpenPlayer(player))
-        {
-            return GameEnums::AiTypes_Open;
-        }
-        else if (m_playerAIs[player]->getCurrentItem() < 0)
-        {
-            return GameEnums::AiTypes_ProxyAi;
-        }
-        else
-        {
-            return static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem());
-        }
+        return GameEnums::AiTypes_Open;
     }
-}
-
-void PlayerSelection::resetPlayerSelection()
-{    
-    m_pPlayerSelection->setVisible(false);
-    m_pPlayerSelection->clearContent();
-    m_playerCO1.clear();
-    m_playerCO2.clear();
-    m_playerColors.clear();
-    m_playerIncomes.clear();
-    m_playerStartFunds.clear();
-    m_playerAIs.clear();
-    m_playerTeams.clear();
-    m_playerBuildlist.clear();
-    m_PlayerSockets.clear();
-    m_pReadyBoxes.clear();
-    m_playerPerks.clear();
-    m_playerArmy.clear();
 }
 
 void PlayerSelection::showSelectCO(qint32 player, quint8 co)
@@ -241,7 +232,6 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
     {
         spCOSelectionDialog dialog = spCOSelectionDialog::create(m_pMap, coid, m_pMap->getPlayer(player)->getColor(), player, cos);
         oxygine::Stage::getStage()->addChild(dialog);
-        m_pPlayerSelection->setVisible(false);
         if (co == 0)
         {
             connect(dialog.get(), &COSelectionDialog::editFinished, this , &PlayerSelection::playerCO1Changed, Qt::QueuedConnection);
@@ -250,21 +240,44 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
         {
             connect(dialog.get(), &COSelectionDialog::editFinished, this , &PlayerSelection::playerCO2Changed, Qt::QueuedConnection);
         }
-        connect(dialog.get(), &COSelectionDialog::canceled, this , &PlayerSelection::playerCOCanceled, Qt::QueuedConnection);
     }
-    
 }
 
-bool PlayerSelection::getIsCampaign()
+bool PlayerSelection::getIsCampaign() const
 {
     return (m_pCampaign.get() != nullptr && !Console::getDeveloperMode());
 }
 
 bool PlayerSelection::getIsArmyCustomizationAllowed()
 {    
-    return (m_pCampaign.get() == nullptr || m_pCampaign->getAllowArmyCustomization(m_pMap) || Console::getDeveloperMode());}
+    return (m_pCampaign.get() == nullptr ||
+            m_pCampaign->getAllowArmyCustomization(m_pMap) ||
+            Console::getDeveloperMode());
+}
 
-qint32 PlayerSelection::getDefaultColorCount()
+bool PlayerSelection::hasNetworkInterface() const
+{
+    return m_pNetworkInterface.get() != nullptr;
+}
+bool PlayerSelection::getIsServerNetworkInterface() const
+{
+    return m_pNetworkInterface.get() != nullptr && m_pNetworkInterface->getIsServer() || m_isServerGame;
+}
+bool PlayerSelection::getIsObserverNetworkInterface() const
+{
+    return m_pNetworkInterface.get() != nullptr && m_pNetworkInterface->getIsObserver();
+}
+bool PlayerSelection::isNotServerChangeable(Player* pPlayer) const
+{
+    bool notServerChangeAblePlayer = false;
+    if (pPlayer->getBaseGameInput() != nullptr)
+    {
+        notServerChangeAblePlayer = (m_pNetworkInterface->getIsServer() && pPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi);
+    }
+    return notServerChangeAblePlayer;
+}
+
+qint32 PlayerSelection::getDefaultColorCount() const
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "getDefaultPlayerColors";
@@ -288,7 +301,7 @@ QColor PlayerSelection::getDefaultColor(qint32 index)
     return color;
 }
 
-QColor PlayerSelection::getDisplayColor(qint32 index, bool & exists)
+QColor PlayerSelection::getDisplayColor(qint32 index, bool & exists) const
 {
     exists = false;
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -346,220 +359,38 @@ QColor PlayerSelection::displayColorToTableColor(QColor displayColor)
     return tableColor;
 }
 
-void PlayerSelection::showPlayerSelection()
+QString PlayerSelection::getStartColorName(qint32 player)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->pauseRendering();
-    resetPlayerSelection();
-    m_pPlayerSelection->setVisible(true);
+    QColor startColor = tableColorToDisplayColor(m_pMap->getPlayer(player)->getColor());
+    return startColor.name();
+}
 
-    
-    // font style
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-
-    // add player labels at top
-    QStringList items = {tr("CO's"), tr("Color"), tr("AI Strength"), tr("Startfunds"), tr("Income Modifier"), tr("Team"), tr("Build List")};
-    if (m_pNetworkInterface.get() != nullptr)
-    {
-        items.append(tr("Connected"));
-    }
-    QVector<qint32> xPositions;
-    qint32 labelminStepSize = (m_pPlayerSelection->getWidth() - 100) / items.size();
-    if (labelminStepSize < 220)
-    {
-        labelminStepSize = 220;
-    }
-    qint32 curPos = 5;
-
-    oxygine::spTextField pLabel;
-    for (qint32 i = 0; i < items.size(); i++)
-    {
-        xPositions.append(curPos);
-        pLabel = oxygine::spTextField::create();
-        pLabel->setStyle(style);
-        pLabel->setHtmlText(items[i]);
-        qint32 width = pLabel->getTextRect().getWidth() + 10;
-        pLabel->setPosition(curPos, 5);
-        m_pPlayerSelection->addItem(pLabel);
-        if (width < labelminStepSize)
-        {
-            width = labelminStepSize;
-        }
-        curPos += width;
-    }
-    xPositions.append(curPos);
-    m_pPlayerSelection->setContentWidth(curPos + 50);
-    qint32 y = pLabel->getTextRect().getHeight() + 10 + 25;
-    // all player
-    pLabel = oxygine::spTextField::create();
-    pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("All"));
-    pLabel->setPosition(xPositions[0], y);
-    m_pPlayerSelection->addItem(pLabel);
-
-    qint32 itemIndex = 0;
-    oxygine::spButton pButtonAllCOs = ObjectManager::createButton(tr("All Random"), labelminStepSize - 10);
-    pButtonAllCOs->setPosition(xPositions[itemIndex], y);
-    m_pPlayerSelection->addItem(pButtonAllCOs);
-    pButtonAllCOs->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
-        emit sigCOsRandom(-1);
-    });
-    itemIndex = 1;
-    oxygine::spButton pButtonCOs1 = ObjectManager::createButton(tr("CO 1 Random"), labelminStepSize - 10);
-    pButtonCOs1->setPosition(xPositions[itemIndex], y);
-    m_pPlayerSelection->addItem(pButtonCOs1);
-    pButtonCOs1->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
-        emit sigCOsRandom(0);
-    });
-
-    itemIndex = 2;
-    oxygine::spButton pButtonCOs2 = ObjectManager::createButton(tr("CO 2 Random"), labelminStepSize - 10);
-    pButtonCOs2->setPosition(xPositions[itemIndex], y);
-    m_pPlayerSelection->addItem(pButtonCOs2);
-    pButtonCOs2->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
-        emit sigCOsRandom(1);
-    });
-    if (m_pMap->getGameRules()->getSingleCo())
-    {
-        pButtonAllCOs->setEnabled(false);
-        pButtonCOs2->setEnabled(false);
-    }
-    bool isCampaign = getIsCampaign();
-    bool isArmyCustomizationAllowed = getIsArmyCustomizationAllowed();
-
-    if (m_pNetworkInterface.get() != nullptr ||
-        isCampaign)
-    {
-        pButtonAllCOs->setVisible(false);
-        pButtonCOs1->setVisible(false);
-        pButtonCOs2->setVisible(false);
-    }
-
-    itemIndex = 3;
-    spSpinBox allStartFundsSpinBox = spSpinBox::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
-    allStartFundsSpinBox->setTooltipText(tr("Select how much funds all player start the game with."));
-    allStartFundsSpinBox->setSpinSpeed(500);
-    allStartFundsSpinBox->setPosition(xPositions[itemIndex], y);
-    allStartFundsSpinBox->setCurrentValue(0);
-    m_pPlayerSelection->addItem(allStartFundsSpinBox);
-    connect(allStartFundsSpinBox.get(), &SpinBox::sigValueChanged, this, &PlayerSelection::allPlayerStartFundsChanged, Qt::QueuedConnection);
-    if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-        m_saveGame ||
-        isCampaign)
-    {
-        allStartFundsSpinBox->setEnabled(false);
-    }
-
-    itemIndex = 4;
-    spSpinBox allIncomeSpinBox = spSpinBox::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
-    allIncomeSpinBox->setTooltipText(tr("Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building."));
-    allIncomeSpinBox->setPosition(xPositions[itemIndex], y);
-    allIncomeSpinBox->setCurrentValue(1.0f);
-    allIncomeSpinBox->setSpinSpeed(0.1f);
-    connect(allIncomeSpinBox.get(), &SpinBox::sigValueChanged, this, &PlayerSelection::allPlayerIncomeChanged, Qt::QueuedConnection);
-    m_pPlayerSelection->addItem(allIncomeSpinBox);
-    if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-        m_saveGame ||
-        isCampaign)
-    {
-        allIncomeSpinBox->setEnabled(false);
-    }
-
-    itemIndex = 5;
-    spSpinBox teamSpinBox = spSpinBox::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 2, m_pMap->getPlayerCount(), SpinBox::Mode::Int);
-    teamSpinBox->setTooltipText(tr("Automatically changes the teams of all players so the teams are equally distributed, according to the team count."
-                                   "Teams are assigned in a way that the first turn advantage is the least relevant."));
-    teamSpinBox->setPosition(xPositions[itemIndex], y);
-    teamSpinBox->setCurrentValue(m_pMap->getPlayerCount());
-    teamSpinBox->setSpinSpeed(1.0f);
-    connect(teamSpinBox.get(), &SpinBox::sigValueChanged, this, [this](qreal value)
-    {
-        emit sigChangeAllTeams(static_cast<qint32>(value));
-    });
-    m_pPlayerSelection->addItem(teamSpinBox);
-    if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-        m_saveGame ||
-        isCampaign)
-    {
-        teamSpinBox->setEnabled(false);
-    }
-
-    itemIndex = 6;
-    oxygine::spButton pButtonAllBuildList = ObjectManager::createButton(tr("Build List"), 150);
-    pButtonAllBuildList->setPosition(xPositions[itemIndex], y);
-    m_pPlayerSelection->addItem(pButtonAllBuildList);
-    pButtonAllBuildList->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
-        emit buttonShowAllBuildList();
-    });
-    if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-        m_saveGame ||
-        isCampaign)
-    {
-        pButtonAllBuildList->setEnabled(false);
-    }
-
-    y += 10 + allIncomeSpinBox->getHeight();
-    QStringList teamList;
+void PlayerSelection::initializeMap()
+{
+    m_playerReadyFlags.clear();
+    m_playerSockets.clear();
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        teamList.append(tr("Team") + " " + QString::number(i + 1));
-    }
-    QStringList defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def.")}; // // heavy ai disabled cause it's not finished
-#if HEAVY_AI
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    GameManager* pGameManager = GameManager::getInstance();
-    // heavy ai enable code
-    for (qint32 i = 0; i < pGameManager->getHeavyAiCount(); ++i)
-    {
-        QString id = pGameManager->getHeavyAiID(i);
-        QJSValue aiName = pInterpreter->doFunction(id, "getName");
-        defaultAiList.append(aiName.toString());
-    }
-#endif
-    defaultAiList.append(tr("Closed"));
-
-    QStringList aiList = defaultAiList;
-    if (isCampaign)
-    {
-        aiList = {tr("Human")};
-        if (m_pNetworkInterface.get() != nullptr)
-        {
-            aiList.append(tr("Open"));
-        }
-    }
-    else if (m_pNetworkInterface.get() != nullptr)
-    {
-        if (m_pNetworkInterface->getIsServer())
-        {
-            aiList.append(tr("Open"));
-        }
-        else
-        {
-            aiList = {tr("Human"), tr("Open")};
-        }
-    }
-
-    qint32 colorCount = getDefaultColorCount();
-    QVector<QColor> playerColors;
-
-    for (qint32 i = 0; i < colorCount; i++)
-    {
-        bool exists = false;
-        playerColors.append(getDisplayColor(i, exists));
+        m_playerReadyFlags.append(false);
+        m_playerSockets.append(0);
     }
 
     bool allPlayer1 = true;
     bool allHuman = true;
+    const bool isCampaign = getIsCampaign();
     if (!isCampaign)
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
+            auto bannlist = Settings::getDefaultBannlist();
+            if (!bannlist.isEmpty())
+            {
+                auto unitList = Filesupport::readList(bannlist, "");
+                if (unitList.items.size() > 0)
+                {
+                    m_pMap->getPlayer(i)->setBuildList(unitList.items);
+                }
+            }
             Player* pPlayer = m_pMap->getPlayer(i);
             if (pPlayer->getTeam() != 0)
             {
@@ -567,14 +398,17 @@ void PlayerSelection::showPlayerSelection()
             }
             if (pPlayer->getBaseGameInput() != nullptr)
             {
-                if (pPlayer->getBaseGameInput()->getAiType() > GameEnums::AiTypes_Human)
+                auto ai = pPlayer->getBaseGameInput()->getAiType();
+                if (ai > GameEnums::AiTypes_Human)
                 {
                     allHuman = false;
                 }
+                pPlayer->setControlType(ai);
             }
             else
             {
                 pPlayer->setBaseGameInput(spHumanPlayerInput::create(m_pMap));
+                pPlayer->setControlType(GameEnums::AiTypes_Human);
             }
         }
     }
@@ -593,352 +427,203 @@ void PlayerSelection::showPlayerSelection()
             m_pMap->getPlayer(i)->setTeam(i);
         }
     }
-
-    // add player selection information
-    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+    if (allHuman)
     {
-        if (!isCampaign)
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            auto bannlist = Settings::getDefaultBannlist();
-            if (!bannlist.isEmpty())
+            if (i != 0)
             {
-                auto unitList = Filesupport::readList(bannlist, "");
-                if (unitList.items.size() > 0)
-                {
-                    m_pMap->getPlayer(i)->setBuildList(unitList.items);
-                }
+                const auto ai = GameEnums::AiTypes_Normal;
+                m_pMap->getPlayer(i)->setControlType(ai);
+                m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, ai));
             }
         }
-        qint32 ai = 0;
-        if (m_pMap->getPlayer(i)->getBaseGameInput() != nullptr)
-        {
-            ai = static_cast<qint32>(m_pMap->getPlayer(i)->getBaseGameInput()->getAiType());
-        }
-
-        itemIndex = 0;
-        oxygine::spSprite spriteCO1 = oxygine::spSprite::create();
-        spriteCO1->setPosition(xPositions[itemIndex], y);
-        spriteCO1->setSize(32, 12);
-        spriteCO1->setScale(2.0f);
-        spriteCO1->setDisableColor(QColor(0, 0, 0, 0));
-        m_pPlayerSelection->addItem(spriteCO1);
-        m_playerCO1.append(spriteCO1);
-
-        spriteCO1->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
-        {
-            emit sigShowSelectCO(i, 0);
-        });
-        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-            m_saveGame ||
-            (ai > 0 && isCampaign))
-        {
-            spriteCO1->setEnabled(false);
-        }
-
-        if (m_pNetworkInterface.get() == nullptr ||
-            m_pNetworkInterface->getIsServer())
-        {
-            if (m_pMap->getPlayer(i)->getCO(0) != nullptr)
-            {
-                playerCO1Changed(m_pMap->getPlayer(i)->getCO(0)->getCoID(), i);
-            }
-            else
-            {
-                playerCO1Changed("", i);
-            }
-        }
-
-        oxygine::spSprite spriteCO2 = oxygine::spSprite::create();
-        spriteCO2->setPosition(xPositions[itemIndex], y + 24);
-        spriteCO2->setSize(32, 12);
-        spriteCO2->setScale(2.0f);
-        spriteCO2->setDisableColor(QColor(0, 0, 0, 0));
-        m_pPlayerSelection->addItem(spriteCO2);
-        m_playerCO2.append(spriteCO2);
-        spriteCO2->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
-        {
-            emit sigShowSelectCO(i, 1);
-        });
-        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-            m_saveGame ||
-            (ai > 0 && isCampaign) ||
-            m_pMap->getGameRules()->getSingleCo())
-        {
-            spriteCO2->setEnabled(false);
-        }
-        if (m_pMap->getGameRules()->getSingleCo())
-        {
-            playerCO2Changed("", i);
-        }
-        else if (m_pNetworkInterface.get() == nullptr ||
-                 m_pNetworkInterface->getIsServer())
-        {
-            if (m_pMap->getPlayer(i)->getCO(1) != nullptr)
-            {
-                playerCO2Changed(m_pMap->getPlayer(i)->getCO(1)->getCoID(), i);
-            }
-            else
-            {
-                playerCO2Changed("", i);
-            }
-        }
-
-        oxygine::spButton pIconButton = ObjectManager::createIconButton("perk", 36);
-        pIconButton->setPosition(xPositions[itemIndex] + 67, y + 3);
-        m_pPlayerSelection->addItem(pIconButton);
-        m_playerPerks.append(pIconButton);
-        pIconButton->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
-        {
-            emit sigShowSelectCOPerks(i);
-        });
-        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-            m_saveGame ||
-            (ai > 0 && isCampaign))
-        {
-            pIconButton->setEnabled(false);
-        }
-        //
-        createArmySelection(ai, xPositions, y, itemIndex, i);
-
-        itemIndex++;
-        spDropDownmenuColor playerColor = spDropDownmenuColor::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, playerColors);
-        playerColor->setTooltipText(tr("Select the Color for this player's army."));
-        playerColor->setPosition(xPositions[itemIndex], y);
-        playerColor->setShowUnitPreview(true);
-        playerColor->setCurrentItem(tableColorToDisplayColor(m_pMap->getPlayer(i)->getColor()));
-        m_pPlayerSelection->addItem(playerColor);
-        DropDownmenuColor* pPlayerColor = playerColor.get();
-        connect(playerColor.get(), &DropDownmenuColor::sigItemChanged, this, [this, i, pPlayerColor](QColor value)
-        {
-            playerColorChanged(value, i, pPlayerColor->getCurrentItem());
-        }, Qt::QueuedConnection);
-        m_playerColors.append(playerColor);
-        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-            m_saveGame ||
-            !isArmyCustomizationAllowed)
-        {
-            playerColor->setEnabled(false);
-        }
-
-        itemIndex++;
-        spDropDownmenu playerAi = spDropDownmenu::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, aiList);
-        playerAi->setTooltipText(tr("Select who controls this player."));
-        playerAi->setPosition(xPositions[itemIndex], y);
-        if (isCampaign)
-        {
-            if (ai == 0)
-            {
-                ai = 0;
-                playerAi->setCurrentItem(0);
-            }
-            else
-            {
-                playerAi->setCurrentItemText(defaultAiList[ai]);
-                playerAi->setEnabled(false);
-            }
-        }
-        else if (m_pNetworkInterface.get() != nullptr)
-        {
-            if (m_pNetworkInterface->getIsServer())
-            {
-                if (m_saveGame)
-                {
-                    if (ai == GameEnums::AiTypes_ProxyAi)
-                    {
-                        ai = aiList.size() - 1;
-                        playerAi->setCurrentItem(ai);
-                    }
-                    else
-                    {
-                        playerAi->setCurrentItem(ai);
-                    }
-                }
-                else if (i > 0)
-                {
-                    ai = GameEnums::AiTypes_Open;
-                    playerAi->setCurrentItem(aiList.size() - 1);
-                }
-                else
-                {
-                    ai = 0;
-                    playerAi->setCurrentItem(0);
-                }
-            }
-            else
-            {
-                ai = GameEnums::AiTypes_Normal;
-                playerAi->setCurrentItem(ai);
-                playerAi->setEnabled(false);
-            }
-        }
-        else if (allHuman)
-        {
-            if (i > 0)
-            {
-                ai = GameEnums::AiTypes_Normal;
-                playerAi->setCurrentItem(ai);
-
-            }
-            else
-            {
-                ai = 0;
-                playerAi->setCurrentItem(0);
-            }
-        }
-        else
-        {
-            auto* input = m_pMap->getPlayer(i)->getBaseGameInput();
-            if (input == nullptr)
-            {
-                ai = GameEnums::AiTypes_Closed;
-                playerAi->setCurrentItem(ai);
-            }
-            else
-            {
-                ai = static_cast<qint32>(input->getAiType());
-                playerAi->setCurrentItem(ai);
-            }
-        }
-        connect(playerAi.get(), &DropDownmenu::sigItemChanged, this, [this, i](qint32)
-        {
-            emit sigAiChanged(i);
-        });
-        m_playerAIs.append(playerAi);
-        m_pPlayerSelection->addItem(playerAi);
-        m_PlayerSockets.append(0);
-
-        itemIndex++;
-        spSpinBox playerStartFundsSpinBox = spSpinBox::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
-        playerStartFundsSpinBox->setTooltipText(tr("Select how much funds this player starts the game with."));
-        playerStartFundsSpinBox->setPosition(xPositions[itemIndex], y);
-        playerStartFundsSpinBox->setCurrentValue(m_pMap->getPlayer(i)->getFunds());
-        playerStartFundsSpinBox->setSpinSpeed(500);
-        m_pPlayerSelection->addItem(playerStartFundsSpinBox);
-        m_playerStartFunds.append(playerStartFundsSpinBox);
-        connect(playerStartFundsSpinBox.get(), &SpinBox::sigValueChanged, this, [this, i](float value)
-        {
-            playerStartFundsChanged(value, i);
-        }, Qt::QueuedConnection);
-        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-            m_saveGame ||
-            isCampaign)
-        {
-            playerStartFundsSpinBox->setEnabled(false);
-        }
-
-        itemIndex++;
-        spSpinBox playerIncomeSpinBox = spSpinBox::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
-        playerIncomeSpinBox->setTooltipText(tr("Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building."));
-        playerIncomeSpinBox->setPosition(xPositions[itemIndex], y);
-        playerIncomeSpinBox->setCurrentValue(m_pMap->getPlayer(i)->getFundsModifier());
-        playerIncomeSpinBox->setSpinSpeed(0.1f);
-        m_pPlayerSelection->addItem(playerIncomeSpinBox);
-        m_playerIncomes.append(playerIncomeSpinBox);
-        connect(playerIncomeSpinBox.get(), &SpinBox::sigValueChanged, this, [this, i](float value)
-        {
-            playerIncomeChanged(value, i);
-        }, Qt::QueuedConnection);
-        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-            m_saveGame ||
-            isCampaign)
-        {
-            playerIncomeSpinBox->setEnabled(false);
-        }
-
-        itemIndex++;
-        spDropDownmenu playerTeam = spDropDownmenu::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, teamList);
-        playerTeam->setTooltipText(tr("Select the team of this player. The team can't be changed and players of the same team can't attack each other."));
-        playerTeam->setPosition(xPositions[itemIndex], y);
-        playerTeam->setCurrentItem(m_pMap->getPlayer(i)->getTeam());
-        m_pPlayerSelection->addItem(playerTeam);
-        connect(playerTeam.get(), &DropDownmenu::sigItemChanged, this, [this, i](qint32 value)
-        {
-            playerTeamChanged(value, i);
-        }, Qt::QueuedConnection);
-        m_playerTeams.append(playerTeam);
-        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-            m_saveGame ||
-            isCampaign)
-        {
-            playerTeam->setEnabled(false);
-        }
-
-        itemIndex++;
-        oxygine::spButton pButtonPlayerBuildList = ObjectManager::createButton(tr("Build List"), 150);
-        pButtonPlayerBuildList->setPosition(xPositions[itemIndex], y);
-        m_pPlayerSelection->addItem(pButtonPlayerBuildList);
-        pButtonPlayerBuildList->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event * )->void
-        {
-            emit buttonShowPlayerBuildList(i);
-        });
-        m_playerBuildlist.append(pButtonPlayerBuildList);
-        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-            m_saveGame ||
-            isCampaign)
-        {
-            pButtonPlayerBuildList->setEnabled(false);
-        }
-
-        itemIndex++;
-        if (m_pNetworkInterface.get() != nullptr)
-        {
-            spCheckbox pCheckbox = spCheckbox::create();
-            pCheckbox->setTooltipText(tr("Shows which players are ready to start the game. All players need to be checked in order to start a game."));
-            pCheckbox->setPosition(xPositions[itemIndex] + labelminStepSize / 2 - pCheckbox->getWidth(), y);
-            pCheckbox->setEnabled(false);
-            m_pReadyBoxes.append(pCheckbox);
-            m_pPlayerSelection->addItem(pCheckbox);
-        }
-        if (isCampaign && ai > 0)
-        {
-            createAi(i, static_cast<GameEnums::AiTypes>(ai), playerAi->getCurrentItemText());
-        }
-        else if ((m_pNetworkInterface.get() == nullptr ||
-                  m_pNetworkInterface->getIsServer() ||
-                  m_isServerGame))
-        {
-            selectPlayerAi(i, static_cast<GameEnums::AiTypes>(ai));
-        }
-        else
-        {
-            createAi(i, static_cast<GameEnums::AiTypes>(ai), playerAi->getCurrentItemText());
-        }
-        y += 15 + playerIncomeSpinBox->getHeight();
     }
-    m_pPlayerSelection->setContentHeigth(y + 50);
+}
+
+void PlayerSelection::showPlayerSelection()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
+    resetUi();
+    initializeMap();
+    UiFactory::getInstance().createUi("ui/game/playerSelection.xml", this);
+    updateInitialState();
     pApp->continueRendering();
 }
 
-void PlayerSelection::createArmySelection(qint32 ai, const QVector<qint32> & xPositions, qint32 y, qint32 itemIndex, qint32 player)
+void PlayerSelection::updateInitialState()
 {
-    auto creator = [](QString army)
+    // add player selection information
+    QStringList aiList = getAiNames();
+    QStringList defaultAiList = getDefaultAiNames();
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        GameManager* pGameManager = GameManager::getInstance();
-        oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_" + army.toLower());
-        oxygine::spSprite ret = oxygine::spSprite::create();
-        ret->setResAnim(pAnim);
-        return ret;
-    };
-    QStringList armies = getSelectableArmies();
-    spDropDownmenuSprite pArmy = spDropDownmenuSprite::create(105, armies, creator);
-    pArmy->setTooltipText(tr("Selects the army for the player. CO means the army of the first CO is selected."));
-    m_pPlayerSelection->addItem(pArmy);
-    m_playerArmy.append(pArmy);
-    DropDownmenuSprite* pPtrArmy = pArmy.get();
-    connect(pArmy.get(), &DropDownmenuSprite::sigItemChanged, this, [this, player, pPtrArmy](qint32)
-    {
-        emit sigSelectedArmyChanged(player, pPtrArmy->getCurrentItemText());
-    });
-    if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-        m_saveGame ||
-        (ai > 0 && !getIsArmyCustomizationAllowed()))
-    {
-        pArmy->setEnabled(false);
+        Player* pPlayer = m_pMap->getPlayer(i);
+        DropDownmenu* pPlayerAi = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
+        qint32 ai = static_cast<qint32>(pPlayer->getControlType());
+        // update co view
+        selectInitialCos(i);
+        // update ai view
+        selectInitialAi(i, pPlayerAi, ai, aiList, defaultAiList);
+        createInitialAi(pPlayerAi, ai, i);
     }
-    pArmy->setPosition(xPositions[itemIndex] + 105, y);
 }
 
-QStringList PlayerSelection::getSelectableArmies()
+void PlayerSelection::selectInitialAi(qint32 player, DropDownmenu* pPlayerAi, qint32 & ai, const QStringList & aiList, const QStringList & defaultAiList)
+{
+    Player* pPlayer = m_pMap->getPlayer(player);
+    const bool isCampaign = getIsCampaign();
+    if (isCampaign)
+    {
+        if (ai == 0)
+        {
+            ai = 0;
+            if (pPlayerAi != nullptr)
+            {
+                pPlayerAi->setCurrentItem(0);
+            }
+        }
+        else
+        {
+            if (pPlayerAi != nullptr)
+            {
+                pPlayerAi->setCurrentItemText(defaultAiList[ai]);
+                pPlayerAi->setEnabled(false);
+            }
+        }
+    }
+    else if (m_pNetworkInterface.get() != nullptr)
+    {
+        if (m_pNetworkInterface->getIsServer())
+        {
+            if (m_saveGame)
+            {
+                if (ai == GameEnums::AiTypes_ProxyAi)
+                {
+                    ai = aiList.size() - 1;
+                    if (pPlayerAi != nullptr)
+                    {
+                        pPlayerAi->setCurrentItem(ai);
+                    }
+                }
+                else
+                {
+                    if (pPlayerAi != nullptr)
+                    {
+                        pPlayerAi->setCurrentItem(ai);
+                    }
+                }
+            }
+            else if (player > 0)
+            {
+                ai = GameEnums::AiTypes_Open;
+                if (pPlayerAi != nullptr)
+                {
+                    pPlayerAi->setCurrentItem(aiList.size() - 1);
+                }
+            }
+            else
+            {
+                ai = 0;
+                if (pPlayerAi != nullptr)
+                {
+                    pPlayerAi->setCurrentItem(0);
+                }
+            }
+        }
+        else
+        {
+            ai = GameEnums::AiTypes_Normal;
+            if (pPlayerAi != nullptr)
+            {
+                pPlayerAi->setCurrentItem(ai);
+                pPlayerAi->setEnabled(false);
+            }
+        }
+    }
+    else
+    {
+        auto* input = pPlayer->getBaseGameInput();
+        if (input == nullptr)
+        {
+            ai = GameEnums::AiTypes_Closed;
+            if (pPlayerAi != nullptr)
+            {
+                pPlayerAi->setCurrentItem(ai);
+            }
+        }
+        else
+        {
+            ai = static_cast<qint32>(input->getAiType());
+            if (pPlayerAi != nullptr)
+            {
+                pPlayerAi->setCurrentItem(ai);
+            }
+        }
+    }
+}
+
+void PlayerSelection::createInitialAi(DropDownmenu* pPlayerAi, qint32 ai, qint32 player)
+{
+    Player* pPlayer = m_pMap->getPlayer(player);
+    // create initial selected ai's
+    QString displayName = pPlayer->getPlayerNameId();
+    if (pPlayerAi != nullptr)
+    {
+        displayName = pPlayerAi->getCurrentItemText();
+    }
+
+    if (getIsCampaign() && ai > 0)
+    {
+        createAi(player, static_cast<GameEnums::AiTypes>(ai), displayName);
+    }
+    else if ((m_pNetworkInterface.get() == nullptr ||
+              m_pNetworkInterface->getIsServer() ||
+              m_isServerGame))
+    {
+        selectPlayerAi(player, static_cast<GameEnums::AiTypes>(ai));
+    }
+    else
+    {
+        createAi(player, static_cast<GameEnums::AiTypes>(ai), displayName);
+    }
+}
+
+void PlayerSelection::selectInitialCos(qint32 player)
+{
+    Player* pPlayer = m_pMap->getPlayer(player);
+    if (m_pNetworkInterface.get() == nullptr ||
+        m_pNetworkInterface->getIsServer())
+    {
+        if (pPlayer->getCO(0) != nullptr)
+        {
+            playerCO1Changed(pPlayer->getCO(0)->getCoID(), player);
+        }
+        else
+        {
+            playerCO1Changed("", player);
+        }
+    }
+    if (m_pMap->getGameRules()->getSingleCo())
+    {
+        playerCO2Changed("", player);
+    }
+    else if (m_pNetworkInterface.get() == nullptr ||
+             m_pNetworkInterface->getIsServer())
+    {
+        if (pPlayer->getCO(1) != nullptr)
+        {
+            playerCO2Changed(pPlayer->getCO(1)->getCoID(), player);
+        }
+        else
+        {
+            playerCO2Changed("", player);
+        }
+    }
+}
+
+QStringList PlayerSelection::getSelectableArmies() const
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue erg = pInterpreter->doFunction("PLAYER", "getArmies");
@@ -949,8 +634,6 @@ QStringList PlayerSelection::getSelectableArmies()
 
 void PlayerSelection::selectedArmyChanged(qint32 player, QString army)
 {
-    
-    
     Player* pPlayer = m_pMap->getPlayer(player);
     if (army == CO_ARMY)
     {
@@ -972,34 +655,28 @@ void PlayerSelection::selectedArmyChanged(qint32 player, QString army)
         sendStream << army;
         emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
     }
-    
 }
 
 void PlayerSelection::allPlayerIncomeChanged(float value)
-{    
-    
+{        
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         m_pMap->getPlayer(i)->setFundsModifier(value);
-        m_playerIncomes[i]->setCurrentValue(value);
     }
     playerDataChanged();
 }
 
 void PlayerSelection::allPlayerStartFundsChanged(float value)
-{    
-    
+{
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         m_pMap->getPlayer(i)->setFunds(static_cast<qint32>(value));
-        m_playerStartFunds[i]->setCurrentValue(value);
     }
     playerDataChanged();
 }
 
 void PlayerSelection::playerIncomeChanged(float value, qint32 playerIdx)
 {
-
     m_pMap->getPlayer(playerIdx)->setFundsModifier(value);
     playerDataChanged();
 }
@@ -1007,15 +684,13 @@ void PlayerSelection::playerIncomeChanged(float value, qint32 playerIdx)
 void PlayerSelection::slotShowAllBuildList()
 {
     // use player 0 as default for showing all
-    
     spBuildListDialog dialog = spBuildListDialog::create(m_pMap, 0, m_pMap->getPlayer(0)->getBuildList());
     oxygine::Stage::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangeAllBuildList, Qt::QueuedConnection);
 }
 
 void PlayerSelection::slotShowPlayerBuildList(qint32 player)
-{    
-    
+{
     spBuildListDialog dialog = spBuildListDialog::create(m_pMap, player, m_pMap->getPlayer(player)->getBuildList());
     oxygine::Stage::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangePlayerBuildList, Qt::QueuedConnection);
@@ -1028,7 +703,6 @@ void PlayerSelection::slotChangeAllBuildList(qint32, QStringList buildList)
         m_pMap->getPlayer(i)->setBuildList(buildList);
     }
     playerDataChanged();
-
 }
 
 void PlayerSelection::slotChangePlayerBuildList(qint32 player, QStringList buildList)
@@ -1041,15 +715,13 @@ void PlayerSelection::slotChangePlayerBuildList(qint32 player, QStringList build
 }
 
 void PlayerSelection::playerStartFundsChanged(float value, qint32 playerIdx)
-{    
-    
+{
     m_pMap->getPlayer(playerIdx)->setFunds(static_cast<qint32>(value));
     playerDataChanged();
 }
 
 void PlayerSelection::playerTeamChanged(qint32 value, qint32 playerIdx)
-{    
-    
+{
     m_pMap->getPlayer(playerIdx)->setTeam(value);
     playerDataChanged();
 }
@@ -1078,7 +750,7 @@ void PlayerSelection::playerDataChanged()
                 sendStream << buildList[i2];
             }
         }
-        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
     }
 }
 
@@ -1100,8 +772,7 @@ void PlayerSelection::playerColorChanged(QColor displayColor, qint32 playerIdx, 
 }
 
 void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
-{
-    
+{    
     if (!m_saveGame)
     {
         CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(1);
@@ -1131,16 +802,15 @@ void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
     {
         autoSelectPlayerColors();
     }
-    m_pPlayerSelection->setVisible(true);
 }
 
 void PlayerSelection::autoSelectPlayerColors()
 {
     QVector<qint32> usedColors;
     QVector<qint32> openPlayers;
-    
     qint32 playerCount = m_pMap->getPlayerCount();
-    if (m_playerColors.size() == playerCount)
+    DropDownmenuColor* pPlayer0Color= getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(0));
+    if (pPlayer0Color != nullptr)
     {
         for (qint32 i = 0; i < playerCount; ++i)
         {
@@ -1157,8 +827,12 @@ void PlayerSelection::autoSelectPlayerColors()
                     if (index >= 0 && !usedColors.contains(index))
                     {
                         usedColors.append(index);
-                        m_playerColors[i]->setCurrentItem(index);
-                        playerColorChanged(m_playerColors[i]->getCurrentItemColor(), i, index);
+                        DropDownmenuColor* pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(i));
+                        if (pDropDownmenuColor != nullptr)
+                        {
+                            pDropDownmenuColor->setCurrentItem(index);
+                            playerColorChanged(pDropDownmenuColor->getCurrentItemColor(), i, index);
+                        }
                     }
                     else
                     {
@@ -1167,7 +841,7 @@ void PlayerSelection::autoSelectPlayerColors()
                 }
             }
         }
-        qint32 colors = m_playerColors[0]->getItemCount();
+        qint32 colors = pPlayer0Color->getItemCount();
         for (const auto & openPlayer : qAsConst(openPlayers))
         {
             for (qint32 i = 0; i < colors; ++i)
@@ -1175,8 +849,12 @@ void PlayerSelection::autoSelectPlayerColors()
                 if (!usedColors.contains(i))
                 {
                     usedColors.append(i);
-                    m_playerColors[openPlayer]->setCurrentItem(i);
-                    playerColorChanged(m_playerColors[openPlayer]->getCurrentItemColor(), openPlayer, i);
+                    DropDownmenuColor* pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(i));
+                    if (pDropDownmenuColor != nullptr)
+                    {
+                        pDropDownmenuColor->setCurrentItem(i);
+                        playerColorChanged(pDropDownmenuColor->getCurrentItemColor(), openPlayer, i);
+                    }
                     break;
                 }
             }
@@ -1195,8 +873,7 @@ void PlayerSelection::setMap(GameMap *newPMap)
 }
 
 void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
-{
-    
+{    
     if (m_pMap)
     {
         CO* pCurrentCO = m_pMap->getPlayer(playerIdx)->getCO(0);
@@ -1209,14 +886,19 @@ void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
         {
             pAnim = pCurrentCO->getResAnim((coid + "+info"));
         }
-        m_playerCO1[playerIdx]->setResAnim(pAnim);
-        if (pAnim != nullptr)
+
+        SpriteObject* pSprite = getCastedObject<SpriteObject>(OBJECT_CO1_PREFIX + QString::number(playerIdx));
+        if (pSprite != nullptr)
         {
-            m_playerCO1[playerIdx]->setScale(2.0f * pAnim->getWidth() / 32.0f);
-        }
-        else
-        {
-            m_playerCO1[playerIdx]->setScale(2.0f);
+            pSprite->setResAnim(pAnim);
+            if (pAnim != nullptr)
+            {
+                pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
+            }
+            else
+            {
+                pSprite->setScale(2.0f);
+            }
         }
     }
 }
@@ -1225,7 +907,6 @@ void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
 {    
     if (!m_saveGame)
     {
-        
         CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(0);
         if (coid == "" ||
             coid == CO::CO_RANDOM ||
@@ -1249,13 +930,10 @@ void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
         }
     }
     updateCO2Sprite(coid, playerIdx);
-    m_pPlayerSelection->setVisible(true);
-    
 }
 
 void PlayerSelection::updateCO2Sprite(QString coid, qint32 playerIdx)
 {
-    
     if (m_pMap)
     {
         CO* pCurrentCO = m_pMap->getPlayer(playerIdx)->getCO(1);
@@ -1268,14 +946,18 @@ void PlayerSelection::updateCO2Sprite(QString coid, qint32 playerIdx)
         {
             pAnim = pCurrentCO->getResAnim((coid + "+info"));
         }
-        m_playerCO2[playerIdx]->setResAnim(pAnim);
-        if (pAnim != nullptr)
+        SpriteObject* pSprite = getCastedObject<SpriteObject>(OBJECT_CO2_PREFIX + QString::number(playerIdx));
+        if (pSprite != nullptr)
         {
-            m_playerCO2[playerIdx]->setScale(2.0f * pAnim->getWidth() / 32.0f);
-        }
-        else
-        {
-            m_playerCO2[playerIdx]->setScale(2.0f);
+            pSprite->setResAnim(pAnim);
+            if (pAnim != nullptr)
+            {
+                pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
+            }
+            else
+            {
+                pSprite->setScale(2.0f);
+            }
         }
     }
 }
@@ -1324,14 +1006,8 @@ void PlayerSelection::updateCOData(qint32 playerIdx)
     }
 }
 
-void PlayerSelection::playerCOCanceled()
-{
-    m_pPlayerSelection->setVisible(true);
-}
-
 void PlayerSelection::slotCOsRandom(qint32 mode)
 {
-    
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         if ((mode == 0) || mode < 0)
@@ -1347,7 +1023,6 @@ void PlayerSelection::slotCOsRandom(qint32 mode)
 
 void PlayerSelection::showSelectCOPerks(qint32 player)
 {
-    
     Player* pPlayer = m_pMap->getPlayer(player);
     if (pPlayer->getCO(0) != nullptr || pPlayer->getCO(1) != nullptr)
     {
@@ -1364,16 +1039,26 @@ void PlayerSelection::showSelectCOPerks(qint32 player)
 
 void PlayerSelection::selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType)
 {
-    if (player >= 0 && player < m_playerAIs.size())
+    if (player >= 0 && player < m_pMap->getPlayerCount())
     {
-        m_playerAIs[player]->setCurrentItem(static_cast<qint32>(eAiType));
+        m_pMap->getPlayer(player)->setControlType(eAiType);
+        DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+        if (pDropDownmenu != nullptr)
+        {
+            pDropDownmenu->setCurrentItem(static_cast<qint32>(eAiType));
+        }
         selectAI(player);
     }
 }
 
 void PlayerSelection::selectAI(qint32 player)
 {
-    GameEnums::AiTypes type = static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem());
+    GameEnums::AiTypes type = m_pMap->getPlayer(player)->getControlType();
+    DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+    if (pDropDownmenu != nullptr)
+    {
+        type = static_cast<GameEnums::AiTypes>(pDropDownmenu->getCurrentItem());
+    }
     if (isOpenPlayer(player))
     {
         type = GameEnums::AiTypes_Open;
@@ -1390,7 +1075,11 @@ void PlayerSelection::selectAI(qint32 player)
     }
     else
     {
-        name = m_playerAIs[player]->getCurrentItemText();
+        QStringList aiTypes = getDefaultAiNames();
+        if (type >= 0 && type < aiTypes.size())
+        {
+            name = aiTypes[type];
+        }
     }
     CONSOLE_PRINT("Selecting ai type " + QString::number(type) + " with name " + name + " for payer " + QString::number(player), Console::eDEBUG);
     if (m_pNetworkInterface.get() != nullptr)
@@ -1400,7 +1089,7 @@ void PlayerSelection::selectAI(qint32 player)
         {
             CONSOLE_PRINT(name + " AI " + QString::number(type) + " selected for player " + QString::number(player) + " sending data.", Console::eDEBUG);
             quint64 socket = m_pNetworkInterface->getSocketID();
-            m_PlayerSockets[player] = socket;
+            m_playerSockets[player] = socket;
 
             createAi(player, type, name);
 
@@ -1439,7 +1128,7 @@ void PlayerSelection::selectAI(qint32 player)
         }
         else
         {
-            createAi(player, static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem()), name);
+            createAi(player, type, name);
         }
     }
 }
@@ -1457,6 +1146,72 @@ void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type, QString d
             pPlayer->getBaseGameInput()->setEnableNeutralTerrainAttack(m_pMap->getGameRules()->getAiAttackTerrain());
         }
     }
+}
+
+QStringList PlayerSelection::getDefaultAiNames() const
+{
+    QStringList defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def.")}; // heavy ai disabled cause it's not finished
+#if HEAVY_AI
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    GameManager* pGameManager = GameManager::getInstance();
+    // heavy ai enable code
+    for (qint32 i = 0; i < pGameManager->getHeavyAiCount(); ++i)
+    {
+        QString id = pGameManager->getHeavyAiID(i);
+        QJSValue aiName = pInterpreter->doFunction(id, "getName");
+        defaultAiList.append(aiName.toString());
+    }
+#endif
+    defaultAiList.append(tr("Closed"));
+    return defaultAiList;
+}
+
+QStringList PlayerSelection::getAiNames() const
+{
+    QStringList aiList = getDefaultAiNames();
+    if (getIsCampaign())
+    {
+        aiList = {tr("Human")};
+        if (m_pNetworkInterface.get() != nullptr)
+        {
+            aiList.append(tr("Open"));
+        }
+    }
+    else if (m_pNetworkInterface.get() != nullptr)
+    {
+        if (m_pNetworkInterface->getIsServer())
+        {
+            aiList.append(tr("Open"));
+        }
+        else
+        {
+            aiList = {tr("Human"), tr("Open")};
+        }
+    }
+    return aiList;
+}
+
+QStringList PlayerSelection::getTeamNames() const
+{
+    QStringList teamList;
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+    {
+        teamList.append(tr("Team") + " " + QString::number(i + 1));
+    }
+    return teamList;
+}
+
+QStringList PlayerSelection::getDropDownColorNames() const
+{
+    qint32 colorCount = getDefaultColorCount();
+    QStringList playerColors;
+    for (qint32 i = 0; i < colorCount; i++)
+    {
+        bool exists = false;
+        QColor color = getDisplayColor(i, exists);
+        playerColors.append(color.name());
+    }
+    return playerColors;
 }
 
 void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -1545,7 +1300,13 @@ void PlayerSelection::joinObserver(quint64 socketID)
         }
         else
         {
-            emit m_pNetworkInterface.get()->sigDisconnectClient(socketID);
+            QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
+            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            QJsonObject data;
+            data.insert(JsonKeys::JSONKEY_COMMAND, command);
+            data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::NoMoreObservers);
+            QJsonDocument doc(data);
+            emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         }
     }
 }
@@ -1556,7 +1317,10 @@ void PlayerSelection::playerAccessDenied()
         !m_pNetworkInterface->getIsObserver() &&
         !hasHumanPlayer())
     {
-        emit m_pNetworkInterface->sigDisconnected(-1);
+        QString message = tr("Connection failed.Reason: No more players available or user is already in the game.");
+        spDialogMessageBox pDialog = spDialogMessageBox::create(message);
+        oxygine::Stage::getStage()->addChild(pDialog);
+        emit m_pNetworkInterface->sigDisconnectClient(0);
     }
 }
 
@@ -1570,9 +1334,9 @@ void PlayerSelection::sendOpenPlayerCount()
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
         qint32 openPlayerCount = 0;
-        for (const auto & playerAI : qAsConst(m_playerAIs))
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
         {
-            if (playerAI->getCurrentItem() == playerAI->getItemCount() - 1)
+            if (m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Open)
             {
                 openPlayerCount++;
             }
@@ -1597,14 +1361,19 @@ void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream& stream)
 {
     if (m_pNetworkInterface->getIsServer())
     {
-        bool value = false;;
+        bool value = false;
         stream >> value;
         QVector<qint32> player;
-        for  (qint32 i = 0; i < m_PlayerSockets.size(); i++)
+        for  (qint32 i = 0; i < m_playerSockets.size(); i++)
         {
-            if (m_PlayerSockets[i] == socketID)
+            if (m_playerSockets[i] == socketID)
             {
-                m_pReadyBoxes[i]->setChecked(value);
+                m_playerReadyFlags[i] = true;
+                Checkbox* pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(i));
+                if (pCheckbox != nullptr)
+                {
+                    pCheckbox->setChecked(value);
+                }
                 player.append(i);
             }
         }
@@ -1641,7 +1410,12 @@ void PlayerSelection::recievePlayerServerReady(quint64, QDataStream& stream)
     {
         qint32 player = 0;
         stream >> player;
-        m_pReadyBoxes[player]->setChecked(value);
+        m_playerReadyFlags[player] = true;
+        Checkbox* pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(player));
+        if (pCheckbox != nullptr)
+        {
+            pCheckbox->setChecked(value);
+        }
     }
 }
 
@@ -1704,14 +1478,19 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             // change data locally and send remote update
             Player* pPlayer = m_pMap->getPlayer(player);
             // we need to handle opening a player slightly different here...
+
+            DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
             if (eAiType == GameEnums::AiTypes_Open)
             {
                 pPlayer->setControlType(eAiType);
                 pPlayer->setBaseGameInput(spBaseGameInputIF());
                 pPlayer->setPlayerNameId("");
                 pPlayer->setSocketId(0);
-                m_playerAIs[player]->setCurrentItem(m_playerAIs[player]->getItemCount() - 1);
-                m_PlayerSockets[player] = 0;
+                if (pDropDownmenu != nullptr)
+                {
+                    pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 1);
+                }
+                m_playerSockets[player] = 0;
             }
             else
             {
@@ -1719,8 +1498,11 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
                 pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes_ProxyAi));
                 pPlayer->setPlayerNameId(username);
                 pPlayer->setSocketId(socketID);
-                m_playerAIs[player]->setCurrentItemText(username);
-                m_PlayerSockets[player] = socketID;
+                if (pDropDownmenu != nullptr)
+                {
+                    pDropDownmenu->setCurrentItemText(username);
+                }
+                m_playerSockets[player] = socketID;
             }
             updatePlayerData(player);
 
@@ -1785,7 +1567,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
 {
     if (!m_pNetworkInterface->getIsServer() ||
         m_isServerGame)
-    {        
+    {
         quint64 socket;
         QString name;
         qint32 aiType;
@@ -1801,7 +1583,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
             aiType != GameEnums::AiTypes::AiTypes_ProxyAi)
         {
             GameEnums::AiTypes originalAiType = static_cast<GameEnums::AiTypes>(aiType);
-            m_PlayerSockets[player] = socket;
+            m_playerSockets[player] = socket;
             if (Mainapp::getSlave())
             {
                 if (aiType != GameEnums::AiTypes::AiTypes_Open &&
@@ -1837,9 +1619,9 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
             m_pMap->getPlayer(player)->setControlType(originalAiType);
 
             bool humanFound = false;
-            for (qint32 i = 0; i < m_playerAIs.size(); i++)
+            for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
-                if (static_cast<GameEnums::AiTypes>(m_playerAIs[i]->getCurrentItem()) == GameEnums::AiTypes_Human)
+                if (m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Human)
                 {
                     humanFound = true;
                     break;
@@ -1875,7 +1657,6 @@ void PlayerSelection::createPlayerChangedData(QByteArray & data, quint64 socketI
     QString command = QString(NetworkCommands::PLAYERCHANGED);
     CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
     QDataStream sendStream(&data, QIODevice::WriteOnly);
-    
     sendStream << command;
     sendStream << clientRequest;
     sendStream << socketId;
@@ -1887,11 +1668,15 @@ void PlayerSelection::createPlayerChangedData(QByteArray & data, quint64 socketI
 
 void PlayerSelection::setPlayerAi(qint32 player, GameEnums::AiTypes eAiType, QString name)
 {
+    DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
     if (eAiType != GameEnums::AiTypes_Human)
     {
         if (eAiType == GameEnums::AiTypes_Open)
         {
-            m_playerAIs[player]->setCurrentItem(m_playerAIs[player]->getItemCount() - 1);
+            if (pDropDownmenu != nullptr)
+            {
+                pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 1);
+            }
         }
         else
         {
@@ -1900,7 +1685,10 @@ void PlayerSelection::setPlayerAi(qint32 player, GameEnums::AiTypes eAiType, QSt
     }
     else
     {
-        m_playerAIs[player]->setCurrentItem(0);
+        if (pDropDownmenu != nullptr)
+        {
+            pDropDownmenu->setCurrentItem(0);
+        }
     }
 }
 
@@ -1943,22 +1731,28 @@ void PlayerSelection::recievedCOData(quint64, QDataStream& stream)
     stream >> playerIdx;
     stream >> coid;
     QStringList perks = Filesupport::readVectorList<QString, QList>(stream);
-    m_pMap->getPlayer(playerIdx)->setCO(coid, 0);
-    CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(0);
-    if (pCO != nullptr)
+    if (!m_saveGame)
     {
-        pCO->setPerkList(perks);
-        pCO->readCoStyleFromStream(stream);
+        m_pMap->getPlayer(playerIdx)->setCO(coid, 0);
+        CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(0);
+        if (pCO != nullptr)
+        {
+            pCO->setPerkList(perks);
+            pCO->readCoStyleFromStream(stream);
+        }
     }
     updateCO1Sprite(coid, playerIdx);
     stream >> coid;
     perks = Filesupport::readVectorList<QString, QList>(stream);
-    m_pMap->getPlayer(playerIdx)->setCO(coid, 1);
-    pCO = m_pMap->getPlayer(playerIdx)->getCO(1);
-    if (pCO != nullptr)
+    if (!m_saveGame)
     {
-        pCO->setPerkList(perks);
-        pCO->readCoStyleFromStream(stream);
+        m_pMap->getPlayer(playerIdx)->setCO(coid, 1);
+        CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(1);
+        if (pCO != nullptr)
+        {
+            pCO->setPerkList(perks);
+            pCO->readCoStyleFromStream(stream);
+        }
     }
     updateCO2Sprite(coid, playerIdx);
 }
@@ -1972,7 +1766,11 @@ void PlayerSelection::recievedColorData(quint64, QDataStream& stream)
     Player* pPlayer = m_pMap->getPlayer(playerIdx);
     QColor tableColor = displayColorToTableColor(displayColor);
     pPlayer->setColor(tableColor);
-    m_playerColors[playerIdx]->setCurrentItem(displayColor);
+    DropDownmenuColor* pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(playerIdx));
+    if (pDropDownmenuColor != nullptr)
+    {
+        pDropDownmenuColor->setCurrentItem(displayColor);
+    }
 }
 
 void PlayerSelection::recievePlayerArmy(quint64, QDataStream& stream)
@@ -1991,7 +1789,6 @@ void PlayerSelection::recievePlayerArmy(quint64, QDataStream& stream)
         pPlayer->setPlayerArmy(army);
         pPlayer->setPlayerArmySelected(true);
     }
-    m_playerArmy[playerIdx]->setCurrentItem(army);
 }
 
 void PlayerSelection::disconnected(quint64 socketID)
@@ -2000,14 +1797,19 @@ void PlayerSelection::disconnected(quint64 socketID)
     {
         CONSOLE_PRINT("Reopening players for socket " + QString::number(socketID) + " after disconnecting", Console::eLogLevels::eDEBUG);
         // handle disconnect of clients here
-        for (qint32 i = 0; i < m_PlayerSockets.size(); i++)
+        for (qint32 i = 0; i < m_playerSockets.size(); i++)
         {
             // this player has disconnect reopen him
-            if (m_PlayerSockets[i] == socketID &&
-                m_playerAIs[i]->getCurrentItem() != m_playerAIs[i]->getItemCount() - 1)
+            if (m_playerSockets[i] == socketID &&
+                m_pMap->getPlayer(i)->getControlType() != GameEnums::AiTypes_Open)
             {
                 // reopen all players
-                m_playerAIs[i]->setCurrentItem(m_playerAIs[i]->getItemCount() - 1);
+                m_pMap->getPlayer(i)->setControlType(GameEnums::AiTypes_Open);
+                DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
+                if (pDropDownmenu != nullptr)
+                {
+                    pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 1);
+                }
                 selectAI(i);
             }
         }
@@ -2047,24 +1849,43 @@ void PlayerSelection::updatePlayerData(qint32 player)
             coid = pCO->getCoID();
         }
         updateCO2Sprite(coid, player);
-        m_playerColors[player]->setCurrentItem(pPlayer->getColor());
-        m_playerStartFunds[player]->setCurrentValue(pPlayer->getFunds());
-        m_playerIncomes[player]->setCurrentValue(pPlayer->getFundsModifier());
-        m_playerTeams[player]->setCurrentItem(pPlayer->getTeam());
-        // check for open player
-        bool notServerChangeAblePlayer = false;
-        if (pPlayer->getBaseGameInput() != nullptr)
+
+        DropDownmenuColor* pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(player));
+        DropDownmenu* pDropDownmenuTeam = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
+        DropDownmenu* pDropDownmenuAI = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+        SpriteObject* pCo1 = getCastedObject<SpriteObject>(OBJECT_CO1_PREFIX + QString::number(player));
+        SpriteObject* pCo2 = getCastedObject<SpriteObject>(OBJECT_CO2_PREFIX + QString::number(player));
+        Checkbox* pReadyBox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(player));
+        bool singleCo = m_pMap->getGameRules()->getSingleCo();
+        if (pDropDownmenuColor != nullptr)
         {
-            notServerChangeAblePlayer = (m_pNetworkInterface->getIsServer() && pPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi);
+            QColor itemColor = tableColorToDisplayColor(pPlayer->getColor());
+            pDropDownmenuColor->setCurrentItem(itemColor);
         }
+        if (pDropDownmenuTeam != nullptr)
+        {
+            pDropDownmenuTeam->setCurrentItem(pPlayer->getTeam());
+        }
+        bool notServerChangeAblePlayer = isNotServerChangeable(pPlayer);
+        // check for open player
         if (m_pNetworkInterface->getIsObserver())
         {
-            m_playerAIs[player]->setEnabled(false);
-            m_playerColors[player]->setEnabled(false);
-            m_playerCO1[player]->setEnabled(false);
-            m_playerCO2[player]->setEnabled(false);
-            m_playerPerks[player]->setEnabled(false);
-            m_playerArmy[player]->setEnabled(false);
+            if (pDropDownmenuAI != nullptr)
+            {
+                pDropDownmenuAI->setEnabled(false);
+            }
+            if (pDropDownmenuColor != nullptr)
+            {
+                pDropDownmenuColor->setEnabled(false);
+            }
+            if (pCo1 != nullptr)
+            {
+                pCo1->setEnabled(false);
+            }
+            if (pCo2 != nullptr)
+            {
+                pCo2->setEnabled(false);
+            }
         }
         else if (pPlayer->getBaseGameInput() == nullptr ||
                  pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human ||
@@ -2075,39 +1896,64 @@ void PlayerSelection::updatePlayerData(qint32 player)
                  notServerChangeAblePlayer) &&
                 !m_saveGame)
             {
-                m_playerAIs[player]->setEnabled(true);
-                m_playerColors[player]->setEnabled(true);
-                m_playerCO1[player]->setEnabled(true);
-                m_playerCO2[player]->setEnabled(true);
-                m_playerPerks[player]->setEnabled(true);
-                m_playerArmy[player]->setEnabled(true);
+                if (pDropDownmenuAI != nullptr)
+                {
+                    pDropDownmenuAI->setEnabled(true);
+                }
+                if (pDropDownmenuColor != nullptr)
+                {
+                    pDropDownmenuColor->setEnabled(true);
+                }
+                if (pCo1 != nullptr)
+                {
+                    pCo1->setEnabled(true);
+                }
+                if (pCo2 != nullptr)
+                {
+                    pCo2->setEnabled(!singleCo);
+                }
             }
             else
             {
                 if (m_pNetworkInterface->getIsServer() || m_isServerGame ||
                     isOpenPlayer(player))
                 {
-                    m_playerAIs[player]->setEnabled(true);
+                    if (pDropDownmenuAI != nullptr)
+                    {
+                        pDropDownmenuAI->setEnabled(true);
+                    }
                 }
                 else
                 {
-                    m_playerAIs[player]->setEnabled(false);
+                    if (pDropDownmenuAI != nullptr)
+                    {
+                        pDropDownmenuAI->setEnabled(false);
+                    }
                 }
-                m_playerColors[player]->setEnabled(false);
-                m_playerCO1[player]->setEnabled(false);
-                m_playerCO2[player]->setEnabled(false);
-                m_playerPerks[player]->setEnabled(false);
-                m_playerArmy[player]->setEnabled(false);
+                if (pDropDownmenuColor != nullptr)
+                {
+                    pDropDownmenuColor->setEnabled(false);
+                }
+                if (pCo1 != nullptr)
+                {
+                    pCo1->setEnabled(false);
+                }
+                if (pCo2 != nullptr)
+                {
+                    pCo2->setEnabled(false);
+                }
             }
-
-            if (pPlayer->getBaseGameInput() != nullptr &&
-                pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+            if (pReadyBox != nullptr)
             {
-                m_pReadyBoxes[player]->setChecked(m_PlayerReady);
-            }
-            else
-            {
-                m_pReadyBoxes[player]->setChecked(false);
+                if (pPlayer->getBaseGameInput() != nullptr &&
+                    pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+                {
+                    pReadyBox->setChecked(m_playerReady);
+                }
+                else
+                {
+                    pReadyBox->setChecked(false);
+                }
             }
         }
         else
@@ -2115,32 +1961,59 @@ void PlayerSelection::updatePlayerData(qint32 player)
             if ((m_pNetworkInterface->getIsServer() || m_isServerGame) &&
                 !m_saveGame)
             {
-                m_playerAIs[player]->setEnabled(true);
-                if (m_playerAIs[player]->getCurrentItem() >= 0)
+                if (pDropDownmenuAI != nullptr)
                 {
-                    m_playerColors[player]->setEnabled(true);
-                    m_playerCO1[player]->setEnabled(true);
-                    m_playerCO2[player]->setEnabled(true);
-                    m_playerPerks[player]->setEnabled(true);
-                    m_playerArmy[player]->setEnabled(true);
-                }
-                else
-                {
-                    m_playerColors[player]->setEnabled(false);
-                    m_playerCO1[player]->setEnabled(false);
-                    m_playerCO2[player]->setEnabled(false);
-                    m_playerPerks[player]->setEnabled(false);
-                    m_playerArmy[player]->setEnabled(false);
+                    pDropDownmenuAI->setEnabled(true);
+                    if (pDropDownmenuAI->getCurrentItem() >= 0)
+                    {
+                        if (pDropDownmenuColor != nullptr)
+                        {
+                            pDropDownmenuColor->setEnabled(true);
+                        }
+                        if (pCo1 != nullptr)
+                        {
+                            pCo1->setEnabled(true);
+                        }
+                        if (pCo2 != nullptr)
+                        {
+                            pCo2->setEnabled(!singleCo);
+                        }
+                    }
+                    else
+                    {
+                        if (pDropDownmenuColor != nullptr)
+                        {
+                            pDropDownmenuColor->setEnabled(false);
+                        }
+                        if (pCo1 != nullptr)
+                        {
+                            pCo1->setEnabled(false);
+                        }
+                        if (pCo2 != nullptr)
+                        {
+                            pCo2->setEnabled(false);
+                        }
+                    }
                 }
             }
             else
             {
-                m_playerAIs[player]->setEnabled(false);
-                m_playerColors[player]->setEnabled(false);
-                m_playerCO1[player]->setEnabled(false);
-                m_playerCO2[player]->setEnabled(false);
-                m_playerPerks[player]->setEnabled(false);
-                m_playerArmy[player]->setEnabled(false);
+                if (pDropDownmenuAI != nullptr)
+                {
+                    pDropDownmenuAI->setEnabled(false);
+                }
+                if (pDropDownmenuColor != nullptr)
+                {
+                    pDropDownmenuColor->setEnabled(false);
+                }
+                if (pCo1 != nullptr)
+                {
+                    pCo1->setEnabled(false);
+                }
+                if (pCo2 != nullptr)
+                {
+                    pCo2->setEnabled(false);
+                }
             }
         }
         if (getIsCampaign())
@@ -2149,42 +2022,57 @@ void PlayerSelection::updatePlayerData(qint32 player)
             if (input != nullptr &&
                 input->getAiType() != GameEnums::AiTypes_Human)
             {
-                m_playerAIs[player]->setEnabled(false);
-                m_playerCO1[player]->setEnabled(false);
-                m_playerCO2[player]->setEnabled(false);
-                m_playerPerks[player]->setEnabled(false);
-                m_playerArmy[player]->setEnabled(false);
+                if (pDropDownmenuAI != nullptr)
+                {
+                    pDropDownmenuAI->setEnabled(false);
+                }
+                if (pCo1 != nullptr)
+                {
+                    pCo1->setEnabled(false);
+                }
+                if (pCo2 != nullptr)
+                {
+                    pCo2->setEnabled(false);
+                }
             }
-            m_playerColors[player]->setEnabled(false);
+            if (pDropDownmenuColor != nullptr)
+            {
+                pDropDownmenuColor->setEnabled(false);
+            }
         }
     }
 }
 
 bool PlayerSelection::getReady(qint32 playerIdx)
 {
-    if (playerIdx >= 0 && playerIdx < m_pReadyBoxes.size())
+    if (playerIdx >= 0 && playerIdx < m_playerReadyFlags.size())
     {
-        return m_pReadyBoxes[playerIdx]->getChecked();
+        return m_playerReadyFlags[playerIdx];
     }
     return false;
 }
 
 void PlayerSelection::setPlayerReady(bool value)
 {
-    m_PlayerReady = value;
-    for (qint32 i = 0; i < m_playerAIs.size(); i++)
+    m_playerReady = value;
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        if (static_cast<GameEnums::AiTypes>(m_playerAIs[i]->getCurrentItem()) >= GameEnums::AiTypes_Human &&
-            static_cast<GameEnums::AiTypes>(m_playerAIs[i]->getCurrentItem()) != GameEnums::AiTypes_Open)
+        if (m_pMap->getPlayer(i)->getControlType() >= GameEnums::AiTypes_Human &&
+            m_pMap->getPlayer(i)->getControlType() != GameEnums::AiTypes_Open)
         {
-            m_pReadyBoxes[i]->setChecked(value);
+            m_playerReadyFlags[i] = true;
+            Checkbox* pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(i));
+            if (pCheckbox != nullptr)
+            {
+                pCheckbox->setChecked(value);
+            }
         }
     }
 }
 
 bool PlayerSelection::getPlayerReady()
 {
-    return m_PlayerReady;
+    return m_playerReady;
 }
 
 void PlayerSelection::changeAllTeams(qint32 value)
@@ -2197,7 +2085,11 @@ void PlayerSelection::changeAllTeams(qint32 value)
     {
         for (qint32 i = 0; i < playersPerTeam - upCountPlayers; ++i)
         {
-            m_playerTeams[player]->setCurrentItem(team);
+            DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
+            if (pDropDownmenu != nullptr)
+            {
+                pDropDownmenu->setCurrentItem(team);
+            }
             playerTeamChanged(team, player);
             ++player;
         }
@@ -2206,14 +2098,22 @@ void PlayerSelection::changeAllTeams(qint32 value)
     {
         for (qint32 i = 0; i < upCountPlayers; ++i)
         {
-            m_playerTeams[player]->setCurrentItem(team);
+            DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
+            if (pDropDownmenu != nullptr)
+            {
+                pDropDownmenu->setCurrentItem(team);
+            }
             playerTeamChanged(team, player);
             ++player;
         }
         if (freePlayer > 0)
         {
             --freePlayer;
-            m_playerTeams[player]->setCurrentItem(team);
+            DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
+            if (pDropDownmenu != nullptr)
+            {
+                pDropDownmenu->setCurrentItem(team);
+            }
             playerTeamChanged(team, player);
             ++player;
         }

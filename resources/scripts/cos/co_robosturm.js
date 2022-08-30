@@ -278,15 +278,15 @@ var Constructor = function()
     };
     this.getPowerName = function(co)
     {
-        return qsTr("Machinized Storm");
+        return qsTr("Mechanized Storm");
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Enemy loses half of their ammo, take 2 HP damage ,his troops can move 2 points more and their defense rises extremly.");
+        return qsTr("Enemy loses half of their ammo, take 2 HP damage, his troops can move 2 points more and their defense rises extremly.");
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Machinized Destruction");
+        return qsTr("Mechanized Destruction");
     };
     this.getPowerSentences = function(co)
     {

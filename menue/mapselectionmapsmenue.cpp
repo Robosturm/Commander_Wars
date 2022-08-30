@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/mapselectionmapsmenue.h"
 #include "menue/mainwindow.h"
 #include "menue/gamemenue.h"
@@ -32,10 +34,13 @@
 
 #include "ui_reader/uifactory.h"
 
-MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView pMapSelectionView)
-    : Basemenu()
+MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionView, qint32 heigth)
+    : Basemenu(),
+      m_pMapSelectionView(pMapSelectionView)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MapSelectionMapsMenue");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
@@ -58,15 +63,6 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/mapselection");
     pApp->getAudioThread()->playRandom();
-
-    if (pMapSelectionView.get() == nullptr)
-    {
-        m_pMapSelectionView = spMapSelectionView::create();
-    }
-    else
-    {
-        m_pMapSelectionView = pMapSelectionView;
-    }
     addChild(m_pMapSelectionView);
 
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &MapSelectionMapsMenue::mapSelectionItemChanged, Qt::QueuedConnection);
@@ -174,9 +170,6 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
         MapSelectionMapsMenue::showPlayerSelection();
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
     }
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue obj = pInterpreter->newQObject(this);
-    pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/mapselectionmapsmenu.xml", this);
     pApp->continueRendering();
 }
@@ -189,10 +182,7 @@ void MapSelectionMapsMenue::buttonBack()
     {
         case MapSelectionStep::selectMap:
         {
-            CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
-            auto window = spMainwindow::create();
-            oxygine::Stage::getStage()->addChild(window);
-            oxygine::Actor::detach();
+            exitMenu();
             break;
         }
         case MapSelectionStep::selectRules:
@@ -298,6 +288,14 @@ void MapSelectionMapsMenue::buttonNext()
         }
     }
     Mainapp::getInstance()->continueRendering();
+}
+
+void MapSelectionMapsMenue::exitMenu()
+{
+    CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+    spMainwindow window = spMainwindow::create("ui/menu/mainsinglemenu.xml");
+    oxygine::Stage::getStage()->addChild(window);
+    oxygine::Actor::detach();
 }
 
 void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)

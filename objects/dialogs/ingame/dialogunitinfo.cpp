@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+
 #include "objects/dialogs/ingame/dialogunitinfo.h"
 
 #include "coreengine/mainapp.h"
@@ -16,7 +18,9 @@
 
 DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogUnitInfo");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

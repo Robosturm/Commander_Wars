@@ -1,7 +1,6 @@
 #ifndef WIKIMENU_H
 #define WIKIMENU_H
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "menue/basemenu.h"
 #include "wiki/wikiview.h"
 

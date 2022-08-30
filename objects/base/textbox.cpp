@@ -6,9 +6,13 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
+
 Textbox::Textbox(qint32 width, qint32 heigth)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Textbox");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 
@@ -68,39 +72,39 @@ void Textbox::update(const oxygine::UpdateState& us)
 {
     // no need to calculate more than we need if we're invisible
     QString drawText = getDrawText(getCurrentText());
-    if(m_focused)
+    if (m_lastDrawText != drawText)
     {
-        qint32 curmsgpos = getCursorPosition();
         m_Textfield->setHtmlText(drawText);
-        if (drawText.size() > 0)
+        m_lastDrawText = drawText;
+        if(m_focused)
         {
-            // calc text field position based on curmsgpos
-            qint32 xPos = 0;
-            qint32 fontWidth = m_Textfield->getTextRect().getWidth() / drawText.size();
-            qint32 boxSize = (m_Textbox->getWidth() - 40 - fontWidth);
-            xPos = -fontWidth * curmsgpos + boxSize / 2;
-            if (xPos > 0)
+            qint32 curmsgpos = getCursorPosition();
+            if (drawText.size() > 0)
             {
-                xPos = 0;
-            }
-            else if ((drawText.size() - curmsgpos + 3) * fontWidth < boxSize)
-            {
-                xPos = m_Textbox->getWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 3;
+                // calc text field position based on curmsgpos
+                qint32 xPos = 0;
+                qint32 fontWidth = m_Textfield->getTextRect().getWidth() / drawText.size();
+                qint32 boxSize = (m_Textbox->getWidth() - 40 - fontWidth);
+                xPos = -fontWidth * curmsgpos + boxSize / 2;
                 if (xPos > 0)
                 {
                     xPos = 0;
                 }
+                else if ((drawText.size() - curmsgpos + 3) * fontWidth < boxSize)
+                {
+                    xPos = m_Textbox->getWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 3;
+                    if (xPos > 0)
+                    {
+                        xPos = 0;
+                    }
+                }
+                else
+                {
+                    // all fine
+                }
+                m_Textfield->setX(xPos);
             }
-            else
-            {
-                // all fine
-            }
-            m_Textfield->setX(xPos);
         }
-    }
-    else
-    {
-        m_Textfield->setHtmlText(drawText);
     }
     oxygine::Actor::update(us);
 }

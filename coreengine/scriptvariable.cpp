@@ -6,7 +6,9 @@
 ScriptVariable::ScriptVariable(QString id)
     : m_Id(id)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ScriptVariable");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -15,7 +17,9 @@ ScriptVariable::ScriptVariable(QString id)
 
 ScriptVariable::ScriptVariable()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ScriptVariable");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

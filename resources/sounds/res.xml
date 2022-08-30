@@ -145,5 +145,7 @@
     <sound file="minimapOpen.wav"               cachesize = "2"/>
     <sound file="moveOut.wav"                   cachesize = "2"/>
     <sound file="player_turn.wav"               cachesize = "2"/>
+    <sound file="connect.wav"                   cachesize = "2"/>
+    <sound file="disconnect.wav"                cachesize = "2"/>
 </sounds>
 

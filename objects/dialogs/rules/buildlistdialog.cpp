@@ -23,7 +23,9 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
       m_Player(player),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("BuildListDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -294,7 +296,7 @@ QStringList BuildListDialog::getNameList()
     while (dirIter.hasNext())
     {
         dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
+        QString file = dirIter.fileInfo().canonicalFilePath();
         auto data = Filesupport::readList(file);
         items.append(data.name);
     }

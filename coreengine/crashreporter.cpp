@@ -71,7 +71,9 @@ void CrashReporter::setSignalHandler(logWrittenCallback inLogWrittenCallback )
     if ( sProcess == nullptr )
     {
         sProcess = new QProcess();
+#ifdef GRAPHICSUPPORT
         sProcess->setObjectName("CrashreporterProcess");
+#endif
         sProcess->setProcessChannelMode( QProcess::MergedChannels );
     }
     setOsSignalHandler();

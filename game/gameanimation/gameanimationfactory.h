@@ -66,7 +66,7 @@ public slots:
      * @param frameTime in ms
      * @return
      */
-    static GameAnimation* createAnimation(GameMap* pMap, quint32 x, quint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
+    static GameAnimation* createAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
     /**
      * @brief createBattleAnimation
      * @param pAtkTerrain
@@ -106,6 +106,14 @@ public slots:
      * @return
      */
     static GameAnimationWalk* createWalkingAnimation(GameMap* pMap, Unit* pUnit, GameAction* pAction);
+    /**
+     * @brief GameAnimationFactory::createWalkingAnimation
+     * @param pMap
+     * @param pUnit
+     * @param movePath
+     * @return
+     */
+    static GameAnimationWalk* createWalkingAnimationV2(GameMap* pMap, Unit* pUnit, const QVector<QPoint> & movePath);
     /**
      * @brief createGameAnimationCapture
      * @return
@@ -182,6 +190,10 @@ public slots:
       * @return
       */
      static bool shouldSkipMovement(GameAnimationWalk* pGameAnimationWalk);
+     /**
+      * @brief printActiveAnimations
+      */
+     static void printActiveAnimations();
 private:
     friend class oxygine::intrusive_ptr<GameAnimationFactory>;
     explicit GameAnimationFactory();
@@ -206,5 +218,7 @@ private:
     static spGameAnimationFactory m_pInstance;
     static QVector<spGameAnimation> m_Animations;
 };
+
+Q_DECLARE_INTERFACE(GameAnimationFactory, "GameAnimationFactory");
 
 #endif // GameAnimationFactory_H

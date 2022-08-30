@@ -5,5 +5,7 @@ BattleAnimationManager::BattleAnimationManager()
                                                   "/scripts/battleanimations")
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("BattleAnimationManager");
+#endif
 }

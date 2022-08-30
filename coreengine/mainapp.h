@@ -8,6 +8,7 @@
 #include <QLineEdit>
 #include <QMutex>
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 #include "coreengine/settings.h"
 #include "coreengine/LUPDATE_MACROS.h"
@@ -205,7 +206,6 @@ public:
     {
         return m_parser;
     }
-    float getActiveDpiFactor() const;
 
     QPoint mapPosFromGlobal(QPoint pos) const;
     QPoint mapPosToGlobal(QPoint pos) const;
@@ -217,19 +217,22 @@ public:
     {
         return m_rsaCypher;
     }
-
 public slots:
-    void changeScreenMode(qint32 mode);
+    /**
+     * @brief createBaseDirs
+     */
+    void createBaseDirs();
+    void changeScreenMode(Settings::ScreenModes mode);
     void changeScreenSize(qint32 width, qint32 heigth);
     void changePosition(QPoint pos, bool invert);
-    qint32 getScreenMode();
+    Settings::ScreenModes getScreenMode();
     /**
      * @brief getGameVersion
      * @return
      */
     static QString getGameVersion()
     {
-        return "Version: " + QString::number(MAJOR) + "." + QString::number(MINOR) + "." + QString::number(REVISION);
+        return "Version: " + QString::number(VERSION_MAJOR) + "." + QString::number(VERSION_MINOR) + "." + QString::number(VERSION_REVISION)+ "-" + QString(VERSION_SUFFIX);
     }
     /**
      * @brief showCrashReport
@@ -261,6 +264,10 @@ public slots:
      * @param ret
      */
     void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg);
+    /**
+     * @brief createLineEdit
+     */
+    void createLineEdit();
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -288,14 +295,11 @@ signals:
      */
     void cursorPositionChanged(int oldPos, int newPos);
     void cursorPositionChanged();
-private slots:
-    void createLineEdit();
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;
     bool keyInputMethodEvent(QInputMethodEvent *event);
-    virtual bool event(QEvent *ev) override;
-    void createBaseDirs();
+    virtual bool event(QEvent *ev) override;    
     virtual void onQuit() override;
 
 private:

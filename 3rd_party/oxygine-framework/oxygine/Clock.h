@@ -1,13 +1,13 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include <chrono>
 
 namespace oxygine
 {
     class Clock;
     using spClock = intrusive_ptr<Clock>;
-    class Clock: public Object
+    class Clock: public ref_counter
     {
     public:
         explicit Clock() = default;

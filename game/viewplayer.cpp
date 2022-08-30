@@ -10,7 +10,9 @@ Viewplayer::Viewplayer(GameMenue* pMenu, GameMap* pMap)
     : Player(pMap),
       m_input(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Viewplayer");
+#endif
     Interpreter::setCppOwnerShip(this);
     m_input.init(pMenu);
 }

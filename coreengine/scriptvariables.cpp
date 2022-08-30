@@ -4,7 +4,9 @@
 
 ScriptVariables::ScriptVariables()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ScriptVariables");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

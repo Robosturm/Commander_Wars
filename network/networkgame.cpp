@@ -50,6 +50,7 @@ void NetworkGame::slaveRunning(const QJsonObject & objData, spTCPServer & pGameS
             QJsonObject data;
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
             data.insert(JsonKeys::JSONKEY_ADDRESS, m_data.getSlaveAddress());
+            data.insert(JsonKeys::JSONKEY_SECONDARYADDRESS, m_data.getSlaveSecondaryAddress());
             data.insert(JsonKeys::JSONKEY_PORT, static_cast<qint64>(m_data.getSlavePort()));
             QJsonDocument doc(data);
             emit pClient->sig_sendData(m_hostingSocket, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
@@ -67,9 +68,12 @@ void NetworkGame::slaveGameStarted(const QJsonObject & objData)
     m_data.setLaunched(true);
     QStringList playerNames;
     QJsonArray usernames = objData.value(JsonKeys::JSONKEY_USERNAMES).toArray();
+    CONSOLE_PRINT("Adding players to slavegame " + m_serverName, Console::eDEBUG);
     for (const auto & username : usernames)
     {
-        playerNames.append(username.toString());
+        QString user = username.toString();
+        playerNames.append(user);
+        CONSOLE_PRINT("user: " + user, Console::eDEBUG);
     }
     m_data.setPlayerNames(playerNames);
 }
@@ -140,7 +144,7 @@ void NetworkGame::setDataBuffer(const QByteArray &dataBuffer)
 
 void NetworkGame::processFinished(int value, QProcess::ExitStatus)
 {
-    CONSOLE_PRINT("Networkgame Closing game cause slave game has been terminated.", Console::eDEBUG);
+    CONSOLE_PRINT("Networkgame Closing game cause slave game has been terminated with code " + QString::number(value), Console::eDEBUG);
     closeGame();
     Interpreter* pInterpreter = Interpreter::getInstance();
     emit pInterpreter->sigNetworkGameFinished(value - 1, m_id);

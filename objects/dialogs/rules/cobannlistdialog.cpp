@@ -20,7 +20,9 @@
 COBannListDialog::COBannListDialog(QStringList cobannlist)
     : m_CurrentCOBannList(cobannlist)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("COBannListDialog");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -131,7 +133,6 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         for (qint32 i = 0; i < group.cos.size(); ++i)
         {
             QString coID = group.cos[i];
-
             oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((coID.toLower() + "+face"));
             oxygine::spSprite pCo = oxygine::spSprite::create();
             pCo->setResAnim(pAnim, 0, 0);
@@ -281,7 +282,7 @@ QStringList COBannListDialog::getNameList()
     while (dirIter.hasNext())
     {
         dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
+        QString file = dirIter.fileInfo().canonicalFilePath();
         auto data = Filesupport::readList(file);
         items.append(data.name);
     }

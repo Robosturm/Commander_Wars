@@ -10,7 +10,9 @@ Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
       m_maxValue(maxValue),
       m_Unit(unit)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Slider");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     V_Scrollbar::setScrollspeed( width / (maxValue - minValue));

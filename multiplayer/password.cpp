@@ -47,9 +47,14 @@ void Password::setPassword(const Password & password)
 
 bool Password::isValidPassword(QString password) const
 {
-    QCryptographicHash myHash(QCryptographicHash::Sha512);
-    myHash.addData(password.toUtf8());
-    return (m_passwordHash == myHash.result());
+    QByteArray data;
+    if (!password.isEmpty())
+    {
+        QCryptographicHash myHash(QCryptographicHash::Sha512);
+        myHash.addData(password.toUtf8());
+        data = myHash.result();
+    }
+    return (m_passwordHash == data);
 }
 
 bool Password::areEqualPassword(const Password & password) const

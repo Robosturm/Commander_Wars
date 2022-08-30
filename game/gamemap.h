@@ -1,11 +1,12 @@
 #ifndef GAMEMAP_H
 #define GAMEMAP_H
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 #include <QObject>
 #include <QVector>
 #include <memory>
+#include <vector>
 
 #include "game/terrain.h"
 #include "game/cursor.h"
@@ -18,8 +19,6 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/qmlvector.h"
-
-#include <vector>
 
 class GameAction;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;
@@ -292,8 +291,7 @@ signals:
     void sigQueueAction(spGameAction pAction);
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
-    void sigShowOptions();
-    void sigShowChangeSound();
+    void sigShowXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
     void sigShowWiki();
     void sigShowRules();
     void sigShowUnitStatistics(qint32 player);
@@ -438,11 +436,7 @@ public slots:
     /**
      * @brief options
      */
-    void options();
-    /**
-     * @brief changeSound
-     */
-    void changeSound();
+    void showXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
     /**
      * @brief saveGame
      */
@@ -701,6 +695,16 @@ public slots:
      * @param pPlayer
      */
     void enableUnits(Player* pPlayer);
+    /**
+     * @brief endOfTurn
+     * @param pPlayer
+     */
+    void endOfTurn(Player* pPlayer);
+    /**
+     * @brief endOfTurnPlayer
+     * @param pPlayer
+     */
+    void endOfTurnPlayer(Player* pPlayer);
     /**
      * @brief startOfTurn calls all start of turn calls of each unit and building owned by this player
      * @param pPlayer

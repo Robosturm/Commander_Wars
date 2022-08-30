@@ -13,6 +13,7 @@ namespace oxygine
 
     Sprite::~Sprite()
     {
+#ifdef GRAPHICSUPPORT
         if (m_flags & flag_manageResAnim)
         {
             ResAnim* rs = m_frame.getResAnim();
@@ -21,15 +22,18 @@ namespace oxygine
                 rs->getAtlas()->unload();
             }
         }
+#endif
     }
 
     void Sprite::setManageResAnim(bool manage)
     {
+#ifdef GRAPHICSUPPORT
         m_flags &= ~flag_manageResAnim;
         if (manage)
         {
             m_flags |= flag_manageResAnim;
         }
+#endif
     }
 
     void Sprite::setAnimFrame(const AnimationFrame& f)
@@ -39,6 +43,7 @@ namespace oxygine
 
     bool Sprite::isOn(const Vector2& localPosition, float localScale)
     {
+#ifdef GRAPHICSUPPORT
         if (!Actor::isOn(localPosition, localScale))
         {
             return false;
@@ -56,16 +61,21 @@ namespace oxygine
         pos = pos.div(m_localScale * pAnim->getScaleFactor());
         Point lp = pos.cast<Point>();
         return m_frame.getHits(lp);
+#else
+        return false;
+#endif
     }
 
     void Sprite::setFlippedX(bool flippedX)
     {
+#ifdef GRAPHICSUPPORT
         if (flippedX != isFlippedX())
         {
             m_frame.flipX();
             m_flags ^= flag_flipX;
             animFrameChanged(m_frame);
-        }        
+        }
+#endif
     }
 
     void Sprite::flipActorsX(oxygine::spActor pActor, bool flippedX)
@@ -122,16 +132,19 @@ namespace oxygine
 
     void Sprite::setFlippedY(bool flippedY)
     {
+#ifdef GRAPHICSUPPORT
         if (flippedY != isFlippedY())
         {
             m_frame.flipY();
             m_flags ^= flag_flipY;
             animFrameChanged(m_frame);
         }
+#endif
     }
 
     void Sprite::setFlipped(bool flippedX, bool flippedY)
     {
+#ifdef GRAPHICSUPPORT
         bool fx = flippedX != isFlippedX();
         bool fy = flippedY != isFlippedY();
 
@@ -151,6 +164,7 @@ namespace oxygine
         {
             animFrameChanged(m_frame);
         }
+#endif
     }
 
     void Sprite::setColumn(qint32 column)
@@ -174,8 +188,10 @@ namespace oxygine
 
     void Sprite::setLocalScale(const Vector2& s)
     {
+#ifdef GRAPHICSUPPORT
         m_localScale = s;
         __setSize(m_frame.getSize().mult(m_localScale));
+#endif
     }
 
     void Sprite::setResAnim(const ResAnim* resanim, qint32 col, qint32 row)
@@ -185,6 +201,7 @@ namespace oxygine
 
     void Sprite::setColorTable(const oxygine::spResAnim pAnim, bool matrix)
     {
+#ifdef GRAPHICSUPPORT
         QMutexLocker lock(&m_Locked);
         m_colorTable = pAnim;
         if (pAnim.get() != nullptr)
@@ -204,6 +221,7 @@ namespace oxygine
             m_mat->m_table = nullptr;
             m_mat->setMatrixMode(false);
         }
+#endif
     }
 
     void Sprite::setAnimFrame(const ResAnim* resanim, qint32 col, qint32 row)
@@ -229,6 +247,7 @@ namespace oxygine
 
     void Sprite::changeAnimFrame(const AnimationFrame& frame)
     {
+#ifdef GRAPHICSUPPORT
         if (m_flags & flag_manageResAnim)
         {
             ResAnim* rs = m_frame.getResAnim();
@@ -276,6 +295,7 @@ namespace oxygine
             }
         }
         animFrameChanged(m_frame);
+#endif
     }
 
     void Sprite::animFrameChanged(const AnimationFrame&)
@@ -284,6 +304,7 @@ namespace oxygine
 
     void Sprite::sizeChanged(const Vector2& size)
     {
+#ifdef GRAPHICSUPPORT
         Actor::sizeChanged(size);
         const Vector2& sz = m_frame.getSize();
         if (sz.x != 0)
@@ -303,20 +324,28 @@ namespace oxygine
         {
             m_localScale.y = 1.0f;
         }
+#endif
     }
 
     bool Sprite::getInvertFlipX() const
     {
+#ifdef GRAPHICSUPPORT
         return m_invertFlipX;
+#else
+        return false;
+#endif
     }
 
     void Sprite::setInvertFlipX(bool value)
     {
+#ifdef GRAPHICSUPPORT
         m_invertFlipX = value;
+#endif
     }
 
     RectF Sprite::getDestRect() const
     {
+#ifdef GRAPHICSUPPORT
         if (!m_frame.getTexture())
         {
             return Actor::getDestRect();
@@ -325,11 +354,14 @@ namespace oxygine
         r.pos = r.pos.mult(m_localScale);
         r.size = r.size.mult(m_localScale);
         return r;
+#else
+        return RectF();
+#endif
     }
 
 
     void Sprite::doRender(const RenderState& rs)
     {
-        m_rdelegate->doRender(this, rs);
+        RenderDelegate::instance->doRender(this, rs);
     }
 }

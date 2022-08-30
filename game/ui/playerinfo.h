@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 class CO;
 class GameMap;
@@ -26,6 +26,8 @@ public slots:
     void updateData();
     void setFlippedX(bool value);
     bool getFlippedX() const;
+private:
+    void showTurnStartInfo(qint32 & yPos);
 private:
     QVector<oxygine::spSprite> m_playerBackground;
     bool m_flippedX{false};

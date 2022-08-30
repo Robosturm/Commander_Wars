@@ -34,7 +34,9 @@ WikiDatabase::WikiDatabase()
     : RessourceManagement<WikiDatabase>("/resources/images/wiki/res.xml",
       "")
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("WikiDatabase");
+#endif
     Mainapp* pMainapp = Mainapp::getInstance();
     moveToThread(pMainapp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);
@@ -91,7 +93,7 @@ void WikiDatabase::load()
         while (dirIter.hasNext())
         {
             dirIter.next();
-            QString file = dirIter.fileInfo().absoluteFilePath();
+            QString file = dirIter.fileInfo().canonicalFilePath();
             if (!hasEntry(file))
             {
                 Interpreter* pInterpreter = Interpreter::getInstance();

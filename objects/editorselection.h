@@ -2,7 +2,7 @@
 #define EDITORSELECTION_H
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include <QObject>
 #include <QVector>
 #include <QVector3D>
@@ -15,7 +15,7 @@
 #include "coreengine/LUPDATE_MACROS.h"
 
 class EditorSelection;
-typedef oxygine::intrusive_ptr<EditorSelection> spEditorSelection;
+using spEditorSelection = oxygine::intrusive_ptr<EditorSelection>;
 
 class EditorSelection : public QObject, public oxygine::Actor
 {

@@ -3,12 +3,13 @@
 
 #include <QObject>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/panel.h"
-#include "coreengine/userdata.h"
 #include "objects/base/label.h"
+
+#include "coreengine/userdata.h"
+
 #include "menue/basemenu.h"
 
 class Shopmenu;

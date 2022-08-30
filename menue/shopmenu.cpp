@@ -15,9 +15,13 @@
 #include "objects/base/dropdownmenu.h"
 #include "objects/base/checkbox.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 Shopmenu::Shopmenu()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Shopmenu");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
@@ -137,7 +141,7 @@ void Shopmenu::onEnter()
 void Shopmenu::exitMenue()
 {
     CONSOLE_PRINT("Leaving Shop Menue", Console::eDEBUG);
-    auto window = spMainwindow::create();
+    auto window = spMainwindow::create("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }

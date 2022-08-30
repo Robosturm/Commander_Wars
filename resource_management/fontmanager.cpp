@@ -8,13 +8,24 @@
 const char* const FontManager::MAINFONT = "main";
 const char* const FontManager::LOGOFONT = "logo";
 
+
 QColor FontManager::m_defaultColor{QColor(250, 210, 0)};
-QMap<QString, QString> FontManager::m_fonts;
+
+oxygine::Font FontManager::m_mainFont16;
+oxygine::Font FontManager::m_mainFont24;
+oxygine::Font FontManager::m_mainFont32;
+oxygine::Font FontManager::m_mainFont48;
+oxygine::Font FontManager::m_mainFont72;
+oxygine::Font FontManager::m_logoFont;
+
+QMap<QString, oxygine::Font> FontManager::m_fonts;
 FontManager* FontManager::m_pInstance = nullptr;
 
 FontManager::FontManager()
 {
-    setObjectName("FontManager");
+#ifdef GRAPHICSUPPORT
+        setObjectName("FontManager");
+#endif
     QStringList searchFolders;
     searchFolders.append("resources/fonts/");
     searchFolders.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/fonts/");
@@ -23,7 +34,6 @@ FontManager::FontManager()
     {
         searchFolders.append(mod + "/fonts/");
     }
-    m_fonts[MAINFONT] = "Helvetica";
     for (qint32 i = searchFolders.size() - 1; i >= 0; --i)
     {
         QString folder = searchFolders[i];
@@ -60,9 +70,36 @@ FontManager::FontManager()
                                     QStringList fonts = QFontDatabase::applicationFontFamilies(res);
                                     if (fonts.size() > 0)
                                     {
-                                        m_fonts[element.attribute("type")] = fonts[0];
+                                        auto type = element.attribute("type");
+                                        auto & font = m_fonts[type];
+                                        font.font = QFont(fonts[0]);
+                                        font.font.setPixelSize(element.attribute("pixelSize").toInt());
+                                        font.offsetX = element.attribute("offsetX").toInt();
+                                        font.offsetY = element.attribute("offsetY").toInt();
+                                        font.borderWidth = element.attribute("borderWidth").toInt();
+                                        if (element.hasAttribute("borderCapStyle"))
+                                        {
+                                            font.borderCapStyle = static_cast<Qt::PenCapStyle>(element.attribute("borderCapStyle").toInt());
+                                        }
+                                        if (element.hasAttribute("borderJoin"))
+                                        {
+                                            font.borderJoin = static_cast<Qt::PenJoinStyle>(element.attribute("borderJoin").toInt());
+                                        }
+                                        if (element.hasAttribute("bold") && element.attribute("bold") == "true")
+                                        {
+                                            font.font.setBold(true);
+                                        }
+                                        else
+                                        {
+                                            font.font.setBold(false);
+                                        }
+                                        if (font.borderWidth > 0)
+                                        {
+                                            font.font.setStyleStrategy(QFont::ForceOutline);
+                                        }
                                     }
                                 }
+
                             }
                         }
                     }
@@ -76,18 +113,13 @@ FontManager::FontManager()
             }
         }
     }
+    m_mainFont16 = m_fonts[MAINFONT + QString::number(16)];
+    m_mainFont24 = m_fonts[MAINFONT + QString::number(24)];
+    m_mainFont32 = m_fonts[MAINFONT + QString::number(32)];
+    m_mainFont48 = m_fonts[MAINFONT + QString::number(48)];
+    m_mainFont72 = m_fonts[MAINFONT + QString::number(72)];
+    m_logoFont = m_fonts[LOGOFONT + QString::number(16)];
 }
-
-const QString &FontManager::getLogoFontName()
-{
-    return m_fonts[LOGOFONT];
-}
-
-const QString &FontManager::getMainFontName()
-{
-    return m_fonts[MAINFONT];
-}
-
 void FontManager::setFontColor(QColor color)
 {
     m_defaultColor = color;
@@ -96,11 +128,4 @@ void FontManager::setFontColor(QColor color)
 QColor FontManager::getFontColor()
 {
     return m_defaultColor;
-}
-
-QFont FontManager::getFontWithPixelSize(const QString & font, qint32 size)
-{
-    QFont qFont(font);
-    qFont.setPixelSize(size);
-    return qFont;
 }

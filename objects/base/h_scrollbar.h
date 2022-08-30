@@ -4,10 +4,11 @@
 #include "objects/base/tooltip.h"
 #include <QElapsedTimer>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 class H_Scrollbar;
-typedef oxygine::intrusive_ptr<H_Scrollbar> spH_Scrollbar;
+using spH_Scrollbar = oxygine::intrusive_ptr<H_Scrollbar>;
 
 class H_Scrollbar : public Tooltip
 {

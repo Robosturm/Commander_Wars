@@ -1,6 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
-#include "3rd_party/oxygine-framework/oxygine/core/texture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
@@ -8,20 +7,19 @@
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
-#include <qmath.h>
+#include "texture.h"
+#include <QtMath>
 
 namespace oxygine
 {
+#ifndef GRAPHICSUPPORT
+    Vector2 Actor::m_dummyVector;
+    RectF Actor::m_dummyRectF;
+#endif
+
     Actor::Actor()
-        : m_rdelegate(RenderDelegate::instance.get()),
-          m_stage(nullptr),
-          m_flags(flag_visible | flag_fastTransform),
-          m_alpha(255),
-          m_extendedIsOn(0),
-          m_parent(nullptr),
-          m_scale(1, 1),
-          m_rotation(0),
-          m_zOrder(0)
+        : m_stage(nullptr),
+          m_parent(nullptr)
     {
         m_pressedOvered = 0;
     }
@@ -69,6 +67,7 @@ namespace oxygine
 
     void Actor::calcChildrenBounds(RectF& bounds, const AffineTransform& transform) const
     {
+#ifdef GRAPHICSUPPORT
         for (auto & child : m_children)
         {
             if (child->getVisible())
@@ -77,10 +76,12 @@ namespace oxygine
                 child->calcBounds2(bounds, tr);
             }
         }
+#endif
     }
 
     void Actor::calcBounds2(RectF& bounds, const AffineTransform& transform) const
     {
+#ifdef GRAPHICSUPPORT
         if (!(m_flags & flag_boundsNoChildren))
         {
             calcChildrenBounds(bounds, transform);
@@ -94,6 +95,7 @@ namespace oxygine
             bounds.unite(transform.transform(rect.getRightBottom()));
             bounds.unite(transform.transform(rect.getLeftBottom()));
         }
+#endif
     }
 
     RectF Actor::computeBounds(const AffineTransform& transform) const
@@ -105,6 +107,7 @@ namespace oxygine
         return bounds;
     }
 
+#ifdef GRAPHICSUPPORT
     AffineTransform Actor::computeGlobalTransform(Actor* parent) const
     {
         AffineTransform t;
@@ -114,9 +117,9 @@ namespace oxygine
             t = t * actor->getTransform();
             actor = actor->getParent();
         }
-
         return t;
     }
+#endif
 
     pointer_index Actor::getPressed(MouseButton b) const
     {
@@ -130,6 +133,7 @@ namespace oxygine
 
     void Actor::setNotPressed(MouseButton b)
     {
+#ifdef GRAPHICSUPPORT
         m_pressedButton[b] = 0;
         if (m_pressedOvered == m_overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
         {
@@ -139,6 +143,7 @@ namespace oxygine
                 stage->removeEventListener(m_onGlobalTouchUpEvent);
             }
         }
+#endif
     }
 
     void Actor::_onGlobalTouchUpEvent(Event* ev)
@@ -158,6 +163,7 @@ namespace oxygine
 
     void Actor::_onGlobalTouchMoveEvent(Event* ev)
     {
+#ifdef GRAPHICSUPPORT
         TouchEvent* te = safeCast<TouchEvent*>(ev);
         if (m_overred == 0)
         {
@@ -175,10 +181,12 @@ namespace oxygine
         oxygine::Stage::getStage()->removeEventListener(m_onGlobalTouchMoveEvent);
         m_overred = 0;
         m_onGlobalTouchMoveEvent = -1;
+#endif
     }
 
     void Actor::dispatchEvent(Event* event)
     {
+#ifdef GRAPHICSUPPORT
         if (!m_onScreen)
         {
             dispatchToParent(event);
@@ -241,6 +249,7 @@ namespace oxygine
                 dispatchEvent(&click);
             }
         }
+#endif
     }
 
     void Actor::dispatchToParent(Event* event)
@@ -267,6 +276,7 @@ namespace oxygine
         bool touchEvent = TouchEvent::isTouchEvent(event->type);
         if (touchEvent)
         {
+#ifdef GRAPHICSUPPORT
             if (!(m_flags & flag_visible))
             {
                 return;
@@ -275,6 +285,7 @@ namespace oxygine
             {
                 return;
             }
+#endif
         }
 
         Vector2 originalLocalPos;
@@ -282,6 +293,7 @@ namespace oxygine
 
         if (touchEvent)
         {
+#ifdef GRAPHICSUPPORT
             TouchEvent* me = safeCast<TouchEvent*>(event);
             originalLocalPos = me->localPosition;
             originalLocalScale = me->__localScale;
@@ -291,6 +303,7 @@ namespace oxygine
             {
                 oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::handleEvent locale scale is NAN");
             }
+#endif
         }
 
         event->phase = Event::phase_capturing;
@@ -322,14 +335,18 @@ namespace oxygine
 
     void Actor::markTranformDirty()
     {
+#ifdef GRAPHICSUPPORT
         m_flags |= flag_transformDirty | flag_transformInvertDirty;
+#endif
     }
 
     void Actor::setAnchor(const Vector2& anchor)
     {
+#ifdef GRAPHICSUPPORT
         m_anchor = anchor;
         m_flags &= ~flag_anchorInPixels;
         markTranformDirty();
+#endif
     }
 
     void Actor::setAnchor(float ax, float ay)
@@ -339,9 +356,11 @@ namespace oxygine
 
     void Actor::setAnchorInPixels(const Vector2& anchor)
     {
+#ifdef GRAPHICSUPPORT
         m_anchor = anchor;
         m_flags |= flag_anchorInPixels;
         markTranformDirty();
+#endif
     }
 
     void Actor::setAnchorInPixels(float x, float y)
@@ -351,6 +370,7 @@ namespace oxygine
 
     void Actor::setPosition(const Vector2& pos)
     {
+#ifdef GRAPHICSUPPORT
         if (m_pos == pos)
         {
             return;
@@ -358,6 +378,7 @@ namespace oxygine
         m_pos.x = static_cast<qint32>(pos.x);
         m_pos.y = static_cast<qint32>(pos.y);
         markTranformDirty();
+#endif
     }
 
     void Actor::setPosition(float x, float y)
@@ -367,26 +388,31 @@ namespace oxygine
 
     void Actor::setX(float x)
     {
+#ifdef GRAPHICSUPPORT
         if (m_pos.x == x)
         {
             return;
         }
         m_pos.x = static_cast<qint32>(x);
         markTranformDirty();
+#endif
     }
 
     void Actor::setY(float y)
     {
+#ifdef GRAPHICSUPPORT
         if (m_pos.y == y)
         {
             return;
         }
         m_pos.y = static_cast<qint32>(y);
         markTranformDirty();
+#endif
     }
 
     void Actor::setAnchorX(float x)
     {
+#ifdef GRAPHICSUPPORT
         if (m_anchor.x == x)
         {
             return;
@@ -394,10 +420,12 @@ namespace oxygine
         m_anchor.x = x;
         m_flags &= ~flag_anchorInPixels;
         markTranformDirty();
+#endif
     }
 
     void Actor::setAnchorY(float y)
     {
+#ifdef GRAPHICSUPPORT
         if (m_anchor.y == y)
         {
             return;
@@ -405,18 +433,22 @@ namespace oxygine
         m_anchor.y = y;
         m_flags &= ~flag_anchorInPixels;
         markTranformDirty();
+#endif
     }
 
     void Actor::setTransform(const AffineTransform& tr)
     {
+#ifdef GRAPHICSUPPORT
         m_transform = tr;
         m_flags &= ~flag_transformDirty;
         m_flags &= ~flag_fastTransform;
         m_flags |= flag_transformInvertDirty;
+#endif
     }
 
     void Actor::setPriority(qint32 zorder)
     {
+#ifdef GRAPHICSUPPORT
         if (m_zOrder == zorder) // fixed by Evgeniy Golovin
         {
             return;
@@ -439,6 +471,7 @@ namespace oxygine
             }
             m_parent->insertActor(me);
         }
+#endif
     }
 
     void Actor::setScale(float scale)
@@ -448,6 +481,7 @@ namespace oxygine
 
     void Actor::setScale(const Vector2& scale)
     {
+#ifdef GRAPHICSUPPORT
         if (m_scale == scale)
         {
             return;
@@ -455,6 +489,7 @@ namespace oxygine
         m_scale = scale;
         markTranformDirty();
         m_flags &= ~flag_fastTransform;
+#endif
     }
 
     void Actor::setScale(float scaleX, float scaleY)
@@ -464,6 +499,7 @@ namespace oxygine
 
     void Actor::setScaleX(float sx)
     {
+#ifdef GRAPHICSUPPORT
         if (m_scale.x == sx)
         {
             return;
@@ -471,10 +507,12 @@ namespace oxygine
         m_scale.x = sx;
         markTranformDirty();
         m_flags &= ~flag_fastTransform;
+#endif
     }
 
     void Actor::setScaleY(float sy)
     {
+#ifdef GRAPHICSUPPORT
         if (m_scale.y == sy)
         {
             return;
@@ -482,10 +520,12 @@ namespace oxygine
         m_scale.y = sy;
         markTranformDirty();
         m_flags &= ~flag_fastTransform;
+#endif
     }
 
     void Actor::setRotation(float rotation)
     {
+#ifdef GRAPHICSUPPORT
         if (m_rotation == rotation)
         {
             return;
@@ -493,6 +533,7 @@ namespace oxygine
         m_rotation = rotation;
         markTranformDirty();
         m_flags &= ~flag_fastTransform;
+#endif
     }
 
     void Actor::setRotationDegrees(float degr)
@@ -507,6 +548,7 @@ namespace oxygine
 
     void Actor::__setSize(const Vector2& size)
     {
+#ifdef GRAPHICSUPPORT
         if (m_size == size)
         {
             return;
@@ -514,6 +556,7 @@ namespace oxygine
         m_size.x = static_cast<qint32>(size.x);
         m_size.y = static_cast<qint32>(size.y);
         markTranformDirty();
+#endif
     }
 
     void Actor::setSize(const Vector2& size)
@@ -529,12 +572,16 @@ namespace oxygine
 
     void Actor::setWidth(float w)
     {
+#ifdef GRAPHICSUPPORT
         setSize(Vector2(w, m_size.y));
+#endif
     }
 
     void Actor::setHeight(float h)
     {
+#ifdef GRAPHICSUPPORT
         setSize(Vector2(m_size.x, h));
+#endif
     }
 
     void Actor::setClock(spClock & clock)
@@ -544,14 +591,12 @@ namespace oxygine
 
     void Actor::setAlpha(unsigned char alpha)
     {
+#ifdef GRAPHICSUPPORT
         m_alpha = alpha;
+#endif
     }
 
-    void Actor::setRenderDelegate(RenderDelegate* mat)
-    {
-        m_rdelegate = mat;
-    }
-
+#ifdef GRAPHICSUPPORT
     const AffineTransform& Actor::getTransform() const
     {
         updateTransform();
@@ -569,20 +614,33 @@ namespace oxygine
 
         return m_transformInvert;
     }
+#endif
 
     float Actor::getWidth() const
     {
+#ifdef GRAPHICSUPPORT
         return m_size.x;
+#else
+        return 0.0f;
+#endif
     }
 
     float Actor::getHeight() const
     {
+#ifdef GRAPHICSUPPORT
         return m_size.y;
+#else
+        return 0.0f;
+#endif
     }
 
     unsigned char Actor::getAlpha() const
     {
+#ifdef GRAPHICSUPPORT
         return m_alpha;
+#else
+        return 0;
+#endif
     }
 
     const spClock&  Actor::getClock() const
@@ -592,6 +650,7 @@ namespace oxygine
 
     void Actor::updateTransform() const
     {
+#ifdef GRAPHICSUPPORT
         if (!(m_flags & flag_transformDirty))
         {
             return;
@@ -633,6 +692,7 @@ namespace oxygine
         tr.translate(offset);
         m_transform = tr;
         m_flags &= ~flag_transformDirty;
+#endif
     }
 
     bool Actor::isOn(const Vector2& localPosition, float)
@@ -712,17 +772,22 @@ namespace oxygine
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add self");
         }
         actor->detach();
+#ifdef GRAPHICSUPPORT
         QMutexLocker lock(&m_Locked);
         QMutexLocker lockActor(&(actor->m_Locked));
+#endif
         insertActor(actor);
         setParent(actor.get(), this);
     }
 
     void Actor::removeChild(spActor & actor)
     {
+#ifdef GRAPHICSUPPORT
         QMutexLocker lock(&m_Locked);
         QMutexLocker lockActor(&(actor->m_Locked));
-        if (!GameWindow::getWindow()->isWorker())
+#endif
+        if (!GameWindow::getWindow()->isWorker() &&
+            dynamic_cast<QObject*>(this) != nullptr)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove actor from wrong thread");
         }
@@ -775,6 +840,7 @@ namespace oxygine
 
     void Actor::internalUpdate(const UpdateState& us)
     {
+#ifdef GRAPHICSUPPORT
         QMutexLocker lock(&m_Locked);
         auto iter = m_tweens.begin();
         while (iter != m_tweens.end())
@@ -795,6 +861,7 @@ namespace oxygine
         {
             child->update(us);
         }
+#endif
     }
 
     void Actor::update(const UpdateState& parentUS)
@@ -831,14 +898,22 @@ namespace oxygine
 
     Vector2 Actor::parent2local(const Vector2& global) const
     {
+#ifdef GRAPHICSUPPORT
         const AffineTransform& t = getTransformInvert();
         return t.transform(global);
+#else
+        return Vector2();
+#endif
     }
 
     Vector2 Actor::local2parent(const Vector2& local) const
     {
+#ifdef GRAPHICSUPPORT
         const AffineTransform& t = getTransform();
         return t.transform(local);
+#else
+        return Vector2();
+#endif
     }
 
     Vector2 Actor::local2stage(const Vector2& pos, Actor* stage) const
@@ -863,6 +938,7 @@ namespace oxygine
 
     bool Actor::prepareRender(RenderState& rs, const RenderState& parentRS)
     {
+#ifdef GRAPHICSUPPORT
         if (!(m_flags & flag_visible))
         {
             return false;
@@ -897,12 +973,13 @@ namespace oxygine
                 return false;
             }
         }
-
+#endif
         return true;
     }
 
     bool Actor::onScreen(RenderState& rs)
     {
+#ifdef GRAPHICSUPPORT
         constexpr float safetyArea = 10;
         float width = oxygine::Stage::getStage()->getScaledWidth() + safetyArea;
         float height = oxygine::Stage::getStage()->getScaledHeight() + safetyArea;
@@ -915,11 +992,13 @@ namespace oxygine
         {
             return false;
         }
+#endif
         return true;
     }
 
     bool Actor::internalRender(RenderState& rs, const RenderState& parentRS)
     {
+#ifdef GRAPHICSUPPORT
         if (!prepareRender(rs, parentRS))
         {
             return false;
@@ -931,23 +1010,28 @@ namespace oxygine
         {
             doRender(rs);
         }
+#endif
         return true;
     }
 
     bool Actor::getBounds(RectF& bounds) const
     {
+#ifdef GRAPHICSUPPORT
         if (m_flags & flag_actorHasBounds)
         {
             bounds = getDestRect();
             return true;
         }
+#endif
         return false;
     }
 
     void Actor::render(const RenderState& parentRS)
     {
+#ifdef GRAPHICSUPPORT
         QMutexLocker lock(&m_Locked);
-        m_rdelegate->render(this, parentRS);
+        RenderDelegate::instance->render(this, parentRS);
+#endif
     }
 
     RectF Actor::getDestRect() const
@@ -956,7 +1040,8 @@ namespace oxygine
     }
 
     spTween Actor::__addTween(spTween tween, bool)
-    {
+    {        
+#ifdef GRAPHICSUPPORT
         if (tween.get() == nullptr)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::__addTween tween is nullptr");
@@ -972,7 +1057,9 @@ namespace oxygine
             m_tweens.push_back(tween);
         }
         tween->start(*this);
+#endif
         return tween;
+
     }
 
     spTween Actor::addTween(spTween tween)
@@ -981,7 +1068,8 @@ namespace oxygine
     }
 
     void Actor::removeTween(spTween pTween)
-    {
+    {        
+#ifdef GRAPHICSUPPORT
         QMutexLocker lock(&m_Locked);
         if (pTween.get() == nullptr)
         {
@@ -998,10 +1086,12 @@ namespace oxygine
             }
             ++iter;
         }
+#endif
     }
 
     void Actor::removeTweens(bool callComplete)
-    {
+    {        
+#ifdef GRAPHICSUPPORT
         while (m_tweens.size() > 0)
         {
             spTween tween = m_tweens.back();
@@ -1014,15 +1104,18 @@ namespace oxygine
                 removeTween(tween);
             }
         }
+#endif
     }
 
     Vector2 Actor::convert_global2local_(const Actor* child, const Actor* parent, Vector2 pos)
-    {
+    {        
+#ifdef GRAPHICSUPPORT
         if (child->getParent() && child->getParent() != parent)
         {
             pos = convert_global2local_(child->getParent(), parent, pos);
         }
         pos = child->parent2local(pos);
+#endif
         return pos;
     }
 
@@ -1033,12 +1126,13 @@ namespace oxygine
 
     Vector2 Actor::convert_local2global_(const Actor* child, const Actor* parent, Vector2 pos)
     {
+#ifdef GRAPHICSUPPORT
         while (child && child != parent)
         {
             pos = child->local2parent(pos);
             child = child->getParent();
         }
-
+#endif
         return pos;
     }
 

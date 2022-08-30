@@ -1,5 +1,7 @@
-#include "dropdownmenu.h"
+#include "objects/base/dropdownmenu.h"
+
 #include "coreengine/mainapp.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
@@ -7,7 +9,9 @@ DropDownmenu::DropDownmenu(qint32 width, const QStringList & items)
     : DropDownmenuBase(width, items.size()),
       m_ItemTexts(items)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DropDownmenu");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

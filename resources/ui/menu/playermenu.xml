@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<ui>
+    <Label>
+        <x>10</x>
+        <y>MainMenu.getButtonY(0) - 70</y>
+        <width>settings.getWidth() - 20</width>
+        <height>60</height>
+        <text>settings.getUsername()</text>
+        <font>"main"</font>
+        <fontSize>48</fontSize>
+        <hAlign>"Middle"</hAlign>
+    </Label>
+    <Button>
+        <x>settings.getWidth() / 2.0 - 125</x>
+        <y>MainMenu.getButtonY(0)</y>
+        <width>250</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Change username")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Change username")</tooltip>
+        <onEvent>MainMenu.changeUsername(currentMenu)</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getWidth() / 2.0 - 125</x>
+        <y>MainMenu.getButtonY(1)</y>
+        <width>250</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Shop")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Shop")</tooltip>
+        <onEvent>currentMenu.enterShopMenu();</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getWidth() / 2.0 - 125</x>
+        <y>MainMenu.getButtonY(2)</y>
+        <width>250</width>
+        <text>QT_TRANSLATE_NOOP("GAME","CO Style")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","CO Style")</tooltip>
+        <onEvent>currentMenu.enterCOStyleMenu();</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getWidth() / 2.0 - 125</x>
+        <y>MainMenu.getButtonY(3)</y>
+        <width>250</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Achievements")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Achievements")</tooltip>
+        <onEvent>currentMenu.enterAchievementmenue();</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getWidth() / 2.0 - 125</x>
+        <y>MainMenu.getButtonY(4)</y>
+        <width>250</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Replay Game")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Replay Game")</tooltip>
+        <onEvent>currentMenu.enterReplayGame();</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getWidth() / 2.0 - 125</x>
+        <y>MainMenu.getButtonY(5)</y>
+        <width>250</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Back")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Back")</tooltip>
+        <onEvent>MainMenu.loadMainMenu(currentMenu);</onEvent>
+    </Button>
+</ui>

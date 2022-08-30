@@ -1,25 +1,51 @@
 var Constructor = function()
 {
-    this.getRuleDescription = function(itemNumber)
+    this.getRuleDescription = function(rule, itemNumber, map)
     {
-        if (itemNumber === 0)
+        var type = itemNumber;
+        if (rule !== null)
+        {
+            var teamVictory = VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getRuleValue(rule, 1, map);
+            if (teamVictory)
+            {
+                type = 2;
+            }
+        }
+        if (type === 0)
         {
             return qsTr("The player with the most captured buildings wins after the time is up.");
         }
-        else
+        else if (type === 1)
         {
             return qsTr("If checked the Team with the most captured buildings wins.");
         }
+        else
+        {
+            return qsTr("The team with the most captured buildings wins after the time is up.");
+        }
     };
-    this.getRuleName = function(itemNumber)
+    this.getRuleName = function(rule, itemNumber, map)
     {
-        if (itemNumber === 0)
+        var type = itemNumber;
+        if (rule !== null)
+        {
+            var teamVictory = VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getRuleValue(rule, 1, map);
+            if (teamVictory)
+            {
+                type = 2;
+            }
+        }
+        if (type === 0)
         {
             return qsTr("Capture race");
         }
-        else
+        else if (type === 1)
         {
             return qsTr("Team Counter");
+        }
+        else
+        {
+            return qsTr("Team capture race");
         }
     };
     // the type how the rule will be represented in the map selection ui

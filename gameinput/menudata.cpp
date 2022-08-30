@@ -14,7 +14,9 @@
 MenuData::MenuData(GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MenuData");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

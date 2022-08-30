@@ -14,7 +14,9 @@ TerrainFindingSystem::TerrainFindingSystem(GameMap* pMap, QString terrainID, qin
       m_data(pMap),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("TerrainFindingSystem");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -28,7 +30,9 @@ TerrainFindingSystem::TerrainFindingSystem(GameMap* pMap, QStringList terrainIDs
       m_data(pMap),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("TerrainFindingSystem");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

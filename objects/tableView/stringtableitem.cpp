@@ -9,7 +9,9 @@ StringTableItem::StringTableItem(const QString& value, qint32 itemWidth, QObject
       m_value(value)
 {
     Interpreter::setCppOwnerShip(this);
-    setObjectName("LockTableItem");
+#ifdef GRAPHICSUPPORT
+    setObjectName("StringTableItem");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 

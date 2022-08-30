@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <ui>
-<Panel>
-    <x>10</x>
-    <y>10</y>
-    <width>settings.getWidth() - 20</width>
-    <height>settings.getHeight() - 80</height>
-    <childs>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getWidth() - 20</width>
+        <height>settings.getHeight() - 80</height>
+        <childs>
             <Label>
                 <x>settings.getWidth() / 2 - 300</x>
                 <y>10</y>

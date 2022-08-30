@@ -1,12 +1,13 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include <atomic>
-#include <qmutex.h>
+#include <QMutex>
 #include <vector>
 
 namespace oxygine
 {
-    class ResAnim;
+    template <class T>
+    class intrusive_ptr;
+
     /** RefCounter **/
     class ref_counter
     {
@@ -36,7 +37,7 @@ namespace oxygine
             --m_jsInstanceCounter;
         }
     private:
-        template<typename T>
+        template <class T>
         friend class intrusive_ptr;
         inline void addRef()
         {

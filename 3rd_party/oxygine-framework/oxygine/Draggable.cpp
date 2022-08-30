@@ -1,3 +1,4 @@
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "3rd_party/oxygine-framework/oxygine/Draggable.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
@@ -161,6 +162,7 @@ namespace oxygine
     Vector2 Draggable::convertPosUp(Actor* src, Actor* dest, const Vector2& pos, bool direction)
     {
         Vector2 locPos = pos;
+#ifdef GRAPHICSUPPORT
         AffineTransform t;
         while (src != dest && src)
         {
@@ -172,14 +174,15 @@ namespace oxygine
             t.x = 0;
             t.y = 0;
         }
-
         locPos = t.transform(locPos);
+#endif
         return locPos;
     }
 
     Vector2 Draggable::convertPosDown(Actor* src, Actor* dest, const Vector2& pos, bool direction)
     {
         Vector2 locPos = pos;
+#ifdef GRAPHICSUPPORT
         AffineTransform t;
         t = src->getTransform();
         while (src != dest && src)
@@ -193,6 +196,7 @@ namespace oxygine
             t.y = 0;
         }
         locPos = t.transform(locPos);
+#endif
         return locPos;
     }
 

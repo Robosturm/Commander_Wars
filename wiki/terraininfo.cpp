@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "wiki/terraininfo.h"
 #include "wiki/wikidatabase.h"
 
@@ -14,7 +16,9 @@
 TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("TerrainInfo");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

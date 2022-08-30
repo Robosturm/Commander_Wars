@@ -1,11 +1,16 @@
-#include "achievementbanner.h"
+#include "objects/achievementbanner.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/settings.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
-#include "coreengine/settings.h"
+
 #include "wiki/wikidatabase.h"
 #include "game/gamemap.h"
+
 #include "objects/base/label.h"
 
 quint32 AchievementBanner::m_activeBanners = 0;
@@ -14,7 +19,9 @@ constexpr quint32 bannerHeight = 45;
 AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     : m_showTimer(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("AchievementBanner");
+#endif
     Interpreter::setCppOwnerShip(this);
     qint32 bannerWidth = 350;
     ObjectManager* pObjectManager = ObjectManager::getInstance();

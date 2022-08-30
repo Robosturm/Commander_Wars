@@ -2,15 +2,14 @@
 #define COLORSELECTIONDIALOG_H
 
 #include <QObject>
-
 #include <QColor>
 #include <QVector>
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "game/unit.h"
 #include "game/player.h"
 #include "game/building.h"
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/colorselector.h"

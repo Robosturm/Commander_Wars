@@ -9,7 +9,6 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QList>
-#include <QApplication>
 #ifdef AUDIOSUPPORT
 #include <QAudioDevice>
 #endif
@@ -23,20 +22,22 @@ AudioThread::AudioThread(bool noAudio)
       m_noAudio(noAudio)
 
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("AudioThread");
+#endif
     Interpreter::setCppOwnerShip(this);
     if (!m_noAudio)
     {
         connect(this, &AudioThread::sigPlayMusic,         this, &AudioThread::SlotPlayMusic, Qt::QueuedConnection);
         connect(this, &AudioThread::sigSetVolume,         this, &AudioThread::SlotSetVolume, Qt::QueuedConnection);
         connect(this, &AudioThread::sigAddMusic,          this, &AudioThread::SlotAddMusic, Qt::QueuedConnection);
-        connect(this, &AudioThread::sigClearPlayList,     this, &AudioThread::SlotClearPlayList, Qt::BlockingQueuedConnection);
+        connect(this, &AudioThread::sigClearPlayList,     this, &AudioThread::SlotClearPlayList, Qt::QueuedConnection);
         connect(this, &AudioThread::sigPlayRandom,        this, &AudioThread::SlotPlayRandom, Qt::QueuedConnection);
-        connect(this, &AudioThread::sigLoadFolder,        this, &AudioThread::SlotLoadFolder, Qt::BlockingQueuedConnection);
+        connect(this, &AudioThread::sigLoadFolder,        this, &AudioThread::SlotLoadFolder, Qt::QueuedConnection);
         connect(this, &AudioThread::sigPlaySound,         this, &AudioThread::SlotPlaySound, Qt::QueuedConnection);
         connect(this, &AudioThread::sigStopSound,         this, &AudioThread::SlotStopSound, Qt::QueuedConnection);
         connect(this, &AudioThread::sigStopAllSounds,     this, &AudioThread::SlotStopAllSounds, Qt::QueuedConnection);
-        connect(this, &AudioThread::sigChangeAudioDevice, this, &AudioThread::SlotChangeAudioDevice, Qt::BlockingQueuedConnection);
+        connect(this, &AudioThread::sigChangeAudioDevice, this, &AudioThread::SlotChangeAudioDevice, Qt::QueuedConnection);
         connect(this, &AudioThread::sigLoadNextAudioFile, this, &AudioThread::loadNextAudioFile, Qt::QueuedConnection);
 
 #ifdef AUDIOSUPPORT
@@ -449,7 +450,7 @@ void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoin
         }
         if (!QFile::exists(currentPath))
         {
-            CONSOLE_PRINT("Unable to locate music file: " + currentPath + " using compiled path.", Console::eERROR);
+            CONSOLE_PRINT("Unable to locate music file: " + currentPath + " using compiled path.", Console::eDEBUG);
             currentPath = oxygine::Resource::RCC_PREFIX_PATH + file;
         }
         if (QFile::exists(currentPath))
@@ -736,6 +737,7 @@ bool AudioThread::stopSoundAtIndex(SoundData* soundData, qint32 index)
 
 void AudioThread::stopOldestSound(SoundData* soundData)
 {
+    CONSOLE_PRINT("Stopping oldest sound sound of " + soundData->cacheUrl.toString(), Console::eDEBUG);
     bool stopped = false;
     for (qint32 i = soundData->nextSoundToUse; i < SoundData::MAX_SAME_SOUNDS; ++i)
     {

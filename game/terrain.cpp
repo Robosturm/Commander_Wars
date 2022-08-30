@@ -1,6 +1,8 @@
 #include <QFileInfo>
 #include <QFile>
 
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
+
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 
@@ -51,7 +53,9 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
       m_Building{nullptr},
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Terrain");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -224,6 +228,7 @@ void Terrain::setTerrainName(const QString &value)
 
 void Terrain::syncAnimation(oxygine::timeMS syncTime)
 {
+#ifdef GRAPHICSUPPORT
     if (m_pTerrainSprite.get() != nullptr)
     {
         auto & tweens = m_pTerrainSprite->getTweens();
@@ -244,6 +249,7 @@ void Terrain::syncAnimation(oxygine::timeMS syncTime)
     {
         m_pBaseTerrain->syncAnimation(syncTime);
     }
+#endif
 }
 
 Unit* Terrain::getUnit()
@@ -408,7 +414,7 @@ void Terrain::loadBaseTerrain(const QString & terrainID)
     addChild(m_pBaseTerrain);
 }
 
-void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime)
+void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 startFrame, qint32 endFrame)
 {
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
@@ -417,8 +423,16 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime)
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * frameTime), -1);
-            pSprite->addTween(tween);
+            if (startFrame >= 0 && endFrame >= 0)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, endFrame), oxygine::timeMS(pAnim->getTotalFrames() * frameTime), -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * frameTime), -1);
+                pSprite->addTween(tween);
+            }
         }
         else
         {
@@ -719,7 +733,7 @@ QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bo
     return ret;
 }
 
-void Terrain::loadOverlaySprite(const QString & spriteID)
+void Terrain::loadOverlaySprite(const QString & spriteID, qint32 startFrame, qint32 endFrame)
 {
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::ep_ignore_error);
@@ -728,8 +742,16 @@ void Terrain::loadOverlaySprite(const QString & spriteID)
     {
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
-            pSprite->addTween(tween);
+            if (startFrame >= 0 && endFrame >= 0)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, endFrame), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                pSprite->addTween(tween);
+            }
         }
         else
         {
@@ -916,7 +938,7 @@ void Terrain::addBuildingSprite(spBuilding pBuilding)
         m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
         if (Terrain::m_y >= 0)
         {
-            m_pMap->getRowActor(Terrain::m_y)->addChild(m_Building);
+            m_pMap->getRowActor(Terrain::m_y + 1)->addChild(m_Building);
         }
     }
     else
@@ -1521,13 +1543,11 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
 
         if (m_Building->isValid())
         {
+            m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
             if (!fast)
             {
-                m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
-                m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
-                m_pMap->getRowActor(Terrain::m_y)->addChild(m_Building);
+                addBuildingSprite(m_Building);
             }
-            m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
             createBuildingDownStream();
         }
         else

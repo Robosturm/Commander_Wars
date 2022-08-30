@@ -5,9 +5,13 @@
 
 #include "coreengine/mainapp.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+
 GenericBox::GenericBox(bool cancel)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GenericBox");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

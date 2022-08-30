@@ -3,7 +3,9 @@
 Passwordbox::Passwordbox(qint32 width, qint32 heigth)
     : Textbox(width, heigth)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Passwordbox");
+#endif
 }
 
 void Passwordbox::update(const oxygine::UpdateState& us)

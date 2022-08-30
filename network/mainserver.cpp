@@ -1,6 +1,6 @@
 #include <QBuffer>
 #include <QFile>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QSqlError>
@@ -17,7 +17,6 @@
 #include "coreengine/commandlineparser.h"
 
 #include "game/gamemap.h"
-#include "game/GameEnums.h"
 
 const char* const DRIVER = "QSQLITE";
 
@@ -30,6 +29,8 @@ const char* const SQL_VALIDPASSWORD = "validPassword";
 const char* const SQL_LASTLOGIN = "lastLogin";
 
 spMainServer MainServer::m_pInstance;
+QSqlDatabase MainServer::m_serverData;
+bool MainServer::m_dataBaseLaunched = false;
 
 MainServer* MainServer::getInstance()
 {
@@ -43,6 +44,33 @@ MainServer* MainServer::getInstance()
 bool MainServer::exists()
 {
     return m_pInstance.get() != nullptr;
+}
+
+void MainServer::initDatabase()
+{
+    if(QSqlDatabase::isDriverAvailable(DRIVER))
+    {
+        m_serverData = QSqlDatabase::addDatabase(DRIVER);
+        QString path = Settings::getUserPath() + "/commanderWars.db";
+        if (Settings::getUserPath().isEmpty())
+        {
+            path = QCoreApplication::applicationDirPath() + "/commanderWars.db";
+        }
+        m_serverData.setDatabaseName(path);
+        if (!m_serverData.open())
+        {
+            CONSOLE_PRINT("Unable to open player error: " + m_serverData.lastError().text(), Console::eERROR);
+            CONSOLE_PRINT("Unable to open player native error: " + m_serverData.lastError().nativeErrorCode(), Console::eERROR);
+        }
+        else
+        {
+            m_dataBaseLaunched = true;
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to detect sql driver. Server won't be started.", Console::eERROR);
+    }
 }
 
 void MainServer::release()
@@ -76,51 +104,31 @@ MainServer::MainServer()
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
     parseSlaveAddressOptions();
 
-    bool dataBaseLaunched = true;
-    if(QSqlDatabase::isDriverAvailable(DRIVER))
+    initDatabase();
+    if (m_dataBaseLaunched)
     {
-        m_serverData = QSqlDatabase::addDatabase(DRIVER);
-        QString path = Settings::getUserPath() + "/commanderWars.db";
-        if (Settings::getUserPath().isEmpty())
+        QSqlQuery query = m_serverData.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
+                                            SQL_USERNAME + " TEXT PRIMARY KEY, " +
+                                            SQL_PASSWORD + " TEXT, " +
+                                            SQL_MAILADRESS + " TEXT, " +
+                                            SQL_MMR + " INTEGER, " +
+                                            SQL_VALIDPASSWORD + " INTEGER, " +
+                                            SQL_LASTLOGIN + " TEXT)");
+        if (sqlQueryFailed(query))
         {
-            path = QApplication::applicationDirPath() + "/commanderWars.db";
-        }
-        m_serverData.setDatabaseName(path);
-        if (!m_serverData.open())
-        {
-            CONSOLE_PRINT("Unable to open player error: " + m_serverData.lastError().text(), Console::eERROR);
-            CONSOLE_PRINT("Unable to open player native error: " + m_serverData.lastError().nativeErrorCode(), Console::eERROR);
-            dataBaseLaunched = false;
-        }
-        if (dataBaseLaunched)
-        {
-            QSqlQuery query = m_serverData.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
-                                                SQL_USERNAME + " TEXT PRIMARY KEY, " +
-                                                SQL_PASSWORD + " TEXT, " +
-                                                SQL_MAILADRESS + " TEXT, " +
-                                                SQL_MMR + " INTEGER, " +
-                                                SQL_VALIDPASSWORD + " INTEGER, " +
-                                                SQL_LASTLOGIN + " TEXT)");
-            if (sqlQueryFailed(query))
-            {
-                CONSOLE_PRINT("Unable to create player table " + m_serverData.lastError().nativeErrorCode(), Console::eERROR);
-            }
+            CONSOLE_PRINT("Unable to create player table " + m_serverData.lastError().nativeErrorCode(), Console::eERROR);
         }
     }
-    else
-    {
-        CONSOLE_PRINT("Unable to detect sql driver. Server won't be started.", Console::eERROR);
-        dataBaseLaunched = false;
-    }
-    if (dataBaseLaunched)
+    if (m_dataBaseLaunched)
     {
         m_mailSender.moveToThread(&m_mailSenderThread);
         m_mailSenderThread.start();
         emit m_mailSender.sigConnectToServer();
+        connect(&m_mailSender, &SmtpMailSender::sigMailResult, this, &MainServer::onMailSendResult, Qt::QueuedConnection);
 
         CONSOLE_PRINT("Starting tcp server and listening to new clients.", Console::eDEBUG);
-        emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort());
-        emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort());
+        emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort(), Settings::getServerSecondaryListenAdress());
+        emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort(), "");
     }
 }
 
@@ -157,24 +165,37 @@ bool MainServer::sqlQueryFailed(const QSqlQuery & query)
 void MainServer::parseSlaveAddressOptions()
 {
     QStringList addressOptions = Settings::getSlaveHostOptions().split(";");
-    for (auto & option : addressOptions)
+    if (addressOptions.size() == 0)
     {
-        QStringList values = option.split("&");
-        if (values.size() == 3)
+        CONSOLE_PRINT("Slave host option: " + Settings::getSlaveHostOptions() + " contains no valid slave spawn options. Server will be unusable.", Console::eWARNING);
+    }
+    else
+    {
+        for (auto & option : addressOptions)
         {
-            bool ok = false;
-            AddressInfo info;
-            info.address = values[0];
-            info.minPort = values[1].toUInt(&ok);
-            if (info.minPort == 0)
+            QStringList values = option.split("&");
+            if (values.size() == 4)
             {
-                info.minPort = 1;
+                bool ok = false;
+                AddressInfo info;
+                info.address = values[0];
+                info.secondaryAddress = values[1];
+                info.minPort = values[2].toUInt(&ok);
+                if (info.minPort == 0)
+                {
+                    info.minPort = 2;
+                }
+                info.maxPort = values[3].toUInt(&ok);
+                m_slaveAddressOptions.append(info);
+                if (m_slaveAddressOptions.size() == 1)
+                {
+                    m_lastUsedPort = info.minPort -1;
+                }
+                CONSOLE_PRINT("Slave host option: " + info.address + " from port " + QString::number(info.minPort) + " to " + QString::number(info.maxPort), Console::eDEBUG);
             }
-            info.maxPort = values[2].toUInt(&ok);
-            m_slaveAddressOptions.append(info);
-            if (m_slaveAddressOptions.size() == 1)
+            else
             {
-                m_lastUsedPort = info.minPort -1;
+                CONSOLE_PRINT("Slave host option: " + option + " couldn't be parsed and will be ignored", Console::eWARNING);
             }
         }
     }
@@ -187,7 +208,7 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         QJsonDocument doc = QJsonDocument::fromJson(data);
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
-        CONSOLE_PRINT("Network Server Command received: " + messageType, Console::eDEBUG);
+        CONSOLE_PRINT("Network json hosting client server command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::SERVERJOINGAME)
         {
             joinSlaveGame(socketID, objData);
@@ -221,7 +242,7 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
-        CONSOLE_PRINT("Network Server Command received: " + messageType, Console::eDEBUG);
+        CONSOLE_PRINT("Network hosting client server command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::LAUNCHGAMEONSERVER)
         {
             spawnSlaveGame(stream, socketID, data);
@@ -240,7 +261,7 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         QJsonDocument doc = QJsonDocument::fromJson(data);
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
-        CONSOLE_PRINT("Network Server Command received: " + messageType, Console::eDEBUG);
+        CONSOLE_PRINT("Network json hosting slave server command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::SLAVEREADY)
         {
             onSlaveReady(socketID, objData);
@@ -273,6 +294,10 @@ void MainServer::onSlaveReady(quint64 socketID, const QJsonObject & objData)
         auto & internGame = iter.value();
         internGame->game->onConnectToLocalServer(socketID, m_pSlaveServer);
     }
+    else
+    {
+        CONSOLE_PRINT("Unable to find slave game: " + slaveName + " running games: " + QString::number(m_games.size()), Console::eDEBUG);
+    }
 }
 
 void MainServer::onGameRunningOnServer(quint64 socketID, const QJsonObject & objData)
@@ -284,6 +309,10 @@ void MainServer::onGameRunningOnServer(quint64 socketID, const QJsonObject & obj
         auto & internGame = iter.value();
         internGame->game->slaveRunning(objData, m_pGameServer);
     }
+    else
+    {
+        CONSOLE_PRINT("Unable to find slave game: " + slaveName + " running games: " + QString::number(m_games.size()), Console::eDEBUG);
+    }
 }
 
 void MainServer::onSlaveGameStarted(quint64 socketID, const QJsonObject & objData)
@@ -294,6 +323,10 @@ void MainServer::onSlaveGameStarted(quint64 socketID, const QJsonObject & objDat
     {
         auto & internGame = iter.value();
         internGame->game->slaveGameStarted(objData);
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to find slave game: " + slaveName + " running games: " + QString::number(m_games.size()), Console::eDEBUG);
     }
 }
 
@@ -312,12 +345,18 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
             game->game->getSlaveRunning())
         {
             auto & data = game->game->getData();
-            if (data.getLaunched() &&
-                data.getPlayerNames().contains(username))
+            if (data.getPlayerNames().contains(username))
             {
-                QJsonObject obj = game->game->getData().toJson();
-                games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
-                ++i;
+                if (data.getLaunched())
+                {
+                    QJsonObject obj = game->game->getData().toJson();
+                    games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+                    ++i;
+                }
+                else
+                {
+                    CONSOLE_PRINT("Found game which isn't started for username " + username, Console::eDEBUG);
+                }
             }
         }
     }
@@ -344,6 +383,10 @@ void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData
         data.setPlayers(data.getMaxPlayers() - openPlayerCount);
         m_updateGameData = true;
     }
+    else
+    {
+        CONSOLE_PRINT("Unable to find slave game: " + slaveName + " running games: " + QString::number(m_games.size()), Console::eDEBUG);
+    }
 }
 
 void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject & objData)
@@ -368,6 +411,7 @@ void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject & objData)
             QJsonObject data;
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
             data.insert(JsonKeys::JSONKEY_ADDRESS, game->game->getData().getSlaveAddress());
+            data.insert(JsonKeys::JSONKEY_SECONDARYADDRESS, game->game->getData().getSlaveSecondaryAddress());
             data.insert(JsonKeys::JSONKEY_PORT, static_cast<qint64>(game->game->getData().getSlavePort()));
             QJsonDocument doc(data);
             emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
@@ -436,12 +480,15 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
     m_slaveGameIterator++;
 
     QString slaveAddress;
+    QString slaveSecondaryAddress;
     quint16 slavePort;
-    if (getNextFreeSlaveAddress(slaveAddress, slavePort))
+    if (getNextFreeSlaveAddress(slaveAddress, slavePort, slaveSecondaryAddress))
     {
+        bool createLogs = Mainapp::getInstance()->getCreateSlaveLogs();
         QString slaveName = "Commander_Wars_Slave_" + QString::number(m_slaveGameIterator);
+        CONSOLE_PRINT("Launching slave game " + slaveName + " creating logs: " + (createLogs ? "true" : "false"), Console::eDEBUG);
         auto game = spInternNetworkGame::create();
-        QString program = "Commander_Wars.exe";
+        QString program = QCoreApplication::applicationFilePath();
         game->process = std::make_shared<QProcess>();
         game->process->setObjectName(slaveName + "Slaveprocess");
         const char* const prefix = "--";
@@ -454,6 +501,8 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
                           Settings::getConfigString(mods),
                           QString(prefix) + CommandLineParser::ARG_SLAVEADDRESS,
                           slaveAddress,
+                          QString(prefix) + CommandLineParser::ARG_SLAVESECONDARYADDRESS,
+                          slaveSecondaryAddress,
                           QString(prefix) + CommandLineParser::ARG_SLAVEPORT,
                           QString::number(slavePort),
                           QString(prefix) + CommandLineParser::ARG_MASTERADDRESS,
@@ -462,7 +511,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
                           QString::number(Settings::getSlaveServerPort()),
                           QString(prefix) + CommandLineParser::ARG_INITSCRIPT,
                           initScript});
-        if (Mainapp::getInstance()->getCreateSlaveLogs())
+        if (createLogs)
         {
             args << QString(prefix) + CommandLineParser::ARG_CREATESLAVELOGS;
         }
@@ -471,6 +520,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         game->game->setServerName(slaveName);
         game->game->setHostingSocket(socketID);
         game->game->getData().setSlaveAddress(slaveAddress);
+        game->game->getData().setSlaveSecondaryAddress(slaveSecondaryAddress);
         game->game->getData().setSlavePort(slavePort);
         connect(game->process.get(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), game->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
         connect(game->game.get(), &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);
@@ -561,6 +611,7 @@ void MainServer::closeGame(NetworkGame* pGame)
         const auto & game = iter.value();
         SlaveAddress freeAddress;
         freeAddress.address = game->game->getData().getSlaveAddress();
+        freeAddress.secondaryAddress = game->game->getData().getSlaveSecondaryAddress();
         freeAddress.port = game->game->getData().getSlavePort();
         m_freeAddresses.append(freeAddress);
         game->process->kill();
@@ -570,13 +621,14 @@ void MainServer::closeGame(NetworkGame* pGame)
     }
 }
 
-bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port)
+bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port, QString & secondaryAddress)
 {
     bool success = false;
     if (m_freeAddresses.size() > 0)
     {
         auto & newAddress = m_freeAddresses.constLast();
         address = newAddress.address;
+        secondaryAddress = newAddress.secondaryAddress;
         port = newAddress.port;
         m_freeAddresses.removeLast();
         success = true;
@@ -589,6 +641,7 @@ bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port)
             if (m_lastUsedPort < options.maxPort)
             {
                 address = options.address;
+                secondaryAddress = options.secondaryAddress;
                 ++m_lastUsedPort;
                 port = m_lastUsedPort;
                 success = true;
@@ -599,7 +652,7 @@ bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port)
                 if (m_lastUsedAddressIndex < m_slaveAddressOptions.size())
                 {
                     m_lastUsedPort = m_slaveAddressOptions[m_lastUsedAddressIndex].minPort - 1;
-                    success = getNextFreeSlaveAddress(address, port);
+                    success = getNextFreeSlaveAddress(address, port, secondaryAddress);
                 }
             }
         }
@@ -653,7 +706,7 @@ void MainServer::createAccount(qint64 socketId, const QJsonDocument & doc, Netwo
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Creating account with username " + username + " and email adress " + mailAdress, Console::eDEBUG);
     bool success = false;
-    QSqlQuery query = getAccountInfo(username, success);
+    QSqlQuery query = getAccountInfo(m_serverData, username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;
     if (!query.first() && success)
     {
@@ -686,7 +739,7 @@ void MainServer::createAccount(qint64 socketId, const QJsonDocument & doc, Netwo
         result = GameEnums::LoginError_AccountExists;
     }
     QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
@@ -700,13 +753,36 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, Netw
     auto & cypher = Mainapp::getInstance()->getCypher();
     QJsonObject data = doc.object();
     QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
-    bool success = false;
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Login to account with username " + username, Console::eDEBUG);
-    QSqlQuery query = getAccountInfo(username, success);
+    auto result = checkPassword(m_serverData, username, password);
+    if (result == GameEnums::LoginError_None)
+    {
+        // mark client as logged in
+        emit m_pGameServer->sigSetIsActive(socketId, true);
+    }
+    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+    CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
+    QJsonObject outData;
+    outData.insert(JsonKeys::JSONKEY_COMMAND, command);
+    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
+    QJsonDocument outDoc(outData);
+    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    if (result == GameEnums::LoginError_None)
+    {
+        sendGameDataToClient(socketId);
+    }
+}
+
+GameEnums::LoginError MainServer::checkPassword(QSqlDatabase & database, const QString & username, const QByteArray & password)
+{
+    bool success = false;
+    QSqlQuery query = getAccountInfo(database, username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;
     if (query.first() && success)
     {
+        CONSOLE_PRINT("Checking password for : " + username, Console::eDEBUG);
         auto dbPassword = query.value(SQL_PASSWORD);
         auto outdatedPassword = query.value(SQL_VALIDPASSWORD).toInt();
         if (dbPassword.toByteArray() != password.toHex())
@@ -715,27 +791,26 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, Netw
         }
         if (outdatedPassword == 0)
         {
+            CONSOLE_PRINT("Account info for : " + username + " is out dated.", Console::eDEBUG);
             result = GameEnums::LoginError_PasswordOutdated;
-        }
-        else
-        {
-            // mark client as logged in
-            emit m_pGameServer->sigSetIsActive(socketId, true);
-            sendGameDataToClient(socketId);
         }
     }
     else
     {
+        CONSOLE_PRINT("Account info for : " + username + " not found.", Console::eDEBUG);
         result = GameEnums::LoginError_AccountDoesntExist;
     }
-    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-    QJsonObject outData;
-    outData.insert(JsonKeys::JSONKEY_COMMAND, command);
-    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
-    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
-    QJsonDocument outDoc(outData);
-    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    return result;
+}
+
+GameEnums::LoginError MainServer::verifyLoginData(const QString & username, const QByteArray & password)
+{
+    GameEnums::LoginError valid = GameEnums::LoginError_DatabaseNotAccesible;
+    if (m_dataBaseLaunched)
+    {
+        valid = checkPassword(m_serverData, username, password);
+    }
+    return valid;
 }
 
 void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
@@ -745,7 +820,7 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Resetting account with username " + username + " and email adress " + mailAdress, Console::eDEBUG);
     bool success = false;
-    QSqlQuery query = getAccountInfo(username, success);
+    QSqlQuery query = getAccountInfo(m_serverData, username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;
     if (query.first() && success)
     {
@@ -767,7 +842,8 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc
                                             SQL_USERNAME + " = '" + username + "';");
             if (!sqlQueryFailed(changeQuery))
             {
-                emit m_mailSender.sigSendMail(0, "Commander Wars password reset", message, mailAdress, username);
+                CONSOLE_PRINT("Try sending reset password mail", Console::eDEBUG);
+                emit m_mailSender.sigSendMail(socketId, "Commander Wars password reset", message, mailAdress, username, action);
             }
             else
             {
@@ -783,68 +859,35 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc
     {
         result = GameEnums::LoginError_AccountDoesntExist;
     }
-    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-    QJsonObject outData;
-    outData.insert(JsonKeys::JSONKEY_COMMAND, command);
-    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
-    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
-    QJsonDocument outDoc(outData);
-    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    if (result != GameEnums::LoginError_None)
+    {
+        QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+        CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
+        QJsonObject outData;
+        outData.insert(JsonKeys::JSONKEY_COMMAND, command);
+        outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+        outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
+        QJsonDocument outDoc(outData);
+        emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
 }
 
-void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
+void MainServer::onMailSendResult(quint64 socketId, const QString & receiverAddress, const QString & username, bool result, NetworkCommands::PublicKeyActions action)
 {
-    auto & cypher = Mainapp::getInstance()->getCypher();
-    QJsonObject data = doc.object();
-    QByteArray oldPassword = cypher.toByteArray(data.value(JsonKeys::JSONKEY_OLDPASSWORD).toArray());
-    QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
-    bool success = false;
-    QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
-    CONSOLE_PRINT("Login to account with username " + username, Console::eDEBUG);
-    QSqlQuery query = getAccountInfo(username, success);
-    GameEnums::LoginError result = GameEnums::LoginError_None;
-    if (query.first() && success)
+    GameEnums::LoginError mailSendResult = GameEnums::LoginError_None;
+    if (!result)
     {
-        auto dbPassword = query.value(SQL_PASSWORD);
-        auto outdatedPassword = query.value(SQL_VALIDPASSWORD).toInt();
-        if (dbPassword.toByteArray() != oldPassword.toHex())
-        {
-            result = GameEnums::LoginError_WrongPassword;
-        }
-        else
-        {
-            auto changeQuery = m_serverData.exec(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
-                                            SQL_PASSWORD + " = " + "'" + password.toHex() + "', " +
-                                            SQL_VALIDPASSWORD + " = 1 WHERE " +
-                                            SQL_USERNAME + " = '" + username + "';");
-            if (sqlQueryFailed(changeQuery))
-            {
-                result = GameEnums::LoginError_InvalidPasswordReset;
-            }
-            else
-            {
-                if (outdatedPassword == 0)
-                {
-                    // mark client as logged in
-                    emit m_pGameServer->sigSetIsActive(socketId, true);
-                    sendGameDataToClient(socketId);
-                }
-            }
-        }
-    }
-    else
-    {
-        result = GameEnums::LoginError_AccountDoesntExist;
+        mailSendResult = GameEnums::LoginError_SendingMailFailed;
     }
     QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(mailSendResult), Console::eDEBUG);
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
-    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, mailSendResult);
     outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
     emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+
 }
 
 QString MainServer::createRandomPassword() const
@@ -891,18 +934,72 @@ QString MainServer::createRandomPassword() const
     return password;
 }
 
-QSqlQuery MainServer::getAccountInfo(const QString & username, bool & success)
+void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
 {
-    QSqlQuery query = m_serverData.exec(QString("SELECT ") +
-                                        SQL_USERNAME + ", " +
-                                        SQL_PASSWORD + ", " +
-                                        SQL_MAILADRESS + ", " +
-                                        SQL_MMR + ", " +
-                                        SQL_VALIDPASSWORD + ", " +
-                                        SQL_LASTLOGIN +
-                                        " from " + SQL_TABLE_PLAYERS +
-                                        " WHERE " + SQL_USERNAME +
-                                        " = '" + username + "';");
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject data = doc.object();
+    QByteArray oldPassword = cypher.toByteArray(data.value(JsonKeys::JSONKEY_OLDPASSWORD).toArray());
+    QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
+    bool success = false;
+    QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
+    CONSOLE_PRINT("Login to account with username " + username, Console::eDEBUG);
+    QSqlQuery query = getAccountInfo(m_serverData, username, success);
+    GameEnums::LoginError result = GameEnums::LoginError_None;
+    if (query.first() && success)
+    {
+        auto dbPassword = query.value(SQL_PASSWORD);
+        auto outdatedPassword = query.value(SQL_VALIDPASSWORD).toInt();
+        if (dbPassword.toByteArray() != oldPassword.toHex())
+        {
+            result = GameEnums::LoginError_WrongPassword;
+        }
+        else
+        {
+            auto changeQuery = m_serverData.exec(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
+                                            SQL_PASSWORD + " = " + "'" + password.toHex() + "', " +
+                                            SQL_VALIDPASSWORD + " = 1 WHERE " +
+                                            SQL_USERNAME + " = '" + username + "';");
+            if (sqlQueryFailed(changeQuery))
+            {
+                result = GameEnums::LoginError_InvalidPasswordReset;
+            }
+            else
+            {
+                if (outdatedPassword == 0)
+                {
+                    // mark client as logged in
+                    emit m_pGameServer->sigSetIsActive(socketId, true);
+                    sendGameDataToClient(socketId);
+                }
+            }
+        }
+    }
+    else
+    {
+        result = GameEnums::LoginError_AccountDoesntExist;
+    }
+        QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+        CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
+        QJsonObject outData;
+        outData.insert(JsonKeys::JSONKEY_COMMAND, command);
+        outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+        outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
+        QJsonDocument outDoc(outData);
+        emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+QSqlQuery MainServer::getAccountInfo(QSqlDatabase & database, const QString & username, bool & success)
+{
+    QSqlQuery query = database.exec(QString("SELECT ") +
+                                    SQL_USERNAME + ", " +
+                                    SQL_PASSWORD + ", " +
+                                    SQL_MAILADRESS + ", " +
+                                    SQL_MMR + ", " +
+                                    SQL_VALIDPASSWORD + ", " +
+                                    SQL_LASTLOGIN +
+                                    " from " + SQL_TABLE_PLAYERS +
+                                    " WHERE " + SQL_USERNAME +
+                                    " = '" + username + "';");
     success = !sqlQueryFailed(query);
     return query;
 }

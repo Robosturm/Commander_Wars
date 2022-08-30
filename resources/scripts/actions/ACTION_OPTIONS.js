@@ -18,11 +18,11 @@ var Constructor = function()
         var id = action.readDataString();
         if (id === "OPTIONS")
         {
-            map.options();
+            map.showXmlFileDialog("ui/options/optiongameplaymenu.xml", true);
         }
         else if (id === "SOUND")
         {
-            map.changeSound();
+            map.showXmlFileDialog("ui/options/optionaudiomenu.xml", true);
         }
     };
     this.isFinalStep = function(action, map)

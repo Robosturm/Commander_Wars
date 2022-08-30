@@ -1,4 +1,5 @@
 #include "objects/dialogs/mapSelection/mapselectionfilterdialog.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 
 #include "coreengine/mainapp.h"
 
@@ -11,7 +12,9 @@ constexpr const char* const MapSelectionFilter = "mapSelectionFilter";
 MapSelectionFilterDialog::MapSelectionFilterDialog(MapFilter* filter)
     : m_mapFilter(filter)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MapSelectionFilterDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

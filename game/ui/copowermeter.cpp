@@ -1,5 +1,7 @@
 #include "game/ui/copowermeter.h"
 
+#include "3rd_party/oxygine-framework/oxygine/tween/TweenQueue.h"
+
 #include "game/gamemap.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
@@ -8,7 +10,9 @@ CoPowermeter::CoPowermeter(GameMap* pMap, CO* pCO)
     : m_pCO(pCO),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CoPowermeter");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

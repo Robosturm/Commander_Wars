@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QDomDocument>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 #include "coreengine/interpreter.h"
 #include "coreengine/console.h"
@@ -47,126 +47,133 @@ private:
      * Nodename: Label
      * supported attributes are:
      * mandatory: x, y, width, heigth, text, font, fontSize
-     * optional: tooltip, onUpdate, id, enabled, fontColor
+     * optional: tooltip, onUpdate, id, enabled, fontColor, visible
      */
     bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: DropDownMenu
      * supported attributes are:
      * mandatory: x, y, width, items
-     * optional: tooltip, onEvent, id, enabled, startValue
+     * optional: tooltip, onEvent, id, enabled, startValue, visible
      */
     bool createDropDownMenu(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: DropDownMenuColor
      * supported attributes are:
      * mandatory: x, y, width, items
-     * optional: tooltip, onEvent, id, enabled, startValue
+     * optional: tooltip, onEvent, id, enabled, startValue, visible, showUnitPreview
      */
     bool createDropDownMenuColor(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: DropDownMenuSprite
      * supported attributes are:
      * mandatory: x, y, width, items, spriteType, spriteSize
-     * optional: tooltip, onEvent, id, enabled, startValue
+     * optional: tooltip, onEvent, id, enabled, startValue, visible
      */
     bool createDropDownMenuSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: TextField
      * supported attributes are:
      * mandatory: x, y, text, font, fontSize
-     * optional: fontColor, id
+     * optional: fontColor, id, visible
      */
     bool createTextfield(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Checkbox
       * supported attributes are:
       * mandatory: x, y, onEvent, startValue
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible
       */
     bool createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Spinbox
       * supported attributes are:
       * mandatory: x, y, width, min, max, infinite, onEvent, startValue
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible, spinSpeed
       */
     bool createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Slider
       * supported attributes are:
       * mandatory: x, y, width, min, max, onEvent, startValue
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible
       */
     bool createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Textbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible
       */
     bool createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Passwordbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible
       */
     bool createPasswordbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: TimeSpinbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible
       */
     bool createTimeSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Panel
       * supported attributes are:
       * mandatory: x, y, width, height, childs
-      * optional: tooltip, id, enabled
+      * optional: tooltip, id, enabled, visible
       */
     bool createPanel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Box
       * supported attributes are:
       * mandatory: x, y, width, height, sprite, childs
-     * optional: id
+      * optional: id, visible
      */
     bool createBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Icon
       * supported attributes are:
       * mandatory: x, y, size, sprite
-      * optional: id, player
+      * optional: id, player, visible
       */
     bool createIcon(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: Button
      * supported attributes are:
      * mandatory: x, y, text, onEvent
-     * optional: tooltip, width enabled, id
+     * optional: tooltip, enabled, id, visible
      */
     bool createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
+     * Nodename: SelectKey
+     * supported attributes are:
+     * mandatory: x, y, startValue, onEvent
+     * optional: tooltip, enabled, id, visible
+     */
+    bool createSelectKey(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: IconButton
      * supported attributes are:
      * mandatory: x, y, sprite, onEvent
-     * optional: enabled, id
+     * optional: enabled, id, visible
      */
     bool createIconButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: MoveInButton
      * supported attributes are:
      * mandatory: moveInSize
-     * optional: enabled, direction, scale, useY, startOffset
+     * optional: enabled, direction, scale, useY, startOffset, visible
      */
     bool createMoveInButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
      * Nodename: Sprite
      * supported attributes are:
      * mandatory: x, y, sprite, scale
-     * optional: id
+     * optional: id, visible, onEvent, width, height
      */
     bool createSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
@@ -186,9 +193,9 @@ private:
      */
     bool ifCondition(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
 signals:
-    void sigDoEvent(QString command, QString objectId, qint32 loopIdx);
+    void sigDoEvent(QString command, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
 private slots:
-    void doEvent(QString command, QString objectId, qint32 loopIdx);
+    void doEvent(QString command, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
 
 private:
     explicit UiFactory();
@@ -202,16 +209,19 @@ private:
     QDomNode getNode(const QDomNodeList & childs, const QString & attribute);
     bool hasChild(const QDomNodeList & childs, const QString & attribute);
     bool createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
-    qint32 getIntValue(QString line, QString objectId, qint32 loopIdx, qint32 defaultValue = 0);
-    float getFloatValue(QString line, QString objectId, qint32 loopIdx, float defaultValue = 0.0f);
-    bool getBoolValue(QString line, QString objectId, qint32 loopIdx, bool defaultValue = false);
-    QString getStringValue(QString line, QString objectId, qint32 loopIdx);
-    Player* getPlayerValue(QString line, QString objectId, qint32 loopIdx);
-    QStringList getStringListValue(QString line, QString objectId, qint32 loopIdx);
-    oxygine::TextStyle getStyle(QString styleName, QColor fontColor, qint32 size);
+    qint32 getIntValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, qint32 defaultValue = 0);
+    quint64 getUInt64Value(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, quint64 defaultValue = 0);
+    float getFloatValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, float defaultValue = 0.0f);
+    bool getBoolValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, bool defaultValue = false);
+    QString getStringValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
+    Player* getPlayerValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
+    QStringList getStringListValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
+    oxygine::TextStyle getStyle(QString styleName, QColor fontColor, qint32 size, oxygine::TextStyle::HorizontalAlign hAlign);
     QString getId(QString attribute);
+    oxygine::TextStyle::HorizontalAlign getHAlignment(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
+
     template<typename TType>
-    void onEvent(QString line, TType value, QString objectId, qint32 loopIdx)
+    void onEvent(QString line, TType value, QString objectId, qint32 loopIdx, CreatedGui* pMenu)
     {
         QString args;
         if constexpr(std::is_same<QString, TType>::value)
@@ -224,7 +234,10 @@ private:
         }
         args += "var objectId = \"" + objectId + "\";";
         args += "var loopIdx = " + QString::number(loopIdx) + ";";
-        QJSValue erg = Interpreter::getInstance()->evaluate(args + line);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue obj = pInterpreter->newQObject(pMenu);
+        pInterpreter->setGlobal("currentMenu", obj);
+        QJSValue erg = pInterpreter->evaluate(args + line);
         if (erg.isError())
         {
             CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", Console::eERROR);
@@ -232,7 +245,7 @@ private:
     }
 
     template<typename TType, typename TType2>
-    void onEvent(QString line, TType value, TType2 value2, QString objectId, qint32 loopIdx)
+    void onEvent(QString line, TType value, TType2 value2, QString objectId, qint32 loopIdx, CreatedGui* pMenu)
     {
         QString args;
         if constexpr(std::is_same<QString, TType>::value)
@@ -253,7 +266,10 @@ private:
         }
         args += "var objectId = \"" + objectId + "\";";
         args += "var loopIdx = " + QString::number(loopIdx) + ";";
-        QJSValue erg = Interpreter::getInstance()->evaluate(args + line);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue obj = pInterpreter->newQObject(pMenu);
+        pInterpreter->setGlobal("currentMenu", obj);
+        QJSValue erg = pInterpreter->evaluate(args + line);
         if (erg.isError())
         {
             CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", Console::eERROR);
@@ -261,14 +277,17 @@ private:
     }
 
     template<typename TType>
-    TType onUpdate(QString line, QString objectId, qint32 loopIdx)
+    TType onUpdate(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu)
     {
         QString args;
         args += "var objectId = \"" + objectId + "\";";
         args += "var loopIdx = " + QString::number(loopIdx) + ";";
         args += line;
         TType ret;
-        QJSValue erg = Interpreter::getInstance()->evaluate(args);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue obj = pInterpreter->newQObject(pMenu);
+        pInterpreter->setGlobal("currentMenu", obj);
+        QJSValue erg = pInterpreter->evaluate(args);
         if constexpr(std::is_same<QString, TType>::value)
         {
             ret = erg.toString();
@@ -288,6 +307,20 @@ private:
         return ret;
     }
     static QString translate(QString line);
+
+    template<typename TEnum>
+    TEnum getEnumValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, QStringList values, TEnum defaultValue = 0)
+    {
+        TEnum ret = defaultValue;
+        QString value = getStringValue(line, objectId, loopIdx, pMenu);
+        auto index = values.indexOf(value);
+        if (index >= 0)
+        {
+            ret = static_cast<TEnum>(index);
+        }
+        return ret;
+    }
+
 private:
 
     static UiFactory* m_pUiFactory;

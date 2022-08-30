@@ -59,6 +59,11 @@ var Constructor = function()
     {
         return 8;
     };
+    this.actionList = ["ACTION_NEST_LASER"];
+    this.startOfTurn = function(building, map)
+    {
+        building.setFireCount(1);
+    };
 }
 
 Constructor.prototype = BUILDING;

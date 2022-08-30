@@ -5,7 +5,9 @@
 
 Topbar::Topbar(qint32 x, qint32 width)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Topbar");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     // create the box for the bar in which everything will be placed

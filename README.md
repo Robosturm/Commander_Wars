@@ -8,12 +8,12 @@ The project is separated in three parts.
 * The `resources` folder containing the javascript default data and images and sounds or music
 * The `mods` folder containing mods for the core engine
 * refer to the [wiki page](https://github.com/Robosturm/Commander_Wars/wiki) for more information about the game and its features
-* [Commander Wars Wiki](https://www.commanderwars.com/mediawiki/Main_Page/)
+* [Commander Wars Wiki](https://www.commanderwars.com/wiki/Main_Page)
 
 If you need help with modding or have a question concerning the game contact me!
 E-Mail-Contact: commanderwars@gmx.de ask for help here. :)
 
-Latest Release is Beta 23.0 which can be found here: [CoW Beta 23.0](https://github.com/Robosturm/Commander_Wars/releases/tag/Beta_23)
+Latest Release is Beta 24.2 which can be found here: [CoW Beta 24.2](https://github.com/Robosturm/Commander_Wars/releases/tag/Beta_24_2)
 
 Commander Wars is also available at the following repositories:
 
