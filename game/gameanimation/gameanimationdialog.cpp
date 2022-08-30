@@ -66,7 +66,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     pRect->setSize(Settings::getWidth() - pRect->getX() - 5, 96);
 
     m_TextField = oxygine::spTextField::create();
-    m_TextField->setPosition(0, -10);
+    m_TextField->setPosition(0, 0);
     m_TextField->setSize(pRect->getWidth() - 5, pRect->getHeight());
     m_TextField->setStyle(style);
     pRect->addChild(m_TextField);

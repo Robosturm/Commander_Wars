@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <fonts>
-    <font file="segoeuiBold.ttf" type="main16" pixelSize="20" offsetX="0" offsetY="-6" borderWidth="1" bold="true"  />
+    <font file="segoeuiBold.ttf" type="main16" pixelSize="16" offsetX="0" offsetY="-3" borderWidth="1" bold="true"  />
     <font file="segoeuiBold.ttf" type="main24" pixelSize="24" offsetX="0" offsetY="-6" borderWidth="1" bold="true" />
     <font file="segoeuiBold.ttf" type="main32" pixelSize="24" offsetX="0" offsetY="-6" borderWidth="1" bold="true" />
     <font file="segoeuiBold.ttf" type="main48" pixelSize="48" offsetX="0" offsetY="-16" borderWidth="1" bold="true" />

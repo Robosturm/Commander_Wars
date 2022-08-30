@@ -624,7 +624,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         addColorbar(divider, posX, posY, color);
         qint32 hpRounded = pUnit->getHpRounded();
         float countMax = Unit::MAX_UNIT_HP;
-        pTextfield = spLabel::create(pAnim->getWidth() - 10);
+        pTextfield = spLabel::create(pAnim->getWidth() - 5);
         pTextfield->setStyle(smallStyle);
         if (hpHidden)
         {
@@ -646,7 +646,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
 
         qint32 fuel = pUnit->getFuel();
         qint32 maxFuel = pUnit->getMaxFuel();
-        pTextfield = spLabel::create(pAnim->getWidth() - 10);
+        pTextfield = spLabel::create(pAnim->getWidth() - 5);
         pTextfield->setStyle(smallStyle);
         if (maxFuel > 0.0f)
         {
@@ -658,8 +658,8 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
             divider = 0.0f;
             pTextfield->setHtmlText(tr("Fuel: -/-"));
         }
-        addColorbar(divider, posX + pAnim->getWidth() + 10, posY, QColor(0, 0, 255, 255));
-        pTextfield->setPosition(posX + pAnim->getWidth() + 15, posY);
+        addColorbar(divider, posX + pAnim->getWidth() + 5, posY, QColor(0, 0, 255, 255));
+        pTextfield->setPosition(posX + pAnim->getWidth() + 10, posY);
         m_pCursorInfoBox->addChild(pTextfield);
         posY += 5 + pAnim->getHeight();
 
@@ -683,7 +683,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
 
         qint32 ammo2 = pUnit->getAmmo2();
         qint32 maxAmmo2 = pUnit->getMaxAmmo2();
-        pTextfield = spLabel::create(pAnim->getWidth() - 10);
+        pTextfield = spLabel::create(pAnim->getWidth() - 5);
         pTextfield->setStyle(smallStyle);
         if (maxAmmo2 > 0)
         {
@@ -695,8 +695,8 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
             pTextfield->setHtmlText(tr("Ammo 2: -/-"));
             divider = 0.0f;
         }
-        addColorbar(divider, posX + pAnim->getWidth() + 10, posY, QColor(0, 255, 0, 255));
-        pTextfield->setPosition(posX + pAnim->getWidth() + 15, posY);
+        addColorbar(divider, posX + pAnim->getWidth() + 5, posY, QColor(0, 255, 0, 255));
+        pTextfield->setPosition(posX + pAnim->getWidth() + 10, posY);
         m_pCursorInfoBox->addChild(pTextfield);
         posY += 5 + pAnim->getHeight();
 
@@ -886,11 +886,11 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
             {
                 color = QColor(255, 0, 0, 255);
             }
-            addColorbar(divider, posX + 10 + pAnim->getWidth() + 5, posY, color);
-            pTextfield = spLabel::create(pAnim->getWidth() - 10);
+            addColorbar(divider, posX + pAnim->getWidth() + 10, posY, color);
+            pTextfield = spLabel::create(pAnim->getWidth() - 5);
             pTextfield->setStyle(smallStyle);
             pTextfield->setHtmlText(tr("HP: ") + QString::number(hp));
-            pTextfield->setPosition(posX + 10 + pAnim->getWidth() + 10, posY);
+            pTextfield->setPosition(posX + 10 + pAnim->getWidth() + 5, posY);
             m_pCursorInfoBox->addChild(pTextfield);
             barAdded = true;
         }
@@ -903,7 +903,7 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
                 resistance = maxCapturepoints - pUnit->getCapturePoints();
             }
             addColorbar(static_cast<float>(resistance) / static_cast<float>(maxCapturepoints), posX, posY, Qt::cyan);
-            pTextfield = spLabel::create(pAnim->getWidth() - 10);
+            pTextfield = spLabel::create(pAnim->getWidth() - 5);
             pTextfield->setPosition(posX + 5, posY);
             pTextfield->setStyle(smallStyle);
             pTextfield->setHtmlText((tr("Resistance: ") + QString::number(resistance)));

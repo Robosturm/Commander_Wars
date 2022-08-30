@@ -15,7 +15,7 @@
         <fontColor>"#FFFFFF"</fontColor>
     </TextField>
     <Button>
-        <x>settings.getWidth() / 2.0 - 100</x>
+        <x>settings.getWidth() / 2.0 - 125</x>
         <y>MainMenu.getButtonY(0)</y>
         <width>250</width>
         <text>QT_TRANSLATE_NOOP("GAME","Singleplayer")</text>
@@ -23,7 +23,7 @@
         <onEvent>MainMenu.loadMainSingleMenu(currentMenu)</onEvent>
     </Button>
     <Button>
-        <x>settings.getWidth() / 2.0 - 100</x>
+        <x>settings.getWidth() / 2.0 - 125</x>
         <y>MainMenu.getButtonY(1)</y>
         <width>250</width>
         <text>QT_TRANSLATE_NOOP("GAME","Multiplayer")</text>
@@ -31,7 +31,7 @@
         <onEvent>currentMenu.enterMultiplayer();</onEvent>
     </Button>
     <Button>
-        <x>settings.getWidth() / 2.0 - 100</x>
+        <x>settings.getWidth() / 2.0 - 125</x>
         <y>MainMenu.getButtonY(2)</y>
         <width>250</width>
         <text>QT_TRANSLATE_NOOP("GAME","Map Editor")</text>
@@ -39,7 +39,7 @@
         <onEvent>currentMenu.enterEditor();</onEvent>
     </Button>
     <Button>
-        <x>settings.getWidth() / 2.0 - 100</x>
+        <x>settings.getWidth() / 2.0 - 125</x>
         <y>MainMenu.getButtonY(3)</y>
         <width>250</width>
         <text>QT_TRANSLATE_NOOP("GAME","Personal")</text>
@@ -47,7 +47,7 @@
         <onEvent>MainMenu.loadPlayermenu(currentMenu)</onEvent>
     </Button>
     <Button>
-        <x>settings.getWidth() / 2.0 - 100</x>
+        <x>settings.getWidth() / 2.0 - 125</x>
         <y>MainMenu.getButtonY(4)</y>
         <width>250</width>
         <text>QT_TRANSLATE_NOOP("GAME","Wiki")</text>
@@ -55,7 +55,7 @@
         <onEvent>currentMenu.enterWikimenue();</onEvent>
     </Button>
     <Button>
-        <x>settings.getWidth() / 2.0 - 100</x>
+        <x>settings.getWidth() / 2.0 - 125</x>
         <y>MainMenu.getButtonY(5)</y>
         <width>250</width>
         <text>QT_TRANSLATE_NOOP("GAME","Options")</text>
@@ -63,7 +63,7 @@
         <onEvent>MainMenu.loadMainOptionMenu(currentMenu)</onEvent>
     </Button>
     <Button>
-        <x>settings.getWidth() / 2.0 - 100</x>
+        <x>settings.getWidth() / 2.0 - 125</x>
         <y>MainMenu.getButtonY(6)</y>
         <width>250</width>
         <text>QT_TRANSLATE_NOOP("GAME","Quit")</text>
