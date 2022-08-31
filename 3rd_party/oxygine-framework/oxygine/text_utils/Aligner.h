@@ -16,10 +16,12 @@ namespace oxygine
         public:
             explicit Aligner(const TextStyle& style, const Vector2& size);
             virtual ~Aligner() = default;
+#ifdef GRAPHICSUPPORT
             const TextStyle& getStyle() const
             {
                 return m_style;
             }
+#endif
             void align(text::Node & node);
             void nextLine(qint32 lastLineX, qint32 lastLineWidth);
             void nodeEnd(qint32 lastLineWidth);
@@ -30,6 +32,7 @@ namespace oxygine
              */
             inline qint32 getXAlignment(qint32 lineWidth)
             {
+#ifdef GRAPHICSUPPORT
                 qint32 tx = 0;
                 switch (m_style.hAlign)
                 {
@@ -45,6 +48,9 @@ namespace oxygine
                         break;
                 }
                 return tx;
+#else
+                return 0;
+#endif
             }
             /**
              * @brief getY current Y advance position
@@ -52,27 +58,38 @@ namespace oxygine
              */
             inline qint32 getY() const
             {
+#ifdef GRAPHICSUPPORT
                 return m_y;
+#else
+                return 0;
+#endif
             }
 
+#ifdef GRAPHICSUPPORT
             inline const Rect &getBounds() const
             {
                 return m_bounds;
             }
+#endif
             /**
              * @brief getWidth the available width of the text rect
              * @return
              */
             inline qint32 getWidth() const
             {
+#ifdef GRAPHICSUPPORT
                 return m_width;
+#else
+                return 0;
+#endif
             }
 
+#ifdef GRAPHICSUPPORT
             inline const QFontMetrics &getMetrics() const
             {
                 return m_metrics;
             }
-
+#endif
             qint32 getX() const;
             void setX(qint32 newX);
             void addLineNode(Node* node);
@@ -81,6 +98,7 @@ namespace oxygine
             void end();
             void updateX();
         private:
+#ifdef GRAPHICSUPPORT
             TextStyle m_style;
             Rect m_bounds;
             qint32 m_width;
@@ -90,6 +108,7 @@ namespace oxygine
             qint32 m_lineSkip;
             QFontMetrics m_metrics;
             std::vector<Node*> m_lineNodes;
+#endif
         };
     }
 }

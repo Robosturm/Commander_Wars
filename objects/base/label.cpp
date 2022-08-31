@@ -43,16 +43,20 @@ void Label::setText(QString str)
 }
 
 void Label::setHtmlText(QString str)
-{    
+{
+#ifdef GRAPHICSUPPORT
     m_textField->setHtmlText(str);
     m_clipRect->setHeight(getTextRect().getHeight() + m_textField->getStyle().font.borderWidth * 2);
     setTooltipText(str);    
+#endif
 }
 
 void Label::setStyle(const oxygine::TextStyle& st)
 {    
+#ifdef GRAPHICSUPPORT
     m_textField->setStyle(st);
     m_clipRect->setHeight(getTextRect().getHeight() + m_textField->getStyle().font.borderWidth * 2);
+#endif
 }
 
 oxygine::TextStyle Label::getStyle()

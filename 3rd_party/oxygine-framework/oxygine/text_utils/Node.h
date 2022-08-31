@@ -74,7 +74,9 @@ namespace oxygine
             virtual qint32 getWidth(Aligner& rd) override;
             virtual void setX(qint32 x) override;
         private:
+#ifdef GRAPHICSUPPORT
             QString * addNewLine(Aligner& rd);
+#endif
         private:
             QString m_text;
             std::vector<QString> m_lines;

@@ -5,7 +5,8 @@ namespace oxygine
 {
     namespace text
     {
-        Aligner::Aligner(const TextStyle& style, const Vector2& size)
+        Aligner::Aligner(const TextStyle& style, const Vector2& size)        
+#ifdef GRAPHICSUPPORT
             : m_style(style),
               m_bounds(0, 0, 0, 0),
               m_width(size.x),
@@ -13,41 +14,53 @@ namespace oxygine
               m_x(0),
               m_y(0),
               m_metrics(style.font.font)
-        {
+#endif
+        {            
+#ifdef GRAPHICSUPPORT
             m_lineSkip = m_metrics.height() + style.font.borderWidth / 2;
             m_lineNodes.reserve(50);
+#endif
         }
 
         void Aligner::align(text::Node & node)
-        {
+        {            
+#ifdef GRAPHICSUPPORT
             begin();
             node.resize(*this);
             end();
+#endif
         }
 
         void Aligner::begin()
         {
+#ifdef GRAPHICSUPPORT
             m_x = 0;
             m_y = m_metrics.ascent();
             m_bounds = Rect(getXAlignment(0), 0, 0, 0);
+#endif
         }
 
         void Aligner::nextLine(qint32 lastLineX, qint32 lastLineWidth)
-        {
+        {            
+#ifdef GRAPHICSUPPORT
             m_y += m_lineSkip;
             updateX();
             m_bounds.setX(std::min(lastLineX, m_bounds.getX()));
             m_bounds.setWidth(std::max(lastLineWidth, m_bounds.getWidth()));
             m_x = 0;
+#endif
         }
 
         void Aligner::addLineNode(Node* node)
         {
+#ifdef GRAPHICSUPPORT
             m_lineNodes.push_back(node);
+#endif
         }
 
         void Aligner::updateX()
         {
+#ifdef GRAPHICSUPPORT
             if (m_lineNodes.size() > 0)
             {
                 qint32 totalWidth = 0;
@@ -67,16 +80,20 @@ namespace oxygine
                 }
             }
             m_lineNodes.clear();
+#endif
         }
 
         void Aligner::nodeEnd(qint32 lastLineWidth)
         {
+#ifdef GRAPHICSUPPORT
             m_x += lastLineWidth;
             m_bounds.setWidth(std::max(lastLineWidth, m_bounds.getWidth()));
+#endif
         }
 
         void Aligner::end()
         {
+#ifdef GRAPHICSUPPORT
             qint32 ry = m_y + m_metrics.descent();
             if (m_style.multiline)
             {
@@ -84,16 +101,23 @@ namespace oxygine
             }
             updateX();
             m_bounds.setHeight(ry);
+#endif
         }
 
         qint32 Aligner::getX() const
         {
+#ifdef GRAPHICSUPPORT
             return m_x;
+#else
+            return 0;
+#endif
         }
 
         void Aligner::setX(qint32 newX)
         {
+#ifdef GRAPHICSUPPORT
             m_x = newX;
+#endif
         }
 
     }

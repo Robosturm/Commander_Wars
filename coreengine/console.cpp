@@ -267,6 +267,7 @@ void Console::update(const oxygine::UpdateState& us)
     // no need to calculate more than we need if we're invisible
     if(m_show)
     {
+#ifdef GRAPHICSUPPORT
         QMutexLocker locker(&m_datalocker);
         qint32 screenheight = Settings::getHeight();
         auto font = FontManager::getMainFont16();
@@ -305,6 +306,7 @@ void Console::update(const oxygine::UpdateState& us)
             drawText += "> Click the console to regain focus";
             m_text->setHtmlText(drawText);
         }
+#endif
     }
     oxygine::Actor::update(us);
 }

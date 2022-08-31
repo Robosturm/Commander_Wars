@@ -8,13 +8,14 @@ namespace oxygine
 {
     struct Font
     {
+#ifdef GRAPHICSUPPORT
         QFont font;
         qint32 borderWidth{2};
         Qt::PenCapStyle borderCapStyle{Qt::RoundCap};
         Qt::PenJoinStyle borderJoin{Qt::RoundJoin};
         qint32 offsetX{0};
         qint32 offsetY{0};
-
+#endif
     };
 
     struct TextStyle

@@ -24,8 +24,7 @@ FontManager* FontManager::m_pInstance = nullptr;
 FontManager::FontManager()
 {
 #ifdef GRAPHICSUPPORT
-        setObjectName("FontManager");
-#endif
+    setObjectName("FontManager");
     QStringList searchFolders;
     searchFolders.append("resources/fonts/");
     searchFolders.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/fonts/");
@@ -119,6 +118,7 @@ FontManager::FontManager()
     m_mainFont48 = m_fonts[MAINFONT + QString::number(48)];
     m_mainFont72 = m_fonts[MAINFONT + QString::number(72)];
     m_logoFont = m_fonts[LOGOFONT + QString::number(16)];
+#endif
 }
 void FontManager::setFontColor(QColor color)
 {

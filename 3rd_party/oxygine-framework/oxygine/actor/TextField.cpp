@@ -12,12 +12,14 @@ namespace oxygine
 {
 #ifndef GRAPHICSUPPORT
         QColor TextField::m_dummyColor;
-        TextStyle TextField::m_dummyTextStyle;
+        TextStyle TextField::m_dummyTextStyle = TextStyle(oxygine::Font());
         Rect TextField::m_dummyRect;
         QString TextField::m_dummyText;
 #endif
     TextField::TextField()
+#ifdef GRAPHICSUPPORT
         : m_style(FontManager::getMainFont24())
+#endif
     {
     }
 

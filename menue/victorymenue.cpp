@@ -506,7 +506,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     pApp->continueRendering();
     if (Mainapp::getSlave())
     {
-        connect(&m_despawnSlaveTimer, QTimer::timeout, this, despawnSlave, Qt::QueuedConnection);
+        connect(&m_despawnSlaveTimer, QTimer::timeout, this, &VictoryMenue::despawnSlave, Qt::QueuedConnection);
         m_despawnSlaveTimer.start(20000);
     }
     else

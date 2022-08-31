@@ -60,6 +60,7 @@ namespace oxygine
 
         void TextNode::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
         {
+#ifdef GRAPHICSUPPORT
             QPainterPath path;
             QFont font = style.font.font;
             if (rs.transform.a != 1)
@@ -77,10 +78,12 @@ namespace oxygine
             painter.setBrush(QBrush(drawColor));
             painter.drawPath(path);
             drawChildren(rs, style, drawColor, painter);
+#endif
         }
 
         void TextNode::xresize(Aligner& rd)
         {
+#ifdef GRAPHICSUPPORT
             if (!m_text.isEmpty())
             {
                 QStringList lines = m_text.split("\n");
@@ -122,8 +125,10 @@ namespace oxygine
                 m_offsets[index].setX(rd.getXAlignment(width));
                 rd.nodeEnd(width);
             }
+#endif
         }
 
+#ifdef GRAPHICSUPPORT
         QString * TextNode::addNewLine(Aligner& rd)
         {
             if (m_lines.size() != 0)
@@ -139,9 +144,11 @@ namespace oxygine
             m_offsets.push_back(QPoint(rd.getX(), rd.getY()));
             return &(m_lines[m_lines.size() - 1]);
         }
+#endif
 
         qint32 TextNode::getWidth(Aligner& rd)
         {
+#ifdef GRAPHICSUPPORT
             qint32 width = 0;
             if (m_lines.size() > 0)
             {
@@ -149,6 +156,9 @@ namespace oxygine
                 width = rd.getMetrics().boundingRect(m_lines[index]).width();
             }
             return width;
+#else
+            return 0;
+#endif
         }
 
         void TextNode::setX(qint32 x)
