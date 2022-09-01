@@ -4815,6 +4815,6 @@
         <file>resources/ui/game/allAdvancedPlayerChanges.xml</file>
         <file>resources/ui/game/advancedPlayerChanges.xml</file>
         <file>resources/images/game/turnStartInfo.png</file>
-        <file>resources/fonts/segoeuiBold.TTF</file>
+        <file>resources/fonts/segoeuiBold.ttf</file>
     </qresource>
 </RCC>

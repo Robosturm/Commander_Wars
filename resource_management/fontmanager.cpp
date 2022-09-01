@@ -97,8 +97,15 @@ FontManager::FontManager()
                                             font.font.setStyleStrategy(QFont::ForceOutline);
                                         }
                                     }
+                                    else
+                                    {
+                                        CONSOLE_PRINT("Unable to load font file: " + folder + file, Console::eERROR)
+                                    }
                                 }
-
+                                else
+                                {
+                                    CONSOLE_PRINT("Unable to load font file: " + folder + file, Console::eERROR)
+                                }
                             }
                         }
                     }
@@ -111,6 +118,10 @@ FontManager::FontManager()
                 CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
             }
         }
+    }
+    if (!m_fonts.contains(MAINFONT + QString::number(16)))
+    {
+        CONSOLE_PRINT("Failed to load any font files.", Console::eERROR)
     }
     m_mainFont16 = m_fonts[MAINFONT + QString::number(16)];
     m_mainFont24 = m_fonts[MAINFONT + QString::number(24)];
