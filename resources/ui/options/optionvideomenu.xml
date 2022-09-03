@@ -164,6 +164,22 @@
                 <unit>""</unit>
                 <onEvent>settings.setFramesPerSecond(input);</onEvent>
             </Slider>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Automatic updates:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: The game tries to keep the game at the up to date by. Updating to the latest release if required.")</tooltip>
+                <startValue>settings.getAutomaticUpdates()</startValue>
+                <onEvent>settings.setAutomaticUpdates(input)</onEvent>
+            </Checkbox>
         </childs>
     </Panel>
 </ui>

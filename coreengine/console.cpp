@@ -1529,7 +1529,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
 {
     static QMutex messageOutputMutex;
     QMutexLocker lock(&messageOutputMutex);
-    static QFile file(Settings::getUserPath() + "console.log");
+    static QFile file(Settings::getUserPath() + "console" + Settings::getUpdateStep()+ ".log");
     if (!file.isOpen())
     {
         Mainapp* pApp = Mainapp::getInstance();

@@ -95,23 +95,71 @@ void Mainapp::createLineEdit()
 
 void Mainapp::shutdown()
 {
-    BuildingSpriteManager::getInstance()->free();
-    COSpriteManager::getInstance()->free();
-    GameManager::getInstance()->free();
-    GameRuleManager::getInstance()->free();
-    MovementTableManager::getInstance()->free();
-    TerrainManager::getInstance()->free();
-    UnitSpriteManager::getInstance()->free();
-    WeaponManager::getInstance()->free();
-    BattleAnimationManager::getInstance()->free();
-    COPerkManager::getInstance()->free();
-    WikiDatabase::getInstance()->free();
-    AchievementManager::getInstance()->free();
-    BackgroundManager::getInstance()->free();
+    if (BuildingSpriteManager::created())
+    {
+        BuildingSpriteManager::getInstance()->free();
+    }
+    if (COSpriteManager::created())
+    {
+        COSpriteManager::getInstance()->free();
+    }
+    if (GameManager::created())
+    {
+        GameManager::getInstance()->free();
+    }
+    if (GameRuleManager::created())
+    {
+        GameRuleManager::getInstance()->free();
+    }
+    if (MovementTableManager::created())
+    {
+        MovementTableManager::getInstance()->free();
+    }
+    if (TerrainManager::created())
+    {
+        TerrainManager::getInstance()->free();
+    }
+    if (UnitSpriteManager::created())
+    {
+        UnitSpriteManager::getInstance()->free();
+    }
+    if (WeaponManager::created())
+    {
+        WeaponManager::getInstance()->free();
+    }
+    if (BattleAnimationManager::created())
+    {
+        BattleAnimationManager::getInstance()->free();
+    }
+    if (COPerkManager::created())
+    {
+        COPerkManager::getInstance()->free();
+    }
+    if (WikiDatabase::created())
+    {
+        WikiDatabase::getInstance()->free();
+    }
+    if (AchievementManager::created())
+    {
+        AchievementManager::getInstance()->free();
+    }
+    if (BackgroundManager::created())
+    {
+        BackgroundManager::getInstance()->free();
+    }
     // FontManager::getInstance()->free();
-    GameAnimationManager::getInstance()->free();
-    ObjectManager::getInstance()->free();
-    ShopLoader::getInstance()->free();
+    if (GameAnimationManager::created())
+    {
+        GameAnimationManager::getInstance()->free();
+    }
+    if (ObjectManager::created())
+    {
+        ObjectManager::getInstance()->free();
+    }
+    if (ShopLoader::created())
+    {
+        ShopLoader::getInstance()->free();
+    }
     GameWindow::shutdown();
     UiFactory::shutdown();
 }
@@ -119,8 +167,8 @@ void Mainapp::shutdown()
 bool Mainapp::isWorker()
 {
     return QThread::currentThread() == &m_Workerthread ||
-           (QThread::currentThread() == m_pMainThread &&
-           (m_shuttingDown || !m_Worker->getStarted()));
+            (QThread::currentThread() == m_pMainThread &&
+             (m_shuttingDown || !m_Worker->getStarted()));
 }
 
 bool Mainapp::isWorkerRunning()
@@ -138,12 +186,13 @@ void Mainapp::nextStartUpStep(StartupPhase step)
 {
     Console::print("Loading startup phase: " + QString::number(step), Console::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
-    pLoadingScreen->moveToThread(&m_Workerthread);
     m_startUpStep = step;
+    bool automaticNextStep = true;
     switch (step)
     {
         case StartupPhase::General:
         {
+            pLoadingScreen->moveToThread(&m_Workerthread);
             m_Audiothread = new AudioThread(m_noAudio);
             m_Audiothread->initAudio();
             m_Audiothread->clearPlayList();
@@ -153,7 +202,28 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             BackgroundManager::getInstance();
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->show();
-            pLoadingScreen->setProgress(tr("Loading Building Textures..."), step  * stepProgress);
+            pLoadingScreen->setProgress(tr("Checking for new version..."), step  * stepProgress);
+            redrawUi();
+            break;
+        }
+        case UpdateManager:
+        {
+#if defined(GRAPHICSUPPORT) && defined(UPDATESUPPORT)
+            if (!getGameVersion().endsWith("dev") && !getSlave() && Settings::getAutomaticUpdates())
+            {
+                automaticNextStep = false;
+                m_gameUpdater = spGameUpdater::create();
+            }
+#endif
+            break;
+        }
+        case StartupPhase::ObjectManager:
+        {
+#ifdef UPDATESUPPORT
+            m_gameUpdater = nullptr;
+#endif
+            ObjectManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Building Textures ..."), step  * stepProgress);
             redrawUi();
             break;
         }
@@ -192,14 +262,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             GameRuleManager::getInstance();
             WeaponManager::getInstance();
             MovementTableManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Objects Textures ..."), step  * stepProgress);
-            break;
-        }
-        case StartupPhase::ObjectManager:
-        {
-            redrawUi();
-            ObjectManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Terrains Textures ..."), step  * stepProgress);
+            pLoadingScreen->setProgress(tr("Loading Terrain Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::TerrainManager:
@@ -324,7 +387,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             break;
         }
     }
-    if (step < StartupPhase::LoadingScripts)
+    if (step < StartupPhase::LoadingScripts && automaticNextStep)
     {
         emit sigNextStartUpStep(static_cast<StartupPhase>(static_cast<qint8>(step) + 1));
     }
@@ -746,6 +809,11 @@ void Mainapp::onQuit()
         m_GameServerThread.wait();
     }
     QCoreApplication::processEvents();
+}
+
+Mainapp::StartupPhase Mainapp::getStartUpStep() const
+{
+    return m_startUpStep;
 }
 
 void Mainapp::setInitScript(const QString &newInitScript)

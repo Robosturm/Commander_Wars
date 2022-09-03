@@ -47,6 +47,7 @@ bool Settings::m_touchScreen = false;
 bool Settings::m_gamepadEnabled = false;
 float Settings::m_gamepadSensitivity = 1.0f;
 bool Settings::m_useHighDpi = true;
+bool Settings::m_automaticUpdates = true;
 qint32 Settings::m_framesPerSecond = 60;
 qint32 Settings::m_touchPointSensitivity = 15;
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
@@ -180,6 +181,7 @@ QStringList Settings::m_activeModVersions;
 // this Object
 spSettings Settings::m_pInstance;
 QTranslator Settings::m_Translator;
+QString Settings::m_updateStep = "";
 
 // logging
 bool Settings::m_LogActions = false;
@@ -256,6 +258,7 @@ Settings::Settings()
         new Value<bool>{"General", "TouchScreen", &m_touchScreen, hasTouch, false, true},
         new Value<qint32>{"General", "TouchPointSensitivity", &m_touchPointSensitivity, 15, 0, size.width()},
         new Value<bool>{"General", "GamepadEnabled", &m_gamepadEnabled, false, false, true},
+        new Value<bool>{"General", "AutomaticUpdates", &m_automaticUpdates, true, false, true},
         new Value<float>{"General", "GamepadSensitivity", &m_gamepadSensitivity, 1.0f, 0.1f, 100},
         new Value<qint32>{"General", "MaxFPS", &m_framesPerSecond, 60, 30, 60},
         // keys
@@ -383,6 +386,26 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+bool Settings::getAutomaticUpdates()
+{
+    return m_automaticUpdates;
+}
+
+void Settings::setAutomaticUpdates(bool newAutomaticUpdates)
+{
+    m_automaticUpdates = newAutomaticUpdates;
+}
+
+const QString &Settings::getUpdateStep()
+{
+    return m_updateStep;
+}
+
+void Settings::setUpdateStep(const QString &newUpdateStep)
+{
+    m_updateStep = newUpdateStep;
 }
 
 QString Settings::getSecondaryServerAdress()
@@ -1391,7 +1414,7 @@ void Settings::saveSettings()
 {
     CONSOLE_PRINT("Settings::saveSettings()", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
-    if (!pApp->getSlave())
+    if (!pApp->getSlave() && m_updateStep.isEmpty())
     {
         QSettings settings(m_settingFile, QSettings::IniFormat);
         for (auto setting : m_SettingValues)

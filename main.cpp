@@ -15,6 +15,8 @@
 #include "coreengine/crashreporter.h"
 #include "coreengine/metatyperegister.h"
 
+#include "updater/gameupdater.h"
+
 #include "network/mainserver.h"
 
 int main(qint32 argc, char* argv[])
@@ -104,6 +106,22 @@ int main(qint32 argc, char* argv[])
 #else
             CONSOLE_PRINT("Restarting application", Console::eDEBUG);
             QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList());
+#endif
+        }
+        else if (returncode == 2)
+        {
+#ifdef Q_OS_ANDROID
+            CONSOLE_PRINT("No update support on android", Console::eDEBUG);
+#else
+            GameUpdater::launchPatcher();
+#endif
+        }
+        else if (returncode == 3)
+        {
+#ifdef Q_OS_ANDROID
+            CONSOLE_PRINT("No update support on android", Console::eDEBUG);
+#else
+            GameUpdater::launchApplication();
 #endif
         }
     }

@@ -257,7 +257,13 @@ public:
     static QString getLastSaveGame();
     static void setLastSaveGame(const QString &LastSaveGame);
 
+    static const QString &getUpdateStep();
+    static void setUpdateStep(const QString &newUpdateStep);
+
 public slots:
+    static bool getAutomaticUpdates();
+    static void setAutomaticUpdates(bool newAutomaticUpdates);
+
     static QString getServerAdress();
     static void setServerAdress(const QString &ServerAdress);
 
@@ -833,6 +839,7 @@ private:
     static float m_gamepadSensitivity;
     static qint32 m_framesPerSecond;
     static bool m_useHighDpi;
+    static bool m_automaticUpdates;
 
     static bool m_borderless;
     static bool m_fullscreen;
@@ -975,6 +982,7 @@ private:
     static QStringList m_activeModVersions;
     static QString m_userPath;
     static QTranslator m_Translator;
+    static QString m_updateStep;
 
     // logging
     static bool m_LogActions;

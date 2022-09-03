@@ -24,6 +24,11 @@ public:
      */
     static TClass* getInstance();
     /**
+     * @brief created
+     * @return
+     */
+    static bool created();
+    /**
      * @brief loadAll loads all units data
      */
     virtual void loadAll();
@@ -106,6 +111,12 @@ TClass* RessourceManagement<TClass>::getInstance()
         Interpreter::setCppOwnerShip(m_pInstance);
     }
     return m_pInstance;
+}
+
+template<class TClass>
+bool RessourceManagement<TClass>::created()
+{
+    return m_pInstance != nullptr;
 }
 
 template<class TClass>

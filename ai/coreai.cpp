@@ -1907,28 +1907,49 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
                                 QString stepType = pAction->getStepInputType();
                                 if (stepType == GameAction::INPUTSTEP_FIELD)
                                 {
-                                    spMarkedFieldData pData = pAction->getMarkedFieldStepData();
-                                    QVector<QPoint> & points = *pData->getPoints();
-                                    qint32 index = -1;
-                                    QPoint target;
+                                    QPoint target(0, 0);
                                     qint32 maxValue = std::numeric_limits<qint32>::lowest();
-                                    for (qint32 i2 = 0; i2 < points.size(); ++i2)
+                                    spMarkedFieldData pData = pAction->getMarkedFieldStepData();
+                                    if (pData->getAllFields())
                                     {
-                                        Unit* pUnit = m_pMap->getTerrain(points[i2].x(), points[i2].y())->getUnit();
-                                        qint32 unitValue = pUnit->getCoUnitValue();
-                                        if (pUnit != nullptr && unitValue > maxValue)
+                                        qint32 width = m_pMap->getMapWidth();
+                                        qint32 height = m_pMap->getMapHeight();
+                                        for (qint32 x = 0; x < width; ++x)
                                         {
-                                            maxValue = unitValue;
-                                            index = i2;
+                                            for (qint32 y = 0; y < height; ++y)
+                                            {
+                                                Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                                                qint32 unitValue = pUnit->getCoUnitValue();
+                                                if (pUnit != nullptr && unitValue > maxValue)
+                                                {
+                                                    maxValue = unitValue;
+                                                    target = QPoint(x, y);
+                                                }
+                                            }
                                         }
-                                    }
-                                    if (index < 0)
-                                    {
-                                        target = points.at(GlobalUtils::randIntBase(0, points.size() -1));
                                     }
                                     else
                                     {
-                                        target = points.at(index);
+                                        QVector<QPoint> & points = *pData->getPoints();
+                                        qint32 index = -1;
+                                        for (qint32 i2 = 0; i2 < points.size(); ++i2)
+                                        {
+                                            Unit* pUnit = m_pMap->getTerrain(points[i2].x(), points[i2].y())->getUnit();
+                                            qint32 unitValue = pUnit->getCoUnitValue();
+                                            if (pUnit != nullptr && unitValue > maxValue)
+                                            {
+                                                maxValue = unitValue;
+                                                index = i2;
+                                            }
+                                        }
+                                        if (index < 0)
+                                        {
+                                            target = points.at(GlobalUtils::randIntBase(0, points.size() -1));
+                                        }
+                                        else
+                                        {
+                                            target = points.at(index);
+                                        }
                                     }
                                     addSelectedFieldData(pAction, target);
                                 }

@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.19.0)
-project (Commander_Wars LANGUAGES CXX)
+project (Commander_Wars LANGUAGES CXX C)
 
 # Information for building commander wars on other platforms
 # 1. make sure the CMAKE_PREFIX_PATH targets to the correct qt installation
@@ -29,7 +29,7 @@ option(USEVULKAN "This swaps from opengl to vulkan rendering. Incompatible with 
 option(PRECOMPILEDOPENSSL "if the openssl are precompiled libs or or package exists" OFF)
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
 option(DEPLOY_RESOURCES_AS_FOLDER "if files should be compiled into the exe or deployed as folder" OFF)
-
+option(UPDATESUPPORT "Enables the automatic updater for the game which updates to the latest github version should be turned off for local builds not supported for android" ON)
 ###################################################################################
 # show configuration
 ###################################################################################
@@ -186,6 +186,7 @@ add_definitions(
     -DVERSION_MINOR=24
     -DVERSION_REVISION=3
     -DVERSION_SUFFIX="dev"
+    -DCOW_BUILD_TAG="${COW_BUILD_TAG}"
     )
 
 set(COW_ANDROID_VERSION_NAME "0.24.3-dev")
@@ -200,25 +201,15 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj ${CMAKE_CXX_FLAGS}")
         set(CMAKE_C_FLAGS "-Wa,-mbig-obj ${CMAKE_C_FLAGS}")
     endif()
-    find_program(ADDR_2_LINE "")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    set(ADDR_2_LINE "")
     if ("${ANDROID_ABI}" STREQUAL armeabi-v7a)
         add_link_options("-long-plt")
     endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
-    find_program(ADDR_2_LINE addr2line)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
-    find_program(ADDR_2_LINE addr2line)
 else()
     message(FATAL_ERROR "Unsupported OS found")
 endif()
-
-###################################################################################
-# show addr2line path
-###################################################################################
-
-message("Addr2Line Path: ${ADDR_2_LINE}")
 
 ###################################################################################
 # start oxygine stuff -> qoxygine
@@ -329,6 +320,43 @@ endif()
 ###################################################################################
 # end oxygine stuff -> qoxygine
 ###################################################################################
+
+###################################################################################
+# start update support stuff
+###################################################################################
+
+if (UPDATESUPPORT AND NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    message("Building with update support")
+    add_definitions(
+        -DUPDATESUPPORT
+        -DCOW_UPDATETARGET="${COW_UPDATETARGET}"
+        -DCOW_INSTALLDIR="${COW_INSTALL_DIR}"
+    )
+    include_directories("updater/zipSupport")
+    set(${PROJECT_NAME}_UPDATE_SRCS
+        updater/gameupdater.h updater/gameupdater.cpp
+        updater/filedownloader.h updater/filedownloader.cpp
+        updater/zipSupport/qzipreader.cpp updater/zipSupport/qzipreader.h
+        updater/zipSupport/adler32.c
+        updater/zipSupport/crc32.c updater/zipSupport/crc32.h
+        updater/zipSupport/deflate.c updater/zipSupport/deflate.h
+        updater/zipSupport/gzguts.h
+        updater/zipSupport/gzlib.c
+        updater/zipSupport/gzread.c
+        updater/zipSupport/inflate.c updater/zipSupport/inflate.h
+        updater/zipSupport/inftrees.c updater/zipSupport/inftrees.h
+        updater/zipSupport/inffast.c updater/zipSupport/inffast.h
+        updater/zipSupport/inffixed.h
+        updater/zipSupport/trees.c updater/zipSupport/trees.h
+        updater/zipSupport/zlib.h
+        updater/zipSupport/uncompr.c
+        updater/zipSupport/zutil.c updater/zipSupport/zutil.h
+    )
+else()
+    message("Building without update support")
+    set(${PROJECT_NAME}_UPDATE_SRCS
+    )
+endif()
 
 ###################################################################################
 # start stmp client stuff
@@ -825,6 +853,7 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_Resource_SRCS}
     ${${PROJECT_NAME}_OS_SRCS}
     ${${PROJECT_NAME}_SmtpClient_SRCS}
+    ${${PROJECT_NAME}_UPDATE_SRCS}
     ICON.rc
     )
 
@@ -980,7 +1009,6 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
-        ${ADDR_2_LINE}
     )
 
     if (GRAPHICSUPPORT)
@@ -1009,7 +1037,6 @@ set(${PROJECT_NAME}_INSTALL_QT_LIBS
     ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
-    ${ADDR_2_LINE}
 )
 
 if (GRAPHICSUPPORT)

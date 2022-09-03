@@ -20,6 +20,7 @@ public:
     static const char* const ARG_SLAVEPORT;
     static const char* const ARG_MASTERADDRESS;
     static const char* const ARG_MASTERPORT;
+    static const char* const ARG_UPDATE;
 
     static const char* const ARG_SERVER;
     static const char* const ARG_SERVERSLAVEHOSTOPTIONS;
@@ -48,6 +49,7 @@ private:
     void disableUi();
 private:
     QCommandLineOption m_mods;
+    QCommandLineOption m_update;
     QCommandLineOption m_slave;
     QCommandLineOption m_noUi;
     QCommandLineOption m_noAudio;

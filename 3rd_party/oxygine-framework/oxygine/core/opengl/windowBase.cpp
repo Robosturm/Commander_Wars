@@ -91,16 +91,19 @@ namespace oxygine
         updateData();
         if (m_pauseMutex.tryLock())
         {
-            oxygine::Stage::getStage()->updateStage();
-            if (beginRendering())
+            if (oxygine::Stage::getStage().get() != nullptr)
             {
-                QColor clearColor(0, 0, 0, 255);
-                QSize windowSize = size();
-                oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(windowSize.width(), windowSize.height()));
-                // Render all actors inside the stage. Actor::render will also be called for all its children
-                oxygine::Stage::getStage()->renderStage(clearColor, viewport);
-                swapDisplayBuffers();
-                m_repeatedFramesDropped = 0;
+                oxygine::Stage::getStage()->updateStage();
+                if (beginRendering())
+                {
+                    QColor clearColor(0, 0, 0, 255);
+                    QSize windowSize = size();
+                    oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(windowSize.width(), windowSize.height()));
+                    // Render all actors inside the stage. Actor::render will also be called for all its children
+                    oxygine::Stage::getStage()->renderStage(clearColor, viewport);
+                    swapDisplayBuffers();
+                    m_repeatedFramesDropped = 0;
+                }
             }
             m_pauseMutex.unlock();
         }

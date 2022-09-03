@@ -17,6 +17,10 @@
 
 #include "network/rsacypherhandler.h"
 
+#ifdef UPDATESUPPORT
+#include "updater/gameupdater.h"
+#endif
+
 class WorkerThread;
 using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
 class AudioThread;
@@ -35,12 +39,13 @@ public:
     {
         Start,
         General = Start,
+        UpdateManager,
+        ObjectManager,
         Building,
         COSprites,
         GameAnimations,
         GameManager,
         GameRuleManager,
-        ObjectManager,
         TerrainManager,
         UnitSpriteManager,
         BattleAnimationManager,
@@ -217,6 +222,8 @@ public:
     {
         return m_rsaCypher;
     }
+    StartupPhase getStartUpStep() const;
+
 public slots:
     /**
      * @brief createBaseDirs
@@ -322,6 +329,9 @@ private:
     CommandLineParser m_parser;
     StartupPhase m_startUpStep{StartupPhase::Start};
     RsaCypherHandler m_rsaCypher;
+#ifdef UPDATESUPPORT
+    spGameUpdater m_gameUpdater;
+#endif
 };
 
 Q_DECLARE_INTERFACE(Mainapp, "Mainapp");

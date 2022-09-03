@@ -26,6 +26,7 @@ const char* const CommandLineParser::ARG_SLAVESECONDARYADDRESS  = "slaveSecondar
 const char* const CommandLineParser::ARG_SLAVEPORT              = "slavePort";
 const char* const CommandLineParser::ARG_MASTERADDRESS          = "masterAdress";
 const char* const CommandLineParser::ARG_MASTERPORT             = "masterPort";
+const char* const CommandLineParser::ARG_UPDATE                 = "update";
 
 // options required for hosting a dedicated server
 const char* const CommandLineParser::ARG_SERVER                     = "server";
@@ -47,6 +48,7 @@ const char* const CommandLineParser::ARG_MAILSERVERAUTHMETHOD = "mailServerAuthM
 
 CommandLineParser::CommandLineParser()
     : m_mods(ARG_MODS, tr("mods that should be loaded. As a string list separated by ';'"), tr("mod list"), ""),
+      m_update(ARG_UPDATE, tr("Only used internal to tell the game that an update is in progresss"), tr("update step"), ""),
       m_slave(ARG_SLAVE, tr("If the exe is started as a slave process.")),
       m_noUi(ARG_NOUI, tr("If the exe is started in headless mode")),
       m_noAudio(ARG_NOAUDIO, tr("If the exe is started muted and sound can't be turned on")),
@@ -79,6 +81,7 @@ CommandLineParser::CommandLineParser()
     m_parser.addHelpOption();
     m_parser.addVersionOption();
     m_parser.addOption(m_mods);
+    m_parser.addOption(m_update);
     m_parser.addOption(m_slave);
     m_parser.addOption(m_noUi);
     m_parser.addOption(m_noAudio);
@@ -124,6 +127,11 @@ void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
     {
         pApp->actAsSlave();
     }
+    if (m_parser.isSet(m_update))
+    {
+        QString value = m_parser.value(m_update);
+        Settings::setUpdateStep(value);
+    }
 }
 
 void CommandLineParser::parseArgsPhaseTwo()
@@ -133,6 +141,11 @@ void CommandLineParser::parseArgsPhaseTwo()
     {
         QString value = m_parser.value(m_slaveName);
         Settings::setSlaveServerName(value);
+    }
+    if (m_parser.isSet(m_update))
+    {
+        QString value = m_parser.value(m_update);
+        Settings::setUpdateStep(value);
     }
 #ifdef GRAPHICSUPPORT
     if (m_parser.isSet(m_noUi))
