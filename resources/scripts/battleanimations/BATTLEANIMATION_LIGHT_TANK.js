@@ -24,13 +24,18 @@ var Constructor = function()
                           ["bm", [Qt.point(22, 20), Qt.point(25, 43), Qt.point(25, 36), -80]],
                           ["dm", [Qt.point(27, 21), Qt.point(28, 41), Qt.point(28, 36), -80]],
                           ["ge", [Qt.point(22, 23), Qt.point(26, 44), Qt.point(26, 37), -80]],
-                          ["gs", [Qt.point(32, 21), Qt.point(30, 27), Qt.point(30, 22), -80]],
+
+                          ["gs", [Qt.point(22, 33), Qt.point(21, 27), Qt.point(22, 20), -80]],
+
                           ["ma", [Qt.point(18, 34), Qt.point(37, 27), Qt.point(37, 22), -90]],
                           ["os", [Qt.point(13, 24), Qt.point(15, 46), Qt.point(15, 39), -80]],
                           ["pf", [Qt.point(22, 24), Qt.point(26, 48), Qt.point(26, 43), -80]],
                           ["ti", [Qt.point(25, 30), Qt.point(31, 46), Qt.point(31, 41), -80]],
                           ["yc", [Qt.point(18, 20), Qt.point(25, 42), Qt.point(25, 35), -80]],];
 
+    // -15 5
+    // 38 36
+    //  3  8
     this.getArmyName = function(unit)
     {
         var player = unit.getOwner();
