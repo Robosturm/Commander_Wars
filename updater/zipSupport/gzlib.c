@@ -441,17 +441,17 @@ int ZEXPORT gzbuffer(file, size)
 //    return state->x.pos + offset;
 //}
 
-/* -- see zlib.h -- */
-z_off_t ZEXPORT gzseek(file, offset, whence)
-    gzFile file;
-    z_off_t offset;
-    int whence;
-{
-    z_off64_t ret;
+///* -- see zlib.h -- */
+//z_off_t ZEXPORT gzseek(file, offset, whence)
+//    gzFile file;
+//    z_off_t offset;
+//    int whence;
+//{
+//    z_off64_t ret;
 
-    ret = gzseek64(file, (z_off64_t)offset, whence);
-    return ret == (z_off_t)ret ? (z_off_t)ret : -1;
-}
+//    ret = gzseek64(file, (z_off64_t)offset, whence);
+//    return ret == (z_off_t)ret ? (z_off_t)ret : -1;
+//}
 
 ///* -- see zlib.h -- */
 //z_off64_t ZEXPORT gztell64(file)
@@ -471,14 +471,14 @@ z_off_t ZEXPORT gzseek(file, offset, whence)
 //}
 
 /* -- see zlib.h -- */
-z_off_t ZEXPORT gztell(file)
-    gzFile file;
-{
-    z_off64_t ret;
+//z_off_t ZEXPORT gztell(file)
+//    gzFile file;
+//{
+//    z_off64_t ret;
 
-    ret = gztell64(file);
-    return ret == (z_off_t)ret ? (z_off_t)ret : -1;
-}
+//    ret = gztell64(file);
+//    return ret == (z_off_t)ret ? (z_off_t)ret : -1;
+//}
 
 ///* -- see zlib.h -- */
 //z_off64_t ZEXPORT gzoffset64(file)
