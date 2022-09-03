@@ -12,12 +12,12 @@ FileDownloader::FileDownloader(const QString & targetFile,
       m_resolveEnd(resolveEnd),
       m_currentTag(currentTag)
 {
-    connect(&m_webCtrl, QNetworkAccessManager::finished, this, FileDownloader::onResponseFinished);
+    connect(&m_webCtrl, &QNetworkAccessManager::finished, this, &FileDownloader::onResponseFinished);
 
     m_requestUrl = QUrl(m_baseUrl + m_resolveEnd);
     QNetworkRequest request(m_requestUrl);
     m_reply = m_webCtrl.get(request);
-    connect(m_reply, QNetworkReply::errorOccurred, this, FileDownloader::errorOccurred);
+    connect(m_reply, &QNetworkReply::errorOccurred, this, &FileDownloader::errorOccurred);
 }
 
 void FileDownloader::onResponseFinished(QNetworkReply* pReply)
@@ -55,8 +55,8 @@ void FileDownloader::downloadFile(const QUrl & fileUrl)
 
     QNetworkRequest request(m_requestUrl);
     m_reply = m_webCtrl.get(request);
-    connect(m_reply, QNetworkReply::downloadProgress, this, FileDownloader::downloadProgress);
-    connect(m_reply, QNetworkReply::errorOccurred, this, FileDownloader::errorOccurred);
+    connect(m_reply, &QNetworkReply::downloadProgress, this, &FileDownloader::downloadProgress);
+    connect(m_reply, &QNetworkReply::errorOccurred, this, &FileDownloader::errorOccurred);
 }
 
 void FileDownloader::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
