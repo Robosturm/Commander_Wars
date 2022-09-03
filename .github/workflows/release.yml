@@ -186,6 +186,7 @@ jobs:
         -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install/Commander_Wars_Release' \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DQt6_DIR=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/ \
+        -DUPDATESUPPORT=ON \
         -DCOW_BUILD_TAG="${{github.ref}}" \
         -DCOW_UPDATETARGET="${{matrix.asset_name}}" \
         -DCOW_INSTALLDIR="Commander_Wars_Release" \
@@ -214,8 +215,10 @@ jobs:
         -DOPENSSL_USE_STATIC_LIBS=ON \
         -DPRECOMPILEDOPENSSL=ON \
         -DUPDATESUPPORT=OFF \
+        -DUPDATESUPPORT=OFF \
         -DCOW_BUILD_TAG="${{github.ref}}" \
         -DCOW_UPDATETARGET="${{matrix.asset_name}}" \
+        -DCOW_INSTALLDIR="Commander_Wars_Release" \
         -DOPENSSL_ROOT_DIR="${{github.workspace}}/android_openssl" \
         -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include" \
         -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi"

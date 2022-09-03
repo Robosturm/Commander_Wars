@@ -33,9 +33,6 @@ var Constructor = function()
                           ["ti", [Qt.point(25, 30), Qt.point(31, 46), Qt.point(31, 41), -80]],
                           ["yc", [Qt.point(18, 20), Qt.point(25, 42), Qt.point(25, 35), -80]],];
 
-    // -15 5
-    // 38 36
-    //  3  8
     this.getArmyName = function(unit)
     {
         var player = unit.getOwner();
