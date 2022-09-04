@@ -272,7 +272,11 @@ void Console::update(const oxygine::UpdateState& us)
         qint32 screenheight = Settings::getHeight();
         auto font = FontManager::getMainFont16();
         QFontMetrics metrics(font.font);
-        qint32 h = metrics.height() + font.borderWidth * 2;
+        qint32 h = metrics.height();
+        if (font.borderWidth < 0)
+        {
+            h += qAbs(font.borderWidth) * 2;
+        }
         // pre calc message start
         qint32 num = screenheight / h - 4;
         m_outputSize = num + 2;

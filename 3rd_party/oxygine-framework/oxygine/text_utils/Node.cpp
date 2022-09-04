@@ -69,9 +69,9 @@ namespace oxygine
             }
             for (qint32 i = 0; i < m_lines.size(); ++i)
             {
-                path.addText(rs.transform.x + (m_offsets[i].x() + style.font.borderWidth + style.font.offsetX) * rs.transform.a, rs.transform.y + (m_offsets[i].y() + style.font.borderWidth + style.font.offsetY) * rs.transform.d, font, m_lines[i]);
+                path.addText(rs.transform.x + (m_offsets[i].x() - style.font.borderWidth + style.font.offsetX) * rs.transform.a, rs.transform.y + (m_offsets[i].y() - style.font.borderWidth + style.font.offsetY) * rs.transform.d, font, m_lines[i]);
             }
-            if (style.font.borderWidth > 0)
+            if (style.font.borderWidth != 0)
             {
                 painter.setPen(QPen(Qt::black, style.font.borderWidth, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
             }
@@ -92,6 +92,14 @@ namespace oxygine
                 m_lines.reserve(50);
                 m_offsets.reserve(50);
                 qint32 borderWidth = rd.getStyle().font.borderWidth;
+                if (borderWidth < 0)
+                {
+                    borderWidth = qAbs(borderWidth);
+                }
+                else
+                {
+                    borderWidth = 0;
+                }
                 auto & metrics = rd.getMetrics();
                 bool checkWidth = (rd.getWidth() > 0);
                 for (auto & line : lines)

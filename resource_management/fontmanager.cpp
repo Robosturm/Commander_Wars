@@ -92,7 +92,7 @@ FontManager::FontManager()
                                         {
                                             font.font.setBold(false);
                                         }
-                                        if (font.borderWidth > 0)
+                                        if (font.borderWidth != 0)
                                         {
                                             font.font.setStyleStrategy(QFont::ForceOutline);
                                         }

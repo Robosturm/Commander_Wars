@@ -190,11 +190,11 @@ void PlayerInfo::updateData()
                 Text->setY(yPos + 30);
                 if (m_flippedX)
                 {
-                    Text->setX(-10 - Text->getTextRect().getWidth());
+                    Text->setX(-Text->getTextRect().getWidth());
                 }
                 else
                 {
-                    Text->setX(0);
+                    Text->setX(3);
                 }
                 addChild(Text);
 
