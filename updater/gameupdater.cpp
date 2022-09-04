@@ -14,8 +14,8 @@ constexpr const char* const LATEST = "latest";
 constexpr const char* const UPDATE_URL = "https://github.com/Robosturm/Commander_Wars/releases/";
 constexpr const char* const DOWNLOADTARGET = "update.zip";
 constexpr const char* const UNPACK_PATH = "update";
-constexpr const char* const MODE_INSTALL = "install";
-constexpr const char* const MODE_FINALIZE = "finalize";
+const char* const GameUpdater::MODE_FORCE = "force";
+const char* const GameUpdater::MODE_INSTALL = "install";
 
 GameUpdater::GameUpdater()
     : m_filedownloader(QString(COW_UPDATETARGET),

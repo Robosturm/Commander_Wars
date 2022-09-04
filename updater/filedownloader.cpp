@@ -1,5 +1,7 @@
 #include "updater/filedownloader.h"
 
+#include "coreengine/console.h"
+
 FileDownloader::FileDownloader(const QString & targetFile,
                                const QString & baseUrl,
                                const QString & resolveEnd,
@@ -28,9 +30,12 @@ void FileDownloader::onResponseFinished(QNetworkReply* pReply)
         QUrl url = m_reply->url();
         QString latestTag = url.toString();
         latestTag = latestTag.replace(m_baseUrl + "tag/", "");
+        Console::print("Current " + m_currentTag + " latest version tag " + latestTag, Console::eDEBUG);
         if (latestTag != m_currentTag)
         {
-            QUrl targetUrl(m_baseUrl + "download/" + latestTag + "/" + m_targetFile);
+            QString targetFile = m_baseUrl + "download/" + latestTag + "/" + m_targetFile;
+            Console::print("Starting download of " + targetFile, Console::eINFO);
+            QUrl targetUrl(targetFile);
             downloadFile(targetUrl);
             emit sigNewState(State::DownloadingNewVersion);
         }

@@ -209,13 +209,16 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case UpdateManager:
         {
 #if defined(GRAPHICSUPPORT) && defined(UPDATESUPPORT)
-            if (!getGameVersion().endsWith("dev") && !getSlave() && Settings::getAutomaticUpdates())
+            QString updateStep = Settings::getUpdateStep();
+            if ((!getGameVersion().endsWith("dev") && !getSlave() && Settings::getAutomaticUpdates()) ||
+                updateStep == GameUpdater::MODE_FORCE ||
+                updateStep == GameUpdater::MODE_INSTALL)
             {
                 automaticNextStep = false;
                 m_gameUpdater = spGameUpdater::create();
             }
-#endif
             break;
+#endif
         }
         case StartupPhase::ObjectManager:
         {

@@ -12,6 +12,9 @@ class GameUpdater : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
+    static const char* const MODE_FORCE;
+    static const char* const MODE_INSTALL;
+
     explicit GameUpdater();
     static void launchPatcher();
     static void launchApplication();

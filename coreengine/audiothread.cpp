@@ -243,6 +243,8 @@ void AudioThread::SlotChangeAudioDevice(const QVariant& value)
         m_player->m_player.setAudioOutput(&m_audioOutput);
         m_soundCaches.clear();
         createSoundCache();
+        m_player->m_player.stop();
+        SlotPlayRandom();
     }
 #endif
 }
@@ -334,7 +336,7 @@ void AudioThread::SlotClearPlayList()
 void AudioThread::SlotPlayMusic(qint32 file)
 {
 #ifdef AUDIOSUPPORT
-    if (!m_noAudio)
+    if (!m_noAudio && !Settings::getMuted())
     {
         if (file >= 0 && file < m_PlayListdata.size())
         {
@@ -369,7 +371,7 @@ void AudioThread::loadMediaForFile(QString filePath)
 void AudioThread::SlotPlayRandom()
 {
 #ifdef AUDIOSUPPORT
-    if (!m_noAudio)
+    if (!m_noAudio && !Settings::getMuted())
     {
         CONSOLE_PRINT("AudioThread::SlotPlayRandom", Console::eDEBUG);
         qint32 size = m_PlayListdata.size();
@@ -431,6 +433,14 @@ void AudioThread::SlotSetVolume(qint32 value)
         if (Settings::getMuted())
         {
             volume = 0.0f;
+            m_player->m_player.stop();
+        }
+        else
+        {
+            if (m_player->m_player.playbackState() != QMediaPlayer::PlayingState)
+            {
+                SlotPlayRandom();
+            }
         }
         CONSOLE_PRINT("Setting volume to : " + QString::number(volume), Console::eDEBUG);
         m_audioOutput.setVolume(volume);
