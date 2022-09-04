@@ -5,8 +5,10 @@
 
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 
 #include "game/unit.h"
+#include "game/gameanimation/battleanimationsprite.h"
 
 class UnitInfo;
 using spUnitInfo = oxygine::intrusive_ptr<UnitInfo>;
@@ -15,7 +17,7 @@ class UnitInfo : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit UnitInfo(Unit* pUnit, qint32 width);
+    explicit UnitInfo(spUnit pUnit, qint32 width);
     virtual ~UnitInfo() = default;
     /**
      * @brief createWeaponTable
@@ -51,18 +53,30 @@ public:
      * @param width
      */
     void createActionTable(Unit* pUnit, qint32& y, qint32 width);
+
 signals:
     /**
      * @brief sigShowLink
      * @param pageID
      */
     void sigShowLink(QString pageID);
+
 public slots:
     /**
      * @brief showLink
      * @param pageID
      */
     void showLink(QString pageID);
+    void showNewBattlesprite(QString newArmy);
+
+private:
+    void loadBattleSprite(Unit* pUnit);
+    void loadArmySelector(qint32 x, qint32 y);
+
+private:
+    spBattleAnimationSprite m_pBattleAnimationSprite;
+    oxygine::spBox9Sprite m_pSpriteBox;
+    spUnit m_pUnit;
 };
 
 #endif // UNITINFO_H

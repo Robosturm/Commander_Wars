@@ -56,7 +56,14 @@ IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
     m_pMinimap->setMenu(pMenu);
     m_pMinimap->setPosition(0, 0);
     updateMinimap();
-    m_pMinimap->setScale(2.0f);
+    if (getScaleY() < 1.0f)
+    {
+        m_pMinimap->setScale(1.0f / getScaleY());
+    }
+    else
+    {
+        m_pMinimap->setScale(2.0f);
+    }
     m_pMinimapSlider = oxygine::spSlidingActor::create();
     m_pMinimapSlider->setPosition(10, 10);
     m_pMinimapSlider->setSize(pMiniMapBox->getWidth() - 20,

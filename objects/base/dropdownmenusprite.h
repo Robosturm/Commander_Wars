@@ -34,6 +34,8 @@ public:
     virtual void setCurrentItem(qint32 index) override;
 signals:
     void sigItemChanged(qint32 item);
+    void sigItemString(QString item);
+
 public slots:
     virtual void itemChanged(qint32 item) override;
 protected:

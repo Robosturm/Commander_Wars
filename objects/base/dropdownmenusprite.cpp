@@ -91,4 +91,5 @@ void DropDownmenuSprite::itemChanged(qint32 id)
 {
     setCurrentItem(id);
     emit sigItemChanged(m_currentItem);
+    emit sigItemString(m_ItemTexts[m_currentItem]);
 }

@@ -116,7 +116,6 @@ namespace oxygine
         VideoDriver* driver = renderer->getDriver();
         Rect scissorRect(0, 0, 0, 0);
         bool scissorEnabled = driver->getScissorRect(scissorRect);
-        driver->setScissorRect(nullptr);
 
         spMaterial cur = Material::current;
         Material::null->apply();
@@ -136,12 +135,9 @@ namespace oxygine
         painter.end();
         //---------------------------------------------------------
 
-        rsCache().restoreAfterPainterUse();        
+        rsCache().restoreAfterPainterUse();
         cur->apply();
-        if (scissorEnabled)
-        {
-            driver->setScissorRect(&scissorRect);
-        }
+        driver->setScissorRect(scissorEnabled ? &scissorRect : nullptr);
 #endif
     }
 
