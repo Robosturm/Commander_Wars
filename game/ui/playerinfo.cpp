@@ -175,9 +175,7 @@ void PlayerInfo::updateData()
                     addChild(pSprite);
                 }
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-
                 oxygine::spTextField Text = oxygine::spTextField::create();
-
                 Text->setStyle(style);
                 QString number = QString::number(pPlayer->getFunds());
                 if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
@@ -235,6 +233,7 @@ void PlayerInfo::showTurnStartInfo(qint32 & yPos)
         addChild(pSprite);
         if (m_pMap->getGameRules()->getWeatherPrediction())
         {
+            qint32 x = 2;
             pSprite = oxygine::spSprite::create();
             Weather* pWeather = m_pMap->getGameRules()->getWeatherAtDay(1, 0);
             if (pWeather != nullptr)
@@ -247,15 +246,34 @@ void PlayerInfo::showTurnStartInfo(qint32 & yPos)
                     pSprite->setScale(16 / pAnim->getWidth());
                     if (m_flippedX)
                     {
+                        x = -4 - pSprite->getScaledWidth();
                         pSprite->setX(-pSprite->getScaledWidth() - 2);
                     }
                     else
                     {
+                        x = 4 + pSprite->getScaledWidth();
                         pSprite->setX(2);
                     }
                     addChild(pSprite);
                 }
             }
+
+
+            oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16());
+            oxygine::spTextField pText = oxygine::spTextField::create();
+            pText->setStyle(style);
+            QString number = QString::number(m_pMap->getCurrentDay() + 1);
+            pText->setHtmlText(tr("Next day ") + number);
+            pText->setY(yPos - 4);
+            if (m_flippedX)
+            {
+                pText->setX(x - pText->getTextRect().getWidth());
+            }
+            else
+            {
+                pText->setX(x);
+            }
+            addChild(pText);
         }
         yPos += itemHeigth;
     }

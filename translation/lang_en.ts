@@ -3264,6 +3264,14 @@ Host mods: </source>
     </message>
 </context>
 <context>
+    <name>PlayerInfo</name>
+    <message>
+        <location filename="../game/ui/playerinfo.cpp" line="266"/>
+        <source>Next day </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PlayerSelection</name>
     <message>
         <location filename="../objects/playerselection.cpp" line="113"/>
