@@ -210,12 +210,15 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         {
 #ifdef UPDATESUPPORT
             QString updateStep = Settings::getUpdateStep();
-            if ((!getGameVersion().endsWith("dev") && !getSlave() && Settings::getAutomaticUpdates()) ||
-                updateStep == GameUpdater::MODE_FORCE ||
-                updateStep == GameUpdater::MODE_INSTALL)
+            if (!getSlave())
             {
-                automaticNextStep = false;
-                m_gameUpdater = spGameUpdater::create();
+                if ((!getGameVersion().endsWith("dev") && Settings::getAutomaticUpdates()) ||
+                    updateStep == GameUpdater::MODE_FORCE ||
+                    updateStep == GameUpdater::MODE_INSTALL)
+                {
+                    automaticNextStep = false;
+                    m_gameUpdater = spGameUpdater::create();
+                }
             }
             break;
 #endif
