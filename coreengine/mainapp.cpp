@@ -208,7 +208,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case UpdateManager:
         {
-#if defined(GRAPHICSUPPORT) && defined(UPDATESUPPORT)
+#ifdef UPDATESUPPORT
             QString updateStep = Settings::getUpdateStep();
             if ((!getGameVersion().endsWith("dev") && !getSlave() && Settings::getAutomaticUpdates()) ||
                 updateStep == GameUpdater::MODE_FORCE ||
