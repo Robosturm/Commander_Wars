@@ -4,7 +4,7 @@ var Constructor = function()
     {
         // string array containing the endings of the alternate co style
         
-        return ["+alt", "+alt2"];
+        return ["+alt", "+alt2", "+alt3"];
     };
 
     this.init = function(co, map)
