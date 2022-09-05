@@ -224,7 +224,7 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
 
                 bool selected = selectedOverlayTerrainStyles.contains(id);
                 spCheckbox pCheckbox = spCheckbox::create();
-                pCheckbox->setPosition(x + pRect->getScaledWidth() + 10, y + GameMap::getImageSize() - pCheckbox-getScaledHeight() / 2);
+                pCheckbox->setPosition(x + pRect->getScaledWidth() + 10, y + pRect->getScaledHeight() / 2 - pCheckbox->getScaledHeight() / 2);
                 pCheckbox->setChecked(selected);
                 connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, id](bool checked)
                 {

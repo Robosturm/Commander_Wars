@@ -16,6 +16,7 @@ namespace oxygine
         Qt::PenJoinStyle borderJoin{Qt::RoundJoin};
         qint32 offsetX{0};
         qint32 offsetY{0};
+        bool antialiasing{false};
 #endif
     };
 

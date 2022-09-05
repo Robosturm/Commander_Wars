@@ -96,6 +96,15 @@ FontManager::FontManager()
                                         {
                                             font.borderColor = QColor(element.attribute("borderColor"));
                                         }
+                                        if (element.hasAttribute("antialiasing") && element.attribute("antialiasing") == "true")
+                                        {
+                                            font.antialiasing = true;
+                                        }
+                                        else
+                                        {
+                                            font.antialiasing = false;
+                                        }
+
                                         if (font.borderWidth != 0)
                                         {
                                             font.font.setStyleStrategy(QFont::ForceOutline);
