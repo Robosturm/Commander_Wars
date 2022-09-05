@@ -15,7 +15,9 @@
 #include "coreengine/crashreporter.h"
 #include "coreengine/metatyperegister.h"
 
+#ifdef UPDATESUPPORT
 #include "updater/gameupdater.h"
+#endif
 
 #include "network/mainserver.h"
 
@@ -108,6 +110,7 @@ int main(qint32 argc, char* argv[])
             QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList());
 #endif
         }
+#ifdef UPDATESUPPORT
         else if (returncode == 2)
         {
 #ifdef Q_OS_ANDROID
@@ -124,6 +127,7 @@ int main(qint32 argc, char* argv[])
             GameUpdater::launchApplication();
 #endif
         }
+#endif
     }
     return returncode;
 }
