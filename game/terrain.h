@@ -117,7 +117,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 9;
+        return 10;
     }
     /**
      * @brief isValid
@@ -129,7 +129,38 @@ public:
      * @return
      */
     qint32 getMapTerrainDrawPriority();
+
 public slots:
+    /**
+     * @brief getFixedOverlaySprites
+     * @return
+     */
+    bool getFixedOverlaySprites() const;
+    /**
+     * @brief setFixedOverlaySprites
+     * @param newFixedOverlaySprites
+     */
+    void setFixedOverlaySprites(bool newFixedOverlaySprites);
+    /**
+     * @brief getCustomOverlays
+     * @return
+     */
+    QStringList getCustomOverlays() const;
+    /**
+     * @brief setCustomOverlays
+     * @param newCustomOverlays
+     */
+    void setCustomOverlays(const QStringList &newCustomOverlays);
+    /**
+     * @brief addCustomOverlay
+     * @param newCustomOverlay
+     */
+    void addCustomOverlay(const QString &customOverlay);
+    /**
+     * @brief removeCustomOverlay
+     * @param customOverlay
+     */
+    void removeCustomOverlay(const QString &customOverlay);
     /**
      * @brief setSpriteVisibility
      * @param value
@@ -483,6 +514,11 @@ public slots:
      */
     QStringList getTerrainSprites();
     /**
+     * @brief getOverlayTerrainSprites
+     * @return
+     */
+    QStringList getOverlayTerrainSprites();
+    /**
      * @brief existsResAnim
      * @param spriteId
      * @return
@@ -559,6 +595,14 @@ private:
      * @brief m_pOverlaySprites
      */
     QVector<oxygine::spSprite> m_pOverlaySprites;
+    /**
+     * @brief m_customOverlays
+     */
+    QStringList m_customOverlays;
+    /**
+     * @brief m_fixedOverlaySprites
+     */
+    bool m_fixedOverlaySprites{false};
     /**
      * @brief fixedSprite stores if the selected sprite is fixed or will be loaded based on the surrounding and random factors
      */

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <fonts>
-    <font file="segoeuiBold.ttf" type="main16" pixelSize="16" offsetX="0" offsetY="0" borderWidth="-1" bold="true"  />
-    <font file="segoeuiBold.ttf" type="main24" pixelSize="24" offsetX="0" offsetY="-4" borderWidth="-1" bold="true" />
-    <font file="segoeuiBold.ttf" type="main32" pixelSize="24" offsetX="0" offsetY="-6" borderWidth="-1" bold="true" />
-    <font file="segoeuiBold.ttf" type="main48" pixelSize="48" offsetX="0" offsetY="-14" borderWidth="-1" bold="true" />
-    <font file="segoeuiBold.ttf" type="main72" pixelSize="72" offsetX="0" offsetY="-18" borderWidth="-1" bold="true" />
-    <font file="segoeuiBold.ttf" type="logo16" pixelSize="24" offsetX="0" offsetY="-1" borderWidth="-1" bold="true" />
+    <font file="segoeuiBold.ttf" type="main16" pixelSize="16" offsetX="0" offsetY="0" borderWidth="-1" bold="true" borderColor="#000000" />
+    <font file="segoeuiBold.ttf" type="main24" pixelSize="24" offsetX="0" offsetY="-4" borderWidth="-1" bold="true" borderColor="#000000" />
+    <font file="segoeuiBold.ttf" type="main32" pixelSize="24" offsetX="0" offsetY="-6" borderWidth="-1" bold="true" borderColor="#000000" />
+    <font file="segoeuiBold.ttf" type="main48" pixelSize="48" offsetX="0" offsetY="-14" borderWidth="-1" bold="true" borderColor="#000000" />
+    <font file="segoeuiBold.ttf" type="main72" pixelSize="72" offsetX="0" offsetY="-18" borderWidth="-1" bold="true" borderColor="#000000" />
+    <font file="segoeuiBold.ttf" type="logo16" pixelSize="24" offsetX="0" offsetY="-1" borderWidth="-1" bold="true" borderColor="#000000" />
 </fonts>

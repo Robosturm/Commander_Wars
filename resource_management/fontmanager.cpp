@@ -92,6 +92,10 @@ FontManager::FontManager()
                                         {
                                             font.font.setBold(false);
                                         }
+                                        if (element.hasAttribute("borderColor"))
+                                        {
+                                            font.borderColor = QColor(element.attribute("borderColor"));
+                                        }
                                         if (font.borderWidth != 0)
                                         {
                                             font.font.setStyleStrategy(QFont::ForceOutline);

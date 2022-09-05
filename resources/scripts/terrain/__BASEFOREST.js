@@ -208,6 +208,14 @@ var Constructor = function()
                 spriteId + "+W"];
     };
 
+    this.getBaseOverlayTerrainSprites = function(spriteId)
+    {
+        return [spriteId + "+SE",
+                spriteId + "+NE",
+                spriteId + "+SW",
+                spriteId + "+NW",];
+    };
+
     this.getTerrainAnimationBase = function(unit, terrain, defender, map)
     {        
         var baseTerrainId = ""

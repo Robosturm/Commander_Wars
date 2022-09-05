@@ -140,6 +140,22 @@ var Constructor = function()
                 "waste+6",
                 "waste+7"];
     };
+    this.getOverlayTerrainSprites = function(map)
+    {
+        return ["shadow_waste",
+                "plains+N",
+                "plains+E",
+                "plains+S",
+                "plains+W",
+                "snow+N",
+                "snow+E",
+                "snow+S",
+                "snow+W",
+                "desert+N",
+                "desert+E",
+                "desert+S",
+                "desert+W",]
+    };
 };
 Constructor.prototype = TERRAIN;
 var WASTE = new Constructor();

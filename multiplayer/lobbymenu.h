@@ -42,6 +42,7 @@ signals:
     void sigObserveAdress();
     void sigUpdateGamesView();
     void sigChangeLobbyMode();
+    void sigRequestUpdateGames();
 public slots:
     bool getServerRequestNewPassword() const;
     void setServerRequestNewPassword(bool newServerRequestNewPassword);
@@ -70,6 +71,7 @@ public slots:
     void changePasswordOnServerAccount(const QString & oldEmailAdress, const QString & newEmailAdress);
     void enableServerButtons(bool enable);
     void changeLobbyMode();
+    void requestUpdateGames();
 protected slots:
     virtual void onEnter() override;
 private:
@@ -80,6 +82,8 @@ private:
     void onPublicKeyResetAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void onPublicKeyChangePassword(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void handleAccountMessage(quint64 socketID, const QJsonObject & objData);
+    void requestServerGames();
+    void requestUserUpdateGames();
 private:
     spNetworkInterface m_pTCPClient{nullptr};
     QVector<spNetworkGameData> m_games;
@@ -88,6 +92,7 @@ private:
     oxygine::spButton m_pButtonGameObserve;    
     oxygine::spButton m_pButtonGameJoin;
     oxygine::spButton m_pButtonSwapLobbyMode;
+    oxygine::spButton m_pButtonUpdateGamesMode;
     spComplexTableView m_gamesview;
     QString m_password;
     bool m_loggedIn{false};

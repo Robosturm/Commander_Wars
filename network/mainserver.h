@@ -314,6 +314,10 @@ private:
      */
     quint16 m_lastUsedPort{0};
     /**
+     *
+     */
+    qint64 m_uuidGameCounter{0};
+    /**
      * @brief m_freeAddresses addresses of slaves that have been used and are now free again
      */
     QVector<SlaveAddress> m_freeAddresses;

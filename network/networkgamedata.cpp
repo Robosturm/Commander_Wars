@@ -40,6 +40,7 @@ QJsonObject NetworkGameData::toJson() const
     obj.insert(JsonKeys::JSONKEY_MAPNAME, m_mapName);
     obj.insert(JsonKeys::JSONKEY_SLAVENAME, m_slaveName);
     obj.insert(JsonKeys::JSONKEY_HASPASSWORD, m_locked);
+    obj.insert(JsonKeys::JSONKEY_UUID, m_uuid);
     QJsonObject mods;
     for (qint32 i = 0; i < m_Mods.size(); ++i)
     {
@@ -69,6 +70,7 @@ void NetworkGameData::fromJson(const QJsonObject & obj)
     m_mapName = obj.value(JsonKeys::JSONKEY_MAPNAME).toString();
     m_slaveName = obj.value(JsonKeys::JSONKEY_SLAVENAME).toString();
     m_locked = obj.value(JsonKeys::JSONKEY_HASPASSWORD).toBool();
+    m_uuid = obj.value(JsonKeys::JSONKEY_UUID).toInteger();
     QJsonArray usernames = obj.value(JsonKeys::JSONKEY_USERNAMES).toArray();
     for (const auto & username : usernames)
     {
@@ -164,6 +166,16 @@ const QStringList &  NetworkGameData::getPlayerNames() const
 void NetworkGameData::setPlayerNames(const QStringList &playerNames)
 {
     m_playerNames = playerNames;
+}
+
+qint64 NetworkGameData::getUuid() const
+{
+    return m_uuid;
+}
+
+void NetworkGameData::setUuid(qint64 newUuid)
+{
+    m_uuid = newUuid;
 }
 
 const QString &NetworkGameData::getSlaveSecondaryAddress() const

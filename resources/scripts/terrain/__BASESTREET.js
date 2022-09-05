@@ -317,6 +317,26 @@ var Constructor = function()
             terrain.loadOverlaySprite(surroundings + "+shadow");
         }
     };
+
+    this.getBaseOverlayTerrainSprites = function(spriteId)
+    {
+        return [spriteId + "+shadow",
+                spriteId + "+E+shadow",
+                spriteId + "+E+S+shadow",
+                spriteId + "+E+S+W+shadow",
+                spriteId + "+E+W+shadow",
+                spriteId + "+N+shadow",
+                spriteId + "+N+E+shadow",
+                spriteId + "+N+E+S+shadow",
+                spriteId + "+N+E+S+W+shadow",
+                spriteId + "+N+E+W+shadow",
+                spriteId + "+N+S+shadow",
+                spriteId + "+N+S+W+shadow",
+                spriteId + "+N+W+shadow",
+                spriteId + "+S+shadow",
+                spriteId + "+S+W+shadow",
+                spriteId + "+W+shadow",]
+    };
 };
 Constructor.prototype = TERRAIN;
 var __BASESTREET = new Constructor();

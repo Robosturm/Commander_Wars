@@ -382,6 +382,12 @@ var TERRAIN =
         return [];
     },
 
+    getOverlayTerrainSprites : function(map)
+    {
+        // array of sprites that can be selected as fix overlay sprites for this terrain
+        return [];
+    },
+
     startOfTurn : function(terrain, map)
     {
         // needs to be enable by calling setHasStartOfTurn(true) in the js function init

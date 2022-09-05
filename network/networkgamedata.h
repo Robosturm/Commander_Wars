@@ -11,6 +11,9 @@
 class NetworkGameData;
 using spNetworkGameData = oxygine::intrusive_ptr<NetworkGameData>;
 
+/**
+ * @brief The NetworkGameData class Data describing this game
+ */
 class NetworkGameData : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
@@ -74,6 +77,9 @@ public:
     const QStringList & getPlayerNames() const;
     void setPlayerNames(const QStringList &playerNames);
 
+    qint64 getUuid() const;
+    void setUuid(qint64 newUuid);
+
 private:
     qint32 m_players{0};
     qint32 m_maxPlayers{0};
@@ -87,6 +93,7 @@ private:
     QString m_slaveAddress;
     QString m_slaveSecondaryAddress;
     quint16 m_slavePort{0};
+    qint64 m_uuid{0};
 };
 
 #endif // NETWORKGAMEDATA_H

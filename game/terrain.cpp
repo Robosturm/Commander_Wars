@@ -64,6 +64,36 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
             GameMap::getImageSize());
 }
 
+QStringList Terrain::getCustomOverlays() const
+{
+    return m_customOverlays;
+}
+
+void Terrain::setCustomOverlays(const QStringList &newCustomOverlays)
+{
+    m_customOverlays = newCustomOverlays;
+}
+
+void Terrain::addCustomOverlay(const QString &customOverlay)
+{
+    m_customOverlays.append(customOverlay);
+}
+
+void Terrain::removeCustomOverlay(const QString &customOverlay)
+{
+    m_customOverlays.removeAll(customOverlay);
+}
+
+bool Terrain::getFixedOverlaySprites() const
+{
+    return m_fixedOverlaySprites;
+}
+
+void Terrain::setFixedOverlaySprites(bool newFixedOverlaySprites)
+{
+    m_fixedOverlaySprites = newFixedOverlaySprites;
+}
+
 Terrain::~Terrain()
 {
     if (m_Unit.get())
@@ -398,11 +428,21 @@ void Terrain::loadSprites()
     // ony load this for valid positions
     if (m_x >= 0 && m_y >= 0)
     {
-        // next call starting by 0 again
-        QString function2 = "loadOverlaySprite";
-        QJSValueList args({pInterpreter->newQObject(this),
-                           pInterpreter->newQObject(m_pMap)});
-        pInterpreter->doFunction(m_terrainID, function2, args);
+        if (m_fixedOverlaySprites)
+        {
+            for (auto & overlay : m_customOverlays)
+            {
+                loadOverlaySprite(overlay);
+            }
+        }
+        else
+        {
+            // next call starting by 0 again
+            QString function2 = "loadOverlaySprite";
+            QJSValueList args({pInterpreter->newQObject(this),
+                               pInterpreter->newQObject(m_pMap)});
+            pInterpreter->doFunction(m_terrainID, function2, args);
+        }
     }
 }
 
@@ -1161,6 +1201,15 @@ QStringList Terrain::getTerrainSprites()
     return erg.toVariant().toStringList();
 }
 
+QStringList Terrain::getOverlayTerrainSprites()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getOverlayTerrainSprites";
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
+    return erg.toVariant().toStringList();
+}
+
 QString Terrain::getTerrainID() const
 {
     return m_terrainID;
@@ -1484,6 +1533,15 @@ void Terrain::serializeObject(QDataStream& pStream) const
         quint32 color = item.color.rgba();
         pStream << color;
     }
+    pStream << m_fixedOverlaySprites;
+    if (m_fixedOverlaySprites)
+    {
+        pStream << static_cast<qint32>(m_customOverlays.size());
+        for (auto & item : m_customOverlays)
+        {
+            pStream << item;
+        }
+    }
 }
 
 void Terrain::deserializeObject(QDataStream& pStream)
@@ -1617,6 +1675,24 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
             addTerrainOverlay(item.resAnim, item.offset.x(), item.offset.y(), item.color, item.duration, item.scale);
         }
     }
+    if (version > 9)
+    {
+        m_customOverlays.clear();
+        pStream >> m_fixedOverlaySprites;
+        if (m_fixedOverlaySprites)
+        {
+            qint32 size = 0;
+            pStream >> size;
+            m_customOverlays.reserve(size);
+            for (qint32 i = 0; i < size; ++i)
+            {
+                QString item;
+                pStream >> item;
+                m_customOverlays.append(item);
+            }
+        }
+    }
+
 }
 
 void Terrain::createBuildingDownStream()

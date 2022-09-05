@@ -11,12 +11,16 @@ var Constructor = function()
     };
     this.getTerrainSprites = function()
     {
-        return __BASESTREET.getSprites("street+style0")
+        return __BASESTREET.getSprites("street+style0");
     };
 
     this.loadOverlaySprite = function(terrain, map)
     {
         __BASESTREET.loadBaseOverlaySprite("street+style0", terrain, map);
+    };
+    this.getOverlayTerrainSprites = function(map)
+    {
+        return __BASESTREET.getBaseOverlayTerrainSprites("street+style0");
     };
 };
 Constructor.prototype = __BASESTREET;

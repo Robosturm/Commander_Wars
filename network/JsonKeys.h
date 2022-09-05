@@ -7,6 +7,7 @@ namespace JsonKeys
     const char* const JSONKEY_GAMEDESCRIPTION = "gameDescription";
     const char* const JSONKEY_MAPNAME = "mapName";
     const char* const JSONKEY_HASPASSWORD = "hasPassword";
+    const char* const JSONKEY_UUID = "uuid";
     const char* const JSONKEY_VERSION = "version";
     const char* const JSONKEY_JOINEDPLAYERS = "joinedPlayers";
     const char* const JSONKEY_MAXPLAYERS = "maxPlayers";

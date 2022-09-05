@@ -11,6 +11,7 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         QFont font;
         qint32 borderWidth{2};
+        QColor borderColor{Qt::black};
         Qt::PenCapStyle borderCapStyle{Qt::RoundCap};
         Qt::PenJoinStyle borderJoin{Qt::RoundJoin};
         qint32 offsetX{0};

@@ -87,7 +87,7 @@ MainServer::MainServer()
     CONSOLE_PRINT("Game server launched", Console::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     m_updateTimer.setSingleShot(true);
-    m_updateTimer.start(5000);
+    m_updateTimer.start(1000 * 60 * 3);
     moveToThread(Mainapp::getGameServerThread());
     // publish server to js environment for ai training
     QString javascriptName = "mainServer";
@@ -522,6 +522,8 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         game->game->getData().setSlaveAddress(slaveAddress);
         game->game->getData().setSlaveSecondaryAddress(slaveSecondaryAddress);
         game->game->getData().setSlavePort(slavePort);
+        game->game->getData().setUuid(m_uuidGameCounter);
+        ++m_uuidGameCounter;
         connect(game->process.get(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), game->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
         connect(game->game.get(), &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);
         connect(game->game.get(), &NetworkGame::sigClose, this, &MainServer::closeGame, Qt::QueuedConnection);

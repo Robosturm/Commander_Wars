@@ -18,6 +18,10 @@ var Constructor = function()
     {
         __BASESTREET.loadBaseOverlaySprite("street+style1", terrain, map);
     };
+    this.getOverlayTerrainSprites = function(map)
+    {
+        return __BASESTREET.getBaseOverlayTerrainSprites("street+style1");
+    };
 };
 Constructor.prototype = __BASESTREET;
 var STREET = new Constructor();

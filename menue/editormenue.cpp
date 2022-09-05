@@ -1960,8 +1960,10 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                 m_pMap->replaceTerrain(pCopyTerrain->getBaseTerrainIDOfLevel(0), x + xPos, y + yPos, true, false);
                                 Terrain* pTerrain = m_pMap->getTerrain(x + xPos, y + yPos);
                                 QString id = pCopyTerrain->getTerrainSpriteName();
-                                pTerrain->setFixedSprite(!id.isEmpty());
+                                pTerrain->setFixedSprite(pCopyTerrain->getFixedSprite());
                                 pTerrain->setTerrainSpriteName(id);
+                                pTerrain->setFixedOverlaySprites(pCopyTerrain->getFixedOverlaySprites());
+                                pTerrain->setCustomOverlays(pCopyTerrain->getCustomOverlays());
                                 if (selection != EditorSelection::EditorMode::All)
                                 {
                                     break;

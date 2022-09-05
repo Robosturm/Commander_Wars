@@ -23,11 +23,16 @@ signals:
     void sigFinished();
     void sigTerrainClicked(QString id);
     void sigShowLoadDialog();
+    void sigOverlayChanged(QString id, bool selected);
 public slots:
     void terrainClicked(QString id);
     void showLoadDialog();
     void loadCustomSprite(QString id);
     void remove();
+    void overlayChanged(QString id, bool selected);
+private:
+    void loadBaseImageview(qint32 & y, Terrain* pTerrain);
+    void loadOverlayview(qint32 & y, Terrain* pTerrain);
 private:
     Terrain* m_pTerrain{nullptr};
     spPanel m_pPanel;

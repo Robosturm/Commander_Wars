@@ -1155,52 +1155,67 @@
 <context>
     <name>DialogModifyTerrain</name>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="35"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="36"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="60"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="137"/>
+        <source>Base image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="66"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="63"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="59"/>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="70"/>
         <source>Custom Name of the Terrain. Empty name equals the default name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="73"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="79"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="76"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="82"/>
         <source>Custom Description of the Terrain. Empty description equals the default description.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="117"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="173"/>
         <source>Terrain Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="121"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="177"/>
         <source>Current select terrain image or terrain path or empty for default selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="126"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="200"/>
+        <source>Overlays</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="93"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="134"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="101"/>
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="175"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="265"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2683,54 +2698,55 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="132"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="196"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="143"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="241"/>
         <source>Show my games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="190"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="235"/>
         <source>Show open games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="244"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="319"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="285"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="360"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="287"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="301"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="328"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="342"/>
         <source>Enter Host Adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="390"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="431"/>
         <source>Host game is no longer available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="148"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="159"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="148"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="159"/>
         <source>Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="148"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="159"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="148"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="159"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="148"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="159"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>

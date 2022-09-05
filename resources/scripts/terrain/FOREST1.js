@@ -18,6 +18,10 @@ var Constructor = function()
     {
         return __BASEFOREST.getSprites("forest_style1")
     };
+    this.getOverlayTerrainSprites = function(map)
+    {
+        return __BASEFOREST.getBaseOverlayTerrainSprites("forest_style1");
+    };
 };
 Constructor.prototype = __BASEFOREST;
 var FOREST1 = new Constructor();

@@ -73,7 +73,7 @@ namespace oxygine
             }
             if (style.font.borderWidth != 0)
             {
-                painter.setPen(QPen(Qt::black, style.font.borderWidth, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
+                painter.setPen(QPen(style.font.borderColor, style.font.borderWidth, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
             }
             painter.setBrush(QBrush(drawColor));
             painter.drawPath(path);
