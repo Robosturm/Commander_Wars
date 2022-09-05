@@ -4816,5 +4816,6 @@
         <file>resources/ui/game/advancedPlayerChanges.xml</file>
         <file>resources/images/game/turnStartInfo.png</file>
         <file>resources/fonts/segoeuiBold.ttf</file>
+        <file>resources/fonts/Advance_Wars_2_Font_Expanded.ttf</file>
     </qresource>
 </RCC>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<fonts>
+    <font file="Advance_Wars_2_Font_Expanded.ttf" type="main16" pixelSize="16" offsetX="0" offsetY="2" borderWidth="-1" borderColor="#000000" />
+    <font file="Advance_Wars_2_Font_Expanded.ttf" type="main24" pixelSize="16" offsetX="0" offsetY="4" borderWidth="-1" borderColor="#000000" />
+    <font file="Advance_Wars_2_Font_Expanded.ttf" type="main32" pixelSize="16" offsetX="0" offsetY="4" borderWidth="-1" borderColor="#000000" />
+    <font file="Advance_Wars_2_Font_Expanded.ttf" type="main48" pixelSize="32" offsetX="0" offsetY="6" borderWidth="-1" borderColor="#000000" />
+    <font file="Advance_Wars_2_Font_Expanded.ttf" type="main72" pixelSize="72" offsetX="0" offsetY="6" borderWidth="-1" borderColor="#000000" />
+    <font file="Advance_Wars_2_Font_Expanded.ttf" type="logo16" pixelSize="16" offsetX="0" offsetY="9" borderWidth="-1" borderColor="#000000" />
+</fonts>
