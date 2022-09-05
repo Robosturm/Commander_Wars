@@ -389,8 +389,9 @@ var Constructor = function()
                     if (defUnit.isAttackable(unit, true, actionTargetField, true) &&
                         defUnit.canCounterAttack(action, Qt.point(x, y), attacker, actionTargetField, luckMode))
                     {
-                        var defFirststrike = defUnit.getFirstStrike(defUnit.getPosition(), attacker, true);
-                        var atkFirststrike = attacker.getFirstStrike(actionTargetField, defUnit, false);
+                        var defPos = defUnit.getPosition();
+                        var defFirststrike = defUnit.getFirstStrike(defPos, attacker, true, actionTargetField);
+                        var atkFirststrike = attacker.getFirstStrike(actionTargetField, defUnit, false, defPos);
                         if (defFirststrike && !atkFirststrike)
                         {
                             if (!fast)
@@ -752,8 +753,10 @@ var Constructor = function()
             // only kill units if we should else we stop here
             if (dontKillUnits === false && !simulation)
             {
-                var defFirststrike = defUnit.getFirstStrike(defUnit.getPosition(), attacker, true);
-                var atkFirststrike = attacker.getFirstStrike(attacker.getPosition(), defUnit, false);
+                var atkPos = attacker.getPosition();
+                var defPos = defUnit.getPosition();
+                var defFirststrike = defUnit.getFirstStrike(defPos, attacker, true, atkPos);
+                var atkFirststrike = attacker.getFirstStrike(atkPos, defUnit, false, defPos);
                 var unitBattleAnimation = null;
                 if (defFirststrike && !atkFirststrike && counterdamage >= 0)
                 {

@@ -2604,12 +2604,12 @@ qint32 Unit::getTerrainDefenseModifier(QPoint position)
     return modifier;
 }
 
-bool Unit::getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender)
+bool Unit::getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender, QPoint attackerPosition)
 {
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
-        if (pCO->getFirstStrike(this, position, pAttacker, isDefender))
+        if (pCO->getFirstStrike(this, position, pAttacker, isDefender, attackerPosition))
         {
             return true;
         }
@@ -2617,7 +2617,7 @@ bool Unit::getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender)
     pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
-        if (pCO->getFirstStrike(this, position, pAttacker, isDefender))
+        if (pCO->getFirstStrike(this, position, pAttacker, isDefender, attackerPosition))
         {
             return true;
         }
@@ -2630,7 +2630,9 @@ bool Unit::getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender)
                        position.y(),
                        pInterpreter->newQObject(pAttacker),
                        isDefender,
-                       pInterpreter->newQObject(m_pMap)});
+                       pInterpreter->newQObject(m_pMap),
+                       attackerPosition.x(),
+                       attackerPosition.y()});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isBool() && erg.toBool() == true)
     {

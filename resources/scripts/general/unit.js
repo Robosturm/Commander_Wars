@@ -343,7 +343,7 @@ var UNIT =
         }
     },
 
-    getFirstStrike : function(unit, posX, posY, attacker, isDefender, map)
+    getFirstStrike : function(unit, posX, posY, attacker, isDefender, map, atkPosX, atkPosY)
     {
         return false;
     },

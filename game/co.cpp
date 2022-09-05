@@ -287,7 +287,7 @@ qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)
     return ergValue;
 }
 
-bool CO::getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDefender)
+bool CO::getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDefender, QPoint attackerPosition)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFirstStrike";
@@ -297,7 +297,9 @@ bool CO::getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDe
                        position.y(),
                        pInterpreter->newQObject(pAttacker),
                        isDefender,
-                       pInterpreter->newQObject(m_pMap)});
+                       pInterpreter->newQObject(m_pMap),
+                       attackerPosition.x(),
+                       attackerPosition.y()});
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))

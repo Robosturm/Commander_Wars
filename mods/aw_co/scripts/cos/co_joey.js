@@ -86,7 +86,7 @@ CO_JOEY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map)
+CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map, atkPosX, atkPosY)
 {
     return false;
 };

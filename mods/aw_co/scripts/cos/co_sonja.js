@@ -81,7 +81,7 @@ CO_SONJA.getPerfectVision = function(co, map)
     return false;
 };
 
-CO_SONJA.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map)
+CO_SONJA.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map, atkPosX, atkPosY)
 {
     return false;
 };

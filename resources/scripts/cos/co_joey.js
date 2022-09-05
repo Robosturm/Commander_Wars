@@ -221,7 +221,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map)
+    this.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map, atkPosX, atkPosY)
     {
         if(unit !== null &&
            isDefender)
