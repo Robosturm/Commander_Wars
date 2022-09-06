@@ -63,7 +63,6 @@ void LoadingScreen::show()
     addChild(m_LoadingBar);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
     m_workText = oxygine::spTextField::create();

@@ -34,8 +34,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
     Interpreter::setCppOwnerShip(this);
     connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInputMenu::keyInput, Qt::QueuedConnection);
     qint32 width = 0;
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont32());
-    style.color = FontManager::getFontColor();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMenuFont32());
     style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;
     oxygine::spTextField testText = oxygine::spTextField::create();
     for (qint32 i = 0; i < texts.size(); i++)
@@ -309,10 +308,6 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
         if (!enabled)
         {
             style.color = QColor(255, 0, 0, 255);
-        }
-        else
-        {
-            style.color = FontManager::getFontColor();
         }
         textField->setStyle(style);
         textField->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize));

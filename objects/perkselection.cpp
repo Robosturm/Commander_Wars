@@ -43,11 +43,9 @@ void PerkSelection::updatePerksView(CO* pCO)
     }
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
     oxygine::TextStyle largeStyle = oxygine::TextStyle(FontManager::getMainFont32());
-    largeStyle.color = FontManager::getFontColor();
     largeStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
     qint32 y = 0;

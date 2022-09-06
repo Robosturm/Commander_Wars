@@ -31,7 +31,6 @@ DialogRandomMap::DialogRandomMap()
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
 
     float y = 30;
     qint32 width = 250;

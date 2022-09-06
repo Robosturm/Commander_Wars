@@ -13,6 +13,7 @@ public:
 
     static const char* const MAINFONT;
     static const char* const LOGOFONT;
+    static const char* const MENUFONT;
 
     static FontManager* getInstance()
     {
@@ -45,7 +46,15 @@ public:
      */
     inline static const oxygine::Font & getMainFont32()
     {
-        return m_mainFont32;
+        return m_menuFont32;
+    }
+    /**
+     * @brief getMainFont32
+     * @return
+     */
+    inline static const oxygine::Font & getMenuFont32()
+    {
+        return m_menuFont32;
     }
     /**
      * @brief getMainFont48
@@ -135,6 +144,8 @@ private:
     static oxygine::Font m_mainFont48;
     static oxygine::Font m_mainFont72;
     static oxygine::Font m_logoFont;
+    static oxygine::Font m_menuFont32;
+
 };
 
 #endif // FONTMANAGER_H

@@ -1031,7 +1031,6 @@ void GameMenue::loadUIButtons()
     m_pButtonBox->setResAnim(pAnim);
     qint32 roundTime = m_pMap->getGameRules()->getRoundTimeMs();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
     m_CurrentRoundTime = oxygine::spTextField::create();
@@ -1073,7 +1072,6 @@ void GameMenue::loadUIButtons()
     pAnim = pObjectManager->getResAnim("panel");
     m_XYButtonBox = oxygine::spBox9Sprite::create();
     m_XYButtonBox->setResAnim(pAnim);
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_xyTextInfo = spLabel::create(180);

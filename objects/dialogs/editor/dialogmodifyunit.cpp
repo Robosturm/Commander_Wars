@@ -76,12 +76,10 @@ void DialogModifyUnit::updateData()
     m_pPanel->clearContent();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
@@ -304,7 +302,6 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     spLabel  pLabel = spLabel::create(sliderOffset - 140);
@@ -379,7 +376,6 @@ void DialogModifyUnit::loadUnit(QString unitID, qint32 index)
 void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     if (m_pUnit->getAiMode() == GameEnums::GameAi_Patrol ||

@@ -37,7 +37,6 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
     m_Panel = spPanel::create(true, QSize(size.width(), size.height() - 50), QSize(size.width(), size.height() - 50));
     addChild(m_Panel);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     m_Chat = oxygine::spTextField::create();

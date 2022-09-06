@@ -344,7 +344,6 @@ void InfluenceFrontMap::showPfs(UnitPathFindingSystem* pPfs)
 void InfluenceFrontMap::showFrontlines()
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     
     qint32 count = 0;

@@ -7,46 +7,19 @@ SmtpMailSender::SmtpMailSender(QObject *parent)
 
 {
     connect(this, &SmtpMailSender::sigSendMail, this, &SmtpMailSender::sendMail, Qt::QueuedConnection);
-    connect(this, &SmtpMailSender::sigConnectToServer, this, &SmtpMailSender::connectToServer, Qt::QueuedConnection);
-    connect(this, &SmtpMailSender::sigDisconnectFromServer, this, &SmtpMailSender::disconnectFromServer, Qt::QueuedConnection);
 }
 
-SmtpMailSender::~SmtpMailSender()
+bool SmtpMailSender::connectToServer(SmtpClient & client)
 {
-    disconnectFromServer();
-}
-
-void SmtpMailSender::disconnectFromServer()
-{
-    if (m_smtpClient != nullptr)
+    bool success = false;
+    CONSOLE_PRINT("Start connecting to mail server.", Console::eDEBUG);
+    client.connectToHost();
+    if (client.waitForReadyConnected())
     {
-        m_connected = false;
-        m_smtpClient->quit();
-        delete m_smtpClient;
-        m_smtpClient = nullptr;
-    }
-}
-
-bool SmtpMailSender::getConnected() const
-{
-    return m_connected;
-}
-
-void SmtpMailSender::connectToServer()
-{
-    if (m_smtpClient == nullptr)
-    {
-        CONSOLE_PRINT("Start connecting to mail server.", Console::eDEBUG);
-        m_smtpClient = new SmtpClient(Settings::getMailServerAddress(), Settings::getMailServerPort(), static_cast<SmtpClient::ConnectionType>(Settings::getMailServerConnectionType()));
-        connect(m_smtpClient, &SmtpClient::disconnected, this, &SmtpMailSender::connectToServer, Qt::QueuedConnection);
-    }
-    m_smtpClient->connectToHost();
-    if (m_smtpClient->waitForReadyConnected())
-    {
-        m_smtpClient->login(Settings::getMailServerUsername(), Settings::getMailServerPassword(), static_cast<SmtpClient::AuthMethod>(Settings::getMailServerAuthMethod()));
-        if (m_smtpClient->waitForAuthenticated())
+        client.login(Settings::getMailServerUsername(), Settings::getMailServerPassword(), static_cast<SmtpClient::AuthMethod>(Settings::getMailServerAuthMethod()));
+        if (client.waitForAuthenticated())
         {
-            m_connected = true;
+            success = true;
             CONSOLE_PRINT("Connect to mail server.", Console::eDEBUG);
         }
         else
@@ -58,21 +31,14 @@ void SmtpMailSender::connectToServer()
     {
         CONSOLE_PRINT("Unable to connect to mail server.", Console::eWARNING);
     }
-}
-
-void SmtpMailSender::onDisconnectFromMailServer()
-{
-    m_connected = false;
-    if (m_smtpClient != nullptr)
-    {
-        connectToServer();
-    }
+    return success;
 }
 
 void SmtpMailSender::sendMail(quint64 socketId, const QString & subject, const QString & content, const QString & receiverAddress, const QString & username, NetworkCommands::PublicKeyActions action)
 {
+    SmtpClient client(Settings::getMailServerAddress(), Settings::getMailServerPort(), static_cast<SmtpClient::ConnectionType>(Settings::getMailServerConnectionType()));
     bool result = false;
-    if (m_connected)
+    if (connectToServer(client))
     {
         CONSOLE_PRINT("Sending mail to " + receiverAddress , Console::eDEBUG);
         MimeMessage message;
@@ -84,8 +50,13 @@ void SmtpMailSender::sendMail(quint64 socketId, const QString & subject, const Q
         MimeText text;
         text.setText(content);
         message.addPart(&text);
-        m_smtpClient->sendMail(message);
-        result = !m_smtpClient->waitForMailSent();
+        client.sendMail(message);
+        result = client.waitForMailSent();
     }
+    else
+    {
+        CONSOLE_PRINT("Sending mail to " + receiverAddress + " failed.", Console::eDEBUG);
+    }
+    CONSOLE_PRINT("Emitting mail send result", Console::eDEBUG);
     emit sigMailResult(socketId, receiverAddress, username, result, action);
 }

@@ -25,7 +25,6 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel, QString confir
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
 

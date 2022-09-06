@@ -123,9 +123,7 @@ MainServer::MainServer()
     {
         m_mailSender.moveToThread(&m_mailSenderThread);
         m_mailSenderThread.start();
-        emit m_mailSender.sigConnectToServer();
         connect(&m_mailSender, &SmtpMailSender::sigMailResult, this, &MainServer::onMailSendResult, Qt::QueuedConnection);
-
         CONSOLE_PRINT("Starting tcp server and listening to new clients.", Console::eDEBUG);
         emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort(), Settings::getServerSecondaryListenAdress());
         emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort(), "");
@@ -136,7 +134,6 @@ MainServer::~MainServer()
 {
     if (m_mailSenderThread.isRunning())
     {
-        emit m_mailSender.sigDisconnectFromServer();
         m_mailSenderThread.quit();
         m_mailSenderThread.wait();
         m_mailSender.moveToThread(QThread::currentThread());
@@ -876,12 +873,12 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc
 
 void MainServer::onMailSendResult(quint64 socketId, const QString & receiverAddress, const QString & username, bool result, NetworkCommands::PublicKeyActions action)
 {
+    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
     GameEnums::LoginError mailSendResult = GameEnums::LoginError_None;
     if (!result)
     {
         mailSendResult = GameEnums::LoginError_SendingMailFailed;
     }
-    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
     CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(mailSendResult), Console::eDEBUG);
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);

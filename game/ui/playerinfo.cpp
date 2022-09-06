@@ -174,7 +174,7 @@ void PlayerInfo::updateData()
                     }
                     addChild(pSprite);
                 }
-                oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+                oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("fundsInfo24"));
                 oxygine::spTextField Text = oxygine::spTextField::create();
                 Text->setStyle(style);
                 QString number = QString::number(pPlayer->getFunds());

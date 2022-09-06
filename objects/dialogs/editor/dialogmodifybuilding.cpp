@@ -46,12 +46,10 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     pSpriteBox->addChild(m_pPanel);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 

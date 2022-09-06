@@ -39,7 +39,6 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
     pSpriteBox->addChild(m_OkButton);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
     CO* firstCO = nullptr;

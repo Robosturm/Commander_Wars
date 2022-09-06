@@ -56,8 +56,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     m_TextBackground->setPriority(1);
     addChild(m_TextBackground);
 
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont48());
-    style.color = FontManager::getFontColor();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("dialog48"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
 

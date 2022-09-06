@@ -83,7 +83,6 @@ Console::Console()
     m_text->setPosition(1, 1);
     m_text->setWidth(Settings::getWidth() - 2);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16());
-    style.color = QColor(255,127,39);
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     m_text->setStyle(style);

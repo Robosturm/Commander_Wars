@@ -25,7 +25,6 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     m_Textbox->setResAnim(pAnim);
     m_Textfield = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_Textfield->setStyle(style);

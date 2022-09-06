@@ -142,7 +142,6 @@ EditorMenue::EditorMenue()
     oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
     pButtonBox->setResAnim(pAnim);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     if (!Settings::getSmallScreenDevice())
@@ -474,7 +473,6 @@ void EditorMenue::showResizeMap()
     spGenericBox pBox = spGenericBox::create(true);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 

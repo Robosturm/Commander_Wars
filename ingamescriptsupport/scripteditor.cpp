@@ -36,7 +36,6 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     m_Data = spScriptData::create(m_pMap);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -277,7 +276,6 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
 {
     qint32 x = 450;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -376,7 +374,6 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
 {
     qint32 x = 450;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     spLabel text = spLabel::create(420);

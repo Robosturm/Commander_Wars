@@ -134,7 +134,6 @@ DialogCOStyle::DialogCOStyle(QString coid)
     {
         oxygine::spTextField textField = oxygine::spTextField::create();
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
         textField->setStyle(style);

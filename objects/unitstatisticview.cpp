@@ -44,11 +44,9 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
     qint32 x = 10;
     qint32 textWidth = 100;
     oxygine::TextStyle styleHeadline = oxygine::TextStyle(FontManager::getMainFont48());
-    styleHeadline.color = FontManager::getFontColor();
     styleHeadline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     styleHeadline.multiline = false;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 

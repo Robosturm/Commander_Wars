@@ -26,12 +26,10 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
 #endif
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
@@ -294,7 +292,6 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_SuperPowerDesc->setHeight(m_SuperPowerDesc->getTextRect().getHeight());
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -444,7 +441,6 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -544,7 +540,6 @@ void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 ind
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -623,7 +618,6 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
     if (pCO.get() != nullptr)
     {
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
         COPerkManager* pCOPerkManager = COPerkManager::getInstance();

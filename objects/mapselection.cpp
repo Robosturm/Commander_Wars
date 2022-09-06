@@ -122,7 +122,6 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
             pBackground->addChild(pClipActor);
             oxygine::spTextField pTextfield = oxygine::spTextField::create();
             oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-            style.color = FontManager::getFontColor();
             style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
             style.multiline = false;
             pTextfield->setStyle(style);

@@ -29,7 +29,6 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -160,7 +159,6 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     m_pBuildingBackground->setPosition(m_MapInfo->getX(),
                                        m_MapInfo->getY() + m_MapInfo->getHeight() + 20);
     oxygine::TextStyle styleMain16 = oxygine::TextStyle(FontManager::getMainFont16());
-    styleMain16.color = FontManager::getFontColor();
     styleMain16.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     styleMain16.multiline = false;
 
@@ -360,7 +358,6 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
 void MapSelectionView::loadMapVictoryInfo()
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.multiline = false;
 
     m_pVictoryInfo->removeChildren();

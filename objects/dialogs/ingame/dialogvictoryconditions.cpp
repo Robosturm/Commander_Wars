@@ -46,12 +46,10 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     });
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = true;
     // no the fun begins create checkboxes and stuff and a panel down here

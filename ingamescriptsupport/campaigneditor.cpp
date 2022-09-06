@@ -52,7 +52,6 @@ CampaignEditor::CampaignEditor()
 
     qint32 y = 30;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::spTextField pText =  oxygine::spTextField::create();
@@ -262,7 +261,6 @@ void CampaignEditor::updateCampaignData()
     for (qint32 i = 0; i < mapDatas.size(); i++)
     {
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
         spLabel pText =  spLabel::create(180);
@@ -678,7 +676,6 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -749,7 +746,6 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -818,12 +814,10 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 

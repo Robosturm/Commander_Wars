@@ -267,10 +267,8 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     y += 40;
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
-
 
     pLabel = spLabel::create(150);
     pLabel->setHtmlText(tr("Battle"));

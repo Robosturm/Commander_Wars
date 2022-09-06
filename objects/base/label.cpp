@@ -16,7 +16,6 @@ Label::Label(qint32 width)
     Label::setWidth(width);
     m_clipRect->addChild(m_textField);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     setStyle(style);

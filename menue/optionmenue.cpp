@@ -260,7 +260,6 @@ void OptionMenue::showMods()
     m_pModDescription->setVisible(true);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     m_ModDescriptionText = oxygine::spTextField::create();

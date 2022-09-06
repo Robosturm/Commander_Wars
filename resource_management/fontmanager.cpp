@@ -7,7 +7,7 @@
 
 const char* const FontManager::MAINFONT = "main";
 const char* const FontManager::LOGOFONT = "logo";
-
+const char* const FontManager::MENUFONT = "menu";
 
 QColor FontManager::m_defaultColor{QColor(250, 210, 0)};
 
@@ -17,6 +17,7 @@ oxygine::Font FontManager::m_mainFont32;
 oxygine::Font FontManager::m_mainFont48;
 oxygine::Font FontManager::m_mainFont72;
 oxygine::Font FontManager::m_logoFont;
+oxygine::Font FontManager::m_menuFont32;
 
 QMap<QString, oxygine::Font> FontManager::m_fonts;
 FontManager* FontManager::m_pInstance = nullptr;
@@ -96,6 +97,14 @@ FontManager::FontManager()
                                         {
                                             font.borderColor = QColor(element.attribute("borderColor"));
                                         }
+                                        if (element.hasAttribute("mainColor"))
+                                        {
+                                            font.mainColor = QColor(element.attribute("mainColor"));
+                                        }
+                                        else
+                                        {
+                                            font.mainColor = getFontColor();
+                                        }
                                         if (element.hasAttribute("antialiasing") && element.attribute("antialiasing") == "true")
                                         {
                                             font.antialiasing = true;
@@ -142,6 +151,7 @@ FontManager::FontManager()
     m_mainFont48 = m_fonts[MAINFONT + QString::number(48)];
     m_mainFont72 = m_fonts[MAINFONT + QString::number(72)];
     m_logoFont = m_fonts[LOGOFONT + QString::number(16)];
+    m_menuFont32 = m_fonts[MENUFONT + QString::number(32)];
 #endif
 }
 void FontManager::setFontColor(QColor color)

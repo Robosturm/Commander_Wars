@@ -106,12 +106,10 @@ CreditsMenue::CreditsMenue()
     m_creditsActor->setY(Settings::getHeight());
     qint32 y = 0;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     oxygine::TextStyle headstyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headstyle.color = FontManager::getFontColor();
     headstyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headstyle.multiline = false;
 

@@ -138,7 +138,6 @@ void Multiplayermenu::showIPs()
     spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     oxygine::spTextField info = oxygine::spTextField::create();

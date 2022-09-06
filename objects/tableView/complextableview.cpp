@@ -38,7 +38,6 @@ ComplexTableView::ComplexTableView(const QVector<qint32> & widths, const QString
     oxygine::ResAnim* pvAnim =pObjectManager->getResAnim("v_table_divider");
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 

@@ -73,7 +73,6 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 

@@ -91,7 +91,6 @@ GameAnimationPower::~GameAnimationPower()
 void GameAnimationPower::createMovingText(const QString & font, const QString & text, qint32 delay, QPoint startPos, QPoint endPos, qint32 duration, QEasingCurve::Type easeType)
 {
     oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getInstance()->getFont(font));
-    headline.color = FontManager::getFontColor();
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headline.multiline = false;
     oxygine::spTextField textField = oxygine::spTextField::create();
@@ -201,7 +200,6 @@ void GameAnimationPower::createPowerDescription(CO* pCo, GameEnums::PowerMode po
             }
         }
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont32());
-        style.color = FontManager::getFontColor();
         style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
         style.multiline = true;
         oxygine::spTextField descriptionField = oxygine::spTextField::create();

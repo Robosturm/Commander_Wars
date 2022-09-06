@@ -85,7 +85,6 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
 
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -97,13 +96,11 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     pSpriteBox->addChild(pPanel);
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
 
     oxygine::TextStyle largeStyle = oxygine::TextStyle(FontManager::getMainFont32());
-    largeStyle.color = FontManager::getFontColor();
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 

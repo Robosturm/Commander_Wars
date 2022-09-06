@@ -44,12 +44,10 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     m_pMap->setMenu(nullptr); // remove outdated link
     
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont72());
-    headerStyle.color = FontManager::getFontColor();
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
@@ -340,7 +338,6 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     if (winnerTeam >= 0)
     {
         oxygine::TextStyle style48 = oxygine::TextStyle(FontManager::getMainFont48());
-        style48.color = FontManager::getFontColor();
         style48.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style48.multiline = true;
         m_VictoryPanel = spPanel::create(true, QSize(Settings::getWidth() - 10, Settings::getHeight() - 115),

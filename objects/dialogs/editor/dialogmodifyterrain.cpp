@@ -48,11 +48,9 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
 
     qint32 y = 20;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::TextStyle style2 = oxygine::TextStyle(FontManager::getMainFont48());
-    style2.color = FontManager::getFontColor();
 
     spLabel pLabel = spLabel::create(m_pPanel->getWidth() - 50);
     pLabel->setStyle(style2);
@@ -125,11 +123,9 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
 {
     qint32 x = 20;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::TextStyle style2 = oxygine::TextStyle(FontManager::getMainFont48());
-    style2.color = FontManager::getFontColor();
 
     QStringList pTerrainStyles = pTerrain->getTerrainSprites();
     spLabel pLabel = spLabel::create(m_pPanel->getWidth() - 50);
@@ -188,11 +184,9 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
         connect(this, &DialogModifyTerrain::sigOverlayChanged, this, &DialogModifyTerrain::overlayChanged, Qt::QueuedConnection);
         qint32 x = 20;
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
         oxygine::TextStyle style2 = oxygine::TextStyle(FontManager::getMainFont48());
-        style2.color = FontManager::getFontColor();
 
         QStringList selectedOverlayTerrainStyles = pTerrain->getCustomOverlays();
         spLabel pLabel = spLabel::create(m_pPanel->getWidth() - 50);

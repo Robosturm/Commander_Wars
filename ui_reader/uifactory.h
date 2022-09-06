@@ -216,7 +216,7 @@ private:
     QString getStringValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
     Player* getPlayerValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
     QStringList getStringListValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
-    oxygine::TextStyle getStyle(QString styleName, QColor fontColor, qint32 size, oxygine::TextStyle::HorizontalAlign hAlign);
+    oxygine::TextStyle getStyle(const QString & styleName, const QString & fontColor, qint32 size, oxygine::TextStyle::HorizontalAlign hAlign);
     QString getId(QString attribute);
     oxygine::TextStyle::HorizontalAlign getHAlignment(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
 

@@ -37,7 +37,6 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     pButtonBox->addChild(pIcon);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     spLabel pTextfield = spLabel::create(bannerWidth - 20 - GameMap::defaultImageSize * 2);

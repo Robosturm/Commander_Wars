@@ -34,12 +34,10 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     setWidth(width);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = true;
 
@@ -448,7 +446,6 @@ void UnitInfo::showNewBattlesprite(QString newArmy)
 void UnitInfo::createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& y, qint32 width)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     WeaponManager* pWeaponManager = WeaponManager::getInstance();

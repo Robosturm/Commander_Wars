@@ -302,10 +302,6 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         QString text = translate(getStringValue(getAttribute(childs, attrText), id, loopIdx, pMenu));
         QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx, pMenu));
         QString fontColor = getStringValue(getAttribute(childs, attrFontColor), id, loopIdx, pMenu);
-        if (fontColor.isEmpty())
-        {
-            fontColor = FontManager::getFontColor().name();
-        }
         auto hAlign = getHAlignment(getAttribute(childs, attrHAlign), id, loopIdx, pMenu);
         auto style = getStyle(getStringValue(getAttribute(childs, attrFont), id, loopIdx, pMenu),
                               fontColor,
@@ -351,10 +347,6 @@ bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, ox
         qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
         QString text = translate(getAttribute(childs, attrText));
         QString fontColor = getStringValue(getAttribute(childs, attrFontColor), id, loopIdx, pMenu);
-        if (fontColor.isEmpty())
-        {
-            fontColor = FontManager::getFontColor().name();
-        }
         auto hAlign = getHAlignment(getAttribute(childs, attrHAlign), id, loopIdx, pMenu);
         auto style = getStyle(getStringValue(getAttribute(childs, attrFont), id, loopIdx, pMenu),
                               fontColor,
@@ -1408,10 +1400,13 @@ QStringList UiFactory::getStringListValue(QString line, QString objectId, qint32
     return value;
 }
 
-oxygine::TextStyle UiFactory::getStyle(QString styleName, QColor fontColor, qint32 size, oxygine::TextStyle::HorizontalAlign hAlign)
+oxygine::TextStyle UiFactory::getStyle(const QString & styleName, const QString & fontColor, qint32 size, oxygine::TextStyle::HorizontalAlign hAlign)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getInstance()->getFont(styleName, size));
-    style.color = fontColor;
+    if (!fontColor.isEmpty())
+    {
+        style.color = QColor(fontColor);
+    }
     style.hAlign = hAlign;
     style.multiline = false;
     return style;

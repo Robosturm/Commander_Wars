@@ -23,7 +23,6 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     m_Textbox->setResAnim(pAnim);
     m_Textfield = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = (heigth > 0);
     style.elideText = Qt::TextElideMode::ElideNone;

@@ -81,7 +81,6 @@ Mainwindow::Mainwindow(const QString & initialView)
     }
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     spLabel pTextfield = spLabel::create(300);

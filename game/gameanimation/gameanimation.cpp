@@ -96,7 +96,6 @@ void GameAnimation::stop()
 qint32 GameAnimation::getFontWidth(const QString & font, const QString & text) const
 {
     oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getInstance()->getFont(font));
-    headline.color = FontManager::getFontColor();
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headline.multiline = false;
     oxygine::TextField testField;
@@ -368,7 +367,7 @@ void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float
 
 qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float scale, QColor color, qint32 priority)
 {
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("animationFont24"));
     style.color = color;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -379,6 +378,7 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
     pTextfield->setPriority(priority);
     pTextfield->setWidth(pTextfield->getTextRect().getWidth());
     pTextfield->setHeight(40);
+    pTextfield->setScale(scale);
     addChild(pTextfield);
     return pTextfield->getTextRect().getWidth();
 }

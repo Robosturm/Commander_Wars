@@ -140,15 +140,10 @@ void RuleSelection::showRuleSelection(bool advanced)
     qint32 y = 20;
     // font style
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-
-    QColor headerColor(0, 255, 0, 255);
-    
 
     spLabel textField = spLabel::create(textWidth - 40);
     textField->setStyle(style);
@@ -227,9 +222,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     }
 
     textField = spLabel::create(800);
-    style.color = headerColor;
     textField->setStyle(headerStyle);
-    style.color = FontManager::getFontColor();
     textField->setHtmlText(tr("Environment"));
     textField->setPosition(30, y);
     addChild(textField);
@@ -298,9 +291,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     }
     y = textField->getY() + 50;
     textField = spLabel::create(800);
-    style.color = headerColor;
     textField->setStyle(headerStyle);
-    style.color = FontManager::getFontColor();
     textField->setHtmlText(tr("Gameplay"));
     textField->setPosition(30, y);
     addChild(textField);
@@ -416,9 +407,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     if (advanced)
     {
         textField = spLabel::create(800);
-        style.color = headerColor;
         textField->setStyle(headerStyle);
-        style.color = FontManager::getFontColor();
         textField->setHtmlText(tr("CO Powergain"));
         textField->setPosition(30, y);
         addChild(textField);
@@ -510,9 +499,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         y += 40;
     }
     textField = spLabel::create(800);
-    style.color = headerColor;
     textField->setStyle(headerStyle);
-    style.color = FontManager::getFontColor();
     textField->setHtmlText(tr("Fog of War"));
     textField->setPosition(30, y);
     addChild(textField);
@@ -611,9 +598,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     if (advanced)
     {
         textField = spLabel::create(800);
-        style.color = headerColor;
         textField->setStyle(headerStyle);
-        style.color = FontManager::getFontColor();
         textField->setHtmlText(tr("Advanced"));
         textField->setPosition(30, y);
         addChild(textField);
@@ -768,9 +753,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     if (advanced)
     {
         textField = spLabel::create(800);
-        style.color = headerColor;
         textField->setStyle(headerStyle);
-        style.color = FontManager::getFontColor();
         textField->setHtmlText(tr("Miscellaneous"));
         textField->setPosition(30, y);
         addChild(textField);
@@ -838,9 +821,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     }
 
     textField = spLabel::create(800);
-    style.color = headerColor;
     textField->setStyle(headerStyle);
-    style.color = FontManager::getFontColor();
     textField->setHtmlText(tr("Victory Rules"));
     textField->setPosition(30, y);
     addChild(textField);
@@ -940,7 +921,6 @@ void RuleSelection::showRuleSelection(bool advanced)
 void RuleSelection::addCustomGamerules(qint32 & y)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();

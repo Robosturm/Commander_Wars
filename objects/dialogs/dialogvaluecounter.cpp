@@ -37,7 +37,6 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
         emit sigFinished();
     });
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont48());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     m_pointsAddedLabel = spLabel::create(Settings::getWidth() / 2 + 3 * 50 - 30);
     m_pointsAddedLabel->setStyle(style);

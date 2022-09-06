@@ -57,11 +57,11 @@ var GAMEANIMATIONPOWER =
     {
         var screenHeight = settings.getHeight();
         var fontHeight = 72;
-        var font = "main72";
+        var font = "powerFont72";
         var totalWidth = animation.getFontWidth(font, text)
         if (totalWidth > settings.getWidth() - 20)
         {
-            font = "main48";
+            font = "powerFont48";
             totalWidth = animation.getFontWidth(font, text)
             fontHeight = 48;
         }

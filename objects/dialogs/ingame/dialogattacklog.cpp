@@ -38,7 +38,6 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
