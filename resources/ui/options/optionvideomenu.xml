@@ -142,7 +142,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If checked the game will use the high dpi option of the screen.")</tooltip>
                 <startValue>settings.getUseHighDpi()</startValue>
-                <onEvent>currentMenu.changeHighDpi(input)</onEvent>
+                <onEvent>settings.changeHighDpi(input)</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>

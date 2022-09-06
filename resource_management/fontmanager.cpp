@@ -113,10 +113,13 @@ FontManager::FontManager()
                                         {
                                             font.antialiasing = false;
                                         }
-
                                         if (font.borderWidth != 0)
                                         {
                                             font.font.setStyleStrategy(QFont::ForceOutline);
+                                        }
+                                        else
+                                        {
+                                            font.font.setStyleStrategy(QFont::PreferDefault);
                                         }
                                     }
                                     else

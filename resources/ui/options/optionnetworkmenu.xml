@@ -83,7 +83,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Enables this game as global server.")</tooltip>
                 <startValue>settings.getServer()</startValue>
-                <onEvent>currentMenu.setServer(input);currentMenu.markRestartNeeded()</onEvent>
+                <onEvent>settings.setServer(input);currentMenu.markRestartNeeded()</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>

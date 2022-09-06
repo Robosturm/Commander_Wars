@@ -29,7 +29,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If active walk, capture, power animations, etc. will be shown.")</tooltip>
                 <startValue>settings.getOverworldAnimations()</startValue>
-                <onEvent>currentMenu.setOverworldAnimations(input)</onEvent>
+                <onEvent>settings.setOverworldAnimations(input)</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>
@@ -273,7 +273,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If enabled the game will automatically end your turn if you can't give any orders anymore.")</tooltip>
                 <startValue>settings.getAutoEndTurn()</startValue>
-                <onEvent>currentMenu.setAutoEndTurn(input)</onEvent>
+                <onEvent>settings.setAutoEndTurn(input)</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>
@@ -289,7 +289,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If enabled the game will show a detailed battle forecast info.")</tooltip>
                 <startValue>settings.getShowDetailedBattleForcast()</startValue>
-                <onEvent>currentMenu.setShowDetailedBattleForcast(input)</onEvent>
+                <onEvent>settings.setShowDetailedBattleForcast(input)</onEvent>
                 <enabled>!settings.getSmallScreenDevice()</enabled>
             </Checkbox>
             <Label>
@@ -459,7 +459,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If active the Computer's cursor is hidden during a game, giving you a more Gameboy like feeling.")</tooltip>
                 <startValue>settings.getShowCursor()</startValue>
-                <onEvent>currentMenu.setShowCursor(input)</onEvent>
+                <onEvent>settings.setShowCursor(input)</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>
@@ -475,7 +475,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If active the Computer's cursor is moved to the first entry when opening menus or similar actions. Only disable this feature if you intend to play using a mouse only.")</tooltip>
                 <startValue>settings.getAutoMoveCursor()</startValue>
-                <onEvent>currentMenu.setAutoMoveCursor(input)</onEvent>
+                <onEvent>settings.setAutoMoveCursor(input)</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>
@@ -491,7 +491,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If active the currently selectable fields get animated.")</tooltip>
                 <startValue>!settings.getStaticMarkedFields()</startValue>
-                <onEvent>currentMenu.setStaticMarkedFields(!input)</onEvent>
+                <onEvent>settings.setStaticMarkedFields(!input)</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>
@@ -525,7 +525,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If active: the map is scrolled automatically when the cursor is at the edge of the screen.")</tooltip>
                 <startValue>settings.getAutoScrolling()</startValue>
-                <onEvent>currentMenu.setAutoScrolling(input)</onEvent>
+                <onEvent>settings.setAutoScrolling(input)</onEvent>
                 <enabled>!settings.getSmallScreenDevice()</enabled>
             </Checkbox>
             <Label>
@@ -542,7 +542,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If active: map coordinates are shown during a game.")</tooltip>
                 <startValue>settings.getShowIngameCoordinates()</startValue>
-                <onEvent>currentMenu.setShowIngameCoordinates(input)</onEvent>
+                <onEvent>settings.setShowIngameCoordinates(input)</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>
@@ -558,7 +558,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If active: the screen will center on every unit performing an action, except when not visible within Fog of War.")</tooltip>
                 <startValue>settings.getAutoCamera()</startValue>
-                <onEvent>currentMenu.setAutoCamera(input)</onEvent>
+                <onEvent>settings.setAutoCamera(input)</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>
@@ -592,7 +592,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Selects if the camera centers on marked fields for an action or not.")</tooltip>
                 <startValue>settings.getCenterOnMarkedField()</startValue>
-                <onEvent>currentMenu.setCenterOnMarkedField(input)</onEvent>
+                <onEvent>settings.setCenterOnMarkedField(input)</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>
@@ -608,7 +608,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: units and building animations on the map are synchronized. Note: changing this doesn't have an immediate effect in-game.")</tooltip>
                 <startValue>settings.getSyncAnimations()</startValue>
-                <onEvent>currentMenu.setSyncAnimations(input)</onEvent>
+                <onEvent>settings.setSyncAnimations(input)</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>
@@ -624,7 +624,7 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If active units and actions can be canceled by a long-press. This is only recommended for devices without a keyboard.")</tooltip>
                 <startValue>settings.getSimpleDeselect()</startValue>
-                <onEvent>currentMenu.setSimpleDeselect(input)</onEvent>
+                <onEvent>settings.setSimpleDeselect(input)</onEvent>
                 <enabled>!settings.getSmallScreenDevice()</enabled>
             </Checkbox>
             <Label>

@@ -139,8 +139,7 @@ LobbyMenu::LobbyMenu()
     m_pButtonSwapLobbyMode->setEnabled(false);
     connect(this, &LobbyMenu::sigChangeLobbyMode, this, &LobbyMenu::changeLobbyMode, Qt::QueuedConnection);
 
-
-    m_pButtonUpdateGamesMode = ObjectManager::createButton(tr("Show my games"));
+    m_pButtonUpdateGamesMode = ObjectManager::createButton(tr("Refresh games"));
     addChild(m_pButtonUpdateGamesMode);
     m_pButtonUpdateGamesMode->setPosition(Settings::getWidth() / 2 + 5, 10);
     m_pButtonUpdateGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void

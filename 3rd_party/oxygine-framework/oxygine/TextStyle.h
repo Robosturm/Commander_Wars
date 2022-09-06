@@ -32,8 +32,10 @@ namespace oxygine
         };
 
         explicit TextStyle(const Font & rs)
-            : font(rs),
-              color(rs.mainColor)
+            : font(rs)
+#ifdef GRAPHICSUPPORT
+            , color(rs.mainColor)
+#endif
         {
         }
         Font font;

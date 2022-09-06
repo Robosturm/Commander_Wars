@@ -1076,8 +1076,8 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
         clipRec->setY(0);
         clipRec->setSize(28 * 4, 40);
         oxygine::spTextField textField = oxygine::spTextField::create();
-        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont32());
-        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("attackFont32"));
+        style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
         textField->setStyle(style);
         textField->setHtmlText(m_pMarkedFieldData->getZLabelText());
         textField->setSize(clipRec->getSize());
@@ -1157,7 +1157,7 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
     {
         itemWidth += baseWidth;
     }
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("attackFont24"));
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     pBox->setSize(itemWidth, 10 + 30 * pData->valueNames.size());
     for (qint32 i = 0; i < pData->valueNames.size(); ++i)

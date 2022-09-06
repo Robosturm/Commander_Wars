@@ -71,10 +71,7 @@ namespace oxygine
             {
                 path.addText(rs.transform.x + (m_offsets[i].x() - style.font.borderWidth + style.font.offsetX) * rs.transform.a, rs.transform.y + (m_offsets[i].y() - style.font.borderWidth + style.font.offsetY) * rs.transform.d, font, m_lines[i]);
             }
-            if (style.font.borderWidth != 0)
-            {
-                painter.setPen(QPen(style.font.borderColor, style.font.borderWidth, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
-            }
+            painter.setPen(QPen(style.font.borderColor, style.font.borderWidth, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
             painter.setBrush(QBrush(drawColor));
             painter.drawPath(path);
             drawChildren(rs, style, drawColor, painter);

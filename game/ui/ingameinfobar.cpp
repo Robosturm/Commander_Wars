@@ -22,6 +22,8 @@
 
 #include "objects/base/label.h"
 
+static const char* const FONT = "infoBar16";
+
 IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
     : m_pMap(pMap),
       m_pMenu(pMenu)
@@ -247,7 +249,7 @@ void IngameInfoBar::updatePlayerInfo()
                     m_pGameInfoBox->addChild(pBox);
                 }
 
-                style = oxygine::TextStyle(FontManager::getMainFont16());
+                style = oxygine::TextStyle(FontManager::getFont(FONT));
                 style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
                 style.multiline = false;
 
@@ -410,7 +412,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 void IngameInfoBar::createMovementInfo(qint32 x, qint32 y)
 {
     constexpr qint32 yAdvance = 22;
-    oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getMainFont16());
+    oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getFont(FONT));
     smallStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     smallStyle.multiline = false;
 
@@ -579,7 +581,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
 bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
 {
     bool created = false;
-    oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getMainFont16());
+    oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getFont(FONT));
     smallStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     smallStyle.multiline = false;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -824,7 +826,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
 
 void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
 {
-    oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getMainFont16());
+    oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getFont(FONT));
     smallStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     smallStyle.multiline = false;
     ObjectManager* pObjectManager = ObjectManager::getInstance();

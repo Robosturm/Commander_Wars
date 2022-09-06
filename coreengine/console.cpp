@@ -82,7 +82,7 @@ Console::Console()
     m_text = oxygine::spTextField::create();
     m_text->setPosition(1, 1);
     m_text->setWidth(Settings::getWidth() - 2);
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16());
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("console16"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     m_text->setStyle(style);
@@ -269,7 +269,7 @@ void Console::update(const oxygine::UpdateState& us)
 #ifdef GRAPHICSUPPORT
         QMutexLocker locker(&m_datalocker);
         qint32 screenheight = Settings::getHeight();
-        auto font = FontManager::getMainFont16();
+        auto font = FontManager::getFont("console16");
         QFontMetrics metrics(font.font);
         qint32 h = metrics.height();
         if (font.borderWidth < 0)
