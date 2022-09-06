@@ -80,7 +80,7 @@ ComplexTableView::ComplexTableView(const QVector<qint32> & widths, const QString
             }
             emit sigSortItems(i, m_sortUp[i]);
         });
-        pSortButton->setPosition(x - pSortButton->getWidth(), DIVIDER_SIZE + ITEM_HEIGHT / 2 - pSortButton->getHeight() / 2);
+        pSortButton->setPosition(x - pSortButton->getScaledWidth(), DIVIDER_SIZE + ITEM_HEIGHT / 2 - pSortButton->getScaledHeight() / 2);
         addChild(pSortButton);
         // following horizintal line
         oxygine::spBox9Sprite line = oxygine::spBox9Sprite::create();

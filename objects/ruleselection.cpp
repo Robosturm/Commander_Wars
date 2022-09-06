@@ -733,7 +733,7 @@ void RuleSelection::showRuleSelection(bool advanced)
             textField->setPosition(30, y);
             addChild(textField);
             oxygine::spButton pScriptButton = pObjectManager->createButton(tr("Select File"), 160);
-            pScriptButton->setPosition(Settings::getWidth() - pScriptButton->getWidth() - 100, y);
+            pScriptButton->setPosition(Settings::getWidth() - pScriptButton->getScaledWidth() - 100, y);
             addChild(pScriptButton);
             m_MapScriptFile = spTextbox::create(pScriptButton->getX() - textField->getX() - textWidth);
             m_MapScriptFile->setTooltipText(tr("The relative path from the exe to the script associated with this map."));

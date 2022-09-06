@@ -24,7 +24,7 @@ SelectKey::SelectKey(Qt::Key code)
     {
         Label* pText = dynamic_cast<Label*>(pActor->getFirstChild().get());
         pText->setHtmlText(tr("Press Key"));
-        pText->setX(pActor->getWidth() / 2 - pText->getTextRect().getWidth() / 2);
+        pText->setX(pActor->getScaledWidth() / 2 - pText->getTextRect().getWidth() / 2);
         if (pText->getX() < 5)
         {
             pText->setX(5);
@@ -202,7 +202,7 @@ void SelectKey::setKeycode(Qt::Key code)
         m_currentCode = code;
         Label* pText = dynamic_cast<Label*>(m_Button->getFirstChild().get());
         pText->setHtmlText((tr("Key ") + codeText));
-        pText->setX(m_Button->getWidth() / 2 - pText->getTextRect().getWidth() / 2);
+        pText->setX(m_Button->getScaledWidth() / 2 - pText->getTextRect().getWidth() / 2);
         if (pText->getX() < 5)
         {
             pText->setX(5);

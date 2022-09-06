@@ -177,17 +177,17 @@ void Tooltip::showTooltip()
             pSpriteBox->setSize(pText->getTextRect().getSize() + oxygine::Point(30, 30));
 
             oxygine::Stage::getStage()->addChild(m_Tooltip);
-            if (curPos.x() + 10 + pSpriteBox->getWidth() + 5 > Settings::getWidth())
+            if (curPos.x() + 10 + pSpriteBox->getScaledWidth() + 5 > Settings::getWidth())
             {
-                m_Tooltip->setX(curPos.x() - 10 - pSpriteBox->getWidth());
+                m_Tooltip->setX(curPos.x() - 10 - pSpriteBox->getScaledWidth());
             }
             else
             {
                 m_Tooltip->setX(curPos.x() + 10);
             }
-            if (curPos.y() + 10 + pSpriteBox->getHeight() + 5 > Settings::getHeight())
+            if (curPos.y() + 10 + pSpriteBox->getScaledHeight() + 5 > Settings::getHeight())
             {
-                m_Tooltip->setY(curPos.y() - 10 - pSpriteBox->getHeight());
+                m_Tooltip->setY(curPos.y() - 10 - pSpriteBox->getScaledHeight());
             }
             else
             {

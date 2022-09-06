@@ -43,7 +43,8 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 10 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getScaledWidth() / 2,
+                           Settings::getHeight() - 10 - pOkButton->getScaledHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {

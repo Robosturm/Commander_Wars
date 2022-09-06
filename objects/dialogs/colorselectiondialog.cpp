@@ -25,12 +25,13 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color, bool showUnitPreview)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -40,7 +41,7 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color, bool showUnitPreview)
     // add spin boxes for red green and blue
     m_pColorSelector = spColorSelector::create(color, pixelSize);
     m_pColorSelector->setY(30);
-    m_pColorSelector->setX(Settings::getWidth() / 2 - m_pColorSelector->getWidth() / 2);
+    m_pColorSelector->setX(Settings::getWidth() / 2 - m_pColorSelector->getScaledWidth() / 2);
     pSpriteBox->addChild(m_pColorSelector);
     if (showUnitPreview)
     {

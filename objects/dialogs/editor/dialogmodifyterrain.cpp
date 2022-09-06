@@ -34,7 +34,8 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -52,7 +53,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     style.multiline = false;
     oxygine::TextStyle style2 = oxygine::TextStyle(FontManager::getMainFont48());
 
-    spLabel pLabel = spLabel::create(m_pPanel->getWidth() - 50);
+    spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 50);
     pLabel->setStyle(style2);
     pLabel->setHtmlText(tr("Information"));
     pLabel->setPosition(10, y);
@@ -64,7 +65,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     pLabel->setHtmlText(tr("Name:"));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    spTextbox pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getWidth());
+    spTextbox pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getScaledWidth());
     pTextbox->setTooltipText(tr("Custom Name of the Terrain. Empty name equals the default name."));
     pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
     pTextbox->setCurrentText(pTerrain->getTerrainName());
@@ -76,7 +77,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Description:"));
     pLabel->setPosition(10, y);
-    pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getWidth());
+    pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getScaledWidth());
     pTextbox->setTooltipText(tr("Custom Description of the Terrain. Empty description equals the default description."));
     pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
     pTextbox->setCurrentText(pTerrain->getTerrainDescription());
@@ -97,7 +98,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     });
 
     oxygine::spButton pButtonSelect = pObjectManager->createButton(tr("Select Image"), 150);
-    pButtonSelect->setPosition(10 + 20 + pButtonDefault->getWidth(), y);
+    pButtonSelect->setPosition(10 + 20 + pButtonDefault->getScaledWidth(), y);
     m_pPanel->addChild(pButtonSelect);
     pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -128,7 +129,7 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
     oxygine::TextStyle style2 = oxygine::TextStyle(FontManager::getMainFont48());
 
     QStringList pTerrainStyles = pTerrain->getTerrainSprites();
-    spLabel pLabel = spLabel::create(m_pPanel->getWidth() - 50);
+    spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 50);
     pLabel->setStyle(style2);
     pLabel->setHtmlText(tr("Base image"));
     pLabel->setPosition(10, y);
@@ -169,7 +170,7 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
     pTextfield->setHtmlText(tr("Terrain Style"));
     pTextfield->setPosition(10, y);
     m_pPanel->addItem(pTextfield);
-    m_pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pTextfield->getWidth());
+    m_pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pTextfield->getScaledWidth());
     m_pTextbox->setTooltipText(tr("Current select terrain image or terrain path or empty for default selection."));
     m_pTextbox->setPosition(200 + 20 + pTextfield->getX(), y);
     m_pPanel->addItem(m_pTextbox);
@@ -189,7 +190,7 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
         oxygine::TextStyle style2 = oxygine::TextStyle(FontManager::getMainFont48());
 
         QStringList selectedOverlayTerrainStyles = pTerrain->getCustomOverlays();
-        spLabel pLabel = spLabel::create(m_pPanel->getWidth() - 50);
+        spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 50);
         pLabel->setStyle(style2);
         pLabel->setHtmlText(tr("Overlays"));
         pLabel->setPosition(10, y);
@@ -226,7 +227,7 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
                 }, Qt::QueuedConnection);
                 m_pPanel->addItem(pCheckbox);
 
-                x += GameMap::getImageSize() * 3 + pCheckbox->getWidth();
+                x += GameMap::getImageSize() * 3 + pCheckbox->getScaledWidth();
                 if (x > m_pPanel->getContentWidth() - 100 - pSprite->getScaledWidth() && i < overlayTerrainStyles.size() - 1)
                 {
                     x = 20;

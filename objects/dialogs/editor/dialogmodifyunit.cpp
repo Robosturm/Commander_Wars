@@ -46,7 +46,8 @@ DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -84,10 +85,10 @@ void DialogModifyUnit::updateData()
     headerStyle.multiline = false;
 
     qint32 sliderOffset = 400;
-    spLabel pLabel = spLabel::create(m_pPanel->getWidth() - 80);
+    spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 80);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Unit: ") + m_pUnit->getName());
-    pLabel->setPosition(m_pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     m_pPanel->addItem(pLabel);
 
     qint32 y = 30 + pLabel->getTextRect().getHeight();

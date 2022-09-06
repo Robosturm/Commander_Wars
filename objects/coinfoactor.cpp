@@ -705,7 +705,7 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
     oxygine::spBox9Sprite pEndBox = oxygine::spBox9Sprite::create();
     pEndBox->setResAnim(pEndAnim);
     pEndBox->setSize(static_cast<qint32>(width * (1.0f - divider)) + 2, 8);
-    pEndBox->setPosition(5 +  GameMap::getImageSize() + pStartBox->getWidth(), y);
+    pEndBox->setPosition(5 +  GameMap::getImageSize() + pStartBox->getScaledWidth(), y);
     pActor->addChild(pEndBox);
 }
 

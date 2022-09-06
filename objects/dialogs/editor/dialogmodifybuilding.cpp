@@ -32,7 +32,8 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -54,10 +55,10 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     headerStyle.multiline = false;
 
     qint32 sliderOffset = 400;
-    spLabel pLabel = spLabel::create(m_pPanel->getWidth() - 80);
+    spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 80);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Building: ") + m_pBuilding->getName());
-    pLabel->setPosition(m_pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     m_pPanel->addItem(pLabel);
 
     qint32 y = 30 + pLabel->getTextRect().getHeight();
@@ -105,7 +106,7 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Name:"));
     pLabel->setPosition(10, y);
-    spTextbox pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getWidth());
+    spTextbox pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getScaledWidth());
     pTextbox->setTooltipText(tr("Custom Name of the Terrain. Leave the name empty to use its Default Name."));
     pTextbox->setPosition(sliderOffset - 160, y);
     pTextbox->setCurrentText(m_pBuilding->getBuildingName());

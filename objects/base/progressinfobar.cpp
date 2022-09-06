@@ -40,5 +40,5 @@ void ProgressInfoBar::setProgress(qint32 progress)
     {
         progress = 0.0f;
     }
-    m_Progressbar->setWidth(m_Background->getWidth() * progress);
+    m_Progressbar->setWidth(m_Background->getScaledWidth() * progress);
 }

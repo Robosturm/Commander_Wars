@@ -36,7 +36,8 @@ DialogCOStyle::DialogCOStyle(QString coid)
 
     // ok button
     m_pOkButton = pObjectManager->createButton(tr("Apply"), 150);
-    m_pOkButton->setPosition(Settings::getWidth() - m_pOkButton->getWidth() - 30, Settings::getHeight() - 10 - m_pOkButton->getHeight());
+    m_pOkButton->setPosition(Settings::getWidth() - m_pOkButton->getScaledWidth() - 30,
+                             Settings::getHeight() - 10 - m_pOkButton->getScaledHeight());
     m_pSpriteBox->addChild(m_pOkButton);
     m_pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pCOSpriteManager](oxygine::Event* event)
     {
@@ -47,7 +48,8 @@ DialogCOStyle::DialogCOStyle(QString coid)
     });
 
     oxygine::spButton pSaveButton = pObjectManager->createButton(tr("Save"), 150);
-    pSaveButton->setPosition(Settings::getWidth() - m_pOkButton->getWidth() - pSaveButton->getWidth() - 40, Settings::getHeight() - 10 - pSaveButton->getHeight());
+    pSaveButton->setPosition(Settings::getWidth() - m_pOkButton->getScaledWidth() - pSaveButton->getScaledWidth() - 40,
+                             Settings::getHeight() - 10 - pSaveButton->getScaledHeight());
     m_pSpriteBox->addChild(pSaveButton);
     pSaveButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* event)
     {
@@ -65,7 +67,8 @@ DialogCOStyle::DialogCOStyle(QString coid)
     });
 
     m_pDeleteButton = pObjectManager->createButton(tr("Delete"), 150);
-    m_pDeleteButton->setPosition(40 + pExitButton->getWidth(), Settings::getHeight() - 10 - m_pDeleteButton->getHeight());
+    m_pDeleteButton->setPosition(40 + pExitButton->getScaledWidth(),
+                                 Settings::getHeight() - 10 - m_pDeleteButton->getScaledHeight());
     m_pSpriteBox->addChild(m_pDeleteButton);
     m_pDeleteButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* event)
     {
@@ -97,7 +100,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
         m_pColorSelector->setPosition(30, 30);
         m_pSpriteBox->addChild(m_pColorSelector);
         connect(m_pColorSelector.get(), &ColorSelector::sigSelecetedColorChanged, this, &DialogCOStyle::selecetedColorChanged, Qt::QueuedConnection);
-        colorSelectorWidth = m_pColorSelector->getWidth();
+        colorSelectorWidth = m_pColorSelector->getScaledWidth();
     }
     QSize size(Settings::getWidth() - colorSelectorWidth - 75, heigth);
     m_pCOPanel = spPanel::create(true, size, size);
@@ -317,11 +320,13 @@ void DialogCOStyle::loadAltsForStyle()
     m_pSpriteBox->addChild(m_pPredefinedStyles);
     if (Settings::getSmallScreenDevice())
     {
-        m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 - m_pPredefinedStyles->getWidth() / 2, Settings::getHeight() - 10 - m_pOkButton->getHeight());
+        m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 - m_pPredefinedStyles->getScaledWidth() / 2,
+                                         Settings::getHeight() - 10 - m_pOkButton->getScaledHeight());
     }
     else
     {
-        m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() -  10 - m_pOkButton->getHeight());
+        m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10,
+                                         Settings::getHeight() -  10 - m_pOkButton->getScaledHeight());
     }
     connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 item)
     {
@@ -361,10 +366,10 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+nrm", oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        float scale = (m_pCOPanel->getHeight() - 150) / pAnim->getHeight();
+        float scale = (m_pCOPanel->getScaledHeight() - 150) / pAnim->getHeight();
         pBox->setSize(scale * pAnim->getWidth() + 70, scale * pAnim->getHeight() + 40);
         pBox->setPosition(m_boxWidth, 10);
-        m_boxWidth += pBox->getWidth() + 10;
+        m_boxWidth += pBox->getScaledWidth() + 10;
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         m_pCOPanel->addItem(pBox);
         // add some event handling :)
@@ -398,7 +403,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
         pCO->setScale(scale);
         pCO->setPosition(10, 10);
         pBox->addChild(pCO);
-        m_pCOPanel->setContentWidth(pBox->getX() + pBox->getWidth() + 50);
+        m_pCOPanel->setContentWidth(pBox->getX() + pBox->getScaledWidth() + 50);
 
         pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+mini", oxygine::ep_ignore_error);
         oxygine::spSprite pMiniCO = oxygine::spSprite::create();        
@@ -414,7 +419,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
         oxygine::spSprite pFaceCO = oxygine::spSprite::create();
         pFaceCO->setResAnim(pAnim);
         pFaceCO->setScale(1.0f);
-        pFaceCO->setPosition(pBox->getWidth() - 10 - pAnim->getWidth(), pBox->getHeight() - pAnim->getHeight() - 10);
+        pFaceCO->setPosition(pBox->getScaledWidth() - 10 - pAnim->getWidth(), pBox->getScaledHeight() - pAnim->getHeight() - 10);
         pBox->addChild(pFaceCO);
 
         m_pCOSprites.append(pCO);

@@ -21,12 +21,12 @@ DamageCalculator::DamageCalculator()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    setPosition(Settings::getWidth() / 2 - getWidth() / 2,
-                Settings::getHeight() / 2 - getHeight() / 2);
+    setPosition(Settings::getWidth() / 2 - getScaledWidth() / 2,
+                Settings::getHeight() / 2 - getScaledHeight() / 2);
     qint32 x = 10;
     qint32 y = 10;
     spLabel pLabel = spLabel::create(300);
-    pLabel->setPosition(getWidth() / 2 - pLabel->getWidth() / 2, y);
+    pLabel->setPosition(getScaledWidth() / 2 - pLabel->getScaledWidth() / 2, y);
     pLabel->setHtmlText(tr("Damage calculator"));
     addItem(pLabel);
 
@@ -71,7 +71,7 @@ DamageCalculator::DamageCalculator()
     loadUnitData(x, y, m_defUnit, rankItems, unitIds, terrainIds, buildingIds);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spButton pCalculateButton = pObjectManager->createButton(tr("Calculate"), 150);
-    pCalculateButton->setPosition(getWidth() / 2 - pCalculateButton->getWidth() / 2, y + 5);
+    pCalculateButton->setPosition(getScaledWidth() / 2 - pCalculateButton->getScaledWidth() / 2, y + 5);
 
     pCalculateButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -134,22 +134,22 @@ void DamageCalculator::loadCoData(qint32 & x, qint32 & y, CosData & cosData,
         coData.m_co->setTooltipText(tr("CO for the player."));
         coData.m_co->setPosition(x, y);
         addItem(coData.m_co);
-        x += coData.m_co->getWidth() + xAdvance;
+        x += coData.m_co->getScaledWidth() + xAdvance;
         coData.m_powerMode = spDropDownmenuSprite::create(110, powers, powerCreator);
         coData.m_powerMode->setTooltipText(tr("Power level of the co."));
         coData.m_powerMode->setPosition(x, y);
         addItem(coData.m_powerMode);
-        x += coData.m_powerMode->getWidth() + xAdvance;
+        x += coData.m_powerMode->getScaledWidth() + xAdvance;
         spLabel pLabel = spLabel::create(55);
         pLabel->setPosition(x, y);
         pLabel->setHtmlText(tr("Zone"));
         addItem(pLabel);
-        x += pLabel->getWidth() + xAdvance;
+        x += pLabel->getScaledWidth() + xAdvance;
         coData.m_inCoRange = spCheckbox::create();
         coData.m_inCoRange->setPosition(x, y);
         coData.m_inCoRange->setTooltipText(tr("If the unit is in the co-zone of this co."));
         addItem(coData.m_inCoRange);
-        x += coData.m_inCoRange->getWidth() + xAdvance;
+        x += coData.m_inCoRange->getScaledWidth() + xAdvance;
         y += 40;
     }
 }
@@ -169,7 +169,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     unitData.m_unit->setTooltipText(tr("Unit to be used."));
     unitData.m_unit->setPosition(x, y);
     addItem(unitData.m_unit);
-    x += unitData.m_unit->getWidth() + xAdvance;
+    x += unitData.m_unit->getScaledWidth() + xAdvance;
     auto terrainCreator = [this, buildingIds](QString id)
     {
         QString terrainId = GameMap::PLAINS;
@@ -196,7 +196,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     unitData.m_Terrain->setTooltipText(tr("Terrain the unit is currently sitting on."));
     unitData.m_Terrain->setPosition(x, y);
     addItem(unitData.m_Terrain);
-    x += unitData.m_unit->getWidth() + xAdvance;
+    x += unitData.m_unit->getScaledWidth() + xAdvance;
     auto unitRankCreator = [=](QString id)
     {
         oxygine::ResAnim* pAnim = nullptr;
@@ -232,7 +232,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     unitData.m_hp = spSpinBox::create(200, 1, 10);
     unitData.m_hp->setCurrentValue(10);
     unitData.m_hp->setTooltipText(tr("HP of the unit."));
-    unitData.m_hp->setPosition(x + pLabel->getWidth() + xAdvance, y);
+    unitData.m_hp->setPosition(x + pLabel->getScaledWidth() + xAdvance, y);
     addItem(unitData.m_hp);
     y += 40;
     pLabel = spLabel::create(150);
@@ -242,7 +242,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     unitData.m_towers = spSpinBox::create(200, 0, maxBuildingCount);
     unitData.m_towers->setCurrentValue(0);
     unitData.m_towers->setTooltipText(tr("Amount of towers owned by the player."));
-    unitData.m_towers->setPosition(x + pLabel->getWidth() + xAdvance, y);
+    unitData.m_towers->setPosition(x + pLabel->getScaledWidth() + xAdvance, y);
     addItem(unitData.m_towers);
     y += 40;
     pLabel = spLabel::create(150);
@@ -252,7 +252,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     unitData.m_buildings = spSpinBox::create(200, 0, maxBuildingCount);
     unitData.m_buildings->setCurrentValue(0);
     unitData.m_buildings->setTooltipText(tr("Amount of towns owned by the player."));
-    unitData.m_buildings->setPosition(x + pLabel->getWidth() + xAdvance, y);
+    unitData.m_buildings->setPosition(x + pLabel->getScaledWidth() + xAdvance, y);
     addItem(unitData.m_buildings);
     y += 40;
     pLabel = spLabel::create(150);
@@ -262,7 +262,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     unitData.m_funds = spSpinBox::create(200, 0, 9999999);
     unitData.m_funds->setCurrentValue(0);
     unitData.m_funds->setTooltipText(tr("Amount of funds owned by the player."));
-    unitData.m_funds->setPosition(x + pLabel->getWidth() + xAdvance, y);
+    unitData.m_funds->setPosition(x + pLabel->getScaledWidth() + xAdvance, y);
     addItem(unitData.m_funds);
     y += 40;
 

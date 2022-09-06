@@ -102,7 +102,7 @@ void Topbar::addGroup(QString text)
     qint32 x = 22;
     for (qint32 i = 0; i < m_Buttons.size(); i++)
     {
-        x += m_Buttons.at(i)->getWidth() + 5;
+        x += m_Buttons.at(i)->getScaledWidth() + 5;
     }
     pButton->setPosition(x, 18);
     qint32 groupID = m_Buttons.size();

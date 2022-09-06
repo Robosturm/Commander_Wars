@@ -42,8 +42,8 @@ FolderDialog::FolderDialog(QString startFolder)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() - 30 - m_OkButton->getWidth(),
-                            Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() - 30 - m_OkButton->getScaledWidth(),
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     auto* pCurrentFolder = m_CurrentFolder.get();
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentFolder](oxygine::Event*)
@@ -137,10 +137,10 @@ void FolderDialog::showFolder(QString folder)
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
         oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
         pBox->setResAnim(pAnim);
-        pBox->setSize(m_MainPanel->getWidth() - 70, 40);
+        pBox->setSize(m_MainPanel->getScaledWidth() - 70, 40);
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
-        spLabel textField = spLabel::create(pBox->getWidth() - 18);
+        spLabel textField = spLabel::create(pBox->getScaledWidth() - 18);
         textField->setX(13);
         textField->setY(5);
         pBox->addChild(textField);

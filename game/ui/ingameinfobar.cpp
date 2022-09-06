@@ -68,8 +68,8 @@ IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
     }
     m_pMinimapSlider = oxygine::spSlidingActor::create();
     m_pMinimapSlider->setPosition(10, 10);
-    m_pMinimapSlider->setSize(pMiniMapBox->getWidth() - 20,
-                              pMiniMapBox->getHeight() - 20);
+    m_pMinimapSlider->setSize(pMiniMapBox->getScaledWidth() - 20,
+                              pMiniMapBox->getScaledHeight() - 20);
     m_pMinimapSlider->setContent(m_pMinimap);
     pMiniMapBox->addChild(m_pMinimapSlider);
     addChild(pMiniMapBox);
@@ -429,13 +429,13 @@ void IngameInfoBar::createMovementInfo(qint32 x, qint32 y)
         {
             QString name = pMovementTableManager->getName(movement) + " : " ;
             name += QString::number(cost);
-            spLabel pTextfield = spLabel::create(m_pCursorInfoBox->getWidth() / 2 - 30);
+            spLabel pTextfield = spLabel::create(m_pCursorInfoBox->getScaledWidth() / 2 - 30);
             pTextfield->setPosition(posX, posY);
             pTextfield->setStyle(smallStyle);
             pTextfield->setHtmlText(name);
             m_pCursorInfoBox->addChild(pTextfield);
             posY += yAdvance;
-            if (posY + yAdvance >= m_pCursorInfoBox->getHeight())
+            if (posY + yAdvance >= m_pCursorInfoBox->getScaledHeight())
             {
                 if (posX > yAdvance)
                 {
@@ -443,7 +443,7 @@ void IngameInfoBar::createMovementInfo(qint32 x, qint32 y)
                 }
                 else
                 {
-                    posX += m_pCursorInfoBox->getWidth() / 2 + 5;
+                    posX += m_pCursorInfoBox->getScaledWidth() / 2 + 5;
                 }
             }
         }
@@ -599,7 +599,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         created = true;
         qint32 posY = 80;
         qint32 posX = 10;
-        spLabel pTextfield = spLabel::create(m_pCursorInfoBox->getWidth() - 20);
+        spLabel pTextfield = spLabel::create(m_pCursorInfoBox->getScaledWidth() - 20);
         pTextfield->setPosition(posX, posY);
         pTextfield->setStyle(smallStyle);
         pTextfield->setHtmlText(pUnit->getName());
@@ -843,7 +843,7 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
         }
         qint32 posY = 5;
         qint32 posX = 10;
-        spLabel pTextfield = spLabel::create(m_pCursorInfoBox->getWidth() - 20);
+        spLabel pTextfield = spLabel::create(m_pCursorInfoBox->getScaledWidth() - 20);
         pTextfield->setPosition(posX, posY);
         pTextfield->setStyle(smallStyle);
         QString name = "";
@@ -958,7 +958,7 @@ void IngameInfoBar::addColorbar(float divider, qint32 posX, qint32 posY, QColor 
         pColorBar = oxygine::spColorRectSprite::create();
         pColorBar->setColor(127, 127, 127, 255);
         pColorBar->setSize((1 - divider) * pAnim->getWidth(), pAnim->getHeight());
-        pColorBar->setPosition(posX + pAnim->getWidth() - pColorBar->getWidth(), posY);
+        pColorBar->setPosition(posX + pAnim->getWidth() - pColorBar->getScaledWidth(), posY);
         m_pCursorInfoBox->addChild(pColorBar);
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setResAnim(pAnim);

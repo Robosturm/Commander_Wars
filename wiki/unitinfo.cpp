@@ -410,7 +410,7 @@ void UnitInfo::loadBattleSprite(Unit* pUnit)
     }
     m_pBattleAnimationSprite = spBattleAnimationSprite::create(pUnit->getMap(), spUnit(pUnit), nullptr, BattleAnimationSprite::standingAnimation, -1, false);
     m_pBattleAnimationSprite->setPosition(m_pSpriteBox->getX() + 7, m_pSpriteBox->getY() + 5);
-    m_pSpriteBox->setSize(m_pBattleAnimationSprite->getWidth() + 14, m_pBattleAnimationSprite->getHeight() + 12);
+    m_pSpriteBox->setSize(m_pBattleAnimationSprite->getScaledWidth() + 14, m_pBattleAnimationSprite->getScaledHeight() + 12);
     addChild(m_pBattleAnimationSprite);
 }
 

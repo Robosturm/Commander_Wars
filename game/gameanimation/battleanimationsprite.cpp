@@ -53,7 +53,7 @@ BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrai
 
     m_Actor = oxygine::spClipRectActor::create();
     m_Actor->setSize(127, 192);
-    setSize(m_Actor->getWidth(), m_Actor->getHeight());
+    setSize(m_Actor->getScaledWidth(), m_Actor->getScaledHeight());
     addChild(m_Actor);
     loadAnimation(animationType);
     connect(this, &BattleAnimationSprite::sigDetachChild, this, &BattleAnimationSprite::detachChild, Qt::QueuedConnection);

@@ -49,16 +49,16 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, QStri
     pSpriteBox->addChild(m_CurrentFile);
     // ok button
     m_OkButton = pObjectManager->createButton(acceptButtonName, 150);
-    m_OkButton->setPosition(m_CurrentFile->getWidth() + 30 + 10, m_CurrentFile->getY());
+    m_OkButton->setPosition(m_CurrentFile->getScaledWidth() + 30 + 10, m_CurrentFile->getY());
     pSpriteBox->addChild(m_OkButton);
     // drop down menu
-    m_DropDownmenu = spDropDownmenu::create(m_CurrentFile->getWidth(), wildcards);
+    m_DropDownmenu = spDropDownmenu::create(m_CurrentFile->getScaledWidth(), wildcards);
     pSpriteBox->addChild(m_DropDownmenu);
     m_DropDownmenu->setPosition(30, m_CurrentFile->getY() + m_CurrentFile->getHeight() + 10);
     connect(m_DropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &FileDialog::filterChanged, Qt::QueuedConnection);
     // cancel button
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_CancelButton->setPosition(m_DropDownmenu->getWidth() + 30 + 10, m_DropDownmenu->getY());
+    m_CancelButton->setPosition(m_DropDownmenu->getScaledWidth() + 30 + 10, m_DropDownmenu->getY());
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -183,7 +183,7 @@ void FileDialog::showFolder(QString folder)
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
         oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
         pBox->setResAnim(pAnim);
-        pBox->setSize(m_MainPanel->getWidth() - 70, 40);
+        pBox->setSize(m_MainPanel->getScaledWidth() - 70, 40);
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         // add some event handling :)
         auto* pPtrBox = pBox.get();
@@ -197,7 +197,7 @@ void FileDialog::showFolder(QString folder)
         });
         pBox->setPosition(0, itemCount * 40);
 
-        spLabel textField = spLabel::create(pBox->getWidth() - 18);
+        spLabel textField = spLabel::create(pBox->getScaledWidth() - 18);
         textField->setX(13);
         textField->setY(5);
         pBox->addChild(textField);

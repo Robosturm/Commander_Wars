@@ -231,8 +231,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
             if (battleViewMode == GameEnums::BattleAnimationType_Fullscreen ||
                 battleViewMode == GameEnums::BattleAnimationType_FullscreenTransparent)
             {
-                float scale = Settings::getHeight() / (pRet->getHeight() - 30);
-                float widthScale = Settings::getWidth() / (pRet->getWidth() - 30);
+                float scale = Settings::getHeight() / (pRet->getScaledHeight() - 30);
+                float widthScale = Settings::getWidth() / (pRet->getScaledWidth() - 30);
                 if (scale > widthScale)
                 {
                     scale = widthScale;

@@ -38,7 +38,8 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -56,7 +57,8 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     });
 
     oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-    pSave->setPosition(Settings::getWidth() / 2 - pSave->getWidth() / 2, Settings::getHeight() - 30 - m_ExitButton->getHeight());
+    pSave->setPosition(Settings::getWidth() / 2 - pSave->getScaledWidth() / 2,
+                       Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
     pSave->addClickListener([this](oxygine::Event*)
     {
         emit sigShowSaveBannlist();
@@ -79,7 +81,8 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     auto items = getNameList();
     m_PredefinedLists = spDropDownmenu::create(300, items);
 
-    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 75 - m_ToggleAll->getHeight());
+    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getScaledWidth(),
+                                   Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
     pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &ActionListDialog::setBuildlist, Qt::QueuedConnection);
 
@@ -97,10 +100,10 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
-    spLabel pLabel = spLabel::create(pPanel->getWidth() - 60);
+    spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Action List"));
-    pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     pPanel->addItem(pLabel);
 
     GameManager* pGameManager = GameManager::getInstance();

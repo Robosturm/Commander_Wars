@@ -28,10 +28,10 @@ void RotatingSprite::sizeChanged(const oxygine::Vector2& size)
     m_SecondRect->setHeight(size.y);
     m_FirstRect->setHeight(size.y);
 
-    m_SecondRect->setX(m_FirstRect->getWidth());
+    m_SecondRect->setX(m_FirstRect->getScaledWidth());
     if (m_SecondSprite.get() != nullptr)
     {
-        m_SecondSprite->setX(-m_FirstRect->getWidth());
+        m_SecondSprite->setX(-m_FirstRect->getScaledWidth());
     }
     oxygine::Actor::sizeChanged(size);
 }
@@ -40,8 +40,8 @@ void RotatingSprite::doUpdate(const oxygine::UpdateState& us)
 {
     if (m_speedTimer.elapsed() > m_speed)
     {
-        float width = getWidth();
-        float overflow = m_FirstRect->getWidth() + m_direction;
+        float width = getScaledWidth();
+        float overflow = m_FirstRect->getScaledWidth() + m_direction;
         if (overflow >= width || overflow <= 0.0f)
         {
             if (m_direction > 0)
@@ -57,8 +57,8 @@ void RotatingSprite::doUpdate(const oxygine::UpdateState& us)
         }
         else
         {
-            m_SecondRect->setWidth(m_SecondRect->getWidth() - m_direction);
-            m_FirstRect->setWidth(m_FirstRect->getWidth() + m_direction);
+            m_SecondRect->setWidth(m_SecondRect->getScaledWidth() - m_direction);
+            m_FirstRect->setWidth(m_FirstRect->getScaledWidth() + m_direction);
         }
         if (overflow == 0.0f)
         {
@@ -67,9 +67,9 @@ void RotatingSprite::doUpdate(const oxygine::UpdateState& us)
         }
         else
         {
-            float firstRectWidth = m_FirstRect->getWidth();
+            float firstRectWidth = m_FirstRect->getScaledWidth();
             m_SecondRect->setX(firstRectWidth);
-            m_FirstSprite->setX(firstRectWidth - m_FirstSprite->getWidth());
+            m_FirstSprite->setX(firstRectWidth - m_FirstSprite->getScaledWidth());
         }
         m_speedTimer.start();
     }

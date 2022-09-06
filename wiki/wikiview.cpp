@@ -36,7 +36,7 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
     addChild(m_SearchString);
     oxygine::spButton pButton = ObjectManager::createButton(tr("Search"));
     addChild(pButton);
-    pButton->setPosition(m_SearchString->getWidth() + m_SearchString->getX() + 10, y);
+    pButton->setPosition(m_SearchString->getScaledWidth() + m_SearchString->getX() + 10, y);
     pButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigSearch(false);
@@ -86,11 +86,11 @@ void WikiView::search(bool onlyTag)
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
         oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
         pBox->setResAnim(pAnim);
-        pBox->setSize(m_MainPanel->getWidth() - 70, 40);
+        pBox->setSize(m_MainPanel->getScaledWidth() - 70, 40);
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
-        spLabel textField = spLabel::create(pBox->getWidth() - 18);
+        spLabel textField = spLabel::create(pBox->getScaledWidth() - 18);
         textField->setStyle(style);
         textField->setHeight(40);
         textField->setX(13);

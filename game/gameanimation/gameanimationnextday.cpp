@@ -148,7 +148,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
         {
             oxygine::spButton pButtonSaveAndExit = ObjectManager::createButton(tr("Save and Exit"), 220);
             addChild(pButtonSaveAndExit);
-            pButtonSaveAndExit->setPosition(Settings::getWidth() / 2 - pButtonSaveAndExit->getWidth() - 10, Settings::getHeight() - 50);
+            pButtonSaveAndExit->setPosition(Settings::getWidth() / 2 - pButtonSaveAndExit->getScaledWidth() - 10, Settings::getHeight() - 50);
             pButtonSaveAndExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
             {
                 emit sigShowSaveAndExit();

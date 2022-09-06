@@ -80,8 +80,8 @@ oxygine::spButton ObjectManager::createIconButton(QString icon, qint32 size)
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     pAnim = ObjectManager::getInstance()->getResAnim(icon);
     pSprite->setResAnim(pAnim);
-    pSprite->setPosition((size - pSprite->getWidth()) / 2,
-                         (size - pSprite->getHeight()) / 2);
+    pSprite->setPosition((size - pSprite->getScaledWidth()) / 2,
+                         (size - pSprite->getScaledHeight()) / 2);
     pButton->addChild(pSprite);
 
     oxygine::Sprite* ptr = pButton.get();
@@ -107,8 +107,8 @@ oxygine::spButton ObjectManager::createIconButton(oxygine::spSprite pSprite, qin
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button_square"));
     pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pButton->setSize(size, size);
-    pSprite->setPosition((size - pSprite->getWidth()) / 2,
-                         (size - pSprite->getHeight()) / 2);
+    pSprite->setPosition((size - pSprite->getScaledWidth()) / 2,
+                         (size - pSprite->getScaledHeight()) / 2);
     pButton->addChild(pSprite);
 
     oxygine::Sprite* ptr = pButton.get();

@@ -441,7 +441,7 @@ bool UiFactory::createSelectKey(oxygine::spActor parent, QDomElement element, ox
         }, Qt::QueuedConnection);
         parent->addChild(pButton);
         item = pButton;
-        m_lastCoordinates = QRect(x, y, pButton->getWidth(), 40);
+        m_lastCoordinates = QRect(x, y, pButton->getScaledWidth(), 40);
     }
     return success;
 }

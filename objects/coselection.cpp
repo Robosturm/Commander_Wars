@@ -117,7 +117,7 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
-    m_COName = spLabel::create(m_CoDescription->getWidth());
+    m_COName = spLabel::create(m_CoDescription->getScaledWidth());
     m_COName->setStyle(headerStyle);
     m_COName->setSize(width, 55);
     m_COName->setPosition(0, 10);
@@ -127,11 +127,11 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    m_COPower = spLabel::create(m_CoDescription->getWidth());
+    m_COPower = spLabel::create(m_CoDescription->getScaledWidth());
     m_COPower->setStyle(style);
     m_COPower->setPosition(0, 70);
     m_CoDescription->addItem(m_COPower);
-    m_COSuperpower = spLabel::create(m_CoDescription->getWidth());
+    m_COSuperpower = spLabel::create(m_CoDescription->getScaledWidth());
     m_COSuperpower->setStyle(style);
     m_COSuperpower->setPosition(0, 100);
     m_CoDescription->addItem(m_COSuperpower);
@@ -387,11 +387,6 @@ void COSelection::hoveredCOChanged(QString coid)
         }
         m_COName->setHtmlText(coName);
         m_COName->setX(5);
-//        m_COName->setX(m_CoDescription->getWidth() / 2 - m_COName->getTextRect().getWidth() / 2 - 35);
-//        if (m_COName->getX() < 5)
-//        {
-//            m_COName->setX(5);
-//        }
 
         m_COBio->setHtmlText(coBio);
         m_COBio->setHeight(m_COBio->getTextRect().getHeight() + 20);

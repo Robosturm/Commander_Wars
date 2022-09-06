@@ -38,7 +38,7 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
     pSpriteBox->addChild(m_Text);
 
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_CancelButton->setPosition(Settings::getWidth() / 2 - m_CancelButton->getWidth() / 2,
+    m_CancelButton->setPosition(Settings::getWidth() / 2 - m_CancelButton->getScaledWidth() / 2,
                                 Settings::getHeight() / 2 + 10);
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)

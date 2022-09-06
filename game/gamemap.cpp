@@ -1104,8 +1104,8 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
             if (pMapSliding.get() != nullptr &&
                 pMapSlidingActor.get() != nullptr)
             {
-                qint32 newX = pMapSliding->getWidth() / 2.0f - x * getZoom() * m_imagesize - m_imagesize / 2.0f;
-                qint32 newY = pMapSliding->getHeight() / 2.0f - y * getZoom() * m_imagesize - m_imagesize / 2.0f;
+                qint32 newX = pMapSliding->getScaledWidth() / 2.0f - x * getZoom() * m_imagesize - m_imagesize / 2.0f;
+                qint32 newY = pMapSliding->getScaledHeight() / 2.0f - y * getZoom() * m_imagesize - m_imagesize / 2.0f;
                 limitPosition(pMenu, newX, newY);
                 pMapSlidingActor->setPosition(newX, newY);
                 pMenu->getCursor()->setMapPoint(x, y);
@@ -1127,8 +1127,8 @@ QPoint GameMap::getCenteredPosition()
     {
         oxygine::spSlidingActorNoClipRect pMapSliding = pMenu->getMapSliding();
         oxygine::spActor pMapSlidingActor = pMenu->getMapSlidingActor();
-        x = -(pMapSlidingActor->getX() - pMapSliding->getWidth() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
-        y = -(pMapSlidingActor->getY() - pMapSliding->getHeight() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
+        x = -(pMapSlidingActor->getX() - pMapSliding->getScaledWidth() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
+        y = -(pMapSlidingActor->getY() - pMapSliding->getScaledHeight() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
     }
     return QPoint(x, y);
 }

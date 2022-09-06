@@ -36,7 +36,7 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel, QString confir
     pSpriteBox->addChild(m_Text);
 
     m_OkButton = pObjectManager->createButton(confirmText, 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2,
+    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
                             m_Text->getY() + m_Text->getTextRect().getHeight() + 20);
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
@@ -54,7 +54,7 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel, QString confir
         {
             emit sigCancel();
         });
-        m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() - 10,
+        m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() - 10,
                                 m_Text->getY() + m_Text->getTextRect().getHeight() + 20);
     }
 

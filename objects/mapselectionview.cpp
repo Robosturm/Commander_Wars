@@ -163,7 +163,7 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     styleMain16.multiline = false;
 
     m_contentSlider = oxygine::spSlidingActor::create();
-    m_contentSlider->setSize(m_pBuildingBackground->getWidth() - 20, 100);
+    m_contentSlider->setSize(m_pBuildingBackground->getScaledWidth() - 20, 100);
     m_content = oxygine::spActor::create();
     m_content->setSize(pBuildingSpriteManager->getCount()* (GameMap::getImageSize() + 12), 100);
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
@@ -203,12 +203,12 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     auto* pContentSlider = m_contentSlider.get();
     pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        if (pContent->getWidth() > pContentSlider->getWidth())
+        if (pContent->getScaledWidth() > pContentSlider->getScaledWidth())
         {
             pContent->setX(pContent->getX() - GameMap::getImageSize());
-            if (pContent->getX() + pContent->getWidth() < pContentSlider->getWidth())
+            if (pContent->getX() + pContent->getScaledWidth() < pContentSlider->getScaledWidth())
             {
-                pContent->setX(pContentSlider->getWidth() - pContent->getWidth());
+                pContent->setX(pContentSlider->getScaledWidth() - pContent->getScaledWidth());
             }
         }
     });
@@ -235,7 +235,7 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
             pContent->setX(0);
         }
     });
-    pButtonTop->setPosition(m_MapInfo->getX() + m_contentSlider->getWidth() + 25, m_MapInfo->getY() + m_MapInfo->getHeight() + 30);
+    pButtonTop->setPosition(m_MapInfo->getX() + m_contentSlider->getScaledWidth() + 25, m_MapInfo->getY() + m_MapInfo->getScaledHeight() + 30);
     addChild(pButtonTop);
 }
 

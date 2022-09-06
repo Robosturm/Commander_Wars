@@ -156,7 +156,6 @@ namespace oxygine
     const Rect& TextField::getTextRect() const
     {
 #ifdef GRAPHICSUPPORT
-        const_cast<TextField*>(this)->getRootNode();
         return m_textRect;
 #else
         return m_dummyRect;

@@ -67,27 +67,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="50"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="51"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="58"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="59"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="67"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="69"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="102"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="105"/>
         <source>Action List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="210"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="213"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -113,67 +113,67 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="52"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="53"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="60"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="61"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="69"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="71"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="109"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="112"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="277"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="280"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="285"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="288"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="286"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="289"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="287"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="290"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="288"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="291"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="289"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="292"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="309"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="312"/>
         <source>Do you want to make the saved build list the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="309"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="312"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="309"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="312"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -194,52 +194,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="51"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="52"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="59"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="60"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="68"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="70"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="109"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="112"/>
         <source>CO Bann List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="263"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="266"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="271"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="274"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="272"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="275"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="273"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="276"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="274"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="277"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="275"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="278"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -300,12 +300,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="47"/>
+        <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="48"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="56"/>
+        <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="58"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
@@ -318,12 +318,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="54"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="55"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="63"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="64"/>
         <source>Show CO Info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -639,7 +639,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/colorselectiondialog.cpp" line="32"/>
+        <location filename="../objects/dialogs/colorselectiondialog.cpp" line="33"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1037,18 +1037,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="116"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="117"/>
         <source>Day </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="181"/>
-        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="240"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="182"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="241"/>
         <source>Hp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="244"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="245"/>
         <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1061,29 +1061,29 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="49"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="50"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="59"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="61"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="67"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="69"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="140"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="143"/>
         <source>Predefined Styles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="281"/>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="299"/>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="308"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="284"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="302"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="311"/>
         <source>CO Style </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1117,37 +1117,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="59"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="60"/>
         <source>Building: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="66"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="67"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="73"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="74"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="75"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="76"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="77"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="78"/>
         <source>Selects the Owner of the current unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="109"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="110"/>
         <source>Custom Name of the Terrain. Leave the name empty to use its Default Name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="106"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="107"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1160,62 +1160,62 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="133"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="134"/>
         <source>Base image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="64"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="65"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="57"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="58"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="68"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="69"/>
         <source>Custom Name of the Terrain. Empty name equals the default name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="77"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="78"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="80"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="81"/>
         <source>Custom Description of the Terrain. Empty description equals the default description.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="169"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="170"/>
         <source>Terrain Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="173"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="174"/>
         <source>Current select terrain image or terrain path or empty for default selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="194"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="195"/>
         <source>Overlays</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="91"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="92"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="99"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="100"/>
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="259"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="260"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1228,114 +1228,114 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="89"/>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="96"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="90"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="97"/>
         <source>Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="112"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="113"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="115"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="116"/>
         <source>HP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="129"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="130"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="132"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="133"/>
         <source>Fuel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="155"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="156"/>
         <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="158"/>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="184"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="159"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="185"/>
         <source>Ammo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="181"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="182"/>
         <source>Ammo 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="206"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="207"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="213"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="214"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="102"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="103"/>
         <source>Selects the custom name of the unit shown instead of the actual unit name. An empty name will display the default name for that unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="116"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="117"/>
         <source>Selects the HP of the current unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="133"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="134"/>
         <source>Selects the Fuel of the current unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="159"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="160"/>
         <source>Selects the Ammo 1 of the current unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="185"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="186"/>
         <source>Selects the Ammo 2 of the current unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="216"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="217"/>
         <source>Selects the Owner of the current unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="229"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="230"/>
         <source>AI-Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="232"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="233"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="232"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="233"/>
         <source>Offensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="232"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="233"/>
         <source>Defensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="232"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="233"/>
         <source>Hold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="234"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="235"/>
         <source>Selects how the AI uses this unit
 Normal AI uses the unit like always.
 Offensive AI the ai moves the unit to the closest enemy and attacks
@@ -1347,47 +1347,47 @@ This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="267"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="268"/>
         <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rank. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="341"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="342"/>
         <source>Selects the unit loaded by the transporter. Enter &apos;-&apos; for no unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="255"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="256"/>
         <source>Unit Rank: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="264"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="265"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="265"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="266"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="309"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="310"/>
         <source>Loaded Unit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="386"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="387"/>
         <source>Move Point: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="418"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="419"/>
         <source>Add Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="426"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="427"/>
         <source>Remove last Point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1512,7 +1512,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="473"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="474"/>
         <source>The percentage of buildings distributed between the players. Note buildings close to an Player HQ may be ignored.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1617,33 +1617,33 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="271"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="272"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="372"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="373"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="464"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="465"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="469"/>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="511"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="470"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="512"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="516"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="517"/>
         <source>The percent unit distribution between the players. Note units that can&apos;t be spawned still count to the distribution.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="523"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="524"/>
         <source>The percent distribution between the units that will be spawned. Note units that can&apos;t be spawned still count to the distribution.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1651,12 +1651,12 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>DialogRandomMap::DialogRandomMap</name>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="424"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="425"/>
         <source>The percentage of different terrain types distributed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="441"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="442"/>
         <source>The percentage of different buildings types distributed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1682,7 +1682,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="156"/>
+        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="157"/>
         <source>Go to Unit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1703,17 +1703,17 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="67"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="68"/>
         <source>Victory Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="107"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="108"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="127"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="128"/>
         <source>Keep Track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3252,33 +3252,33 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="80"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="81"/>
         <source>If checked: clicking the &apos;Random&apos; Button will fill all available perk slots instead of just 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="83"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="84"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="113"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="115"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="121"/>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="150"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="123"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="155"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="130"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="133"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="237"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="243"/>
         <source>Perklist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4074,14 +4074,14 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="42"/>
-        <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="81"/>
+        <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="43"/>
+        <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="83"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="51"/>
-        <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="91"/>
+        <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="52"/>
+        <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="93"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>

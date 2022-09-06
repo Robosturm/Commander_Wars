@@ -40,7 +40,8 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -58,7 +59,8 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     });
 
     oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-    pSave->setPosition(Settings::getWidth() / 2 - pSave->getWidth() / 2, Settings::getHeight() - 30 - m_ExitButton->getHeight());
+    pSave->setPosition(Settings::getWidth() / 2 - pSave->getScaledWidth() / 2,
+                       Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
     pSave->addClickListener([this](oxygine::Event*)
     {
         emit sigShowSaveBannlist();
@@ -81,7 +83,8 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     auto items = getNameList();
     m_PredefinedLists = spDropDownmenu::create(300, items);
 
-    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 75 - m_ToggleAll->getHeight());
+    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getScaledWidth(),
+                                   Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
     pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &BuildListDialog::setBuildlist, Qt::QueuedConnection);
 
@@ -104,10 +107,10 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
-    spLabel pLabel = spLabel::create(pPanel->getWidth() - 60);
+    spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Build List"));
-    pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     pPanel->addItem(pLabel);
     qint32 y = 40 + pLabel->getTextRect().getHeight();
     qint32 x = 10;
@@ -117,10 +120,10 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
 
     for (const auto & group : unitGroups)
     {
-        spLabel textField = spLabel::create(pPanel->getWidth() - 40);
+        spLabel textField = spLabel::create(pPanel->getScaledWidth() - 40);
         textField->setStyle(largeStyle);
         textField->setHtmlText(group.name);
-        textField->setPosition(pPanel->getWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
+        textField->setPosition(pPanel->getScaledWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
         pPanel->addItem(textField);
         y += 45;
         x = 10;

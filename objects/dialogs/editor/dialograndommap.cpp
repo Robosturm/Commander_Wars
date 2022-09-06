@@ -46,7 +46,7 @@ DialogRandomMap::DialogRandomMap()
     m_GeneratorFile->setCurrentText("data/randommaps/commanderwarsgenerator.js");
     m_pPanel->addItem(m_GeneratorFile);
     m_Generator = ObjectManager::createButton(tr("Select"), 130);
-    m_Generator->setPosition(m_GeneratorFile->getX() + m_GeneratorFile->getWidth() + 10, y);
+    m_Generator->setPosition(m_GeneratorFile->getX() + m_GeneratorFile->getScaledWidth() + 10, y);
     m_Generator->addClickListener([this](oxygine::Event*)
     {
         emit sigShowGeneratorSelection();
@@ -263,7 +263,8 @@ DialogRandomMap::DialogRandomMap()
     m_pPanel->setContentHeigth(y + 40);
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
 
 

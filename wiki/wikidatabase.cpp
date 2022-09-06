@@ -220,7 +220,7 @@ spWikipage WikiDatabase::getPage(PageData data)
         pPlayer->init();
         spCO pCO = spCO::create(id, pPlayer.get(), nullptr);
         ret = spWikipage::create();
-        spCOInfoActor pInfo = spCOInfoActor::create(nullptr, ret->getPanel()->getWidth());
+        spCOInfoActor pInfo = spCOInfoActor::create(nullptr, ret->getPanel()->getScaledWidth());
         pInfo->showCO(pCO, pPlayer);
         ret->getPanel()->addItem(pInfo);
         ret->getPanel()->setContentHeigth(pInfo->getHeight());

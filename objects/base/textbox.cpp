@@ -40,9 +40,9 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     m_Textbox->addChild(pClipActor);
     m_Textbox->setSize(width, heigth);
     setSize(width, heigth);
-    m_Textfield->setWidth(m_Textbox->getWidth() - 20);
-    m_Textfield->setHeight(m_Textbox->getHeight());
-    pClipActor->setSize(m_Textfield->getSize());
+    m_Textfield->setWidth(m_Textbox->getScaledWidth() - 20);
+    m_Textfield->setHeight(m_Textbox->getScaledHeight());
+    pClipActor->setSize(m_Textfield->getScaledSize());
     pClipActor->setX(10);
     pClipActor->setY(5);
 
@@ -83,7 +83,7 @@ void Textbox::update(const oxygine::UpdateState& us)
                 // calc text field position based on curmsgpos
                 qint32 xPos = 0;
                 qint32 fontWidth = m_Textfield->getTextRect().getWidth() / drawText.size();
-                qint32 boxSize = (m_Textbox->getWidth() - 40 - fontWidth);
+                qint32 boxSize = (m_Textbox->getScaledWidth() - 40 - fontWidth);
                 xPos = -fontWidth * curmsgpos + boxSize / 2;
                 if (xPos > 0)
                 {
@@ -91,7 +91,7 @@ void Textbox::update(const oxygine::UpdateState& us)
                 }
                 else if ((drawText.size() - curmsgpos + 3) * fontWidth < boxSize)
                 {
-                    xPos = m_Textbox->getWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 3;
+                    xPos = m_Textbox->getScaledWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 3;
                     if (xPos > 0)
                     {
                         xPos = 0;
