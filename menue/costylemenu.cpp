@@ -51,7 +51,7 @@ COStyleMenu::COStyleMenu()
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
-    pButtonExit->setPosition(20, Settings::getHeight() - pButtonExit->getHeight() - 10);
+    pButtonExit->setPosition(20, Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -60,7 +60,8 @@ COStyleMenu::COStyleMenu()
 
     oxygine::spButton pButtonEdit = ObjectManager::createButton(tr("Edit CO"));
     addChild(pButtonEdit);
-    pButtonEdit->setPosition(Settings::getWidth() - pButtonEdit->getWidth() - 20, Settings::getHeight() - pButtonExit->getHeight() - 10);
+    pButtonEdit->setPosition(Settings::getWidth() - pButtonEdit->getScaledWidth() - 20,
+                             Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonEdit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigEditCOStyle();

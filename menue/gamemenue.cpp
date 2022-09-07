@@ -1049,7 +1049,8 @@ void GameMenue::loadUIButtons()
     }
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
-    m_pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) / 2 - m_pButtonBox->getWidth() / 2, Settings::getHeight() - m_pButtonBox->getHeight() + 6);
+    m_pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) / 2 - m_pButtonBox->getScaledWidth() / 2,
+                              Settings::getHeight() - m_pButtonBox->getScaledHeight() + 6);
     m_pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(m_pButtonBox);
     oxygine::spButton saveGame = pObjectManager->createButton(tr("Save"), 130);
@@ -1061,7 +1062,7 @@ void GameMenue::loadUIButtons()
     m_pButtonBox->addChild(saveGame);
 
     oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit"), 130);
-    exitGame->setPosition(m_pButtonBox->getWidth() - 138, 4);
+    exitGame->setPosition(m_pButtonBox->getScaledWidth() - 138, 4);
     exitGame->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowExitGame();
@@ -1080,7 +1081,7 @@ void GameMenue::loadUIButtons()
     m_xyTextInfo->setPosition(8, 8);
     m_XYButtonBox->addChild(m_xyTextInfo);
     m_XYButtonBox->setSize(200, 50);
-    m_XYButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - m_XYButtonBox->getWidth(), 0);
+    m_XYButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) - m_XYButtonBox->getScaledWidth(), 0);
     m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates() && !Settings::getSmallScreenDevice());
     addChild(m_XYButtonBox);
     m_UpdateTimer.setInterval(500);
@@ -1092,7 +1093,7 @@ void GameMenue::loadUIButtons()
         oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
         pButtonBox->setResAnim(pAnim);
         pButtonBox->setSize(144, 50);
-        pButtonBox->setPosition(0, Settings::getHeight() - pButtonBox->getHeight());
+        pButtonBox->setPosition(0, Settings::getHeight() - pButtonBox->getScaledHeight());
         pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         addChild(pButtonBox);
         m_ChatButton = pObjectManager->createButton(tr("Show Chat"), 130);
@@ -1561,7 +1562,7 @@ void GameMenue::showGameInfo(qint32 player)
         spTableView pTableView = spTableView::create(widths, data, header, false);
         pTableView->setPosition(20, 20);
         pPanel->addItem(pTableView);
-        pPanel->setContentHeigth(pTableView->getHeight() + 40);
+        pPanel->setContentHeigth(pTableView->getScaledHeight() + 40);
         pGenericBox->addItem(pPanel);
         addChild(pGenericBox);
         connect(pGenericBox.get(), &GenericBox::sigFinished, this, [this]()
@@ -2046,6 +2047,11 @@ void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
 void GameMenue::showDamageCalculator()
 {
     spDamageCalculator calculator = spDamageCalculator::create();
+    if (calculator->getScaledHeight() >= Settings::getHeight() ||
+        calculator->getScaledWidth() >= Settings::getWidth())
+    {
+        calculator->setScale(0.5f);
+    }
     addChild(calculator);
 }
 

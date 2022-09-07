@@ -151,7 +151,7 @@ void DialogVictoryConditions::showPopup(QString rule)
     if (pMenu != nullptr && !VictoryRulePopup::exists(rule))
     {
         spVictoryRulePopup pPopup = spVictoryRulePopup::create(m_pMap, rule, 180, 250);
-        pPopup->setY(Settings::getHeight() - pPopup->getHeight());
+        pPopup->setY(Settings::getHeight() - pPopup->getScaledHeight());
         pMenu->addChild(pPopup);
     }
 }

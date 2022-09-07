@@ -56,7 +56,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
 
     // back button
     m_BackButton = pObjectManager->createButton(tr("Back"), 150);
-    m_BackButton->setPosition(30, Settings::getHeight() - 30 - m_BackButton->getHeight());
+    m_BackButton->setPosition(30, Settings::getHeight() - 30 - m_BackButton->getScaledHeight());
     pSpriteBox->addChild(m_BackButton);
     m_BackButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -103,6 +103,6 @@ void COInfoDialog::showCO()
 {
     
     m_COInfo->showCO(m_CurrentCO, m_pCurrentPlayer);
-    m_pPanel->setContentHeigth(m_COInfo->getHeight());
+    m_pPanel->setContentHeigth(m_COInfo->getScaledHeight());
     
 }

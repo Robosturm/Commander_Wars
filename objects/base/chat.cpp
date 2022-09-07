@@ -47,15 +47,15 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
     m_Panel->addItem(m_Chat);
 
     m_Send = pObjectManager->createButton(tr("Send"), 150);
-    m_Send->setPosition(size.width() - m_Send->getWidth(), size.height() - m_Send->getHeight());
+    m_Send->setPosition(size.width() - m_Send->getScaledWidth(), size.height() - m_Send->getScaledHeight());
 
     connect(this, &Chat::sigSendText, this, &Chat::sendData, Qt::QueuedConnection);
     addChild(m_Send);
 
-    m_ChatInput = spTextbox::create(size.width() - m_Send->getWidth() - 10);
+    m_ChatInput = spTextbox::create(size.width() - m_Send->getScaledWidth() - 10);
     Chat::setVisible(true);
 
-    m_ChatInput->setPosition(0, size.height() - m_Send->getHeight());
+    m_ChatInput->setPosition(0, size.height() - m_Send->getScaledHeight());
     connect(m_ChatInput.get(), &Textbox::sigEnterPressed, this, &Chat::sendData, Qt::QueuedConnection);
     addChild(m_ChatInput);
 

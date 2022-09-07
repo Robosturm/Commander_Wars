@@ -52,6 +52,7 @@ void Label::setHtmlText(QString str)
         height += qAbs(fontHeight) * 2;
     }
     m_clipRect->setHeight(height);
+    oxygine::Sprite::setHeight(height);
     setTooltipText(str);    
 #endif
 }
@@ -67,6 +68,7 @@ void Label::setStyle(const oxygine::TextStyle& st)
         height += qAbs(fontHeight) * 2;
     }
     m_clipRect->setHeight(height);
+    oxygine::Sprite::setHeight(height);
 #endif
 }
 

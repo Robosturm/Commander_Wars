@@ -246,7 +246,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(m_pTextbox);
     oxygine::spButton pButtonSelect = ObjectManager::getInstance()->createButton(tr("Select Image"), 150);
-    pButtonSelect->setPosition(width + m_pTextbox->getWidth() + 10, y);
+    pButtonSelect->setPosition(width + m_pTextbox->getScaledWidth() + 10, y);
     pBox->addItem(pButtonSelect);
     pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {

@@ -73,7 +73,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
 
     // load battle sprite data
     loadBattleSprite(pUnit.get());
-    loadArmySelector(m_pSpriteBox->getX(), m_pSpriteBox->getY() + m_pSpriteBox->getHeight() + 10);
+    loadArmySelector(m_pSpriteBox->getX(), m_pSpriteBox->getY() + m_pSpriteBox->getScaledHeight() + 10);
 
     // movement
     pLabel = oxygine::spTextField::create();

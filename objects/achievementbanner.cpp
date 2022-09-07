@@ -33,7 +33,7 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     addChild(pButtonBox);
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
     oxygine::spSprite pIcon = pWikiDatabase->getIcon(nullptr, achievement.icon, GameMap::defaultImageSize);
-    pIcon->setPosition(10, pButtonBox->getHeight() / 2 - GameMap::defaultImageSize / 2);
+    pIcon->setPosition(10, pButtonBox->getScaledHeight() / 2 - GameMap::defaultImageSize / 2);
     pButtonBox->addChild(pIcon);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
@@ -42,7 +42,7 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     spLabel pTextfield = spLabel::create(bannerWidth - 20 - GameMap::defaultImageSize * 2);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(achievement.name);
-    pTextfield->setPosition(bannerWidth - 5 - pTextfield->getWidth(), 5);
+    pTextfield->setPosition(bannerWidth - 5 - pTextfield->getScaledWidth(), 5);
     pButtonBox->addChild(pTextfield);
 }
 

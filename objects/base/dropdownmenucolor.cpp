@@ -23,8 +23,8 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
 
     oxygine::spColorRectSprite colorField = oxygine::spColorRectSprite::create();
     colorField->setColor(Qt::black);
-    colorField->setWidth(m_pClipActor->getWidth() - 10);
-    colorField->setHeight(m_pClipActor->getHeight() - 13);
+    colorField->setWidth(m_pClipActor->getScaledWidth() - 10);
+    colorField->setHeight(m_pClipActor->getScaledHeight() - 13);
     colorField->setY(7);
     m_pClipActor->addChild(colorField);
 
@@ -40,8 +40,8 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
         });
     }
     connect(this, &DropDownmenuColor::sigShowColorDialog, this, &DropDownmenuColor::showColorDialog, Qt::QueuedConnection);
-    m_Colorfield->setWidth(m_pClipActor->getWidth() - 16);
-    m_Colorfield->setHeight(m_pClipActor->getHeight() - 19);
+    m_Colorfield->setWidth(m_pClipActor->getScaledWidth() - 16);
+    m_Colorfield->setHeight(m_pClipActor->getScaledHeight() - 19);
     m_Colorfield->setColor(m_ItemColors[0].red(), m_ItemColors[0].green(), m_ItemColors[0].blue(), 255);
     m_Colorfield->setDisableColor(QColor(0, 0, 0, 0));
     m_Colorfield->setY(10);

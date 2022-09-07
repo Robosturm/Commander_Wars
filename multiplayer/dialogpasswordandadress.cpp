@@ -30,7 +30,7 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
     pSpriteBox->addChild(pText);
 
     m_pTextbox = spTextbox::create(300);
-    m_pTextbox->setPosition(Settings::getWidth() / 2 - m_pTextbox->getWidth() / 2, Settings::getHeight() / 2 - 40);
+    m_pTextbox->setPosition(Settings::getWidth() / 2 - m_pTextbox->getScaledWidth() / 2, Settings::getHeight() / 2 - 40);
     m_pTextbox->setCurrentText("");
     pSpriteBox->addChild(m_pTextbox);
 
@@ -41,7 +41,7 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
     pSpriteBox->addChild(pText);
 
     m_pPasswordbox = spPasswordbox::create(300);
-    m_pPasswordbox->setPosition(Settings::getWidth() / 2 - m_pTextbox->getWidth() / 2, Settings::getHeight() / 2 + 40);
+    m_pPasswordbox->setPosition(Settings::getWidth() / 2 - m_pTextbox->getScaledWidth() / 2, Settings::getHeight() / 2 + 40);
     m_pPasswordbox->setCurrentText("");
     pSpriteBox->addChild(m_pPasswordbox);
 
@@ -62,7 +62,7 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
         }
     });
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_CancelButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() - 10,
+    m_CancelButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() - 10,
                                 Settings::getHeight() / 2 + 90);
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)

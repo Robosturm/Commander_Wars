@@ -256,13 +256,13 @@ void EditorSelection::changeScrollValue(qint32 dir)
     else
     {
         m_PlacementActor->setY(m_PlacementActor->getY() - GameMap::getImageSize());
-        if (m_PlacementActor->getHeight() < m_PlacementSelectionClip->getHeight())
+        if (m_PlacementActor->getScaledHeight() < m_PlacementSelectionClip->getScaledHeight())
         {
             m_PlacementActor->setY(-GameMap::getImageSize());
         }
-        else if (m_PlacementActor->getY() < -m_PlacementActor->getHeight() + m_PlacementSelectionClip->getHeight())
+        else if (m_PlacementActor->getY() < -m_PlacementActor->getScaledHeight() + m_PlacementSelectionClip->getScaledHeight())
         {
-            m_PlacementActor->setY(-m_PlacementActor->getHeight() + m_PlacementSelectionClip->getHeight());
+            m_PlacementActor->setY(-m_PlacementActor->getScaledHeight() + m_PlacementSelectionClip->getScaledHeight());
         }
     }
 }

@@ -112,7 +112,7 @@ DialogRandomMap::DialogRandomMap()
     text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Heigth:"));
-    text->setPosition(30, 5 + y + text->getHeight());
+    text->setPosition(30, 5 + y + text->getScaledHeight());
     m_pPanel->addItem(text);
     m_MapHeigth = spSpinBox::create(300, 1, 999, SpinBox::Mode::Int);
     m_MapHeigth->setTooltipText(tr("Selects the height of the new map."));
@@ -125,7 +125,7 @@ DialogRandomMap::DialogRandomMap()
     text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Player:"));
-    text->setPosition(30, 5 + y + text->getHeight());
+    text->setPosition(30, 5 + y + text->getScaledHeight());
     m_pPanel->addItem(text);
     m_MapPlayerCount = spSpinBox::create(300, 2, 40, SpinBox::Mode::Int);
     m_MapPlayerCount->setTooltipText(tr("Selects the amount of players for the new map."));
@@ -139,7 +139,7 @@ DialogRandomMap::DialogRandomMap()
     text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Mirrored Map:"));
-    text->setPosition(30, 5 + y + text->getHeight());
+    text->setPosition(30, 5 + y + text->getScaledHeight());
     m_pPanel->addItem(text);
     m_mirrored = spCheckbox::create();
     m_mirrored->setTooltipText(tr("If the map should be created in a mirrored/rotated base. This requires an even number of players to work."));
@@ -152,7 +152,7 @@ DialogRandomMap::DialogRandomMap()
     text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Seed:"));
-    text->setPosition(30, 5 + y + text->getHeight());
+    text->setPosition(30, 5 + y + text->getScaledHeight());
     m_pPanel->addItem(text);
     m_Seed = spSpinBox::create(300, 0, std::numeric_limits<qint32>::max() - 1, SpinBox::Mode::Int);
     m_Seed->setTooltipText(tr("The seed to generate the new map. Using the same map settings with the same seed will generate the same map."));
@@ -165,7 +165,7 @@ DialogRandomMap::DialogRandomMap()
     text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Create Road:"));
-    text->setPosition(30, 5 + y + text->getHeight());
+    text->setPosition(30, 5 + y + text->getScaledHeight());
     m_pPanel->addItem(text);
     m_CreateRoad = spCheckbox::create();
     m_CreateRoad->setTooltipText(tr("If selected roads are created between the HQ's of the players."));
@@ -178,7 +178,7 @@ DialogRandomMap::DialogRandomMap()
     text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Base Size:"));
-    text->setPosition(30, 5 + y + text->getHeight());
+    text->setPosition(30, 5 + y + text->getScaledHeight());
     m_pPanel->addItem(text);
     m_BaseSize = spSlider::create(Settings::getWidth() - 220 - width, 0, 100);
     m_BaseSize->setCurrentValue(10);
@@ -191,19 +191,19 @@ DialogRandomMap::DialogRandomMap()
     m_TerrainChanceLabel = oxygine::spTextField::create();
     m_TerrainChanceLabel->setStyle(style);
     m_TerrainChanceLabel->setHtmlText(tr("Terrain Distribution"));
-    m_TerrainChanceLabel->setPosition(30, 5 + y + m_TerrainChanceLabel->getHeight());
+    m_TerrainChanceLabel->setPosition(30, 5 + y + m_TerrainChanceLabel->getScaledHeight());
     m_pPanel->addItem(m_TerrainChanceLabel);
     y += 40;
     m_BuildingChanceLabel = oxygine::spTextField::create();
     m_BuildingChanceLabel->setStyle(style);
     m_BuildingChanceLabel->setHtmlText(tr("Building Distribution"));
-    m_BuildingChanceLabel->setPosition(30, 5 + y + m_BuildingChanceLabel->getHeight());
+    m_BuildingChanceLabel->setPosition(30, 5 + y + m_BuildingChanceLabel->getScaledHeight());
     m_pPanel->addItem(m_BuildingChanceLabel);
     y += 40;
     m_OwnerDistributionLabel = oxygine::spTextField::create();
     m_OwnerDistributionLabel->setStyle(style);
     m_OwnerDistributionLabel->setHtmlText(tr("Owner Distribution"));
-    m_OwnerDistributionLabel->setPosition(30, 5 + y + m_OwnerDistributionLabel->getHeight());
+    m_OwnerDistributionLabel->setPosition(30, 5 + y + m_OwnerDistributionLabel->getScaledHeight());
     m_pPanel->addItem(m_OwnerDistributionLabel);
     y += 40;
 
@@ -249,13 +249,13 @@ DialogRandomMap::DialogRandomMap()
     m_UnitDistributionLabel = oxygine::spTextField::create();
     m_UnitDistributionLabel->setStyle(style);
     m_UnitDistributionLabel->setHtmlText(tr("Unit distribution:"));
-    m_UnitDistributionLabel->setPosition(30, 5 + y + m_UnitDistributionLabel->getHeight());
+    m_UnitDistributionLabel->setPosition(30, 5 + y + m_UnitDistributionLabel->getScaledHeight());
     m_pPanel->addItem(m_UnitDistributionLabel);
     y += 40;
     m_UnitChanceLabel = oxygine::spTextField::create();
     m_UnitChanceLabel->setStyle(style);
     m_UnitChanceLabel->setHtmlText(tr("Unit spawn chance"));
-    m_UnitChanceLabel->setPosition(30, 5 + y + m_UnitChanceLabel->getHeight());
+    m_UnitChanceLabel->setPosition(30, 5 + y + m_UnitChanceLabel->getScaledHeight());
     m_pPanel->addItem(m_UnitChanceLabel);
     y += 40;
 
@@ -270,7 +270,7 @@ DialogRandomMap::DialogRandomMap()
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {

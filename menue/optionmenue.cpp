@@ -114,7 +114,7 @@ OptionMenue::OptionMenue(const QString & xmlFile)
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"), 200);
     addChild(pButtonExit);
     pButtonExit->setPosition(Settings::getWidth()  / 2.0f + 10,
-                             Settings::getHeight() - pButtonExit->getHeight() - 10);
+                             Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -123,8 +123,8 @@ OptionMenue::OptionMenue(const QString & xmlFile)
 
     oxygine::spButton pButtonReset = ObjectManager::createButton(tr("Reset settings"), 200);
     addChild(pButtonReset);
-    pButtonReset->setPosition(Settings::getWidth() / 2.0f - pButtonReset->getWidth() - 10,
-                             Settings::getHeight() - pButtonReset->getHeight() - 10);
+    pButtonReset->setPosition(Settings::getWidth() / 2.0f - pButtonReset->getScaledWidth() - 10,
+                             Settings::getHeight() - pButtonReset->getScaledHeight() - 10);
     pButtonReset->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowResetBox();

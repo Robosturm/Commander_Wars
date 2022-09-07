@@ -51,7 +51,8 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_ExitButton->getHeight());
+    m_ExitButton->setPosition(30,
+                              Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -69,7 +70,8 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     connect(this, &BuildListDialog::sigShowSaveBannlist, this, &BuildListDialog::showSaveBannlist, Qt::QueuedConnection);
 
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
-    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 75 - m_ToggleAll->getHeight());
+    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 ,
+                             Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
     pSpriteBox->addChild(m_ToggleAll);
     m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {

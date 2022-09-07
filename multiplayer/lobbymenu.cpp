@@ -65,7 +65,7 @@ LobbyMenu::LobbyMenu()
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
-    pButtonExit->setPosition(10, Settings::getHeight() - pButtonExit->getHeight() - 10);
+    pButtonExit->setPosition(10, Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -74,7 +74,8 @@ LobbyMenu::LobbyMenu()
 
     oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Direct Host"));
     addChild(pButtonHost);
-    pButtonHost->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
+    pButtonHost->setPosition(Settings::getWidth() - pButtonHost->getScaledWidth() - 10,
+                             Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonHost->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigHostLocal();
@@ -83,7 +84,8 @@ LobbyMenu::LobbyMenu()
 
     m_pButtonHostOnServer = ObjectManager::createButton(tr("Server Host"));
     addChild(m_pButtonHostOnServer);
-    m_pButtonHostOnServer->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() * 2 - 10);
+    m_pButtonHostOnServer->setPosition(Settings::getWidth() - pButtonHost->getScaledWidth() - 10,
+                                       Settings::getHeight() - pButtonExit->getScaledHeight() * 2 - 10);
     m_pButtonHostOnServer->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigHostServer();
@@ -93,7 +95,8 @@ LobbyMenu::LobbyMenu()
 
     m_pButtonGameJoin = ObjectManager::createButton(tr("Join Game"));
     addChild(m_pButtonGameJoin);
-    m_pButtonGameJoin->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
+    m_pButtonGameJoin->setPosition(Settings::getWidth() / 2 + 10,
+                                   Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
     m_pButtonGameJoin->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigJoinGame();
@@ -103,7 +106,7 @@ LobbyMenu::LobbyMenu()
 
     m_pButtonGameObserve = ObjectManager::createButton(tr("Observe Game"));
     addChild(m_pButtonGameObserve);
-    m_pButtonGameObserve->setPosition(Settings::getWidth() / 2 + 10, m_pButtonGameJoin->getY() - m_pButtonGameJoin->getHeight());
+    m_pButtonGameObserve->setPosition(Settings::getWidth() / 2 + 10, m_pButtonGameJoin->getY() - m_pButtonGameJoin->getScaledHeight());
     m_pButtonGameObserve->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigObserveGame();
@@ -113,7 +116,8 @@ LobbyMenu::LobbyMenu()
 
     oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Address"));
     addChild(pButtonJoinAdress);
-    pButtonJoinAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getWidth(), Settings::getHeight() - pButtonExit->getHeight() - 10);
+    pButtonJoinAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getScaledWidth(),
+                                   Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonJoinAdress->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigJoinAdress();
@@ -122,7 +126,8 @@ LobbyMenu::LobbyMenu()
 
     oxygine::spButton pButtonObserveAdress = ObjectManager::createButton(tr("Observe Address"));
     addChild(pButtonObserveAdress);
-    pButtonObserveAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getWidth(), pButtonJoinAdress->getY() - pButtonJoinAdress->getHeight());
+    pButtonObserveAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getScaledWidth(),
+                                      pButtonJoinAdress->getY() - pButtonJoinAdress->getScaledHeight());
     pButtonObserveAdress->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigObserveAdress();
@@ -131,7 +136,7 @@ LobbyMenu::LobbyMenu()
 
     m_pButtonSwapLobbyMode = ObjectManager::createButton(tr("Show my games"));
     addChild(m_pButtonSwapLobbyMode);
-    m_pButtonSwapLobbyMode->setPosition(Settings::getWidth() / 2 - m_pButtonSwapLobbyMode->getWidth() - 5, 10);
+    m_pButtonSwapLobbyMode->setPosition(Settings::getWidth() / 2 - m_pButtonSwapLobbyMode->getScaledWidth() - 5, 10);
     m_pButtonSwapLobbyMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigChangeLobbyMode();
@@ -149,17 +154,17 @@ LobbyMenu::LobbyMenu()
     m_pButtonUpdateGamesMode->setEnabled(false);
     connect(this, &LobbyMenu::sigRequestUpdateGames, this, &LobbyMenu::requestUpdateGames, Qt::QueuedConnection);
 
-    qint32 height = m_pButtonHostOnServer->getY() - 220 - 10 - m_pButtonSwapLobbyMode->getHeight();
+    qint32 height = m_pButtonHostOnServer->getY() - 220 - 10 - m_pButtonSwapLobbyMode->getScaledHeight();
     if (Settings::getSmallScreenDevice())
     {
-        height = m_pButtonHostOnServer->getY() - 20 - m_pButtonSwapLobbyMode->getHeight();
+        height = m_pButtonHostOnServer->getY() - 20 - m_pButtonSwapLobbyMode->getScaledHeight();
     }
 
     QStringList header = {tr("Map"), tr("Players"), tr("Description"), tr("Mods"), tr("Locked")};
     qint32 itemWidth = (Settings::getWidth() - 20 - 80 - 100 - 90) / 3;
     QVector<qint32> widths = {itemWidth, 100, itemWidth, itemWidth, 90};
     m_gamesview = spComplexTableView::create(widths, header, height);
-    m_gamesview->setPosition(10, 10 + 10 + pButtonJoinAdress->getHeight());
+    m_gamesview->setPosition(10, 10 + 10 + pButtonJoinAdress->getScaledHeight());
     addChild(m_gamesview);
 
     spNetworkInterface pInterface = m_pTCPClient;
@@ -168,10 +173,10 @@ LobbyMenu::LobbyMenu()
         pInterface = MainServer::getInstance()->getGameServer();
     }
 
-    height = m_pButtonHostOnServer->getY() - m_gamesview->getY() - m_gamesview->getHeight() - 20;
+    height = m_pButtonHostOnServer->getY() - m_gamesview->getY() - m_gamesview->getScaledHeight() - 20;
 
     spChat pChat = spChat::create(pInterface, QSize(Settings::getWidth() - 20, height), NetworkInterface::NetworkSerives::LobbyChat);
-    pChat->setPosition(10, m_gamesview->getY() + m_gamesview->getHeight() + 10);
+    pChat->setPosition(10, m_gamesview->getY() + m_gamesview->getScaledHeight() + 10);
     if (Settings::getSmallScreenDevice())
     {
         pChat->setVisible(false);

@@ -78,7 +78,7 @@ TimeSpinBox::TimeSpinBox(qint32 width)
         m_spinDirection = 0;
     });
     m_pSpinBox->addChild(m_pArrowDown);
-    m_pArrowDown->setPosition(9, m_pSpinBox->getHeight() - m_pArrowDown->getHeight() - 8);
+    m_pArrowDown->setPosition(9, m_pSpinBox->getScaledHeight() - m_pArrowDown->getScaledHeight() - 8);
 
     m_pArrowUp = oxygine::spButton::create();
     // pButton->setPosition(200, 200);

@@ -157,7 +157,7 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     m_pBuildingBackground->setResAnim(pAnim);
     m_pBuildingBackground->setSize(Settings::getWidth() - width - 100, GameMap::getImageSize() * 1.2f + 32);
     m_pBuildingBackground->setPosition(m_MapInfo->getX(),
-                                       m_MapInfo->getY() + m_MapInfo->getHeight() + 20);
+                                       m_MapInfo->getY() + m_MapInfo->getScaledHeight() + 20);
     oxygine::TextStyle styleMain16 = oxygine::TextStyle(FontManager::getMainFont16());
     styleMain16.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     styleMain16.multiline = false;
@@ -212,7 +212,7 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
             }
         }
     });
-    pButtonTop->setPosition(m_MapInfo->getX() - 25, m_MapInfo->getY() + m_MapInfo->getHeight() + 30);
+    pButtonTop->setPosition(m_MapInfo->getX() - 25, m_MapInfo->getY() + m_MapInfo->getScaledHeight() + 30);
     addChild(pButtonTop);
 
     pButtonTop = oxygine::spButton::create();

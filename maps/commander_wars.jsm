@@ -193,7 +193,6 @@ var Constructor = function()
         // --------------------------------------------------------------
         // Communication Devastation
         // --------------------------------------------------------------
-        // 16 64
         // 2175 602
         var communicationDevastationName = "Mecha in the Middle";
         var communicationDevastation = variables.createVariable(communicationDevastationName);

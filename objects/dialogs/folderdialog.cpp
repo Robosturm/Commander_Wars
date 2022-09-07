@@ -37,7 +37,7 @@ FolderDialog::FolderDialog(QString startFolder)
     connect(m_CurrentFolder.get(), &Textbox::sigTextChanged, this, &FolderDialog::showFolder, Qt::QueuedConnection);
     // folder file selection
     m_MainPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150), QSize(Settings::getWidth() - 60, Settings::getHeight() - 300));
-    m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getHeight() + 10);
+    m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getScaledHeight() + 10);
     pSpriteBox->addChild(m_MainPanel);
 
     // ok button
@@ -59,7 +59,7 @@ FolderDialog::FolderDialog(QString startFolder)
     // cancel button
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_CancelButton->setPosition(30,
-                                Settings::getHeight() - 30 - m_CancelButton->getHeight());
+                                Settings::getHeight() - 30 - m_CancelButton->getScaledHeight());
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {

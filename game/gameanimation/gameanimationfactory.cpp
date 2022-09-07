@@ -220,10 +220,10 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
                 pBack->setAlpha(128);
             }
             qint32 scaleFactor = 2.0f;
-            if (scaleFactor * (pRet->getHeight() - 30) > Settings::getHeight())
+            if (scaleFactor * (pRet->getScaledHeight() - 30) > Settings::getHeight())
             {
                 scaleFactor = 1.0f;
-                while (scaleFactor * (pRet->getHeight() - 30) > Settings::getHeight())
+                while (scaleFactor * (pRet->getScaledHeight() - 30) > Settings::getHeight())
                 {
                     scaleFactor /= 2;
                 }

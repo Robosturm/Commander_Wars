@@ -76,14 +76,14 @@ IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
 
     m_pGameInfoBox = oxygine::spBox9Sprite::create();
     m_pGameInfoBox->setResAnim(pAnim);
-    m_pGameInfoBox->setPosition(0, pMiniMapBox->getHeight());
+    m_pGameInfoBox->setPosition(0, pMiniMapBox->getScaledHeight());
     m_pGameInfoBox->setSize(width, gameInfoHeigth);
     m_pGameInfoBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(m_pGameInfoBox);
 
     m_pCursorInfoBox = oxygine::spBox9Sprite::create();
     m_pCursorInfoBox->setResAnim(pAnim);
-    m_pCursorInfoBox->setPosition(0, pMiniMapBox->getHeight() + gameInfoHeigth);
+    m_pCursorInfoBox->setPosition(0, pMiniMapBox->getScaledHeight() + gameInfoHeigth);
     m_pCursorInfoBox->setSize(width, cursorInfoHeigth);
     m_pCursorInfoBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
@@ -99,7 +99,8 @@ IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
         m_pDetailedViewBox->setScale(1 / getScaleX());
     }
     m_pDetailedViewBox->setSize(130, 199);
-    m_pDetailedViewBox->setPosition(-m_pDetailedViewBox->getScaledWidth(), m_pCursorInfoBox->getHeight() - m_pDetailedViewBox->getScaledHeight());
+    m_pDetailedViewBox->setPosition(-m_pDetailedViewBox->getScaledWidth(),
+                                    m_pCursorInfoBox->getScaledHeight() - m_pDetailedViewBox->getScaledHeight());
 
     setX(Settings::getWidth() - getScaledWidth());
     addChild(m_pCursorInfoBox);

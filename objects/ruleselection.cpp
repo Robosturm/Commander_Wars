@@ -244,7 +244,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     addChild(m_pWeatherSlider);
     connect(m_pWeatherSlider.get(), &Multislider::signalSliderChanged, this, &RuleSelection::weatherChancesChanged, Qt::QueuedConnection);
 
-    y += m_pWeatherSlider->getHeight();
+    y += m_pWeatherSlider->getScaledHeight();
     textField = spLabel::create(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("Random Weather: "));

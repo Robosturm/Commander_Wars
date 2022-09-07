@@ -22,7 +22,7 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
 
     m_VScrollbar = spV_Scrollbar::create(size.width() - sliderSize, contentSize.width());
     addChild(m_VScrollbar);
-    m_VScrollbar->setY(size.height() - m_VScrollbar->getHeight());
+    m_VScrollbar->setY(size.height() - m_VScrollbar->getScaledHeight());
     connect(m_VScrollbar.get(), &V_Scrollbar::sigScrollValueChanged, this, &Panel::scrolledX, Qt::QueuedConnection);
 
     m_ClipRect = oxygine::spClipRectActor::create();
@@ -31,18 +31,19 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
         m_Panelbox = oxygine::spBox9Sprite::create();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim(resAnim);
         m_Panelbox->setResAnim(pAnim);
-        m_Panelbox->setSize(size.width() - m_HScrollbar->getWidth(),
-                            size.height() - m_VScrollbar->getHeight());
+        m_Panelbox->setSize(size.width() - m_HScrollbar->getScaledWidth(),
+                            size.height() - m_VScrollbar->getScaledHeight());
         addChild(m_Panelbox);
         m_Panelbox->addChild(m_ClipRect);
         m_ClipRect->setPosition(10, 10);
-        m_ClipRect->setSize(m_Panelbox->getWidth() - 20, m_Panelbox->getHeight() - 20);
+        m_ClipRect->setSize(m_Panelbox->getScaledWidth() - 20,
+                            m_Panelbox->getScaledHeight() - 20);
     }
     else
     {
         addChild(m_ClipRect);
-        m_ClipRect->setSize(size.width() - m_HScrollbar->getWidth(),
-                            size.height() - m_VScrollbar->getHeight());
+        m_ClipRect->setSize(size.width() - m_HScrollbar->getScaledWidth(),
+                            size.height() - m_VScrollbar->getScaledHeight());
     }
     m_ContentRect = oxygine::spActor::create();
     m_SlidingActor = oxygine::spSlidingActor::create();
@@ -82,7 +83,7 @@ void Panel::scrolledY(float value)
     if (m_HScrollbar->getVisible() && getVisible())
     {
         oxygine::RectF bounds = m_SlidingActor->getDragBounds();
-        qint32 newY = -(m_ContentRect->getHeight() - m_SlidingActor->getHeight()) * value;
+        qint32 newY = -(m_ContentRect->getScaledHeight() - m_SlidingActor->getScaledHeight()) * value;
         if (newY < bounds.getTop())
         {
             newY = bounds.getTop();
@@ -104,7 +105,7 @@ void Panel::scrolledX(float value)
     if (m_VScrollbar->getVisible() && getVisible())
     {
         oxygine::RectF bounds = m_SlidingActor->getDragBounds();
-        qint32 newX = -(m_ContentRect->getWidth() - m_SlidingActor->getWidth()) * value;
+        qint32 newX = -(m_ContentRect->getScaledWidth() - m_SlidingActor->getScaledWidth()) * value;
         if (newX < bounds.getLeft())
         {
             newX = bounds.getLeft();
@@ -125,7 +126,7 @@ void Panel::doUpdate(const oxygine::UpdateState& us)
 {
     if (m_VScrollbar->getVisible())
     {
-        float value = m_ContentRect->getX() / -(m_ContentRect->getWidth() - m_SlidingActor->getWidth());
+        float value = m_ContentRect->getX() / -(m_ContentRect->getScaledWidth() - m_SlidingActor->getScaledWidth());
         m_VScrollbar->setScrollvalue(value);
     }
     else
@@ -134,7 +135,7 @@ void Panel::doUpdate(const oxygine::UpdateState& us)
     }
     if (m_HScrollbar->getVisible())
     {
-        float value = m_ContentRect->getY() / -(m_ContentRect->getHeight() - m_SlidingActor->getHeight());
+        float value = m_ContentRect->getY() / -(m_ContentRect->getScaledHeight() - m_SlidingActor->getScaledHeight());
         m_HScrollbar->setScrollvalue(value);
     }
     else
@@ -212,23 +213,23 @@ void Panel::setContentHeigth(qint32 heigth)
         {
             if (m_Panelbox.get() != nullptr)
             {
-                m_Panelbox->setWidth(m_Panelbox->getWidth() + m_HScrollbar->getWidth());
+                m_Panelbox->setWidth(m_Panelbox->getScaledWidth() + m_HScrollbar->getScaledWidth());
             }
-            m_ClipRect->setWidth(m_ClipRect->getWidth() + m_HScrollbar->getWidth());
+            m_ClipRect->setWidth(m_ClipRect->getScaledWidth() + m_HScrollbar->getScaledWidth());
             m_HScrollbar->setVisible(false);
-            m_VScrollbar->setWidth(m_VScrollbar->getWidth() + m_HScrollbar->getWidth());
+            m_VScrollbar->setWidth(m_VScrollbar->getScaledWidth() + m_HScrollbar->getScaledWidth());
         }
     }
     else if (!m_HScrollbar->getVisible())
     {
         if (m_Panelbox.get() != nullptr)
         {
-            m_Panelbox->setWidth(m_Panelbox->getWidth() - m_HScrollbar->getWidth());
+            m_Panelbox->setWidth(m_Panelbox->getScaledWidth() - m_HScrollbar->getScaledWidth());
         }
-        m_ClipRect->setWidth(m_ClipRect->getWidth() - m_HScrollbar->getWidth());
+        m_ClipRect->setWidth(m_ClipRect->getScaledWidth() - m_HScrollbar->getScaledWidth());
 
         m_HScrollbar->setVisible(true);
-        m_VScrollbar->setWidth(m_VScrollbar->getWidth() - m_HScrollbar->getWidth());
+        m_VScrollbar->setWidth(m_VScrollbar->getScaledWidth() - m_HScrollbar->getScaledWidth());
     }
     m_SlidingActor->setSize(m_ClipRect->getSize());
     m_ContentRect->setHeight(heigth);
@@ -248,22 +249,22 @@ void Panel::setContentWidth(qint32 width)
         {
             if (m_Panelbox.get() != nullptr)
             {
-                m_Panelbox->setHeight(m_Panelbox->getHeight() + m_VScrollbar->getHeight());
+                m_Panelbox->setHeight(m_Panelbox->getScaledHeight() + m_VScrollbar->getScaledHeight());
             }
-            m_ClipRect->setHeight(m_ClipRect->getHeight() + m_VScrollbar->getHeight());
+            m_ClipRect->setHeight(m_ClipRect->getScaledHeight() + m_VScrollbar->getScaledHeight());
             m_VScrollbar->setVisible(false);
-            m_HScrollbar->setHeight(m_HScrollbar->getHeight() + m_VScrollbar->getHeight());
+            m_HScrollbar->setHeight(m_HScrollbar->getScaledHeight() + m_VScrollbar->getScaledHeight());
         }
     }
     else if (!m_VScrollbar->getVisible())
     {
         if (m_Panelbox.get() != nullptr)
         {
-            m_Panelbox->setHeight(m_Panelbox->getHeight() - m_VScrollbar->getHeight());
+            m_Panelbox->setHeight(m_Panelbox->getScaledHeight() - m_VScrollbar->getScaledHeight());
         }
-        m_ClipRect->setHeight(m_ClipRect->getHeight() - m_VScrollbar->getHeight());
+        m_ClipRect->setHeight(m_ClipRect->getScaledHeight() - m_VScrollbar->getScaledHeight());
         m_VScrollbar->setVisible(true);
-        m_HScrollbar->setHeight(m_HScrollbar->getHeight() - m_VScrollbar->getHeight());
+        m_HScrollbar->setHeight(m_HScrollbar->getScaledHeight() - m_VScrollbar->getScaledHeight());
     }
     m_SlidingActor->setSize(m_ClipRect->getSize());
     m_ContentRect->setWidth(width);
@@ -274,12 +275,12 @@ void Panel::setContentWidth(qint32 width)
 
 qint32 Panel::getContentHeigth()
 {
-    return m_ContentRect->getHeight();
+    return m_ContentRect->getScaledHeight();
 }
 
 qint32 Panel::getContentWidth()
 {
-   return m_ContentRect->getWidth();
+   return m_ContentRect->getScaledWidth();
 }
 
 void Panel::addItem(oxygine::spActor pActor)

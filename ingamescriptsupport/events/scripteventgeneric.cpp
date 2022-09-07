@@ -171,7 +171,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 pBox->addItem(pTextbox);
                 ObjectManager* pObjectManager = ObjectManager::getInstance();
                 oxygine::spButton pButtonSelect = pObjectManager->createButton(tr("Select"), 150);
-                pButtonSelect->setPosition(10 + pTextbox->getX() + pTextbox->getWidth(), y);
+                pButtonSelect->setPosition(10 + pTextbox->getX() + pTextbox->getScaledWidth(), y);
                 pBox->addChild(pButtonSelect);
                 auto* pPtrTextbox = pTextbox.get();
                 pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [this, i, pPtrTextbox](oxygine::Event*)

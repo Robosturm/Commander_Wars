@@ -51,8 +51,8 @@ Achievementmenu::Achievementmenu()
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
-    pButtonExit->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f,
-                             Settings::getHeight() - pButtonExit->getHeight() - 10);
+    pButtonExit->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getScaledWidth() / 2.0f,
+                             Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -80,7 +80,7 @@ Achievementmenu::Achievementmenu()
     addChild(m_SearchString);
     oxygine::spButton pButton = ObjectManager::createButton(tr("Search"));
     addChild(pButton);
-    pButton->setPosition(m_SearchString->getWidth() + m_SearchString->getX() + 10, y);
+    pButton->setPosition(m_SearchString->getScaledWidth() + m_SearchString->getX() + 10, y);
     pButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigSearch();
@@ -94,7 +94,7 @@ Achievementmenu::Achievementmenu()
     pTextfield->setHtmlText(tr("Group: "));
     pTextfield->setPosition(x, y);
     addChild(pTextfield);
-    x += 10 + pTextfield->getWidth();
+    x += 10 + pTextfield->getScaledWidth();
 
     QStringList groups{tr("All")};
     Userdata* pUserdata = Userdata::getInstance();
@@ -113,14 +113,14 @@ Achievementmenu::Achievementmenu()
     {
         search();
     }, Qt::QueuedConnection);
-    x += 10 + m_group->getWidth();
+    x += 10 + m_group->getScaledWidth();
 
     pTextfield = spLabel::create(100);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Sort: "));
     pTextfield->setPosition(x, y);
     addChild(pTextfield);
-    x += 10 + pTextfield->getWidth();
+    x += 10 + pTextfield->getScaledWidth();
     m_sort = spDropDownmenu::create(200, QStringList{tr("None"), tr("Ascending"), tr("Descending")});
     m_sort->setPosition(x, y);
     addChild(m_sort);
@@ -128,7 +128,7 @@ Achievementmenu::Achievementmenu()
     {
         search();
     }, Qt::QueuedConnection);
-    x += 10 + m_sort->getWidth();
+    x += 10 + m_sort->getScaledWidth();
     y += 50;
 
     QSize size(Settings::getWidth() - 20, Settings::getHeight() - 210);

@@ -795,9 +795,9 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
         oxygine::spSlidingActorNoClipRect pMapSliding = m_pMenu->getMapSliding();
         oxygine::spActor pMapSlidingActor = m_pMenu->getMapSlidingActor();
         float posX = x * GameMap::getImageSize() * m_pMap->getZoom() + m_pMap->getX() + pMapSliding->getX() + pMapSlidingActor->getX();
-        if (posX + m_CurrentMenu->getWidth() > Settings::getWidth() - 40 - m_pMenu->getGameInfoBar()->getWidth())
+        if (posX + m_CurrentMenu->getScaledWidth() > Settings::getWidth() - 40 - m_pMenu->getGameInfoBar()->getScaledWidth())
         {
-            posX = Settings::getWidth() - m_CurrentMenu->getWidth() - 40 - m_pMenu->getGameInfoBar()->getWidth();
+            posX = Settings::getWidth() - m_CurrentMenu->getScaledWidth() - 40 - m_pMenu->getGameInfoBar()->getScaledWidth();
         }
         if (posX < 10)
         {
@@ -808,9 +808,9 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
         {
             posY = 10;
         }
-        else if (posY + m_CurrentMenu->getHeight() > Settings::getHeight())
+        else if (posY + m_CurrentMenu->getScaledHeight() > Settings::getHeight())
         {
-            posY = Settings::getHeight() - m_CurrentMenu->getHeight() - 10;
+            posY = Settings::getHeight() - m_CurrentMenu->getScaledHeight() - 10;
         }
         m_CurrentMenu->setPosition(posX, posY);
         m_pMenu->addChild(m_CurrentMenu);
@@ -1172,7 +1172,7 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
     {
         oxygine::spColorRectSprite pRect = oxygine::spColorRectSprite::create();
         pRect->setPosition(7, 4);
-        pRect->setSize(baseWidth, pBox->getHeight() - 10);
+        pRect->setSize(baseWidth, pBox->getScaledHeight() - 10);
         if (m_pPlayer != nullptr)
         {
             pRect->setColor(m_pPlayer->getColor());
@@ -1198,8 +1198,8 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
     if (pData->enemyUnitValues.size() > 0)
     {
         oxygine::spColorRectSprite pRect = oxygine::spColorRectSprite::create();
-        pRect->setSize(baseWidth, pBox->getHeight() - 10);
-        pRect->setPosition(pBox->getWidth() - 4 - pRect->getWidth(), 4);
+        pRect->setSize(baseWidth, pBox->getScaledHeight() - 10);
+        pRect->setPosition(pBox->getScaledWidth() - 4 - pRect->getScaledWidth(), 4);
         pRect->setColor(pData->enemyColor);
         pRect->setAlpha(200);
         pBox->addChild(pRect);

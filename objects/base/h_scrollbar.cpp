@@ -51,7 +51,7 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
         m_scroll = 0;
     });
     m_pBox->addChild(m_pArrowDown);
-    m_pArrowDown->setPosition(9, heigth - m_pArrowDown->getHeight() - 8);
+    m_pArrowDown->setPosition(9, heigth - m_pArrowDown->getScaledHeight() - 8);
 
     oxygine::spButton pArrowUp = oxygine::spButton::create();
     // pButton->setPosition(200, 200);
@@ -87,14 +87,14 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     m_slider->setResAnim(pAnim);
 
     qint32 sliderHeight = 50;
-    sliderHeight = ((heigth - m_slider->getHeight() - 20 - 20) * heigth) / contentHeigth;
+    sliderHeight = ((heigth - m_slider->getScaledHeight() - 20 - 20) * heigth) / contentHeigth;
     if (sliderHeight < 11)
     {
         sliderHeight = 11;
     }
-    else if (sliderHeight > (heigth - m_slider->getHeight() - 20 - 20))
+    else if (sliderHeight > (heigth - m_slider->getScaledHeight() - 20 - 20))
     {
-        sliderHeight = (heigth - m_slider->getHeight() - 20 - 20);
+        sliderHeight = (heigth - m_slider->getScaledHeight() - 20 - 20);
     }
 
     m_slider->setSize(18, sliderHeight);
@@ -155,20 +155,20 @@ void H_Scrollbar::scroll(oxygine::Event* pEvent)
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-            qint32 y = pTouchEvent->localPosition.y - m_slider->getHeight() / 2;
+            qint32 y = pTouchEvent->localPosition.y - m_slider->getScaledHeight() / 2;
             if (y < 20)
             {
                 y = 20;
             }
-            else if (y > getHeight() - m_slider->getHeight() - 20)
+            else if (y > getScaledHeight() - m_slider->getScaledHeight() - 20)
             {
-                y = getHeight() - m_slider->getHeight() - 20;
+                y = getScaledHeight() - m_slider->getScaledHeight() - 20;
             }
             m_slider->setY(y);
             // calc scroll value :)
-            if (static_cast<float>(getHeight() - m_slider->getHeight() - 20 - 20) > 0)
+            if (static_cast<float>(getScaledHeight() - m_slider->getScaledHeight() - 20 - 20) > 0)
             {
-                m_Scrollvalue = static_cast<float>(y - 20) / static_cast<float>(getHeight() - m_slider->getHeight() - 20 - 20);
+                m_Scrollvalue = static_cast<float>(y - 20) / static_cast<float>(getHeight() - m_slider->getScaledHeight() - 20 - 20);
             }
             else
             {
@@ -266,7 +266,7 @@ void H_Scrollbar::changeScrollValue(float value)
         {
             // all fine do nothing
         }
-        m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getHeight() - 20 - 20));
+        m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getScaledHeight() - 20 - 20));
         emit sigScrollValueChanged(m_Scrollvalue);
     }
 }
@@ -288,7 +288,7 @@ void H_Scrollbar::setScrollvalue(float Scrollvalue)
         {
             // all fine do nothing
         }
-        m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getHeight() - 20 - 20));
+        m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getScaledHeight() - 20 - 20));
     }
 }
 
@@ -298,7 +298,7 @@ void H_Scrollbar::setHeight(float h)
     oxygine::Actor::setHeight(h);
     m_Heigth = h;
     m_pBox->setHeight(h);
-    m_pArrowDown->setPosition(9, m_Heigth - m_pArrowDown->getHeight() - 8);
+    m_pArrowDown->setPosition(9, m_Heigth - m_pArrowDown->getScaledHeight() - 8);
     setContentHeigth(m_ContentHeigth);
     
 }

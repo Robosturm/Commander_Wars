@@ -61,7 +61,8 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
     }
     m_pRuleSelection = spRuleSelection::create(m_pMap, Settings::getWidth() - 80, mode, enabled);
     connect(m_pRuleSelection.get(), &RuleSelection::sigSizeChanged, this, &RuleSelectionDialog::ruleSelectionSizeChanged, Qt::QueuedConnection);
-    QSize size(Settings::getWidth() - 20, Settings::getHeight() - 40 * 2 - m_OkButton->getHeight());
+    QSize size(Settings::getWidth() - 20,
+               Settings::getHeight() - 40 * 2 - m_OkButton->getScaledHeight());
     m_pPanel = spPanel::create(true,  size, size);
     m_pPanel->setPosition(10, 20);
     m_pPanel->addItem(m_pRuleSelection);

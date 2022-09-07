@@ -331,7 +331,7 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         parent->addChild(pLabel);
         item = pLabel;
 
-        m_lastCoordinates = QRect(x, y, width, height);
+        m_lastCoordinates = QRect(x, y, pLabel->getScaledWidth(), pLabel->getScaledHeight());
     }
     return success;
 }
@@ -363,8 +363,7 @@ bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, ox
         pLabel->setEnabled(enabled);
         parent->addChild(pLabel);
         item = pLabel;
-        const auto & textRect = pLabel->getTextRect();
-        m_lastCoordinates = QRect(x, y, textRect.getWidth(), textRect.getHeight());
+        m_lastCoordinates = QRect(x, y, pLabel->getScaledWidth(), pLabel->getScaledHeight());
     }
     return success;
 }
@@ -408,7 +407,7 @@ bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygi
         parent->addChild(pButton);
         item = pButton;
 
-        m_lastCoordinates = QRect(x, y, width, 40);
+        m_lastCoordinates = QRect(x, y, pButton->getScaledWidth(), pButton->getScaledHeight());
     }
     return success;
 }
@@ -441,7 +440,7 @@ bool UiFactory::createSelectKey(oxygine::spActor parent, QDomElement element, ox
         }, Qt::QueuedConnection);
         parent->addChild(pButton);
         item = pButton;
-        m_lastCoordinates = QRect(x, y, pButton->getScaledWidth(), 40);
+        m_lastCoordinates = QRect(x, y, pButton->getScaledWidth(), pButton->getScaledHeight());
     }
     return success;
 }
@@ -472,7 +471,7 @@ bool UiFactory::createIconButton(oxygine::spActor parent, QDomElement element, o
         parent->addChild(pButton);
         item = pButton;
 
-        m_lastCoordinates = QRect(x, y, 30, 30);
+        m_lastCoordinates = QRect(x, y, pButton->getScaledWidth(), pButton->getScaledHeight());
     }
     return success;
 }
@@ -553,7 +552,7 @@ bool UiFactory::createSprite(oxygine::spActor parent, QDomElement element, oxygi
         }
         parent->addChild(pSprite);
         item = pSprite;
-        m_lastCoordinates = QRect(x, y, width * scale, height * scale);
+        m_lastCoordinates = QRect(x, y, pSprite->getScaledWidth(), pSprite->getScaledHeight());
     }
     return success;
 }
@@ -586,7 +585,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
             onEvent(onEventLine, value, id, loopIdx, pMenu);
         }, Qt::QueuedConnection);
         item = pCheckbox;
-        m_lastCoordinates = QRect(x, y, 40, 40);
+        m_lastCoordinates = QRect(x, y, pCheckbox->getScaledWidth(), pCheckbox->getScaledHeight());
     }
     return success;
 }
@@ -634,7 +633,7 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
         }, Qt::QueuedConnection);
         parent->addChild(pSpinBox);
         item = pSpinBox;
-        m_lastCoordinates = QRect(x, y, width, 40);
+        m_lastCoordinates = QRect(x, y, pSpinBox->getScaledWidth(), pSpinBox->getScaledHeight());
     }
     return success;
 }
@@ -677,7 +676,7 @@ bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygi
         }, Qt::QueuedConnection);
         parent->addChild(pSlider);
         item = pSlider;
-        m_lastCoordinates = QRect(x, y, width, 40);
+        m_lastCoordinates = QRect(x, y, pSlider->getScaledWidth(), pSlider->getScaledHeight());
     }
     return success;
 }
@@ -719,7 +718,7 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
         {
             height = 40;
         }
-        m_lastCoordinates = QRect(x, y, width, height);
+        m_lastCoordinates = QRect(x, y, pTextbox->getScaledWidth(), pTextbox->getScaledHeight());
     }
     return success;
 }
@@ -761,7 +760,7 @@ bool UiFactory::createPasswordbox(oxygine::spActor parent, QDomElement element, 
         {
             height = 40;
         }
-        m_lastCoordinates = QRect(x, y, width, height);
+        m_lastCoordinates = QRect(x, y, pTextbox->getScaledWidth(), pTextbox->getScaledHeight());
     }
     return success;
 }
@@ -795,7 +794,7 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
         }, Qt::QueuedConnection);
         parent->addChild(pSpinBox);
         item = pSpinBox;
-        m_lastCoordinates = QRect(x, y, width, 40);
+        m_lastCoordinates = QRect(x, y, pSpinBox->getScaledWidth(), pSpinBox->getScaledHeight());
     }
     return success;
 }
@@ -821,7 +820,7 @@ bool UiFactory::createIcon(oxygine::spActor parent, QDomElement element, oxygine
         pIcon->setEnabled(enabled);
         pIcon->setVisible(visible);
         item = pIcon;
-        m_lastCoordinates = QRect(x, y, size, size);
+        m_lastCoordinates = QRect(x, y, pIcon->getScaledWidth(), pIcon->getScaledHeight());
     }
     return success;
 }
@@ -878,7 +877,7 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
         pPanel->setContentWidth(maxWidth + 40);
         parent->addChild(pPanel);
         item = pPanel;
-        m_lastCoordinates = QRect(x, y, width, height);
+        m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
     }
     return success;
 }
@@ -929,7 +928,7 @@ bool UiFactory::createDropDownMenu(oxygine::spActor parent, QDomElement element,
         }, Qt::QueuedConnection);
         parent->addChild(pDropDownmenu);
         item = pDropDownmenu;
-        m_lastCoordinates = QRect(x, y, width, 40);
+        m_lastCoordinates = QRect(x, y, pDropDownmenu->getScaledWidth(), pDropDownmenu->getScaledHeight());
     }
     return success;
 }
@@ -979,7 +978,7 @@ bool UiFactory::createDropDownMenuColor(oxygine::spActor parent, QDomElement ele
         }, Qt::QueuedConnection);
         parent->addChild(pDropDownmenu);
         item = pDropDownmenu;
-        m_lastCoordinates = QRect(x, y, width, 40);
+        m_lastCoordinates = QRect(x, y, pDropDownmenu->getScaledWidth(), pDropDownmenu->getScaledHeight());
     }
     return success;
 }
@@ -1095,7 +1094,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
         }, Qt::QueuedConnection);
         parent->addChild(pDropDownmenu);
         item = pDropDownmenu;
-        m_lastCoordinates = QRect(x, y, width, 40);
+        m_lastCoordinates = QRect(x, y, pDropDownmenu->getScaledWidth(), pDropDownmenu->getScaledHeight());
     }
     return success;
 }
@@ -1144,7 +1143,7 @@ bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine:
         }
         parent->addChild(pPanel);
         item = pPanel;
-        m_lastCoordinates = QRect(x, y, width, height);
+        m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
     }
     return success;
 }

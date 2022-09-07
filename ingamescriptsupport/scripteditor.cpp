@@ -68,7 +68,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     pSpriteBox->addChild(m_Conditions);
     // condition button
     oxygine::spButton pConditionButton = pObjectManager->createButton(tr("Add Condition"), 200);
-    pConditionButton->setPosition(m_Conditions->getX() + m_Conditions->getWidth() + 10, Settings::getHeight() / 2 - 45);
+    pConditionButton->setPosition(m_Conditions->getX() + m_Conditions->getScaledWidth() + 10, Settings::getHeight() / 2 - 45);
     pSpriteBox->addChild(pConditionButton);
     pConditionButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -77,7 +77,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     connect(this, &ScriptEditor::sigAddCondition, this, &ScriptEditor::addCondition, Qt::QueuedConnection);
 
     oxygine::spButton pConditionDuplicate = pObjectManager->createButton(tr("Duplicate"), 200);
-    pConditionDuplicate->setPosition(pConditionButton->getX() + pConditionButton->getWidth() + 10, Settings::getHeight() / 2 - 45);
+    pConditionDuplicate->setPosition(pConditionButton->getX() + pConditionButton->getScaledWidth() + 10, Settings::getHeight() / 2 - 45);
     pSpriteBox->addChild(pConditionDuplicate);
     pConditionDuplicate->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -120,7 +120,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     pSpriteBox->addChild(m_Events);
     // condition button
     m_pEventButton = pObjectManager->createButton(tr("Add Event"), 200);
-    m_pEventButton->setPosition(m_Events->getX() + m_Events->getWidth() + 10, Settings::getHeight() - 115);
+    m_pEventButton->setPosition(m_Events->getX() + m_Events->getScaledWidth() + 10, Settings::getHeight() - 115);
     pSpriteBox->addChild(m_pEventButton);
     m_pEventButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -143,7 +143,8 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 10 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() - pOkButton->getScaledWidth() - 30,
+                           Settings::getHeight() - 10 - pOkButton->getScaledHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -151,14 +152,15 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     });
 
     oxygine::spButton pSaveButton = pObjectManager->createButton(tr("Save"), 150);
-    pSaveButton->setPosition(Settings::getWidth() / 2 - pSaveButton->getWidth() / 2, Settings::getHeight() - 10 - pSaveButton->getHeight());
+    pSaveButton->setPosition(Settings::getWidth() / 2 - pSaveButton->getScaledWidth() / 2,
+                             Settings::getHeight() - 10 - pSaveButton->getScaledHeight());
     pSpriteBox->addChild(pSaveButton);
     pSaveButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigSaveScript();
     });
     oxygine::spButton pLoadButton = pObjectManager->createButton(tr("Load"), 150);
-    pLoadButton->setPosition(30, Settings::getHeight() - 10 - pLoadButton->getHeight());
+    pLoadButton->setPosition(30, Settings::getHeight() - 10 - pLoadButton->getScaledHeight());
     pSpriteBox->addChild(pLoadButton);
     pLoadButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -326,7 +328,7 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
         if (condition.get() != nullptr)
         {
             boxY += 40;
-            pSpritebox->setHeight(pSpritebox->getHeight() + 40);
+            pSpritebox->setHeight(pSpritebox->getScaledHeight() + 40);
         }
     }
 

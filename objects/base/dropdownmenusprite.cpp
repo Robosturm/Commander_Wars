@@ -42,8 +42,8 @@ void DropDownmenuSprite::setCurrentItem(qint32 index)
         oxygine::spActor pSprite = m_Creator(m_ItemTexts[index]);
         if (m_autoScale)
         {
-            pSprite->setScaleX((m_Box->getWidth() - 13 - 65) / pSprite->getScaledWidth());
-            pSprite->setScaleY((m_Box->getHeight() - 12) / pSprite->getScaledHeight());
+            pSprite->setScaleX((m_Box->getScaledWidth() - 13 - 65) / pSprite->getScaledWidth());
+            pSprite->setScaleY((m_Box->getScaledHeight() - 12) / pSprite->getScaledHeight());
         }
         m_pClipActor->addChild(pSprite);
         

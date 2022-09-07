@@ -140,17 +140,17 @@ void DamageCalculator::loadCoData(qint32 & x, qint32 & y, CosData & cosData,
         coData.m_powerMode->setPosition(x, y);
         addItem(coData.m_powerMode);
         x += coData.m_powerMode->getScaledWidth() + xAdvance;
-        spLabel pLabel = spLabel::create(55);
+        spLabel pLabel = spLabel::create(60);
         pLabel->setPosition(x, y);
         pLabel->setHtmlText(tr("Zone"));
         addItem(pLabel);
-        x += pLabel->getScaledWidth() + xAdvance;
+        x += pLabel->getScaledWidth();
         coData.m_inCoRange = spCheckbox::create();
         coData.m_inCoRange->setPosition(x, y);
         coData.m_inCoRange->setTooltipText(tr("If the unit is in the co-zone of this co."));
         addItem(coData.m_inCoRange);
         x += coData.m_inCoRange->getScaledWidth() + xAdvance;
-        y += 40;
+        y += pLabel->getScaledHeight() + 5;
     }
 }
 
@@ -224,7 +224,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     unitData.m_unitRank->setPosition(x, y);
     addItem(unitData.m_unitRank);
     x = startX;
-    y += 40;
+    y += unitData.m_unitRank->getScaledHeight() + 5;
     spLabel pLabel = spLabel::create(150);
     pLabel->setPosition(x, y);
     pLabel->setHtmlText(tr("HP:"));
@@ -234,7 +234,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     unitData.m_hp->setTooltipText(tr("HP of the unit."));
     unitData.m_hp->setPosition(x + pLabel->getScaledWidth() + xAdvance, y);
     addItem(unitData.m_hp);
-    y += 40;
+    y += pLabel->getScaledHeight() + 5;
     pLabel = spLabel::create(150);
     pLabel->setPosition(x, y);
     pLabel->setHtmlText(tr("Towers:"));
@@ -244,7 +244,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     unitData.m_towers->setTooltipText(tr("Amount of towers owned by the player."));
     unitData.m_towers->setPosition(x + pLabel->getScaledWidth() + xAdvance, y);
     addItem(unitData.m_towers);
-    y += 40;
+    y += pLabel->getScaledHeight() + 5;
     pLabel = spLabel::create(150);
     pLabel->setPosition(x, y);
     pLabel->setHtmlText(tr("Towns:"));
@@ -254,7 +254,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     unitData.m_buildings->setTooltipText(tr("Amount of towns owned by the player."));
     unitData.m_buildings->setPosition(x + pLabel->getScaledWidth() + xAdvance, y);
     addItem(unitData.m_buildings);
-    y += 40;
+    y += pLabel->getScaledHeight() + 5;
     pLabel = spLabel::create(150);
     pLabel->setPosition(x, y);
     pLabel->setHtmlText(tr("Funds:"));
@@ -264,7 +264,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     unitData.m_funds->setTooltipText(tr("Amount of funds owned by the player."));
     unitData.m_funds->setPosition(x + pLabel->getScaledWidth() + xAdvance, y);
     addItem(unitData.m_funds);
-    y += 40;
+    y += pLabel->getScaledHeight() + 5;
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
@@ -276,15 +276,15 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     pLabel->setStyle(style);
     addItem(pLabel);
 
-    pLabel = spLabel::create(50);
+    pLabel = spLabel::create(59);
     pLabel->setHtmlText(tr("Min:"));
     pLabel->setPosition(x, y + 80);
     addItem(pLabel);
-    pLabel = spLabel::create(50);
+    pLabel = spLabel::create(59);
     pLabel->setHtmlText(tr("Avg:"));
     pLabel->setPosition(x, y + 110);
     addItem(pLabel);
-    pLabel = spLabel::create(50);
+    pLabel = spLabel::create(59);
     pLabel->setHtmlText(tr("Max:"));
     pLabel->setPosition(x, y + 140);
     addItem(pLabel);

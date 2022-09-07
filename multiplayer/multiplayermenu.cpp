@@ -61,8 +61,8 @@ Multiplayermenu::Multiplayermenu(QString address, QString secondaryAddress, quin
         {
             emit sigShowIPs();
         });
-        m_pHostAdresse->setPosition(m_pButtonStart->getX() - m_pHostAdresse->getWidth() - 10,
-                                    Settings::getHeight() - m_pHostAdresse->getHeight() - 10);
+        m_pHostAdresse->setPosition(m_pButtonStart->getX() - m_pHostAdresse->getScaledWidth() - 10,
+                                    Settings::getHeight() - m_pHostAdresse->getScaledHeight() - 10);
         m_pHostAdresse->setVisible(false);
         connect(this, &Multiplayermenu::sigShowIPs, this, &Multiplayermenu::showIPs, Qt::QueuedConnection);
     }
@@ -120,7 +120,8 @@ void Multiplayermenu::init()
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_pButtonLoadSavegame = ObjectManager::createButton(tr("Load Savegame"));
-    m_pButtonLoadSavegame->setPosition(Settings::getWidth() - m_pButtonLoadSavegame->getWidth() - m_pButtonNext->getWidth() - 20, Settings::getHeight() - 10 - m_pButtonLoadSavegame->getHeight());
+    m_pButtonLoadSavegame->setPosition(Settings::getWidth() - m_pButtonLoadSavegame->getScaledWidth() - m_pButtonNext->getScaledWidth() - 20,
+                                       Settings::getHeight() - 10 - m_pButtonLoadSavegame->getScaledHeight());
     addChild(m_pButtonLoadSavegame);
     m_pButtonLoadSavegame->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -1443,8 +1444,8 @@ void Multiplayermenu::showRuleSelection()
     m_pRuleSelectionView = spRuleSelection::create(pMap.get(), Settings::getWidth() - 80, RuleSelection::Mode::Multiplayer);
     connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &Multiplayermenu::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
-    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
-    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getWidth());    
+    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 40);
+    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getScaledWidth());
 }
 
 void Multiplayermenu::showPlayerSelection()
@@ -1589,7 +1590,7 @@ void Multiplayermenu::createChat()
         m_Chat = spChat::create(m_pNetworkInterface,
                                 QSize(Settings::getWidth() - 60, Settings::getHeight() - 90),
                                 NetworkInterface::NetworkSerives::GameChat);
-        m_Chat->setPosition(-m_Chat->getWidth() + 1, 10);
+        m_Chat->setPosition(-m_Chat->getScaledWidth() + 1, 10);
         auto moveButton = spMoveInButton::create(m_Chat.get(), m_Chat->getScaledWidth(), 1, -1, 1.0f);
         m_Chat->addChild(moveButton);
     }

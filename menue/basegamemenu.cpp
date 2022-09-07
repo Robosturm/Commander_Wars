@@ -475,20 +475,20 @@ void BaseGamemenu::updateSlidingActorSize()
         qint32 mapWidth = m_pMap->getScaledWidth();
         qint32 mapHeight = m_pMap->getScaledHeight();
         CONSOLE_PRINT("InGameMenue::updateSlidingActorSize() width " + QString::number(mapWidth) + " height "  + QString::number(mapHeight), Console::eDEBUG);
-        if (mapWidth < m_mapSliding->getWidth())
+        if (mapWidth < m_mapSliding->getScaledWidth())
         {
-            m_mapSlidingActor->setWidth(m_mapSliding->getWidth());
-            m_pMap->setX((m_mapSliding->getWidth() -  mapWidth) / 2);
+            m_mapSlidingActor->setWidth(m_mapSliding->getScaledWidth());
+            m_pMap->setX((m_mapSliding->getScaledWidth() -  mapWidth) / 2);
         }
         else
         {
             m_pMap->setX(0);
             m_mapSlidingActor->setWidth(mapWidth);
         }
-        if (mapHeight < m_mapSliding->getHeight())
+        if (mapHeight < m_mapSliding->getScaledHeight())
         {
-            m_pMap->setY((m_mapSliding->getHeight() -  mapHeight) / 2);
-            m_mapSlidingActor->setHeight(m_mapSliding->getHeight());
+            m_pMap->setY((m_mapSliding->getScaledHeight() -  mapHeight) / 2);
+            m_mapSlidingActor->setHeight(m_mapSliding->getScaledHeight());
         }
         else
         {

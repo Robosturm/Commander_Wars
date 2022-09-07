@@ -113,7 +113,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
             oxygine::spBox9Sprite pItemBox = createMenuItem(enabled, x, y, width, style, texts[i], action, costs, icons[i], i, pPlayer);
             if (xCount < m_maxXCount)
             {
-                y += static_cast<qint32>(pItemBox->getHeight());
+                y += static_cast<qint32>(pItemBox->getScaledHeight());
             }
             if (y > maxY)
             {
@@ -153,8 +153,8 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
                         });
                         addChild(pItemBox);
                         m_ItemActors.append(pItemBox);
-                        y += static_cast<qint32>(pItemBox->getHeight());
-                        m_itemHeigth = static_cast<qint32>(pItemBox->getHeight());
+                        y += static_cast<qint32>(pItemBox->getScaledHeight());
+                        m_itemHeigth = static_cast<qint32>(pItemBox->getScaledHeight());
                     }
                 }
             }
@@ -174,7 +174,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
                 m_startItem = max * value;
                 updateItemPositionAndVisibility();
             });
-            scrollbarWidth = m_scrollbar->getWidth() + 25;
+            scrollbarWidth = m_scrollbar->getScaledWidth() + 25;
             m_scrollbar->setX(width * xCount + 25);
             addChild(m_scrollbar);
             auto* pScrollbar = m_scrollbar.get();
@@ -275,7 +275,7 @@ void HumanPlayerInputMenu::updateItemPositionAndVisibility()
         {
             m_ItemActors[i]->setPosition(x, y);
             m_ItemActors[i]->setVisible(true);
-            y += static_cast<qint32>(m_ItemActors[i]->getHeight());
+            y += static_cast<qint32>(m_ItemActors[i]->getScaledHeight());
         }
         else
         {
@@ -381,7 +381,7 @@ qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width
         pBottomBox->setX(x);
     }
     addChild(pBottomBox);
-    return static_cast<qint32>(pBottomBox->getHeight());
+    return static_cast<qint32>(pBottomBox->getScaledHeight());
 }
 
 qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width, Player* pPlayer)
@@ -398,7 +398,7 @@ qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width, Player* pPl
         pTopBox->setX(x);
     }
     addChild(pTopBox);
-    return static_cast<qint32>(pTopBox->getHeight());
+    return static_cast<qint32>(pTopBox->getScaledHeight());
 }
 
 void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)

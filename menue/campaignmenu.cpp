@@ -58,7 +58,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
     pButtonExit->setPosition(10,
-                             Settings::getHeight() - pButtonExit->getHeight() - 10);
+                             Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -66,7 +66,8 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     connect(this, &CampaignMenu::sigExitMenue, this, &CampaignMenu::exitMenue, Qt::QueuedConnection);
 
     m_pButtonNext = ObjectManager::createButton(tr("Next"));
-    m_pButtonNext->setPosition(Settings::getWidth() - 10 - m_pButtonNext->getWidth(), Settings::getHeight() - 10 - m_pButtonNext->getHeight());
+    m_pButtonNext->setPosition(Settings::getWidth() - 10 - m_pButtonNext->getScaledWidth(),
+                               Settings::getHeight() - 10 - m_pButtonNext->getScaledHeight());
     addChild(m_pButtonNext);
     m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -75,7 +76,8 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     connect(this, &CampaignMenu::sigButtonNext, this, &CampaignMenu::slotButtonNext, Qt::QueuedConnection);
 
     m_pButtonSave = ObjectManager::createButton(tr("Save"));
-    m_pButtonSave->setPosition(Settings::getWidth() / 2 - m_pButtonSave->getWidth() / 2, Settings::getHeight() - 10 - m_pButtonSave->getHeight());
+    m_pButtonSave->setPosition(Settings::getWidth() / 2 - m_pButtonSave->getScaledWidth() / 2,
+                               Settings::getHeight() - 10 - m_pButtonSave->getScaledHeight());
     addChild(m_pButtonSave);
     m_pButtonSave->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *)->void
     {
@@ -300,9 +302,9 @@ void CampaignMenu::showMinimap()
         qint32 y = m_currentMapFlagPosition.y();
         GameManager* pGameManager = GameManager::getInstance();
         auto pMiniMapPanel = m_pMapSelectionView->getMinimapPanel();
-        if (y - pMiniMapPanel->getHeight() / 2 + m_pMapBackground->getY() > 0)
+        if (y - pMiniMapPanel->getScaledHeight() / 2 + m_pMapBackground->getY() > 0)
         {
-            pMiniMapPanel->setY(y - pMiniMapPanel->getHeight() / 2);
+            pMiniMapPanel->setY(y - pMiniMapPanel->getScaledHeight() / 2);
         }
         else
         {
@@ -374,9 +376,9 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
             pBuildingBackground->setX(xPos);
             m_pMapBackground->addChild(pBuildingBackground);
             auto pMapInfo = m_pMapSelectionView->getMapInfo();
-            if (y - contentHeight - pMapInfo->getHeight() + m_pMapBackground->getY() > 0)
+            if (y - contentHeight - pMapInfo->getScaledHeight() + m_pMapBackground->getY() > 0)
             {
-                pMapInfo->setY(y - contentHeight - pMapInfo->getHeight());
+                pMapInfo->setY(y - contentHeight - pMapInfo->getScaledHeight());
             }
             else
             {

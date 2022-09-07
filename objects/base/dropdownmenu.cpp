@@ -37,8 +37,8 @@ void DropDownmenu::changeList(const QStringList & items)
         m_Textfield->setHtmlText(tr("unknown"));
     }
     m_pClipActor->addChild(m_Textfield);
-    m_Textfield->setWidth(m_Box->getWidth() - 20 - 45);
-    m_Textfield->setHeight(m_Box->getHeight());
+    m_Textfield->setWidth(m_Box->getScaledWidth() - 20 - 45);
+    m_Textfield->setHeight(m_Box->getScaledHeight());
     m_Textfield->setY(5);
     m_ItemTexts = items;
 
@@ -104,7 +104,8 @@ void DropDownmenu::addDropDownText(QString text, qint32 id)
     textField->setHtmlText(text);
     textField->setY(5);
     clipRect->addChild(textField);
-    clipRect->setSize(m_Textfield->getWidth() + 10, m_Textfield->getHeight());
+    clipRect->setSize(m_Textfield->getScaledWidth() + 10,
+                      m_Textfield->getScaledHeight());
     clipRect->setX(10);
     auto size = addDropDownItem(clipRect, id);
     textField->setSize(size);

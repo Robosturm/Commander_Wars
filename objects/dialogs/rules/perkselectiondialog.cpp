@@ -78,7 +78,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
         pLabel->setPosition(pDropDownmenu->getX() + pDropDownmenu->getScaledWidth() + 10, 30);
         pSpriteBox->addChild(pLabel);
         m_randomFillCheckbox = spCheckbox::create();
-        m_randomFillCheckbox->setTooltipText(tr("If checked: clicking the 'Random' Button will fill all available perk slots instead of just 1."));
+        m_randomFillCheckbox->setTooltipText(tr("If checked: clicking the 'Random' Button will fill all remaining perk slots instead of replacing all."));
         m_randomFillCheckbox->setPosition(pLabel->getX() + pLabel->getScaledWidth() + 10, 30);
         pSpriteBox->addChild(m_randomFillCheckbox);
         oxygine::spButton randomButton = pObjectManager->createButton(tr("Random"), 150);
@@ -91,7 +91,8 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
         connect(this, &PerkSelectionDialog::sigSelectRandomPerks, this, &PerkSelectionDialog::selectRandomPerks, Qt::QueuedConnection);
     }
 
-    QSize size(Settings::getWidth() - 60, Settings::getHeight() - 40 * 3 - m_OkButton->getHeight());
+    QSize size(Settings::getWidth() - 60,
+               Settings::getHeight() - 40 * 3 - m_OkButton->getScaledHeight());
     m_pPanel = spPanel::create(true, size, size);
     if (banning)
     {
@@ -113,7 +114,8 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
                                 Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
 
         m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-        m_CancelButton->setPosition(30, Settings::getHeight() - 30 - m_CancelButton->getHeight());
+        m_CancelButton->setPosition(30,
+                                    Settings::getHeight() - 30 - m_CancelButton->getScaledHeight());
         pSpriteBox->addChild(m_CancelButton);
         m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {
@@ -131,7 +133,8 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
         connect(this, &PerkSelectionDialog::sigShowSavePerklist, this, &PerkSelectionDialog::showSavePerklist, Qt::QueuedConnection);
 
         m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
-        m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 75 - m_ToggleAll->getHeight());
+        m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 ,
+                                 Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
         pSpriteBox->addChild(m_ToggleAll);
         m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {
@@ -153,7 +156,8 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
                                 Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
 
         oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-        pSave->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 30 - pSave->getHeight());
+        pSave->setPosition(Settings::getWidth() / 2 + 60 ,
+                           Settings::getHeight() - 30 - pSave->getScaledHeight());
         pSave->addClickListener([this](oxygine::Event*)
         {
             emit sigShowSavePerklist();

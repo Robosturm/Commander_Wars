@@ -152,7 +152,7 @@ EditorMenue::EditorMenue()
         m_xyTextInfo->setPosition(8, 8);
         pButtonBox->addChild(m_xyTextInfo);
         pButtonBox->setSize(200, 50);
-        pButtonBox->setPosition((Settings::getWidth() - m_EditorSelection->getWidth())  - pButtonBox->getWidth(), -4 + m_Topbar->getHeight());
+        pButtonBox->setPosition((Settings::getWidth() - m_EditorSelection->getScaledWidth()) - pButtonBox->getScaledWidth(), -4 + m_Topbar->getScaledHeight());
         pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         addChild(pButtonBox);
     }

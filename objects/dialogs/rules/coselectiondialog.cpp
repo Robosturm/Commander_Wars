@@ -53,7 +53,7 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {

@@ -59,7 +59,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
 
     // cancel button
     oxygine::spButton pExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    pExitButton->setPosition(30, Settings::getHeight() - 10 - pExitButton->getHeight());
+    pExitButton->setPosition(30, Settings::getHeight() - 10 - pExitButton->getScaledHeight());
     m_pSpriteBox->addChild(pExitButton);
     pExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -141,7 +141,8 @@ DialogCOStyle::DialogCOStyle(QString coid)
         style.multiline = false;
         textField->setStyle(style);
         textField->setHtmlText(tr("Predefined Styles"));
-        textField->setPosition(Settings::getWidth() / 2 - 10 - textField->getTextRect().getWidth(),  Settings::getHeight()  - 10 - m_pOkButton->getHeight());
+        textField->setPosition(Settings::getWidth() / 2 - 10 - textField->getTextRect().getWidth(),
+                               Settings::getHeight()  - 10 - m_pOkButton->getScaledHeight());
         m_pSpriteBox->addChild(textField);
     }
     connect(this, &DialogCOStyle::sigCOStyleChanged, this, &DialogCOStyle::changeCOStyle, Qt::QueuedConnection);
@@ -411,7 +412,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
         if (pAnim != nullptr)
         {
             pMiniCO->setScale(1.0f);
-            pMiniCO->setPosition(10, pBox->getHeight() - pAnim->getHeight() - 10);
+            pMiniCO->setPosition(10, pBox->getScaledHeight() - pAnim->getHeight() - 10);
             pBox->addChild(pMiniCO);
         }
 

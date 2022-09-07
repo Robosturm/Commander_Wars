@@ -99,7 +99,7 @@ Mainwindow::Mainwindow(const QString & initialView)
         // import
         oxygine::spButton pImport = ObjectManager::createButton(tr("Import"), 170, tr("Imports all data from an other Commander Wars release to the current release."));
         addChild(pImport);
-        pImport->setPosition(10, Settings::getHeight() - 10 - pImport->getHeight());
+        pImport->setPosition(10, Settings::getHeight() - 10 - pImport->getScaledHeight());
         pImport->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigImport();

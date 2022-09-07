@@ -181,7 +181,7 @@ void ReplayMenu::loadUIButtons()
     qint32 width = Settings::getWidth();
     if (!Settings::getSmallScreenDevice())
     {
-        width += -m_IngameInfoBar->getWidth() - m_IngameInfoBar->getDetailedViewBox()->getWidth();
+        width += -m_IngameInfoBar->getWidth() - m_IngameInfoBar->getDetailedViewBox()->getScaledWidth();
     }
     m_taskBar->setSize(width, 50);
     m_taskBar->setPosition(0, Settings::getHeight() + 6);
@@ -189,7 +189,7 @@ void ReplayMenu::loadUIButtons()
     addChild(m_taskBar);
 
     oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit"), 130);
-    exitGame->setPosition(m_taskBar->getWidth() - 8 - exitGame->getWidth(), 4);
+    exitGame->setPosition(m_taskBar->getScaledWidth() - 8 - exitGame->getScaledWidth(), 4);
     exitGame->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowExitGame();
@@ -202,8 +202,8 @@ void ReplayMenu::loadUIButtons()
     m_playButton = ObjectManager::createIconButton("play", 36);
     m_playButton->setVisible(false);
     m_pauseButton = ObjectManager::createIconButton("pause", 36);
-    m_playButton->setPosition(exitGame->getX() - 4 - m_playButton->getWidth(), y);
-    m_pauseButton->setPosition(exitGame->getX() - 4 - m_pauseButton->getWidth(), y);
+    m_playButton->setPosition(exitGame->getX() - 4 - m_playButton->getScaledWidth(), y);
+    m_pauseButton->setPosition(exitGame->getX() - 4 - m_pauseButton->getScaledWidth(), y);
     m_playButton->addClickListener([this](oxygine::Event * )
     {
         emit sigSwapPlay();
@@ -213,7 +213,7 @@ void ReplayMenu::loadUIButtons()
         emit sigSwapPlay();
     });
     m_oneStepButton = ObjectManager::createIconButton("one_step", 36);
-    m_oneStepButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getWidth(), y);
+    m_oneStepButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getScaledWidth(), y);
     m_taskBar->addChild(m_oneStepButton);
     m_oneStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -223,7 +223,7 @@ void ReplayMenu::loadUIButtons()
     m_taskBar->addChild(m_playButton);
     m_taskBar->addChild(m_pauseButton);
     m_fastForwardButton = ObjectManager::createIconButton("fastforward", 36);
-    m_fastForwardButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getWidth() - m_fastForwardButton->getWidth(), y);
+    m_fastForwardButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getScaledWidth() - m_fastForwardButton->getScaledWidth(), y);
     m_taskBar->addChild(m_fastForwardButton);
     m_fastForwardButton->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event*)
     {
@@ -234,7 +234,7 @@ void ReplayMenu::loadUIButtons()
         emit sigStopFastForward();
     });
     m_rewindDayButton = ObjectManager::createIconButton("rewind", 36);
-    m_rewindDayButton->setPosition(m_fastForwardButton->getX() - 4 - m_rewindDayButton->getWidth(), y);
+    m_rewindDayButton->setPosition(m_fastForwardButton->getX() - 4 - m_rewindDayButton->getScaledWidth(), y);
     m_rewindDayButton->addClickListener([this](oxygine::Event*)
     {
         emit sigRewindDay();
@@ -242,7 +242,7 @@ void ReplayMenu::loadUIButtons()
     m_taskBar->addChild(m_rewindDayButton);
 
     m_configButton = ObjectManager::createIconButton("settings", 36);
-    m_configButton->setPosition(m_rewindDayButton->getX() - 4 - m_configButton->getWidth(), y);
+    m_configButton->setPosition(m_rewindDayButton->getX() - 4 - m_configButton->getScaledWidth(), y);
     m_configButton->addClickListener([this](oxygine::Event*)
     {
         emit sigShowConfig();
@@ -276,7 +276,7 @@ void ReplayMenu::loadUIButtons()
     m_xyTextInfo->setPosition(8, 8);
     pButtonBox->addChild(m_xyTextInfo);
     pButtonBox->setSize(200, 50);
-    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
+    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) - pButtonBox->getScaledWidth(), 0);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_XYButtonBox = pButtonBox;
     m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates());
@@ -312,7 +312,7 @@ void ReplayMenu::loadSeekUi()
     m_seekDayLabel->setPosition(8, 8);
     pDayBox->addChild(m_seekDayLabel);
     pDayBox->setSize(160, 50);
-    pDayBox->setPosition(0, Settings::getHeight() - pDayBox->getHeight() + 6 - pDayBox->getHeight());
+    pDayBox->setPosition(0, Settings::getHeight() - pDayBox->getScaledHeight() + 6 - pDayBox->getScaledHeight());
     pDayBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pDayBox);
     m_seekActor = pDayBox;
