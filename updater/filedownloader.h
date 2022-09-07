@@ -43,5 +43,6 @@ private:
     QUrl m_requestUrl;
 
     bool m_downloading{false};
+    bool m_downloadFailed{false};
 };
 

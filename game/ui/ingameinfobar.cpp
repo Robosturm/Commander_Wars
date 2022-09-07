@@ -132,7 +132,7 @@ void IngameInfoBar::updatePlayerInfo()
                 pName->setPosition(x1, y - 5);
                 pName->setHtmlText(pPlayer->getPlayerNameId());
                 m_pGameInfoBox->addChild(pName);
-                y += 30;
+                y += pName->getScaledHeight();
 
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
                 CO* pCO = pPlayer->getCO(0);

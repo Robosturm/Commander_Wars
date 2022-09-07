@@ -46,9 +46,16 @@ void FileDownloader::onResponseFinished(QNetworkReply* pReply)
     }
     else
     {
-        m_file.write(pReply->readAll());
-        m_file.close();
-        emit sigNewState(State::DownloadingFinished);
+        if (!m_downloadFailed)
+        {
+            m_file.write(pReply->readAll());
+            m_file.close();
+            emit sigNewState(State::DownloadingFinished);
+        }
+        else
+        {
+            emit sigNewState(State::DownloadingFailed);
+        }
     }
     pReply->deleteLater();
 }
@@ -66,8 +73,15 @@ void FileDownloader::downloadFile(const QUrl & fileUrl)
 
 void FileDownloader::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
-    m_file.write(m_reply->readAll());
-    emit sigNewProgress(bytesReceived, bytesTotal);
+    if (bytesTotal < 0 && bytesReceived < 0)
+    {
+        m_downloadFailed = true;
+    }
+    else
+    {
+        m_file.write(m_reply->readAll());
+        emit sigNewProgress(bytesReceived, bytesTotal);
+    }
 }
 
 void FileDownloader::errorOccurred(QNetworkReply::NetworkError code)

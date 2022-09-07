@@ -42,7 +42,7 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
         emit sigSearch(false);
     });
     connect(this, &WikiView::sigSearch, this, &WikiView::search, Qt::QueuedConnection);
-    y += 50;
+    y += pTextfield->getScaledHeight() + 10;
 
     pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
@@ -55,13 +55,12 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
     connect(m_Tags.get(), &DropDownmenu::sigItemChanged, this, &WikiView::tagChanged, Qt::QueuedConnection);
     addChild(m_Tags);
     connect(this, &WikiView::sigSearch, this, &WikiView::search, Qt::QueuedConnection);
-    y += 50;
+    y += pTextfield->getScaledHeight() + 10;
 
     QSize size(viewWidth - 20, viewHeigth - y - 50);
     m_MainPanel = spPanel::create(true, size, size);
     m_MainPanel->setPosition(10, y);
     addChild(m_MainPanel);
-    y += 50;
 
     connect(this, &WikiView::sigShowWikipage, this, &WikiView::showWikipage, Qt::QueuedConnection);
     pApp->continueRendering();
