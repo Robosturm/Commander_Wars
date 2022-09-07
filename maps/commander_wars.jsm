@@ -184,7 +184,41 @@ var Constructor = function()
                 {
                     data.setNewlyWonMap(mapWinCount);
                 }
-                wonMaps.push(uprisingAtTheDocksPos);
+                wonMaps.push(mechaInTheMiddlePos);
+                ++mapWinCount;
+            }
+        }
+        // --------------------------------------------------------------
+
+        // --------------------------------------------------------------
+        // Communication Devastation
+        // --------------------------------------------------------------
+        // 16 64
+        // 2175 602
+        var communicationDevastationName = "Mecha in the Middle";
+        var communicationDevastation = variables.createVariable(communicationDevastationName);
+        if (mechaInTheMiddle.readDataBool() === true)
+        {
+            var communicationDevastationPos = Qt.point(0.70345, 0.3732687);
+            if (communicationDevastation.readDataBool() === false)
+            {
+                openMaps.push(communicationDevastationPos);
+                openMapNames.push("communicationDevastation.map");
+                var newCommunicationDevastation = variables.createVariable("new" + communicationDevastationName);
+                if (newCommunicationDevastation.readDataBool() === false)
+                {
+                    newMapPositions.push(mapCount);
+                    newCommunicationDevastation.writeDataBool(true);
+                }
+                ++mapCount;
+            }
+            else
+            {
+                if (lastWonMapName === communicationDevastationName)
+                {
+                    data.setNewlyWonMap(mapWinCount);
+                }
+                wonMaps.push(communicationDevastationPos);
                 ++mapWinCount;
             }
         }

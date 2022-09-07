@@ -18,6 +18,7 @@ class Unit;
 class GameAction;
 class GameAnimation;
 class GameMap;
+class UnitPathFindingSystem;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;
 using spUnit = oxygine::intrusive_ptr<Unit>;
 
@@ -173,6 +174,11 @@ public:
         return m_TransportUnits;
     }
 public slots:
+    /**
+     * @brief createUnitPathFindingSystem Note: the path finding system needs to be deleted by the caller using remove()
+     * @return a path finding system that is explored for this unit using the given player information
+     */
+    UnitPathFindingSystem* createUnitPathFindingSystem(Player* pPlayer);
     /**
      * @brief getActionList
      * @return the string id list of actions this units can perform

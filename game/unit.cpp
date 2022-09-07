@@ -3003,6 +3003,13 @@ void Unit::loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration,
     }    
 }
 
+UnitPathFindingSystem* Unit::createUnitPathFindingSystem(Player* pPlayer)
+{
+    UnitPathFindingSystem* pPfs = new UnitPathFindingSystem(m_pMap, this, pPlayer);
+    pPfs->explore();
+    return pPfs;
+}
+
 void Unit::unloadIcon(const QString & iconID)
 {
     
