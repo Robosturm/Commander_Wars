@@ -300,7 +300,7 @@
         <image file="flak/flak+dm+move+mask.png" />
         <image file="flak/flak+os+move+mask.png" cols = "4" />
         <image file="flak/flak+ge+move+mask.png" cols = "4" />
-        <image file="flak/flak+gs+move+mask.png" cols = "3" />
+        <image file="flak/flak+gs+move+mask.png" cols = "4" />
         <image file="flak/flak+yc+move+mask.png" cols = "4" />
         <image file="flak/flak+ma+move+mask.png" />
         <image file="flak/flak+ti+move+mask.png" cols = "4" />
@@ -312,7 +312,7 @@
         <image file="flak/flak+dm+move+air+mask.png" />
         <image file="flak/flak+os+move+air+mask.png" cols = "4" />
         <image file="flak/flak+ge+move+air+mask.png" cols = "4" />
-        <image file="flak/flak+gs+move+air+mask.png" cols = "3" />
+        <image file="flak/flak+gs+move+air+mask.png" cols = "4" />
         <image file="flak/flak+yc+move+air+mask.png" cols = "4" />
         <image file="flak/flak+ma+move+air+mask.png" />
         <image file="flak/flak+ti+move+air+mask.png" cols = "4" />
