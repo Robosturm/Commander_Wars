@@ -1330,7 +1330,7 @@ void HeavyAi::scoreMoveToTargets()
     }
 }
 
-void HeavyAi::prepareWaitPfs(MoveUnitData & unitData, QStringList & actions)
+void HeavyAi::prepareWaitPfs(MoveUnitData & unitData, const QStringList & actions)
 {
     if (m_currentTargetedPfs.get() == nullptr)
     {
@@ -1341,7 +1341,7 @@ void HeavyAi::prepareWaitPfs(MoveUnitData & unitData, QStringList & actions)
     }
 }
 
-void HeavyAi::getMoveTargets(MoveUnitData & unit, QStringList & actions, std::vector<QVector3D> & targets)
+void HeavyAi::getMoveTargets(MoveUnitData & unit, const QStringList & actions, std::vector<QVector3D> & targets)
 {
     if (m_pMap != nullptr)
     {
@@ -1356,10 +1356,28 @@ void HeavyAi::getMoveTargets(MoveUnitData & unit, QStringList & actions, std::ve
         // todo create input vector
         m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier]->predict(input);
 
-        addRepairTargets(unit.pUnit.get(), targets);
-        Unit* pUnit = unit.pUnit.get();
+        Unit* pUnit = unit.pUnit.get();                
         if (isUsingUnit(pUnit))
         {
+            bool canRefill = false;
+            if (actions.contains(ACTION_SUPPORTALL_RATION) ||
+                actions.contains(ACTION_SUPPORTALL_RATION) ||
+                actions.contains(ACTION_SUPPORTSINGLE_REPAIR) ||
+                actions.contains(ACTION_SUPPORTSINGLE_FREEREPAIR) ||
+                actions.contains(ACTION_SUPPORTSINGLE_SUPPLY))
+            {
+                canRefill = true;
+            }
+            bool canSupport = false;
+            for (const auto & action : actions)
+            {
+                if (action.startsWith(ACTION_SUPPORTSINGLE) ||
+                    action.startsWith(ACTION_SUPPORTALL))
+                {
+                    canSupport = true;
+                    break;
+                }
+            }
             addLoadingTargets(pUnit, unit.actions, targets);
             addUnloadTargets(pUnit, targets);
             addCustomTargets(pUnit);
@@ -1375,12 +1393,14 @@ void HeavyAi::getMoveTargets(MoveUnitData & unit, QStringList & actions, std::ve
                         addAttackTargets(pUnit, pTerrain, pTargetFields.get(), targets);
                         addCaptureTransporterTargets(pUnit, actions, pTerrain, targets);
                         addTransporterTargets(pUnit, pTerrain, targets);
-
-                        // todo implement that list
-                        // // we need reparing / supplying
-                        // addRefillTargets();
-                        // addSupportTargets();
-
+                        if (canRefill)
+                        {
+                            addRefillTargets(x, y, targets);
+                        }
+                        if (canSupport)
+                        {
+                            addSupportTargets(x, y, targets);
+                        }
                         // currently using predefined ai
                         // addFlareTargets();
                         // addOoziumTargets();
@@ -1388,6 +1408,10 @@ void HeavyAi::getMoveTargets(MoveUnitData & unit, QStringList & actions, std::ve
                     }
                 }
             }
+        }
+        else
+        {
+            addRepairTargets(unit.pUnit.get(), targets);
         }
     }
 }
@@ -1664,6 +1688,76 @@ void HeavyAi::addLoadingTargets(Unit* pUnit, const QStringList & actions, std::v
         if (targets.size() == 0)
         {
             appendLoadingTargets(pUnit, m_pUnits, m_pEnemyUnits, m_pEnemyBuildings, true, false, targets, false, distanceModifier);
+        }
+    }
+}
+
+void HeavyAi::addRefillTargets(qint32 posX, qint32 posY, std::vector<QVector3D> & targets)
+{
+    qint32 distanceModifier = m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier]->output(WaitTargetTypes_Refill);
+    if (distanceModifier < 1)
+    {
+        distanceModifier = 1;
+    }
+    QVector3D possibleTarget(posX, posY, distanceModifier);
+    if (!GlobalUtils::contains(targets, possibleTarget))
+    {
+        bool found = false;
+        spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+        for (const auto circlePos : circle->getVector())
+        {
+            qint32 x = posX + circlePos.x();
+            qint32 y = posY + circlePos.y();
+            if (m_pMap->onMap(x, y))
+            {
+                Unit* pSupplyUnit = m_pMap->getTerrain(x, y)->getUnit();
+                if (pSupplyUnit != nullptr &&
+                    pSupplyUnit->getOwner() == m_pPlayer &&
+                    needsRefuel(pSupplyUnit))
+                {
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (found)
+        {
+            targets.push_back(possibleTarget);
+        }
+    }
+}
+
+void HeavyAi::addSupportTargets(qint32 posX, qint32 posY, std::vector<QVector3D> & targets)
+{
+    qint32 distanceModifier = m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier]->output(WaitTargetTypes_Support);
+    if (distanceModifier < 1)
+    {
+        distanceModifier = 1;
+    }
+    QVector3D possibleTarget(posX, posY, distanceModifier);
+    if (!GlobalUtils::contains(targets, possibleTarget))
+    {
+        bool found = false;
+        spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+        for (const auto circlePos : circle->getVector())
+        {
+            qint32 x = posX + circlePos.x();
+            qint32 y = posY + circlePos.y();
+            if (m_pMap->onMap(x, y))
+            {
+                Unit* pSupportUnit = m_pMap->getTerrain(x, y)->getUnit();
+                if (pSupportUnit != nullptr &&
+                    pSupportUnit->getOwner() == m_pPlayer &&
+                    !needsRefuel(pSupportUnit))
+                {
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (found)
+        {
+            targets.push_back(possibleTarget);
         }
     }
 }

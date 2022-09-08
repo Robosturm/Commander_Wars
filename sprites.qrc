@@ -4819,5 +4819,6 @@
         <file>resources/fonts/Advance_Wars_2_Font_Expanded.ttf</file>
         <file>resources/images/colortables/Color_Codes.png</file>
         <file>resources/images/colortables/mask.png</file>
+        <file>resources/images/battleanimations/bomber/bomber+bd+mask.png</file>
     </qresource>
 </RCC>

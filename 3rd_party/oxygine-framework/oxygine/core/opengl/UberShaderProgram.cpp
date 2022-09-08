@@ -35,7 +35,7 @@ namespace oxygine
         }
         else
         {
-            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eFATAL);
+            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eERROR);
         }
         filepath = "system/vertex_shader.glsl";
         if (!QFile::exists(filepath))
@@ -51,7 +51,7 @@ namespace oxygine
         }
         else
         {
-            CONSOLE_PRINT("Unable to find vertex shader: " + filepath, Console::eFATAL);
+            CONSOLE_PRINT("Unable to find vertex shader: " + filepath, Console::eERROR);
         }
         filepath = "system/frac_table_shader.glsl";
         if (!QFile::exists(filepath))
@@ -67,7 +67,7 @@ namespace oxygine
         }
         else
         {
-            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eFATAL);
+            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eERROR);
         }
         filepath = "system/frac_matrix_shader.glsl";
         if (!QFile::exists(filepath))
@@ -83,7 +83,7 @@ namespace oxygine
         }
         else
         {
-            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eFATAL);
+            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eERROR);
         }
         m_fracShader = fracShaderBody;
         m_vertexShader = vertexShaderBody;

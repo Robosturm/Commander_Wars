@@ -602,7 +602,7 @@ void GameAction::revertLastInputStep(const QString & stepType)
                 }
                 default:
                 {
-                    CONSOLE_PRINT("Uknown input data: " + QString::number(static_cast<qint32>(m_storedDataTypes[i])), Console::eFATAL);
+                    CONSOLE_PRINT("Uknown input data: " + QString::number(static_cast<qint32>(m_storedDataTypes[i])), Console::eERROR);
                 }
             }
         }
@@ -630,7 +630,7 @@ void GameAction::revertLastInputStep(const QString & stepType)
                 }
                 default:
                 {
-                    CONSOLE_PRINT("Uknown input data: " + QString::number(static_cast<qint32>(m_storedDataTypes[i])), Console::eFATAL);
+                    CONSOLE_PRINT("Uknown input data: " + QString::number(static_cast<qint32>(m_storedDataTypes[i])), Console::eERROR);
                 }
             }
         }

@@ -24,7 +24,7 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
 {
     if (secondaryAdress == primaryAdress && !primaryAdress.isEmpty())
     {
-        CONSOLE_PRINT("TCP Server launched ignored on primary adress \"" + primaryAdress + "\" and secondary adress \""+ secondaryAdress + "\" and port " + QString::number(port) + " cause the primary adress is equal to the secondary.", Console::eLogLevels::eFATAL);
+        CONSOLE_PRINT("TCP Server launched ignored on primary adress \"" + primaryAdress + "\" and secondary adress \""+ secondaryAdress + "\" and port " + QString::number(port) + " cause the primary adress is equal to the secondary.", Console::eLogLevels::eERROR);
     }
     else if (m_pTCPServer[0].get() == nullptr)
     {        
@@ -53,7 +53,7 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
     }
     else
     {
-        CONSOLE_PRINT("TCP Server launched ignored on primary adress \"" + primaryAdress + "\" and secondary adress \""+ secondaryAdress + "\" and port " + QString::number(port) + " cause the server is already running.", Console::eLogLevels::eFATAL);
+        CONSOLE_PRINT("TCP Server launched ignored on primary adress \"" + primaryAdress + "\" and secondary adress \""+ secondaryAdress + "\" and port " + QString::number(port) + " cause the server is already running.", Console::eLogLevels::eERROR);
     }
 }
 

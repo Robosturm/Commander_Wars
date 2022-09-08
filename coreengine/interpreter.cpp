@@ -88,7 +88,6 @@ QString Interpreter::getRuntimeData()
     if (m_runtimeData.isEmpty())
     {
         CONSOLE_PRINT("Trying to access not loaded runtime data in no ui mode", Console::eFATAL);
-        Q_ASSERT(false);
     }
     return m_runtimeData;
 }

@@ -40,7 +40,7 @@ spTerrain Terrain::createTerrain(const QString & terrainID, qint32 x, qint32 y, 
         }
         else
         {
-            CONSOLE_PRINT("Unable to load Terrain " + terrainID, Console::eFATAL);
+            CONSOLE_PRINT("Unable to load Terrain " + terrainID, Console::eERROR);
         }
     }
     return pTerrain;

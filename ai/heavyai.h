@@ -125,6 +125,8 @@ class HeavyAi : public CoreAI
         WaitTargetTypes_Transport,
         WaitTargetTypes_Load,
         WaitTargetTypes_Unload,
+        WaitTargetTypes_Refill,
+        WaitTargetTypes_Support,
         WaitTargetTypesMaxSize,
     };
 
@@ -312,7 +314,7 @@ protected:
      * @param unitData
      * @param actions
      */
-    void prepareWaitPfs(MoveUnitData & unitData, QStringList & actions);
+    void prepareWaitPfs(MoveUnitData & unitData, const QStringList & actions);
 private:
     void setupTurn(const spQmlVectorBuilding & buildings);
     void endTurn();
@@ -387,7 +389,7 @@ private:
      * @param unit
      * @param targets
      */
-    void getMoveTargets(MoveUnitData & unit, QStringList & actions, std::vector<QVector3D> & targets);
+    void getMoveTargets(MoveUnitData & unit, const QStringList & actions, std::vector<QVector3D> & targets);
     /**
      * @brief scoreWait
      * @param action
@@ -450,6 +452,20 @@ private:
      * @param targets
      */
     void addRepairTargets(Unit* pUnit, std::vector<QVector3D>& targets);
+    /**
+     * @brief addRefillTargets
+     * @param posX
+     * @param posY
+     * @param targets
+     */
+    void addRefillTargets(qint32 posX, qint32 posY, std::vector<QVector3D> & targets);
+    /**
+     * @brief addSupportTargets
+     * @param posX
+     * @param posY
+     * @param targets
+     */
+    void addSupportTargets(qint32 posX, qint32 posY, std::vector<QVector3D> & targets);
     /**
      * @brief getBasicFieldInputVector
      * @param action
