@@ -160,7 +160,6 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"TurnOneDmageMalus", "Production", &m_turnOneDmageMalus, 10.0f, 1.f, 20.0f},
                   {"CounterUnitRatio", "Production", &m_counterUnitRatio, 2.0f, 1.f, 5.0f},
                   {"SpamInfantryChance", "Production", &m_spamInfantryChance, 50.0f, 100.f, 50.0f},
-
                 };
 
     if (m_pMap != nullptr &&
@@ -596,7 +595,7 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint
             {
                 CoreAI::DamageData target = ret[targetIdx];
                 auto path = unitData.pUnitPfs->getPathFast(static_cast<qint32>(moveTargetFields[targetIdx].x()),
-                                                                  static_cast<qint32>(moveTargetFields[targetIdx].y()));
+                                                           static_cast<qint32>(moveTargetFields[targetIdx].y()));
                 pAction->setMovepath(path, unitData.pUnitPfs->getCosts(path));
                 CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x), static_cast<qint32>(target.y)));
                 if (m_pMap->getTerrain(static_cast<qint32>(target.x), static_cast<qint32>(target.y))->getUnit() == nullptr)
@@ -1247,7 +1246,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
                         m_updatePoints.push_back(pUnit->getPosition());
                         m_updatePoints.push_back(pAction->getActionTarget());
                         m_updatePoints.push_back(QPoint(static_cast<qint32>(target.x()),
-                                                     static_cast<qint32>(target.y())));
+                                                        static_cast<qint32>(target.y())));
                         emit performAction(pAction);
                         return true;
                     }
@@ -1312,7 +1311,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
                     pAction->setActionID(ACTION_FIRE);
                     // if we run away and still find a target we should attack it
                     std::vector<QVector3D> moveTargets(1, QVector3D(pAction->getActionTarget().x(),
-                                                                pAction->getActionTarget().y(), 1));
+                                                                    pAction->getActionTarget().y(), 1));
                     std::vector<QVector3D> ret;
                     getBestAttacksFromField(pUnit, pAction, ret, moveTargets);
                     if (ret.size() > 0 && ret[0].z() >= -pUnit->getCoUnitValue()  * m_minSuicideDamage)
@@ -1326,7 +1325,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
                             m_updatePoints.push_back(pUnit->getPosition());
                             m_updatePoints.push_back(pAction->getActionTarget());
                             m_updatePoints.push_back(QPoint(static_cast<qint32>(target.x()),
-                                                         static_cast<qint32>(target.y())));
+                                                            static_cast<qint32>(target.y())));
                             emit performAction(pAction);
                             return true;
                         }
@@ -1370,7 +1369,7 @@ bool NormalAi::suicide(spGameAction & pAction, Unit* pUnit, UnitPathFindingSyste
             m_updatePoints.push_back(pUnit->getPosition());
             m_updatePoints.push_back(pAction->getActionTarget());
             m_updatePoints.push_back(QPoint(static_cast<qint32>(target.x()),
-                                         static_cast<qint32>(target.y())));
+                                            static_cast<qint32>(target.y())));
             emit performAction(pAction);
             return true;
         }
@@ -1680,7 +1679,7 @@ float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPos
             float unitDamage = -1;
             if (hasDamage)
             {
-               unitDamage = unitDamageData[pNextEnemy->getUnitID()];
+                unitDamage = unitDamageData[pNextEnemy->getUnitID()];
             }
             qint32 moveRange = 0;
             bool canMoveAndFire = false;
@@ -2624,6 +2623,7 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
     float notAttackableCount = 0;
     float damageCount = 0;
     float attacksCount = 0;
+    qint32 baseAttacksCount = 0;
     float extraMalusCount = 0;
 
     float counterDamageCount = 0;
@@ -2654,7 +2654,8 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
     qint32 lowUnitAttackCount = 0;
     qint32 lowUnitDamageCount = 0;
 
-    for (qint32 i3 = 0; i3 < pEnemyUnits->size(); i3++)
+    auto enemyUnitCount = pEnemyUnits->size();
+    for (qint32 i3 = 0; i3 < enemyUnitCount; i3++)
     {
         Unit* pEnemyUnit = pEnemyUnits->at(i3);
         QPoint enemyPosition = pEnemyUnit->getPosition();
@@ -2730,6 +2731,7 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
             {
                 ++extraMalusCount;
             }
+            ++baseAttacksCount;
             bool sameIsland = onSameIsland(dummy.getMovementType(), posX, posY, pEnemyUnit->Unit::getX(), pEnemyUnit->Unit::getY());
             float distanceBonus = 0;
             if (sameIsland)
@@ -2852,22 +2854,23 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
         }
     }
     // low on counter units
-    if (lowUnitAttackCount < lowUnitDamageCount * 2.0f && lowUnitAttackCount > 0)
+    if (lowUnitAttackCount < lowUnitDamageCount * 2.0f &&
+        lowUnitAttackCount > 0)
     {
         notAttackableCount += m_highDamageBonus * m_currentlyNotAttackableBonus;
     }
 
     float damage = 0.0f;
-    if (attacksCount > 0)
+    if (attacksCount > 0.0f)
     {
         damage = damageCount / (attacksCount + extraMalusCount);
     }
     if (damage > 0)
     {
-        float value = (attacksCount) / static_cast<float>(pEnemyUnits->size());
-        if (attacksCount > m_minAttackCountBonus)
+        float value = (baseAttacksCount) / static_cast<float>(enemyUnitCount);
+        if (baseAttacksCount > m_minAttackCountBonus)
         {
-            damage *= (attacksCount + m_minAttackCountBonus) / static_cast<float>(pEnemyUnits->size());
+            damage *= (baseAttacksCount + m_minAttackCountBonus) / static_cast<float>(enemyUnitCount);
         }
         else
         {
@@ -2918,7 +2921,9 @@ float NormalAi::calcSameFundsMatchUpScore(Unit& dummy, const QStringList & build
             matchUpValue >= dummyValue - dummyValue * m_targetPriceDifference)
         {
             float dmg = dummy.getBaseDamage(&dummyMatchUp);
-            if (dmg >= 0.0f)
+            float counterDmg = dummyMatchUp.getBaseDamage(&dummy);
+            if (dmg >= 0.0f &&
+                counterDmg >= 0.0f)
             {
                 if (dmg <= m_notAttackableDamage)
                 {

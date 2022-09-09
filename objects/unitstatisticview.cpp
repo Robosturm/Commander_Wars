@@ -91,7 +91,7 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
                     pPanel->addItem(pLabel);
                     summaryCount[i] += item.count;
                     x += 40 + textWidth;
-                    if (x + 50 + textWidth > width && player != count - 1)
+                    if (x + 50 + textWidth > width && i != sortedList.size() - 1)
                     {
                         x = 10;
                         y += 40;

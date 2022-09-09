@@ -27,7 +27,6 @@ var ChangePasswordDialog =
         var oldPassword =  oldPasswordVariable.readDataString();
         var password =  passwordVariable.readDataString();
         var confirmPassword =  confirmPasswordVariable.readDataString();
-        var email =  emailVariable.readDataString();
         var menu = changePassword.getBaseMenu();
         if (menu.isValidPassword(password) === false)
         {
