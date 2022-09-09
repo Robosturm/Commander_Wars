@@ -73,28 +73,37 @@
                 <Id>ForgotPasswordButton</Id>
                 <x>settings.getWidth() / 2 + 75 + 10</x>
                 <y>lastY</y>
-                <width>200</width>
+                <width>210</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Forgot password.")</text>
                 <tooltip>QT_TRANSLATE_NOOP("GAME", "Allows you to reset your password.")</tooltip>
                 <onEvent>userLogin.createDialog("forgotPassword", "ui/serverLogin/forgotPasswordDialog.xml", userLogin.getBaseMenu())</onEvent>
             </Button>
             <Button>
                 <Id>BackButton</Id>
-                <x>settings.getWidth() / 2 - 155</x>
+                <x>settings.getWidth() / 2 - 75 - 210</x>
                 <y>lastY  + lastHeight + 20</y>
-                <width>150</width>
+                <width>200</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Back")</text>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Goes back to the main menu.")</tooltip>
                 <onEvent>userLogin.getBaseMenu().exitMenue()</onEvent>
             </Button>
             <Button>
                 <Id>LocalButton</Id>
-                <x>settings.getWidth() / 2 + 5</x>
+                <x>settings.getWidth() / 2 - 75</x>
                 <y>lastY</y>
                 <width>150</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Local")</text>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Play a game in your local network.")</tooltip>
                 <onEvent>UserLoginDialog.exit()</onEvent>
+            </Button>
+            <Button>
+                <Id>ChangePassword</Id>
+                <x>settings.getWidth() / 2 + 75 + 10</x>
+                <y>lastY</y>
+                <width>210</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Change password.")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME", "Allows you to change your password.")</tooltip>
+                <onEvent>userLogin.createDialog("changePassword", "ui/serverLogin/changePasswordDialog.xml", userLogin.getBaseMenu())</onEvent>
             </Button>
         </childs>
     </Panel>

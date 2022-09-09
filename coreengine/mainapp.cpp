@@ -796,7 +796,8 @@ void Mainapp::onQuit()
         m_Workerthread.wait();
     }
     QCoreApplication::processEvents();
-    delete m_Audiothread;
+    m_Audiothread->deleteLater();
+    m_Audiothread = nullptr;
     QCoreApplication::processEvents();
     if (m_Networkthread.isRunning())
     {

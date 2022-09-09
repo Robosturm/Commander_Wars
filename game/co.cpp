@@ -1088,7 +1088,7 @@ qint32 CO::getCoBonus(QPoint position, Unit* pUnit, const QString & function)
     return ergValue;
 }
 
-qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode)
+qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDeffensiveBonus";
@@ -1099,7 +1099,7 @@ qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPo
                        pInterpreter->newQObject(pDefender),
                        defPosition.x(),
                        defPosition.y(),
-                       isAttacker,
+                       isDefender,
                        pInterpreter->newQObject(pAction),
                        luckMode,
                        pInterpreter->newQObject(m_pMap)});

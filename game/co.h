@@ -303,7 +303,7 @@ public slots:
      * @param pDefender our unit that gets attacked
      * @return bonus
      */
-    qint32 getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode);
+    qint32 getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getDeffensiveBonus the deffensive bonus of our unit
      * @param pAttacker the unit attacking us

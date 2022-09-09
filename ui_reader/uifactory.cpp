@@ -894,11 +894,7 @@ bool UiFactory::createDropDownMenu(oxygine::spActor parent, QDomElement element,
         qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
         QString tooltip = translate(getAttribute(childs, attrTooltip));
         QString onEventLine = getAttribute(childs, attrOnEvent);
-        QString value;
-        if (hasChild(childs, attrStartValue))
-        {
-            value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
-        }
+
         QStringList items = getStringListValue(getAttribute(childs, attrItems), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
@@ -908,17 +904,19 @@ bool UiFactory::createDropDownMenu(oxygine::spActor parent, QDomElement element,
         pDropDownmenu->setVisible(visible);
         pDropDownmenu->setEnabled(enabled);
         pDropDownmenu->setObjectName(id);
-        if (!value.isEmpty())
+        if (hasChild(childs, attrStartValue))
         {
-            bool ok = false;
-            qint32 item = value.toInt(&ok);
-            if (ok)
+            bool success = false;
+            qint32 intValue = getIntValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu, 0, &success);
+            if (success)
             {
-                pDropDownmenu->setCurrentItem(item);
+                pDropDownmenu->setCurrentItem(intValue);
             }
             else
             {
+                QString value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
                 pDropDownmenu->setCurrentItem(value);
+
             }
         }
         DropDownmenu* pDropDownmenuPtr = pDropDownmenu.get();
@@ -967,9 +965,20 @@ bool UiFactory::createDropDownMenuColor(oxygine::spActor parent, QDomElement ele
         pDropDownmenu->setShowUnitPreview(showUnitPreview);
         pDropDownmenu->setObjectName(id);
         pDropDownmenu->setEnabled(enabled);
-        if (!value.isEmpty())
+        if (hasChild(childs, attrStartValue))
         {
-            pDropDownmenu->setCurrentItem(value);
+            bool success = false;
+            qint32 intValue = getIntValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu, 0, &success);
+            if (success)
+            {
+                pDropDownmenu->setCurrentItem(intValue);
+            }
+            else
+            {
+                QString value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
+                pDropDownmenu->setCurrentItem(value);
+
+            }
         }
         DropDownmenuColor* pDropDownmenuPtr = pDropDownmenu.get();
         connect(pDropDownmenu.get(), &DropDownmenuColor::sigItemChanged, pMenu, [this, onEventLine, pDropDownmenuPtr, id, loopIdx, pMenu](QColor value)
@@ -996,11 +1005,6 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
         qint32 spriteSize = getIntValue(getAttribute(childs, attrSpriteSize), id, loopIdx, pMenu);
         QString tooltip = translate(getAttribute(childs, attrTooltip));
         QString onEventLine = getAttribute(childs, attrOnEvent);
-        QString value;
-        if (hasChild(childs, attrStartValue))
-        {
-            value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
-        }
         QStringList items = getStringListValue(getAttribute(childs, attrItems), id, loopIdx, pMenu);
         QString spriteCreator = getStringValue(getAttribute(childs, attrSpriteType), id, loopIdx, pMenu);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
@@ -1083,9 +1087,20 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
         pDropDownmenu->setVisible(visible);
         pDropDownmenu->setEnabled(enabled);
         pDropDownmenu->setObjectName(id);
-        if (!value.isEmpty())
+        if (hasChild(childs, attrStartValue))
         {
-            pDropDownmenu->setCurrentItem(value);
+            bool success = false;
+            qint32 intValue = getIntValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu, 0, &success);
+            if (success)
+            {
+                pDropDownmenu->setCurrentItem(intValue);
+            }
+            else
+            {
+                QString value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
+                pDropDownmenu->setCurrentItem(value);
+
+            }
         }
         DropDownmenuSprite* pDropDownmenuPtr = pDropDownmenu.get();
         connect(pDropDownmenu.get(), &DropDownmenuSprite::sigItemChanged, pMenu, [this, onEventLine, pDropDownmenuPtr, id, loopIdx, pMenu](qint32 value)
@@ -1210,9 +1225,10 @@ bool UiFactory::hasChild(const QDomNodeList & childs, const QString & attribute)
     return false;
 }
 
-qint32 UiFactory::getIntValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, qint32 defaultValue)
+qint32 UiFactory::getIntValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, qint32 defaultValue, bool * success)
 {
     qint32 value = defaultValue;
+
     if (!line.isEmpty())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
@@ -1225,23 +1241,46 @@ qint32 UiFactory::getIntValue(QString line, QString objectId, qint32 loopIdx, Cr
         QJSValue obj = pInterpreter->newQObject(pMenu);
         pInterpreter->setGlobal("currentMenu", obj);
         QJSValue erg = pInterpreter->evaluate(coordinates + line);
+        if (success != nullptr)
+        {
+            *success = true;
+        }
         if (erg.isNumber())
         {
             value = erg.toInt();
         }
+        else if (erg.isBool())
+        {
+            value = erg.toBool();
+        }
         else if (erg.isError())
         {
             CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            if (success != nullptr)
+            {
+                *success = false;
+            }
         }
         else
         {
             CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
+            if (success != nullptr)
+            {
+                *success = false;
+            }
+        }
+    }
+    else
+    {
+        if (success != nullptr)
+        {
+            *success = false;
         }
     }
     return value;
 }
 
-quint64 UiFactory::getUInt64Value(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, quint64 defaultValue)
+quint64 UiFactory::getUInt64Value(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, quint64 defaultValue, bool * success)
 {
     quint64 value = defaultValue;
     if (!line.isEmpty())
@@ -1256,23 +1295,46 @@ quint64 UiFactory::getUInt64Value(QString line, QString objectId, qint32 loopIdx
         QJSValue obj = pInterpreter->newQObject(pMenu);
         pInterpreter->setGlobal("currentMenu", obj);
         QJSValue erg = pInterpreter->evaluate(coordinates + line);
+        if (success != nullptr)
+        {
+            *success = true;
+        }
         if (erg.isNumber())
         {
             value = erg.toNumber();
         }
+        else if (erg.isBool())
+        {
+            value = erg.toBool();
+        }
         else if (erg.isError())
         {
             CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            if (success != nullptr)
+            {
+                *success = false;
+            }
         }
         else
         {
             CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
+            if (success != nullptr)
+            {
+                *success = false;
+            }
+        }
+    }
+    else
+    {
+        if (success != nullptr)
+        {
+            *success = false;
         }
     }
     return value;
 }
 
-float UiFactory::getFloatValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, float defaultValue)
+float UiFactory::getFloatValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, float defaultValue, bool * success)
 {
     float value = defaultValue;
     if (!line.isEmpty())
@@ -1287,23 +1349,46 @@ float UiFactory::getFloatValue(QString line, QString objectId, qint32 loopIdx, C
         QJSValue obj = pInterpreter->newQObject(pMenu);
         pInterpreter->setGlobal("currentMenu", obj);
         QJSValue erg = pInterpreter->evaluate(coordinates + line);
+        if (success != nullptr)
+        {
+            *success = true;
+        }
         if (erg.isNumber())
         {
             value = erg.toNumber();
         }
+        else if (erg.isBool())
+        {
+            value = erg.toBool();
+        }
         else if (erg.isError())
         {
             CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            if (success != nullptr)
+            {
+                *success = false;
+            }
         }
         else
         {
             CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
+            if (success != nullptr)
+            {
+                *success = false;
+            }
+        }
+    }
+    else
+    {
+        if (success != nullptr)
+        {
+            *success = false;
         }
     }
     return value;
 }
 
-bool UiFactory::getBoolValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, bool defaultValue)
+bool UiFactory::getBoolValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, bool defaultValue, bool * success)
 {
     bool value = defaultValue;
     if (!line.isEmpty())
@@ -1314,23 +1399,46 @@ bool UiFactory::getBoolValue(QString line, QString objectId, qint32 loopIdx, Cre
         QJSValue obj = pInterpreter->newQObject(pMenu);
         pInterpreter->setGlobal("currentMenu", obj);
         QJSValue erg = pInterpreter->evaluate(line);
+        if (success != nullptr)
+        {
+            *success = true;
+        }
         if (erg.isBool())
         {
             value = erg.toBool();
         }
+        else if (erg.isNumber())
+        {
+            value = erg.toNumber();
+        }
         else if (erg.isError())
         {
             CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            if (success != nullptr)
+            {
+                *success = false;
+            }
         }
         else
         {
             CONSOLE_PRINT("Unable to determine a bool value while interpreting. Line: " + line, Console::eERROR);
+            if (success != nullptr)
+            {
+                *success = false;
+            }
+        }
+    }
+    else
+    {
+        if (success != nullptr)
+        {
+            *success = false;
         }
     }
     return value;
 }
 
-QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu)
+QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, bool * success)
 {
     QString value = line;
     if (!line.isEmpty())
@@ -1341,19 +1449,42 @@ QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx
         QJSValue obj = pInterpreter->newQObject(pMenu);
         pInterpreter->setGlobal("currentMenu", obj);
         QJSValue erg = pInterpreter->evaluate(line);
+        if (success != nullptr)
+        {
+            *success = true;
+        }
         if (erg.isError())
         {
             CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ". Using \"" + value + "\" as value.", Console::eDEBUG);
+            if (success != nullptr)
+            {
+                *success = false;
+            }
+        }
+        else if (erg.isString())
+        {
+            value = erg.toString();
         }
         else
         {
-            value = erg.toString();
+            CONSOLE_PRINT("Unable to determine a string value while interpreting. Line: " + line, Console::eERROR);
+            if (success != nullptr)
+            {
+                *success = false;
+            }
+        }
+    }
+    else
+    {
+        if (success != nullptr)
+        {
+            *success = false;
         }
     }
     return value;
 }
 
-Player* UiFactory::getPlayerValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu)
+Player* UiFactory::getPlayerValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, bool * success)
 {
     Player* value = nullptr;
     if (!line.isEmpty())
@@ -1367,16 +1498,31 @@ Player* UiFactory::getPlayerValue(QString line, QString objectId, qint32 loopIdx
         if (erg.isError())
         {
             CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            if (success != nullptr)
+            {
+                *success = false;
+            }
         }
         else
         {
             value = erg.toVariant().value<Player*>();
+            if (success != nullptr)
+            {
+                *success = true;
+            }
+        }
+    }
+    else
+    {
+        if (success != nullptr)
+        {
+            *success = false;
         }
     }
     return value;
 }
 
-QStringList UiFactory::getStringListValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu)
+QStringList UiFactory::getStringListValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, bool * success)
 {
     QStringList value;
     if (!line.isEmpty())
@@ -1390,10 +1536,25 @@ QStringList UiFactory::getStringListValue(QString line, QString objectId, qint32
         if (erg.isError())
         {
             CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            if (success != nullptr)
+            {
+                *success = false;
+            }
         }
         else
         {
             value = erg.toVariant().toStringList();
+            if (success != nullptr)
+            {
+                *success = true;
+            }
+        }
+    }
+    else
+    {
+        if (success != nullptr)
+        {
+            *success = false;
         }
     }
     return value;

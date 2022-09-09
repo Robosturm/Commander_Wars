@@ -2,7 +2,9 @@
 
 UiManager::UiManager()
     : RessourceManagement<UiManager>("/images/ui/res.xml",
-                                     "/ui")
+                                     "/ui",
+                                     true,
+                                     false)
 {
     Interpreter::setCppOwnerShip(this);
 #ifdef GRAPHICSUPPORT

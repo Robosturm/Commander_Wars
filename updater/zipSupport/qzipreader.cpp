@@ -377,7 +377,9 @@ public:
     ~QZipPrivate()
     {
         if (ownDevice)
+        {
             delete device;
+        }
     }
 
     QZipReader::FileInfo fillFileInfo(int index) const;

@@ -471,7 +471,7 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     if (pCO.get() != nullptr)
     {
         offBonus = pCO->getOffensiveBonus(nullptr, pUnit.get(), pUnit->getPosition(), nullptr, pUnit->getPosition(), false, GameEnums::LuckDamageMode_Off);
-        defBonus = pCO->getDeffensiveBonus(nullptr, nullptr, pUnit->getPosition(), pUnit.get(), pUnit->getPosition(), false, GameEnums::LuckDamageMode_Off);
+        defBonus = pCO->getDeffensiveBonus(nullptr, nullptr, pUnit->getPosition(), pUnit.get(), pUnit->getPosition(), true, GameEnums::LuckDamageMode_Off);
         firerangeBonus = pCO->getFirerangeModifier(pUnit.get(), pUnit->getPosition());
         movementBonus = pCO->getMovementpointModifier(pUnit.get(), pUnit->getPosition());
     }

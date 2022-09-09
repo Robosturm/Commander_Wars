@@ -54,7 +54,7 @@ var ChangePasswordDialog =
     {
         if (errorCode === GameEnums.LoginError_None)
         {
-            forgotPassword.showMessageBox(qsTr("You're password was changed successfully."));
+            changePassword.showMessageBox(qsTr("You're password was changed successfully."));
             var menu = forgotPassword.getBaseMenu();
             menu.enableServerButtons(true);
             menu.setServerRequestNewPassword(false);
@@ -62,30 +62,31 @@ var ChangePasswordDialog =
         }
         else if (errorCode === GameEnums.LoginError_WrongPassword)
         {
-            forgotPassword.showMessageBox(qsTr("Your old password isn't correct."));
+            changePassword.showMessageBox(qsTr("Your old password isn't correct."));
             ChangePasswordDialog.changeEnableForItems(true);
         }
         else if (errorCode === GameEnums.LoginError_AccountDoesntExist)
         {
-            forgotPassword.showMessageBox(qsTr("No account with your username was found."));
+            changePassword.showMessageBox(qsTr("No account with your username was found."));
             ChangePasswordDialog.changeEnableForItems(true);
         }
         else if (errorCode === GameEnums.LoginError_InvalidPasswordReset)
         {
-            forgotPassword.showMessageBox(qsTr("Unable to change password on the server."));
+            changePassword.showMessageBox(qsTr("Unable to change password on the server."));
             ChangePasswordDialog.changeEnableForItems(true);
         }
         else
         {
-            forgotPassword.showMessageBox(qsTr("Unknown error happened."));
+            changePassword.showMessageBox(qsTr("Unknown error happened."));
             ChangePasswordDialog.changeEnableForItems(true);
         }
     },
     onAbort : function()
     {
+        var menu = changePassword.getBaseMenu();
         if (menu.getServerRequestNewPassword())
         {
-            forgotPassword.getBaseMenu().leaveServer();
+            menu.leaveServer();
         }
         changePassword.exit();
     },

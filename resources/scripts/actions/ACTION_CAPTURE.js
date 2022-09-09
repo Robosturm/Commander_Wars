@@ -51,7 +51,7 @@ var Constructor = function()
     {
         return ["AIRPORT", "FACTORY", "HARBOUR", "HQ", "LABOR", "MINE",
                 "PIPESTATION", "RADAR", "TOWER", "TOWN", "TEMPORARY_AIRPORT",
-                "TEMPORARY_HARBOUR", "OILRIG"];
+                "TEMPORARY_HARBOUR", "OILRIG", "POWERPLANT"];
     };
 
     this.getActionText = function(map)

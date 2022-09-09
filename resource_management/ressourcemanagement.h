@@ -85,7 +85,7 @@ public:
     bool getLoaded() const;
 
 protected:
-    explicit RessourceManagement(QString resPath, QString scriptPath, bool addTransparentBorder = true);
+    explicit RessourceManagement(QString resPath, QString scriptPath, bool addTransparentBorder = true, bool raiseErrors = true);
     virtual ~RessourceManagement() = default;
     void loadRessources(QString resPath, bool addTransparentBorder = true);
     void loadAll(QStringList& list);
@@ -95,6 +95,7 @@ protected:
     QStringList m_loadedRessources;
     QString m_scriptPath;
     bool m_loaded{false};
+    bool m_raiseErrors{true};
 private:
     static TClass* m_pInstance;
 };
@@ -120,8 +121,9 @@ bool RessourceManagement<TClass>::created()
 }
 
 template<class TClass>
-RessourceManagement<TClass>::RessourceManagement(QString resPath, QString scriptPath, bool addTransparentBorder)
-    : m_scriptPath(scriptPath)
+RessourceManagement<TClass>::RessourceManagement(QString resPath, QString scriptPath, bool addTransparentBorder, bool raiseErrors)
+    : m_scriptPath(scriptPath),
+      m_raiseErrors(raiseErrors)
 {
     loadRessources(resPath, addTransparentBorder);
 }
@@ -277,7 +279,14 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
                 pInterpreter->openScript(dirIter.fileInfo().filePath(), true);
                 if (!list.contains(id))
                 {
-                    list.append(id);
+                    if (m_raiseErrors && !pInterpreter->exists(id))
+                    {
+                        CONSOLE_PRINT("File: " + dirIter.fileInfo().filePath() + " didn't add an object named " + id + " to the game", Console::eERROR);
+                    }
+                    else
+                    {
+                        list.append(id);
+                    }
                 }
             }
         }
