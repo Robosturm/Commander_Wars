@@ -73,8 +73,9 @@ bool MultilineTextbox::calculateNewFocusPosition(oxygine::text::Node* pNode, qin
 
 bool MultilineTextbox::getNewFocusPosition(oxygine::text::Node* pNode, qint32 x, qint32 y)
 {
-    oxygine::text::TextNode* pTextNode = dynamic_cast<oxygine::text::TextNode*>(pNode);
     bool end = false;
+#ifdef GRAPHICSUPPORT
+    oxygine::text::TextNode* pTextNode = dynamic_cast<oxygine::text::TextNode*>(pNode);
     if (pTextNode != nullptr)
     {
         auto & lines = pTextNode->getLines();
@@ -99,6 +100,7 @@ bool MultilineTextbox::getNewFocusPosition(oxygine::text::Node* pNode, qint32 x,
     {
         end = calculateNewFocusPosition(pNode, x, y);
     }
+#endif
     return end;
 }
 
