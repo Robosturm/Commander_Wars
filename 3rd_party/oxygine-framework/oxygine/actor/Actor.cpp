@@ -1141,10 +1141,12 @@ namespace oxygine
         return convert_local2global_(child.get(), parent.get(), pos);
     }
 
+#ifdef GRAPHICSUPPORT
     QMutex* Actor::getLocked()
     {
         return &m_Locked;
     }
+#endif
 
     Vector2 Actor::convert_local2stage(spActor & actor, const Vector2& pos, spActor root)
     {

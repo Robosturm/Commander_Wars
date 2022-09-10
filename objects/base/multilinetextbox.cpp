@@ -35,6 +35,7 @@ MultilineTextbox::MultilineTextbox(qint32 width, qint32 heigth)
     m_textfield->setSize(width - widthReduction, heigth);
     m_pPanel->addItem(m_textfield);
 
+#ifdef GRAPHICSUPPORT
     addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
@@ -55,6 +56,7 @@ MultilineTextbox::MultilineTextbox(qint32 width, qint32 heigth)
             emit sigFocused();
         }
     });
+#endif
 }
 
 bool MultilineTextbox::calculateNewFocusPosition(oxygine::text::Node* pNode, qint32 x, qint32 y)
