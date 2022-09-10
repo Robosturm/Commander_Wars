@@ -86,6 +86,7 @@ void Textbox::focusedLost()
 
 void Textbox::update(const oxygine::UpdateState& us)
 {
+#ifdef GRAPHICSUPPORT
     // no need to calculate more than we need if we're invisible
     QString drawText = getDrawText(getCurrentText());
     if (m_lastDrawText != drawText)
@@ -123,6 +124,7 @@ void Textbox::update(const oxygine::UpdateState& us)
             }
         }
     }
+#endif
     oxygine::Actor::update(us);
 }
 
