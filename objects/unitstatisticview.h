@@ -13,12 +13,12 @@ class Player;
 class UnitStatisticView;
 using spUnitStatisticView = oxygine::intrusive_ptr<UnitStatisticView>;
 
-class UnitStatisticView : public QObject, public oxygine::Actor
+class UnitStatisticView final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit UnitStatisticView(const GameRecorder::PlayerData & data, qint32 width, qint32 heigth, Player* pPlayer, GameMap* pMap);
-    virtual ~UnitStatisticView() = default;
+    ~UnitStatisticView() = default;
 signals:
     void sigShowLink(QString pageID);
 public slots:

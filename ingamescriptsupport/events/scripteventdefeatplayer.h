@@ -8,7 +8,7 @@
 class ScriptEventDefeatPlayer;
 using spScriptEventDefeatPlayer = oxygine::intrusive_ptr<ScriptEventDefeatPlayer>;
 
-class ScriptEventDefeatPlayer : public ScriptEvent
+class ScriptEventDefeatPlayer final : public ScriptEvent
 {
     Q_OBJECT
 public:

@@ -6,6 +6,7 @@
 #include "objects/base/label.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -17,6 +18,8 @@ SelectKey::SelectKey(Qt::Key code)
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
     setWidth(180);
     m_Button = ObjectManager::createButton("", getWidth());
     oxygine::Actor* pActor = m_Button.get();

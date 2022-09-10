@@ -7,11 +7,11 @@ namespace oxygine
 {
     class Clock;
     using spClock = intrusive_ptr<Clock>;
-    class Clock: public ref_counter
+    class Clock final : public ref_counter
     {
     public:
         explicit Clock() = default;
-        virtual ~Clock() = default;
+        ~Clock() = default;
         timeMS getTime() const;
         qint32 getPauseCounter() const;
         qint32 getFixedStep() const;

@@ -1,4 +1,4 @@
-#include "multislider.h"
+#include "objects/base/multislider.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
@@ -6,6 +6,7 @@
 #include "objects/base/label.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values)
 {
@@ -14,6 +15,8 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
     qint32 textWidth = 0;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

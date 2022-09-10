@@ -6,7 +6,7 @@
 class ScriptEventPlaySound;
 using spScriptEventPlaySound = oxygine::intrusive_ptr<ScriptEventPlaySound>;
 
-class ScriptEventPlaySound : public ScriptEventGeneric
+class ScriptEventPlaySound final : public ScriptEventGeneric
 {
     Q_OBJECT
 public:

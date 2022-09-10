@@ -12,12 +12,12 @@ class GameMap;
 class DialogVictoryConditions;
 using spDialogVictoryConditions = oxygine::intrusive_ptr<DialogVictoryConditions>;
 
-class DialogVictoryConditions : public QObject, public oxygine::Actor
+class DialogVictoryConditions final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogVictoryConditions(GameMap* pMap);
-    virtual ~DialogVictoryConditions() = default;
+    ~DialogVictoryConditions() = default;
 
 signals:
     void sigFinished();

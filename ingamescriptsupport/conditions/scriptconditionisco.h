@@ -5,7 +5,7 @@
 class ScriptConditionIsCo;
 using spScriptConditionIsCo = oxygine::intrusive_ptr<ScriptConditionIsCo>;
 
-class ScriptConditionIsCo : public ScriptCondition
+class ScriptConditionIsCo final : public ScriptCondition
 {
     Q_OBJECT
 public:

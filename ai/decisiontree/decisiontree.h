@@ -9,15 +9,14 @@
 
 #include "coreengine/fileserializable.h"
 
-class DecisionTree : public QObject, public FileSerializable
+class DecisionTree final : public QObject, public FileSerializable
 {
 	Q_OBJECT
 public:
     DecisionTree(spDecisionNode & pRootNode);
     DecisionTree(std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions);
     DecisionTree(const QString & treeFile, const QString & trainingDataFile);
-
-    virtual ~DecisionTree() = default;
+    ~DecisionTree() = default;
 
     spDecisionNode train(std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions);
 

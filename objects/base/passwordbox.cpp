@@ -1,4 +1,6 @@
-#include "passwordbox.h"
+#include "objects/base/passwordbox.h"
+
+#include "coreengine/interpreter.h"
 
 Passwordbox::Passwordbox(qint32 width, qint32 heigth)
     : Textbox(width, heigth)
@@ -6,6 +8,8 @@ Passwordbox::Passwordbox(qint32 width, qint32 heigth)
 #ifdef GRAPHICSUPPORT
     setObjectName("Passwordbox");
 #endif
+    Interpreter::setCppOwnerShip(this);
+
 }
 
 void Passwordbox::update(const oxygine::UpdateState& us)

@@ -6,7 +6,7 @@
 class Unit;
 class Terrain;
 
-class MovementTableManager : public QObject, public RessourceManagement<MovementTableManager>
+class MovementTableManager final : public QObject, public RessourceManagement<MovementTableManager>
 {
     Q_OBJECT
 public:
@@ -21,7 +21,7 @@ protected:
     friend RessourceManagement<MovementTableManager>;
     MovementTableManager();
 private:
-    virtual ~MovementTableManager() = default;
+    ~MovementTableManager() = default;
 };
 
 #endif // MOVEMENTTABLEMANAGER_H

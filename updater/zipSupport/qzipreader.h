@@ -9,7 +9,7 @@
 
 class QZipReaderPrivate;
 
-class QZipReader : public QObject
+class QZipReader final : public QObject
 {
     Q_OBJECT
 public:

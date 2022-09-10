@@ -453,6 +453,8 @@ namespace oxygine
         typedef Property<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>                             TweenScaleX;
         typedef Property<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>                             TweenScaleY;
         typedef Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>               TweenAlpha;
+        QMutex* getLocked();
+
     protected:
         void added2stage(Stage*);
         void removedFromStage();

@@ -16,12 +16,12 @@
 class ScriptDialogDialog;
 using spScriptDialogDialog = oxygine::intrusive_ptr<ScriptDialogDialog>;
 
-class ScriptDialogDialog : public QObject, public oxygine::Actor
+class ScriptDialogDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit ScriptDialogDialog(spScriptEventDialog scriptEventDialog);
-    virtual ~ScriptDialogDialog() = default;
+    ~ScriptDialogDialog() = default;
 signals:
     /**
      * @brief sigFinished

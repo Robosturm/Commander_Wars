@@ -16,12 +16,12 @@ class DropDownmenu;
 class PlayerSelection;
 using spPlayerSelection = oxygine::intrusive_ptr<PlayerSelection>;
 
-class PlayerSelection : public CreatedGui
+class PlayerSelection final : public CreatedGui
 {
     Q_OBJECT
 public:
     explicit PlayerSelection(qint32 width, qint32 heigth);
-    virtual ~PlayerSelection() = default;
+    ~PlayerSelection() = default;
     void showPlayerSelection();    
     void attachNetworkInterface(spNetworkInterface pNetworkInterface);    
     void attachCampaign(spCampaign campaign);

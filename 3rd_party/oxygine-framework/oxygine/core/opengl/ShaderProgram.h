@@ -8,11 +8,11 @@ namespace oxygine
 {
     class ShaderProgram;
     using spShaderProgram = oxygine::intrusive_ptr<ShaderProgram>;
-    class ShaderProgram: public ref_counter
+    class ShaderProgram final : public ref_counter
     {
     public:
         explicit ShaderProgram(const QString & vsShader, const QString & fsShader, const VertexDeclaration* decl);
-        virtual ~ShaderProgram() = default;
+        ~ShaderProgram() = default;
         void bind();
         quint32 getID() const;
         qint32 getUniformLocation(const char* id) const;

@@ -17,7 +17,7 @@
 class DamageCalculator;
 using spDamageCalculator = oxygine::intrusive_ptr<DamageCalculator>;
 
-class DamageCalculator : public CloseablePopUp
+class DamageCalculator final : public CloseablePopUp
 {
     Q_OBJECT
     struct CoData
@@ -45,7 +45,7 @@ class DamageCalculator : public CloseablePopUp
     using CosData = CoData[2];
 public:
     explicit DamageCalculator();
-    virtual ~DamageCalculator() = default;
+    ~DamageCalculator() = default;
 
 signals:
     void sigCalculateDamage();

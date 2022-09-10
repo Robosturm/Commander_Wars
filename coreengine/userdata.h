@@ -15,7 +15,7 @@
 class Userdata;
 using spUserdata = oxygine::intrusive_ptr<Userdata>;
 
-class Userdata : public QObject, public FileSerializable, public oxygine::ref_counter
+class Userdata final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -70,7 +70,7 @@ public:
          */
         GameEnums::ShopItemType itemType;
     };
-    virtual ~Userdata() = default;
+    ~Userdata() = default;
     static Userdata* getInstance();
     void changeUser();
     void storeUser();

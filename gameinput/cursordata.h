@@ -8,12 +8,12 @@
 class CursorData;
 using spCursorData = oxygine::intrusive_ptr<CursorData>;
 
-class CursorData : public QObject, public oxygine::ref_counter
+class CursorData final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     explicit CursorData();
-    virtual ~CursorData() = default;
+    ~CursorData() = default;
 signals:
 
 public slots:

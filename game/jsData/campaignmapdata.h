@@ -5,12 +5,12 @@
 #include <QVector>
 #include <QString>
 
-class CampaignMapData : public QObject
+class CampaignMapData final : public QObject
 {
     Q_OBJECT
 public:
     explicit CampaignMapData();
-    virtual ~CampaignMapData() = default;
+    ~CampaignMapData() = default;
 
 public slots:
     const QString getMapBackground() const;

@@ -22,7 +22,7 @@ namespace oxygine
 
     class STDRenderer;
     typedef oxygine::intrusive_ptr<STDRenderer> spSTDRenderer;
-    class STDRenderer : public ShaderProgramChangedHook, public oxygine::ref_counter
+    class STDRenderer final : public ShaderProgramChangedHook, public oxygine::ref_counter
     {
     public:
         static spSTDRenderer current;

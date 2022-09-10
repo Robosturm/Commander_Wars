@@ -9,7 +9,7 @@
 class MapEditDialog;
 using spMapEditDialog = oxygine::intrusive_ptr<MapEditDialog>;
 
-class MapEditDialog : public CreatedGui
+class MapEditDialog final : public CreatedGui
 {
     Q_OBJECT
 public:
@@ -27,7 +27,7 @@ public:
         GameEnums::MapFilterFlags mapFlags{GameEnums::MapFilterFlags_None};
     };
     explicit MapEditDialog(MapEditInfo info);
-    virtual ~MapEditDialog();
+    ~MapEditDialog();
 
 signals:
     void editFinished(MapEditInfo info);

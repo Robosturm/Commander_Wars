@@ -12,13 +12,13 @@
 class ColorSelector;
 using spColorSelector = oxygine::intrusive_ptr<ColorSelector>;
 
-class ColorSelector : public QObject, public oxygine::Actor
+class ColorSelector final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
     static constexpr qint32 pixelCount = 4;
 public:
     explicit ColorSelector(QColor color, qint32 pixelSize);
-    virtual ~ColorSelector() = default;
+    ~ColorSelector() = default;
     QColor getCurrentColor() const;
 
 signals:

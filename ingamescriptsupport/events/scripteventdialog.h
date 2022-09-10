@@ -13,7 +13,7 @@
 class DialogEntry;
 using spDialogEntry = oxygine::intrusive_ptr<DialogEntry>;
 
-class DialogEntry : public QObject, public oxygine::ref_counter
+class DialogEntry final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -27,7 +27,7 @@ public:
 class ScriptEventDialog;
 using spScriptEventDialog = oxygine::intrusive_ptr<ScriptEventDialog>;
 
-class ScriptEventDialog : public ScriptEvent
+class ScriptEventDialog final : public ScriptEvent
 {
     Q_OBJECT
 public:

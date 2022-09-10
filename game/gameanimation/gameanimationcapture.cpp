@@ -78,6 +78,7 @@ void GameAnimationCapture::addBuildingSprite(const QString & spriteID, Player* s
 void GameAnimationCapture::getRecoloredImage(Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode,
                                              QImage & preCaptureImage, QImage & captureImage)
 {
+#ifdef GRAPHICSUPPORT
     if (mode == GameEnums::Recoloring_Table ||
         mode == GameEnums::Recoloring_Matrix)
     {
@@ -102,6 +103,7 @@ void GameAnimationCapture::getRecoloredImage(Player* startPlayer, Player* captur
         m_buildingImage = SpriteCreator::mergeImages(m_buildingImage, preCaptureImage);
         m_captureBuildingImage = SpriteCreator::mergeImages(m_captureBuildingImage, captureImage);
     }
+#endif
 }
 
 void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Player* startPlayer, Player* capturedPlayer)

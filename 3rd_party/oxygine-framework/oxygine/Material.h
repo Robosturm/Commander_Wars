@@ -11,7 +11,7 @@ namespace oxygine
     class Material;
     using spMaterial = oxygine::intrusive_ptr<Material>;
 
-    class Material : public ref_counter
+    class Material final : public ref_counter
     {
     public:
         static spMaterial current;
@@ -31,7 +31,7 @@ namespace oxygine
               m_fracShader(other->m_fracShader)
         {
         }
-        virtual ~Material() = default;
+        ~Material() = default;
         void init();
         spMaterial clone() const
         {

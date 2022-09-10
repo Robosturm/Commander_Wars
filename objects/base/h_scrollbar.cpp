@@ -4,7 +4,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     : m_Heigth(heigth),
@@ -15,6 +15,7 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
 
     m_ScrollTimer.start();
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

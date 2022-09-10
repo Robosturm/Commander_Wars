@@ -13,7 +13,7 @@
 class CampaignEditor;
 using spCampaignEditor = oxygine::intrusive_ptr<CampaignEditor>;
 
-class CampaignEditor : public QObject, public oxygine::Actor
+class CampaignEditor final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
@@ -49,7 +49,7 @@ public:
         bool scriptVariableDisableActive{false};
     };
     explicit CampaignEditor();
-    virtual ~CampaignEditor() = default;
+    ~CampaignEditor() = default;
 signals:
     /**
      * @brief sigFinished

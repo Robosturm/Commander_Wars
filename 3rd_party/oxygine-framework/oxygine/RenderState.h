@@ -6,11 +6,11 @@
 namespace oxygine
 {
 
-    class RenderState
+    class RenderState final
     {
     public:
         explicit RenderState() = default;
-        virtual ~RenderState() = default;
+        ~RenderState() = default;
 
         QColor getFinalColor(const QColor& clr) const
         {

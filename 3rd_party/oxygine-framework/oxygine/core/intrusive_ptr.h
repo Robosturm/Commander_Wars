@@ -4,7 +4,7 @@
 namespace oxygine
 {
     template <class T>
-    class intrusive_ptr
+    class intrusive_ptr final
     {
         T* m_pPointer{nullptr};
     public:
@@ -23,7 +23,7 @@ namespace oxygine
         {
         }
 
-        virtual ~intrusive_ptr()
+        ~intrusive_ptr()
         {
             if (m_pPointer != nullptr)
             {

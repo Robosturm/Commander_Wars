@@ -8,7 +8,7 @@
 class GameUpdater;
 using spGameUpdater = oxygine::intrusive_ptr<GameUpdater>;
 
-class GameUpdater : public QObject, public oxygine::ref_counter
+class GameUpdater final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -16,6 +16,7 @@ public:
     static const char* const MODE_INSTALL;
 
     explicit GameUpdater();
+    ~GameUpdater() = default;
     static void launchPatcher();
     static void launchApplication();
 public slots:

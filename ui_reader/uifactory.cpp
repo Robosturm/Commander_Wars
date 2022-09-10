@@ -16,6 +16,7 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/timespinbox.h"
 #include "objects/base/textbox.h"
+#include "objects/base/multilinetextbox.h"
 #include "objects/base/panel.h"
 #include "objects/base/slider.h"
 #include "objects/base/spriteobject.h"
@@ -34,6 +35,7 @@ static const char* const itemLabel = "Label";
 static const char* const itemCheckbox = "Checkbox";
 static const char* const itemSpinbox = "Spinbox";
 static const char* const itemTextbox = "Textbox";
+static const char* const itemMultilineTextbox = "MultilineTextbox";
 static const char* const itemPasswordbox = "Passwordbox";
 static const char* const itemTimeSpinbox = "TimeSpinbox";
 static const char* const itemPanel = "Panel";
@@ -119,6 +121,7 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemLoop), std::bind(&UiFactory::loop, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemDropDownMenuColor), std::bind(&UiFactory::createDropDownMenuColor, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemIf), std::bind(&UiFactory::ifCondition, this, _1, _2, _3, _4, _5)});
+    m_factoryItems.append({QString(itemMultilineTextbox), std::bind(&UiFactory::createMultilineTextbox, this, _1, _2, _3, _4, _5)});
 
     connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
@@ -540,8 +543,7 @@ bool UiFactory::createSprite(oxygine::spActor parent, QDomElement element, oxygi
         }
         else
         {
-            width = 40;
-            height = 40;
+            pSprite->setSize(40, 40);
         }
         if (!onEvent.isEmpty())
         {
@@ -714,10 +716,40 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
         }, Qt::QueuedConnection);
         parent->addChild(pTextbox);
         item = pTextbox;
-        if (height <= 0)
+        m_lastCoordinates = QRect(x, y, pTextbox->getScaledWidth(), pTextbox->getScaledHeight());
+    }
+    return success;
+}
+
+bool UiFactory::createMultilineTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrHeight, attrOnEvent, attrStartValue});
+    if (success)
+    {
+        QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
+        qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
+        qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
+        qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
+        qint32 height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu);
+        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString onEventLine = getAttribute(childs, attrOnEvent);
+        QString value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
+        bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
+        bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
+        spMultilineTextbox pTextbox = spMultilineTextbox::create(width, height);
+        pTextbox->setPosition(x, y);
+        pTextbox->setTooltipText(tooltip);
+        pTextbox->setCurrentText(value);
+        pTextbox->setObjectName(id);
+        pTextbox->setEnabled(enabled);
+        pTextbox->setVisible(visible);
+        connect(pTextbox.get(), &MultilineTextbox::sigTextChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](QString value)
         {
-            height = 40;
-        }
+            onEvent(onEventLine, value, id, loopIdx, pMenu);
+        }, Qt::QueuedConnection);
+        parent->addChild(pTextbox);
+        item = pTextbox;
         m_lastCoordinates = QRect(x, y, pTextbox->getScaledWidth(), pTextbox->getScaledHeight());
     }
     return success;
@@ -756,10 +788,6 @@ bool UiFactory::createPasswordbox(oxygine::spActor parent, QDomElement element, 
         }, Qt::QueuedConnection);
         parent->addChild(pTextbox);
         item = pTextbox;
-        if (height <= 0)
-        {
-            height = 40;
-        }
         m_lastCoordinates = QRect(x, y, pTextbox->getScaledWidth(), pTextbox->getScaledHeight());
     }
     return success;

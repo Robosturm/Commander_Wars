@@ -13,12 +13,12 @@
 class DropDownmenu;
 using spDropDownmenu = oxygine::intrusive_ptr<DropDownmenu>;
 
-class DropDownmenu : public DropDownmenuBase
+class DropDownmenu final : public DropDownmenuBase
 {
     Q_OBJECT
 public:
     explicit DropDownmenu(qint32 width, const QStringList & items);
-    virtual ~DropDownmenu() = default;
+    ~DropDownmenu() = default;
     /**
      * @brief getCurrentItemText text of the current item
      * @return

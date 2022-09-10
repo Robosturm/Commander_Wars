@@ -6,7 +6,7 @@
 class ScriptEventChangeCOBar;
 using spScriptEventChangeCOBar = oxygine::intrusive_ptr<ScriptEventChangeCOBar>;
 
-class ScriptEventChangeCOBar : public ScriptEvent
+class ScriptEventChangeCOBar final : public ScriptEvent
 {
     Q_OBJECT
 public:

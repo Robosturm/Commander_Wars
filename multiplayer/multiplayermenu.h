@@ -20,7 +20,7 @@
 class Multiplayermenu;
 using spMultiplayermenu = oxygine::intrusive_ptr<Multiplayermenu>;
 
-class Multiplayermenu : public MapSelectionMapsMenue
+class Multiplayermenu final : public MapSelectionMapsMenue
 {
     Q_OBJECT
 public:
@@ -32,8 +32,8 @@ public:
     };
 
     explicit Multiplayermenu(QString address, QString secondaryAddress, quint16 port, QString password, NetworkMode host);
-    explicit Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, NetworkMode host);
-    virtual ~Multiplayermenu() = default;
+    explicit Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, NetworkMode host);    
+    ~Multiplayermenu() = default;
 
     /**
      * @brief existsMap

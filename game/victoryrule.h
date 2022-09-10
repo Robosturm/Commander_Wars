@@ -13,7 +13,7 @@ class GameMap;
 class VictoryRule;
 using spVictoryRule = oxygine::intrusive_ptr<VictoryRule>;
 
-class VictoryRule : public QObject, public FileSerializable, public oxygine::ref_counter
+class VictoryRule final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -22,7 +22,7 @@ public:
 
     explicit VictoryRule(GameMap* pMap);
     explicit VictoryRule(QString ruleID, GameMap* pMap);
-    virtual ~VictoryRule() = default;
+    ~VictoryRule() = default;
 
     /**
      * @brief serialize stores the object

@@ -8,12 +8,12 @@
 class Mainwindow;
 using spMainwindow = oxygine::intrusive_ptr<Mainwindow>;
 
-class Mainwindow : public Basemenu
+class Mainwindow final : public Basemenu
 {
     Q_OBJECT
 public:
     explicit Mainwindow(const QString & initialView);
-    virtual ~Mainwindow() = default;
+    ~Mainwindow() = default;
 signals:
     void sigImport();
     void sigVersionClicked();

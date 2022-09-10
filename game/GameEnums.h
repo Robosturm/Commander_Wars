@@ -338,8 +338,7 @@ public:
 
     static void registerEnums();
 private:
-    explicit GameEnums() = default;
-    virtual ~GameEnums() = default;
+    GameEnums() = default;
 };
 
 #endif

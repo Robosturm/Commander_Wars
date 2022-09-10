@@ -13,7 +13,7 @@ class CampaignMapData;
 class Campaign;
 using spCampaign = oxygine::intrusive_ptr<Campaign>;
 
-class Campaign : public QObject, public FileSerializable, public oxygine::ref_counter
+class Campaign final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -30,7 +30,7 @@ public:
     static const QString scriptName;
     explicit Campaign(QString file);
     explicit Campaign();
-    virtual ~Campaign();
+    ~Campaign();
     /**
      * @brief serialize stores the object
      * @param pStream

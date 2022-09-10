@@ -6,7 +6,7 @@
 
 #include "resource_management/ressourcemanagement.h"
 
-class FontManager : public QObject
+class FontManager final : public QObject
 {
     Q_OBJECT
 public:
@@ -131,9 +131,9 @@ public slots:
 protected:
     friend RessourceManagement<FontManager>;
     explicit FontManager();
-private:
+    ~FontManager() = default;
 
-    virtual ~FontManager() = default;
+private:
     static QColor m_defaultColor;
     static FontManager* m_pInstance;
     static QMap<QString, oxygine::Font> m_fonts;

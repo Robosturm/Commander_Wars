@@ -5,9 +5,9 @@
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionBuildingsOwned;
-typedef oxygine::intrusive_ptr<ScriptConditionBuildingsOwned> spScriptConditionBuildingsOwned;
+using spScriptConditionBuildingsOwned = oxygine::intrusive_ptr<ScriptConditionBuildingsOwned>;
 
-class ScriptConditionBuildingsOwned : public ScriptCondition
+class ScriptConditionBuildingsOwned final : public ScriptCondition
 {
     Q_OBJECT
 public:

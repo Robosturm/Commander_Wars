@@ -3,7 +3,7 @@
 
 #include "resource_management/ressourcemanagement.h"
 
-class COSpriteManager : public QObject, public RessourceManagement<COSpriteManager>
+class COSpriteManager final : public QObject, public RessourceManagement<COSpriteManager>
 {
     Q_OBJECT
 public:
@@ -78,8 +78,8 @@ public slots:
 protected:
     friend RessourceManagement<COSpriteManager>;
     COSpriteManager();
+    ~COSpriteManager() = default;
 private:
-    virtual ~COSpriteManager() = default;
     struct CoSprite
     {
         CoSprite(QString spriteId, oxygine::spResAnim sprite)

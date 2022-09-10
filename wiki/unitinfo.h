@@ -13,12 +13,12 @@
 class UnitInfo;
 using spUnitInfo = oxygine::intrusive_ptr<UnitInfo>;
 
-class UnitInfo : public QObject, public oxygine::Actor
+class UnitInfo final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit UnitInfo(spUnit pUnit, qint32 width);
-    virtual ~UnitInfo() = default;
+    ~UnitInfo() = default;
     /**
      * @brief createWeaponTable
      * @param weaponID

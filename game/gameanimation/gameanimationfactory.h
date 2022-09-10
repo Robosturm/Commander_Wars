@@ -19,7 +19,7 @@ class BattleAnimation;
 class GameAnimationFactory;
 using spGameAnimationFactory = oxygine::intrusive_ptr<GameAnimationFactory>;
 
-class GameAnimationFactory : public QObject, public oxygine::ref_counter
+class GameAnimationFactory final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -28,7 +28,7 @@ public:
      * @return the singleton of the factory
      */
     static GameAnimationFactory* getInstance();
-    virtual ~GameAnimationFactory() = default;
+    ~GameAnimationFactory() = default;
     void release();
     /**
      * @brief queueAnimation queues the given animation by removing it from the execution

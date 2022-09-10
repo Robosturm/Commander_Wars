@@ -13,7 +13,7 @@ class GameMenue;
 class IngameInfoBar;
 using spIngameInfoBar = oxygine::intrusive_ptr<IngameInfoBar>;
 
-class IngameInfoBar : public QObject, public oxygine::Actor
+class IngameInfoBar final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
@@ -21,7 +21,7 @@ public:
     static constexpr qint32 spriteHeigth = 192;
 
     explicit IngameInfoBar(GameMenue* pMenu, GameMap* pMap);
-    virtual ~IngameInfoBar() = default;
+    ~IngameInfoBar() = default;
     Minimap* getMinimap()
     {
         return m_pMinimap.get();

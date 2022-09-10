@@ -14,7 +14,7 @@ class GameMap;
 class BuildListDialog;
 using spBuildListDialog = oxygine::intrusive_ptr<BuildListDialog>;
 
-class BuildListDialog : public QObject, public oxygine::Actor
+class BuildListDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
     struct UnitGroup
@@ -24,7 +24,7 @@ class BuildListDialog : public QObject, public oxygine::Actor
     };
 public:
     explicit BuildListDialog(GameMap* pMap, qint32 player, QStringList buildList);
-    virtual ~BuildListDialog() = default;
+    ~BuildListDialog() = default;
 signals:
     void editFinished(qint32 player, QStringList buildList);
     void canceled();

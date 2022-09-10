@@ -2,6 +2,8 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
+#include "coreengine/interpreter.h"
+
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -17,6 +19,7 @@ TimeSpinBox::TimeSpinBox(qint32 width)
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();

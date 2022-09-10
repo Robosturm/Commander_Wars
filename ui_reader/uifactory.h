@@ -12,7 +12,7 @@
 
 #include "ui_reader/createdgui.h"
 
-class UiFactory : public QObject
+class UiFactory final : public QObject
 {
     Q_OBJECT
 public:
@@ -106,6 +106,13 @@ private:
       * optional: tooltip, id, enabled, visible
       */
     bool createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
+      * Nodename: Textbox
+      * supported attributes are:
+      * mandatory: x, y, width, height, onEvent, startValue
+      * optional: tooltip, id, enabled, visible
+      */
+    bool createMultilineTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Passwordbox
       * supported attributes are:

@@ -88,7 +88,7 @@ Mainapp::Mainapp()
 void Mainapp::createLineEdit()
 {
 #ifdef GRAPHICSUPPORT    
-    m_pLineEdit = new QLineEdit();
+    m_pLineEdit = new EventTextEdit();
     m_pLineEdit->setVisible(false);
 #endif
 }
@@ -851,9 +851,4 @@ void Mainapp::setCreateSlaveLogs(bool create)
 void Mainapp::inputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
 {
     FocusableObject::handleInputMethodQuery(query, arg);
-}
-
-void Mainapp::slotCursorPositionChanged(int oldPos, int newPos)
-{
-    emit cursorPositionChanged(oldPos, newPos);
 }

@@ -16,11 +16,11 @@ namespace oxygine
         static const char* const QOUT_AMP_XML_SIGN = "&quot;";
         static const char* const APOS_AMP_XML_SIGN = "&apos;";
 
-        class TextBuilder
+        class TextBuilder final
         {
         public:
             explicit TextBuilder() = default;
-            virtual ~TextBuilder() = default;
+            ~TextBuilder() = default;
             text::spNode parse(const QString & str);
         private:
             void ReplaceXmlSignsToSigns(QString & text) const;

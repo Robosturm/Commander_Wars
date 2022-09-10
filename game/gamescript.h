@@ -16,12 +16,12 @@ class GameMap;
 class GameScript;
 using spGameScript = oxygine::intrusive_ptr<GameScript>;
 
-class GameScript : public QObject, public FileSerializable, public oxygine::ref_counter
+class GameScript final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     explicit GameScript(GameMap* pMap);
-    virtual ~GameScript();
+    ~GameScript();
     /**
      * @brief serialize stores the object
      * @param pStream

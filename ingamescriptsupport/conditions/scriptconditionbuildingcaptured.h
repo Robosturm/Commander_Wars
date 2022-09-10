@@ -7,7 +7,7 @@
 class ScriptConditionBuildingCaptured;
 using spScriptConditionBuildingCaptured = oxygine::intrusive_ptr<ScriptConditionBuildingCaptured>;
 
-class ScriptConditionBuildingCaptured : public ScriptCondition
+class ScriptConditionBuildingCaptured final : public ScriptCondition
 {
     Q_OBJECT
 public:

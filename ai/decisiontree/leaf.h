@@ -8,13 +8,13 @@
 class Leaf;
 using spLeaf = oxygine::intrusive_ptr<Leaf>;
 
-class Leaf : public DecisionNode
+class Leaf final : public DecisionNode
 {
     Q_OBJECT
 public:
         explicit Leaf();
         Leaf(std::vector<std::vector<float>>& trainingData);
-        virtual ~Leaf() = default;
+        ~Leaf() = default;
         virtual void serializeObject(QDataStream& pStream) const override;
         virtual void deserializeObject(QDataStream& pStream)  override;
         virtual qint32 getVersion() const override

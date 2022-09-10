@@ -13,7 +13,7 @@ class GameMap;
 class PerkSelection;
 using spPerkSelection = oxygine::intrusive_ptr<PerkSelection>;
 
-class PerkSelection : public QObject, public oxygine::Actor
+class PerkSelection final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
     struct PerkGroup
@@ -24,7 +24,7 @@ class PerkSelection : public QObject, public oxygine::Actor
 
 public:
     explicit PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool banning, QStringList hiddenList, GameMap* pMap);
-    virtual ~PerkSelection() = default;
+    ~PerkSelection() = default;
     void updatePerksView(CO* pCO);
 
 signals:

@@ -25,12 +25,12 @@
 class MapSelectionView;
 using spMapSelectionView = oxygine::intrusive_ptr<MapSelectionView>;
 
-class MapSelectionView : public QObject, public oxygine::Actor
+class MapSelectionView final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit MapSelectionView(QStringList filter, qint32 mapInfoHeight = -1);
-    virtual ~MapSelectionView() = default;
+    ~MapSelectionView() = default;
 
     inline MapSelection* getMapSelection()
     {

@@ -7,7 +7,7 @@
 class ScriptEventAddFunds;
 using spScriptEventAddFunds = oxygine::intrusive_ptr<ScriptEventAddFunds>;
 
-class ScriptEventAddFunds : public ScriptEvent
+class ScriptEventAddFunds final : public ScriptEvent
 {
     Q_OBJECT
 public:

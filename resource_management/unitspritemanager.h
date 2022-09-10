@@ -5,7 +5,7 @@
 
 #include "resource_management/ressourcemanagement.h"
 
-class UnitSpriteManager : public QObject, public RessourceManagement<UnitSpriteManager>
+class UnitSpriteManager final : public QObject, public RessourceManagement<UnitSpriteManager>
 {
     Q_OBJECT
 public:
@@ -52,7 +52,7 @@ protected:
     friend RessourceManagement<UnitSpriteManager>;
     UnitSpriteManager();
 private:
-    virtual ~UnitSpriteManager() = default;
+    ~UnitSpriteManager() = default;
 };
 
 Q_DECLARE_INTERFACE(UnitSpriteManager, "UnitSpriteManager");

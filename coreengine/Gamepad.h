@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QTimer>
 
-class Gamepad : public QObject
+class Gamepad final : public QObject
 {
     Q_OBJECT
 public:
@@ -40,7 +40,7 @@ public:
     };
 
     explicit Gamepad(qint32 gamepadId);
-    virtual ~Gamepad() = default;
+    ~Gamepad() = default;
 
     void init();
     DeviceState getDeviceState() const;

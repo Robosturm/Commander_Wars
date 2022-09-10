@@ -13,12 +13,12 @@ class QTcpServer;
 class TCPServer;
 using spTCPServer = oxygine::intrusive_ptr<TCPServer>;
 
-class TCPServer : public NetworkInterface
+class TCPServer final : public NetworkInterface
 {
     Q_OBJECT
 public:
     TCPServer(QObject* pParent);
-    virtual ~TCPServer();
+    ~TCPServer();
 
     spTCPClient getClient(quint64 socketID);
 signals:

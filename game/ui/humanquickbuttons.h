@@ -7,10 +7,10 @@ class GameMenue;
 class HumanQuickButtons;
 using spHumanQuickButtons = oxygine::intrusive_ptr<HumanQuickButtons>;
 
-class HumanQuickButtons : public CreatedGui
+class HumanQuickButtons final : public CreatedGui
 {
 public:
     explicit HumanQuickButtons(GameMenue* pMenu);
-    virtual ~HumanQuickButtons();
+    ~HumanQuickButtons();
 };
 

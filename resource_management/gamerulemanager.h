@@ -3,7 +3,7 @@
 
 #include "resource_management/ressourcemanagement.h"
 
-class GameRuleManager : public QObject, public RessourceManagement<GameRuleManager>
+class GameRuleManager final : public QObject, public RessourceManagement<GameRuleManager>
 {
     Q_OBJECT
 public:
@@ -115,9 +115,9 @@ public:
 protected:
     friend RessourceManagement<GameRuleManager>;
     GameRuleManager();
+    ~GameRuleManager() = default;
 
 private:
-    virtual ~GameRuleManager() = default;
     QStringList m_loadedWeather;
     QStringList m_loadedVictoryRules;
     QStringList m_loadedGameRules;

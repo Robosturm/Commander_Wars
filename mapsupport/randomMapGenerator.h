@@ -10,10 +10,12 @@
 
 class GameMap;
 
-class RandomMapGenerator : public QObject
+class RandomMapGenerator final
 {
-    Q_OBJECT
 public:
+    RandomMapGenerator() = delete;
+    ~RandomMapGenerator() = delete;
+
     enum class MirrorMode
     {
         none,

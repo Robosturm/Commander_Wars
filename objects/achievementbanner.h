@@ -11,12 +11,12 @@
 class AchievementBanner;
 using spAchievementBanner = oxygine::intrusive_ptr<AchievementBanner>;
 
-class AchievementBanner : public QObject, public oxygine::Actor
+class AchievementBanner final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit AchievementBanner(const Userdata::Achievement& achievement);
-    virtual ~AchievementBanner() = default;
+    ~AchievementBanner() = default;
     void init();
 protected slots:
     void removeBanner();

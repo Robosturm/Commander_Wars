@@ -13,12 +13,12 @@
 class TimeSpinBox;
 using spTimeSpinBox = oxygine::intrusive_ptr<TimeSpinBox>;
 
-class TimeSpinBox : public TextInput
+class TimeSpinBox final : public TextInput
 {
     Q_OBJECT
 public:
     explicit TimeSpinBox(qint32 width);
-    virtual ~TimeSpinBox() = default;
+    ~TimeSpinBox() = default;
     /**
      * @brief getCurrentValue
      * @return the current value of the spin box

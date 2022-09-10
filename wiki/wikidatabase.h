@@ -15,7 +15,7 @@ using spWikiDatabase = oxygine::intrusive_ptr<WikiDatabase>;
 /**
  * @brief The WikiDatabase class
  */
-class WikiDatabase : public QObject, public RessourceManagement<WikiDatabase>
+class WikiDatabase final : public QObject, public RessourceManagement<WikiDatabase>
 {
     Q_OBJECT
 public:
@@ -33,7 +33,7 @@ public:
         QStringList m_tags;
     };
 
-    virtual ~WikiDatabase() = default;
+    ~WikiDatabase() = default;
     /**
      * @brief load
      */

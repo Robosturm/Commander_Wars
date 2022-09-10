@@ -6,7 +6,7 @@
 class ScriptEventSpawnBuilding;
 using spScriptEventSpawnBuilding = oxygine::intrusive_ptr<ScriptEventSpawnBuilding>;
 
-class ScriptEventSpawnBuilding : public ScriptEventGeneric
+class ScriptEventSpawnBuilding final : public ScriptEventGeneric
 {
     Q_OBJECT
 public:

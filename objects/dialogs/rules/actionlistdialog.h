@@ -14,12 +14,12 @@ class GameMap;
 class ActionListDialog;
 using spActionListDialog = oxygine::intrusive_ptr<ActionListDialog>;
 
-class ActionListDialog : public QObject, public oxygine::Actor
+class ActionListDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit ActionListDialog(QStringList bannlist, GameMap* pMap);
-    virtual ~ActionListDialog() = default;
+    ~ActionListDialog() = default;
 signals:
     void editFinished(QStringList actionList);
     void canceled();

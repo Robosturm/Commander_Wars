@@ -6,7 +6,7 @@
 class LockTableItem;
 using spLockTableItem = oxygine::intrusive_ptr<LockTableItem>;
 
-class LockTableItem : public BaseTableItem
+class LockTableItem final : public BaseTableItem
 {
     Q_OBJECT
 public:

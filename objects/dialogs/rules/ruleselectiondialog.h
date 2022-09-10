@@ -14,12 +14,12 @@ class GameMap;
 class RuleSelectionDialog;
 using spRuleSelectionDialog = oxygine::intrusive_ptr<RuleSelectionDialog>;
 
-class RuleSelectionDialog : public QObject, public oxygine::Actor
+class RuleSelectionDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode, bool enabled = true);
-    virtual ~RuleSelectionDialog() = default;
+    ~RuleSelectionDialog() = default;
 signals:
     void sigRulesChanged();
     void sigShowLoadRules();

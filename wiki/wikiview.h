@@ -14,12 +14,12 @@
 class WikiView;
 using spWikiView = oxygine::intrusive_ptr<WikiView>;
 
-class WikiView : public QObject, public oxygine::Actor
+class WikiView final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit WikiView(qint32 viewWidth, qint32 viewHeigth);
-    virtual ~WikiView() = default;
+    ~WikiView() = default;
 signals:
     void sigSearch(bool onlyTag);
     void sigShowWikipage(WikiDatabase::PageData page);

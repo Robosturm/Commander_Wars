@@ -5,7 +5,7 @@
 #include "coreengine/interpreter.h"
 
 template<class TClass>
-class JsCallback : public oxygine::ref_counter
+class JsCallback final : public oxygine::ref_counter
 {
 public:
     JsCallback(TClass* pOwner, const QString & objectID, const QString & callback)

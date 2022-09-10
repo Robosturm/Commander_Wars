@@ -3,14 +3,14 @@
 
 #include "resource_management/ressourcemanagement.h"
 
-class GameAnimationManager : public QObject, public RessourceManagement<GameAnimationManager>
+class GameAnimationManager final : public QObject, public RessourceManagement<GameAnimationManager>
 {
     Q_OBJECT
 protected:
     friend RessourceManagement<GameAnimationManager>;
     GameAnimationManager();
 private:
-    virtual ~GameAnimationManager() = default;
+    ~GameAnimationManager() = default;
 };
 
 #endif // GAMEANIMATIONMANAGER_H

@@ -11,13 +11,13 @@
 class GameAnimationDialog;
 using spGameAnimationDialog = oxygine::intrusive_ptr<GameAnimationDialog>;
 
-class GameAnimationDialog : public GameAnimation
+class GameAnimationDialog final : public GameAnimation
 {
     Q_OBJECT
 public:
     static const qint32 dialogHeigth = 96;
     explicit GameAnimationDialog(quint32 frameTime, GameMap* pMap);
-    virtual ~GameAnimationDialog() = default;
+    ~GameAnimationDialog() = default;
     virtual void restart() override;
     void finishDialog();
     void updateShownText();

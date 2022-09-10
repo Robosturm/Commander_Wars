@@ -8,13 +8,13 @@ namespace oxygine
 {
     const qint32 MAX_TOUCHES = 17;
 
-    class Input
+    class Input final
     {
     public:
         static Input instance;
 
         explicit Input();
-        virtual ~Input() = default;
+        ~Input() = default;
         void cleanup();
         void multiTouchEnabled(bool en);
         /**index should be in range [1, MAX_TOUCHES]*/

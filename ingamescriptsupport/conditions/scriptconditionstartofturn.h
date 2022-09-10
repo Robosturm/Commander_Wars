@@ -6,7 +6,7 @@
 class ScriptConditionStartOfTurn;
 typedef oxygine::intrusive_ptr<ScriptConditionStartOfTurn> spScriptConditionStartOfTurn;
 
-class ScriptConditionStartOfTurn : public ScriptCondition
+class ScriptConditionStartOfTurn final : public ScriptCondition
 {
     Q_OBJECT
 public:

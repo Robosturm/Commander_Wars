@@ -10,15 +10,15 @@
 class QmlVectorPoint;
 using spQmlVectorPoint = oxygine::intrusive_ptr<QmlVectorPoint>;
 
-class GlobalUtils : public QObject
+class GlobalUtils final : public QObject
 {
     Q_OBJECT
 public:
     static GlobalUtils* getInstance()
     {
         return &m_pInstace;
-    };
-    virtual ~GlobalUtils() = default;
+    }
+    ~GlobalUtils() = default;
     static bool getUseSeed();
     static void setUseSeed(bool useSeed);
     static qint32 randIntBase(qint32 low, qint32 high);

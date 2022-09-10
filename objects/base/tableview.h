@@ -11,12 +11,12 @@
 class TableView;
 using spTableView = oxygine::intrusive_ptr<TableView>;
 
-class TableView : public QObject, public oxygine::Actor
+class TableView final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit TableView(const QVector<qint32> & widths, const QVector<QStringList> & data, const QStringList & header, bool selectable = false);
-    virtual ~TableView() = default;
+    ~TableView() = default;
 signals:
     void sigItemClicked();
 public slots:

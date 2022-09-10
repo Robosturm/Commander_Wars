@@ -26,7 +26,7 @@
 class VictoryMenue;
 using spVictoryMenue = oxygine::intrusive_ptr<VictoryMenue>;
 
-class VictoryMenue : public Basemenu
+class VictoryMenue final : public Basemenu
 {
     Q_OBJECT
 public:
@@ -50,7 +50,7 @@ public:
     };
 
     explicit VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface, bool isReplay = false);
-    virtual ~VictoryMenue() = default;
+    ~VictoryMenue() = default;
 
     /**
      * @brief createLine creates a nice sweet polygon line for drawing our graphs

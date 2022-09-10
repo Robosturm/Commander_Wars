@@ -9,6 +9,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
@@ -23,6 +24,8 @@ Tooltip::Tooltip()
 {
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
 #ifdef GRAPHICSUPPORT
     setObjectName("Tooltip");
     m_TooltipTimer.setSingleShot(true);

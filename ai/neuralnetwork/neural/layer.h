@@ -13,7 +13,7 @@ class Layer;
 
 using spLayer = oxygine::intrusive_ptr<Layer>;
 //Layer of the network
-class Layer : public FileSerializable, public oxygine::ref_counter
+class Layer final : public FileSerializable, public oxygine::ref_counter
 {
 public:
     static const QString LAYER_PARAMETER_SIZE;
@@ -28,7 +28,7 @@ public:
 
     };
     Layer(qint32 id_layer, NeuralNetwork* net, QMap<QString, double> & parameters);
-    virtual ~Layer() = default;
+    ~Layer() = default;
     /**
      * @brief extend
      * @param count

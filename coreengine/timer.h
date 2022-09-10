@@ -6,12 +6,12 @@
 /**
  * @brief The Timer class timer with pause resume function -> note only use this timer as a singleshot timer.
  */
-class Timer : public QTimer
+class Timer final : public QTimer
 {
     Q_OBJECT
 public:
     explicit Timer(QObject* pParent);
-    virtual ~Timer() = default;
+    ~Timer() = default;
 public slots:
     void pause();
     void resume();

@@ -15,12 +15,12 @@
 class Shopmenu;
 using spShopmenu = oxygine::intrusive_ptr<Shopmenu>;
 
-class Shopmenu : public Basemenu
+class Shopmenu final : public Basemenu
 {
     Q_OBJECT
 public:
     explicit Shopmenu();
-    virtual ~Shopmenu() = default;
+    ~Shopmenu() = default;
 signals:
     void sigExitMenue();
     void sigUpdateItemCosts(qint32 costChange);

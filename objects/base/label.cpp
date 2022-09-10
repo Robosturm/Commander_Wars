@@ -1,6 +1,8 @@
-#include "label.h"
+#include "objects/base/label.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
+
 #include "resource_management/fontmanager.h"
 
 Label::Label(qint32 width)
@@ -8,6 +10,8 @@ Label::Label(qint32 width)
 #ifdef GRAPHICSUPPORT
     setObjectName("Label");
 #endif
+    Interpreter::setCppOwnerShip(this);
+
     m_clipRect = oxygine::spClipRectActor::create();
     m_clipRect->setWidth(width);
     m_clipRect->setHeight(28);

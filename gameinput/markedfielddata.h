@@ -11,7 +11,7 @@
 class MarkedFieldData;
 using spMarkedFieldData = oxygine::intrusive_ptr<MarkedFieldData>;
 
-class MarkedFieldData : public QObject, public oxygine::ref_counter
+class MarkedFieldData final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -24,7 +24,7 @@ public:
         QColor enemyColor;
     };
     explicit MarkedFieldData();
-    virtual ~MarkedFieldData() = default;
+    ~MarkedFieldData() = default;
 
     QVector<QPoint>* getPoints()
     {

@@ -8,13 +8,13 @@
 class MoveInButton;
 using spMoveInButton = oxygine::intrusive_ptr<MoveInButton>;
 
-class MoveInButton : public QObject, public oxygine::Actor
+class MoveInButton final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 direction = -1,
                           qint32 startOffset = -1, float buttonScale = 2.0f, bool useY = false);
-    virtual ~MoveInButton() = default;
+    ~MoveInButton() = default;
     bool getMovedOut() const;
 
 signals:

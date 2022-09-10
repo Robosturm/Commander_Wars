@@ -14,12 +14,12 @@ using spNetworkGameData = oxygine::intrusive_ptr<NetworkGameData>;
 /**
  * @brief The NetworkGameData class Data describing this game
  */
-class NetworkGameData : public QObject, public oxygine::ref_counter
+class NetworkGameData final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     explicit NetworkGameData() = default;
-    virtual ~NetworkGameData() = default;
+    ~NetworkGameData() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

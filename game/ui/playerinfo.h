@@ -14,12 +14,12 @@ using spPlayerInfo = oxygine::intrusive_ptr<PlayerInfo>;
 /**
  * @brief Shows infos about the co's, funds and the powermeter
  */
-class PlayerInfo : public QObject, public oxygine::Actor
+class PlayerInfo final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit PlayerInfo(GameMap* pMap);
-    virtual ~PlayerInfo() = default;
+    ~PlayerInfo() = default;
 
 public slots:
     GameMap *getMap() const;

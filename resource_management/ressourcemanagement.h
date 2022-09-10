@@ -86,7 +86,7 @@ public:
 
 protected:
     explicit RessourceManagement(QString resPath, QString scriptPath, bool addTransparentBorder = true, bool raiseErrors = true);
-    virtual ~RessourceManagement() = default;
+    ~RessourceManagement() = default;
     void loadRessources(QString resPath, bool addTransparentBorder = true);
     void loadAll(QStringList& list);
     void reset(QStringList& list);

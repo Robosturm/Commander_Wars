@@ -18,12 +18,12 @@ using spNetworkGame = oxygine::intrusive_ptr<NetworkGame>;
  * @brief The NetworkGame class needs to be run in it's own thread.
  * Handles sending data between the locally spawned pipe connected game instance and the joined players.
  */
-class NetworkGame : public QObject, public oxygine::ref_counter
+class NetworkGame final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     explicit NetworkGame(QObject* pParent);
-    virtual ~NetworkGame() = default;
+    ~NetworkGame() = default;
     QByteArray getDataBuffer() const;
     void setDataBuffer(const QByteArray &dataBuffer);
 

@@ -11,10 +11,10 @@ namespace oxygine
 {
     class Texture;
     using spTexture = intrusive_ptr<Texture>;
-    class Texture : public ref_counter
+    class Texture final : public ref_counter
     {
     public:
-        virtual ~Texture();
+        ~Texture();
         void init(const QImage & image);
 
         qint32 getWidth() const

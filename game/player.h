@@ -108,6 +108,7 @@ public:
      * @return
      */
     static oxygine::spResAnim getNeutralTableAnim();
+#ifdef GRAPHICSUPPORT
     /**
      * @brief getColorTable
      * @return
@@ -118,6 +119,7 @@ public:
      * @return
      */
     static const QImage &getNeutralTableImage();
+#endif
     /**
      * @brief setUniqueIdentifier
      * @param newUniqueIdentifier
@@ -687,8 +689,10 @@ private:
     float m_fundsModifier{1.0f};
 
     QColor m_Color;
+#ifdef GRAPHICSUPPORT
     QImage m_colorTable;
     oxygine::spResAnim m_ColorTableAnim;
+#endif
     QString m_playerArmy{""};
     qint32 m_team{0};
     std::array<spCO, 2> m_playerCOs;

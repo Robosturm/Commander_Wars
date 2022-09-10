@@ -20,7 +20,7 @@ using spFileDialog = oxygine::intrusive_ptr<FileDialog>;
  * Upon success or cancel the dialog will remove itself from the scene.
  * You have to hold a smart pointer to this object if you need further info from it.
  */
-class FileDialog : public QObject, public oxygine::Actor
+class FileDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
@@ -30,7 +30,7 @@ public:
      * @param wildcards wildcard items will be split at ;
      */
     explicit FileDialog(QString startFolder, const QStringList & wildcards, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"));
-    virtual ~FileDialog() = default;
+    ~FileDialog() = default;
 
     bool getPreview() const;
     void setPreview(bool preview);

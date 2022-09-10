@@ -9,7 +9,7 @@ class GameMap;
 class TerrainFindingSystem;
 using spTerrainFindingSystem = oxygine::intrusive_ptr<TerrainFindingSystem>;
 
-class TerrainFindingSystem : public PathFindingSystem
+class TerrainFindingSystem final : public PathFindingSystem
 {
     Q_OBJECT
     struct PositionFlowData
@@ -24,7 +24,7 @@ class TerrainFindingSystem : public PathFindingSystem
 public:
     explicit TerrainFindingSystem(GameMap* pMap, QString terrainID, qint32 startX, qint32 startY);
     explicit TerrainFindingSystem(GameMap* pMap, QStringList terrainIDs, qint32 startX, qint32 startY);
-    virtual ~TerrainFindingSystem() = default;
+    ~TerrainFindingSystem() = default;
     /**
      * @brief getRemainingCost
      * @param x

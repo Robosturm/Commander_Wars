@@ -20,7 +20,7 @@ using spFolderDialog = oxygine::intrusive_ptr<FolderDialog>;
  * Upon success or cancel the dialog will remove itself from the scene.
  * You have to hold a smart pointer to this object if you need further info from it.
  */
-class FolderDialog : public QObject, public oxygine::Actor
+class FolderDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
@@ -29,7 +29,7 @@ public:
      * @param startFolder initial folder of the file dialog
      */
     explicit FolderDialog(QString startFolder);
-    virtual ~FolderDialog() = default;
+    ~FolderDialog() = default;
 
 signals:
     void sigFolderSelected(QString file);

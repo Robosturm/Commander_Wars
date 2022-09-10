@@ -15,12 +15,12 @@
 class COInfoActor;
 using spCOInfoActor = oxygine::intrusive_ptr<COInfoActor>;
 
-class COInfoActor : public QObject, public oxygine::Actor
+class COInfoActor final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit COInfoActor(GameMap* pMap, qint32 width);
-    virtual ~COInfoActor() = default;
+    ~COInfoActor() = default;
     /**
      * @brief showCO
      * @param pCO

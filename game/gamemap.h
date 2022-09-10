@@ -29,7 +29,7 @@ using spGameMap = oxygine::intrusive_ptr<GameMap>;
 class BaseGamemenu;
 using spBaseGamemenu = oxygine::intrusive_ptr<BaseGamemenu>;
 
-class GameMap : public QObject, public FileSerializable, public oxygine::Actor
+class GameMap final : public QObject, public FileSerializable, public oxygine::Actor
 {
     Q_OBJECT
 public:
@@ -69,7 +69,7 @@ public:
      */
     explicit GameMap(QString map, bool onlyLoad, bool fast, bool savegame);
     void loadMap(QString map, bool onlyLoad, bool fast, bool savegame);
-    virtual ~GameMap();
+    ~GameMap();
     /**
      * @brief newMap
      * @param width

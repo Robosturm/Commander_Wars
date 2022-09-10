@@ -6,7 +6,7 @@
 class XofYTableItem;
 using spXofYTableItem = oxygine::intrusive_ptr<XofYTableItem>;
 
-class XofYTableItem : public BaseTableItem
+class XofYTableItem final : public BaseTableItem
 {
     Q_OBJECT
 public:

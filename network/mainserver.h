@@ -23,7 +23,7 @@ using spMainServer = oxygine::intrusive_ptr<MainServer>;
 /**
  * @brief The MainServer class handling the server and it's data.
  */
-class MainServer : public QObject, public oxygine::ref_counter
+class MainServer final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
     struct AddressInfo
@@ -46,7 +46,7 @@ public:
     static void initDatabase();
     static GameEnums::LoginError verifyLoginData(const QString & username, const QByteArray & password);
     void release();
-    virtual ~MainServer();
+    ~MainServer();
 
     inline TCPServer* getGameServer()
     {

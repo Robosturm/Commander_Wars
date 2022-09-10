@@ -185,8 +185,10 @@ void Player::setColor(QColor color, qint32 table)
     {
         createTable(m_Color);
     }
+#ifdef GRAPHICSUPPORT
     m_ColorTableAnim = oxygine::spSingleResAnim::create();
     Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
+#endif
 }
 
 bool Player::loadTable(qint32 table)
@@ -222,11 +224,15 @@ bool Player::loadTableFromFile(const QString & tablename)
     {
         if (QFile::exists(path + tablename + ".png"))
         {
+#ifdef GRAPHICSUPPORT
             m_colorTable.load(path + tablename + ".png");
             if (m_colorTable.height() > 0)
             {
                 found = true;
             }
+#else
+            found = true;
+#endif
             break;
         }
     }
@@ -401,11 +407,15 @@ bool Player::colorToTableInTable(QColor baseColor)
                 QColor(img.pixel(255, 255)) == baseColor)
             {
                 CONSOLE_PRINT("load table " + path, Console::eDEBUG);
+#ifdef GRAPHICSUPPORT
                 m_colorTable.load(path);
                 if (m_colorTable.height() > 0)
                 {
                     found = true;
                 }
+#else
+                found = true;
+#endif
             }
             if (found)
             {
@@ -422,6 +432,7 @@ bool Player::colorToTableInTable(QColor baseColor)
 
 void Player::createTable(QColor baseColor)
 {
+#ifdef GRAPHICSUPPORT
     CONSOLE_PRINT("Player::createTable " + baseColor.name(), Console::eDEBUG);
     constexpr qint32 imageSize = 256;
     m_colorTable = QImage(imageSize, imageSize, QImage::Format_RGBA8888);
@@ -477,6 +488,7 @@ void Player::createTable(QColor baseColor)
             }
         }
     }
+#endif
 }
 
 void Player::setPlayerArmy(const QString &value)
@@ -501,7 +513,11 @@ void Player::setPlayerArmySelected(bool playerArmySelected)
 
 oxygine::spResAnim Player::getColorTableAnim() const
 {
+#ifdef GRAPHICSUPPORT
     return m_ColorTableAnim;
+#else
+    return oxygine::spResAnim();
+#endif
 }
 
 oxygine::spResAnim Player::getNeutralTableAnim()
@@ -1122,6 +1138,7 @@ void Player::addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool di
     }
 }
 
+#ifdef GRAPHICSUPPORT
 const QImage &Player::getNeutralTableImage()
 {
     return m_neutralTableImage;
@@ -1131,6 +1148,7 @@ const QImage &Player::getColorTable() const
 {
     return m_colorTable;
 }
+#endif
 
 void Player::updatePlayerVision(bool reduceTimer)
 {
@@ -2266,9 +2284,11 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         }
         if (!fast)
         {
+#ifdef GRAPHICSUPPORT
             CONSOLE_PRINT("Loading colortable", Console::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
+#endif
         }
     }
     else
@@ -2279,9 +2299,11 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         }
         if (!fast)
         {
+#ifdef GRAPHICSUPPORT
             CONSOLE_PRINT("Loading colortable", Console::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
+#endif
         }
     }
     if (version > 13)

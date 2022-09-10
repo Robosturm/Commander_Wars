@@ -13,7 +13,7 @@
 class BattleAnimation;
 using spBattleAnimation = oxygine::intrusive_ptr<BattleAnimation>;
 
-class BattleAnimation : public GameAnimation
+class BattleAnimation final : public GameAnimation
 {
     Q_OBJECT
 public:
@@ -52,7 +52,7 @@ public:
     BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                     Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage,
                     GameMap* pMap);
-    virtual ~BattleAnimation() = default;
+    ~BattleAnimation() = default;
     virtual void restart() override;
     virtual void stop() override;
     /**

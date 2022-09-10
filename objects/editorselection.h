@@ -17,7 +17,7 @@
 class EditorSelection;
 using spEditorSelection = oxygine::intrusive_ptr<EditorSelection>;
 
-class EditorSelection : public QObject, public oxygine::Actor
+class EditorSelection final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
@@ -45,7 +45,7 @@ public:
     };
 
     explicit EditorSelection(qint32 width, bool smallScreen, GameMap* pMap);
-    virtual ~EditorSelection() = default;
+    ~EditorSelection() = default;
     inline EditorMode getCurrentMode() const
     {
         return m_Mode;

@@ -15,11 +15,11 @@ using spNeuron = oxygine::intrusive_ptr<Neuron>;
 using spEdge = oxygine::intrusive_ptr<Edge>;
 
 //Edge between two neurons
-class Edge : public FileSerializable, public oxygine::ref_counter
+class Edge final : public FileSerializable, public oxygine::ref_counter
 {
 public:
-    Edge(Neuron* nextNeuron, Neuron* previousNeuron, double weight);
-    virtual ~Edge() = default;
+    Edge(Neuron* nextNeuron, Neuron* previousNeuron, double weight);    
+    ~Edge() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

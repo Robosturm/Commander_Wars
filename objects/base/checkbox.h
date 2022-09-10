@@ -6,12 +6,12 @@
 class Checkbox;
 using spCheckbox = oxygine::intrusive_ptr<Checkbox>;
 
-class Checkbox : public Tooltip
+class Checkbox final : public Tooltip
 {
     Q_OBJECT
 public:
     explicit Checkbox();
-    virtual ~Checkbox() = default;
+    ~Checkbox() = default;
     bool getChecked() const;
     void setChecked(bool Checked);
 signals:

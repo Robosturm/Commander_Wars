@@ -22,7 +22,7 @@ using spAttackReport = oxygine::intrusive_ptr<AttackReport>;
 /**
  * @brief The AttackReport struct
  */
-class AttackReport : public oxygine::ref_counter
+class AttackReport final : public oxygine::ref_counter
 {
 public:
     qint32 day{0};
@@ -80,7 +80,7 @@ public:
 
 Q_DECLARE_INTERFACE(AttackReport, "AttackReport");
 
-class GameRecorder : public QObject, public FileSerializable, public oxygine::ref_counter
+class GameRecorder final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT    
 public:
@@ -107,7 +107,7 @@ public:
     };
 
     explicit GameRecorder(GameMap* pMap);
-    virtual ~GameRecorder() = default;
+    ~GameRecorder() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

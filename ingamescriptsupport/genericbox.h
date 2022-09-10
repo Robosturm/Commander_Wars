@@ -8,12 +8,12 @@
 class GenericBox;
 using spGenericBox = oxygine::intrusive_ptr<GenericBox>;
 
-class GenericBox : public QObject, public oxygine::Actor
+class GenericBox final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit GenericBox(bool cancel = false);
-    virtual ~GenericBox() = default;
+    ~GenericBox() = default;
     /**
      * @brief addItem
      * @param pActor

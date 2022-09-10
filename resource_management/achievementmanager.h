@@ -5,7 +5,7 @@
 
 class GameMap;
 
-class AchievementManager : public QObject, public RessourceManagement<AchievementManager>
+class AchievementManager final : public QObject, public RessourceManagement<AchievementManager>
 {
     Q_OBJECT
 public:
@@ -22,7 +22,7 @@ protected:
     AchievementManager();
 
 private:
-    virtual ~AchievementManager() = default;
+    ~AchievementManager() = default;
 };
 
 #endif // ACHIEVEMENTMANAGER_H

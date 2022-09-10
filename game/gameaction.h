@@ -22,7 +22,7 @@ class GameMap;
 class GameAction;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;
 
-class GameAction : public QObject, public FileSerializable, public oxygine::ref_counter
+class GameAction final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 
@@ -38,7 +38,7 @@ public:
 
     explicit GameAction(GameMap* pMap);
     explicit GameAction(const QString & actionID, GameMap* pMap);
-    virtual ~GameAction() = default;
+    ~GameAction() = default;
     /**
      * @brief setTarget sets the target for the current action
      * @param point

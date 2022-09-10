@@ -4,7 +4,7 @@
 #include <QObject>
 #include "resource_management/ressourcemanagement.h"
 
-class ShopLoader : public QObject, public RessourceManagement<ShopLoader>
+class ShopLoader final : public QObject, public RessourceManagement<ShopLoader>
 {
     Q_OBJECT
 public:
@@ -15,7 +15,7 @@ protected:
     ShopLoader();
 
 private:
-    virtual ~ShopLoader() = default;
+    ~ShopLoader() = default;
 };
 
 #endif // SHOPLOADER_H

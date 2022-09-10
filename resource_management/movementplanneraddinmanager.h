@@ -2,7 +2,7 @@
 
 #include "resource_management/ressourcemanagement.h"
 
-class MovementPlannerAddInManager : public QObject, public RessourceManagement<MovementPlannerAddInManager>
+class MovementPlannerAddInManager final : public QObject, public RessourceManagement<MovementPlannerAddInManager>
 {
     Q_OBJECT
 public:
@@ -12,6 +12,6 @@ protected:
     MovementPlannerAddInManager();
 
 private:
-    virtual ~MovementPlannerAddInManager() = default;
+    ~MovementPlannerAddInManager() = default;
 };
 

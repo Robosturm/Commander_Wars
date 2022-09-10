@@ -6,7 +6,7 @@
 class ScriptConditionVictory;
 typedef oxygine::intrusive_ptr<ScriptConditionVictory> spScriptConditionVictory;
 
-class ScriptConditionVictory : public ScriptCondition
+class ScriptConditionVictory final : public ScriptCondition
 {
     Q_OBJECT
 public:

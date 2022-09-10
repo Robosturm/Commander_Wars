@@ -8,12 +8,12 @@
 
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 
-class WorkerThread : public QObject
+class WorkerThread final : public QObject
 {
     Q_OBJECT
 public:
     explicit WorkerThread();
-    virtual ~WorkerThread() = default;
+    ~WorkerThread() = default;
     bool getStarted() const;
 signals:
     void sigStart();

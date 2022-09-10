@@ -11,12 +11,12 @@
 class DialogValueCounter;
 using spDialogValueCounter = oxygine::intrusive_ptr<DialogValueCounter>;
 
-class DialogValueCounter : public QObject, public oxygine::Actor
+class DialogValueCounter final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd);
-    virtual ~DialogValueCounter() = default;
+    ~DialogValueCounter() = default;
 signals:
     void sigFinished();
 private slots:

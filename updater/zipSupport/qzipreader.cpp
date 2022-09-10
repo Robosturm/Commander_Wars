@@ -459,7 +459,7 @@ QZipReader::FileInfo QZipPrivate::fillFileInfo(int index) const
     return fileInfo;
 }
 
-class QZipReaderPrivate : public QZipPrivate
+class QZipReaderPrivate final : public QZipPrivate
 {
 public:
     QZipReaderPrivate(QIODevice *device, bool ownDev)

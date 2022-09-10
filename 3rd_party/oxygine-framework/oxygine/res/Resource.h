@@ -7,7 +7,7 @@ namespace oxygine
 {
     class Resource;
     using spResource = intrusive_ptr<Resource>;
-    class Resource: public ref_counter
+    class Resource : public ref_counter
     {
     public:
         /**

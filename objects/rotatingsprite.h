@@ -10,11 +10,11 @@
 class RotatingSprite;
 using spRotatingSprite = oxygine::intrusive_ptr<RotatingSprite>;
 
-class RotatingSprite : public oxygine::Actor
+class RotatingSprite final : public oxygine::Actor
 {
 public:
     explicit RotatingSprite();
-    virtual ~RotatingSprite() = default;
+    ~RotatingSprite() = default;
     void setSprite(oxygine::spActor firstSprite, oxygine::spActor secondSprite);
     qint32 getSpeed() const;
     void setSpeed(const qint32 &value);

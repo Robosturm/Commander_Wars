@@ -13,13 +13,12 @@ class Unit;
 class GameAnimationWalk;
 using spGameAnimationWalk = oxygine::intrusive_ptr<GameAnimationWalk>;
 
-class GameAnimationWalk : public GameAnimation
+class GameAnimationWalk final : public GameAnimation
 {
     Q_OBJECT
 public:
     explicit GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePath, GameMap* pMap);
-    virtual ~GameAnimationWalk() = default;
-signals:
+    ~GameAnimationWalk() = default;
 
 public slots:
     /**

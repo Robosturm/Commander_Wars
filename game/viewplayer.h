@@ -8,7 +8,7 @@ class GameMenue;
 class Viewplayer;
 using spViewplayer = oxygine::intrusive_ptr<Viewplayer>;
 
-class Viewplayer : public Player
+class Viewplayer final : public Player
 {
     Q_OBJECT
 public:
@@ -20,7 +20,7 @@ public:
     };
 
     explicit Viewplayer(GameMenue* pMenu, GameMap* pMap);
-    virtual ~Viewplayer() = default;
+    ~Viewplayer() = default;
     /**
      * @brief getColorTableAnim
      * @return

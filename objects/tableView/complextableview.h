@@ -12,7 +12,7 @@
 class ComplexTableView;
 using spComplexTableView = oxygine::intrusive_ptr<ComplexTableView>;
 
-class ComplexTableView : public QObject, public oxygine::Actor
+class ComplexTableView final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:

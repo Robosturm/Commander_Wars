@@ -5,12 +5,12 @@
 
 #include "coreengine/fileserializable.h"
 
-class GameData : public QObject, public FileSerializable
+class GameData final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
     explicit GameData() = default;
-    virtual ~GameData() = default;
+    ~GameData() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

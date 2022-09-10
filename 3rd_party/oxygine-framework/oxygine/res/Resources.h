@@ -10,7 +10,7 @@
 
 namespace oxygine
 {
-    class Resources: public Resource
+    class Resources : public Resource
     {
     public:
         using resources = std::vector<spResource>;

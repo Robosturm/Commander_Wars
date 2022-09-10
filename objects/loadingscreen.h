@@ -12,12 +12,12 @@
 class LoadingScreen;
 using spLoadingScreen = oxygine::intrusive_ptr<LoadingScreen>;
 
-class LoadingScreen : public QObject, public oxygine::Actor
+class LoadingScreen final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     static spLoadingScreen getInstance();
-    virtual ~LoadingScreen();
+    ~LoadingScreen();
     /**w
      * @brief show
      */

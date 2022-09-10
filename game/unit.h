@@ -22,7 +22,7 @@ class UnitPathFindingSystem;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;
 using spUnit = oxygine::intrusive_ptr<Unit>;
 
-class Unit : public Tooltip, public FileSerializable
+class Unit final : public Tooltip, public FileSerializable
 {
     Q_OBJECT
 public:
@@ -59,10 +59,8 @@ public:
      * @brief Unit only for deserialization
      */
     explicit Unit(GameMap* pMap);
-
     explicit Unit(const QString & unitID, Player* pOwner, bool aquireId, GameMap* pMap);
-
-    virtual ~Unit();
+    ~Unit();
     /**
      * @brief setTerrain
      * @param pTerrain smart pointer to the terrain this building is placed on

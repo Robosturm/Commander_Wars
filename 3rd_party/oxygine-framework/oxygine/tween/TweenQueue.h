@@ -6,7 +6,7 @@ namespace oxygine
 {
     class TweenQueue;
     using spTweenQueue = intrusive_ptr<TweenQueue>;
-    class TweenQueue : public Tween
+    class TweenQueue final : public Tween
     {
     public:
 
@@ -16,7 +16,7 @@ namespace oxygine
             EVENT_LOOP_END = sysEventID('T', 'L', 'E'),
         };
         explicit TweenQueue() = default;
-        virtual ~TweenQueue() = default;
+        ~TweenQueue() = default;
         /*Add tween to Queue, returns added tween*/
         spTween add(spTween t);
         virtual void complete(timeMS deltaTime) override;

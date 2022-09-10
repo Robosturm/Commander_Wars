@@ -20,7 +20,7 @@ class GameMap;
 class Building;
 using spBuilding = oxygine::intrusive_ptr<Building>;
 
-class Building : public Tooltip, public FileSerializable
+class Building final : public Tooltip, public FileSerializable
 {
     Q_OBJECT
     enum class DrawPriority
@@ -34,8 +34,7 @@ class Building : public Tooltip, public FileSerializable
 public:
 
     explicit Building(QString BuildingID, GameMap* pMap);
-
-    virtual ~Building() = default;
+    ~Building() = default;
     /**
      * @brief init
      */

@@ -408,9 +408,11 @@ set(${PROJECT_NAME}_SRCS
     objects/achievementbanner.cpp objects/achievementbanner.h
     objects/unitstatisticview.cpp objects/unitstatisticview.h
     # objects base
+    objects/base/EventTextEdit.cpp objects/base/EventTextEdit.h
     objects/base/textinput.cpp objects/base/textinput.h
     objects/base/topbar.cpp objects/base/topbar.h
     objects/base/textbox.cpp objects/base/textbox.h
+    objects/base/multilinetextbox.cpp objects/base/multilinetextbox.h
     objects/base/h_scrollbar.cpp objects/base/h_scrollbar.h
     objects/base/v_scrollbar.cpp objects/base/v_scrollbar.h
     objects/base/dropdownmenu.cpp objects/base/dropdownmenu.h

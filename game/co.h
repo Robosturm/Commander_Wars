@@ -24,7 +24,7 @@ class GameMenue;
 class CO;
 using spCO = oxygine::intrusive_ptr<CO>;
 
-class CO : public QObject, public oxygine::Actor, public FileSerializable
+class CO final : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
 public:
@@ -32,7 +32,7 @@ public:
     static constexpr qint32 MAX_CO_UNIT_VALUE = 20;
 
     explicit CO(QString coID, Player* owner, GameMap* pMap);
-    virtual ~CO() = default;
+    ~CO() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

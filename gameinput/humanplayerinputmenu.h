@@ -17,13 +17,13 @@ class GameMap;
 class HumanPlayerInputMenu;
 using spHumanPlayerInputMenu = oxygine::intrusive_ptr<HumanPlayerInputMenu>;
 
-class HumanPlayerInputMenu : public QObject, public oxygine::Actor
+class HumanPlayerInputMenu final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
                                   const QVector<qint32> & costList = QVector<qint32>(), const QVector<bool> & enabledList = QVector<bool>());
-    virtual ~HumanPlayerInputMenu() = default;
+    ~HumanPlayerInputMenu() = default;
     /**
      * @brief setMenuPosition changes the position of this menu
      * @param x position in pixel

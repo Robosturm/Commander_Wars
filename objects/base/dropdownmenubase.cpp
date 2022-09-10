@@ -1,6 +1,7 @@
 #include "objects/base/dropdownmenubase.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -14,6 +15,8 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setWidth(width);
     setHeight(40);

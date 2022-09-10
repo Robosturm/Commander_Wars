@@ -22,7 +22,7 @@ using spTerrainFindingSystem = oxygine::intrusive_ptr<TerrainFindingSystem>;
 class Terrain;
 using spTerrain = oxygine::intrusive_ptr<Terrain>;
 
-class Terrain : public Tooltip, public FileSerializable
+class Terrain final : public Tooltip, public FileSerializable
 {
     Q_OBJECT
 
@@ -54,8 +54,7 @@ public:
         BuildingLayer = 2,
     };
     static spTerrain createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap);
-
-    virtual ~Terrain();
+    ~Terrain();
 
     void init();
     /**

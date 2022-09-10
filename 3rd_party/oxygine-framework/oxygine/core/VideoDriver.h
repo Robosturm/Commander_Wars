@@ -14,7 +14,7 @@ namespace oxygine
     class VideoDriver;
     using spVideoDriver = oxygine::intrusive_ptr<VideoDriver>;
 
-    class VideoDriver : public oxygine::ref_counter
+    class VideoDriver final : public oxygine::ref_counter
     {
     public:
 
@@ -68,11 +68,11 @@ namespace oxygine
             blend_inverse               = ((BT_ONE_MINUS_DST_COLOR << 16) | BT_ZERO),
         };
 
-        class Stats
+        class Stats final
         {
         public:
             explicit Stats() : batches(0), start(0), duration(0) { memset(elements, 0, sizeof(elements)); }
-            virtual  ~Stats() = default;
+             ~Stats() = default;
             qint32 batches;
             qint32 elements[PT_COUNT];
             timeMS start;
@@ -107,7 +107,7 @@ namespace oxygine
 
         static spVideoDriver instance;
         explicit VideoDriver();
-        virtual ~VideoDriver();
+        ~VideoDriver();
         void reset();
         void restore();
         bool isReady() const;

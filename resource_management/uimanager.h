@@ -2,12 +2,12 @@
 
 #include "resource_management/ressourcemanagement.h"
 
-class UiManager : public QObject, public RessourceManagement<UiManager>
+class UiManager final : public QObject, public RessourceManagement<UiManager>
 {
     Q_OBJECT
 protected:
     friend RessourceManagement<UiManager>;
     UiManager();
 private:
-    virtual ~UiManager() = default;
+    ~UiManager() = default;
 };

@@ -4,7 +4,7 @@
 #include <qobject.h>
 #include "resource_management/ressourcemanagement.h"
 
-class BuildingSpriteManager : public QObject, public RessourceManagement<BuildingSpriteManager>
+class BuildingSpriteManager final : public QObject, public RessourceManagement<BuildingSpriteManager>
 {
     Q_OBJECT
 public slots:
@@ -29,7 +29,7 @@ protected:
     friend RessourceManagement<BuildingSpriteManager>;
     BuildingSpriteManager();
 private:
-    virtual ~BuildingSpriteManager() = default;
+    ~BuildingSpriteManager() = default;
 };
 
 Q_DECLARE_INTERFACE(BuildingSpriteManager, "BuildingSpriteManager");

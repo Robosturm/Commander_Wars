@@ -5,10 +5,11 @@
 #include <QTranslator>
 #include <QThread>
 #include <QCoreApplication>
-#include <QLineEdit>
 #include <QMutex>
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
+
+#include "objects/base/EventTextEdit.h"
 
 #include "coreengine/settings.h"
 #include "coreengine/LUPDATE_MACROS.h"
@@ -29,7 +30,7 @@ using spAudioThread = oxygine::intrusive_ptr<AudioThread>;
 class TCPClient;
 using spTCPClient = oxygine::intrusive_ptr<TCPClient>;
 
-class Mainapp : public oxygine::GameWindow
+class Mainapp final : public oxygine::GameWindow
 {
     Q_OBJECT
 public:
@@ -93,7 +94,7 @@ public:
     };
 
     explicit Mainapp();
-    virtual ~Mainapp() = default;
+    ~Mainapp() = default;
     virtual void shutdown() override;
     static inline Mainapp* getInstance()
     {
@@ -161,7 +162,7 @@ public:
      * @brief getLastCreateLineEdit
      * @return
      */
-    QLineEdit* getLastCreateLineEdit() const
+    EventTextEdit* getLastCreateLineEdit() const
     {
         return m_pLineEdit;
     }
@@ -260,12 +261,6 @@ public slots:
     void doMapshot();
     void nextStartUpStep(Mainapp::StartupPhase step);
     /**
-     * @brief slotCursorPositionChanged dummy function to rerout qlineedit events
-     * @param oldPos
-     * @param newPos
-     */
-    void slotCursorPositionChanged(int oldPos, int newPos);
-    /**
      * @brief inputMethodQuery dummy function to rerout qlineedit events
      * @param query
      * @param ret
@@ -310,7 +305,7 @@ protected:
     virtual void onQuit() override;
 
 private:
-    QLineEdit* m_pLineEdit{nullptr};
+    EventTextEdit* m_pLineEdit{nullptr};
 
     static Mainapp* m_pMainapp;
     static QMutex m_crashMutex;

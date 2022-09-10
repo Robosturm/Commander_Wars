@@ -5,12 +5,12 @@
 class COStyleMenu;
 using spCOStyleMenu = oxygine::intrusive_ptr<COStyleMenu>;
 
-class COStyleMenu : public Basemenu
+class COStyleMenu final : public Basemenu
 {
     Q_OBJECT
 public:
     explicit COStyleMenu();
-    virtual ~COStyleMenu() = default;
+    ~COStyleMenu() = default;
 signals:
     void sigExitMenue();
     void sigEditCOStyle();

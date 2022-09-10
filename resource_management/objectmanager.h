@@ -3,7 +3,7 @@
 
 #include "resource_management/ressourcemanagement.h"
 
-class ObjectManager : public QObject, public RessourceManagement<ObjectManager>
+class ObjectManager final : public QObject, public RessourceManagement<ObjectManager>
 {
     Q_OBJECT
 public:
@@ -14,7 +14,7 @@ protected:
     friend RessourceManagement<ObjectManager>;
     ObjectManager();
 private:
-    virtual ~ObjectManager() = default;
+    ~ObjectManager() = default;
 };
 
 

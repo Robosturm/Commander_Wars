@@ -16,14 +16,14 @@
 class COSelection;
 using spCOSelection = oxygine::intrusive_ptr<COSelection>;
 
-class COSelection : public QObject, public oxygine::Actor
+class COSelection final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 
     static constexpr float scale = 1.5f;
 public:
     explicit COSelection(QPoint Position, QSize maxSize, QStringList coids = {});
-    virtual ~COSelection() = default;
+    ~COSelection() = default;
 signals:
     void armySelectedChange(QString army);
     void coSelected(QString coid);

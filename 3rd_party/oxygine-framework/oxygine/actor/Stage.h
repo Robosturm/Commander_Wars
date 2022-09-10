@@ -7,7 +7,7 @@ namespace oxygine
 {
     class Stage;
     using spStage = intrusive_ptr<Stage>;
-    class Stage : public Actor
+    class Stage final : public Actor
     {
     public:
         enum
@@ -19,7 +19,7 @@ namespace oxygine
 
         static QMatrix4x4 getViewProjectionMatrix(const Rect& viewport);
         explicit Stage();
-        virtual ~Stage() = default;
+        ~Stage() = default;
 
         /**Initializes size, scale and position of Stage
         @param is real display size of device.

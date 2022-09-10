@@ -11,6 +11,7 @@ class BaseTableItem : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit BaseTableItem(QObject *parent = nullptr);
+    virtual ~BaseTableItem() = default;
 
     virtual bool operator>(const BaseTableItem& rhs) const = 0;
     inline bool operator<(const BaseTableItem& rhs) const

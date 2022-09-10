@@ -14,12 +14,12 @@
 class Multislider;
 using spMultislider = oxygine::intrusive_ptr<Multislider>;
 
-class Multislider : public Tooltip
+class Multislider final : public Tooltip
 {
     Q_OBJECT
 public:
     explicit Multislider(QStringList texts, qint32 width, QVector<qint32> values = {});
-    virtual ~Multislider() = default;
+    ~Multislider() = default;
     qint32 getSliderValue(qint32 slider);
     virtual void setEnabled(bool value) override;
 signals:

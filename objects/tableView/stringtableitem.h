@@ -6,7 +6,7 @@
 class StringTableItem;
 using spStringTableItem = oxygine::intrusive_ptr<StringTableItem>;
 
-class StringTableItem : public BaseTableItem
+class StringTableItem final : public BaseTableItem
 {
     Q_OBJECT
 public:

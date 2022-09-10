@@ -11,12 +11,12 @@ class GameMap;
 class MenuData;
 using spMenuData = oxygine::intrusive_ptr<MenuData>;
 
-class MenuData : public QObject, public oxygine::ref_counter
+class MenuData final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     explicit MenuData(GameMap* pMap);
-    virtual ~MenuData() = default;
+    ~MenuData() = default;
 
     QStringList getTexts()
     {

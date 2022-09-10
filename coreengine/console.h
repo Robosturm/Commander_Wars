@@ -26,7 +26,7 @@ using spConsole = oxygine::intrusive_ptr<Console>;
 #define AI_CONSOLE_PRINT(text, logLevel)
 #endif
 
-class Console : public TextInput
+class Console final : public TextInput
 {
     Q_OBJECT
 public:
@@ -51,7 +51,7 @@ public:
         BLINKFREQG = 250,
         MAXLASTMSG = 20
     };
-    virtual ~Console() = default;
+    ~Console() = default;
     static spConsole getInstance();
     static void dotask(QString message);
     static void draw();

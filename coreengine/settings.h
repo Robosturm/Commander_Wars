@@ -22,7 +22,7 @@ class GLGraphicsView;
 class Settings;
 using spSettings = oxygine::intrusive_ptr<Settings>;
 
-class Settings : public QObject, public oxygine::ref_counter
+class Settings final : public QObject, public oxygine::ref_counter
 {
 public:
     static const char* const DEFAULT_AUDIODEVICE;
@@ -246,7 +246,7 @@ public:
         FullScreen,
     };
 
-    virtual ~Settings() = default;
+    ~Settings() = default;
     static Settings* getInstance();
     static void shutdown();
 

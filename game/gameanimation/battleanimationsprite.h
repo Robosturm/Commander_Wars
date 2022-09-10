@@ -14,7 +14,7 @@
 class BattleAnimationSprite;
 using spBattleAnimationSprite = oxygine::intrusive_ptr<BattleAnimationSprite>;
 
-class BattleAnimationSprite : public QObject, public oxygine::Sprite
+class BattleAnimationSprite final : public QObject, public oxygine::Sprite
 {
     Q_OBJECT
 public:
@@ -28,7 +28,7 @@ public:
     static const QString stopAnimation;
 
     explicit BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1, bool playSound = true);
-    virtual ~BattleAnimationSprite();
+    ~BattleAnimationSprite();
     /**
      * @brief loadAnimation
      * @param animationType

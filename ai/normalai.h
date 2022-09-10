@@ -15,7 +15,7 @@ class Building;
 class NormalAi;
 using spNormalAi = oxygine::intrusive_ptr<NormalAi>;
 
-class NormalAi : public CoreAI
+class NormalAi final : public CoreAI
 {
     Q_OBJECT
     enum FundsMode
@@ -113,7 +113,7 @@ public:
     };
 
     explicit NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType);
-    virtual ~NormalAi() = default;
+    ~NormalAi() = default;
 signals:
 
 public slots:

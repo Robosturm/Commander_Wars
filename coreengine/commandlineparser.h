@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QCoreApplication>
 
-class CommandLineParser : public QObject
+class CommandLineParser final : public QObject
 {
     Q_OBJECT
 public:

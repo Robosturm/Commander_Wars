@@ -114,7 +114,7 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
     {
 
         QString terrainID = std::get<0>(terrains[i]);
-        pLoadingScreen->setProgress(tr("Generating ") + terrainID, progress * 100 / maxSteps);
+        pLoadingScreen->setProgress(QObject::tr("Generating ") + terrainID, progress * 100 / maxSteps);
         progress++;
         if (terrainID == "Buildings")
         {
@@ -179,7 +179,7 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
 
     if (roadSupport)
     {
-        pLoadingScreen->setProgress(tr("Generating ") + "Roads", (progress) * 100 / (maxSteps));
+        pLoadingScreen->setProgress(QObject::tr("Generating ") + "Roads", (progress) * 100 / (maxSteps));
         ++progress;
         if (mirrorX != MirrorMode::none || mirrorY != MirrorMode::none)
         {
@@ -630,7 +630,7 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint
     spUnit pUnit = spUnit::create("INFANTRY", pMap->getPlayer(0), false, pMap);
     pUnit->setIgnoreUnitCollision(true);
     qint32 days = minimalDistance / 2;
-    LoadingScreen::getInstance()->setWorktext(tr("Generating ") + "HQ's");
+    LoadingScreen::getInstance()->setWorktext(QObject::tr("Generating ") + "HQ's");
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         QPoint position;
@@ -703,11 +703,11 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint
     }
     buildings -= playerPositions.size();
 
-    LoadingScreen::getInstance()->setWorktext(tr("Generating ") + "Factory");
+    LoadingScreen::getInstance()->setWorktext(QObject::tr("Generating ") + "Factory");
     for (qint32 i = 0; i < buildingDistributions.size(); i++)
     {
         QString buildingID = std::get<0>(buildingDistributions[i]);
-        LoadingScreen::getInstance()->setProgress(tr("Generating ") + buildingID, progress * 100 / maxProgess);
+        LoadingScreen::getInstance()->setProgress(QObject::tr("Generating ") + buildingID, progress * 100 / maxProgess);
         progress++;
         float buildingChance = std::get<1>(buildingDistributions[i]) / 100.0f;
         erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + buildingID + "BaseTerrainID");
@@ -855,7 +855,7 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint
     spUnit pUnit = spUnit::create("INFANTRY", pMap->getPlayer(0), false, pMap);
     pUnit->setIgnoreUnitCollision(true);
     qint32 days = minimalDistance / 2;
-    LoadingScreen::getInstance()->setWorktext(tr("Generating ") + "HQ's");
+    LoadingScreen::getInstance()->setWorktext(QObject::tr("Generating ") + "HQ's");
 
     for (qint32 i = 0; i < playerCount; i++)
     {
@@ -940,11 +940,11 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint
         }
     }
     buildings -= playerPositions.size();
-    LoadingScreen::getInstance()->setWorktext(tr("Generating ") + "Factory");
+    LoadingScreen::getInstance()->setWorktext(QObject::tr("Generating ") + "Factory");
     for (qint32 i = 0; i < buildingDistributions.size(); i++)
     {
         QString buildingID = std::get<0>(buildingDistributions[i]);
-        LoadingScreen::getInstance()->setProgress(tr("Generating ") + buildingID, progress * 100 / maxProgess);
+        LoadingScreen::getInstance()->setProgress(QObject::tr("Generating ") + buildingID, progress * 100 / maxProgess);
         progress++;
         float buildingChance = std::get<1>(buildingDistributions[i]) / 100.0f;
         erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + buildingID + "BaseTerrainID");
@@ -1139,7 +1139,7 @@ void RandomMapGenerator::randomMapPlaceUnits(GameMap* pMap, QVector<std::tuple<Q
     {
         for (qint32 hqPos = 0; hqPos < playerPositions.size(); ++hqPos)
         {
-            pLoadingScreen->setProgress(tr("Generating ") + "Units", (progress + hqPos / playerPositions.size() * unitCount) * 100 / (maxProgess));
+            pLoadingScreen->setProgress(QObject::tr("Generating ") + "Units", (progress + hqPos / playerPositions.size() * unitCount) * 100 / (maxProgess));
             qint32 index = getPlayerForHqPos(pMap, hqPos, mirrorX, mirrorY);
             qint32 hqUnits = static_cast<qint32>(unitCount) * unitDistribution[index] / 100.0f;
             // round up for units near the hq
@@ -1181,7 +1181,7 @@ void RandomMapGenerator::randomMapPlaceUnits(GameMap* pMap, QVector<std::tuple<Q
         }
         for (qint32 i = 0; i < unitCount; ++i)
         {
-            pLoadingScreen->setProgress(tr("Generating ") + "Units", (progress + i * units.size() / unitCount) * 100 / (maxProgess));
+            pLoadingScreen->setProgress(QObject::tr("Generating ") + "Units", (progress + i * units.size() / unitCount) * 100 / (maxProgess));
             qint32 hqPos = 0;
             float percentPlaced = static_cast<float>(i) / static_cast<float>(unitCount);
             qint32 playerIndex = getPlayerForHqPos(pMap, hqPos, mirrorX, mirrorY);

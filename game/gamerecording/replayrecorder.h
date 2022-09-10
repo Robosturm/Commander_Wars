@@ -13,12 +13,12 @@ using spGameMap = oxygine::intrusive_ptr<GameMap>;
 class GameAction;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;
 
-class ReplayRecorder : public QObject
+class ReplayRecorder final : public QObject
 {
     Q_OBJECT
 public:
     explicit ReplayRecorder(GameMap* pMap);
-    virtual ~ReplayRecorder();
+    ~ReplayRecorder();
     /**
      * @brief startRecording
      */

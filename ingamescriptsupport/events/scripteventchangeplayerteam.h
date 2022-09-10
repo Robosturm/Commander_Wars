@@ -6,7 +6,7 @@
 class ScriptEventChangePlayerTeam;
 using spScriptEventChangePlayerTeam = oxygine::intrusive_ptr<ScriptEventChangePlayerTeam>;
 
-class ScriptEventChangePlayerTeam : public ScriptEventGeneric
+class ScriptEventChangePlayerTeam final : public ScriptEventGeneric
 {
     Q_OBJECT
 public:

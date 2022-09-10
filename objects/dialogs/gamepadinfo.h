@@ -8,12 +8,12 @@
 class GamepadInfo;
 using spGamepadInfo = oxygine::intrusive_ptr<GamepadInfo>;
 
-class GamepadInfo : public CreatedGui
+class GamepadInfo final : public CreatedGui
 {
     Q_OBJECT
 public:
     explicit GamepadInfo();
-    virtual ~GamepadInfo();
+    ~GamepadInfo();
 public slots:
     void remove();
 };

@@ -6,7 +6,7 @@
 class ScriptConditionUnitsDestroyed;
 typedef oxygine::intrusive_ptr<ScriptConditionUnitsDestroyed> spScriptConditionUnitsDestroyed;
 
-class ScriptConditionUnitsDestroyed : public ScriptCondition
+class ScriptConditionUnitsDestroyed final : public ScriptCondition
 {
     Q_OBJECT
 public:

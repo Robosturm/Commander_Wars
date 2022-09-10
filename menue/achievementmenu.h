@@ -10,7 +10,7 @@
 class Achievementmenu;
 using spAchievementmenu = oxygine::intrusive_ptr<Achievementmenu>;
 
-class Achievementmenu : public Basemenu
+class Achievementmenu final : public Basemenu
 {
     Q_OBJECT
     enum class SortDirection
@@ -22,7 +22,7 @@ class Achievementmenu : public Basemenu
 public:
 
     explicit Achievementmenu();
-    virtual ~Achievementmenu() = default;
+    ~Achievementmenu() = default;
 signals:
     void sigExitMenue();
     void sigSearch();

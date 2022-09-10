@@ -18,12 +18,12 @@
 class DialogRandomMap;
 using spDialogRandomMap = oxygine::intrusive_ptr<DialogRandomMap>;
 
-class DialogRandomMap : public QObject, public oxygine::Actor
+class DialogRandomMap final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogRandomMap();
-    virtual ~DialogRandomMap() = default;
+    ~DialogRandomMap() = default;
 signals:
     void sigFinished(QString mapName, QString author, QString description,
                      qint32 width, qint32 heigth, qint32 playerCount,

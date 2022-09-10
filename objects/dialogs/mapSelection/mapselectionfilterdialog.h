@@ -8,12 +8,12 @@
 class MapSelectionFilterDialog;
 using spMapSelectionFilterDialog = oxygine::intrusive_ptr<MapSelectionFilterDialog>;
 
-class MapSelectionFilterDialog : public CreatedGui
+class MapSelectionFilterDialog final : public CreatedGui
 {
     Q_OBJECT
 public:
     explicit MapSelectionFilterDialog(MapFilter* filter);
-    virtual ~MapSelectionFilterDialog();
+    ~MapSelectionFilterDialog();
 signals:
     void sigFinished();
 public slots:

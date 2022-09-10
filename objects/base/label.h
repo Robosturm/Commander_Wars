@@ -8,12 +8,12 @@
 class Label;
 using spLabel = oxygine::intrusive_ptr<Label>;
 
-class Label : public Tooltip
+class Label final : public Tooltip
 {
     Q_OBJECT
 public:
     explicit Label(qint32 width);
-    virtual ~Label() = default;
+    ~Label() = default;
     /**
      * @brief setText
      * @param str

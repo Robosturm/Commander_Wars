@@ -14,12 +14,12 @@
 class ProxyAi;
 using spProxyAi = oxygine::intrusive_ptr<ProxyAi>;
 
-class ProxyAi : public CoreAI
+class ProxyAi final : public CoreAI
 {
     Q_OBJECT
 public:
     explicit ProxyAi(GameMap* pMap);
-    virtual ~ProxyAi() = default;
+    ~ProxyAi() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

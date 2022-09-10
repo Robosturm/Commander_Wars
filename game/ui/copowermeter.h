@@ -10,12 +10,12 @@
 class CoPowermeter;
 typedef oxygine::intrusive_ptr<CoPowermeter> spCoPowermeter;
 
-class CoPowermeter : public QObject, public oxygine::Actor
+class CoPowermeter final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit CoPowermeter(GameMap* pMap, CO* pCO);
-    virtual ~CoPowermeter() = default;
+    ~CoPowermeter() = default;
     /**
      * @brief drawPowerMeter
      */
@@ -42,8 +42,6 @@ public:
     bool getFlippedX() const;
     GameMap *getMap() const;
     void setMap(GameMap *newPMap);
-
-signals:
 
 private:
     CO* m_pCO;

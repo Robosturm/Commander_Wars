@@ -18,12 +18,12 @@
 class CampaignMenu;
 using spCampaignMenu = oxygine::intrusive_ptr<CampaignMenu>;
 
-class CampaignMenu : public Basemenu
+class CampaignMenu final : public Basemenu
 {
     Q_OBJECT
 public:
     explicit CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveCampaign = false);
-    virtual ~CampaignMenu() = default;
+    ~CampaignMenu() = default;
 signals:
     void sigExitMenue();
     void sigButtonNext();

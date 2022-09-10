@@ -6,7 +6,7 @@
 
 class GameMenue;
 
-class ActionPerformer : public QObject
+class ActionPerformer final : public QObject
 {
     Q_OBJECT
 public:

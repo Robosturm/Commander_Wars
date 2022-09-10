@@ -12,7 +12,7 @@ class GameMap;
 class ScriptData;
 using spScriptData = oxygine::intrusive_ptr<ScriptData>;
 
-class ScriptData : public QObject, public oxygine::ref_counter
+class ScriptData final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -27,7 +27,7 @@ public:
     static constexpr auto variables = "variables";
 
     explicit ScriptData(GameMap* pMap);
-    virtual ~ScriptData() = default;
+    ~ScriptData() = default;
     /**
      * @brief readScript
      * @param rStream

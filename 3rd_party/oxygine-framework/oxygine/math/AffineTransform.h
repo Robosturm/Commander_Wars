@@ -5,7 +5,7 @@
 namespace oxygine
 {
     template<class T>
-    class AffineTransformT
+    class AffineTransformT final
     {
     public:
 

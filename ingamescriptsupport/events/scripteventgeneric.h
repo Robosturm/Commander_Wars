@@ -50,6 +50,8 @@ public:
     };
 
     explicit ScriptEventGeneric(GameMap* pMap, EventType type, QString eventIdentifier);
+    virtual ~ScriptEventGeneric() = default;
+
     /**
      * @brief readEvent
      * @param rStream
@@ -59,11 +61,11 @@ public:
      * @brief removeCustomStart
      * @param text
      */
-    virtual void removeCustomStart(QString &){};
+    virtual void removeCustomStart(QString &){}
     /**
      * @brief writeCustomStart
      */
-    virtual void writeCustomStart(QTextStream&){};
+    virtual void writeCustomStart(QTextStream&){}
     /**
      * @brief writeEvent
      * @param rStream

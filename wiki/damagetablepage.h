@@ -5,11 +5,11 @@
 class DamageTablePage;
 using spDamageTablePage = oxygine::intrusive_ptr<DamageTablePage>;
 
-class DamageTablePage : public Wikipage
+class DamageTablePage final : public Wikipage
 {
 public:
     explicit DamageTablePage();
-    virtual ~DamageTablePage() = default;
+    ~DamageTablePage() = default;
 private:
     oxygine::spColorRectSprite m_verticalMarker;
     oxygine::spColorRectSprite m_horizontalMarker;

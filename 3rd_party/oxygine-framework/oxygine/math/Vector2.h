@@ -7,7 +7,7 @@
 namespace oxygine
 {
     template <class T>
-    class VectorT2
+    class VectorT2 final
     {
         typedef VectorT2<T> vector2;
     public:

@@ -11,11 +11,11 @@ namespace oxygine
     namespace text
     {
         class Node;
-        class Aligner
+        class Aligner final
         {
         public:
             explicit Aligner(const TextStyle& style, const Vector2& size);
-            virtual ~Aligner() = default;
+            ~Aligner() = default;
 #ifdef GRAPHICSUPPORT
             const TextStyle& getStyle() const
             {

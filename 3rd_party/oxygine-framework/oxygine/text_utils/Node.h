@@ -28,14 +28,6 @@ namespace oxygine
         class TextNode;
         using spTextNode = oxygine::intrusive_ptr<TextNode>;
 
-        class DrawContext
-        {
-        public:
-            explicit DrawContext() = default;
-            virtual ~DrawContext() = default;
-            ;
-        };
-
         class Node : public oxygine::ref_counter
         {
         public:
@@ -56,7 +48,14 @@ namespace oxygine
             virtual void setX(qint32 x)
             {
             }
-
+            Node* getFirstChild() const
+            {
+                return m_firstChild.get();
+            }
+            Node* getNextSibling() const
+            {
+                return m_nextSibling.get();
+            }
 
         private:
             spNode m_firstChild;
@@ -64,15 +63,23 @@ namespace oxygine
             spNode m_nextSibling;
         };
 
-        class TextNode: public Node
+        class TextNode final : public Node
         {
         public:
             explicit TextNode(const QString & v);
-            virtual ~TextNode() = default;
+            ~TextNode() = default;
             virtual void xresize(Aligner& rd) override;
             virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
             virtual qint32 getWidth(Aligner& rd) override;
             virtual void setX(qint32 x) override;
+            const std::vector<QString> & getLines() const
+            {
+                return m_lines;
+            }
+            const std::vector<QPoint> & getPositions() const
+            {
+                return m_offsets;
+            }
         private:
 #ifdef GRAPHICSUPPORT
             QString * addNewLine(Aligner& rd);
@@ -83,11 +90,11 @@ namespace oxygine
             std::vector<QPoint> m_offsets;
         };
 
-        class DivNode: public Node
+        class DivNode final : public Node
         {
         public:
             explicit DivNode(QDomElement& reader);
-            virtual ~DivNode() = default;
+            ~DivNode() = default;
             virtual void resize(Aligner& rd) override;
             virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
         private:
@@ -95,12 +102,12 @@ namespace oxygine
             quint32 m_options;
         };
 
-        class BrNode: public Node
+        class BrNode final: public Node
         {
         public:
             explicit BrNode() = default;
             virtual ~BrNode() = default;
-            virtual void xresize(Aligner& rd) override
+            void xresize(Aligner& rd) override
             {
                 rd.nextLine(0, 0);
             }

@@ -13,12 +13,12 @@
  * @brief The ScriptVariables class holds variables for javascript that belong to a specific object
  * The variables are never used by the c++ engine
  */
-class ScriptVariables : public QObject, public FileSerializable
+class ScriptVariables final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
     explicit ScriptVariables();
-    virtual ~ScriptVariables() = default;
+    ~ScriptVariables() = default;
 
     /**
      * @brief serialize stores the object

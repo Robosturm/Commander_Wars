@@ -5,7 +5,7 @@
 
 class GameMap;
 
-class GameManager : public QObject, public RessourceManagement<GameManager>
+class GameManager final : public QObject, public RessourceManagement<GameManager>
 {
     Q_OBJECT
 public:
@@ -56,7 +56,7 @@ protected:
     friend RessourceManagement<GameManager>;
     GameManager();
 private:
-    virtual ~GameManager() = default;
+    ~GameManager() = default;
     oxygine::spSprite getIconSprite(const QString & icon);
     QStringList m_loadedHeavyAis;
 };

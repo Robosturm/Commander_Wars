@@ -5,9 +5,11 @@
 
 class QProcess;
 
-class CrashReporter
+class CrashReporter final
 {
 public:
+    CrashReporter() = delete;
+    ~CrashReporter() = delete;
     /// Function signature for a callback after the log is written.
     /// @param log
     using logWrittenCallback = void (*)(const QString & log);

@@ -9,13 +9,12 @@
 class GameAnimationPower;
 using spGameAnimationPower = oxygine::intrusive_ptr<GameAnimationPower>;
 
-class GameAnimationPower : public GameAnimation
+class GameAnimationPower final : public GameAnimation
 {
     Q_OBJECT
 public:
     static spGameAnimationPower createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO, GameMap * pMap);
-
-    virtual ~GameAnimationPower();
+    ~GameAnimationPower();
 
     virtual void restart() override;
     virtual void stop() override;

@@ -11,12 +11,12 @@
 class DropDownmenuSprite;
 using spDropDownmenuSprite = oxygine::intrusive_ptr<DropDownmenuSprite>;
 
-class DropDownmenuSprite : public DropDownmenuBase
+class DropDownmenuSprite final : public DropDownmenuBase
 {
     Q_OBJECT
 public:
     explicit DropDownmenuSprite(qint32 width, QStringList& items, std::function<oxygine::spActor(QString item)> creator, qint32 dropDownWidth = -1, bool autoScale = true);
-    virtual ~DropDownmenuSprite() = default;
+    ~DropDownmenuSprite() = default;
     /**
      * @brief getCurrentItemText text of the current item
      * @return

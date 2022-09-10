@@ -1,10 +1,12 @@
 #pragma once
 
-class MetaTypeRegister
+class MetaTypeRegister final
 {
 public:
     static void registerInterfaceData();
 private:
-    MetaTypeRegister() = default;
+    MetaTypeRegister() = delete;
+    ~MetaTypeRegister() = delete;
 };
+
 

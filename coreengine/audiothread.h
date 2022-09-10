@@ -15,7 +15,7 @@
 
 #include "coreengine/globalutils.h"
 
-class AudioThread : public QObject
+class AudioThread final : public QObject
 {
     Q_OBJECT
 private:
@@ -42,7 +42,7 @@ private:
 #endif
 public:
     explicit AudioThread(bool noAudio);
-    virtual ~AudioThread();
+    ~AudioThread();
     qint32 getSoundsBuffered();
     /**
      * @brief createSoundCache

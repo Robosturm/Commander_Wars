@@ -6,7 +6,7 @@
 class ScriptEventChangeUnitAI;
 using spScriptEventChangeUnitAI = oxygine::intrusive_ptr<ScriptEventChangeUnitAI>;
 
-class ScriptEventChangeUnitAI : public ScriptEventGeneric
+class ScriptEventChangeUnitAI final : public ScriptEventGeneric
 {
     Q_OBJECT
 public:

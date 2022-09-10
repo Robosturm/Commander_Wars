@@ -10,12 +10,12 @@
 class GameAnimationCapture;
 using spGameAnimationCapture = oxygine::intrusive_ptr<GameAnimationCapture>;
 
-class GameAnimationCapture : public GameAnimation
+class GameAnimationCapture final : public GameAnimation
 {
     Q_OBJECT
 public:
     explicit GameAnimationCapture(qint32 startPoints, qint32 endPoints, qint32 maxPoints, GameMap* pMap);
-    virtual ~GameAnimationCapture() = default;
+    ~GameAnimationCapture() = default;
 public slots:
     /**
      * @brief addBackgroundSprite adds a background sprite with no functionality. Besides looking pretty.

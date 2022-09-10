@@ -3,6 +3,7 @@
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 direction, qint32 startOffset, float buttonScale, bool useY)
     : m_pParent(pParent),
@@ -10,6 +11,8 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
       m_direction(direction),
       m_useY(useY)
 {
+    Interpreter::setCppOwnerShip(this);
+
     m_pButton = oxygine::spButton::create();
     if (m_useY)
     {

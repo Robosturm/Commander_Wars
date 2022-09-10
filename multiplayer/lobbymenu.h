@@ -19,7 +19,7 @@
 class LobbyMenu;
 using spLobbyMenu = oxygine::intrusive_ptr<LobbyMenu>;
 
-class LobbyMenu : public Basemenu
+class LobbyMenu final : public Basemenu
 {
     Q_OBJECT
 public:
@@ -30,8 +30,7 @@ public:
     };
 
     explicit LobbyMenu();
-    virtual ~LobbyMenu() = default;
-
+    ~LobbyMenu() = default;
 signals:
     void sigExitMenue();
     void sigHostServer();

@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QFile>
 
-class FileDownloader : public QObject
+class FileDownloader final : public QObject
 {
     Q_OBJECT
 public:
@@ -22,6 +22,7 @@ public:
                    const QString & resolveEnd,
                    const QString & currentTag,
                    const QString & downloadFile);
+    ~FileDownloader() = default;
 
 signals:
     void sigNewProgress(qint64 bytesReceived, qint64 bytesTotal);

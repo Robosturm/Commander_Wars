@@ -6,7 +6,7 @@
 class ScriptConditionCheckVariable;
 typedef oxygine::intrusive_ptr<ScriptConditionCheckVariable> spScriptConditionCheckVariable;
 
-class ScriptConditionCheckVariable : public ScriptCondition
+class ScriptConditionCheckVariable final : public ScriptCondition
 {
     Q_OBJECT
 public:

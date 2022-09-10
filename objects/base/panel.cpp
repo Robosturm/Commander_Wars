@@ -2,6 +2,7 @@
 #include "objects/base/dropdownmenubase.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -13,6 +14,8 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_HScrollbar = spH_Scrollbar::create(size.height() - sliderSize, contentSize.height());
@@ -273,12 +276,12 @@ void Panel::setContentWidth(qint32 width)
     m_VScrollbar->setScrollvalue(0);    
 }
 
-qint32 Panel::getContentHeigth()
+qint32 Panel::getContentHeigth() const
 {
     return m_ContentRect->getScaledHeight();
 }
 
-qint32 Panel::getContentWidth()
+qint32 Panel::getContentWidth() const
 {
    return m_ContentRect->getScaledWidth();
 }
@@ -286,6 +289,16 @@ qint32 Panel::getContentWidth()
 void Panel::addItem(oxygine::spActor pActor)
 {
     m_ContentRect->addChild(pActor);
+}
+
+qint32 Panel::getContentX() const
+{
+    return m_ContentRect->getX();
+}
+
+qint32 Panel::getContentY() const
+{
+    return m_ContentRect->getY();
 }
 
 void Panel::removeItem(oxygine::spActor pActor)

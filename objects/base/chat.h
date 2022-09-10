@@ -16,12 +16,12 @@
 class Chat;
 using spChat = oxygine::intrusive_ptr<Chat>;
 
-class Chat : public QObject, public oxygine::Actor
+class Chat final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkSerives serviceMode);
-    virtual ~Chat() = default;
+    ~Chat() = default;
     /**
      * @brief setVisible
      * @param vis

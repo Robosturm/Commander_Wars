@@ -15,7 +15,7 @@ class GameMap;
 class HeavyAi;
 using spHeavyAi = oxygine::intrusive_ptr<HeavyAi>;
 
-class HeavyAi : public CoreAI
+class HeavyAi final : public CoreAI
 {
     Q_OBJECT
     /**
@@ -179,7 +179,7 @@ public:
     };
 
     explicit HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType);
-    virtual ~HeavyAi() = default;
+    ~HeavyAi() = default;
 
     void loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, bool randomize, qint32 outputSize = 1);
 

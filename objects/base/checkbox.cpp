@@ -3,7 +3,7 @@
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/mainapp.h"
-
+#include "coreengine/interpreter.h"
 #include "coreengine/audiothread.h"
 
 Checkbox::Checkbox()
@@ -13,6 +13,7 @@ Checkbox::Checkbox()
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("checkbox");
     if (pAnim != nullptr)

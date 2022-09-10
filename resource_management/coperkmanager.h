@@ -3,7 +3,7 @@
 
 #include "resource_management/ressourcemanagement.h"
 
-class COPerkManager : public QObject, public RessourceManagement<COPerkManager>
+class COPerkManager final : public QObject, public RessourceManagement<COPerkManager>
 {
     Q_OBJECT
 public slots:
@@ -46,7 +46,7 @@ protected:
     friend RessourceManagement<COPerkManager>;
     COPerkManager();
 private:
-    virtual ~COPerkManager() = default;
+    ~COPerkManager() = default;
 };
 
 Q_DECLARE_INTERFACE(COPerkManager, "COPerkManager");
