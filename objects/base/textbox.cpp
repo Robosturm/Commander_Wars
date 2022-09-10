@@ -49,6 +49,7 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     pClipActor->setY(5);
 
     addChild(m_Textbox);
+#ifdef GRAPHICSUPPORT
     addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
@@ -67,6 +68,7 @@ Textbox::Textbox(qint32 width, qint32 heigth)
             emit sigFocused();
         }
     });
+#endif
 }
 
 bool Textbox::onEditFinished()
