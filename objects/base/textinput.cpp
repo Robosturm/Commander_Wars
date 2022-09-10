@@ -19,10 +19,11 @@ TextInput::TextInput()
     {
         emit pApp->sigCreateLineEdit();
     }
-    m_lineEdit = pApp->getLastCreateLineEdit();    
+    m_lineEdit = pApp->getLastCreateLineEdit();
     if (m_lineEdit != nullptr)
     {
         connect(m_lineEdit, &EventTextEdit::returnPressed, this, &TextInput::editFinished, Qt::QueuedConnection);
+        connect(this, &TextInput::sigSetText, m_lineEdit, &EventTextEdit::setPlainText, Qt::BlockingQueuedConnection);
     }
     m_toggle.start();
 }
@@ -32,6 +33,7 @@ TextInput::~TextInput()
     if (m_lineEdit != nullptr)
     {
         m_lineEdit->deleteLater();
+        m_lineEdit = nullptr;
     }
 }
 
@@ -68,7 +70,7 @@ void TextInput::setCurrentText(const QString & text)
 {
     if (m_lineEdit != nullptr)
     {
-        m_lineEdit->setText(text);
+        emit sigSetText(text);
     }
 }
 

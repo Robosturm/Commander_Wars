@@ -19,8 +19,7 @@ SelectKey::SelectKey(Qt::Key code)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-
-    setWidth(180);
+    setSize(180, 40);
     m_Button = ObjectManager::createButton("", getWidth());
     oxygine::Actor* pActor = m_Button.get();
     m_Button->addEventListener(oxygine::TouchEvent::CLICK, [this, pActor](oxygine::Event * )->void

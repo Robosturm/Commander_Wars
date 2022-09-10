@@ -1283,18 +1283,24 @@ qint32 UiFactory::getIntValue(QString line, QString objectId, qint32 loopIdx, Cr
         }
         else if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
             if (success != nullptr)
             {
                 *success = false;
             }
+            else
+            {
+                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            }
         }
         else
         {
-            CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
             if (success != nullptr)
             {
                 *success = false;
+            }
+            else
+            {
+                CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
             }
         }
     }
@@ -1337,18 +1343,24 @@ quint64 UiFactory::getUInt64Value(QString line, QString objectId, qint32 loopIdx
         }
         else if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
             if (success != nullptr)
             {
                 *success = false;
             }
+            else
+            {
+                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            }
         }
         else
         {
-            CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
             if (success != nullptr)
             {
                 *success = false;
+            }
+            else
+            {
+                CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
             }
         }
     }
@@ -1391,18 +1403,24 @@ float UiFactory::getFloatValue(QString line, QString objectId, qint32 loopIdx, C
         }
         else if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
             if (success != nullptr)
             {
                 *success = false;
             }
+            else
+            {
+                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            }
         }
         else
         {
-            CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
             if (success != nullptr)
             {
                 *success = false;
+            }
+            else
+            {
+                CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
             }
         }
     }
@@ -1441,18 +1459,24 @@ bool UiFactory::getBoolValue(QString line, QString objectId, qint32 loopIdx, Cre
         }
         else if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
             if (success != nullptr)
             {
                 *success = false;
             }
+            else
+            {
+                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            }
         }
         else
         {
-            CONSOLE_PRINT("Unable to determine a bool value while interpreting. Line: " + line, Console::eERROR);
             if (success != nullptr)
             {
                 *success = false;
+            }
+            else
+            {
+                CONSOLE_PRINT("Unable to determine a bool value while interpreting. Line: " + line, Console::eERROR);
             }
         }
     }
@@ -1483,10 +1507,13 @@ QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx
         }
         if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ". Using \"" + value + "\" as value.", Console::eDEBUG);
             if (success != nullptr)
             {
                 *success = false;
+            }
+            else
+            {
+                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ". Using \"" + value + "\" as value.", Console::eDEBUG);
             }
         }
         else if (erg.isString())
@@ -1495,10 +1522,13 @@ QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx
         }
         else
         {
-            CONSOLE_PRINT("Unable to determine a string value while interpreting. Line: " + line, Console::eERROR);
             if (success != nullptr)
             {
                 *success = false;
+            }
+            else
+            {
+                CONSOLE_PRINT("Unable to determine a string value while interpreting. Line: " + line + " using line as value", Console::eDEBUG);
             }
         }
     }
@@ -1525,10 +1555,13 @@ Player* UiFactory::getPlayerValue(QString line, QString objectId, qint32 loopIdx
         QJSValue erg = pInterpreter->evaluate(line);
         if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
             if (success != nullptr)
             {
                 *success = false;
+            }
+            else
+            {
+                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
             }
         }
         else

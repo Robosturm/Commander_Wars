@@ -1583,66 +1583,74 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
             aiType != GameEnums::AiTypes::AiTypes_ProxyAi)
         {
             GameEnums::AiTypes originalAiType = static_cast<GameEnums::AiTypes>(aiType);
-            m_playerSockets[player] = socket;
-            if (Mainapp::getSlave())
+            if (player <m_playerSockets.size() && m_pMap != nullptr)
             {
-                if (aiType != GameEnums::AiTypes::AiTypes_Open &&
-                    aiType != GameEnums::AiTypes::AiTypes_Closed)
+                m_playerSockets[player] = socket;
+                if (Mainapp::getSlave())
                 {
-                    aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                    if (aiType != GameEnums::AiTypes::AiTypes_Open &&
+                        aiType != GameEnums::AiTypes::AiTypes_Closed)
+                    {
+                        aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                    }
+                    CONSOLE_PRINT("Slave remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
                 }
-                CONSOLE_PRINT("Slave remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
-            }
-            else if (m_isServerGame)
-            {
-                if (aiType != GameEnums::AiTypes::AiTypes_Open &&
-                    aiType != GameEnums::AiTypes::AiTypes_Human)
+                else if (m_isServerGame)
                 {
-                    aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                    if (aiType != GameEnums::AiTypes::AiTypes_Open &&
+                        aiType != GameEnums::AiTypes::AiTypes_Human)
+                    {
+                        aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                    }
+                    CONSOLE_PRINT("Server remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
                 }
-                CONSOLE_PRINT("Server remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
-            }
-            else if (!clientRequest)
-            {
-                if (aiType != GameEnums::AiTypes::AiTypes_Open &&
-                    aiType != GameEnums::AiTypes::AiTypes_Closed)
+                else if (!clientRequest)
                 {
-                    aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                    if (aiType != GameEnums::AiTypes::AiTypes_Open &&
+                        aiType != GameEnums::AiTypes::AiTypes_Closed)
+                    {
+                        aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                    }
+                    CONSOLE_PRINT("Remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
                 }
-                CONSOLE_PRINT("Remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
-            }
-            GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
-            setPlayerAi(player, eAiType, name);
-            m_pMap->getPlayer(player)->deserializeObject(stream);
-            m_pMap->getPlayer(player)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, eAiType));
-            m_pMap->getPlayer(player)->setPlayerNameId(name);
-            m_pMap->getPlayer(player)->setControlType(originalAiType);
+                GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
+                setPlayerAi(player, eAiType, name);
+                m_pMap->getPlayer(player)->deserializeObject(stream);
+                m_pMap->getPlayer(player)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, eAiType));
+                m_pMap->getPlayer(player)->setPlayerNameId(name);
+                m_pMap->getPlayer(player)->setControlType(originalAiType);
 
-            bool humanFound = false;
-            for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
-            {
-                if (m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Human)
+                bool humanFound = false;
+                for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
                 {
-                    humanFound = true;
-                    break;
+                    if (m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Human)
+                    {
+                        humanFound = true;
+                        break;
+                    }
+                }
+                updatePlayerData(player);
+                if (!humanFound &&
+                    !m_pNetworkInterface->getIsObserver())
+                {
+                    CONSOLE_PRINT("Disconnecting cause controlling no player and isn't an observer", Console::eDEBUG);
+                    emit sigDisconnect();
+                }
+                if (m_isServerGame)
+                {
+                    if (aiType != GameEnums::AiTypes::AiTypes_Open)
+                    {
+                        aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                    }
+                    QByteArray data;
+                    createPlayerChangedData(data, socket, name, aiType, player, false);
+                    emit m_pNetworkInterface->sigForwardData(socketId, data, NetworkInterface::NetworkSerives::Multiplayer);
                 }
             }
-            updatePlayerData(player);
-            if (!humanFound &&
-                !m_pNetworkInterface->getIsObserver())
+            else
             {
-                CONSOLE_PRINT("Disconnecting cause controlling no player and isn't an observer", Console::eDEBUG);
+                CONSOLE_PRINT("Disconnecting cause connection seems faulty", Console::eDEBUG);
                 emit sigDisconnect();
-            }
-            if (m_isServerGame)
-            {
-                if (aiType != GameEnums::AiTypes::AiTypes_Open)
-                {
-                    aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
-                }
-                QByteArray data;
-                createPlayerChangedData(data, socket, name, aiType, player, false);
-                emit m_pNetworkInterface->sigForwardData(socketId, data, NetworkInterface::NetworkSerives::Multiplayer);
             }
         }
         else

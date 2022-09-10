@@ -17,7 +17,8 @@ public:
     };
     explicit TextInput();
     virtual ~TextInput();
-
+signals:
+    void sigSetText(const QString & text);
 public slots:
     QString getCurrentText() const;
     /**
