@@ -228,6 +228,7 @@ void NormalAi::process()
                     if (useCOPower(pUnits, pEnemyUnits))
                     {
                         m_usedTransportSystem = false;
+                        m_usedPredefinedAi = false;
                         turnMode = GameEnums::AiTurnMode_DuringDay;
                     }
                     else
@@ -370,7 +371,9 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
         QCoreApplication::processEvents();
         auto & unitData = m_OwnUnits[i];
         Unit* pUnit = unitData.pUnit.get();
-        if (!pUnit->getHasMoved() && unitData.actions.contains(ACTION_CAPTURE))
+        if (!pUnit->getHasMoved() &&
+            unitData.actions.contains(ACTION_CAPTURE) &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             if (pUnit->getCapturePoints() > 0)
             {
@@ -414,7 +417,9 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
             QCoreApplication::processEvents();
             auto & unitData = m_OwnUnits[i];
             Unit* pUnit = unitData.pUnit.get();
-            if (!pUnit->getHasMoved() && unitData.actions.contains(ACTION_CAPTURE))
+            if (!pUnit->getHasMoved() &&
+                unitData.actions.contains(ACTION_CAPTURE) &&
+                pUnit->getAiMode() == GameEnums::GameAi_Normal)
             {
                 std::vector<QVector3D> captures;
                 for (auto & building : captureBuildings)
@@ -486,7 +491,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                             {
                                 Building* pBuilding = m_pMap->getTerrain(static_cast<qint32>(captures[i2].x()), static_cast<qint32>(captures[i2].y()))->getBuilding();
                                 qint32 testPrio = std::numeric_limits<qint32>::min();
-                                if (pBuilding->getBuildingID() == "HQ")
+                                if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ)
                                 {
                                     testPrio = std::numeric_limits<qint32>::max();
                                 }
@@ -544,7 +549,8 @@ bool NormalAi::joinCaptureBuildings(spQmlVectorUnit & pUnits)
         Unit* pUnit = unitData.pUnit.get();
         if (!pUnit->getHasMoved() &&
             unitData.actions.contains(ACTION_CAPTURE) &&
-            unitData.actions.contains(ACTION_JOIN))
+            unitData.actions.contains(ACTION_JOIN) &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             spGameAction pAction = spGameAction::create(ACTION_JOIN, m_pMap);
             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -583,7 +589,8 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint
             pUnit->getBaseMaxRange() >= minfireRange &&
             pUnit->getBaseMaxRange() <= maxfireRange &&
             (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0) &&
-            unitData.actions.contains(CoreAI::ACTION_FIRE))
+            unitData.actions.contains(CoreAI::ACTION_FIRE) &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -630,7 +637,8 @@ bool NormalAi::refillUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
         Unit* pUnit = unitData.pUnit.get();
         // can we use the unit?
         if (isUsingUnit(pUnit) &&
-            pUnit->getLoadedUnitCount() == 0)
+            pUnit->getLoadedUnitCount() == 0 &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             QStringList & actions = unitData.actions;
             if (isRefuelUnit(actions))
@@ -808,28 +816,36 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
             QStringList & actions = unitData.actions;
             // find possible targets for this unit
             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-
-            // find some cool targets
-            appendCaptureTargets(actions, pUnit, pEnemyBuildings, targets);
+            if (pUnit->getAiMode() == GameEnums::GameAi_Normal)
+            {
+                // find some cool targets
+                appendCaptureTargets(actions, pUnit, pEnemyBuildings, targets);
+            }
             if (targets.size() > 0)
             {
                 appendCaptureTransporterTargets(pUnit, pUnits, pEnemyBuildings, transporterTargets);
                 targets.insert(targets.cbegin(), transporterTargets.cbegin(), transporterTargets.cend());
             }
-            appendAttackTargets(pUnit, pEnemyUnits, targets);
-            appendAttackTargetsIgnoreOwnUnits(pUnit, pEnemyUnits, targets);
-            appendTerrainBuildingAttackTargets(pUnit, pEnemyBuildings, targets);
-            if (targets.size() == 0)
+            if (pUnit->getAiMode() == GameEnums::GameAi_Normal)
             {
-                appendRepairTargets(pUnit, pBuildings, targets);
+                appendAttackTargets(pUnit, pEnemyUnits, targets);
+                appendAttackTargetsIgnoreOwnUnits(pUnit, pEnemyUnits, targets);
+                appendTerrainBuildingAttackTargets(pUnit, pEnemyBuildings, targets);
+                if (targets.size() == 0)
+                {
+                    appendRepairTargets(pUnit, pBuildings, targets);
+                }
+                if (supportUnits)
+                {
+                    appendSupportTargets(actions, pUnit, pUnits, pEnemyUnits, targets);
+                }
             }
-            if (supportUnits)
+            if (targets.size() > 0 || transporterTargets.size() > 0)
             {
-                appendSupportTargets(actions, pUnit, pUnits, pEnemyUnits, targets);
-            }
-            if (moveUnit(pAction, &unitData, pUnits, actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
-            {
-                return true;
+                if (moveUnit(pAction, &unitData, pUnits, actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
+                {
+                    return true;
+                }
             }
         }
     }
@@ -887,7 +903,9 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
         QCoreApplication::processEvents();
         Unit* pUnit = unitData.pUnit.get();
         // can we use the unit?
-        if (!pUnit->getHasMoved() && pUnit->getLoadingPlace() > 0)
+        if (!pUnit->getHasMoved() &&
+            pUnit->getLoadingPlace() > 0 &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             // wooohooo it's a transporter
             if (pUnit->getLoadedUnitCount() > 0)
@@ -1109,7 +1127,9 @@ bool NormalAi::repairUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
         QCoreApplication::processEvents();
         Unit* pUnit = unitData.pUnit.get();
         // can we use the unit?
-        if (!isUsingUnit(pUnit) && !pUnit->getHasMoved())
+        if (!isUsingUnit(pUnit) &&
+            !pUnit->getHasMoved() &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             std::vector<QVector3D> targets;
             std::vector<QVector3D> transporterTargets;
@@ -1158,7 +1178,8 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
         UnitPathFindingSystem & turnPfs = *(pUnitData->pUnitPfs.get());
         if (CoreAI::contains(transporterTargets, targetFields) &&
             pTargetUnit != nullptr &&
-            pTargetUnit->getHasMoved() == false)
+            pTargetUnit->getHasMoved() == false &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             auto path = turnPfs.getPathFast(targetFields.x(), targetFields.y());
             pAction->setMovepath(path, turnPfs.getCosts(path));
@@ -1649,7 +1670,7 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife) const
     }
     if (pBuilding != nullptr &&
         pBuilding->getOwner() == m_pPlayer &&
-        pBuilding->getBuildingID() == "HQ" &&
+        pBuilding->getBuildingID() == CoreAI::BUILDING_HQ &&
         pUnit->hasAction(ACTION_CAPTURE))
     {
         ret *= m_antiCaptureHqBonus;
@@ -2109,6 +2130,7 @@ void NormalAi::clearUnitData()
 {
     m_EnemyUnits.clear();
     m_OwnUnits.clear();
+    m_usedPredefinedAi = false;
 }
 
 bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits,

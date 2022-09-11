@@ -84,7 +84,10 @@ void VeryEasyAI::process()
     rebuildIsland(pUnits);
 
     // make the ai do stuff
-    if (useCOPower(pUnits, pEnemyUnits)){}
+    if (useCOPower(pUnits, pEnemyUnits))
+    {
+        m_usedPredefinedAi = false;
+    }
     else
     {
         turnMode = GameEnums::AiTurnMode_DuringDay;
@@ -101,6 +104,7 @@ void VeryEasyAI::process()
                 if (useCOPower(pUnits, pEnemyUnits))
                 {
                     m_usedTransportSystem = false;
+                    m_usedPredefinedAi = false;
                     turnMode = GameEnums::AiTurnMode_DuringDay;
                 }
                 else
@@ -165,7 +169,8 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
     {
         Unit* pUnit = spUnit.get();
         QCoreApplication::processEvents();
-        if (!pUnit->getHasMoved())
+        if (!pUnit->getHasMoved() &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             if (pUnit->getActionList().contains(ACTION_CAPTURE))
             {
@@ -244,7 +249,8 @@ bool VeryEasyAI::fireWithIndirectUnits(spQmlVectorUnit & pUnits)
         QCoreApplication::processEvents();
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() > 1 &&
-            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0))
+            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0) &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             if (attack(pUnit.get()))
             {
@@ -263,7 +269,8 @@ bool VeryEasyAI::fireWithDirectUnits(spQmlVectorUnit & pUnits)
         QCoreApplication::processEvents();
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() == 1 &&
-            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0))
+            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0) &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             if (attack(pUnit.get()))
             {
@@ -340,7 +347,8 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
         Unit* pUnit = spUnit.get();
         QCoreApplication::processEvents();
         // can we use the unit?
-        if (!pUnit->getHasMoved())
+        if (!pUnit->getHasMoved() &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             std::vector<QVector3D> targets;
             std::vector<QVector3D> transporterTargets;
@@ -397,7 +405,9 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
         QCoreApplication::processEvents();
         Unit* pUnit = spUnit.get();
         // can we use the unit?
-        if (!pUnit->getHasMoved() && pUnit->getLoadingPlace() > 0)
+        if (!pUnit->getHasMoved() &&
+            pUnit->getLoadingPlace() > 0 &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             // wooohooo it's a transporter
             if (pUnit->getLoadedUnitCount() > 0)

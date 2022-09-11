@@ -37,6 +37,7 @@
         <image file="icons/patrol.png"  />
         <image file="icons/iron_shield.png"  />
         <image file="icons/arrow_up.png"  />
+        <image file="icons/hq.png"  />        
         <!-- aircraftcarrier -->
         <image file="aircraftcarrier+mask.png" cols = "4"  />
         <image file="aircraftcarrier+walk+mask.png" cols = "2" rows = "4"   />

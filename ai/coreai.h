@@ -148,6 +148,7 @@ public:
     static const QString ACTION_FLARE;
     static const QString ACTION_TRAP;
 
+    static const QString BUILDING_HQ;
     static const QString UNIT_INFANTRY;
 
     explicit CoreAI(GameMap* pMap, GameEnums::AiTypes aiType);
@@ -456,11 +457,12 @@ protected:
      * @return
      */
     bool processPredefinedAi();
-    void processPredefinedAiHold(Unit* pUnit);
-    void processPredefinedAiDefensive(Unit* pUnit);
-    void processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyUnits);
-    void processPredefinedAiPatrol(Unit* pUnit);
+    bool processPredefinedAiHold(Unit* pUnit);
+    bool processPredefinedAiDefensive(Unit* pUnit);
+    bool processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyUnits);
+    bool processPredefinedAiPatrol(Unit* pUnit);
     bool processPredefinedAiAttack(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem & pfs);
+    bool processPredefinedAiTargetEnemyHq(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings);
     virtual void finishTurn();
     // helper functions to get targets for unit actions
     void appendSupportTargets(const QStringList & actions, Unit* pCurrentUnit, spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets);
@@ -622,6 +624,7 @@ protected:
     GameEnums::AiTurnMode turnMode{GameEnums::AiTurnMode_StartOfDay};
     AISteps m_aiStep;
     bool m_usedTransportSystem{false};
+    bool m_usedPredefinedAi{false};
     bool m_missileTarget{false};
     double m_fuelResupply{0.33f};
     double m_ammoResupply{0.25f};

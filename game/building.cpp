@@ -183,7 +183,7 @@ void Building::setOwner(Player* pOwner)
     }
     else
     {
-        if (m_BuildingID == "HQ")
+        if (m_BuildingID == CoreAI::BUILDING_HQ)
         {
             updateBuildingSprites(false);
         }

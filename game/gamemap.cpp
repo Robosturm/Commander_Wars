@@ -2150,7 +2150,7 @@ void GameMap::centerOnPlayer(Player* pPlayer)
                 if (pBuilding->getOwner() == pPlayer &&
                     (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y))
                 {
-                    if (pBuilding->getBuildingID() == "HQ" &&
+                    if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ &&
                         hqWarp.x() < 0)
                     {
                         hqWarp = QPoint(x, y);

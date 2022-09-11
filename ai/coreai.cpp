@@ -54,6 +54,7 @@ const QString CoreAI::ACTION_FLARE = "ACTION_FLARE";
 const QString CoreAI::ACTION_TRAP = "ACTION_TRAP";
 
 const QString CoreAI::UNIT_INFANTRY = "INFANTRY";
+const QString CoreAI::BUILDING_HQ = "HQ";
 
 CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType)
     : BaseGameInputIF(pMap, aiType)
@@ -829,9 +830,9 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
     qint32 heigth = m_pMap->getMapHeight();
     std::vector<Unit*> transportUnits;
     qint32 transporterMovement = pUnit->getMovementpoints(pUnit->Unit::getPosition());
-    for (auto & pUnit : pUnits->getVector())
+    for (auto & pOtherUnit : pUnits->getVector())
     {
-        Unit* pLoadingUnit = pUnit.get();
+        Unit* pLoadingUnit = pOtherUnit.get();
         if (pLoadingUnit != pUnit && pLoadingUnit->getHp() > 0.0f)
         {
             // can we transport it?
@@ -848,7 +849,7 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
                     found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings,
                                              loadingIslandIdx, loadingIsland);
                 }
-                else
+                else if (!pLoadingUnit->getHasMoved())
                 {
                     found = hasTargets(transporterMovement, pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings,
                                        loadingIslandIdx, loadingIsland);
@@ -866,10 +867,10 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
                         {
                             // can be reached by both units and is empty
                             // and not added yet
+                            Unit* pFieldUnit = m_pMap->getTerrain(x, y)->getUnit();
                             if ((m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland) &&
                                 (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
-                                ((m_pMap->getTerrain(x, y)->getUnit() == nullptr) ||
-                                 (m_pMap->getTerrain(x, y)->getUnit() == pUnit)))
+                                (pFieldUnit == nullptr || pFieldUnit == pUnit))
                             {
                                 qint32 dist = GlobalUtils::getDistance(loadingUnitPos, QPoint(x, y));
                                 if (dist < distance)
@@ -1671,7 +1672,6 @@ void CoreAI::rebuildIsland(spQmlVectorUnit & pUnits)
     }
 }
 
-
 void CoreAI::sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits)
 {
     auto & pEnemyUnitsVec = pEnemyUnits->getVector();
@@ -1843,6 +1843,7 @@ void CoreAI::finishTurn()
 {
     AI_CONSOLE_PRINT("CoreAI::finishTurn(()", Console::eDEBUG);
     m_usedTransportSystem = false;
+    m_usedPredefinedAi = false;
     spGameAction pAction = spGameAction::create(ACTION_NEXT_PLAYER, m_pMap);
     CO* pCO0 = m_pPlayer->getCO(0);
     CO* pCO1 = m_pPlayer->getCO(1);

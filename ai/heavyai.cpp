@@ -177,7 +177,10 @@ void HeavyAi::process()
     getFunctionType(CoreAI::ACTION_EXPLODE, explodeType, index);
 
     if (useBuilding(m_pBuildings)){}
-    else if (useCOPower(pUnits, pEnemyUnits)){}
+    else if (useCOPower(pUnits, pEnemyUnits))
+    {
+        m_usedPredefinedAi = false;
+    }
     else
     {
         setupTurn(m_pBuildings);
@@ -220,6 +223,7 @@ void HeavyAi::endTurn()
     turnMode = GameEnums::AiTurnMode_EndOfDay;
     m_pUnits = nullptr;
     m_pEnemyUnits = nullptr;
+    m_usedPredefinedAi = false;
     spQmlVectorUnit pUnits(m_pPlayer->getUnits());
     spQmlVectorUnit pEnemyUnits(m_pPlayer->getEnemyUnits());
     if (useCOPower(pUnits, pEnemyUnits)){}
@@ -499,7 +503,7 @@ void HeavyAi::findHqThreads(const spQmlVectorBuilding & buildings)
     std::vector<QVector3D> hqPositions;
     for (auto & pBuilding : buildings->getVector())
     {
-        if (pBuilding->getBuildingID() == "HQ")
+        if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ)
         {
             hqPositions.push_back(QVector3D(pBuilding->Building::getX(), pBuilding->Building::getY(), 1));
         }
@@ -560,7 +564,8 @@ void HeavyAi::scoreActions(MoveUnitData & unit)
 {
     AI_CONSOLE_PRINT("HeavyAi::scoreActions", Console::eDEBUG);
     if (!unit.pUnit->getHasMoved() &&
-        isUsingUnit(unit.pUnit.get()))
+        isUsingUnit(unit.pUnit.get()) &&
+        unit.pUnit->getAiMode() == GameEnums::GameAi_Normal)
     {
         if (unit.pUnit->getTerrain() == nullptr ||
             unit.pUnit->getHp() <= 0)
@@ -1018,7 +1023,7 @@ void HeavyAi::scoreCapture(ScoreData & data, MoveUnitData & unitData, std::vecto
     baseData.resize(baseData.size() + static_cast<qsizetype>(CaptureInfoMaxSize - CaptureInfoStart), 0);
     Building* pBuilding = data.m_gameAction->getMovementBuilding();
     auto target = data.m_gameAction->getActionTarget();
-    baseData[CaptureInfoIsHq] = (pBuilding->getBuildingID() == "HQ");
+    baseData[CaptureInfoIsHq] = (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ);
     baseData[CaptureInfoIsComTower] = (pBuilding->getBuildingID() == "TOWER");
     baseData[CaptureInfoCaptureOptions] = 1.0 / static_cast<double>(unitData.m_capturePoints.size());
     if (pBuilding->getActionList().contains(ACTION_BUILD_UNITS))

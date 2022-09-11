@@ -1320,22 +1320,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="233"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="234"/>
         <source>Offensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="233"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="235"/>
         <source>Defensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="233"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="236"/>
         <source>Hold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="235"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="275"/>
+        <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rank. This is immediately applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="349"/>
+        <source>Selects the unit loaded by the transporter. Enter &apos;-&apos; for no unit. This is immediately applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="263"/>
+        <source>Unit Rank: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="237"/>
+        <source>Patrol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="238"/>
+        <source>Patrol Loop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="239"/>
+        <source>Target Enemy HQ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="241"/>
         <source>Selects how the AI uses this unit
 Normal AI uses the unit like always.
 Offensive AI the ai moves the unit to the closest enemy and attacks
@@ -1343,51 +1373,37 @@ Defensive AI the ai moves the unit only if it can attack.
 Hold AI the ai only attacks but never moves with this unit.
 Patrol the unit will move to each position in the given order
 Patrol Loop the unit will move to each position in the given order and restart at the first
+Target Enemy HQ moves to the nearest enemy HQ
 This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="268"/>
-        <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rank. This is immediately applied.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="342"/>
-        <source>Selects the unit loaded by the transporter. Enter &apos;-&apos; for no unit. This is immediately applied.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="256"/>
-        <source>Unit Rank: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="265"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="272"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="266"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="273"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="310"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="317"/>
         <source>Loaded Unit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="387"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="394"/>
         <source>Move Point: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="419"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="426"/>
         <source>Add Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="427"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="434"/>
         <source>Remove last Point</source>
         <translation type="unfinished"></translation>
     </message>

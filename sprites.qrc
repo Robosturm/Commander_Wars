@@ -4820,5 +4820,6 @@
         <file>resources/images/colortables/Color_Codes.png</file>
         <file>resources/images/colortables/mask.png</file>
         <file>resources/images/battleanimations/bomber/bomber+bd+mask.png</file>
+        <file>resources/images/units/icons/hq.png</file>
     </qresource>
 </RCC>

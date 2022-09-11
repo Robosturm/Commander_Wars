@@ -3321,6 +3321,7 @@ void Unit::setAiMode(const GameEnums::GameAi &AiMode)
     unloadIcon("offensive");
     unloadIcon("patrol");
     unloadIcon("patrol_loop");
+    unloadIcon("hq");
     if (dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance()) != nullptr)
     {
         switch (m_AiMode)
@@ -3353,6 +3354,11 @@ void Unit::setAiMode(const GameEnums::GameAi &AiMode)
             case GameEnums::GameAi_PatrolLoop:
             {
                 loadIcon("patrol_loop", 0, 0);
+                break;
+            }
+            case GameEnums::GameAi_TargetEnemyHq:
+            {
+                loadIcon("hq", 0, 0);
                 break;
             }
         }
