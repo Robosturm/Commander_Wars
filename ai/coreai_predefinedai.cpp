@@ -420,6 +420,10 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyU
             pAction->setMovepath(path, pfs.getCosts(path));
             emit performAction(pAction);
         }
+        else
+        {
+            emit performAction(pAction);
+        }
     }
 }
 

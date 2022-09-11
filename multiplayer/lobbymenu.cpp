@@ -251,6 +251,7 @@ void LobbyMenu::changeLobbyMode()
 void LobbyMenu::leaveServer()
 {
     m_pTCPClient = nullptr;
+    enableServerButtons(false);
 }
 
 void LobbyMenu::exitMenue()

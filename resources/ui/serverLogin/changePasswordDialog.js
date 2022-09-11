@@ -55,7 +55,7 @@ var ChangePasswordDialog =
         if (errorCode === GameEnums.LoginError_None)
         {
             changePassword.showMessageBox(qsTr("You're password was changed successfully."));
-            var menu = forgotPassword.getBaseMenu();
+            var menu = changePassword.getBaseMenu();
             menu.enableServerButtons(true);
             menu.setServerRequestNewPassword(false);
             changePassword.exit();
@@ -84,10 +84,6 @@ var ChangePasswordDialog =
     onAbort : function()
     {
         var menu = changePassword.getBaseMenu();
-        if (menu.getServerRequestNewPassword())
-        {
-            menu.leaveServer();
-        }
         changePassword.exit();
     },
 };

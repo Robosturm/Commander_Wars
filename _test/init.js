@@ -2,8 +2,14 @@ var Init =
 {
     step = 0,
     playTest = 0,
+    optionTestCount = 0,
     steps = ["creditsTest",
              "achievementTest",
+             "optionTest",
+             "optionTest",
+             "optionTest",
+             "optionTest",
+             "optionTest",
              "optionTest",
              "wikiTest",
              "shopTest",
@@ -47,13 +53,34 @@ var Init =
     },
     optionTest = function(menu)
     {
-        menu.enterOptionmenue();
+        ++Init.optionTestCount;
+        if (Init.optionTestCount === 1)
+        {
+            menu.enterOptionmenue("ui/options/optionvideomenu.xml");
+        }
+        else  if (Init.optionTestCount === 2)
+        {
+            menu.enterOptionmenue("ui/options/optionaudiomenu.xml");
+        }
+        else  if (Init.optionTestCount === 3)
+        {
+            menu.enterOptionmenue("ui/options/optiongameplaymenu.xml");
+        }
+        else  if (Init.optionTestCount === 4)
+        {
+            menu.enterOptionmenue("ui/options/optioncontrolsmenu.xml");
+        }
+        else  if (Init.optionTestCount === 5)
+        {
+            menu.enterOptionmenue("");
+        }   
+        else  if (Init.optionTestCount === 6)
+        {
+            menu.enterOptionmenue("ui/options/optionnetworkmenu.xml");
+        }        
     },
     optionMenu = function(menu)
     {
-        menu.showMods();
-        menu.showGameplayAndKeys();
-        menu.showSettings();
         menu.exitMenue();
     },
     wikiTest = function(menu)
@@ -129,7 +156,8 @@ var Init =
     },
     simplePlayTest = function(menu)
     {
-        menu.enterSingleplayer();
+        var filter = [".map"];
+        currentMenu.enterSingleplayer(filter);
     },
     mapsSelection = function(menu)
     {
