@@ -16,4 +16,5 @@
     <font file="segoeuiBold.ttf" type="console16" pixelSize="16" offsetX="0" offsetY="0" borderWidth="1" bold="false" antialiasing="false" borderColor="#FF7F27" mainColor="#FF7F27" />
     <font file="Advance_Wars_2_Font_Expanded.ttf" type="attackFont32" pixelSize="16" offsetX="0" offsetY="6" borderWidth="-1" antialiasing="false" borderColor="#000000" mainColor="#000000" />
     <font file="segoeuiBold.ttf" type="attackFont24" pixelSize="20" offsetX="0" offsetY="-4" borderWidth="-1" bold="true" antialiasing="true" borderColor="#000000" />
+    <font file="segoeuiBold.ttf" type="battleHpFont16" pixelSize="16" offsetX="0" offsetY="-4" borderWidth="-1" bold="true" antialiasing="true" borderColor="#000000" />
 </fonts>

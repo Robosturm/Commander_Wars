@@ -47,7 +47,7 @@ namespace oxygine
 
         void setStyle(const TextStyle& st);
         /**Changes text utf-8 string*/
-        void setText(const QString & str);
+        void setText(const QString & str, bool lock = true);
         /**Changes text.
         Supports pseudo html style tags:  <br/> - break line,  <div color='FFFFFF'/>colored text </div>, <div c='FFFFFF'/>colored text</div>,
         in pair with oxygine-freetype you may use 'opt': <div opt=123>custom option</div>, <div c='ffffff' opt=123>custom option with color</div>
@@ -63,7 +63,7 @@ namespace oxygine
         using TweenColor = Property<QColor, const QColor&, TextField, &TextField::getStyleColor, &TextField::setStyleColor>;
     protected:
         virtual void sizeChanged(const Vector2& size) override;
-        void rebuildText();
+        void rebuildText(bool lock = true);
 
     protected:
 #ifdef GRAPHICSUPPORT

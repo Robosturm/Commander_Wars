@@ -102,14 +102,14 @@ namespace oxygine
         rebuildText();
     }
 
-    void TextField::setText(const QString & str)
+    void TextField::setText(const QString & str, bool lock)
     {
 #ifdef GRAPHICSUPPORT
         m_htmlText = false;
         if (m_text != str)
         {
             m_text = str;
-            rebuildText();
+            rebuildText(lock);
         }
 #endif
     }
@@ -179,10 +179,13 @@ namespace oxygine
 #endif
     }
 
-    void TextField::rebuildText()
+    void TextField::rebuildText(bool lock)
     {
 #ifdef GRAPHICSUPPORT
-        QMutexLocker lock(&m_Locked);
+        if (lock)
+        {
+            m_Locked.lock();
+        }
         m_root = nullptr;
         if (m_htmlText)
         {
@@ -196,6 +199,10 @@ namespace oxygine
         text::Aligner rd(m_style, getSize());
         rd.align(*m_root.get());
         m_textRect = rd.getBounds().cast<Rect>();
+        if (lock)
+        {
+            m_Locked.unlock();
+        }
 #endif
     }
 

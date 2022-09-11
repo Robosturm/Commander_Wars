@@ -138,6 +138,12 @@ public:
         GameAi_Hold,
         GameAi_Patrol,
         GameAi_PatrolLoop,
+
+        // target hq
+        // guard hq
+        // guard ai lander / infantry
+        // target neutral properties / silo
+        // stay out of attack range / camp on high defense
     };
     Q_ENUM(GameAi)
 

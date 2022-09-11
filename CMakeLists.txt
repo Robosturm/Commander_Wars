@@ -258,6 +258,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/tween/tweenwait.cpp 3rd_party/oxygine-framework/oxygine/tween/tweenwait.h
     3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.cpp 3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h
     3rd_party/oxygine-framework/oxygine/tween/tweenshakey.cpp 3rd_party/oxygine-framework/oxygine/tween/tweenshakey.h
+    3rd_party/oxygine-framework/oxygine/tween/tweenchangenumbertext.h 3rd_party/oxygine-framework/oxygine/tween/tweenchangenumbertext.cpp
     # res stuff
     3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.cpp 3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h
     3rd_party/oxygine-framework/oxygine/res/ResAnim.cpp 3rd_party/oxygine-framework/oxygine/res/ResAnim.h
