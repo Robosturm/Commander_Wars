@@ -144,6 +144,7 @@ var Constructor = function()
 
     this.getIndirectToUse = function(unit, unitX, unitY, targetX, targetY, map)
     {
+        var indirectToUse = null;
         if (map.onMap(targetX, targetY))
         {
             var enemy = map.getTerrain(targetX, targetY).getUnit();
@@ -152,7 +153,6 @@ var Constructor = function()
                 var pos = Qt.point(unitX, unitY);
                 var fields = globals.getCircle(1, unit.getMaxRange(pos));
                 var owner = unit.getOwner();
-                var indirectToUse = null;
                 var damage = -1;
                 var result = Qt.rect(-1, -1, -1, -1);
                 var size = fields.size();
@@ -167,7 +167,8 @@ var Constructor = function()
                         if (indirectUnit !== null &&
                             indirectUnit.getUnitID() !== "ZCOUNIT_RANGER" &&
                             indirectUnit.getOwner() === owner &&
-                            !indirectUnit.getHasMoved())
+                            !indirectUnit.getHasMoved() &&
+                             indirectUnit.getMaxRange(Qt.point(x, y)) > 1)
                         {
                             result = ACTION_FIRE.calcAttackerWeaponDamage(null, indirectUnit, 0, indirectUnit.getPosition(),
                                                                           enemy, targetX, targetY, 0, GameEnums.LuckDamageMode_Average, result,
@@ -190,7 +191,7 @@ var Constructor = function()
         return indirectToUse;
     };
 
-    this.canUseWeapon = function(unit, weaponIndex, unitX, unitY, targetX, targetY, rangeCheck)
+    this.canUseWeapon = function(unit, weaponIndex, unitX, unitY, targetX, targetY, rangeCheck, map)
     {
         var pos = unit.getPosition();
         if (weaponIndex === 0 &&
@@ -201,7 +202,7 @@ var Constructor = function()
         else if (weaponIndex === 1 &&
                  pos.x === unitX &&
                  pos.y === unitY &&
-                 ZCOUNIT_RANGER.getIndirectToUse(unit, unitX, unitY, targetX, targetY, unit.getMap()) !== null)
+                 ZCOUNIT_RANGER.getIndirectToUse(unit, unitX, unitY, targetX, targetY, map) !== null)
         {
             return true;
         }
