@@ -24,16 +24,13 @@ var Constructor = function()
                           ["bm", [Qt.point(-5, 5),  Qt.point(39, 36)]],
                           ["dm", [Qt.point(-25, 5), Qt.point(28, 40)]],
                           ["ge", [Qt.point(-5, 5),  Qt.point(40, 37)]],
-                          ["gs", [Qt.point(-15, 5), Qt.point(43, 38)]],
+                          ["gs", [Qt.point(-5, 5),  Qt.point(31, 28)]],
                           ["ma", [Qt.point(-35, 5), Qt.point(13, 43)]],
                           ["os", [Qt.point(-5, 5),  Qt.point(40, 38)]],
                           ["pf", [Qt.point(-5, 5),  Qt.point(41, 39)]],
                           ["ti", [Qt.point(-15, 5), Qt.point(34, 29)]],
                           ["yc", [Qt.point(-5, 5),  Qt.point(40, 38)]],];
 
-    // -5 5
-    // 48 40
-    //  0 9
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ARTILLERY.loadSprite(sprite, unit, defender, weapon, "", 0, 0);
