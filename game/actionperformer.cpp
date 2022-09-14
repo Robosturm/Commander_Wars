@@ -28,7 +28,12 @@ void ActionPerformer::setSyncCounter(qint64 counter)
 
 void ActionPerformer::performAction(spGameAction pGameAction)
 {
-    if (m_actionRunning)
+    if (m_exit)
+    {
+        emit m_pMenu->sigVictory(-1);
+        return;
+    }
+    else if (m_actionRunning)
     {
         CONSOLE_PRINT("Ignoring action request cause an action is currently performed", Console::eWARNING);
         return;
@@ -148,6 +153,16 @@ bool ActionPerformer::requiresForwarding(const spGameAction & pGameAction) const
                       m_pMenu->getIsMultiplayer(pGameAction) &&
                       baseGameInput != nullptr &&
                                        baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi;
+}
+
+bool ActionPerformer::getExit() const
+{
+    return m_exit;
+}
+
+void ActionPerformer::setExit(bool newExit)
+{
+    m_exit = newExit;
 }
 
 spGameAction ActionPerformer::doMultiTurnMovement(spGameAction pGameAction)

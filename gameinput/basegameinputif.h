@@ -36,6 +36,9 @@ public:
 
     virtual void centerCameraOnAction(GameAction* pAction);
 
+    bool getProcessing() const;
+    void setProcessing(bool newProcessing);
+
 public slots:
     /**
      * @brief getAiType
@@ -89,6 +92,7 @@ protected:
     GameMap* m_pMap{nullptr};
     GameMenue* m_pMenu{nullptr};
     bool m_initDone{false};
+    bool m_processing{false};
 };
 
 Q_DECLARE_INTERFACE(BaseGameInputIF, "BaseGameInputIF");

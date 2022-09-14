@@ -345,15 +345,20 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
     for (auto & spUnit : pUnits->getVector())
     {
         Unit* pUnit = spUnit.get();
+        QStringList actions = pUnit->getActionList();
         QCoreApplication::processEvents();
+        constexpr qint32 AVERAGE_TRANSPORTER_MOVEMENT = 7;
+        bool canCapture = actions.contains(ACTION_CAPTURE);
+        qint32 loadingIslandIdx = getIslandIndex(pUnit);
+        qint32 loadingIsland = getIsland(pUnit);
         // can we use the unit?
-        if (!pUnit->getHasMoved() &&
-            pUnit->getAiMode() == GameEnums::GameAi_Normal)
+        if (pUnit->getAiMode() == GameEnums::GameAi_Normal &&
+            (m_usedTransportSystem || (!pUnit->getHasMoved() && hasTargets(AVERAGE_TRANSPORTER_MOVEMENT, pUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+                                                                           loadingIslandIdx, loadingIsland, false))))
         {
             std::vector<QVector3D> targets;
             std::vector<QVector3D> transporterTargets;
             spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
-            QStringList actions = pUnit->getActionList();
             // find possible targets for this unit
             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
 
@@ -485,7 +490,8 @@ bool VeryEasyAI::loadUnits(spQmlVectorUnit & pUnits)
     {
         QCoreApplication::processEvents();
         // can we use the unit?
-        if (!pUnit->getHasMoved())
+        if (!pUnit->getHasMoved() &&
+            (pUnit->getLoadingPlace() == 0 || (pUnit->getLoadedUnitCount() > 0  && m_usedTransportSystem)))
         {
             std::vector<QVector3D> targets;
             std::vector<QVector3D> transporterTargets;

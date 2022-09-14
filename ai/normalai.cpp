@@ -803,12 +803,18 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
     {
         QCoreApplication::processEvents();
         Unit* pUnit = unitData.pUnit.get();
+        constexpr qint32 AVERAGE_TRANSPORTER_MOVEMENT = 7;
+        bool canCapture = unitData.actions.contains(ACTION_CAPTURE);
+        qint32 loadingIslandIdx = getIslandIndex(pUnit);
+        qint32 loadingIsland = getIsland(pUnit);
+
         // can we use the unit?
-        if ((isUsingUnit(pUnit) || m_usedTransportSystem) &&
-            !pUnit->getHasMoved() &&
+        if (!pUnit->getHasMoved() &&
             pUnit->getBaseMaxRange() >= minfireRange &&
             pUnit->getBaseMaxRange() <= maxfireRange &&
-            pUnit->hasWeapons() && pUnit->getLoadedUnitCount() == 0)
+            pUnit->hasWeapons() && pUnit->getLoadedUnitCount() == 0 &&
+            (m_usedTransportSystem || (isUsingUnit(pUnit) && hasTargets(AVERAGE_TRANSPORTER_MOVEMENT, pUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+                                                                        loadingIslandIdx, loadingIsland, false))))
         {
             std::vector<QVector3D> targets;
             std::vector<QVector3D> transporterTargets;
@@ -871,7 +877,8 @@ bool NormalAi::loadUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
         QCoreApplication::processEvents();
         Unit* pUnit = unitData.pUnit.get();
         // can we use the unit?
-        if (!pUnit->getHasMoved())
+        if (!pUnit->getHasMoved() &&
+            (pUnit->getLoadingPlace() == 0 || (pUnit->getLoadedUnitCount() > 0 && m_usedTransportSystem)))
         {
             std::vector<QVector3D> targets;
             std::vector<QVector3D> transporterTargets;
@@ -1178,7 +1185,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
         UnitPathFindingSystem & turnPfs = *(pUnitData->pUnitPfs.get());
         if (CoreAI::contains(transporterTargets, targetFields) &&
             pTargetUnit != nullptr &&
-            pTargetUnit->getHasMoved() == false &&
+            (pTargetUnit->getHasMoved() == false || m_usedTransportSystem) &&
             pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             auto path = turnPfs.getPathFast(targetFields.x(), targetFields.y());

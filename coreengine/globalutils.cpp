@@ -177,25 +177,25 @@ QmlVectorPoint* GlobalUtils::getCircle(qint32 min, qint32 max)
         }
         else
         {
-            for (qint32 i = 0; i < currentRadius; i++)
+            for (qint32 i = 0; i < currentRadius; ++i)
             {
                 x2 += 1;
                 y2 += 1;
                 ret->append(QPoint(x2, y2));
             }
-            for (qint32 i = 0; i < currentRadius; i++)
+            for (qint32 i = 0; i < currentRadius; ++i)
             {
                 x2 += 1;
                 y2 -= 1;
                 ret->append(QPoint(x2, y2));
             }
-            for (qint32 i = 0; i < currentRadius; i++)
+            for (qint32 i = 0; i < currentRadius; ++i)
             {
                 x2 -= 1;
                 y2 -= 1;
                 ret->append(QPoint(x2, y2));
             }
-            for (qint32 i = 0; i < currentRadius; i++)
+            for (qint32 i = 0; i < currentRadius; ++i)
             {
                 x2 -= 1;
                 y2 += 1;

@@ -33,6 +33,9 @@ public:
      */
     void setSyncCounter(qint64 counter);
 
+    bool getExit() const;
+    void setExit(bool newExit);
+
 signals:
     void sigActionPerformed();
 
@@ -110,5 +113,6 @@ private:
     qint64 m_syncCounter{0};
     SyncData m_multiplayerSyncData;
     QTimer m_delayedActionPerformedTimer{this};
+    bool m_exit{false};
 };
 

@@ -17,6 +17,8 @@
 #include "coreengine/LUPDATE_MACROS.h"
 #include "coreengine/pathfindingsystem.h"
 
+#include <functional>
+
 class GameMap;
 class Unit;
 class CO;
@@ -37,6 +39,13 @@ public:
         High,
         Hq,
         Max,
+    };
+
+    ENUM_CLASS CircleReturns
+    {
+        Stop,
+        Fail,
+        Success,
     };
 
     struct UnitCountData
@@ -419,6 +428,13 @@ public slots:
      */
     bool isUnloadTerrain(Unit* pUnit, Terrain* pTerrain);
     /**
+     * @brief isLoadingTerrain
+     * @param pTransporter
+     * @param pTerrain
+     * @return
+     */
+    bool isLoadingTerrain(Unit* pTransporter, Terrain* pTerrain);
+    /**
      * @brief createIslandMap
      * @param movementType
      * @param unitID
@@ -477,6 +493,7 @@ protected:
                                         spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                                         bool addCaptureTargets, bool virtualLoading, std::vector<QVector3D>& targets,
                                         bool all = false, qint32 distanceModifier = 1);
+    CircleReturns doExtendedCircleAction(qint32 x, qint32 y, qint32 min, qint32 max, std::function<CircleReturns(qint32, qint32)> functor);
     /**
      * @brief hasTargets checks if a unit has anything to do on this island
      * @param transporterMovement movement points of the transporting unit
@@ -487,7 +504,7 @@ protected:
      * @return
      */
     bool hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                    qint32 loadingIslandIdx, qint32 loadingIsland);
+                    qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit = true);
     /**
      * @brief hasCaptureTarget
      * @param pLoadingUnit
@@ -541,7 +558,7 @@ protected:
      */
     void checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, std::vector<qint32>& checkedIslands,
                                  qint32 unitIslandIdx, qint32 unitIsland,
-                                 qint32 loadedUnitIslandIdx, qint32 targetIsland,
+                                 qint32 loadedUnitIslandIdx, qint32 targetIsland, qint32 islandX, qint32 islandY,
                                  QmlVectorPoint* pUnloadArea, std::vector<QVector3D>& targets, qint32 distanceModifier = 1);
     /**
      * @brief getBestFlareTarget
@@ -641,7 +658,6 @@ protected:
     QVector<IniData> m_iniData;
 private:
     bool finish{false};
-    bool  m_processing{false};
     struct FlareInfo
     {
         qint32 minRange{0};

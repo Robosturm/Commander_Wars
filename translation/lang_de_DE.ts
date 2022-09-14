@@ -95,12 +95,12 @@
 <context>
     <name>ActionPerformer</name>
     <message>
-        <location filename="../game/actionperformer.cpp" line="41"/>
+        <location filename="../game/actionperformer.cpp" line="46"/>
         <source>Waiting for Players/Observers to join...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/actionperformer.cpp" line="66"/>
+        <location filename="../game/actionperformer.cpp" line="71"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2516,22 +2516,22 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1965"/>
+        <location filename="../menue/gamemenue.cpp" line="1974"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1996"/>
+        <location filename="../menue/gamemenue.cpp" line="2005"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2022"/>
+        <location filename="../menue/gamemenue.cpp" line="2031"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2199"/>
+        <location filename="../menue/gamemenue.cpp" line="2208"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>

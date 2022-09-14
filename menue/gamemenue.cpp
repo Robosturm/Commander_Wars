@@ -1769,7 +1769,16 @@ void GameMenue::exitGame()
     {
         GameAnimationFactory::finishAllAnimations();
     }
-    emit sigVictory(-1);
+    auto * ai = m_pMap->getCurrentPlayer()->getBaseGameInput();
+    if (ai != nullptr &&
+        ai->getProcessing())
+    {
+        m_actionPerformer.setExit(true);
+    }
+    else
+    {
+        emit sigVictory(-1);
+    }
 }
 
 void GameMenue::startGame()
