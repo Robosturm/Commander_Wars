@@ -10,7 +10,7 @@
 #include "game/unitpathfindingsystem.h"
 
 #include "ai/islandmap.h"
-
+#include "ai/targetedunitpathfindingsystem.h"
 #include "ai/decisiontree/decisiontree.h"
 
 #include "coreengine/qmlvector.h"
@@ -205,6 +205,13 @@ signals:
      */
     void performAction(spGameAction pAction);
 public slots:
+    /**
+     * @brief createTargetedPfs
+     * @param pUnit
+     * @param targets
+     * @return
+     */
+    TargetedUnitPathFindingSystem* createTargetedPfs(Unit* pUnit, const QVector<QVector3D> & targets);
     /**
      * @brief process
      */

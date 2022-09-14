@@ -110,6 +110,20 @@ void CoreAI::init(GameMenue* pMenu)
     }
 }
 
+TargetedUnitPathFindingSystem* CoreAI::createTargetedPfs(Unit* pUnit, const QVector<QVector3D> & targets)
+{
+    std::vector<QVector3D> stdTargets;
+    stdTargets.reserve(targets.size());
+    for (auto & point : targets)
+    {
+        stdTargets.push_back(point);
+    }
+    auto* ret = new TargetedUnitPathFindingSystem(m_pMap, pUnit, stdTargets, &m_MoveCostMap);
+    ret->explore();
+    return ret;
+}
+
+
 void CoreAI::loadIni(QString file)
 {
         AI_CONSOLE_PRINT("CoreAI::loadIni " + file, Console::eDEBUG);
@@ -825,6 +839,7 @@ CoreAI::CircleReturns CoreAI::doExtendedCircleAction(qint32 x, qint32 y, qint32 
     qint32 x2 = 0;
     qint32 y2 = 0;
     CircleReturns states[4] = {CircleReturns::Success, CircleReturns::Success, CircleReturns::Success, CircleReturns::Success};
+    CircleReturns state = CircleReturns::Success;
     for (qint32 currentRadius = min; currentRadius <= max; currentRadius++)
     {
         x2 = -currentRadius;
@@ -846,12 +861,12 @@ CoreAI::CircleReturns CoreAI::doExtendedCircleAction(qint32 x, qint32 y, qint32 
                 {
                     x2 += 1;
                     y2 += 1;
-                    states[0] = functor(x + x2, y + y2);
-                    if (states[0] == CircleReturns::Success)
+                    state = functor(x + x2, y + y2);
+                    if (state == CircleReturns::Success)
                     {
                         return CircleReturns::Success;
                     }
-                    else if (states[0] != CircleReturns::Stop)
+                    else if (state != CircleReturns::Stop)
                     {
                         onlyStop= false;
                     }
@@ -873,12 +888,12 @@ CoreAI::CircleReturns CoreAI::doExtendedCircleAction(qint32 x, qint32 y, qint32 
                 {
                     x2 += 1;
                     y2 -= 1;
-                    states[1] = functor(x + x2, y + y2);
-                    if (states[1] == CircleReturns::Success)
+                    state = functor(x + x2, y + y2);
+                    if (state == CircleReturns::Success)
                     {
                         return CircleReturns::Success;
                     }
-                    else if (states[1] != CircleReturns::Stop)
+                    else if (state != CircleReturns::Stop)
                     {
                         onlyStop= false;
                     }
@@ -900,12 +915,12 @@ CoreAI::CircleReturns CoreAI::doExtendedCircleAction(qint32 x, qint32 y, qint32 
                 {
                     x2 -= 1;
                     y2 -= 1;
-                    states[2] = functor(x + x2, y + y2);
-                    if (states[2] == CircleReturns::Success)
+                    state = functor(x + x2, y + y2);
+                    if (state == CircleReturns::Success)
                     {
                         return CircleReturns::Success;
                     }
-                    else if (states[2] != CircleReturns::Stop)
+                    else if (state != CircleReturns::Stop)
                     {
                         onlyStop= false;
                     }
@@ -927,12 +942,12 @@ CoreAI::CircleReturns CoreAI::doExtendedCircleAction(qint32 x, qint32 y, qint32 
                 {
                     x2 -= 1;
                     y2 += 1;
-                    states[3] = functor(x + x2, y + y2);
-                    if (states[3] == CircleReturns::Success)
+                    state = functor(x + x2, y + y2);
+                    if (state == CircleReturns::Success)
                     {
                         return CircleReturns::Success;
                     }
-                    else if (states[3] != CircleReturns::Stop)
+                    else if (state != CircleReturns::Stop)
                     {
                         onlyStop= false;
                     }

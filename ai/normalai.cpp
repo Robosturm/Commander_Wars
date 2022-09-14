@@ -892,7 +892,7 @@ bool NormalAi::loadUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
             targets.insert(targets.cbegin(), transporterTargets.cbegin(), transporterTargets.cend());
             // till now the selected targets are a little bit lame cause we only search for reachable transporters
             // but not for reachable loading places.
-            if (moveUnit(pAction, &unitData, pUnits, actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
+            if (moveUnit(pAction, &unitData, pUnits, actions, targets, transporterTargets, false, pBuildings, pEnemyBuildings))
             {
                 return true;
             }
@@ -972,7 +972,7 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
                 {
                     appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, true, false, targets);
                 }
-                if (moveUnit(pAction, &unitData, pUnits, actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
+                if (moveUnit(pAction, &unitData, pUnits, actions, targets, transporterTargets, false, pBuildings, pEnemyBuildings))
                 {
                     return true;
                 }
