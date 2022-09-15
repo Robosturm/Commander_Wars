@@ -2089,5 +2089,9 @@
         <file>resources/scripts/building/powerplant.js</file>
         <file>maps/commander_wars.camp/communicationDevastation.map</file>
         <file>maps/commander_wars.camp/communicationDevastation.js</file>
+        <file>resources/aidata/normal/normalai.js</file>
+        <file>resources/aidata/normal/normalaidefensive.js</file>
+        <file>resources/aidata/normal/normalaioffensive.js</file>
+        <file>resources/aidata/very_easy/veryeasyai.js</file>
     </qresource>
 </RCC>

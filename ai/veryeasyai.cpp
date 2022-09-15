@@ -20,7 +20,7 @@
 #include "coreengine/console.h"
 
 VeryEasyAI::VeryEasyAI(GameMap* pMap)
-    : CoreAI(pMap, GameEnums::AiTypes_VeryEasy),
+    : CoreAI(pMap, GameEnums::AiTypes_VeryEasy, "VERYEASYAI"),
       m_GeneralBuildingTree("resources/aidata/very_easy/generalbuilding.tree", "resources/aidata/very_easy/generalbuilding.txt"),
       m_AirportBuildingTree("resources/aidata/very_easy/airportbuilding.tree", "resources/aidata/very_easy/airportbuilding.txt"),
       m_HarbourBuildingTree("resources/aidata/very_easy/harbourbuilding.tree", "resources/aidata/very_easy/harbourbuilding.txt")

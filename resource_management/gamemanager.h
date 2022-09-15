@@ -59,6 +59,8 @@ private:
     ~GameManager() = default;
     oxygine::spSprite getIconSprite(const QString & icon);
     QStringList m_loadedHeavyAis;
+    QStringList m_loadedNormalAis;
+    QStringList m_loadedVeryEasyAis;
 };
 
 #endif // GAMEMANAGER_H

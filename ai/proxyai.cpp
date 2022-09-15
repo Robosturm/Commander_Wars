@@ -10,7 +10,7 @@
 #include <QMutexLocker>
 
 ProxyAi::ProxyAi(GameMap* pMap)
-    : CoreAI (pMap, GameEnums::AiTypes_ProxyAi)
+    : CoreAI (pMap, GameEnums::AiTypes_ProxyAi, "ProxyAi")
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("ProxyAi");

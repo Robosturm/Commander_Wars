@@ -24,7 +24,7 @@ public:
         QColor enemyColor;
     };
     explicit MarkedFieldData();
-    ~MarkedFieldData() = default;
+    ~MarkedFieldData();
 
     QVector<QPoint>* getPoints()
     {
@@ -35,6 +35,10 @@ public:
         return &m_ZInformation;
     }
 public slots:
+    QVector<QPoint> getJsPoints()
+    {
+        return m_MarkedFields;
+    }
     void addPoint(QPoint point)
     {
         m_MarkedFields.append(point);
@@ -73,6 +77,13 @@ public slots:
     void setZLabelColor(const QColor &ZLabelColor);
     QString getZLabelText() const;
     void setZLabelText(const QString &ZLabelText);
+    /**
+     * @brief remove
+     */
+    void remove()
+    {
+        delete this;
+    }
 private:
     bool m_allFields{false};
     bool m_showZData{false};

@@ -128,6 +128,20 @@ public:
      * @param useBasecosts
      */
     void setUseBasecosts(bool useBasecosts);
+public slots:
+    /**
+     * @brief getCosts returns the costs need to go the given path
+     * @param path the path the unit should go
+     * @return the costs needed when using the given path
+     */
+    qint32 getCosts(const QVector<QPoint> & path);
+    /**
+     * @brief getClosestReachableMovePath
+     * @param path
+     * @param movepoints
+     * @return
+     */
+    QVector<QPoint> getJsClosestReachableMovePath(QVector<QPoint>& path, qint32 movepoints);
 protected:
     Unit* m_pUnit;
     Player* m_pPlayer{nullptr};

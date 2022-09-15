@@ -57,8 +57,9 @@ const QString CoreAI::ACTION_TRAP = "ACTION_TRAP";
 const QString CoreAI::UNIT_INFANTRY = "INFANTRY";
 const QString CoreAI::BUILDING_HQ = "HQ";
 
-CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType)
-    : BaseGameInputIF(pMap, aiType)
+CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
+    : BaseGameInputIF(pMap, aiType),
+      m_aiName(jsName)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("CoreAI");
@@ -737,7 +738,7 @@ QRectF CoreAI::calcUnitDamage(spGameAction & pAction, const QPoint & target) con
 QRectF CoreAI::calcVirtuelUnitDamage(GameMap* pMap,
                                      Unit* pAttacker, float attackerTakenDamage, const QPoint & atkPos, GameEnums::LuckDamageMode luckModeAtk,
                                      Unit* pDefender, float defenderTakenDamage, const QPoint & defPos, GameEnums::LuckDamageMode luckModeDef,
-                                     bool ignoreOutOfVisionRange)
+                                     bool ignoreOutOfVisionRange, bool fastInAccurate)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage3";
@@ -753,7 +754,8 @@ QRectF CoreAI::calcVirtuelUnitDamage(GameMap* pMap,
                        defenderTakenDamage,
                        static_cast<qint32>(luckModeAtk),
                        static_cast<qint32>(luckModeDef),
-                       ignoreOutOfVisionRange});
+                       ignoreOutOfVisionRange,
+                       fastInAccurate});
     QJSValue erg = pInterpreter->doFunction(ACTION_FIRE, function1, args);
     return erg.toVariant().toRectF();
 }
@@ -973,9 +975,9 @@ CoreAI::CircleReturns CoreAI::doExtendedCircleAction(qint32 x, qint32 y, qint32 
 }
 
 std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
-                                            spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                                            bool addCaptureTargets, bool virtualLoading, std::vector<QVector3D>& targets,
-                                            bool all, qint32 distanceModifier)
+                                                spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
+                                                bool addCaptureTargets, bool virtualLoading, std::vector<QVector3D>& targets,
+                                                bool all, qint32 distanceModifier)
 {
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
@@ -2438,6 +2440,7 @@ void CoreAI::serializeObject(QDataStream& stream) const
         stream << item.m_name;
         stream << *item.m_value;
     }
+    m_Variables.serializeObject(stream);
 }
 
 void CoreAI::deserializeObject(QDataStream& stream)
@@ -2522,5 +2525,9 @@ void CoreAI::deserializeObjectVersion(QDataStream &stream, qint32 version)
     {
         QString dummy;
         stream >> dummy;
+    }
+    if (version > 8)
+    {
+        m_Variables.deserializeObject(stream);
     }
 }

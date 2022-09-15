@@ -87,6 +87,21 @@ public:
         float counterDamage{0.0f};
     };
 
+    /**
+     * @brief The AISteps enum
+     */
+    ENUM_CLASS AISteps
+    {
+        moveUnits = 0,
+        moveToTargets,
+        moveIndirectsToTargets,
+        loadUnits,
+        moveTransporters,
+        moveSupportUnits,
+        moveAway,
+        buildUnits,
+    };
+
     struct MoveUnitData
     {
         spUnit pUnit;
@@ -103,25 +118,12 @@ public:
         // get filled by sortUnitsFarFromEnemyFirst
         bool canCapture{false};
         qint32 distanceToEnemy{0};
+        AISteps nextAiStep{AISteps::moveUnits};
 
         // infos for performing an action
         spGameAction m_action;
         float m_score{0};
         QPoint captureTarget{-1, -1};
-    };
-    /**
-     * @brief The AISteps enum
-     */
-    ENUM_CLASS AISteps
-    {
-        moveUnits = 0,
-        moveToTargets,
-        moveIndirectsToTargets,
-        loadUnits,
-        moveTransporters,
-        moveSupportUnits,
-        moveAway,
-        buildUnits,
     };
     Q_ENUM(AISteps)
     // static string list of actions so we only define them once
@@ -160,7 +162,7 @@ public:
     static const QString BUILDING_HQ;
     static const QString UNIT_INFANTRY;
 
-    explicit CoreAI(GameMap* pMap, GameEnums::AiTypes aiType);
+    explicit CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName);
     virtual ~CoreAI() = default;
     /**
      * @brief init
@@ -196,7 +198,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 8;
+        return 9;
     }
 signals:
     /**
@@ -205,6 +207,14 @@ signals:
      */
     void performAction(spGameAction pAction);
 public slots:
+    /**
+     * @brief getVariables
+     * @return
+     */
+    inline ScriptVariables* getVariables()
+    {
+        return &m_Variables;
+    }
     /**
      * @brief createTargetedPfs
      * @param pUnit
@@ -327,7 +337,7 @@ public slots:
     static QRectF calcVirtuelUnitDamage(GameMap* pMap,
                                         Unit* pAttacker, float attackerTakenDamage, const QPoint & atkPos, GameEnums::LuckDamageMode luckModeAtk,
                                         Unit* pDefender, float defenderTakenDamage, const QPoint & defPos, GameEnums::LuckDamageMode luckModeDef,
-                                        bool ignoreOutOfVisionRange = false);
+                                        bool ignoreOutOfVisionRange = false, bool fastInAccurate = true);
     /**
      * @brief getBestTarget
      * @param pUnit
@@ -486,6 +496,8 @@ protected:
     bool processPredefinedAiPatrol(Unit* pUnit);
     bool processPredefinedAiAttack(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem & pfs);
     bool processPredefinedAiTargetEnemyHq(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings);
+    bool processPredefinedGenericScripted(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
+    bool processPredefinedMapScripted(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
     virtual void finishTurn();
     // helper functions to get targets for unit actions
     void appendSupportTargets(const QStringList & actions, Unit* pCurrentUnit, spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets);
@@ -663,6 +675,8 @@ protected:
     double m_minTerrainDamage{20.0f};
 
     QVector<IniData> m_iniData;
+    QString m_aiName{"CoreAI"};
+    ScriptVariables m_Variables;
 private:
     bool finish{false};
     struct FlareInfo

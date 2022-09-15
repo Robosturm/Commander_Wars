@@ -139,7 +139,7 @@ public:
         GameAi_Patrol,
         GameAi_PatrolLoop,
         GameAi_TargetEnemyHq,
-
+        GameAi_Scripted,
         // guard hq
         // guard ai lander / infantry
         // target capturable properties / silo

@@ -4821,5 +4821,7 @@
         <file>resources/images/colortables/mask.png</file>
         <file>resources/images/battleanimations/bomber/bomber+bd+mask.png</file>
         <file>resources/images/units/icons/hq.png</file>
+        <file>resources/images/game/tagpower_background.png</file>
+        <file>resources/images/units/icons/scripted.png</file>
     </qresource>
 </RCC>

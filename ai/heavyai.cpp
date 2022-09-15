@@ -24,7 +24,7 @@ const QStringList HeavyAi::NeuralNetworkNames = {"Production",
 using namespace std::placeholders;
 
 HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
-    : CoreAI(pMap, aiType),
+    : CoreAI(pMap, aiType, type),
       m_scoreInfos({
 {ACTION_CAPTURE,  std::bind(&HeavyAi::scoreCapture,     this,   _1, _2, _3)},
 {ACTION_FIRE,     std::bind(&HeavyAi::scoreFire,        this,   _1, _2, _3)},
@@ -35,8 +35,7 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
 {ACTION_WAIT,     std::bind(&HeavyAi::scoreWait,        this,   _1, _2, _3)},
                    }),
       m_InfluenceFrontMap(pMap, m_IslandMaps),
-      m_timer(this),
-      m_aiName(type)
+      m_timer(this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("HeavyAi");

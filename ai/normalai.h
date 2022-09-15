@@ -112,7 +112,7 @@ public:
         Max,
     };
 
-    explicit NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType);
+    explicit NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType, QString jsName);
     ~NormalAi() = default;
 signals:
 
@@ -601,6 +601,7 @@ private:
     double m_cappingFunds{4700};
     double m_cappedFunds{1999};
     double m_targetPriceDifference{0.3f};
+    double m_sameFundsMatchUpNoMatchUpValue{0.5f};
     double m_fundsPerBuildingFactorC{4};
     double m_cheapUnitValue{3000.0f};
     double m_supportDamageBonus{1.0f};

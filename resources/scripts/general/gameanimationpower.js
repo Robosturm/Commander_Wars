@@ -3,8 +3,12 @@ var GAMEANIMATIONPOWER =
     loadAnimation : function(animation, color, powerMode, co, map)
     {
         // load main background
-        if (powerMode === GameEnums.PowerMode_Superpower ||
-            powerMode === GameEnums.PowerMode_Tagpower)
+        if (powerMode === GameEnums.PowerMode_Tagpower)
+        {
+            animation.createRotatingBackground("tagpower_background", color);
+        }
+        else if (powerMode === GameEnums.PowerMode_Superpower)
+
         {
             animation.createRotatingBackground("superpower_background", color);
         }

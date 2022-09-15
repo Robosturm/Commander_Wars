@@ -680,7 +680,6 @@ private:
     double m_minUnitHealth{3};
 
     // storable stuff
-    QString m_aiName{"HEAVY_AI"};
     QList<spNeuralNetwork> m_neuralNetworks{static_cast<qsizetype>(NeuralNetworksMax)};
 
     // static constants

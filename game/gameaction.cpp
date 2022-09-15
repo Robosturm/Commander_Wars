@@ -391,6 +391,30 @@ spMarkedFieldData GameAction::getMarkedFieldStepData()
     return data;
 }
 
+MenuData* GameAction::getJsMenuStepData()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    MenuData* data = new MenuData(m_pMap);
+    QString function1 = "getStepData";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(data),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(m_actionID, function1, args);
+    return data;
+}
+
+MarkedFieldData* GameAction::getJMarkedFieldStepData()
+{
+    MarkedFieldData* data = new MarkedFieldData();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getStepData";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(data),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(m_actionID, function1, args);
+    return data;
+}
+
 quint32 GameAction::getSeed() const
 {
     return m_seed;

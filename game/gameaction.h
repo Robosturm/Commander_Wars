@@ -262,6 +262,16 @@ public slots:
      * @return
      */
     bool getRequiresEmptyField();
+    /**
+     * @brief getMenuStepData
+     * @return the data needed to create an input menu. the data needs to be deleted by the caller
+     */
+    MenuData* getJsMenuStepData();
+    /**
+     * @brief getMarkedFieldStepData
+     * @return
+     */
+    MarkedFieldData* getJMarkedFieldStepData();
     /************** reading and writing data to the action buffer *****************/
     /**
      * @brief writeDataString adds a string to the action data

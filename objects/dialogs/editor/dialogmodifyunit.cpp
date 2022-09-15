@@ -236,7 +236,8 @@ void DialogModifyUnit::updateData()
              tr("Hold"),
              tr("Patrol"),
              tr("Patrol Loop"),
-             tr("Target Enemy HQ")};
+             tr("Target Enemy HQ"),
+             tr("Scripted")};
     pDropdownmenu = spDropDownmenu::create(300, items);
     pDropdownmenu->setTooltipText(tr("Selects how the AI uses this unit\n"
                                      "Normal AI uses the unit like always.\n"
@@ -246,6 +247,7 @@ void DialogModifyUnit::updateData()
                                      "Patrol the unit will move to each position in the given order\n"
                                      "Patrol Loop the unit will move to each position in the given order and restart at the first\n"
                                      "Target Enemy HQ moves to the nearest enemy HQ\n"
+                                     "Scripted you need to provide a game script containing the code for what this unit does\n"
                                      "This is immediately applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getAiMode()));

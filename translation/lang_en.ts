@@ -1335,17 +1335,36 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="275"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="240"/>
+        <source>Scripted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="242"/>
+        <source>Selects how the AI uses this unit
+Normal AI uses the unit like always.
+Offensive AI the ai moves the unit to the closest enemy and attacks
+Defensive AI the ai moves the unit only if it can attack.
+Hold AI the ai only attacks but never moves with this unit.
+Patrol the unit will move to each position in the given order
+Patrol Loop the unit will move to each position in the given order and restart at the first
+Target Enemy HQ moves to the nearest enemy HQ
+Scripted you need to provide a game script containing the code for what this unit does
+This is immediately applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="277"/>
         <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rank. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="349"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="351"/>
         <source>Selects the unit loaded by the transporter. Enter &apos;-&apos; for no unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="263"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="265"/>
         <source>Unit Rank: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1365,45 +1384,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="241"/>
-        <source>Selects how the AI uses this unit
-Normal AI uses the unit like always.
-Offensive AI the ai moves the unit to the closest enemy and attacks
-Defensive AI the ai moves the unit only if it can attack.
-Hold AI the ai only attacks but never moves with this unit.
-Patrol the unit will move to each position in the given order
-Patrol Loop the unit will move to each position in the given order and restart at the first
-Target Enemy HQ moves to the nearest enemy HQ
-This is immediately applied.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="272"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="274"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="273"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="275"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="317"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="319"/>
         <source>Loaded Unit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="394"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="396"/>
         <source>Move Point: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="426"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="428"/>
         <source>Add Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="434"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="436"/>
         <source>Remove last Point</source>
         <translation type="unfinished"></translation>
     </message>

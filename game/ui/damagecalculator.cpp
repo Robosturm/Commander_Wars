@@ -339,15 +339,15 @@ void DamageCalculator::calculateDamage()
     QRectF minDamage = CoreAI::calcVirtuelUnitDamage(&m_map,
                                                     pAttacker.get(), 0.0f, atkPos, GameEnums::LuckDamageMode_Min,
                                                     pDefender.get(), 0.0f, defPos, GameEnums::LuckDamageMode_Max,
-                                                    true);
+                                                    true, false);
     QRectF avgDamage = CoreAI::calcVirtuelUnitDamage(&m_map,
                                                     pAttacker.get(), 0.0f, atkPos, GameEnums::LuckDamageMode_Average,
                                                     pDefender.get(), 0.0f, defPos, GameEnums::LuckDamageMode_Average,
-                                                    true);
+                                                    true, false);
     QRectF maxDamage = CoreAI::calcVirtuelUnitDamage(&m_map,
                                                     pAttacker.get(), 0.0f, atkPos, GameEnums::LuckDamageMode_Max,
                                                     pDefender.get(), 0.0f, defPos, GameEnums::LuckDamageMode_Min,
-                                                    true);
+                                                    true, false);
     createDamageText(m_atkUnit.m_minBattleDamage, m_atkUnit.m_avgBattleDamage, m_atkUnit.m_maxBattleDamage,
                      minDamage.x(), avgDamage.x(), maxDamage.x());
     createDamageText(m_defUnit.m_minBattleDamage, m_defUnit.m_avgBattleDamage, m_defUnit.m_maxBattleDamage,

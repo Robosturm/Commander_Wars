@@ -110,7 +110,7 @@ var Constructor = function()
     };
 
     this.calcAttackerWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField,
-                                             defUnit, x, y, defenderTakenDamage, luckMode, result, rangeCheck = 0, fast)
+                                             defUnit, x, y, defenderTakenDamage, luckMode, result, rangeCheck = 0, fast = false, fastInaccurate = false)
     {
         var baseDamage1 = -1;
         var baseDamage2 = -1;
@@ -137,7 +137,7 @@ var Constructor = function()
                 }
                 else
                 {
-                    result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID1, attackerTakenDamage, actionTargetField, defUnit, luckMode);
+                    result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID1, attackerTakenDamage, actionTargetField, defUnit, luckMode, fastInaccurate);
                 }
                 result.y = 0;
             }
@@ -149,14 +149,14 @@ var Constructor = function()
                 }
                 else
                 {
-                    result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID2, attackerTakenDamage, actionTargetField, defUnit, luckMode);
+                    result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID2, attackerTakenDamage, actionTargetField, defUnit, luckMode, fastInaccurate);
                 }
                 result.y = 1;
             }
         }
         return result;
     };
-    this.calcAttackerDamage = function(action, attacker, attackerWeapon, takenDamage, attackerPosition, defender, luckMode)
+    this.calcAttackerDamage = function(action, attacker, attackerWeapon, takenDamage, attackerPosition, defender, luckMode, fastInaccurate = false)
     {
         var hp = globals.roundUp(attacker.getVirtualHp() - takenDamage / 10.0);
         if (hp < 0)
@@ -167,11 +167,11 @@ var Constructor = function()
         {
             return ACTION_FIRE.calcDamage(action, attacker, attackerWeapon, attackerPosition, hp,
                                           defender, defender.getPosition(), false,
-                                          luckMode);
+                                          luckMode, fastInaccurate);
         }
     };
 
-    this.calcDefenderWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckModeDefender, result, rangeCheck = 0)
+    this.calcDefenderWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckModeDefender, result, rangeCheck = 0, fastInaccurate = false)
     {
         var baseDamage1 = -1;
         var baseDamage2 = -1;
@@ -191,18 +191,18 @@ var Constructor = function()
         {
             if (baseDamage1 >= baseDamage2)
             {
-                result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID1, defenderTakenDamage, luckModeDefender, x, y);
+                result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID1, defenderTakenDamage, luckModeDefender, x, y, fastInaccurate);
                 result.height = 0;
             }
             else
             {
-                result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID2, defenderTakenDamage, luckModeDefender, x, y);
+                result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID2, defenderTakenDamage, luckModeDefender, x, y, fastInaccurate);
                 result.height = 1;
             }
         }
         return result;
     };
-    this.calcDefenderDamage = function(action, attacker, attackerPosition, defender, defenderWeapon, takenDamage, luckMode, defenderX, defenderY)
+    this.calcDefenderDamage = function(action, attacker, attackerPosition, defender, defenderWeapon, takenDamage, luckMode, defenderX, defenderY, fastInaccurate = false)
     {
         var damage = -1;
         // only direct units can deal counter damage
@@ -210,12 +210,12 @@ var Constructor = function()
         var health = defender.getVirtualHp() - takenDamage / 10.0;
         damage = ACTION_FIRE.calcDamage(action, defender, defenderWeapon, defPos, health,
                                         attacker, attackerPosition, true,
-                                        luckMode);
+                                        luckMode, fastInaccurate);
         return damage;
     };
     this.calcDamage = function(action, attacker, attackerWeapon, attackerPosition, attackerBaseHp,
                                defender, defenderPosition, isDefender,
-                               luckMode)
+                               luckMode, fastInaccurate = false)
     {
         if (attackerBaseHp <= 0)
         {
@@ -227,71 +227,83 @@ var Constructor = function()
         {
             var virtualHp = attacker.getVirtualHpValue();
             attacker.setVirtualHpValue(attackerBaseHp);
-            var offensive = 100 + attacker.getBonusOffensive(action, attackerPosition, defender, defenderPosition, isDefender, luckMode);
-            var defensive = 100 + defender.getBonusDefensive(action, defenderPosition, attacker, attackerPosition, isDefender, luckMode);
-            var attackerHp = attackerBaseHp + attacker.getAttackHpBonus(attackerPosition);
+            var offensive = 100;
+            var defensive = 100;
+            var attackerHp = attackerBaseHp;
             var luckDamage = 0;
-            if (luckMode !== GameEnums.LuckDamageMode_Off)
+            if (fastInaccurate === false)
             {
-                var luck = 10 + attacker.getBonusLuck(attackerPosition);
-                var misfortune = attacker.getBonusMisfortune(attackerPosition);
-                // only roll if we have valid luck misfortune pair
-                if (luck > -misfortune)
-                {                    
-                    if (luckMode === GameEnums.LuckDamageMode_On)
+                offensive += attacker.getBonusOffensive(action, attackerPosition, defender, defenderPosition, isDefender, luckMode);
+                defensive += defender.getBonusDefensive(action, defenderPosition, attacker, attackerPosition, isDefender, luckMode);
+                attackerHp += attacker.getAttackHpBonus(attackerPosition);
+                if (luckMode !== GameEnums.LuckDamageMode_Off)
+                {
+                    var luck = 10 + attacker.getBonusLuck(attackerPosition);
+                    var misfortune = attacker.getBonusMisfortune(attackerPosition);
+                    // only roll if we have valid luck misfortune pair
+                    if (luck > -misfortune)
                     {
-                        var luckValue = 0;
-                        // roll luck?
-                        if (luck > 0)
+                        if (luckMode === GameEnums.LuckDamageMode_On)
                         {
-                            // roll against zero or against negative misfortune?
-                            if (misfortune < 0)
+                            var luckValue = 0;
+                            // roll luck?
+                            if (luck > 0)
                             {
-                                luckValue = globals.randInt(-misfortune, luck);
+                                // roll against zero or against negative misfortune?
+                                if (misfortune < 0)
+                                {
+                                    luckValue = globals.randInt(-misfortune, luck);
+                                }
+                                else
+                                {
+                                    luckValue = globals.randInt(0, luck);
+                                }
                             }
-                            else
+                            var misfortuneValue = 0;
+                            // roll misfortune?
+                            if (misfortune > 0)
                             {
-                                luckValue = globals.randInt(0, luck);
+                                // roll against zero or against luck?
+                                if (luck < 0)
+                                {
+                                    misfortuneValue = globals.randInt(-misfortune, luck);
+                                }
+                                else
+                                {
+                                    misfortuneValue = globals.randInt(-misfortune, 0);
+                                }
                             }
+                            luckDamage += (luckValue + misfortuneValue);
                         }
-                        var misfortuneValue = 0;
-                        // roll misfortune?
-                        if (misfortune > 0)
+                        else if (luckMode === GameEnums.LuckDamageMode_Average)
                         {
-                            // roll against zero or against luck?
-                            if (luck < 0)
-                            {
-                                misfortuneValue = globals.randInt(-misfortune, luck);
-                            }
-                            else
-                            {
-                                misfortuneValue = globals.randInt(-misfortune, 0);
-                            }
+                            luckDamage += (-misfortune + luck) / 2;
                         }
-                        luckDamage += (luckValue + misfortuneValue);
-                    }
-                    else if (luckMode === GameEnums.LuckDamageMode_Average)
-                    {
-                        luckDamage += (-misfortune + luck) / 2;
-                    }
-                    else if (luckMode === GameEnums.LuckDamageMode_Min)
-                    {
-                        luckDamage -= misfortune;
-                    }
-                    else if (luckMode === GameEnums.LuckDamageMode_Max)
-                    {
-                        luckDamage += luck;
+                        else if (luckMode === GameEnums.LuckDamageMode_Min)
+                        {
+                            luckDamage -= misfortune;
+                        }
+                        else if (luckMode === GameEnums.LuckDamageMode_Max)
+                        {
+                            luckDamage += luck;
+                        }
                     }
                 }
             }
+            else
+            {
+                luckDamage = 5;
+            }
             damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive, luckDamage);
-            damage += attacker.getTrueDamage(action, damage, attackerPosition, attackerBaseHp,
-                                             defender, defenderPosition, isDefender, luckMode);
-            damage -= defender.getDamageReduction(action, damage, attacker, attackerPosition, attackerBaseHp,
-                                                  defenderPosition, isDefender, luckMode);
-            damage -= ACTION_FIRE.predictSupportDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
-                                                                defenderPosition, defender, luckMode);
-
+            if (fastInaccurate === false)
+            {
+                damage += attacker.getTrueDamage(action, damage, attackerPosition, attackerBaseHp,
+                                                 defender, defenderPosition, isDefender, luckMode);
+                damage -= defender.getDamageReduction(action, damage, attacker, attackerPosition, attackerBaseHp,
+                                                      defenderPosition, isDefender, luckMode);
+                damage -= ACTION_FIRE.predictSupportDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
+                                                                    defenderPosition, defender, luckMode);
+            }
             // avoid healing through negativ damage caused by misfortune or other stuff
             if (damage <= 0.0)
             {
@@ -362,12 +374,12 @@ var Constructor = function()
         return ACTION_FIRE.calcBattleDamage3(map, action, attacker, 0, atkPos.x, atkPos.y, null, x, y, 0, luckMode, luckMode);
     };
 
-    this.calcBattleDamage3 = function(map, action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckModeAtk, luckModeDef, ignoreOutOfVisionRange = false)
+    this.calcBattleDamage3 = function(map, action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckModeAtk, luckModeDef, ignoreOutOfVisionRange = false, fastInaccurate = false)
     {
-        return ACTION_FIRE.calcBattleDamage4(map, action, attacker, 0, atkPosX, atkPosY, defender, x, y, 0, luckModeAtk, luckModeDef, ignoreOutOfVisionRange);
+        return ACTION_FIRE.calcBattleDamage4(map, action, attacker, 0, atkPosX, atkPosY, defender, x, y, 0, luckModeAtk, luckModeDef, ignoreOutOfVisionRange, false, fastInaccurate);
     }
 
-    this.calcBattleDamage4 = function(map, action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, luckModeDefender, ignoreOutOfVisionRange = false, fast = false)
+    this.calcBattleDamage4 = function(map, action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, luckModeDefender, ignoreOutOfVisionRange = false, fast = false, fastInaccurate = false)
     {
         var result = Qt.rect(-1, -1, -1, -1);
         if (map.onMap(x, y))
@@ -384,34 +396,40 @@ var Constructor = function()
             if (defUnit !== null)
             {
                 if (action === null ||
+                    fastInaccurate ||
                     unit.isAttackable(defUnit, ignoreOutOfVisionRange, Qt.point(atkPosX, atkPosY)))
                 {
-                    if (defUnit.isAttackable(unit, true, actionTargetField, true) &&
-                        defUnit.canCounterAttack(action, Qt.point(x, y), attacker, actionTargetField, luckMode))
+                    if (fastInaccurate || (defUnit.isAttackable(unit, true, actionTargetField, true) &&
+                        defUnit.canCounterAttack(action, Qt.point(x, y), attacker, actionTargetField, luckMode)))
                     {
                         var defPos = defUnit.getPosition();
-                        var defFirststrike = defUnit.getFirstStrike(defPos, attacker, true, actionTargetField);
-                        var atkFirststrike = attacker.getFirstStrike(actionTargetField, defUnit, false, defPos);
+                        var defFirststrike = false;
+                        var atkFirststrike = false;
+                        if (fastInaccurate !== false)
+                        {
+                            defFirststrike = defUnit.getFirstStrike(defPos, attacker, true, actionTargetField);
+                            atkFirststrike = attacker.getFirstStrike(actionTargetField, defUnit, false, defPos);
+                        }
                         if (defFirststrike && !atkFirststrike)
                         {
                             if (!fast)
                             {
-                                result = ACTION_FIRE.calcDefenderWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckModeDefender, result);
+                                result = ACTION_FIRE.calcDefenderWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckModeDefender, result, 0, fastInaccurate);
                             }
-                            result = ACTION_FIRE.calcAttackerWeaponDamage(action, unit, result.width + attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result, 0, fast);
+                            result = ACTION_FIRE.calcAttackerWeaponDamage(action, unit, result.width + attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result, 0, fast, fastInaccurate);
                         }
                         else
                         {
-                            result = ACTION_FIRE.calcAttackerWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result, 0, fast);
+                            result = ACTION_FIRE.calcAttackerWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result, 0, fast, fastInaccurate);
                             if (!fast)
                             {
-                                result = ACTION_FIRE.calcDefenderWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, result.x + defenderTakenDamage, luckModeDefender, result);
+                                result = ACTION_FIRE.calcDefenderWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, result.x + defenderTakenDamage, luckModeDefender, result, 0, fastInaccurate);
                             }
                         }
                     }
                     else
                     {
-                        result = ACTION_FIRE.calcAttackerWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result);
+                        result = ACTION_FIRE.calcAttackerWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result, 0, fast, fastInaccurate);
                     }
                 }
             }

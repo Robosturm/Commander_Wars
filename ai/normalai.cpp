@@ -20,8 +20,8 @@
 #include "resource_management/movementtablemanager.h"
 
 
-NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType)
-    : CoreAI(pMap, aiType),
+NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType, QString jsName)
+    : CoreAI(pMap, aiType, jsName),
       m_InfluenceFrontMap(pMap, m_IslandMaps)
 {
 #ifdef GRAPHICSUPPORT
@@ -159,7 +159,8 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"MaxProductionBuildingsForB", "Production", &m_maxProductionBuildingsForB, 1.0f, 1.f, 5.0f},
                   {"TurnOneDmageMalus", "Production", &m_turnOneDmageMalus, 10.0f, 1.f, 20.0f},
                   {"CounterUnitRatio", "Production", &m_counterUnitRatio, 2.0f, 1.f, 5.0f},
-                  {"SpamInfantryChance", "Production", &m_spamInfantryChance, 50.0f, 100.f, 50.0f},
+                  {"SpamInfantryChance", "Production", &m_spamInfantryChance, 50.0f, 100.0f, 50.0f},
+                  {"SameFundsMatchUpNoMatchUpValue", "Production", &m_sameFundsMatchUpNoMatchUpValue, 0.5f, 0.0f, 1.0f},
                 };
 
     if (m_pMap != nullptr &&
@@ -317,6 +318,13 @@ bool NormalAi::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
         {
             m_usedTransportSystem = true;
             m_aiStep = AISteps::moveUnits;
+            for (auto & unit : m_OwnUnits)
+            {
+                if (!unit.pUnit->getHasMoved())
+                {
+                    unit.nextAiStep = m_aiStep;
+                }
+            }
             return performActionSteps(pUnits, pEnemyUnits,  pBuildings, pEnemyBuildings);
         }
         else if (m_aiStep <= AISteps::loadUnits && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
@@ -583,39 +591,43 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint
     AI_CONSOLE_PRINT("NormalAi::fireWithUnits()", Console::eDEBUG);
     for (auto & unitData : m_OwnUnits)
     {
-        QCoreApplication::processEvents();
-        Unit* pUnit = unitData.pUnit.get();
-        if (!pUnit->getHasMoved() &&
-            pUnit->getBaseMaxRange() >= minfireRange &&
-            pUnit->getBaseMaxRange() <= maxfireRange &&
-            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0) &&
-            unitData.actions.contains(CoreAI::ACTION_FIRE) &&
-            pUnit->getAiMode() == GameEnums::GameAi_Normal)
+        if (unitData.nextAiStep <= m_aiStep)
         {
-            spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
-            pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-            std::vector<CoreAI::DamageData> ret;
-            std::vector<QVector3D> moveTargetFields;
-            CoreAI::getAttackTargets(pUnit, pAction, unitData.pUnitPfs.get(), ret, moveTargetFields, unitData.movementPoints + 1);
-            qint32 targetIdx = getBestAttackTarget(unitData, ret, moveTargetFields, pBuildings, pEnemyBuildings);
-            if (targetIdx >= 0)
+            QCoreApplication::processEvents();
+            Unit* pUnit = unitData.pUnit.get();
+            if (!pUnit->getHasMoved() &&
+                unitData.minFireRange >= minfireRange &&
+                unitData.maxFireRange <= maxfireRange &&
+                (pUnit->getAmmo1() != 0 || pUnit->getAmmo2() != 0) &&
+                unitData.actions.contains(CoreAI::ACTION_FIRE) &&
+                pUnit->getAiMode() == GameEnums::GameAi_Normal)
             {
-                CoreAI::DamageData target = ret[targetIdx];
-                auto path = unitData.pUnitPfs->getPathFast(static_cast<qint32>(moveTargetFields[targetIdx].x()),
-                                                           static_cast<qint32>(moveTargetFields[targetIdx].y()));
-                pAction->setMovepath(path, unitData.pUnitPfs->getCosts(path));
-                CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x), static_cast<qint32>(target.y)));
-                if (m_pMap->getTerrain(static_cast<qint32>(target.x), static_cast<qint32>(target.y))->getUnit() == nullptr)
+                spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
+                pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+                std::vector<CoreAI::DamageData> ret;
+                std::vector<QVector3D> moveTargetFields;
+                CoreAI::getAttackTargets(pUnit, pAction, unitData.pUnitPfs.get(), ret, moveTargetFields, unitData.movementPoints + 1);
+                qint32 targetIdx = getBestAttackTarget(unitData, ret, moveTargetFields, pBuildings, pEnemyBuildings);
+                unitData.nextAiStep = static_cast<AISteps>(static_cast<qint32>(m_aiStep) + 1);
+                if (targetIdx >= 0)
                 {
-                    m_IslandMaps.clear();
-                }
-                if (pAction->isFinalStep() && pAction->canBePerformed())
-                {
-                    m_updatePoints.push_back(pUnit->getPosition());
-                    m_updatePoints.push_back(pAction->getActionTarget());
-                    m_updatePoints.push_back(QPoint(static_cast<qint32>(target.x), static_cast<qint32>(target.y)));
-                    emit performAction(pAction);
-                    return true;
+                    CoreAI::DamageData target = ret[targetIdx];
+                    auto path = unitData.pUnitPfs->getPathFast(static_cast<qint32>(moveTargetFields[targetIdx].x()),
+                                                               static_cast<qint32>(moveTargetFields[targetIdx].y()));
+                    pAction->setMovepath(path, unitData.pUnitPfs->getCosts(path));
+                    CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x), static_cast<qint32>(target.y)));
+                    if (m_pMap->getTerrain(static_cast<qint32>(target.x), static_cast<qint32>(target.y))->getUnit() == nullptr)
+                    {
+                        m_IslandMaps.clear();
+                    }
+                    if (pAction->isFinalStep() && pAction->canBePerformed())
+                    {
+                        m_updatePoints.push_back(pUnit->getPosition());
+                        m_updatePoints.push_back(pAction->getActionTarget());
+                        m_updatePoints.push_back(QPoint(static_cast<qint32>(target.x), static_cast<qint32>(target.y)));
+                        emit performAction(pAction);
+                        return true;
+                    }
                 }
             }
         }
@@ -801,56 +813,60 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
     AI_CONSOLE_PRINT("NormalAi::moveUnits()", Console::eDEBUG);
     for (auto & unitData : m_OwnUnits)
     {
-        QCoreApplication::processEvents();
-        Unit* pUnit = unitData.pUnit.get();
-        constexpr qint32 AVERAGE_TRANSPORTER_MOVEMENT = 7;
-        bool canCapture = unitData.actions.contains(ACTION_CAPTURE);
-        qint32 loadingIslandIdx = getIslandIndex(pUnit);
-        qint32 loadingIsland = getIsland(pUnit);
-
-        // can we use the unit?
-        if (!pUnit->getHasMoved() &&
-            pUnit->getBaseMaxRange() >= minfireRange &&
-            pUnit->getBaseMaxRange() <= maxfireRange &&
-            pUnit->hasWeapons() && pUnit->getLoadedUnitCount() == 0 &&
-            (m_usedTransportSystem || (isUsingUnit(pUnit) && hasTargets(AVERAGE_TRANSPORTER_MOVEMENT, pUnit, canCapture, pEnemyUnits, pEnemyBuildings,
-                                                                        loadingIslandIdx, loadingIsland, false))))
+        if (unitData.nextAiStep <= m_aiStep)
         {
-            std::vector<QVector3D> targets;
-            std::vector<QVector3D> transporterTargets;
-            spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
-            QStringList & actions = unitData.actions;
-            // find possible targets for this unit
-            pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-            if (pUnit->getAiMode() == GameEnums::GameAi_Normal)
+            QCoreApplication::processEvents();
+            Unit* pUnit = unitData.pUnit.get();
+            constexpr qint32 AVERAGE_TRANSPORTER_MOVEMENT = 7;
+            bool canCapture = unitData.actions.contains(ACTION_CAPTURE);
+            qint32 loadingIslandIdx = getIslandIndex(pUnit);
+            qint32 loadingIsland = getIsland(pUnit);
+
+            // can we use the unit?
+            if (!pUnit->getHasMoved() &&
+                pUnit->getBaseMaxRange() >= minfireRange &&
+                pUnit->getBaseMaxRange() <= maxfireRange &&
+                pUnit->hasWeapons() && pUnit->getLoadedUnitCount() == 0 &&
+                (m_usedTransportSystem || (isUsingUnit(pUnit) && hasTargets(AVERAGE_TRANSPORTER_MOVEMENT, pUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+                                                                            loadingIslandIdx, loadingIsland, false))))
             {
-                // find some cool targets
-                appendCaptureTargets(actions, pUnit, pEnemyBuildings, targets);
-            }
-            if (targets.size() > 0)
-            {
-                appendCaptureTransporterTargets(pUnit, pUnits, pEnemyBuildings, transporterTargets);
-                targets.insert(targets.cbegin(), transporterTargets.cbegin(), transporterTargets.cend());
-            }
-            if (pUnit->getAiMode() == GameEnums::GameAi_Normal)
-            {
-                appendAttackTargets(pUnit, pEnemyUnits, targets);
-                appendAttackTargetsIgnoreOwnUnits(pUnit, pEnemyUnits, targets);
-                appendTerrainBuildingAttackTargets(pUnit, pEnemyBuildings, targets);
-                if (targets.size() == 0)
+                std::vector<QVector3D> targets;
+                std::vector<QVector3D> transporterTargets;
+                spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                QStringList & actions = unitData.actions;
+                // find possible targets for this unit
+                pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+                if (pUnit->getAiMode() == GameEnums::GameAi_Normal)
                 {
-                    appendRepairTargets(pUnit, pBuildings, targets);
+                    // find some cool targets
+                    appendCaptureTargets(actions, pUnit, pEnemyBuildings, targets);
                 }
-                if (supportUnits)
+                if (targets.size() > 0)
                 {
-                    appendSupportTargets(actions, pUnit, pUnits, pEnemyUnits, targets);
+                    appendCaptureTransporterTargets(pUnit, pUnits, pEnemyBuildings, transporterTargets);
+                    targets.insert(targets.cbegin(), transporterTargets.cbegin(), transporterTargets.cend());
                 }
-            }
-            if (targets.size() > 0 || transporterTargets.size() > 0)
-            {
-                if (moveUnit(pAction, &unitData, pUnits, actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
+                if (pUnit->getAiMode() == GameEnums::GameAi_Normal)
                 {
-                    return true;
+                    appendAttackTargets(pUnit, pEnemyUnits, targets);
+                    appendAttackTargetsIgnoreOwnUnits(pUnit, pEnemyUnits, targets);
+                    appendTerrainBuildingAttackTargets(pUnit, pEnemyBuildings, targets);
+                    if (targets.size() == 0)
+                    {
+                        appendRepairTargets(pUnit, pBuildings, targets);
+                    }
+                    if (supportUnits)
+                    {
+                        appendSupportTargets(actions, pUnit, pUnits, pEnemyUnits, targets);
+                    }
+                }
+                unitData.nextAiStep = static_cast<AISteps>(static_cast<qint32>(m_aiStep) + 1);
+                if (targets.size() > 0 || transporterTargets.size() > 0)
+                {
+                    if (moveUnit(pAction, &unitData, pUnits, actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -874,27 +890,31 @@ bool NormalAi::loadUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
     m_aiStep = AISteps::loadUnits;
     for (auto & unitData : m_OwnUnits)
     {
-        QCoreApplication::processEvents();
-        Unit* pUnit = unitData.pUnit.get();
-        // can we use the unit?
-        if (!pUnit->getHasMoved() &&
-            (pUnit->getLoadingPlace() == 0 || (pUnit->getLoadedUnitCount() > 0 && m_usedTransportSystem)))
+        if (unitData.nextAiStep <= m_aiStep)
         {
-            std::vector<QVector3D> targets;
-            std::vector<QVector3D> transporterTargets;
-            spGameAction pAction = spGameAction::create(ACTION_LOAD, m_pMap);
-            QStringList & actions = unitData.actions;
-            // find possible targets for this unit
-            pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-
-            // find some cool targets
-            appendTransporterTargets(pUnit, pUnits, transporterTargets);
-            targets.insert(targets.cbegin(), transporterTargets.cbegin(), transporterTargets.cend());
-            // till now the selected targets are a little bit lame cause we only search for reachable transporters
-            // but not for reachable loading places.
-            if (moveUnit(pAction, &unitData, pUnits, actions, targets, transporterTargets, false, pBuildings, pEnemyBuildings))
+            QCoreApplication::processEvents();
+            Unit* pUnit = unitData.pUnit.get();
+            // can we use the unit?
+            if (!pUnit->getHasMoved() &&
+                (pUnit->getLoadingPlace() == 0 || (pUnit->getLoadedUnitCount() > 0 && m_usedTransportSystem)))
             {
-                return true;
+                std::vector<QVector3D> targets;
+                std::vector<QVector3D> transporterTargets;
+                spGameAction pAction = spGameAction::create(ACTION_LOAD, m_pMap);
+                QStringList & actions = unitData.actions;
+                // find possible targets for this unit
+                pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+
+                // find some cool targets
+                appendTransporterTargets(pUnit, pUnits, transporterTargets);
+                targets.insert(targets.cbegin(), transporterTargets.cbegin(), transporterTargets.cend());
+                // till now the selected targets are a little bit lame cause we only search for reachable transporters
+                // but not for reachable loading places.
+                unitData.nextAiStep = static_cast<AISteps>(static_cast<qint32>(m_aiStep) + 1);
+                if (moveUnit(pAction, &unitData, pUnits, actions, targets, transporterTargets, false, pBuildings, pEnemyBuildings))
+                {
+                    return true;
+                }
             }
         }
     }
@@ -907,74 +927,78 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
     m_aiStep = AISteps::moveTransporters;
     for (auto & unitData : m_OwnUnits)
     {
-        QCoreApplication::processEvents();
-        Unit* pUnit = unitData.pUnit.get();
-        // can we use the unit?
-        if (!pUnit->getHasMoved() &&
-            pUnit->getLoadingPlace() > 0 &&
-            pUnit->getAiMode() == GameEnums::GameAi_Normal)
+        if (unitData.nextAiStep <= m_aiStep)
         {
-            // wooohooo it's a transporter
-            if (pUnit->getLoadedUnitCount() > 0)
+            QCoreApplication::processEvents();
+            Unit* pUnit = unitData.pUnit.get();
+            // can we use the unit?
+            if (!pUnit->getHasMoved() &&
+                pUnit->getLoadingPlace() > 0 &&
+                pUnit->getAiMode() == GameEnums::GameAi_Normal)
             {
-                spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
-                QStringList & actions = unitData.actions;
-                pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                // find possible targets for this unit
-                std::vector<QVector3D> targets;
-                // can one of our units can capture buildings?
-                bool captureFound = false;
-                bool attackFound = false;
-                for (auto & pLoaded : pUnit->getLoadedUnits())
+                unitData.nextAiStep = static_cast<AISteps>(static_cast<qint32>(m_aiStep) + 1);
+                // wooohooo it's a transporter
+                if (pUnit->getLoadedUnitCount() > 0)
                 {
-                    QStringList actions = pLoaded->getActionList();
-                    if (!captureFound && actions.contains(ACTION_CAPTURE))
+                    spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                    QStringList & actions = unitData.actions;
+                    pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+                    // find possible targets for this unit
+                    std::vector<QVector3D> targets;
+                    // can one of our units can capture buildings?
+                    bool captureFound = false;
+                    bool attackFound = false;
+                    for (auto & pLoaded : pUnit->getLoadedUnits())
                     {
-                        appendUnloadTargetsForCapturing(pUnit, pEnemyBuildings, targets);
-                        captureFound = true;
+                        QStringList actions = pLoaded->getActionList();
+                        if (!captureFound && actions.contains(ACTION_CAPTURE))
+                        {
+                            appendUnloadTargetsForCapturing(pUnit, pEnemyBuildings, targets);
+                            captureFound = true;
+                        }
+                        if (!attackFound && actions.contains(ACTION_FIRE))
+                        {
+                            appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets, 1);
+                            attackFound = true;
+                        }
+                        if (attackFound && captureFound)
+                        {
+                            break;
+                        }
                     }
-                    if (!attackFound && actions.contains(ACTION_FIRE))
+                    // if not find closest unloading field
+                    if (targets.size() == 0)
                     {
-                        appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets, 1);
-                        attackFound = true;
+                        appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets, 3);
                     }
-                    if (attackFound && captureFound)
+                    if (targets.size() == 0)
                     {
-                        break;
+                        appendNearestUnloadTargets(pUnit, pEnemyUnits, pEnemyBuildings, targets);
+                    }
+                    if (moveToUnloadArea(pAction, &unitData, pUnits, actions, targets, pBuildings, pEnemyBuildings, pEnemyUnits))
+                    {
+                        return true;
                     }
                 }
-                // if not find closest unloading field
-                if (targets.size() == 0)
+                else
                 {
-                    appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets, 3);
-                }
-                if (targets.size() == 0)
-                {
-                    appendNearestUnloadTargets(pUnit, pEnemyUnits, pEnemyBuildings, targets);
-                }
-                if (moveToUnloadArea(pAction, &unitData, pUnits, actions, targets, pBuildings, pEnemyBuildings, pEnemyUnits))
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
-                QStringList & actions = unitData.actions;
-                // find possible targets for this unit
-                pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                // we need to move to a loading place
-                std::vector<QVector3D> targets;
-                std::vector<QVector3D> transporterTargets;
-                appendCaptureTargets(actions, pUnit, pEnemyBuildings, targets);
-                appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, false, targets);
-                if (targets.size() == 0)
-                {
-                    appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, true, false, targets);
-                }
-                if (moveUnit(pAction, &unitData, pUnits, actions, targets, transporterTargets, false, pBuildings, pEnemyBuildings))
-                {
-                    return true;
+                    spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                    QStringList & actions = unitData.actions;
+                    // find possible targets for this unit
+                    pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+                    // we need to move to a loading place
+                    std::vector<QVector3D> targets;
+                    std::vector<QVector3D> transporterTargets;
+                    appendCaptureTargets(actions, pUnit, pEnemyBuildings, targets);
+                    appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, false, targets);
+                    if (targets.size() == 0)
+                    {
+                        appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, true, false, targets);
+                    }
+                    if (moveUnit(pAction, &unitData, pUnits, actions, targets, transporterTargets, false, pBuildings, pEnemyBuildings))
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -2023,6 +2047,7 @@ void NormalAi::createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, qint
     data.minFireRange = pUnit->getMinRange(pUnit->Unit::getPosition());
     data.maxFireRange = pUnit->getMaxRange(pUnit->Unit::getPosition());
     data.unitCosts = pUnit->getCoUnitValue();
+    data.nextAiStep = m_aiStep;
     if (enemy)
     {
         data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
@@ -2973,7 +2998,7 @@ float NormalAi::calcSameFundsMatchUpScore(Unit& dummy, const QStringList & build
     }
     else
     {
-        return 1.0f;
+        return m_sameFundsMatchUpNoMatchUpValue;
     }
 }
 
@@ -3089,7 +3114,7 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData, spQmlVectorU
     if (unitBuildData.loadingCount > 0)
     {
         if (unitBuildData.transportCount <= 0 ||
-            static_cast<float>(unitBuildData.loadingCount)  / static_cast<float>(unitBuildData.transportCount) >= m_ProducingTransportMinLoadingTransportRatio)
+            static_cast<float>(unitBuildData.loadingCount)  / static_cast<float>(unitBuildData.transportCount + 1) >= m_ProducingTransportMinLoadingTransportRatio)
         {
             if (data[FundsFactoryRatio] <= m_cheapUnitRatio + m_targetPriceDifference)
             {
@@ -3102,7 +3127,7 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData, spQmlVectorU
             score += unitBuildData.loadingPlace * m_additionalLoadingUnitBonus;
             score += unitBuildData.loadingCount * m_additionalLoadingUnitBonus;
             score += unitBuildData.noTransporterBonus;
-            score -= unitBuildData.transporterCount;
+            score -= unitBuildData.transporterCount * m_additionalLoadingUnitBonus;
             AI_CONSOLE_PRINT("NormalAi::calcTransporterScore for " + unitBuildData.unitId +
                              " score=" + QString::number(score) +
                              " loadingCount=" + QString::number(unitBuildData.loadingCount) +

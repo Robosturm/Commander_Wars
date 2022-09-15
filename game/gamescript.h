@@ -20,6 +20,8 @@ class GameScript final : public QObject, public FileSerializable, public oxygine
 {
     Q_OBJECT
 public:
+    static const QString m_scriptName;
+
     explicit GameScript(GameMap* pMap);
     ~GameScript();
     /**
@@ -98,7 +100,6 @@ private:
     ScriptVariables m_Variables;
     bool m_loaded{false};
     GameMap* m_pMap{nullptr};
-    static const QString m_scriptName;
 };
 
 Q_DECLARE_INTERFACE(GameScript, "GameScript");

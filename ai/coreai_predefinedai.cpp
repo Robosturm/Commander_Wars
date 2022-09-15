@@ -12,6 +12,7 @@
 #include "game/unit.h"
 #include "game/gameaction.h"
 #include "game/gamemap.h"
+#include "game/gamescript.h"
 
 bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
 {
@@ -332,8 +333,20 @@ bool CoreAI::processPredefinedAi()
                         }
                         break;
                     }
+                    case GameEnums::GameAi_Scripted:
+                    {
+                        if (processPredefinedGenericScripted(pUnit, pEnemyUnits, pEnemyBuildings))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
                     case GameEnums::GameAi_Normal:
                     {
+                        if (processPredefinedGenericScripted(pUnit, pEnemyUnits, pEnemyBuildings))
+                        {
+                            return true;
+                        }
                         break;
                     }
                 }
@@ -342,6 +355,82 @@ bool CoreAI::processPredefinedAi()
         m_usedPredefinedAi = true;
     }
     return false;    
+}
+
+bool CoreAI::processPredefinedGenericScripted(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    const QString function1 = "GenericPredefinedUnitMapScriptBehaviour";
+    if (pInterpreter->exists(GameScript::m_scriptName, function1))
+    {
+        spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+        pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+        QJSValueList args({pInterpreter->newQObject(this),
+                           pInterpreter->newQObject(pAction.get()),
+                           pInterpreter->newQObject(pUnit),
+                           pInterpreter->newQObject(pEnemyUnits.get()),
+                           pInterpreter->newQObject(pEnemyBuildings.get()),
+                          pInterpreter->newQObject(m_pMap)});
+        QJSValue erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
+        if (erg.isBool() && erg.toBool())
+        {
+            if (pAction->canBePerformed())
+            {
+                emit performAction(pAction);
+                return true;
+            }
+        }
+    }
+    if (pInterpreter->exists(m_aiName, function1))
+    {
+        spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+        pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+        QJSValueList args({pInterpreter->newQObject(this),
+                           pInterpreter->newQObject(pAction.get()),
+                           pInterpreter->newQObject(pUnit),
+                           pInterpreter->newQObject(pEnemyUnits.get()),
+                           pInterpreter->newQObject(pEnemyBuildings.get()),
+                           pInterpreter->newQObject(m_pMap)});
+        QJSValue erg = pInterpreter->doFunction(m_aiName, function1, args);
+        if (erg.isBool() && erg.toBool())
+        {
+            if (pAction->canBePerformed())
+            {
+                emit performAction(pAction);
+                return true;
+            }
+        }
+    }
+
+    return false;
+
+}
+
+bool CoreAI::processPredefinedMapScripted(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    const QString function1 = "PredefinedUnitMapScriptBehaviour";
+    if (pInterpreter->exists(GameScript::m_scriptName, function1))
+    {
+        spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+        pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+        QJSValueList args({pInterpreter->newQObject(this),
+                           pInterpreter->newQObject(pAction.get()),
+                           pInterpreter->newQObject(pUnit),
+                           pInterpreter->newQObject(pEnemyUnits.get()),
+                           pInterpreter->newQObject(pEnemyBuildings.get()),
+                           pInterpreter->newQObject(m_pMap)});
+        QJSValue erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
+        if (erg.isBool() && erg.toBool())
+        {
+            if (pAction->canBePerformed())
+            {
+                emit performAction(pAction);
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 bool CoreAI::processPredefinedAiHold(Unit* pUnit)
