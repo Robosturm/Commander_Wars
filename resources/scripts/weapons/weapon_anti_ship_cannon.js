@@ -7,7 +7,7 @@ var Constructor = function()
     this.damageTable = [["BATTLESHIP", 95],
                         ["CANNONBOAT", 120],
                         ["CRUISER", 95],
-                        ["DESTROYER", 55],
+                        ["BATTLECRUISER", 55],
                         ["SUBMARINE", 25],
                         ["LANDER", 120],
                         ["BLACK_BOAT", 120],

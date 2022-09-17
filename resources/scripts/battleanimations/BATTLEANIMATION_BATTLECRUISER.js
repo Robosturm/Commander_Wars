@@ -8,7 +8,7 @@ var Constructor = function()
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
-        BATTLEANIMATION_DESTROYER.loadSprite(sprite, unit, defender, weapon, Qt.point(-116, 0), 1200, 0, 0, 0, 0,
+        BATTLEANIMATION_BATTLECRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(-116, 0), 1200, 0, 0, 0, 0,
                                              "+cannon", "+flak", Qt.point(20, 20));
     };
 
@@ -19,7 +19,7 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_DESTROYER.loadSprite(sprite, unit, defender, weapon);
+        BATTLEANIMATION_BATTLECRUISER.loadSprite(sprite, unit, defender, weapon);
     };
 
     this.loadSprite = function(sprite, unit, defender, weapon, movement = Qt.point(0, 0), moveTime = 0, mgStartFrame = 0, mgEndFrame = 0,
@@ -28,16 +28,16 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         // get army name
-        sprite.loadMovingSprite("destroyer",  false,
-                                BATTLEANIMATION_DESTROYER.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
-        sprite.loadMovingSpriteV2("destroyer+mask", GameEnums.Recoloring_Matrix,
-                                  BATTLEANIMATION_DESTROYER.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
-        sprite.loadMovingSpriteV2("destroyer" + rocketSprite + "+mask", GameEnums.Recoloring_Matrix,
-                                  BATTLEANIMATION_DESTROYER.getMaxUnitCount(), Qt.point(startPos.x + 160, startPos.y + 56),
+        sprite.loadMovingSprite("battlecruiser",  false,
+                                BATTLEANIMATION_BATTLECRUISER.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+        sprite.loadMovingSpriteV2("battlecruiser+mask", GameEnums.Recoloring_Matrix,
+                                  BATTLEANIMATION_BATTLECRUISER.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+        sprite.loadMovingSpriteV2("battlecruiser" + rocketSprite + "+mask", GameEnums.Recoloring_Matrix,
+                                  BATTLEANIMATION_BATTLECRUISER.getMaxUnitCount(), Qt.point(startPos.x + 160, startPos.y + 56),
                                   movement, moveTime, false, 1, 1, 0, 0,
                                   false, 200, rocketEndFrame, rocketStartFrame);
-        sprite.loadMovingSpriteV2("destroyer" + mgSprite + "+mask", GameEnums.Recoloring_Matrix,
-                                  BATTLEANIMATION_DESTROYER.getMaxUnitCount(), Qt.point(startPos.x + 100, startPos.y + 64),
+        sprite.loadMovingSpriteV2("battlecruiser" + mgSprite + "+mask", GameEnums.Recoloring_Matrix,
+                                  BATTLEANIMATION_BATTLECRUISER.getMaxUnitCount(), Qt.point(startPos.x + 100, startPos.y + 64),
                                   movement, moveTime, false, 3, 1, 0, 0,
                                   false, 100, mgEndFrame, mgStartFrame);
     };
@@ -49,7 +49,7 @@ var Constructor = function()
         if (weapon === 0)
         {
             var count = sprite.getUnitCount(5);
-            BATTLEANIMATION_DESTROYER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 0, 0,
+            BATTLEANIMATION_BATTLECRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 0, 0,
                                                  0, count - 1, "+cannon+fire");
             offset = Qt.point(100, 100);
             for (var i = 0; i < count; i++)
@@ -82,7 +82,7 @@ var Constructor = function()
         }
         else
         {
-            BATTLEANIMATION_DESTROYER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 0, 3,
+            BATTLEANIMATION_BATTLECRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 0, 3,
                                                  0, 0, "+cannon", "+flak+fire");
             offset = Qt.point(29, 109);
             for (var i2 = 0; i2 < 2; ++i2)
@@ -207,10 +207,10 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_DESTROYER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000);
+        BATTLEANIMATION_BATTLECRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000);
         sprite.loadSound("ship_dying_move.wav", -2);
     };
 };
 
 Constructor.prototype = BATTLEANIMATION;
-var BATTLEANIMATION_DESTROYER = new Constructor();
+var BATTLEANIMATION_BATTLECRUISER = new Constructor();

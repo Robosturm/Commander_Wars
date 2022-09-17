@@ -29,7 +29,7 @@ var Constructor = function()
                         ["BATTLESHIP", 25],
                         ["CANNONBOAT", 85],
                         ["CRUISER", 10],
-                        ["DESTROYER", 10],
+                        ["BATTLECRUISER", 10],
                         ["SUBMARINE", 25],
                         ["LANDER", 25],
                         ["BLACK_BOAT", 85],

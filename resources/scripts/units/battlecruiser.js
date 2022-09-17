@@ -8,7 +8,7 @@ var Constructor = function()
 
         unit.setAmmo2(9);
         unit.setMaxAmmo2(9);
-        unit.setWeapon2ID("WEAPON_DESTROYER_A_AIR_GUN");
+        unit.setWeapon2ID("WEAPON_BATTLECRUISER_A_AIR_GUN");
 
         unit.setFuel(100);
         unit.setMaxFuel(100);
@@ -20,7 +20,7 @@ var Constructor = function()
     
     this.loadSprites = function(unit)
     {
-        unit.loadSpriteV2("destroyer+mask", GameEnums.Recoloring_Matrix);
+        unit.loadSpriteV2("battlecruiser+mask", GameEnums.Recoloring_Matrix);
     };
     this.getMovementType = function()
     {
@@ -103,4 +103,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = UNIT;
-var DESTROYER = new Constructor();
+var BATTLECRUISER = new Constructor();

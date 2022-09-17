@@ -46,7 +46,7 @@ Constructor = function()
                         ["BATTLESHIP", 45],
                         ["CANNONBOAT", 100],
                         ["CRUISER", 35],
-                        ["DESTROYER", 35],
+                        ["BATTLECRUISER", 35],
                         ["SUBMARINE", 35],
                         ["LANDER", 65],
                         ["BLACK_BOAT", 100],
