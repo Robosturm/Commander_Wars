@@ -56,10 +56,10 @@ var Constructor = function()
                         ["PIPERUNNER", 85],
 
                         // ships
-                        ["BATTLESHIP", 55],
-                        ["CANNONBOAT", 75],
-                        ["CRUISER", 55],
                         ["BATTLECRUISER", 55],
+                        ["BATTLESHIP", 55],
+                        ["CRUISER", 55],
+                        ["DESTROYER", 75],
                         ["SUBMARINE", 55],
                         ["LANDER", 55],
                         ["BLACK_BOAT", 75],

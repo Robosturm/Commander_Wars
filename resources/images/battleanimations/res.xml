@@ -172,6 +172,8 @@
         <!-- cannonboat -->
         <image file="cannonboat/cannonboat.png" cols = "4" />
         <image file="cannonboat/cannonboat+mask.png" cols = "4" />        
+        <image file="cannonboat/cannonboat+gun+mask.png"/>
+        <image file="cannonboat/cannonboat+gun+fire+mask.png" cols = "4" />
         <!-- cruiser -->
         <image file="cruiser/cruiser+bh.png" cols = "4" />
         <image file="cruiser/cruiser+bh+mask.png" cols = "4" />
@@ -205,6 +207,9 @@
         <image file="cruiser/cruiser+yc+missile+mask.png" cols = "6" />
         <image file="cruiser/cruiser+ge+missile+mask.png" cols = "6" />
         <image file="cruiser/cruiser+bm+missile+mask.png" cols = "6" />
+        <!-- destroyer -->
+        <image file="destroyer/destroyer.png" cols = "4" />
+        <image file="destroyer/destroyer+mask.png" cols = "4" />
         <!-- duster -->
         <image file="duster/duster+ge+mask.png" cols = "2" />
         <image file="duster/duster+ma+mask.png" />
@@ -1097,6 +1102,9 @@
         <image file="missile/missile+ma+fire+mask.png" />
         <image file="missile/missile+ti+fire+mask.png" />
         <image file="missile/missile+pf+fire+mask.png" />
+        <!-- missileboat -->
+        <image file="missileboat/missileboat.png" cols = "4" />
+        <image file="missileboat/missileboat+mask.png" cols = "4" />
         <!-- motorbike -->
         <image file="motorbike/motorbike++mask.png" />
         <image file="motorbike/motorbike+os+mask.png" />
@@ -1234,6 +1242,9 @@
         <image file="t_heli/t_heli+os+mask.png" cols = "2" />
         <image file="t_heli/t_heli+yc+mask.png" cols = "2" />
         <image file="t_heli/t_heli+ma+mask.png" />        
+        <!-- torpedoboat -->
+        <image file="torpedoboat/torpedoboat.png" cols = "4" />
+        <image file="torpedoboat/torpedoboat+mask.png" cols = "4" />
         <!-- sniper -->
         <image file="sniper/sniper+os+mask.png" />
         <image file="sniper/sniper+ma+mask.png" />        

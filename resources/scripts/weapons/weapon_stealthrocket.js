@@ -55,10 +55,10 @@ var Constructor = function()
 
 
                         // ships
-                        ["BATTLESHIP", 55],
-                        ["CANNONBOAT", 75],
-                        ["CRUISER", 35],
                         ["BATTLECRUISER", 35],
+                        ["BATTLESHIP", 55],
+                        ["CRUISER", 35],
+                        ["DESTROYER", 75],
                         ["SUBMARINE", 55],
                         ["LANDER", 55],
                         ["BLACK_BOAT", 75],
