@@ -169,11 +169,6 @@
         <image file="bomber/bomber+os+mask.png" />
         <image file="bomber/bomber+yc+mask.png" />
         <image file="bomber/bomber+ma+mask.png" />        
-        <!-- cannonboat -->
-        <image file="cannonboat/cannonboat.png" cols = "4" />
-        <image file="cannonboat/cannonboat+mask.png" cols = "4" />        
-        <image file="cannonboat/cannonboat+gun+mask.png"/>
-        <image file="cannonboat/cannonboat+gun+fire+mask.png" cols = "4" />
         <!-- cruiser -->
         <image file="cruiser/cruiser+bh.png" cols = "4" />
         <image file="cruiser/cruiser+bh+mask.png" cols = "4" />
@@ -343,6 +338,11 @@
         <!-- flare -->
         <image file="flare/flare+os+mask.png" />
         <image file="flare/flare+bh+mask.png" />        
+        <!-- gunboat -->
+        <image file="gunboat/gunboat.png" cols = "4" />
+        <image file="gunboat/gunboat+mask.png" cols = "4" />        
+        <image file="gunboat/gunboat+gun+mask.png"/>
+        <image file="gunboat/gunboat+gun+fire+mask.png" cols = "4" />
         <!-- heavy_hovercraft -->
         <image file="heavy_hovercraft/heavy_hovercraft+ma+mask.png" />
         <image file="heavy_hovercraft/heavy_hovercraft+bm+mask.png" />
