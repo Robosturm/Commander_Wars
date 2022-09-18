@@ -1,27 +1,32 @@
-#include "selectkey.h"
+#ifdef GRAPHICSUPPORT
+#include <QApplication>
+#endif
+
+#include "objects/base/selectkey.h"
+#include "objects/base/label.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "objects/base/label.h"
-
-#include <qguiapplication.h>
-
 SelectKey::SelectKey(Qt::Key code)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("SelectKey");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-
-    m_Button = ObjectManager::createButton("", 180);
+    Interpreter::setCppOwnerShip(this);
+    setSize(180, 40);
+    m_Button = ObjectManager::createButton("", getWidth());
     oxygine::Actor* pActor = m_Button.get();
     m_Button->addEventListener(oxygine::TouchEvent::CLICK, [this, pActor](oxygine::Event * )->void
     {
-        Label* pText = dynamic_cast<Label*>(pActor->getFirstChild()->getFirstChild().get());
+        Label* pText = dynamic_cast<Label*>(pActor->getFirstChild().get());
         pText->setHtmlText(tr("Press Key"));
-        pText->setX(pActor->getWidth() / 2 - pText->getTextRect().getWidth() / 2);
+        pText->setX(pActor->getScaledWidth() / 2 - pText->getTextRect().getWidth() / 2);
         if (pText->getX() < 5)
         {
             pText->setX(5);
@@ -38,20 +43,24 @@ SelectKey::SelectKey(Qt::Key code)
 void SelectKey::focusedLost()
 {
     setKeycode(m_currentCode);
-    auto virtualKeyboard = QGuiApplication::inputMethod();
+#ifdef GRAPHICSUPPORT
+    auto virtualKeyboard = QApplication::inputMethod();
     if (virtualKeyboard != nullptr)
     {
         virtualKeyboard->hide();
     }
+#endif
 }
 
 void SelectKey::focused()
 {
-    auto virtualKeyboard = QGuiApplication::inputMethod();
+#ifdef GRAPHICSUPPORT
+    auto virtualKeyboard = QApplication::inputMethod();
     if (virtualKeyboard != nullptr)
     {
         virtualKeyboard->show();
     }
+#endif
 }
 
 void SelectKey::keyInput(oxygine::KeyEvent event)
@@ -67,7 +76,6 @@ void SelectKey::keyInput(oxygine::KeyEvent event)
 QString SelectKey::getKeycodeText(Qt::Key code)
 {
     QString codeText = tr("Unknown");
-    const oxygine::Font* pFont = FontManager::getMainFont24()->getFont();
     if (code == Qt::Key_Space)
     {
         codeText = tr("Space");
@@ -182,11 +190,7 @@ QString SelectKey::getKeycodeText(Qt::Key code)
     }
     else if (code <= 255)
     {
-        const oxygine::glyph* pGlyph = pFont->getGlyph(code);
-        if (pGlyph != nullptr)
-        {
-            codeText = static_cast<char>(code);
-        }
+        codeText = static_cast<char>(code);
     }
     return codeText;
 }
@@ -198,9 +202,9 @@ void SelectKey::setKeycode(Qt::Key code)
     if (codeText != tr("Unknown"))
     {
         m_currentCode = code;
-        Label* pText = dynamic_cast<Label*>(m_Button->getFirstChild()->getFirstChild().get());
+        Label* pText = dynamic_cast<Label*>(m_Button->getFirstChild().get());
         pText->setHtmlText((tr("Key ") + codeText));
-        pText->setX(m_Button->getWidth() / 2 - pText->getTextRect().getWidth() / 2);
+        pText->setX(m_Button->getScaledWidth() / 2 - pText->getTextRect().getWidth() / 2);
         if (pText->getX() < 5)
         {
             pText->setX(5);

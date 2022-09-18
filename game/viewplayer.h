@@ -4,10 +4,11 @@
 #include "game/player.h"
 #include "gameinput/humanplayerinput.h"
 
+class GameMenue;
 class Viewplayer;
-typedef oxygine::intrusive_ptr<Viewplayer> spViewplayer;
+using spViewplayer = oxygine::intrusive_ptr<Viewplayer>;
 
-class Viewplayer : public Player
+class Viewplayer final : public Player
 {
     Q_OBJECT
 public:
@@ -18,8 +19,8 @@ public:
         Map  = -1,
     };
 
-    explicit Viewplayer(GameMap* pMap);
-    virtual ~Viewplayer() = default;
+    explicit Viewplayer(GameMenue* pMenu, GameMap* pMap);
+    ~Viewplayer() = default;
     /**
      * @brief getColorTableAnim
      * @return

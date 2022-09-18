@@ -20,40 +20,43 @@ var Constructor = function ()
             if ((targetUnit.getOwner() === unit.getOwner()) &&
                 (targetUnit.getTransportUnits().indexOf(unit.getUnitID()) >= 0) &&
                 (targetUnit.getLoadedUnitCount() < targetUnit.getLoadingPlace())) {
-
-                var unitID = targetUnit.getUnitID();
-                var terrainId = transportTerrain.getID();
-                if (unitID === "TRANSPORTPLANE")
-                {
-                    if ((terrainId === "AIRPORT") ||
-                        (terrainId === "TEMPORARY_AIRPORT") ||
-                        (terrainId === "SNOW_STREET") ||
-                        (terrainId === "STREET") ||
-                        (terrainId === "STREET1"))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else if (unitID === "LANDER" ||
-                         unitID === "BLACK_BOAT" ||
-                         unitID === "CANNONBOAT")
-                {
-                    if ((terrainId === "BRIDGE") ||
-                        (terrainId === "BRIDGE1") ||
-                        (terrainId === "BRIDGE2"))
-                    {
-                        return false;
-                    }
-                }
-                return true;
+                return ACTION_LOAD.isLoadingTerrain(targetUnit, transportTerrain);
             }
         }
         return false;
+    };
 
+    this.isLoadingTerrain = function(transporter, terrain)
+    {
+        var unitID = transporter.getUnitID();
+        var terrainId = terrain.getID();
+        if (unitID === "TRANSPORTPLANE")
+        {
+            if ((terrainId === "AIRPORT") ||
+                (terrainId === "TEMPORARY_AIRPORT") ||
+                (terrainId === "SNOW_STREET") ||
+                (terrainId === "STREET") ||
+                (terrainId === "STREET1"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if (unitID === "LANDER" ||
+                 unitID === "BLACK_BOAT" ||
+                 unitID === "CANNONBOAT")
+        {
+            if ((terrainId === "BRIDGE") ||
+                (terrainId === "BRIDGE1") ||
+                (terrainId === "BRIDGE2"))
+            {
+                return false;
+            }
+        }
+        return true;
     };
 
     this.getActionText = function(map)

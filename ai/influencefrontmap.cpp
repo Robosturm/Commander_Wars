@@ -1,4 +1,4 @@
-#include <QApplication>
+#include <QCoreApplication>
 
 #include "ai/influencefrontmap.h"
 
@@ -14,11 +14,125 @@
 
 #include "objects/base/label.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
+
+InfluenceInfo::InfluenceInfo(GameMap* pMap)
+    : m_pMap(pMap)
+{
+    Interpreter::setCppOwnerShip(this);
+}
+
+void InfluenceInfo::updateOwner(Player* pOwner)
+{
+    owners.clear();
+    qint32 highestValue = 0;
+    enemyInfluence = 0;
+    ownInfluence = 0;
+    for (qint32 player = 0; player < playerValues.size(); ++player)
+    {
+        qint32 influence = getPlayerInfluence(player);
+        if (pOwner->isPlayerIdEnemy(player) &&
+            influence > enemyInfluence)
+        {
+            enemyInfluence = influence;
+        }
+        else if (pOwner->isPlayerIdAlly(player) &&
+                 influence > ownInfluence)
+        {
+            ownInfluence = influence;
+        }
+        if (influence > highestValue)
+        {
+            highestValue = influence;
+            owners.clear();
+            owners.push_back(player);
+        }
+        else if (influence > 0 &&
+                 influence == highestValue)
+        {
+            owners.push_back(player);
+        }
+    }
+    highestInfluence = highestValue;
+}
+
+qint32 InfluenceInfo::getPlayerInfluence(qint32 playerId)
+{
+    qint32 influence = 0;
+    Player* pOwner = m_pMap->getPlayer(playerId);
+    for (qint32 player = 0; player < playerValues.size(); ++player)
+    {
+        if (pOwner->isPlayerIdAlly(player))
+        {
+            influence += playerValues[player];
+        }
+    }
+    return influence;
+}
+
+void InfluenceInfo::reset(GameMap* pMap)
+{
+    m_pMap = pMap;
+    qint32 playerCount = m_pMap->getPlayerCount();
+    if (playerValues.size() == 0)
+    {
+        playerValues.reserve(playerCount);
+        for (qint32 i = 0; i < playerCount; ++i)
+        {
+            playerValues.push_back(0);
+        }
+    }
+    else
+    {
+        for (auto & value : playerValues)
+        {
+            value = 0;
+        }
+    }
+    highestInfluence = 0;
+    owners.clear();
+    frontMovetype.clear();
+    frontOwners.clear();
+    frontLineCreated = false;
+}
+
+void InfluenceInfo::increaseInfluence(qint32 player, qint32 value)
+{
+    playerValues[player] += value;
+}
+
+QStringList InfluenceInfo::getFrontMovetype() const
+{
+    return frontMovetype;
+}
+
+qint32 InfluenceInfo::getHighestInfluence() const
+{
+    return highestInfluence;
+}
+
+qint32 InfluenceInfo::getEnemyInfluence() const
+{
+    return enemyInfluence;
+}
+
+const std::vector<qint32> &InfluenceInfo::getFrontOwners() const
+{
+    return frontOwners;
+}
+
+qint32 InfluenceInfo::getOwnInfluence() const
+{
+    return ownInfluence;
+}
+
 InfluenceFrontMap::InfluenceFrontMap(GameMap* pMap, const std::vector<spIslandMap> & islands)
     : m_islands(islands),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("InfluenceFrontMap");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -65,7 +179,7 @@ void InfluenceFrontMap::addBuildingInfluence()
             QPoint curPos(x, y);
             for (qint32 building = 0; building < buildingPositions.size(); building++)
             {
-                QApplication::processEvents();
+                QCoreApplication::processEvents();
                 QPoint pos = buildingPositions[building];
                 for (auto & unitId : buildLists[building])
                 {
@@ -115,83 +229,6 @@ qint32 InfluenceFrontMap::getIslandFromUnitId(const QString & unitId, std::map<Q
     return island;
 }
 
-InfluenceFrontMap::InfluenceInfo::InfluenceInfo(GameMap* pMap)
-    : m_pMap(pMap)
-{
-    qint32 playerCount = pMap->getPlayerCount();
-    playerValues.reserve(playerCount);
-    for (qint32 x = 0; x < playerCount; x++)
-    {
-        playerValues.push_back(0);
-    }
-}
-
-void InfluenceFrontMap::InfluenceInfo::updateOwner(Player* pOwner)
-{
-    owners.clear();
-    qint32 highestValue = 0;
-    enemyInfluence = 0;
-    ownInfluence = 0;
-    for (qint32 player = 0; player < playerValues.size(); ++player)
-    {
-        qint32 influence = getPlayerInfluence(player);
-        if (pOwner->isPlayerIdEnemy(player) &&
-            influence > enemyInfluence)
-        {
-            enemyInfluence = influence;
-        }
-        else if (pOwner->isPlayerIdAlly(player) &&
-                 influence > ownInfluence)
-        {
-            ownInfluence = influence;
-        }
-        if (influence > highestValue)
-        {
-            highestValue = influence;
-            owners.clear();
-            owners.push_back(player);
-        }
-        else if (influence > 0 &&
-                 influence == highestValue)
-        {
-            owners.push_back(player);
-        }
-    }
-    highestInfluence = highestValue;
-}
-
-qint32 InfluenceFrontMap::InfluenceInfo::getPlayerInfluence(qint32 playerId)
-{
-    qint32 influence = 0;
-    Player* pOwner = m_pMap->getPlayer(playerId);
-    for (qint32 player = 0; player < playerValues.size(); ++player)
-    {
-        if (pOwner->isPlayerIdAlly(player))
-        {
-            influence += playerValues[player];
-        }
-    }
-    return influence;
-}
-
-void InfluenceFrontMap::InfluenceInfo::reset()
-{
-    for (auto & value : playerValues)
-    {
-        value = 0;
-    }
-    highestInfluence = 0;
-    owners.clear();
-    frontMovetype.clear();
-    frontOwners.clear();
-    frontLineCreated = false;
-}
-
-void InfluenceFrontMap::InfluenceInfo::increaseInfluence(qint32 player, qint32 value)
-{
-    playerValues[player] += value;
-}
-
 void InfluenceFrontMap::reset()
 {
     AI_CONSOLE_PRINT("InfluenceFrontMap::reset()", Console::eDEBUG);
@@ -202,7 +239,7 @@ void InfluenceFrontMap::reset()
         qint32 heigth = m_pMap->getMapHeight();
         for (qint32 x = 0; x < width; x++)
         {
-            m_InfluenceMap.push_back(std::vector<InfluenceInfo>(heigth, InfluenceInfo(m_pMap)));
+            m_InfluenceMap.push_back(std::vector<InfluenceInfo>(heigth));
         }
     }
     
@@ -210,7 +247,7 @@ void InfluenceFrontMap::reset()
     {
         for (qint32 y = 0; y < m_InfluenceMap[x].size(); ++y)
         {
-            m_InfluenceMap[x][y].reset();
+            m_InfluenceMap[x][y].reset(m_pMap);
         }
     }
     m_totalHighestInfluence = 0;
@@ -220,7 +257,7 @@ void InfluenceFrontMap::addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPf
 {
     if (pUnit->hasWeapons() || pUnit->getLoadedUnitCount() > 0)
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         qint32 value = pUnit->getCoUnitValue();
         qint32 owner = pUnit->getOwner()->getPlayerID();
         auto points = pPfs->getAllNodePointsFast();
@@ -307,8 +344,6 @@ void InfluenceFrontMap::showPfs(UnitPathFindingSystem* pPfs)
 void InfluenceFrontMap::showFrontlines()
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     
     qint32 count = 0;

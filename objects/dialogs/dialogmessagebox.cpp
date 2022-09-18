@@ -9,7 +9,9 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel, QString confir
     : QObject(),
       m_Message(text)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogMessageBox");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -23,8 +25,6 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel, QString confir
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
 
@@ -36,7 +36,7 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel, QString confir
     pSpriteBox->addChild(m_Text);
 
     m_OkButton = pObjectManager->createButton(confirmText, 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2,
+    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
                             m_Text->getY() + m_Text->getTextRect().getHeight() + 20);
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
@@ -54,7 +54,7 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel, QString confir
         {
             emit sigCancel();
         });
-        m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() - 10,
+        m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() - 10,
                                 m_Text->getY() + m_Text->getTextRect().getHeight() + 20);
     }
 

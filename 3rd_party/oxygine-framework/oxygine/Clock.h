@@ -1,17 +1,17 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include <chrono>
 
 namespace oxygine
 {
     class Clock;
     using spClock = intrusive_ptr<Clock>;
-    class Clock: public Object
+    class Clock final : public ref_counter
     {
     public:
         explicit Clock() = default;
-        virtual ~Clock() = default;
+        ~Clock() = default;
         timeMS getTime() const;
         qint32 getPauseCounter() const;
         qint32 getFixedStep() const;

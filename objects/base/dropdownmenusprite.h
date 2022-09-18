@@ -4,20 +4,19 @@
 #include <QObject>
 #include <QVector>
 #include <QString>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/dropdownmenubase.h"
 
 class DropDownmenuSprite;
-typedef oxygine::intrusive_ptr<DropDownmenuSprite> spDropDownmenuSprite;
+using spDropDownmenuSprite = oxygine::intrusive_ptr<DropDownmenuSprite>;
 
-class DropDownmenuSprite : public DropDownmenuBase
+class DropDownmenuSprite final : public DropDownmenuBase
 {
     Q_OBJECT
 public:
-    explicit DropDownmenuSprite(qint32 width, QStringList& items, std::function<oxygine::spActor(QString item)> creator, qint32 dropDownWidth = -1);
-    virtual ~DropDownmenuSprite() = default;
+    explicit DropDownmenuSprite(qint32 width, QStringList& items, std::function<oxygine::spActor(QString item)> creator, qint32 dropDownWidth = -1, bool autoScale = true);
+    ~DropDownmenuSprite() = default;
     /**
      * @brief getCurrentItemText text of the current item
      * @return
@@ -35,6 +34,8 @@ public:
     virtual void setCurrentItem(qint32 index) override;
 signals:
     void sigItemChanged(qint32 item);
+    void sigItemString(QString item);
+
 public slots:
     virtual void itemChanged(qint32 item) override;
 protected:
@@ -44,7 +45,7 @@ private:
     std::function<oxygine::spActor(QString item)> m_Creator;
     QVector<oxygine::spBox9Sprite> m_Items;
     QString m_currentText;
-
+    bool m_autoScale{true};
 
 };
 

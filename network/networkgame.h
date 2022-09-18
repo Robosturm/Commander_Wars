@@ -9,7 +9,7 @@
 #include "network/tcpclient.h"
 #include "network/tcpserver.h"
 #include "network/networkgamedata.h"
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class NetworkGame;
 using spNetworkGame = oxygine::intrusive_ptr<NetworkGame>;
@@ -18,12 +18,12 @@ using spNetworkGame = oxygine::intrusive_ptr<NetworkGame>;
  * @brief The NetworkGame class needs to be run in it's own thread.
  * Handles sending data between the locally spawned pipe connected game instance and the joined players.
  */
-class NetworkGame : public QObject, public oxygine::ref_counter
+class NetworkGame final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     explicit NetworkGame(QObject* pParent);
-    virtual ~NetworkGame() = default;
+    ~NetworkGame() = default;
     QByteArray getDataBuffer() const;
     void setDataBuffer(const QByteArray &dataBuffer);
 
@@ -66,6 +66,11 @@ public:
      * @param stream
      */
     void slaveRunning(const QJsonObject & objData, spTCPServer & pGameServer);
+    /**
+     * @brief slaveGameStarted
+     * @param objData
+     */
+    void slaveGameStarted(const QJsonObject & objData);
     /**
      * @brief startCloseTimer
      */

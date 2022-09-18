@@ -1,4 +1,4 @@
-#include <QApplication>
+#include <QCoreApplication>
 
 #include "ai/islandmap.h"
 
@@ -9,11 +9,15 @@
 #include "game/co.h"
 #include "game/unitpathfindingsystem.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
+
 IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
       : m_pOwner(pOwner),
         m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("IslandMap");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -41,7 +45,7 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
                 {                    
                     if (pUnit->canMoveOver(x, y))
                     {
-                        QApplication::processEvents();
+                        QCoreApplication::processEvents();
                         UnitPathFindingSystem pfs(m_pMap, pUnit.get());
                         pfs.setMovepoints(-2);
                         pfs.setFast(true);

@@ -5,7 +5,7 @@ CO_STURM.init = function(co, map)
 };
 CO_STURM.activateSuperpower = function(co, powerMode, map)
 {
-    CO_STURM.activatePower(co, powerMode);
+    CO_STURM.activatePower(co, powerMode, map);
 };
 CO_STURM.getSuperPowerDescription = function()
 {

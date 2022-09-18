@@ -20,10 +20,15 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
+
+        var whiteAnimation = GameAnimationFactory.createAnimation(map, 0, 0);
+        whiteAnimation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
+        whiteAnimation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+        powerNameAnimation.queueAnimation(whiteAnimation);
+        map.getGameRules().changeWeather("WEATHER_1SUN", map.getPlayerCount() * 1);
 
         var player = co.getOwner();
         var counter = 0;
@@ -58,9 +63,9 @@ var Constructor = function()
                     if (animations.length < 5)
                     {
                         animation.addSprite("power14", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        if (powerNameAnimation !== null)
+                        if (whiteAnimation !== null)
                         {
-                            powerNameAnimation.queueAnimation(animation);
+                            whiteAnimation.queueAnimation(animation);
                         }
                         animations.push(animation);
                     }
@@ -87,7 +92,15 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_AIRA.airaDamage(co, 3, powerNameAnimation, map);
+        var animation = GameAnimationFactory.createAnimation(map, 0, 0);
+        animation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
+        animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+        powerNameAnimation.queueAnimation(animation);
+        map.getGameRules().changeWeather("WEATHER_1SUN", map.getPlayerCount() * 1);
+
+        CO_AIRA.airaDamage(co, 3, animation, map);
+
+
     };
 
     this.airaDamage = function(co, value, animation2, map)
@@ -260,7 +273,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
         {
-            return qsTr("Enemies expend 6 times more fuel when they move for their next turn.");
+            return qsTr("Enemies expend 6 times more fuel when they move for their next turn and the weather changes to sun.");
         };
     this.getPowerName = function(co)
     {
@@ -268,7 +281,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
         {
-            return qsTr("The cheapest enemy ground and sea units suffer 3 HP of damage while all enemy air units suffer 3 HP of damage. Lastly, all enemy units have half of their movement range.");
+            return qsTr("The cheapest enemy ground and sea units suffer 3 HP of damage while all enemy air units suffer 3 HP of damage. All enemy units have half of their movement range and the weather changes to sun.");
         };
     this.getSuperPowerName = function(co)
     {
@@ -277,22 +290,22 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Amazing what a little gust can do..."),
-                qsTr("You cannot hope to face the power of the wind."),
+                qsTr("Huh? Oh, wind's about to change."),
                 qsTr("The only surpises I like are the ones that help me win."),
                 qsTr("The winds will help me blow through this battle."),
-                qsTr("I can stand tall with the flow of wind, I cannot say the same for you."),
-                qsTr("I am certain that my determination will grant me the favor of the winds.")];
+                qsTr("Wind is coming in from the southeast. And the north. And the west."),
+                qsTr("You're about to see why my troops don't wear skirts.")];
     };
     this.getVictorySentences = function(co)
     {
         return [qsTr("...Huh? Oh, right. I won. Woohoo?"),
-                qsTr("This win was expected. Losing would have been a surprise, and I hate both."),
+                qsTr("I tore through you like a tornado."),
                 qsTr("You could say... you were swept under the wind.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("The wind blew in the wrong direction."),
-                qsTr("Luckily for you it was not windy today.")];
+        return [qsTr("You caught me by surprise. I hate that."),
+                qsTr("The winds weren't with me today.")];
     };
     this.getName = function()
     {

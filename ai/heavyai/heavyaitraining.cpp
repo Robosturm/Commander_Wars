@@ -123,3 +123,8 @@ void HeavyAi::setMinActionScore(double newMinActionScore)
 {
     m_minActionScore = newMinActionScore;
 }
+
+InfluenceFrontMap* HeavyAi::getInfluenceFrontMap()
+{
+    return &m_InfluenceFrontMap;
+}

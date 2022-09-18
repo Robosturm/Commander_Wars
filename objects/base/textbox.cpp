@@ -5,12 +5,18 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
+#include "coreengine/interpreter.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
 Textbox::Textbox(qint32 width, qint32 heigth)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Textbox");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -19,10 +25,9 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     m_Textbox->setResAnim(pAnim);
     m_Textfield = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = (heigth > 0);
+    style.elideText = Qt::TextElideMode::ElideNone;
     m_Textfield->setStyle(style);
     m_Textfield->setHtmlText("");
 
@@ -37,18 +42,33 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     m_Textbox->addChild(pClipActor);
     m_Textbox->setSize(width, heigth);
     setSize(width, heigth);
-    m_Textfield->setWidth(m_Textbox->getWidth() - 20);
-    m_Textfield->setHeight(m_Textbox->getHeight());
-    pClipActor->setSize(m_Textfield->getSize());
+    m_Textfield->setWidth(m_Textbox->getScaledWidth() - 20);
+    m_Textfield->setHeight(m_Textbox->getScaledHeight());
+    pClipActor->setSize(m_Textfield->getScaledSize());
     pClipActor->setX(10);
     pClipActor->setY(5);
 
     addChild(m_Textbox);
-    addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* event)
+#ifdef GRAPHICSUPPORT
+    addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* pEvent)
     {
-        event->stopPropagation();
-        emit sigFocused();
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
+        {
+            qint32 x = pTouchEvent->localPosition.x - m_Textfield->getX();
+            m_focusPosition = getClickedLinePosition(x, getCurrentText(), m_Textfield->getStyle().font.font);
+        }
+        pEvent->stopPropagation();
+        if (FocusableObject::getFocusedObject() == this)
+        {
+            setCursorPosition(m_focusPosition);
+        }
+        else
+        {
+            emit sigFocused();
+        }
     });
+#endif
 }
 
 bool Textbox::onEditFinished()
@@ -66,47 +86,45 @@ void Textbox::focusedLost()
 
 void Textbox::update(const oxygine::UpdateState& us)
 {
+#ifdef GRAPHICSUPPORT
     // no need to calculate more than we need if we're invisible
     QString drawText = getDrawText(getCurrentText());
-    if(m_focused)
+    if (m_lastDrawText != drawText)
     {
-        qint32 curmsgpos = getCursorPosition();
         m_Textfield->setHtmlText(drawText);
-        if (drawText.size() > 0)
+        m_lastDrawText = drawText;
+        if(m_focused)
         {
-            // calc text field position based on curmsgpos
-            qint32 xPos = 0;
-            qint32 fontWidth = m_Textfield->getTextRect().getWidth() / drawText.size();
-            qint32 boxSize = (m_Textbox->getWidth() - 40 - fontWidth);
-            xPos = -fontWidth * curmsgpos + boxSize / 2;
-            if (xPos > 0)
+            qint32 curmsgpos = getCursorPosition();
+            if (drawText.size() > 0)
             {
-                xPos = 0;
-            }
-            else if ((drawText.size() - curmsgpos + 3) * fontWidth < boxSize)
-            {
-                xPos = m_Textbox->getWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 3;
+                // calc text field position based on curmsgpos
+                qint32 xPos = 0;
+                auto textRect = m_Textfield->getTextRect();
+                qint32 fontWidth = textRect.getWidth() / drawText.size();
+                qint32 boxSize = (m_Textbox->getScaledWidth() - 40 - fontWidth);
+                xPos = -fontWidth * curmsgpos + boxSize / 2;
                 if (xPos > 0)
                 {
                     xPos = 0;
                 }
+                else if ((drawText.size() - curmsgpos + 3) * fontWidth < boxSize)
+                {
+                    xPos = m_Textbox->getScaledWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 3;
+                    if (xPos > 0)
+                    {
+                        xPos = 0;
+                    }
+                }
+                else
+                {
+                    // all fine
+                }
+                m_Textfield->setX(xPos);
             }
-            else
-            {
-                // all fine
-            }
-            m_Textfield->setX(xPos);
         }
     }
-    else
-    {
-        m_Textfield->setHtmlText(drawText);
-    }
-    qint32 width = m_Textfield->getTextRect().getWidth();
-    if (width != m_Textfield->getWidth())
-    {
-        m_Textfield->setWidth(m_Textfield->getTextRect().getWidth());
-    }
+#endif
     oxygine::Actor::update(us);
 }
 

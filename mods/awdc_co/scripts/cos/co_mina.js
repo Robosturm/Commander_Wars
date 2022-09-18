@@ -5,7 +5,7 @@ CO_MINA.init = function(co, map)
 };
 CO_MINA.activateSuperpower = function(co, powerMode, map)
 {
-	CO_MINA.activatePower(co, powerMode);
+	CO_MINA.activatePower(co, powerMode, map);
 };
 CO_MINA.getSuperPowerDescription = function()
 {

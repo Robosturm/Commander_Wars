@@ -1,4 +1,4 @@
-#include "multislider.h"
+#include "objects/base/multislider.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
@@ -6,16 +6,19 @@
 #include "objects/base/label.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Multislider");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
     qint32 textWidth = 0;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     for (qint32 i = 0; i < texts.size(); i++)
@@ -54,14 +57,12 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
             emit signalSliderValueChanged(i);
         });
         addChild(m_Slider[i]);
-        char unlockChar = FontManager::SpecialChars::unlockChar;
-        char lockChar = FontManager::SpecialChars::lockChar;
-        oxygine::spButton pLockButton = pObjectManager->createButton("", 40, "Locks this slider. So the value can't be changed.", "button_square");
-        Label* pLabel = oxygine::safeCast<Label*>(pLockButton->getFirstChild()->getFirstChild().get());
-        pLabel->setText(QString(unlockChar));
-        pLockButton->getFirstChild()->setY(-5);
-        pLockButton->getFirstChild()->setX(-8);
-        qint32 x = m_Slider[i]->getX() + m_Slider[i]->getWidth() + 10;
+
+        oxygine::spButton pLockButton = pObjectManager->createIconButton("unlock", 40);
+        oxygine::Sprite* pSprite = oxygine::safeCast<Sprite*>(pLockButton->getFirstChild().get());
+
+
+        qint32 x = m_Slider[i]->getX() + m_Slider[i]->getScaledWidth() + 10;
         pLockButton->setPosition(x, i * 40);        
         m_lockButtons.append(pLockButton);
         m_locked.append(false);
@@ -69,17 +70,15 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
         // add click listener for locking
         oxygine::Actor* pActor = pLockButton.get();
         auto* pSlider = m_Slider[i].get();
-        pLockButton->addClickListener([this, i, pActor, pLabel, unlockChar, lockChar, pSlider](oxygine::Event*)
+        pLockButton->addClickListener([this, i, pActor, pSprite, pObjectManager, pSlider](oxygine::Event*)
         {
             if (m_locked[i])
             {
-                pActor->getFirstChild()->setY(-5);
-                pLabel->setText(QString(unlockChar));
+                pSprite->setResAnim(pObjectManager->getResAnim("unlock"));
             }
             else
             {
-                pActor->getFirstChild()->setY(0);
-                pLabel->setText(QString(lockChar));
+                pSprite->setResAnim(pObjectManager->getResAnim("lock"));
             }
             pSlider->setEnabled(m_locked[i]);
             m_locked[i] = !m_locked[i];

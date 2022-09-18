@@ -14,7 +14,7 @@
 
 #include "coreengine/console.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "game/GameEnums.h"
 
@@ -22,10 +22,12 @@ class GLGraphicsView;
 class Settings;
 using spSettings = oxygine::intrusive_ptr<Settings>;
 
-class Settings : public QObject, public oxygine::ref_counter
+class Settings final : public QObject, public oxygine::ref_counter
 {
+public:
+    static const char* const DEFAULT_AUDIODEVICE;
+private:
     Q_OBJECT
-
     struct ValueBase
     {
         virtual void readValue(QSettings & settings) = 0;
@@ -121,6 +123,17 @@ class Settings : public QObject, public oxygine::ref_counter
                     *m_value = m_defaultValue;
                 }
             }
+            else if constexpr (std::is_same<TType, std::chrono::minutes>::value)
+            {
+                bool ok = false;
+                *m_value = std::chrono::minutes(settings.value(m_name, static_cast<qint64>(m_defaultValue.count())).toUInt(&ok));
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
+                {
+                    QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
+                    CONSOLE_PRINT(error, Console::eERROR);
+                    *m_value = m_defaultValue;
+                }
+            }
             else
             {
                 // not implemented data type
@@ -165,52 +178,75 @@ class Settings : public QObject, public oxygine::ref_counter
 #ifdef AUDIOSUPPORT
     struct AudioDeviceValue : public ValueBase
     {
-        AudioDeviceValue(const char* const group, const char* const name, QVariant* value)
+        AudioDeviceValue(const char* const group, const char* const name, QVariant* value, QString defaultValue)
             : m_group{group},
               m_name{name},
-              m_value{value}
+              m_value{value},
+              m_defaultValue{defaultValue}
         {
         }
-        virtual void readValue(QSettings & settings)
+        virtual void readValue(QSettings & settings) override
         {
             settings.beginGroup(m_group);
             const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
-            QString description = settings.value(m_name, "").toString();
-            const auto audioDevices = QMediaDevices::audioOutputs();
-            for (const auto & device : audioDevices)
+            QString description = settings.value(m_name, m_defaultValue).toString();
+            if (description == DEFAULT_AUDIODEVICE)
             {
-                if (device.description() == description)
+                *m_value = QVariant(DEFAULT_AUDIODEVICE);
+            }
+            else
+            {
+                const auto audioDevices = QMediaDevices::audioOutputs();
+                for (const auto & device : audioDevices)
                 {
-                    *m_value = QVariant::fromValue(device);
-                    break;
+                    if (device.description() == description)
+                    {
+                        *m_value = QVariant::fromValue(device);
+                        break;
+                    }
+                }
+                if (m_audioOutput.value<QAudioDevice>().isNull())
+                {
+                    *m_value = QVariant::fromValue(defaultDeviceInfo);
                 }
             }
-            if (m_audioOutput.value<QAudioDevice>().isNull())
+            settings.endGroup();
+        }
+        virtual void saveValue(QSettings & settings) override
+        {
+            settings.beginGroup(m_group);
+            if (m_value->typeId() == QMetaType::QString &&
+                m_value->toString() == DEFAULT_AUDIODEVICE)
             {
-                *m_value = QVariant::fromValue(defaultDeviceInfo);
+                settings.setValue(m_name, DEFAULT_AUDIODEVICE);
+            }
+            else
+            {
+                auto device = (*m_value).value<QAudioDevice>();
+                settings.setValue(m_name, device.description());
             }
             settings.endGroup();
         }
-        virtual void saveValue(QSettings & settings)
+        virtual void resetValue() override
         {
-            settings.beginGroup(m_group);
-            auto device = (*m_value).value<QAudioDevice>();
-            settings.setValue(m_name, device.description());
-            settings.endGroup();
-        }
-        virtual void resetValue()
-        {
-            const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
-            *m_value = QVariant::fromValue(defaultDeviceInfo);
+            *m_value = QVariant(Settings::DEFAULT_AUDIODEVICE);
         }
     private:
         const char* const m_group;
         const char* const m_name;
         QVariant* m_value;
+        QString m_defaultValue;
     };
 #endif
 public:
-    virtual ~Settings() = default;
+    enum class ScreenModes
+    {
+        Window,
+        Borderless,
+        FullScreen,
+    };
+
+    ~Settings() = default;
     static Settings* getInstance();
     static void shutdown();
 
@@ -218,20 +254,57 @@ public:
     static void saveSettings();
     static void resetSettings();
 
-    static quint16 getServerPort();
-    static void setServerPort(const quint16 &ServerPort);
+    static QString getLastSaveGame();
+    static void setLastSaveGame(const QString &LastSaveGame);
+
+    static const QString &getUpdateStep();
+    static void setUpdateStep(const QString &newUpdateStep);
+
+public slots:
+    static bool getAutomaticUpdates();
+    static void setAutomaticUpdates(bool newAutomaticUpdates);
 
     static QString getServerAdress();
     static void setServerAdress(const QString &ServerAdress);
 
-    static void setServer(bool Server);
+    static QString getSecondaryServerAdress();
+    static void setSecondaryServerAdress(const QString &newSecondaryServerAdress);
 
-    static QString getLastSaveGame();
-    static void setLastSaveGame(const QString &LastSaveGame);
+    static quint16 getServerPort();
+    static void setServerPort(const quint16 &ServerPort);
 
-    static void setUsername(const QString &Username);
+    static const QString &getServerPassword();
+    static void setServerPassword(const QString &newServerPassword);
 
-public slots:
+    static const QString &getMailServerSendAddress();
+    static void setMailServerSendAddress(const QString &newMailServerSendAddress);
+
+    static qint32 getMailServerAuthMethod();
+    static void setMailServerAuthMethod(qint32 newMailServerAuthMethod);
+
+    static const QString &getMailServerAddress();
+    static void setMailServerAddress(const QString &newMailServerAddress);
+
+    static quint16 getMailServerPort();
+    static void setMailServerPort(quint16 newMailServerPort);
+
+    static qint32 getMailServerConnectionType();
+    static void setMailServerConnectionType(qint32 newMailServerConnectionType);
+
+    static QString getMailServerUsername();
+    static void setMailServerUsername(QString newMailServerUsername);
+
+    static QString getMailServerPassword();
+    static void setMailServerPassword(QString newMailServerPassword);
+
+    static const std::chrono::seconds &getSlaveDespawnTime();
+    static void setSlaveDespawnTime(const std::chrono::seconds &newSlaveDespawnTime);
+
+    static QString getDefaultBannlist();
+    static void setDefaultBannlist(const QString &newDefaultBannlist);
+
+    static bool getUseHighDpi();
+    static void setUseHighDpi(bool newUseHighDpi);
 
     static bool getDay2dayScreen();
     static void setDay2dayScreen(bool newDay2dayScreen);
@@ -250,6 +323,9 @@ public slots:
 
     static const QString &getServerListenAdress();
     static void setServerListenAdress(const QString &newServerListenAdress);
+
+    static const QString &getServerSecondaryListenAdress();
+    static void setServerSecondaryListenAdress(const QString &newServerSecondaryListenAdress);
 
     static quint16 getSlaveServerPort();
     static void setSlaveServerPort(quint16 newSlaveServerPort);
@@ -275,7 +351,7 @@ public slots:
     static float getGamepadSensitivity();
     static void setGamepadSensitivity(float newGamepadSensitivity);
 
-    static const QString &getDefaultRuleset();
+    static QString getDefaultRuleset();
     static void setDefaultRuleset(const QString &newDefaultRuleset);
 
     static bool getUseCoMinis();
@@ -296,7 +372,7 @@ public slots:
     static bool getShowDetailedBattleForcast();
     static void setShowDetailedBattleForcast(bool newShowDetailedBattleForcast);
 
-    static const QString &getUserPath();
+    static QString getUserPath();
     static void setUserPath(const QString &newUserPath);
 
     static bool getTouchScreen();
@@ -436,6 +512,8 @@ public slots:
 
     static std::chrono::seconds getAutoSavingCylceTime();
     static void setAutoSavingCylceTime(const std::chrono::seconds &value);
+    static quint64 getAutoSavingCylceTimeRaw();
+    static void setAutoSavingCylceTimeRaw(quint64 &value);
 
     static qint32 getAutoSavingCycle();
     static void setAutoSavingCycle(const qint32 &value);
@@ -459,6 +537,7 @@ public slots:
     static void setMenuItemCount(const qint32 &MenuItemCount);
 
     static QString getModString();
+    static void filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter);
     static QString getConfigString(QStringList mods);
 
     static quint32 getMultiTurnCounter();
@@ -473,6 +552,7 @@ public slots:
     static GameEnums::BattleAnimationType getBattleAnimationType();
     static void setBattleAnimationType(const GameEnums::BattleAnimationType &value);
 
+    static void setUsername(const QString &Username);
     static QString getUsername();
     static void setX(const qint32 &x);
     inline static qint32 getX()
@@ -543,6 +623,7 @@ public slots:
     {
         m_GamePort = value;
     }
+    static void setServer(bool Server);
     static inline bool getServer()
     {
         return m_Server;
@@ -672,6 +753,71 @@ public slots:
      * @return
      */
     static bool getIsCosmetic(QString mod);
+    /**
+     * @brief getAudioDevices
+     * @return
+     */
+    static QStringList getAudioDevices();
+    /**
+     * @brief getCurrentDevice
+     * @return
+     */
+    static qint32 getCurrentDevice();
+    /**
+     * @brief setAudioDevice
+     * @param value
+     */
+    static void setAudioDevice(qint32 value);
+    /**
+     * @brief getScreenSize
+     * @return
+     */
+    static QSize getScreenSize();
+    /**
+     * @brief Settings::getDpiFactor
+     * @return
+     */
+    static float getDpiFactor();
+    /**
+     * @brief getScreenMode
+     * @return
+     */
+    static qint32 getScreenMode();
+    /**
+     * @brief setScreenMode
+     * @param value
+     */
+    static void setScreenMode(qint32 value);
+    /**
+     * @brief changeBrightness
+     * @param value
+     */
+    static void changeBrightness(qint32 value);
+    /**
+     * @brief changeGamma
+     * @param value
+     */
+    static void changeGamma(float value);
+    /**
+     * @brief isGamepadSupported
+     * @return
+     */
+    static bool isGamepadSupported();
+    /**
+     * @brief getLanguageNames
+     * @return
+     */
+    static QStringList getLanguageNames();
+    /**
+     * @brief getLanguageIds
+     * @return
+     */
+    static QStringList getLanguageIds();
+    /**
+     * @brief getCurrentLanguageIndex
+     * @return
+     */
+    static qint32 getCurrentLanguageIndex();
 private:
     friend class oxygine::intrusive_ptr<Settings>;
     explicit Settings();
@@ -692,6 +838,8 @@ private:
     static bool m_gamepadEnabled;
     static float m_gamepadSensitivity;
     static qint32 m_framesPerSecond;
+    static bool m_useHighDpi;
+    static bool m_automaticUpdates;
 
     static bool m_borderless;
     static bool m_fullscreen;
@@ -761,14 +909,27 @@ private:
     static quint16 m_GamePort;
     static QString m_Username;
     static QString m_slaveServerName;
+    static QString m_serverPassword;
 
     static bool m_Server;
     static quint16 m_ServerPort;
     static quint16 m_slaveServerPort;
     static QString m_ServerAdress;
+    static QString m_secondaryServerAdress;
     static QString m_serverListenAdress;
+    static QString m_serverSecondaryListenAdress;
     static QString m_slaveListenAdress;
     static QString m_slaveHostOptions;
+    static std::chrono::seconds m_slaveDespawnTime;
+
+    // mailing
+    static QString m_mailServerAddress;
+    static quint16 m_mailServerPort;
+    static qint32 m_mailServerConnectionType;
+    static QString m_mailServerUsername;
+    static QString m_mailServerPassword;
+    static QString m_mailServerSendAddress;
+    static qint32 m_mailServerAuthMethod;
 
     // auto saving
     static std::chrono::seconds m_autoSavingCylceTime;
@@ -792,6 +953,7 @@ private:
     static quint32 multiTurnCounter;
     static QString m_LastSaveGame;
     static QString m_defaultRuleset;
+    static QString m_defaultBannlist;
     static bool m_ShowCursor;
     static bool m_AutoEndTurn;
     static qint32 m_MenuItemCount;
@@ -820,6 +982,7 @@ private:
     static QStringList m_activeModVersions;
     static QString m_userPath;
     static QTranslator m_Translator;
+    static QString m_updateStep;
 
     // logging
     static bool m_LogActions;

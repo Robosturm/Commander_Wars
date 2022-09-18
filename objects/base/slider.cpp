@@ -1,6 +1,8 @@
-#include "slider.h"
+#include "objects/base/slider.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
@@ -10,9 +12,13 @@ Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
       m_maxValue(maxValue),
       m_Unit(unit)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Slider");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
     V_Scrollbar::setScrollspeed( width / (maxValue - minValue));
 
     m_spinBox = spSpinBox::create(150, minValue, maxValue);
@@ -22,7 +28,7 @@ Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
     m_spinBox->setX(getWidth() + 15);
     connect(this, &Slider::V_Scrollbar::sigScrollValueChanged, this, &Slider::slotSliderValueChanged, Qt::QueuedConnection);
     connect(m_spinBox.get(), &SpinBox::sigValueChanged, this, &Slider::slotSpinBoxValueChanged, Qt::QueuedConnection);
-    oxygine::Actor::setWidth(m_spinBox->getX() + m_spinBox->getWidth());
+    oxygine::Actor::setWidth(m_spinBox->getX() + m_spinBox->getScaledWidth());
 }
 
 void Slider::slotSliderValueChanged(float value)

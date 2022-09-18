@@ -2,26 +2,24 @@
 #define MULTISLIDER_H
 
 #include <QObject>
-
 #include <QString>
-
 #include <QVector>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/slider.h"
 #include "objects/base/tooltip.h"
 
 class Multislider;
-typedef oxygine::intrusive_ptr<Multislider> spMultislider;
+using spMultislider = oxygine::intrusive_ptr<Multislider>;
 
-class Multislider : public Tooltip
+class Multislider final : public Tooltip
 {
     Q_OBJECT
 public:
     explicit Multislider(QStringList texts, qint32 width, QVector<qint32> values = {});
-    virtual ~Multislider() = default;
+    ~Multislider() = default;
     qint32 getSliderValue(qint32 slider);
     virtual void setEnabled(bool value) override;
 signals:

@@ -7,7 +7,7 @@
 class ScriptConditionTerrainDestroyed;
 typedef oxygine::intrusive_ptr<ScriptConditionTerrainDestroyed> spScriptConditionTerrainDestroyed;
 
-class ScriptConditionTerrainDestroyed : public ScriptCondition
+class ScriptConditionTerrainDestroyed final : public ScriptCondition
 {
     Q_OBJECT
 public:

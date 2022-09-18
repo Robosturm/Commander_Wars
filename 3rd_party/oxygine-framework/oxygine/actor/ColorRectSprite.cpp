@@ -9,14 +9,16 @@ namespace oxygine
 
     ColorRectSprite::ColorRectSprite()
     {
+#ifdef GRAPHICSUPPORT
         Material mat;
         mat.m_base = STDRenderer::white;
         m_mat = MaterialCache::mc().cache(mat);
+#endif
     }
 
     void ColorRectSprite::doRender(const RenderState& rs)
     {
-        m_rdelegate->doRender(this, rs);
+        RenderDelegate::instance->doRender(this, rs);
     }
 
     void ColorRectSprite::sizeChanged(const Vector2& size)

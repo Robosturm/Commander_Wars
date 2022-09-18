@@ -1,8 +1,7 @@
 #ifndef MENUDATA_H
 #define MENUDATA_H
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include <QObject>
 #include <QStringList>
 #include <QVector>
@@ -12,28 +11,15 @@ class GameMap;
 class MenuData;
 using spMenuData = oxygine::intrusive_ptr<MenuData>;
 
-class MenuData : public QObject, public oxygine::ref_counter
+class MenuData final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     explicit MenuData(GameMap* pMap);
-    virtual ~MenuData() = default;
-
+    ~MenuData();
     QStringList getTexts()
     {
         return m_texts;
-    }
-    QStringList getActionIDs()
-    {
-        return m_actionIDs;
-    }
-    QVector<qint32> getCostList()
-    {
-        return m_costList;
-    }
-    QVector<bool> getEnabledList()
-    {
-        return m_enabledList;
     }
     QVector<oxygine::spActor> getIconList()
     {
@@ -41,6 +27,30 @@ public:
     }
 
 public slots:
+    /**
+     * @brief getActionIDs
+     * @return
+     */
+    QStringList getActionIDs()
+    {
+        return m_actionIDs;
+    }
+    /**
+     * @brief getCostList
+     * @return
+     */
+    QVector<qint32> getCostList()
+    {
+        return m_costList;
+    }
+    /**
+     * @brief getEnabledList
+     * @return
+     */
+    QVector<bool> getEnabledList()
+    {
+        return m_enabledList;
+    }
     /**
      * @brief getMap
      * @return
@@ -69,7 +79,13 @@ public slots:
      * @return
      */
     bool validData();
-
+    /**
+     * @brief remove
+     */
+    void remove()
+    {
+        delete this;
+    }
 private:
     QStringList m_texts;
     QStringList m_actionIDs;

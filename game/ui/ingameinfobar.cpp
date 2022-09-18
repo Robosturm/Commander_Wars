@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/slidingsprite.h"
+
 #include "game/ui/ingameinfobar.h"
 
 #include "coreengine/mainapp.h"
@@ -14,14 +16,21 @@
 #include "game/player.h"
 #include "game/co.h"
 #include "game/gameanimation/battleanimationsprite.h"
+
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "objects/base/label.h"
 
-IngameInfoBar::IngameInfoBar(GameMap* pMap)
-    : m_pMap(pMap)
+static const char* const FONT = "infoBar16";
+
+IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
+    : m_pMap(pMap),
+      m_pMenu(pMenu)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("IngameInfoBar");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -46,27 +55,35 @@ IngameInfoBar::IngameInfoBar(GameMap* pMap)
 
     pMiniMapBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pMinimap = spMinimap::create();
+    m_pMinimap->setMenu(pMenu);
     m_pMinimap->setPosition(0, 0);
     updateMinimap();
-    m_pMinimap->setScale(2.0f);
+    if (getScaleY() < 1.0f)
+    {
+        m_pMinimap->setScale(1.0f / getScaleY());
+    }
+    else
+    {
+        m_pMinimap->setScale(2.0f);
+    }
     m_pMinimapSlider = oxygine::spSlidingActor::create();
     m_pMinimapSlider->setPosition(10, 10);
-    m_pMinimapSlider->setSize(pMiniMapBox->getWidth() - 20,
-                              pMiniMapBox->getHeight() - 20);
+    m_pMinimapSlider->setSize(pMiniMapBox->getScaledWidth() - 20,
+                              pMiniMapBox->getScaledHeight() - 20);
     m_pMinimapSlider->setContent(m_pMinimap);
     pMiniMapBox->addChild(m_pMinimapSlider);
     addChild(pMiniMapBox);
 
     m_pGameInfoBox = oxygine::spBox9Sprite::create();
     m_pGameInfoBox->setResAnim(pAnim);
-    m_pGameInfoBox->setPosition(0, pMiniMapBox->getHeight());
+    m_pGameInfoBox->setPosition(0, pMiniMapBox->getScaledHeight());
     m_pGameInfoBox->setSize(width, gameInfoHeigth);
     m_pGameInfoBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(m_pGameInfoBox);
 
     m_pCursorInfoBox = oxygine::spBox9Sprite::create();
     m_pCursorInfoBox->setResAnim(pAnim);
-    m_pCursorInfoBox->setPosition(0, pMiniMapBox->getHeight() + gameInfoHeigth);
+    m_pCursorInfoBox->setPosition(0, pMiniMapBox->getScaledHeight() + gameInfoHeigth);
     m_pCursorInfoBox->setSize(width, cursorInfoHeigth);
     m_pCursorInfoBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
@@ -82,7 +99,8 @@ IngameInfoBar::IngameInfoBar(GameMap* pMap)
         m_pDetailedViewBox->setScale(1 / getScaleX());
     }
     m_pDetailedViewBox->setSize(130, 199);
-    m_pDetailedViewBox->setPosition(-m_pDetailedViewBox->getScaledWidth(), m_pCursorInfoBox->getHeight() - m_pDetailedViewBox->getScaledHeight());
+    m_pDetailedViewBox->setPosition(-m_pDetailedViewBox->getScaledWidth(),
+                                    m_pCursorInfoBox->getScaledHeight() - m_pDetailedViewBox->getScaledHeight());
 
     setX(Settings::getWidth() - getScaledWidth());
     addChild(m_pCursorInfoBox);
@@ -99,8 +117,7 @@ void IngameInfoBar::updatePlayerInfo()
         m_pMap->getCurrentPlayer() != nullptr)
     {
         m_pDetailedViewBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
-        spGameMenue pMenu = GameMenue::getInstance();
-        if (pMenu.get() != nullptr)
+        if (m_pMenu != nullptr)
         {
             Player* pPlayer = m_pMap->getCurrentPlayer();
             if (pPlayer != nullptr)
@@ -113,9 +130,9 @@ void IngameInfoBar::updatePlayerInfo()
                 style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
                 pName->setStyle(style);
                 pName->setPosition(x1, y - 5);
-                pName->setHtmlText(pPlayer->getDisplayName());
+                pName->setHtmlText(pPlayer->getPlayerNameId());
                 m_pGameInfoBox->addChild(pName);
-                y += 30;
+                y += pName->getScaledHeight();
 
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
                 CO* pCO = pPlayer->getCO(0);
@@ -233,9 +250,7 @@ void IngameInfoBar::updatePlayerInfo()
                     m_pGameInfoBox->addChild(pBox);
                 }
 
-                style = oxygine::TextStyle(FontManager::getMainFont16());
-                style.color = FontManager::getFontColor();
-                style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+                style = oxygine::TextStyle(FontManager::getFont(FONT));
                 style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
                 style.multiline = false;
 
@@ -256,7 +271,7 @@ void IngameInfoBar::updatePlayerInfo()
                 m_pGameInfoBox->addChild(pTextfield);
                 y += 25;
 
-                Player* pViewPlayer = pMenu->getCurrentViewPlayer();
+                Player* pViewPlayer = m_pMenu->getCurrentViewPlayer();
                 if (pViewPlayer != nullptr)
                 {
                     pTextfield = spLabel::create(width);
@@ -368,24 +383,69 @@ void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)
 }
 
 void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
-{    
-    
+{
     if (m_pMap != nullptr && m_pMap->onMap(x, y) && (m_LastX != x || m_LastY != y || update))
     {
         m_pDetailedViewBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
         m_LastX = x;
         m_LastY = y;
         m_pCursorInfoBox->removeChildren();
-        spGameMenue pGamemenu = GameMenue::getInstance();
-        if (pGamemenu.get() != nullptr)
+        if (m_pMenu != nullptr)
         {
-            Player* pPlayer = pGamemenu->getCurrentViewPlayer();
-            GameEnums::VisionType visionHide = pPlayer->getFieldVisibleType(x, y);
-            if (visionHide != GameEnums::VisionType_Shrouded)
+            Player* pPlayer = m_pMenu->getCurrentViewPlayer();
+            if (pPlayer != nullptr)
             {
-                updateDetailedView(x, y);
-                createTerrainInfo(x, y);
-                createUnitInfo(x, y);
+                GameEnums::VisionType visionHide = pPlayer->getFieldVisibleType(x, y);
+                if (visionHide != GameEnums::VisionType_Shrouded)
+                {
+                    updateDetailedView(x, y);
+                    createTerrainInfo(x, y);
+                    if (!createUnitInfo(x, y))
+                    {
+                        createMovementInfo(x, y);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void IngameInfoBar::createMovementInfo(qint32 x, qint32 y)
+{
+    constexpr qint32 yAdvance = 22;
+    oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getFont(FONT));
+    smallStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    smallStyle.multiline = false;
+
+    MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
+
+    Terrain* pTerrain = m_pMap->getTerrain(x, y);
+    qint32 posY = 80;
+    qint32 posX = 10;
+    auto movements = pMovementTableManager->getLoadedRessources();
+    for (const auto & movement : qAsConst(movements))
+    {
+        qint32 cost = pMovementTableManager->getBaseMovementPoints(movement, pTerrain, pTerrain, nullptr);
+        if (cost >= 0)
+        {
+            QString name = pMovementTableManager->getName(movement) + " : " ;
+            name += QString::number(cost);
+            spLabel pTextfield = spLabel::create(m_pCursorInfoBox->getScaledWidth() / 2 - 30);
+            pTextfield->setPosition(posX, posY);
+            pTextfield->setStyle(smallStyle);
+            pTextfield->setHtmlText(name);
+            m_pCursorInfoBox->addChild(pTextfield);
+            posY += yAdvance;
+            if (posY + yAdvance >= m_pCursorInfoBox->getScaledHeight())
+            {
+                if (posX > yAdvance)
+                {
+                    break;
+                }
+                else
+                {
+                    posX += m_pCursorInfoBox->getScaledWidth() / 2 + 5;
+                }
             }
         }
     }
@@ -396,19 +456,17 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     static constexpr qint32 xOffset = 2;
     static constexpr qint32 yOffset = 4;
     bool hpHidden = false;
-    spGameMenue pGamemenu = GameMenue::getInstance();
-    
     Terrain* pTerrain = m_pMap->getTerrain(x, y);
     spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
     spUnit pUnit = spUnit(pTerrain->getUnit());
-    Player* pPlayer = pGamemenu->getCurrentViewPlayer();
+    Player* pPlayer = m_pMenu->getCurrentViewPlayer();
     if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
     {
         pUnit = nullptr;
     }
     if (pUnit.get() != nullptr)
     {
-        hpHidden = pUnit->getHpHidden(pGamemenu->getCurrentViewPlayer());
+        hpHidden = pUnit->getHpHidden(m_pMenu->getCurrentViewPlayer());
     }
     GameManager* pGameManager = GameManager::getInstance();
     m_pDetailedViewBox->removeChildren();
@@ -521,20 +579,17 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     }
 }
 
-void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
+bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
 {
-    oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getMainFont16());
-    smallStyle.color = FontManager::getFontColor();
-    smallStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    bool created = false;
+    oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getFont(FONT));
     smallStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     smallStyle.multiline = false;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("barforeground");
-    spGameMenue pGamemenu = GameMenue::getInstance();
-    
     Terrain* pTerrain = m_pMap->getTerrain(x, y);
     spUnit pUnit = spUnit(pTerrain->getUnit());
-    Player* pPlayer = pGamemenu->getCurrentViewPlayer();
+    Player* pPlayer = m_pMenu->getCurrentViewPlayer();
     if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
     {
         pUnit = nullptr;
@@ -542,9 +597,10 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
     if (pUnit.get() != nullptr &&
         pAnim != nullptr)
     {
+        created = true;
         qint32 posY = 80;
         qint32 posX = 10;
-        spLabel pTextfield = spLabel::create(m_pCursorInfoBox->getWidth() - 20);
+        spLabel pTextfield = spLabel::create(m_pCursorInfoBox->getScaledWidth() - 20);
         pTextfield->setPosition(posX, posY);
         pTextfield->setStyle(smallStyle);
         pTextfield->setHtmlText(pUnit->getName());
@@ -553,8 +609,8 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         posY += 22;
         float hp = pUnit->getHp();
         float divider = static_cast<float>(hp) / static_cast<float>(Unit::MAX_UNIT_HP);
-        bool hpHidden = pUnit->getHpHidden(pGamemenu->getCurrentViewPlayer());
-        bool perfectHpVision = pUnit->getPerfectHpView(pGamemenu->getCurrentViewPlayer());
+        bool hpHidden = pUnit->getHpHidden(m_pMenu->getCurrentViewPlayer());
+        bool perfectHpVision = pUnit->getPerfectHpView(m_pMenu->getCurrentViewPlayer());
         if (hpHidden)
         {
             divider = 0.0f;
@@ -575,7 +631,7 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         addColorbar(divider, posX, posY, color);
         qint32 hpRounded = pUnit->getHpRounded();
         float countMax = Unit::MAX_UNIT_HP;
-        pTextfield = spLabel::create(pAnim->getWidth() - 10);
+        pTextfield = spLabel::create(pAnim->getWidth() - 5);
         pTextfield->setStyle(smallStyle);
         if (hpHidden)
         {
@@ -597,7 +653,7 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
 
         qint32 fuel = pUnit->getFuel();
         qint32 maxFuel = pUnit->getMaxFuel();
-        pTextfield = spLabel::create(pAnim->getWidth() - 10);
+        pTextfield = spLabel::create(pAnim->getWidth() - 5);
         pTextfield->setStyle(smallStyle);
         if (maxFuel > 0.0f)
         {
@@ -609,8 +665,8 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
             divider = 0.0f;
             pTextfield->setHtmlText(tr("Fuel: -/-"));
         }
-        addColorbar(divider, posX + pAnim->getWidth() + 10, posY, QColor(0, 0, 255, 255));
-        pTextfield->setPosition(posX + pAnim->getWidth() + 15, posY);
+        addColorbar(divider, posX + pAnim->getWidth() + 5, posY, QColor(0, 0, 255, 255));
+        pTextfield->setPosition(posX + pAnim->getWidth() + 10, posY);
         m_pCursorInfoBox->addChild(pTextfield);
         posY += 5 + pAnim->getHeight();
 
@@ -634,7 +690,7 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
 
         qint32 ammo2 = pUnit->getAmmo2();
         qint32 maxAmmo2 = pUnit->getMaxAmmo2();
-        pTextfield = spLabel::create(pAnim->getWidth() - 10);
+        pTextfield = spLabel::create(pAnim->getWidth() - 5);
         pTextfield->setStyle(smallStyle);
         if (maxAmmo2 > 0)
         {
@@ -646,8 +702,8 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
             pTextfield->setHtmlText(tr("Ammo 2: -/-"));
             divider = 0.0f;
         }
-        addColorbar(divider, posX + pAnim->getWidth() + 10, posY, QColor(0, 255, 0, 255));
-        pTextfield->setPosition(posX + pAnim->getWidth() + 15, posY);
+        addColorbar(divider, posX + pAnim->getWidth() + 5, posY, QColor(0, 255, 0, 255));
+        pTextfield->setPosition(posX + pAnim->getWidth() + 10, posY);
         m_pCursorInfoBox->addChild(pTextfield);
         posY += 5 + pAnim->getHeight();
 
@@ -766,129 +822,126 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
             }
         }
     }
+    return created;
 }
 
 void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
 {
-    oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getMainFont16());
-    smallStyle.color = FontManager::getFontColor();
-    smallStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getFont(FONT));
     smallStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     smallStyle.multiline = false;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("barforeground");
     if (pAnim != nullptr)
     {
-    spGameMenue pGamemenu = GameMenue::getInstance();
-    
-    Terrain* pTerrain = m_pMap->getTerrain(x, y);
-    spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
-    spUnit pUnit = spUnit(pTerrain->getUnit());
-    Player* pPlayer = pGamemenu->getCurrentViewPlayer();
-    if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
-    {
-        pUnit = nullptr;
-    }
-    qint32 posY = 5;
-    qint32 posX = 10;
-    spLabel pTextfield = spLabel::create(m_pCursorInfoBox->getWidth() - 20);
-    pTextfield->setPosition(posX, posY);
-    pTextfield->setStyle(smallStyle);
-    QString name = "";
-    if (pBuilding.get() != nullptr)
-    {
-        name = pBuilding->getName();
-    }
-    else
-    {
-        name = pTerrain->getTerrainName();
-    }
-    pTextfield->setHtmlText(name);
-    m_pCursorInfoBox->addChild(pTextfield);
-    smallStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    posY += 22;
-    // draw building hp
-    qint32 hp = 0;
-    if ((pBuilding.get() != nullptr) && (pBuilding->getHp() > 0))
-    {
-        hp = pBuilding->getHp();
-    }
-    else if ((pTerrain->getHp() > 0))
-    {
-        hp = pTerrain->getHp();
-    }
-    bool barAdded = false;
-    if (hp > 0)
-    {
-        qint32 hpMax = 100;
-        if (hp > 100)
+        Terrain* pTerrain = m_pMap->getTerrain(x, y);
+        spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
+        spUnit pUnit = spUnit(pTerrain->getUnit());
+        Player* pPlayer = m_pMenu->getCurrentViewPlayer();
+        if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
         {
-            hpMax = hp;
+            pUnit = nullptr;
         }
-        float divider = static_cast<float>(hp) / static_cast<float>(hpMax);
-        QColor color;
-        if (divider > 2.0f / 3.0f)
+        qint32 posY = 5;
+        qint32 posX = 10;
+        spLabel pTextfield = spLabel::create(m_pCursorInfoBox->getScaledWidth() - 20);
+        pTextfield->setPosition(posX, posY);
+        pTextfield->setStyle(smallStyle);
+        QString name = "";
+        if (pBuilding.get() != nullptr)
         {
-            color = QColor(0, 128, 0, 255);
-        }
-        else if (divider > 1.0f / 3.0f)
-        {
-            color = QColor(255, 128, 0, 255);
+            name = pBuilding->getName();
         }
         else
         {
-            color = QColor(255, 0, 0, 255);
+            name = pTerrain->getTerrainName();
         }
-        addColorbar(divider, posX + 10 + pAnim->getWidth() + 5, posY, color);
-        pTextfield = spLabel::create(pAnim->getWidth() - 10);
-        pTextfield->setStyle(smallStyle);
-        pTextfield->setHtmlText(tr("HP: ") + QString::number(hp));
-        pTextfield->setPosition(posX + 10 + pAnim->getWidth() + 10, posY);
+        pTextfield->setHtmlText(name);
         m_pCursorInfoBox->addChild(pTextfield);
-        barAdded = true;
-    }
-    if (pBuilding.get() != nullptr)
-    {
-        constexpr qint32 maxCapturepoints = 20;
-        qint32 resistance = maxCapturepoints;
-        if (pUnit.get() != nullptr)
+        smallStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+        posY += 22;
+        // draw building hp
+        qint32 hp = 0;
+        if ((pBuilding.get() != nullptr) && (pBuilding->getHp() > 0))
         {
-            resistance = maxCapturepoints - pUnit->getCapturePoints();
+            hp = pBuilding->getHp();
         }
-        addColorbar(static_cast<float>(resistance) / static_cast<float>(maxCapturepoints), posX, posY, Qt::cyan);
-        pTextfield = spLabel::create(pAnim->getWidth() - 10);
-        pTextfield->setPosition(posX + 5, posY);
-        pTextfield->setStyle(smallStyle);
-        pTextfield->setHtmlText((tr("Resistance: ") + QString::number(resistance)));
-        m_pCursorInfoBox->addChild(pTextfield);
-        barAdded = true;
-    }
-    if (barAdded)
-    {
-        posY += 5 + pAnim->getHeight();
-    }
+        else if ((pTerrain->getHp() > 0))
+        {
+            hp = pTerrain->getHp();
+        }
+        bool barAdded = false;
+        if (hp > 0)
+        {
+            qint32 hpMax = 100;
+            if (hp > 100)
+            {
+                hpMax = hp;
+            }
+            float divider = static_cast<float>(hp) / static_cast<float>(hpMax);
+            QColor color;
+            if (divider > 2.0f / 3.0f)
+            {
+                color = QColor(0, 128, 0, 255);
+            }
+            else if (divider > 1.0f / 3.0f)
+            {
+                color = QColor(255, 128, 0, 255);
+            }
+            else
+            {
+                color = QColor(255, 0, 0, 255);
+            }
+            addColorbar(divider, posX + pAnim->getWidth() + 10, posY, color);
+            pTextfield = spLabel::create(pAnim->getWidth() - 5);
+            pTextfield->setStyle(smallStyle);
+            pTextfield->setHtmlText(tr("HP: ") + QString::number(hp));
+            pTextfield->setPosition(posX + 10 + pAnim->getWidth() + 5, posY);
+            m_pCursorInfoBox->addChild(pTextfield);
+            barAdded = true;
+        }
+        if (pBuilding.get() != nullptr)
+        {
+            constexpr qint32 maxCapturepoints = 20;
+            qint32 resistance = maxCapturepoints;
+            if (pUnit.get() != nullptr)
+            {
+                resistance = maxCapturepoints - pUnit->getCapturePoints();
+            }
+            addColorbar(static_cast<float>(resistance) / static_cast<float>(maxCapturepoints), posX, posY, Qt::cyan);
+            pTextfield = spLabel::create(pAnim->getWidth() - 5);
+            pTextfield->setPosition(posX + 5, posY);
+            pTextfield->setStyle(smallStyle);
+            pTextfield->setHtmlText((tr("Resistance: ") + QString::number(resistance)));
+            m_pCursorInfoBox->addChild(pTextfield);
+            barAdded = true;
+        }
+        if (barAdded)
+        {
+            posY += 5 + pAnim->getHeight();
+        }
 
-    // show building information
-    if (pBuilding.get() != nullptr)
-    {
-        GameEnums::VisionType visionHide = pPlayer->getFieldVisibleType(x, y);
-        QString ownerText = tr("Neutral");
-        if (pBuilding->getOwner() != nullptr &&
-            visionHide == GameEnums::VisionType_Clear)
+        // show building information
+        if (pBuilding.get() != nullptr)
         {
-            ownerText = tr("Player ") + QString::number(pBuilding->getOwner()->getPlayerID() + 1);
+            GameEnums::VisionType visionHide = pPlayer->getFieldVisibleType(x, y);
+            QString ownerText = tr("Neutral");
+            if (pBuilding->getOwner() != nullptr &&
+                visionHide == GameEnums::VisionType_Clear)
+            {
+                ownerText = tr("Player ") + QString::number(pBuilding->getOwner()->getPlayerID() + 1);
+            }
+            pTextfield = spLabel::create(spriteWidth - 5);
+            pTextfield->setPosition(posX, posY);
+            pTextfield->setStyle(smallStyle);
+            pTextfield->setHtmlText(tr("Owner:"));
+            m_pCursorInfoBox->addChild(pTextfield);
+            pTextfield = spLabel::create(spriteWidth);
+            pTextfield->setPosition(posX + spriteWidth, posY);
+            pTextfield->setStyle(smallStyle);
+            pTextfield->setHtmlText(ownerText);
+            m_pCursorInfoBox->addChild(pTextfield);
         }
-        pTextfield = spLabel::create(spriteWidth - 5);
-        pTextfield->setPosition(posX, posY);
-        pTextfield->setStyle(smallStyle);
-        pTextfield->setHtmlText(tr("Owner:"));
-        m_pCursorInfoBox->addChild(pTextfield);
-        pTextfield = spLabel::create(spriteWidth);
-        pTextfield->setPosition(posX + spriteWidth, posY);
-        pTextfield->setStyle(smallStyle);
-        pTextfield->setHtmlText(ownerText);
-        m_pCursorInfoBox->addChild(pTextfield);
-    }
     }
 }
 
@@ -906,7 +959,7 @@ void IngameInfoBar::addColorbar(float divider, qint32 posX, qint32 posY, QColor 
         pColorBar = oxygine::spColorRectSprite::create();
         pColorBar->setColor(127, 127, 127, 255);
         pColorBar->setSize((1 - divider) * pAnim->getWidth(), pAnim->getHeight());
-        pColorBar->setPosition(posX + pAnim->getWidth() - pColorBar->getWidth(), posY);
+        pColorBar->setPosition(posX + pAnim->getWidth() - pColorBar->getScaledWidth(), posY);
         m_pCursorInfoBox->addChild(pColorBar);
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setResAnim(pAnim);

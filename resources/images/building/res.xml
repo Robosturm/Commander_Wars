@@ -421,5 +421,19 @@
                 
         <!-- depot -->
         <image file="depot.png" />
+        <image file="depot+shadow+desert.png" />
+        <image file="depot+shadow+snow.png" />
+        <image file="depot+shadow+plains.png" />
+        <image file="depot+shadow+waste.png" />
+        
+        <!-- powerplant -->
+        <image file="powerplant.png" cols = "2" />
+        <image file="powerplant+mask.png" cols = "2" />
+        <image file="powerplant+snow.png" cols = "2" />
+        <image file="powerplant+neutral.png" />
+        <image file="powerplant+shadow+desert.png" />
+        <image file="powerplant+shadow+snow.png" />
+        <image file="powerplant+shadow+plains.png" />
+        <image file="powerplant+shadow+waste.png" />
     </atlas>
 </resources>

@@ -1,13 +1,20 @@
 #include "objects/base/topbar.h"
+
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
 Topbar::Topbar(qint32 x, qint32 width)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Topbar");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
     // create the box for the bar in which everything will be placed
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_pSpriteBox = oxygine::spBox9Sprite::create();
@@ -48,8 +55,6 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     clipRect->setSize(280, 40);
     oxygine::spTextField textField = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
     textField->setStyle(style);
@@ -92,8 +97,6 @@ void Topbar::addGroup(QString text)
 
     oxygine::spTextField textField = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
     textField->setStyle(style);
@@ -104,7 +107,7 @@ void Topbar::addGroup(QString text)
     qint32 x = 22;
     for (qint32 i = 0; i < m_Buttons.size(); i++)
     {
-        x += m_Buttons.at(i)->getWidth() + 5;
+        x += m_Buttons.at(i)->getScaledWidth() + 5;
     }
     pButton->setPosition(x, 18);
     qint32 groupID = m_Buttons.size();
@@ -137,6 +140,7 @@ void Topbar::finishCreation()
         spPanel pPanel = spPanel::create(false, size, QSize(size.width(), m_Items[i].size() * 40));
         pPanel->setSubComponent(true);
         pPanel->setVisible(false);
+        pPanel->setStopMouseWheel(true);
         for (auto & item : m_Items[i])
         {
             pPanel->addItem(item);

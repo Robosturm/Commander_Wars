@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/panel.h"
 
@@ -16,12 +16,12 @@ class GameMap;
 class ScriptEditor;
 using spScriptEditor = oxygine::intrusive_ptr<ScriptEditor>;
 
-class ScriptEditor : public QObject, public oxygine::Actor
+class ScriptEditor final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit ScriptEditor(GameMap* pMap);
-    virtual ~ScriptEditor() = default;
+    ~ScriptEditor() = default;
 signals:
     /**
      * @brief sigSaveScript

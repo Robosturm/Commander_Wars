@@ -1,5 +1,7 @@
 #include <QFile>
-#include <QGuiApplication>
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
@@ -29,7 +31,8 @@
 #include "gameinput/humanplayerinput.h"
 
 #include "menue/gamemenue.h"
-#include "menue/ingamemenue.h"
+#include "menue/basegamemenu.h"
+#include "menue/movementplanner.h"
 
 #include "objects/loadingscreen.h"
 
@@ -48,7 +51,9 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     : m_CurrentPlayer(nullptr),
       m_Rules(spGameRules::create(this))
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     m_headerInfo.m_mapAuthor = Settings::getUsername();
@@ -62,7 +67,9 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
       m_Rules(spGameRules::create(this)),
       m_savegame(savegame)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     loadMapData();
@@ -75,7 +82,9 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
       m_Rules(spGameRules::create(this)),
       m_savegame(savegame)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
+#endif
     CONSOLE_PRINT("Loading map: " + map, Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -124,7 +133,7 @@ void GameMap::loadMapData()
 {
     Interpreter::setCppOwnerShip(this);
     registerMapAtInterpreter();
-    if (Mainapp::getInstance()->devicePixelRatio() < 2.0f)
+    if (Mainapp::getInstance()->devicePixelRatio() < 2.0f && !Settings::getUseHighDpi())
     {
         setZoom(1);
     }
@@ -383,7 +392,7 @@ spTerrain GameMap::getSpTerrain(qint32 x, qint32 y)
     }
 }
 
-Terrain* GameMap::getTerrain(qint32 x, qint32 y)
+Terrain* GameMap::getTerrain(qint32 x, qint32 y) const
 {
     if (onMap(x, y))
     {
@@ -660,7 +669,7 @@ void GameMap::finishUpdateSprites(bool showLoadingScreen)
     {
         m_Rules->createWeatherSprites();
     }
-    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     if (pMenu != nullptr)
     {
         pMenu->updateSlidingActorSize();
@@ -932,7 +941,7 @@ qint32 GameMap::getMapHeight() const
     return m_fields.size();
 }
 
-qint32 GameMap::getBuildingCount(const QString & buildingID)
+qint32 GameMap::getBuildingCount(const QString & buildingID) const
 {
     qint32 ret = 0;
     qint32 width = getMapWidth();
@@ -949,6 +958,59 @@ qint32 GameMap::getBuildingCount(const QString & buildingID)
                     if (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y)
                     {
                         ret++;
+                    }
+                }
+            }
+        }
+    }
+    return ret;
+}
+
+qint32 GameMap::getTerrainCount(const QString & terrainId) const
+{
+    qint32 ret = 0;
+    qint32 width = getMapWidth();
+    qint32 heigth = getMapHeight();
+    if (terrainId.isEmpty())
+    {
+        ret = width * heigth;
+    }
+    else
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            for (qint32 y = 0; y < heigth; y++)
+            {
+                if (getTerrain(x, y)->getID() == terrainId)
+                {
+                    ret++;
+                }
+            }
+        }
+    }
+    return ret;
+}
+
+qint32 GameMap::getPlayerBuildingCount(const QString & buildingID, Player* pPlayer) const
+{
+    qint32 ret = 0;
+    qint32 width = getMapWidth();
+    qint32 heigth = getMapHeight();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            Building* pBuilding = getTerrain(x, y)->getBuilding();
+            if (pBuilding != nullptr)
+            {
+                if (pBuilding->getOwner() == pPlayer)
+                {
+                    if (buildingID.isEmpty() || pBuilding->getBuildingID() == buildingID)
+                    {
+                        if (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y)
+                        {
+                            ret++;
+                        }
                     }
                 }
             }
@@ -1012,7 +1074,7 @@ void GameMap::getField(qint32& x, qint32& y, GameEnums::Directions direction)
     }
 }
 
-bool GameMap::onMap(qint32 x, qint32 y)
+bool GameMap::onMap(qint32 x, qint32 y) const
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
@@ -1034,7 +1096,7 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
     if (onMap(x, y))
     {
         // draw point
-        InGameMenue* pMenu = InGameMenue::getMenuInstance();
+        BaseGamemenu* pMenu = BaseGamemenu::getInstance();
         if (pMenu != nullptr)
         {
             oxygine::spSlidingActorNoClipRect pMapSliding = pMenu->getMapSliding();
@@ -1042,8 +1104,8 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
             if (pMapSliding.get() != nullptr &&
                 pMapSlidingActor.get() != nullptr)
             {
-                qint32 newX = pMapSliding->getWidth() / 2.0f - x * getZoom() * m_imagesize - m_imagesize / 2.0f;
-                qint32 newY = pMapSliding->getHeight() / 2.0f - y * getZoom() * m_imagesize - m_imagesize / 2.0f;
+                qint32 newX = pMapSliding->getScaledWidth() / 2.0f - x * getZoom() * m_imagesize - m_imagesize / 2.0f;
+                qint32 newY = pMapSliding->getScaledHeight() / 2.0f - y * getZoom() * m_imagesize - m_imagesize / 2.0f;
                 limitPosition(pMenu, newX, newY);
                 pMapSlidingActor->setPosition(newX, newY);
                 pMenu->getCursor()->setMapPoint(x, y);
@@ -1058,35 +1120,38 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
 
 QPoint GameMap::getCenteredPosition()
 {
-    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     qint32 x = 0;
     qint32 y = 0;
     if (pMenu != nullptr)
     {
         oxygine::spSlidingActorNoClipRect pMapSliding = pMenu->getMapSliding();
         oxygine::spActor pMapSlidingActor = pMenu->getMapSlidingActor();
-        x = -(pMapSlidingActor->getX() - pMapSliding->getWidth() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
-        y = -(pMapSlidingActor->getY() - pMapSliding->getHeight() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
+        x = -(pMapSlidingActor->getX() - pMapSliding->getScaledWidth() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
+        y = -(pMapSlidingActor->getY() - pMapSliding->getScaledHeight() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
     }
     return QPoint(x, y);
 }
 
 void GameMap::moveMap(qint32 x, qint32 y)
 {
-    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     if (pMenu != nullptr)
     {
         // draw point
         oxygine::spActor pActor = pMenu->getMapSlidingActor();
-        qint32 newX = pActor->getX() + x;
-        qint32 newY = pActor->getY() + y;
-        limitPosition(pMenu, newX, newY);
-        pActor->setPosition(newX, newY);
-        emit sigMovedMap();
+        if (pActor.get() != nullptr)
+        {
+            qint32 newX = pActor->getX() + x;
+            qint32 newY = pActor->getY() + y;
+            limitPosition(pMenu, newX, newY);
+            pActor->setPosition(newX, newY);
+            emit sigMovedMap();
+        }
     }
 }
 
-void GameMap::limitPosition(InGameMenue* pMenu, qint32 & newX, qint32 & newY)
+void GameMap::limitPosition(BaseGamemenu* pMenu, qint32 & newX, qint32 & newY)
 {
     oxygine::RectF bounds = pMenu->getMapSliding()->getDragBounds();
     if (newX < bounds.getLeft())
@@ -1121,7 +1186,7 @@ void GameMap::setZoom(float zoom)
     // limit zoom
 
     float minLimit = 1.0f / 4.0f;
-    if (Mainapp::getInstance()->devicePixelRatio() >= 2.0f)
+    if (Mainapp::getInstance()->devicePixelRatio() >= 2.0f && !Settings::getUseHighDpi())
     {
         minLimit = 1.0f / 8.0f;
     }
@@ -1138,7 +1203,7 @@ void GameMap::setZoom(float zoom)
         // all fine
     }
     setScale(curZoom);
-    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     if (pMenu != nullptr)
     {
         pMenu->updateSlidingActorSize();
@@ -1191,8 +1256,11 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
             for (qint32 xPos = x + 1; xPos < mapWidth; xPos++)
             {
                 spTerrain pTerrain = m_fields[y][xPos];
-                pTerrain->detach();
-                m_rowSprites[y]->addChild(pTerrain);
+                if (pTerrain.get() != nullptr)
+                {
+                    pTerrain->detach();
+                    m_rowSprites[y]->addChild(pTerrain);
+                }
             }
         }
         else
@@ -1358,6 +1426,11 @@ void GameMap::updateMapFlags() const
     }
 }
 
+void GameMap::setMenu(GameMenue *newMenu)
+{
+    m_pMenu = newMenu;
+}
+
 oxygine::spActor GameMap::getUnitsLayer() const
 {
     return m_unitsLayer;
@@ -1444,15 +1517,20 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     m_rowSprites.reserve(m_headerInfo.m_heigth);
     for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
     {
-        if (showLoadingScreen)
-        {
-            pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_heigth), 5 + 75 * y / m_headerInfo.m_heigth);
-        }
-        m_fields.push_back(std::vector<spTerrain>(m_headerInfo.m_width, spTerrain()));
         auto pActor = oxygine::spActor::create();
         pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         m_rowSprites.push_back(pActor);
         addChild(pActor);
+    }
+    for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
+    {
+        if (showLoadingScreen)
+        {
+            QString title = tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_heigth);
+            qint32 progress = 5 + 75 * y / m_headerInfo.m_heigth;
+            pLoadingScreen->setProgress(title, progress);
+        }
+        m_fields.push_back(std::vector<spTerrain>(m_headerInfo.m_width, spTerrain()));
         for (qint32 x = 0; x < m_headerInfo.m_width; x++)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y, "", this);
@@ -1549,14 +1627,9 @@ void GameMap::exitGame()
     emit signalExitGame();
 }
 
-void GameMap::options()
+void GameMap::showXmlFileDialog(const QString & xmlFile, bool saveSettings)
 {
-    emit sigShowOptions();
-}
-
-void GameMap::changeSound()
-{
-    emit sigShowChangeSound();
+    emit sigShowXmlFileDialog(xmlFile, saveSettings);
 }
 
 void GameMap::surrenderGame()
@@ -1571,7 +1644,12 @@ void GameMap::nicknameUnit(qint32 x, qint32 y)
 
 void GameMap::saveGame()
 {
-    emit signalSaveGame();
+    emit sigSaveGame();
+}
+
+void GameMap::loadGame()
+{
+    emit sigShowLoadSaveGame();
 }
 
 void GameMap::victoryInfo()
@@ -1612,6 +1690,11 @@ void GameMap::showRules()
 void GameMap::showUnitStatistics(qint32 player)
 {
     emit sigShowUnitStatistics(player);
+}
+
+void GameMap::showMovementPlanner()
+{
+    emit sigShowMovementPlanner();
 }
 
 void GameMap::showDamageCalculator()
@@ -1895,12 +1978,54 @@ void GameMap::refillTransportedUnits(Unit* pUnit)
 
 Player* GameMap::getCurrentViewPlayer()
 {
-    spGameMenue pMenue = GameMenue::getInstance();
-    if (pMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        return pMenue->getCurrentViewPlayer();
+        return m_pMenu->getCurrentViewPlayer();
     }
     return getCurrentPlayer();
+}
+
+void GameMap::endOfTurn(Player* pPlayer)
+{
+    if (pPlayer != nullptr)
+    {
+        pPlayer->endOfTurn();
+        endOfTurnPlayer(pPlayer);
+        enableUnits(pPlayer);
+    }
+}
+
+void GameMap::endOfTurnPlayer(Player* pPlayer)
+{
+    CONSOLE_PRINT("Doing end of turn for player " + QString::number(pPlayer->getPlayerID()), Console::eDEBUG);
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    auto xValues = GlobalUtils::getRandomizedArray(0, width - 1);
+    auto yValues = GlobalUtils::getRandomizedArray(0, heigth - 1);
+    // update start of turn
+    for (auto y : yValues)
+    {
+        for (auto x : xValues)
+        {
+            spUnit pUnit = m_fields[y][x]->getSpUnit();
+            if (pUnit.get() != nullptr)
+            {
+                if (pUnit->getOwner() == pPlayer)
+                {
+                    pUnit->endOfTurn();
+                }
+            }
+            spBuilding pBuilding = m_fields[y][x]->getSpBuilding();
+            if (pBuilding.get() != nullptr)
+            {
+                if (pBuilding->getOwner() == pPlayer &&
+                    (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y))
+                {
+                    pBuilding->endOfTurn();
+                }
+            }
+        }
+    }
 }
 
 void GameMap::startOfTurn(Player* pPlayer)
@@ -2025,7 +2150,7 @@ void GameMap::centerOnPlayer(Player* pPlayer)
                 if (pBuilding->getOwner() == pPlayer &&
                     (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y))
                 {
-                    if (pBuilding->getBuildingID() == "HQ" &&
+                    if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ &&
                         hqWarp.x() < 0)
                     {
                         hqWarp = QPoint(x, y);
@@ -2189,7 +2314,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
     {
         CONSOLE_PRINT("GameMap::nextTurn", Console::eDEBUG);
         m_Rules->checkVictory();
-        enableUnits(m_CurrentPlayer.get());
+        endOfTurn(m_CurrentPlayer.get());
         bool nextDay = nextPlayer();
         bool permanent = false;
         bool found = false;
@@ -2235,11 +2360,10 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         }
         if (permanent)
         {
-            spGameMenue pMenu = GameMenue::getInstance();
-            if (pMenu.get() != nullptr)
+            if (m_pMenu != nullptr)
             {
                 spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(this, m_CurrentPlayer.get(), GameMap::frameTime, true);
-                pMenu->addChild(pAnim);
+                m_pMenu->addChild(pAnim);
             }
         }
         else
@@ -2257,11 +2381,10 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         checkFuel(m_CurrentPlayer.get());
         m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
         m_Rules->initRoundTime();
-        spGameMenue pMenu = GameMenue::getInstance();
-        if (pMenu.get() != nullptr)
+        if (m_pMenu != nullptr)
         {
-            pMenu->updatePlayerinfo();
-            pMenu->updateMinimap();
+            m_pMenu->updatePlayerinfo();
+            m_pMenu->updateMinimap();
         }
         playMusic();
         if (baseGameInput->getAiType() == GameEnums::AiTypes_Human)
@@ -2293,6 +2416,7 @@ void GameMap::playMusic()
 
 void GameMap::initPlayersAndSelectCOs()
 {
+    CONSOLE_PRINT("GameMap::initPlayersAndSelectCOs", Console::eDEBUG);
     bool singleCO = m_Rules->getSingleRandomCO();
     QStringList bannList = m_Rules->getCOBannlist();
     for (qint32 i = 0; i < getPlayerCount(); i++)

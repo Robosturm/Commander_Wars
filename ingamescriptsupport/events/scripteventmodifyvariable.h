@@ -7,7 +7,7 @@
 class ScriptEventModifyVariable;
 using spScriptEventModifyVariable = oxygine::intrusive_ptr<ScriptEventModifyVariable>;
 
-class ScriptEventModifyVariable : public ScriptEvent
+class ScriptEventModifyVariable final : public ScriptEvent
 {
     Q_OBJECT
 public:

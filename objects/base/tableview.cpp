@@ -1,6 +1,7 @@
-#include "tableview.h"
+#include "objects/base/tableview.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -11,7 +12,10 @@ TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> 
       m_data(data),
       m_widths(widths)
 {
+    Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("TableView");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -24,8 +28,6 @@ TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> 
     setHeight((data.size() + 1) * 45);
     QColor color(255, 127, 39);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     // first vertical line
@@ -102,8 +104,6 @@ void TableView::addRow(qint32 i, qint32 i2, qint32 x, bool selectable)
 {
     QColor color(255, 127, 39);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -170,12 +170,9 @@ qint32 TableView::getCurrentItem() const
     return m_currentItem;
 }
 
-QStringList TableView::getItem(qint32 i)
+const QStringList & TableView::getItem(qint32 i) const
 {
-    if (i >= 0 && i < m_data.size())
-    {
-        return m_data[i];
-    }
-    return QStringList();
+    Q_ASSERT(i >= 0 && i < m_data.size());
+    return m_data[i];
 }
 

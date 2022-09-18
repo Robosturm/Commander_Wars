@@ -6,7 +6,7 @@
 class ScriptEventChangeUnitOwner;
 using spScriptEventChangeUnitOwner = oxygine::intrusive_ptr<ScriptEventChangeUnitOwner>;
 
-class ScriptEventChangeUnitOwner : public ScriptEventGeneric
+class ScriptEventChangeUnitOwner final : public ScriptEventGeneric
 {
     Q_OBJECT
 public:

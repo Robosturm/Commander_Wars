@@ -3,24 +3,23 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "network/NetworkInterface.h"
 
 class QIODevice;
-
 class TxTask;
-typedef oxygine::intrusive_ptr<TxTask> spTxTask;
+using spTxTask = oxygine::intrusive_ptr<TxTask>;
 
 /**
  * @brief The TXTask class
  */
-class TxTask : public QObject, public oxygine::ref_counter
+class TxTask final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool sendAll);
-    virtual ~TxTask() = default;
+    ~TxTask() = default;
     quint64 getSocketID() const;
     void setSocketID(const quint64 &SocketID);
 

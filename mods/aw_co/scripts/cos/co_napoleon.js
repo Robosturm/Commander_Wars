@@ -5,7 +5,7 @@ CO_NAPOLEON.init = function(co, map)
 };
 CO_NAPOLEON.activateSuperpower = function(co, powerMode, map)
 {
-    CO_NAPOLEON.activatePower(co, powerMode);
+    CO_NAPOLEON.activatePower(co, powerMode, map);
 };
 CO_NAPOLEON.getSuperPowerDescription = function()
 {

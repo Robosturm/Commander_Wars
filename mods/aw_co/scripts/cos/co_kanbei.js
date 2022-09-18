@@ -5,7 +5,7 @@ CO_KANBEI.init = function(co, map)
 };
 CO_KANBEI.activateSuperpower = function(co, powerMode, map)
 {
-    CO_KANBEI.activatePower(co, powerMode);
+    CO_KANBEI.activatePower(co, powerMode, map);
 };
 CO_KANBEI.getSuperPowerDescription = function()
 {

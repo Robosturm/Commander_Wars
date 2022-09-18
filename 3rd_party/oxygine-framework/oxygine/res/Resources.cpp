@@ -1,7 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
-#include "3rd_party/oxygine-framework/oxygine/res/ResFont.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
 #include "qfile.h"
@@ -57,11 +56,6 @@ namespace oxygine
         return getT<ResAnim>(id, ep);
     }
 
-    ResFont* Resources::getResFont(const QString & id, error_policy ep) const
-    {
-        return getT<ResFont>(id, ep);
-    }
-
     void Resources::load()
     {
         Resource::load();
@@ -110,6 +104,7 @@ namespace oxygine
 
     bool Resources::loadXML(const QString & xmlFile, bool addTransparentBorder)
     {
+#ifdef GRAPHICSUPPORT
         m_name = xmlFile;
         QFile file(xmlFile);
 
@@ -176,6 +171,7 @@ namespace oxygine
         {
             CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
         }
+#endif
         return true;
     }
 
@@ -207,6 +203,7 @@ namespace oxygine
 
     Resource* Resources::get(const QString & id_, error_policy ep) const
     {
+#ifdef GRAPHICSUPPORT
         if (id_.isEmpty())
         {
             return nullptr;
@@ -218,6 +215,7 @@ namespace oxygine
             return it.value().get();
         }
         handleErrorPolicy(ep, "can't find resource: '" + id + "' in '" + m_name + "'");
+#endif
         return nullptr;
     }
 

@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/timer.h"
@@ -29,7 +29,7 @@ using spGameRules = oxygine::intrusive_ptr<GameRules>;
  * There is a small amount of rules that's hard coded in this object.
  * But most rules are taken from javascript scripts
  */
-class GameRules : public QObject, public FileSerializable, public oxygine::ref_counter
+class GameRules final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -40,7 +40,7 @@ public:
     };
 
     explicit GameRules(GameMap* pMap);
-    virtual ~GameRules() = default;
+    ~GameRules() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

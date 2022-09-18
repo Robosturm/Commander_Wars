@@ -6,11 +6,11 @@ namespace oxygine
 {
     class ColorRectSprite;
     using spColorRectSprite = intrusive_ptr<ColorRectSprite>;
-    class ColorRectSprite: public Sprite
+    class ColorRectSprite final : public Sprite
     {
     public:
         explicit ColorRectSprite();
-        virtual ~ColorRectSprite() = default;
+        ~ColorRectSprite() = default;
         virtual void doRender(const RenderState&) override;
         virtual bool isOn(const Vector2& localPosition, float localScale) override;
     protected:

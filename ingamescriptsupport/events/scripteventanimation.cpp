@@ -1,4 +1,6 @@
-#include "qcoreapplication.h"
+#include <QCoreApplication>
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "ingamescriptsupport/events/scripteventanimation.h"
 
@@ -71,8 +73,6 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -246,7 +246,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(m_pTextbox);
     oxygine::spButton pButtonSelect = ObjectManager::getInstance()->createButton(tr("Select Image"), 150);
-    pButtonSelect->setPosition(width + m_pTextbox->getWidth() + 10, y);
+    pButtonSelect->setPosition(width + m_pTextbox->getScaledWidth() + 10, y);
     pBox->addItem(pButtonSelect);
     pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {

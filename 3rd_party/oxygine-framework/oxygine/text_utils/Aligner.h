@@ -1,89 +1,114 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/Font.h"
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
 #include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 
+#include <QFontMetrics>
+
 namespace oxygine
 {
-    struct glyph;
-    class Font;
-
     namespace text
     {
-        struct Symbol
-        {
-            Symbol()
-                : x(0),
-                  y(0),
-                  code(0)
-            {
-            }
-
-            short x, y;
-            qint32 code;
-            glyph gl;
-            RectF destRect;
-            spMaterial mat;
-        };
-
-        class Aligner
+        class Node;
+        class Aligner final
         {
         public:
-            using line = QVector<Symbol*>;
-            explicit Aligner(const TextStyle& style, spMaterial & mat, const Font* font, float gscale, const Vector2& size);
-            virtual ~Aligner() = default;
+            explicit Aligner(const TextStyle& style, const Vector2& size);
+            ~Aligner() = default;
+#ifdef GRAPHICSUPPORT
             const TextStyle& getStyle() const
             {
                 return m_style;
             }
-            float getScale() const;
-            void begin();
-            void end();
-            qint32 putSymbol(Symbol& s);
-            void nextLine();
-            const Rect &getBounds() const
+#endif
+            void align(text::Node & node);
+            void nextLine(qint32 lastLineX, qint32 lastLineWidth);
+            void nodeEnd(qint32 lastLineWidth);
+            /**
+             * @brief getXAlignment calculates the x-alignement for the given line width
+             * @param lineWidth
+             * @return
+             */
+            inline qint32 getXAlignment(qint32 lineWidth)
+            {
+#ifdef GRAPHICSUPPORT
+                qint32 tx = 0;
+                switch (m_style.hAlign)
+                {
+                    case TextStyle::HALIGN_LEFT:
+                    case TextStyle::HALIGN_DEFAULT:
+                        tx = 0;
+                        break;
+                    case TextStyle::HALIGN_MIDDLE:
+                        tx = m_width / 2 - lineWidth / 2;
+                        break;
+                    case TextStyle::HALIGN_RIGHT:
+                        tx = m_width - lineWidth;
+                        break;
+                }
+                return tx;
+#else
+                return 0;
+#endif
+            }
+            /**
+             * @brief getY current Y advance position
+             * @return
+             */
+            inline qint32 getY() const
+            {
+#ifdef GRAPHICSUPPORT
+                return m_y;
+#else
+                return 0;
+#endif
+            }
+
+#ifdef GRAPHICSUPPORT
+            inline const Rect &getBounds() const
             {
                 return m_bounds;
             }
-            void setBounds(const Rect &newBounds)
+#endif
+            /**
+             * @brief getWidth the available width of the text rect
+             * @return
+             */
+            inline qint32 getWidth() const
             {
-                m_bounds = newBounds;
+#ifdef GRAPHICSUPPORT
+                return m_width;
+#else
+                return 0;
+#endif
             }
-            const Font *getFont() const
-            {
-                return m_font;
-            }
-            spMaterial getMat() const
-            {
-                return m_mat;
-            }
-            void setMat(spMaterial & newMat)
-            {
-                m_mat = newMat;
-            }
-        private:
-            qint32 getLineWidth()const;
-            qint32 getLineSkip()const;
-            void _alignLine(line& ln);
-            void _nextLine(line& ln);
-            qint32 _alignX(qint32 rx);
-            qint32 _alignY(qint32 ry);
 
+#ifdef GRAPHICSUPPORT
+            inline const QFontMetrics &getMetrics() const
+            {
+                return m_metrics;
+            }
+#endif
+            qint32 getX() const;
+            void setX(qint32 newX);
+            void addLineNode(Node* node);
         private:
+            void begin();
+            void end();
+            void updateX();
+        private:
+#ifdef GRAPHICSUPPORT
             TextStyle m_style;
             Rect m_bounds;
             qint32 m_width;
             qint32 m_height;
-            spMaterial m_mat;
-            const Font* m_font;
-            float m_scale;
             qint32 m_x;
             qint32 m_y;
-            line m_line;
-            qint32 m_lineWidth;
             qint32 m_lineSkip;
+            QFontMetrics m_metrics;
+            std::vector<Node*> m_lineNodes;
+#endif
         };
     }
 }

@@ -40,10 +40,10 @@ void ScriptEventModifyUnit::readEvent(QTextStream& rStream, QString line)
     {
         m_x = items[0].toInt();
         m_y = items[1].toInt();
-        m_hpChange = items[3].toInt();
-        m_ammo1Change = items[4].toInt();
-        m_ammo2Change = items[5].toInt();
-        m_fuelChange = items[6].toInt();
+        m_hpChange = items[4].toInt();
+        m_ammo1Change = items[5].toInt();
+        m_ammo2Change = items[6].toInt();
+        m_fuelChange = items[7].toInt();
     }
 }
 
@@ -52,8 +52,6 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 

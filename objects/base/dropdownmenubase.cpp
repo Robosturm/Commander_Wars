@@ -1,13 +1,22 @@
-#include "dropdownmenubase.h"
+#include "objects/base/dropdownmenubase.h"
+
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DropDownmenuBase");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setWidth(width);
     setHeight(40);
@@ -18,7 +27,7 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     m_Box->setSize(width, 40);
     m_pClipActor = oxygine::spClipRectActor::create();
     m_Box->addChild(m_pClipActor);
-    m_pClipActor->setSize(m_Box->getWidth() - 20 - 45, m_Box->getHeight());
+    m_pClipActor->setSize(m_Box->getScaledWidth() - 20 - 45, m_Box->getScaledHeight());
     m_pClipActor->setX(10);
     addChild(m_Box);
     qint32 maxItemCount = 6;
@@ -42,7 +51,7 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     addChild(m_Panel);
     m_pArrowDown = oxygine::spButton::create();
     m_Box->addChild(m_pArrowDown);
-    m_pArrowDown->setPosition(m_Box->getWidth() - 45, 10);
+    m_pArrowDown->setPosition(m_Box->getScaledWidth() - 45, 10);
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
     m_pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Actor* pPtrDown = m_pArrowDown.get();
@@ -82,7 +91,8 @@ void DropDownmenuBase::focusedLost()
 }
 
 void DropDownmenuBase::showDropDown()
-{    
+{
+#ifdef GRAPHICSUPPORT
     setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
     m_OriginalOwner = getParent();
@@ -95,18 +105,18 @@ void DropDownmenuBase::showDropDown()
     {
         if (m_Panel->getH_Scrollbar()->getVisible())
         {
-            m_Panel->setY(-m_Panel->getHeight());
+            m_Panel->setY(-m_Panel->getScaledHeight());
         }
         else
         {
-            m_Panel->setY(-m_Panel->getHeight() + m_Panel->getV_Scrollbar()->getHeight() + 7);
+            m_Panel->setY(-m_Panel->getScaledHeight() + m_Panel->getV_Scrollbar()->getScaledHeight() + 7);
         }
     }
     else
     {
-        m_Panel->setY(m_Box->getHeight());
+        m_Panel->setY(m_Box->getScaledHeight());
     }
-    
+#endif
 }
 
 void DropDownmenuBase::hideDropDown()

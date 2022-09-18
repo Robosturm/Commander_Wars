@@ -1,4 +1,7 @@
 #include <QColor>
+
+#include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
+
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/weaponmanager.h"
@@ -23,7 +26,9 @@
 Unit::Unit(GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Unit");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -36,7 +41,10 @@ Unit::Unit(const QString & unitID, Player* pOwner, bool aquireId, GameMap* pMap)
       m_pOwner(pOwner),
       m_pMap{pMap}
 {
+
+#ifdef GRAPHICSUPPORT
     setObjectName("Unit");
+#endif
     setHeight(GameMap::getImageSize());
     setWidth(GameMap::getImageSize());
     Mainapp* pApp = Mainapp::getInstance();
@@ -289,6 +297,7 @@ void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bo
 
 void Unit::syncAnimation(oxygine::timeMS syncTime)
 {
+#ifdef GRAPHICSUPPORT
     for (auto & sprite : m_pUnitSprites)
     {
         auto & tweens = sprite->getTweens();
@@ -313,6 +322,7 @@ void Unit::syncAnimation(oxygine::timeMS syncTime)
             pTween->setElapsed(syncTime);
         }
     }
+#endif
 }
 
 Player* Unit::getOwner()
@@ -436,12 +446,15 @@ void Unit::updateSprites(bool editor)
     {
         m_TransportUnits[i]->updateSprites(false);
     }
-    CO* pCO1 = m_pOwner->getCO(0);
-    CO* pCO2 = m_pOwner->getCO(1);
-    if ((pCO1 != nullptr && pCO1->getPowerMode() > GameEnums::PowerMode_Off) ||
-        (pCO2 != nullptr && pCO2->getPowerMode() > GameEnums::PowerMode_Off))
+    if (m_pOwner != nullptr)
     {
-        addShineTween();
+        CO* pCO1 = m_pOwner->getCO(0);
+        CO* pCO2 = m_pOwner->getCO(1);
+        if ((pCO1 != nullptr && pCO1->getPowerMode() > GameEnums::PowerMode_Off) ||
+            (pCO2 != nullptr && pCO2->getPowerMode() > GameEnums::PowerMode_Off))
+        {
+            addShineTween();
+        }
     }
 }
 
@@ -1720,15 +1733,24 @@ qint32 Unit::getAttackHpBonus(QPoint position)
 qint32 Unit::getBonusMisfortune(QPoint position)
 {
     qint32 bonus = 0;
-    CO* pCO = m_pOwner->getCO(0);
-    if (pCO != nullptr)
+    if (m_pMap != nullptr)
     {
-        bonus += pCO->getBonusMisfortune(this, position);
-    }
-    pCO = m_pOwner->getCO(1);
-    if (pCO != nullptr)
-    {
-        bonus += pCO->getBonusMisfortune(this, position);
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            if (pPlayer != nullptr)
+            {
+                if (pPlayer->isEnemy(m_pOwner))
+
+                {
+                    bonus += pPlayer->getEnemyBonusMisfortune(this, position);
+                }
+                else if ( m_pOwner == pPlayer)
+                {
+                    bonus += pPlayer->getBonusMisfortune(this, position);
+                }
+            }
+        }
     }
     return bonus;
 }
@@ -1808,19 +1830,29 @@ void Unit::makeCOUnit(quint8 co, bool force)
 qint32 Unit::getBonusLuck(QPoint position)
 {
     qint32 bonus = 0;
-    CO* pCO0 = m_pOwner->getCO(0);
-    if (pCO0 != nullptr)
+    if (m_pMap != nullptr)
     {
-        bonus += pCO0->getBonusLuck(this, position);
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            if (pPlayer != nullptr)
+            {
+                if (pPlayer->isEnemy(m_pOwner))
+
+                {
+                    bonus += pPlayer->getEnemyBonusLuck(this, position);
+                }
+                else if ( m_pOwner == pPlayer)
+                {
+                    bonus += pPlayer->getBonusLuck(this, position);
+                }
+            }
+        }
     }
-    CO* pCO1 = m_pOwner->getCO(1);
-    if (pCO1 != nullptr)
-    {
-        bonus += pCO1->getBonusLuck(this, position);
-    }
+
     // apply star bonus
-    pCO0 = m_pOwner->getCO(0);
-    pCO1 = m_pOwner->getCO(1);
+    auto* pCO0 = m_pOwner->getCO(0);
+    auto* pCO1 = m_pOwner->getCO(1);
     if (pCO0 != nullptr && pCO1 != nullptr &&
         pCO0->getPowerMode() == GameEnums::PowerMode_Tagpower)
     {
@@ -1836,6 +1868,19 @@ qint32 Unit::getBonusLuck(QPoint position)
         }
     }
     return bonus;
+}
+
+void Unit::endOfTurn()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "endOfTurn";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(m_UnitID, function1, args);
+    for (qint32 i = 0; i < m_TransportUnits.size(); i++)
+    {
+        m_TransportUnits[i]->endOfTurn();
+    }
 }
 
 void Unit::startOfTurn()
@@ -2044,6 +2089,10 @@ void Unit::setFuel(const qint32 &value)
     {
         m_fuel = value;
     }
+    if (m_fuel > m_maxFuel)
+    {
+        m_fuel = m_maxFuel;
+    }
     if (m_maxFuel > 0 && static_cast<float>(m_fuel) / static_cast<float>(m_maxFuel) <= Settings::getSupplyWarning())
     {
         loadIcon("fuel", GameMap::getImageSize() / 2, 0);
@@ -2101,6 +2150,10 @@ void Unit::setAmmo2(const qint32 &value)
     else  if (m_maxAmmo2 > 0 && m_ammo2 < 0)
     {
         m_ammo2 = 0;
+    }
+    if (m_ammo2 > m_maxAmmo2)
+    {
+        m_ammo2 = m_maxAmmo2;
     }
     if (m_maxAmmo2 > 0 && static_cast<float>(m_ammo2) / static_cast<float>(m_maxAmmo2) <= Settings::getSupplyWarning())
     {
@@ -2163,6 +2216,10 @@ void Unit::setAmmo1(const qint32 &value)
     else if (m_maxAmmo1 > 0 && m_ammo1 < 0)
     {
         m_ammo1 = 0;
+    }
+    if (m_ammo1 > m_maxAmmo1)
+    {
+        m_ammo1 = m_maxAmmo1;
     }
 
     if (m_maxAmmo1 > 0 && static_cast<float>(m_ammo1) / static_cast<float>(m_maxAmmo1) <= Settings::getSupplyWarning())
@@ -2493,16 +2550,16 @@ qint32 Unit::getY() const
     }
 }
 
-void Unit::refill(bool noMaterial)
+void Unit::refill(bool noMaterial, float fuelAmount, float ammo1Amount, float ammo2Amount)
 {
-    setFuel(m_maxFuel);
+    setFuel(m_fuel + m_maxFuel * fuelAmount);
     if (!(noMaterial && m_weapon1ID.isEmpty()))
     {
-        setAmmo1(m_maxAmmo1);
+        setAmmo1(m_ammo1 + m_maxAmmo1 * ammo1Amount);
     }
     if (!(noMaterial && m_weapon2ID.isEmpty()))
     {
-        setAmmo2(m_maxAmmo2);
+        setAmmo2(m_ammo2 + m_maxAmmo2 * ammo2Amount);
     }
 }
 
@@ -2526,7 +2583,7 @@ void Unit::setHasMoved(bool value)
     }
 }
 
-bool Unit::getHasMoved()
+bool Unit::getHasMoved() const
 {
     return m_Moved;
 }
@@ -2547,12 +2604,12 @@ qint32 Unit::getTerrainDefenseModifier(QPoint position)
     return modifier;
 }
 
-bool Unit::getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender)
+bool Unit::getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender, QPoint attackerPosition)
 {
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
-        if (pCO->getFirstStrike(this, position, pAttacker, isDefender))
+        if (pCO->getFirstStrike(this, position, pAttacker, isDefender, attackerPosition))
         {
             return true;
         }
@@ -2560,7 +2617,7 @@ bool Unit::getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender)
     pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
-        if (pCO->getFirstStrike(this, position, pAttacker, isDefender))
+        if (pCO->getFirstStrike(this, position, pAttacker, isDefender, attackerPosition))
         {
             return true;
         }
@@ -2573,7 +2630,9 @@ bool Unit::getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender)
                        position.y(),
                        pInterpreter->newQObject(pAttacker),
                        isDefender,
-                       pInterpreter->newQObject(m_pMap)});
+                       pInterpreter->newQObject(m_pMap),
+                       attackerPosition.x(),
+                       attackerPosition.y()});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isBool() && erg.toBool() == true)
     {
@@ -2859,11 +2918,12 @@ GameAnimation* Unit::killUnit()
     }
     // record destruction of this unit
     GameRecorder* pRecorder = m_pMap->getGameRecorder();
-    if (pRecorder != nullptr)
+    if (pRecorder != nullptr &&
+        m_pMap->getCurrentPlayer() != nullptr)
     {
         if (!m_pOwner->getIsDefeated())
         {
-            m_pMap->getGameRecorder()->lostUnit(m_pOwner->getPlayerID(), m_UnitID);
+            m_pMap->getGameRecorder()->lostUnit(m_pOwner->getPlayerID(), m_UnitID, m_pMap->getCurrentPlayer()->getPlayerID());
         }
     }
     return pRet;
@@ -2941,6 +3001,13 @@ void Unit::loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration,
 
         updateIconTweens();
     }    
+}
+
+UnitPathFindingSystem* Unit::createUnitPathFindingSystem(Player* pPlayer)
+{
+    UnitPathFindingSystem* pPfs = new UnitPathFindingSystem(m_pMap, this, pPlayer);
+    pPfs->explore();
+    return pPfs;
 }
 
 void Unit::unloadIcon(const QString & iconID)
@@ -3254,7 +3321,9 @@ void Unit::setAiMode(const GameEnums::GameAi &AiMode)
     unloadIcon("offensive");
     unloadIcon("patrol");
     unloadIcon("patrol_loop");
-    if (EditorMenue::getInstance() != nullptr)
+    unloadIcon("hq");
+    unloadIcon("scripted");
+    if (dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance()) != nullptr)
     {
         switch (m_AiMode)
         {
@@ -3286,6 +3355,16 @@ void Unit::setAiMode(const GameEnums::GameAi &AiMode)
             case GameEnums::GameAi_PatrolLoop:
             {
                 loadIcon("patrol_loop", 0, 0);
+                break;
+            }
+            case GameEnums::GameAi_TargetEnemyHq:
+            {
+                loadIcon("hq", 0, 0);
+                break;
+            }
+            case GameEnums::GameAi_Scripted:
+            {
+                loadIcon("scripted", 0, 0);
                 break;
             }
         }

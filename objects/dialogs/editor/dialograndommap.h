@@ -4,8 +4,8 @@
 #include <QObject>
 #include <QVector>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/textbox.h"
@@ -16,14 +16,14 @@
 #include "objects/base/dropdownmenu.h"
 
 class DialogRandomMap;
-typedef oxygine::intrusive_ptr<DialogRandomMap> spDialogRandomMap;
+using spDialogRandomMap = oxygine::intrusive_ptr<DialogRandomMap>;
 
-class DialogRandomMap : public QObject, public oxygine::Actor
+class DialogRandomMap final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogRandomMap();
-    virtual ~DialogRandomMap() = default;
+    ~DialogRandomMap() = default;
 signals:
     void sigFinished(QString mapName, QString author, QString description,
                      qint32 width, qint32 heigth, qint32 playerCount,

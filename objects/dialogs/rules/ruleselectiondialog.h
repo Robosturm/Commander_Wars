@@ -4,7 +4,8 @@
 #include <QObject>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/ruleselection.h"
 #include "objects/base/panel.h"
@@ -13,12 +14,12 @@ class GameMap;
 class RuleSelectionDialog;
 using spRuleSelectionDialog = oxygine::intrusive_ptr<RuleSelectionDialog>;
 
-class RuleSelectionDialog : public QObject, public oxygine::Actor
+class RuleSelectionDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode, bool enabled = true);
-    virtual ~RuleSelectionDialog() = default;
+    ~RuleSelectionDialog() = default;
 signals:
     void sigRulesChanged();
     void sigShowLoadRules();

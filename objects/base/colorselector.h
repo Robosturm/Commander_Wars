@@ -2,26 +2,23 @@
 #define COLORSELECTOR_H
 
 #include <QObject>
+#include <QColor>
+#include <QVector>
 
-#include <qcolor.h>
-
-#include <qvector.h>
-
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 #include "objects/base/spinbox.h"
 
 class ColorSelector;
-typedef oxygine::intrusive_ptr<ColorSelector> spColorSelector;
+using spColorSelector = oxygine::intrusive_ptr<ColorSelector>;
 
-class ColorSelector : public QObject, public oxygine::Actor
+class ColorSelector final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
     static constexpr qint32 pixelCount = 4;
 public:
     explicit ColorSelector(QColor color, qint32 pixelSize);
-    virtual ~ColorSelector() = default;
+    ~ColorSelector() = default;
     QColor getCurrentColor() const;
 
 signals:

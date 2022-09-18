@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "game/gamerecording/gamerecorder.h"
 
 #include "objects/base/panel.h"
@@ -13,12 +13,12 @@ class Player;
 class UnitStatisticView;
 using spUnitStatisticView = oxygine::intrusive_ptr<UnitStatisticView>;
 
-class UnitStatisticView : public QObject, public oxygine::Actor
+class UnitStatisticView final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit UnitStatisticView(const GameRecorder::PlayerData & data, qint32 width, qint32 heigth, Player* pPlayer);
-    virtual ~UnitStatisticView() = default;
+    explicit UnitStatisticView(const GameRecorder::PlayerData & data, qint32 width, qint32 heigth, Player* pPlayer, GameMap* pMap);
+    ~UnitStatisticView() = default;
 signals:
     void sigShowLink(QString pageID);
 public slots:
@@ -34,7 +34,7 @@ private:
      * @param y
      * @param width
      */
-    void addStatistic(spPanel & pPanel, QString headline, const QMap<QString, qint32> & view, Player* pPlayer, qint32 & y, qint32 width);
+    void addStatistic(spPanel & pPanel, QString headline, const QVector<GameRecorder::UnitData> & view, Player* pPlayer, GameMap* pMap, qint32 & y, qint32 width, bool summary);
 
 };
 

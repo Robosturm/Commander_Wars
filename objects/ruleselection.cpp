@@ -1,4 +1,6 @@
-#include "ruleselection.h"
+#include "objects/ruleselection.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -29,7 +31,9 @@ RuleSelection::RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enable
       m_ruleChangeEabled(enabled),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("RuleSelection");
+#endif
     Interpreter::setCppOwnerShip(this);
     setWidth(width);
     showRuleSelection();
@@ -136,17 +140,10 @@ void RuleSelection::showRuleSelection(bool advanced)
     qint32 y = 20;
     // font style
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-
-    QColor headerColor(0, 255, 0, 255);
-    
 
     spLabel textField = spLabel::create(textWidth - 40);
     textField->setStyle(style);
@@ -225,9 +222,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     }
 
     textField = spLabel::create(800);
-    style.color = headerColor;
     textField->setStyle(headerStyle);
-    style.color = FontManager::getFontColor();
     textField->setHtmlText(tr("Environment"));
     textField->setPosition(30, y);
     addChild(textField);
@@ -249,7 +244,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     addChild(m_pWeatherSlider);
     connect(m_pWeatherSlider.get(), &Multislider::signalSliderChanged, this, &RuleSelection::weatherChancesChanged, Qt::QueuedConnection);
 
-    y += m_pWeatherSlider->getHeight();
+    y += m_pWeatherSlider->getScaledHeight();
     textField = spLabel::create(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("Random Weather: "));
@@ -296,9 +291,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     }
     y = textField->getY() + 50;
     textField = spLabel::create(800);
-    style.color = headerColor;
     textField->setStyle(headerStyle);
-    style.color = FontManager::getFontColor();
     textField->setHtmlText(tr("Gameplay"));
     textField->setPosition(30, y);
     addChild(textField);
@@ -414,9 +407,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     if (advanced)
     {
         textField = spLabel::create(800);
-        style.color = headerColor;
         textField->setStyle(headerStyle);
-        style.color = FontManager::getFontColor();
         textField->setHtmlText(tr("CO Powergain"));
         textField->setPosition(30, y);
         addChild(textField);
@@ -508,9 +499,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         y += 40;
     }
     textField = spLabel::create(800);
-    style.color = headerColor;
     textField->setStyle(headerStyle);
-    style.color = FontManager::getFontColor();
     textField->setHtmlText(tr("Fog of War"));
     textField->setPosition(30, y);
     addChild(textField);
@@ -609,9 +598,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     if (advanced)
     {
         textField = spLabel::create(800);
-        style.color = headerColor;
         textField->setStyle(headerStyle);
-        style.color = FontManager::getFontColor();
         textField->setHtmlText(tr("Advanced"));
         textField->setPosition(30, y);
         addChild(textField);
@@ -746,7 +733,7 @@ void RuleSelection::showRuleSelection(bool advanced)
             textField->setPosition(30, y);
             addChild(textField);
             oxygine::spButton pScriptButton = pObjectManager->createButton(tr("Select File"), 160);
-            pScriptButton->setPosition(Settings::getWidth() - pScriptButton->getWidth() - 100, y);
+            pScriptButton->setPosition(Settings::getWidth() - pScriptButton->getScaledWidth() - 100, y);
             addChild(pScriptButton);
             m_MapScriptFile = spTextbox::create(pScriptButton->getX() - textField->getX() - textWidth);
             m_MapScriptFile->setTooltipText(tr("The relative path from the exe to the script associated with this map."));
@@ -766,9 +753,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     if (advanced)
     {
         textField = spLabel::create(800);
-        style.color = headerColor;
         textField->setStyle(headerStyle);
-        style.color = FontManager::getFontColor();
         textField->setHtmlText(tr("Miscellaneous"));
         textField->setPosition(30, y);
         addChild(textField);
@@ -836,9 +821,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     }
 
     textField = spLabel::create(800);
-    style.color = headerColor;
     textField->setStyle(headerStyle);
-    style.color = FontManager::getFontColor();
     textField->setHtmlText(tr("Victory Rules"));
     textField->setPosition(30, y);
     addChild(textField);
@@ -938,8 +921,6 @@ void RuleSelection::showRuleSelection(bool advanced)
 void RuleSelection::addCustomGamerules(qint32 & y)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
@@ -1052,8 +1033,6 @@ void RuleSelection::weatherChancesChanged()
 
 void RuleSelection::showCOBannlist()
 {
-    
-    
     spCOBannListDialog pBannlist = spCOBannListDialog::create(m_pMap->getGameRules()->getCOBannlist());
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &COBannListDialog::editFinished, m_pMap->getGameRules(), &GameRules::setCOBannlist, Qt::QueuedConnection);
@@ -1061,16 +1040,14 @@ void RuleSelection::showCOBannlist()
 }
 
 void RuleSelection::showPerkBannlist()
-{
-    
+{    
     spPerkSelectionDialog pBannlist = spPerkSelectionDialog::create(m_pMap, nullptr, -1, true, QStringList());
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &PerkSelectionDialog::editFinished, m_pMap->getGameRules(), &GameRules::setAllowedPerks, Qt::QueuedConnection);
 }
 
 void RuleSelection::showActionBannlist()
-{
-    
+{    
     spActionListDialog pBannlist = spActionListDialog::create(m_pMap->getGameRules()->getAllowedActions(), m_pMap);
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &ActionListDialog::editFinished, m_pMap->getGameRules(), &GameRules::setAllowedActions, Qt::QueuedConnection);

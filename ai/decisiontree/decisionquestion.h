@@ -2,7 +2,7 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "coreengine/fileserializable.h"
 #include "ai/decisiontree/question.h"
@@ -10,12 +10,12 @@
 class DecisionQuestion;
 typedef oxygine::intrusive_ptr<DecisionQuestion> spDecisionQuestion;
 
-class DecisionQuestion : public QObject, public FileSerializable, public oxygine::ref_counter
+class DecisionQuestion final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     explicit DecisionQuestion();
-    virtual ~DecisionQuestion() = default;
+    ~DecisionQuestion() = default;
     void appendQuestion(spQuestion pQuestions);
     virtual void serializeObject(QDataStream& pStream) const override;
     virtual void deserializeObject(QDataStream& pStream)  override;

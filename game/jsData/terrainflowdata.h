@@ -7,12 +7,12 @@
 
 class GameMap;
 
-class TerrainFlowData : public QObject
+class TerrainFlowData final : public QObject
 {
     Q_OBJECT
 public:
     explicit TerrainFlowData(GameMap* pMap);
-    virtual ~TerrainFlowData() = default;
+    ~TerrainFlowData() = default;
 
 public slots:
     GameMap *getMap() const;

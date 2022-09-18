@@ -1,4 +1,6 @@
 #pragma once
+#include <QObject>
+
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 
@@ -6,8 +8,9 @@ namespace oxygine
 {
     class Button;
     using spButton = intrusive_ptr<Button>;
-    class Button: public Box9Sprite
+    class Button : public QObject, public Box9Sprite
     {
+        Q_OBJECT
     public:
 
         explicit Button();

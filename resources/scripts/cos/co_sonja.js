@@ -132,7 +132,7 @@ var Constructor = function()
         }
     };
 
-    this.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map)
+    this.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map, atkPosX, atkPosY)
     {
         if(unit !== null)
         {

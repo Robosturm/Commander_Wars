@@ -2,30 +2,28 @@
 #define COSELECTION_H
 
 #include <QObject>
-
 #include <QStringList>
-
 #include <QVector>
-
 #include <QColor>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/label.h"
 
 class COSelection;
-typedef oxygine::intrusive_ptr<COSelection> spCOSelection;
+using spCOSelection = oxygine::intrusive_ptr<COSelection>;
 
-class COSelection : public QObject, public oxygine::Actor
+class COSelection final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 
     static constexpr float scale = 1.5f;
 public:
     explicit COSelection(QPoint Position, QSize maxSize, QStringList coids = {});
-    virtual ~COSelection() = default;
+    ~COSelection() = default;
 signals:
     void armySelectedChange(QString army);
     void coSelected(QString coid);

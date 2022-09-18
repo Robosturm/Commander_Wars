@@ -2,20 +2,20 @@
 #define DIALOGCONNECTING_H
 
 #include <QObject>
-#include <qtimer.h>
+#include <QTimer>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 
 class DialogConnecting;
-typedef oxygine::intrusive_ptr<DialogConnecting> spDialogConnecting;
+using spDialogConnecting = oxygine::intrusive_ptr<DialogConnecting>;
 
-class DialogConnecting : public QObject, public oxygine::Actor
+class DialogConnecting final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogConnecting(QString text, qint32 timeoutMs);
-    virtual ~DialogConnecting() = default;
+    ~DialogConnecting() = default;
 signals:
     void sigCancel();
     void sigConnected();

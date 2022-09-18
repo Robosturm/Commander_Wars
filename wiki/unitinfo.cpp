@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "wiki/unitinfo.h"
 #include "wiki/wikidatabase.h"
 
@@ -13,14 +15,17 @@
 #include "game/terrain.h"
 #include "game/building.h"
 #include "game/gamemap.h"
-#include "game/gameanimation/battleanimationsprite.h"
 #include "game/gameaction.h"
 
 #include "objects/base/label.h"
+#include "objects/base/dropdownmenusprite.h"
 
-UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
+UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
+    : m_pUnit(pUnit)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("UnitInfo");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -29,14 +34,10 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     setWidth(width);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = true;
 
@@ -63,17 +64,16 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     qint32 xOffset = 230;
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel_transparent+mask");
-    pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setPosition(width - 210, y);
-    pSpriteBox->setColorTable(pUnit->getOwner()->getColorTableAnim(), true);
-    addChild(pSpriteBox);
+    m_pSpriteBox = oxygine::spBox9Sprite::create();
+    m_pSpriteBox->setResAnim(pAnim);
+    m_pSpriteBox->setPosition(width - 210, y);
+    m_pSpriteBox->setColorTable(pUnit->getOwner()->getColorTableAnim(), true);
+    addChild(m_pSpriteBox);
 
-    spBattleAnimationSprite pBattleAnimationSprite = spBattleAnimationSprite::create(pUnit->getMap(), spUnit(pUnit), nullptr, BattleAnimationSprite::standingAnimation, -1, false);
-    pBattleAnimationSprite->setPosition(pSpriteBox->getX() + 7, pSpriteBox->getY() + 5);
-    pSpriteBox->setSize(pBattleAnimationSprite->getWidth() + 14, pBattleAnimationSprite->getHeight() + 12);
-    addChild(pBattleAnimationSprite);
+    // load battle sprite data
+    loadBattleSprite(pUnit.get());
+    loadArmySelector(m_pSpriteBox->getX(), m_pSpriteBox->getY() + m_pSpriteBox->getScaledHeight() + 10);
 
     // movement
     pLabel = oxygine::spTextField::create();
@@ -235,7 +235,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         addChild(pLabel);
         y += 80;
         QStringList loadingUnits = pUnit->getTransportUnits();
-        createLoadingTable(pUnit, loadingUnits, y, width);
+        createLoadingTable(pUnit.get(), loadingUnits, y, width);
         y += 40;
 
         if (pUnit->getLoadedUnitCount() > 0)
@@ -246,7 +246,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
             pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
             addChild(pLabel);
             y += 80;
-            createLoadedUnits(pUnit, y, width);
+            createLoadedUnits(pUnit.get(), y, width);
             y += 40;
         }
     }
@@ -257,7 +257,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
     addChild(pLabel);
     y += 80;
-    createActionTable(pUnit, y, width);
+    createActionTable(pUnit.get(), y, width);
     y += 40;
 
     pLabel = oxygine::spTextField::create();
@@ -266,7 +266,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
     addChild(pLabel);
     y += 80;
-    createTransportTable(pUnit, y, width);
+    createTransportTable(pUnit.get(), y, width);
     y += 40;
 
     if (y - yStart < 210)
@@ -290,7 +290,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     {
         spTerrain pTerrain = Terrain::createTerrain(terrainId, -1, -1, "", pUnit->getMap());
         pTerrain->loadSprites();
-        qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);
+        qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit.get());
         pTerrain->setPosition(x, y);
         pTerrain->addClickListener([this, terrainId](oxygine::Event*)
         {
@@ -324,7 +324,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         spBuilding pBuilding = spBuilding::create(buildingId, pUnit->getMap());
         spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", pUnit->getMap());
         pTerrain->setBuilding(pBuilding);
-        qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);
+        qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit.get());
         pTerrain->removeBuilding();
 
         qint32 buildingWidth = pBuilding->getBuildingWidth();
@@ -384,7 +384,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
         addChild(pLabel);
         y += 80;
-        createWeaponTable(pUnit, pUnit->getWeapon1ID(), y, width);
+        createWeaponTable(pUnit.get(), pUnit->getWeapon1ID(), y, width);
         y += 40;
     }
     if (pUnit->getWeapon2ID() != "" && pWeaponManager->exists(pUnit->getWeapon2ID()))
@@ -395,18 +395,57 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
         addChild(pLabel);
         y += 80;
-        createWeaponTable(pUnit, pUnit->getWeapon2ID(), y, width);
+        createWeaponTable(pUnit.get(), pUnit->getWeapon2ID(), y, width);
         y += 40;
     }
     setHeight(y);
     connect(this, &UnitInfo::sigShowLink, this, &UnitInfo::showLink, Qt::QueuedConnection);
 }
 
+void UnitInfo::loadBattleSprite(Unit* pUnit)
+{
+    if (m_pBattleAnimationSprite.get() != nullptr)
+    {
+        m_pBattleAnimationSprite->detach();
+    }
+    m_pBattleAnimationSprite = spBattleAnimationSprite::create(pUnit->getMap(), spUnit(pUnit), nullptr, BattleAnimationSprite::standingAnimation, -1, false);
+    m_pBattleAnimationSprite->setPosition(m_pSpriteBox->getX() + 7, m_pSpriteBox->getY() + 5);
+    m_pSpriteBox->setSize(m_pBattleAnimationSprite->getScaledWidth() + 14, m_pBattleAnimationSprite->getScaledHeight() + 12);
+    addChild(m_pBattleAnimationSprite);
+}
+
+void UnitInfo::loadArmySelector(qint32 x, qint32 y)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue erg = pInterpreter->doFunction("PLAYER", "getArmies");
+    QStringList army = erg.toVariant().toStringList();
+    GameManager* pGameManager = GameManager::getInstance();
+    auto creator = [pGameManager](QString army)
+    {
+        oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_" + army.toLower());
+        oxygine::spSprite ret = oxygine::spSprite::create();
+        ret->setResAnim(pAnim);
+        return ret;
+    };
+    spDropDownmenuSprite pDropDown = spDropDownmenuSprite::create(105, army, creator);
+    pDropDown->setPosition(x, y);
+    pDropDown->setCurrentItem(m_pUnit->getOwner()->getArmy());
+    connect(pDropDown.get(), &DropDownmenuSprite::sigItemString, this, &UnitInfo::showNewBattlesprite, Qt::QueuedConnection);
+    addChild(pDropDown);
+}
+
+void UnitInfo::showNewBattlesprite(QString newArmy)
+{
+    spPlayer pPlayer = spPlayer::create(nullptr);
+    pPlayer->setPlayerArmy(newArmy);
+    pPlayer->init();
+    spUnit pUnit = spUnit::create(m_pUnit->getUnitID(), pPlayer.get(), false, nullptr);
+    loadBattleSprite(pUnit.get());
+}
+
 void UnitInfo::createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& y, qint32 width)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     WeaponManager* pWeaponManager = WeaponManager::getInstance();

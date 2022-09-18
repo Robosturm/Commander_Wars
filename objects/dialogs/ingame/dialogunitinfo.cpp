@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+
 #include "objects/dialogs/ingame/dialogunitinfo.h"
 
 #include "coreengine/mainapp.h"
@@ -8,13 +10,17 @@
 
 #include "objects/base/panel.h"
 
+#include "menue/movementplanner.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 
 DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogUnitInfo");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -28,14 +34,13 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 10 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getScaledWidth() / 2,
+                           Settings::getHeight() - 10 - pOkButton->getScaledHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -173,13 +178,12 @@ void DialogUnitInfo::remove()
 }
 
 void DialogUnitInfo::moveToUnit(qint32 posX, qint32 posY)
-{
-    
-    spGameMenue pGamemenu = GameMenue::getInstance();
-    if (pGamemenu.get() != nullptr)
+{    
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
+    if (pMenu != nullptr)
     {
-        pGamemenu->MoveMap(posX, posY);
-        pGamemenu->calcNewMousePosition(posX, posY);
+        pMenu->MoveMap(posX, posY);
+        pMenu->calcNewMousePosition(posX, posY);
     }
     emit sigFinished();
     oxygine::Actor::detach();

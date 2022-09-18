@@ -1,4 +1,4 @@
-#include <QApplication>
+#include <QCoreApplication>
 #include <QVariant>
 #include <QFile>
 
@@ -28,7 +28,7 @@ namespace oxygine
         std::vector<spResAnim> anims;
         while (true)
         {
-            QApplication::processEvents();
+            QCoreApplication::processEvents();
             XmlWalker walker = context.m_walker.next();
             if (walker.empty())
             {
@@ -61,7 +61,7 @@ namespace oxygine
             }
             if (found)
             {
-                CONSOLE_PRINT("Duplicate entry found. " + walker.getPath("file"), Console::eFATAL);
+                CONSOLE_PRINT("Duplicate entry found. " + walker.getPath("file"), Console::eERROR);
                 continue;
             }
             qint32 columns = 0;
@@ -77,7 +77,7 @@ namespace oxygine
             }
             else
             {
-                CONSOLE_PRINT("Invalid item found. " + walker.getPath("file"), Console::eFATAL);
+                CONSOLE_PRINT("Invalid item found. " + walker.getPath("file"), Console::eERROR);
                 continue;
             }
             QString path = walker.getPath("file");

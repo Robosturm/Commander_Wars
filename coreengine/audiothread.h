@@ -14,9 +14,8 @@
 #include <QTimer>
 
 #include "coreengine/globalutils.h"
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
-class AudioThread : public QObject
+class AudioThread final : public QObject
 {
     Q_OBJECT
 private:
@@ -43,7 +42,7 @@ private:
 #endif
 public:
     explicit AudioThread(bool noAudio);
-    virtual ~AudioThread();
+    ~AudioThread();
     qint32 getSoundsBuffered();
     /**
      * @brief createSoundCache

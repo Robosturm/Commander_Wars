@@ -5,7 +5,7 @@ CO_WILL.init = function(co, map)
 };
 CO_WILL.activateSuperpower = function(co, powerMode, map)
 {
-    CO_WILL.activatePower(co, powerMode);
+    CO_WILL.activatePower(co, powerMode, map);
 };
 CO_WILL.getSuperPowerDescription = function()
 {

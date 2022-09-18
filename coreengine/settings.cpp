@@ -1,27 +1,38 @@
-#include "coreengine/settings.h"
-#include "coreengine/mainapp.h"
-#include "coreengine/globalutils.h"
-#include "coreengine/userdata.h"
-
-#include "game/gamemap.h"
-
 #include <QSettings>
 #include <QTranslator>
 #include <QLocale>
-#include <qguiapplication.h>
-#include <qscreen.h>
-#include <qlocale.h>
+#ifdef GRAPHICSUPPORT
+#include <QApplication>
+#else
+#include <QCoreApplication>
+#endif
+#include <QScreen>
+#include <QLocale>
 #include <QStandardPaths>
 #include <QDir>
 #include <QFileInfoList>
 #include <QInputDevice>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include <QDirIterator>
+
+#include "coreengine/settings.h"
+#include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
+#include "coreengine/userdata.h"
+#include "coreengine/audiothread.h"
+#include "coreengine/Gamepad.h"
+
+#include "game/gamemap.h"
+
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
 #ifdef USEAPPCONFIGPATH
     const QString Settings::m_settingFile = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + "/Commander_Wars.ini";
 #else
     const QString Settings::m_settingFile = "Commander_Wars.ini";
 #endif
+
+const char* const Settings::DEFAULT_AUDIODEVICE = "@@default@@";
+
 float Settings::m_mouseSensitivity   = -0.75f;
 qint32 Settings::m_x                 = 0;
 qint32 Settings::m_y                 = 0;
@@ -35,6 +46,8 @@ bool Settings::m_smallScreenDevice  = false;
 bool Settings::m_touchScreen = false;
 bool Settings::m_gamepadEnabled = false;
 float Settings::m_gamepadSensitivity = 1.0f;
+bool Settings::m_useHighDpi = true;
+bool Settings::m_automaticUpdates = true;
 qint32 Settings::m_framesPerSecond = 60;
 qint32 Settings::m_touchPointSensitivity = 15;
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
@@ -96,16 +109,29 @@ qint32 Settings::m_SoundVolume       = 100;
 QVariant Settings::m_audioOutput = QVariant();
 bool Settings::m_muted = false;
 // Network
-quint16 Settings::m_GamePort          = 9001;
-quint16 Settings::m_ServerPort        = 9002;
-quint16 Settings::m_slaveServerPort   = 9003;
-QString Settings::m_ServerAdress      = "";
-QString Settings::m_slaveServerName   = "";
-QString Settings::m_slaveHostOptions      = "::1&10000&20000;::1&50000&65535";
-QString Settings::m_serverListenAdress = "";
-QString Settings::m_slaveListenAdress = "::1";
-bool Settings::m_Server               = false;
-bool Settings::m_record               = true;
+quint16 Settings::m_GamePort                        = 9001;
+quint16 Settings::m_ServerPort                      = 9002;
+quint16 Settings::m_slaveServerPort                 = 9003;
+QString Settings::m_ServerAdress                    = "192.46.216.113";
+QString Settings::m_secondaryServerAdress           = "2600:3c00::f03c:93ff:fe86:009e";
+QString Settings::m_slaveServerName                 = "";
+QString Settings::m_slaveHostOptions                = "::1&&10000&20000;::1&&50000&65535";
+QString Settings::m_serverListenAdress              = "";
+QString Settings::m_serverSecondaryListenAdress     = "";
+QString Settings::m_slaveListenAdress               = "::1";
+bool Settings::m_Server                             = false;
+bool Settings::m_record                             = true;
+std::chrono::seconds Settings::m_slaveDespawnTime   = std::chrono::minutes(0);
+QString Settings::m_serverPassword                  = "";
+
+// mailing
+QString Settings::m_mailServerAddress = "";
+quint16 Settings::m_mailServerPort = 0;
+qint32 Settings::m_mailServerConnectionType = 2;
+QString Settings::m_mailServerUsername = "";
+QString Settings::m_mailServerPassword = "";
+qint32 Settings::m_mailServerAuthMethod = 1;
+QString Settings::m_mailServerSendAddress = "";
 // auto saving
 std::chrono::seconds Settings::m_autoSavingCylceTime = std::chrono::minutes(0);
 qint32 Settings::m_autoSavingCycle = 0;
@@ -125,6 +151,7 @@ bool Settings::m_captureAnimation = true;
 quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
 QString Settings::m_defaultRuleset = "";
+QString Settings::m_defaultBannlist = "";
 QString Settings::m_Username = "";
 bool Settings::m_ShowCursor = true;
 bool Settings::m_AutoEndTurn = false;
@@ -154,6 +181,7 @@ QStringList Settings::m_activeModVersions;
 // this Object
 spSettings Settings::m_pInstance;
 QTranslator Settings::m_Translator;
+QString Settings::m_updateStep = "";
 
 // logging
 bool Settings::m_LogActions = false;
@@ -177,9 +205,14 @@ void Settings::shutdown()
 
 Settings::Settings()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Settings");
+#endif
     Interpreter::setCppOwnerShip(this);
-    QSize size = QGuiApplication::primaryScreen()->availableSize();
+    QSize size;
+#ifdef GRAPHICSUPPORT
+    size = QApplication::primaryScreen()->availableSize() * QApplication::primaryScreen()->devicePixelRatio();
+#endif
     bool smallScreenDevice = hasSmallScreen();
     QString defaultPath = "";
     qint32 defaultCoCount = 0;
@@ -216,6 +249,8 @@ Settings::Settings()
         new Value<bool>{"Resolution", "fullscreen", &m_fullscreen, false, false, true, true},
         new Value<bool>{"Resolution", "recordgames", &m_record, false, false, true},
         new Value<bool>{"Resolution", "SmallScreenDevice", &m_smallScreenDevice, smallScreenDevice, false, true},
+        new Value<bool>{"Resolution", "UseHighDpi", &m_useHighDpi, false, false, true},
+
         // general
         new Value<QString>{"General", "language", &m_language, "en", "", ""},
         new Value<float>{"General", "MouseSensitivity", &m_mouseSensitivity, -0.75f, -100, 100},
@@ -223,6 +258,7 @@ Settings::Settings()
         new Value<bool>{"General", "TouchScreen", &m_touchScreen, hasTouch, false, true},
         new Value<qint32>{"General", "TouchPointSensitivity", &m_touchPointSensitivity, 15, 0, size.width()},
         new Value<bool>{"General", "GamepadEnabled", &m_gamepadEnabled, false, false, true},
+        new Value<bool>{"General", "AutomaticUpdates", &m_automaticUpdates, true, false, true},
         new Value<float>{"General", "GamepadSensitivity", &m_gamepadSensitivity, 1.0f, 0.1f, 100},
         new Value<qint32>{"General", "MaxFPS", &m_framesPerSecond, 60, 30, 60},
         // keys
@@ -281,7 +317,7 @@ Settings::Settings()
         new Value<qint32>{"Sound", "SoundVolume", &m_SoundVolume, 100, 0, 100},
         new Value<bool>{"Sound", "Muted", &m_muted, false, false, true},
 #ifdef AUDIOSUPPORT
-        new AudioDeviceValue{"Sound", "AudioDevice", &m_audioOutput},
+        new AudioDeviceValue{"Sound", "AudioDevice", &m_audioOutput, DEFAULT_AUDIODEVICE},
 #endif
         // game
         new Value<QString>{"Game", "Username", &m_Username, "", "", "", true},
@@ -305,6 +341,7 @@ Settings::Settings()
         new Value<bool>{"Game", "MovementAnimations", &m_movementAnimations, true, false, true},
         new Value<QString>{"Game", "LastSaveGame", &m_LastSaveGame, "", "", ""},
         new Value<QString>{"Game", "DefaultRuleset", &m_defaultRuleset, "", "", ""},
+        new Value<QString>{"Game", "DefaultBannlist", &m_defaultBannlist, "", "", ""},
         new Value<bool>{"Game", "ShowCursor", &m_ShowCursor, true, false, true},
         new Value<bool>{"Game", "AutoEndTurn", &m_AutoEndTurn, false, false, true},
         new Value<bool>{"Game", "AutoCamera", &m_autoCamera, true, false, true},
@@ -322,14 +359,23 @@ Settings::Settings()
 
         // network
         new Value<quint16>{"Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()},
-        new Value<QString>{"Network", "ServerAdress", &m_ServerAdress, "", "", ""},
+        new Value<QString>{"Network", "ServerAdress", &m_ServerAdress, "192.46.216.113", "", ""},
+        new Value<QString>{"Network", "SecondaryServerAdress", &m_secondaryServerAdress, "2600:3c00::f03c:93ff:fe86:009e", "", ""},
         new Value<quint16>{"Network", "SlaveServerPort", &m_slaveServerPort, 9003, 0, std::numeric_limits<quint16>::max()},
         new Value<quint16>{"Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()},
         new Value<bool>{"Network", "Server", &m_Server, false, false, true},
-        new Value<QString>{"Network", "SlaveServerName", &m_slaveServerName, "", "", ""},
         new Value<QString>{"Network", "ServerListenAdress", &m_serverListenAdress, "", "", ""},
+        new Value<QString>{"Network", "ServerSecondaryListenAdress", &m_serverSecondaryListenAdress, "", "", ""},
         new Value<QString>{"Network", "SlaveListenAdress", &m_slaveListenAdress, "", "", ""},
-        new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&10000&20000;::1&50000&65535", "", ""},
+        new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&&10000&20000;::1&&50000&65535", "", ""},
+        new Value<std::chrono::seconds>{"Network", "SlaveDespawnTime", &m_slaveDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(60), std::chrono::seconds(60 * 60 * 24 * 96)},
+        // mailing
+        new Value<QString>{"Mailing", "MailServerAddress", &m_mailServerAddress, "", "", ""},
+        new Value<quint16>{"Mailing", "MailServerPort", &m_mailServerPort, 0, 0, std::numeric_limits<quint16>::max()},
+        new Value<qint32>{"Mailing", "MailServerConnectionType", &m_mailServerConnectionType, 2, 0, 2},
+        new Value<QString>{"Mailing", "MailServerUsername", &m_mailServerUsername, "", "", ""},
+        new Value<qint32>{"Mailing", "MailServerAuthMethod", &m_mailServerAuthMethod, 1, 0, 1},
+        new Value<QString>{"Mailing", "MailServerSendAddress", &m_mailServerSendAddress, "", "", ""},
 
         // auto saving
         new Value<std::chrono::seconds>{"Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)},
@@ -340,6 +386,157 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+bool Settings::getAutomaticUpdates()
+{
+    return m_automaticUpdates;
+}
+
+void Settings::setAutomaticUpdates(bool newAutomaticUpdates)
+{
+    m_automaticUpdates = newAutomaticUpdates;
+}
+
+const QString &Settings::getUpdateStep()
+{
+    return m_updateStep;
+}
+
+void Settings::setUpdateStep(const QString &newUpdateStep)
+{
+    m_updateStep = newUpdateStep;
+}
+
+QString Settings::getSecondaryServerAdress()
+{
+    return m_secondaryServerAdress;
+}
+
+void Settings::setSecondaryServerAdress(const QString &newSecondaryServerAdress)
+{
+    m_secondaryServerAdress = newSecondaryServerAdress;
+}
+
+const QString &Settings::getServerSecondaryListenAdress()
+{
+    return m_serverSecondaryListenAdress;
+}
+
+void Settings::setServerSecondaryListenAdress(const QString &newServerSecondaryListenAdress)
+{
+    m_serverSecondaryListenAdress = newServerSecondaryListenAdress;
+}
+
+const QString &Settings::getServerPassword()
+{
+    return m_serverPassword;
+}
+
+void Settings::setServerPassword(const QString &newServerPassword)
+{
+    CONSOLE_PRINT("Changed buffered server login password", Console::eDEBUG);
+    m_serverPassword = newServerPassword;
+}
+
+const QString &Settings::getMailServerSendAddress()
+{
+    return m_mailServerSendAddress;
+}
+
+void Settings::setMailServerSendAddress(const QString &newMailServerSendAddress)
+{
+    m_mailServerSendAddress = newMailServerSendAddress;
+}
+
+qint32 Settings::getMailServerAuthMethod()
+{
+    return m_mailServerAuthMethod;
+}
+
+void Settings::setMailServerAuthMethod(qint32 newMailServerAuthMethod)
+{
+    m_mailServerAuthMethod = newMailServerAuthMethod;
+}
+
+QString Settings::getMailServerPassword()
+{
+    return m_mailServerPassword;
+}
+
+void Settings::setMailServerPassword(QString newMailServerPassword)
+{
+    m_mailServerPassword = newMailServerPassword;
+}
+
+QString Settings::getMailServerUsername()
+{
+    return m_mailServerUsername;
+}
+
+void Settings::setMailServerUsername(QString newMailServerUsername)
+{
+    m_mailServerUsername = newMailServerUsername;
+}
+
+qint32 Settings::getMailServerConnectionType()
+{
+    return m_mailServerConnectionType;
+}
+
+void Settings::setMailServerConnectionType(qint32 newMailServerConnectionType)
+{
+    m_mailServerConnectionType = newMailServerConnectionType;
+}
+
+quint16 Settings::getMailServerPort()
+{
+    return m_mailServerPort;
+}
+
+void Settings::setMailServerPort(quint16 newMailServerPort)
+{
+    m_mailServerPort = newMailServerPort;
+}
+
+const QString &Settings::getMailServerAddress()
+{
+    return m_mailServerAddress;
+}
+
+void Settings::setMailServerAddress(const QString &newMailServerAddress)
+{
+    m_mailServerAddress = newMailServerAddress;
+}
+
+const std::chrono::seconds &Settings::getSlaveDespawnTime()
+{
+    return m_slaveDespawnTime;
+}
+
+void Settings::setSlaveDespawnTime(const std::chrono::seconds &newSlaveDespawnTime)
+{
+    m_slaveDespawnTime = newSlaveDespawnTime;
+}
+
+QString Settings::getDefaultBannlist()
+{
+    return m_defaultBannlist;
+}
+
+void Settings::setDefaultBannlist(const QString &newDefaultBannlist)
+{
+    m_defaultBannlist = newDefaultBannlist;
+}
+
+bool Settings::getUseHighDpi()
+{
+    return m_useHighDpi;
+}
+
+void Settings::setUseHighDpi(bool newUseHighDpi)
+{
+    m_useHighDpi = newUseHighDpi;
 }
 
 bool Settings::getMovementAnimations()
@@ -476,7 +673,7 @@ void Settings::setSupplyWarning(float newSupplyWarning)
     m_supplyWarning = newSupplyWarning;
 }
 
-const QString &Settings::getDefaultRuleset()
+QString Settings::getDefaultRuleset()
 {
     return m_defaultRuleset;
 }
@@ -580,7 +777,7 @@ void Settings::setTouchScreen(bool newTouchScreen)
     m_touchScreen = newTouchScreen;
 }
 
-const QString &Settings::getUserPath()
+QString Settings::getUserPath()
 {
     return m_userPath;
 }
@@ -1091,6 +1288,16 @@ void Settings::setAutoSavingCylceTime(const std::chrono::seconds &value)
     m_autoSavingCylceTime = value;
 }
 
+quint64 Settings::getAutoSavingCylceTimeRaw()
+{
+    return std::chrono::duration_cast<std::chrono::milliseconds>(getAutoSavingCylceTime()).count();
+}
+
+void Settings::setAutoSavingCylceTimeRaw(quint64 &value)
+{
+    setAutoSavingCylceTime(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::milliseconds(value)));
+}
+
 Qt::Key Settings::getKey_ShowAttackFields()
 {
     return m_key_ShowAttackFields;
@@ -1128,7 +1335,7 @@ QString Settings::getLanguage()
 
 void Settings::setLanguage(const QString &language)
 {
-    QGuiApplication::removeTranslator(&m_Translator);
+    QCoreApplication::removeTranslator(&m_Translator);
     m_language = language;
     QString languageFile = "resources/translation/lang_" + m_language + ".qm";
     if (!QFile::exists(languageFile))
@@ -1150,7 +1357,7 @@ void Settings::setLanguage(const QString &language)
             CONSOLE_PRINT("Loaded language " + language, Console::eDEBUG);
         }
     }
-    QGuiApplication::installTranslator(&m_Translator);
+    QCoreApplication::installTranslator(&m_Translator);
     Interpreter* pInterpreter = Interpreter::getInstance();
     if (pInterpreter != nullptr)
     {
@@ -1207,7 +1414,7 @@ void Settings::saveSettings()
 {
     CONSOLE_PRINT("Settings::saveSettings()", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
-    if (!pApp->getSlave())
+    if (!pApp->getSlave() && m_updateStep.isEmpty())
     {
         QSettings settings(m_settingFile, QSettings::IniFormat);
         for (auto setting : m_SettingValues)
@@ -1220,6 +1427,27 @@ void Settings::saveSettings()
 QString Settings::getModString()
 {
     return getConfigString(m_activeMods);
+}
+
+
+void Settings::filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter)
+{
+    if (filter)
+    {
+        qint32 i = 0;
+        while (i < mods.length())
+        {
+            if (Settings::getIsCosmetic(mods[i]))
+            {
+                mods.removeAt(i);
+                versions.removeAt(i);
+            }
+            else
+            {
+                ++i;
+            }
+        }
+    }
 }
 
 QString Settings::getConfigString(QStringList list)
@@ -1762,12 +1990,191 @@ QStringList Settings::getAvailableMods()
 
 bool Settings::hasSmallScreen()
 {
-    QScreen* screen = QGuiApplication::primaryScreen();
+#ifdef GRAPHICSUPPORT
+    QScreen* screen = QApplication::primaryScreen();
     QRect screenSize = screen->availableGeometry();
     if (screenSize.width() < 960 ||
         screenSize.height() < 640)
     {
         return true;
     }
+#endif
     return false;
+}
+
+QStringList Settings::getAudioDevices()
+{
+    QStringList items = {tr("Default device")};
+#ifdef AUDIOSUPPORT
+    const auto deviceInfos = QMediaDevices::audioOutputs();
+    for (qint32 i = 0; i < deviceInfos.size(); ++i)
+    {
+        items.append(deviceInfos[i].description());
+    }
+#endif
+    return items;
+}
+
+qint32 Settings::getCurrentDevice()
+{
+    qint32 currentItem = 0;
+#ifdef AUDIOSUPPORT
+    auto currentDevice = Settings::getAudioOutput().value<QAudioDevice>();
+    const auto deviceInfos = QMediaDevices::audioOutputs();
+
+    for (qint32 i = 0; i < deviceInfos.size(); ++i)
+    {
+        if (deviceInfos[i] == currentDevice)
+        {
+            currentItem = i + 1;
+        }
+    }
+#endif
+    return currentItem;
+}
+
+void Settings::setAudioDevice(qint32 value)
+{
+#ifdef AUDIOSUPPORT
+    AudioThread* pAudio = Mainapp::getInstance()->getAudioThread();
+    if (value == 0)
+    {
+        auto item = QVariant::fromValue(QMediaDevices::defaultAudioOutput());
+        pAudio->changeAudioDevice(item);
+        Settings::setAudioOutput(QVariant(Settings::DEFAULT_AUDIODEVICE));
+    }
+    else
+    {
+        const auto deviceInfos = QMediaDevices::audioOutputs();
+        if (value <= deviceInfos.size())
+        {
+            auto item = QVariant::fromValue(deviceInfos[value - 1]);
+            Settings::setAudioOutput(item);
+            pAudio->changeAudioDevice(item);
+        }
+    }
+#endif
+}
+
+QSize Settings::getScreenSize()
+{
+    QRect screenSize;
+#ifdef GRAPHICSUPPORT
+    QScreen *screen = QApplication::primaryScreen();
+    if (Settings::getFullscreen())
+    {
+        screenSize  = screen->geometry();
+    }
+    else
+    {
+        screenSize  = screen->availableGeometry();
+    }
+#endif
+    return screenSize.size();
+}
+
+float Settings::getDpiFactor()
+{
+    return Mainapp::getInstance()->getActiveDpiFactor();
+}
+
+qint32 Settings::getScreenMode()
+{
+    return static_cast<qint32>(Mainapp::getInstance()->getScreenMode());
+}
+
+void Settings::setScreenMode(qint32 value)
+{
+    Mainapp::getInstance()->changeScreenMode(static_cast<Settings::ScreenModes>(value));
+}
+
+void Settings::changeBrightness(qint32 value)
+{
+    setBrightness(value);
+    Mainapp::getInstance()->setBrightness(value);
+}
+
+void Settings::changeGamma(float value)
+{
+    setGamma(value);
+    Mainapp::getInstance()->setGamma(value);
+}
+
+bool Settings::isGamepadSupported()
+{
+    return Gamepad::isSupported();
+}
+
+QStringList Settings::getLanguageNames()
+{
+     QLocale english("en");
+     QStringList items = {english.nativeLanguageName()};
+     QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
+     QStringList filter;
+     filter << "*.qm";
+     for (const QString & path : qAsConst(paths))
+     {
+         QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+         while (dirIter.hasNext())
+         {
+             dirIter.next();
+             QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
+             if (lang != "en")
+             {
+                 QLocale langLoc(lang);
+                 items.append(langLoc.nativeLanguageName());
+             }
+         }
+     }
+     return items;
+}
+
+QStringList Settings::getLanguageIds()
+{
+     QStringList languages = {"en"};
+     QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
+     QStringList filter;
+     filter << "*.qm";
+     for (const QString & path : qAsConst(paths))
+     {
+         QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+         while (dirIter.hasNext())
+         {
+             dirIter.next();
+             QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
+             if (lang != "en")
+             {
+                 languages.append(lang);
+             }
+         }
+     }
+     return languages;
+}
+
+qint32 Settings::getCurrentLanguageIndex()
+{
+     qint32 current = 0;
+     QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
+     QStringList filter;
+     filter << "*.qm";
+     qint32 i = 0;
+     for (const QString & path : qAsConst(paths))
+     {
+         QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+         while (dirIter.hasNext())
+         {
+             dirIter.next();
+             QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
+             if (lang != "en")
+             {
+                 ++i;
+                 if (lang == Settings::getLanguage())
+                 {
+                     current = i;
+                     break;
+                 }
+             }
+         }
+     }
+     return current;
 }

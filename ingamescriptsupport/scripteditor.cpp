@@ -1,4 +1,4 @@
-#include "qfile.h"
+#include <QFile>
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -8,6 +8,8 @@
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
 
+#include "objects/base/label.h"
+
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 #include "ingamescriptsupport/events/scriptevent.h"
 #include "ingamescriptsupport/scripteditor.h"
@@ -15,7 +17,9 @@
 ScriptEditor::ScriptEditor(GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ScriptEditor");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -32,8 +36,6 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     m_Data = spScriptData::create(m_pMap);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -47,25 +49,26 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     m_ConditionPanel->setPosition(30, 110);
     pSpriteBox->addChild(m_ConditionPanel);
     QStringList items = {tr(ScriptCondition::ConditionStartOfTurn.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionVictory.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionEachDay.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionUnitDestroyed.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionBuildingDestroyed.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionTerrainDestroyed.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionBuildingCaptured.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionPlayerDefeated.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionUnitsDestroyed.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionBuildingsOwned.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionPlayerReachedArea.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionUnitReachedArea.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionCheckVariable.toStdString().c_str())};
+                         tr(ScriptCondition::ConditionVictory.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionEachDay.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionUnitDestroyed.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionBuildingDestroyed.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionTerrainDestroyed.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionBuildingCaptured.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionPlayerDefeated.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionUnitsDestroyed.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionBuildingsOwned.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionPlayerReachedArea.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionUnitReachedArea.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionCheckVariable.toStdString().c_str()),
+                         tr(ScriptCondition::ConditionIsCo.toStdString().c_str())};
     m_Conditions = spDropDownmenu::create(300, items);
     m_Conditions->setTooltipText(tr("Condition type you want to create. If another condition is selected both must be fulfilled to activate the event."));
     m_Conditions->setPosition(30, Settings::getHeight() / 2 - 45);
     pSpriteBox->addChild(m_Conditions);
     // condition button
     oxygine::spButton pConditionButton = pObjectManager->createButton(tr("Add Condition"), 200);
-    pConditionButton->setPosition(m_Conditions->getX() + m_Conditions->getWidth() + 10, Settings::getHeight() / 2 - 45);
+    pConditionButton->setPosition(m_Conditions->getX() + m_Conditions->getScaledWidth() + 10, Settings::getHeight() / 2 - 45);
     pSpriteBox->addChild(pConditionButton);
     pConditionButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -74,7 +77,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     connect(this, &ScriptEditor::sigAddCondition, this, &ScriptEditor::addCondition, Qt::QueuedConnection);
 
     oxygine::spButton pConditionDuplicate = pObjectManager->createButton(tr("Duplicate"), 200);
-    pConditionDuplicate->setPosition(pConditionButton->getX() + pConditionButton->getWidth() + 10, Settings::getHeight() / 2 - 45);
+    pConditionDuplicate->setPosition(pConditionButton->getX() + pConditionButton->getScaledWidth() + 10, Settings::getHeight() / 2 - 45);
     pSpriteBox->addChild(pConditionDuplicate);
     pConditionDuplicate->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -117,7 +120,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     pSpriteBox->addChild(m_Events);
     // condition button
     m_pEventButton = pObjectManager->createButton(tr("Add Event"), 200);
-    m_pEventButton->setPosition(m_Events->getX() + m_Events->getWidth() + 10, Settings::getHeight() - 115);
+    m_pEventButton->setPosition(m_Events->getX() + m_Events->getScaledWidth() + 10, Settings::getHeight() - 115);
     pSpriteBox->addChild(m_pEventButton);
     m_pEventButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -140,7 +143,8 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 10 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() - pOkButton->getScaledWidth() - 30,
+                           Settings::getHeight() - 10 - pOkButton->getScaledHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -148,14 +152,15 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     });
 
     oxygine::spButton pSaveButton = pObjectManager->createButton(tr("Save"), 150);
-    pSaveButton->setPosition(Settings::getWidth() / 2 - pSaveButton->getWidth() / 2, Settings::getHeight() - 10 - pSaveButton->getHeight());
+    pSaveButton->setPosition(Settings::getWidth() / 2 - pSaveButton->getScaledWidth() / 2,
+                             Settings::getHeight() - 10 - pSaveButton->getScaledHeight());
     pSpriteBox->addChild(pSaveButton);
     pSaveButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigSaveScript();
     });
     oxygine::spButton pLoadButton = pObjectManager->createButton(tr("Load"), 150);
-    pLoadButton->setPosition(30, Settings::getHeight() - 10 - pLoadButton->getHeight());
+    pLoadButton->setPosition(30, Settings::getHeight() - 10 - pLoadButton->getScaledHeight());
     pSpriteBox->addChild(pLoadButton);
     pLoadButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -239,8 +244,7 @@ void ScriptEditor::changeImmediateStart()
 }
 
 void ScriptEditor::updateConditios()
-{
-    
+{    
     m_ImmediateStart->setChecked(m_Data->getStartMode());
 
     m_ConditionPanel->clearContent();
@@ -267,16 +271,13 @@ void ScriptEditor::updateConditios()
 
     m_CurrentCondition = nullptr;
     updateEvents();
-    m_ConditionPanel->setContentHeigth(y + 40);
-    
+    m_ConditionPanel->setContentHeigth(y + 40);    
 }
 
 void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
 {
     qint32 x = 450;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -293,7 +294,7 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
     spScriptCondition condition = pCondition;
     while (condition.get() != nullptr)
     {
-        oxygine::spTextField text = oxygine::spTextField::create();
+        spLabel text = spLabel::create(420);
         text->setStyle(style);
         text->setHtmlText(condition->getDescription());
         text->setPosition(10, boxY);
@@ -327,7 +328,7 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
         if (condition.get() != nullptr)
         {
             boxY += 40;
-            pSpritebox->setHeight(pSpritebox->getHeight() + 40);
+            pSpritebox->setHeight(pSpritebox->getScaledHeight() + 40);
         }
     }
 
@@ -375,11 +376,9 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
 {
     qint32 x = 450;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    oxygine::spTextField text = oxygine::spTextField::create();
+    spLabel text = spLabel::create(420);
     text->setStyle(style);
     text->setHtmlText(pEvent->getDescription());
     text->setPosition(10, y);
@@ -510,6 +509,7 @@ void ScriptEditor::addConditionToData(spScriptCondition pCondition)
         case ScriptCondition::ConditionType::unitReachedArea:
         case ScriptCondition::ConditionType::playerReachedArea:
         case ScriptCondition::ConditionType::checkVariable:
+        case ScriptCondition::ConditionType::isCo:
         {
             m_Data->addActionCondition(pCondition);
             break;

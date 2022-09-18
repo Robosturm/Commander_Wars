@@ -6,7 +6,7 @@
 #include <QObject>
 #include <vector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "ai/neuralnetwork/neural/layer.h"
 #include "ai/neuralnetwork/neural/neuron.h"
@@ -16,13 +16,13 @@ class Neuron;
 class Layer;
 using spNeuralNetwork = oxygine::intrusive_ptr<NeuralNetwork>;
 
-class NeuralNetwork : public QObject, public FileSerializable, public oxygine::ref_counter
+class NeuralNetwork final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
 
     NeuralNetwork(double maxWeight = 1.0);
-    virtual ~NeuralNetwork()= default;
+    ~NeuralNetwork()= default;
     /**
      * @brief serialize stores the object
      * @param pStream

@@ -138,6 +138,12 @@ public:
         GameAi_Hold,
         GameAi_Patrol,
         GameAi_PatrolLoop,
+        GameAi_TargetEnemyHq,
+        GameAi_Scripted,
+        // guard hq
+        // guard ai lander / infantry
+        // target capturable properties / silo
+        // stay out of attack range / camp on high defense
     };
     Q_ENUM(GameAi)
 
@@ -189,6 +195,7 @@ public:
 
     enum AiTypes
     {
+        AiTypes_MovePlanner = -2,
         AiTypes_ProxyAi = -1,
         AiTypes_Human = 0,
         AiTypes_VeryEasy,
@@ -315,10 +322,29 @@ public:
     };
     Q_ENUM(MapFilterFlags)
 
+    enum AddinStepType
+    {
+        AddinStepType_Field,
+        AddinStepType_Menu,
+    };
+    Q_ENUM(AddinStepType)
+
+    enum LoginError
+    {
+        LoginError_None,
+        LoginError_WrongPassword,
+        LoginError_AccountDoesntExist,
+        LoginError_AccountExists,
+        LoginError_InvalidPasswordReset,
+        LoginError_PasswordOutdated,
+        LoginError_DatabaseNotAccesible,
+        LoginError_SendingMailFailed,
+    };
+    Q_ENUM(LoginError)
+
     static void registerEnums();
 private:
-    explicit GameEnums() = default;
-    virtual ~GameEnums() = default;
+    GameEnums() = default;
 };
 
 #endif

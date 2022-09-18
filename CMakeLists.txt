@@ -1,9 +1,10 @@
 cmake_minimum_required (VERSION 3.19.0)
-project (Commander_Wars LANGUAGES CXX)
+project (Commander_Wars LANGUAGES CXX C)
 
 # Information for building commander wars on other platforms
 # 1. make sure the CMAKE_PREFIX_PATH targets to the correct qt installation
 # 2. make sure the LIBRARY_PATH targets the library folder of qt e.g. LD_LIBRARY_PATH=$HOME/Qt/5.15.2/gcc_64/lib
+# 3. make sure that -DOPENSSL_ROOT_DIR= targets your local openssl installation e.g. -DOPENSSL_ROOT_DIR=D:/Qt/Tools/OpenSSL
 
 # Special Information for Android
 # ANDROID_NATIVE_API_LEVEL needs to be 27
@@ -20,28 +21,41 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
+option(OPENSSL_USE_STATIC_LIBS "you may disable linking static against openssl but it's not recommended. The installation process won't deploy the libs." TRUE)
+option(OPENSSL_MSVC_STATIC_RT "you may disable linking static against openssl but it's not recommended. The installation process won't deploy the libs." TRUE)
 option(AUDIOSUPPORT "enables audio support for the game and compiles music/sound into the exe" ON)
 option(GRAPHICSUPPORT "enables sprites for the game and compiles them into the exe" ON)
+option(USEVULKAN "This swaps from opengl to vulkan rendering. Incompatible with GRAPHICSUPPORT OFF. In development don't use" OFF)
+option(PRECOMPILEDOPENSSL "if the openssl are precompiled libs or or package exists" OFF)
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
-
+option(DEPLOY_RESOURCES_AS_FOLDER "if files should be compiled into the exe or deployed as folder" OFF)
+option(UPDATESUPPORT "Enables the automatic updater for the game which updates to the latest github version should be turned off for local builds not supported for android" OFF)
 ###################################################################################
 # show configuration
 ###################################################################################
 
+get_filename_component(CXX_COMPILER_PATH "${CMAKE_CXX_COMPILER}" DIRECTORY)
+get_filename_component(C_COMPILER_PATH "${CMAKE_C_COMPILER}" DIRECTORY)
 message("Prefix Path: ${CMAKE_PREFIX_PATH}")
 message("Module Path: ${CMAKE_MODULE_PATH}")
+message("Qt-Host-Path: ${QT_HOST_PATH}")
 message("Qt-Dir: ${Qt6_DIR}")
+message("Qt-Tools Path: ${Qt6CoreTools_DIR}")
 message("C-Compiler Path: ${C_COMPILER_PATH}")
 message("C-Compiler: ${CMAKE_C_COMPILER}")
 message("C++-Compiler Path: ${CXX_COMPILER_PATH}")
 message("C++-Compiler: ${CMAKE_CXX_COMPILER}")
-message("C-Compiler ${CMAKEXX_COMPILER_ID}")
-message("C++-Compiler ${CMAKE_CXX_COMPILER_ID}")
-message("OS: ${CMAKE_SYSTEM_NAME}")
 message("CFlags: ${CMAKE_C_FLAGS}")
 message("CXX Flags: ${CMAKE_CXX_FLAGS}")
 message("CMake Systemname: ${CMAKE_SYSTEM_NAME}")
 message("CMake Binary dir: ${CMAKE_CURRENT_BINARY_DIR}")
+message("OpenSsL-Dir:" ${OPENSSL_ROOT_DIR})
+message("Toolchain-file: ${CMAKE_TOOLCHAIN_FILE}")
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    message("SDK: ${ANDROID_SDK}")
+    message("NDK: ${ANDROID_SDK_ROOT}")
+endif()
+
 
 ###################################################################################
 # Find external libs
@@ -52,7 +66,7 @@ find_package(Qt6 COMPONENTS Network REQUIRED)
 find_package(Qt6 COMPONENTS Gui REQUIRED)
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt6 COMPONENTS Xml REQUIRED)
-find_package(Qt6 COMPONENTS OpenGL REQUIRED)
+find_package(Qt6 COMPONENTS Sql REQUIRED)
 find_package(Doxygen OPTIONAL_COMPONENTS mscgen dia dot)
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
@@ -61,8 +75,6 @@ endif()
 # the binaries
 get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
 get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
-get_filename_component(CXX_COMPILER_PATH "${CMAKE_CXX_COMPILER}" DIRECTORY)
-get_filename_component(C_COMPILER_PATH "${CMAKE_C_COMPILER}" DIRECTORY)
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
@@ -71,41 +83,62 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
 endif()
 
 ###################################################################################
+# OpenSsl
+###################################################################################
+
+if(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    message("Using local pre-compiled openssl version from path: ${OPENSSL_LIB_PATH}")
+    set(OPENSSL_LIBS
+        ${OPENSSL_LIB_PATH}/libcrypto_${ANDROID_ABI}.a
+        ${OPENSSL_LIB_PATH}/libssl_${ANDROID_ABI}.a
+    CACHE INTERNAL "")
+    include_directories(${OPENSSL_INCLUDE_DIR})
+    message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
+    message ("OpenSsL libs:" ${OPENSSL_LIBS})
+else()
+    message("Using openssl package")
+    find_package(OpenSSL REQUIRED)
+    message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
+    message ("OpenSsL All-Libs:" ${OPENSSL_LIBRARIES})
+    include_directories(${OPENSSL_INCLUDE_DIR})
+    set(OPENSSL_LIBS
+        OpenSSL::SSL
+        OpenSSL::Crypto
+    )
+endif()
+
+###################################################################################
 # Set build dependend defines
 ###################################################################################
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     message("Compiling as Debug")
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-        set(DEPLOY_RESOURCES_AS_FOLDER false)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
-            #-DHEAVY_AI                 # experimental heavy ai unfinished
+            -DHEAVY_AI                 # experimental heavy ai unfinished
             #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        set(DEPLOY_RESOURCES_AS_FOLDER true)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
-            #-DHEAVY_AI                 # experimental heavy ai unfinished
+            -DHEAVY_AI                 # experimental heavy ai unfinished
             #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     else()
-        set(DEPLOY_RESOURCES_AS_FOLDER false)
         add_definitions(
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
-            #-DHEAVY_AI                 # experimental heavy ai unfinished
+            -DHEAVY_AI                 # experimental heavy ai unfinished
             #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     endif()
 else("Release")
     message("Compiling as Release")
-    set(DEPLOY_RESOURCES_AS_FOLDER false)
     add_definitions(
         -DDEBUG_LEVEL=1             # default console log level
     )
@@ -121,6 +154,21 @@ else()
     message("Building without Audio")
 endif()
 
+if(GRAPHICSUPPORT)
+    if (USEVULKAN)
+        message("Building with vulkan")
+        find_package(Vulkan REQUIRED)
+    else()
+        message("Building with OpenGl")
+        find_package(Qt6 COMPONENTS OpenGL REQUIRED)
+    endif()
+    add_definitions(
+        -DGRAPHICSUPPORT
+    )
+else()
+    message("Building without UI")
+endif()
+
 if (USEAPPCONFIGPATH)
     message("Building with user config path")
     add_definitions(
@@ -131,13 +179,18 @@ else()
 endif()
 
 ###################################################################################
-# General defines
+# General version information
 ###################################################################################
 add_definitions(
-    -DMAJOR=0
-    -DMINOR=22
-    -DREVISION=7
+    -DVERSION_MAJOR=0
+    -DVERSION_MINOR=24
+    -DVERSION_REVISION=3
+    -DVERSION_SUFFIX="dev"
+    -DCOW_BUILD_TAG="${COW_BUILD_TAG}"
     )
+
+set(COW_ANDROID_VERSION_NAME "0.24.3-dev")
+set(COW_ANDROID_VERSION_CODE "22")
 
 ###################################################################################
 # Set up some compiler and linking options
@@ -148,25 +201,15 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj ${CMAKE_CXX_FLAGS}")
         set(CMAKE_C_FLAGS "-Wa,-mbig-obj ${CMAKE_C_FLAGS}")
     endif()
-    find_program(ADDR_2_LINE "")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    set(ADDR_2_LINE "")
     if ("${ANDROID_ABI}" STREQUAL armeabi-v7a)
         add_link_options("-long-plt")
     endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
-    find_program(ADDR_2_LINE addr2line)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
-    find_program(ADDR_2_LINE addr2line)
 else()
     message(FATAL_ERROR "Unsupported OS found")
 endif()
-
-###################################################################################
-# show addr2line path
-###################################################################################
-
-message("Addr2Line Path: ${ADDR_2_LINE}")
 
 ###################################################################################
 # start oxygine stuff -> qoxygine
@@ -177,9 +220,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/Clock.cpp 3rd_party/oxygine-framework/oxygine/Clock.h
     3rd_party/oxygine-framework/oxygine/Draggable.cpp 3rd_party/oxygine-framework/oxygine/Draggable.h
     3rd_party/oxygine-framework/oxygine/EventDispatcher.cpp 3rd_party/oxygine-framework/oxygine/EventDispatcher.h
-    3rd_party/oxygine-framework/oxygine/Font.cpp 3rd_party/oxygine-framework/oxygine/Font.h
     3rd_party/oxygine-framework/oxygine/Input.cpp 3rd_party/oxygine-framework/oxygine/Input.h
-    3rd_party/oxygine-framework/oxygine/MaskedRenderer.cpp 3rd_party/oxygine-framework/oxygine/MaskedRenderer.h
     3rd_party/oxygine-framework/oxygine/Material.cpp 3rd_party/oxygine-framework/oxygine/Material.h
     3rd_party/oxygine-framework/oxygine/MaterialCache.cpp 3rd_party/oxygine-framework/oxygine/MaterialCache.h
     3rd_party/oxygine-framework/oxygine/PointerState.cpp 3rd_party/oxygine-framework/oxygine/PointerState.h
@@ -188,16 +229,14 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/VisualStyle.cpp 3rd_party/oxygine-framework/oxygine/VisualStyle.h
     3rd_party/oxygine-framework/oxygine/RenderState.h
     3rd_party/oxygine-framework/oxygine/oxygine-forwards.h
+    3rd_party/oxygine-framework/oxygine/TextStyle.h
     #core
-    3rd_party/oxygine-framework/oxygine/core/Object.cpp 3rd_party/oxygine-framework/oxygine/core/Object.h
     3rd_party/oxygine-framework/oxygine/core/oxygine.cpp 3rd_party/oxygine-framework/oxygine/core/oxygine.h
-    3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h
-    3rd_party/oxygine-framework/oxygine/core/VideoDriver.cpp 3rd_party/oxygine-framework/oxygine/core/VideoDriver.h
+    3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h
     3rd_party/oxygine-framework/oxygine/core/gamewindow.cpp 3rd_party/oxygine-framework/oxygine/core/gamewindow.h
     3rd_party/oxygine-framework/oxygine/core/ref_counter.cpp 3rd_party/oxygine-framework/oxygine/core/ref_counter.h
-    3rd_party/oxygine-framework/oxygine/core/texture.cpp 3rd_party/oxygine-framework/oxygine/core/texture.h
-    3rd_party/oxygine-framework/oxygine/core/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h
     3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h
+    3rd_party/oxygine-framework/oxygine/core/VideoDriver.h
     # actor
     3rd_party/oxygine-framework/oxygine/actor/Actor.cpp 3rd_party/oxygine-framework/oxygine/actor/Actor.h
     3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.cpp 3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h
@@ -219,13 +258,12 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/tween/tweenwait.cpp 3rd_party/oxygine-framework/oxygine/tween/tweenwait.h
     3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.cpp 3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h
     3rd_party/oxygine-framework/oxygine/tween/tweenshakey.cpp 3rd_party/oxygine-framework/oxygine/tween/tweenshakey.h
+    3rd_party/oxygine-framework/oxygine/tween/tweenchangenumbertext.h 3rd_party/oxygine-framework/oxygine/tween/tweenchangenumbertext.cpp
     # res stuff
     3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.cpp 3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h
     3rd_party/oxygine-framework/oxygine/res/ResAnim.cpp 3rd_party/oxygine-framework/oxygine/res/ResAnim.h
     3rd_party/oxygine-framework/oxygine/res/ResAtlas.cpp 3rd_party/oxygine-framework/oxygine/res/ResAtlas.h
     3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.cpp 3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.h
-    3rd_party/oxygine-framework/oxygine/res/ResFont.cpp 3rd_party/oxygine-framework/oxygine/res/ResFont.h
-    3rd_party/oxygine-framework/oxygine/res/ResFontBM.cpp 3rd_party/oxygine-framework/oxygine/res/ResFontBM.h
     3rd_party/oxygine-framework/oxygine/res/Resource.cpp 3rd_party/oxygine-framework/oxygine/res/Resource.h
     3rd_party/oxygine-framework/oxygine/res/Resources.cpp 3rd_party/oxygine-framework/oxygine/res/Resources.h
     3rd_party/oxygine-framework/oxygine/res/SingleResAnim.cpp 3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h
@@ -240,9 +278,114 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/math/Rect.h
     3rd_party/oxygine-framework/oxygine/math/ScalarMath.h
     3rd_party/oxygine-framework/oxygine/math/Vector2.h
+)
+
+if (GRAPHICSUPPORT)
+    if (USEVULKAN)
+        include_directories("3rd_party/oxygine-framework/oxygine/core/vulkan")
+        set(${PROJECT_NAME}_OXYGINE_SRCS
+            ${${PROJECT_NAME}_OXYGINE_SRCS}
+            3rd_party/oxygine-framework/oxygine/core/vulkan/vulkanrenderer.cpp 3rd_party/oxygine-framework/oxygine/core/vulkan/vulkanrenderer.h
+            3rd_party/oxygine-framework/oxygine/core/vulkan/windowBase.cpp 3rd_party/oxygine-framework/oxygine/core/vulkan/windowBase.h
+            3rd_party/oxygine-framework/oxygine/core/vulkan/texture.cpp 3rd_party/oxygine-framework/oxygine/core/vulkan/texture.h
+            3rd_party/oxygine-framework/oxygine/core/vulkan/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/vulkan/ShaderProgram.h
+            3rd_party/oxygine-framework/oxygine/core/vulkan/VideoDriver.cpp
+            3rd_party/oxygine-framework/oxygine/core/vulkan/UberShaderProgram.cpp
+            game/gamerecording/vulkan/gamemapimagesaver.cpp
+        )
+    else()
+        include_directories("3rd_party/oxygine-framework/oxygine/core/opengl")
+        set(${PROJECT_NAME}_OXYGINE_SRCS
+            ${${PROJECT_NAME}_OXYGINE_SRCS}
+            3rd_party/oxygine-framework/oxygine/core/opengl/windowBase.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/windowBase.h
+            3rd_party/oxygine-framework/oxygine/core/opengl/texture.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/texture.h
+            3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.h
+            3rd_party/oxygine-framework/oxygine/core/opengl/VideoDriver.cpp
+            3rd_party/oxygine-framework/oxygine/core/opengl/UberShaderProgram.cpp
+            game/gamerecording/opengl/gamemapimagesaver.cpp
+        )
+    endif()
+else()
+    include_directories("3rd_party/oxygine-framework/oxygine/core/none")
+    set(${PROJECT_NAME}_OXYGINE_SRCS
+        ${${PROJECT_NAME}_OXYGINE_SRCS}
+        3rd_party/oxygine-framework/oxygine/core/none/windowBase.cpp 3rd_party/oxygine-framework/oxygine/core/none/windowBase.h
+        3rd_party/oxygine-framework/oxygine/core/none/texture.cpp 3rd_party/oxygine-framework/oxygine/core/none/texture.h
+        3rd_party/oxygine-framework/oxygine/core/none/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/none/ShaderProgram.h
+        3rd_party/oxygine-framework/oxygine/core/none/VideoDriver.cpp
+        3rd_party/oxygine-framework/oxygine/core/none/UberShaderProgram.cpp
+        game/gamerecording/none/gamemapimagesaver.cpp
     )
+endif()
+
 ###################################################################################
 # end oxygine stuff -> qoxygine
+###################################################################################
+
+###################################################################################
+# start update support stuff
+###################################################################################
+
+if (UPDATESUPPORT AND NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    message("Building with update support")
+    add_definitions(
+        -DUPDATESUPPORT
+        -DCOW_UPDATETARGET="${COW_UPDATETARGET}"
+        -DCOW_INSTALLDIR="${COW_INSTALL_DIR}"
+    )
+    include_directories("updater/zipSupport")
+    set(${PROJECT_NAME}_UPDATE_SRCS
+        updater/gameupdater.h updater/gameupdater.cpp
+        updater/filedownloader.h updater/filedownloader.cpp
+        updater/zipSupport/qzipreader.cpp updater/zipSupport/qzipreader.h
+        updater/zipSupport/adler32.c
+        updater/zipSupport/crc32.c updater/zipSupport/crc32.h
+        updater/zipSupport/deflate.c updater/zipSupport/deflate.h
+        updater/zipSupport/gzguts.h
+        updater/zipSupport/gzlib.c
+        updater/zipSupport/gzread.c
+        updater/zipSupport/inflate.c updater/zipSupport/inflate.h
+        updater/zipSupport/inftrees.c updater/zipSupport/inftrees.h
+        updater/zipSupport/inffast.c updater/zipSupport/inffast.h
+        updater/zipSupport/inffixed.h
+        updater/zipSupport/trees.c updater/zipSupport/trees.h
+        updater/zipSupport/zlib.h
+        updater/zipSupport/uncompr.c
+        updater/zipSupport/zutil.c updater/zipSupport/zutil.h
+    )
+else()
+    message("Building without update support")
+    set(${PROJECT_NAME}_UPDATE_SRCS
+    )
+endif()
+
+###################################################################################
+# start stmp client stuff
+###################################################################################
+set(${PROJECT_NAME}_SmtpClient_SRCS
+    3rd_party/smtpClient/src/emailaddress.cpp 3rd_party/smtpClient/src/emailaddress.h
+    3rd_party/smtpClient/src/mimeattachment.cpp 3rd_party/smtpClient/src/mimeattachment.h
+    3rd_party/smtpClient/src/mimebase64encoder.cpp 3rd_party/smtpClient/src/mimebase64encoder.h
+    3rd_party/smtpClient/src/mimebase64formatter.cpp 3rd_party/smtpClient/src/mimebase64formatter.h
+    3rd_party/smtpClient/src/mimebytearrayattachment.cpp 3rd_party/smtpClient/src/mimebytearrayattachment.h
+    3rd_party/smtpClient/src/mimecontentencoder.cpp 3rd_party/smtpClient/src/mimecontentencoder.h
+    3rd_party/smtpClient/src/mimecontentformatter.cpp 3rd_party/smtpClient/src/mimecontentformatter.h
+    3rd_party/smtpClient/src/mimefile.cpp 3rd_party/smtpClient/src/mimefile.h
+    3rd_party/smtpClient/src/mimehtml.cpp 3rd_party/smtpClient/src/mimehtml.h
+    3rd_party/smtpClient/src/mimeinlinefile.cpp 3rd_party/smtpClient/src/mimeinlinefile.h
+    3rd_party/smtpClient/src/mimemessage.cpp 3rd_party/smtpClient/src/mimemessage.h
+    3rd_party/smtpClient/src/mimemultipart.cpp 3rd_party/smtpClient/src/mimemultipart.h
+    3rd_party/smtpClient/src/mimepart.cpp 3rd_party/smtpClient/src/mimepart.h
+    3rd_party/smtpClient/src/mimeqpencoder.cpp 3rd_party/smtpClient/src/mimeqpencoder.h
+    3rd_party/smtpClient/src/mimeqpformatter.cpp 3rd_party/smtpClient/src/mimeqpformatter.h
+    3rd_party/smtpClient/src/mimetext.cpp 3rd_party/smtpClient/src/mimetext.h
+    3rd_party/smtpClient/src/quotedprintable.cpp 3rd_party/smtpClient/src/quotedprintable.h
+    3rd_party/smtpClient/src/smtpclient.cpp 3rd_party/smtpClient/src/smtpclient.h
+    3rd_party/smtpClient/src/SmtpMime
+    3rd_party/smtpClient/src/mimeattachment.h
+)
+###################################################################################
+# end stmp client stuff
 ###################################################################################
 
 ###################################################################################
@@ -259,7 +402,6 @@ set(${PROJECT_NAME}_SRCS
     objects/perkselection.cpp objects/perkselection.h
     objects/mapselectionview.cpp objects/mapselectionview.h
     objects/loadingscreen.cpp objects/loadingscreen.h
-    objects/gameplayandkeys.cpp objects/gameplayandkeys.h
     objects/editorselection.cpp objects/editorselection.h
     objects/mapselection.cpp objects/mapselection.h
     objects/coselection.cpp objects/coselection.h
@@ -267,9 +409,11 @@ set(${PROJECT_NAME}_SRCS
     objects/achievementbanner.cpp objects/achievementbanner.h
     objects/unitstatisticview.cpp objects/unitstatisticview.h
     # objects base
+    objects/base/EventTextEdit.cpp objects/base/EventTextEdit.h
     objects/base/textinput.cpp objects/base/textinput.h
     objects/base/topbar.cpp objects/base/topbar.h
     objects/base/textbox.cpp objects/base/textbox.h
+    objects/base/multilinetextbox.cpp objects/base/multilinetextbox.h
     objects/base/h_scrollbar.cpp objects/base/h_scrollbar.h
     objects/base/v_scrollbar.cpp objects/base/v_scrollbar.h
     objects/base/dropdownmenu.cpp objects/base/dropdownmenu.h
@@ -293,6 +437,7 @@ set(${PROJECT_NAME}_SRCS
     objects/base/tableview.cpp objects/base/tableview.h
     objects/base/closeablepopup.cpp objects/base/closeablepopup.h
     objects/base/moveinbutton.cpp objects/base/moveinbutton.h
+    objects/base/spriteobject.cpp objects/base/spriteobject.h
     # objects dialogs
     objects/dialogs/colorselectiondialog.cpp objects/dialogs/colorselectiondialog.h
     objects/dialogs/dialogconnecting.cpp objects/dialogs/dialogconnecting.h
@@ -303,12 +448,14 @@ set(${PROJECT_NAME}_SRCS
     objects/dialogs/folderdialog.cpp objects/dialogs/folderdialog.h
     objects/dialogs/dialogvaluecounter.cpp objects/dialogs/dialogvaluecounter.h
     objects/dialogs/gamepadinfo.cpp objects/dialogs/gamepadinfo.h
+    objects/dialogs/customdialog.h objects/dialogs/customdialog.cpp
     # objects dialogs editor
     objects/dialogs/editor/dialogmodifyunit.cpp objects/dialogs/editor/dialogmodifyunit.h
     objects/dialogs/editor/dialogmodifybuilding.cpp objects/dialogs/editor/dialogmodifybuilding.h
     objects/dialogs/editor/dialogmodifyterrain.cpp objects/dialogs/editor/dialogmodifyterrain.h
     objects/dialogs/editor/dialograndommap.cpp objects/dialogs/editor/dialograndommap.h
     objects/dialogs/editor/mapeditdialog.cpp objects/dialogs/editor/mapeditdialog.h
+    objects/dialogs/editor/dialogviewmapstats.h objects/dialogs/editor/dialogviewmapstats.cpp
     # objects dialogs rules
     objects/dialogs/rules/actionlistdialog.cpp objects/dialogs/rules/actionlistdialog.h
     objects/dialogs/rules/buildlistdialog.cpp objects/dialogs/rules/buildlistdialog.h
@@ -331,10 +478,11 @@ set(${PROJECT_NAME}_SRCS
 
     #menues
     menue/basemenu.cpp menue/basemenu.h
+    menue/basegamemenu.cpp menue/basegamemenu.h
     menue/mainwindow.cpp menue/mainwindow.h
-    menue/ingamemenue.cpp menue/ingamemenue.h
     menue/editormenue.cpp menue/editormenue.h
-    menue/gamemenue.cpp menue/gamemenue.h
+    menue/gamemenue.cpp menue/gamemenue.h    
+    menue/movementplanner.cpp menue/movementplanner.h
     menue/optionmenue.cpp menue/optionmenue.h
     menue/mapselectionmapsmenue.cpp menue/mapselectionmapsmenue.h
     menue/creditsmenue.cpp menue/creditsmenue.h
@@ -363,6 +511,8 @@ set(${PROJECT_NAME}_SRCS
     resource_management/coperkmanager.cpp resource_management/coperkmanager.h
     resource_management/achievementmanager.cpp resource_management/achievementmanager.h
     resource_management/shoploader.cpp resource_management/shoploader.h
+    resource_management/movementplanneraddinmanager.h resource_management/movementplanneraddinmanager.cpp
+    resource_management/uimanager.h resource_management/uimanager.cpp
     resource_management/ressourcemanagement.h
 
     # core engine
@@ -386,8 +536,10 @@ set(${PROJECT_NAME}_SRCS
     coreengine/GamepadShared.cpp coreengine/Gamepad.h
     coreengine/sha256hash.cpp coreengine/sha256hash.h
     coreengine/commandlineparser.cpp coreengine/commandlineparser.h
+    coreengine/JsCallback.h
 
     # network engine
+    network/smtpmailsender.h network/smtpmailsender.cpp
     network/tcpclient.cpp network/tcpclient.h
     network/tcpserver.cpp network/tcpserver.h
     network/txtask.cpp network/txtask.h
@@ -396,6 +548,7 @@ set(${PROJECT_NAME}_SRCS
     network/networkgamedata.cpp network/networkgamedata.h
     network/mainserver.cpp network/mainserver.h
     network/networkgame.cpp network/networkgame.h
+    network/rsacypherhandler.h network/rsacypherhandler.cpp
     network/JsonKeys.h
 
     # game
@@ -415,13 +568,14 @@ set(${PROJECT_NAME}_SRCS
     game/weather.cpp game/weather.h
     game/cursor.cpp game/cursor.h
     game/createoutline.cpp game/createoutline.h
+    game/actionperformer.h game/actionperformer.cpp
     # cool ingame recording
     game/gamerecording/daytodayrecord.cpp game/gamerecording/daytodayrecord.h
     game/gamerecording/playerrecord.cpp game/gamerecording/playerrecord.h
     game/gamerecording/specialevent.cpp game/gamerecording/specialevent.h
     game/gamerecording/gamerecorder.cpp game/gamerecording/gamerecorder.h
     game/gamerecording/replayrecorder.cpp game/gamerecording/replayrecorder.h
-    game/gamerecording/gamemapimagesaver.cpp game/gamerecording/gamemapimagesaver.h
+    game/gamerecording/gamemapimagesaver.h
 
     # cool ingame script support
     game/gamescript.cpp game/gamescript.h
@@ -436,6 +590,7 @@ set(${PROJECT_NAME}_SRCS
     game/gameanimation/gameanimationnextday.cpp game/gameanimation/gameanimationnextday.h
     game/gameanimation/battleanimation.cpp game/gameanimation/battleanimation.h
     game/gameanimation/battleanimationsprite.cpp game/gameanimation/battleanimationsprite.h
+    game/gameanimation/animationskipper.h game/gameanimation/animationskipper.cpp
     # replay/observer
     game/viewplayer.cpp game/viewplayer.h
 
@@ -450,6 +605,7 @@ set(${PROJECT_NAME}_SRCS
     game/ui/customcoboostinfo.cpp game/ui/customcoboostinfo.h
     game/ui/humanquickbuttons.cpp game/ui/humanquickbuttons.h
     game/ui/damagecalculator.cpp game/ui/damagecalculator.h
+    game/ui/movementplanneraddin.h game/ui/movementplanneraddin.cpp
 
     # game input
     gameinput/basegameinputif.cpp gameinput/basegameinputif.h
@@ -459,6 +615,7 @@ set(${PROJECT_NAME}_SRCS
     gameinput/markedfielddata.cpp gameinput/markedfielddata.h
     gameinput/cursordata.cpp gameinput/cursordata.h
     gameinput/mapmover.cpp gameinput/mapmover.h
+    gameinput/moveplannerinput.h gameinput/moveplannerinput.cpp
 
     # map importing/exporting support
     # and resizing etc.
@@ -527,6 +684,7 @@ set(${PROJECT_NAME}_SRCS
     ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp ingamescriptsupport/conditions/scriptconditionplayerreachedarea.h
     ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.h
     ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp ingamescriptsupport/conditions/scriptconditioncheckvariable.h
+    ingamescriptsupport/conditions/scriptconditionisco.cpp ingamescriptsupport/conditions/scriptconditionisco.h
     # event stuff
     ingamescriptsupport/events/scriptevent.cpp ingamescriptsupport/events/scriptevent.h
     ingamescriptsupport/events/scripteventdialog.cpp ingamescriptsupport/events/scripteventdialog.h
@@ -559,6 +717,13 @@ set(${PROJECT_NAME}_SRCS
     wiki/defaultwikipage.cpp wiki/defaultwikipage.h
     wiki/wikiview.cpp wiki/wikiview.h
     wiki/damagetablepage.cpp wiki/damagetablepage.h
+
+    # table view
+    objects/tableView/basetableitem.h objects/tableView/basetableitem.cpp
+    objects/tableView/stringtableitem.h objects/tableView/stringtableitem.cpp
+    objects/tableView/xofytableitem.h objects/tableView/xofytableitem.cpp
+    objects/tableView/locktableitem.h objects/tableView/locktableitem.cpp
+    objects/tableView/complextableview.h objects/tableView/complextableview.cpp
 
     # spriting support
     spritingsupport/spritecreator.cpp spritingsupport/spritecreator.h
@@ -634,6 +799,39 @@ if (NOT DEPLOY_RESOURCES_AS_FOLDER)
 endif()
 
 ##############################################################################
+# Lib setup                                                                  #
+##############################################################################
+
+# link libraries
+set(QT_LIBRARIES
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Qml
+    Qt6::Network
+    Qt6::Widgets
+    Qt6::Xml
+    Qt6::Sql
+    ${OPENSSL_LIBS}
+    )
+
+if (AUDIOSUPPORT)
+    set(QT_LIBRARIES
+        ${QT_LIBRARIES}
+        Qt6::Multimedia
+    )
+endif()
+
+if (GRAPHICSUPPORT)
+    if (USEVULKAN)
+    else()
+        set(QT_LIBRARIES
+            ${QT_LIBRARIES}
+            Qt6::OpenGL
+        )
+    endif()
+endif()
+
+##############################################################################
 # This section finds all resources so they can be linked to a rcc file later #
 ##############################################################################
 # this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
@@ -657,6 +855,8 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_SRCS}
     ${${PROJECT_NAME}_Resource_SRCS}
     ${${PROJECT_NAME}_OS_SRCS}
+    ${${PROJECT_NAME}_SmtpClient_SRCS}
+    ${${PROJECT_NAME}_UPDATE_SRCS}
     ICON.rc
     )
 
@@ -670,30 +870,12 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_NAME "0.22.7"
+    QT_ANDROID_VERSION_NAME ${COW_ANDROID_VERSION_NAME}
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_CODE "17"
+    QT_ANDROID_VERSION_CODE ${COW_ANDROID_VERSION_CODE}
     )
-
-# link libraries
-set(QT_LIBRARIES
-    Qt6::Core
-    Qt6::Gui
-    Qt6::Qml
-    Qt6::Network
-    Qt6::Widgets
-    Qt6::Xml
-    Qt6::OpenGL
-    )
-
-if (AUDIOSUPPORT)
-    set(QT_LIBRARIES
-        ${QT_LIBRARIES}
-        Qt6::Multimedia
-    )
-endif()
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     target_link_libraries(${PROJECT_NAME} PUBLIC
@@ -776,7 +958,7 @@ endif()
 # get qt dir
 get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
 get_filename_component(QT_BIN_DIR "${_qmake_executable}" DIRECTORY)
-message(${QT_BIN_DIR})
+message("Qt-Bin-Dir: " ${QT_BIN_DIR})
 
 # those libs are not the same for each platform and need to be selected based on the os
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
@@ -789,9 +971,12 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${QT_BIN_DIR}/libstdc++-6.dll
         ${QT_BIN_DIR}/libwinpthread-1.dll
         ${QT_BIN_DIR}/libgcc_s_seh-1.dll
+        ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1-x64.dll
+        ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1.dll
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/qwindows${LibNameEnd}
+        ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite${LibNameEnd}
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     set(LibNameStart "../lib/libQt6")
@@ -814,6 +999,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/../plugins/platforms/libqxcb.so
         ${QT_BIN_DIR}/../plugins/platforms/libqminimal.so
         ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
+        ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite.so
     )
 
     set(LibNameEnd ".so.6")
@@ -825,9 +1011,18 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
-        ${ADDR_2_LINE}
+        ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
     )
+
+    if (GRAPHICSUPPORT)
+        if (USEVULKAN)
+        else()
+            set(${PROJECT_NAME}_INSTALL_OS_LIBS
+                ${${PROJECT_NAME}_INSTALL_OS_LIBS}
+                ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
+            )
+        endif()
+    endif()
     set(LibNameEnd ".so")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
 else()
@@ -844,9 +1039,18 @@ set(${PROJECT_NAME}_INSTALL_QT_LIBS
     ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
-    ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
-    ${ADDR_2_LINE}
+    ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
 )
+
+if (GRAPHICSUPPORT)
+    if (USEVULKAN)
+    else()
+        set(${PROJECT_NAME}_INSTALL_QT_LIBS
+            ${${PROJECT_NAME}_INSTALL_QT_LIBS}
+            ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
+        )
+    endif()
+endif()
 
 message("install lib dir: ${CMAKE_INSTALL_PREFIX}")
 # install folders and executable
@@ -891,8 +1095,13 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     install(FILES "icon.png"                                    DESTINATION "share/pixmaps"       RENAME "${PROJECT_NAME_LOWER}.png" OPTIONAL)
     install(FILES "Commander_Wars.desktop"                      DESTINATION "share/applications"  RENAME "${PROJECT_NAME}.desktop"   OPTIONAL)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/debug/android-build-debug.apk"
-            DESTINATION "."                   RENAME "${PROJECT_NAME}_${ANDROID_ABI}.apk" OPTIONAL)
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/debug/android-build-debug.apk"
+                DESTINATION "."                   RENAME "${PROJECT_NAME}_${ANDROID_ABI}.apk" OPTIONAL)
+    else("Release")
+        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/release/android-build-release-signed.apk"
+                DESTINATION "."                   RENAME "${PROJECT_NAME}_${ANDROID_ABI}.apk" OPTIONAL)
+    endif()
 else()
     install(TARGETS ${PROJECT_NAME}
         RUNTIME         DESTINATION         "."

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "coreengine/fileserializable.h"
 
@@ -15,13 +15,13 @@ class GameMap;
 class DayToDayRecord;
 using spDayToDayRecord = oxygine::intrusive_ptr<DayToDayRecord>;
 
-class DayToDayRecord : public QObject, public FileSerializable, public oxygine::ref_counter
+class DayToDayRecord final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     explicit DayToDayRecord(GameMap* pMap);
     explicit DayToDayRecord(GameMap* pMap, qint32 playerCount);
-    virtual ~DayToDayRecord() = default;
+    ~DayToDayRecord() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

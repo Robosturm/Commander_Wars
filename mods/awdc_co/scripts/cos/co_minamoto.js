@@ -5,7 +5,7 @@ CO_MINAMOTO.init = function(co, map)
 };
 CO_MINAMOTO.activateSuperpower = function(co, powerMode, map)
 {
-	CO_MINAMOTO.activatePower(co, powerMode);
+	CO_MINAMOTO.activatePower(co, powerMode, map);
 };
 CO_MINAMOTO.getSuperPowerDescription = function()
 {

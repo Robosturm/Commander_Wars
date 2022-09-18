@@ -1,5 +1,5 @@
 #include <QSettings>
-#include <QApplication>
+#include <QCoreApplication>
 
 #include "ai/veryeasyai.h"
 #include "ai/islandmap.h"
@@ -20,12 +20,14 @@
 #include "coreengine/console.h"
 
 VeryEasyAI::VeryEasyAI(GameMap* pMap)
-    : CoreAI(pMap, GameEnums::AiTypes_VeryEasy),
+    : CoreAI(pMap, GameEnums::AiTypes_VeryEasy, "VERYEASYAI"),
       m_GeneralBuildingTree("resources/aidata/very_easy/generalbuilding.tree", "resources/aidata/very_easy/generalbuilding.txt"),
       m_AirportBuildingTree("resources/aidata/very_easy/airportbuilding.tree", "resources/aidata/very_easy/airportbuilding.txt"),
       m_HarbourBuildingTree("resources/aidata/very_easy/harbourbuilding.tree", "resources/aidata/very_easy/harbourbuilding.txt")
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("VeryEasyAI");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -58,7 +60,7 @@ VeryEasyAI::VeryEasyAI(GameMap* pMap)
 
 void VeryEasyAI::process()
 {
-    AI_CONSOLE_PRINT("NormalAi::process()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("VeryEasyAI::process()", Console::eDEBUG);
     spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
     pBuildings->randomize();
     spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
@@ -82,7 +84,10 @@ void VeryEasyAI::process()
     rebuildIsland(pUnits);
 
     // make the ai do stuff
-    if (useCOPower(pUnits, pEnemyUnits)){}
+    if (useCOPower(pUnits, pEnemyUnits))
+    {
+        m_usedPredefinedAi = false;
+    }
     else
     {
         turnMode = GameEnums::AiTurnMode_DuringDay;
@@ -91,6 +96,7 @@ void VeryEasyAI::process()
         else
         {
             m_aiStep = AISteps::moveUnits;
+            m_aiFunctionStep = 0;
             if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
             else
             {
@@ -99,6 +105,7 @@ void VeryEasyAI::process()
                 if (useCOPower(pUnits, pEnemyUnits))
                 {
                     m_usedTransportSystem = false;
+                    m_usedPredefinedAi = false;
                     turnMode = GameEnums::AiTurnMode_DuringDay;
                 }
                 else
@@ -162,8 +169,9 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
     for (auto & spUnit : pUnits->getVector())
     {
         Unit* pUnit = spUnit.get();
-        QApplication::processEvents();
-        if (!pUnit->getHasMoved())
+        QCoreApplication::processEvents();
+        if (!pUnit->getHasMoved() &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             if (pUnit->getActionList().contains(ACTION_CAPTURE))
             {
@@ -239,10 +247,11 @@ bool VeryEasyAI::fireWithIndirectUnits(spQmlVectorUnit & pUnits)
     AI_CONSOLE_PRINT("VeryEasyAI::fireWithIndirectUnits()", Console::eDEBUG);
     for (auto & pUnit : pUnits->getVector())
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() > 1 &&
-            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0))
+            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0) &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             if (attack(pUnit.get()))
             {
@@ -258,10 +267,11 @@ bool VeryEasyAI::fireWithDirectUnits(spQmlVectorUnit & pUnits)
     AI_CONSOLE_PRINT("VeryEasyAI::fireWithDirectUnits()", Console::eDEBUG);
     for (auto & pUnit : pUnits->getVector())
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() == 1 &&
-            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0))
+            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0) &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             if (attack(pUnit.get()))
             {
@@ -336,14 +346,20 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
     for (auto & spUnit : pUnits->getVector())
     {
         Unit* pUnit = spUnit.get();
-        QApplication::processEvents();
+        QStringList actions = pUnit->getActionList();
+        QCoreApplication::processEvents();
+        constexpr qint32 AVERAGE_TRANSPORTER_MOVEMENT = 7;
+        bool canCapture = actions.contains(ACTION_CAPTURE);
+        qint32 loadingIslandIdx = getIslandIndex(pUnit);
+        qint32 loadingIsland = getIsland(pUnit);
         // can we use the unit?
-        if (!pUnit->getHasMoved())
+        if (pUnit->getAiMode() == GameEnums::GameAi_Normal &&
+            (m_usedTransportSystem || (!pUnit->getHasMoved() && hasTargets(AVERAGE_TRANSPORTER_MOVEMENT, pUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+                                                                           loadingIslandIdx, loadingIsland, false))))
         {
             std::vector<QVector3D> targets;
             std::vector<QVector3D> transporterTargets;
             spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
-            QStringList actions = pUnit->getActionList();
             // find possible targets for this unit
             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
 
@@ -392,10 +408,12 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
     m_aiStep = AISteps::moveTransporters;
     for (auto & spUnit : pUnits->getVector())
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         Unit* pUnit = spUnit.get();
         // can we use the unit?
-        if (!pUnit->getHasMoved() && pUnit->getLoadingPlace() > 0)
+        if (!pUnit->getHasMoved() &&
+            pUnit->getLoadingPlace() > 0 &&
+            pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             // wooohooo it's a transporter
             if (pUnit->getLoadedUnitCount() > 0)
@@ -471,9 +489,10 @@ bool VeryEasyAI::loadUnits(spQmlVectorUnit & pUnits)
     m_aiStep = AISteps::loadUnits;
     for (auto & pUnit : pUnits->getVector())
     {
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         // can we use the unit?
-        if (!pUnit->getHasMoved())
+        if (!pUnit->getHasMoved() &&
+            (pUnit->getLoadingPlace() == 0 || (pUnit->getLoadedUnitCount() > 0  && m_usedTransportSystem)))
         {
             std::vector<QVector3D> targets;
             std::vector<QVector3D> transporterTargets;
@@ -643,7 +662,7 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
         qint32 transporterUnits = 0;
         for (auto & pUnit : pUnits->getVector())
         {
-            QApplication::processEvents();
+            QCoreApplication::processEvents();
             if (pUnit->getActionList().contains(ACTION_CAPTURE))
             {
                 infantryUnits++;
@@ -680,7 +699,7 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
         for (qint32 i = 0; i < m_maxTreeDecisionTries; i++)
         {
-            QApplication::processEvents();
+            QCoreApplication::processEvents();
             if (i == 0 || m_pPlayer->getFunds() >= m_minAllBuildingFunds)
             {
                 for (auto & pBuilding : pBuildings->getVector())
@@ -719,8 +738,11 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
                                         // produce the unit
                                         if (pAction->isFinalStep())
                                         {
-                                            emit performAction(pAction);
-                                            return true;
+                                            if (pAction->canBePerformed())
+                                            {
+                                                emit performAction(pAction);
+                                                return true;
+                                            }
                                         }
                                     }
                                 }

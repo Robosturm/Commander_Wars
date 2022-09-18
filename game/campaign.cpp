@@ -15,7 +15,9 @@ const QString Campaign::scriptName = "campaignScript";
 
 Campaign::Campaign(QString file)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Campaign");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -25,7 +27,9 @@ Campaign::Campaign(QString file)
 
 Campaign::Campaign()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Campaign");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

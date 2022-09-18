@@ -18,6 +18,10 @@ var Constructor = function()
     {
         __BASESTREET.loadBaseOverlaySprite("desert_path+style0", terrain, map);
     };
+    this.getOverlayTerrainSprites = function(map)
+    {
+        return __BASESTREET.getBaseOverlayTerrainSprites("desert_path+style0");
+    };
 };
 Constructor.prototype = __BASESTREET;
 var DESERT_PATH1 = new Constructor();

@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/achievementmenu.h"
 #include "menue/mainwindow.h"
 
@@ -20,7 +22,9 @@
 Achievementmenu::Achievementmenu()
     : Basemenu()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Achievementmenu");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
@@ -47,8 +51,8 @@ Achievementmenu::Achievementmenu()
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
-    pButtonExit->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f,
-                             Settings::getHeight() - pButtonExit->getHeight() - 10);
+    pButtonExit->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getScaledWidth() / 2.0f,
+                             Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -56,8 +60,6 @@ Achievementmenu::Achievementmenu()
     connect(this, &Achievementmenu::sigExitMenue, this, &Achievementmenu::exitMenue, Qt::QueuedConnection);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -78,7 +80,7 @@ Achievementmenu::Achievementmenu()
     addChild(m_SearchString);
     oxygine::spButton pButton = ObjectManager::createButton(tr("Search"));
     addChild(pButton);
-    pButton->setPosition(m_SearchString->getWidth() + m_SearchString->getX() + 10, y);
+    pButton->setPosition(m_SearchString->getScaledWidth() + m_SearchString->getX() + 10, y);
     pButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigSearch();
@@ -92,7 +94,7 @@ Achievementmenu::Achievementmenu()
     pTextfield->setHtmlText(tr("Group: "));
     pTextfield->setPosition(x, y);
     addChild(pTextfield);
-    x += 10 + pTextfield->getWidth();
+    x += 10 + pTextfield->getScaledWidth();
 
     QStringList groups{tr("All")};
     Userdata* pUserdata = Userdata::getInstance();
@@ -111,14 +113,14 @@ Achievementmenu::Achievementmenu()
     {
         search();
     }, Qt::QueuedConnection);
-    x += 10 + m_group->getWidth();
+    x += 10 + m_group->getScaledWidth();
 
     pTextfield = spLabel::create(100);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Sort: "));
     pTextfield->setPosition(x, y);
     addChild(pTextfield);
-    x += 10 + pTextfield->getWidth();
+    x += 10 + pTextfield->getScaledWidth();
     m_sort = spDropDownmenu::create(200, QStringList{tr("None"), tr("Ascending"), tr("Descending")});
     m_sort->setPosition(x, y);
     addChild(m_sort);
@@ -126,7 +128,7 @@ Achievementmenu::Achievementmenu()
     {
         search();
     }, Qt::QueuedConnection);
-    x += 10 + m_sort->getWidth();
+    x += 10 + m_sort->getScaledWidth();
     y += 50;
 
     QSize size(Settings::getWidth() - 20, Settings::getHeight() - 210);
@@ -172,7 +174,7 @@ void Achievementmenu::onEnter()
 void Achievementmenu::exitMenue()
 {    
     CONSOLE_PRINT("Leaving Achievement Menue", Console::eDEBUG);
-    auto window = spMainwindow::create();
+    auto window = spMainwindow::create("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
 }
@@ -194,14 +196,10 @@ void Achievementmenu::searchChanged(QString searchText, QString group, SortDirec
     pApp->pauseRendering();
     CONSOLE_PRINT("Achievementmenu::searchChanged " + searchText + " group " + group + " sorting direction " + QString::number(static_cast<qint32>(sortDirection)), Console::eDEBUG);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     oxygine::TextStyle styleLarge = oxygine::TextStyle(FontManager::getMainFont48());
-    styleLarge.color = FontManager::getFontColor();
-    styleLarge.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     styleLarge.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     styleLarge.multiline = false;
 

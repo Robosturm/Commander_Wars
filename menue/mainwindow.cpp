@@ -1,5 +1,7 @@
 #include <QFile>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/mainwindow.h"
 #include "menue/campaignmenu.h"
 #include "menue/gamemenue.h"
@@ -12,6 +14,7 @@
 #include "menue/replaymenu.h"
 #include "menue/achievementmenu.h"
 #include "menue/shopmenu.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -36,12 +39,12 @@
 
 #include "ui_reader/uifactory.h"
 
-static constexpr qint32 buttonCount = 7;
-
-Mainwindow::Mainwindow()
+Mainwindow::Mainwindow(const QString & initialView)
     : m_cheatTimeout(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Mainwindow");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
@@ -65,6 +68,11 @@ Mainwindow::Mainwindow()
     pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
     pApp->getAudioThread()->playRandom();
 
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue obj = pInterpreter->newQObject(this);
+    pInterpreter->setGlobal("currentMenu", obj);
+    UiFactory::getInstance().createUi("ui/mainmenu.xml", this);
+
     if (Settings::getUsername().isEmpty())
     {
         spDialogTextInput pDialogTextInput = spDialogTextInput::create(tr("Select Username"), false, "");
@@ -73,11 +81,9 @@ Mainwindow::Mainwindow()
     }
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    spLabel pTextfield = spLabel::create(250);
+    spLabel pTextfield = spLabel::create(300);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(Mainapp::getGameVersion());
     pTextfield->setPosition(Settings::getWidth() - 10 - pTextfield->getTextRect().getWidth(), Settings::getHeight() - 10 - pTextfield->getTextRect().getHeight());
@@ -93,7 +99,7 @@ Mainwindow::Mainwindow()
         // import
         oxygine::spButton pImport = ObjectManager::createButton(tr("Import"), 170, tr("Imports all data from an other Commander Wars release to the current release."));
         addChild(pImport);
-        pImport->setPosition(10, Settings::getHeight() - 10 - pImport->getHeight());
+        pImport->setPosition(10, Settings::getHeight() - 10 - pImport->getScaledHeight());
         pImport->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigImport();
@@ -101,13 +107,11 @@ Mainwindow::Mainwindow()
         connect(this, &Mainwindow::sigImport, this, &Mainwindow::import, Qt::QueuedConnection);
     }
 
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue obj = pInterpreter->newQObject(this);
-    pInterpreter->setGlobal("currentMenu", obj);
-    UiFactory::getInstance().createUi("ui/mainmenu.xml", this);
+    UiFactory::getInstance().createUi(initialView, this);
 
     m_cheatTimeout.setSingleShot(true);
     connect(&m_cheatTimeout, &QTimer::timeout, this, &Mainwindow::cheatTimeout, Qt::QueuedConnection);
+
     pApp->continueRendering();
 }
 
@@ -159,34 +163,7 @@ void Mainwindow::changeUsername(QString name)
     Settings::saveSettings();
 }
 
-qint32 Mainwindow::getButtonX(qint32 btnI) const
-{
-    qint32 col = btnI % 3;
-    qint32 x = 0;
-    const qint32 width = 170;
-    if (col == 0)
-    {
-        x = (Settings::getWidth() / 2.0f - width * 1.5f - 10);
-    }
-    else if (col == 1)
-    {
-        x = (Settings::getWidth() / 2.0f - width * 0.5f);
-    }
-    else if (col == 2)
-    {
-        x = (Settings::getWidth() / 2.0f + width * 0.5f + 10);
-    }
-    return x;
-}
-
-qint32 Mainwindow::getButtonY(qint32 btnI) const
-{
-    float buttonHeigth = 45;
-    btnI = btnI / 3;
-    return Settings::getHeight() / 2.0f - buttonCount  / 2 * buttonHeigth + buttonHeigth * btnI;
-}
-
-bool Mainwindow::isValidSavegame() const
+bool Mainwindow::isValidSavegame()
 {
     QString lastSaveGame = Settings::getLastSaveGame();
     if (!QFile::exists(lastSaveGame) ||
@@ -197,10 +174,11 @@ bool Mainwindow::isValidSavegame() const
     return true;
 }
 
-void Mainwindow::enterSingleplayer()
+void Mainwindow::enterSingleplayer(const QStringList & filter)
 {    
     Mainapp::getInstance()->pauseRendering();
-    auto window = spMapSelectionMapsMenue::create();
+    auto view = spMapSelectionView::create(filter);
+    auto window = spMapSelectionMapsMenue::create(view);
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -223,10 +201,10 @@ void Mainwindow::enterEditor()
     Mainapp::getInstance()->continueRendering();
 }
 
-void Mainwindow::enterOptionmenue()
+void Mainwindow::enterOptionmenue(const QString & xmlFile)
 {
     Mainapp::getInstance()->pauseRendering();
-    auto window = spOptionMenue::create();
+    auto window = spOptionMenue::create(xmlFile);
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -290,7 +268,6 @@ void Mainwindow::enterLoadCampaign()
 
 void Mainwindow::loadCampaign(QString filename)
 {
-    Mainapp::getInstance()->pauseRendering();
     if (filename.endsWith(".camp"))
     {
         QFile file(filename);
@@ -302,6 +279,7 @@ void Mainwindow::loadCampaign(QString filename)
             pCampaign->deserializeObject(stream);
             spCampaignMenu pMenu = spCampaignMenu::create(pCampaign, false);
             oxygine::Stage::getStage()->addChild(pMenu);
+            leaveMenue();
         }
         else
         {
@@ -312,8 +290,6 @@ void Mainwindow::loadCampaign(QString filename)
     {
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "Mainwindow::loadCampaign illegal savefile was selected");
     }
-    leaveMenue();
-    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::enterReplayGame()
@@ -335,7 +311,6 @@ void Mainwindow::lastSaveGame()
 
 void Mainwindow::loadGame(QString filename)
 {
-    Mainapp::getInstance()->pauseRendering();
     if (filename.endsWith(".sav"))
     {
         QFile file(filename);
@@ -346,6 +321,7 @@ void Mainwindow::loadGame(QString filename)
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->clearPlayList();
             pMenu->startGame();
+            leaveMenue();
         }
         else
         {
@@ -356,13 +332,10 @@ void Mainwindow::loadGame(QString filename)
     {
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "Mainwindow::loadGame illegal savefile was selected");
     }
-    leaveMenue();
-    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::replayGame(QString filename)
 {
-    Mainapp::getInstance()->pauseRendering();
     if (filename.endsWith(".rec"))
     {
         QFile file(filename);
@@ -377,6 +350,7 @@ void Mainwindow::replayGame(QString filename)
             {
                 emit pMenu->sigShowRecordInvalid();
             }
+            leaveMenue();
         }
         else
         {
@@ -387,8 +361,6 @@ void Mainwindow::replayGame(QString filename)
     {
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "Mainwindow::replayGame illegal record file was selected");
     }
-    leaveMenue();
-    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::leaveMenue()

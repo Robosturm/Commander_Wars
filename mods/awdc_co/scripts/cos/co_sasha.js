@@ -5,7 +5,7 @@ CO_SASHA.init = function(co, map)
 };
 CO_SASHA.activateSuperpower = function(co, powerMode, map)
 {
-	CO_SASHA.activatePower(co, powerMode);
+	CO_SASHA.activatePower(co, powerMode, map);
 };
 CO_SASHA.getSuperPowerDescription = function()
 {

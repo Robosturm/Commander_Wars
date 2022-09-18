@@ -2,20 +2,20 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 class Player;
 class GameMap;
 class IslandMap;
 using spIslandMap = oxygine::intrusive_ptr<IslandMap>;
 
-class IslandMap : public QObject, public oxygine::ref_counter
+class IslandMap final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
     static constexpr qint32 UNKNOWN = -1;
 public:
     explicit IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner);
-    virtual ~IslandMap() = default;
+    ~IslandMap() = default;
 
 
 public slots:

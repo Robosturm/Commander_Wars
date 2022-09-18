@@ -1,8 +1,9 @@
 #pragma once
 
 #include "objects/base/tooltip.h"
+#include "objects/base/EventTextEdit.h"
+
 #include <QObject>
-#include <QLineEdit>
 #include <QElapsedTimer>
 
 
@@ -16,18 +17,20 @@ public:
     };
     explicit TextInput();
     virtual ~TextInput();
-
+signals:
+    void sigSetText(const QString & text);
+public slots:
     QString getCurrentText() const;
     /**
      * @brief setCurrentText changes the text of this textbox
      * @param text
      */
-    void setCurrentText(QString text);
+    void setCurrentText(const QString & text);
     qint32 getCursorPosition() const;
     void setCursorPosition(qint32 position);
-
-public slots:
     virtual void focusedLost() override;
+
+    static qint32 getClickedLinePosition(qint32 x, const QString & line, const QFont & font);
 private slots:
     void editFinished();
 protected:
@@ -40,11 +43,13 @@ protected:
      * @param text
      * @return the draw text in pseudo html format
      */
-    QString getDrawText(QString text);
+    QString getDrawText(const QString & text);
     virtual void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg) override;
-private:
-    QLineEdit* m_lineEdit;
+protected:
+    EventTextEdit* m_lineEdit;
     bool m_LineEditFocused{false};
     QElapsedTimer m_toggle;
+    qint32 m_focusPosition{-1};
+    bool m_multiline{false};
 };
 

@@ -5,14 +5,16 @@
 #include "game/cursor.h"
 #include "game/createoutline.h"
 
-#include "menue/ingamemenue.h"
+#include "menue/basegamemenu.h"
 
 #include "resource_management/objectmanager.h"
 
 Cursor::Cursor(GameMap* pMap)
     : m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Cursor");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -50,8 +52,7 @@ void Cursor::changeCursor(const QString & spriteID, qint32 xOffset, qint32 yOffs
 }
 
 void Cursor::setMapPoint(qint32 x, qint32 y)
-{
-    
+{    
     if (m_pMap != nullptr)
     {
         m_onMap = m_pMap->onMap(x, y);
@@ -73,14 +74,18 @@ void Cursor::setMapPoint(qint32 x, qint32 y)
 }
 
 void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
-{
-    
-    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+{    
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     if (m_pMap != nullptr && pMenu != nullptr)
     {
-        auto position = pMenu->getMapSlidingActor()->getPosition() + pMenu->getMapSliding()->getPosition() + m_pMap->getPosition();
-        qint32 x = (mousePosX - position.x) / (GameMap::getImageSize() * m_pMap->getZoom());
-        qint32 y = (mousePosY - position.y) / (GameMap::getImageSize() * m_pMap->getZoom());
+        Mainapp* pApp = Mainapp::getInstance();
+        // auto position = pMenu->getMapSlidingActor()->getPosition() + pMenu->getMapSliding()->getPosition() + m_pMap->getPosition();
+        // - position.x) * pApp->getActiveDpiFactor()
+        // - position.y) * pApp->getActiveDpiFactor()
+        // * m_pMap->getZoom())
+        // * m_pMap->getZoom())
+        qint32 x = mousePosX / GameMap::getImageSize();
+        qint32 y = mousePosY / GameMap::getImageSize();
         setMapPoint(x, y);
     }
 }

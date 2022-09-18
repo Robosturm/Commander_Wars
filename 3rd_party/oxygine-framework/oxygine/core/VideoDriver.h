@@ -1,12 +1,12 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
-#include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
-#include "3rd_party/oxygine-framework/oxygine/core/texture.h"
-#include <qopengl.h>
+#include "ShaderProgram.h"
+#include "texture.h"
+
 #include <QMatrix4x4>
 
 namespace oxygine
@@ -14,7 +14,7 @@ namespace oxygine
     class VideoDriver;
     using spVideoDriver = oxygine::intrusive_ptr<VideoDriver>;
 
-    class VideoDriver : public oxygine::ref_counter
+    class VideoDriver final : public oxygine::ref_counter
     {
     public:
 
@@ -54,7 +54,6 @@ namespace oxygine
         enum STATE
         {
             STATE_BLEND,
-            STATE_CULL_FACE,
             STATE_NUM
         };
 
@@ -69,11 +68,11 @@ namespace oxygine
             blend_inverse               = ((BT_ONE_MINUS_DST_COLOR << 16) | BT_ZERO),
         };
 
-        class Stats
+        class Stats final
         {
         public:
             explicit Stats() : batches(0), start(0), duration(0) { memset(elements, 0, sizeof(elements)); }
-            virtual  ~Stats() = default;
+             ~Stats() = default;
             qint32 batches;
             qint32 elements[PT_COUNT];
             timeMS start;
@@ -108,14 +107,14 @@ namespace oxygine
 
         static spVideoDriver instance;
         explicit VideoDriver();
-        virtual ~VideoDriver();
+        ~VideoDriver();
         void reset();
         void restore();
         bool isReady() const;
         spTexture createTexture();
         void clear(const QColor& color);
         void begin(const Rect& viewport, const QColor* color);
-        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, GLsizei primitives);
+        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, qint32 primitives);
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, const quint16* indicesData, quint32 numIndices);
         void getViewport(Rect& r) const;
         bool getScissorRect(Rect&) const;

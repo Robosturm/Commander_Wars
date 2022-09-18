@@ -5,7 +5,7 @@
 
 #include "resource_management/ressourcemanagement.h"
 
-class UnitSpriteManager : public QObject, public RessourceManagement<UnitSpriteManager>
+class UnitSpriteManager final : public QObject, public RessourceManagement<UnitSpriteManager>
 {
     Q_OBJECT
 public:
@@ -28,11 +28,6 @@ public:
      */
     QString getMovementType(const QString & id);
     /**
-     * @brief getUnitsSorted
-     * @return
-     */
-    QStringList getUnitsSorted();
-    /**
      * @brief getUnitTypeText
      * @param type
      * @return
@@ -40,11 +35,24 @@ public:
     static QString getUnitTypeText(qint32 type);
 public slots:
     void removeRessource(QString id);
+    /**
+     * @brief getUnitsSorted
+     * @return
+     */
+    QStringList getUnitsSorted();
+    /**
+     * @brief getCount
+     * @return
+     */
+    qint32 getUnitCount()
+    {
+        return m_loadedRessources.size();
+    }
 protected:
     friend RessourceManagement<UnitSpriteManager>;
     UnitSpriteManager();
 private:
-    virtual ~UnitSpriteManager() = default;
+    ~UnitSpriteManager() = default;
 };
 
 Q_DECLARE_INTERFACE(UnitSpriteManager, "UnitSpriteManager");

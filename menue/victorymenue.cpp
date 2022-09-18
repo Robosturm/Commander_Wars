@@ -1,5 +1,7 @@
 #include <QtMath>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/victorymenue.h"
 #include "menue/mainwindow.h"
 #include "menue/campaignmenu.h"
@@ -26,26 +28,26 @@
 
 VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface, bool isReplay)
     : m_ProgressTimer(this),
+      m_despawnSlaveTimer(this),
       m_pNetworkInterface(pNetworkInterface),
       m_pMap(pMap),
       m_isReplay(isReplay)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("VictoryMenue");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     CONSOLE_PRINT("Entering Victory Menue", Console::eDEBUG);
+    m_pMap->setMenu(nullptr); // remove outdated link
     
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont72());
-    headerStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
@@ -100,26 +102,26 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     }
     if (Settings::getSmallScreenDevice())
     {
-        m_pGraphBackground->setPosition(Settings::getWidth() - 10 - m_pGraphBackground->getWidth(), 10);
+        m_pGraphBackground->setPosition(Settings::getWidth() - 10 - m_pGraphBackground->getScaledWidth(), 10);
     }
     else
     {
-        m_pGraphBackground->setPosition(Settings::getWidth() - 10 - m_pGraphBackground->getWidth(), 90);
+        m_pGraphBackground->setPosition(Settings::getWidth() - 10 - m_pGraphBackground->getScaledWidth(), 90);
     }
 
     addChild(m_pGraphBackground);
-    qint32 graphDays = m_pGraphBackground->getWidth() / 100;
+    qint32 graphDays = m_pGraphBackground->getScaledWidth() / 100;
     for (qint32 i = 0; i < graphDays; i++)
     {
         oxygine::spTextField pDayText = oxygine::spTextField::create();
-        pDayText->setY(m_pGraphBackground->getHeight());
+        pDayText->setY(m_pGraphBackground->getScaledHeight());
         pDayText->setX(i * 100);
         pDayText->setStyle(style);
         qint32 day = static_cast<qint32>((i * m_pMap->getCurrentDay()) / graphDays) + 1;
         pDayText->setHtmlText(QString::number(day));
         m_pGraphBackground->addChild(pDayText);
     }
-    qint32 graphHeigth = m_pGraphBackground->getHeight() / 100;
+    qint32 graphHeigth = m_pGraphBackground->getScaledHeight() / 100;
     for (qint32 i = 0; i < graphHeigth; i++)
     {
         m_YGraphItems.append(oxygine::spTextField::create());
@@ -131,8 +133,8 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
-    pButtonExit->setPosition(Settings::getWidth() - pButtonExit->getWidth() - 10,
-                             Settings::getHeight() - pButtonExit->getHeight() - 10);
+    pButtonExit->setPosition(Settings::getWidth() - pButtonExit->getScaledWidth() - 10,
+                             Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -155,7 +157,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
 
         oxygine::spColorRectSprite pProgressLine = oxygine::spColorRectSprite::create();
         pProgressLine->setColor(255, 0, 0, 255);
-        pProgressLine->setSize(5, m_pGraphBackground->getHeight());
+        pProgressLine->setSize(5, m_pGraphBackground->getScaledHeight());
         pProgressLine->setPriority(10);
         m_GraphsProgessLine[i] = pProgressLine;
         m_pGraphBackground->addChild(pProgressLine);
@@ -199,17 +201,17 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
 
     if (m_pMap->getCurrentDay() > 1)
     {
-        m_lineLength = m_pGraphBackground->getWidth() / static_cast<float>(m_pMap->getCurrentDay() - 1);
+        m_lineLength = m_pGraphBackground->getScaledWidth() / static_cast<float>(m_pMap->getCurrentDay() - 1);
     }
     else
     {
-        m_lineLength = m_pGraphBackground->getWidth();
+        m_lineLength = m_pGraphBackground->getScaledWidth();
     }
 
     m_ProgressTimer.setSingleShot(false);
     m_ProgressTimer.setInterval(getStepTime());
     connect(&m_ProgressTimer, &QTimer::timeout, this, &VictoryMenue::updateGraph, Qt::QueuedConnection);
-    spPanel panel = spPanel::create(true, QSize(Settings::getWidth() - pButtonExit->getWidth() - 30, 105), QSize(Settings::getWidth() - pButtonExit->getX() - 20, 40));
+    spPanel panel = spPanel::create(true, QSize(Settings::getWidth() - pButtonExit->getScaledWidth() - 30, 105), QSize(Settings::getWidth() - pButtonExit->getX() - 20, 40));
 
     if (Settings::getSmallScreenDevice())
     {
@@ -233,7 +235,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
 
     oxygine::spButton pButtonIncome = ObjectManager::createButton(tr("Income"));
     addChild(pButtonIncome);
-    pButtonIncome->setPosition(10 + pButtonFunds->getWidth() + pButtonFunds->getX(), 5);
+    pButtonIncome->setPosition(10 + pButtonFunds->getScaledWidth() + pButtonFunds->getX(), 5);
     pButtonIncome->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowGraph(GraphModes::Income);
@@ -242,7 +244,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
 
     oxygine::spButton pButtonBuildings = ObjectManager::createButton(tr("Buildings"));
     addChild(pButtonBuildings);
-    pButtonBuildings->setPosition(10 + pButtonIncome->getWidth() + pButtonIncome->getX(), 5);
+    pButtonBuildings->setPosition(10 + pButtonIncome->getScaledWidth() + pButtonIncome->getX(), 5);
     pButtonBuildings->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowGraph(GraphModes::Buildings);
@@ -251,7 +253,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
 
     oxygine::spButton pButtonUnits = ObjectManager::createButton(tr("Units"));
     addChild(pButtonUnits);
-    pButtonUnits->setPosition(10 + pButtonBuildings->getWidth() + pButtonBuildings->getX(), 5);
+    pButtonUnits->setPosition(10 + pButtonBuildings->getScaledWidth() + pButtonBuildings->getX(), 5);
     pButtonUnits->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowGraph(GraphModes::Units);
@@ -260,7 +262,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
 
     oxygine::spButton pButtonPlayerStrength = ObjectManager::createButton(tr("Player Strength"));
     addChild(pButtonPlayerStrength);
-    pButtonPlayerStrength->setPosition(10 + pButtonUnits->getWidth() + pButtonUnits->getX(), 5);
+    pButtonPlayerStrength->setPosition(10 + pButtonUnits->getScaledWidth() + pButtonUnits->getX(), 5);
     pButtonPlayerStrength->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowGraph(GraphModes::PlayerStrength);
@@ -269,7 +271,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
 
     oxygine::spButton pButtonPlayerStatistic = ObjectManager::createButton(tr("Player Statistics"));
     addChild(pButtonPlayerStatistic);
-    pButtonPlayerStatistic->setPosition(10 + pButtonPlayerStrength->getWidth() + pButtonPlayerStrength->getX(), 5);
+    pButtonPlayerStatistic->setPosition(10 + pButtonPlayerStrength->getScaledWidth() + pButtonPlayerStrength->getX(), 5);
     pButtonPlayerStatistic->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowGraph(GraphModes::PlayerStatistics);
@@ -280,18 +282,18 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     {
         oxygine::spButton pButtonVictoryRanking = ObjectManager::createButton(tr("Ranking"));
         addChild(pButtonVictoryRanking);
-        pButtonVictoryRanking->setPosition(10 + pButtonPlayerStatistic->getWidth() + pButtonPlayerStatistic->getX(), 5);
+        pButtonVictoryRanking->setPosition(10 + pButtonPlayerStatistic->getScaledWidth() + pButtonPlayerStatistic->getX(), 5);
         pButtonVictoryRanking->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowGraph(GraphModes::VictoryRanking);
         });
         panel->addItem(pButtonVictoryRanking);
 
-        panel->setContentWidth(pButtonVictoryRanking->getX() + pButtonVictoryRanking->getWidth() + 5);
+        panel->setContentWidth(pButtonVictoryRanking->getX() + pButtonVictoryRanking->getScaledWidth() + 5);
     }
     else
     {
-        panel->setContentWidth(pButtonPlayerStatistic->getX() + pButtonPlayerStatistic->getWidth() + 5);
+        panel->setContentWidth(pButtonPlayerStatistic->getX() + pButtonPlayerStatistic->getScaledWidth() + 5);
     }
 
     m_Textfield = oxygine::spTextField::create();
@@ -303,11 +305,11 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     }
     addChild(m_Textfield);
 
-    m_PlayerSelectPanel = spPanel::create(true, QSize(200, m_pGraphBackground->getHeight()), QSize(200, 100));
+    m_PlayerSelectPanel = spPanel::create(true, QSize(200, m_pGraphBackground->getScaledHeight()), QSize(200, 100));
     m_PlayerSelectPanel->setPosition(5, m_pGraphBackground->getY());
     if (Settings::getSmallScreenDevice())
     {
-        m_PlayerSelectPanel->setX(-m_PlayerSelectPanel->getWidth() + 1);
+        m_PlayerSelectPanel->setX(-m_PlayerSelectPanel->getScaledWidth() + 1);
         auto moveButton = spMoveInButton::create(m_PlayerSelectPanel.get(), m_PlayerSelectPanel->getScaledWidth(), 1, -1);
     }
     addChild(m_PlayerSelectPanel);
@@ -336,8 +338,6 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     if (winnerTeam >= 0)
     {
         oxygine::TextStyle style48 = oxygine::TextStyle(FontManager::getMainFont48());
-        style48.color = FontManager::getFontColor();
-        style48.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style48.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style48.multiline = true;
         m_VictoryPanel = spPanel::create(true, QSize(Settings::getWidth() - 10, Settings::getHeight() - 115),
@@ -402,7 +402,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
                     {
                         oxygine::spSprite  pTextMask = oxygine::spSprite::create();
                         pTextMask->setWidth(sentenceWidth);
-                        pTextMask->setScaleX(pTextMask->getWidth() / pAnim->getWidth());
+                        pTextMask->setScaleX(pTextMask->getScaledWidth() / pAnim->getWidth());
                         pTextMask->setResAnim(pAnim);
                         pTextMask->setPosition(5, 5 + y);
                         QColor color = pPlayer->getColor();
@@ -415,7 +415,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
                     if (pAnim != nullptr)
                     {
                         pWinLooseSprite->setWidth(sentenceWidth);
-                        pWinLooseSprite->setScaleX(pWinLooseSprite->getWidth() / pAnim->getWidth());
+                        pWinLooseSprite->setScaleX(pWinLooseSprite->getScaledWidth() / pAnim->getWidth());
                         pWinLooseSprite->setResAnim(pAnim);
                         pWinLooseSprite->setPosition(5, 5 + y);
                         m_VictoryPanel->addItem(pWinLooseSprite);
@@ -503,23 +503,29 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     pApp->continueRendering();
     if (Mainapp::getSlave())
     {
-        // despawn slave process on finish
-        CONSOLE_PRINT("Closing slave cause the game is finished.", Console::eDEBUG);
-        qint32 ret = m_pMap->getWinnerTeam() + 1;
-        QString object = "Init";
-        QString func = "onMasterValue";
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        if (pInterpreter->exists(object, func))
-        {
-            QJSValue erg = pInterpreter->doFunction(object, func);
-            ret = erg.toInt();
-        }
-        QCoreApplication::exit(ret);
+        connect(&m_despawnSlaveTimer, &QTimer::timeout, this, &VictoryMenue::despawnSlave, Qt::QueuedConnection);
+        m_despawnSlaveTimer.start(20000);
     }
     else
     {
         AddScoreToUserdata();
     }
+}
+
+void VictoryMenue::despawnSlave()
+{
+    // despawn slave process on finish
+    CONSOLE_PRINT("Closing slave cause the game is finished.", Console::eDEBUG);
+    qint32 ret = m_pMap->getWinnerTeam() + 1;
+    QString object = "Init";
+    QString func = "onMasterValue";
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValue erg = pInterpreter->doFunction(object, func);
+        ret = erg.toInt();
+    }
+    QCoreApplication::exit(ret);
 }
 
 void VictoryMenue::createStatisticsView()
@@ -736,7 +742,7 @@ void VictoryMenue::exitMenue()
     else
     {
         m_pMap->detach();
-        auto window = spMainwindow::create();
+        auto window = spMainwindow::create("ui/menu/mainmenu.xml");
         oxygine::Stage::getStage()->addChild(window);
     }
     oxygine::Actor::detach();
@@ -794,8 +800,7 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
 }
 
 void VictoryMenue::updateGraph()
-{    
-    
+{
     if (m_pMap.get() != nullptr)
     {
         if (m_CurrentGraphMode < GraphModes::Max)
@@ -879,7 +884,7 @@ qint32 VictoryMenue::drawGraphStep(qint32 progress)
     if (pStartRecord != nullptr &&
         pEndRecord != nullptr)
     {
-        m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->setX(endProgress * m_lineLength - m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->getWidth() / 2);
+        m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->setX(endProgress * m_lineLength - m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->getScaledWidth() / 2);
         // add player lines
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
@@ -939,8 +944,8 @@ qint32 VictoryMenue::drawGraphStep(qint32 progress)
             }
             if (startPoint.y() >= 0 && endPoint.y() >= 0)
             {
-                startPoint.setY(m_pGraphBackground->getHeight() - startPoint.y() * m_pGraphBackground->getHeight());
-                endPoint.setY(m_pGraphBackground->getHeight() - endPoint.y() * m_pGraphBackground->getHeight());
+                startPoint.setY(m_pGraphBackground->getScaledHeight() - startPoint.y() * m_pGraphBackground->getScaledHeight());
+                endPoint.setY(m_pGraphBackground->getScaledHeight() - endPoint.y() * m_pGraphBackground->getScaledHeight());
                 oxygine::spActor line = createLine(endPoint - startPoint, lineWidth, m_pMap->getPlayer(i)->getColor());
                 line->setPosition(startPoint.x(), startPoint.y() - lineWidth / 2);
                 m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][i]->addChild(line);
@@ -954,7 +959,6 @@ qint32 VictoryMenue::drawGraphStep(qint32 progress)
 void VictoryMenue::drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
                               QPointF startPoint, qint32 progress)
 {
-    
     GameManager* pGameManager = GameManager::getInstance();
     for (qint32 event = 0; event < pStartRecord->getEventRecordCount(); event++)
     {
@@ -1014,7 +1018,6 @@ void VictoryMenue::drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
 
 qint32 VictoryMenue::getStepTime()
 {
-    
     qint32 stepTime = static_cast<qint32>(15.0 * (20.0 - qExp(m_pMap->getCurrentDay() / 10.0)));
     if (m_pMap->getCurrentDay() < 5)
     {
@@ -1099,11 +1102,11 @@ void VictoryMenue::showPlayerStatistic(qint32 player)
         const auto & playerdata = data[player];
         if (Settings::getSmallScreenDevice())
         {
-            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 180, m_pMap->getPlayer(player));
+            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 180, m_pMap->getPlayer(player), m_pMap.get());
         }
         else
         {
-            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 280, m_pMap->getPlayer(player));
+            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 280, m_pMap->getPlayer(player), m_pMap.get());
         }
         m_statisticsView->setPosition(10, 60);
         m_statisticsBox->addChild(m_statisticsView);

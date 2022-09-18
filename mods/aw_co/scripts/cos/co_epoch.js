@@ -5,7 +5,7 @@ CO_EPOCH.init = function(co, map)
 };
 CO_EPOCH.activateSuperpower = function(co, powerMode, map)
 {
-    CO_EPOCH.activatePower(co, powerMode);
+    CO_EPOCH.activatePower(co, powerMode, map);
 };
 CO_EPOCH.getSuperPowerDescription = function()
 {

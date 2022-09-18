@@ -3,7 +3,7 @@
 #include "game/GameEnums.h"
 #include "game/gamemap.h"
 
-class MapFilter
+class MapFilter final
 {
     struct FlagFilter
     {
@@ -21,7 +21,7 @@ class MapFilter
 
 public:
     explicit MapFilter() = default;
-    virtual ~MapFilter() = default;
+    ~MapFilter() = default;
 
     void setFlagActive(GameEnums::MapFilterFlags flag, bool isOptional);
     bool getFlagActive(GameEnums::MapFilterFlags flag);

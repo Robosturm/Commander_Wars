@@ -1,7 +1,11 @@
 #include <QObject>
 #include <QProcess>
 #include <QDir>
+#ifdef GRAPHICSUPPORT
 #include <QApplication>
+#else
+#include <QCoreApplication>
+#endif
 #include <QFile>
 
 #include "coreengine/mainapp.h"
@@ -11,6 +15,10 @@
 #include "coreengine/crashreporter.h"
 #include "coreengine/metatyperegister.h"
 
+#ifdef UPDATESUPPORT
+#include "updater/gameupdater.h"
+#endif
+
 #include "network/mainserver.h"
 
 int main(qint32 argc, char* argv[])
@@ -18,36 +26,51 @@ int main(qint32 argc, char* argv[])
     qInstallMessageHandler(Console::messageOutput);
     srand(static_cast<unsigned>(time(nullptr)));
     QThread::currentThread()->setPriority(QThread::NormalPriority);
+#ifdef GRAPHICSUPPORT
     QThread::currentThread()->setObjectName("RenderThread");
     QApplication app(argc, argv);
+#else
+    QCoreApplication app(argc, argv);
+#endif
     app.setApplicationName("Commander Wars");
     app.setApplicationVersion(Mainapp::getGameVersion());
-
-    Settings::getInstance();
-    Settings::loadSettings();
 
     Mainapp window;
     window.setTitle("Commander Wars");
     auto & parser = window.getParser();
-    window.getParser().parseArgs(app);
+    parser.parseArgsPhaseOne(app);
+    Settings::getInstance();
+    Settings::loadSettings();
+    parser.parseArgsPhaseTwo();
+    window.createBaseDirs();
+
     // start crash report handler
     CrashReporter::setSignalHandler(&Mainapp::showCrashReport);
     MetaTypeRegister::registerInterfaceData();
     /*************************************************************************************************/
     // show window according to window mode
     window.setPosition(Settings::getX(), Settings::getY());
+    if (Settings::getSmallScreenDevice())
+    {
+        // force a resolution reset
+        window.changeScreenMode(Settings::ScreenModes::FullScreen);
+    }
+    // show as normal borderless
     window.changeScreenMode(window.getScreenMode());
-
     window.setBrightness(Settings::getBrightness());
     window.setGamma(Settings::getGamma());
-    if (window.getScreenMode() != 0)
+    if (window.getScreenMode() != Settings::ScreenModes::Window)
     {
         window.setPosition(Settings::getX(), Settings::getY());
-    }
+    }    
+#ifdef GRAPHICSUPPORT
     if (window.getNoUi())
     {
         window.launchGame();
     }
+#else
+    window.launchGame();
+#endif
     qint32 returncode = app.exec();
     /*************************************************************************************************/
     // shutting down
@@ -65,14 +88,15 @@ int main(qint32 argc, char* argv[])
     // give os time to save the settings
     QThread::currentThread()->msleep(350);
     CONSOLE_PRINT("Checking for memory leak during runtime", Console::eDEBUG);
-    static constexpr qint32 finalObjects = 0;
-    if (oxygine::ref_counter::getAlloctedObjectCount() != finalObjects)
+    static constexpr qint32 finalObjects = 2;
+    static constexpr qint32 finalJsObjects = 0;
+    if (oxygine::ref_counter::getAlloctedObjectCount() > finalObjects)
     {
-        oxygine::handleErrorPolicy(oxygine::ep_show_error, "c++ memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()));
+        oxygine::handleErrorPolicy(oxygine::ep_show_warning, "c++ memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()));
     }
-    else if (oxygine::ref_counter::getAlloctedJsObjectCount() != finalObjects)
+    else if (oxygine::ref_counter::getAlloctedJsObjectCount() > finalJsObjects)
     {
-        oxygine::handleErrorPolicy(oxygine::ep_show_error, "js memory leak detected. This happens due to not deleted qml-vectors in a mod. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()));
+        oxygine::handleErrorPolicy(oxygine::ep_show_warning, "js memory leak detected. This happens due to not deleted qml-vectors in a mod. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()));
     }
     //end
     if (!slave)
@@ -86,6 +110,24 @@ int main(qint32 argc, char* argv[])
             QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList());
 #endif
         }
+#ifdef UPDATESUPPORT
+        else if (returncode == 2)
+        {
+#ifdef Q_OS_ANDROID
+            CONSOLE_PRINT("No update support on android", Console::eDEBUG);
+#else
+            GameUpdater::launchPatcher();
+#endif
+        }
+        else if (returncode == 3)
+        {
+#ifdef Q_OS_ANDROID
+            CONSOLE_PRINT("No update support on android", Console::eDEBUG);
+#else
+            GameUpdater::launchApplication();
+#endif
+        }
+#endif
     }
     return returncode;
 }

@@ -1,16 +1,26 @@
+#include <QClipboard>
+#ifdef GRAPHICSUPPORT
+#include <QApplication>
+#endif
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/base/focusableobject.h"
+
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
-
-#include <QClipboard>
-#include <QGuiApplication>
+#include "coreengine/interpreter.h"
 
 FocusableObject* FocusableObject::m_focusedObject = nullptr;
 bool FocusableObject::m_registeredAtStage = false;
 
 FocusableObject::FocusableObject()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("FocusableObject");
+#endif
+    Interpreter::setCppOwnerShip(this);
+
     connect(this, &FocusableObject::sigFocused, this, &FocusableObject::focusedInternal);
     connect(this, &FocusableObject::sigFocusedLost, this, &FocusableObject::focusedLost);
     connect(this, &FocusableObject::sigLooseFocusInternal, this, &FocusableObject::looseFocusInternal);
@@ -30,9 +40,9 @@ FocusableObject::FocusableObject()
 
 bool FocusableObject::handleEvent(QEvent *event)
 {
+    auto* pObj = FocusableObject::getFocusedObject();
     bool handled = false;
-    spFocusableObject pObj(FocusableObject::getFocusedObject());
-    if (pObj.get() != nullptr)
+    if (pObj != nullptr)
     {
         switch (event->type())
         {
@@ -80,11 +90,13 @@ void FocusableObject::looseFocus()
         m_focusedObject->m_focused = false;
         emit m_focusedObject->sigFocusedLost();
         m_focusedObject = nullptr;
-        auto virtualKeyboard = QGuiApplication::inputMethod();
+#ifdef GRAPHICSUPPORT
+        auto virtualKeyboard = QApplication::inputMethod();
         if (virtualKeyboard != nullptr)
         {
             virtualKeyboard->hide();
         }
+#endif
     }
 }
 
@@ -95,11 +107,13 @@ void FocusableObject::looseFocusInternal()
         CONSOLE_PRINT("Loosing focus forced by object", Console::eDEBUG);
         m_focusedObject->m_focused = false;
         m_focusedObject = nullptr;
-        auto virtualKeyboard = QGuiApplication::inputMethod();
+#ifdef GRAPHICSUPPORT
+        auto virtualKeyboard = QApplication::inputMethod();
         if (virtualKeyboard != nullptr)
         {
             virtualKeyboard->hide();
         }
+#endif
     }
 }
 

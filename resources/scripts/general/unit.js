@@ -78,6 +78,11 @@ var UNIT =
         return animation;
     },
 
+    endOfTurn : function(unit, map)
+    {
+        // gets called at the end of a turn
+    },
+
     startOfTurn : function(unit, map)
     {
         // gets called at the start of a turn
@@ -338,7 +343,7 @@ var UNIT =
         }
     },
 
-    getFirstStrike : function(unit, posX, posY, attacker, isDefender, map)
+    getFirstStrike : function(unit, posX, posY, attacker, isDefender, map, atkPosX, atkPosY)
     {
         return false;
     },

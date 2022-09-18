@@ -12,7 +12,9 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
       m_Timer(this),
       m_TimerConnectionTimeout(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogConnecting");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -26,8 +28,6 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -38,7 +38,7 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
     pSpriteBox->addChild(m_Text);
 
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_CancelButton->setPosition(Settings::getWidth() / 2 - m_CancelButton->getWidth() / 2,
+    m_CancelButton->setPosition(Settings::getWidth() / 2 - m_CancelButton->getScaledWidth() / 2,
                                 Settings::getHeight() / 2 + 10);
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)

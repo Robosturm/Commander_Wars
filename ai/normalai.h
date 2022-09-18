@@ -15,7 +15,7 @@ class Building;
 class NormalAi;
 using spNormalAi = oxygine::intrusive_ptr<NormalAi>;
 
-class NormalAi : public CoreAI
+class NormalAi final : public CoreAI
 {
     Q_OBJECT
     enum FundsMode
@@ -112,8 +112,8 @@ public:
         Max,
     };
 
-    explicit NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType);
-    virtual ~NormalAi() = default;
+    explicit NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType, QString jsName);
+    ~NormalAi() = default;
 signals:
 
 public slots:
@@ -461,14 +461,14 @@ protected:
      * @param pUnitData
      * @param enemy
      */
-    void updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & pUnitData, bool enemy);
+    void updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & pUnitData, bool enemy, std::vector<MoveUnitData> & otherUnitData);
     /**
      * @brief createUnitData
      * @param pUnit
      * @param data
      * @param enemy
      */
-    void createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, qint32 moveMultiplier);
+    void createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, qint32 moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always = false);
     /**
      * @brief createUnitInfluenceMap
      */
@@ -601,6 +601,7 @@ private:
     double m_cappingFunds{4700};
     double m_cappedFunds{1999};
     double m_targetPriceDifference{0.3f};
+    double m_sameFundsMatchUpNoMatchUpValue{0.5f};
     double m_fundsPerBuildingFactorC{4};
     double m_cheapUnitValue{3000.0f};
     double m_supportDamageBonus{1.0f};
@@ -616,7 +617,6 @@ private:
     double m_influenceIgnoreValue{0.2};
     double m_influenceMultiplier{2};
     double m_lowThreadDamage{10};
-
     double m_ProducingTransportSearchrange{6};
     double m_ProducingTransportSizeBonus{10};
     double m_ProducingTransportRatioBonus{1.7f};

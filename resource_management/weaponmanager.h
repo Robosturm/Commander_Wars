@@ -5,7 +5,7 @@ class Unit;
 
 #include "resource_management/ressourcemanagement.h"
 
-class WeaponManager : public QObject, public RessourceManagement<WeaponManager>
+class WeaponManager final : public QObject, public RessourceManagement<WeaponManager>
 {
     Q_OBJECT
 public:
@@ -33,10 +33,12 @@ protected:
         : RessourceManagement<WeaponManager>("",
                                              "/scripts/weapons")
     {
+#ifdef GRAPHICSUPPORT
         setObjectName("WeaponManager");
+#endif
     }
 private:
-    virtual ~WeaponManager() = default;
+    ~WeaponManager() = default;
 };
 
 #endif // WEAPONMANAGER_H

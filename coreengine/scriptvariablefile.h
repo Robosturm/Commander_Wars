@@ -2,17 +2,17 @@
 
 #include <QObject>
 #include "coreengine/scriptvariables.h"
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class ScriptVariableFile;
 using spScriptVariableFile = oxygine::intrusive_ptr<ScriptVariableFile>;
 
-class ScriptVariableFile : public QObject, public FileSerializable, public oxygine::ref_counter
+class ScriptVariableFile final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
         Q_OBJECT
     public:
         explicit ScriptVariableFile(const QString & filename);
-        virtual ~ScriptVariableFile() = default;
+        ~ScriptVariableFile() = default;
         /**
          * @brief serialize stores the object
          * @param pStream

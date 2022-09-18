@@ -5,15 +5,16 @@
 #include <QTimer>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
 #include "game/unit.h"
 #include "game/gamemap.h"
 
 class BattleAnimationSprite;
-typedef oxygine::intrusive_ptr<BattleAnimationSprite> spBattleAnimationSprite;
+using spBattleAnimationSprite = oxygine::intrusive_ptr<BattleAnimationSprite>;
 
-class BattleAnimationSprite : public QObject, public oxygine::Sprite
+class BattleAnimationSprite final : public QObject, public oxygine::Sprite
 {
     Q_OBJECT
 public:
@@ -27,7 +28,7 @@ public:
     static const QString stopAnimation;
 
     explicit BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1, bool playSound = true);
-    virtual ~BattleAnimationSprite();
+    ~BattleAnimationSprite();
     /**
      * @brief loadAnimation
      * @param animationType
@@ -602,5 +603,7 @@ private:
     float m_backgroundSpeed{0.0f};
     GameMap* m_pMap{nullptr};
 };
+
+Q_DECLARE_INTERFACE(BattleAnimationSprite, "BattleAnimationSprite");
 
 #endif // BATTLEANIMATIONSPRITE_H

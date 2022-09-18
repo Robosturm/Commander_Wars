@@ -1,7 +1,10 @@
 #include <QMutexLocker>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/replaymenu.h"
 #include "menue/victorymenue.h"
+#include "menue/movementplanner.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
 
@@ -10,6 +13,8 @@
 #include "objects/base/slider.h"
 #include "objects/base/checkbox.h"
 #include "objects/base/moveinbutton.h"
+
+#include "wiki/fieldinfo.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
@@ -20,11 +25,14 @@ ReplayMenu::ReplayMenu(QString filename)
     : GameMenue(spGameMap::create(1, 1, 2))
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("ReplayMenu");
+#endif
+    registerAtInterpreter();
     setIsReplay(true);
     connect(this, &ReplayMenu::sigExitReplay, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigShowRecordInvalid, this, &ReplayMenu::showRecordInvalid, Qt::QueuedConnection);
-    connect(this, &GameMenue::sigActionPerformed, this, &ReplayMenu::nextReplayAction, Qt::QueuedConnection);
+    connect(&getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &ReplayMenu::nextReplayAction, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigSwapPlay, this, &ReplayMenu::togglePlayUi, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigStartFastForward, this, &ReplayMenu::startFastForward, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigStopFastForward, this, &ReplayMenu::stopFastForward, Qt::QueuedConnection);
@@ -35,20 +43,9 @@ ReplayMenu::ReplayMenu(QString filename)
     m_valid = m_ReplayRecorder.loadRecord(filename);
     if (m_valid)
     {
-        m_Viewplayer = spViewplayer::create(m_pMap.get());
+        m_Viewplayer = spViewplayer::create(this, m_pMap.get());
         // store animation modes
-        m_storedOverworldAnimations = Settings::getOverworldAnimations();
-        m_storedBattleAnimMode = Settings::getBattleAnimationMode();
-        m_storedBatteAnimType = Settings::getBattleAnimationType();
-        m_storedDialog = Settings::getDialogAnimation();
-        m_storedCaptureAnimation = Settings::getCaptureAnimation();
-        m_storedMovementAnimation = Settings::getMovementAnimations();
-        m_storedDay2DayAnimation = Settings::getDay2dayScreen();
-
-        m_storedAnimationSpeed = Settings::getAnimationSpeedValue();
-        m_storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
-        m_storedDialogAnimationSpeed = Settings::getDialogAnimationSpeedValue();
-        m_storedCaptureAnimationSpeed = Settings::getCaptureAnimationSpeedValue();
+        m_storedAnimationSettings.storeAnimationSettings();
         
         loadHandling();
         loadGameMenue();
@@ -56,7 +53,7 @@ ReplayMenu::ReplayMenu(QString filename)
         m_pMap->updateSprites();
         loadUIButtons();
         m_HumanInput = spHumanPlayerInput::create(m_pMap.get());
-        m_HumanInput->init();
+        m_HumanInput->init(this);
         m_gameStarted = true;
         CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
     }
@@ -81,24 +78,13 @@ void ReplayMenu::onEnter()
     }
     if (m_valid)
     {
-        emit sigActionPerformed();
+        emit getActionPerformer().sigActionPerformed();
     }
 }
 
 ReplayMenu::~ReplayMenu()
 {
-    Settings::setOverworldAnimations(m_storedOverworldAnimations);
-    Settings::setBattleAnimationMode(m_storedBattleAnimMode);
-    Settings::setBattleAnimationType(m_storedBatteAnimType);
-    Settings::setDialogAnimation(m_storedDialog);
-    Settings::setCaptureAnimation(m_storedCaptureAnimation);
-    Settings::setMovementAnimations(m_storedMovementAnimation);
-    Settings::setDay2dayScreen(m_storedDay2DayAnimation);
-
-    Settings::setAnimationSpeed(m_storedAnimationSpeed);
-    Settings::setBattleAnimationSpeed(m_storedBattleAnimationSpeed);
-    Settings::setDialogAnimationSpeed(m_storedDialogAnimationSpeed);
-    Settings::setCaptureAnimationSpeed(m_storedCaptureAnimationSpeed);
+    m_storedAnimationSettings.restoreAnimationSettings();
 }
 
 void ReplayMenu::showRecordInvalid()
@@ -112,8 +98,8 @@ void ReplayMenu::showRecordInvalid()
     }
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("The current active mods or the current record are invalid or damaged! Exiting the Replay now. Mods used in the Replay:") + "\n" +
                                                           modList, false);
-    connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);    
-    addChild(pExit);   
+    connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
+    addChild(pExit);
 }
 
 void ReplayMenu::exitReplay()
@@ -153,7 +139,7 @@ void ReplayMenu::nextReplayAction()
         {
             --m_replayCounter;
             CONSOLE_PRINT("Performing next replay action", Console::eDEBUG);
-            performAction(pAction);
+            getActionPerformer().performAction(pAction);
         }
         else
         {
@@ -174,7 +160,7 @@ void ReplayMenu::showExitGame()
     {
         m_Focused = true;
     });
-    addChild(pExit);    
+    addChild(pExit);
 }
 
 Player* ReplayMenu::getCurrentViewPlayer()
@@ -187,8 +173,6 @@ void ReplayMenu::loadUIButtons()
     loadSeekUi();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
@@ -197,7 +181,7 @@ void ReplayMenu::loadUIButtons()
     qint32 width = Settings::getWidth();
     if (!Settings::getSmallScreenDevice())
     {
-        width += -m_IngameInfoBar->getWidth() - m_IngameInfoBar->getDetailedViewBox()->getWidth();
+        width += -m_IngameInfoBar->getWidth() - m_IngameInfoBar->getDetailedViewBox()->getScaledWidth();
     }
     m_taskBar->setSize(width, 50);
     m_taskBar->setPosition(0, Settings::getHeight() + 6);
@@ -205,7 +189,7 @@ void ReplayMenu::loadUIButtons()
     addChild(m_taskBar);
 
     oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit"), 130);
-    exitGame->setPosition(m_taskBar->getWidth() - 8 - exitGame->getWidth(), 4);
+    exitGame->setPosition(m_taskBar->getScaledWidth() - 8 - exitGame->getScaledWidth(), 4);
     exitGame->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowExitGame();
@@ -218,8 +202,8 @@ void ReplayMenu::loadUIButtons()
     m_playButton = ObjectManager::createIconButton("play", 36);
     m_playButton->setVisible(false);
     m_pauseButton = ObjectManager::createIconButton("pause", 36);
-    m_playButton->setPosition(exitGame->getX() - 4 - m_playButton->getWidth(), y);
-    m_pauseButton->setPosition(exitGame->getX() - 4 - m_pauseButton->getWidth(), y);
+    m_playButton->setPosition(exitGame->getX() - 4 - m_playButton->getScaledWidth(), y);
+    m_pauseButton->setPosition(exitGame->getX() - 4 - m_pauseButton->getScaledWidth(), y);
     m_playButton->addClickListener([this](oxygine::Event * )
     {
         emit sigSwapPlay();
@@ -229,7 +213,7 @@ void ReplayMenu::loadUIButtons()
         emit sigSwapPlay();
     });
     m_oneStepButton = ObjectManager::createIconButton("one_step", 36);
-    m_oneStepButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getWidth(), y);
+    m_oneStepButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getScaledWidth(), y);
     m_taskBar->addChild(m_oneStepButton);
     m_oneStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -239,7 +223,7 @@ void ReplayMenu::loadUIButtons()
     m_taskBar->addChild(m_playButton);
     m_taskBar->addChild(m_pauseButton);
     m_fastForwardButton = ObjectManager::createIconButton("fastforward", 36);
-    m_fastForwardButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getWidth() - m_fastForwardButton->getWidth(), y);
+    m_fastForwardButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getScaledWidth() - m_fastForwardButton->getScaledWidth(), y);
     m_taskBar->addChild(m_fastForwardButton);
     m_fastForwardButton->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event*)
     {
@@ -250,7 +234,7 @@ void ReplayMenu::loadUIButtons()
         emit sigStopFastForward();
     });
     m_rewindDayButton = ObjectManager::createIconButton("rewind", 36);
-    m_rewindDayButton->setPosition(m_fastForwardButton->getX() - 4 - m_rewindDayButton->getWidth(), y);
+    m_rewindDayButton->setPosition(m_fastForwardButton->getX() - 4 - m_rewindDayButton->getScaledWidth(), y);
     m_rewindDayButton->addClickListener([this](oxygine::Event*)
     {
         emit sigRewindDay();
@@ -258,7 +242,7 @@ void ReplayMenu::loadUIButtons()
     m_taskBar->addChild(m_rewindDayButton);
 
     m_configButton = ObjectManager::createIconButton("settings", 36);
-    m_configButton->setPosition(m_rewindDayButton->getX() - 4 - m_configButton->getWidth(), y);
+    m_configButton->setPosition(m_rewindDayButton->getX() - 4 - m_configButton->getScaledWidth(), y);
     m_configButton->addClickListener([this](oxygine::Event*)
     {
         emit sigShowConfig();
@@ -284,8 +268,6 @@ void ReplayMenu::loadUIButtons()
     pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
     pButtonBox->setResAnim(pAnim);
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_xyTextInfo = spLabel::create(180);
@@ -294,7 +276,7 @@ void ReplayMenu::loadUIButtons()
     m_xyTextInfo->setPosition(8, 8);
     pButtonBox->addChild(m_xyTextInfo);
     pButtonBox->setSize(200, 50);
-    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
+    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) - pButtonBox->getScaledWidth(), 0);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_XYButtonBox = pButtonBox;
     m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates());
@@ -309,7 +291,7 @@ void ReplayMenu::oneStep()
     {
         m_paused = false;
         m_pauseRequested = true;
-        emit sigActionPerformed();
+        emit getActionPerformer().sigActionPerformed();
     }
 }
 
@@ -317,15 +299,11 @@ void ReplayMenu::loadSeekUi()
 {    
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pDayBox = oxygine::spBox9Sprite::create();
     pDayBox->setResAnim(pAnim);
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_seekDayLabel = spLabel::create(140);
@@ -334,7 +312,7 @@ void ReplayMenu::loadSeekUi()
     m_seekDayLabel->setPosition(8, 8);
     pDayBox->addChild(m_seekDayLabel);
     pDayBox->setSize(160, 50);
-    pDayBox->setPosition(0, Settings::getHeight() - pDayBox->getHeight() + 6 - pDayBox->getHeight());
+    pDayBox->setPosition(0, Settings::getHeight() - pDayBox->getScaledHeight() + 6 - pDayBox->getScaledHeight());
     pDayBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pDayBox);
     m_seekActor = pDayBox;
@@ -350,31 +328,14 @@ void ReplayMenu::startSeeking()
         swapPlay();
     }
     m_replayCounter = 0;
-    m_seekingOverworldAnimations = Settings::getOverworldAnimations();    
-    m_seekingDialog = Settings::getDialogAnimation();
-    m_seekingBattleAnimations = Settings::getBattleAnimationMode();
 
-    m_seekingCapture = Settings::getCaptureAnimation();
-    m_seekingMovement = Settings::getMovementAnimations();
-    m_seekingDay2Day = Settings::getDay2dayScreen();
-    Settings::setOverworldAnimations(false);
-    Settings::setDialogAnimation(false);
-    Settings::setMovementAnimations(false);
-    Settings::setDay2dayScreen(false);
-    Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode::BattleAnimationMode_None);
-
+    m_storedSeekingAnimationSettings.startSeeking();
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
         GameAnimationFactory::finishAllAnimations();
     }
-    Settings::setBattleAnimationMode(m_seekingBattleAnimations);
-    Settings::setOverworldAnimations(m_seekingOverworldAnimations);
-    Settings::setDialogAnimation(m_seekingDialog);
-    Settings::setCaptureAnimation(m_seekingCapture);
-    Settings::setMovementAnimations(m_seekingMovement);
-    Settings::setDay2dayScreen(m_seekingDay2Day);
-
-    m_seeking = true;    
+    m_storedSeekingAnimationSettings.restoreAnimationSettings();
+    m_seeking = true;
 }
 
 void ReplayMenu::seekChanged(float value)
@@ -386,17 +347,17 @@ void ReplayMenu::seekChanged(float value)
     {
         day = m_ReplayRecorder.getDayFromPosition(count);
     }
-    m_seekDayLabel->setHtmlText(tr("Day: ") + QString::number(day));    
+    m_seekDayLabel->setHtmlText(tr("Day: ") + QString::number(day));
 }
 
 void ReplayMenu::seekRecord(float value)
 {
-    QMutexLocker locker(&m_replayMutex);    
+    QMutexLocker locker(&m_replayMutex);
     qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
     qint32 day = m_ReplayRecorder.getDayFromPosition(count);
     seekToDay(day);
     m_seekActor->setVisible(false);
-    m_seeking = false;    
+    m_seeking = false;
 }
 
 void ReplayMenu::rewindDay()
@@ -461,7 +422,7 @@ void ReplayMenu::swapPlay()
     {
         CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
         m_paused = false;
-        emit sigActionPerformed();
+        emit getActionPerformer().sigActionPerformed();
     }
     else
     {
@@ -498,29 +459,14 @@ void ReplayMenu::togglePlayUi()
 void ReplayMenu::startFastForward()
 {
     QMutexLocker locker(&m_replayMutex);
-    m_seekingOverworldAnimations = Settings::getOverworldAnimations();
-    m_seekingDialog = Settings::getDialogAnimation();
-    m_seekingCapture = Settings::getCaptureAnimation();
-    m_seekingBattleAnimations = Settings::getBattleAnimationMode();
-    m_seekingMovement = Settings::getMovementAnimations();
-    m_seekingDay2Day = Settings::getDay2dayScreen();
-    Settings::setOverworldAnimations(false);
-    Settings::setDialogAnimation(false);
-    Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode::BattleAnimationMode_None);
-
-    skipAnimations(false);
-    
+    m_storedSeekingAnimationSettings.startSeeking();
+    getActionPerformer().skipAnimations(false);
 }
 
 void ReplayMenu::stopFastForward()
 {
     QMutexLocker locker(&m_replayMutex);
-    Settings::setBattleAnimationMode(m_seekingBattleAnimations);
-    Settings::setOverworldAnimations(m_seekingOverworldAnimations);
-    Settings::setDialogAnimation(m_seekingDialog);
-    Settings::setCaptureAnimation(m_seekingCapture);
-    Settings::setMovementAnimations(m_seekingMovement);
-    Settings::setDay2dayScreen(m_seekingDay2Day);
+    m_storedSeekingAnimationSettings.restoreAnimationSettings();
 }
 
 void ReplayMenu::showConfig()
@@ -533,13 +479,11 @@ void ReplayMenu::showConfig()
     spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     spPanel pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
-                         QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
+                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     pPanel->setPosition(30, 30);
     pBox->addChild(pPanel);
     qint32 width = 450;
@@ -788,12 +732,11 @@ void ReplayMenu::showConfig()
     });
     y += 40;
 
-    addChild(pBox);    
+    addChild(pBox);
 }
 
 void ReplayMenu::setViewTeam(qint32 item)
-{    
-    
+{
     if (item <= -Viewplayer::ViewType::CurrentTeam)
     {
         m_Viewplayer->setViewType(item + Viewplayer::ViewType::CurrentTeam);
@@ -815,5 +758,43 @@ void ReplayMenu::setViewTeam(qint32 item)
             }
         }
     }
-    m_pMap->getGameRules()->createFogVision();    
+    m_pMap->getGameRules()->createFogVision();
+}
+
+void ReplayMenu::keyInput(oxygine::KeyEvent event)
+{
+    if (!event.getContinousPress())
+    {
+        // for debugging
+        Qt::Key cur = event.getKey();
+        if (m_Focused)
+        {
+            if (cur == Settings::getKey_information() ||
+                     cur == Settings::getKey_information2())
+            {
+
+                Player* pPlayer = m_pMap->getCurrentViewPlayer();
+                GameEnums::VisionType visionType = pPlayer->getFieldVisibleType(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                if (m_pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()) &&
+                    visionType != GameEnums::VisionType_Shrouded)
+                {
+                    Terrain* pTerrain = m_pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                    Unit* pUnit = pTerrain->getUnit();
+                    if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
+                    {
+                        pUnit = nullptr;
+                    }
+                    spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pUnit);
+                    addChild(fieldinfo);
+                    connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [this]
+                    {
+                        setFocused(true);
+                    });
+                    setFocused(false);
+                }
+
+            }
+        }
+    }
+    BaseGamemenu::keyInput(event);
 }

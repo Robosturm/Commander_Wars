@@ -3,21 +3,25 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 class GameMap;
+class GameMenue;
 class Minimap;
 using spMinimap = oxygine::intrusive_ptr<Minimap>;
 
-class Minimap : public QObject, public oxygine::Actor
+class Minimap final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     static const qint32 IMAGE_SIZE{4};
     explicit Minimap();
-    virtual ~Minimap() = default;
+    ~Minimap();
 
-    void clear();
+    void clear();    
+    void setMenu(GameMenue* pMenu);
+
 signals:
     void clicked(qint32 x, qint32 y, bool updateMinimapPosition);
 public slots:
@@ -33,7 +37,7 @@ private:
         oxygine::spSprite unit;
     };
     QVector<MinimapFieldInfo> m_Items;
-
+    GameMenue* m_pGamemenu{nullptr};
 };
 
 #endif // MINIMAP_H

@@ -7,7 +7,7 @@
 class ScriptEventVictoryInfo;
 using spScriptEventVictoryInfo = oxygine::intrusive_ptr<ScriptEventVictoryInfo>;
 
-class ScriptEventVictoryInfo : public ScriptEvent
+class ScriptEventVictoryInfo final : public ScriptEvent
 {
     Q_OBJECT
 public:

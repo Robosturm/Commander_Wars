@@ -1,17 +1,14 @@
 #pragma once
 
-#include <QObject>
 #include <QIODevice>
 
-class Sha256Hash : public QObject
+class Sha256Hash final
 {
-    Q_OBJECT
-
     static constexpr quint32 MAX_DATA_LENGTH = 64;
 
 public:
     explicit Sha256Hash();
-    virtual ~Sha256Hash() = default;
+    ~Sha256Hash() = default;
 
     void addData(QIODevice* device);
     void addData(const QByteArray & data);

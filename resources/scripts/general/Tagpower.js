@@ -281,7 +281,7 @@ var TAGPOWER =
         return 0;
     },
 
-    getFirstStrike : function(co, unit, posX, posY, attacker, isDefender, map)
+    getFirstStrike : function(co, unit, posX, posY, attacker, isDefender, map, atkPosX, atkPosY)
     {
         return false;
     },
@@ -319,6 +319,11 @@ var TAGPOWER =
 
     getTrueDamage : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                              defender, defPosX, defPosY, isDefender, action, luckmode, map)
+    {
+        return 0;
+    },
+
+    getPowerChargeBonus : function(co, map)
     {
         return 0;
     },
@@ -362,7 +367,17 @@ var TAGPOWER =
         return 0;
     },
 
+    getEnemyBonusLuck : function(co, unit, posX, posY, map)
+    {
+        return 0;
+    },
+
     getBonusMisfortune : function(co, unit, posX, posY, map)
+    {
+        return 0;
+    },
+
+    getEnemyBonusMisfortune : function(co, unit, posX, posY, map)
     {
         return 0;
     },
@@ -489,6 +504,11 @@ var TAGPOWER =
         // called after damage was dealt to the defender unit.
         // the damage given is the damage was dealt to the unit.
         // gotAttacked means we own the unit which got damage dealt.
+    },
+
+    endOfTurn : function(co, map)
+    {
+        // called at the end of the turn use it to do cool co stuff like caulder's healing :)
     },
 
     startOfTurn : function(co, map)

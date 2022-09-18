@@ -5,7 +5,7 @@ CO_COLIN.init = function(co, map)
 };
 CO_COLIN.activateSuperpower = function(co, powerMode, map)
 {
-    CO_COLIN.activatePower(co, powerMode);
+    CO_COLIN.activatePower(co, powerMode, map);
 };
 CO_COLIN.getSuperPowerDescription = function()
 {
@@ -38,7 +38,7 @@ CO_COLIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-this.getCostModifier = function(co, id, baseCost, posX, posY, map)
+CO_COLIN.getCostModifier = function(co, id, baseCost, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

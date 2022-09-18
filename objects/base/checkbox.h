@@ -3,23 +3,20 @@
 
 #include "objects/base/tooltip.h"
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
 class Checkbox;
-typedef oxygine::intrusive_ptr<Checkbox> spCheckbox;
+using spCheckbox = oxygine::intrusive_ptr<Checkbox>;
 
-class Checkbox : public Tooltip
+class Checkbox final : public Tooltip
 {
     Q_OBJECT
 public:
     explicit Checkbox();
-    virtual ~Checkbox() = default;
+    ~Checkbox() = default;
     bool getChecked() const;
     void setChecked(bool Checked);
 signals:
     void checkChanged(bool value);
-public slots:
+
 private:
     bool m_Checked{false};
 };

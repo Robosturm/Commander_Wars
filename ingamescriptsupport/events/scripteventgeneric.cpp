@@ -12,9 +12,12 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/checkbox.h"
 #include "objects/base/dropdownmenu.h"
+#include "objects/base/dropdownmenusprite.h"
 #include "objects/base/textbox.h"
 #include "objects/base/label.h"
 #include "objects/dialogs/filedialog.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 ScriptEventGeneric::ScriptEventGeneric(GameMap* pMap, EventType type, QString eventIdentifier)
     : ScriptEvent(pMap, type),
@@ -60,8 +63,6 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
     spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -170,13 +171,32 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 pBox->addItem(pTextbox);
                 ObjectManager* pObjectManager = ObjectManager::getInstance();
                 oxygine::spButton pButtonSelect = pObjectManager->createButton(tr("Select"), 150);
-                pButtonSelect->setPosition(10 + pTextbox->getX() + pTextbox->getWidth(), y);
+                pButtonSelect->setPosition(10 + pTextbox->getX() + pTextbox->getScaledWidth(), y);
                 pBox->addChild(pButtonSelect);
                 auto* pPtrTextbox = pTextbox.get();
                 pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [this, i, pPtrTextbox](oxygine::Event*)
                 {
                      emit sigShowSelectFile (m_Items[i].filter, m_Items[i].startFolder, m_Items[i].item, spTextbox(pPtrTextbox));
                 });
+                break;
+            }
+            case EditTypes::IconSelection:
+            {
+                spDropDownmenuSprite dropDown = spDropDownmenuSprite::create(105, m_Items[i].items, m_Items[i].creator, -1, false);
+                dropDown->setTooltipText(m_Items[i].tooltip);
+                dropDown->setPosition(width, y);
+                for (qint32 i2  = 0; i2 < m_Items[i].data.size(); i2++)
+                {
+                    if (m_Items[i].data[i2] == m_Items[i].item)
+                    {
+                        dropDown->setCurrentItem(i2);
+                    }
+                }
+                connect(dropDown.get(), &DropDownmenuSprite::sigItemChanged, this, [this, i](qint32 item)
+                {
+                    m_Items[i].item = m_Items[i].data[item];
+                });
+                pBox->addItem(dropDown);
                 break;
             }
         }

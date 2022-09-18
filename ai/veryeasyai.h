@@ -14,13 +14,13 @@ class Building;
 class VeryEasyAI;
 using spVeryEasyAI = oxygine::intrusive_ptr<VeryEasyAI>;
 
-class VeryEasyAI : public CoreAI
+class VeryEasyAI final : public CoreAI
 {
     Q_OBJECT
 public:
 
     explicit VeryEasyAI(GameMap* pMap);
-    virtual ~VeryEasyAI() = default;
+    ~VeryEasyAI() = default;
 public slots:
     /**
      * @brief process

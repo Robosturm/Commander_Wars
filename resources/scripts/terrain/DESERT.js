@@ -114,6 +114,19 @@ var Constructor = function()
                 "desert+7"];
     };
 
+    this.getOverlayTerrainSprites = function(map)
+    {
+        return ["shadow_desert",
+                "plains+N",
+                "plains+E",
+                "plains+S",
+                "plains+W",
+                "snow+N",
+                "snow+E",
+                "snow+S",
+                "snow+W",]
+    };
+
     this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return TERRAIN.getFactoryForeground(terrain, map);

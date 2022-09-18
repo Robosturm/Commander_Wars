@@ -13,7 +13,9 @@
 GameRecorder::GameRecorder(GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameRecorder");
+#endif
     moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
@@ -60,9 +62,69 @@ void GameRecorder::serializeObject(QDataStream& pStream) const
     pStream << static_cast<qint32>(m_playerDataRecords.size());
     for (qint32 i = 0; i < m_playerDataRecords.size(); i++)
     {
-        Filesupport::writeMap(pStream, m_playerDataRecords[i].killedUnits);
-        Filesupport::writeMap(pStream, m_playerDataRecords[i].lostUnits);
-        Filesupport::writeMap(pStream, m_playerDataRecords[i].producedUnits);
+        saveUnitVector(pStream, m_playerDataRecords[i].killedUnits);
+        saveUnitVector(pStream, m_playerDataRecords[i].lostUnits);
+        saveUnitVector(pStream, m_playerDataRecords[i].producedUnits);
+    }
+}
+
+void GameRecorder::saveUnitVector(QDataStream& pStream, const QVector<UnitData> & data) const
+{
+    pStream << static_cast<qint32>(data.size());
+    for (qint32 i = 0; i < data.size(); i++)
+    {
+        pStream << data[i].unitId;
+        pStream << data[i].count;
+        pStream << data[i].player;
+    }
+}
+
+void GameRecorder::loadUnitVector(QDataStream& pStream, QVector<UnitData> & data)
+{
+    qint32 size = 0;
+    pStream >> size;
+    for (qint32 i = 0; i < size; i++)
+    {
+        UnitData item;
+        pStream >> item.unitId;
+        pStream >> item.count;
+        pStream >> item.player;
+        data.append(item);
+    }
+}
+
+void GameRecorder::loadUnitVectorFromMap(QVector<UnitData> & data, QMap<QString, qint32> & info)
+{
+    auto iter = info.cbegin();
+    while (iter != info.cend())
+    {
+        UnitData item;
+        item.unitId = iter.key();
+        item.count = iter.value();
+        data.append(item);
+        ++iter;
+    }
+}
+
+void GameRecorder::increaseItem(QVector<UnitData> & data, qint32 player, QString unitId)
+{
+    bool found = false;
+    for (auto & item : data)
+    {
+        if (item.player == player && item.unitId == unitId)
+        {
+            ++item.count;
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+    {
+        UnitData item;
+        item.unitId = unitId;
+        ++item.count;
+        item.player = player;
+        data.append(item);
     }
 }
 
@@ -151,15 +213,31 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
             }
         }
     }
-    if (version > 5)
+    m_playerDataRecords.clear();
+    if (version > 6)
     {
         pStream >> size;
         for (qint32 i = 0; i < size; i++)
         {
             PlayerData data;
-            data.killedUnits = Filesupport::readMap<QString, qint32, QMap>(pStream);
-            data.lostUnits = Filesupport::readMap<QString, qint32, QMap>(pStream);
-            data.producedUnits = Filesupport::readMap<QString, qint32, QMap>(pStream);
+            loadUnitVector(pStream, data.killedUnits);
+            loadUnitVector(pStream, data.lostUnits);
+            loadUnitVector(pStream, data.producedUnits);
+            m_playerDataRecords.append(data);
+        }
+    }
+    else if (version > 5)
+    {
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            PlayerData data;
+            auto info = Filesupport::readMap<QString, qint32, QMap>(pStream);
+            loadUnitVectorFromMap(data.killedUnits, info);
+            info = Filesupport::readMap<QString, qint32, QMap>(pStream);
+            loadUnitVectorFromMap(data.lostUnits, info);
+            info = Filesupport::readMap<QString, qint32, QMap>(pStream);
+            loadUnitVectorFromMap(data.producedUnits, info);
             m_playerDataRecords.append(data);
         }
     }
@@ -183,16 +261,14 @@ void GameRecorder::newDay()
     m_Record.append(spDayToDayRecord::create(m_pMap, playerCount));
 }
 
-void GameRecorder::lostUnit(qint32 player, QString unitId)
+void GameRecorder::lostUnit(qint32 player, QString unitId, qint32 owner)
 {
     if (player >= 0 && player < m_lostUnits.size())
     {
         m_lostUnits[player]++;
         if (!unitId.isEmpty())
         {
-            qint32 value = m_playerDataRecords[player].lostUnits.value(unitId);
-            value++;
-            m_playerDataRecords[player].lostUnits.insert(unitId, value);
+            increaseItem(m_playerDataRecords[player].lostUnits, owner, unitId);
         }
     }
 }
@@ -206,16 +282,14 @@ quint32 GameRecorder::getLostUnits(qint32 player)
     return 0;
 }
 
-void GameRecorder::destroyedUnit(qint32 player, QString unitId)
+void GameRecorder::destroyedUnit(qint32 player, QString unitId, qint32 owner)
 {
     if (player >= 0 && player < m_destroyedUnits.size())
     {
         m_destroyedUnits[player]++;
         if (!unitId.isEmpty())
         {
-            qint32 value = m_playerDataRecords[player].killedUnits.value(unitId);
-            value++;
-            m_playerDataRecords[player].killedUnits.insert(unitId, value);
+            increaseItem(m_playerDataRecords[player].killedUnits, owner, unitId);
         }
     }
 }
@@ -229,16 +303,14 @@ quint32 GameRecorder::getDestroyedUnits(qint32 player)
     return 0;
 }
 
-void GameRecorder::buildUnit(qint32 player, const QString & unitId)
+void GameRecorder::buildUnit(qint32 player, const QString & unitId, qint32 owner)
 {
     if (player >= 0 && player < m_deployedUnits.size())
     {
         m_deployedUnits[player]++;
         if (!unitId.isEmpty())
         {
-            qint32 value = m_playerDataRecords[player].producedUnits.value(unitId);
-            value++;
-            m_playerDataRecords[player].producedUnits.insert(unitId, value);
+            increaseItem(m_playerDataRecords[player].producedUnits, owner, unitId);
         }
     }
 }

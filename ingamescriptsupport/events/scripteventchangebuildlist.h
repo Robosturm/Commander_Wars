@@ -7,7 +7,7 @@
 class ScriptEventChangeBuildlist;
 using spScriptEventChangeBuildlist = oxygine::intrusive_ptr<ScriptEventChangeBuildlist>;
 
-class ScriptEventChangeBuildlist : public ScriptEvent
+class ScriptEventChangeBuildlist final : public ScriptEvent
 {
     Q_OBJECT
 public:

@@ -33,7 +33,7 @@ void ScriptConditionTerrainDestroyed::readCondition(QTextStream& rStream, QStrin
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(m_pMap, rStream, ConditionBuildingDestroyed, line))
+        if (readSubCondition(m_pMap, rStream, ConditionTerrainDestroyed, line))
         {
             break;
         }
@@ -99,8 +99,6 @@ void ScriptConditionTerrainDestroyed::showEditCondition(spScriptEditor pScriptEd
     spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 

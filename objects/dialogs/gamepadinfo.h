@@ -2,18 +2,18 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "ui_reader/createdgui.h"
 
 class GamepadInfo;
 using spGamepadInfo = oxygine::intrusive_ptr<GamepadInfo>;
 
-class GamepadInfo : public CreatedGui
+class GamepadInfo final : public CreatedGui
 {
     Q_OBJECT
 public:
     explicit GamepadInfo();
-    virtual ~GamepadInfo();
+    ~GamepadInfo();
 public slots:
     void remove();
 };

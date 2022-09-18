@@ -3,9 +3,9 @@
 
 #include <QObject>
 #include <QVector>
+#include <QMap>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "coreengine/fileserializable.h"
 
@@ -14,7 +14,7 @@
 class GameMap;
 class Player;
 class GameAction;
-
+class GameMenue;
 class BaseGameInputIF;
 using spBaseGameInputIF = oxygine::intrusive_ptr<BaseGameInputIF>;
 
@@ -26,7 +26,7 @@ public:
     virtual ~BaseGameInputIF() = default;
     void setPlayer(Player* pPlayer);
 
-    virtual void init() = 0;
+    virtual void init(GameMenue* pMenu) = 0;
 
     static void serializeInterface(QDataStream& pStream, BaseGameInputIF* input);
 
@@ -35,6 +35,9 @@ public:
     static spBaseGameInputIF createAi(GameMap* pMap, GameEnums::AiTypes type);
 
     virtual void centerCameraOnAction(GameAction* pAction);
+
+    bool getProcessing() const;
+    void setProcessing(bool newProcessing);
 
 public slots:
     /**
@@ -87,6 +90,9 @@ protected:
      */
     std::vector<std::vector<std::tuple<qint32, bool>>> m_MoveCostMap;
     GameMap* m_pMap{nullptr};
+    GameMenue* m_pMenu{nullptr};
+    bool m_initDone{false};
+    bool m_processing{false};
 };
 
 Q_DECLARE_INTERFACE(BaseGameInputIF, "BaseGameInputIF");

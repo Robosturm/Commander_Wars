@@ -4,20 +4,21 @@
 #include <QObject>
 #include <QVector>
 #include <QString>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/dropdownmenubase.h"
 
 class DropDownmenu;
-typedef oxygine::intrusive_ptr<DropDownmenu> spDropDownmenu;
+using spDropDownmenu = oxygine::intrusive_ptr<DropDownmenu>;
 
-class DropDownmenu : public DropDownmenuBase
+class DropDownmenu final : public DropDownmenuBase
 {
     Q_OBJECT
 public:
     explicit DropDownmenu(qint32 width, const QStringList & items);
-    virtual ~DropDownmenu() = default;
+    ~DropDownmenu() = default;
     /**
      * @brief getCurrentItemText text of the current item
      * @return

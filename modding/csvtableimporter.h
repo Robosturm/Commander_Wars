@@ -1,16 +1,16 @@
 #ifndef CSVTABLEIMPORTER_H
 #define CSVTABLEIMPORTER_H
 
-#include <qstring.h>
+#include <QString>
 
-class CsvTableImporter
+class CsvTableImporter final
 {
 public:
 
     static QString ImportCsvTable(QString csvTable, QString jsHeaderString, QString tableName, QStringList& newData);
 private:
-    explicit CsvTableImporter() = default;
-    virtual ~CsvTableImporter() = default;
+    explicit CsvTableImporter() = delete;
+    ~CsvTableImporter() = delete;
     static void MergeCsvEntry(QStringList & item);
 };
 

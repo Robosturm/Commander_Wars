@@ -2,29 +2,26 @@
 #define SCRIPTDIALOGDIALOG_H
 
 #include <QObject>
+#include <QVector>
 
-#include "qvector.h"
-
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 #include "ingamescriptsupport/events/scripteventdialog.h"
 
 #include "objects/base/panel.h"
-
 #include "objects/base/dropdownmenu.h"
 #include "objects/base/dropdownmenucolor.h"
 #include "objects/base/textbox.h"
 
 class ScriptDialogDialog;
-typedef oxygine::intrusive_ptr<ScriptDialogDialog> spScriptDialogDialog;
+using spScriptDialogDialog = oxygine::intrusive_ptr<ScriptDialogDialog>;
 
-class ScriptDialogDialog : public QObject, public oxygine::Actor
+class ScriptDialogDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit ScriptDialogDialog(spScriptEventDialog scriptEventDialog);
-    virtual ~ScriptDialogDialog() = default;
+    ~ScriptDialogDialog() = default;
 signals:
     /**
      * @brief sigFinished

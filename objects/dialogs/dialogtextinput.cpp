@@ -9,7 +9,9 @@
 DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInput)
     : QObject()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogTextInput");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -23,8 +25,6 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::spTextField pText = oxygine::spTextField::create();
@@ -34,7 +34,7 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
     pSpriteBox->addChild(pText);
 
     m_pTextbox = spTextbox::create(300);
-    m_pTextbox->setPosition(Settings::getWidth() / 2 - m_pTextbox->getWidth() / 2, Settings::getHeight() / 2);
+    m_pTextbox->setPosition(Settings::getWidth() / 2 - m_pTextbox->getScaledWidth() / 2, Settings::getHeight() / 2);
     m_pTextbox->setCurrentText(startInput);
     pSpriteBox->addChild(m_pTextbox);
 
@@ -56,7 +56,7 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
     if (showCancel)
     {
         m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-        m_CancelButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() - 10,
+        m_CancelButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() - 10,
                                     Settings::getHeight() / 2 + 50);
         pSpriteBox->addChild(m_CancelButton);
         m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)

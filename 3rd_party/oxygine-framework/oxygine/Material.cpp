@@ -15,7 +15,7 @@ namespace oxygine
         if (matA->m_base       != matB->m_base ||
             matA->m_table      != matB->m_table ||
             matA->m_blend      != matB->m_blend ||
-            matA->m_flags      != matB->m_flags ||
+            matA->m_fracShader      != matB->m_fracShader ||
             matA->m_uberShader != matB->m_uberShader ||
             matA->m_addColor   != matB->m_addColor)
         {
@@ -28,7 +28,7 @@ namespace oxygine
     {
         m_addColor = QColor(0, 0, 0, 0);
         m_blend = VideoDriver::blend_alpha;
-        m_flags = 0;
+        m_fracShader = UberShaderProgram::ColorMode::COLOR_DEFAULT;
         m_uberShader = &STDRenderer::uberShader;
     }
 
@@ -37,17 +37,20 @@ namespace oxygine
         hash_combine(hash, m_base.get());
         hash_combine(hash, m_table.get());
         hash_combine(hash, static_cast<qint32>(m_blend));
-        hash_combine(hash, m_flags);
+        hash_combine(hash, m_fracShader);
         hash_combine(hash, m_uberShader);
         hash_combine(hash, qRgba(m_addColor));
     }
 
     void Material::setMatrixMode(bool set)
     {
-        m_flags &= ~UberShaderProgram::COLOR_MATRIX;
         if (set)
         {
-            m_flags |= UberShaderProgram::COLOR_MATRIX;
+            m_fracShader = UberShaderProgram::COLOR_MATRIX;
+        }
+        else
+        {
+            m_fracShader = UberShaderProgram::COLOR_DEFAULT;
         }
     }
 
@@ -55,21 +58,16 @@ namespace oxygine
     {
         STDRenderer* r = STDRenderer::getCurrent();
         r->setUberShaderProgram(m_uberShader);
-        qint32 tempFlags = 0;
-        if (m_table.get() != nullptr)
+        if (m_table.get() != nullptr && m_fracShader == UberShaderProgram::ColorMode::COLOR_DEFAULT)
         {
-            tempFlags |= UberShaderProgram::COLOR_TABLE;
+            r->setFracShader(UberShaderProgram::ColorMode::COLOR_TABLE);
         }
-        if (m_addColor.rgba())
+        else
         {
-            tempFlags |= UberShaderProgram::ADD_COLOR;
+            r->setFracShader(m_fracShader);
         }
-        r->setShaderFlags(m_flags | tempFlags);
-        if (m_addColor.rgba())
-        {
-            VideoDriver::Uniform4f vec = VideoDriver::Uniform4f(m_addColor.redF(), m_addColor.greenF(), m_addColor.blueF(), m_addColor.alphaF());
-            r->getDriver()->setUniform("add_color", vec);
-        }
+        VideoDriver::Uniform4f vec = VideoDriver::Uniform4f(m_addColor.redF(), m_addColor.greenF(), m_addColor.blueF(), m_addColor.alphaF());
+        r->getDriver()->setUniform("add_color", vec);
         float brightnessColor = GameWindow::getWindow()->getBrightness();
         float gamma = GameWindow::getWindow()->getGamma();
         VideoDriver::Uniform4f brightness = VideoDriver::Uniform4f(brightnessColor, brightnessColor, brightnessColor, 0);

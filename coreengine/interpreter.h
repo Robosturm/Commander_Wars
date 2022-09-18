@@ -7,14 +7,14 @@
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class Interpreter;
-typedef oxygine::intrusive_ptr<Interpreter> spInterpreter;
+using spInterpreter = oxygine::intrusive_ptr<Interpreter>;
 /**
  * @brief The Interpreter class java-script interpreter with easy access functions
  */
-class Interpreter : public QQmlEngine, public oxygine::ref_counter
+class Interpreter final : public QQmlEngine, public oxygine::ref_counter
 {
     Q_OBJECT
 
@@ -36,8 +36,7 @@ public:
         }
         return m_pInstance.get();
     }
-
-    virtual ~Interpreter();
+    ~Interpreter();
     static void release();
 
     static void setCppOwnerShip(QObject* object);

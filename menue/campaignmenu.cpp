@@ -1,7 +1,10 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/campaignmenu.h"
 #include "menue/mainwindow.h"
 #include "menue/mapselectionmapsmenue.h"
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "multiplayer/multiplayermenu.h"
 
@@ -26,7 +29,9 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     : Basemenu(),
       m_Multiplayer(multiplayer)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CampaignMenu");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
@@ -53,7 +58,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
     pButtonExit->setPosition(10,
-                             Settings::getHeight() - pButtonExit->getHeight() - 10);
+                             Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -61,7 +66,8 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     connect(this, &CampaignMenu::sigExitMenue, this, &CampaignMenu::exitMenue, Qt::QueuedConnection);
 
     m_pButtonNext = ObjectManager::createButton(tr("Next"));
-    m_pButtonNext->setPosition(Settings::getWidth() - 10 - m_pButtonNext->getWidth(), Settings::getHeight() - 10 - m_pButtonNext->getHeight());
+    m_pButtonNext->setPosition(Settings::getWidth() - 10 - m_pButtonNext->getScaledWidth(),
+                               Settings::getHeight() - 10 - m_pButtonNext->getScaledHeight());
     addChild(m_pButtonNext);
     m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -70,7 +76,8 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     connect(this, &CampaignMenu::sigButtonNext, this, &CampaignMenu::slotButtonNext, Qt::QueuedConnection);
 
     m_pButtonSave = ObjectManager::createButton(tr("Save"));
-    m_pButtonSave->setPosition(Settings::getWidth() / 2 - m_pButtonSave->getWidth() / 2, Settings::getHeight() - 10 - m_pButtonSave->getHeight());
+    m_pButtonSave->setPosition(Settings::getWidth() / 2 - m_pButtonSave->getScaledWidth() / 2,
+                               Settings::getHeight() - 10 - m_pButtonSave->getScaledHeight());
     addChild(m_pButtonSave);
     m_pButtonSave->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *)->void
     {
@@ -91,16 +98,14 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     {
         autosave();
     }
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue obj = pInterpreter->newQObject(this);
-    pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/campaignmenu.xml", this);
     pApp->continueRendering();
 }
 
 void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
 {
-    m_pMapSelectionView = spMapSelectionView::create(Settings::getHeight() / 3 - 30);
+    QStringList filter = {".map"};
+    m_pMapSelectionView = spMapSelectionView::create(filter, Settings::getHeight() / 3 - 30);
     m_pMapSelectionView->setCurrentSetCampaign(campaign);
     GameManager* pGameManager = GameManager::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
@@ -297,9 +302,9 @@ void CampaignMenu::showMinimap()
         qint32 y = m_currentMapFlagPosition.y();
         GameManager* pGameManager = GameManager::getInstance();
         auto pMiniMapPanel = m_pMapSelectionView->getMinimapPanel();
-        if (y - pMiniMapPanel->getHeight() / 2 + m_pMapBackground->getY() > 0)
+        if (y - pMiniMapPanel->getScaledHeight() / 2 + m_pMapBackground->getY() > 0)
         {
-            pMiniMapPanel->setY(y - pMiniMapPanel->getHeight() / 2);
+            pMiniMapPanel->setY(y - pMiniMapPanel->getScaledHeight() / 2);
         }
         else
         {
@@ -371,9 +376,9 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
             pBuildingBackground->setX(xPos);
             m_pMapBackground->addChild(pBuildingBackground);
             auto pMapInfo = m_pMapSelectionView->getMapInfo();
-            if (y - contentHeight - pMapInfo->getHeight() + m_pMapBackground->getY() > 0)
+            if (y - contentHeight - pMapInfo->getScaledHeight() + m_pMapBackground->getY() > 0)
             {
-                pMapInfo->setY(y - contentHeight - pMapInfo->getHeight());
+                pMapInfo->setY(y - contentHeight - pMapInfo->getScaledHeight());
             }
             else
             {
@@ -408,7 +413,8 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
 
 void CampaignMenu::createMapSelection(spCampaign & campaign)
 {
-    m_pMapSelectionView = spMapSelectionView::create();
+    QStringList filter = {".map"};
+    m_pMapSelectionView = spMapSelectionView::create(filter);
     m_pMapSelectionView->setCurrentSetCampaign(campaign);
     addChild(m_pMapSelectionView);
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &CampaignMenu::mapSelectionItemChanged, Qt::QueuedConnection);
@@ -418,9 +424,11 @@ void CampaignMenu::createMapSelection(spCampaign & campaign)
 }
 
 void CampaignMenu::exitMenue()
-{    
+{
+    QStringList filter = {".jsm"};
     CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
-    auto window = spMapSelectionMapsMenue::create();
+    auto mapSelectionView = spMapSelectionView::create(filter);
+    auto window = spMapSelectionMapsMenue::create(mapSelectionView);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
 }
@@ -484,7 +492,7 @@ void CampaignMenu::slotButtonNext()
             pMap->updateSprites();
             // start game
             CONSOLE_PRINT("Leaving Campaign Menue", Console::eDEBUG);
-            auto window = spGameMenue::create(pMap, false, spNetworkInterface());
+            auto window = spGameMenue::create(pMap, false, spNetworkInterface(), false);
             oxygine::Stage::getStage()->addChild(window);
             oxygine::Actor::detach();
         }
@@ -494,7 +502,7 @@ void CampaignMenu::slotButtonNext()
         }
         else
         {
-            auto window = spMapSelectionMapsMenue::create(-1, m_pMapSelectionView);
+            auto window = spMapSelectionMapsMenue::create(m_pMapSelectionView);
             oxygine::Stage::getStage()->addChild(window);
             oxygine::Actor::detach();
         }

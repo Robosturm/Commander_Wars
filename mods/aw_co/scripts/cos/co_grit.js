@@ -5,7 +5,7 @@ CO_GRIT.init = function(co, map)
 };
 CO_GRIT.activateSuperpower = function(co, powerMode, map)
 {
-    CO_GRIT.activatePower(co, powerMode);
+    CO_GRIT.activatePower(co, powerMode, map);
 };
 CO_GRIT.getSuperPowerDescription = function()
 {

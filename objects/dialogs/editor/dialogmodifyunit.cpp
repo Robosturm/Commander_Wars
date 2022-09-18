@@ -27,7 +27,9 @@ DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
     : m_pUnit(pUnit),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogModifyUnit");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     m_dropDownPlayer = spPlayer::create(m_pMap);
@@ -44,7 +46,8 @@ DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -74,22 +77,18 @@ void DialogModifyUnit::updateData()
     m_pPanel->clearContent();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
     qint32 sliderOffset = 400;
-    spLabel pLabel = spLabel::create(m_pPanel->getWidth() - 80);
+    spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 80);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Unit: ") + m_pUnit->getName());
-    pLabel->setPosition(m_pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     m_pPanel->addItem(pLabel);
 
     qint32 y = 30 + pLabel->getTextRect().getHeight();
@@ -231,7 +230,14 @@ void DialogModifyUnit::updateData()
     pLabel->setHtmlText(tr("AI-Mode: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    items = {tr("Normal"), tr("Offensive"), tr("Defensive"), tr("Hold"), "Patrol", "Patrol Loop"};
+    items = {tr("Normal"),
+             tr("Offensive"),
+             tr("Defensive"),
+             tr("Hold"),
+             tr("Patrol"),
+             tr("Patrol Loop"),
+             tr("Target Enemy HQ"),
+             tr("Scripted")};
     pDropdownmenu = spDropDownmenu::create(300, items);
     pDropdownmenu->setTooltipText(tr("Selects how the AI uses this unit\n"
                                      "Normal AI uses the unit like always.\n"
@@ -240,6 +246,8 @@ void DialogModifyUnit::updateData()
                                      "Hold AI the ai only attacks but never moves with this unit.\n"
                                      "Patrol the unit will move to each position in the given order\n"
                                      "Patrol Loop the unit will move to each position in the given order and restart at the first\n"
+                                     "Target Enemy HQ moves to the nearest enemy HQ\n"
+                                     "Scripted you need to provide a game script containing the code for what this unit does\n"
                                      "This is immediately applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getAiMode()));
@@ -304,8 +312,6 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     spLabel  pLabel = spLabel::create(sliderOffset - 140);
@@ -380,8 +386,6 @@ void DialogModifyUnit::loadUnit(QString unitID, qint32 index)
 void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     if (m_pUnit->getAiMode() == GameEnums::GameAi_Patrol ||

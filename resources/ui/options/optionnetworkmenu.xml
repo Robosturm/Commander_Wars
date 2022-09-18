@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getWidth() - 20</width>
+        <height>settings.getHeight() - 90</height>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>400</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Network Settings")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","1. dedicated address:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Provide the address to the multiplayer game server you want to connect to which is used for the first connection attempt.")</tooltip>
+                <startValue>settings.getServerAdress()</startValue>
+                <onEvent>settings.setServerAdress(input)</onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","2. dedicated address:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Provide the address to the multiplayer game server you want to connect used when the first address fails to connect.")</tooltip>
+                <startValue>settings.getSecondaryServerAdress()</startValue>
+                <onEvent>settings.setSecondaryServerAdress(input)</onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Dedicated port:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the port dedicated server use for the lobby chat.")</tooltip>
+                <startValue>settings.getServerPort()</startValue>
+                <infinite>-1</infinite>
+                <min>0</min>
+                <max>65535</max>
+                <onEvent>settings.setServerPort(input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Dedicated server:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Enables this game as global server.")</tooltip>
+                <startValue>settings.getServer()</startValue>
+                <onEvent>settings.setServer(input);currentMenu.markRestartNeeded()</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Game port:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the game port used to play on a dedicated server or through a direct connection.")</tooltip>
+                <startValue>settings.getGamePort()</startValue>
+                <infinite>-1</infinite>
+                <min>0</min>
+                <max>65535</max>
+                <onEvent>settings.setGamePort(input)</onEvent>
+            </Spinbox>
+        </childs>
+    </Panel>
+</ui>

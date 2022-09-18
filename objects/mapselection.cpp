@@ -1,3 +1,6 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
+
 #include "objects/mapselection.h"
 
 #include "coreengine/mainapp.h"
@@ -10,11 +13,14 @@
 
 #include "game/gamemap.h"
 
-MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
-    : m_currentFolder(Settings::getUserPath() + "maps"),
+MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QStringList & filter)
+    : m_filter(filter),
+      m_currentFolder(Settings::getUserPath() + "maps"),
       m_itemChangedTimer(this)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MapSelection");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -116,8 +122,6 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
             pBackground->addChild(pClipActor);
             oxygine::spTextField pTextfield = oxygine::spTextField::create();
             oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-            style.color = FontManager::getFontColor();
-            style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
             style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
             style.multiline = false;
             pTextfield->setStyle(style);
@@ -302,7 +306,7 @@ void MapSelection::changeFolder(QString folder)
     if (dir.exists() || virtDir.exists())
     {
         QFileInfo newFolderInfo(newFolder);
-        newFolder = GlobalUtils::makePathRelative(newFolderInfo.absoluteFilePath());
+        newFolder = GlobalUtils::makePathRelative(newFolderInfo.canonicalFilePath());
         CONSOLE_PRINT("MapSelection::changeFolder. Relative Path: " + newFolder, Console::eDEBUG);
         m_Files.clear();
         if (newFolder != "maps")
@@ -310,30 +314,43 @@ void MapSelection::changeFolder(QString folder)
             m_Files.append("..");
         }
         QFileInfo upFolder(newFolder + "..");
-        QStringList list = {"*.map", "*.jsm"};
+        QStringList list;
+        list.reserve(m_filter.size());
+        for (const auto & ending : qAsConst(m_filter))
+        {
+            list.append("*" + ending);
+        }
         QFileInfoList infoList = GlobalUtils::getInfoList(newFolder, list);
         Userdata* pUserdata = Userdata::getInstance();
         auto hideList = pUserdata->getShopItemsList(GameEnums::ShopItemType_Map, false);
         for (qint32 i = 1; i < infoList.size(); i++)
         {
-            QString myPath = infoList[i].absoluteFilePath();
+            auto & infoItem = infoList[i];
+            QString myPath = infoItem.canonicalFilePath();
             QString item = GlobalUtils::makePathRelative(myPath);
-            if ((myPath == newFolder) ||
-                (upFolder == infoList[i] ||
-                (infoList[i].isDir() && myPath.endsWith(".camp"))) ||
+            bool isDir = infoItem.isDir();
+            if ((item == newFolder) ||
+                (upFolder == infoItem) ||
+                (isDir && myPath.endsWith(".camp")) ||
                 (hideList.contains(item)))
             {
                 // skip ourself
                 continue;
             }
-            if (infoList[i].isDir())
+            if (isDir)
             {
-                QString path = infoList[i].absoluteFilePath();
+                QString path = infoItem.canonicalFilePath();
+                QDirIterator iter(path, list, QDir::Files, QDirIterator::Subdirectories);
+                QDirIterator iter2(oxygine::Resources::RCC_PREFIX_PATH + item, list, QDir::Files, QDirIterator::Subdirectories);
+                if (!iter.hasNext() && !iter2.hasNext())
+                {
+                    continue;
+                }
                 m_Files.append(path);
             }
-            else if (infoList[i].isFile())
+            else if (infoItem.isFile())
             {
-                m_Files.append(infoList[i].absoluteFilePath());
+                m_Files.append(infoItem.canonicalFilePath());
             }
         }
         m_currentFolder = newFolder;
@@ -356,7 +373,6 @@ void MapSelection::update(const oxygine::UpdateState& us)
         m_timer.start();
         emit changeSelection(m_currentStartIndex + m_spin);
     }
-
     oxygine::Actor::update(us);
 }
 

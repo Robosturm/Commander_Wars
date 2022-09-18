@@ -4,16 +4,16 @@
 #include "QVector"
 #include "QColor"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "ingamescriptsupport/events/scriptevent.h"
 
 #include "game/GameEnums.h"
 
 class DialogEntry;
-typedef oxygine::intrusive_ptr<DialogEntry> spDialogEntry;
+using spDialogEntry = oxygine::intrusive_ptr<DialogEntry>;
 
-class DialogEntry : public QObject, public oxygine::ref_counter
+class DialogEntry final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -25,9 +25,9 @@ public:
 };
 
 class ScriptEventDialog;
-typedef oxygine::intrusive_ptr<ScriptEventDialog> spScriptEventDialog;
+using spScriptEventDialog = oxygine::intrusive_ptr<ScriptEventDialog>;
 
-class ScriptEventDialog : public ScriptEvent
+class ScriptEventDialog final : public ScriptEvent
 {
     Q_OBJECT
 public:

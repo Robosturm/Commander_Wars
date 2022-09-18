@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/loadingscreen.h"
 
 #include "coreengine/mainapp.h"
@@ -19,9 +21,15 @@ spLoadingScreen LoadingScreen::getInstance()
 
 LoadingScreen::LoadingScreen()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("LoadingScreen");
+#endif
     Interpreter::setCppOwnerShip(this);
     setPriority(static_cast<quint16>(Mainapp::ZOrder::Loadingscreen));
+}
+LoadingScreen::~LoadingScreen()
+{
+    CONSOLE_PRINT("LoadingScreen::deleted", Console::eDEBUG);
 }
 
 void LoadingScreen::show()
@@ -55,8 +63,6 @@ void LoadingScreen::show()
     addChild(m_LoadingBar);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
     m_workText = oxygine::spTextField::create();
@@ -72,16 +78,19 @@ void LoadingScreen::show()
     m_workText->setHtmlText("Loading...");
     m_loadingProgress->setHtmlText("0 %");
     m_LoadingBar->setWidth(1);
-    setVisible(true);
-    
+    setVisible(true);    
 }
 
 void LoadingScreen::setProgress(QString workText, qint32 value)
 {
+    CONSOLE_PRINT("LoadingScreen::setProgress " + workText + " " + QString::number(value), Console::eDEBUG);
     m_workText->setHtmlText(workText);
     m_loadingProgress->setHtmlText(QString::number(value) + " %");
     m_LoadingBar->setWidth(value * Settings::getWidth() / 100);
-    QApplication::processEvents();
+    if (Mainapp::getInstance()->isMainThread())
+    {
+        QCoreApplication::processEvents();
+    }
 }
 
 void LoadingScreen::setWorktext(QString workText)

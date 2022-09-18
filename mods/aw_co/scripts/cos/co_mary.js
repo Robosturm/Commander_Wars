@@ -5,7 +5,7 @@ CO_MARY.init = function(co, map)
 };
 CO_MARY.activateSuperpower = function(co, powerMode, map)
 {
-    CO_MARY.activatePower(co, powerMode);
+    CO_MARY.activatePower(co, powerMode, map);
 };
 CO_MARY.getSuperPowerDescription = function()
 {

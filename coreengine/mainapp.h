@@ -5,14 +5,22 @@
 #include <QTranslator>
 #include <QThread>
 #include <QCoreApplication>
-#include <QLineEdit>
 #include <QMutex>
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
+
+#include "objects/base/EventTextEdit.h"
 
 #include "coreengine/settings.h"
 #include "coreengine/LUPDATE_MACROS.h"
 #include "coreengine/Gamepad.h"
 #include "coreengine/commandlineparser.h"
+
+#include "network/rsacypherhandler.h"
+
+#ifdef UPDATESUPPORT
+#include "updater/gameupdater.h"
+#endif
 
 class WorkerThread;
 using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
@@ -22,7 +30,7 @@ using spAudioThread = oxygine::intrusive_ptr<AudioThread>;
 class TCPClient;
 using spTCPClient = oxygine::intrusive_ptr<TCPClient>;
 
-class Mainapp : public oxygine::GameWindow
+class Mainapp final : public oxygine::GameWindow
 {
     Q_OBJECT
 public:
@@ -32,12 +40,13 @@ public:
     {
         Start,
         General = Start,
+        UpdateManager,
+        ObjectManager,
         Building,
         COSprites,
         GameAnimations,
         GameManager,
         GameRuleManager,
-        ObjectManager,
         TerrainManager,
         UnitSpriteManager,
         BattleAnimationManager,
@@ -45,6 +54,8 @@ public:
         WikiDatabase,
         Userdata,
         Achievementmanager,
+        MovementPlannerAddInManager,
+        UiManager,
         ShopLoader,
         Sound,
         LoadingScripts,
@@ -83,7 +94,7 @@ public:
     };
 
     explicit Mainapp();
-    virtual ~Mainapp() = default;
+    ~Mainapp() = default;
     virtual void shutdown() override;
     static inline Mainapp* getInstance()
     {
@@ -151,7 +162,7 @@ public:
      * @brief getLastCreateLineEdit
      * @return
      */
-    QLineEdit* getLastCreateLineEdit() const
+    EventTextEdit* getLastCreateLineEdit() const
     {
         return m_pLineEdit;
     }
@@ -202,18 +213,34 @@ public:
         return m_parser;
     }
 
+    QPoint mapPosFromGlobal(QPoint pos) const;
+    QPoint mapPosToGlobal(QPoint pos) const;
+    /**
+     * @brief getCypher
+     * @return
+     */
+    RsaCypherHandler & getCypher()
+    {
+        return m_rsaCypher;
+    }
+    StartupPhase getStartUpStep() const;
+
 public slots:
-    void changeScreenMode(qint32 mode);
+    /**
+     * @brief createBaseDirs
+     */
+    void createBaseDirs();
+    void changeScreenMode(Settings::ScreenModes mode);
     void changeScreenSize(qint32 width, qint32 heigth);
     void changePosition(QPoint pos, bool invert);
-    qint32 getScreenMode();
+    Settings::ScreenModes getScreenMode();
     /**
      * @brief getGameVersion
      * @return
      */
     static QString getGameVersion()
     {
-        return "Version: " + QString::number(MAJOR) + "." + QString::number(MINOR) + "." + QString::number(REVISION);
+        return "Version: " + QString::number(VERSION_MAJOR) + "." + QString::number(VERSION_MINOR) + "." + QString::number(VERSION_REVISION)+ "-" + QString(VERSION_SUFFIX);
     }
     /**
      * @brief showCrashReport
@@ -234,18 +261,15 @@ public slots:
     void doMapshot();
     void nextStartUpStep(Mainapp::StartupPhase step);
     /**
-     * @brief slotCursorPositionChanged dummy function to rerout qlineedit events
-     * @param oldPos
-     * @param newPos
-     */
-    void slotCursorPositionChanged(int oldPos, int newPos);
-    /**
      * @brief inputMethodQuery dummy function to rerout qlineedit events
      * @param query
      * @param ret
      */
     void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg);
-
+    /**
+     * @brief createLineEdit
+     */
+    void createLineEdit();
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -273,18 +297,15 @@ signals:
      */
     void cursorPositionChanged(int oldPos, int newPos);
     void cursorPositionChanged();
-private slots:
-    void createLineEdit();
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;
     bool keyInputMethodEvent(QInputMethodEvent *event);
-    virtual bool event(QEvent *ev) override;
-    void createBaseDirs();
+    virtual bool event(QEvent *ev) override;    
     virtual void onQuit() override;
 
 private:
-    QLineEdit* m_pLineEdit{nullptr};
+    EventTextEdit* m_pLineEdit{nullptr};
 
     static Mainapp* m_pMainapp;
     static QMutex m_crashMutex;
@@ -301,6 +322,11 @@ private:
     Gamepad m_gamepad{0};
     bool m_noAudio{false};
     CommandLineParser m_parser;
+    StartupPhase m_startUpStep{StartupPhase::Start};
+    RsaCypherHandler m_rsaCypher;
+#ifdef UPDATESUPPORT
+    spGameUpdater m_gameUpdater;
+#endif
 };
 
 Q_DECLARE_INTERFACE(Mainapp, "Mainapp");

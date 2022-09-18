@@ -7,14 +7,18 @@
 
 Leaf::Leaf()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Leaf");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 
 Leaf::Leaf(std::vector<std::vector<float>>& trainingData)
     : m_AnswersChances(DecisionTree::countClassItems(trainingData))
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Leaf");
+#endif
     Interpreter::setCppOwnerShip(this);
     for (qint32 i = 0; i < trainingData.size(); i++)
 	{

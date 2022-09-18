@@ -1,12 +1,12 @@
 #ifndef GAMEMAP_H
 #define GAMEMAP_H
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 #include <QObject>
 #include <QVector>
-#include <QRandomGenerator>
-#include "memory"
+#include <memory>
+#include <vector>
 
 #include "game/terrain.h"
 #include "game/cursor.h"
@@ -20,18 +20,16 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/qmlvector.h"
 
-#include <vector>
-
 class GameAction;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;
 
 class GameMap;
 using spGameMap = oxygine::intrusive_ptr<GameMap>;
 
-class InGameMenue;
-using spInGameMenue = oxygine::intrusive_ptr<InGameMenue>;
+class BaseGamemenu;
+using spBaseGamemenu = oxygine::intrusive_ptr<BaseGamemenu>;
 
-class GameMap : public QObject, public FileSerializable, public oxygine::Actor
+class GameMap final : public QObject, public FileSerializable, public oxygine::Actor
 {
     Q_OBJECT
 public:
@@ -71,7 +69,7 @@ public:
      */
     explicit GameMap(QString map, bool onlyLoad, bool fast, bool savegame);
     void loadMap(QString map, bool onlyLoad, bool fast, bool savegame);
-    virtual ~GameMap();
+    ~GameMap();
     /**
      * @brief newMap
      * @param width
@@ -243,7 +241,7 @@ public:
      * @param newX
      * @param newY
      */
-    void limitPosition(InGameMenue* pMenu, qint32 & newX, qint32 & newY);
+    void limitPosition(BaseGamemenu* pMenu, qint32 & newX, qint32 & newY);
     /**
      * @brief setIsHumanMatch
      * @param newIsHumanMatch
@@ -276,10 +274,15 @@ public:
      * @return
      */
     oxygine::spActor getUnitsLayer() const;
+    /**
+     * @brief setMenu
+     * @param newMenu
+     */
+    void setMenu(GameMenue *newMenu);
 
 signals:
     void signalExitGame();
-    void signalSaveGame();
+    void sigSaveGame();
     void sigVictoryInfo();
     void signalShowCOInfo();
     void sigShowGameInfo(qint32 player);
@@ -288,14 +291,15 @@ signals:
     void sigQueueAction(spGameAction pAction);
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
-    void sigShowOptions();
-    void sigShowChangeSound();
+    void sigShowXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
     void sigShowWiki();
     void sigShowRules();
     void sigShowUnitStatistics(qint32 player);
     void sigMovedMap();
     void sigZoomChanged(float zoom);
     void sigShowDamageCalculator();
+    void sigShowMovementPlanner();
+    void sigShowLoadSaveGame();
 public slots:
     /**
      * @brief getMapTagsText
@@ -432,15 +436,15 @@ public slots:
     /**
      * @brief options
      */
-    void options();
-    /**
-     * @brief changeSound
-     */
-    void changeSound();
+    void showXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
     /**
      * @brief saveGame
      */
     void saveGame();
+    /**
+     * @brief loadGame
+     */
+    void loadGame();
     /**
      * @brief victoryInfo
      */
@@ -474,11 +478,28 @@ public slots:
      */
     void showUnitStatistics(qint32 player);
     /**
+     * @brief showMovementPlanner
+     */
+    void showMovementPlanner();
+    /**
+     * @brief getTerrainCount
+     * @param terrainId
+     * @return
+     */
+    qint32 getTerrainCount(const QString & terrainId) const;
+    /**
      * @brief getBuildingCount
      * @param buildingID
      * @return
      */
-    qint32 getBuildingCount(const QString & buildingID);
+    qint32 getBuildingCount(const QString & buildingID) const;
+    /**
+     * @brief getPlayerBuildingCount
+     * @param buildingID
+     * @param pPlayer
+     * @return
+     */
+    qint32 getPlayerBuildingCount(const QString & buildingID, Player* pPlayer) const;
     /**
      * @brief getMapWidth
      * @return width of the map
@@ -561,7 +582,7 @@ public slots:
      * @param y
      * @return true if it's still on the map
      */
-    bool onMap(qint32 x, qint32 y);
+    bool onMap(qint32 x, qint32 y) const;
     /**
      * @brief centerMap centers the view point to the given location
      * @param x
@@ -589,8 +610,7 @@ public slots:
      * @param y
      * @return the real pointer to the given terrain
      */
-    Terrain* getTerrain(qint32 x, qint32 y);
-
+    Terrain* getTerrain(qint32 x, qint32 y) const;
     /**
      * @brief canBePlaced
      * @param terrainID the terrain id you want to place
@@ -675,6 +695,16 @@ public slots:
      * @param pPlayer
      */
     void enableUnits(Player* pPlayer);
+    /**
+     * @brief endOfTurn
+     * @param pPlayer
+     */
+    void endOfTurn(Player* pPlayer);
+    /**
+     * @brief endOfTurnPlayer
+     * @param pPlayer
+     */
+    void endOfTurnPlayer(Player* pPlayer);
     /**
      * @brief startOfTurn calls all start of turn calls of each unit and building owned by this player
      * @param pPlayer
@@ -837,6 +867,7 @@ private:
     qint32 m_endLoopMs{-1};
     bool m_savegame{false};
     bool m_isHumanMatch{false};
+    GameMenue* m_pMenu{nullptr};
     static qint32 m_imagesize;
 };
 

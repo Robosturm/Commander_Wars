@@ -14,10 +14,18 @@
 MenuData::MenuData(GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MenuData");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    oxygine::ref_counter::addInstanceCounter();
+}
+
+MenuData::~MenuData()
+{
+    oxygine::ref_counter::releaseInstanceCounter();
 }
 
 void MenuData::addData(QString text, QString actionID, QString icon, qint32 costs, bool enabled)

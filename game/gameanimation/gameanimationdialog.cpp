@@ -1,4 +1,6 @@
-#include "qfile.h"
+#include <QFile>
+
+#include "3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.h"
 
 #include "game/gameanimation/gameanimationdialog.h"
 #include "game/gameanimation/gameanimationfactory.h"
@@ -8,6 +10,7 @@
 #include "coreengine/audiothread.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
@@ -18,7 +21,9 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
       m_finishTimer(this),
       m_textSpeed(100 / Settings::getDialogAnimationSpeed())
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -51,9 +56,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     m_TextBackground->setPriority(1);
     addChild(m_TextBackground);
 
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont48());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("dialog48"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
 
@@ -62,8 +65,9 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     pRect->setSize(Settings::getWidth() - pRect->getX() - 5, 96);
 
     m_TextField = oxygine::spTextField::create();
-    m_TextField->setPosition(0, -10);
-    m_TextField->setSize(pRect->getWidth() - 5, pRect->getHeight());
+    m_TextField->setPosition(0, 0);
+    m_TextField->setSize(pRect->getScaledWidth() - 5,
+                         pRect->getScaledHeight());
     m_TextField->setStyle(style);
     pRect->addChild(m_TextField);
     pRect->setPriority(1);
@@ -282,7 +286,10 @@ void GameAnimationDialog::setPlayerCO(qint32 player, quint8 co, GameEnums::COMoo
             {
                 QString resAnim = pCo->getCoID().toLower() + "+face";
                 oxygine::ResAnim* pAnim = pCo->getResAnim(resAnim);
-                m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+                if (pAnim != nullptr)
+                {
+                    m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+                }
             }
             else
             {
@@ -304,11 +311,11 @@ void GameAnimationDialog::setTextSpeed(qint32 speed)
 
 void GameAnimationDialog::restart()
 {
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
+    if (pMenu != nullptr)
     {
         m_stopped = false;
-        pGameMenue->addChild(spGameAnimationDialog(this));
+        pMenu->addChild(spGameAnimationDialog(this));
     }
 }
 

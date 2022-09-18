@@ -5,7 +5,7 @@ CO_MELANTHE.init = function(co, map)
 };
 CO_MELANTHE.activateSuperpower = function(co, powerMode, map)
 {
-    CO_MELANTHE.activatePower(co, powerMode);
+    CO_MELANTHE.activatePower(co, powerMode, map);
 };
 CO_MELANTHE.getSuperPowerDescription = function()
 {

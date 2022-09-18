@@ -1,3 +1,5 @@
+#include <QEasingCurve>
+
 #include "coreengine/metatyperegister.h"
 
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
@@ -9,8 +11,9 @@
 
 #include "ai/heavyai.h"
 #include "ai/normalai.h"
+#include "ai/influencefrontmap.h"
 
-#include "menue/ingamemenue.h"
+#include "menue/basegamemenu.h"
 #include "menue/victorymenue.h"
 #include "menue/mainwindow.h"
 #include "menue/creditsmenue.h"
@@ -21,6 +24,8 @@
 #include "menue/achievementmenu.h"
 #include "menue/optionmenue.h"
 #include "menue/basemenu.h"
+#include "menue/replaymenu.h"
+#include "menue/movementplanner.h"
 
 #include "ui_reader/uifactory.h"
 #include "ui_reader/createdgui.h"
@@ -51,6 +56,8 @@
 #include "game/gamerecording/daytodayrecord.h"
 
 #include "game/ui/customcoboostinfo.h"
+#include "game/ui/movementplanneraddin.h"
+
 #include "game/jsData/terrainflowdata.h"
 #include "game/jsData/campaignmapdata.h"
 
@@ -62,6 +69,7 @@
 #include "objects/dialogs/mapSelection/mapselectionfilterdialog.h"
 #include "objects/dialogs/editor/mapeditdialog.h"
 #include "objects/dialogs/gamepadinfo.h"
+#include "objects/dialogs/customdialog.h"
 
 #include "gameinput/cursordata.h"
 #include "gameinput/basegameinputif.h"
@@ -106,6 +114,7 @@ void MetaTypeRegister::registerInterfaceData()
     qRegisterMetaType<GameEnums::ShopItemType>("GameEnums::ShopItemType");
     qRegisterMetaType<GameEnums::PowerGainZone>("GameEnums::PowerGainZone");
     qRegisterMetaType<GameEnums::PowerGainMode>("GameEnums::PowerGainMode");
+    qRegisterMetaType<QEasingCurve::Type>("QEasingCurve::Type");
     qRegisterMetaType<Console::eLogLevels>("Console::eLogLevels");
     qRegisterMetaType<Mainapp::StartupPhase>("Mainapp::StartupPhase");
     qRegisterMetaType<std::shared_ptr<QTcpSocket>>("std::shared_ptr<QTcpSocket>");
@@ -127,8 +136,6 @@ void MetaTypeRegister::registerInterfaceData()
     qRegisterMetaType<std::shared_ptr<QEvent>>("std::shared_ptr<QEvent>");
     qRegisterMetaType<MapEditDialog::MapEditInfo>("MapEditDialog::MapEditInfo");
     // interface
-
-    qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint", 1);
     qmlRegisterInterface<Terrain>("Terrain", 1);
     qmlRegisterInterface<Player>("Player", 1);
     qmlRegisterInterface<Building>("Building", 1);
@@ -161,6 +168,9 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<Settings>("Settings", 1);
     qmlRegisterInterface<Wikipage>("Wikipage", 1);
     qmlRegisterInterface<HeavyAi>("HeavyAi", 1);
+    qmlRegisterInterface<InfluenceFrontMap>("InfluenceFrontMap", 1);
+    qmlRegisterInterface<InfluenceInfo>("InfluenceInfo", 1);
+
     qmlRegisterInterface<NormalAi>("NormalAi", 1);
     qmlRegisterInterface<NeuralNetwork>("NeuralNetwork", 1);
     qmlRegisterInterface<NetworkGame>("NetworkGame", 1);
@@ -170,13 +180,11 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<BuildingSpriteManager>("BuildingSpriteManager", 1);
     qmlRegisterInterface<TerrainManager>("TerrainManager", 1);
     qmlRegisterInterface<COPerkManager>("COPerkManager", 1);
+    qmlRegisterInterface<MovementPlannerAddIn>("MovementPlannerAddIn", 1);
+    qmlRegisterInterface<CampaignMenu>("CampaignMenu", 1);
     qmlRegisterInterface<WikiView>("WikiView", 1);
     qmlRegisterInterface<Mainwindow>("Mainwindow", 1);
     qmlRegisterInterface<VictoryMenue>("VictoryMenue", 1);
-    qmlRegisterInterface<GameMenue>("GameMenue", 1);
-    qmlRegisterInterface<InGameMenue>("InGameMenue", 1);
-    qmlRegisterInterface<CampaignMenu>("CampaignMenu", 1);
-    qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
     qmlRegisterInterface<CreditsMenue>("CreditsMenue", 1);
     qmlRegisterInterface<Achievementmenu>("Achievementmenu", 1);
     qmlRegisterInterface<OptionMenue>("OptionMenue", 1);
@@ -187,11 +195,15 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<TerrainFlowData>("TerrainFlowData", 1);
     qmlRegisterInterface<CampaignMapData>("CampaignMapData", 1);
     qmlRegisterInterface<GamepadInfo>("GamepadInfo", 1);
-    qmlRegisterInterface<Basemenu>("Basemenu", 1);
     qmlRegisterInterface<CreatedGui>("CreatedGui", 1);
     qmlRegisterInterface<UiFactory>("UiFactory", 1);
-    qmlRegisterInterface<GameRecorder>("GameRecorder", 1);
     qmlRegisterInterface<PlayerRecord>("PlayerRecord", 1);
     qmlRegisterInterface<SpecialEvent>("SpecialEvent", 1);
     qmlRegisterInterface<DayToDayRecord>("DayToDayRecord", 1);
+    qmlRegisterInterface<MovementPlanner>("MovementPlanner", 1);
+    qmlRegisterInterface<GameMenue>("GameMenue", 1);
+    qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
+    qmlRegisterInterface<BaseGamemenu>("BaseGamemenu", 1);
+    qmlRegisterInterface<Basemenu>("Basemenu", 1);
+    qmlRegisterInterface<CustomDialog>("CustomDialog", 1);
 }

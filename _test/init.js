@@ -2,8 +2,14 @@ var Init =
 {
     step = 0,
     playTest = 0,
+    optionTestCount = 0,
     steps = ["creditsTest",
              "achievementTest",
+             "optionTest",
+             "optionTest",
+             "optionTest",
+             "optionTest",
+             "optionTest",
              "optionTest",
              "wikiTest",
              "shopTest",
@@ -47,13 +53,34 @@ var Init =
     },
     optionTest = function(menu)
     {
-        menu.enterOptionmenue();
+        ++Init.optionTestCount;
+        if (Init.optionTestCount === 1)
+        {
+            menu.enterOptionmenue("ui/options/optionvideomenu.xml");
+        }
+        else  if (Init.optionTestCount === 2)
+        {
+            menu.enterOptionmenue("ui/options/optionaudiomenu.xml");
+        }
+        else  if (Init.optionTestCount === 3)
+        {
+            menu.enterOptionmenue("ui/options/optiongameplaymenu.xml");
+        }
+        else  if (Init.optionTestCount === 4)
+        {
+            menu.enterOptionmenue("ui/options/optioncontrolsmenu.xml");
+        }
+        else  if (Init.optionTestCount === 5)
+        {
+            menu.enterOptionmenue("");
+        }   
+        else  if (Init.optionTestCount === 6)
+        {
+            menu.enterOptionmenue("ui/options/optionnetworkmenu.xml");
+        }        
     },
     optionMenu = function(menu)
     {
-        menu.showMods();
-        menu.showGameplayAndKeys();
-        menu.showSettings();
         menu.exitMenue();
     },
     wikiTest = function(menu)
@@ -123,12 +150,14 @@ var Init =
         menu.showEditPlayers();
         menu.showEditRules();
         menu.copy();
+        menu.viewMapStats();
         menu.showExit();
         menu.exitEditor();
     },
     simplePlayTest = function(menu)
     {
-        menu.enterSingleplayer();
+        var filter = [".map"];
+        currentMenu.enterSingleplayer(filter);
     },
     mapsSelection = function(menu)
     {
@@ -136,8 +165,8 @@ var Init =
         {
             GameConsole.print("Testing ingame menus", 0);
             menu.selectMap("maps/2_player/", "Agitated.map");
-            menu.slotButtonNext();
-            menu.slotButtonNext();
+            menu.buttonNext();
+            menu.buttonNext();
             var selection = menu.getPlayerSelection();
             selection.selectPlayerAi(0, 0);
             selection.selectPlayerAi(1, 2);
@@ -151,11 +180,12 @@ var Init =
         {
             GameConsole.print("Testing ai's and fog of war", 0);
             menu.selectMap("maps/2_player/", "Agitated.map");
-            menu.slotButtonNext();
-            menu.slotButtonNext();
+            menu.buttonNext();
+            menu.buttonNext();
+            var selection = menu.getPlayerSelection();
+            var map = selection.getMap();
             var gameRules = map.getGameRules();
             gameRules.setFogMode(Init.playTest - 1);
-            var selection = menu.getPlayerSelection();
             selection.selectPlayerAi(0, 1);
             selection.selectPlayerAi(1, 2);
             selection.playerCO1Changed("CO_RANDOM", 0);
@@ -173,8 +203,8 @@ var Init =
             menu.victoryInfo();
             menu.showCOInfo();
             menu.showGameInfo(0);
-            menu.showOptions();
-            menu.showChangeSound();
+            menu.showXmlFileDialog("ui/options/optiongameplaymenu.xml", true);
+            menu.showXmlFileDialog("ui/options/optionaudiomenu.xml", true);
             menu.showAttackLog(0);
             menu.showRules();
             menu.showUnitInfo(0);
@@ -182,7 +212,12 @@ var Init =
             menu.showExitGame();
             menu.showSurrenderGame();
             menu.showSaveAndExitGame();
-            menu.showWiki();
+            var wikiView = menu.showWiki();
+            wikiView.tagChanged(0);
+            wikiView.showPage("CO_ANDY");
+            wikiView.showPage("MECH");
+            wikiView.showPage("PLAINS");
+            wikiView.showPage("HQ");
             menu.exitGame();
         }
     },

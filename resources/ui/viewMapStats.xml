@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getWidth() - 20</width>
+        <height>settings.getHeight() - 80</height>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>400</width>
+                <height>50</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Map statistics")</text>
+                <font>"main"</font>
+                <fontSize>48</fontSize>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>400</width>
+                <height>50</height>
+                <text>ViewMapStats.getNeutralText()</text>
+                <font>"main"</font>
+                <fontSize>48</fontSize>
+            </Label>
+            <loop count="ViewMapStats.getBuildingCount(viewMapStats, -1)">
+                <if condition="ViewMapStats.hasBuilding(loopIdx)">
+                    <Icon>
+                        <x>ViewMapStats.getNextIconX()</x>
+                        <y>ViewMapStats.getNextIconY()</y>
+                        <sprite>ViewMapStats.lastId</sprite>
+                        <player>ViewMapStats.getLastPlayer()</player>
+                        <size>48</size>
+                    </Icon>
+                    <Label>
+                        <x>ViewMapStats.getNextLabelX()</x>
+                        <y>lastY</y>
+                        <width>50</width>
+                        <height>30</height>
+                        <text>ViewMapStats.getCountOfBuilding()</text>
+                        <font>"main"</font>
+                        <fontSize>24</fontSize>
+                    </Label>
+                </if>
+            </loop>
+            <loop count="ViewMapStats.getPlayerCount(viewMapStats)">
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>400</width>
+                    <height>50</height>
+                    <text>ViewMapStats.getPlayerText()</text>
+                    <font>"main"</font>
+                    <fontSize>48</fontSize>
+                </Label>
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>400</width>
+                    <height>30</height>
+                    <text>QT_TRANSLATE_NOOP("GAME","Buildings")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <loop count="ViewMapStats.getBuildingCount(viewMapStats, loopIdx)">
+                    <if condition="ViewMapStats.hasBuilding(loopIdx)">
+                        <Icon>
+                            <x>ViewMapStats.getNextIconX()</x>
+                            <y>ViewMapStats.getNextIconY()</y>
+                            <sprite>ViewMapStats.lastId</sprite>
+                            <player>ViewMapStats.getLastPlayer()</player>
+                            <size>48</size>
+                        </Icon>
+                        <Label>
+                            <x>ViewMapStats.getNextLabelX()</x>
+                            <y>lastY</y>
+                            <width>50</width>
+                            <height>30</height>
+                            <text>ViewMapStats.getCountOfBuilding()</text>
+                            <font>"main"</font>
+                            <fontSize>24</fontSize>
+                        </Label>
+                    </if>
+                </loop>
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>400</width>
+                    <height>30</height>
+                    <text>QT_TRANSLATE_NOOP("GAME","Units")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <loop count="ViewMapStats.getUnitCount()">
+                    <if condition="ViewMapStats.hasUnit(loopIdx)">
+                        <Icon>
+                            <x>ViewMapStats.getNextIconX()</x>
+                            <y>ViewMapStats.getNextIconY()</y>
+                            <sprite>ViewMapStats.lastId</sprite>
+                            <player>ViewMapStats.getLastPlayer()</player>
+                            <size>48</size>
+                        </Icon>
+                        <Label>
+                            <x>ViewMapStats.getNextLabelX()</x>
+                            <y>lastY</y>
+                            <width>50</width>
+                            <height>30</height>
+                            <text>ViewMapStats.getCountOfUnit()</text>
+                            <font>"main"</font>
+                            <fontSize>24</fontSize>
+                        </Label>
+                    </if>
+                </loop>
+            </loop>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>400</width>
+                <height>50</height>
+                <text>ViewMapStats.getTerrainText()</text>
+                <font>"main"</font>
+                <fontSize>48</fontSize>
+            </Label>
+            <loop count="ViewMapStats.getTerrainCount(viewMapStats)">
+                <if condition="ViewMapStats.hasTerrain(loopIdx)">
+                    <Icon>
+                        <x>ViewMapStats.getNextIconX()</x>
+                        <y>ViewMapStats.getNextIconY()</y>
+                        <sprite>ViewMapStats.lastId</sprite>
+                        <size>48</size>
+                    </Icon>
+                    <Label>
+                        <x>ViewMapStats.getNextLabelX()</x>
+                        <y>lastY</y>
+                        <width>50</width>
+                        <height>30</height>
+                        <text>ViewMapStats.getCountOfTerrain()</text>
+                        <font>"main"</font>
+                        <fontSize>24</fontSize>
+                    </Label>
+                </if>
+            </loop>
+        </childs>
+    </Panel>
+    <Button>
+        <x>settings.getWidth() / 2 - 75</x>
+        <y>settings.getHeight() - 60</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Ok")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Closes the map filter dialog")</tooltip>
+        <onEvent>viewMapStats.close();</onEvent>
+    </Button>
+</ui>

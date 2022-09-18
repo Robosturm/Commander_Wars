@@ -1,6 +1,9 @@
-#include "dialogvictoryconditions.h"
+#include "objects/dialogs/ingame/dialogvictoryconditions.h"
+#include "objects/base/panel.h"
+#include "objects/dialogs/ingame/victoryrulepopup.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 
@@ -8,8 +11,6 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "objects/base/panel.h"
-#include "objects/dialogs/ingame/victoryrulepopup.h"
 
 #include "game/gamemap.h"
 #include "game/gamerules.h"
@@ -20,7 +21,9 @@
 DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogVictoryConditions");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -35,7 +38,8 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -43,14 +47,10 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     });
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = true;
     // no the fun begins create checkboxes and stuff and a panel down here
@@ -147,11 +147,11 @@ void DialogVictoryConditions::remove()
 
 void DialogVictoryConditions::showPopup(QString rule)
 {
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr && !VictoryRulePopup::exists(rule))
+    BaseGamemenu* pMenu = GameMenue::getInstance();
+    if (pMenu != nullptr && !VictoryRulePopup::exists(rule))
     {
         spVictoryRulePopup pPopup = spVictoryRulePopup::create(m_pMap, rule, 180, 250);
-        pPopup->setY(Settings::getHeight() - pPopup->getHeight());
+        pPopup->setY(Settings::getHeight() - pPopup->getScaledHeight());
         pMenu->addChild(pPopup);
     }
 }

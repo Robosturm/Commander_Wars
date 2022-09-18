@@ -4,7 +4,9 @@
 #include <QObject>
 #include <QJsonObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "network/NetworkInterface.h"
 
@@ -12,14 +14,14 @@
 #include "objects/base/textbox.h"
 
 class Chat;
-typedef oxygine::intrusive_ptr<Chat> spChat;
+using spChat = oxygine::intrusive_ptr<Chat>;
 
-class Chat : public QObject, public oxygine::Actor
+class Chat final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkSerives serviceMode);
-    virtual ~Chat() = default;
+    ~Chat() = default;
     /**
      * @brief setVisible
      * @param vis

@@ -5,7 +5,7 @@ CO_PENNY.init = function(co, map)
 };
 CO_PENNY.activateSuperpower = function(co, powerMode, map)
 {
-    CO_PENNY.activatePower(co, powerMode);
+    CO_PENNY.activatePower(co, powerMode, map);
 };
 CO_PENNY.getSuperPowerDescription = function()
 {

@@ -24,7 +24,7 @@ namespace oxygine
 
     protected:
         QColor m_color{Qt::white};
-        VideoDriver::blend_mode m_blend{VideoDriver::blend_premultiplied_alpha};
+        VideoDriver::blend_mode m_blend{VideoDriver::blend_alpha};
     };
 
     class VStyleActor;
@@ -37,7 +37,11 @@ namespace oxygine
 
         VideoDriver::blend_mode getBlendMode() const
         {
+#ifdef GRAPHICSUPPORT
             return m_vstyle.getBlendMode();
+#else
+            return VideoDriver::blend_mode::blend_disabled;
+#endif
         }
         const QColor& getColor() const;
         const QColor& getAddColor() const;
@@ -53,19 +57,25 @@ namespace oxygine
         QColor getDisableColor() const;
         void setDisableColor(const QColor &value);
 
+#ifdef GRAPHICSUPPORT
         inline spMaterial & getMaterial()
         {
             return m_mat;
         }
+#endif
     protected:
         virtual void matChanged() {}
         void setMaterial(spMaterial & mat);
     private:
         void changeAddColor(const QColor& color);
     protected:
+#ifdef GRAPHICSUPPORT
         VisualStyle m_vstyle;
         QColor m_disableColor{75, 75, 75, 0};
         spMaterial m_mat;
+#else
+        static QColor m_dummyColor;
+#endif
 
     };
 

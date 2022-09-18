@@ -14,14 +14,16 @@
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 
+#include "menue/movementplanner.h"
+
 DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
     : m_pPlayer(pPlayer),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogAttackLog");
-    
+#endif
     m_Log = m_pMap->getGameRecorder()->getAttackLog(pPlayer->getPlayerID());
-
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -36,14 +38,13 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 10 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getScaledWidth() / 2,
+                           Settings::getHeight() - 10 - pOkButton->getScaledHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {

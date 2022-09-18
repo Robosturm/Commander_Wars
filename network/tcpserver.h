@@ -9,21 +9,24 @@
 #include "network/txtask.h"
 
 class QTcpServer;
-class QTcpSocket;
 
 class TCPServer;
-typedef oxygine::intrusive_ptr<TCPServer> spTCPServer;
+using spTCPServer = oxygine::intrusive_ptr<TCPServer>;
 
-class TCPServer : public NetworkInterface
+class TCPServer final : public NetworkInterface
 {
     Q_OBJECT
 public:
     TCPServer(QObject* pParent);
-    virtual ~TCPServer();
+    ~TCPServer();
 
     spTCPClient getClient(quint64 socketID);
+signals:
+    void sigSetIsActive(quint64 socketID, bool active);
+
 public slots:
-    virtual void connectTCP(QString adress, quint16 port) override;
+    void setIsActive(quint64 socketID, bool active);
+    virtual void connectTCP(QString adress, quint16 port, QString secondaryAdress) override;
     virtual void disconnectTCP() override;
     virtual void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service) override;
     virtual QVector<quint64> getConnectedSockets() override;
@@ -36,7 +39,7 @@ public slots:
 private:
     QMap<quint64, spTCPClient> m_pClients;
     quint64 m_idCounter = 0;
-    std::shared_ptr<QTcpServer> m_pTCPServer{nullptr};
+    std::shared_ptr<QTcpServer> m_pTCPServer[2];
     bool m_gameServer{false};
 };
 

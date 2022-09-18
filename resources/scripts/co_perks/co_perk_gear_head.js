@@ -24,4 +24,4 @@ var Constructor = function()
 };
 
 Constructor.prototype = CO_PERK;
-var CO_PERK_MECHANIC = new Constructor();
+var CO_PERK_GEAR_HEAD = new Constructor();

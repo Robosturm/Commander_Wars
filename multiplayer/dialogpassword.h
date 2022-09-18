@@ -3,20 +3,19 @@
 
 #include <QObject>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/passwordbox.h"
 
 class DialogPassword;
-typedef oxygine::intrusive_ptr<DialogPassword> spDialogPassword;
+using spDialogPassword = oxygine::intrusive_ptr<DialogPassword>;
 
-class DialogPassword : public QObject, public oxygine::Actor
+class DialogPassword final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogPassword(QString text, bool showCancel, QString startInput);
-    virtual ~DialogPassword() = default;
+    ~DialogPassword() = default;
 
 signals:
     void sigTextChanged(QString text);

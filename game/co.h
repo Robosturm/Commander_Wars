@@ -3,11 +3,10 @@
 
 #include <QObject>
 #include <QPoint>
+#include <QImage>
 
 #include "game/GameEnums.h"
 #include "game/ui/customcoboostinfo.h"
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
@@ -21,11 +20,11 @@ class GameAnimationDialog;
 class GameAnimationPower;
 class GameAction;
 class GameMap;
-
+class GameMenue;
 class CO;
 using spCO = oxygine::intrusive_ptr<CO>;
 
-class CO : public QObject, public oxygine::Actor, public FileSerializable
+class CO final : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
 public:
@@ -33,7 +32,7 @@ public:
     static constexpr qint32 MAX_CO_UNIT_VALUE = 20;
 
     explicit CO(QString coID, Player* owner, GameMap* pMap);
-    virtual ~CO() = default;
+    ~CO() = default;
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -85,8 +84,11 @@ public:
      * @return
      */
     oxygine::ResAnim* getResAnim(const QString & id, oxygine::error_policy ep = oxygine::ep_ignore_error) const;
-
-
+    /**
+     * @brief setMenu
+     * @param newMenu
+     */
+    void setMenu(GameMenue *newMenu);
 
 public slots:
     /**
@@ -223,12 +225,26 @@ public slots:
      */
     qint32 getBonusLuck(Unit* pUnit, QPoint position);
     /**
+     * @brief getBonusLuck
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getEnemyBonusLuck(Unit* pUnit, QPoint position);
+    /**
      * @brief getBonusMisfortune
      * @param pUnit
      * @param position
      * @return
      */
     qint32 getBonusMisfortune(Unit* pUnit, QPoint position);
+    /**
+     * @brief getEnemyBonusMisfortune
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getEnemyBonusMisfortune(Unit* pUnit, QPoint position);
     /**
      * @brief getTerrainDefenseModifier the bonus defense of this co for a terrain
      * @param pUnit the unit we want to get the bonus points from
@@ -241,7 +257,7 @@ public slots:
      * @param position
      * @return
      */
-    bool getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDefender);
+    bool getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDefender, QPoint attackerPosition);
     /**
      * @brief getVisionrangeModifier the bonus defense of this co for a terrain
      * @param pUnit the unit we want to get the bonus points from
@@ -287,7 +303,7 @@ public slots:
      * @param pDefender our unit that gets attacked
      * @return bonus
      */
-    qint32 getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode);
+    qint32 getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getDeffensiveBonus the deffensive bonus of our unit
      * @param pAttacker the unit attacking us
@@ -450,6 +466,10 @@ public slots:
      */
     void gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender, bool counterAttack);
     /**
+     * @brief endOfTurn
+     */
+    void endOfTurn();
+    /**
      * @brief startOfTurn called at the start of our turn
      */
     void startOfTurn();
@@ -464,7 +484,7 @@ public slots:
      */
     inline Player* getOwner()
     {
-        return m_Owner;
+        return m_pOwner;
     }
     /**
      * @brief getCOUnit
@@ -523,6 +543,11 @@ public slots:
      * @return
      */
     qint32 getIncomeReduction(Building* pBuilding, qint32 income);
+    /**
+     * @brief getPowerChargeBonus
+     * @return
+     */
+    qint32 getPowerChargeBonus();
     /**
      * @brief getPerfectVision
      * @return
@@ -737,7 +762,6 @@ public slots:
      * @return
      */
     float getStarCost();
-
 protected:
     void limitPowerbar(float previousValue);
 
@@ -750,7 +774,7 @@ private:
      */
     bool isJsFunctionEnabled(QString perk) const;
 private:
-    Player* m_Owner;
+    Player* m_pOwner;
     QString m_coID;
     qint32 m_powerStars{0};
     qint32 m_superpowerStars{0};
@@ -776,6 +800,7 @@ private:
 
     QVector<std::tuple<QString, QString, QImage, QImage, bool>> m_customCOStyles;
     QVector<std::tuple<QString, oxygine::spResAnim>> m_Ressources;
+    GameMenue* m_pMenu{nullptr};
 };
 
 Q_DECLARE_INTERFACE(CO, "CO");

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "conditions/scriptcondition.h"
 
@@ -12,7 +12,7 @@ class GameMap;
 class ScriptData;
 using spScriptData = oxygine::intrusive_ptr<ScriptData>;
 
-class ScriptData : public QObject, public oxygine::ref_counter
+class ScriptData final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -27,7 +27,7 @@ public:
     static constexpr auto variables = "variables";
 
     explicit ScriptData(GameMap* pMap);
-    virtual ~ScriptData() = default;
+    ~ScriptData() = default;
     /**
      * @brief readScript
      * @param rStream
@@ -137,14 +137,14 @@ public:
     static QString getVariableName();
 private:
     QVector<spScriptCondition> m_Victory;
-    QString customVictoryCode;
+    QString m_customVictoryCode;
     QVector<spScriptCondition> m_DayConditions;
-    QString customStartOfTurnCode;
+    QString m_customStartOfTurnCode;
     QVector<spScriptCondition> m_ActionConditions;
-    QString customActionConditions;
+    QString m_customActionConditions;
 
-    QString customCode;
-    bool startMode{false};
+    QString m_customCode;
+    bool m_startMode{false};
     GameMap* m_pMap{nullptr};
 
     static quint32 m_variableCounter;

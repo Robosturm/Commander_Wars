@@ -1,6 +1,8 @@
 #include <QFileInfo>
 #include <QFile>
 
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
+
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 
@@ -38,7 +40,7 @@ spTerrain Terrain::createTerrain(const QString & terrainID, qint32 x, qint32 y, 
         }
         else
         {
-            CONSOLE_PRINT("Unable to load Terrain " + terrainID, Console::eFATAL);
+            CONSOLE_PRINT("Unable to load Terrain " + terrainID, Console::eERROR);
         }
     }
     return pTerrain;
@@ -51,13 +53,45 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
       m_Building{nullptr},
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Terrain");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setPriority(getMapTerrainDrawPriority());
     setSize(GameMap::getImageSize(),
             GameMap::getImageSize());
+}
+
+QStringList Terrain::getCustomOverlays() const
+{
+    return m_customOverlays;
+}
+
+void Terrain::setCustomOverlays(const QStringList &newCustomOverlays)
+{
+    m_customOverlays = newCustomOverlays;
+}
+
+void Terrain::addCustomOverlay(const QString &customOverlay)
+{
+    m_customOverlays.append(customOverlay);
+}
+
+void Terrain::removeCustomOverlay(const QString &customOverlay)
+{
+    m_customOverlays.removeAll(customOverlay);
+}
+
+bool Terrain::getFixedOverlaySprites() const
+{
+    return m_fixedOverlaySprites;
+}
+
+void Terrain::setFixedOverlaySprites(bool newFixedOverlaySprites)
+{
+    m_fixedOverlaySprites = newFixedOverlaySprites;
 }
 
 Terrain::~Terrain()
@@ -155,7 +189,10 @@ void Terrain::setSpriteVisibility(bool value)
     {
         m_pBaseTerrain->setSpriteVisibility(value);
     }
-    m_pTerrainSprite->setVisible(value);
+    if (m_pTerrainSprite.get() != nullptr)
+    {
+        m_pTerrainSprite->setVisible(value);
+    }
     for (auto& sprite : m_pOverlaySprites)
     {
         sprite->setVisible(value);
@@ -221,6 +258,7 @@ void Terrain::setTerrainName(const QString &value)
 
 void Terrain::syncAnimation(oxygine::timeMS syncTime)
 {
+#ifdef GRAPHICSUPPORT
     if (m_pTerrainSprite.get() != nullptr)
     {
         auto & tweens = m_pTerrainSprite->getTweens();
@@ -241,6 +279,7 @@ void Terrain::syncAnimation(oxygine::timeMS syncTime)
     {
         m_pBaseTerrain->syncAnimation(syncTime);
     }
+#endif
 }
 
 Unit* Terrain::getUnit()
@@ -389,11 +428,21 @@ void Terrain::loadSprites()
     // ony load this for valid positions
     if (m_x >= 0 && m_y >= 0)
     {
-        // next call starting by 0 again
-        QString function2 = "loadOverlaySprite";
-        QJSValueList args({pInterpreter->newQObject(this),
-                           pInterpreter->newQObject(m_pMap)});
-        pInterpreter->doFunction(m_terrainID, function2, args);
+        if (m_fixedOverlaySprites)
+        {
+            for (auto & overlay : m_customOverlays)
+            {
+                loadOverlaySprite(overlay);
+            }
+        }
+        else
+        {
+            // next call starting by 0 again
+            QString function2 = "loadOverlaySprite";
+            QJSValueList args({pInterpreter->newQObject(this),
+                               pInterpreter->newQObject(m_pMap)});
+            pInterpreter->doFunction(m_terrainID, function2, args);
+        }
     }
 }
 
@@ -405,7 +454,7 @@ void Terrain::loadBaseTerrain(const QString & terrainID)
     addChild(m_pBaseTerrain);
 }
 
-void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime)
+void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 startFrame, qint32 endFrame)
 {
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
@@ -414,8 +463,16 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime)
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * frameTime), -1);
-            pSprite->addTween(tween);
+            if (startFrame >= 0 && endFrame >= 0)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, endFrame), oxygine::timeMS(pAnim->getTotalFrames() * frameTime), -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * frameTime), -1);
+                pSprite->addTween(tween);
+            }
         }
         else
         {
@@ -716,7 +773,7 @@ QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bo
     return ret;
 }
 
-void Terrain::loadOverlaySprite(const QString & spriteID)
+void Terrain::loadOverlaySprite(const QString & spriteID, qint32 startFrame, qint32 endFrame)
 {
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::ep_ignore_error);
@@ -725,8 +782,16 @@ void Terrain::loadOverlaySprite(const QString & spriteID)
     {
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
-            pSprite->addTween(tween);
+            if (startFrame >= 0 && endFrame >= 0)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, endFrame), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                pSprite->addTween(tween);
+            }
         }
         else
         {
@@ -913,7 +978,7 @@ void Terrain::addBuildingSprite(spBuilding pBuilding)
         m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
         if (Terrain::m_y >= 0)
         {
-            m_pMap->getRowActor(Terrain::m_y)->addChild(m_Building);
+            m_pMap->getRowActor(Terrain::m_y + 1)->addChild(m_Building);
         }
     }
     else
@@ -948,7 +1013,6 @@ void Terrain::removeBuilding()
                     }
                 }
             }
-            m_Building = nullptr;
         }
         else
         {
@@ -959,6 +1023,7 @@ void Terrain::removeBuilding()
                 pTerrain->removeBuilding();
             }
         }
+        m_Building = nullptr;
     }
 }
 
@@ -1131,6 +1196,15 @@ QStringList Terrain::getTerrainSprites()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainSprites";
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
+    return erg.toVariant().toStringList();
+}
+
+QStringList Terrain::getOverlayTerrainSprites()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getOverlayTerrainSprites";
     QJSValueList args({pInterpreter->newQObject(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
     return erg.toVariant().toStringList();
@@ -1459,6 +1533,15 @@ void Terrain::serializeObject(QDataStream& pStream) const
         quint32 color = item.color.rgba();
         pStream << color;
     }
+    pStream << m_fixedOverlaySprites;
+    if (m_fixedOverlaySprites)
+    {
+        pStream << static_cast<qint32>(m_customOverlays.size());
+        for (auto & item : m_customOverlays)
+        {
+            pStream << item;
+        }
+    }
 }
 
 void Terrain::deserializeObject(QDataStream& pStream)
@@ -1518,13 +1601,11 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
 
         if (m_Building->isValid())
         {
+            m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
             if (!fast)
             {
-                m_Building->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
-                m_Building->setPriority(getMapTerrainDrawPriority() + static_cast<qint32>(ExtraDrawPriority::BuildingLayer));
-                m_pMap->getRowActor(Terrain::m_y)->addChild(m_Building);
+                addBuildingSprite(m_Building);
             }
-            m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
             createBuildingDownStream();
         }
         else
@@ -1594,6 +1675,24 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
             addTerrainOverlay(item.resAnim, item.offset.x(), item.offset.y(), item.color, item.duration, item.scale);
         }
     }
+    if (version > 9)
+    {
+        m_customOverlays.clear();
+        pStream >> m_fixedOverlaySprites;
+        if (m_fixedOverlaySprites)
+        {
+            qint32 size = 0;
+            pStream >> size;
+            m_customOverlays.reserve(size);
+            for (qint32 i = 0; i < size; ++i)
+            {
+                QString item;
+                pStream >> item;
+                m_customOverlays.append(item);
+            }
+        }
+    }
+
 }
 
 void Terrain::createBuildingDownStream()

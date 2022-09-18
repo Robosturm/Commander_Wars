@@ -9,7 +9,9 @@ AchievementManager::AchievementManager()
                                               "/scripts/achievements")
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("AchievementManager");
+#endif
 }
 
 void AchievementManager::loadAll()

@@ -1,6 +1,7 @@
 #include "coreengine/filesupport.h"
 #include "coreengine/settings.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/console.h"
 
 #include <QDirIterator>
 #include <QCoreApplication>
@@ -9,10 +10,16 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
 {
     Sha256Hash myHash;
     QStringList fullList;
+
+    QString userPath = Settings::getUserPath();
+    if (!userPath.isEmpty())
+    {
+        userPath += "/";
+    }
     for (const auto & folder : qAsConst(folders))
     {
         fullList.append(oxygine::Resource::RCC_PREFIX_PATH + folder);
-        fullList.append(Settings::getUserPath() + folder);
+        fullList.append(userPath + folder);
     }
     for (const auto & folder : qAsConst(fullList))
     {
@@ -36,11 +43,6 @@ void Filesupport::addHash(Sha256Hash & hash, const QString & folder, const QStri
             hash.addData(file.readLine().trimmed());
         }
         file.close();
-        if (Console::eDEBUG >= Console::getLogLevel())
-        {
-            QString hostString = GlobalUtils::getByteArrayString(hash.result());
-            CONSOLE_PRINT("Hash after file is: " + hostString, Console::eDEBUG);
-        }
     }
     list = dir.entryInfoList(QStringList(), QDir::Dirs | QDir::NoDotAndDotDot);
     for (auto & item : list)
@@ -53,7 +55,8 @@ void Filesupport::addHash(Sha256Hash & hash, const QString & folder, const QStri
 QByteArray Filesupport::getRuntimeHash(const QStringList & mods)
 {
     QStringList folders = mods;
-    folders.append("/resources");
+    folders.append("resources/scripts");
+    folders.append("resources/aidata");
     QStringList filter = {"*.js", "*.csv"};
     return getHash(filter, folders);
 }
@@ -112,17 +115,24 @@ Filesupport::StringList Filesupport::readList(const QString & file, const QStrin
 Filesupport::StringList Filesupport::readList(const QString & file)
 {
     QFile dataFile(file);
-    dataFile.open(QIODevice::ReadOnly);
-    QDataStream stream(&dataFile);
     StringList ret;
-    stream >> ret.name;
-    qint32 size = 0;
-    stream >> size;
-    for (qint32 i = 0; i < size; i++)
+    if (dataFile.exists())
     {
-        QString name;
-        stream >> name;
-        ret.items.append(name);
+        dataFile.open(QIODevice::ReadOnly);
+        QDataStream stream(&dataFile);
+        stream >> ret.name;
+        qint32 size = 0;
+        stream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            QString name;
+            stream >> name;
+            ret.items.append(name);
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to open file: " + file + " using empty list", Console::eWARNING);
     }
     return ret;
 }

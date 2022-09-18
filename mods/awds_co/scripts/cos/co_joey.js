@@ -82,7 +82,7 @@ CO_JOEY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map)
+CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map, atkPosX, atkPosY)
 {
     if (co.getIsCO0() === true)
     {
@@ -95,7 +95,7 @@ CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, ma
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (attackerValue < defenderValue)
+                if (attackerValue > defenderValue)
                 {
                     return true;
                 }

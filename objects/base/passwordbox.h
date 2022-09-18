@@ -6,12 +6,12 @@
 class Passwordbox;
 typedef oxygine::intrusive_ptr<Passwordbox> spPasswordbox;
 
-class Passwordbox : public Textbox
+class Passwordbox final : public Textbox
 {
     Q_OBJECT
 public:
     explicit Passwordbox(qint32 width, qint32 heigth = -1);
-    virtual ~Passwordbox() = default;
+    ~Passwordbox() = default;
     virtual void update(const oxygine::UpdateState& us) override;
 
 private:

@@ -6,7 +6,7 @@
 #include <QVector>
 #include <QMap>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariablefile.h"
@@ -15,7 +15,7 @@
 class Userdata;
 using spUserdata = oxygine::intrusive_ptr<Userdata>;
 
-class Userdata : public QObject, public FileSerializable, public oxygine::ref_counter
+class Userdata final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -70,7 +70,7 @@ public:
          */
         GameEnums::ShopItemType itemType;
     };
-    virtual ~Userdata() = default;
+    ~Userdata() = default;
     static Userdata* getInstance();
     void changeUser();
     void storeUser();

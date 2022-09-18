@@ -13,7 +13,7 @@
 class BattleAnimation;
 using spBattleAnimation = oxygine::intrusive_ptr<BattleAnimation>;
 
-class BattleAnimation : public GameAnimation
+class BattleAnimation final : public GameAnimation
 {
     Q_OBJECT
 public:
@@ -52,7 +52,7 @@ public:
     BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                     Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage,
                     GameMap* pMap);
-    virtual ~BattleAnimation() = default;
+    ~BattleAnimation() = default;
     virtual void restart() override;
     virtual void stop() override;
     /**
@@ -161,7 +161,7 @@ private:
      * @param enemyHp
      */
     void loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite & pSprite, spBattleAnimationSprite & pAttackerSprite,
-                             oxygine::spBox9Sprite & pHealthbar, float endHp, qint32 weapon, float enemyHp);
+                             oxygine::spBox9Sprite & pHealthbar, oxygine::spTextField & pHealthtext, float startHp, float endHp, qint32 weapon, float enemyHp);
     /**
      * @brief loadDyingAnimation
      * @param pUnit1
@@ -229,12 +229,15 @@ private:
 
     oxygine::spBox9Sprite m_HealthBar0;
     oxygine::spBox9Sprite m_HealthBar1;
+    oxygine::spTextField m_hpInfo0;
+    oxygine::spTextField m_hpInfo1;
 
     spBattleAnimationSprite m_pAttackerAnimation;
     spBattleAnimationSprite m_pDefenderAnimation;
 
     oxygine::spActor m_pAttackerSprite;
     oxygine::spActor m_pDefenderSprite;
+
 
     Terrain* m_pAtkTerrain;
     Unit* m_pAtkUnit;
@@ -250,5 +253,7 @@ private:
 
     AnimationProgress m_currentState{AnimationProgress::MoveIn};
 };
+
+Q_DECLARE_INTERFACE(BattleAnimation, "BattleAnimation");
 
 #endif // BATTLEANIMATION_H

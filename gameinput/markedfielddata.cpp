@@ -5,10 +5,18 @@
 
 MarkedFieldData::MarkedFieldData()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("MarkedFieldData");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    oxygine::ref_counter::addInstanceCounter();
+}
+
+MarkedFieldData::~MarkedFieldData()
+{
+    oxygine::ref_counter::releaseInstanceCounter();
 }
 
 bool MarkedFieldData::getAllFields() const

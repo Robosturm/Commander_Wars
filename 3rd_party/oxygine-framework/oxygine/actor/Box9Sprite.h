@@ -1,13 +1,14 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
+
 #include <vector>
 
 namespace oxygine
 {
     class Box9Sprite;
     using spBox9Sprite = intrusive_ptr<Box9Sprite>;
-    class Box9Sprite: public Sprite
+    class Box9Sprite : public Sprite
     {
     public:
         enum StretchMode
@@ -17,7 +18,7 @@ namespace oxygine
             STRETCHING
         };
 
-        explicit Box9Sprite();
+        explicit Box9Sprite();        
         virtual ~Box9Sprite() = default;
         StretchMode getVerticalMode() const
         {

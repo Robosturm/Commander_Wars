@@ -5,13 +5,13 @@
 #include <QTimer>
 #include <QColor>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/checkbox.h"
 #include "objects/base/dropdownmenu.h"
-
 #include "objects/unitstatisticview.h"
 
 #include "network/NetworkInterface.h"
@@ -19,12 +19,14 @@
 #include "game/gamemap.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
+
 #include "menue/basemenu.h"
+#include "menue/wikimenu.h"
 
 class VictoryMenue;
 using spVictoryMenue = oxygine::intrusive_ptr<VictoryMenue>;
 
-class VictoryMenue : public Basemenu
+class VictoryMenue final : public Basemenu
 {
     Q_OBJECT
 public:
@@ -48,7 +50,7 @@ public:
     };
 
     explicit VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface, bool isReplay = false);
-    virtual ~VictoryMenue() = default;
+    ~VictoryMenue() = default;
 
     /**
      * @brief createLine creates a nice sweet polygon line for drawing our graphs
@@ -63,6 +65,9 @@ signals:
     void sigShowGraph(VictoryMenue::GraphModes mode);
     void sigFinishCurrentGraph();
 public slots:
+    /**
+     * @brief exitMenue
+     */
     void exitMenue();
     /**
      * @brief showGraph
@@ -92,6 +97,10 @@ protected slots:
      * @brief onEnter
      */
     virtual void onEnter() override;
+    /**
+     * @brief despawn
+     */
+    void despawnSlave();
 protected:
     /**
      * @brief drawGraphStep
@@ -105,7 +114,7 @@ protected:
      * @param progress
      */
     void drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
-                    QPointF startPoint, qint32 progress);
+                          QPointF startPoint, qint32 progress);
     /**
      * @brief getStepTime
      * @return
@@ -147,6 +156,7 @@ private:
      * @brief m_ProgressTimer tick timer for updating the graph
      */
     QTimer m_ProgressTimer;
+    QTimer m_despawnSlaveTimer;
 
     float m_lineLength{0};
 

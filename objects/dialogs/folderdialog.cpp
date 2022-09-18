@@ -1,16 +1,21 @@
 #include "objects/dialogs/folderdialog.h"
+#include "objects/dialogs/dialogmessagebox.h"
+
+#include "objects/base/label.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
-#include "objects/dialogs/dialogmessagebox.h"
 
 const char* const ROOT = "::::";
 
 FolderDialog::FolderDialog(QString startFolder)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("FolderDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
@@ -32,13 +37,13 @@ FolderDialog::FolderDialog(QString startFolder)
     connect(m_CurrentFolder.get(), &Textbox::sigTextChanged, this, &FolderDialog::showFolder, Qt::QueuedConnection);
     // folder file selection
     m_MainPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150), QSize(Settings::getWidth() - 60, Settings::getHeight() - 300));
-    m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getHeight() + 10);
+    m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getScaledHeight() + 10);
     pSpriteBox->addChild(m_MainPanel);
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() - 30 - m_OkButton->getWidth(),
-                            Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() - 30 - m_OkButton->getScaledWidth(),
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     auto* pCurrentFolder = m_CurrentFolder.get();
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentFolder](oxygine::Event*)
@@ -54,7 +59,7 @@ FolderDialog::FolderDialog(QString startFolder)
     // cancel button
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_CancelButton->setPosition(30,
-                                Settings::getHeight() - 30 - m_CancelButton->getHeight());
+                                Settings::getHeight() - 30 - m_CancelButton->getScaledHeight());
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -112,16 +117,16 @@ void FolderDialog::showFolder(QString folder)
         QString myPath;
         if (folder == ROOT)
         {
-            myPath = infoList[i].absoluteFilePath();
+            myPath = infoList[i].canonicalFilePath();
         }
-        else if (infoList[i].absoluteFilePath() != QCoreApplication::applicationDirPath() &&
-                 infoList[i].absoluteFilePath() != QCoreApplication::applicationDirPath() + "/")
+        else if (infoList[i].canonicalFilePath() != QCoreApplication::applicationDirPath() &&
+                 infoList[i].canonicalFilePath() != QCoreApplication::applicationDirPath() + "/")
         {
-           myPath = GlobalUtils::makePathRelative(infoList[i].absoluteFilePath());
+           myPath = GlobalUtils::makePathRelative(infoList[i].canonicalFilePath());
         }
         else
         {
-            myPath = infoList[i].absoluteFilePath();
+            myPath = infoList[i].canonicalFilePath();
         }
         if (myPath == folder)
         {
@@ -132,21 +137,13 @@ void FolderDialog::showFolder(QString folder)
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
         oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
         pBox->setResAnim(pAnim);
-        oxygine::spTextField textField = oxygine::spTextField::create();
-        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-        style.multiline = false;
-        textField->setStyle(style);
+        pBox->setSize(m_MainPanel->getScaledWidth() - 70, 40);
+        pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
-        pBox->addChild(textField);
-        pBox->setSize(m_MainPanel->getWidth() - 70, 40);
-        textField->setHeight(40);
-        textField->setWidth(pBox->getWidth() - 18);
+        spLabel textField = spLabel::create(pBox->getScaledWidth() - 18);
         textField->setX(13);
         textField->setY(5);
-        pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+        pBox->addChild(textField);
         m_MainPanel->addItem(pBox);
         // add some event handling :)
         auto* pPtrBox = pBox.get();
@@ -165,7 +162,7 @@ void FolderDialog::showFolder(QString folder)
         {
             if (folder == ROOT)
             {
-                textField->setHtmlText(infoList[i].absoluteFilePath());
+                textField->setHtmlText(infoList[i].canonicalFilePath());
             }
             else
             {

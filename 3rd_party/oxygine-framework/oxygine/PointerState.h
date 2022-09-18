@@ -14,11 +14,11 @@ namespace oxygine
 
     };
 
-    class PointerState
+    class PointerState final
     {
     public:
         explicit PointerState();
-        virtual ~PointerState() = default;
+        ~PointerState() = default;
 
         void init(pointer_index pointerIndex);
         bool isPressed(MouseButton mb = MouseButton_Touch) const;

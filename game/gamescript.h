@@ -4,24 +4,26 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
-#include "menue/ingamemenue.h"
 
 #include "game/gameaction.h"
 
+class BaseGamemenu;
 class GameMap;
 class GameScript;
 using spGameScript = oxygine::intrusive_ptr<GameScript>;
 
-class GameScript : public QObject, public FileSerializable, public oxygine::ref_counter
+class GameScript final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
+    static const QString m_scriptName;
+
     explicit GameScript(GameMap* pMap);
-    virtual ~GameScript();
+    ~GameScript();
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -72,7 +74,7 @@ public:
      * @brief onGameLoaded
      * @param pMenu
      */
-    void onGameLoaded(InGameMenue* pMenu);
+    void onGameLoaded(BaseGamemenu* pMenu);
 
     QString getScriptFile() const;
     void setScriptFile(const QString &value);
@@ -98,7 +100,6 @@ private:
     ScriptVariables m_Variables;
     bool m_loaded{false};
     GameMap* m_pMap{nullptr};
-    static const QString m_scriptName;
 };
 
 Q_DECLARE_INTERFACE(GameScript, "GameScript");

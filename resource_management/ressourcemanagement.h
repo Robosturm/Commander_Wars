@@ -7,7 +7,7 @@
 #include <QDirIterator>
 #include <QCoreApplication>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 
 #include "coreengine/interpreter.h"
 #include "coreengine/settings.h"
@@ -23,6 +23,11 @@ public:
      * @return
      */
     static TClass* getInstance();
+    /**
+     * @brief created
+     * @return
+     */
+    static bool created();
     /**
      * @brief loadAll loads all units data
      */
@@ -80,8 +85,8 @@ public:
     bool getLoaded() const;
 
 protected:
-    explicit RessourceManagement(QString resPath, QString scriptPath, bool addTransparentBorder = true);
-    virtual ~RessourceManagement() = default;
+    explicit RessourceManagement(QString resPath, QString scriptPath, bool addTransparentBorder = true, bool raiseErrors = true);
+    ~RessourceManagement() = default;
     void loadRessources(QString resPath, bool addTransparentBorder = true);
     void loadAll(QStringList& list);
     void reset(QStringList& list);
@@ -90,6 +95,7 @@ protected:
     QStringList m_loadedRessources;
     QString m_scriptPath;
     bool m_loaded{false};
+    bool m_raiseErrors{true};
 private:
     static TClass* m_pInstance;
 };
@@ -109,8 +115,15 @@ TClass* RessourceManagement<TClass>::getInstance()
 }
 
 template<class TClass>
-RessourceManagement<TClass>::RessourceManagement(QString resPath, QString scriptPath, bool addTransparentBorder)
-    : m_scriptPath(scriptPath)
+bool RessourceManagement<TClass>::created()
+{
+    return m_pInstance != nullptr;
+}
+
+template<class TClass>
+RessourceManagement<TClass>::RessourceManagement(QString resPath, QString scriptPath, bool addTransparentBorder, bool raiseErrors)
+    : m_scriptPath(scriptPath),
+      m_raiseErrors(raiseErrors)
 {
     loadRessources(resPath, addTransparentBorder);
 }
@@ -232,7 +245,7 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
 {    
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths = getSearchPaths();
-    QApplication::processEvents();
+    QCoreApplication::processEvents();
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString path = searchPaths[i];
@@ -266,7 +279,14 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
                 pInterpreter->openScript(dirIter.fileInfo().filePath(), true);
                 if (!list.contains(id))
                 {
-                    list.append(id);
+                    if (m_raiseErrors && !pInterpreter->exists(id))
+                    {
+                        CONSOLE_PRINT("File: " + dirIter.fileInfo().filePath() + " didn't add an object named " + id + " to the game", Console::eERROR);
+                    }
+                    else
+                    {
+                        list.append(id);
+                    }
                 }
             }
         }

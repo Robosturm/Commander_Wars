@@ -2,27 +2,27 @@
 #define TABLEVIEW_H
 
 #include <QObject>
-#include "qvector.h"
-#include "qstringlist.h"
+#include <QVector>
+#include <QStringList>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 #include "objects/base/label.h"
 
 class TableView;
-typedef oxygine::intrusive_ptr<TableView> spTableView;
+using spTableView = oxygine::intrusive_ptr<TableView>;
 
-class TableView : public QObject, public oxygine::Actor
+class TableView final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit TableView(const QVector<qint32> & widths, const QVector<QStringList> & data, const QStringList & header, bool selectable = false);
-    virtual ~TableView() = default;
+    ~TableView() = default;
 signals:
     void sigItemClicked();
 public slots:
     void setCurrentItem(qint32 i);
     qint32 getCurrentItem() const;
-    QStringList getItem(qint32 i);
+    const QStringList & getItem(qint32 i) const;
 private:
     void addRow(qint32 i, qint32 i2, qint32 x, bool selectable);
 private:

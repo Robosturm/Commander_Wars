@@ -1,23 +1,36 @@
+#ifdef GRAPHICSUPPORT
+#include <QApplication>
+#endif
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/base/tooltip.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
-#include <qguiapplication.h>
+oxygine::spActor Tooltip::m_Tooltip = oxygine::spActor();
 
 Tooltip::Tooltip()
+#ifdef GRAPHICSUPPORT
     : m_TooltipTimer(this),
       m_TooltipPauseTimer(this)
+#endif
 {
-    setObjectName("Tooltip");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
+#ifdef GRAPHICSUPPORT
+    setObjectName("Tooltip");
     m_TooltipTimer.setSingleShot(true);
     m_TooltipPauseTimer.setSingleShot(true);
-    addEventListener(oxygine::TouchEvent::MOVE, [this](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::MOVE, [this](oxygine::Event* pEvent)
     {
         if (m_mouseHovered)
         {
@@ -28,7 +41,7 @@ Tooltip::Tooltip()
             emit sigStartHoveredTimer();
         }
     });
-    addEventListener(oxygine::TouchEvent::OVER, [this](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::OVER, [this](oxygine::Event* pEvent)
     {
         if (m_mouseHovered)
         {
@@ -39,7 +52,7 @@ Tooltip::Tooltip()
             emit sigStartHoveredTimer();
         }
     });
-    addEventListener(oxygine::TouchEvent::OUTX, [this](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::OUTX, [this](oxygine::Event* pEvent)
     {
         m_mouseHovered = false;
         emit sigStartHoveredTimer();
@@ -52,15 +65,10 @@ Tooltip::Tooltip()
         emit sigHideTooltip();
     });
 
-    addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* pEvent)
     {
         emit sigStopTooltip();
     });
-
-    connect(this, &Tooltip::sigHideTooltip, this, &Tooltip::hideTooltip, Qt::QueuedConnection);
-    connect(this, &Tooltip::sigStopTooltip, this, &Tooltip::stopTooltiptimer, Qt::QueuedConnection);
-    connect(this, &Tooltip::sigStartTooltip, this, &Tooltip::restartTooltiptimer, Qt::QueuedConnection);
-    connect(this, &Tooltip::sigStartHoveredTimer, this, &Tooltip::startHoveredTimer, Qt::QueuedConnection);
     connect(&m_TooltipTimer, &QTimer::timeout, this, &Tooltip::showTooltip, Qt::QueuedConnection);
     connect(&m_TooltipPauseTimer, &QTimer::timeout, this, [this]()
     {
@@ -68,11 +76,18 @@ Tooltip::Tooltip()
         hideTooltip();
         m_mouseHovered = true;
     }, Qt::QueuedConnection);
+#endif
+    connect(this, &Tooltip::sigHideTooltip, this, &Tooltip::hideTooltip, Qt::QueuedConnection);
+    connect(this, &Tooltip::sigStopTooltip, this, &Tooltip::stopTooltiptimer, Qt::QueuedConnection);
+    connect(this, &Tooltip::sigStartTooltip, this, &Tooltip::restartTooltiptimer, Qt::QueuedConnection);
+    connect(this, &Tooltip::sigStartHoveredTimer, this, &Tooltip::startHoveredTimer, Qt::QueuedConnection);
 }
 
 Tooltip::~Tooltip()
 {
+#ifdef GRAPHICSUPPORT
     m_TooltipTimer.stop();
+#endif
     if (m_Tooltip.get() != nullptr)
     {
         m_Tooltip->detach();
@@ -82,11 +97,14 @@ Tooltip::~Tooltip()
 
 void Tooltip::startHoveredTimer()
 {
+#ifdef GRAPHICSUPPORT
     m_TooltipPauseTimer.start(100);
+#endif
 }
 
 void Tooltip::restartTooltiptimer()
 {
+#ifdef GRAPHICSUPPORT
     if (!m_disabled && m_mouseHovered)
     {
         m_TooltipTimer.start(std::chrono::milliseconds(1000));
@@ -95,120 +113,130 @@ void Tooltip::restartTooltiptimer()
     {
         m_TooltipTimer.stop();
     }
+#endif
     removeTooltip();
 }
 
 void Tooltip::stopTooltiptimer()
 {
+#ifdef GRAPHICSUPPORT
     m_mouseHovered = false;
     m_TooltipTimer.stop();
+#endif
 }
 
 QString Tooltip::getTooltipText() const
 {
+#ifdef GRAPHICSUPPORT
     return m_tooltipText;
+#else
+    return QString();
+#endif
 }
 
 void Tooltip::setTooltipText(const QString &tooltipText)
 {
+#ifdef GRAPHICSUPPORT
     m_tooltipText = tooltipText;
+#endif
 }
 
 void Tooltip::showTooltip()
 {
+#ifdef GRAPHICSUPPORT
     if (!m_disabled && m_mouseHovered)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->pauseRendering();
-        hideTooltip();
-        if (oxygine::Stage::getStage()->isDescendant(oxygine::spActor(this)) && m_enabled && pApp->hasCursor())
+        if (oxygine::Stage::getStage()->isDescendant(oxygine::spActor(this)) &&
+            m_enabled &&
+            pApp->hasCursor() &&
+            QGuiApplication::focusWindow() == pApp &&
+            !m_tooltipText.isEmpty())
         {
-            if (QGuiApplication::focusWindow() == pApp &&
-                !m_tooltipText.isEmpty())
+            hideTooltip();
+            CONSOLE_PRINT("Showing tooltip", Console::eDEBUG);
+            QPoint curPos = pApp->mapPosFromGlobal(pApp->cursor().pos());
+            m_Tooltip = oxygine::spActor::create();
+            m_Tooltip->setPriority(static_cast<qint32>(Mainapp::ZOrder::Tooltip));
+
+            oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+            style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+            style.multiline = true;
+
+            ObjectManager* pObjectManager = ObjectManager::getInstance();
+            oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+            oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
+            pSpriteBox->setResAnim(pAnim);
+            m_Tooltip->addChild(pSpriteBox);
+            pSpriteBox->setPosition(0, 0);
+            pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+            oxygine::spTextField pText = oxygine::spTextField::create();
+            pText->setHtmlText(m_tooltipText);
+            pText->setWidth(Settings::getWidth() / 3);
+            pText->setStyle(style);
+            pText->setPosition(10, 10);
+            pSpriteBox->addChild(pText);
+            pSpriteBox->setSize(pText->getTextRect().getSize() + oxygine::Point(30, 30));
+
+            oxygine::Stage::getStage()->addChild(m_Tooltip);
+            if (curPos.x() + 10 + pSpriteBox->getScaledWidth() + 5 > Settings::getWidth())
             {
-                CONSOLE_PRINT("Showing tooltip", Console::eDEBUG);
-                QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
-                if (m_Tooltip.get() != nullptr)
-                {
-                    m_Tooltip->detach();
-                    m_Tooltip = nullptr;
-                }
-                m_Tooltip = oxygine::spActor::create();
-                m_Tooltip->setPriority(static_cast<qint32>(Mainapp::ZOrder::Tooltip));
-
-                oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-                style.color = FontManager::getFontColor();
-                style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-                style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-                style.multiline = true;
-
-                ObjectManager* pObjectManager = ObjectManager::getInstance();
-                oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
-                oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-                pSpriteBox->setResAnim(pAnim);
-                m_Tooltip->addChild(pSpriteBox);
-                pSpriteBox->setPosition(0, 0);
-                pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-                oxygine::spTextField pText = oxygine::spTextField::create();
-                pText->setHtmlText(m_tooltipText);
-                pText->setWidth(Settings::getWidth() / 3);
-                pText->setStyle(style);
-                pText->setPosition(10, 10);
-                pSpriteBox->addChild(pText);
-                pSpriteBox->setSize(pText->getTextRect().getSize() + oxygine::Point(30, 30));
-
-                oxygine::Stage::getStage()->addChild(m_Tooltip);
-                if (curPos.x() + 10 + pSpriteBox->getWidth() + 5 > Settings::getWidth())
-                {
-                    m_Tooltip->setX(curPos.x() - 10 - pSpriteBox->getWidth());
-                }
-                else
-                {
-                    m_Tooltip->setX(curPos.x() + 10);
-                }
-                if (curPos.y() + 10 + pSpriteBox->getHeight() + 5 > Settings::getHeight())
-                {
-                    m_Tooltip->setY(curPos.y() - 10 - pSpriteBox->getHeight());
-                }
-                else
-                {
-                    m_Tooltip->setY(curPos.y() + 10);
-                }
+                m_Tooltip->setX(curPos.x() - 10 - pSpriteBox->getScaledWidth());
+            }
+            else
+            {
+                m_Tooltip->setX(curPos.x() + 10);
+            }
+            if (curPos.y() + 10 + pSpriteBox->getScaledHeight() + 5 > Settings::getHeight())
+            {
+                m_Tooltip->setY(curPos.y() - 10 - pSpriteBox->getScaledHeight());
+            }
+            else
+            {
+                m_Tooltip->setY(curPos.y() + 10);
             }
         }
         pApp->continueRendering();
     }
+#endif
 }
 
 void Tooltip::enableTooltip()
 {
+#ifdef GRAPHICSUPPORT
     m_mouseHovered = true;
     m_disabled = false;
+#endif
 }
 
 void Tooltip::disableTooltip()
 {
+#ifdef GRAPHICSUPPORT
     m_disabled = true;
     stopTooltiptimer();
+#endif
     emit sigHideTooltip();
 }
 
 void Tooltip::hideTooltip()
 {    
+#ifdef GRAPHICSUPPORT
     stopTooltiptimer();
     removeTooltip();
+#endif
 }
 
 void Tooltip::removeTooltip()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->pauseRendering();
     if (m_Tooltip.get() != nullptr)
     {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->pauseRendering();
         m_Tooltip->detach();
         m_Tooltip = nullptr;
+        pApp->continueRendering();
     }
-    pApp->continueRendering();
 }
 
 void Tooltip::looseFocusInternal()

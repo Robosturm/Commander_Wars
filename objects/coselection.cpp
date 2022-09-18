@@ -12,7 +12,9 @@
 COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     : m_Coids(coids)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("COSelection");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPosition(position.x(), position.y());
@@ -112,12 +114,10 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
 
     connect(this, &COSelection::armySelectedChange, this, &COSelection::armyChanged, Qt::QueuedConnection);
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
-    m_COName = spLabel::create(m_CoDescription->getWidth());
+    m_COName = spLabel::create(m_CoDescription->getScaledWidth());
     m_COName->setStyle(headerStyle);
     m_COName->setSize(width, 55);
     m_COName->setPosition(0, 10);
@@ -125,15 +125,13 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
 
     width -= 70;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    m_COPower = spLabel::create(m_CoDescription->getWidth());
+    m_COPower = spLabel::create(m_CoDescription->getScaledWidth());
     m_COPower->setStyle(style);
     m_COPower->setPosition(0, 70);
     m_CoDescription->addItem(m_COPower);
-    m_COSuperpower = spLabel::create(m_CoDescription->getWidth());
+    m_COSuperpower = spLabel::create(m_CoDescription->getScaledWidth());
     m_COSuperpower->setStyle(style);
     m_COSuperpower->setPosition(0, 100);
     m_CoDescription->addItem(m_COSuperpower);
@@ -389,20 +387,15 @@ void COSelection::hoveredCOChanged(QString coid)
         }
         m_COName->setHtmlText(coName);
         m_COName->setX(5);
-//        m_COName->setX(m_CoDescription->getWidth() / 2 - m_COName->getTextRect().getWidth() / 2 - 35);
-//        if (m_COName->getX() < 5)
-//        {
-//            m_COName->setX(5);
-//        }
 
         m_COBio->setHtmlText(coBio);
         m_COBio->setHeight(m_COBio->getTextRect().getHeight() + 20);
 
         m_CODesc->setHtmlText(coDesc);
         m_CODesc->setHeight(m_CODesc->getTextRect().getHeight() + 20);
-        m_CODesc->setY(m_COBio->getY() + m_COBio->getHeight() + 10);
+        m_CODesc->setY(m_COBio->getY() + m_COBio->getScaledHeight() + 10);
 
-        m_CoDescription->setContentHeigth(m_CODesc->getY() + m_CODesc->getHeight() + 20);
+        m_CoDescription->setContentHeigth(m_CODesc->getY() + m_CODesc->getScaledHeight() + 20);
 
         m_COPower->setHtmlText(coPower);
         m_COSuperpower->setHtmlText(coSuperpower);

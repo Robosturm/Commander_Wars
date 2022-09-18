@@ -5,7 +5,7 @@ CO_OZZY.init = function(co, map)
 };
 CO_OZZY.activateSuperpower = function(co, powerMode, map)
 {
-    CO_OZZY.activatePower(co, powerMode);
+    CO_OZZY.activatePower(co, powerMode, map);
 };
 CO_OZZY.getSuperPowerDescription = function()
 {

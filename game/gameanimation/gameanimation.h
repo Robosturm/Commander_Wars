@@ -9,11 +9,12 @@
 
 #include "game/GameEnums.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/TweenQueue.h"
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
 class Player;
 class GameMap;
-
 class GameAnimation;
 using spGameAnimation = oxygine::intrusive_ptr<GameAnimation>;
 
@@ -31,6 +32,13 @@ signals:
     void sigFinished(bool skipping);
     void sigStart();
 public slots:
+    /**
+     * @brief getFontWidth
+     * @param font
+     * @param text
+     * @return
+     */
+    qint32 getFontWidth(const QString & font, const QString & text) const;
     /**
      * @brief getMap
      * @return
@@ -94,7 +102,7 @@ public slots:
       * @param scaleY
       * @param delay
       */
-    void addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0, qint32 frames = 0, qint32 loops = 1);
+    void addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0, qint32 frames = 0, qint32 loops = 1, QEasingCurve::Type easeType = QEasingCurve::Linear);
     /**
      * @brief addSpriteAnimTable
      * @param spriteID
@@ -161,26 +169,51 @@ public slots:
      * @param endScale final scaling of the animation
      * @param duration duration of scaling up
      */
-    void addTweenScale(float endScale, qint32 duration);
+    void addTweenScale(float endScale, qint32 duration, QEasingCurve::Type easeType = QEasingCurve::Linear);
     /**
      * @brief addTweenPosition adds a tween to change the position of this animation
      * @param point final position of the animation
      * @param duration duration of scaling up
      */
-    void addTweenPosition(QPoint point, qint32 duration);
+    void addTweenPosition(QPoint point, qint32 duration, QEasingCurve::Type easeType = QEasingCurve::Linear);
     /**
      * @brief addTweenColor
+     * @param endColor
+     * @param duration
+     * @param twoSided
+     */
+    void addTweenColor(qint32 spriteIdx, QColor startColor, QColor endColor, qint32 duration, bool twoSided, qint32 delay = 0, QEasingCurve::Type easeType = QEasingCurve::Linear);
+    /**
+     * @brief addTweenWait
+     * @param duration
+     */
+    void addTweenWait(qint32 duration, QEasingCurve::Type easeType= QEasingCurve::Linear);
+    /**
+     * @brief addTweenScale adds a tween to change the scale of this animation
+     * @param endScale final scaling of the animation
+     * @param duration duration of scaling up
+     */
+    void addTweenScaleToLastQueue(float endScale, qint32 duration, QEasingCurve::Type easeType = QEasingCurve::Linear);
+    /**
+     * @brief addTweenPosition adds a tween to change the position of this animation
+     * @param point final position of the animation
+     * @param duration duration of scaling up
+     */
+    void addTweenPositionToLastQueue(QPoint point, qint32 duration, QEasingCurve::Type easeType = QEasingCurve::Linear);
+    /**
+     * @brief addTweenColorToLastQueue
      * @param startColor
      * @param endColor
      * @param duration
      * @param twoSided
      */
-    void addTweenColor(qint32 spriteIdx, QColor startColor, QColor endColor, qint32 duration, bool twoSided, qint32 delay = 0);
+    void addTweenColorToLastQueue(QColor endColor, qint32 duration, bool twoSided, qint32 delay = 0, QEasingCurve::Type easeType = QEasingCurve::Linear);
     /**
      * @brief addTweenWait
      * @param duration
      */
-    void addTweenWait(qint32 duration);
+    void addTweenWaitToLastQueue(qint32 duration, QEasingCurve::Type easeType= QEasingCurve::Linear);
+
     /************ post animation stuff **************************/
     /**
      * @brief seekBuffer seeks the variable buffer to 0
@@ -290,7 +323,12 @@ public slots:
      * @param durationMs
      * @param shakePauseMs
      */
-    void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delay = 0, qint32 shakePauseMs = 30);
+    void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delay = 0, qint32 shakePauseMs = 30, QEasingCurve::Type easeType = QEasingCurve::Linear);
+    /**
+     * @brief getFrameTime
+     * @return
+     */
+    quint32 getFrameTime() const;
 protected:
     void emitFinished();
 
@@ -306,7 +344,7 @@ private:
      * @param scaleY
      * @param delay
      */
-    void loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, qint32 loops);
+    void loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, qint32 loops, QEasingCurve::Type easeType = QEasingCurve::Linear);
     /**
      * @brief loadSpriteAnimTable
      * @param pAnim
@@ -351,6 +389,7 @@ protected:
     };
     QVector<SoundData> m_SoundData;
     GameMap* m_pMap{nullptr};
+    oxygine::spTweenQueue m_lastCreatedTweenQueue;
 private:
 
     QVector<spGameAnimation> m_QueuedAnimations;

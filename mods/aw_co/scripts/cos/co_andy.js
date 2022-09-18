@@ -5,7 +5,7 @@ CO_ANDY.init = function(co, map)
 };
 CO_ANDY.activateSuperpower = function(co, powerMode, map)
 {
-    CO_ANDY.activatePower(co, powerMode);
+    CO_ANDY.activatePower(co, powerMode, map);
 };
 CO_ANDY.getSuperPowerDescription = function()
 {
@@ -16,6 +16,8 @@ CO_ANDY.getSuperPowerName = function()
     return CO_ANDY.getPowerName();
 };
 CO_ANDY.coZoneBonus = 0;
+CO_ANDY.coPowerBonus = 0;
+CO_ANDY.coSuperPowerBonus = 20;
 CO_ANDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {

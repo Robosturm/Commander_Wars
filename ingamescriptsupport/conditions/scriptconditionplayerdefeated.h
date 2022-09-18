@@ -6,7 +6,7 @@
 class ScriptConditionPlayerDefeated;
 typedef oxygine::intrusive_ptr<ScriptConditionPlayerDefeated> spScriptConditionPlayerDefeated;
 
-class ScriptConditionPlayerDefeated : public ScriptCondition
+class ScriptConditionPlayerDefeated final : public ScriptCondition
 {
     Q_OBJECT
 public:

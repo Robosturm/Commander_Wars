@@ -17,7 +17,9 @@ DialogCOStyle::DialogCOStyle(QString coid)
     : QObject(),
       m_currentCOID(coid)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DialogCOStyle");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
@@ -34,7 +36,8 @@ DialogCOStyle::DialogCOStyle(QString coid)
 
     // ok button
     m_pOkButton = pObjectManager->createButton(tr("Apply"), 150);
-    m_pOkButton->setPosition(Settings::getWidth() - m_pOkButton->getWidth() - 30, Settings::getHeight() - 10 - m_pOkButton->getHeight());
+    m_pOkButton->setPosition(Settings::getWidth() - m_pOkButton->getScaledWidth() - 30,
+                             Settings::getHeight() - 10 - m_pOkButton->getScaledHeight());
     m_pSpriteBox->addChild(m_pOkButton);
     m_pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pCOSpriteManager](oxygine::Event* event)
     {
@@ -44,14 +47,36 @@ DialogCOStyle::DialogCOStyle(QString coid)
         emit sigFinished();
     });
 
+    oxygine::spButton pSaveButton = pObjectManager->createButton(tr("Save"), 150);
+    pSaveButton->setPosition(Settings::getWidth() - m_pOkButton->getScaledWidth() - pSaveButton->getScaledWidth() - 40,
+                             Settings::getHeight() - 10 - pSaveButton->getScaledHeight());
+    m_pSpriteBox->addChild(pSaveButton);
+    pSaveButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* event)
+    {
+        event->stopPropagation();
+        emit sigSaveCustomStyle();
+    });
+
     // cancel button
     oxygine::spButton pExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    pExitButton->setPosition(30, Settings::getHeight() - 10 - pExitButton->getHeight());
+    pExitButton->setPosition(30, Settings::getHeight() - 10 - pExitButton->getScaledHeight());
     m_pSpriteBox->addChild(pExitButton);
     pExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigCancel();
     });
+
+    m_pDeleteButton = pObjectManager->createButton(tr("Delete"), 150);
+    m_pDeleteButton->setPosition(40 + pExitButton->getScaledWidth(),
+                                 Settings::getHeight() - 10 - m_pDeleteButton->getScaledHeight());
+    m_pSpriteBox->addChild(m_pDeleteButton);
+    m_pDeleteButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* event)
+    {
+        event->stopPropagation();
+        emit sigDeleteCustomStyle();
+    });
+    m_pDeleteButton->setEnabled(false);
+
     qint32 heigth = Settings::getHeight() - 320;
     if (Settings::getSmallScreenDevice())
     {
@@ -75,7 +100,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
         m_pColorSelector->setPosition(30, 30);
         m_pSpriteBox->addChild(m_pColorSelector);
         connect(m_pColorSelector.get(), &ColorSelector::sigSelecetedColorChanged, this, &DialogCOStyle::selecetedColorChanged, Qt::QueuedConnection);
-        colorSelectorWidth = m_pColorSelector->getWidth();
+        colorSelectorWidth = m_pColorSelector->getScaledWidth();
     }
     QSize size(Settings::getWidth() - colorSelectorWidth - 75, heigth);
     m_pCOPanel = spPanel::create(true, size, size);
@@ -112,13 +137,12 @@ DialogCOStyle::DialogCOStyle(QString coid)
     {
         oxygine::spTextField textField = oxygine::spTextField::create();
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
         textField->setStyle(style);
         textField->setHtmlText(tr("Predefined Styles"));
-        textField->setPosition(Settings::getWidth() / 2 - 10 - textField->getTextRect().getWidth(),  Settings::getHeight()  - 10 - m_pOkButton->getHeight());
+        textField->setPosition(Settings::getWidth() / 2 - 10 - textField->getTextRect().getWidth(),
+                               Settings::getHeight()  - 10 - m_pOkButton->getScaledHeight());
         m_pSpriteBox->addChild(textField);
     }
     connect(this, &DialogCOStyle::sigCOStyleChanged, this, &DialogCOStyle::changeCOStyle, Qt::QueuedConnection);
@@ -149,6 +173,8 @@ DialogCOStyle::DialogCOStyle(QString coid)
     updateSprites();
     connect(this, &DialogCOStyle::sigCancel, this, &DialogCOStyle::remove, Qt::QueuedConnection);
     connect(this, &DialogCOStyle::sigFinished, this, &DialogCOStyle::remove, Qt::QueuedConnection);
+    connect(this, &DialogCOStyle::sigSaveCustomStyle, this, &DialogCOStyle::saveCustomStyle, Qt::QueuedConnection);
+    connect(this, &DialogCOStyle::sigDeleteCustomStyle, this, &DialogCOStyle::deleteCustomStyle, Qt::QueuedConnection);
     pApp->continueRendering();
 }
 
@@ -187,73 +213,11 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         }
         oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + "+nrm"));
         QString filePath = GlobalUtils::makePathRelative(pAnim->getResPath());
-        QString style = m_Styles[index];
+        QString style = m_Styles[m_CurrentIndex];
         filePath = filePath.replace("+nrm.png", "");
         m_ResFilePath = filePath + style;
         CONSOLE_PRINT("Using res file path: " + m_ResFilePath, Console::eDEBUG);
-        QFile file(Settings::getUserPath() + m_ResFilePath + "+table.png");
-        if (!file.exists())
-        {
-            file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + m_ResFilePath + "+table.png");
-        }
-        if (file.exists())
-        {
-            m_useColorBox = false;
-            QStringList items;
-            m_baseColorTable.load(file.fileName());
-            m_colorTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
-            m_maskTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
-            for (qint32 i = 0; i < m_baseColorTable.height(); i++)
-            {
-                items.append(tr("CO Style ") + QString::number(i));
-            }
-            m_pPredefinedStyles = spDropDownmenu::create(200, items);
-            m_pSpriteBox->addChild(m_pPredefinedStyles);
-        }
-        else
-        {
-            m_useColorBox = true;
-            QImage src;
-            if (QFile::exists(Settings::getUserPath() + m_ResFilePath + "+nrm.png"))
-            {
-                src = QImage(Settings::getUserPath() + m_ResFilePath + "+nrm.png");
-            }
-            else
-            {
-                src = QImage(oxygine::Resource::RCC_PREFIX_PATH + m_ResFilePath + "+nrm.png");
-            }
-            m_baseColorTable = SpriteCreator::createColorTable(src);
-            m_colorTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
-            m_maskTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
-            QStringList items;
-            items.append(tr("CO Style ") + QString::number(0));
-            m_pPredefinedStyles = spDropDownmenu::create(200, items);
-            m_pSpriteBox->addChild(m_pPredefinedStyles);
-        }
-        if (Settings::getSmallScreenDevice())
-        {
-            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 - m_pPredefinedStyles->getWidth() / 2, Settings::getHeight() - 10 - m_pOkButton->getHeight());
-        }
-        else
-        {
-            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() -  10 - m_pOkButton->getHeight());
-        }
-        connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 item)
-        {
-            m_maskTable = m_baseColorTable.copy(0, item, m_baseColorTable.width(), 1);
-            if (!Settings::getSmallScreenDevice())
-            {
-                for (qint32 i = 0; i < m_maskTable.width(); i++)
-                {
-                    if (i < m_Pixels.size())
-                    {
-                        QColor color = m_maskTable.pixelColor(i, 0);
-                        m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
-                    }
-                }
-            }
-            updateSprites();
-        });
+        loadAltsForStyle();
         if (!Settings::getSmallScreenDevice())
         {
             m_pPixelPanel->clearContent();
@@ -275,13 +239,19 @@ void DialogCOStyle::changeCOStyle(qint32 index)
                 pixel->setColor(color.red(), color.green(), color.blue(), 255);
                 pixel->setPosition(xStep * 22 + 5, y);
                 oxygine::Actor* pActor = m_PixelsSelector.get();
-                pixel->addClickListener([this, pActor, xStep, y, i](oxygine::Event* pEvent)
+                auto* pPixelAxtor = pixel.get();
+                pixel->addClickListener([this, pActor, pPixelAxtor, xStep, y, i](oxygine::Event* pEvent)
                 {
                     pEvent->stopPropagation();
                     pActor->setPosition(xStep * 22 - 2 + 5, y - 2);
                     m_currentPixel = i;
+                    emit m_pColorSelector->sigSelecetedColorChanged(pPixelAxtor->getColor());
                 });
-
+                if (i == 0)
+                {
+                    m_currentPixel = 0;
+                    emit m_pColorSelector->sigSelecetedColorChanged(pPixelAxtor->getColor());
+                }
                 m_pPixelPanel->addItem(pixel);
                 m_Pixels.append(pixel);
                 xStep++;
@@ -296,6 +266,97 @@ void DialogCOStyle::changeCOStyle(qint32 index)
     }
 }
 
+void DialogCOStyle::loadAltsForStyle()
+{
+    QFile file(Settings::getUserPath() + m_ResFilePath + "+table.png");
+    if (!file.exists())
+    {
+        file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + m_ResFilePath + "+table.png");
+    }
+    QStringList items;
+    if (file.exists())
+    {
+        m_useColorBox = false;
+        m_baseColorTable.load(file.fileName());
+        m_colorTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
+        m_maskTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
+        for (qint32 i = 0; i < m_baseColorTable.height(); i++)
+        {
+            items.append(tr("CO Style ") + QString::number(i + 1));
+        }
+    }
+    else
+    {
+        m_useColorBox = true;
+        QImage src;
+        if (QFile::exists(Settings::getUserPath() + m_ResFilePath + "+nrm.png"))
+        {
+            src = QImage(Settings::getUserPath() + m_ResFilePath + "+nrm.png");
+        }
+        else
+        {
+            src = QImage(oxygine::Resource::RCC_PREFIX_PATH + m_ResFilePath + "+nrm.png");
+        }
+        m_baseColorTable = SpriteCreator::createColorTable(src);
+        m_colorTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
+        m_maskTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
+        items.append(tr("CO Style ") + QString::number(1));
+    }
+
+    QString customStylePath = "data/customStyles/" + m_currentCOID + m_Styles[m_CurrentIndex] + "+table.png";;
+    if (QFile::exists(customStylePath))
+    {
+        m_customMaskTable = QImage(customStylePath);
+        for (qint32 i = 0; i < m_customMaskTable.height(); ++i)
+        {
+            items.append(tr("CO Style ") + QString::number(items.length() + 1));
+        }
+    }
+    else
+    {
+        m_pDeleteButton->setEnabled(false);
+    }
+
+    m_pPredefinedStyles = spDropDownmenu::create(200, items);
+    m_pSpriteBox->addChild(m_pPredefinedStyles);
+    if (Settings::getSmallScreenDevice())
+    {
+        m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 - m_pPredefinedStyles->getScaledWidth() / 2,
+                                         Settings::getHeight() - 10 - m_pOkButton->getScaledHeight());
+    }
+    else
+    {
+        m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10,
+                                         Settings::getHeight() -  10 - m_pOkButton->getScaledHeight());
+    }
+    connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 item)
+    {
+        if (item >= m_baseColorTable.height())
+        {
+            m_maskTable = m_customMaskTable.copy(0, item - m_baseColorTable.height(), m_customMaskTable.width(), 1);
+            m_pDeleteButton->setEnabled(true);
+        }
+        else
+        {
+            m_maskTable = m_baseColorTable.copy(0, item, m_baseColorTable.width(), 1);
+            m_pDeleteButton->setEnabled(false);
+        }
+
+        if (!Settings::getSmallScreenDevice())
+        {
+            for (qint32 i = 0; i < m_maskTable.width(); i++)
+            {
+                if (i < m_Pixels.size())
+                {
+                    QColor color = m_maskTable.pixelColor(i, 0);
+                    m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
+                }
+            }
+        }
+        updateSprites();
+    });
+}
+
 void DialogCOStyle::addCOStyle(QString style, bool select)
 {
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -306,10 +367,10 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+nrm", oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        float scale = (m_pCOPanel->getHeight() - 100) / pAnim->getHeight();
-        pBox->setSize(scale * pAnim->getWidth() + 20, scale * pAnim->getHeight() + 40);
+        float scale = (m_pCOPanel->getScaledHeight() - 150) / pAnim->getHeight();
+        pBox->setSize(scale * pAnim->getWidth() + 70, scale * pAnim->getHeight() + 40);
         pBox->setPosition(m_boxWidth, 10);
-        m_boxWidth += pBox->getWidth() + 10;
+        m_boxWidth += pBox->getScaledWidth() + 10;
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         m_pCOPanel->addItem(pBox);
         // add some event handling :)
@@ -343,19 +404,114 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
         pCO->setScale(scale);
         pCO->setPosition(10, 10);
         pBox->addChild(pCO);
-        m_pCOPanel->setContentWidth(pBox->getX() + pBox->getWidth() + 50);
+        m_pCOPanel->setContentWidth(pBox->getX() + pBox->getScaledWidth() + 50);
+
+        pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+mini", oxygine::ep_ignore_error);
+        oxygine::spSprite pMiniCO = oxygine::spSprite::create();        
+        pMiniCO->setResAnim(pAnim);
+        if (pAnim != nullptr)
+        {
+            pMiniCO->setScale(1.0f);
+            pMiniCO->setPosition(10, pBox->getScaledHeight() - pAnim->getHeight() - 10);
+            pBox->addChild(pMiniCO);
+        }
+
+        pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+face", oxygine::ep_ignore_error);
+        oxygine::spSprite pFaceCO = oxygine::spSprite::create();
+        pFaceCO->setResAnim(pAnim);
+        pFaceCO->setScale(1.0f);
+        pFaceCO->setPosition(pBox->getScaledWidth() - 10 - pAnim->getWidth(), pBox->getScaledHeight() - pAnim->getHeight() - 10);
+        pBox->addChild(pFaceCO);
 
         m_pCOSprites.append(pCO);
-        m_pCOBoxes.append(pBox);
         m_pResAnims.append(oxygine::spResAnim());
+        m_pMiniCOSprites.append(pMiniCO);
+        m_pMiniResAnims.append(oxygine::spResAnim());
+        m_pFaceCOSprites.append(pFaceCO);
+        m_pFaceResAnims.append(oxygine::spResAnim());
+
+        m_pCOBoxes.append(pBox);
     }
 }
 
 void DialogCOStyle::updateSprites()
 {
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + m_Styles[m_CurrentIndex] + "+nrm"));
+    oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + m_Styles[m_CurrentIndex] + "+nrm");
     float scale = pAnim->getScaleFactor();
     m_pResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+nrm.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale, false);
     m_pCOSprites[m_CurrentIndex]->setResAnim(m_pResAnims[m_CurrentIndex].get());
+
+    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + m_Styles[m_CurrentIndex] + "+mini");
+    if (pAnim != nullptr)
+    {
+        scale = pAnim->getScaleFactor();
+        m_pMiniResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+mini.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale, false);
+        m_pMiniCOSprites[m_CurrentIndex]->setResAnim(m_pMiniResAnims[m_CurrentIndex].get());
+    }
+    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + m_Styles[m_CurrentIndex] + "+face");
+    scale = pAnim->getScaleFactor();
+    m_pFaceResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+face.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale, false);
+    m_pFaceCOSprites[m_CurrentIndex]->setResAnim(m_pFaceResAnims[m_CurrentIndex].get());
+}
+
+void DialogCOStyle::saveCustomStyle()
+{
+    QImage saveFile;
+    QString filename = "data/customStyles/" + m_currentCOID + m_Styles[m_CurrentIndex] + "+table.png";
+    if (QFile::exists(filename))
+    {
+        QImage current(filename);
+        saveFile = QImage(current.width(), current.height() + 1, QImage::Format_RGBA8888);
+        for (qint32 x = 0; x < current.width(); ++x)
+        {
+            for (qint32 y = 0; y < current.height(); ++y)
+            {
+                saveFile.setPixelColor(x, y, current.pixelColor(x, y));
+            }
+        }
+    }
+    else
+    {
+        saveFile = QImage(m_maskTable.width(), 1, QImage::Format_RGBA8888);
+    }
+    for (qint32 x = 0; x < m_Pixels.size(); ++x)
+    {
+        saveFile.setPixelColor(x, saveFile.height() - 1, m_Pixels[x]->getColor());
+    }
+    saveFile.save(filename);
+    loadAltsForStyle();
+}
+
+void DialogCOStyle::deleteCustomStyle()
+{
+    qint32 item = m_pPredefinedStyles->getCurrentItem() - m_baseColorTable.height();
+    if (item >= 0)
+    {
+        QString filename = "data/customStyles/" + m_currentCOID + m_Styles[m_CurrentIndex] + "+table.png";
+        if (m_customMaskTable.height() > 1)
+        {
+            QImage saveFile(m_customMaskTable.width(), m_customMaskTable.height() - 1, QImage::Format_RGBA8888);
+            qint32 newY = 0;
+            for (qint32 y = 0; y < m_customMaskTable.height(); ++y)
+            {
+                if (y != item)
+                {
+                    for (qint32 x = 0; x < m_customMaskTable.width(); ++x)
+                    {
+                        saveFile.setPixelColor(x, newY, m_customMaskTable.pixelColor(x, y));
+                    }
+                    ++newY;
+                }
+            }
+            saveFile.save(filename);
+        }
+        else
+        {
+            QFile file (filename);
+            file.remove();
+            m_pDeleteButton->setEnabled(false);
+        }
+    }
+    loadAltsForStyle();
 }

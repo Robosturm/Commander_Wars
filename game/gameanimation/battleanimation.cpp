@@ -1,10 +1,17 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/slidingsprite.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenchangenumbertext.h"
+
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/cospritemanager.h"
-#include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
+#include "resource_management/fontmanager.h"
 
 #include "game/gameanimation/battleanimation.h"
 #include "game/gamemap.h"
@@ -30,7 +37,9 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
       m_DefWeapon(defWeapon),
       m_DefenderDamage(defenderDamage)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("BattleAnimation");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -410,9 +419,12 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
 {
     // create health bar
     auto* pAnim = GameManager::getInstance()->getResAnim("healthbar");
+    oxygine::TextStyle style(FontManager::getFont("battleHpFont16"));
     m_HealthBar0 = oxygine::spBox9Sprite::create();
     m_HealthBar0->setResAnim(pAnim);
     m_HealthBar0->setSize((spriteWidth - healthBarSize) * atkStartHp / Unit::MAX_UNIT_HP + MIN_HEALTHBAR_WIDTH, 9);
+    m_hpInfo0 = oxygine::spTextField::create();
+    m_hpInfo0->setStyle(style);
     if (getIsLeft(pAtkUnit, pDefUnit))
     {
         m_HealthBar0->setPosition(41, 25);
@@ -422,11 +434,16 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
         m_HealthBar0->setPosition(162, 25);
         m_HealthBar0->setFlippedX(true);
     }
+    m_hpInfo0->setPosition(m_HealthBar0->getPosition() + oxygine::Vector2(spriteWidth / 2 - 16, -16));
     m_HealthBar0->setColor(getHealthBarColor(atkStartHp));
+    m_hpInfo0->setText(QString::number(GlobalUtils::roundUp(atkStartHp)));
     addChild(m_HealthBar0);
+    addChild(m_hpInfo0);
     m_HealthBar1 = oxygine::spBox9Sprite::create();
     m_HealthBar1->setResAnim(pAnim);
     m_HealthBar1->setSize((spriteWidth - healthBarSize) * defStartHp / Unit::MAX_UNIT_HP + MIN_HEALTHBAR_WIDTH, 9);
+    m_hpInfo1 = oxygine::spTextField::create();
+    m_hpInfo1->setStyle(style);
     if (getIsLeft(pDefUnit, pAtkUnit))
     {
         m_HealthBar1->setPosition(41, 25);
@@ -436,8 +453,11 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
         m_HealthBar1->setPosition(162, 25);
         m_HealthBar1->setFlippedX(true);
     }
+    m_hpInfo1->setPosition(m_HealthBar1->getPosition() + oxygine::Vector2(spriteWidth / 2 - 16, -16));
     m_HealthBar1->setColor(getHealthBarColor(defStartHp));
+    m_hpInfo1->setText(QString::number(GlobalUtils::roundUp(defStartHp)));
     addChild(m_HealthBar1);
+    addChild(m_hpInfo1);
 }
 
 bool BattleAnimation::getIsLeft(Unit* pUnit1, Unit* pUnit2)
@@ -614,10 +634,10 @@ QColor BattleAnimation::getHealthBarColor(float hp)
 
 void BattleAnimation::restart()
 {
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
+    if (pMenu != nullptr)
     {
-        pGameMenue->addChild(spBattleAnimation(this));
+        pMenu->addChild(spBattleAnimation(this));
         m_battleTimer.start();
     }
 }
@@ -701,7 +721,7 @@ void BattleAnimation::nextAnimatinStep()
         {
             // load impact
             loadImpactAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_pAttackerAnimation,
-                                m_HealthBar1, m_defEndHp, m_AtkWeapon, m_atkStartHp);
+                                m_HealthBar1, m_hpInfo1, m_defStartHp, m_defEndHp, m_AtkWeapon, m_atkStartHp);
             break;
         }
         case AnimationProgress::AttackerDying:
@@ -767,7 +787,7 @@ void BattleAnimation::nextAnimatinStep()
         {
             // remove firing frames
             loadImpactAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_pDefenderAnimation,
-                                m_HealthBar0, m_atkEndHp, m_DefWeapon, m_defEndHp);
+                                m_HealthBar0, m_hpInfo0, m_atkStartHp, m_atkEndHp, m_DefWeapon, m_defEndHp);
             break;
         }
         case AnimationProgress::DefenderDying:
@@ -851,7 +871,7 @@ void BattleAnimation::loadFireAnimation(spBattleAnimationSprite pSprite, Unit* p
 }
 
 void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite & pSprite, spBattleAnimationSprite & pAttackerSprite,
-                                          oxygine::spBox9Sprite & pHealthbar, float endHp, qint32 weapon, float enemyHp)
+                                          oxygine::spBox9Sprite & pHealthbar, oxygine::spTextField & pHealthtext, float startHp, float endHp, qint32 weapon, float enemyHp)
 {    
     if (endHp < 0.0f)
     {
@@ -860,10 +880,15 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
         pHealthbar->addTween(visibleTween);
     }
     oxygine::VStyleActor::TweenColor tweenColor(getHealthBarColor(endHp));
+    TweenChangeNumberText tweenChangeNumber(GlobalUtils::roundUp(startHp), GlobalUtils::roundUp(endHp));
+
     oxygine::spTween colorTween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pHealthbar->addTween(colorTween);
     oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth((spriteWidth -  healthBarSize) * endHp / Unit::MAX_UNIT_HP + MIN_HEALTHBAR_WIDTH), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pHealthbar->addTween(posTween);
+    oxygine::spTween numberTween = oxygine::createTween(tweenChangeNumber, oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
+    pHealthtext->addTween(numberTween);
+
     if (m_currentState <= AnimationProgress::AttackerImpact)
     {
         setCOMood(m_AtkCO0, m_atkStartHp, m_defEndHp);

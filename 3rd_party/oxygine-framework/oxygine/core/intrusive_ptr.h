@@ -1,12 +1,10 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
-#include "QtGlobal"
 
 namespace oxygine
 {
     template <class T>
-    class intrusive_ptr
+    class intrusive_ptr final
     {
         T* m_pPointer{nullptr};
     public:
@@ -23,6 +21,15 @@ namespace oxygine
         explicit intrusive_ptr()
             : m_pPointer(nullptr)
         {
+        }
+
+        ~intrusive_ptr()
+        {
+            if (m_pPointer != nullptr)
+            {
+                m_pPointer->releaseRef();
+                m_pPointer = nullptr;
+            }
         }
 
         intrusive_ptr(const intrusive_ptr& s)
@@ -117,15 +124,6 @@ namespace oxygine
         {
             return m_pPointer != nullptr;
         }
-
-        virtual ~intrusive_ptr()
-        {
-            if (m_pPointer != nullptr)
-            {
-                m_pPointer->releaseRef();
-                m_pPointer = nullptr;
-            }
-        }
     };
 
     template<class T, class U> inline bool operator==(intrusive_ptr<T> const& a, intrusive_ptr<U> const& b)
@@ -160,7 +158,7 @@ namespace oxygine
 
     template<class T, class U> intrusive_ptr<T> static_pointer_cast(intrusive_ptr<U> const& p)
     {
-        return static_cast<T*>(p.get());
+        return intrusive_ptr<T>(static_cast<T*>(p.get()));
     }
 
     template<class T, class U> intrusive_ptr<T> const_pointer_cast(intrusive_ptr<U> const& p)

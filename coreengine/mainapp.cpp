@@ -1,13 +1,15 @@
-#include "qfile.h"
-#include "qguiapplication.h"
-#include "qscreen.h"
-#include "qdir.h"
-#include "qmessagebox.h"
-#include "qthread.h"
-#include "qresource.h"
-
+#include <QFile>
+#ifdef GRAPHICSUPPORT
 #include <QApplication>
-#include <QGuiApplication>
+#else
+#include <QCoreApplication>
+#endif
+#include <QScreen>
+#include <QDir>
+#include <QMessageBox>
+#include <QThread>
+#include <QResource>
+#include <QCoreApplication>
 #include <QClipboard>
 
 #include "coreengine/userdata.h"
@@ -16,6 +18,8 @@
 #include "coreengine/audiothread.h"
 #include "coreengine/workerthread.h"
 #include "coreengine/globalutils.h"
+
+#include "ui_reader/uifactory.h"
 
 #include "game/gamerecording/gamemapimagesaver.h"
 
@@ -40,6 +44,8 @@
 #include "resource_management/shoploader.h"
 #include "resource_management/movementtablemanager.h"
 #include "resource_management/weaponmanager.h"
+#include "resource_management/movementplanneraddinmanager.h"
+#include "resource_management/uimanager.h"
 
 #include "wiki/wikidatabase.h"
 
@@ -55,17 +61,22 @@ bool Mainapp::m_slave{false};
 QMutex Mainapp::m_crashMutex;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
 
+#include "network/rsacypherhandler.h"
+
 Mainapp::Mainapp()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Mainapp");
+#endif
     m_pMainThread = QThread::currentThread();
     m_pMainapp = this;
     Interpreter::setCppOwnerShip(this);
-    createBaseDirs();
+#ifdef GRAPHICSUPPORT
     m_pMainThread->setObjectName("Mainthread");
     m_Workerthread.setObjectName("Workerthread");
     m_Networkthread.setObjectName("Networkthread");
     m_GameServerThread.setObjectName("GameServerThread");
+#endif
 
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
@@ -76,36 +87,88 @@ Mainapp::Mainapp()
 
 void Mainapp::createLineEdit()
 {
-    m_pLineEdit = new QLineEdit();
+#ifdef GRAPHICSUPPORT    
+    m_pLineEdit = new EventTextEdit();
+    m_pLineEdit->setVisible(false);
+#endif
 }
 
 void Mainapp::shutdown()
 {
-    BuildingSpriteManager::getInstance()->free();
-    COSpriteManager::getInstance()->free();
-    GameManager::getInstance()->free();
-    GameRuleManager::getInstance()->free();
-    MovementTableManager::getInstance()->free();
-    TerrainManager::getInstance()->free();
-    UnitSpriteManager::getInstance()->free();
-    WeaponManager::getInstance()->free();
-    BattleAnimationManager::getInstance()->free();
-    COPerkManager::getInstance()->free();
-    WikiDatabase::getInstance()->free();
-    AchievementManager::getInstance()->free();
-    BackgroundManager::getInstance()->free();
-    FontManager::getInstance()->free();
-    GameAnimationManager::getInstance()->free();
-    ObjectManager::getInstance()->free();
-    ShopLoader::getInstance()->free();
+    if (BuildingSpriteManager::created())
+    {
+        BuildingSpriteManager::getInstance()->free();
+    }
+    if (COSpriteManager::created())
+    {
+        COSpriteManager::getInstance()->free();
+    }
+    if (GameManager::created())
+    {
+        GameManager::getInstance()->free();
+    }
+    if (GameRuleManager::created())
+    {
+        GameRuleManager::getInstance()->free();
+    }
+    if (MovementTableManager::created())
+    {
+        MovementTableManager::getInstance()->free();
+    }
+    if (TerrainManager::created())
+    {
+        TerrainManager::getInstance()->free();
+    }
+    if (UnitSpriteManager::created())
+    {
+        UnitSpriteManager::getInstance()->free();
+    }
+    if (WeaponManager::created())
+    {
+        WeaponManager::getInstance()->free();
+    }
+    if (BattleAnimationManager::created())
+    {
+        BattleAnimationManager::getInstance()->free();
+    }
+    if (COPerkManager::created())
+    {
+        COPerkManager::getInstance()->free();
+    }
+    if (WikiDatabase::created())
+    {
+        WikiDatabase::getInstance()->free();
+    }
+    if (AchievementManager::created())
+    {
+        AchievementManager::getInstance()->free();
+    }
+    if (BackgroundManager::created())
+    {
+        BackgroundManager::getInstance()->free();
+    }
+    // FontManager::getInstance()->free();
+    if (GameAnimationManager::created())
+    {
+        GameAnimationManager::getInstance()->free();
+    }
+    if (ObjectManager::created())
+    {
+        ObjectManager::getInstance()->free();
+    }
+    if (ShopLoader::created())
+    {
+        ShopLoader::getInstance()->free();
+    }
     GameWindow::shutdown();
+    UiFactory::shutdown();
 }
 
 bool Mainapp::isWorker()
 {
     return QThread::currentThread() == &m_Workerthread ||
-           (QThread::currentThread() == m_pMainThread &&
-           (m_shuttingDown || !m_Worker->getStarted()));
+            (QThread::currentThread() == m_pMainThread &&
+             (m_shuttingDown || !m_Worker->getStarted()));
 }
 
 bool Mainapp::isWorkerRunning()
@@ -115,10 +178,7 @@ bool Mainapp::isWorkerRunning()
 
 void Mainapp::loadRessources()
 {
-    if (!m_noUi)
-    {
-        update();
-    }
+    redrawUi();
     emit sigNextStartUpStep(StartupPhase::Start);
 }
 
@@ -126,11 +186,13 @@ void Mainapp::nextStartUpStep(StartupPhase step)
 {
     Console::print("Loading startup phase: " + QString::number(step), Console::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
-    pLoadingScreen->moveToThread(&m_Workerthread);
+    m_startUpStep = step;
+    bool automaticNextStep = true;
     switch (step)
     {
         case StartupPhase::General:
         {
+            pLoadingScreen->moveToThread(&m_Workerthread);
             m_Audiothread = new AudioThread(m_noAudio);
             m_Audiothread->initAudio();
             m_Audiothread->clearPlayList();
@@ -140,92 +202,85 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             BackgroundManager::getInstance();
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->show();
-            pLoadingScreen->setProgress(tr("Loading Building Textures..."), step  * stepProgress);
-            if (!m_noUi)
+            pLoadingScreen->setProgress(tr("Checking for new version..."), step  * stepProgress);
+            redrawUi();
+            break;
+        }
+        case UpdateManager:
+        {
+#ifdef UPDATESUPPORT
+            QString updateStep = Settings::getUpdateStep();
+            if (!getSlave())
             {
-                update();
+                if ((!getGameVersion().endsWith("dev") && Settings::getAutomaticUpdates()) ||
+                    updateStep == GameUpdater::MODE_FORCE ||
+                    updateStep == GameUpdater::MODE_INSTALL)
+                {
+                    automaticNextStep = false;
+                    m_gameUpdater = spGameUpdater::create();
+                }
             }
+            break;
+#endif
+        }
+        case StartupPhase::ObjectManager:
+        {
+#ifdef UPDATESUPPORT
+            m_gameUpdater = nullptr;
+#endif
+            ObjectManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Building Textures ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case StartupPhase::Building:
         {
             m_Audiothread->playRandom();
-            if (!m_noUi)
-            {
-                update();
-            }
+            redrawUi();
             BuildingSpriteManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading CO Textures..."), step  * stepProgress);
             break;
         }
         case StartupPhase::COSprites:
         {
-            if (!m_noUi)
-            {
-                update();
-            }
+            redrawUi();
             COSpriteManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading Animation Textures..."), step  * stepProgress);
             break;
         }
         case StartupPhase::GameAnimations:
         {
-            if (!m_noUi)
-            {
-                update();
-            }
+            redrawUi();
             GameAnimationManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading Game Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::GameManager:
         {
-            if (!m_noUi)
-            {
-                update();
-            }
+            redrawUi();
             GameManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading Rule Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::GameRuleManager:
         {
-            if (!m_noUi)
-            {
-                update();
-            }
+            redrawUi();
             GameRuleManager::getInstance();
             WeaponManager::getInstance();
             MovementTableManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Objects Textures ..."), step  * stepProgress);
-            break;
-        }
-        case StartupPhase::ObjectManager:
-        {
-            if (!m_noUi)
-            {
-                update();
-            }
-            ObjectManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Terrains Textures ..."), step  * stepProgress);
+            pLoadingScreen->setProgress(tr("Loading Terrain Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::TerrainManager:
         {
-            if (!m_noUi)
-            {
-                update();
-            }
+            redrawUi();
             TerrainManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading Units Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::UnitSpriteManager:
         {
-            if (!m_noUi)
-            {
-                update();
-            }
+            redrawUi();
             UnitSpriteManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading Battleanimation Textures ..."), step  * stepProgress);
             break;
@@ -239,59 +294,58 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case StartupPhase::COPerkManager:
         {
-            if (!m_noUi)
-            {
-                update();
-            }
+            redrawUi();
             COPerkManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading Wiki Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::WikiDatabase:
         {
-            if (!m_noUi)
-            {
-                update();
-            }
+            redrawUi();
             WikiDatabase::getInstance();
             pLoadingScreen->setProgress(tr("Loading Userdata ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::Userdata:
         {
-            if (!m_noUi)
-            {
-                update();
-            }
+            redrawUi();
             Userdata::getInstance();
             pLoadingScreen->setProgress(tr("Loading Achievement Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::Achievementmanager:
         {
-            if (!m_noUi)
-            {
-                update();
-            }
+            redrawUi();
             AchievementManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading Shop Textures ..."), step  * stepProgress);
             break;
         }
+        case MovementPlannerAddInManager:
+        {
+            redrawUi();
+            MovementPlannerAddInManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Movement planner addin Textures ..."), step  * stepProgress);
+            break;
+        }
+        case UiManager:
+        {
+            redrawUi();
+            UiManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Ui Textures ..."), step  * stepProgress);
+            break;
+        }
         case StartupPhase::ShopLoader:
         {
-            if (!m_noUi)
-            {
-                update();
-            }
+            redrawUi();
             ShopLoader::getInstance();
             pLoadingScreen->setProgress(tr("Loading sounds ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::Sound:
         {
+            redrawUi();
             if (!m_noAudio)
             {
-                update();
                 m_Audiothread->createSoundCache();
             }
             pLoadingScreen->setProgress(tr("Loading Scripts ..."), SCRIPT_PROCESS);
@@ -300,14 +354,16 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::LoadingScripts:
         {
             // start after ressource loading
+#ifdef GRAPHICSUPPORT
             m_Networkthread.setObjectName("NetworkThread");
             m_Workerthread.setObjectName("WorkerThread");
+#endif
             m_Networkthread.start(QThread::Priority::NormalPriority);
             m_Workerthread.start(QThread::Priority::NormalPriority);
             emit m_Worker->sigStart();
+            redrawUi();
             if (!m_noUi)
             {
-                update();
                 // refresh timer cycle before using it.
                 Settings::setFramesPerSecond(Settings::getFramesPerSecond());
                 m_Timer.start(m_timerCycle, this);
@@ -337,7 +393,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             break;
         }
     }
-    if (step < StartupPhase::LoadingScripts)
+    if (step < StartupPhase::LoadingScripts && automaticNextStep)
     {
         emit sigNextStartUpStep(static_cast<StartupPhase>(static_cast<qint8>(step) + 1));
     }
@@ -345,6 +401,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
 
 void Mainapp::doScreenshot()
 {
+#ifdef GRAPHICSUPPORT
     auto* currentScreen = screen();
     if (currentScreen != nullptr)
     {
@@ -363,6 +420,7 @@ void Mainapp::doScreenshot()
             ++i;
         }
     }
+#endif
 }
 
 void Mainapp::doMapshot()
@@ -385,17 +443,18 @@ void Mainapp::doMapshot()
     }
 }
 
-void Mainapp::changeScreenMode(qint32 mode)
+void Mainapp::changeScreenMode(Settings::ScreenModes mode)
 {
+#ifdef GRAPHICSUPPORT
     if (m_noUi)
     {
         return;
     }
-    CONSOLE_PRINT("Changing screen mode to " + QString::number(mode), Console::eDEBUG);
+    CONSOLE_PRINT("Changing screen mode to " + QString::number(static_cast<qint32>(mode)), Console::eDEBUG);
     hide();
     switch (mode)
     {
-        case 1:
+        case Settings::ScreenModes::Borderless:
         {
             setWindowState(Qt::WindowState::WindowNoState);
             setFlag(Qt::FramelessWindowHint);
@@ -403,30 +462,30 @@ void Mainapp::changeScreenMode(qint32 mode)
             setPosition(0, 0);
             Settings::setFullscreen(false);
             Settings::setBorderless(true);
-            QScreen* screen = QGuiApplication::primaryScreen();
+            QScreen* screen = QApplication::primaryScreen();
             QRect screenSize = screen->availableGeometry();
             if (screenSize.width() < Settings::getWidth())
             {
                 setWidth(screenSize.width());
-                Settings::setWidth(screenSize.width());
+                Settings::setWidth(screenSize.width() * getActiveDpiFactor());
             }
             if (screenSize.height() < Settings::getHeight())
             {
                 setHeight(screenSize.height());
-                Settings::setHeight(screenSize.height());
+                Settings::setHeight(screenSize.height() * getActiveDpiFactor());
             }
             break;
         }
-        case 2:
+        case Settings::ScreenModes::FullScreen:
         {
             showFullScreen();
-            QScreen* screen = QGuiApplication::primaryScreen();
+            QScreen* screen = QApplication::primaryScreen();
             QRect screenSize = screen->geometry();
             // set window info
             Settings::setFullscreen(true);
             Settings::setBorderless(false);
-            Settings::setWidth(screenSize.width());
-            Settings::setHeight(screenSize.height());
+            Settings::setWidth(screenSize.width() * getActiveDpiFactor());
+            Settings::setHeight(screenSize.height() * getActiveDpiFactor());
             setGeometry(screenSize);
             break;
         }
@@ -436,44 +495,56 @@ void Mainapp::changeScreenMode(qint32 mode)
             setFlag(Qt::FramelessWindowHint, false);
             Settings::setFullscreen(false);
             Settings::setBorderless(false);
-            QScreen* screen = QGuiApplication::primaryScreen();
+            QScreen* screen = QApplication::primaryScreen();
             QRect screenSize = screen->availableGeometry();
             if (screenSize.width() < Settings::getWidth())
             {
                 setWidth(screenSize.width());
-                Settings::setWidth(screenSize.width());
+                Settings::setWidth(screenSize.width() * getActiveDpiFactor());
             }
             if (screenSize.height() < Settings::getHeight())
             {
                 setHeight(screenSize.height());
-                Settings::setHeight(screenSize.height());
+                Settings::setHeight(screenSize.height() * getActiveDpiFactor());
             }
             showNormal();
         }
     }
     // change screen size after changing the border flags
     changeScreenSize(Settings::getWidth(), Settings::getHeight());
+#endif
 }
 
 void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
 {    
+#ifdef GRAPHICSUPPORT
     if (m_noUi)
     {
         return;
     }
     CONSOLE_PRINT("Changing screen size to width: " + QString::number(width) + " height: " + QString::number(heigth), Console::eDEBUG);
-    resize(width, heigth);
-    setMinimumSize(QSize(width, heigth));
-    setMaximumSize(QSize(width, heigth));
+    auto ratio = getActiveDpiFactor();
+    resize(width / ratio, heigth / ratio);
+    setMinimumSize(QSize(width / ratio, heigth / ratio));
+    setMaximumSize(QSize(width / ratio, heigth / ratio));
+
     Settings::setWidth(width);
     Settings::setHeight(heigth);
-    if (oxygine::Stage::instance.get() != nullptr)
-    {
-        oxygine::Stage::instance->setSize(width, heigth);
-    }
     Settings::saveSettings();
+    initStage();
     emit sigWindowLayoutChanged();
     emit sigChangePosition(QPoint(-1, -1), true);
+#endif
+}
+
+QPoint Mainapp::mapPosFromGlobal(QPoint pos) const
+{
+    return mapFromGlobal(pos) * getActiveDpiFactor();
+}
+
+QPoint Mainapp::mapPosToGlobal(QPoint pos) const
+{
+    return mapToGlobal(pos / getActiveDpiFactor());
 }
 
 void Mainapp::changePosition(QPoint pos, bool invert)
@@ -489,61 +560,76 @@ void Mainapp::changePosition(QPoint pos, bool invert)
     }
 }
 
-qint32 Mainapp::getScreenMode()
+Settings::ScreenModes Mainapp::getScreenMode()
 {
     if (Settings::getFullscreen())
     {
-        return 2;
+        return Settings::ScreenModes::FullScreen;
     }
     else if (Settings::getBorderless())
     {
-        return 1;
+        return Settings::ScreenModes::Borderless;
     }
     else
     {
-        return 0;
+        return Settings::ScreenModes::Window;
     }
 }
 
 void Mainapp::keyPressEvent(QKeyEvent *event)
 {
-    Qt::Key cur = static_cast<Qt::Key>(event->key());
-    if (cur == Settings::getKeyConsole())
+    if (m_startUpStep >= StartupPhase::Finalizing)
     {
-        emit Console::getInstance()->sigToggleView();
-    }
-    else if (cur == Settings::getKey_screenshot())
-    {
-        doScreenshot();
-    }
-    else if (cur == Settings::getKey_mapshot())
-    {
-        doMapshot();
-    }
-    else
-    {
-        CONSOLE_PRINT("keyPressEvent", Console::eDEBUG);
-        emit sigKeyDown(oxygine::KeyEvent(event));
+        Qt::Key cur = static_cast<Qt::Key>(event->key());
+        if (cur == Settings::getKeyConsole())
+        {
+            emit Console::getInstance()->sigToggleView();
+        }
+        else if (cur == Settings::getKey_screenshot())
+        {
+            doScreenshot();
+        }
+        else if (cur == Settings::getKey_mapshot())
+        {
+            doMapshot();
+        }
+        else
+        {
+            CONSOLE_PRINT("keyPressEvent", Console::eDEBUG);
+            emit sigKeyDown(oxygine::KeyEvent(event));
+        }
     }
 }
 
 void Mainapp::keyReleaseEvent(QKeyEvent *event)
 {
-    if (!event->isAutoRepeat())
+    if (m_startUpStep >= StartupPhase::Finalizing)
     {
-        emit sigKeyUp(oxygine::KeyEvent(event));
+        if (!event->isAutoRepeat())
+        {
+            emit sigKeyUp(oxygine::KeyEvent(event));
+        }
     }
 }
 
 bool Mainapp::event(QEvent *event)
 {
-    bool handled = FocusableObject::handleEvent(event);
+    spFocusableObject pObj(FocusableObject::getFocusedObject());
+    bool handled = false;
+    if (pObj.get() != nullptr)
+    {
+        handled = FocusableObject::handleEvent(event);
+    }
     if (!handled)
     {
         if (event->type() == QEvent::InputMethod)
         {
+#ifdef GRAPHICSUPPORT
             QInputMethodEvent* inputEvent = static_cast<QInputMethodEvent*>(event);
             handled = keyInputMethodEvent(inputEvent);
+#else
+            handled = oxygine::GameWindow::event(event);
+#endif
         }
         else
         {
@@ -582,7 +668,7 @@ void Mainapp::setSlave(bool slave)
 void Mainapp::showCrashReport(const QString & log)
 {
     static qint32 counter = 0;
-    if (QGuiApplication::instance()->thread() == QThread::currentThread())
+    if (QCoreApplication::instance()->thread() == QThread::currentThread())
     {
         // gui thread cool show the crash report
         QString title = tr("Whoops Sturm crashed a meteor into the PC.");
@@ -634,6 +720,7 @@ void Mainapp::actAsSlave()
     Settings::setUsername("Server");
     m_slaveClient = spTCPClient::create(nullptr);
     m_slaveClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
+    CONSOLE_PRINT("Running as slave with name : " + Settings::getSlaveServerName(), Console::eDEBUG);
 }
 
 void Mainapp::onActiveChanged()
@@ -673,6 +760,7 @@ void Mainapp::createBaseDirs()
         "data/gamerules",
         "data/randommaps",
         "data/records",
+        "data/customStyles",
         "maps",
         "customTerrainImages",
         "resources",
@@ -689,7 +777,7 @@ void Mainapp::createBaseDirs()
     auto virtList = QDir(QString(oxygine::Resource::RCC_PREFIX_PATH) + "maps").entryInfoList(QDir::Dirs);
     for (const auto & item : qAsConst(virtList))
     {
-        QString path = GlobalUtils::makePathRelative(item.absoluteFilePath());
+        QString path = GlobalUtils::makePathRelative(item.canonicalFilePath());
         if (!path.endsWith(".camp"))
         {
             QDir newDir(userPath + path);
@@ -700,22 +788,23 @@ void Mainapp::createBaseDirs()
 
 void Mainapp::onQuit()
 {
-    QApplication::processEvents();
+    QCoreApplication::processEvents();
     if (m_Workerthread.isRunning())
     {
         m_Worker->deleteLater();
         m_Workerthread.quit();
         m_Workerthread.wait();
     }
-    QApplication::processEvents();
-    delete m_Audiothread;
-    QApplication::processEvents();
+    QCoreApplication::processEvents();
+    m_Audiothread->deleteLater();
+    m_Audiothread = nullptr;
+    QCoreApplication::processEvents();
     if (m_Networkthread.isRunning())
     {
         m_Networkthread.quit();
         m_Networkthread.wait();
     }
-    QApplication::processEvents();
+    QCoreApplication::processEvents();
     CONSOLE_PRINT("Shutting down game server", Console::eDEBUG);
     if (m_GameServerThread.isRunning())
     {
@@ -726,7 +815,12 @@ void Mainapp::onQuit()
         m_GameServerThread.quit();
         m_GameServerThread.wait();
     }
-    QApplication::processEvents();
+    QCoreApplication::processEvents();
+}
+
+Mainapp::StartupPhase Mainapp::getStartUpStep() const
+{
+    return m_startUpStep;
 }
 
 void Mainapp::setInitScript(const QString &newInitScript)
@@ -757,9 +851,4 @@ void Mainapp::setCreateSlaveLogs(bool create)
 void Mainapp::inputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
 {
     FocusableObject::handleInputMethodQuery(query, arg);
-}
-
-void Mainapp::slotCursorPositionChanged(int oldPos, int newPos)
-{
-    emit cursorPositionChanged(oldPos, newPos);
 }

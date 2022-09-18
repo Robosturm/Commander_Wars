@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "wiki/wikipage.h"
 #include "wiki/wikidatabase.h"
 
@@ -14,7 +16,9 @@
 
 Wikipage::Wikipage()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Wikipage");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -32,7 +36,7 @@ Wikipage::Wikipage()
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -74,8 +78,6 @@ void Wikipage::remove()
 void Wikipage::loadText(QString text)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     oxygine::spTextField pLabel = oxygine::spTextField::create();
@@ -84,14 +86,12 @@ void Wikipage::loadText(QString text)
     pLabel->setWidth(m_pPanel->getContentWidth() - 80);
     pLabel->setPosition(10, m_y);
     m_pPanel->addItem(pLabel);
-    m_y += pLabel->getTextRect().getHeight() + 10;
+    m_y += pLabel->getScaledHeight() + 10;
 }
 
 void Wikipage::loadHeadline(QString text)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont48());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     oxygine::spTextField pLabel = oxygine::spTextField::create();
@@ -99,7 +99,7 @@ void Wikipage::loadHeadline(QString text)
     pLabel->setHtmlText(text);
     pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().getWidth() / 2, m_y);
     m_pPanel->addItem(pLabel);
-    m_y += 80;
+    m_y += pLabel->getScaledHeight() + 10;
 }
 
 void Wikipage::showLink(QString pageID)

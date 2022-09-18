@@ -7,6 +7,7 @@
 #include "resource_management/ressourcemanagement.h"
 #include "wiki/wikipage.h"
 
+class Player;
 class GameMap;
 class WikiDatabase;
 using spWikiDatabase = oxygine::intrusive_ptr<WikiDatabase>;
@@ -14,7 +15,7 @@ using spWikiDatabase = oxygine::intrusive_ptr<WikiDatabase>;
 /**
  * @brief The WikiDatabase class
  */
-class WikiDatabase : public QObject, public RessourceManagement<WikiDatabase>
+class WikiDatabase final : public QObject, public RessourceManagement<WikiDatabase>
 {
     Q_OBJECT
 public:
@@ -32,7 +33,7 @@ public:
         QStringList m_tags;
     };
 
-    virtual ~WikiDatabase() = default;
+    ~WikiDatabase() = default;
     /**
      * @brief load
      */
@@ -84,7 +85,7 @@ public:
      * @param file
      * @return
      */
-    oxygine::spSprite getIcon(GameMap* pMap, QString file, qint32 size);
+    oxygine::spSprite getIcon(GameMap* pMap, QString file, qint32 size, Player* pIconPlayer = nullptr);
 
 private:
     friend RessourceManagement<WikiDatabase>;

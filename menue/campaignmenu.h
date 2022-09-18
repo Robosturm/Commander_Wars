@@ -1,7 +1,9 @@
 #ifndef CAMPAIGNMENU_H
 #define CAMPAIGNMENU_H
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
 #include "game/campaign.h"
 #include "game/jsData/campaignmapdata.h"
@@ -16,12 +18,12 @@
 class CampaignMenu;
 using spCampaignMenu = oxygine::intrusive_ptr<CampaignMenu>;
 
-class CampaignMenu : public Basemenu
+class CampaignMenu final : public Basemenu
 {
     Q_OBJECT
 public:
     explicit CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveCampaign = false);
-    virtual ~CampaignMenu() = default;
+    ~CampaignMenu() = default;
 signals:
     void sigExitMenue();
     void sigButtonNext();

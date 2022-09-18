@@ -14,13 +14,12 @@
 class ProxyAi;
 using spProxyAi = oxygine::intrusive_ptr<ProxyAi>;
 
-class ProxyAi : public CoreAI
+class ProxyAi final : public CoreAI
 {
     Q_OBJECT
 public:
     explicit ProxyAi(GameMap* pMap);
-    virtual ~ProxyAi() = default;
-    virtual void init() override;
+    ~ProxyAi() = default;
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -60,7 +59,6 @@ public slots:
 
 private:
     QList<spGameAction> m_ActionBuffer;
-    bool m_actionRunning{false};
     QMutex m_ActionMutex;
 };
 

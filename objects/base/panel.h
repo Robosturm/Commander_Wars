@@ -4,27 +4,33 @@
 #include <QObject>
 #include <QSize>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
+
 #include "objects/base/h_scrollbar.h"
 #include "objects/base/v_scrollbar.h"
 
 class Panel;
-typedef oxygine::intrusive_ptr<Panel> spPanel;
+using spPanel = oxygine::intrusive_ptr<Panel>;
 
-class Panel : public QObject, public oxygine::Actor
+class Panel final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
-    static constexpr qint32 sliderSize = 33;
 public:
+    static constexpr qint32 sliderSize = 33;
     explicit Panel(bool useBox, QSize size, QSize contentSize, QString resAnim = "panel");
-    virtual ~Panel();
+    ~Panel();
     void addItem(oxygine::spActor pActor);
     void removeItem(oxygine::spActor pActor);
     void setContentHeigth(qint32 heigth);
     void setContentWidth(qint32 width);
 
-    qint32 getContentHeigth();
-    qint32 getContentWidth();
+    qint32 getContentHeigth() const;
+    qint32 getContentWidth() const;
+
+    qint32 getContentX() const;
+    qint32 getContentY() const;
 
     void clearContent();
 
@@ -38,6 +44,9 @@ public:
     }
     bool getSubComponent() const;
     void setSubComponent(bool subComponent);
+    bool getStopMouseWheel() const;
+    void setStopMouseWheel(bool newStopMouseWheel);
+
 signals:
 
 public slots:
@@ -57,6 +66,7 @@ private:
     spH_Scrollbar m_HScrollbar;
     spV_Scrollbar m_VScrollbar;
     QTimer m_hideTimer;
+    bool m_stopMouseWheel{false};
 };
 
 #endif // PANEL_H

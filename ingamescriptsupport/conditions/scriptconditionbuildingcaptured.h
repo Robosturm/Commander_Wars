@@ -5,9 +5,9 @@
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionBuildingCaptured;
-typedef oxygine::intrusive_ptr<ScriptConditionBuildingCaptured> spScriptConditionBuildingCaptured;
+using spScriptConditionBuildingCaptured = oxygine::intrusive_ptr<ScriptConditionBuildingCaptured>;
 
-class ScriptConditionBuildingCaptured : public ScriptCondition
+class ScriptConditionBuildingCaptured final : public ScriptCondition
 {
     Q_OBJECT
 public:

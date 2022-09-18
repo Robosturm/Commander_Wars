@@ -1,5 +1,5 @@
-#include "qfileinfo.h"
-#include "qimage.h"
+#include <QFileInfo>
+#include <QImage>
 
 #include "ingamescriptsupport/scriptdialogdialog.h"
 
@@ -11,8 +11,9 @@
 #include "coreengine/globalutils.h"
 
 #include "objects/dialogs/filedialog.h"
-
 #include "objects/base/dropdownmenusprite.h"
+
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
 ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     : m_Event(scriptEventDialog)
@@ -36,7 +37,8 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 10 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() - pOkButton->getScaledWidth() - 30,
+                           Settings::getHeight() - 10 - pOkButton->getScaledHeight());
     m_pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -45,7 +47,7 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
 
     // add Dialog button
     oxygine::spButton pDialogButton = pObjectManager->createButton(tr("add Dialog"), 150);
-    pDialogButton->setPosition(30, Settings::getHeight() - 10 - pDialogButton->getHeight());
+    pDialogButton->setPosition(30, Settings::getHeight() - 10 - pDialogButton->getScaledHeight());
     m_pSpriteBox->addChild(pDialogButton);
     pDialogButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -53,7 +55,8 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     });
     // remove Dialog button
     oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("remove Last"), 150);
-    pRemoveButton->setPosition(Settings::getWidth() / 2 - pRemoveButton->getWidth() / 2, Settings::getHeight() - 10 - pRemoveButton->getHeight());
+    pRemoveButton->setPosition(Settings::getWidth() / 2 - pRemoveButton->getScaledWidth() / 2,
+                               Settings::getHeight() - 10 - pRemoveButton->getScaledHeight());
     m_pSpriteBox->addChild(pRemoveButton);
     pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {

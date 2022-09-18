@@ -4,7 +4,8 @@
 #include <QObject>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/playerselection.h"
 
@@ -12,12 +13,12 @@ class GameMap;
 class PlayerSelectionDialog;
 using spPlayerSelectionDialog = oxygine::intrusive_ptr<PlayerSelectionDialog>;
 
-class PlayerSelectionDialog : public QObject, public oxygine::Actor
+class PlayerSelectionDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit PlayerSelectionDialog(GameMap* pMap);
-    virtual ~PlayerSelectionDialog() = default;
+    ~PlayerSelectionDialog() = default;
 signals:
     void sigPlayersChanged();
 private slots:

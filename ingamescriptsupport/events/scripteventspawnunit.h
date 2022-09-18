@@ -8,7 +8,7 @@
 class ScriptEventSpawnUnit;
 using spScriptEventSpawnUnit = oxygine::intrusive_ptr<ScriptEventSpawnUnit>;
 
-class ScriptEventSpawnUnit : public ScriptEvent
+class ScriptEventSpawnUnit final : public ScriptEvent
 {
     Q_OBJECT
 public:

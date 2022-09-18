@@ -5,10 +5,14 @@
 #include "coreengine/mainapp.h"
 #include "objects/base/label.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+
 ObjectManager::ObjectManager()
     : RessourceManagement<ObjectManager>("/objects/res.xml", "")
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ObjectManager");
+#endif
     Interpreter::setCppOwnerShip(this);
     loadRessources("/cursor/res.xml");
 }
@@ -22,8 +26,6 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
     //Create Actor with Text and add it to button as child
     spLabel textField = spLabel::create(width - 10);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     textField->setStyle(style);
@@ -47,11 +49,7 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
     }
     textField->setTooltipText(tooltip);
     pButton->setSize(width, 40);
-    oxygine::spClipRectActor clipRect = oxygine::spClipRectActor::create();
-    clipRect->setSize(pButton->getSize());
-    textField->setSize(pButton->getSize());
-    clipRect->addChild(textField);
-    pButton->addChild(clipRect);
+    pButton->addChild(textField);
 
     oxygine::Sprite* ptr = pButton.get();
     pButton->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
@@ -82,8 +80,8 @@ oxygine::spButton ObjectManager::createIconButton(QString icon, qint32 size)
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     pAnim = ObjectManager::getInstance()->getResAnim(icon);
     pSprite->setResAnim(pAnim);
-    pSprite->setPosition((size - pSprite->getWidth()) / 2,
-                         (size - pSprite->getHeight()) / 2);
+    pSprite->setPosition((size - pSprite->getScaledWidth()) / 2,
+                         (size - pSprite->getScaledHeight()) / 2);
     pButton->addChild(pSprite);
 
     oxygine::Sprite* ptr = pButton.get();
@@ -109,8 +107,8 @@ oxygine::spButton ObjectManager::createIconButton(oxygine::spSprite pSprite, qin
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button_square"));
     pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pButton->setSize(size, size);
-    pSprite->setPosition((size - pSprite->getWidth()) / 2,
-                         (size - pSprite->getHeight()) / 2);
+    pSprite->setPosition((size - pSprite->getScaledWidth()) / 2,
+                         (size - pSprite->getScaledHeight()) / 2);
     pButton->addChild(pSprite);
 
     oxygine::Sprite* ptr = pButton.get();

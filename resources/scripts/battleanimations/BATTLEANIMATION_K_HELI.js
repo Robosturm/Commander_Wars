@@ -17,7 +17,7 @@ var Constructor = function()
                      ["yc", "yc"],];
 
 
-    this.animationData = [["bd", [Qt.point(-36, 31), Qt.point(30, 35)]],
+    this.animationData = [["bd", [Qt.point(-37, 32), Qt.point(26, 38)]],
                           ["bh", [Qt.point(-49, 39), Qt.point(33, 34)]],
                           ["bm", [Qt.point(-36, 31), Qt.point(30, 35)]],
                           ["dm", [Qt.point(-40, 41), Qt.point(29, 38)]],

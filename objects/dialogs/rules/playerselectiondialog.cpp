@@ -1,4 +1,4 @@
-#include "playerselectiondialog.h"
+#include "objects/dialogs/rules/playerselectiondialog.h"
 
 #include "coreengine/mainapp.h"
 
@@ -6,7 +6,9 @@
 
 PlayerSelectionDialog::PlayerSelectionDialog(GameMap* pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("PlayerSelectionDialog");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -22,7 +24,8 @@ PlayerSelectionDialog::PlayerSelectionDialog(GameMap* pMap)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -30,7 +33,7 @@ PlayerSelectionDialog::PlayerSelectionDialog(GameMap* pMap)
     });
 
     m_pPlayerSelection = spPlayerSelection::create(Settings::getWidth() - 60,
-                                             Settings::getHeight() - 80 - m_OkButton->getHeight());
+                                             Settings::getHeight() - 80 - m_OkButton->getScaledHeight());
     m_pPlayerSelection->setMap(pMap);
     m_pPlayerSelection->setPosition(30, 30);
     m_pPlayerSelection->showPlayerSelection();

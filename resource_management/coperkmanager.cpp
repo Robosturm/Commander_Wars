@@ -5,7 +5,9 @@ COPerkManager::COPerkManager()
                                          "/scripts/co_perks")
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("COPerkManager");
+#endif
 }
 
 QString COPerkManager::getIcon(qint32 position)
@@ -26,12 +28,18 @@ bool COPerkManager::isSelectable(qint32 position)
 {
     if ((position >= 0) && (position < m_loadedRessources.size()))
     {
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValue value = pInterpreter->doFunction(m_loadedRessources[position], "isSelectable");
-        if (value.isBool())
-        {
-            return value.toBool();
-        }
+        isSelectable(m_loadedRessources[position]);
+    }
+    return true;
+}
+
+bool COPerkManager::isSelectable(QString id)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue value = pInterpreter->doFunction(id, "isSelectable");
+    if (value.isBool())
+    {
+        return value.toBool();
     }
     return true;
 }

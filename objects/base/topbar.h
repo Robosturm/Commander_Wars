@@ -1,22 +1,24 @@
 #ifndef TOPBAR_H
 #define TOPBAR_H
 
-#include "objects/base/focusableobject.h"
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+
 #include "objects/base/tooltip.h"
 #include "objects/base/panel.h"
+#include "objects/base/focusableobject.h"
 
 class Topbar;
-typedef oxygine::intrusive_ptr<Topbar> spTopbar;
+using spTopbar = oxygine::intrusive_ptr<Topbar>;
 
-class Topbar : public FocusableObject
+class Topbar final : public FocusableObject
 {
     Q_OBJECT
 public:
     explicit Topbar(qint32 x, qint32 width);
-    virtual ~Topbar() = default;
+    ~Topbar() = default;
     /**
      * @brief addItem adds an item to the bar
      * @param text the text shown for this item

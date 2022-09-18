@@ -12,17 +12,20 @@
 #include "game/gameaction.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "resource_management/cospritemanager.h"
 
 #include "spritingsupport/spritecreator.h"
 
 CO::CO(QString coID, Player* owner, GameMap* pMap)
-    : m_Owner(owner),
+    : m_pOwner(owner),
       m_coID(coID),
       m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CO");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -70,7 +73,12 @@ bool CO::isJsFunctionEnabled(QString perk) const
     return perk != m_coID || // perks are always enabled
            m_PowerMode != GameEnums::PowerMode_Off || // d2d is active during if no power is active
            m_pMap == nullptr || // no map means no rules
-                          m_pMap->getGameRules()->getEnableDayToDayCoAbilities(); // or if d2d is active
+           m_pMap->getGameRules()->getEnableDayToDayCoAbilities(); // or if d2d is active
+}
+
+void CO::setMenu(GameMenue *newMenu)
+{
+    m_pMenu = newMenu;
 }
 
 bool CO::getGlobalCoZone() const
@@ -90,10 +98,9 @@ GameMap *CO::getMap() const
 
 void CO::setCOUnit(Unit* pUnit)
 {
-    spGameMenue pMenu = GameMenue::getInstance();
-    if ((pUnit == nullptr) &&
-        (m_pCOUnit.get() != nullptr) &&
-        (pMenu.get() != nullptr))
+    if (pUnit == nullptr &&
+        m_pCOUnit.get() != nullptr &&
+        m_pMenu != nullptr)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "onCOUnitLost";
@@ -118,6 +125,21 @@ QString CO::getCoID() const
 double CO::getPowerFilled() const
 {
     return m_powerFilled;
+}
+
+void CO::endOfTurn()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "endOfTurn";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            pInterpreter->doFunction(perk, function1, args);
+        }
+    }
 }
 
 void CO::startOfTurn()
@@ -163,12 +185,11 @@ void CO::setPowerFilled(const double &value)
         {
             limitPowerbar(currentValue);
         }
-        CONSOLE_PRINT("Powerbar changed by: " + QString::number(value - currentValue), Console::eDEBUG);
+        CONSOLE_PRINT("Powerbar changed by: " + QString::number(value - currentValue) + " for co " + m_coID + " of player " + QString::number(m_pOwner->getPlayerID()), Console::eDEBUG);
     }
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pMenu->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
 }
 void CO::limitPowerbar(float previousValue)
@@ -181,8 +202,7 @@ void CO::limitPowerbar(float previousValue)
     {
         m_powerFilled = 0;
     }
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();
         if (previousValue < m_powerStars && m_powerFilled >= m_powerStars)
@@ -267,7 +287,7 @@ qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)
     return ergValue;
 }
 
-bool CO::getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDefender)
+bool CO::getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDefender, QPoint attackerPosition)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFirstStrike";
@@ -277,7 +297,9 @@ bool CO::getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDe
                        position.y(),
                        pInterpreter->newQObject(pAttacker),
                        isDefender,
-                       pInterpreter->newQObject(m_pMap)});
+                       pInterpreter->newQObject(m_pMap),
+                       attackerPosition.x(),
+                       attackerPosition.y()});
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -576,10 +598,58 @@ qint32 CO::getBonusLuck(Unit* pUnit, QPoint position)
     return ergValue;
 }
 
+qint32 CO::getEnemyBonusLuck(Unit* pUnit, QPoint position)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getEnemyBonusLuck";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       position.x(),
+                       position.y(),
+                       pInterpreter->newQObject(m_pMap)});
+    qint32 ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toInt();
+            }
+        }
+    }
+    return ergValue;
+}
+
 qint32 CO::getBonusMisfortune(Unit* pUnit, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBonusMisfortune";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       position.x(),
+                       position.y(),
+                       pInterpreter->newQObject(m_pMap)});
+    qint32 ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toInt();
+            }
+        }
+    }
+    return ergValue;
+}
+
+qint32 CO::getEnemyBonusMisfortune(Unit* pUnit, QPoint position)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getEnemyBonusMisfortune";
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(pUnit),
                        position.x(),
@@ -884,10 +954,9 @@ void CO::activatePower()
     {
         pInterpreter->doFunction(perk, function1, args);
     }
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pMenu->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
     addUnitShines();
 }
@@ -907,10 +976,9 @@ void CO::activateSuperpower(GameEnums::PowerMode powerMode)
     {
         pInterpreter->doFunction(perk, function1, args);
     }
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pMenu->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
     addUnitShines();
 }
@@ -928,7 +996,7 @@ void CO::addUnitShines()
             {
                 Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
                 if (pUnit != nullptr &&
-                    pUnit->getOwner() == m_Owner)
+                    pUnit->getOwner() == m_pOwner)
                 {
                     pUnit->addShineTween();
                 }
@@ -1020,7 +1088,7 @@ qint32 CO::getCoBonus(QPoint position, Unit* pUnit, const QString & function)
     return ergValue;
 }
 
-qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode)
+qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDeffensiveBonus";
@@ -1031,7 +1099,7 @@ qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPo
                        pInterpreter->newQObject(pDefender),
                        defPosition.x(),
                        defPosition.y(),
-                       isAttacker,
+                       isDefender,
                        pInterpreter->newQObject(pAction),
                        luckMode,
                        pInterpreter->newQObject(m_pMap)});
@@ -1340,6 +1408,27 @@ qint32 CO::getIncomeReduction(Building* pBuilding, qint32 income)
     return ergValue;
 }
 
+qint32 CO::getPowerChargeBonus()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getPowerChargeBonus";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    qint32 ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toInt();
+            }
+        }
+    }
+    return ergValue + m_pOwner->getPowerChargeBonus();
+}
+
 qint32 CO::getBonusIncome(Building* pBuilding, qint32 income)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -1556,7 +1645,7 @@ GameAnimationDialog* CO::createPowerSentence()
     QStringList sentences = pInterpreter->doFunction(m_coID, "getPowerSentences", args).toVariant().toStringList();
     QString sentence = sentences[GlobalUtils::randInt(0, sentences.size() - 1)];
 
-    GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(m_pMap, sentence, m_coID, GameEnums::COMood_Normal, m_Owner->getColor());
+    GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(m_pMap, sentence, m_coID, GameEnums::COMood_Normal, m_pOwner->getColor());
     pGameAnimationDialog->setFinishDelay(500);
 
     return pGameAnimationDialog;
@@ -1592,13 +1681,13 @@ QString CO::getVictorySentence()
 
 GameAnimationPower* CO::createPowerScreen(GameEnums::PowerMode powerMode, quint32 frameTime)
 {
-    GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_pMap, m_Owner->getColor(), powerMode, this, frameTime);
+    GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_pMap, m_pOwner->getColor(), powerMode, this, frameTime);
     return pGameAnimationPower;
 }
 
 bool CO::getIsCO0()
 {
-    if (this == m_Owner->getCO(0) || GameMenue::getInstance().get() == nullptr)
+    if (this == m_pOwner->getCO(0) || m_pMenu == nullptr)
     {
         return true;
     }
@@ -2085,10 +2174,9 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
         }
     }
     pCOAnim = nullptr;
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pMenu->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
 }
 

@@ -34,7 +34,9 @@ WikiDatabase::WikiDatabase()
     : RessourceManagement<WikiDatabase>("/resources/images/wiki/res.xml",
       "")
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("WikiDatabase");
+#endif
     Mainapp* pMainapp = Mainapp::getInstance();
     moveToThread(pMainapp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);
@@ -91,7 +93,7 @@ void WikiDatabase::load()
         while (dirIter.hasNext())
         {
             dirIter.next();
-            QString file = dirIter.fileInfo().absoluteFilePath();
+            QString file = dirIter.fileInfo().canonicalFilePath();
             if (!hasEntry(file))
             {
                 Interpreter* pInterpreter = Interpreter::getInstance();
@@ -218,10 +220,10 @@ spWikipage WikiDatabase::getPage(PageData data)
         pPlayer->init();
         spCO pCO = spCO::create(id, pPlayer.get(), nullptr);
         ret = spWikipage::create();
-        spCOInfoActor pInfo = spCOInfoActor::create(nullptr, ret->getPanel()->getWidth());
+        spCOInfoActor pInfo = spCOInfoActor::create(nullptr, ret->getPanel()->getScaledWidth());
         pInfo->showCO(pCO, pPlayer);
         ret->getPanel()->addItem(pInfo);
-        ret->getPanel()->setContentHeigth(pInfo->getHeight());
+        ret->getPanel()->setContentHeigth(pInfo->getScaledHeight());
     }
     else if (pTerrainManager->exists(id))
     {
@@ -263,7 +265,7 @@ spWikipage WikiDatabase::getPage(PageData data)
     return ret;
 }
 
-oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size)
+oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size, Player* pIconPlayer)
 {
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
@@ -297,11 +299,17 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
         BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
         TerrainManager* pTerrainManager = TerrainManager::getInstance();
+        Player* pFinalIconPlayer = pIconPlayer;
+        spPlayer pPlayer;
         if (pUnitSpriteManager->exists(file))
         {
-            spPlayer pPlayer = spPlayer::create(nullptr);
-            pPlayer->init();
-            spUnit pUnit = spUnit::create(file, pPlayer.get(), false, pMap);
+            if (pFinalIconPlayer == nullptr)
+            {
+                pPlayer = spPlayer::create(nullptr);
+                pPlayer->init();
+                pFinalIconPlayer = pPlayer.get();
+            }
+            spUnit pUnit = spUnit::create(file, pFinalIconPlayer, false, pMap);
             pUnit->setScale(size / GameMap::getImageSize());
             pUnit->setOwner(nullptr);
             pSprite = pUnit;
@@ -309,14 +317,16 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
         else if (pBuildingSpriteManager->exists(file))
         {
             // check buildings?
-            
-            spPlayer pPlayer;
-            if (pMap != nullptr)
+            if (pFinalIconPlayer == nullptr)
             {
-                pPlayer = pMap->getCurrentPlayer();
+                if (pMap != nullptr)
+                {
+                    pPlayer = pMap->getCurrentPlayer();
+                }
+                pFinalIconPlayer = pPlayer.get();
             }
             spBuilding pBuilding = spBuilding::create(file, pMap);
-            pBuilding->setOwner(pPlayer.get());            
+            pBuilding->setOwner(pFinalIconPlayer);
             pBuilding->scaleAndShowOnSingleTile();
             return pBuilding;
         }

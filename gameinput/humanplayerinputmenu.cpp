@@ -8,6 +8,7 @@
 #include "wiki/wikidatabase.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
@@ -17,24 +18,24 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/unitspritemanager.h"
 
-HumanPlayerInputMenu::HumanPlayerInputMenu(GameMap* pMap, const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
+HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
                                            const QVector<qint32> & costList, const QVector<bool> & enabledList)
     : m_ActionIDs(actionIDs),
       m_CostList(costList),
       m_EnabledList(enabledList),
-      m_pMap(pMap)
+      m_pMap(pMap),
+      m_pMenu(pMenu)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("HumanPlayerInputMenu");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInputMenu::keyInput, Qt::QueuedConnection);
     qint32 width = 0;
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont32());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMenuFont32());
     style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;
-    style.fontSize = 20;
     oxygine::spTextField testText = oxygine::spTextField::create();
     for (qint32 i = 0; i < texts.size(); i++)
     {
@@ -112,7 +113,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMap* pMap, const QStringList & te
             oxygine::spBox9Sprite pItemBox = createMenuItem(enabled, x, y, width, style, texts[i], action, costs, icons[i], i, pPlayer);
             if (xCount < m_maxXCount)
             {
-                y += static_cast<qint32>(pItemBox->getHeight());
+                y += static_cast<qint32>(pItemBox->getScaledHeight());
             }
             if (y > maxY)
             {
@@ -152,8 +153,8 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMap* pMap, const QStringList & te
                         });
                         addChild(pItemBox);
                         m_ItemActors.append(pItemBox);
-                        y += static_cast<qint32>(pItemBox->getHeight());
-                        m_itemHeigth = static_cast<qint32>(pItemBox->getHeight());
+                        y += static_cast<qint32>(pItemBox->getScaledHeight());
+                        m_itemHeigth = static_cast<qint32>(pItemBox->getScaledHeight());
                     }
                 }
             }
@@ -173,7 +174,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMap* pMap, const QStringList & te
                 m_startItem = max * value;
                 updateItemPositionAndVisibility();
             });
-            scrollbarWidth = m_scrollbar->getWidth() + 25;
+            scrollbarWidth = m_scrollbar->getScaledWidth() + 25;
             m_scrollbar->setX(width * xCount + 25);
             addChild(m_scrollbar);
             auto* pScrollbar = m_scrollbar.get();
@@ -182,7 +183,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMap* pMap, const QStringList & te
                 oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
                 if (pTouchEvent != nullptr)
                 {
-                    emit pScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / static_cast<float>(pScrollbar->getContentHeigth()));                    
+                    emit pScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / static_cast<float>(pScrollbar->getContentHeigth()));
                 }
             });
         }
@@ -274,7 +275,7 @@ void HumanPlayerInputMenu::updateItemPositionAndVisibility()
         {
             m_ItemActors[i]->setPosition(x, y);
             m_ItemActors[i]->setVisible(true);
-            y += static_cast<qint32>(m_ItemActors[i]->getHeight());
+            y += static_cast<qint32>(m_ItemActors[i]->getScaledHeight());
         }
         else
         {
@@ -307,10 +308,6 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
         if (!enabled)
         {
             style.color = QColor(255, 0, 0, 255);
-        }
-        else
-        {
-            style.color = FontManager::getFontColor();
         }
         textField->setStyle(style);
         textField->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize));
@@ -384,7 +381,7 @@ qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width
         pBottomBox->setX(x);
     }
     addChild(pBottomBox);
-    return static_cast<qint32>(pBottomBox->getHeight());
+    return static_cast<qint32>(pBottomBox->getScaledHeight());
 }
 
 qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width, Player* pPlayer)
@@ -401,13 +398,11 @@ qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width, Player* pPl
         pTopBox->setX(x);
     }
     addChild(pTopBox);
-    return static_cast<qint32>(pTopBox->getHeight());
+    return static_cast<qint32>(pTopBox->getScaledHeight());
 }
 
 void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
 {
-    
-
     if (x + getWidth() + GameMap::getImageSize() / 2 > m_pMap->getMapWidth() * GameMap::getImageSize())
     {
         x = m_pMap->getMapWidth() * GameMap::getImageSize() - getWidth() - GameMap::getImageSize() / 2;
@@ -430,10 +425,9 @@ void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
 
 void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
 {
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        Chat* pChat = pMenu->getChat();
+        Chat* pChat = m_pMenu->getChat();
         if (m_Focused && (pChat == nullptr || pChat->getVisible() == false))
         {
             // for debugging
@@ -563,7 +557,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     {
                         spUnit pDummy = spUnit::create(id, m_pMap->getCurrentPlayer(), false, m_pMap);
                         spFieldInfo fieldinfo = spFieldInfo::create(nullptr, pDummy.get());
-                        pMenu->addChild(fieldinfo);
+                        m_pMenu->addChild(fieldinfo);
                         connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [this]
                         {
                             m_Focused = true;
@@ -577,7 +571,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                         if (data.m_id != "")
                         {
                             spWikipage page = pDatabase->getPage(data);
-                            pMenu->addChild(page);
+                            m_pMenu->addChild(page);
                             connect(page.get(), &FieldInfo::sigFinished, this, [this]
                             {
                                 m_Focused = true;
@@ -600,8 +594,10 @@ void HumanPlayerInputMenu::moveMouseToItem(qint32 x, qint32 y)
     Mainapp* pApp = Mainapp::getInstance();
     if (pApp->hasCursor() && Settings::getAutoMoveCursor())
     {
+#ifdef GRAPHICSUPPORT
         oxygine::Vector2 pos = local2stage();
-        QPoint curPos = pApp->mapToGlobal(QPoint(pos.x + m_itemWidth / 2 + m_itemWidth * x, pos.y + m_startY + m_itemHeigth / 2 + m_itemHeigth * y));
+        QPoint curPos = pApp->mapPosToGlobal(QPoint(pos.x + m_itemWidth / 2 + m_itemWidth * x, pos.y + m_startY + m_itemHeigth / 2 + m_itemHeigth * y));
         pApp->cursor().setPos(curPos);
+#endif
     }
 }

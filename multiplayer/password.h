@@ -7,13 +7,13 @@
 /**
  * @brief The Password class for transferring a password as cryptic hash and checking if a given password matches it.
  */
-class Password : public QObject, public FileSerializable
+class Password final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
     explicit Password();
     explicit Password(QString password);
-    virtual ~Password() = default;
+    ~Password() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

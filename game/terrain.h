@@ -4,9 +4,6 @@
 #include <QObject>
 #include <QVector>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
 #include "coreengine/fileserializable.h"
 #include "coreengine/JsCallback.h"
 #include "coreengine/LUPDATE_MACROS.h"
@@ -25,7 +22,7 @@ using spTerrainFindingSystem = oxygine::intrusive_ptr<TerrainFindingSystem>;
 class Terrain;
 using spTerrain = oxygine::intrusive_ptr<Terrain>;
 
-class Terrain : public Tooltip, public FileSerializable
+class Terrain final : public Tooltip, public FileSerializable
 {
     Q_OBJECT
 
@@ -57,8 +54,7 @@ public:
         BuildingLayer = 2,
     };
     static spTerrain createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap);
-
-    virtual ~Terrain();
+    ~Terrain();
 
     void init();
     /**
@@ -120,8 +116,55 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 9;
+        return 10;
     }
+    /**
+     * @brief isValid
+     * @return
+     */
+    bool isValid();
+    /**
+     * @brief getMapTerrainDrawPriority
+     * @return
+     */
+    qint32 getMapTerrainDrawPriority();
+
+public slots:
+    /**
+     * @brief getFixedOverlaySprites
+     * @return
+     */
+    bool getFixedOverlaySprites() const;
+    /**
+     * @brief setFixedOverlaySprites
+     * @param newFixedOverlaySprites
+     */
+    void setFixedOverlaySprites(bool newFixedOverlaySprites);
+    /**
+     * @brief getCustomOverlays
+     * @return
+     */
+    QStringList getCustomOverlays() const;
+    /**
+     * @brief setCustomOverlays
+     * @param newCustomOverlays
+     */
+    void setCustomOverlays(const QStringList &newCustomOverlays);
+    /**
+     * @brief addCustomOverlay
+     * @param newCustomOverlay
+     */
+    void addCustomOverlay(const QString &customOverlay);
+    /**
+     * @brief removeCustomOverlay
+     * @param customOverlay
+     */
+    void removeCustomOverlay(const QString &customOverlay);
+    /**
+     * @brief setSpriteVisibility
+     * @param value
+     */
+    void setSpriteVisibility(bool value);
     /**
      * @brief setFixedSprite only avaible for ingame editor
      * @return
@@ -132,27 +175,6 @@ public:
      * @return
      */
     void setTerrainSpriteName(const QString &terrainSpriteName);
-    /**
-     * @brief setSpriteVisibility
-     * @param value
-     */
-    void setSpriteVisibility(bool value);
-    /**
-     * @brief isValid
-     * @return
-     */
-    bool isValid();
-
-
-    QPoint getTest() const;
-    void setTest(QPoint newTest);
-    /**
-     * @brief getMapTerrainDrawPriority
-     * @return
-     */
-    qint32 getMapTerrainDrawPriority();
-public slots:
-
     /**
      * @brief getShowInEditor
      * @param unitId
@@ -357,7 +379,7 @@ public slots:
      * @brief loadBaseSprite loads the sprite for this terrain
      * @param spriteID
      */
-    void loadBaseSprite(const QString & spriteID, qint32 frameTime = 100);
+    void loadBaseSprite(const QString & spriteID, qint32 frameTime = 100, qint32 startFrame = -1, qint32 endFrame = -1);
     /**
      * @brief getSurroundings returns a string containing the directions which fulfill the given rule
      * @param list the list as string split with ,
@@ -374,7 +396,7 @@ public slots:
      * @brief loadOverlaySprite loads overlay sprites of this terrain
      * @param spriteID
      */
-    void loadOverlaySprite(const QString & spriteID);
+    void loadOverlaySprite(const QString & spriteID, qint32 startFrame = -1, qint32 endFrame = -1);
     /**
      * @brief getBaseTerrainID finds the base terrain id of the real base terrain recursivly
      * @return the base terrainID
@@ -491,6 +513,11 @@ public slots:
      */
     QStringList getTerrainSprites();
     /**
+     * @brief getOverlayTerrainSprites
+     * @return
+     */
+    QStringList getOverlayTerrainSprites();
+    /**
      * @brief existsResAnim
      * @param spriteId
      * @return
@@ -567,6 +594,14 @@ private:
      * @brief m_pOverlaySprites
      */
     QVector<oxygine::spSprite> m_pOverlaySprites;
+    /**
+     * @brief m_customOverlays
+     */
+    QStringList m_customOverlays;
+    /**
+     * @brief m_fixedOverlaySprites
+     */
+    bool m_fixedOverlaySprites{false};
     /**
      * @brief fixedSprite stores if the selected sprite is fixed or will be loaded based on the surrounding and random factors
      */

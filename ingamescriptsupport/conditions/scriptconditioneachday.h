@@ -6,7 +6,7 @@
 class ScriptConditionEachDay;
 typedef oxygine::intrusive_ptr<ScriptConditionEachDay> spScriptConditionEachDay;
 
-class ScriptConditionEachDay : public ScriptCondition
+class ScriptConditionEachDay final : public ScriptCondition
 {
     Q_OBJECT
 public:

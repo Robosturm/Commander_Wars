@@ -1,17 +1,25 @@
 #include "objects/base/timespinbox.h"
+
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
+#include "coreengine/interpreter.h"
+
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
 #include <QTime>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
+
 TimeSpinBox::TimeSpinBox(qint32 width)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("TimeSpinBox");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -20,8 +28,6 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     m_Textbox->setResAnim(pAnim);
     m_Textfield = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_Textfield->setStyle(style);
@@ -34,8 +40,8 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     m_Textbox->addChild(pClipActor);
     m_Textbox->setSize(width - 35, 40);
     setSize(width, 40);
-    m_Textfield->setWidth(m_Textbox->getWidth() - 20);
-    m_Textfield->setHeight(m_Textbox->getHeight());
+    m_Textfield->setWidth(m_Textbox->getScaledWidth() - 20);
+    m_Textfield->setHeight(m_Textbox->getScaledHeight());
     pClipActor->setSize(m_Textfield->getSize());
     pClipActor->setX(10);
     pClipActor->setY(5);
@@ -43,8 +49,8 @@ TimeSpinBox::TimeSpinBox(qint32 width)
 
     m_pSpinBox = oxygine::spBox9Sprite::create();
     m_pSpinBox->setResAnim(pAnim);
-    m_pSpinBox->setSize(width - m_Textbox->getWidth(), 40);
-    m_pSpinBox->setX(m_Textbox->getWidth());
+    m_pSpinBox->setSize(width - m_Textbox->getScaledWidth(), 40);
+    m_pSpinBox->setX(m_Textbox->getScaledWidth());
 
     m_pArrowDown = oxygine::spButton::create();
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
@@ -75,7 +81,7 @@ TimeSpinBox::TimeSpinBox(qint32 width)
         m_spinDirection = 0;
     });
     m_pSpinBox->addChild(m_pArrowDown);
-    m_pArrowDown->setPosition(9, m_pSpinBox->getHeight() - m_pArrowDown->getHeight() - 8);
+    m_pArrowDown->setPosition(9, m_pSpinBox->getScaledHeight() - m_pArrowDown->getScaledHeight() - 8);
 
     m_pArrowUp = oxygine::spButton::create();
     // pButton->setPosition(200, 200);
@@ -160,7 +166,7 @@ void TimeSpinBox::update(const oxygine::UpdateState& us)
             // calc text field position based on curmsgpos
             qint32 xPos = 0;
             qint32 fontWidth = m_Textfield->getTextRect().getWidth() / drawText.size();
-            qint32 boxSize = (m_Textbox->getWidth() - 5 - fontWidth);
+            qint32 boxSize = (m_Textbox->getScaledWidth() - 5 - fontWidth);
             xPos = -fontWidth * curmsgpos + boxSize / 2;
             if (xPos > 0)
             {
@@ -168,7 +174,7 @@ void TimeSpinBox::update(const oxygine::UpdateState& us)
             }
             else if ((drawText.size() - curmsgpos + 1) * fontWidth < boxSize)
             {
-                xPos = m_Textbox->getWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 1;
+                xPos = m_Textbox->getScaledWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 1;
                 if (xPos > 0)
                 {
                     xPos = 0;

@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+
 #include "objects/dialogs/gamepadinfo.h"
 
 #include "coreengine/mainapp.h"
@@ -11,7 +13,9 @@ constexpr const char* const GamepadInfoItem = "gamepadInfo";
 
 GamepadInfo::GamepadInfo()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GamepadInfo");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

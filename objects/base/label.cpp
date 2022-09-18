@@ -1,11 +1,17 @@
-#include "label.h"
+#include "objects/base/label.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
+
 #include "resource_management/fontmanager.h"
 
 Label::Label(qint32 width)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Label");
+#endif
+    Interpreter::setCppOwnerShip(this);
+
     m_clipRect = oxygine::spClipRectActor::create();
     m_clipRect->setWidth(width);
     m_clipRect->setHeight(28);
@@ -14,8 +20,6 @@ Label::Label(qint32 width)
     Label::setWidth(width);
     m_clipRect->addChild(m_textField);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     setStyle(style);
@@ -42,16 +46,34 @@ void Label::setText(QString str)
 }
 
 void Label::setHtmlText(QString str)
-{    
+{
+#ifdef GRAPHICSUPPORT
     m_textField->setHtmlText(str);
-    m_clipRect->setHeight(getTextRect().getHeight() * 1.4f);
+    qint32 height = getTextRect().getHeight();
+    qint32 fontHeight = m_textField->getStyle().font.borderWidth;
+    if (fontHeight < 0)
+    {
+        height += qAbs(fontHeight) * 2;
+    }
+    m_clipRect->setHeight(height);
+    oxygine::Sprite::setHeight(height);
     setTooltipText(str);    
+#endif
 }
 
 void Label::setStyle(const oxygine::TextStyle& st)
 {    
+#ifdef GRAPHICSUPPORT
     m_textField->setStyle(st);
-    m_clipRect->setHeight(getTextRect().getHeight() * 1.4f);    
+    qint32 height = getTextRect().getHeight();
+    qint32 fontHeight = m_textField->getStyle().font.borderWidth;
+    if (fontHeight < 0)
+    {
+        height += qAbs(fontHeight) * 2;
+    }
+    m_clipRect->setHeight(height);
+    oxygine::Sprite::setHeight(height);
+#endif
 }
 
 oxygine::TextStyle Label::getStyle()

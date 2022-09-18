@@ -113,6 +113,26 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
     {
         while (playerCount < m_players.size())
         {
+            for (qint32 y = 0; y < heigth; y++)
+            {
+                for (qint32 x = 0; x < width; x++)
+                {
+                    Terrain* pTerrain = getTerrain(x, y);
+                    Building* pBuilding = pTerrain->getBuilding();
+                    if (pBuilding != nullptr &&
+                        pBuilding->getOwner() == m_players.last().get())
+                    {
+                        pBuilding->setOwner(nullptr);
+                    }
+                    Unit* pUnit = pTerrain->getUnit();
+                    if (pUnit != nullptr &&
+                        pUnit->getOwner() == m_players.last().get())
+                    {
+                        pTerrain->setUnit(spUnit());
+                    }
+                }
+            }
+
             m_players.removeLast();
         }
     }

@@ -10,15 +10,15 @@
 
 WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("WikiView");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -36,13 +36,13 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
     addChild(m_SearchString);
     oxygine::spButton pButton = ObjectManager::createButton(tr("Search"));
     addChild(pButton);
-    pButton->setPosition(m_SearchString->getWidth() + m_SearchString->getX() + 10, y);
+    pButton->setPosition(m_SearchString->getScaledWidth() + m_SearchString->getX() + 10, y);
     pButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigSearch(false);
     });
     connect(this, &WikiView::sigSearch, this, &WikiView::search, Qt::QueuedConnection);
-    y += 50;
+    y += pTextfield->getScaledHeight() + 10;
 
     pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
@@ -55,13 +55,12 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
     connect(m_Tags.get(), &DropDownmenu::sigItemChanged, this, &WikiView::tagChanged, Qt::QueuedConnection);
     addChild(m_Tags);
     connect(this, &WikiView::sigSearch, this, &WikiView::search, Qt::QueuedConnection);
-    y += 50;
+    y += pTextfield->getScaledHeight() + 10;
 
     QSize size(viewWidth - 20, viewHeigth - y - 50);
     m_MainPanel = spPanel::create(true, size, size);
     m_MainPanel->setPosition(10, y);
     addChild(m_MainPanel);
-    y += 50;
 
     connect(this, &WikiView::sigShowWikipage, this, &WikiView::showWikipage, Qt::QueuedConnection);
     pApp->continueRendering();
@@ -86,13 +85,11 @@ void WikiView::search(bool onlyTag)
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
         oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
         pBox->setResAnim(pAnim);
-        pBox->setSize(m_MainPanel->getWidth() - 70, 40);
+        pBox->setSize(m_MainPanel->getScaledWidth() - 70, 40);
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
-        spLabel textField = spLabel::create(pBox->getWidth() - 18);
+        spLabel textField = spLabel::create(pBox->getScaledWidth() - 18);
         textField->setStyle(style);
         textField->setHeight(40);
         textField->setX(13);

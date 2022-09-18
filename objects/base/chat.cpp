@@ -8,10 +8,12 @@
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "game/gamemap.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "network/JsonKeys.h"
 
@@ -26,16 +28,17 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
       m_serviceMode(serviceMode)
 {
     setSize(size.width(), size.height());
+#ifdef GRAPHICSUPPORT
     setObjectName("Chat");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
     m_Panel = spPanel::create(true, QSize(size.width(), size.height() - 50), QSize(size.width(), size.height() - 50));
     addChild(m_Panel);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     m_Chat = oxygine::spTextField::create();
@@ -46,15 +49,15 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
     m_Panel->addItem(m_Chat);
 
     m_Send = pObjectManager->createButton(tr("Send"), 150);
-    m_Send->setPosition(size.width() - m_Send->getWidth(), size.height() - m_Send->getHeight());
+    m_Send->setPosition(size.width() - m_Send->getScaledWidth(), size.height() - m_Send->getScaledHeight());
 
     connect(this, &Chat::sigSendText, this, &Chat::sendData, Qt::QueuedConnection);
     addChild(m_Send);
 
-    m_ChatInput = spTextbox::create(size.width() - m_Send->getWidth() - 10);
+    m_ChatInput = spTextbox::create(size.width() - m_Send->getScaledWidth() - 10);
     Chat::setVisible(true);
 
-    m_ChatInput->setPosition(0, size.height() - m_Send->getHeight());
+    m_ChatInput->setPosition(0, size.height() - m_Send->getScaledHeight());
     connect(m_ChatInput.get(), &Textbox::sigEnterPressed, this, &Chat::sendData, Qt::QueuedConnection);
     addChild(m_ChatInput);
 
@@ -76,7 +79,7 @@ void Chat::setVisible(bool vis)
     oxygine::Actor::setVisible(vis);
     if (vis)
     {
-        if (GameMenue::getInstance().get() != nullptr)
+        if (BaseGamemenu::getInstance() != nullptr)
         {
             QString tooltip = tr("Message to send via chat. Start a message with one of the following items to send "
                                  "a message to specific targets. \n") +
@@ -107,20 +110,20 @@ void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSeriv
 
 void Chat::addMessage(QJsonObject data, bool local)
 {    
-    spGameMenue pGamemenu = GameMenue::getInstance();
-    
+    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     bool show = true;
 
     QString textMessage = data.value(JsonKeys::JSONKEY_ChatMessage).toString();
     QString target = data.value(JsonKeys::JSONKEY_ChatTarget).toString();
     QString sender = data.value(JsonKeys::JSONKEY_ChatSender).toString();
 
-    if (target.startsWith("@") && pGamemenu.get() != nullptr)
+    if (target.startsWith("@") && pMenu != nullptr &&
+        pMenu->getCurrentViewPlayer() != nullptr)
     {
         if (target.startsWith(chatTeamTarget))
         {
             qint32 team = target.replace(chatTeamTarget, "").toInt();
-            if (team - 1 != pGamemenu->getCurrentViewPlayer()->getTeam())
+            if (team - 1 != pMenu->getCurrentViewPlayer()->getTeam())
             {
                 show = false;
             }
@@ -128,7 +131,7 @@ void Chat::addMessage(QJsonObject data, bool local)
         else if (target.startsWith(chatAllyTarget))
         {
             qint32 team = target.replace(chatAllyTarget, "").toInt();
-            if (team != pGamemenu->getCurrentViewPlayer()->getTeam())
+            if (team != pMenu->getCurrentViewPlayer()->getTeam())
             {
                 show = false;
             }
@@ -136,7 +139,7 @@ void Chat::addMessage(QJsonObject data, bool local)
         else if (target.startsWith(chatNotTeamTarget))
         {
             qint32 team = target.replace(chatNotTeamTarget, "").toInt();
-            if (team == pGamemenu->getCurrentViewPlayer()->getTeam())
+            if (team == pMenu->getCurrentViewPlayer()->getTeam())
             {
                 show = false;
             }
@@ -144,7 +147,7 @@ void Chat::addMessage(QJsonObject data, bool local)
         else if (target.startsWith(chatPlayerTarget))
         {
             qint32 player = target.replace(chatPlayerTarget, "").toInt();
-            if (player - 1 != pGamemenu->getCurrentViewPlayer()->getPlayerID())
+            if (player - 1 != pMenu->getCurrentViewPlayer()->getPlayerID())
             {
                 show = false;
             }
@@ -188,9 +191,10 @@ void Chat::sendData(QString message)
         data.insert(JsonKeys::JSONKEY_ChatSender, Settings::getUsername());
         QString text;
         QString target;
-        spGameMenue pGamemenu = GameMenue::getInstance();        
+        BaseGamemenu* pMenu = GameMenue::getInstance();
         if (message.startsWith("@") &&
-            pGamemenu.get() != nullptr)
+            pMenu != nullptr &&
+            pMenu->getCurrentViewPlayer() != nullptr)
         {
             QStringList list = message.split(" ");
             for (qint32 i = 0; i < list.size(); i++)
@@ -199,11 +203,11 @@ void Chat::sendData(QString message)
                 {
                     if (list[i] == chatEnemyTarget)
                     {
-                        target = chatNotTeamTarget + QString::number(pGamemenu->getCurrentViewPlayer()->getTeam());
+                        target = chatNotTeamTarget + QString::number(pMenu->getCurrentViewPlayer()->getTeam());
                     }
                     else if (list[i] == chatAllyTarget)
                     {
-                        target = chatTeamTarget + QString::number(pGamemenu->getCurrentViewPlayer()->getTeam());
+                        target = chatTeamTarget + QString::number(pMenu->getCurrentViewPlayer()->getTeam());
                     }
                     else
                     {

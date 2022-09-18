@@ -14,7 +14,9 @@ COSpriteManager::COSpriteManager()
     : RessourceManagement<COSpriteManager>("/images/co/res.xml",
                                            "/scripts/cos")
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("COSpriteManager");
+#endif
     Interpreter::setCppOwnerShip(this);
     connect(this, &COSpriteManager::sigLoadResAnim, this, &COSpriteManager::loadResAnim, Qt::QueuedConnection);
 }

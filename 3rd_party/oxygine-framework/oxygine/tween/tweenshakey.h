@@ -3,14 +3,14 @@
 
 #include <QPoint>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
-class TweenShakeY
+class TweenShakeY final
 {
 public:
     using TActor = oxygine::Actor;
     explicit TweenShakeY(qint32 startIntensity, float start, float end);
-    virtual ~TweenShakeY() = default;
+    ~TweenShakeY() = default;
     void update(oxygine::Actor& actor, float percentDone, const oxygine::UpdateState& us);
 
     void init(oxygine::Actor& actor);

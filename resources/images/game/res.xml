@@ -330,6 +330,7 @@
         <!-- player info stuff -->
         <image file="2co.png" />
         <image file="co.png" />
+        <image file="turnStartInfo.png" />
         <!-- power star stuff -->
         <image file="powerstar.png" />
         <image file="powerstarfull.png" cols = "13" />
@@ -448,7 +449,7 @@
         <!-- powert stuff -->
         <image file="power_background.png" guideX1="0" guideX2="480" guideY1="0" guideY2="320"/>
         <image file="superpower_background.png" guideX1="0" guideX2="480" guideY1="0" guideY2="320"/>
-            
+        <image file="tagpower_background.png" guideX1="0" guideX2="512" guideY1="0" guideY2="480"/>
         
         <!-- score rang images -->
         <image file="victory_screen/s_rang.png" />

@@ -40,11 +40,11 @@ var Constructor = function()
         }
         if (baseTerrainId === "WASTE")
         {
-            return 1;
+            return 2;
         }
         else
         {
-            return 2;
+            return 3;
         }
     };
     this.getBonusVision = function(unit, terrain)
@@ -206,6 +206,14 @@ var Constructor = function()
                 spriteId + "+E",
                 spriteId + "+E+W",
                 spriteId + "+W"];
+    };
+
+    this.getBaseOverlayTerrainSprites = function(spriteId)
+    {
+        return [spriteId + "+SE",
+                spriteId + "+NE",
+                spriteId + "+SW",
+                spriteId + "+NW",];
     };
 
     this.getTerrainAnimationBase = function(unit, terrain, defender, map)

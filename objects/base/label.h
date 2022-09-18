@@ -2,16 +2,18 @@
 #define LABEL_H
 
 #include "objects/base/tooltip.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
 class Label;
-typedef oxygine::intrusive_ptr<Label> spLabel;
+using spLabel = oxygine::intrusive_ptr<Label>;
 
-class Label : public Tooltip
+class Label final : public Tooltip
 {
     Q_OBJECT
 public:
     explicit Label(qint32 width);
-    virtual ~Label() = default;
+    ~Label() = default;
     /**
      * @brief setText
      * @param str

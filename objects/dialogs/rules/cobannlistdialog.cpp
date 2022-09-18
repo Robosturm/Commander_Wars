@@ -20,7 +20,9 @@
 COBannListDialog::COBannListDialog(QStringList cobannlist)
     : m_CurrentCOBannList(cobannlist)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("COBannListDialog");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -37,7 +39,8 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -47,7 +50,8 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_ExitButton->getHeight());
+    m_ExitButton->setPosition(30,
+                              Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -55,7 +59,8 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     });
 
     oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-    pSave->setPosition(Settings::getWidth() / 2 - pSave->getWidth() / 2, Settings::getHeight() - 30 - m_ExitButton->getHeight());
+    pSave->setPosition(Settings::getWidth() / 2 - pSave->getScaledWidth() / 2,
+                       Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
     pSave->addClickListener([this](oxygine::Event*)
     {
         emit sigShowSaveBannlist();
@@ -64,7 +69,8 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     connect(this, &COBannListDialog::sigShowSaveBannlist, this, &COBannListDialog::showSaveBannlist, Qt::QueuedConnection);
 
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
-    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 75 - m_ToggleAll->getHeight());
+    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 ,
+                             Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
     pSpriteBox->addChild(m_ToggleAll);
     m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -77,14 +83,13 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     });
     auto items = getNameList();
     m_PredefinedLists = spDropDownmenu::create(260, items);
-    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 75 - m_ToggleAll->getHeight());
+    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getScaledWidth(),
+                                   Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
     pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &COBannListDialog::setCOBannlist, Qt::QueuedConnection);
 
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -96,22 +101,18 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     pSpriteBox->addChild(pPanel);
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
 
     oxygine::TextStyle largeStyle = oxygine::TextStyle(FontManager::getMainFont32());
-    largeStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
-    spLabel pLabel = spLabel::create(pPanel->getWidth() - 40);
+    spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 40);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("CO Bann List"));
-    pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     if (pLabel->getX() < 20)
     {
         pLabel->setX(20);
@@ -124,17 +125,16 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     auto coGroups = pCOSpriteManager->getCoGroups(m_COIDs);
     for (const auto & group : coGroups)
     {
-        spLabel textField = spLabel::create(pPanel->getWidth() - 40);
+        spLabel textField = spLabel::create(pPanel->getScaledWidth() - 40);
         textField->setStyle(largeStyle);
         textField->setHtmlText(group.name);
-        textField->setPosition(pPanel->getWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
+        textField->setPosition(pPanel->getScaledWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
         pPanel->addItem(textField);
         y += 45;
         x = 10;
         for (qint32 i = 0; i < group.cos.size(); ++i)
         {
             QString coID = group.cos[i];
-
             oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((coID.toLower() + "+face"));
             oxygine::spSprite pCo = oxygine::spSprite::create();
             pCo->setResAnim(pAnim, 0, 0);
@@ -284,7 +284,7 @@ QStringList COBannListDialog::getNameList()
     while (dirIter.hasNext())
     {
         dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
+        QString file = dirIter.fileInfo().canonicalFilePath();
         auto data = Filesupport::readList(file);
         items.append(data.name);
     }

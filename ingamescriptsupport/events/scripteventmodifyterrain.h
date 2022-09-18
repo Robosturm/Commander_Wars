@@ -6,7 +6,7 @@
 class ScriptEventModifyTerrain;
 using spScriptEventModifyTerrain = oxygine::intrusive_ptr<ScriptEventModifyTerrain>;
 
-class ScriptEventModifyTerrain  : public ScriptEvent
+class ScriptEventModifyTerrain final : public ScriptEvent
 {
     Q_OBJECT
 public:

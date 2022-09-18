@@ -1,5 +1,8 @@
-#include "dropdownmenu.h"
+#include "objects/base/dropdownmenu.h"
+
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
@@ -7,15 +10,17 @@ DropDownmenu::DropDownmenu(qint32 width, const QStringList & items)
     : DropDownmenuBase(width, items.size()),
       m_ItemTexts(items)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("DropDownmenu");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setWidth(width);
     m_Textfield = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_Textfield->setStyle(style);
@@ -35,8 +40,8 @@ void DropDownmenu::changeList(const QStringList & items)
         m_Textfield->setHtmlText(tr("unknown"));
     }
     m_pClipActor->addChild(m_Textfield);
-    m_Textfield->setWidth(m_Box->getWidth() - 20 - 45);
-    m_Textfield->setHeight(m_Box->getHeight());
+    m_Textfield->setWidth(m_Box->getScaledWidth() - 20 - 45);
+    m_Textfield->setHeight(m_Box->getScaledHeight());
     m_Textfield->setY(5);
     m_ItemTexts = items;
 
@@ -79,6 +84,14 @@ void DropDownmenu::setCurrentItemText(QString value)
     
     m_Textfield->setHtmlText(value);
     m_currentItem = -1;
+    for (qint32 i = 0; i < m_ItemTexts.size(); i++)
+    {
+        if (m_ItemTexts[i] == value)
+        {
+            m_currentItem = i;
+            break;
+        }
+    }
     hideTooltip();
     
 }
@@ -88,15 +101,14 @@ void DropDownmenu::addDropDownText(QString text, qint32 id)
     oxygine::spClipRectActor clipRect = oxygine::spClipRectActor::create();
     oxygine::spTextField textField = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;
     style.multiline = false;
     textField->setStyle(style);
     textField->setHtmlText(text);
     textField->setY(5);
     clipRect->addChild(textField);
-    clipRect->setSize(m_Textfield->getWidth() + 10, m_Textfield->getHeight());
+    clipRect->setSize(m_Textfield->getScaledWidth() + 10,
+                      m_Textfield->getScaledHeight());
     clipRect->setX(10);
     auto size = addDropDownItem(clipRect, id);
     textField->setSize(size);

@@ -1,18 +1,31 @@
 var Constructor = function()
 {
-    this.getRuleDescription = function(itemNumber)
+    this.getRuleDescription = function(rule, itemNumber, map)
     {
-        if (itemNumber === 0)
+        var type = itemNumber;
+        if (rule !== null)
+        {
+            var teamVictory = VICTORYRULE_BUILDINGLIMIT.getRuleValue(rule, 1, map);
+            if (teamVictory)
+            {
+                type = 2;
+            }
+        }
+        if (type === 0)
         {
             return qsTr("The player who reaches the number of buildings wins.")
         }
-        else
+        else if (type === 1)
         {
             return qsTr("If checked the Team needs to capture the given number of buildings else a single player needs to capture them.");
         }
+        else
+        {
+            return qsTr("The team which reaches the number of buildings wins.")
+        }
     };
 
-    this.getRuleName = function(itemNumber)
+    this.getRuleName = function(rule, itemNumber, map)
     {
         if (itemNumber === 0)
         {

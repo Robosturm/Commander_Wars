@@ -5,7 +5,7 @@ CO_ADAM.init = function(co, map)
 };
 CO_ADAM.activateSuperpower = function(co, powerMode, map)
 {
-	CO_ADAM.activatePower(co, powerMode);
+	CO_ADAM.activatePower(co, powerMode, map);
 };
 CO_ADAM.getSuperPowerDescription = function()
 {

@@ -1,16 +1,12 @@
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 #include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
-#include "3rd_party/oxygine-framework/oxygine/Font.h"
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
-#include "3rd_party/oxygine-framework/oxygine/res/ResFont.h"
 
 namespace oxygine
 {
     namespace text
-    {        
-        qint32 TextNode::m_defMissingGlyph = '?';
-
+    {
         void Node::appendNode(spNode tn)
         {
             if (!m_firstChild)
@@ -27,6 +23,7 @@ namespace oxygine
 
         void Node::resize(Aligner& rd)
         {
+            rd.addLineNode(this);
             xresize(rd);
             resizeChildren(rd);
         }
@@ -41,179 +38,140 @@ namespace oxygine
             }
         }
 
-        void Node::finalPass(Aligner& rd)
-        {
-            xfinalPass(rd);
-            spNode child = m_firstChild;
-            while (child)
-            {
-                child->finalPass(rd);
-                child = child->m_nextSibling;
-            }
-        }
-
-        void Node::drawChildren(DrawContext& dc)
+        void Node::drawChildren(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
         {
             spNode child = m_firstChild;
             while (child)
             {
-                child->draw(dc);
+                child->draw(rs, style, drawColor, painter);
                 child = child->m_nextSibling;
             }
         }
 
-        Symbol* Node::getSymbol(int& pos)
+        void Node::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
         {
-            spNode node = m_firstChild;
-            while (node)
-            {
-                Symbol* res = node->getSymbol(pos);
-                if (res)
-                    return res;
-                node = node->m_nextSibling;
-            }
-            return 0;
-        }
-
-        void Node::draw(DrawContext& dc)
-        {
-            drawChildren(dc);
-        }
-
-        void Node::updateMaterial(const Material& mat)
-        {
-            spNode node = m_firstChild;
-            while (node)
-            {
-                node->updateMaterial(mat);
-                node = node->m_nextSibling;
-            }
-            xupdateMaterial(mat);
+            drawChildren(rs, style, drawColor, painter);
         }
 
         TextNode::TextNode(const QString & v)
+            : m_text(v)
         {
-            for (auto & c : v)
-            {
-                Symbol s;
-                s.code = c.unicode();
-                m_data.push_back(s);
-            }
         }
 
-        Symbol* TextNode::getSymbol(int& pos)
+        void TextNode::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
         {
-            if (m_data.size() > pos)
+#ifdef GRAPHICSUPPORT
+            QPainterPath path;
+            QFont font = style.font.font;
+            if (rs.transform.a != 1)
             {
-                return &m_data[pos];
+                font.setPixelSize(font.pixelSize() * rs.transform.a);
             }
-            pos -= m_data.size();
-            return Node::getSymbol(pos);
-        }
-
-        void TextNode::draw(DrawContext& dc)
-        {
-            for (const auto & s : qAsConst(m_data))
+            for (qint32 i = 0; i < m_lines.size(); ++i)
             {
-                if (!s.mat)
-                {
-                    continue;
-                }
-
-                s.mat->apply();
-                s.mat->render(dc.m_color, s.gl.src, s.destRect);
+                path.addText(rs.transform.x + (m_offsets[i].x() - style.font.borderWidth + style.font.offsetX) * rs.transform.a, rs.transform.y + (m_offsets[i].y() - style.font.borderWidth + style.font.offsetY) * rs.transform.d, font, m_lines[i]);
             }
-
-            drawChildren(dc);
-        }
-
-        void TextNode::xupdateMaterial(const Material& mat)
-        {
-            for (auto & s : m_data)
-            {
-                spMaterial m = mat.clone();
-                m->m_base = s.mat->m_base;
-                s.mat = MaterialCache::mc().cache(*m.get());
-            }
+            painter.setPen(QPen(style.font.borderColor, style.font.borderWidth, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
+            painter.setBrush(QBrush(drawColor));
+            painter.drawPath(path);
+            drawChildren(rs, style, drawColor, painter);
+#endif
         }
 
         void TextNode::xresize(Aligner& rd)
         {
-            if (!m_data.empty())
+#ifdef GRAPHICSUPPORT
+            if (!m_text.isEmpty())
             {
-                qint32 i = 0;
-                const Font* font = rd.getFont();
-                while (i != m_data.size())
+                QStringList lines = m_text.split("\n");
+                m_lines.clear();
+                m_offsets.clear();
+                m_lines.reserve(50);
+                m_offsets.reserve(50);
+                qint32 borderWidth = rd.getStyle().font.borderWidth;
+                if (borderWidth < 0)
                 {
-                    Symbol& s = m_data[i];
-                    if (s.code == '\n')
-                    {
-                        rd.nextLine();
-                    }
-                    else
-                    {
-                        const glyph* gl = font->getGlyph(s.code);
-                        if (gl)
-                        {
-                            s.gl = *gl;
-                            i += rd.putSymbol(s);
-                        }
-                        else
-                        {
-                            gl = font->getGlyph(m_defMissingGlyph);
-                            if (gl)//even 'missing' symbol  could be missing
-                            {
-                                s.gl = *gl;
-                                i += rd.putSymbol(s);
-                            }
-                        }
-
-                        if (gl != nullptr)
-                        {
-                            if (rd.getMat()->m_base.get() == gl->texture.get())
-                            {
-                                s.mat = rd.getMat();
-                            }
-                            else
-                            {
-                                spMaterial mat = dynamic_pointer_cast<Material>(rd.getMat()->clone());
-                                mat->m_base = gl->texture;
-                                s.mat = MaterialCache::mc().cache(*mat.get());
-                                rd.setMat(s.mat);
-                            }
-                        }
-                    }
-                    ++i;
-                    if (i < 0)
-                    {
-                        i = 0;
-                    }
-                }
-            }
-        }
-
-        float mlt(qint32 x, float sf)
-        {
-            return x / sf;
-        }
-
-        void TextNode::xfinalPass(Aligner& rd)
-        {
-            float scaleFactor = rd.getScale();
-
-            qint32 offsetY = rd.getBounds().pos.y;
-
-            for (auto & s : m_data)
-            {
-                s.y += offsetY;
-                if (s.gl.texture)
-                {
-                    s.destRect = RectF(mlt(s.x, scaleFactor), mlt(s.y, scaleFactor), mlt(s.gl.sw, scaleFactor), mlt(s.gl.sh, scaleFactor));
+                    borderWidth = qAbs(borderWidth);
                 }
                 else
                 {
-                    s.destRect = RectF(0, 0, 0, 0);
+                    borderWidth = 0;
                 }
+                auto & metrics = rd.getMetrics();
+                bool checkWidth = (rd.getWidth() > 0);
+                for (auto & line : lines)
+                {
+                    auto * currentLine = addNewLine(rd);
+                    QStringList words = line.split(' ');
+                    for (auto & word : words)
+                    {
+                        if (checkWidth && metrics.horizontalAdvance(*currentLine + word) > rd.getWidth() - rd.getX() - borderWidth)
+                        {
+                            if (rd.getStyle().multiline)
+                            {
+                                currentLine = addNewLine(rd);
+                                *currentLine = metrics.elidedText(word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX() - borderWidth);
+                            }
+                            else
+                            {
+                                *currentLine = metrics.elidedText(*currentLine + word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX() - borderWidth);
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            *currentLine += word + ' ';
+                        }
+                    }
+                }
+                qint32 index = m_lines.size() - 1;
+                QString line = m_lines[index];
+                qint32 width = metrics.horizontalAdvance(line);
+                m_offsets[index].setX(rd.getXAlignment(width));
+                rd.nodeEnd(width);
+            }
+#endif
+        }
+
+#ifdef GRAPHICSUPPORT
+        QString * TextNode::addNewLine(Aligner& rd)
+        {
+            if (m_lines.size() != 0)
+            {
+                qint32 index = m_lines.size() - 1;
+                qint32 width = rd.getMetrics().horizontalAdvance(m_lines[index]);
+                qint32 posX = rd.getXAlignment(width);
+                m_offsets[index].setX(posX);
+                rd.nextLine(posX, width);
+                rd.addLineNode(this);
+            }
+            m_lines.push_back(QString());
+            m_offsets.push_back(QPoint(rd.getX(), rd.getY()));
+            return &(m_lines[m_lines.size() - 1]);
+        }
+#endif
+
+        qint32 TextNode::getWidth(Aligner& rd)
+        {
+#ifdef GRAPHICSUPPORT
+            qint32 width = 0;
+            if (m_lines.size() > 0)
+            {
+                qint32 index = m_lines.size() - 1;
+                width = rd.getMetrics().boundingRect(m_lines[index]).width();
+            }
+            return width;
+#else
+            return 0;
+#endif
+        }
+
+        void TextNode::setX(qint32 x)
+        {
+            if (m_lines.size() > 0)
+            {
+                qint32 index = m_lines.size() - 1;
+                m_offsets[index].setX(x);
             }
         }
 
@@ -227,13 +185,9 @@ namespace oxygine
             resizeChildren(rd);
         }
 
-        void DivNode::draw(DrawContext& dc)
+        void DivNode::draw(const RenderState& rs, const TextStyle & style, const QColor &, QPainter & painter)
         {
-            QColor prev = dc.m_color;
-
-            dc.m_color = m_color * dc.m_primary;
-            drawChildren(dc);
-            dc.m_color = prev;
+            drawChildren(rs, style, m_color, painter);
         }
 
         DivNode::DivNode(QDomElement& reader)

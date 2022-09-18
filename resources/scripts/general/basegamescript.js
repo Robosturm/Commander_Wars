@@ -31,4 +31,14 @@ var BASEGAMESCRIPT =
     {
 
     },
+    // optional functions not defined in the base class
+    //this.PredefinedUnitMapScriptBehaviour = function(ai, action, unit, enemies, enemyBuildings, map)
+    //{
+    // called when a unit has the scripted ai modify the action and return true for the ai to execute the defined action
+    //};
+
+    //this.GenericPredefinedUnitMapScriptBehaviour = function(ai, action, unit, enemies, enemyBuildings, map)
+    //{
+    // called when a unit has no predefined ai behaviour modify the action and return true for the ai to execute the defined action
+    //};
 };

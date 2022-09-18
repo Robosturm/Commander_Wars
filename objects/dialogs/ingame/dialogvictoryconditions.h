@@ -4,8 +4,7 @@
 #include <QObject>
 #include <QVector>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 #include "objects/base/checkbox.h"
 
@@ -13,12 +12,12 @@ class GameMap;
 class DialogVictoryConditions;
 using spDialogVictoryConditions = oxygine::intrusive_ptr<DialogVictoryConditions>;
 
-class DialogVictoryConditions : public QObject, public oxygine::Actor
+class DialogVictoryConditions final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogVictoryConditions(GameMap* pMap);
-    virtual ~DialogVictoryConditions() = default;
+    ~DialogVictoryConditions() = default;
 
 signals:
     void sigFinished();

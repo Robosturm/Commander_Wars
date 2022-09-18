@@ -1,14 +1,27 @@
 var Constructor = function()
 {
-    this.getRuleDescription = function(itemNumber)
+    this.getRuleDescription = function(rule, itemNumber, map)
     {
-        if (itemNumber === 0)
+        var type = itemNumber;
+        if (rule !== null)
+        {
+            var teamVictory = VICTORYRULE_TURNLIMIT_SCORE_RACE.getRuleValue(rule, 1, map);
+            if (teamVictory)
+            {
+                type = 2;
+            }
+        }
+        if (type === 0)
         {
             return qsTr("The player with the highest combined tech and power score wins after the time is up.");
         }
-        else
+        else if (type === 1)
         {
             return qsTr("If checked the Team with the highest average score wins.");
+        }
+        else
+        {
+            return qsTr("The team with the highest combined tech and power score wins after the time is up.");
         }
     };
     this.getRuleName = function(itemNumber)

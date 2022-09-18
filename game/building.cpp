@@ -18,7 +18,9 @@ Building::Building(QString BuildingID, GameMap* pMap)
       m_pTerrain(nullptr),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Building");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -181,7 +183,7 @@ void Building::setOwner(Player* pOwner)
     }
     else
     {
-        if (m_BuildingID == "HQ")
+        if (m_BuildingID == CoreAI::BUILDING_HQ)
         {
             updateBuildingSprites(false);
         }
@@ -377,6 +379,7 @@ qint32 Building::getImageSize()
 
 void Building::syncAnimation(oxygine::timeMS syncTime)
 {
+#ifdef GRAPHICSUPPORT
     for (auto & sprite : m_pBuildingSprites)
     {
         auto & tweens = sprite->getTweens();
@@ -393,6 +396,7 @@ void Building::syncAnimation(oxygine::timeMS syncTime)
             pTween->setElapsed(syncTime);
         }
     }
+#endif
 }
 
 void Building::updatePlayerColor(bool visible)
@@ -776,6 +780,15 @@ QStringList Building::getConstructionList()
     return buildList;
 }
 
+void Building::endOfTurn()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "endOfTurn";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(m_BuildingID, function1, args);
+}
+
 void Building::startOfTurn()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -789,6 +802,23 @@ qint32 Building::getOffensiveBonus()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveBonus";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+qint32 Building::getPowerChargeBonus()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getPowerChargeBonus";
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);

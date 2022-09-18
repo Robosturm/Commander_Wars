@@ -1,9 +1,7 @@
 #pragma once
-
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/core/closure.h"
 #include <chrono>
-#include <qglobal.h>
+#include <QtGlobal>
 
 #ifdef GAMEDEBUG
 #define OXY_ASSERT(check) Q_ASSERT(check)
@@ -38,7 +36,6 @@ namespace oxygine
     class Texture;
     class Tween;
     class ResAnim;
-    class ResFont;
     class TweenOptions;
     class ResourcesLoadOptions;
     class Resources;
@@ -65,7 +62,6 @@ namespace oxygine
     using spSlidingActorNoClipRect = intrusive_ptr<SlidingActorNoClipRect>;
     using spResAnim = intrusive_ptr<ResAnim>;
     using spTween = intrusive_ptr<Tween>;
-    using spResFont = intrusive_ptr<ResFont>;
 
     using EventCallback = OwnedClosure<void, Event*>;
     using eventType = qint32;

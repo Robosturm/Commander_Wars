@@ -274,7 +274,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("All hovercraft units gain %0% firepower along with one extra movement. Hovercrafts also receive a %0% reduction in deployment costs.");
+        var text = qsTr("All hovercraft units gain %0% firepower along with one extra movement. Hovercrafts also receive a %1% reduction in deployment costs.");
         text = replaceTextArgs(text, [CO_AMY.powerHoverCraftBoost, CO_AMY.powerCostReduction * 100]);
         return text;
     };

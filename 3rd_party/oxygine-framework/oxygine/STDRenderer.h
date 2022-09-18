@@ -3,6 +3,7 @@
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
 #include <functional>
 #include <vector>
+#include <QPainter>
 
 namespace oxygine
 {
@@ -16,12 +17,12 @@ namespace oxygine
         }
         ShaderProgramChangedHook* prev;
         ShaderProgramChangedHook* next;
-        std::function< void() > hook;
+        std::function<void()> hook;
     };    
 
     class STDRenderer;
     typedef oxygine::intrusive_ptr<STDRenderer> spSTDRenderer;
-    class STDRenderer : public ShaderProgramChangedHook, public oxygine::ref_counter
+    class STDRenderer final : public ShaderProgramChangedHook, public oxygine::ref_counter
     {
     public:
         static spSTDRenderer current;
@@ -43,10 +44,6 @@ namespace oxygine
         /**White 4x4 Texture*/
         static spTexture white;
         static UberShaderProgram uberShader;
-        static QString fracShaderBody;
-        static QString fracTableShaderBody;
-        static QString fracMatrixShaderBody;
-        static QString vertexShaderBody;
         static std::vector<quint16> indices16;
         static size_t maxVertices;
 
@@ -63,17 +60,12 @@ namespace oxygine
         {
             return m_vdecl;
         }
-        quint32 getBaseShaderFlags() const
-        {
-            return m_baseShaderFlags;
-        }
 
-        void setShaderFlags(unsigned int);
+        void setFracShader(UberShaderProgram::ColorMode fracShader);
         void setViewProj(const QMatrix4x4& viewProj);
         void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
         void setBaseShaderFlags(quint32 fl);
-
         /**Sets World transformation.*/
         void setTransform(const AffineTransform& world);
         void addQuad(const QColor&, const RectF& srcRect, const RectF& destRect);
@@ -154,7 +146,6 @@ namespace oxygine
         ShaderProgramChangedHook* m_sphookLast;
 
         UberShaderProgram* m_uberShader{nullptr};
-        quint32 m_baseShaderFlags;
         spTexture m_prevRT;
     private:
         static bool m_restored;
@@ -178,6 +169,9 @@ namespace oxygine
 
         void reset();
         void resetTextures();
+        void restoreAfterPainterUse();
+    protected:
+        void setBlendModeInternal();
 
     protected:
         static constexpr quint32 MAX_TEXTURES = 8;

@@ -19,6 +19,8 @@
         <image file="next_unit.png" />
         <image file="cancel.png" />
         <image file="info.png" />
+        <image file="lock.png" />
+        <image file="unlock.png" />
         <!-- editor selection -->
         <image file="arrow+right.png" cols = "3"/>
         <image file="editorselection.png"           guideX1="9" guideX2="120" guideY1="5" guideY2="125"/>
@@ -70,6 +72,11 @@
         <image file="no_co.png"/>
         <image file="co_background.png"/>
         <image file="co_cursor.png"/>
+        
+        <!-- complex table view -->
+        <image file="h_table_divider.png"  guideX1="2" guideX2="6"  guideY1="8"  guideY2="126"/>
+        <image file="v_table_divider.png"  guideX1="8" guideX2="122"  guideY1="2"  guideY2="6"/>
+        
         <!-- ingame stuff -->
         <image file="barforeground.png"/>
         <image file="gamepad.png"/>

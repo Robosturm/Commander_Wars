@@ -8,7 +8,7 @@
 class ScriptEventAnimation;
 using spScriptEventAnimation = oxygine::intrusive_ptr<ScriptEventAnimation>;
 
-class ScriptEventAnimation : public ScriptEvent
+class ScriptEventAnimation final : public ScriptEvent
 {
     Q_OBJECT
 public:

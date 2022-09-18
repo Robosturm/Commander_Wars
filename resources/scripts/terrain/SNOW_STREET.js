@@ -17,6 +17,10 @@ var Constructor = function()
     {
         __BASESTREET.loadBaseOverlaySprite("snow_street+style0", terrain, map);
     };
+    this.getOverlayTerrainSprites = function(map)
+    {
+        return __BASESTREET.getBaseOverlayTerrainSprites("snow_street+style0");
+    };
 };
 Constructor.prototype = __BASESTREET;
 var SNOW_STREET = new Constructor();

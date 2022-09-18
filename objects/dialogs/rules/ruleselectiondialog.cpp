@@ -11,7 +11,9 @@
 RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode, bool enabled)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("RuleSelectionDialog");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -27,7 +29,8 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -38,7 +41,7 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
     if (enabled)
     {
         m_pButtonLoadRules = ObjectManager::createButton(tr("Load"));
-        m_pButtonLoadRules->setPosition(Settings::getWidth() / 2 + 20 + m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
+        m_pButtonLoadRules->setPosition(Settings::getWidth() / 2 + 20 + m_OkButton->getScaledWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
         m_pButtonLoadRules->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowLoadRules();
@@ -47,7 +50,8 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
         connect(this, &RuleSelectionDialog::sigShowLoadRules, this, &RuleSelectionDialog::showLoadRules, Qt::QueuedConnection);
 
         m_pButtonSaveRules = ObjectManager::createButton(tr("Save"));
-        m_pButtonSaveRules->setPosition(Settings::getWidth() / 2 - m_pButtonSaveRules->getWidth() - 20 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
+        m_pButtonSaveRules->setPosition(Settings::getWidth() / 2 - m_pButtonSaveRules->getScaledWidth() - 20 - m_OkButton->getScaledWidth() / 2,
+                                        Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
         m_pButtonSaveRules->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowSaveRules();
@@ -57,18 +61,19 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
     }
     m_pRuleSelection = spRuleSelection::create(m_pMap, Settings::getWidth() - 80, mode, enabled);
     connect(m_pRuleSelection.get(), &RuleSelection::sigSizeChanged, this, &RuleSelectionDialog::ruleSelectionSizeChanged, Qt::QueuedConnection);
-    QSize size(Settings::getWidth() - 20, Settings::getHeight() - 40 * 2 - m_OkButton->getHeight());
+    QSize size(Settings::getWidth() - 20,
+               Settings::getHeight() - 40 * 2 - m_OkButton->getScaledHeight());
     m_pPanel = spPanel::create(true,  size, size);
     m_pPanel->setPosition(10, 20);
     m_pPanel->addItem(m_pRuleSelection);
-    m_pPanel->setContentHeigth(m_pRuleSelection->getHeight() + 40);
-    m_pPanel->setContentWidth(m_pRuleSelection->getWidth());
+    m_pPanel->setContentHeigth(m_pRuleSelection->getScaledHeight() + 40);
+    m_pPanel->setContentWidth(m_pRuleSelection->getScaledWidth());
     pSpriteBox->addChild(m_pPanel);
 }
 
 void RuleSelectionDialog::ruleSelectionSizeChanged()
 {
-    m_pPanel->setContentHeigth(m_pRuleSelection->getHeight() + 40);
+    m_pPanel->setContentHeigth(m_pRuleSelection->getScaledHeight() + 40);
 }
 
 void RuleSelectionDialog::showLoadRules()
@@ -107,8 +112,8 @@ void RuleSelectionDialog::loadRules(QString filename)
             m_pRuleSelection->detach();
             m_pRuleSelection = spRuleSelection::create(m_pMap, Settings::getWidth() - 80, mode);
             m_pPanel->addItem(m_pRuleSelection);
-            m_pPanel->setContentHeigth(m_pRuleSelection->getHeight() + 40);
-            m_pPanel->setContentWidth(m_pRuleSelection->getWidth());
+            m_pPanel->setContentHeigth(m_pRuleSelection->getScaledHeight() + 40);
+            m_pPanel->setContentWidth(m_pRuleSelection->getScaledWidth());
         }
     }
 }

@@ -3,8 +3,7 @@
 
 #include <QObject>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 class GameMap;
 class Cursor;
@@ -13,12 +12,12 @@ using spCursor = oxygine::intrusive_ptr<Cursor>;
 /**
  * @brief The Cursor class is the ingame cursor for the map
  */
-class Cursor : public QObject, public oxygine::Actor
+class Cursor final : public QObject, public oxygine::Actor
 {
    Q_OBJECT
 public:
     explicit Cursor(GameMap* pMap);
-    virtual ~Cursor() = default;
+    ~Cursor() = default;
     void changeCursor(const QString & spriteID, qint32 xOffset = 0, qint32 yOffset = 0, float scale = 1.0f);
     /**
      * @brief addCursorRangeOutline

@@ -14,6 +14,7 @@
 #include "game/gameanimation/gameanimation.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "resource_management/unitspritemanager.h"
 
@@ -28,7 +29,9 @@ void Player::releaseStaticData()
 Player::Player(GameMap* pMap)
     : m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Player");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -57,14 +60,14 @@ BaseGameInputIF* Player::getBaseGameInput()
     return m_pBaseGameInput.get();
 }
 
-QString Player::getDisplayName() const
+QString Player::getPlayerNameId() const
 {
-    return m_displayName;
+    return m_playerNameId;
 }
 
-void Player::setDisplayName(const QString &newDisplayName)
+void Player::setPlayerNameId(const QString &newDisplayName)
 {
-    m_displayName = newDisplayName;
+    m_playerNameId = newDisplayName;
 }
 
 const QString Player::getUniqueIdentifier() const
@@ -158,10 +161,9 @@ void Player::swapCOs()
         spCO co0 = m_playerCOs[0];
         m_playerCOs[0] = m_playerCOs[1];
         m_playerCOs[1] = co0;
-        spGameMenue pGameMenue = GameMenue::getInstance();
-        if (pGameMenue.get() != nullptr)
+        if (m_pMenu != nullptr)
         {
-            pGameMenue->updatePlayerinfo();
+            m_pMenu->updatePlayerinfo();
         }
     }
 }
@@ -183,8 +185,10 @@ void Player::setColor(QColor color, qint32 table)
     {
         createTable(m_Color);
     }
+#ifdef GRAPHICSUPPORT
     m_ColorTableAnim = oxygine::spSingleResAnim::create();
     Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
+#endif
 }
 
 bool Player::loadTable(qint32 table)
@@ -220,11 +224,15 @@ bool Player::loadTableFromFile(const QString & tablename)
     {
         if (QFile::exists(path + tablename + ".png"))
         {
+#ifdef GRAPHICSUPPORT
             m_colorTable.load(path + tablename + ".png");
             if (m_colorTable.height() > 0)
             {
                 found = true;
             }
+#else
+            found = true;
+#endif
             break;
         }
     }
@@ -394,14 +402,20 @@ bool Player::colorToTableInTable(QColor baseColor)
             dirIter.next();
             QString path = dirIter.fileInfo().filePath();
             QImage img(path);
-            if (QColor(img.pixel(255, 255)) == baseColor)
+            if (img.width() > 255 &&
+                img.height() > 255 &&
+                QColor(img.pixel(255, 255)) == baseColor)
             {
                 CONSOLE_PRINT("load table " + path, Console::eDEBUG);
+#ifdef GRAPHICSUPPORT
                 m_colorTable.load(path);
                 if (m_colorTable.height() > 0)
                 {
                     found = true;
                 }
+#else
+                found = true;
+#endif
             }
             if (found)
             {
@@ -418,6 +432,7 @@ bool Player::colorToTableInTable(QColor baseColor)
 
 void Player::createTable(QColor baseColor)
 {
+#ifdef GRAPHICSUPPORT
     CONSOLE_PRINT("Player::createTable " + baseColor.name(), Console::eDEBUG);
     constexpr qint32 imageSize = 256;
     m_colorTable = QImage(imageSize, imageSize, QImage::Format_RGBA8888);
@@ -473,11 +488,17 @@ void Player::createTable(QColor baseColor)
             }
         }
     }
+#endif
 }
 
 void Player::setPlayerArmy(const QString &value)
 {
     m_playerArmy = value;
+}
+
+QString Player::getPlayerArmy() const
+{
+    return m_playerArmy;
 }
 
 bool Player::getPlayerArmySelected() const
@@ -492,7 +513,11 @@ void Player::setPlayerArmySelected(bool playerArmySelected)
 
 oxygine::spResAnim Player::getColorTableAnim() const
 {
+#ifdef GRAPHICSUPPORT
     return m_ColorTableAnim;
+#else
+    return oxygine::spResAnim();
+#endif
 }
 
 oxygine::spResAnim Player::getNeutralTableAnim()
@@ -656,10 +681,9 @@ bool Player::isAlly(Player* pOwner)
 void Player::setFunds(const qint32 &value)
 {
     m_funds = value;
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pGameMenue->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
 }
 
@@ -676,29 +700,9 @@ qint32 Player::getFunds() const
 qint32 Player::getBuildingCount(const QString & buildingID)
 {
     qint32 ret = 0;
-    
     if (m_pMap != nullptr)
     {
-        for (qint32 y = 0; y < m_pMap->getMapHeight(); y++)
-        {
-            for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
-            {
-                spBuilding pBuilding = m_pMap->getSpTerrain(x, y)->getSpBuilding();
-                if (pBuilding.get() != nullptr)
-                {
-                    if (pBuilding->getOwner() == this)
-                    {
-                        if (buildingID.isEmpty() || pBuilding->getBuildingID() == buildingID)
-                        {
-                            if (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y)
-                            {
-                                ret++;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        ret = m_pMap->getPlayerBuildingCount(buildingID, this);
     }
     return ret;
 }
@@ -863,10 +867,9 @@ void Player::defeatPlayer(Player* pPlayer, bool units)
             }
         }
     }
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pGameMenue->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
 }
 
@@ -1135,6 +1138,7 @@ void Player::addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool di
     }
 }
 
+#ifdef GRAPHICSUPPORT
 const QImage &Player::getNeutralTableImage()
 {
     return m_neutralTableImage;
@@ -1144,6 +1148,7 @@ const QImage &Player::getColorTable() const
 {
     return m_colorTable;
 }
+#endif
 
 void Player::updatePlayerVision(bool reduceTimer)
 {
@@ -1382,7 +1387,6 @@ bool Player::getFieldDirectVisible(qint32 x, qint32 y)
 qint32 Player::getCosts(const QString & id, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args({pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(id, "getBaseCost");
     qint32 costs = 0;
     if (ret.isNumber())
@@ -1391,16 +1395,19 @@ qint32 Player::getCosts(const QString & id, QPoint position)
     }
 
     qint32 costModifier = 0;
-    qint32 mapHeigth = m_pMap->getMapHeight();
-    qint32 mapWidth = m_pMap->getMapWidth();
-    for (qint32 x = 0; x < mapWidth; x++)
+    if (m_pMap != nullptr)
     {
-        for (qint32 y = 0; y < mapHeigth; y++)
+        qint32 mapHeigth = m_pMap->getMapHeight();
+        qint32 mapWidth = m_pMap->getMapWidth();
+        for (qint32 x = 0; x < mapWidth; x++)
         {
-            Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
-            if ((pBuilding != nullptr) && pBuilding->getOwner() == this)
+            for (qint32 y = 0; y < mapHeigth; y++)
             {
-                costModifier += pBuilding->getCostModifier(id, costs, position);
+                Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
+                if ((pBuilding != nullptr) && pBuilding->getOwner() == this)
+                {
+                    costModifier += pBuilding->getCostModifier(id, costs, position);
+                }
             }
         }
     }
@@ -1424,10 +1431,9 @@ void Player::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage,
             pCO->gainPowerstar(fundsDamage * speed, position, hpDamage * speed, defender, counterAttack);
         }
     }
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pGameMenue->updatePlayerinfo();
+        m_pMenu->updatePlayerinfo();
     }
 }
 
@@ -1439,6 +1445,58 @@ qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
         if (pCO.get() != nullptr)
         {
             modifier += pCO->getMovementcostModifier(pUnit, position);
+        }
+    }
+    return modifier;
+}
+
+qint32 Player::getBonusMisfortune(Unit* pUnit, QPoint position)
+{
+    qint32 modifier = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getBonusMisfortune(pUnit, position);
+        }
+    }
+    return modifier;
+}
+
+qint32 Player::getBonusLuck(Unit* pUnit, QPoint position)
+{
+    qint32 modifier = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getBonusLuck(pUnit, position);
+        }
+    }
+    return modifier;
+}
+
+qint32 Player::getEnemyBonusLuck(Unit* pUnit, QPoint position)
+{
+    qint32 modifier = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getEnemyBonusLuck(pUnit, position);
+        }
+    }
+    return modifier;
+}
+
+qint32 Player::getEnemyBonusMisfortune(Unit* pUnit, QPoint position)
+{
+    qint32 modifier = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getEnemyBonusMisfortune(pUnit, position);
         }
     }
     return modifier;
@@ -1490,6 +1548,22 @@ void Player::startOfTurn()
             pCO->setPowerMode(GameEnums::PowerMode_Off);
             pCO->setCoRangeEnabled(true);
             pCO->startOfTurn();
+        }
+    }
+}
+
+void Player::endOfTurn()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "endOfTurn";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction("PLAYER", function1, args);
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            pCO->endOfTurn();
         }
     }
 }
@@ -1691,27 +1765,52 @@ qint32 Player::getCoCount() const
     return ret;
 }
 
-QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType)
+QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
 {
     
     spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, radius));
     qint32 highestDamage = -1;
     QVector<QPoint> targets;
-
-    for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
+    if (pSearchArea == nullptr)
     {
-        for (qint32 y = 0; y < m_pMap->getMapHeight(); y++)
+        for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
         {
-            qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, true);
-            if (damageDone > highestDamage)
+            for (qint32 y = 0; y < m_pMap->getMapHeight(); y++)
             {
-                highestDamage = damageDone;
-                targets.clear();
-                targets.append(QPoint(x, y));
+                qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, true);
+                if (damageDone > highestDamage)
+                {
+                    highestDamage = damageDone;
+                    targets.clear();
+                    targets.append(QPoint(x, y));
+                }
+                else if ((damageDone == highestDamage) && highestDamage >= 0)
+                {
+                    targets.append(QPoint(x, y));
+                }
             }
-            else if ((damageDone == highestDamage) && highestDamage >= 0)
+        }
+    }
+    else
+    {
+        const auto & vector = pSearchArea->getVector();
+        for (auto iter = vector.begin(); iter != vector.end(); ++iter)
+        {
+            qint32 x = iter->x();
+            qint32 y = iter->y();
+            if (m_pMap->onMap(x, y))
             {
-                targets.append(QPoint(x, y));
+                qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, true);
+                if (damageDone > highestDamage)
+                {
+                    highestDamage = damageDone;
+                    targets.clear();
+                    targets.append(QPoint(x, y));
+                }
+                else if ((damageDone == highestDamage) && highestDamage >= 0)
+                {
+                    targets.append(QPoint(x, y));
+                }
             }
         }
     }
@@ -1726,18 +1825,39 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
     }
 }
 
-QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, float ownUnitValue, GameEnums::RocketTarget targetType)
-{
-    
+QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, float ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
+{    
     spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, radius));
     highestDamage = -1;
     QVector<QPoint> targets;
-
-    for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
+    if (pSearchArea == nullptr)
     {
-        for (qint32 y = 0; y < m_pMap->getMapHeight(); y++)
+        for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
         {
-            qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, false);
+            for (qint32 y = 0; y < m_pMap->getMapHeight(); y++)
+            {
+                qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, false);
+                if (damageDone > highestDamage)
+                {
+                    highestDamage = damageDone;
+                    targets.clear();
+                    targets.append(QPoint(x, y));
+                }
+                else if ((damageDone == highestDamage) && highestDamage >= 0)
+                {
+                    targets.append(QPoint(x, y));
+                }
+            }
+        }
+    }
+    else
+    {
+        const auto & vector = pSearchArea->getVector();
+        for (auto iter = vector.begin(); iter != vector.end(); ++iter)
+        {
+            qint32 x = iter->x();
+            qint32 y = iter->y();
+            qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, true);
             if (damageDone > highestDamage)
             {
                 highestDamage = damageDone;
@@ -1750,7 +1870,6 @@ QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highes
             }
         }
     }
-
     if (targets.size() >= 0)
     {
         return targets[GlobalUtils::randInt(0, targets.size() - 1)];
@@ -1860,6 +1979,26 @@ void Player::defineArmy()
     }
 }
 
+qint32 Player::getPowerChargeBonus() const
+{
+    qint32 bonus = 0;
+    qint32 mapHeigth = m_pMap->getMapHeight();
+    qint32 mapWidth = m_pMap->getMapWidth();
+    for (qint32 x = 0; x < mapWidth; x++)
+    {
+        for (qint32 y = 0; y < mapHeigth; y++)
+        {
+            Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
+            if (pBuilding != nullptr &&
+                pBuilding->getOwner() == this)
+            {
+                bonus += pBuilding->getPowerChargeBonus();
+            }
+        }
+    }
+    return bonus;
+}
+
 float Player::getFundsModifier() const
 {
     return m_fundsModifier;
@@ -1896,7 +2035,6 @@ qint32 Player::calculatePlayerStrength() const
     return ret + calcIncome();
 }
 
-
 qint32 Player::calculatePlayerStrength(Unit* pUnit) const
 {
     qint32 ret = 0;
@@ -1910,6 +2048,21 @@ qint32 Player::calculatePlayerStrength(Unit* pUnit) const
         ret += calculatePlayerStrength(pLoadedUnit);
     }
     return ret;
+}
+
+GameEnums::AiTypes Player::getControlType() const
+{
+    return m_controlType;
+}
+
+void Player::setControlType(const GameEnums::AiTypes &newControlType)
+{
+    m_controlType = newControlType;
+}
+
+void Player::setMenu(GameMenue *newMenu)
+{
+    m_pMenu = newMenu;
 }
 
 void Player::serializeObject(QDataStream& pStream) const
@@ -1958,7 +2111,8 @@ void Player::serializeObject(QDataStream& pStream) const
     pStream << m_BuildlistChanged;
     m_Variables.serializeObject(pStream);
     pStream << m_playerArmySelected;
-    pStream << m_displayName;
+    pStream << m_playerNameId;
+    pStream << static_cast<qint32>(m_controlType);
 }
 
 void Player::deserializeObject(QDataStream& pStream)
@@ -2130,9 +2284,11 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         }
         if (!fast)
         {
+#ifdef GRAPHICSUPPORT
             CONSOLE_PRINT("Loading colortable", Console::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
+#endif
         }
     }
     else
@@ -2143,9 +2299,11 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         }
         if (!fast)
         {
+#ifdef GRAPHICSUPPORT
             CONSOLE_PRINT("Loading colortable", Console::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
+#endif
         }
     }
     if (version > 13)
@@ -2154,6 +2312,13 @@ void Player::deserializer(QDataStream& pStream, bool fast)
     }
     if (version > 15)
     {
-        pStream >> m_displayName;
+        pStream >> m_playerNameId;
     }
+    if (version > 16)
+    {
+        qint32 type;
+        pStream >> type;
+        m_controlType = static_cast<GameEnums::AiTypes>(type);
+    }
+    CONSOLE_PRINT("Loaded player " + m_playerNameId, Console::eDEBUG);
 }

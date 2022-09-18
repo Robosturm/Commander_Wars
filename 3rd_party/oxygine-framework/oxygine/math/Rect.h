@@ -6,7 +6,7 @@
 namespace oxygine
 {
     template<typename point2>
-    class RectT
+    class RectT final
     {
     public:
         typedef typename point2::type T;

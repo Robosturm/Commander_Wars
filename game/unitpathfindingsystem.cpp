@@ -19,7 +19,9 @@ UnitPathFindingSystem::UnitPathFindingSystem(GameMap* pMap, Unit* pUnit, Player*
       m_pMap(pMap)
 
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("UnitPathFindingSystem");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -130,6 +132,17 @@ qint32 UnitPathFindingSystem::getCosts(const std::vector<QPoint> & path)
     return totalCosts;
 }
 
+qint32 UnitPathFindingSystem::getCosts(const QVector<QPoint> & path)
+{
+    qint32 totalCosts = 0;
+    for (qint32 i = path.size() - 2; i >= 0; i--)
+    {
+        totalCosts += UnitPathFindingSystem::getCosts(getIndex(path[i].x(), path[i].y()), path[i].x(), path[i].y(),
+                                                      path[i + 1].x(), path[i + 1].y(), totalCosts);
+    }
+    return totalCosts;
+}
+
 std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target, qint32 movepoints, bool direct)
 {    
     if (m_pMap != nullptr)
@@ -230,6 +243,7 @@ std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(std::vect
         {
             for (qint32 i = path.size() - 2; i >= 0; i--)
             {
+
                 Unit* pNodeUnit = m_pMap->getTerrain(path[i].x(), path[i].y())->getUnit();
                 currentCosts += getCosts(getIndex(path[i].x(), path[i].y()), path[i].x(), path[i].y(),
                                          path[i + 1].x(), path[i + 1].y(), currentCosts);
@@ -268,12 +282,25 @@ std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(std::vect
 
 std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoint>& path, qint32 movepoints)
 {
-    std::vector<QPoint> stdPath(path.size());
+    std::vector<QPoint> stdPath;
+    stdPath.reserve(path.size());
     for (auto & point : path)
     {
         stdPath.push_back(point);
     }
     return getClosestReachableMovePath(stdPath, movepoints);
+}
+
+QVector<QPoint> UnitPathFindingSystem::getJsClosestReachableMovePath(QVector<QPoint>& path, qint32 movepoints)
+{
+    auto stdPath = getClosestReachableMovePath(path, movepoints);
+    QVector<QPoint> outPath;
+    outPath.reserve(path.size());
+    for (auto & point : stdPath)
+    {
+        outPath.push_back(point);
+    }
+    return outPath;
 }
 
 bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 curX, qint32 curY, qint32 movementCosts, qint32 movepoints)

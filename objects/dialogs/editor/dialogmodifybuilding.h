@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 #include "objects/base/panel.h"
 
 #include "game/building.h"
@@ -12,12 +12,12 @@ class GameMap;
 class DialogModifyBuilding;
 using spDialogModifyBuilding = oxygine::intrusive_ptr<DialogModifyBuilding>;
 
-class DialogModifyBuilding : public QObject, public oxygine::Actor
+class DialogModifyBuilding final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogModifyBuilding(GameMap* pMap, Building* pBuilding);
-    virtual ~DialogModifyBuilding() = default;
+    ~DialogModifyBuilding() = default;
 signals:
     void sigFinished();
 public slots:

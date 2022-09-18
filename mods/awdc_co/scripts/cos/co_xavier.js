@@ -5,7 +5,7 @@ CO_XAVIER.init = function(co, map)
 };
 CO_XAVIER.activateSuperpower = function(co, powerMode, map)
 {
-	CO_XAVIER.activatePower(co, powerMode);
+	CO_XAVIER.activatePower(co, powerMode, map);
 };
 CO_XAVIER.getSuperPowerDescription = function()
 {

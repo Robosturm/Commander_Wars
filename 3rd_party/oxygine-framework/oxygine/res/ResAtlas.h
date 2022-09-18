@@ -23,7 +23,7 @@ namespace oxygine
         void loadBase(QDomElement node);
     protected:
         //settings from xml
-        quint32 m_linearFilter{GL_NEAREST};
+        quint32 m_linearFilter{0};
         bool m_clamp2edge{false};
     };
 }

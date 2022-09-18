@@ -5,18 +5,18 @@
 #include <QTimer>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 #include "objects/base/label.h"
 
 class DialogValueCounter;
-typedef oxygine::intrusive_ptr<DialogValueCounter> spDialogValueCounter;
+using spDialogValueCounter = oxygine::intrusive_ptr<DialogValueCounter>;
 
-class DialogValueCounter : public QObject, public oxygine::Actor
+class DialogValueCounter final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd);
-    virtual ~DialogValueCounter() = default;
+    ~DialogValueCounter() = default;
 signals:
     void sigFinished();
 private slots:

@@ -1,8 +1,6 @@
 #ifndef ACHIEVEMENTMENU_H
 #define ACHIEVEMENTMENU_H
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "menue/basemenu.h"
 
 #include "objects/base/panel.h"
@@ -12,7 +10,7 @@
 class Achievementmenu;
 using spAchievementmenu = oxygine::intrusive_ptr<Achievementmenu>;
 
-class Achievementmenu : public Basemenu
+class Achievementmenu final : public Basemenu
 {
     Q_OBJECT
     enum class SortDirection
@@ -24,7 +22,7 @@ class Achievementmenu : public Basemenu
 public:
 
     explicit Achievementmenu();
-    virtual ~Achievementmenu() = default;
+    ~Achievementmenu() = default;
 signals:
     void sigExitMenue();
     void sigSearch();

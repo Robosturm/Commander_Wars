@@ -146,5 +146,7 @@
         <file>resources/sounds/player_turn.wav</file>
         <file>resources/sounds/tank_hit.wav</file>
         <file>resources/sounds/vulcan_weapon_fire_1.wav</file>
+        <file>resources/sounds/connect.wav</file>
+        <file>resources/sounds/disconnect.wav</file>
     </qresource>
 </RCC>

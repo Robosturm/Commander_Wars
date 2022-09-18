@@ -83,7 +83,7 @@ var RANDOMMAPGENERATOR =
     {
         return [];
     },
-    getPLAINSDistribution : function()
+    getPLAINSDistribution : function(map)
     {
         return Qt.point(map.getPlayerCount() * 2, map.getPlayerCount() * 3);
     },
@@ -103,7 +103,7 @@ var RANDOMMAPGENERATOR =
     {
         return [];
     },
-    getBEACHDistribution : function()
+    getBEACHDistribution : function(map)
     {
         var size = map.getMapWidth() * map.getMapHeight();
         return Qt.point(size, size);

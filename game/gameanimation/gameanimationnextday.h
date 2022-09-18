@@ -9,12 +9,12 @@
 class GameAnimationNextDay;
 using spGameAnimationNextDay = oxygine::intrusive_ptr<GameAnimationNextDay>;
 
-class GameAnimationNextDay : public GameAnimation
+class GameAnimationNextDay final : public GameAnimation
 {
     Q_OBJECT
 public:
     explicit GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs = 2000);
-    virtual ~GameAnimationNextDay() = default;
+    ~GameAnimationNextDay() = default;
     virtual void restart() override;
     virtual void stop() override;
 

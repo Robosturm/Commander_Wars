@@ -4,21 +4,23 @@
 #include <QObject>
 #include <QDir>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
+
 #include "objects/base/textbox.h"
 #include "objects/base/panel.h"
 #include "objects/base/dropdownmenu.h"
 
-
 class FileDialog;
-typedef oxygine::intrusive_ptr<FileDialog> spFileDialog;
+using spFileDialog = oxygine::intrusive_ptr<FileDialog>;
 
 /**
  * @brief The FileDialog class file dialog for accessing folder and files.
  * Upon success or cancel the dialog will remove itself from the scene.
  * You have to hold a smart pointer to this object if you need further info from it.
  */
-class FileDialog : public QObject, public oxygine::Actor
+class FileDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
@@ -28,7 +30,7 @@ public:
      * @param wildcards wildcard items will be split at ;
      */
     explicit FileDialog(QString startFolder, const QStringList & wildcards, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"));
-    virtual ~FileDialog() = default;
+    ~FileDialog() = default;
 
     bool getPreview() const;
     void setPreview(bool preview);

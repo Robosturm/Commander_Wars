@@ -1,25 +1,51 @@
 var Constructor = function()
 {
-    this.getRuleDescription = function(itemNumber)
+    this.getRuleDescription = function(rule, itemNumber, map)
     {
-        if (itemNumber === 0)
+        var type = itemNumber;
+        if (rule !== null)
+        {
+            var teamVictory = VICTORYRULE_ELIMINATION.getRuleValue(rule, 1, map);
+            if (teamVictory)
+            {
+                type = 2;
+            }
+        }
+        if (type === 0)
         {
             return qsTr("A player wins after killing the given amount of units by attacking or explosion damage from black bombs or Black Hole Buildings.")
         }
-        else
+        else if (type === 1)
         {
             return qsTr("If checked the Team needs to kill the given number of units else a single player needs to kill them.");
         }
+        else
+        {
+            return qsTr("A team wins after killing the given amount of units by attacking or explosion damage from black bombs or Black Hole Buildings.")
+        }
     };
-    this.getRuleName = function(itemNumber)
+    this.getRuleName = function(rule, itemNumber, map)
     {
-        if (itemNumber === 0)
+        var type = itemNumber;
+        if (rule !== null)
+        {
+            var teamVictory = VICTORYRULE_ELIMINATION.getRuleValue(rule, 1, map);
+            if (teamVictory)
+            {
+                type = 2;
+            }
+        }
+        if (type === 0)
         {
             return qsTr("Elimination");
         }
-        else
+        else if (type === 1)
         {
             return qsTr("Team Counter");
+        }
+        else
+        {
+            return qsTr("Team elimination");
         }
     };
     // the type how the rule will be represented in the map selection ui

@@ -421,7 +421,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Units within two spaces of any owned properties receive firepower bonuses and restore 3 HP per nearby property. Enemies within two spaces of their own properties suffer 3 HP of damage per nearby property.");
+        return qsTr("Units within two spaces of any owned properties receive firepower bonuses and restore 3 HP per nearby property. Enemies within one spaces of their own properties suffer 3 HP of damage per nearby property.");
     };
     this.getSuperPowerName = function(co)
     {

@@ -11,15 +11,14 @@
 #include <QNetworkInterface>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "coreengine/console.h"
 #include "coreengine/LUPDATE_MACROS.h"
 
 class Serializable;
-
 class NetworkInterface;
-typedef oxygine::intrusive_ptr<NetworkInterface> spNetworkInterface;
+using spNetworkInterface = oxygine::intrusive_ptr<NetworkInterface>;
 
 /**
  * @brief The NetworkInterface class use this in the Context of a Network-Task
@@ -41,6 +40,7 @@ public:
         ServerHostingJson,      /**< used for data when starting a game on the host or when communicating between slave and master. Packages are in JSON-Format */
         ServerHosting,          /**< used for data when starting a game on the host or when communicating between slave and master. Packages are in Binary-Format */
         ServerSocketInfo,       /**< used inside the rx-task data is not emitted when recieving this data */
+        CryptedMessage,
         Max,
     };
 
@@ -125,6 +125,14 @@ public:
     {
         m_isObserver = newIsObserver;
     }
+    bool getIsActive() const
+    {
+        return m_active;
+    }
+    void setIsActive(bool isActive)
+    {
+        m_active = isActive;
+    }
 
 signals:
     /**
@@ -132,7 +140,7 @@ signals:
      * @param data
      */
     void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
-    void sig_connect(QString adress, quint16 port);
+    void sig_connect(QString primaryAdress, quint16 port, QString secondaryAdress);
     void sigConnected(quint64 socket);
     void sigDisconnected(quint64 socket);
     void sig_sendData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData);
@@ -163,7 +171,7 @@ signals:
      */
     void sigChangeThread(quint64 socketID, QThread* pThread);
 public slots:
-    virtual void connectTCP(QString adress, quint16 port) = 0;
+    virtual void connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress) = 0;
     virtual void disconnectTCP() = 0;
     virtual void forwardData(quint64, QByteArray, NetworkInterface::NetworkSerives){}
     virtual QVector<quint64> getConnectedSockets() = 0;
@@ -209,6 +217,15 @@ public slots:
             case QAbstractSocket::UnfinishedSocketOperationError:
                 CONSOLE_PRINT("Unfinished socket operation error.", Console::eDEBUG);
                 break;
+            case QAbstractSocket::SslHandshakeFailedError:
+                CONSOLE_PRINT("Ssl Handshake failed.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::SslInternalError:
+                CONSOLE_PRINT("Ssl internal error.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::SslInvalidUserDataError:
+                CONSOLE_PRINT("Ssl invalid user data errror.", Console::eDEBUG);
+                break;
             default:
                 CONSOLE_PRINT("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
         }
@@ -246,6 +263,7 @@ protected:
     bool m_isServer{false};
     bool m_isConnected{false};
     bool m_isObserver{false};
+    bool m_active{true};
 };
 
 #endif // NETWORKINTERFACE_H

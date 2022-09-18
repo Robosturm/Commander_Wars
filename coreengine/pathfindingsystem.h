@@ -8,9 +8,12 @@
 #include <qlist.h>
 #include "array"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "coreengine/qmlvector.h"
+
+class PathFindingSystem;
+using spPathFindingSystem = oxygine::intrusive_ptr<PathFindingSystem>;
 
 class PathFindingSystem : public QObject, public oxygine::ref_counter
 {
@@ -149,6 +152,10 @@ public:
      */
     std::vector<QPoint> getAllNodePointsFast(qint32 maxRange = infinite);
 public slots:
+    void remove()
+    {
+        delete this;
+    }
     /**
      * @brief getTarget
      * @return

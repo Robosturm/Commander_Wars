@@ -287,7 +287,7 @@ void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBui
             data.unitBuildingDataInput[BuildingEntry::CaptureUnit] = -1;
         }
         QPoint position(pBuilding->Building::getX(), pBuilding->Building::getY());
-        auto & influenceInfo = m_InfluenceFrontMap.getInfluenceInfo(position.x(), position.y());
+        const auto * influenceInfo = m_InfluenceFrontMap.getInfluenceInfo(position.x(), position.y());
         double highestInfluence = m_InfluenceFrontMap.getTotalHighestInfluence();        
         data.unitBuildingDataInput[BuildingEntry::Movementpoints] = static_cast<double>(movementPoints) / static_cast<double>(m_maxMovementpoints);
         data.unitBuildingDataInput[BuildingEntry::VisionPotential] = pUnit->getVision(position) / m_maxVision;
@@ -295,8 +295,8 @@ void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBui
         data.unitBuildingDataInput[BuildingEntry::FireRange] = static_cast<double>(pUnit->getMaxRange(position)) / static_cast<double>(m_maxFirerange);
         data.unitBuildingDataInput[BuildingEntry::Flying] = (pUnit->useTerrainDefense() == false) ? 1 : -1;
         data.unitBuildingDataInput[BuildingEntry::LoadingPotential] = static_cast<double>(pUnit->getLoadingPlace()) / 4.0;
-        data.unitBuildingDataInput[BuildingEntry::OwnInfluence] = static_cast<double>(influenceInfo.ownInfluence) / highestInfluence;
-        data.unitBuildingDataInput[BuildingEntry::HighestEnemyInfluence] = static_cast<double>(influenceInfo.enemyInfluence) / highestInfluence;
+        data.unitBuildingDataInput[BuildingEntry::OwnInfluence] = static_cast<double>(influenceInfo->getOwnInfluence()) / highestInfluence;
+        data.unitBuildingDataInput[BuildingEntry::HighestEnemyInfluence] = static_cast<double>(influenceInfo->getEnemyInfluence()) / highestInfluence;
         qint32 islandIdx = getIslandIndex(pUnit);
         qint32 island = m_IslandMaps[islandIdx]->getIsland(position.x(), position.y());
         qint32 islandSize =  m_IslandMaps[islandIdx]->getIslandSize(island);

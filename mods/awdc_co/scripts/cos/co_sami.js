@@ -5,7 +5,7 @@ CO_SAMI.init = function(co, map)
 };
 CO_SAMI.activateSuperpower = function(co, powerMode, map)
 {
-    CO_SAMI.activatePower(co, powerMode);
+    CO_SAMI.activatePower(co, powerMode, map);
 };
 CO_SAMI.getSuperPowerDescription = function()
 {

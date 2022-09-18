@@ -6,7 +6,7 @@
 class ScriptEventCenterMap;
 using spScriptEventCenterMap = oxygine::intrusive_ptr<ScriptEventCenterMap>;
 
-class ScriptEventCenterMap: public ScriptEventGeneric
+class ScriptEventCenterMap final : public ScriptEventGeneric
 {
     Q_OBJECT
 public:

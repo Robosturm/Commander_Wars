@@ -10,7 +10,7 @@ namespace oxygine
     sprite->addTween(TweenAnim(res.getResAnim("anim")), 500, -1);
     \endcode
     */
-    class TweenAnimColumn
+    class TweenAnimColumn final
     {
     public:
         using TActor = oxygine::Sprite;
@@ -19,7 +19,7 @@ namespace oxygine
         explicit TweenAnimColumn(const ResAnim* resAnim, float initFrame, qint32 column);
         /**Frames mode. Play animation in interval [start, end]*/
         explicit TweenAnimColumn(const ResAnim* resAnim, qint32 startFrame, qint32 endFrame);
-        virtual ~TweenAnimColumn() = default;
+        ~TweenAnimColumn() = default;
 
         void init(Sprite& actor);
         void done(Sprite&)

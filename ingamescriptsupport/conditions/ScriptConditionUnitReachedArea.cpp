@@ -13,7 +13,9 @@
 ScriptConditionUnitReachedArea::ScriptConditionUnitReachedArea(GameMap* pMap)
     : ScriptCondition(pMap, ConditionType::unitReachedArea)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ScriptConditionUnitReachedArea");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -176,8 +178,6 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 

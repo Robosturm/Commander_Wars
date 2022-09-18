@@ -2,20 +2,39 @@
 
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
+
+#include <QFontMetrics>
 
 TextInput::TextInput()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    emit pApp->sigCreateLineEdit();
-    m_lineEdit = pApp->getLastCreateLineEdit();    
-    connect(m_lineEdit, &QLineEdit::returnPressed, this, &TextInput::editFinished, Qt::QueuedConnection);
-    connect(m_lineEdit, &QLineEdit::cursorPositionChanged, pApp, &Mainapp::slotCursorPositionChanged);
+    Interpreter::setCppOwnerShip(this);
+
+    if (pApp->isMainThread())
+    {
+        pApp->createLineEdit();
+    }
+    else
+    {
+        emit pApp->sigCreateLineEdit();
+    }
+    m_lineEdit = pApp->getLastCreateLineEdit();
+    if (m_lineEdit != nullptr)
+    {
+        connect(m_lineEdit, &EventTextEdit::returnPressed, this, &TextInput::editFinished, Qt::QueuedConnection);
+        connect(this, &TextInput::sigSetText, m_lineEdit, &EventTextEdit::setPlainText, Qt::BlockingQueuedConnection);
+    }
     m_toggle.start();
 }
 
 TextInput::~TextInput()
 {
-    m_lineEdit->deleteLater();
+    if (m_lineEdit != nullptr)
+    {
+        m_lineEdit->deleteLater();
+        m_lineEdit = nullptr;
+    }
 }
 
 void TextInput::editFinished()
@@ -29,27 +48,52 @@ void TextInput::editFinished()
 
 void TextInput::inputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
 {
-    m_lineEdit->inputMethodQuery(query, arg);
+    if (m_lineEdit != nullptr)
+    {
+        m_lineEdit->inputMethodQuery(query, arg);
+    }
 }
 
 QString TextInput::getCurrentText() const
 {
-    return m_lineEdit->text().trimmed();
+    if (m_lineEdit != nullptr)
+    {
+        return m_lineEdit->toPlainText().trimmed();
+    }
+    else
+    {
+        return "";
+    }
 }
 
-void TextInput::setCurrentText(QString text)
+void TextInput::setCurrentText(const QString & text)
 {
-    m_lineEdit->setText(text);
+    if (m_lineEdit != nullptr)
+    {
+        emit sigSetText(text);
+    }
 }
 
 qint32 TextInput::getCursorPosition() const
 {
-    return m_lineEdit->cursorPosition();
+    if (m_lineEdit != nullptr)
+    {
+        return m_lineEdit->textCursor().position();
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 void TextInput::setCursorPosition(qint32 position)
 {
-    m_lineEdit->setCursorPosition(position);
+    if (m_lineEdit != nullptr)
+    {
+        auto cursor = m_lineEdit->textCursor();
+        cursor.setPosition(position);
+        m_lineEdit->setTextCursor(cursor);
+    }
 }
 
 bool TextInput::doHandleEvent(QEvent *event)
@@ -67,7 +111,10 @@ bool TextInput::doHandleEvent(QEvent *event)
             case QEvent::Shortcut:
             case QEvent::ShortcutOverride:
             {
-                ret = m_lineEdit->event(event);
+                if (m_lineEdit != nullptr)
+                {
+                    ret = m_lineEdit->event(event);
+                }
                 break;
             }
             default:
@@ -83,7 +130,20 @@ bool TextInput::doHandleEvent(QEvent *event)
 void TextInput::focused()
 {
     Tooltip::disableTooltip();
-    m_lineEdit->setCursorPosition(m_lineEdit->text().size());
+    if (m_lineEdit != nullptr)
+    {
+        qint32 charCount = m_lineEdit->toPlainText().size();
+        auto cursor = m_lineEdit->textCursor();
+        if (m_focusPosition < 0 || charCount < m_focusPosition)
+        {
+            cursor.setPosition(charCount);
+        }
+        else
+        {
+            cursor.setPosition(m_focusPosition);
+        }
+        m_lineEdit->setTextCursor(cursor);
+    }
     emit Mainapp::getInstance()->sigShowKeyboard(true);
 }
 
@@ -99,12 +159,13 @@ void TextInput::looseFocusInternal()
     Tooltip::looseFocusInternal();
 }
 
-QString TextInput::getDrawText(QString text)
+QString TextInput::getDrawText(const QString & text)
 {
     QString drawText = text;
-    if(m_focused)
+    if(m_focused && m_lineEdit != nullptr)
     {
-        qint32 curmsgpos = getCursorPosition();
+        auto cursor = m_lineEdit->textCursor();
+        qint32 curmsgpos = cursor.position();
         // create output text
         if (m_toggle.elapsed() < BLINKFREQG)
         {
@@ -114,8 +175,8 @@ QString TextInput::getDrawText(QString text)
         {
             drawText.insert(curmsgpos, " ");
         }
-        qint32 startMarked = m_lineEdit->selectionStart();
-        qint32 endMarked = m_lineEdit->selectionEnd();
+        qint32 startMarked = cursor.selectionStart();
+        qint32 endMarked = cursor.selectionEnd();
         if (startMarked > -1 && endMarked > -1)
         {
             if (curmsgpos <= startMarked)
@@ -136,4 +197,22 @@ QString TextInput::getDrawText(QString text)
     }
     drawText = "<r>" + drawText + "</r>";
     return drawText;
+}
+
+qint32 TextInput::getClickedLinePosition(qint32 x, const QString & line, const QFont & font)
+{
+    qint32 cursorPos = 0;
+    QFontMetrics metrics(font);
+    QString testString;
+    for (qint32 i = 0; i < line.size(); ++i)
+    {
+        testString += line[i];
+        qint32 width = metrics.boundingRect(testString).width();
+        if (x < width)
+        {
+            break;
+        }
+        ++cursorPos;
+    }
+    return cursorPos;
 }

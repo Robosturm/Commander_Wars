@@ -3,8 +3,7 @@
 
 #include <QObject>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/textbox.h"
@@ -13,14 +12,14 @@
 #include "wiki/wikidatabase.h"
 
 class WikiView;
-typedef oxygine::intrusive_ptr<WikiView> spWikiView;
+using spWikiView = oxygine::intrusive_ptr<WikiView>;
 
-class WikiView : public QObject, public oxygine::Actor
+class WikiView final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit WikiView(qint32 viewWidth, qint32 viewHeigth);
-    virtual ~WikiView() = default;
+    ~WikiView() = default;
 signals:
     void sigSearch(bool onlyTag);
     void sigShowWikipage(WikiDatabase::PageData page);

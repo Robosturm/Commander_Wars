@@ -4,16 +4,21 @@
 #include <QDir>
 #include <qlogging.h>
 #include <QLoggingCategory>
-#include <qdatetime.h>
+#include <QDateTime>
+#include <QFontMetrics>
+
+#include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
+
 #include "resource_management/fontmanager.h"
 
 #include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
 
 #include "network/NetworkInterface.h"
 
@@ -25,10 +30,10 @@ Console::eLogLevels Console::m_LogLevel = static_cast<Console::eLogLevels>(DEBUG
 bool Console::m_show = false;
 bool Console::m_toggled = false;
 bool Console::m_developerMode = false;
-QList<QString> Console::m_output;
+std::vector<QString> Console::m_output;
 spConsole Console::m_pConsole;
 qint32 Console::m_curlastmsgpos = 0;
-QList<QString> Console::m_lastmsgs;
+std::vector<QString> Console::m_lastmsgs;
 qint32 Console::m_outputSize = 100;
 QMutex Console::m_datalocker;
 
@@ -60,7 +65,9 @@ const char* const Console::compileDate = __DATE__;
 
 Console::Console()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Console");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -75,8 +82,7 @@ Console::Console()
     m_text = oxygine::spTextField::create();
     m_text->setPosition(1, 1);
     m_text->setWidth(Settings::getWidth() - 2);
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16());
-    style.color = QColor(255,127,39);
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("console16"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     m_text->setStyle(style);
@@ -90,6 +96,9 @@ Console::Console()
         event->stopPropagation();
         emit sigFocused();
     });
+
+    m_output.reserve(m_outputSize);
+    m_lastmsgs.reserve(m_lastMsgSize);
 }
 
 spConsole Console::getInstance()
@@ -158,10 +167,10 @@ void Console::dotask(QString message)
     print(message, Console::eINFO);
     QString order = "GameConsole." + message;
     // ignore console argument and evaluate the String on the Top-Level
-    spGameMenue pGameMenue = GameMenue::getInstance();
+    spGameMenue pMenu = spGameMenue(dynamic_cast<GameMenue*>(GameMenue::getInstance()));
     if (message.startsWith("game:") &&
-        pGameMenue.get() != nullptr &&
-        !pGameMenue->isNetworkGame() &&
+        pMenu.get() != nullptr &&
+        !pMenu->isNetworkGame() &&
         getDeveloperMode())
     {
         order = order.replace("GameConsole.game:", "");
@@ -229,10 +238,10 @@ void Console::print(const QString & message, eLogLevels logLevel)
                 break;
         }
         msg.replace("&", "&amp;");
-        m_output.append(prefix + msg);
-        while (m_output.size() > m_outputSize)
+        m_output.push_back(prefix + msg);
+        if (m_output.size() > m_outputSize)
         {
-            m_output.removeFirst();
+            m_output.erase(m_output.cbegin(), m_output.cbegin() + m_output.size() - m_outputSize);
         }
     }
 }
@@ -257,12 +266,19 @@ void Console::update(const oxygine::UpdateState& us)
     // no need to calculate more than we need if we're invisible
     if(m_show)
     {
+#ifdef GRAPHICSUPPORT
         QMutexLocker locker(&m_datalocker);
         qint32 screenheight = Settings::getHeight();
-        qint32 h = FontManager::getMainFont16()->getSize();
+        auto font = FontManager::getFont("console16");
+        QFontMetrics metrics(font.font);
+        qint32 h = metrics.height();
+        if (font.borderWidth < 0)
+        {
+            h += qAbs(font.borderWidth) * 2;
+        }
         // pre calc message start
         qint32 num = screenheight / h - 4;
-        m_outputSize = num + 30;
+        m_outputSize = num + 2;
         qint32 i = 0;
         qint32 start = m_output.size() - num;
         if (start < 0)
@@ -273,10 +289,7 @@ void Console::update(const oxygine::UpdateState& us)
         QString drawText;
         for(i = start; i < m_output.size();i++)
         {
-            if(i >= 0)
-            {
-                drawText += "> " + m_output[i] + "\n";
-            }
+            drawText += "> " + m_output[i] + "\n";
         }
         if (m_focused)
         {
@@ -296,6 +309,7 @@ void Console::update(const oxygine::UpdateState& us)
             drawText += "> Click the console to regain focus";
             m_text->setHtmlText(drawText);
         }
+#endif
     }
     oxygine::Actor::update(us);
 }
@@ -347,7 +361,6 @@ void Console::setLogLevel(eLogLevels newLogLevel)
 
 void Console::help(qint32 start, qint32 end)
 {
-
     qint32 index = 0;
     while (functions[index] != "" && ((end >= 0 && index <= end) ||  end < 0))
     {
@@ -386,9 +399,9 @@ void Console::extractResources()
     {
         dirIter.next();
         count++;
-        QFile file(dirIter.fileInfo().absoluteFilePath());
-        QString relativePath = GlobalUtils::makePathRelative(dirIter.fileInfo().absoluteFilePath());
-        QString dir = GlobalUtils::makePathRelative(dirIter.fileInfo().absoluteDir().absolutePath());
+        QFile file(dirIter.fileInfo().canonicalFilePath());
+        QString relativePath = GlobalUtils::makePathRelative(dirIter.fileInfo().canonicalFilePath());
+        QString dir = GlobalUtils::makePathRelative(dirIter.fileInfo().absoluteDir().canonicalPath());
         QDir newDir(targetDir + dir);
         newDir.mkpath(".");
         file.copy(targetDir + relativePath);
@@ -1504,10 +1517,10 @@ bool Console::onEditFinished()
 {
     QString message = getCurrentText();
     dotask(message);
-    m_lastmsgs.append(message);
+    m_lastmsgs.push_back(message);
     while (m_lastmsgs.size() > m_lastMsgSize)
     {
-        m_lastmsgs.removeFirst();
+        m_lastmsgs.erase(m_lastmsgs.cbegin());
     }
     m_curlastmsgpos = m_lastmsgs.size();
     setCurrentText("");
@@ -1517,19 +1530,22 @@ bool Console::onEditFinished()
 
 void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-
     static QMutex messageOutputMutex;
     QMutexLocker lock(&messageOutputMutex);
-    static QFile file(Settings::getUserPath() + "console.log");
+    static QFile file(Settings::getUserPath() + "console" + Settings::getUpdateStep()+ ".log");
     if (!file.isOpen())
     {
         Mainapp* pApp = Mainapp::getInstance();
         if (pApp->getSlave() && pApp->getCreateSlaveLogs())
         {
             QString slaveName = Settings::getSlaveServerName();
-            file.setFileName(Settings::getUserPath() + slaveName + ".log");            
+            file.setFileName(Settings::getUserPath() + slaveName + ".log");
+            file.open(QIODevice::WriteOnly);
         }
-        file.open(QIODevice::WriteOnly);
+        else if (!pApp->getSlave())
+        {
+            file.open(QIODevice::WriteOnly);
+        }
     }
     static QTextStream stream(&file);
     QByteArray localMsg = msg.toLocal8Bit();

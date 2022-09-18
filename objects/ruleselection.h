@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 #include "objects/base/multislider.h"
 #include "objects/base/textbox.h"
@@ -12,9 +12,9 @@
 
 class GameMap;
 class RuleSelection;
-typedef oxygine::intrusive_ptr<RuleSelection> spRuleSelection;
+using spRuleSelection = oxygine::intrusive_ptr<RuleSelection>;
 
-class RuleSelection : public QObject, public oxygine::Actor
+class RuleSelection final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
@@ -25,7 +25,7 @@ public:
         Multiplayer,
     };
     explicit RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enabled = true);
-    virtual ~RuleSelection() = default;
+    ~RuleSelection() = default;
     void showRuleSelection(bool advanced = false);
     void confirmRuleSelectionSetup();
     Mode getMode() const;

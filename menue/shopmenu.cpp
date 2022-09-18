@@ -15,9 +15,13 @@
 #include "objects/base/dropdownmenu.h"
 #include "objects/base/checkbox.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 Shopmenu::Shopmenu()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Shopmenu");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
@@ -52,7 +56,7 @@ Shopmenu::Shopmenu()
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     pButtonBox->addChild(pButtonExit);
-    pButtonExit->setPosition(Settings::getWidth() - pButtonExit->getWidth() - 10,
+    pButtonExit->setPosition(Settings::getWidth() - pButtonExit->getScaledWidth() - 10,
                              10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -88,7 +92,7 @@ Shopmenu::Shopmenu()
 
     m_buyButton = ObjectManager::createButton(tr("Buy"));
     pButtonBox->addChild(m_buyButton);
-    m_buyButton->setPosition(Settings::getWidth() - m_buyButton->getWidth() - pButtonExit->getWidth() - 20,
+    m_buyButton->setPosition(Settings::getWidth() - m_buyButton->getScaledWidth() - pButtonExit->getScaledWidth() - 20,
                              10);
     m_buyButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -102,19 +106,19 @@ Shopmenu::Shopmenu()
     pLabel->setPosition(10, 10);
     pButtonBox->addChild(pLabel);
 
-    qint32 pointsSize = Settings::getWidth() - 10 * 7 - m_buyButton->getWidth() - pButtonExit->getWidth() - width * 2;
+    qint32 pointsSize = Settings::getWidth() - 10 * 7 - m_buyButton->getScaledWidth() - pButtonExit->getScaledWidth() - width * 2;
     m_points = spLabel::create(pointsSize / 2);
     m_points->setHtmlText(QString::number(Userdata::getInstance()->getCredtis()));
-    m_points->setPosition(pLabel->getX() + pLabel->getWidth() + 10, 10);
+    m_points->setPosition(pLabel->getX() + pLabel->getScaledWidth() + 10, 10);
     pButtonBox->addChild(m_points);
 
     pLabel = spLabel::create(width + 30);
     pLabel->setHtmlText(tr("Total Price:"));
-    pLabel->setPosition(m_points->getX() + m_points->getWidth() + 10, 10);
+    pLabel->setPosition(m_points->getX() + m_points->getScaledWidth() + 10, 10);
     pButtonBox->addChild(pLabel);
     m_costs = spLabel::create(pointsSize / 2);
     m_costs->setHtmlText(QString::number(0));
-    m_costs->setPosition(pLabel->getX() + pLabel->getWidth() + 10, 10);
+    m_costs->setPosition(pLabel->getX() + pLabel->getScaledWidth() + 10, 10);
     pButtonBox->addChild(m_costs);
 
     filterChanged(0);
@@ -137,7 +141,7 @@ void Shopmenu::onEnter()
 void Shopmenu::exitMenue()
 {
     CONSOLE_PRINT("Leaving Shop Menue", Console::eDEBUG);
-    auto window = spMainwindow::create();
+    auto window = spMainwindow::create("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }

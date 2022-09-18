@@ -1,5 +1,7 @@
 #include "game/ui/copowermeter.h"
 
+#include "3rd_party/oxygine-framework/oxygine/tween/TweenQueue.h"
+
 #include "game/gamemap.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
@@ -8,7 +10,9 @@ CoPowermeter::CoPowermeter(GameMap* pMap, CO* pCO)
     : m_pCO(pCO),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CoPowermeter");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -136,7 +140,6 @@ void CoPowermeter::drawPowerMeter()
             case GameEnums::PowerMode_Power:
             {
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-                style.color = FontManager::getFontColor();
                 oxygine::spTextField pText = oxygine::spTextField::create();
                 pText->setStyle(style);
                 pText->setHtmlText(tr("Power"));
@@ -150,11 +153,11 @@ void CoPowermeter::drawPowerMeter()
                     pText->setX(0);
                 }
                 oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
-                oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
+                oxygine::TextField::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(200), 1, false);
-                oxygine::Sprite::TweenColor tweenColor2(QColor(255, 0, 0, 255));
+                oxygine::TextField::TweenColor tweenColor2(QColor(255, 0, 0, 255));
                 oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(200), 1, false);
-                oxygine::Sprite::TweenColor tweenColor3(QColor(0, 255, 0, 255));
+                oxygine::TextField::TweenColor tweenColor3(QColor(0, 255, 0, 255));
                 oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(200), 1, false);
                 queue->add(tween1);
                 queue->add(tween2);
@@ -167,7 +170,6 @@ void CoPowermeter::drawPowerMeter()
             case GameEnums::PowerMode_Superpower:
             {
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-                style.color = FontManager::getFontColor();
                 oxygine::spTextField pText = oxygine::spTextField::create();
                 pText->setStyle(style);
                 pText->setHtmlText(tr("Superpower"));
@@ -181,11 +183,11 @@ void CoPowermeter::drawPowerMeter()
                     pText->setX(0);
                 }
                 oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
-                oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
+                oxygine::TextField::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(200), 1, false);
-                oxygine::Sprite::TweenColor tweenColor2(QColor(255, 0, 0, 255));
+                oxygine::TextField::TweenColor tweenColor2(QColor(255, 0, 0, 255));
                 oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(200), 1, false);
-                oxygine::Sprite::TweenColor tweenColor3(QColor(0, 255, 0, 255));
+                oxygine::TextField::TweenColor tweenColor3(QColor(0, 255, 0, 255));
                 oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(200), 1, false);
                 queue->add(tween1);
                 queue->add(tween2);
@@ -198,7 +200,6 @@ void CoPowermeter::drawPowerMeter()
             case GameEnums::PowerMode_Tagpower:
             {
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-                style.color = FontManager::getFontColor();
                 oxygine::spTextField pText = oxygine::spTextField::create();
                 pText->setStyle(style);
                 pText->setHtmlText(tr("Tagpower"));
@@ -212,11 +213,11 @@ void CoPowermeter::drawPowerMeter()
                     pText->setX(0);
                 }
                 oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
-                oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
+                oxygine::TextField::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(100), 1, false);
-                oxygine::Sprite::TweenColor tweenColor2(QColor(255, 0, 0, 255));
+                oxygine::TextField::TweenColor tweenColor2(QColor(255, 0, 0, 255));
                 oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(100), 1, false);
-                oxygine::Sprite::TweenColor tweenColor3(QColor(0, 255, 0, 255));
+                oxygine::TextField::TweenColor tweenColor3(QColor(0, 255, 0, 255));
                 oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(100), 1, false);
                 queue->add(tween1);
                 queue->add(tween2);

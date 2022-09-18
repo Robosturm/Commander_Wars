@@ -1,16 +1,17 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/texture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+#include "texture.h"
 
 namespace oxygine
 {
-    class AnimationFrame
+    class AnimationFrame final
     {
     public:
         explicit AnimationFrame() = default;
         explicit AnimationFrame(spTexture & t);
-        virtual ~AnimationFrame() = default;
+        ~AnimationFrame() = default;
         void init(ResAnim* rs, short column, short row, const spTexture& texture,
                    const RectF& srcRect, const RectF& destRect, const Vector2& frame_size);
         /**ResAnim should be valid!*/
@@ -110,6 +111,5 @@ namespace oxygine
         short m_width{0};
         short m_height{0};
     };
-
 }
 

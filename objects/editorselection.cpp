@@ -1,5 +1,8 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
+
 #include "objects/editorselection.h"
 #include "objects/base/moveinbutton.h"
+#include "objects/base/label.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/terrainmanager.h"
@@ -12,15 +15,15 @@
 
 #include "game/co.h"
 
-#include "objects/base/label.h"
-
 const float EditorSelection::m_xFactor = 1.5f;
 const float EditorSelection::m_yFactor = 2.5f;
 
 EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("EditorSelection");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -46,15 +49,15 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
 
     m_PlacementSelectionClip = oxygine::spSlidingActor::create();
     m_PlacementSelectionClip->setPosition(10, 50);
-    m_PlacementSelectionClip->setSize(m_BoxPlacementSelection->getWidth() - 20,
-                                        m_BoxPlacementSelection->getHeight() - 100);
+    m_PlacementSelectionClip->setSize(m_BoxPlacementSelection->getScaledWidth() - 20,
+                                        m_BoxPlacementSelection->getScaledHeight() - 100);
     m_BoxPlacementSelection->addChild(m_PlacementSelectionClip);
     m_PlacementActor = oxygine::spActor::create();
-    m_PlacementActor->setWidth(m_PlacementSelectionClip->getWidth());
+    m_PlacementActor->setWidth(m_PlacementSelectionClip->getScaledWidth());
     m_PlacementActor->setY(-GameMap::getImageSize());
     m_PlacementSelectionClip->setContent(m_PlacementActor);
 
-    m_labelWidth = m_PlacementSelectionClip->getWidth() - GameMap::getImageSize() - m_frameSize - m_frameSize;
+    m_labelWidth = m_PlacementSelectionClip->getScaledWidth() - GameMap::getImageSize() - m_frameSize - m_frameSize;
     m_xCount = m_labelWidth / (GameMap::getImageSize() * m_xFactor) + 1;
     createBoxPlacementSize();
     createBoxSelectionMode();
@@ -92,7 +95,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     {
         emit sigChangeScrollValue(1);
     });
-    pButtonTop->setPosition(m_BoxPlacementSelection->getWidth() / 2 - pButtonTop->getWidth() / 2, 15);
+    pButtonTop->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - pButtonTop->getScaledWidth() / 2, 15);
     m_BoxPlacementSelection->addChild(pButtonTop);
 
     oxygine::spButton pButtonDown = oxygine::spButton::create();
@@ -121,7 +124,8 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
            pTouchEvent->stopPropagation();
         }
     });
-    pButtonDown->setPosition(m_BoxPlacementSelection->getWidth() / 2 - pButtonTop->getWidth() / 2, m_BoxPlacementSelection->getHeight() - pButtonDown->getHeight() - 18);
+    pButtonDown->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - pButtonTop->getScaledWidth() / 2,
+                             m_BoxPlacementSelection->getScaledHeight() - pButtonDown->getScaledHeight() - 18);
     m_BoxPlacementSelection->addChild(pButtonDown);
 
     m_PlacementActor->addChild(m_CurrentSelector);
@@ -252,13 +256,13 @@ void EditorSelection::changeScrollValue(qint32 dir)
     else
     {
         m_PlacementActor->setY(m_PlacementActor->getY() - GameMap::getImageSize());
-        if (m_PlacementActor->getHeight() < m_PlacementSelectionClip->getHeight())
+        if (m_PlacementActor->getScaledHeight() < m_PlacementSelectionClip->getScaledHeight())
         {
             m_PlacementActor->setY(-GameMap::getImageSize());
         }
-        else if (m_PlacementActor->getY() < -m_PlacementActor->getHeight() + m_PlacementSelectionClip->getHeight())
+        else if (m_PlacementActor->getY() < -m_PlacementActor->getScaledHeight() + m_PlacementSelectionClip->getScaledHeight())
         {
-            m_PlacementActor->setY(-m_PlacementActor->getHeight() + m_PlacementSelectionClip->getHeight());
+            m_PlacementActor->setY(-m_PlacementActor->getScaledHeight() + m_PlacementSelectionClip->getScaledHeight());
         }
     }
 }
@@ -490,6 +494,14 @@ void EditorSelection::changeSelectedPlayer(qint32 player)
 
 void EditorSelection::updateSelectedPlayer()
 {
+    if (m_playerStartIndex >= m_Players.size() - calcMaxPlayerSelection())
+    {
+        m_playerStartIndex = m_Players.size() - calcMaxPlayerSelection();
+        if (m_playerStartIndex < 0)
+        {
+            m_playerStartIndex = 0;
+        }
+    }
     for (qint32 i = 0; i < m_Players.size(); i++)
     {
         m_Players[i]->setVisible(false);
@@ -507,7 +519,7 @@ void EditorSelection::updateSelectedPlayer()
 
 qint32 EditorSelection::calcMaxPlayerSelection()
 {
-    return (m_BoxSelectedPlayer->getScaledWidth() - 80) / (m_Players[0]->getWidth() + 5);
+    return (m_BoxSelectedPlayer->getScaledWidth() - 80) / (m_Players[0]->getScaledWidth() + 5);
 }
 
 void EditorSelection::createBoxSelectionMode()
@@ -727,8 +739,6 @@ void EditorSelection::createTerrainSectionLabel(qint32 item, qint32 & currentIde
         currentIdentifier = newIdentifier;
         xCounter = 0;
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
 
@@ -777,8 +787,6 @@ void EditorSelection::createUnitSectionLabel(qint32 item, qint32 & currentIdenti
         currentIdentifier = newIdentifier;
         xCounter = 0;
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
 

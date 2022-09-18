@@ -1,10 +1,9 @@
-#ifndef GAMEMENUE_H
-#define GAMEMENUE_H
+#pragma once
 
 #include <QObject>
 #include <QTimer>
 
-#include <menue/ingamemenue.h>
+#include "menue/basegamemenu.h"
 
 #include "network/NetworkInterface.h"
 
@@ -18,31 +17,31 @@
 #include "game/ui/playerinfo.h"
 #include "game/ui/ingameinfobar.h"
 #include "game/ui/humanquickbuttons.h"
+#include "game/actionperformer.h"
 
-#include "coreengine/LUPDATE_MACROS.h"
-
+class WikiView;
 class GameMenue;
 using spGameMenue = oxygine::intrusive_ptr<GameMenue>;
 
+class MovementPlanner;
+using spMovementPlanner = oxygine::intrusive_ptr<MovementPlanner>;
+
 /**
- * @brief The GameMenue class handles the game :)
+ * @brief The GameMenue class handles the game
  */
-class GameMenue : public InGameMenue
+class GameMenue : public BaseGamemenu
 {
     Q_OBJECT
 public:
-
-    explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface);
+    explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface, bool rejoin = false);
     explicit GameMenue(QString map, bool saveGame);
     explicit GameMenue(spGameMap pMap);
-    virtual ~GameMenue() = default;
-    static spGameMenue getInstance();
+    virtual ~GameMenue();
     /**
      * @brief attachInterface
      * @param pNetworkInterface
      */
     void attachInterface(spNetworkInterface pNetworkInterface);
-
     /**
      * @brief getGameStarted
      * @return always true for singleplayer games turns true on multiplayer games once all clients have started the game
@@ -52,16 +51,17 @@ public:
      * @brief getGameInfoBar
      * @return
      */
-    IngameInfoBar* getGameInfoBar()
-    {
-        return m_IngameInfoBar.get();
-    }
+    IngameInfoBar* getGameInfoBar();
+    /**
+     * @brief getChat
+     * @return
+     */
     Chat* getChat() const;
     /**
      * @brief getCurrentViewPlayer
      * @return
      */
-    virtual Player* getCurrentViewPlayer();
+    virtual Player* getCurrentViewPlayer() override;
     /**
      * @brief getSyncCounter
      * @return
@@ -71,16 +71,44 @@ public:
      * @brief autoScroll
      */
     virtual void autoScroll(QPoint cursorPosition) override;
-    /**
-     * @brief doTrapping
-     * @param pGameAction
-     */
-    void doTrapping(spGameAction & pGameAction);
     bool getIsReplay() const;
     void setIsReplay(bool isReplay);
 
+    bool getActionRunning() const;
+    void updateQuickButtons();
+    void setSaveMap(bool newSaveMap);
+    bool getSaveMap() const;
+
+    bool getSaveAllowed() const;
+    void setSaveAllowed(bool newSaveAllowed);
+    /**
+     * @brief doSaveMap
+     */
+    void doSaveMap();
+    void setGameStarted(bool newGameStarted);
+    /**
+     * @brief getReplayRecorder
+     * @return
+     */
+    ReplayRecorder &getReplayRecorder();
+    /**
+     * @brief getNetworkInterface
+     * @return
+     */
+    NetworkInterface* getNetworkInterface();
+    /**
+     * @brief getActionPerformer
+     * @return
+     */
+    ActionPerformer &getActionPerformer();
+    /**
+     * @brief getIsMultiplayer
+     * @param pGameAction
+     * @return
+     */
+    bool getIsMultiplayer(const spGameAction & pGameAction) const;
+
 signals:
-    void sigActionPerformed();
     void sigGameStarted();
     void sigSyncFinished();
     void sigSaveGame();
@@ -88,43 +116,9 @@ signals:
     void sigShowExitGame();
     void sigShowSurrenderGame();
     void sigNicknameUnit(qint32 x, qint32 y, QString name);
+    void sigVictory(qint32 team);
+    void sigLoadSaveGame(const QString savefile);
 public slots:
-    /**
-     * @brief centerMapOnAction
-     * @param pGameAction
-     */
-    void centerMapOnAction(GameAction* pGameAction);
-    /**
-     * @brief actionPerformed
-     */
-    void actionPerformed();
-    /**
-     * @brief performAction performs the given action and deletes it afterwards.
-     * @param pGameAction
-     */
-    void performAction(spGameAction pGameAction);
-    /**
-     * @brief isTrap
-     * @param pAction
-     * @param pMoveUnit
-     * @param currentPoint
-     * @param previousPoint
-     * @return
-     */
-    bool isTrap(const QString & function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost);
-    /**
-     * @brief finsihActionPerformed
-     */
-    void finishActionPerformed();
-    /**
-     * @brief skipAnimations
-     */
-    void skipAnimations(bool postAnimation);
-    /**
-     * @brief doMultiTurnMovement
-     * @param pGameAction
-     */
-    spGameAction doMultiTurnMovement(spGameAction pGameAction);
     /**
      * @brief updatePlayerinfo
      */
@@ -133,6 +127,10 @@ public slots:
      * @brief updateMinimap
      */
     void updateMinimap();
+    /**
+     * @brief updateGameInfo
+     */
+    void updateGameInfo();
     /**
      * @brief cursorMoved
      * @param x
@@ -147,7 +145,7 @@ public slots:
      * @brief victory
      * @param team
      */
-    void victory(qint32 team);
+    virtual void victory(qint32 team);
     /**
      * @brief saveGame
      */
@@ -165,13 +163,9 @@ public slots:
      */
     void showGameInfo(qint32 player);
     /**
-     * @brief showOptions
+     * @brief showXmlFileDialog
      */
-    void showOptions();
-    /**
-     * @brief showChangeSound
-     */
-    void showChangeSound();
+    void showXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
     /**
      * @brief showAttackLog
      */
@@ -227,11 +221,6 @@ public slots:
      */
     void nicknameUnit(qint32 x, qint32 y, QString name);
     /**
-     * @brief keyInput
-     * @param event
-     */
-    virtual void keyInput(oxygine::KeyEvent event) override;
-    /**
      * @brief editFinishedCanceled
      */
     void editFinishedCanceled();
@@ -245,6 +234,41 @@ public slots:
      * @param socketID
      */
     void playerJoined(quint64 socketID);
+    /**
+     * @brief showDisconnectReason
+     * @param socketID
+     * @param objData
+     */
+    void showDisconnectReason(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief sendUsername
+     * @param socketID
+     * @param objData
+     */
+    void sendUsername(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief sendLoginData
+     * @param socketID
+     * @param objData
+     * @param action
+     */
+    void sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
+    /**
+     * @brief verifyLoginData
+     * @param objData
+     * @param socketID
+     */
+    void verifyLoginData(const QJsonObject & objData, quint64 socketID);
+    /**
+     * @brief sendVerifyGameData
+     * @param socketID
+     */
+    void sendVerifyGameData(quint64 socketID);
+    /**
+     * @brief sendRequestJoinReason
+     * @param socketID
+     */
+    void sendRequestJoinReason(quint64 socketID);
     /**
      * @brief continueAfterSyncGame
      */
@@ -269,12 +293,45 @@ public slots:
     /**
      * @brief showWiki
      */
-    void showWiki();
+    WikiView* showWiki();
     /**
      * @brief showDamageCalculator
      */
     void showDamageCalculator();
+    /**
+     * @brief showMovementPlaner
+     */
+    void showMovementPlanner();
+    /**
+     * @brief hideMovementPlanner
+     */
+    void hideMovementPlanner();
+    /**
+     * @brief exitMovementPlanner
+     */
+    void exitMovementPlanner();
+    /**
+     * @brief unhideGameMenue
+     */
+    void unhideGameMenue();
+    /**
+     * @brief checkMovementPlanner
+     */
+    void checkMovementPlanner();
+    /**
+     * @brief showLoadSaveGame
+     */
+    void showLoadSaveGame();
+    /**
+     * @brief loadSaveGame
+     */
+    void loadSaveGame(const QString savefile);
 protected slots:
+    /**
+     * @brief keyInput
+     * @param event
+     */
+    virtual void keyInput(oxygine::KeyEvent event) override;
     /**
      * @brief recieveData
      * @param socketID
@@ -288,11 +345,25 @@ protected slots:
      */
     void disconnected(quint64 socketID);
     /**
+     * @brief despawnSlave
+     */
+    void despawnSlave();
+    /**
      * @brief joinAsObserver
      * @param stream
      * @param socketID
      */
     void joinAsObserver(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief startGameSync
+     */
+    void startGameSync(quint64 socketID);
+    /**
+     * @brief joinAsPlayer
+     * @param stream
+     * @param socketID
+     */
+    void joinAsPlayer(QDataStream & stream, quint64 socketID);
     /**
      * @brief waitForPlayerJoinSyncFinished
      * @param stream
@@ -303,6 +374,32 @@ protected slots:
      * @brief waitingForPlayerJoinSyncFinished
      */
     void waitingForPlayerJoinSyncFinished(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief syncPointReached
+     */
+    void syncPointReached();
+    /**
+     * @brief receivedUsername
+     * @param socketID
+     * @param objData
+     */
+    void receivedUsername(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief playerRequestControl
+     * @param stream
+     * @param socketID
+     */
+    void playerRequestControlInfo(QDataStream & stream, quint64 socketId);
+    /**
+     * @brief checkSendPlayerRequestControlInfo
+     */
+    void checkSendPlayerRequestControlInfo();
+    /**
+     * @brief sendPlayerRequestControlInfo
+     * @param playerNameId
+     * @param socketId
+     */
+    void sendPlayerRequestControlInfo(const QString & playerNameId, quint64 socketId);
     /**
      * @brief removePlayerFromSyncWaitList
      * @param socketID
@@ -320,14 +417,6 @@ protected slots:
      * @brief onEnter
      */
     virtual void onEnter() override;
-    /**
-     * @brief nextTurnPlayerTimeout
-     */
-    void nextTurnPlayerTimeout();
-    /**
-     * @brief delayedActionPerformed
-     */
-    void delayedActionPerformed();
 protected:
     void loadUIButtons();
     void loadGameMenue();
@@ -335,34 +424,41 @@ protected:
     void keyInputAll(Qt::Key cur);
     QString getSaveFileEnding();
     void showChat();
-    void doSaveMap();
-    bool getIsMultiplayer(const spGameAction & pGameAction) const;
-    bool requiresForwarding(const spGameAction & pGameAction) const;
+    /**
+     * @brief sendGameStartedToServer
+     */
+    void sendGameStartedToServer();
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;
     spIngameInfoBar m_IngameInfoBar;
+    oxygine::spBox9Sprite m_pButtonBox;
     spLabel m_xyTextInfo;
-    oxygine::spActor m_XYButtonBox;
+    oxygine::spBox9Sprite m_XYButtonBox;
     spHumanQuickButtons m_humanQuickButtons;
     spChat m_pChat{nullptr};
     oxygine::spButton m_ChatButton{nullptr};
     oxygine::spTween m_chatButtonShineTween{nullptr};
-    spNetworkInterface m_pNetworkInterface;
     bool m_gameStarted{false};
-    QVector<quint64> m_PlayerSockets;
-    QVector<quint64> m_ReadySockets;
     oxygine::spTextField m_CurrentRoundTime;
     bool m_SaveGame{false};
+
+    // multiplayer data
+    QVector<quint64> m_PlayerSockets;
+    QVector<quint64> m_ReadySockets;
+    spNetworkInterface m_pNetworkInterface;
     bool m_Multiplayer{false};
-
+    QElapsedTimer m_slaveDespawnElapseTimer;
+    QTimer m_slaveDespawnTimer{this};
     QTimer m_UpdateTimer{this};
-    QTimer m_delayedActionPerformedTimer{this};
-    bool m_noTimeOut{false};
-    spGameAction m_pStoredAction{nullptr};
-    spGameAction m_pCurrentAction{nullptr};
+    struct Userdata
+    {
+        QString username;
+        quint64 socket;
+    };
+    QVector<Userdata> m_userData;
+    QVector<Userdata> m_requestData;
 
-    qint64 m_syncCounter{0};
     bool m_enabledAutosaving{false};
 
     QString m_saveFile;
@@ -371,15 +467,8 @@ protected:
     bool m_saveAllowed{false};
     bool m_isReplay{false};
 
-    struct
-    {
-        bool m_waitingForSyncFinished{false};
-        spGameAction m_postSyncAction;
-        QVector<bool> m_lockedPlayers;
-        QVector<quint64> m_connectingSockets;
-    } m_multiplayerSyncData;
+    ActionPerformer m_actionPerformer;
+    spMovementPlanner m_pMovementPlanner;
 };
 
 Q_DECLARE_INTERFACE(GameMenue, "GameMenue");
-
-#endif // GAMEMENUE_H

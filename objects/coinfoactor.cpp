@@ -1,4 +1,6 @@
-#include "coinfoactor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
+#include "objects/coinfoactor.h"
 
 #include "coreengine/mainapp.h"
 
@@ -19,17 +21,15 @@
 COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("COInfoActor");
+#endif
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
@@ -292,8 +292,6 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_SuperPowerDesc->setHeight(m_SuperPowerDesc->getTextRect().getHeight());
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -443,8 +441,6 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -475,7 +471,7 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     if (pCO.get() != nullptr)
     {
         offBonus = pCO->getOffensiveBonus(nullptr, pUnit.get(), pUnit->getPosition(), nullptr, pUnit->getPosition(), false, GameEnums::LuckDamageMode_Off);
-        defBonus = pCO->getDeffensiveBonus(nullptr, nullptr, pUnit->getPosition(), pUnit.get(), pUnit->getPosition(), false, GameEnums::LuckDamageMode_Off);
+        defBonus = pCO->getDeffensiveBonus(nullptr, nullptr, pUnit->getPosition(), pUnit.get(), pUnit->getPosition(), true, GameEnums::LuckDamageMode_Off);
         firerangeBonus = pCO->getFirerangeModifier(pUnit.get(), pUnit->getPosition());
         movementBonus = pCO->getMovementpointModifier(pUnit.get(), pUnit->getPosition());
     }
@@ -544,8 +540,6 @@ void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 ind
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -624,8 +618,6 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
     if (pCO.get() != nullptr)
     {
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
         COPerkManager* pCOPerkManager = COPerkManager::getInstance();
@@ -713,7 +705,7 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
     oxygine::spBox9Sprite pEndBox = oxygine::spBox9Sprite::create();
     pEndBox->setResAnim(pEndAnim);
     pEndBox->setSize(static_cast<qint32>(width * (1.0f - divider)) + 2, 8);
-    pEndBox->setPosition(5 +  GameMap::getImageSize() + pStartBox->getWidth(), y);
+    pEndBox->setPosition(5 +  GameMap::getImageSize() + pStartBox->getScaledWidth(), y);
     pActor->addChild(pEndBox);
 }
 

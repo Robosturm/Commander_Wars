@@ -4,7 +4,7 @@
 #include <QObject>
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 #include "game/building.h"
 #include "game/unit.h"
@@ -15,12 +15,12 @@ class GameMap;
 class TerrainInfo;
 using spTerrainInfo = oxygine::intrusive_ptr<TerrainInfo>;
 
-class TerrainInfo : public QObject, public oxygine::Actor
+class TerrainInfo final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width);
-    virtual ~TerrainInfo() = default;
+    ~TerrainInfo() = default;
 signals:
     /**
      * @brief sigShowLink

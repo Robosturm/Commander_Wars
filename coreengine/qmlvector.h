@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 
 #include "game/unit.h"
 #include "game/building.h"
@@ -16,12 +16,12 @@
 class QmlVectorPoint;
 using spQmlVectorPoint = oxygine::intrusive_ptr<QmlVectorPoint>;
 
-class QmlVectorPoint : public QObject, public oxygine::ref_counter
+class QmlVectorPoint final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     explicit QmlVectorPoint();
-    virtual ~QmlVectorPoint();
+    ~QmlVectorPoint();
     const std::vector<QPoint> & getVector() const
     {
         return m_Vector;
@@ -56,12 +56,12 @@ Q_DECLARE_INTERFACE(QmlVectorPoint, "QmlVectorPoint");
 
 class QmlVectorUnit;
 using spQmlVectorUnit = oxygine::intrusive_ptr<QmlVectorUnit>;
-class QmlVectorUnit : public QObject, public oxygine::ref_counter
+class QmlVectorUnit final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     explicit QmlVectorUnit();
-    virtual ~QmlVectorUnit();
+    ~QmlVectorUnit();
     const std::vector<spUnit> & getVector() const
     {
         return m_Vector;
@@ -105,12 +105,12 @@ Q_DECLARE_INTERFACE(QmlVectorUnit, "QmlVectorUnit");
 
 class QmlVectorBuilding;
 using spQmlVectorBuilding = oxygine::intrusive_ptr<QmlVectorBuilding>;
-class QmlVectorBuilding: public QObject, public oxygine::ref_counter
+class QmlVectorBuilding final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     explicit QmlVectorBuilding();
-    virtual ~QmlVectorBuilding();
+    ~QmlVectorBuilding();
     const std::vector<spBuilding> & getVector() const
     {
         return m_Vector;

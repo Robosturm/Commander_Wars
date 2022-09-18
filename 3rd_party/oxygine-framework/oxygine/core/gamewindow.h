@@ -1,25 +1,24 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 
-#include <qopenglwindow.h>
-#include <qopenglfunctions.h>
-#include <qmutex.h>
-#include <qbasictimer.h>
-#include <qthread.h>
+#include "windowBase.h"
+
+#include <QBasicTimer>
+#include <QThread>
 #include <QKeyEvent>
 #include <QElapsedTimer>
 
 namespace oxygine
 {
-    class GameWindow : public QOpenGLWindow, public QOpenGLFunctions
+    class GameWindow : public WindowBase
     {
         Q_OBJECT
     public:
         explicit GameWindow();
         virtual ~GameWindow() = default;
 
-        static QOpenGLContext* getGLContext();
         static GameWindow* getWindow();
         bool isReady2Render();
         /**
@@ -73,18 +72,14 @@ namespace oxygine
                 m_pauseMutex.unlock();
             }
         }
-        /**
-         * @brief hasCursor
-         * @return
-         */
-        bool hasCursor();
         virtual void shutdown();
         void setTimerCycle(qint32 newTimerCycle);
         qint32 getTimerCycle() const;
         bool getShuttingDown() const;
         void setShuttingDown(bool newShuttingDown);
-
-
+        void initStage();
+        float getActiveDpiFactor() const;
+        bool hasCursor() const;
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         void sigLoadRessources();
@@ -117,12 +112,12 @@ namespace oxygine
          * @param gamma
          */
         void setGamma(float gamma);
-        virtual void initializeGL() override;
+
         bool isMainThread() const
         {
             return QThread::currentThreadId() == m_mainHandle;
         }
-        void launchGame();
+        virtual void launchGame() override;
 
     protected slots:
         void loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
@@ -134,28 +129,18 @@ namespace oxygine
         void showKeyboard(bool visible);
     protected:
         virtual void registerResourceTypes();
-        virtual void timerEvent(QTimerEvent *) override;
-        virtual void paintGL() override;
-
-        virtual void resizeGL(qint32 w, qint32 h) override;
         // input events
         virtual void mousePressEvent(QMouseEvent *event) override;
         virtual void mouseReleaseEvent(QMouseEvent *event) override;
         virtual void wheelEvent(QWheelEvent *event) override;
         virtual void mouseMoveEvent(QMouseEvent *event)override;        
         virtual void touchEvent(QTouchEvent *event) override;
-
-        void updateData();
-        bool beginRendering();
-        void swapDisplayBuffers();
+        virtual void updateData() override;
 
         void handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints);
         bool sameTouchpoint(QPointF pos1, QPointF pos2) const;
 
     protected:
-        bool m_renderEnabled = true;
-
-        bool m_quit{false};
         QBasicTimer m_Timer;
         qint32 m_timerCycle{1};
         QElapsedTimer m_pressDownTime;
@@ -166,17 +151,12 @@ namespace oxygine
         bool m_touchMousePressSent{false};
         float m_lastZoomValue{1.0f};
 
-        QMutex m_pauseMutex;
-        qint32 m_pausedCounter{0};
-
         static GameWindow* m_window;
         float m_brightness{0.0f};
         float m_gamma{1.0f};
         Qt::HANDLE m_mainHandle{nullptr};
 
         bool m_shuttingDown{false};
-        bool m_noUi{false};
         bool m_launched{false};
-        qint32 m_repeatedFramesDropped{0};
     };
 }

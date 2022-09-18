@@ -1,16 +1,21 @@
 #include "objects/base/v_scrollbar.h"
-#include "coreengine/mainapp.h"
+
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/console.h"
+#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     : m_Width(width),
       m_ContentWidth(contentWidth)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("V_Scrollbar");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
 
     m_ScrollTimer.start();
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -44,7 +49,6 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
-            pEvent->stopPropagation();
             m_scroll = 1;
             m_currentScrollspeed = m_Scrollspeed;
             m_speedCounter = 0;
@@ -55,13 +59,12 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
-            pEvent->stopPropagation();
             m_scroll = 0;
             emit sigEndEditValue(m_Scrollvalue);
         }
     });
     m_pBox->addChild(m_pArrowRigth);
-    m_pArrowRigth->setPosition(width - m_pArrowRigth->getWidth() - 8, 9);
+    m_pArrowRigth->setPosition(width - m_pArrowRigth->getScaledWidth() - 8, 9);
 
     m_pArrowLeft = oxygine::spButton::create();
     // pButton->setPosition(200, 200);
@@ -87,7 +90,6 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
-            pEvent->stopPropagation();
             m_scroll = -1;
             m_currentScrollspeed = m_Scrollspeed;
             m_speedCounter = 0;
@@ -98,7 +100,6 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
-            pEvent->stopPropagation();
             m_scroll = 0;
             emit sigEndEditValue(m_Scrollvalue);
         }
@@ -111,14 +112,14 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     m_slider->setResAnim(pAnim);
 
     qint32 sliderWidth = 50;
-    sliderWidth = ((width - m_slider->getWidth() - 20 - 20) * width) / contentWidth;
+    sliderWidth = ((width - m_slider->getScaledWidth() - 20 - 20) * width) / contentWidth;
     if (sliderWidth < 11)
     {
         sliderWidth = 11;
     }
-    else if (sliderWidth > (width - m_slider->getWidth() - 20 - 20))
+    else if (sliderWidth > (width - m_slider->getScaledWidth() - 20 - 20))
     {
-        sliderWidth = (width - m_slider->getWidth() - 20 - 20);
+        sliderWidth = (width - m_slider->getScaledWidth() - 20 - 20);
     }
 
     m_slider->setSize(sliderWidth, 18);
@@ -135,18 +136,18 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             pSlider->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
         }
     });
-    addEventListener(oxygine::TouchEvent::OUTX, [this](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::OUTX, [this, pSlider](oxygine::Event*)
     {
         if (m_enabled)
         {
             setSliding(getSliding());
+            pSlider->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
         }
     });
     m_slider->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event* event)
     {
         if (m_enabled)
         {
-            event->stopPropagation();
             setSliding(true);
             emit sigStartEditValue();
             emit sigFocused();
@@ -156,7 +157,6 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
-            event->stopPropagation();
             if (getSliding())
             {
                 setSliding(false);
@@ -165,18 +165,10 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             emit sigFocusedLost();
         }
     });
-    m_slider->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* pEvent)
-    {
-        if (m_enabled)
-        {
-            pEvent->stopPropagation();
-        }
-    });
     m_pBox->addEventListener(oxygine::TouchEvent::MOVE, [this](oxygine::Event* pEvent)
     {
         if (m_enabled)
         {
-            pEvent->stopPropagation();
             scroll(pEvent);
         }
     });
@@ -198,24 +190,25 @@ void V_Scrollbar::scroll(oxygine::Event* pEvent)
 {
     if (m_sliding)
     {
-        pEvent->stopPropagation();
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-            qint32 x = pTouchEvent->localPosition.x - m_slider->getWidth() / 2;
+            Tooltip::hideTooltip();
+            pTouchEvent->stopPropagation();
+            qint32 x = pTouchEvent->localPosition.x - m_slider->getScaledWidth() / 2;
             if (x < 20)
             {
                 x = 20;
             }
-            else if (x > m_Width - m_slider->getWidth() - 20)
+            else if (x > m_Width - m_slider->getScaledWidth() - 20)
             {
-                x = m_Width - m_slider->getWidth() - 20;
+                x = m_Width - m_slider->getScaledWidth() - 20;
             }
             m_slider->setX(x);
             // calc scroll value :)
-            if (static_cast<float>(m_Width - m_slider->getWidth() - 20 - 20) > 0)
+            if (static_cast<float>(m_Width - m_slider->getScaledWidth() - 20 - 20) > 0)
             {
-                m_Scrollvalue = static_cast<float>(x - 20) / static_cast<float>(m_Width - m_slider->getWidth() - 20 - 20);
+                m_Scrollvalue = static_cast<float>(x - 20) / static_cast<float>(m_Width - m_slider->getScaledWidth() - 20 - 20);
             }
             else
             {
@@ -346,7 +339,7 @@ void V_Scrollbar::setScrollvalue(float Scrollvalue)
         {
             // all fine do nothing
         }
-        m_slider->setX(20 + m_Scrollvalue * (m_Width - m_slider->getWidth() - 20 - 20));
+        m_slider->setX(20 + m_Scrollvalue * (m_Width - m_slider->getScaledWidth() - 20 - 20));
     }
 }
 
@@ -355,7 +348,7 @@ void V_Scrollbar::setWidth(float w)
     oxygine::Actor::setWidth(w);
     m_Width = w;
     m_pBox->setWidth(w);
-    m_pArrowRigth->setPosition(m_Width - m_pArrowRigth->getWidth() - 8, 9);
+    m_pArrowRigth->setPosition(m_Width - m_pArrowRigth->getScaledWidth() - 8, 9);
     setContentWidth(m_ContentWidth);
 }
 

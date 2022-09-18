@@ -2,15 +2,14 @@
 #define TWEENSCREENSHAKE_H
 
 #include <QPoint>
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
-class TweenScreenshake
+class TweenScreenshake final
 {
 public:
     using TActor = oxygine::Actor;
     explicit TweenScreenshake(qint32 startIntensity, float decay, oxygine::timeMS timeMs);
-    virtual ~TweenScreenshake() = default;
+    ~TweenScreenshake() = default;
     void update(oxygine::Actor& actor, float p, const oxygine::UpdateState& us);
 
     void init(oxygine::Actor& actor);

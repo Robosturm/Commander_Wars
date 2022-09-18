@@ -2,39 +2,25 @@
 
 #include <QTimer>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 #include "menue/basemenu.h"
 
 class Mainwindow;
 using spMainwindow = oxygine::intrusive_ptr<Mainwindow>;
 
-class Mainwindow : public Basemenu
+class Mainwindow final : public Basemenu
 {
     Q_OBJECT
 public:
-    explicit Mainwindow();
-    virtual ~Mainwindow() = default;
+    explicit Mainwindow(const QString & initialView);
+    ~Mainwindow() = default;
 signals:
-    void sigEnterSingleplayer();
-    void sigEnterMultiplayer();
-    void sigEnterEditor();
-    void sigEnterOptionmenue();
-    void sigEnterCreditsmenue();
-    void sigQuit();
-    void sigEnterLoadGame();
-    void sigEnterReplayGame();
-    void sigLastSaveGame();
-    void sigEnterWikimenue();
-    void sigEnterCOStyleMenu();
-    void sigEnterLoadCampaign();
-    void sigEnterAchievementmenue();
     void sigImport();
-    void sigEnterShopMenu();
     void sigVersionClicked();
 public slots:
-    void enterSingleplayer();
+    void enterSingleplayer(const QStringList & filter);
     void enterEditor();
-    void enterOptionmenue();
+    void enterOptionmenue(const QString & xmlFile);
     void enterWikimenue();
     void enterLoadGame();
     void enterReplayGame();
@@ -55,9 +41,8 @@ public slots:
     void importFromDirectory(QString file);
     virtual void onEnter() override;
     void versionClicked();
-    qint32 getButtonX(qint32 btnI) const;
-    qint32 getButtonY(qint32 btnI) const;
-    bool isValidSavegame() const;
+    bool isValidSavegame();
+
 protected slots:
     void cheatTimeout();
     void unlockAllShopItems();

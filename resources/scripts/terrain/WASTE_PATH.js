@@ -17,6 +17,10 @@ var Constructor = function()
     {
         __BASESTREET.loadBaseOverlaySprite("waste_path+style0", terrain, map);
     };
+    this.getOverlayTerrainSprites = function(map)
+    {
+        return __BASESTREET.getBaseOverlayTerrainSprites("waste_path+style0");
+    };
 };
 Constructor.prototype = __BASESTREET;
 var WASTE_PATH = new Constructor();

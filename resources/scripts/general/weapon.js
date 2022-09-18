@@ -40,7 +40,7 @@ var WEAPON =
             hp = 0;
         }
         var calcDamage = (hp / 10.0) * damage * (offBonus / defBonus)
-            + luckDamage * (hp / 10.0) * (offBonus / defBonus);
+            + luckDamage * (hp / 10.0) * 100 / defBonus;
         return calcDamage;
     },
 

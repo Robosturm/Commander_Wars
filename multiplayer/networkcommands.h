@@ -1,8 +1,30 @@
-#ifndef NETWORKCOMMANDS_H
-#define NETWORKCOMMANDS_H
+#pragma once
 
 namespace NetworkCommands
 {
+    enum class PublicKeyActions
+    {
+        SendInitialMapUpdate,
+        CreateAccount,
+        LoginAccount,
+        ResetPassword,
+        ChangePassword,
+        RequestLoginData,
+    };
+
+    enum DisconnectReason
+    {
+        InvalidPassword,
+        NoMoreObservers,
+        NoValidPlayerAvailable,
+        InvalidConnection,
+        InvalidUsername,
+        PasswordOutdated,
+        DatabaseAccessError,
+        UsernameAlreadyInGame,
+        Max,
+    };
+
     /**
      * @brief MAPINFO map info of from the host
      */
@@ -88,6 +110,14 @@ namespace NetworkCommands
      */
     const char* const REQUESTJOINREASON = "REQUESTJOINREASON";
     /**
+     * @brief VERIFYGAMEDATA
+     */
+    const char* const VERIFYGAMEDATA = "VERIFYGAMEDATA";
+    /**
+     * @brief GAMEDATAVERIFIED
+     */
+    const char* const GAMEDATAVERIFIED = "GAMEDATAVERIFIED";
+    /**
      * @brief JOINASPLAYER
      */
     const char* const JOINASPLAYER = "JOINASPLAYER";
@@ -111,7 +141,42 @@ namespace NetworkCommands
      * @brief PLAYERJOINEDFINISHED
      */
     const char* const PLAYERJOINEDFINISHED = "PLAYERJOINEDFINISHED";
-
+    /**
+     * @brief REQUESTPLAYERCONTROLLEDINFO
+     */
+    const char* const REQUESTPLAYERCONTROLLEDINFO = "REQUESTPLAYERCONTROLLEDINFO";
+    /**
+     * @brief RECEIVEPLAYERCONTROLLEDINFO
+     */
+    const char* const RECEIVEPLAYERCONTROLLEDINFO = "RECEIVEPLAYERCONTROLLEDINFO";
+    /**
+     * @brief REQUESTPUBLICKEY
+     */
+    const char* const REQUESTPUBLICKEY = "REQUESTPUBLICKEY";
+    /**
+     * @brief SENDPUBLICKEY
+     */
+    const char* const SENDPUBLICKEY = "SENDPUBLICKEY";
+    /**
+     * @brief CRYPTEDMESSAGE
+     */
+    const char* const CRYPTEDMESSAGE = "CRYPTEDMESSAGE";
+    /**
+     * @brief CRYPTEDMESSAGE
+     */
+    const char* const VERIFYLOGINDATA = "VERIFYLOGINDATA";
+    /**
+     * @brief DISCONNECTINFOFROMSERVER
+     */
+    const char* const DISCONNECTINGFOFROMSERVER = "DISCONNECTINGFOFROMSERVER";
+    /**
+     * @brief REQUESTUSERNAME
+     */
+    const char* const REQUESTUSERNAME = "REQUESTUSERNAME";
+    /**
+     * @brief SENDUSERNAME
+     */
+    const char* const SENDUSERNAME = "SENDUSERNAME";
     /*****************************************************************************************************************************/
     // dedicated server commands
     /*****************************************************************************************************************************/
@@ -135,6 +200,10 @@ namespace NetworkCommands
      * @brief SERVERGAMEDATA
      */
     const char* const SERVERGAMEDATA = "SERVERGAMEDATA";
+    /**
+     * @brief SERVERGAMESTARTED
+     */
+    const char* const SLAVEGAMESTARTED = "SLAVEGAMESTARTED";
     /**
      * @brief SERVERJOINGAME
      */
@@ -163,6 +232,20 @@ namespace NetworkCommands
      * @brief SERVERNOGAMESLOTSAVAILABLE
      */
     const char* const SERVERNOGAMESLOTSAVAILABLE = "SERVERNOGAMESLOTSAVAILABLE";
+    /**
+     * @brief SERVERACCOUNTMESSAGE
+     */
+    const char* const SERVERACCOUNTMESSAGE = "SERVERACCOUNTMESSAGE";
+    /**
+     * @brief SERVERREQUESTUSERGAMES
+     */
+    const char* const SERVERREQUESTUSERGAMES = "SERVERREQUESTUSERGAMES";
+    /**
+     * @brief SERVERUSERGAMEDATA
+     */
+    const char* const SERVERUSERGAMEDATA = "SERVERUSERGAMEDATA";
+    /**
+     * @brief SERVERREQUESTGAMES
+     */
+    const char* const SERVERREQUESTGAMES = "SERVERREQUESTGAMES";
 }
-
-#endif // NETWORKCOMMANDS_H

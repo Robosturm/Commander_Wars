@@ -15,6 +15,7 @@
 #include "objects/base/panel.h"
 
 #include "objects/dialogs/dialogtextinput.h"
+#include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/label.h"
 
 BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList buildList)
@@ -22,7 +23,9 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
       m_Player(player),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("BuildListDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -37,7 +40,8 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -47,7 +51,8 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_ExitButton->getHeight());
+    m_ExitButton->setPosition(30,
+                              Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -55,7 +60,8 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     });
 
     oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-    pSave->setPosition(Settings::getWidth() / 2 - pSave->getWidth() / 2, Settings::getHeight() - 30 - m_ExitButton->getHeight());
+    pSave->setPosition(Settings::getWidth() / 2 - pSave->getScaledWidth() / 2,
+                       Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
     pSave->addClickListener([this](oxygine::Event*)
     {
         emit sigShowSaveBannlist();
@@ -64,7 +70,8 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     connect(this, &BuildListDialog::sigShowSaveBannlist, this, &BuildListDialog::showSaveBannlist, Qt::QueuedConnection);
 
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
-    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 75 - m_ToggleAll->getHeight());
+    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 ,
+                             Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
     pSpriteBox->addChild(m_ToggleAll);
     m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -78,15 +85,14 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     auto items = getNameList();
     m_PredefinedLists = spDropDownmenu::create(300, items);
 
-    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 75 - m_ToggleAll->getHeight());
+    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getScaledWidth(),
+                                   Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
     pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &BuildListDialog::setBuildlist, Qt::QueuedConnection);
 
 
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     // no the fun begins create checkboxes and stuff and a panel down here
@@ -96,21 +102,17 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     pSpriteBox->addChild(pPanel);
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
     oxygine::TextStyle largeStyle = oxygine::TextStyle(FontManager::getMainFont32());
-    largeStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
-    spLabel pLabel = spLabel::create(pPanel->getWidth() - 60);
+    spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Build List"));
-    pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     pPanel->addItem(pLabel);
     qint32 y = 40 + pLabel->getTextRect().getHeight();
     qint32 x = 10;
@@ -120,10 +122,10 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
 
     for (const auto & group : unitGroups)
     {
-        spLabel textField = spLabel::create(pPanel->getWidth() - 40);
+        spLabel textField = spLabel::create(pPanel->getScaledWidth() - 40);
         textField->setStyle(largeStyle);
         textField->setHtmlText(group.name);
-        textField->setPosition(pPanel->getWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
+        textField->setPosition(pPanel->getScaledWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
         pPanel->addItem(textField);
         y += 45;
         x = 10;
@@ -296,7 +298,7 @@ QStringList BuildListDialog::getNameList()
     while (dirIter.hasNext())
     {
         dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
+        QString file = dirIter.fileInfo().canonicalFilePath();
         auto data = Filesupport::readList(file);
         items.append(data.name);
     }
@@ -308,4 +310,11 @@ void BuildListDialog::saveBannlist(QString filename)
     Filesupport::storeList(filename, m_CurrentBuildList, "data/unitbannlist/");
     auto items = getNameList();
     m_PredefinedLists->changeList(items);
+
+    spDialogMessageBox pMessageBox = spDialogMessageBox::create(tr("Do you want to make the saved build list the default ruleset?"), true, tr("Yes"), tr("No"));
+    addChild(pMessageBox);
+    connect(pMessageBox.get(),  &DialogMessageBox::sigOk, this, [=]()
+    {
+        Settings::setDefaultBannlist("data/unitbannlist/" + filename + ".bl");
+    }, Qt::QueuedConnection);
 }

@@ -5,7 +5,7 @@ CO_JULIA.init = function(co, map)
 };
 CO_JULIA.activateSuperpower = function(co, powerMode, map)
 {
-    CO_JULIA.activatePower(co, powerMode);
+    CO_JULIA.activatePower(co, powerMode, map);
 };
 CO_JULIA.getSuperPowerDescription = function()
 {

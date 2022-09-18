@@ -1,13 +1,13 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "QDomDocument"
 
 namespace oxygine
 {
     class Resource;
     using spResource = intrusive_ptr<Resource>;
-    class Resource: public Object
+    class Resource : public ref_counter
     {
     public:
         /**

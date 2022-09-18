@@ -9,7 +9,6 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QList>
-#include <QApplication>
 #ifdef AUDIOSUPPORT
 #include <QAudioDevice>
 #endif
@@ -23,20 +22,22 @@ AudioThread::AudioThread(bool noAudio)
       m_noAudio(noAudio)
 
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("AudioThread");
+#endif
     Interpreter::setCppOwnerShip(this);
     if (!m_noAudio)
     {
         connect(this, &AudioThread::sigPlayMusic,         this, &AudioThread::SlotPlayMusic, Qt::QueuedConnection);
         connect(this, &AudioThread::sigSetVolume,         this, &AudioThread::SlotSetVolume, Qt::QueuedConnection);
         connect(this, &AudioThread::sigAddMusic,          this, &AudioThread::SlotAddMusic, Qt::QueuedConnection);
-        connect(this, &AudioThread::sigClearPlayList,     this, &AudioThread::SlotClearPlayList, Qt::BlockingQueuedConnection);
+        connect(this, &AudioThread::sigClearPlayList,     this, &AudioThread::SlotClearPlayList, Qt::QueuedConnection);
         connect(this, &AudioThread::sigPlayRandom,        this, &AudioThread::SlotPlayRandom, Qt::QueuedConnection);
-        connect(this, &AudioThread::sigLoadFolder,        this, &AudioThread::SlotLoadFolder, Qt::BlockingQueuedConnection);
+        connect(this, &AudioThread::sigLoadFolder,        this, &AudioThread::SlotLoadFolder, Qt::QueuedConnection);
         connect(this, &AudioThread::sigPlaySound,         this, &AudioThread::SlotPlaySound, Qt::QueuedConnection);
         connect(this, &AudioThread::sigStopSound,         this, &AudioThread::SlotStopSound, Qt::QueuedConnection);
         connect(this, &AudioThread::sigStopAllSounds,     this, &AudioThread::SlotStopAllSounds, Qt::QueuedConnection);
-        connect(this, &AudioThread::sigChangeAudioDevice, this, &AudioThread::SlotChangeAudioDevice, Qt::BlockingQueuedConnection);
+        connect(this, &AudioThread::sigChangeAudioDevice, this, &AudioThread::SlotChangeAudioDevice, Qt::QueuedConnection);
         connect(this, &AudioThread::sigLoadNextAudioFile, this, &AudioThread::loadNextAudioFile, Qt::QueuedConnection);
 
 #ifdef AUDIOSUPPORT
@@ -61,7 +62,7 @@ AudioThread::~AudioThread()
             {
                 cache->timer[i]->stop();
                 cache->sound[i]->stop();
-                delete cache->sound[i];
+                cache->sound[i]->deleteLater();
                 cache->sound[i] = nullptr;
                 cache->timer[i].reset();
             }
@@ -77,7 +78,17 @@ void AudioThread::initAudio()
     if (!m_noAudio)
     {
         CONSOLE_PRINT("AudioThread::initAudio", Console::eDEBUG);
-        m_audioDevice = Settings::getAudioOutput().value<QAudioDevice>();
+        const auto& value = Settings::getAudioOutput();
+        if (value.typeId() == QMetaType::QString &&
+            value.toString() == Settings::DEFAULT_AUDIODEVICE)
+        {
+            const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
+            m_audioOutput.setDevice(defaultDeviceInfo);
+        }
+        else
+        {
+            m_audioDevice = value.value<QAudioDevice>();
+        }
         m_audioOutput.setDevice(m_audioDevice);
         createPlayer();
         SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getMusicVolume())));
@@ -232,6 +243,8 @@ void AudioThread::SlotChangeAudioDevice(const QVariant& value)
         m_player->m_player.setAudioOutput(&m_audioOutput);
         m_soundCaches.clear();
         createSoundCache();
+        m_player->m_player.stop();
+        SlotPlayRandom();
     }
 #endif
 }
@@ -323,7 +336,7 @@ void AudioThread::SlotClearPlayList()
 void AudioThread::SlotPlayMusic(qint32 file)
 {
 #ifdef AUDIOSUPPORT
-    if (!m_noAudio)
+    if (!m_noAudio && !Settings::getMuted())
     {
         if (file >= 0 && file < m_PlayListdata.size())
         {
@@ -358,7 +371,7 @@ void AudioThread::loadMediaForFile(QString filePath)
 void AudioThread::SlotPlayRandom()
 {
 #ifdef AUDIOSUPPORT
-    if (!m_noAudio)
+    if (!m_noAudio && !Settings::getMuted())
     {
         CONSOLE_PRINT("AudioThread::SlotPlayRandom", Console::eDEBUG);
         qint32 size = m_PlayListdata.size();
@@ -420,6 +433,14 @@ void AudioThread::SlotSetVolume(qint32 value)
         if (Settings::getMuted())
         {
             volume = 0.0f;
+            m_player->m_player.stop();
+        }
+        else
+        {
+            if (m_player->m_player.playbackState() != QMediaPlayer::PlayingState)
+            {
+                SlotPlayRandom();
+            }
         }
         CONSOLE_PRINT("Setting volume to : " + QString::number(volume), Console::eDEBUG);
         m_audioOutput.setVolume(volume);
@@ -439,7 +460,7 @@ void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoin
         }
         if (!QFile::exists(currentPath))
         {
-            CONSOLE_PRINT("Unable to locate music file: " + currentPath + " using compiled path.", Console::eERROR);
+            CONSOLE_PRINT("Unable to locate music file: " + currentPath + " using compiled path.", Console::eDEBUG);
             currentPath = oxygine::Resource::RCC_PREFIX_PATH + file;
         }
         if (QFile::exists(currentPath))
@@ -726,6 +747,7 @@ bool AudioThread::stopSoundAtIndex(SoundData* soundData, qint32 index)
 
 void AudioThread::stopOldestSound(SoundData* soundData)
 {
+    CONSOLE_PRINT("Stopping oldest sound sound of " + soundData->cacheUrl.toString(), Console::eDEBUG);
     bool stopped = false;
     for (qint32 i = soundData->nextSoundToUse; i < SoundData::MAX_SAME_SOUNDS; ++i)
     {

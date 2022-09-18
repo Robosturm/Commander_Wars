@@ -4,14 +4,14 @@
 #include <QObject>
 #include <QTimer>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
-class InGameMenue;
-
+class BaseGamemenu;
 class MapMover;
 using spMapMover = oxygine::intrusive_ptr<MapMover>;
 
-class MapMover : public QObject, public oxygine::ref_counter
+class MapMover final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
     enum Keys
@@ -28,17 +28,16 @@ class MapMover : public QObject, public oxygine::ref_counter
         ZoomOut,
         Max
     };
-
 public:
-    explicit MapMover(InGameMenue* pOwner);
-    virtual ~MapMover() = default;
+    explicit MapMover(BaseGamemenu* pOwner);
+    ~MapMover() = default;
 public slots:
     void mouseWheel(float direction);
-    virtual void keyInput(oxygine::KeyEvent event);
     void autoScroll();
-
+protected slots:
+    virtual void keyInput(oxygine::KeyEvent event);
 private:
-    InGameMenue* m_pOwner{nullptr};
+    BaseGamemenu* m_pOwner{nullptr};
     QTimer m_scrollTimer;
     qint64 m_lastUpdateTimestamp[Max] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 };

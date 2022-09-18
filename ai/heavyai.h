@@ -15,7 +15,7 @@ class GameMap;
 class HeavyAi;
 using spHeavyAi = oxygine::intrusive_ptr<HeavyAi>;
 
-class HeavyAi : public CoreAI
+class HeavyAi final : public CoreAI
 {
     Q_OBJECT
     /**
@@ -122,15 +122,20 @@ class HeavyAi : public CoreAI
         WaitTargetTypes_Enemy,
         WaitTargetTypes_Terrain,
         WaitTargetTypes_CaptureLoad,
+        WaitTargetTypes_Transport,
         WaitTargetTypes_Load,
         WaitTargetTypes_Unload,
+        WaitTargetTypes_Refill,
+        WaitTargetTypes_Support,
         WaitTargetTypesMaxSize,
     };
 
-    // flare?
-    // place watermine
+    // flare / explode
+
+    // place watermine / disable mine
     // support repair and ration actions
     // wait / stealth / unstealth
+    // build waterplane
 
     enum NeuralNetworks
     {
@@ -154,6 +159,7 @@ public:
     {
         JavaScript,
         CPlusPlus,
+        Undefined,
     };
 
     struct UnitBuildData
@@ -173,7 +179,7 @@ public:
     };
 
     explicit HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType);
-    virtual ~HeavyAi() = default;
+    ~HeavyAi() = default;
 
     void loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, bool randomize, qint32 outputSize = 1);
 
@@ -183,6 +189,21 @@ public slots:
      */
     virtual void process() override;
 
+    /*******************************************************************/
+    // processing section for js scripts use the following functions
+    /*******************************************************************/
+    /**
+     * @brief getInfluenceFrontMap
+     * @return
+     */
+    InfluenceFrontMap* getInfluenceFrontMap();
+    /**
+     * @brief addCustomTarget
+     * @param x
+     * @param y
+     * @param priority
+     */
+    void addCustomTarget(qint32 x, qint32 y, qint32 priority);
     /*******************************************************************/
     // training section
     /*******************************************************************/
@@ -293,7 +314,7 @@ protected:
      * @param unitData
      * @param actions
      */
-    void prepareWaitPfs(MoveUnitData & unitData, QStringList & actions);
+    void prepareWaitPfs(MoveUnitData & unitData, const QStringList & actions);
 private:
     void setupTurn(const spQmlVectorBuilding & buildings);
     void endTurn();
@@ -309,7 +330,8 @@ private:
                                QString action, FunctionType type, qint32 index,
                                float & bestScore, std::vector<ScoreData> & scoreInfos);
     bool mutateAction(ScoreData & data, MoveUnitData & MoveUnitData, std::vector<double> & baseData, FunctionType type, qint32 functionIndex,
-                      qint32 & step, std::vector<qint32> & stepPosition);
+                      qint32 & step, std::vector<qint32> & stepPosition, std::vector<qint32> & maxStepOtions);
+    qint32 getNextMutateStep(qint32 step, std::vector<qint32> & stepPosition, std::vector<qint32> & maxStepOtions, qint32 maxOptions);
     /**
      * @brief scoreWait
      * @param unit
@@ -367,7 +389,7 @@ private:
      * @param unit
      * @param targets
      */
-    void getMoveTargets(MoveUnitData & unit, QStringList & actions, std::vector<QVector3D> & targets);
+    void getMoveTargets(MoveUnitData & unit, const QStringList & actions, std::vector<QVector3D> & targets);
     /**
      * @brief scoreWait
      * @param action
@@ -406,6 +428,44 @@ private:
      */
     void addCaptureTransporterTargets(Unit* pUnit, const QStringList & actions,
                                       Terrain* pTerrain, std::vector<QVector3D>& targets);
+    /**
+     * @brief addUnloadTargets
+     * @param pUnit
+     * @param pEnemyUnits
+     * @param targets
+     */
+    void addUnloadTargets(Unit* pUnit, std::vector<QVector3D>& targets);
+    /**
+     * @brief addLoadingTargets
+     * @param pUnit
+     * @param targets
+     */
+    void addLoadingTargets(Unit* pUnit, const QStringList & actions, std::vector<QVector3D>& targets);
+    /**
+     * @brief addCustomTargets
+     * @param pUnit
+     */
+    void addCustomTargets(Unit* pUnit);
+    /**
+     * @brief addRepairTargets
+     * @param pUnit
+     * @param targets
+     */
+    void addRepairTargets(Unit* pUnit, std::vector<QVector3D>& targets);
+    /**
+     * @brief addRefillTargets
+     * @param posX
+     * @param posY
+     * @param targets
+     */
+    void addRefillTargets(qint32 posX, qint32 posY, std::vector<QVector3D> & targets);
+    /**
+     * @brief addSupportTargets
+     * @param posX
+     * @param posY
+     * @param targets
+     */
+    void addSupportTargets(qint32 posX, qint32 posY, std::vector<QVector3D> & targets);
     /**
      * @brief getBasicFieldInputVector
      * @param action
@@ -555,6 +615,12 @@ private:
      * @param target
      */
     qint32 getDistanceToMovepath(const std::vector<QPoint> & targetPath, const QPoint & target) const;
+    /**
+     * @brief isUsingUnit
+     * @param pUnit
+     * @return
+     */
+    bool isUsingUnit(Unit* pUnit) const;
 private:
     // function for scoring a function
     using scoreFunction = std::function<void (ScoreData & data, MoveUnitData & unitData, std::vector<double> & baseData)>;
@@ -571,11 +637,13 @@ private:
     std::vector<QPoint> m_planedCaptureTargets;
     InfluenceFrontMap m_InfluenceFrontMap;
     spQmlVectorUnit m_pUnits = spQmlVectorUnit();
+    spQmlVectorBuilding m_pBuildings = spQmlVectorBuilding();
     spQmlVectorUnit m_pEnemyUnits = spQmlVectorUnit();
+    spQmlVectorBuilding m_pEnemyBuildings = spQmlVectorBuilding();
     Player* m_pPrimaryEnemy{nullptr};
     QTimer m_timer;
     bool m_pause{false};
-    QStringList m_secondyActions
+    QStringList m_secondActions
     {
         ACTION_WAIT,
         ACTION_LOAD,
@@ -586,8 +654,9 @@ private:
     {
         ACTION_UNLOAD,
     };
-    spTargetedUnitPathFindingSystem m_currentTargetedfPfs;
+    spTargetedUnitPathFindingSystem m_currentTargetedPfs;
     std::vector<QPoint> m_possibleCaptureTargets;
+    std::vector<QVector3D> m_currentTargetedPfsTargets;
 
     double m_minActionScore{0.2};
     double m_actionScoreVariant{0.05};
@@ -608,9 +677,9 @@ private:
     double m_maxCapturePoints = 20;
     double m_earlyGameDays{6.0f};
     double m_usedCapturePointIncrease{1.5f};
+    double m_minUnitHealth{3};
 
     // storable stuff
-    QString m_aiName{"HEAVY_AI"};
     QList<spNeuralNetwork> m_neuralNetworks{static_cast<qsizetype>(NeuralNetworksMax)};
 
     // static constants

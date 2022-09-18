@@ -4,7 +4,9 @@ ShopLoader::ShopLoader()
     : RessourceManagement<ShopLoader>("/images/shop/res.xml",
                                               "/scripts/shop")
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ShopLoader");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

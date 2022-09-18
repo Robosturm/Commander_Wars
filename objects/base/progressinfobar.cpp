@@ -1,9 +1,16 @@
-#include "progressinfobar.h"
+#include "objects/base/progressinfobar.h"
+
+#include "coreengine/interpreter.h"
+
 #include "resource_management/fontmanager.h"
 
 ProgressInfoBar::ProgressInfoBar(qint32 width, qint32 heigth, QString text, float progress)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ProgressInfoBar");
+#endif
+    Interpreter::setCppOwnerShip(this);
+
     m_Background = oxygine::spColorRectSprite::create();
     m_Background->setSize(width, heigth);
     m_Background->setColor(QColor(100, 100, 100, 150));
@@ -15,8 +22,6 @@ ProgressInfoBar::ProgressInfoBar(qint32 width, qint32 heigth, QString text, floa
     addChild(m_Progressbar);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
     m_Label = spLabel::create(width);
@@ -40,5 +45,5 @@ void ProgressInfoBar::setProgress(qint32 progress)
     {
         progress = 0.0f;
     }
-    m_Progressbar->setWidth(m_Background->getWidth() * progress);
+    m_Progressbar->setWidth(m_Background->getScaledWidth() * progress);
 }

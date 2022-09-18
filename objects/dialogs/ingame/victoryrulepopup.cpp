@@ -1,12 +1,15 @@
-#include "victoryrulepopup.h"
+#include "objects/dialogs/ingame/victoryrulepopup.h"
+#include "objects/base/label.h"
 
 #include "game/gamemap.h"
 #include "game/gamerules.h"
 #include "game/victoryrule.h"
-#include "resource_management/fontmanager.h"
-#include "menue/gamemenue.h"
+#include "game/actionperformer.h"
 
-#include "objects/base/label.h"
+#include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
+
+#include "resource_management/fontmanager.h"
 
 QStringList VictoryRulePopup::m_popUps;
 
@@ -15,10 +18,10 @@ VictoryRulePopup::VictoryRulePopup(GameMap* pMap, QString rule, qint32 width, qi
       m_rule(rule),
       m_pMap(pMap)
 {
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    GameMenue* pMenu = dynamic_cast<GameMenue*>(BaseGamemenu::getInstance());
+    if (pMenu != nullptr)
     {
-        connect(pMenu.get(), &GameMenue::sigActionPerformed, this, &VictoryRulePopup::updateInfo, Qt::QueuedConnection);
+        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &VictoryRulePopup::updateInfo, Qt::QueuedConnection);
     }
     updateInfo();
     m_popUps.append(m_rule);
@@ -41,8 +44,6 @@ void VictoryRulePopup::updateInfo()
         qint32 y = 10;
 
         oxygine::TextStyle styleSmall = oxygine::TextStyle(FontManager::getMainFont16());
-        styleSmall.color = FontManager::getFontColor();
-        styleSmall.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         styleSmall.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         styleSmall.multiline = true;
 
@@ -54,8 +55,6 @@ void VictoryRulePopup::updateInfo()
         y += 30 + pTextfield->getTextRect().getHeight();
 
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = true;
 

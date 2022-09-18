@@ -1,7 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/closure.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 #include <QDomDocument>
 #include <QString>
@@ -10,7 +10,7 @@
 
 namespace oxygine
 {
-    class Resources: public Resource
+    class Resources : public Resource
     {
     public:
         using resources = std::vector<spResource>;
@@ -57,11 +57,6 @@ namespace oxygine
         @param resource id
         */
         virtual ResAnim* getResAnim(const QString & id, error_policy ep = ep_ignore_error) const;
-
-        /** get animation resource by id
-        @param resource id
-        */
-        ResFont* getResFont(const QString & id, error_policy ep = ep_ignore_error) const;
 
         template<class T>
         T* getT(const QString & id, error_policy ep = ep_ignore_error) const

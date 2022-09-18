@@ -34,7 +34,9 @@ const QString CampaignEditor::campaignFinished = "campaignFinished";
 
 CampaignEditor::CampaignEditor()
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("CampaignEditor");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -50,8 +52,6 @@ CampaignEditor::CampaignEditor()
 
     qint32 y = 30;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::spTextField pText =  oxygine::spTextField::create();
@@ -66,7 +66,7 @@ CampaignEditor::CampaignEditor()
     pSpriteBox->addChild(m_CampaignFolder);
     // Campaign Button
     oxygine::spButton pCampaignButton = pObjectManager->createButton(tr("Folder"), 150);
-    pCampaignButton->setPosition(Settings::getWidth() - pCampaignButton->getWidth() - 30, 30);
+    pCampaignButton->setPosition(Settings::getWidth() - pCampaignButton->getScaledWidth() - 30, 30);
     pSpriteBox->addChild(pCampaignButton);
     pCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -117,7 +117,7 @@ CampaignEditor::CampaignEditor()
 
     // add campaign
     oxygine::spButton pAddCampaignButton = pObjectManager->createButton(tr("Add Map"), 200);
-    pAddCampaignButton->setPosition(30, Settings::getHeight() - 30 - pAddCampaignButton->getHeight());
+    pAddCampaignButton->setPosition(30, Settings::getHeight() - 30 - pAddCampaignButton->getScaledHeight());
     pSpriteBox->addChild(pAddCampaignButton);
     pAddCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -126,7 +126,8 @@ CampaignEditor::CampaignEditor()
 
     // load campaign
     oxygine::spButton pLoadCampaignButton = pObjectManager->createButton(tr("Load"), 150);
-    pLoadCampaignButton->setPosition(Settings::getWidth() / 2 - 10 - pLoadCampaignButton->getWidth(), Settings::getHeight() - 30 - pLoadCampaignButton->getHeight());
+    pLoadCampaignButton->setPosition(Settings::getWidth() / 2 - 10 - pLoadCampaignButton->getScaledWidth(),
+                                     Settings::getHeight() - 30 - pLoadCampaignButton->getScaledHeight());
     pSpriteBox->addChild(pLoadCampaignButton);
     pLoadCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -135,7 +136,8 @@ CampaignEditor::CampaignEditor()
 
     // save campaign
     oxygine::spButton pSaveCampaignButton = pObjectManager->createButton(tr("Save"), 150);
-    pSaveCampaignButton->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 10 - pSaveCampaignButton->getHeight());
+    pSaveCampaignButton->setPosition(Settings::getWidth() / 2 + 10,
+                                     Settings::getHeight() - 10 - pSaveCampaignButton->getScaledHeight());
     pSpriteBox->addChild(pSaveCampaignButton);
     pSaveCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -144,7 +146,8 @@ CampaignEditor::CampaignEditor()
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 10 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() - pOkButton->getScaledWidth() - 30,
+                           Settings::getHeight() - 10 - pOkButton->getScaledHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -261,8 +264,6 @@ void CampaignEditor::updateCampaignData()
     for (qint32 i = 0; i < mapDatas.size(); i++)
     {
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_TOP;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
         spLabel pText =  spLabel::create(180);
@@ -315,7 +316,7 @@ void CampaignEditor::updateCampaignData()
         pBox->setTooltipText(tr("All maps marked as last map need to be won in order to finish the campaign."));
         pBox->setPosition(940, 10 + i * 40);
         m_Panel->addItem(pBox);
-        connect(pBox.get(), &Checkbox::checkChanged, [this, i](bool value)
+        connect(pBox.get(), &Checkbox::checkChanged, this, [this, i](bool value)
         {
             mapDatas[i].lastMap = value;
         });
@@ -678,8 +679,6 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -692,7 +691,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     spinBox->setTooltipText(tr("Number of maps that leads to this map and that need to be won in order to play this map. Can be smaller so multiple campaign paths lead to this map."));
     spinBox->setPosition(300, 10);
     spinBox->setCurrentValue(mapDatas[index].previousCount);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this, index](qreal value)
     {
         mapDatas[index].previousCount = static_cast<qint32>(value);
@@ -721,7 +720,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
             {
                 pCheckbox->setChecked(false);
             }
-            connect(pCheckbox.get(), &Checkbox::checkChanged, [this, index, i](bool value)
+            connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, index, i](bool value)
             {
                 if (value)
                 {
@@ -750,8 +749,6 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
@@ -764,7 +761,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     spinBox->setTooltipText(tr("Number of maps that disable this map again. When they are one this map is made unplayable. Can be used to make a map no longer playable after a Victory."));
     spinBox->setPosition(300, 10);
     spinBox->setCurrentValue(mapDatas[index].disableCount);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this, index](qreal value)
     {
         mapDatas[index].disableCount = static_cast<qint32>(value);
@@ -791,7 +788,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
         {
             pCheckbox->setChecked(false);
         }
-        connect(pCheckbox.get(), &Checkbox::checkChanged, [this, index, i](bool value)
+        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, index, i](bool value)
         {
             if (value)
             {
@@ -820,14 +817,10 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    headerStyle.color = FontManager::getFontColor();
-    headerStyle.vAlign = oxygine::TextStyle::VALIGN_TOP;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
@@ -851,7 +844,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     textBox->setTooltipText(tr("Name of the Variable that should be checked. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, y);
     textBox->setCurrentText(mapDatas[index].scriptVariableEnableName);
-    connect(textBox.get(), &Textbox::sigTextChanged,
+    connect(textBox.get(), &Textbox::sigTextChanged, this,
             [this, index](QString value)
     {
         mapDatas[index].scriptVariableEnableName = value;
@@ -886,7 +879,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     spinBox->setTooltipText(tr("The value that the variable gets checked against."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(mapDatas[index].scriptVariableEnableValue);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this, index](qreal value)
     {
         mapDatas[index].scriptVariableEnableValue = value;
@@ -903,7 +896,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     checkBox->setTooltipText(tr("If checked the enable variable needs to fullfil the condition to allow this map to be playable."));
     checkBox->setPosition(width, y);
     checkBox->setChecked(mapDatas[index].scriptVariableEnableActive);
-    connect(checkBox.get(), &Checkbox::checkChanged,
+    connect(checkBox.get(), &Checkbox::checkChanged, this,
             [this, index](bool value)
     {
         mapDatas[index].scriptVariableEnableActive = value;
@@ -927,7 +920,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     textBox->setTooltipText(tr("Name of the Variable that should be checked. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, y);
     textBox->setCurrentText(mapDatas[index].scriptVariableDisableName);
-    connect(textBox.get(), &Textbox::sigTextChanged,
+    connect(textBox.get(), &Textbox::sigTextChanged, this,
             [this, index](QString value)
     {
         mapDatas[index].scriptVariableDisableName = value;
@@ -960,7 +953,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     spinBox->setTooltipText(tr("The value that the variable gets checked against."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(mapDatas[index].scriptVariableDisableValue);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this, index](qreal value)
     {
         mapDatas[index].scriptVariableDisableValue = value;
@@ -977,7 +970,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     checkBox->setTooltipText(tr("If checked and if the disable variable has been fullfiled this map can't be played."));
     checkBox->setPosition(width, y);
     checkBox->setChecked(mapDatas[index].scriptVariableDisableActive);
-    connect(checkBox.get(), &Checkbox::checkChanged,
+    connect(checkBox.get(), &Checkbox::checkChanged, this,
             [this, index](bool value)
     {
         mapDatas[index].scriptVariableDisableActive = value;

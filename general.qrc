@@ -2060,5 +2060,38 @@
         <file>data/randommaps/multiclimatesgenerator.js</file>
         <file>data/randommaps/seamapgenerator.js</file>
         <file>data/records/info.txt</file>
+        <file>mods/cow_movement_mod/scripts/actions/ACTION_TRAP.js</file>
+        <file>resources/scripts/actions/ACTION_MOVEMENTPLANNER.js</file>
+        <file>resources/scripts/general/movementPlannerAddIn.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_reset.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_deleteunit.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.xml</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_warpunit.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.xml</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.xml</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.js</file>
+        <file>resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.xml</file>
+        <file>resources/scripts/actions/ACTION_LOADGAME.js</file>
+        <file>resources/scripts/general/gameanimationpower.js</file>
+        <file>resources/scripts/wiki/pinkfrontier.js</file>
+        <file>maps/commander_wars.camp/dayAtTheBeach.js</file>
+        <file>maps/commander_wars.camp/dayAtTheBeach.map</file>
+        <file>resources/scripts/actions/ACTION_NEST_LASER.js</file>
+        <file>resources/scripts/actions/ACTION_NEST_MORTAR.js</file>
+        <file>resources/scripts/actions/ACTION_DISABLE_MINE.js</file>
+        <file>maps/commander_wars.camp/UprisingAtTheDocks.js</file>
+        <file>maps/commander_wars.camp/uprisingAtTheDocks.map</file>
+        <file>maps/commander_wars.camp/mechaInTheMiddle.js</file>
+        <file>maps/commander_wars.camp/mechaInTheMiddle.map</file>
+        <file>resources/scripts/building/powerplant.js</file>
+        <file>maps/commander_wars.camp/communicationDevastation.map</file>
+        <file>maps/commander_wars.camp/communicationDevastation.js</file>
+        <file>resources/aidata/normal/normalai.js</file>
+        <file>resources/aidata/normal/normalaidefensive.js</file>
+        <file>resources/aidata/normal/normalaioffensive.js</file>
+        <file>resources/aidata/very_easy/veryeasyai.js</file>
     </qresource>
 </RCC>

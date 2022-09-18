@@ -45,7 +45,7 @@ void ScriptConditionCheckVariable::readCondition(QTextStream& rStream, QString l
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(m_pMap, rStream, ConditionVictory, line))
+        if (readSubCondition(m_pMap, rStream, ConditionCheckVariable, line))
         {
             break;
         }
@@ -105,8 +105,6 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 

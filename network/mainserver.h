@@ -2,15 +2,20 @@
 #define MAINSERVER_H
 
 #include <QObject>
-#include "qprocess.h"
+#include <QSqlDatabase>
+#include <QProcess>
 
 #include "network/tcpserver.h"
 #include "network/tcpclient.h"
-
 #include "network/networkgamedata.h"
 #include "network/networkgame.h"
+#include "network/smtpmailsender.h"
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "multiplayer/networkcommands.h"
+
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+
+#include "game/GameEnums.h"
 
 class MainServer;
 using spMainServer = oxygine::intrusive_ptr<MainServer>;
@@ -18,26 +23,30 @@ using spMainServer = oxygine::intrusive_ptr<MainServer>;
 /**
  * @brief The MainServer class handling the server and it's data.
  */
-class MainServer : public QObject, public oxygine::ref_counter
+class MainServer final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
     struct AddressInfo
     {
         QString address;
+        QString secondaryAddress;
         quint16 minPort;
         quint16 maxPort;
     };
     struct SlaveAddress
     {
         QString address;
+        QString secondaryAddress;
         quint16 port;
     };
 
 public:
     static MainServer* getInstance();
     static bool exists();
+    static void initDatabase();
+    static GameEnums::LoginError verifyLoginData(const QString & username, const QByteArray & password);
     void release();
-    virtual ~MainServer();
+    ~MainServer();
 
     inline TCPServer* getGameServer()
     {
@@ -80,7 +89,11 @@ public slots:
      * @param configuration
      */
     void startRemoteGame(const QString & initScript, const QString & id);
-
+    /**
+     * @brief createRandomPassword
+     * @return
+     */
+    QString createRandomPassword() const;
 private slots:
     /**
      * @brief startRemoteGame used for ai training and to move data from one thread context to this one
@@ -93,6 +106,14 @@ private slots:
      * @param socketId
      */
     void disconnected(qint64 socketId);
+    /**
+     * @brief onMailSendResult
+     * @param socketId
+     * @param receiverAddress
+     * @param username
+     * @param result
+     */
+    void onMailSendResult(quint64 socketId, const QString & receiverAddress, const QString & username, bool result, NetworkCommands::PublicKeyActions action);
 private:
     /**
      * @brief spawnSlaveGame checks if a slave game can be spawned and spawns a slave game on the server
@@ -147,6 +168,24 @@ private:
      */
     void onGameRunningOnServer(quint64 socketID, const QJsonObject & objData);
     /**
+     * @brief onSlaveGameStarted
+     * @param socketID
+     * @param objData
+     */
+    void onSlaveGameStarted(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief onRequestUsergames
+     * @param socketID
+     * @param objData
+     */
+    void onRequestUsergames(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief onRequestGameData
+     * @param socketId
+     * @param objData
+     */
+    void onRequestGameData(quint64 socketId, const QJsonObject & objData);
+    /**
      * @brief onOpenPlayerCount
      * @param socketID
      * @param stream
@@ -157,11 +196,69 @@ private:
      * @param address
      * @param port
      */
-    bool getNextFreeSlaveAddress(QString & address, quint16 & port);
+    bool getNextFreeSlaveAddress(QString & address, quint16 & port, QString & secondaryAddress);
     /**
      * @brief parseSlaveAddressOptions
      */
     void parseSlaveAddressOptions();
+    /**
+     * @brief handleCryptedMessage
+     * @param socketId
+     * @param data
+     * @param action
+     */
+    void handleCryptedMessage(qint64 socketId, const QJsonDocument & doc);
+    /**
+     * @brief createAccount
+     * @param socketId
+     * @param doc
+     */
+    void createAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
+    /**
+     * @brief loginToAccount
+     * @param socketId
+     * @param doc
+     */
+    void loginToAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
+    /**
+     * @brief checkPassword
+     * @param database
+     * @param username
+     * @param password
+     * @return
+     */
+    static GameEnums::LoginError checkPassword(QSqlDatabase & database, const QString & username, const QByteArray & password);
+    /**
+     * @brief resetAccountPassword
+     * @param socketId
+     * @param doc
+     */
+    void resetAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
+    /**
+     * @brief changeAccountPassword
+     * @param socketId
+     * @param doc
+     * @param action
+     */
+    void changeAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
+    /**
+     * @brief getAccountInfo
+     * @param username
+     * @param success
+     * @return
+     */
+    static QSqlQuery getAccountInfo(QSqlDatabase & database, const QString & username, bool & success);
+    /**
+     * @brief sqlQueryFailed
+     * @param query
+     * @return
+     */
+    static bool sqlQueryFailed(const QSqlQuery & query);
+    /**
+     * @brief sendMail
+     * @param message
+     */
+    void sendMail(QString message);
 private:
     class InternNetworkGame;
     using spInternNetworkGame = oxygine::intrusive_ptr<InternNetworkGame>;
@@ -217,9 +314,29 @@ private:
      */
     quint16 m_lastUsedPort{0};
     /**
+     *
+     */
+    qint64 m_uuidGameCounter{0};
+    /**
      * @brief m_freeAddresses addresses of slaves that have been used and are now free again
      */
     QVector<SlaveAddress> m_freeAddresses;
+    /**
+     * @brief m_serverData
+     */
+    static QSqlDatabase m_serverData;
+    /**
+     * @brief m_dataBaseLaunched
+     */
+    static bool m_dataBaseLaunched;
+    /**
+     * @brief m_mailSender
+     */
+    SmtpMailSender m_mailSender;
+    /**
+     * @brief m_mailSenderThread
+     */
+    QThread m_mailSenderThread;
 };
 
 #endif // MAINSERVER_H

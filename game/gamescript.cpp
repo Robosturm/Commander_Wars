@@ -8,12 +8,16 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/console.h"
 
+#include "menue/basegamemenu.h"
+
 const QString GameScript::m_scriptName = "gameScript";
 
 GameScript::GameScript(GameMap* pMap)
     : m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("GameScript");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -126,6 +130,7 @@ bool GameScript::victory(qint32 team)
 {
     if (m_loaded && !m_victoryCalled)
     {
+        CONSOLE_PRINT("Game script on victory", Console::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({team,
                            pInterpreter->newQObject(m_pMap)});
@@ -144,6 +149,7 @@ void GameScript::gameStart()
 {
     if (m_loaded)
     {
+        CONSOLE_PRINT("Game script on game start", Console::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "gameStart";
         QJSValueList args({pInterpreter->newQObject(m_pMap)});
@@ -155,6 +161,7 @@ void GameScript::actionDone(spGameAction & pAction)
 {
     if (m_loaded)
     {
+        CONSOLE_PRINT("Game script on action done", Console::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "actionDone";
         QJSValueList args({pInterpreter->newQObject(pAction.get()),
@@ -167,6 +174,7 @@ void GameScript::turnStart(qint32 turn, qint32 player)
 {
     if (m_loaded)
     {
+        CONSOLE_PRINT("Game script on turn start", Console::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "turnStart";
         QJSValueList args({turn,
@@ -176,7 +184,7 @@ void GameScript::turnStart(qint32 turn, qint32 player)
     }
 }
 
-void GameScript::onGameLoaded(InGameMenue* pMenu)
+void GameScript::onGameLoaded(BaseGamemenu* pMenu)
 {
     if (m_loaded)
     {

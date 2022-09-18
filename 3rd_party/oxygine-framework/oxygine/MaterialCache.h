@@ -19,11 +19,11 @@ namespace oxygine
     class Material;
     using spMaterial = intrusive_ptr<Material>;
 
-    class MaterialCache
+    class MaterialCache final
     {
     public:
         explicit MaterialCache() = default;
-        virtual ~MaterialCache() = default;
+        ~MaterialCache() = default;
         spMaterial cache(const Material& other)
         {
             return clone_(other);

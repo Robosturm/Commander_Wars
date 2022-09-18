@@ -9,13 +9,13 @@ namespace oxygine
 {
     class SlidingActor;
     using spSlidingActor = intrusive_ptr<SlidingActor>;
-    class SlidingActor: public Actor
+    class SlidingActor final : public Actor
     {
     public:
         static void setDefaultTouchThreshold(float val);
 
         explicit SlidingActor();
-        virtual ~SlidingActor();
+        ~SlidingActor();
         spActor getContent() const
         {
             return m_content;

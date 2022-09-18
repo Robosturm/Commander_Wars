@@ -86,6 +86,11 @@ var Constructor = function()
                 "plains+19",
                 "plains+20"];
     };
+
+    this.getOverlayTerrainSprites = function(map)
+    {
+        return ["shadow_plains"]
+    };
 };
 Constructor.prototype = TERRAIN;
 var PLAINS = new Constructor();

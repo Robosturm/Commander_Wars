@@ -1,18 +1,13 @@
-#include "coinfodialog.h"
+#include "objects/dialogs/ingame/coinfodialog.h"
+#include "objects/base/panel.h"
 
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
-
 #include "resource_management/cospritemanager.h"
-
 #include "resource_management/unitspritemanager.h"
-
 #include "resource_management/gamemanager.h"
-
-#include "objects/base/panel.h"
 
 #include "game/gamemap.h"
 
@@ -24,7 +19,9 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
       m_StepFunction(stepFunction),
       m_Ingame(ingame)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("COInfoDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -39,7 +36,8 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
 
     // next button
     m_NextButton = pObjectManager->createButton(tr("Next"), 150);
-    m_NextButton->setPosition(Settings::getWidth() - m_NextButton->getWidth() - 30, Settings::getHeight() - 30 - m_NextButton->getHeight());
+    m_NextButton->setPosition(Settings::getWidth() - m_NextButton->getScaledWidth() - 30,
+                              Settings::getHeight() - 30 - m_NextButton->getScaledHeight());
     pSpriteBox->addChild(m_NextButton);
     m_NextButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -48,7 +46,8 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
 
     // quit button
     m_QuitButton = pObjectManager->createButton(tr("Quit"), 150);
-    m_QuitButton->setPosition(Settings::getWidth() / 2 - m_QuitButton->getWidth() / 2, Settings::getHeight() - 30 - m_QuitButton->getHeight());
+    m_QuitButton->setPosition(Settings::getWidth() / 2 - m_QuitButton->getScaledWidth() / 2,
+                              Settings::getHeight() - 30 - m_QuitButton->getScaledHeight());
     pSpriteBox->addChild(m_QuitButton);
     m_QuitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -57,7 +56,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
 
     // back button
     m_BackButton = pObjectManager->createButton(tr("Back"), 150);
-    m_BackButton->setPosition(30, Settings::getHeight() - 30 - m_BackButton->getHeight());
+    m_BackButton->setPosition(30, Settings::getHeight() - 30 - m_BackButton->getScaledHeight());
     pSpriteBox->addChild(m_BackButton);
     m_BackButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -77,7 +76,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
     {
         pMap = pCO->getMap();
     }
-    m_COInfo = spCOInfoActor::create(pMap, m_pPanel->getWidth());
+    m_COInfo = spCOInfoActor::create(pMap, m_pPanel->getScaledWidth());
     m_pPanel->addItem(m_COInfo);
     showCO();
     connect(this, &COInfoDialog::quit, this, &COInfoDialog::remove, Qt::QueuedConnection);
@@ -104,6 +103,6 @@ void COInfoDialog::showCO()
 {
     
     m_COInfo->showCO(m_CurrentCO, m_pCurrentPlayer);
-    m_pPanel->setContentHeigth(m_COInfo->getHeight());
+    m_pPanel->setContentHeigth(m_COInfo->getScaledHeight());
     
 }

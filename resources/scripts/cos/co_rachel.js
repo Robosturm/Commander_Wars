@@ -131,7 +131,6 @@ var Constructor = function()
         {
             var x = fields.at(i).x + rocketTarget.x;
             var y = fields.at(i).y + rocketTarget.y;
-            // check with which weapon we can attack and if we could deal damage with this weapon
             if (map.onMap(x, y))
             {
                 var unit = map.getTerrain(x, y).getUnit();

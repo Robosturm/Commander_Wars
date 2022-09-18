@@ -1,23 +1,21 @@
 #ifndef CREDITSMENUE_H
 #define CREDITSMENUE_H
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-#include "menue/basemenu.h"
-
 #include <QVector>
 #include <QElapsedTimer>
-
 #include <QObject>
+
+#include "menue/basemenu.h"
 
 class CreditsMenue;
 using spCreditsMenue = oxygine::intrusive_ptr<CreditsMenue>;
 
-class CreditsMenue : public Basemenu
+class CreditsMenue final : public Basemenu
 {
     Q_OBJECT
 public:
     explicit CreditsMenue();
-    virtual ~CreditsMenue() = default;
+    ~CreditsMenue() = default;
     virtual void doUpdate(const oxygine::UpdateState&) override;
 signals:
     void sigExitMenue();

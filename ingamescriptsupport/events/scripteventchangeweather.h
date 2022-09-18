@@ -6,7 +6,7 @@
 class ScriptEventChangeWeather;
 using spScriptEventChangeWeather = oxygine::intrusive_ptr<ScriptEventChangeWeather>;
 
-class ScriptEventChangeWeather : public ScriptEvent
+class ScriptEventChangeWeather final : public ScriptEvent
 {
     Q_OBJECT
 public:

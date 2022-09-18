@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getWidth() - 20</width>
+        <height>settings.getHeight() - 80</height>
+        <childs>
+            <Label>
+                <x>settings.getWidth() / 2 - 250</x>
+                <y>settings.getHeight() / 2 - 180</y>
+                <width>500</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Login on Server")</text>
+                <font>"main"</font>
+                <fontSize>48</fontSize>
+            </Label>
+            <Label>
+                <x>settings.getWidth() / 2 - 310</x>
+                <y>settings.getHeight() / 2 - 100</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Username:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>settings.getUsername()</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>settings.getWidth() / 2 - 310</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Password:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Passwordbox>
+                <Id>PasswordBox</Id>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Password of your account.")</tooltip>
+                <startValue>""</startValue>
+                <onEvent>UserLoginDialog.primaryPassword(input);</onEvent>
+            </Passwordbox>
+            <Button>
+                <Id>CreateAccountButton</Id>
+                <x>settings.getWidth() / 2 - 75 - 210</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Create account")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Creates a new account on the server.")</tooltip>
+                <onEvent>userLogin.createDialog("createAccount", "ui/serverLogin/createAccountDialog.xml", userLogin.getBaseMenu())</onEvent>
+            </Button>
+            <Button>
+                <Id>LoginButton</Id>
+                <x>settings.getWidth() / 2 - 75</x>
+                <y>lastY</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Login")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Logs you onto the server with the given userdata.")</tooltip>
+                <onEvent>UserLoginDialog.login();</onEvent>
+            </Button>
+            <Button>
+                <Id>ForgotPasswordButton</Id>
+                <x>settings.getWidth() / 2 + 75 + 10</x>
+                <y>lastY</y>
+                <width>210</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Forgot password.")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME", "Allows you to reset your password.")</tooltip>
+                <onEvent>userLogin.createDialog("forgotPassword", "ui/serverLogin/forgotPasswordDialog.xml", userLogin.getBaseMenu())</onEvent>
+            </Button>
+            <Button>
+                <Id>BackButton</Id>
+                <x>settings.getWidth() / 2 - 75 - 210</x>
+                <y>lastY  + lastHeight + 20</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Back")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Goes back to the main menu.")</tooltip>
+                <onEvent>userLogin.getBaseMenu().exitMenue()</onEvent>
+            </Button>
+            <Button>
+                <Id>LocalButton</Id>
+                <x>settings.getWidth() / 2 - 75</x>
+                <y>lastY</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Local")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Play a game in your local network.")</tooltip>
+                <onEvent>UserLoginDialog.exit()</onEvent>
+            </Button>
+            <Button>
+                <Id>ChangePassword</Id>
+                <x>settings.getWidth() / 2 + 75 + 10</x>
+                <y>lastY</y>
+                <width>210</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Change password.")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME", "Allows you to change your password.")</tooltip>
+                <onEvent>userLogin.createDialog("changePassword", "ui/serverLogin/changePasswordDialog.xml", userLogin.getBaseMenu())</onEvent>
+            </Button>
+        </childs>
+    </Panel>
+</ui>

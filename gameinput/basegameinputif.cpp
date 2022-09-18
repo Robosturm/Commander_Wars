@@ -13,11 +13,15 @@
 
 #include "resource_management/gamemanager.h"
 
+#include "menue/movementplanner.h"
+
 BaseGameInputIF::BaseGameInputIF(GameMap* pMap, GameEnums::AiTypes aiType)
     : m_AiType(aiType),
       m_pMap(pMap)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("BaseGameInputIF");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -97,17 +101,17 @@ spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes ty
         }
         case GameEnums::AiTypes_Normal:
         {
-            ret = spNormalAi::create(pMap, "normal.ini", type);
+            ret = spNormalAi::create(pMap, "normal.ini", type, "NORMALAI");
             break;
         }
         case GameEnums::AiTypes_NormalOffensive:
         {
-            ret = spNormalAi::create(pMap, "normalOffensive.ini", type);
+            ret = spNormalAi::create(pMap, "normalOffensive.ini", type, "NORMALAIOFFENSIVE");
             break;
         }
         case GameEnums::AiTypes_NormalDefensive:
         {
-            ret = spNormalAi::create(pMap, "normalDefensive.ini", type);
+            ret = spNormalAi::create(pMap, "normalDefensive.ini", type, "NORMALAIDEFENSIVE");
             break;
         }
         case GameEnums::AiTypes_ProxyAi:
@@ -125,7 +129,7 @@ spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes ty
             ret = nullptr;
             break;
         }
-        default: // fall back case for damaged files or unset ai's
+        default: // heavy ai case
         {
             GameManager* pGameManager = GameManager::getInstance();
             QString id = pGameManager->getHeavyAiID(static_cast<qint32>(type) - GameEnums::AiTypes_Heavy);
@@ -175,6 +179,10 @@ qint32 BaseGameInputIF::getMoveCostMapValue(qint32 x, qint32 y)
     return 0.0f;
 }
 
+bool BaseGameInputIF::getProcessing() const
+{
+    return m_processing;
+}
 
 void BaseGameInputIF::centerCameraOnAction(GameAction* pAction)
 {
@@ -185,10 +193,9 @@ void BaseGameInputIF::centerCameraOnAction(GameAction* pAction)
         {
             if (pAction != nullptr)
             {
-                spGameMenue pMenu = GameMenue::getInstance();
-                if (pMenu.get() != nullptr)
+                if (m_pMenu != nullptr)
                 {
-                    pMenu->centerMapOnAction(pAction);
+                    m_pMenu->getActionPerformer().centerMapOnAction(pAction);
                 }
             }
             else

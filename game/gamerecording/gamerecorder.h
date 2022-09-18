@@ -2,12 +2,12 @@
 #define GAMERECORDER_H
 
 #include <QObject>
-#include <qvector3d.h>
+#include <QVector3D>
 
 #include "game/gamerecording/daytodayrecord.h"
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
 
@@ -22,7 +22,7 @@ using spAttackReport = oxygine::intrusive_ptr<AttackReport>;
 /**
  * @brief The AttackReport struct
  */
-class AttackReport : public oxygine::ref_counter
+class AttackReport final : public oxygine::ref_counter
 {
 public:
     qint32 day{0};
@@ -80,15 +80,22 @@ public:
 
 Q_DECLARE_INTERFACE(AttackReport, "AttackReport");
 
-class GameRecorder : public QObject, public FileSerializable, public oxygine::ref_counter
+class GameRecorder final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT    
 public:
+    struct UnitData
+    {
+        QString unitId;
+        qint32 player{-1};
+        qint32 count{0};
+    };
+
     struct PlayerData
     {
-        QMap<QString, qint32> producedUnits;
-        QMap<QString, qint32> lostUnits;
-        QMap<QString, qint32> killedUnits;
+        QVector<UnitData> producedUnits;
+        QVector<UnitData> lostUnits;
+        QVector<UnitData> killedUnits;
     };
     ENUM_CLASS Rang
     {
@@ -100,7 +107,7 @@ public:
     };
 
     explicit GameRecorder(GameMap* pMap);
-    virtual ~GameRecorder() = default;
+    ~GameRecorder() = default;
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -117,7 +124,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 6;
+        return 7;
     }
     /**
      * @brief calculateRang
@@ -187,7 +194,7 @@ public slots:
      * @param player
      * @param unitId is optional to make it upwards compatible
      */
-    void lostUnit(qint32 player, QString unitId = "");
+    void lostUnit(qint32 player, QString unitId = "", qint32 owner = -1);
     /**
      * @brief getLostUnits
      * @param player
@@ -199,7 +206,7 @@ public slots:
      * @param player
      * @param unitId is optional to make it upwards compatible
      */
-    void destroyedUnit(qint32 player, QString unitId = "");
+    void destroyedUnit(qint32 player, QString unitId = "", qint32 owner = -1);
     /**
      * @brief getDestroyedUnits
      * @param player
@@ -211,7 +218,7 @@ public slots:
      * @param player
      * @param unitId is optional to make it upwards compatible
      */
-    void buildUnit(qint32 player, const QString & unitId = "");
+    void buildUnit(qint32 player, const QString & unitId = "", qint32 owner = -1);
     /**
      * @brief getBuildedUnits
      * @param player
@@ -267,9 +274,14 @@ public slots:
      */
     QVector<spAttackReport> getAttackLog(qint32 player);
 private:
+    void saveUnitVector(QDataStream& pStream, const QVector<UnitData> & data) const;
+    void loadUnitVector(QDataStream& pStream, QVector<UnitData> & data);
+    void loadUnitVectorFromMap(QVector<UnitData> & data, QMap<QString, qint32> & info);
+    void increaseItem(QVector<UnitData> & data, qint32 player, QString unitId);
+
+private:
     QVector<spDayToDayRecord> m_Record;
     QVector<spAttackReport> m_Attackreports;
-
     QVector<quint32> m_destroyedUnits;
     QVector<quint32> m_lostUnits;
     QVector<quint32> m_damageDealt;

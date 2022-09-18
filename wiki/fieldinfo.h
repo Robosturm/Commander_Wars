@@ -12,12 +12,12 @@
 class FieldInfo;
 typedef oxygine::intrusive_ptr<FieldInfo> spFieldInfo;
 
-class FieldInfo : public Wikipage
+class FieldInfo final : public Wikipage
 {
     Q_OBJECT
 public:
     explicit FieldInfo(Terrain* pTerrain, Unit* pUnit);
-    virtual ~FieldInfo() = default;
+    ~FieldInfo() = default;
 };
 
 #endif // FIELDINFO_H

@@ -5,7 +5,7 @@
 #include "3rd_party/oxygine-framework/oxygine/Property.h"
 #include "3rd_party/oxygine-framework/oxygine/UpdateState.h"
 #include "3rd_party/oxygine-framework/oxygine/core/closure.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include <limits>
 
 #include <QEasingCurve>
@@ -15,7 +15,7 @@ namespace oxygine
     class Tween;
     using spTween = intrusive_ptr<Tween>;
 
-    class TweenEvent : public Event
+    class TweenEvent final : public Event
     {
     public:
         enum
@@ -188,7 +188,7 @@ namespace oxygine
     using spTweenT = oxygine::intrusive_ptr<TweenT<TProperty>>;
 
     template<class TProperty>
-    class TweenT : public Tween
+    class TweenT final : public Tween
     {
     public:
         using TActor = typename TProperty::TActor;
@@ -196,7 +196,7 @@ namespace oxygine
             : m_property(property)
         {
         }
-        virtual ~TweenT() = default;
+        ~TweenT() = default;
 
         virtual void _update(Actor& actor, const UpdateState& us) override
         {
@@ -241,7 +241,7 @@ namespace oxygine
     };
 
     template<class TTween>
-    class TweenProxy
+    class TweenProxy final
     {
     public:
         TweenProxy(intrusive_ptr<TTween> object)

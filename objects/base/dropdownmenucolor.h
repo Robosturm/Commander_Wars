@@ -5,20 +5,19 @@
 #include <QVector>
 #include <QString>
 #include <QColor>
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/dropdownmenubase.h"
 
 class DropDownmenuColor;
-typedef oxygine::intrusive_ptr<DropDownmenuColor> spDropDownmenuColor;
+using spDropDownmenuColor = oxygine::intrusive_ptr<DropDownmenuColor>;
 
-class DropDownmenuColor : public DropDownmenuBase
+class DropDownmenuColor final : public DropDownmenuBase
 {
     Q_OBJECT
 public:
     explicit DropDownmenuColor(qint32 width, QVector<QColor> items);
-    virtual ~DropDownmenuColor() = default;
+    ~DropDownmenuColor() = default;
     /**
      * @brief getCurrentItem color of the current item
      * @return
@@ -31,6 +30,9 @@ public:
      * @param index
      */
     virtual void setCurrentItem(qint32 index) override;
+    bool getShowUnitPreview() const;
+    void setShowUnitPreview(bool newShowUnitPreview);
+
 signals:
     void sigItemChanged(QColor color);
     void sigShowColorDialog();
@@ -52,6 +54,7 @@ private:
     oxygine::spColorRectSprite m_Colorfield;
     QVector<QColor> m_ItemColors;
     QColor m_currentColor;
+    bool m_showUnitPreview{false};
 };
 
 #endif // DropDownmenuColor_H

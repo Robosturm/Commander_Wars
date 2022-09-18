@@ -5,20 +5,20 @@
 #include <QDir>
 #include <QRandomGenerator>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class QmlVectorPoint;
 using spQmlVectorPoint = oxygine::intrusive_ptr<QmlVectorPoint>;
 
-class GlobalUtils : public QObject
+class GlobalUtils final : public QObject
 {
     Q_OBJECT
 public:
     static GlobalUtils* getInstance()
     {
         return &m_pInstace;
-    };
-    virtual ~GlobalUtils() = default;
+    }
+    ~GlobalUtils() = default;
     static bool getUseSeed();
     static void setUseSeed(bool useSeed);
     static qint32 randIntBase(qint32 low, qint32 high);

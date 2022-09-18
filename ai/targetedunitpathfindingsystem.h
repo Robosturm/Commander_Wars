@@ -6,12 +6,12 @@
 class TargetedUnitPathFindingSystem;
 typedef oxygine::intrusive_ptr<TargetedUnitPathFindingSystem> spTargetedUnitPathFindingSystem;
 
-class TargetedUnitPathFindingSystem : public UnitPathFindingSystem
+class TargetedUnitPathFindingSystem final : public UnitPathFindingSystem
 {
     Q_OBJECT
 public:
     explicit TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, std::vector<QVector3D>& targets, std::vector<std::vector<std::tuple<qint32, bool>>>* pMoveCostMap);
-    virtual ~TargetedUnitPathFindingSystem() = default;
+    ~TargetedUnitPathFindingSystem() = default;
     /**
      * @brief getRemainingCost
      * @param x

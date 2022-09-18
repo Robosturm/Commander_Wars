@@ -4,11 +4,9 @@
 #include "memory.h"
 #include <QObject>
 #include <QTimer>
-#include <qdir.h>
+#include <QDir>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
-#include "objects/base/chat.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "menue/mapselectionmapsmenue.h"
 
@@ -16,10 +14,13 @@
 
 #include "multiplayer/password.h"
 
+#include "objects/base/chat.h"
+#include "objects/dialogs/dialogconnecting.h"
+
 class Multiplayermenu;
 using spMultiplayermenu = oxygine::intrusive_ptr<Multiplayermenu>;
 
-class Multiplayermenu : public MapSelectionMapsMenue
+class Multiplayermenu final : public MapSelectionMapsMenue
 {
     Q_OBJECT
 public:
@@ -30,9 +31,9 @@ public:
         Observer,
     };
 
-    explicit Multiplayermenu(QString adress, quint16 port, QString password, NetworkMode host);
-    explicit Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, NetworkMode host);
-    virtual ~Multiplayermenu() = default;
+    explicit Multiplayermenu(QString address, QString secondaryAddress, quint16 port, QString password, NetworkMode host);
+    explicit Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, NetworkMode host);    
+    ~Multiplayermenu() = default;
 
     /**
      * @brief existsMap
@@ -69,6 +70,7 @@ public slots:
     virtual void buttonBack() override;
     virtual void buttonNext() override;
     virtual void startGame() override;
+    virtual void exitMenu() override;
 
     // network slots
     void playerJoined(quint64 socketID);
@@ -111,24 +113,113 @@ protected:
     void loadMultiplayerMap();
     void showIPs();
     spGameMap createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
-    QString getNewFileName(QString filename);
+    QString getNewFileName(QString filename);    
     void clientMapInfo(QDataStream & stream, quint64 socketID);
+    void readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, bool & sameMods, bool & differentHash, bool & sameVersion);
+    void handleVersionMissmatch(const QStringList & mods, bool sameMods, bool differentHash, bool sameVersion);
+    bool checkMods(const QStringList & mods, const QStringList & versions, bool filter);
+    void verifyGameData(QDataStream & stream, quint64 socketID);
     /**
      * @brief filterCosmeticMods
      * @param mods
      * @param versions
      */
     void filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter);
-    bool checkMods(const QStringList & mods, const QStringList & versions, bool filter);
+    /**
+     * @brief requestRule
+     * @param socketID
+     */
     void requestRule(quint64 socketID);
+    /**
+     * @brief sendInitUpdate
+     * @param stream
+     * @param socketID
+     */
     void sendInitUpdate(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief requestMap
+     * @param socketID
+     */
     void requestMap(quint64 socketID);
+    /**
+     * @brief recieveMap
+     * @param stream
+     * @param socketID
+     */
     void recieveMap(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief playerJoinedServer
+     * @param stream
+     * @param socketID
+     */
     void playerJoinedServer(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief findAndLoadMap
+     * @param dirIter
+     * @param hash
+     * @param m_saveGame
+     * @return
+     */
     bool findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, bool m_saveGame);
+    /**
+     * @brief sendJoinReason
+     * @param stream
+     * @param socketID
+     */
     void sendJoinReason(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief receiveCurrentGameState
+     * @param stream
+     * @param socketID
+     */
     void receiveCurrentGameState(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief connectToSlave
+     * @param objData
+     * @param socketID
+     */
     void connectToSlave(const QJsonObject & objData, quint64 socketID);
+    /**
+     * @brief startRejoinedGame
+     * @param syncCounter
+     */
+    void startRejoinedGame(qint64 syncCounter);
+    /**
+     * @brief receivePlayerControlledInfo
+     * @param stream
+     * @param socketID
+     */
+    void receivePlayerControlledInfo(QDataStream & stream, quint64 socketID);
+    /**
+     * @brief showDisconnectReason
+     * @param socketID
+     * @param objData
+     */
+    void showDisconnectReason(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief sendUsername
+     */
+    void sendUsername(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief sendLoginData
+     * @param socketID
+     * @param objData
+     * @param action
+     */
+    void sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
+    /**
+     * @brief verifyLoginData
+     * @param objData
+     * @param socketID
+     */
+    void verifyLoginData(const QJsonObject & objData, quint64 socketID);
+    /**
+     * @brief sendMapInfoUpdate
+     * @param socketID
+     * @param objData
+     * @param action
+     */
+    void sendMapInfoUpdate(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
 private:
     /**
      * @brief init
@@ -170,7 +261,7 @@ private:
     void changeButtonText();
 private:
     NetworkMode m_networkMode{NetworkMode::Client};
-    spNetworkInterface m_NetworkInterface;
+    spNetworkInterface m_pNetworkInterface;
     oxygine::spButton m_pHostAdresse;
     spChat m_Chat;
     QTimer m_GameStartTimer;
@@ -181,6 +272,7 @@ private:
     bool m_slaveGameReady{false};
     Password m_password;
     quint64 m_hostSocket{0};
+    spDialogConnecting m_pDialogConnecting;
 };
 
 #endif // MULTIPLAYERMENU_H

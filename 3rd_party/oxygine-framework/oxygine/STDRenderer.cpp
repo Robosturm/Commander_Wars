@@ -4,14 +4,15 @@
 #include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
-#include "qfile.h"
-#include "qtextstream.h"
+#include <QFile>
+#include <QTextStream>
 
 class STDRenderer;
-typedef oxygine::intrusive_ptr<STDRenderer> spSTDRenderer;
+using spSTDRenderer = oxygine::intrusive_ptr<STDRenderer>;
 
 namespace oxygine
 {
@@ -22,10 +23,6 @@ namespace oxygine
     std::vector<unsigned short> STDRenderer::indices16;
     size_t STDRenderer::maxVertices = 0;
     UberShaderProgram STDRenderer::uberShader;
-    QString STDRenderer::fracShaderBody;
-    QString STDRenderer::fracTableShaderBody;
-    QString STDRenderer::fracMatrixShaderBody;
-    QString STDRenderer::vertexShaderBody;
 
     RenderStateCache& rsCache()
     {
@@ -83,18 +80,23 @@ namespace oxygine
         {
             return;
         }
-        if (blend == 0)
+        m_blend = blend;
+        setBlendModeInternal();
+    }
+
+    void RenderStateCache::setBlendModeInternal()
+    {
+        if (m_blend == 0)
         {
             m_driver->setState(VideoDriver::STATE_BLEND, 0);
         }
         else
         {
-            VideoDriver::BLEND_TYPE src = static_cast<VideoDriver::BLEND_TYPE>(blend >> 16);
-            VideoDriver::BLEND_TYPE dest = static_cast<VideoDriver::BLEND_TYPE>(blend & 0xFFFF);
+            VideoDriver::BLEND_TYPE src = static_cast<VideoDriver::BLEND_TYPE>(m_blend >> 16);
+            VideoDriver::BLEND_TYPE dest = static_cast<VideoDriver::BLEND_TYPE>(m_blend & 0xFFFF);
             m_driver->setBlendFunc(src, dest);
             m_driver->setState(VideoDriver::STATE_BLEND, 1);
         }
-        m_blend = blend;
     }
 
     bool RenderStateCache::setShader(ShaderProgram* prog)
@@ -106,6 +108,12 @@ namespace oxygine
         m_program = prog;
         m_driver->setShaderProgram(prog);
         return true;
+    }
+
+    void RenderStateCache::restoreAfterPainterUse()
+    {
+        m_driver->setShaderProgram(m_program);
+        setBlendModeInternal();        
     }
 
     void STDRenderer::initialize()
@@ -126,56 +134,7 @@ namespace oxygine
             indices16.push_back(i + 3u);
         }
         maxVertices = indices16.size() * 2u / 3u;
-
-        QString filepath = "system/frac_shader.glsl";
-        if (!QFile::exists(filepath))
-        {
-            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
-        }
-        if (QFile::exists(filepath))
-        {
-            QFile file(filepath);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            fracShaderBody = stream.readAll();
-        }
-        filepath = "system/vertex_shader.glsl";
-        if (!QFile::exists(filepath))
-        {
-            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
-        }
-        if (QFile::exists(filepath))
-        {
-            QFile file(filepath);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            vertexShaderBody = stream.readAll();
-        }
-        filepath = "system/frac_table_shader.glsl";
-        if (!QFile::exists(filepath))
-        {
-            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
-        }
-        if (QFile::exists(filepath))
-        {
-            QFile file(filepath);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            fracTableShaderBody = stream.readAll();
-        }
-        filepath = "system/frac_matrix_shader.glsl";
-        if (!QFile::exists(filepath))
-        {
-            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
-        }
-        if (QFile::exists(filepath))
-        {
-            QFile file(filepath);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            fracMatrixShaderBody = stream.readAll();
-        }
-        uberShader.init(fracShaderBody, vertexShaderBody, fracTableShaderBody, fracMatrixShaderBody);
+        uberShader.init();
 
         restore();
     }
@@ -184,9 +143,6 @@ namespace oxygine
     {
         indices16.clear();
         uberShader.release();
-        fracShaderBody.clear();
-        vertexShaderBody.clear();
-        fracTableShaderBody.clear();
         if (white)
         {
             white->release();
@@ -258,7 +214,6 @@ namespace oxygine
         return m_driver;
     }
 
-
     void STDRenderer::setViewProj(const QMatrix4x4& viewProj)
     {
         flush();
@@ -327,7 +282,6 @@ namespace oxygine
         m_vp.setToIdentity();
         m_vdecl = m_driver->getVertexDeclaration();
         m_uberShader = &uberShader;
-        m_baseShaderFlags = 0;
         m_sphookFirst = this;
         m_sphookLast  = this;
 
@@ -356,10 +310,9 @@ namespace oxygine
         addVertices(quad);
     }
 
-
-    void STDRenderer::setShaderFlags(quint32 flags)
+    void STDRenderer::setFracShader(UberShaderProgram::ColorMode fracShader)
     {
-        ShaderProgram* sp = m_uberShader->getShaderProgram(m_baseShaderFlags | flags);
+        ShaderProgram* sp = m_uberShader->getShaderProgram(fracShader);
         setShader(sp);
     }
 
@@ -376,7 +329,6 @@ namespace oxygine
         m_verticesData.clear();
     }
 
-
     void STDRenderer::setUberShaderProgram(UberShaderProgram* pr)
     {
         if (m_uberShader == pr)
@@ -385,10 +337,4 @@ namespace oxygine
         }
         m_uberShader = pr;
     }
-
-    void STDRenderer::setBaseShaderFlags(quint32 fl)
-    {
-        m_baseShaderFlags = fl;
-    }
-
 }

@@ -10,7 +10,9 @@ GameManager::GameManager()
                                        "")
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
     setObjectName("GameManager");
+#endif
 }
 
 void GameManager::reset()
@@ -24,8 +26,14 @@ void GameManager::loadAll()
     reset();
     m_scriptPath = "scripts/actions/";
     RessourceManagement<GameManager>::loadAll(m_loadedRessources);
-    m_scriptPath = "aidata/heavy/";
+    m_raiseErrors = false;
+    m_scriptPath = "aidata/heavy/";    
     RessourceManagement<GameManager>::loadAll(m_loadedHeavyAis);
+    m_scriptPath = "aidata/very_easy/";
+    RessourceManagement<GameManager>::loadAll(m_loadedVeryEasyAis);
+    m_scriptPath = "aidata/normal/";
+    RessourceManagement<GameManager>::loadAll(m_loadedNormalAis);
+    m_raiseErrors = true;
 }
 
 QString GameManager::getActionIcon(const QString & actionID)

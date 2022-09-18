@@ -1,17 +1,34 @@
 var Constructor = function()
 {
-    this.getRuleDescription = function(itemNumber)
+    this.getRuleDescription = function(rule, itemNumber, map)
     {
-        if (itemNumber === 0)
+        if (rule !== null)
         {
-            return qsTr("All player loose when the time is up.");
+            var victoryTeam = VICTORYRULE_TURNLIMIT.getRuleValue(rule, 1, map);
+            if (victoryTeam > 0)
+            {
+                var text = qsTr("Team %0 wins when the time is up.");
+                text = replaceTextArgs(text, [victoryTeam]);
+                return text
+            }
+            else
+            {
+                return qsTr("All player lose when the time is up.");
+            }
         }
         else
         {
-            return qsTr("The Team winning the game if the time is up. Infinite for all player losing the game.");
+            if (itemNumber === 0)
+            {
+                return qsTr("All player lose when the time is up.");
+            }
+            else
+            {
+                return qsTr("The Team winning the game if the time is up. Infinite for all player losing the game.");
+            }
         }
     };
-    this.getRuleName = function(itemNumber)
+    this.getRuleName = function(rule, itemNumber, map)
     {
         if (itemNumber === 0)
         {

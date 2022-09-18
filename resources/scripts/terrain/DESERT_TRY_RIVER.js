@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return qsTr("Try River");
+        return qsTr("Dry River");
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
@@ -57,7 +57,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Once a river. Now an empty Riverbed that can be crossed by most units doesn't provide cover. It reduces the firepower of units by 20%.");
+        return qsTr("Once a river. Now an empty riverbed that can be crossed by most units doesn't provide cover. It reduces the firepower of units by 20%.");
     };
 
     this.getTerrainSprites = function()

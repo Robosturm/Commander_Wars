@@ -7,7 +7,7 @@
 #include <QBuffer>
 #include <QDataStream>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "gameinput/menudata.h"
 #include "gameinput/markedfielddata.h"
@@ -22,14 +22,23 @@ class GameMap;
 class GameAction;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;
 
-class GameAction : public QObject, public FileSerializable, public oxygine::ref_counter
+class GameAction final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 
 public:
+    enum class InputData
+    {
+        Int,
+        Float,
+        String
+    };
+    static const char* const INPUTSTEP_FIELD;
+    static const char* const INPUTSTEP_MENU;
+
     explicit GameAction(GameMap* pMap);
     explicit GameAction(const QString & actionID, GameMap* pMap);
-    virtual ~GameAction() = default;
+    ~GameAction() = default;
     /**
      * @brief setTarget sets the target for the current action
      * @param point
@@ -171,7 +180,7 @@ public slots:
      * @param actionID id of the action we want to check
      * @return
      */
-    bool canBePerformed(const QString & actionID, bool emptyField = false);
+    bool canBePerformed(const QString & actionID, bool emptyField = false, Player* pUsingPlayer = nullptr);
     /**
      * @brief isFinalStep
      * @return true if we have all data to perform this action
@@ -253,6 +262,16 @@ public slots:
      * @return
      */
     bool getRequiresEmptyField();
+    /**
+     * @brief getMenuStepData
+     * @return the data needed to create an input menu. the data needs to be deleted by the caller
+     */
+    MenuData* getJsMenuStepData();
+    /**
+     * @brief getMarkedFieldStepData
+     * @return
+     */
+    MarkedFieldData* getJMarkedFieldStepData();
     /************** reading and writing data to the action buffer *****************/
     /**
      * @brief writeDataString adds a string to the action data
@@ -262,7 +281,7 @@ public slots:
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
-        ++m_variableCount;
+        m_storedDataTypes.push_back(InputData::String);
     }
     /**
      * @brief readDataString
@@ -282,7 +301,7 @@ public slots:
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
-        ++m_variableCount;
+        m_storedDataTypes.push_back(InputData::Int);
     }
     /**
      * @brief readDataInt32
@@ -302,7 +321,7 @@ public slots:
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
-        ++m_variableCount;
+        m_storedDataTypes.push_back(InputData::Float);
     }
     /**
      * @brief readDataFloat
@@ -356,8 +375,12 @@ public slots:
     }
     qint32 getVariableCount() const
     {
-        return m_variableCount;
+        return m_storedDataTypes.size();
     }
+    /**
+     * @brief revertLastInputStep
+     */
+    void revertLastInputStep(const QString & stepType);
 protected:
     void printAction();
 private:
@@ -383,6 +406,7 @@ private:
      */
     QBuffer m_buffer;
     QDataStream m_actionData{&m_buffer};
+    std::vector<InputData> m_storedDataTypes;
 
     quint32 m_seed;
     /**
@@ -395,7 +419,6 @@ private:
     qint64 m_syncCounter{0};
     qint64 m_roundTimerTime{0};
     qint32 m_player{-1};
-    qint32 m_variableCount{0};
     GameMap* m_pMap{nullptr};
 };
 

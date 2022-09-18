@@ -1,4 +1,4 @@
-#include <QApplication>
+#include <QCoreApplication>
 
 #include "ai/coreai.h"
 #include "ai/targetedunitpathfindingsystem.h"
@@ -12,6 +12,7 @@
 #include "game/unit.h"
 #include "game/gameaction.h"
 #include "game/gamemap.h"
+#include "game/gamescript.h"
 
 bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
 {
@@ -19,7 +20,7 @@ bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
     for (auto & spUnit : pUnits->getVector())
     {
         Unit* pUnit = spUnit.get();
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         if (!pUnit->getHasMoved())
         {
             if (pUnit->getActionList().contains(ACTION_FLARE))
@@ -60,7 +61,7 @@ bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits
     for (auto & spUnit : pUnits->getVector())
     {
         Unit* pUnit = spUnit.get();
-        QApplication::processEvents();
+        QCoreApplication::processEvents();
         if (!pUnit->getHasMoved())
         {
             if (pUnit->getActionList().contains(ACTION_HOELLIUM_WAIT))
@@ -75,7 +76,7 @@ bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits
                     turnPfs.explore();
                     spGameAction pAction = spGameAction::create(ACTION_HOELLIUM_WAIT, m_pMap);
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                    auto path = turnPfs.getClosestReachableMovePath(targetFields);
+                    auto path = turnPfs.getClosestReachableMovePath(targetFields, movepoints);
                     pAction->setMovepath(path, turnPfs.getCosts(path));
                     if (pAction->canBePerformed())
                     {
@@ -115,7 +116,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
         for (auto & spUnit : pUnits->getVector())
         {
             Unit* pUnit = spUnit.get();
-            QApplication::processEvents();
+            QCoreApplication::processEvents();
             if (!pUnit->getHasMoved())
             {
                 if (pUnit->getActionList().contains(ACTION_EXPLODE))
@@ -164,7 +165,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
                         if (targetFields.x() >= 0)
                         {
                             pAction->setActionID(ACTION_WAIT);
-                            auto path = turnPfs.getClosestReachableMovePath(targetFields);
+                            auto path = turnPfs.getClosestReachableMovePath(targetFields, movepoints);
                             pAction->setMovepath(path, turnPfs.getCosts(path));
                             if (pAction->canBePerformed())
                             {
@@ -193,7 +194,7 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
         for (auto & spUnit : pUnits->getVector())
         {
             Unit* pUnit = spUnit.get();
-            QApplication::processEvents();
+            QCoreApplication::processEvents();
             if (pUnit->getHpRounded() < Unit::MAX_UNIT_HP && pUnit->getUnitCosts() / Unit::MAX_UNIT_HP <= m_pPlayer->getFunds())
             {
                 for (auto & field : unitFields->getVector())
@@ -274,51 +275,165 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
 
 bool CoreAI::processPredefinedAi()
 {
-    AI_CONSOLE_PRINT("processPredefinedAi()", Console::eDEBUG);
-    spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
-    pUnits->randomize();
-    spQmlVectorUnit pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
-    pEnemyUnits->randomize();
-    for (auto & spUnit : pUnits->getVector())
+    if (!m_usedPredefinedAi)
     {
-        Unit* pUnit = spUnit.get();
-        QApplication::processEvents();
-        if (!pUnit->getHasMoved())
+        AI_CONSOLE_PRINT("processPredefinedAi()", Console::eDEBUG);
+        spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
+        pUnits->randomize();
+        spQmlVectorUnit pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
+        pEnemyUnits->randomize();
+        spQmlVectorBuilding pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
+        pEnemyBuildings->randomize();
+        for (auto & spUnit : pUnits->getVector())
         {
-            switch (pUnit->getAiMode())
+            Unit* pUnit = spUnit.get();
+            QCoreApplication::processEvents();
+            if (!pUnit->getHasMoved())
             {
-                case GameEnums::GameAi_Hold:
+                switch (pUnit->getAiMode())
                 {
-                    processPredefinedAiHold(pUnit);
-                    return true;
+                    case GameEnums::GameAi_Hold:
+                    {
+                        if (processPredefinedAiHold(pUnit))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
+                    case GameEnums::GameAi_Offensive:
+                    {
+                        if (processPredefinedAiOffensive(pUnit, pEnemyUnits))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
+                    case GameEnums::GameAi_Defensive:
+                    {
+                        if (processPredefinedAiDefensive(pUnit))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
+                    case GameEnums::GameAi_Patrol:
+                    case GameEnums::GameAi_PatrolLoop:
+                    {
+                        if (processPredefinedAiPatrol(pUnit))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
+                    case GameEnums::GameAi_TargetEnemyHq:
+                    {
+                        if (processPredefinedAiTargetEnemyHq(pUnit, pEnemyBuildings))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
+                    case GameEnums::GameAi_Scripted:
+                    {
+                        if (processPredefinedGenericScripted(pUnit, pEnemyUnits, pEnemyBuildings))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
+                    case GameEnums::GameAi_Normal:
+                    {
+                        if (processPredefinedGenericScripted(pUnit, pEnemyUnits, pEnemyBuildings))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
                 }
-                case GameEnums::GameAi_Offensive:
-                {
-                    processPredefinedAiOffensive(pUnit, pEnemyUnits);
-                    return true;
-                }
-                case GameEnums::GameAi_Defensive:
-                {
-                    processPredefinedAiDefensive(pUnit);
-                    return true;
-                }
-                case GameEnums::GameAi_Patrol:
-                case GameEnums::GameAi_PatrolLoop:
-                {
-                    processPredefinedAiPatrol(pUnit);
-                    return true;
-                }
-                case GameEnums::GameAi_Normal:
-                {
-                    break;
-                }
+            }
+        }
+        m_usedPredefinedAi = true;
+    }
+    return false;    
+}
+
+bool CoreAI::processPredefinedGenericScripted(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    const QString function1 = "GenericPredefinedUnitMapScriptBehaviour";
+    if (pInterpreter->exists(GameScript::m_scriptName, function1))
+    {
+        spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+        pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+        QJSValueList args({pInterpreter->newQObject(this),
+                           pInterpreter->newQObject(pAction.get()),
+                           pInterpreter->newQObject(pUnit),
+                           pInterpreter->newQObject(pEnemyUnits.get()),
+                           pInterpreter->newQObject(pEnemyBuildings.get()),
+                          pInterpreter->newQObject(m_pMap)});
+        QJSValue erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
+        if (erg.isBool() && erg.toBool())
+        {
+            if (pAction->canBePerformed())
+            {
+                emit performAction(pAction);
+                return true;
+            }
+        }
+    }
+    if (pInterpreter->exists(m_aiName, function1))
+    {
+        spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+        pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+        QJSValueList args({pInterpreter->newQObject(this),
+                           pInterpreter->newQObject(pAction.get()),
+                           pInterpreter->newQObject(pUnit),
+                           pInterpreter->newQObject(pEnemyUnits.get()),
+                           pInterpreter->newQObject(pEnemyBuildings.get()),
+                           pInterpreter->newQObject(m_pMap)});
+        QJSValue erg = pInterpreter->doFunction(m_aiName, function1, args);
+        if (erg.isBool() && erg.toBool())
+        {
+            if (pAction->canBePerformed())
+            {
+                emit performAction(pAction);
+                return true;
+            }
+        }
+    }
+
+    return false;
+
+}
+
+bool CoreAI::processPredefinedMapScripted(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    const QString function1 = "PredefinedUnitMapScriptBehaviour";
+    if (pInterpreter->exists(GameScript::m_scriptName, function1))
+    {
+        spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+        pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+        QJSValueList args({pInterpreter->newQObject(this),
+                           pInterpreter->newQObject(pAction.get()),
+                           pInterpreter->newQObject(pUnit),
+                           pInterpreter->newQObject(pEnemyUnits.get()),
+                           pInterpreter->newQObject(pEnemyBuildings.get()),
+                           pInterpreter->newQObject(m_pMap)});
+        QJSValue erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
+        if (erg.isBool() && erg.toBool())
+        {
+            if (pAction->canBePerformed())
+            {
+                emit performAction(pAction);
+                return true;
             }
         }
     }
     return false;
 }
 
-void CoreAI::processPredefinedAiHold(Unit* pUnit)
+bool CoreAI::processPredefinedAiHold(Unit* pUnit)
 {
     AI_CONSOLE_PRINT("CoreAI::processPredefinedAiHold", Console::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
@@ -336,21 +451,25 @@ void CoreAI::processPredefinedAiHold(Unit* pUnit)
         if (pAction->isFinalStep())
         {
             emit performAction(pAction);
+            return true;
         }
         else
         {
             pAction->setActionID(ACTION_WAIT);
             emit performAction(pAction);
+            return true;
         }
     }
     else
     {
         pAction->setActionID(ACTION_WAIT);
         emit performAction(pAction);
+        return true;
     }
+    return false;
 }
 
-void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
+bool CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 {
     AI_CONSOLE_PRINT("CoreAI::processPredefinedAiDefensive", Console::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
@@ -382,22 +501,25 @@ void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
         if (pAction->isFinalStep())
         {
             emit performAction(pAction);
+            return true;
         }
         else
         {
-            pAction->setActionID(ACTION_WAIT);
+            pAction->setActionID(ACTION_WAIT);            
             emit performAction(pAction);
+            return true;
         }
     }
     else
     {
         pAction->setActionID(ACTION_WAIT);
         emit performAction(pAction);
-    }
-
+        return true;
+    }    
+    return false;
 }
 
-void CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyUnits)
+bool CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyUnits)
 {
     AI_CONSOLE_PRINT("CoreAI::processPredefinedAiOffensive", Console::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
@@ -419,7 +541,16 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyU
             std::vector<QPoint> path = pfs.getClosestReachableMovePath(targetFields);
             pAction->setMovepath(path, pfs.getCosts(path));
             emit performAction(pAction);
+            return true;
         }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        return true;
     }
 }
 
@@ -460,7 +591,7 @@ bool CoreAI::processPredefinedAiAttack(Unit* pUnit, spGameAction & pAction, Unit
     return performed;
 }
 
-void CoreAI::processPredefinedAiPatrol(Unit* pUnit)
+bool CoreAI::processPredefinedAiPatrol(Unit* pUnit)
 {
     AI_CONSOLE_PRINT("CoreAI::processPredefinedAiPatrol", Console::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
@@ -478,11 +609,11 @@ void CoreAI::processPredefinedAiPatrol(Unit* pUnit)
             targets.push_back(QVector3D(nextTarget.x(), nextTarget.y(), 1));
             TargetedUnitPathFindingSystem targetPfs(m_pMap, pUnit, targets, &m_MoveCostMap);
             targetPfs.explore();
-            qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+            qint32 movepoints = pUnit->getMovementpoints(pUnit->getPosition());
             QPoint targetFields = targetPfs.getReachableTargetField(movepoints);
             if (targetFields.x() >= 0)
             {
-                auto path = pfs.getClosestReachableMovePath(targetFields);
+                auto path = pfs.getClosestReachableMovePath(targetFields, movepoints);
                 pAction->setMovepath(path, pfs.getCosts(path));
                 if (path[0] == nextTarget)
                 {
@@ -503,5 +634,60 @@ void CoreAI::processPredefinedAiPatrol(Unit* pUnit)
             pAction->setMovepath(QVector<QPoint>(), 0);
         }
         emit performAction(pAction);
+        return true;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+bool CoreAI::processPredefinedAiTargetEnemyHq(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings)
+{
+    AI_CONSOLE_PRINT("CoreAI::processPredefinedAiOffensive", Console::eDEBUG);
+    spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
+    UnitPathFindingSystem pfs(m_pMap, pUnit);
+    pfs.explore();
+    bool performed = processPredefinedAiAttack(pUnit, pAction,  pfs);
+    if (!performed)
+    {
+        // no target move aggressive to the target field
+        std::vector<QVector3D> targets;
+        pAction->setActionID(ACTION_CAPTURE);
+        for (const auto & pBuilding : pEnemyBuildings->getVector())
+        {
+            if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ)
+            {
+                targets.push_back(QVector3D(pBuilding->getX(), pBuilding->getY(), 1));
+            }
+        }
+        TargetedUnitPathFindingSystem targetPfs(m_pMap, pUnit, targets, &m_MoveCostMap);
+        targetPfs.explore();
+        qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+        QPoint targetFields = targetPfs.getReachableTargetField(movepoints);
+        if (targetFields.x() >= 0)
+        {
+            std::vector<QPoint> path = pfs.getClosestReachableMovePath(targetFields);
+            pAction->setMovepath(path, pfs.getCosts(path));
+
+            if (pAction->canBePerformed())
+            {
+                emit performAction(pAction);
+            }
+            else
+            {
+                pAction->setActionID(ACTION_WAIT);
+                emit performAction(pAction);
+            }
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        return true;
     }
 }

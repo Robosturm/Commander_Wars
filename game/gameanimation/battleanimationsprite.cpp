@@ -1,4 +1,8 @@
-#include "qcolor.h"
+#include "QColor"
+
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenshakey.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
@@ -33,7 +37,9 @@ BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrai
       m_nextFrameTimer(this),
       m_playSound(playSound)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("BattleAnimationSprite");
+#endif
     Interpreter::setCppOwnerShip(this);
     if (m_hpRounded < 0.0f)
     {
@@ -47,7 +53,7 @@ BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrai
 
     m_Actor = oxygine::spClipRectActor::create();
     m_Actor->setSize(127, 192);
-    setSize(m_Actor->getWidth(), m_Actor->getHeight());
+    setSize(m_Actor->getScaledWidth(), m_Actor->getScaledHeight());
     addChild(m_Actor);
     loadAnimation(animationType);
     connect(this, &BattleAnimationSprite::sigDetachChild, this, &BattleAnimationSprite::detachChild, Qt::QueuedConnection);

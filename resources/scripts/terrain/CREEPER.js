@@ -115,6 +115,14 @@ var Constructor = function()
                 "creeper+E+W",
                 "creeper+W"];
     };
+
+    this.getOverlayTerrainSprites = function(map)
+    {
+        return ["creeper+SE",
+                "creeper+NE",
+                "creeper+SW",
+                "creeper+NW",];
+    };
     this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";

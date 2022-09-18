@@ -1039,7 +1039,7 @@ void GameMap::importAWByWebMap(QString file)
         m_headerInfo.m_mapDescription = "";
         m_headerInfo.m_mapAuthor = Settings::getUsername();
     }
-    EditorMenue::getInstance()->optimizePlayers();
+    dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance())->optimizePlayers();
     // update the whole fucking map
     pLoadingScreen->setProgress(tr("Loading Sprites"), 90);
     updateSprites();

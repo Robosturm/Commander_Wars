@@ -109,6 +109,13 @@ var Constructor = function()
                 "fog+E+W",
                 "fog+W"];
     };
+    this.getOverlayTerrainSprites = function(map)
+    {
+        return ["fog+SE",
+                "fog+NE",
+                "fog+SW",
+                "fog+NW",];
+    };
 };
 Constructor.prototype = TERRAIN;
 var FOG = new Constructor();

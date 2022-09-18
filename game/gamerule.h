@@ -4,18 +4,16 @@
 #include <QObject>
 
 #include "coreengine/fileserializable.h"
-
 #include "coreengine/scriptvariables.h"
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class Player;
 
 class GameRule;
 using spGameRule = oxygine::intrusive_ptr<GameRule>;
 
-class GameRule : public QObject, public FileSerializable, public oxygine::ref_counter
+class GameRule final : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -24,7 +22,7 @@ public:
 
     explicit GameRule();
     explicit GameRule(QString ruleID);
-    virtual ~GameRule() = default;
+    ~GameRule() = default;
 
     /**
      * @brief serialize stores the object

@@ -3,7 +3,7 @@
 
 #include "resource_management/ressourcemanagement.h"
 
-class TerrainManager : public QObject, public RessourceManagement<TerrainManager>
+class TerrainManager final : public QObject, public RessourceManagement<TerrainManager>
 {
     Q_OBJECT
 public:
@@ -57,7 +57,7 @@ protected:
     friend RessourceManagement<TerrainManager>;
     TerrainManager();
 private:
-    virtual ~TerrainManager() = default;
+    ~TerrainManager() = default;
 };
 
 Q_DECLARE_INTERFACE(TerrainManager, "TerrainManager");

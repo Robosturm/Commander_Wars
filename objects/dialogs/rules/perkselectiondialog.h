@@ -10,13 +10,14 @@
 #include "objects/base/checkbox.h"
 
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 
 class GameMap;
 class PerkSelectionDialog;
 using spPerkSelectionDialog = oxygine::intrusive_ptr<PerkSelectionDialog>;
 
-class PerkSelectionDialog : public QObject, public oxygine::Actor
+class PerkSelectionDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:

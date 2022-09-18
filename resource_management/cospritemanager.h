@@ -3,7 +3,7 @@
 
 #include "resource_management/ressourcemanagement.h"
 
-class COSpriteManager : public QObject, public RessourceManagement<COSpriteManager>
+class COSpriteManager final : public QObject, public RessourceManagement<COSpriteManager>
 {
     Q_OBJECT
 public:
@@ -12,8 +12,6 @@ public:
         QString name;
         QStringList cos;
     };
-
-    QStringList getSpriteCOIDs();
     /**
      * @brief getCOStyles
      * @param id
@@ -45,6 +43,15 @@ public:
 signals:
     void sigLoadResAnim(const QString & coid, const QString & file, QImage colorTable, QImage maskTable, bool useColorBox);
 public slots:
+    /**
+     * @brief getSpriteCOIDs
+     * @return
+     */
+    QStringList getSpriteCOIDs();
+    /**
+     * @brief getCoIds
+     * @return
+     */
     QStringList getCoIds()
     {
         return m_loadedRessources;
@@ -71,8 +78,8 @@ public slots:
 protected:
     friend RessourceManagement<COSpriteManager>;
     COSpriteManager();
+    ~COSpriteManager() = default;
 private:
-    virtual ~COSpriteManager() = default;
     struct CoSprite
     {
         CoSprite(QString spriteId, oxygine::spResAnim sprite)

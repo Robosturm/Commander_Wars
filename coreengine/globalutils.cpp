@@ -177,25 +177,25 @@ QmlVectorPoint* GlobalUtils::getCircle(qint32 min, qint32 max)
         }
         else
         {
-            for (qint32 i = 0; i < currentRadius; i++)
+            for (qint32 i = 0; i < currentRadius; ++i)
             {
                 x2 += 1;
                 y2 += 1;
                 ret->append(QPoint(x2, y2));
             }
-            for (qint32 i = 0; i < currentRadius; i++)
+            for (qint32 i = 0; i < currentRadius; ++i)
             {
                 x2 += 1;
                 y2 -= 1;
                 ret->append(QPoint(x2, y2));
             }
-            for (qint32 i = 0; i < currentRadius; i++)
+            for (qint32 i = 0; i < currentRadius; ++i)
             {
                 x2 -= 1;
                 y2 -= 1;
                 ret->append(QPoint(x2, y2));
             }
-            for (qint32 i = 0; i < currentRadius; i++)
+            for (qint32 i = 0; i < currentRadius; ++i)
             {
                 x2 -= 1;
                 y2 += 1;
@@ -266,16 +266,7 @@ QmlVectorPoint* GlobalUtils::getEmptyPointArray()
 
 bool GlobalUtils::isEven(qint32 value)
 {
-    float val = value/2.0f;
-    qint32 val2 = value/2;
-    if(val == val2)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return (value % 2 == 0);
 }
 
 bool GlobalUtils::getUseSeed()
@@ -299,7 +290,7 @@ QStringList GlobalUtils::getFiles(const QString & folder, const QStringList & fi
         while (dirIter.hasNext())
         {
             dirIter.next();
-            QString file = dirIter.fileInfo().absoluteFilePath();
+            QString file = dirIter.fileInfo().canonicalFilePath();
             file = GlobalUtils::makePathRelative(file);
             file.replace(folder + "/", "");
             file.replace(folder, "");
@@ -316,7 +307,7 @@ void GlobalUtils::importFilesFromDirectory(QString folder, QString targetDirecto
     while (dirIter.hasNext())
     {
         dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
+        QString file = dirIter.fileInfo().canonicalFilePath();
         bool exclude = false;
         for (const auto & exlucePath : excludeFolders)
         {
@@ -334,7 +325,7 @@ void GlobalUtils::importFilesFromDirectory(QString folder, QString targetDirecto
             if (replace || !exists)
             {
                 QFile::remove(targetDirectory + "/" + file);
-                QFile::copy(dirIter.fileInfo().absoluteFilePath(), targetDirectory + "/" + file);
+                QFile::copy(dirIter.fileInfo().canonicalFilePath(), targetDirectory + "/" + file);
             }
         }
     }
@@ -463,8 +454,12 @@ QFileInfoList GlobalUtils::getInfoList(const QString & folder, const QStringList
     }
     if (list.length() > 0)
     {
-        infoList.append(QDir(Settings::getUserPath() + folder).entryInfoList(list, QDir::Files));
-        infoList.append(QDir(oxygine::Resource::RCC_PREFIX_PATH + folder).entryInfoList(list, QDir::Files));
+        QString path = Settings::getUserPath() + folder;
+        path.replace("//", "/");
+        infoList.append(QDir(path).entryInfoList(list, QDir::Files));
+        path = oxygine::Resource::RCC_PREFIX_PATH + folder;
+        path.replace("//", "/");
+        infoList.append(QDir(path).entryInfoList(list, QDir::Files));
     }
     return infoList;
 }

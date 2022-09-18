@@ -6,16 +6,16 @@
 
 #include "coreengine/sha256hash.h"
 
-class Filesupport : public QObject
+class Filesupport final
 {
-    Q_OBJECT
 public:
     struct StringList
     {
         QString name;
         QStringList items;
     };
-    virtual ~Filesupport() = default;
+    Filesupport() = delete;
+    ~Filesupport() = delete;
     /**
      * @brief getRuntimeHash
      * @return
@@ -132,10 +132,6 @@ public:
         }
         return map;
     }
-signals:
-
-private:
-    explicit Filesupport() = default;
 };
 
 #endif // HASHING_H

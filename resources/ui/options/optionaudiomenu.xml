@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getWidth() - 20</width>
+        <height>settings.getHeight() - 90</height>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>260</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Audio Settings")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Muted:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: mutes all sounds and music.")</tooltip>
+                <startValue>settings.getMuted()</startValue>
+                <onEvent>settings.setMuted(input);audio.setVolume(settings.getMusicVolume());</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Audio Device:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the primary audio output device.")</tooltip>
+                <startValue>settings.getCurrentDevice()</startValue>
+                <items>settings.getAudioDevices()</items>
+                <onEvent>settings.setAudioDevice(input)</onEvent>
+            </DropDownMenu>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Master Volume:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Slider>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the master volume for the game.")</tooltip>
+                <startValue>settings.getTotalVolume()</startValue>
+                <min>0</min>
+                <max>100</max>
+                <unit>"%"</unit>
+                <onEvent>settings.setTotalVolume(input);audio.setVolume(settings.getMusicVolume());</onEvent>
+            </Slider>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Music Volume:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Slider>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the music volume for the game.")</tooltip>
+                <startValue>settings.getMusicVolume()</startValue>
+                <min>0</min>
+                <max>100</max>
+                <unit>"%"</unit>
+                <onEvent>settings.setMusicVolume(input);audio.setVolume(settings.getMusicVolume());</onEvent>
+            </Slider>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Sound Volume:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Slider>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the sound volume for the game.")</tooltip>
+                <startValue>settings.getSoundVolume()</startValue>
+                <min>0</min>
+                <max>100</max>
+                <unit>"%"</unit>
+                <onEvent>settings.setSoundVolume(input);</onEvent>
+            </Slider>
+        </childs>
+    </Panel>
+</ui>

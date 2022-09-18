@@ -3,23 +3,24 @@
 
 #include <QObject>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/panel.h"
-#include "coreengine/userdata.h"
 #include "objects/base/label.h"
+
+#include "coreengine/userdata.h"
+
 #include "menue/basemenu.h"
 
 class Shopmenu;
 using spShopmenu = oxygine::intrusive_ptr<Shopmenu>;
 
-class Shopmenu : public Basemenu
+class Shopmenu final : public Basemenu
 {
     Q_OBJECT
 public:
     explicit Shopmenu();
-    virtual ~Shopmenu() = default;
+    ~Shopmenu() = default;
 signals:
     void sigExitMenue();
     void sigUpdateItemCosts(qint32 costChange);

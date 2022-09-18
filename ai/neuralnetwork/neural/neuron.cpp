@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
+
 #include "ai/neuralnetwork/neural/neuron.h"
 #include "ai/neuralnetwork/neural/layer.h"
 #include "ai/neuralnetwork/neural/neuralnetwork.h"

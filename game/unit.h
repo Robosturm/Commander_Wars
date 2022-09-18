@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 #include "coreengine/LUPDATE_MACROS.h"
@@ -20,10 +18,11 @@ class Unit;
 class GameAction;
 class GameAnimation;
 class GameMap;
+class UnitPathFindingSystem;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;
 using spUnit = oxygine::intrusive_ptr<Unit>;
 
-class Unit : public Tooltip, public FileSerializable
+class Unit final : public Tooltip, public FileSerializable
 {
     Q_OBJECT
 public:
@@ -60,10 +59,8 @@ public:
      * @brief Unit only for deserialization
      */
     explicit Unit(GameMap* pMap);
-
     explicit Unit(const QString & unitID, Player* pOwner, bool aquireId, GameMap* pMap);
-
-    virtual ~Unit();
+    ~Unit();
     /**
      * @brief setTerrain
      * @param pTerrain smart pointer to the terrain this building is placed on
@@ -175,6 +172,11 @@ public:
         return m_TransportUnits;
     }
 public slots:
+    /**
+     * @brief createUnitPathFindingSystem Note: the path finding system needs to be deleted by the caller using remove()
+     * @return a path finding system that is explored for this unit using the given player information
+     */
+    UnitPathFindingSystem* createUnitPathFindingSystem(Player* pPlayer);
     /**
      * @brief getActionList
      * @return the string id list of actions this units can perform
@@ -387,7 +389,7 @@ public slots:
      * @param position
      * @return
      */
-    bool getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender);
+    bool getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender, QPoint attackerPosition = QPoint(-1, -1));
     /**
      * @brief getMovementpoints the movement points this unit can move
      * @param position
@@ -621,7 +623,7 @@ public slots:
      * @brief refill fills up all ammo and fuel to max
      * @param noMaterial if true material will not be refilled.
      */
-    void refill(bool noMaterial = false);
+    void refill(bool noMaterial = false, float fuelAmount = 1, float ammo1Amount = 1, float ammo2Amount = 1);
 
     /**
      * @brief setHasMoved  changes if the unit has been moved or not
@@ -632,7 +634,7 @@ public slots:
      * @brief getHasMoveed return if this unit has moved or not
      * @return
      */
-    bool getHasMoved();
+    bool getHasMoved() const;
     /**
      * @brief getMovementFuelCostModifier fuel modification when moving this unit from a to b
      * @param fuelCost
@@ -697,6 +699,10 @@ public slots:
      * @param iconID
      */
     void unloadIcon(const QString & iconID);
+    /**
+     * @brief endOfTurn
+     */
+    void endOfTurn();
     /**
      * @brief startOfTurn
      */

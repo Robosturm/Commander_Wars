@@ -89,6 +89,14 @@ var Constructor = function()
         var id = TERRAIN.getTerrainAnimationId(terrain, map);
         return TERRAIN.getTerrainBackgroundId(id, "snow");
     };
+    this.getOverlayTerrainSprites = function(map)
+    {
+        return ["shadow_snow",
+                "plains+N",
+                "plains+E",
+                "plains+S",
+                "plains+W",]
+    };
 };
 Constructor.prototype = TERRAIN;
 var SNOW = new Constructor();

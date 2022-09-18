@@ -3,8 +3,7 @@
 
 #include <QObject>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/checkbox.h"
 #include "objects/base/panel.h"
@@ -16,12 +15,12 @@ using spPlayer = oxygine::intrusive_ptr<Player>;
 class DialogModifyUnit;
 using spDialogModifyUnit = oxygine::intrusive_ptr<DialogModifyUnit>;
 
-class DialogModifyUnit : public QObject, public oxygine::Actor
+class DialogModifyUnit final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogModifyUnit(GameMap* pMap, Unit* pUnit);
-    virtual ~DialogModifyUnit() = default;
+    ~DialogModifyUnit() = default;
 signals:
     void sigFinished();
     void sigUpdateData();

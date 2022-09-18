@@ -4,21 +4,20 @@
 #include "game/player.h"
 #include "game/co.h"
 
-#include "QMutexLocker"
+#include "menue/gamemenue.h"
+#include "menue/movementplanner.h"
+
+#include <QMutexLocker>
 
 ProxyAi::ProxyAi(GameMap* pMap)
-    : CoreAI (pMap, GameEnums::AiTypes_ProxyAi)
+    : CoreAI (pMap, GameEnums::AiTypes_ProxyAi, "ProxyAi")
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ProxyAi");
+#endif
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-
-}
-
-void ProxyAi::init()
-{
-    CoreAI::init();
 }
 
 void ProxyAi::readIni(QString)
@@ -70,18 +69,28 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
         stream >> player;
         if (m_pPlayer->getPlayerID() == player)
         {
-            AI_CONSOLE_PRINT("Received action from network for player " + QString::number(player), Console::eDEBUG);
+            CONSOLE_PRINT("Received action from network for player " + QString::number(player), Console::eDEBUG);
             QMutexLocker locker(&m_ActionMutex);
             spGameAction pAction = spGameAction::create(m_pMap);
             pAction->deserializeObject(stream);
             m_ActionBuffer.append(pAction);
-            if (m_actionRunning == false &&
+            if (m_pMenu != nullptr &&
+                !m_pMenu->getActionRunning() &&
                 m_pPlayer == m_pMap->getCurrentPlayer())
             {
-                m_actionRunning = true;
                 spGameAction pAction = m_ActionBuffer.front();
-                m_ActionBuffer.pop_front();
-                emit performAction(pAction);
+                if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
+                {
+                    m_ActionBuffer.pop_front();
+                    AI_CONSOLE_PRINT("Emitting action for player " + QString::number(m_pPlayer->getPlayerID()) +
+                                     " current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
+                                     " with sync counter " + QString::number(pAction->getSyncCounter()), Console::eDEBUG);
+                    emit performAction(pAction);
+                }
+                else
+                {
+                    AI_CONSOLE_PRINT("Skipping emit action cause sync counter doesn't match", Console::eDEBUG);
+                }
             }
         }
     }
@@ -90,15 +99,25 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
 void ProxyAi::nextAction()
 {
     QMutexLocker locker(&m_ActionMutex);
-    m_actionRunning = false;
-    if (m_pPlayer == m_pMap->getCurrentPlayer())
+    if (m_pMenu != nullptr &&
+        !m_pMenu->getActionRunning() &&
+        m_pPlayer == m_pMap->getCurrentPlayer())
     {
         if (m_ActionBuffer.size() > 0)
         {
-            m_actionRunning = true;
             spGameAction pAction = m_ActionBuffer.front();
-            m_ActionBuffer.pop_front();
-            emit performAction(pAction);
+            if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
+            {
+                m_ActionBuffer.pop_front();
+                AI_CONSOLE_PRINT("Emitting action for player " + QString::number(m_pPlayer->getPlayerID()) +
+                                 " current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
+                                 " with sync counter " + QString::number(pAction->getSyncCounter()), Console::eDEBUG);
+                emit performAction(pAction);
+            }
+            else
+            {
+                AI_CONSOLE_PRINT("Skipping emit action cause sync counter doesn't match", Console::eDEBUG);
+            }
         }
     }
 }

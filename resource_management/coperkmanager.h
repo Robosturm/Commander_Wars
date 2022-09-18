@@ -3,13 +3,10 @@
 
 #include "resource_management/ressourcemanagement.h"
 
-class COPerkManager : public QObject, public RessourceManagement<COPerkManager>
+class COPerkManager final : public QObject, public RessourceManagement<COPerkManager>
 {
     Q_OBJECT
-protected:
-    friend RessourceManagement<COPerkManager>;
-    COPerkManager();
-public:
+public slots:
     /**
      * @brief getIcon
      * @param index
@@ -23,6 +20,12 @@ public:
      */
     bool isSelectable(qint32 position);
     /**
+     * @brief isSelectable
+     * @param id
+     * @return
+     */
+    bool isSelectable(QString id);
+    /**
      * @brief getDescription
      * @param position
      * @return
@@ -34,11 +37,16 @@ public:
      * @return
      */
     QString getGroup(qint32 position);
-
-public slots:
+    /**
+     * @brief removeRessource
+     * @param id
+     */
     void removeRessource(QString id);
+protected:
+    friend RessourceManagement<COPerkManager>;
+    COPerkManager();
 private:
-    virtual ~COPerkManager() = default;
+    ~COPerkManager() = default;
 };
 
 Q_DECLARE_INTERFACE(COPerkManager, "COPerkManager");

@@ -11,9 +11,9 @@ bool operator<(const PathFindingSystem::Node& pNodeLhs, const PathFindingSystem:
 {
     return (pNodeLhs.totalCost < pNodeRhs.totalCost) || // cheaper end cost
             // same end cost but currently cheaper cost
-           (pNodeLhs.currentCosts < pNodeRhs.currentCosts && pNodeLhs.totalCost == pNodeRhs.totalCost) ||
+            (pNodeLhs.currentCosts < pNodeRhs.currentCosts && pNodeLhs.totalCost == pNodeRhs.totalCost) ||
             // same
-           (pNodeLhs.distance < pNodeRhs.distance && pNodeLhs.currentCosts == pNodeRhs.currentCosts && pNodeLhs.totalCost == pNodeRhs.totalCost);
+            (pNodeLhs.distance < pNodeRhs.distance && pNodeLhs.currentCosts == pNodeRhs.currentCosts && pNodeLhs.totalCost == pNodeRhs.totalCost);
 }
 
 PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
@@ -25,7 +25,9 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
       m_DirectionMap(new Directions[static_cast<quint32>(width * heigth)]),
       m_movecosts(new std::array<qint32, Directions::Max>[static_cast<quint32>(width * heigth)])
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("PathFindingSystem");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -39,6 +41,7 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
             m_movecosts[i][i2] = infinite;
         }
     }
+    oxygine::ref_counter::addInstanceCounter();
 }
 
 PathFindingSystem::~PathFindingSystem()
@@ -46,6 +49,7 @@ PathFindingSystem::~PathFindingSystem()
     delete[] m_costs;
     delete[] m_DirectionMap;
     delete[] m_movecosts;
+    oxygine::ref_counter::releaseInstanceCounter();
 }
 
 void PathFindingSystem::setStartPoint(qint32 startX, qint32 startY)
@@ -69,7 +73,7 @@ void PathFindingSystem::explore()
     }
     qint32 neighboursIndex = getIndex(m_StartPoint.x(), m_StartPoint.y());
     m_OpenList.push_back(Node(m_StartPoint.x(), m_StartPoint.y(), neighboursIndex, 0, 0,
-                           m_StartPoint.x(), m_StartPoint.y(), 0));
+                              m_StartPoint.x(), m_StartPoint.y(), 0));
     qint32 remainingCosts;
     qint32 neighboursX = -1;
     qint32 neighboursY = -1;

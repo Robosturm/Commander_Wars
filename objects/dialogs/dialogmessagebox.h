@@ -3,18 +3,18 @@
 
 #include <QObject>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 
 class DialogMessageBox;
 using spDialogMessageBox = oxygine::intrusive_ptr<DialogMessageBox>;
 
-class DialogMessageBox : public QObject, public oxygine::Actor
+class DialogMessageBox final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogMessageBox(QString text, bool withCancel = false, QString confirmText = tr("Ok"), QString cancelText = tr("Cancel"));
-    virtual ~DialogMessageBox() = default;
+    ~DialogMessageBox() = default;
 signals:
     void sigOk();
     void sigCancel();

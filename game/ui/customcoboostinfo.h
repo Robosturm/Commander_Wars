@@ -2,12 +2,12 @@
 
 #include <QObject>
 
-class CustomCoBoostInfo : public QObject
+class CustomCoBoostInfo final : public QObject
 {
     Q_OBJECT
 public:
     explicit CustomCoBoostInfo() = default;
-    virtual ~CustomCoBoostInfo() = default;
+    ~CustomCoBoostInfo() = default;
 
     const QStringList &getBonusIcons() const;
 

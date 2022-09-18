@@ -1,5 +1,6 @@
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
+#include "objects/base/label.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
@@ -7,13 +8,17 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
+
 const char* const ROOT = "::::";
 
 FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, QString startFile, bool preview, QString acceptButtonName)
     : m_preview(preview),
       m_pathPrefix(Settings::getUserPath())
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("FileDialog");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
@@ -35,25 +40,25 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, QStri
     connect(m_CurrentFolder.get(), &Textbox::sigTextChanged, this, &FileDialog::showFolder, Qt::QueuedConnection);
     // folder file selection
     m_MainPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 210), QSize(Settings::getWidth() - 60, Settings::getHeight() - 300));
-    m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getHeight() + 10);
+    m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getScaledHeight() + 10);
     pSpriteBox->addChild(m_MainPanel);
     // file folder
     m_CurrentFile = spTextbox::create(Settings::getWidth() - 60 - 160);
-    m_CurrentFile->setPosition(30, m_MainPanel->getY() + m_MainPanel->getHeight() + 10);
+    m_CurrentFile->setPosition(30, m_MainPanel->getY() + m_MainPanel->getScaledHeight() + 10);
     m_CurrentFile->setCurrentText(startFile);
     pSpriteBox->addChild(m_CurrentFile);
     // ok button
     m_OkButton = pObjectManager->createButton(acceptButtonName, 150);
-    m_OkButton->setPosition(m_CurrentFile->getWidth() + 30 + 10, m_CurrentFile->getY());
+    m_OkButton->setPosition(m_CurrentFile->getScaledWidth() + 30 + 10, m_CurrentFile->getY());
     pSpriteBox->addChild(m_OkButton);
     // drop down menu
-    m_DropDownmenu = spDropDownmenu::create(m_CurrentFile->getWidth(), wildcards);
+    m_DropDownmenu = spDropDownmenu::create(m_CurrentFile->getScaledWidth(), wildcards);
     pSpriteBox->addChild(m_DropDownmenu);
-    m_DropDownmenu->setPosition(30, m_CurrentFile->getY() + m_CurrentFile->getHeight() + 10);
+    m_DropDownmenu->setPosition(30, m_CurrentFile->getY() + m_CurrentFile->getScaledHeight() + 10);
     connect(m_DropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &FileDialog::filterChanged, Qt::QueuedConnection);
     // cancel button
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_CancelButton->setPosition(m_DropDownmenu->getWidth() + 30 + 10, m_DropDownmenu->getY());
+    m_CancelButton->setPosition(m_DropDownmenu->getScaledWidth() + 30 + 10, m_DropDownmenu->getY());
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -158,16 +163,16 @@ void FileDialog::showFolder(QString folder)
         QString myPath;
         if (folder == ROOT)
         {
-            myPath = infoList[i].absoluteFilePath();
+            myPath = infoList[i].canonicalFilePath();
         }
-        else if (infoList[i].absoluteFilePath() != QCoreApplication::applicationDirPath() &&
-                 infoList[i].absoluteFilePath() != QCoreApplication::applicationDirPath() + "/")
+        else if (infoList[i].canonicalFilePath() != QCoreApplication::applicationDirPath() &&
+                 infoList[i].canonicalFilePath() != QCoreApplication::applicationDirPath() + "/")
         {
-           myPath = GlobalUtils::makePathRelative(infoList[i].absoluteFilePath());
+           myPath = GlobalUtils::makePathRelative(infoList[i].canonicalFilePath());
         }
         else
         {
-            myPath = infoList[i].absoluteFilePath();
+            myPath = infoList[i].canonicalFilePath();
         }
         if (myPath == folder)
         {
@@ -178,22 +183,8 @@ void FileDialog::showFolder(QString folder)
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
         oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
         pBox->setResAnim(pAnim);
-        oxygine::spTextField textField = oxygine::spTextField::create();
-        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-        style.multiline = false;
-        textField->setStyle(style);
-
-        pBox->addChild(textField);
-        pBox->setSize(m_MainPanel->getWidth() - 70, 40);
-        textField->setHeight(40);
-        textField->setWidth(pBox->getWidth() - 18);
-        textField->setX(13);
-        textField->setY(5);
+        pBox->setSize(m_MainPanel->getScaledWidth() - 70, 40);
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-        m_MainPanel->addItem(pBox);
         // add some event handling :)
         auto* pPtrBox = pBox.get();
         pBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
@@ -206,12 +197,17 @@ void FileDialog::showFolder(QString folder)
         });
         pBox->setPosition(0, itemCount * 40);
 
+        spLabel textField = spLabel::create(pBox->getScaledWidth() - 18);
+        textField->setX(13);
+        textField->setY(5);
+        pBox->addChild(textField);
+
         // loop through all entries :)
         if (infoList[i].isDir())
         {
             if (folder == ROOT)
             {
-                textField->setHtmlText(infoList[i].absoluteFilePath());
+                textField->setHtmlText(infoList[i].canonicalFilePath());
             }
             else
             {
@@ -225,7 +221,7 @@ void FileDialog::showFolder(QString folder)
         }
         else if (infoList[i].isFile())
         {
-            QString fullPath = infoList[i].absoluteFilePath();
+            QString fullPath = infoList[i].canonicalFilePath();
             QString file = infoList[i].fileName();
             textField->setHtmlText(file);
             auto* pCurrentFile = m_CurrentFile.get();
@@ -261,6 +257,7 @@ void FileDialog::showFolder(QString folder)
             // not possible i hope
         }
         m_Items.append(pBox);
+        m_MainPanel->addItem(pBox);
         itemCount++;
     }
     m_MainPanel->setContentHeigth(itemCount * 40 + 50);

@@ -1,0 +1,682 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getWidth() - 20</width>
+        <height>settings.getHeight() - 90</height>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>400</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Gameplay")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Overworld Animations:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If active walk, capture, power animations, etc. will be shown.")</tooltip>
+                <startValue>settings.getOverworldAnimations()</startValue>
+                <onEvent>settings.setOverworldAnimations(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Battle Animations:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Select which in-game animations are played.")</tooltip>
+                <startValue>settings.getBattleAnimationMode()</startValue>
+                <items>OptionMenu.getBattleAnimationModes()</items>
+                <onEvent>settings.setBattleAnimationMode(input)</onEvent>
+            </DropDownMenu>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Battle Type:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>OptionMenu.getBattleAnimationTypeHelp()</tooltip>
+                <startValue>settings.getBattleAnimationType()</startValue>
+                <items>OptionMenu.getBattleAnimationTypes()</items>
+                <onEvent>settings.setBattleAnimationType(input)</onEvent>
+            </DropDownMenu>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Dialogs:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects if dialogs are shown or not.")</tooltip>
+                <startValue>settings.getDialogAnimation()</startValue>
+                <items>OptionMenu.getDialogAnimationModes()</items>
+                <onEvent>settings.setDialogAnimation(input)</onEvent>
+            </DropDownMenu>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Capture animations:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects if capture animations are shown or not.")</tooltip>
+                <startValue>settings.getCaptureAnimation()</startValue>
+                <items>OptionMenu.getCaptureAnimationModes()</items>
+                <onEvent>settings.setCaptureAnimation(input)</onEvent>
+            </DropDownMenu>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Day 2 Day animations:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects if the day to day screen gets skipped or not. Note: On fog of war maps the screen is still shown.")</tooltip>
+                <startValue>settings.getDay2dayScreen()</startValue>
+                <items>OptionMenu.getDay2DayAnimationModes()</items>
+                <onEvent>settings.setDay2dayScreen(input)</onEvent>
+            </DropDownMenu>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Movement animations:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects if movement animations get shown or not.")</tooltip>
+                <startValue>settings.getMovementAnimations()</startValue>
+                <items>OptionMenu.getMovementAnimationModes()</items>
+                <onEvent>settings.setMovementAnimations(input)</onEvent>
+            </DropDownMenu>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Animation speed:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Slider>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the speed at which basic animations are played.")</tooltip>
+                <startValue>settings.getAnimationSpeedValue()</startValue>
+                <min>1</min>
+                <max>100</max>
+                <unit>""</unit>
+                <onEvent>settings.setAnimationSpeed(input);</onEvent>
+            </Slider>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Walk animation speed:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Slider>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the speed at which units walk across the map.")</tooltip>
+                <startValue>settings.getWalkAnimationSpeedValue()</startValue>
+                <min>1</min>
+                <max>100</max>
+                <unit>""</unit>
+                <onEvent>settings.setWalkAnimationSpeed(input);</onEvent>
+            </Slider>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Battle animation speed:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Slider>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the speed at which battle animations are played.")</tooltip>
+                <startValue>settings.getBattleAnimationSpeedValue()</startValue>
+                <min>1</min>
+                <max>100</max>
+                <unit>""</unit>
+                <onEvent>settings.setBattleAnimationSpeed(input);</onEvent>
+            </Slider>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Capture animation speed:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Slider>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the speed at which capture animations are played.")</tooltip>
+                <startValue>settings.getCaptureAnimationSpeedValue()</startValue>
+                <min>1</min>
+                <max>100</max>
+                <unit>""</unit>
+                <onEvent>settings.setCaptureAnimationSpeed(input);</onEvent>
+            </Slider>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Dialog animation Speed:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Slider>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the speed at which dialog animations are played.")</tooltip>
+                <startValue>settings.getDialogAnimationSpeedValue()</startValue>
+                <min>1</min>
+                <max>100</max>
+                <unit>""</unit>
+                <onEvent>settings.setDialogAnimationSpeed(input);</onEvent>
+            </Slider>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Multi Turn Plantime:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Slider>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the amount of turns you can preplan with a unit.")</tooltip>
+                <startValue>settings.getMultiTurnCounter()</startValue>
+                <min>1</min>
+                <max>10</max>
+                <unit>""</unit>
+                <onEvent>settings.setMultiTurnCounter(input);</onEvent>
+            </Slider>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Auto end turn:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If enabled the game will automatically end your turn if you can't give any orders anymore.")</tooltip>
+                <startValue>settings.getAutoEndTurn()</startValue>
+                <onEvent>settings.setAutoEndTurn(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Detailed battle info:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If enabled the game will show a detailed battle forecast info.")</tooltip>
+                <startValue>settings.getShowDetailedBattleForcast()</startValue>
+                <onEvent>settings.setShowDetailedBattleForcast(input)</onEvent>
+                <enabled>!settings.getSmallScreenDevice()</enabled>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Auto saving time:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <TimeSpinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the time between auto saves in hours:minutes:seconds.")</tooltip>
+                <startValue>settings.getAutoSavingCylceTimeRaw()</startValue>
+                <onEvent>settings.setAutoSavingCylceTimeRaw(input)</onEvent>
+            </TimeSpinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Auto saving cycle:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the number of auto saves that are kept during games. A value of 0 disables this feature.")</tooltip>
+                <startValue>settings.getAutoSavingCycle()</startValue>
+                <infinite>-1</infinite>
+                <min>0</min>
+                <max>65535</max>
+                <onEvent>settings.setAutoSavingCycle(input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Record games:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: games will be recorded and you can rewatch them in the replay section.")</tooltip>
+                <startValue>settings.getRecord()</startValue>
+                <onEvent>settings.setRecord(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Menu heigth:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Slider>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Amount of items per row for in-game menus before a new row is added.")</tooltip>
+                <startValue>settings.getMenuItemCount()</startValue>
+                <min>5</min>
+                <max>(settings.getHeight() - 32) / 32</max>
+                <unit>""</unit>
+                <onEvent>settings.setMenuItemCount(input);</onEvent>
+            </Slider>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Menu width:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Slider>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Amount of columns for in-game menus before a scrollable menu is shown.")</tooltip>
+                <startValue>settings.getMenuItemRowCount()</startValue>
+                <min>1</min>
+                <max>20</max>
+                <unit>""</unit>
+                <onEvent>settings.setMenuItemRowCount(input);</onEvent>
+            </Slider>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Shown players:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the amount of players shown in-game on the sidebar.")</tooltip>
+                <startValue>settings.getShowCoCount()</startValue>
+                <infinite>0</infinite>
+                <min>0</min>
+                <max>65535</max>
+                <onEvent>settings.setShowCoCount(input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Supply warning:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Slider>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects when the supply warnings for ammo and fuel appear.")</tooltip>
+                <startValue>settings.getSupplyWarning() * 100</startValue>
+                <min>1</min>
+                <max>100</max>
+                <unit>"%"</unit>
+                <onEvent>settings.setSupplyWarning(input / 100);</onEvent>
+            </Slider>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Action delay:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The delay after an action before an ai or replay action gets triggered.")</tooltip>
+                <startValue>settings.getPauseAfterAction()</startValue>
+                <infinite>-1</infinite>
+                <min>0</min>
+                <max>100</max>
+                <onEvent>settings.setPauseAfterAction(input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Show pc cursor:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If active the Computer's cursor is hidden during a game, giving you a more Gameboy like feeling.")</tooltip>
+                <startValue>settings.getShowCursor()</startValue>
+                <onEvent>settings.setShowCursor(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Warp pc cursor:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If active the Computer's cursor is moved to the first entry when opening menus or similar actions. Only disable this feature if you intend to play using a mouse only.")</tooltip>
+                <startValue>settings.getAutoMoveCursor()</startValue>
+                <onEvent>settings.setAutoMoveCursor(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Animated marked fields:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If active the currently selectable fields get animated.")</tooltip>
+                <startValue>!settings.getStaticMarkedFields()</startValue>
+                <onEvent>settings.setStaticMarkedFields(!input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Battle Animations:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Flipping' positions the info opposite the side of the screen where the cursor is located.")</tooltip>
+                <startValue>settings.getCoInfoPosition()</startValue>
+                <items>OptionMenu.getCoInfoPositionModes()</items>
+                <onEvent>settings.setCoInfoPosition(input)</onEvent>
+            </DropDownMenu>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Auto scrolling:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If active: the map is scrolled automatically when the cursor is at the edge of the screen.")</tooltip>
+                <startValue>settings.getAutoScrolling()</startValue>
+                <onEvent>settings.setAutoScrolling(input)</onEvent>
+                <enabled>!settings.getSmallScreenDevice()</enabled>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Show coordinates:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If active: map coordinates are shown during a game.")</tooltip>
+                <startValue>settings.getShowIngameCoordinates()</startValue>
+                <onEvent>settings.setShowIngameCoordinates(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Auto camera:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If active: the screen will center on every unit performing an action, except when not visible within Fog of War.")</tooltip>
+                <startValue>settings.getAutoCamera()</startValue>
+                <onEvent>settings.setAutoCamera(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Battle Animations:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Select where the screen starts during your player phase. This setting only applies while auto focusing is active.")</tooltip>
+                <startValue>settings.getAutoFocusing()</startValue>
+                <items>OptionMenu.getAutoCameraCenterModes()</items>
+                <onEvent>settings.setAutoFocusing(input)</onEvent>
+            </DropDownMenu>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Center camera on fields:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects if the camera centers on marked fields for an action or not.")</tooltip>
+                <startValue>settings.getCenterOnMarkedField()</startValue>
+                <onEvent>settings.setCenterOnMarkedField(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Synchronize animations:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: units and building animations on the map are synchronized. Note: changing this doesn't have an immediate effect in-game.")</tooltip>
+                <startValue>settings.getSyncAnimations()</startValue>
+                <onEvent>settings.setSyncAnimations(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Simple cancel:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If active units and actions can be canceled by a long-press. This is only recommended for devices without a keyboard.")</tooltip>
+                <startValue>settings.getSimpleDeselect()</startValue>
+                <onEvent>settings.setSimpleDeselect(input)</onEvent>
+                <enabled>!settings.getSmallScreenDevice()</enabled>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Default rules:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>"RulesetTextbox"</Id>
+                <width>settings.getWidth() - 90 - lastWidth - lastX - 170</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The relative path from the exe to the default ruleset.")</tooltip>
+                <startValue>settings.getDefaultRuleset()</startValue>
+                <onEvent>settings.setDefaultRuleset(input)</onEvent>
+            </Textbox>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>160</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Select file")</text>
+                <onEvent>OptionMenu.showSelectDefaultRuleset(currentMenu)</onEvent>
+            </Button>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Default bannlist:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>"RulesetTextbox"</Id>
+                <width>settings.getWidth() - 90 - lastWidth - lastX - 170</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The relative path from the exe to the default bannlist.")</tooltip>
+                <startValue>settings.getDefaultBannlist()</startValue>
+                <onEvent>settings.setDefaultBannlist(input)</onEvent>
+            </Textbox>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>160</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Select file")</text>
+                <onEvent>OptionMenu.showSelectDefaultDannlist(currentMenu)</onEvent>
+            </Button>
+        </childs>
+    </Panel>
+</ui>

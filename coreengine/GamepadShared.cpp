@@ -9,7 +9,9 @@ Gamepad::Gamepad(qint32 gamepadId)
     : m_timer(this),
       m_gamepadId(gamepadId)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("Gamepad");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -71,12 +73,14 @@ void Gamepad::handleKeyCursorStick(float xValue, float yValue)
         qint64 currentTimestamp = QDateTime::currentMSecsSinceEpoch();
         if (currentTimestamp - m_lastMouseMoveEvent >= mouseIntervall * Settings::getGamepadSensitivity() * m_mouseMoveSpeed)
         {
+#ifdef GRAPHICSUPPORT
             Mainapp* pApp = Mainapp::getInstance();
             QPoint pos = pApp->cursor().pos();
             pos += QPoint(xValue * cursorSpeed, -yValue * cursorSpeed);
             pApp->cursor().setPos(pos);
             m_lastMouseMoveEvent = currentTimestamp;
             nextMoveSpeed(m_mouseMoveSpeed);
+#endif
         }
     }
 }
@@ -169,8 +173,9 @@ void Gamepad::handleWheelEvent(qint32 x, qint32 y)
 
 void Gamepad::handleThumbStickPress(bool left, bool right)
 {
+#ifdef GRAPHICSUPPORT
     Mainapp* pApp = Mainapp::getInstance();
-    QPoint cursor = pApp->mapFromGlobal(pApp->cursor().pos());
+    QPoint cursor = pApp->mapPosFromGlobal(pApp->cursor().pos());
     if (left)
     {
         emit pApp->sigMousePressEvent(oxygine::MouseButton_Left, cursor.x(), cursor.y());
@@ -191,6 +196,7 @@ void Gamepad::handleThumbStickPress(bool left, bool right)
         emit pApp->sigMouseReleaseEvent(oxygine::MouseButton_Right, cursor.x(), cursor.y());
         m_rightMouseSend = false;
     }
+#endif
 }
 
 void Gamepad::nextMoveSpeed(float & currentValue)

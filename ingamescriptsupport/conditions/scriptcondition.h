@@ -5,7 +5,7 @@
 #include <QVector>
 #include <QTextStream>
 
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "ingamescriptsupport/events/scriptevent.h"
 
@@ -38,6 +38,7 @@ public:
         playerReachedArea,
         unitReachedArea,
         checkVariable,
+        isCo,
     };
     static const QString ConditionVictory;
     static const QString ConditionStartOfTurn;
@@ -52,6 +53,7 @@ public:
     static const QString ConditionPlayerReachedArea;
     static const QString ConditionUnitReachedArea;
     static const QString ConditionCheckVariable;
+    static const QString ConditionIsCo;
 
     /**
      * @brief createCondition

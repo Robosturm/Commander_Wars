@@ -1,10 +1,11 @@
-#include "colorselector.h"
+#include "objects/base/colorselector.h"
 
 #include "resource_management/fontmanager.h"
 
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "objects/base/label.h"
 #include "objects/base/focusableobject.h"
@@ -13,14 +14,15 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     : m_CurrentColor(color),
       m_pixelSize(pixelSize)
 {
+#ifdef GRAPHICSUPPORT
     setObjectName("ColorSelector");
+#endif
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
 
     // font style
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     qint32 space = 170;

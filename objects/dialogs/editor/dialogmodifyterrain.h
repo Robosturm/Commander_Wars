@@ -3,34 +3,36 @@
 
 #include <QObject>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/panel.h"
-
 #include "objects/base/textbox.h"
 
 class GameMap;
 class Terrain;
-
 class DialogModifyTerrain;
-typedef oxygine::intrusive_ptr<DialogModifyTerrain> spDialogModifyTerrain;
+using spDialogModifyTerrain = oxygine::intrusive_ptr<DialogModifyTerrain>;
 
-class DialogModifyTerrain : public QObject, public oxygine::Actor
+class DialogModifyTerrain final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain);
-    virtual ~DialogModifyTerrain() = default;
+    ~DialogModifyTerrain() = default;
 signals:
     void sigFinished();
     void sigTerrainClicked(QString id);
     void sigShowLoadDialog();
+    void sigOverlayChanged(QString id, bool selected);
 public slots:
     void terrainClicked(QString id);
     void showLoadDialog();
     void loadCustomSprite(QString id);
     void remove();
+    void overlayChanged(QString id, bool selected);
+private:
+    void loadBaseImageview(qint32 & y, Terrain* pTerrain);
+    void loadOverlayview(qint32 & y, Terrain* pTerrain);
 private:
     Terrain* m_pTerrain{nullptr};
     spPanel m_pPanel;
