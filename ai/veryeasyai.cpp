@@ -96,6 +96,7 @@ void VeryEasyAI::process()
         else
         {
             m_aiStep = AISteps::moveUnits;
+            m_aiFunctionStep = 0;
             if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
             else
             {

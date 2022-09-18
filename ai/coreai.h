@@ -118,7 +118,7 @@ public:
         // get filled by sortUnitsFarFromEnemyFirst
         bool canCapture{false};
         qint32 distanceToEnemy{0};
-        AISteps nextAiStep{AISteps::moveUnits};
+        qint32 nextAiStep{0};
 
         // infos for performing an action
         spGameAction m_action;
@@ -658,7 +658,8 @@ protected:
     double m_buildingValue{1.0f};
     double m_ownUnitValue{1.0f};
     GameEnums::AiTurnMode turnMode{GameEnums::AiTurnMode_StartOfDay};
-    AISteps m_aiStep;
+    AISteps m_aiStep{AISteps::moveUnits};
+    qint32 m_aiFunctionStep{0};
     bool m_usedTransportSystem{false};
     bool m_usedPredefinedAi{false};
     bool m_missileTarget{false};
