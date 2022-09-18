@@ -168,7 +168,8 @@
         <image file="bomber/bomber+ge+mask.png" />
         <image file="bomber/bomber+os+mask.png" />
         <image file="bomber/bomber+yc+mask.png" />
-        <image file="bomber/bomber+ma+mask.png" />        
+        <image file="bomber/bomber+ma+mask.png" />     
+        <image file="bomber/bomber+ti+mask.png" />   
         <!-- cruiser -->
         <image file="cruiser/cruiser+bh.png" cols = "4" />
         <image file="cruiser/cruiser+bh+mask.png" cols = "4" />
