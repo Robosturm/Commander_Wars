@@ -393,6 +393,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     if (pAction->canBePerformed())
                     {
+                        ++unitData.nextAiStep;
                         emit performAction(pAction);
                         return true;
                     }
@@ -432,7 +433,6 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
             {
                 QCoreApplication::processEvents();
                 Unit* pUnit = unitData.pUnit.get();
-                ++unitData.nextAiStep;
                 if (!pUnit->getHasMoved() &&
                     unitData.actions.contains(ACTION_CAPTURE) &&
                     pUnit->getAiMode() == GameEnums::GameAi_Normal)
@@ -528,6 +528,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                     // perform capturing
                     if (perform)
                     {
+                        ++unitData.nextAiStep;
                         spGameAction pAction = spGameAction::create(ACTION_CAPTURE, m_pMap);
                         pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                         auto path = unitData.pUnitPfs->getPathFast(static_cast<qint32>(captures[targetIndex].x()), static_cast<qint32>(captures[targetIndex].y()));
@@ -1952,8 +1953,8 @@ void NormalAi::updateAllUnitData(spQmlVectorUnit & pUnits)
     rebuildIsland(pUnits);
     rebuildIsland(enemyUnits);
 
-    updateUnitData(pUnits, m_OwnUnits, false);
-    updateUnitData(enemyUnits, m_EnemyUnits, true);
+    updateUnitData(pUnits, m_OwnUnits, false, m_EnemyUnits);
+    updateUnitData(enemyUnits, m_EnemyUnits, true, m_OwnUnits);
     sortUnitsFarFromEnemyFirst(m_OwnUnits, enemyUnits);
     if (initial)
     {
@@ -1987,7 +1988,7 @@ void NormalAi::createUnitInfluenceMap()
     m_InfluenceFrontMap.calculateGlobalData();
 }
 
-void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & pUnitData, bool enemy)
+void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & pUnitData, bool enemy, std::vector<MoveUnitData> & otherUnitData)
 {
     AI_CONSOLE_PRINT("NormalAi::updateEnemyData", Console::eDEBUG);
     if (pUnitData.size() == 0)
@@ -1997,7 +1998,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
         {
             QCoreApplication::processEvents();
             MoveUnitData data;
-            createUnitData(pUnit.get(), data, enemy, m_influenceUnitRange);
+            createUnitData(pUnit.get(), data, enemy, m_influenceUnitRange, otherUnitData, !enemy);
             pUnitData.push_back(data);
         }
     }
@@ -2035,7 +2036,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
             if (!found)
             {
                 MoveUnitData data;
-                createUnitData(pUnit.get(), data, enemy, m_influenceUnitRange);
+                createUnitData(pUnit.get(), data, enemy, m_influenceUnitRange, otherUnitData, !enemy);
                 pUnitData.push_back(data);
             }
         }
@@ -2058,7 +2059,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
                         qAbs(point.y() - pUnit->Unit::getY()) <=
                         unitData.movementPoints * m_influenceUnitRange + 2)
                     {
-                        createUnitData(pUnit, unitData, enemy, m_influenceUnitRange + 1);
+                        createUnitData(pUnit, unitData, enemy, m_influenceUnitRange + 1, otherUnitData, true);
                     }
                     updated.push_back(i2);
                 }
@@ -2067,32 +2068,49 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
     }
 }
 
-void NormalAi::createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, qint32 moveMultiplier)
+void NormalAi::createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, qint32 moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always)
 {
+    QPoint pos = pUnit->Unit::getPosition();
     data.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
-    data.movementPoints = pUnit->getMovementpoints(pUnit->Unit::getPosition());
-    data.minFireRange = pUnit->getMinRange(pUnit->Unit::getPosition());
-    data.maxFireRange = pUnit->getMaxRange(pUnit->Unit::getPosition());
+    data.movementPoints = pUnit->getMovementpoints(pos);
+    data.maxFireRange = pUnit->getMaxRange(pos);
+    data.pUnit = pUnit;
+    data.minFireRange = pUnit->getMinRange(pos);
     data.unitCosts = pUnit->getCoUnitValue();
     data.nextAiStep = m_aiFunctionStep;
-    if (enemy)
+    bool valid = false;
+    if (!always)
     {
-        data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
+        auto range = data.movementPoints + data.maxFireRange;
+        for (auto & otherUnit : otherUnitData)
+        {
+            if (GlobalUtils::getDistance(pos, otherUnit.pUnit->getPosition()) <= range + otherUnit.movementPoints + otherUnit.maxFireRange + 1)
+            {
+                valid = true;
+                break;
+            }
+        }
     }
-    else
+    if (valid || always)
     {
-        data.actions = pUnit->getActionList();
+        if (enemy)
+        {
+            data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
+        }
+        else
+        {
+            data.actions = pUnit->getActionList();
+        }
+        if (pUnit->getHasMoved())
+        {
+            data.pUnitPfs->setMovepoints(moveMultiplier * data.movementPoints - 1);
+        }
+        else
+        {
+            data.pUnitPfs->setMovepoints(moveMultiplier * data.movementPoints);
+        }
+        data.pUnitPfs->explore();
     }
-    if (pUnit->getHasMoved())
-    {
-        data.pUnitPfs->setMovepoints(moveMultiplier * data.movementPoints - 1);
-    }
-    else
-    {
-        data.pUnitPfs->setMovepoints(moveMultiplier * data.movementPoints);
-    }
-    data.pUnitPfs->explore();
-    data.pUnit = pUnit;
 }
 
 void NormalAi::calcVirtualDamage()

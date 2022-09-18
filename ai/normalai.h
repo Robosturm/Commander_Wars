@@ -461,14 +461,14 @@ protected:
      * @param pUnitData
      * @param enemy
      */
-    void updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & pUnitData, bool enemy);
+    void updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & pUnitData, bool enemy, std::vector<MoveUnitData> & otherUnitData);
     /**
      * @brief createUnitData
      * @param pUnit
      * @param data
      * @param enemy
      */
-    void createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, qint32 moveMultiplier);
+    void createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, qint32 moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always = false);
     /**
      * @brief createUnitInfluenceMap
      */
