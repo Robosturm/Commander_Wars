@@ -3063,10 +3063,11 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
     qint32 loadingPlace = dummy.getLoadingPlace();
     qint32 smallTransporterCount = 0;
     qint32 transporterCount = 0;
+    static constexpr float maxDayDistance = 6.0f;
     for (auto & pUnit : pUnits->getVector())
     {
         float distance = GlobalUtils::getDistance(position, pUnit->getPosition());
-        if (distance / movement <= maxDayDistance * maxDayDistance)
+        if (distance / movement <= maxDayDistance)
         {
             relevantUnits->append(pUnit.get());
         }
@@ -3080,7 +3081,8 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
             ++transporterCount;
         }
     }
-    std::vector<Unit*> loadingUnits = appendLoadingTargets(&dummy, relevantUnits, pEnemyUnits, pEnemyBuildings, false, true, targets, true);
+    bool onlyTrueIslands = loadingPlace > 1;
+    std::vector<Unit*> loadingUnits = appendLoadingTargets(&dummy, relevantUnits, pEnemyUnits, pEnemyBuildings, false, true, targets, false, 1, onlyTrueIslands);
     std::vector<Unit*> transporterUnits;
     for (auto target : transportTargets)
     {

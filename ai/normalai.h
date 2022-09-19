@@ -148,8 +148,6 @@ public slots:
      */
     void hideFrontMap();
 protected:
-    static constexpr float maxDayDistance = 6.0f;
-
     bool performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits,
                             spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**

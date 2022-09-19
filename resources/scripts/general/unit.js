@@ -92,6 +92,11 @@ var UNIT =
     {
         return false;
     },
+
+    canCounterOnRangeAttacks : function(unit, defX, defY, attacker, atkX, atkY, pAction, luckMode, map)
+    {
+        return false;
+    },
     // number of units that can be loaded by this unit
     getLoadingPlace : function(unit, map)
     {

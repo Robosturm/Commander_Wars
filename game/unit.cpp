@@ -1511,7 +1511,26 @@ float Unit::getTrueDamage(GameAction* pAction, float damage, QPoint position, qi
 
 bool Unit::canCounterAttack(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, GameEnums::LuckDamageMode luckMode)
 {
-    bool directCombat = qAbs(position.x() - defPosition.x()) + qAbs(position.y() - defPosition.y()) == 1 ;
+    bool canCounter = qAbs(position.x() - defPosition.x()) + qAbs(position.y() - defPosition.y()) == 1;
+    if (!canCounter)
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function1 = "canCounterOnRangeAttacks";
+        QJSValueList args({pInterpreter->newQObject(this),
+                           position.x(),
+                           position.y(),
+                           pInterpreter->newQObject(pDefender),
+                           defPosition.x(),
+                           defPosition.y(),
+                           pInterpreter->newQObject(pAction),
+                           luckMode,
+                           pInterpreter->newQObject(m_pMap)});
+        QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
+        if (erg.isBool())
+        {
+            canCounter = erg.toBool();
+        }
+    }
     CO* pCO = m_pOwner->getCO(0);
     auto mode = GameEnums::CounterAttackMode_Undefined;
     if (pCO != nullptr)
@@ -1532,7 +1551,6 @@ bool Unit::canCounterAttack(GameAction* pAction, QPoint position, Unit* pDefende
     }
     if (mode != GameEnums::CounterAttackMode_Impossible)
     {
-
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = m_pMap->getPlayer(i);
@@ -1569,7 +1587,7 @@ bool Unit::canCounterAttack(GameAction* pAction, QPoint position, Unit* pDefende
             }
         }
     }
-    return (directCombat || mode == GameEnums::CounterAttackMode_Possible) &&
+    return (canCounter || mode == GameEnums::CounterAttackMode_Possible) &&
             mode != GameEnums::CounterAttackMode_Impossible;
 }
 

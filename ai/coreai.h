@@ -511,7 +511,7 @@ protected:
     std::vector<Unit*> appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
                                         spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                                         bool addCaptureTargets, bool virtualLoading, std::vector<QVector3D>& targets,
-                                        bool all = false, qint32 distanceModifier = 1);
+                                        bool all = false, qint32 distanceModifier = 1, bool onlyTrueIslands = false);
     CircleReturns doExtendedCircleAction(qint32 x, qint32 y, qint32 min, qint32 max, std::function<CircleReturns(qint32, qint32)> functor);
     /**
      * @brief hasTargets checks if a unit has anything to do on this island
@@ -523,7 +523,7 @@ protected:
      * @return
      */
     bool hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                    qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit = true);
+                    qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit = true, bool onlyTrueIslands = false);
     /**
      * @brief hasCaptureTarget
      * @param pLoadingUnit
@@ -535,7 +535,7 @@ protected:
      * @return
      */
     bool hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorBuilding & pEnemyBuildings,
-                                  qint32 loadingIslandIdx, qint32 loadingIsland);
+                                  qint32 loadingIslandIdx, qint32 loadingIsland, bool onlyTrueIslands = false);
     /**
      * @brief appendNearestUnloadTargets searches for unload fields closest to our current position
      * @param pUnit
