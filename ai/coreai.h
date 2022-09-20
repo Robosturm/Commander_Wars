@@ -390,7 +390,7 @@ public slots:
      * @param pEnemyUnits
      * @param targets
      */
-    void appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets);
+    void appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 distanceModifier = 1);
     /**
      * @brief onSameIsland checks if unit1 can reach unit 2. This may be vice versa but isn't checked here
      * @param pUnit1
@@ -500,9 +500,9 @@ protected:
     bool processPredefinedMapScripted(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
     virtual void finishTurn();
     // helper functions to get targets for unit actions
-    void appendSupportTargets(const QStringList & actions, Unit* pCurrentUnit, spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets);
+    void appendSupportTargets(const QStringList & actions, Unit* pCurrentUnit, spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 distanceModifier = 1);
     void appendCaptureTargets(const QStringList & actions, Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings,  std::vector<QVector3D>& targets, qint32 distanceModifier = 1);
-    void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets);
+    void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 distanceModifier = 1);
     void appendRepairTargets(Unit* pUnit, spQmlVectorBuilding & pBuildings, std::vector<QVector3D>& targets);
     void appendSupplyTargets(Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets);
     void appendTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets);
@@ -562,7 +562,7 @@ protected:
      * @param pEnemyBuildings
      * @param targets
      */
-    void appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets);
+    void appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier = 1);
     /**
      * @brief checkIslandForUnloading
      * @param pUnit

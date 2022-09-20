@@ -161,6 +161,8 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"CounterUnitRatio", "Production", &m_counterUnitRatio, 2.0f, 1.f, 5.0f},
                   {"SpamInfantryChance", "Production", &m_spamInfantryChance, 50.0f, 100.0f, 50.0f},
                   {"SameFundsMatchUpNoMatchUpValue", "Production", &m_sameFundsMatchUpNoMatchUpValue, 0.5f, 0.0f, 1.0f},
+                  {"SpamLightUnitChance", "Production", &m_spamLightUnitChance, 30.0f, 0.0f, 100.0f},
+                  {"SpamMediumUnitChance", "Production", &m_spamMediumUnitChance, 30.0f, 0.0f, 100.0f},
                 };
 
     if (m_pMap != nullptr &&
@@ -855,6 +857,7 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
                 std::vector<QVector3D> transporterTargets;
                 spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
                 QStringList & actions = unitData.actions;
+                qint32 distanceModifier = 1;
                 // find possible targets for this unit
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 if (pUnit->getAiMode() == GameEnums::GameAi_Normal)
@@ -864,21 +867,22 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
                 }
                 if (targets.size() > 0)
                 {
+                    distanceModifier = 4;
                     appendCaptureTransporterTargets(pUnit, pUnits, pEnemyBuildings, transporterTargets);
                     targets.insert(targets.cbegin(), transporterTargets.cbegin(), transporterTargets.cend());
                 }
                 if (pUnit->getAiMode() == GameEnums::GameAi_Normal)
                 {
-                    appendAttackTargets(pUnit, pEnemyUnits, targets);
-                    appendAttackTargetsIgnoreOwnUnits(pUnit, pEnemyUnits, targets);
-                    appendTerrainBuildingAttackTargets(pUnit, pEnemyBuildings, targets);
+                    appendAttackTargets(pUnit, pEnemyUnits, targets, distanceModifier);
+                    appendAttackTargetsIgnoreOwnUnits(pUnit, pEnemyUnits, targets, distanceModifier);
+                    appendTerrainBuildingAttackTargets(pUnit, pEnemyBuildings, targets, distanceModifier);
                     if (targets.size() == 0)
                     {
                         appendRepairTargets(pUnit, pBuildings, targets);
                     }
                     if (supportUnits)
                     {
-                        appendSupportTargets(actions, pUnit, pUnits, pEnemyUnits, targets);
+                        appendSupportTargets(actions, pUnit, pUnits, pEnemyUnits, targets, distanceModifier);
                     }
                 }
                 if (targets.size() > 0 || transporterTargets.size() > 0)
@@ -2269,9 +2273,19 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     // calc average costs if we would build same cost units on every building
     float fundsPerFactory = funds - m_cappedFunds * (productionBuildings - 1) * m_fundsPerBuildingFactorD;
     AI_CONSOLE_PRINT("NormalAI: Funds: " + QString::number(funds) + " funds for the next factory: " + QString::number(fundsPerFactory), Console::eDEBUG);
-    if (fundsPerFactory <= m_cappingFunds)
+    auto chance = GlobalUtils::randInt(0, 100);
+    if (funds >= m_spamingFunds && productionBuildings > 1 && chance <= m_spamLightUnitChance)
     {
-        auto chance = GlobalUtils::randInt(0, 100);
+        fundsPerFactory = m_spamingFunds;
+    }
+    else if (funds >= m_spamingFunds * m_fundsPerBuildingFactorA && productionBuildings > 1 && chance < m_spamLightUnitChance + m_spamMediumUnitChance)
+    {
+        AI_CONSOLE_PRINT("NormalAI: Building expensive units", Console::eDEBUG);
+        fundsPerFactory = m_spamingFunds * m_fundsPerBuildingFactorA;
+        data[UseHighTechUnits] = FundsMode::Expensive;
+    }
+    else if (fundsPerFactory <= m_cappingFunds)
+    {
         if (funds >= m_spamingFunds && chance > m_spamInfantryChance)
         {
             fundsPerFactory = m_spamingFunds;

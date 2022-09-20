@@ -625,6 +625,8 @@ private:
     double m_turnOneDmageMalus{5};
     double m_counterUnitRatio{2};
     double m_spamInfantryChance{50};
+    double m_spamLightUnitChance{50};
+    double m_spamMediumUnitChance{30};
 
     float m_currentDirectIndirectRatio{1.0f};
 

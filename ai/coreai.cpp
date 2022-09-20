@@ -1129,7 +1129,7 @@ bool CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorBu
     return found;
 }
 
-void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUnit, spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets)
+void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUnit, spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     spQmlVectorPoint unitFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
     
@@ -1147,7 +1147,7 @@ void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUni
                         if (m_pMap->onMap(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y()) &&
                             m_pMap->getTerrain(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y())->getUnit() == nullptr)
                         {
-                            QVector3D point = QVector3D(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y(), 2);
+                            QVector3D point = QVector3D(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y(), 1 + distanceModifier);
                             if (!GlobalUtils::contains(targets, point))
                             {
                                 targets.push_back(point);
@@ -1166,7 +1166,7 @@ void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUni
                     if (m_pMap->onMap(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y()) &&
                         m_pMap->getTerrain(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y())->getUnit() == nullptr)
                     {
-                        QVector3D point = QVector3D(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y(), 2);
+                        QVector3D point = QVector3D(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y(), 1 + distanceModifier);
                         if (!GlobalUtils::contains(targets, point))
                         {
                             targets.push_back(point);
@@ -1198,7 +1198,7 @@ void CoreAI::appendCaptureTargets(const QStringList & actions, Unit* pUnit, spQm
     }
 }
 
-void CoreAI::appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets)
+void CoreAI::appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     
     qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
@@ -1226,7 +1226,7 @@ void CoreAI::appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std
                                 stealthMalus /= 2;
                             }
                         }
-                        QVector3D possibleTarget(x, y, 1 + stealthMalus);
+                        QVector3D possibleTarget(x, y, distanceModifier + stealthMalus);
                         if (!GlobalUtils::contains(targets, possibleTarget))
                         {
                             targets.push_back(possibleTarget);
@@ -1238,7 +1238,7 @@ void CoreAI::appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std
     }
 }
 
-void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets)
+void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     
     for (auto & pEnemy : pEnemyUnits->getVector())
@@ -1268,7 +1268,7 @@ void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit & pE
                                 stealthMalus /= 2;
                             }
                         }
-                        QVector3D possibleTarget(x, y, 4 + stealthMalus);
+                        QVector3D possibleTarget(x, y, 4 + distanceModifier + stealthMalus);
                         if (!GlobalUtils::contains(targets, possibleTarget))
                         {
                             targets.push_back(possibleTarget);
@@ -1759,7 +1759,7 @@ void CoreAI::appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEne
     }
 }
 
-void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets)
+void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     
     qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
@@ -1798,7 +1798,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding
                         {
                             if (pUnit->canMoveOver(x, y))
                             {
-                                QVector3D possibleTarget(x, y, 2);
+                                QVector3D possibleTarget(x, y, 1 + distanceModifier);
                                 if (!GlobalUtils::contains(targets, possibleTarget))
                                 {
                                     targets.push_back(possibleTarget);
