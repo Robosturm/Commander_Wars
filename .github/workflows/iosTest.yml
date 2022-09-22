@@ -37,17 +37,6 @@ jobs:
       uses: actions/checkout@v3
       with:
           path: 'source'
-
-    - name: Install host os qt
-      if: matrix.target == 'android'
-      uses: jurplel/install-qt-action@v2.14.0
-      with:      
-          aqtversion: '==2.0.2'
-          target: 'desktop'
-          version: ${{env.QT_Version}}
-          arch: ${{matrix.COMPILER_TOOLS_VERSION}}
-          dir: '${{github.workspace}}/qt/'
-          install-deps: "true"
           
     - name: Install Qt
       uses: jurplel/install-qt-action@v2.14.0
