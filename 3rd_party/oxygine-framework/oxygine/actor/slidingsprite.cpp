@@ -137,38 +137,38 @@ namespace oxygine
             {
                 if (m_sprites[0]->getY() >= getHeight())
                 {
-                    m_sprites[0]->setY(m_sprites[1]->getY() - m_sprites[1]->getHeight());
+                    m_sprites[0]->setY(m_sprites[2]->getY() - m_sprites[2]->getHeight());
                 }
                 if (m_sprites[1]->getY() >= getHeight())
                 {
-                    m_sprites[1]->setY(m_sprites[0]->getY() - m_sprites[0]->getHeight());
+                    m_sprites[1]->setY(m_sprites[3]->getY() - m_sprites[3]->getHeight());
                 }
                 if (m_sprites[2]->getY() >= getHeight())
                 {
-                    m_sprites[2]->setY(m_sprites[3]->getY() - m_sprites[3]->getHeight());
+                    m_sprites[2]->setY(m_sprites[0]->getY() - m_sprites[0]->getHeight());
                 }
                 if (m_sprites[3]->getY() >= getHeight())
                 {
-                    m_sprites[3]->setY(m_sprites[2]->getY() - m_sprites[2]->getHeight());
+                    m_sprites[3]->setY(m_sprites[1]->getY() - m_sprites[1]->getHeight());
                 }
             }
             else
             {
                 if (m_sprites[0]->getY() + m_sprites[0]->getHeight() < 0)
                 {
-                    m_sprites[0]->setY(m_sprites[1]->getY() + m_sprites[1]->getHeight());
+                    m_sprites[0]->setY(m_sprites[2]->getY() + m_sprites[2]->getHeight());
                 }
                 if (m_sprites[1]->getY() + m_sprites[1]->getHeight() < 0)
                 {
-                    m_sprites[1]->setY(m_sprites[0]->getY() + m_sprites[0]->getHeight());
+                    m_sprites[1]->setY(m_sprites[3]->getY() + m_sprites[3]->getHeight());
                 }
                 if (m_sprites[2]->getY() + m_sprites[2]->getHeight() < 0)
                 {
-                    m_sprites[2]->setY(m_sprites[3]->getY() + m_sprites[3]->getHeight());
+                    m_sprites[2]->setY(m_sprites[0]->getY() + m_sprites[0]->getHeight());
                 }
                 if (m_sprites[3]->getY() + m_sprites[3]->getHeight() < 0)
                 {
-                    m_sprites[3]->setY(m_sprites[2]->getY() + m_sprites[2]->getHeight());
+                    m_sprites[3]->setY(m_sprites[1]->getY() + m_sprites[1]->getHeight());
                 }
             }
         }

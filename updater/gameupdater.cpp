@@ -50,9 +50,10 @@ GameUpdater::GameUpdater()
 void GameUpdater::cleanUpOldArtifacts()
 {
     CONSOLE_PRINT("Clean up old artifacts", Console::eDEBUG);
-    if (m_downloadFile.exists())
+    QFile downloadFile(DOWNLOADTARGET);
+    if (downloadFile.exists())
     {
-        m_downloadFile.remove();
+        downloadFile.remove();
     }
     QDir dir(QCoreApplication::applicationDirPath() + "/" + UNPACK_PATH);
     dir.removeRecursively();

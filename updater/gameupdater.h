@@ -19,12 +19,12 @@ public:
     ~GameUpdater() = default;
     static void launchPatcher();
     static void launchApplication();
+    static void cleanUpOldArtifacts();
 public slots:
     void onNewState(FileDownloader::State state);
     void onNewProgress(qint64 bytesReceived, qint64 bytesTotal);
     void onExtractProgress(qint32 progress);
 private:
-    void cleanUpOldArtifacts();
     void continueBooting();
     void finishDownload();
     void install();
