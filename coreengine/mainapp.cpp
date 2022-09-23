@@ -208,8 +208,8 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case UpdateManager:
         {
-            GameUpdater::cleanUpOldArtifacts();
 #ifdef UPDATESUPPORT
+            GameUpdater::cleanUpOldArtifacts();
             QString updateStep = Settings::getUpdateStep();            
             if (!getSlave())
             {
