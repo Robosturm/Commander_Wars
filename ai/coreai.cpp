@@ -983,80 +983,83 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
     qint32 unitIsland = getIsland(pUnit);
     std::vector<Unit*> transportUnits;
     qint32 transporterMovement = pUnit->getMovementpoints(pUnit->Unit::getPosition());
-    for (auto & pOtherUnit : pUnits->getVector())
+    if (transporterMovement > 0)
     {
-        Unit* pLoadingUnit = pOtherUnit.get();
-        if (pLoadingUnit != pUnit && pLoadingUnit->getHp() > 0.0f)
+        for (auto & pOtherUnit : pUnits->getVector())
         {
-            // can we transport it?
-            if (pUnit->canTransportUnit(pLoadingUnit, virtualLoading))
+            Unit* pLoadingUnit = pOtherUnit.get();
+            if (pLoadingUnit != pUnit && pLoadingUnit->getHp() > 0.0f)
             {
-                bool found = false;
-                bool canCapture = pLoadingUnit->getActionList().contains(ACTION_CAPTURE);
-                qint32 loadingIslandIdx = getIslandIndex(pLoadingUnit);
-                qint32 loadingIsland = getIsland(pLoadingUnit);
-                if (addCaptureTargets && canCapture)
+                // can we transport it?
+                if (pUnit->canTransportUnit(pLoadingUnit, virtualLoading))
                 {
-                    // no targets found -> try to speed up those infis
-                    found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings,
-                                             loadingIslandIdx, loadingIsland, onlyTrueIslands);
-                }
-                else if (!pLoadingUnit->getHasMoved())
-                {
-                    found = hasTargets(transporterMovement, pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings,
-                                       loadingIslandIdx, loadingIsland, onlyTrueIslands);
-                }
-                if (!found)
-                {
-                    // no targets for this unit :(
-                    found = false;
-                    qint32 targetX = 0;
-                    qint32 targetY = 0;
-                    qint32 min = 1;
-                    qint32 max = transporterMovement;
-                    CircleReturns circleResult = CircleReturns::Fail;
-                    qint32 unitX = pLoadingUnit->getX();
-                    qint32 unitY = pLoadingUnit->getY();
-                    while (circleResult == CircleReturns::Fail)
+                    bool found = false;
+                    bool canCapture = pLoadingUnit->getActionList().contains(ACTION_CAPTURE);
+                    qint32 loadingIslandIdx = getIslandIndex(pLoadingUnit);
+                    qint32 loadingIsland = getIsland(pLoadingUnit);
+                    if (addCaptureTargets && canCapture)
                     {
-                        circleResult = doExtendedCircleAction(unitX, unitY, min, max, [this, pUnit, loadingIslandIdx, loadingIsland, unitIslandIdx, unitIsland, &targetX, &targetY, &found](qint32 x, qint32 y)
+                        // no targets found -> try to speed up those infis
+                        found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings,
+                                                 loadingIslandIdx, loadingIsland, onlyTrueIslands);
+                    }
+                    else if (!pLoadingUnit->getHasMoved())
+                    {
+                        found = hasTargets(transporterMovement, pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+                                           loadingIslandIdx, loadingIsland, onlyTrueIslands);
+                    }
+                    if (!found)
+                    {
+                        // no targets for this unit :(
+                        found = false;
+                        qint32 targetX = 0;
+                        qint32 targetY = 0;
+                        qint32 min = 1;
+                        qint32 max = transporterMovement;
+                        CircleReturns circleResult = CircleReturns::Fail;
+                        qint32 unitX = pLoadingUnit->getX();
+                        qint32 unitY = pLoadingUnit->getY();
+                        while (circleResult == CircleReturns::Fail)
                         {
-                            if (m_pMap->onMap(x, y))
+                            circleResult = doExtendedCircleAction(unitX, unitY, min, max, [this, pUnit, loadingIslandIdx, loadingIsland, unitIslandIdx, unitIsland, &targetX, &targetY, &found](qint32 x, qint32 y)
                             {
-                                Unit* pFieldUnit = m_pMap->getTerrain(x, y)->getUnit();
-                                if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland)
+                                if (m_pMap->onMap(x, y))
                                 {
-                                    if ((m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
-                                        (pFieldUnit == nullptr || pFieldUnit == pUnit) &&
-                                        isLoadingTerrain(pUnit, m_pMap->getTerrain(x, y)))
+                                    Unit* pFieldUnit = m_pMap->getTerrain(x, y)->getUnit();
+                                    if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland)
                                     {
-                                        found = true;
-                                        targetX = x;
-                                        targetY = y;
-                                        return CircleReturns::Success;
+                                        if ((m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
+                                            (pFieldUnit == nullptr || pFieldUnit == pUnit) &&
+                                            isLoadingTerrain(pUnit, m_pMap->getTerrain(x, y)))
+                                        {
+                                            found = true;
+                                            targetX = x;
+                                            targetY = y;
+                                            return CircleReturns::Success;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return CircleReturns::Stop;
                                     }
                                 }
                                 else
                                 {
                                     return CircleReturns::Stop;
                                 }
-                            }
-                            else
-                            {
-                                return CircleReturns::Stop;
-                            }
-                            return CircleReturns::Fail;
-                        });
-                        min += transporterMovement;
-                        max += transporterMovement;
-                    }
-                    if (found && (virtualLoading || !GlobalUtils::contains(targets, QVector3D(targetX, targetY, distanceModifier))))
-                    {
-                        targets.push_back(QVector3D(targetX, targetY, distanceModifier));
-                        transportUnits.push_back(pLoadingUnit);
-                        if (!all)
+                                return CircleReturns::Fail;
+                            });
+                            min += transporterMovement;
+                            max += transporterMovement;
+                        }
+                        if (found && (virtualLoading || !GlobalUtils::contains(targets, QVector3D(targetX, targetY, distanceModifier))))
                         {
-                            break;
+                            targets.push_back(QVector3D(targetX, targetY, distanceModifier));
+                            transportUnits.push_back(pLoadingUnit);
+                            if (!all)
+                            {
+                                break;
+                            }
                         }
                     }
                 }
