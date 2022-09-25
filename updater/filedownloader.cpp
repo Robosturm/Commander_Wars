@@ -14,6 +14,7 @@ FileDownloader::FileDownloader(const QString & targetFile,
       m_resolveEnd(resolveEnd),
       m_currentTag(currentTag)
 {
+    m_currentTag.replace("refs/tags/", "");
     connect(&m_webCtrl, &QNetworkAccessManager::finished, this, &FileDownloader::onResponseFinished);
 
     m_requestUrl = QUrl(m_baseUrl + m_resolveEnd);
