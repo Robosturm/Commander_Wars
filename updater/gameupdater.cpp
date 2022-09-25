@@ -159,11 +159,6 @@ void GameUpdater::launchPatcher()
     QFileInfo info(QCoreApplication::applicationFilePath());
     QString program = info.fileName();
     QString patcherProgram =  QCoreApplication::applicationDirPath() + "/" + UNPACK_PATH + "/" + COW_INSTALLDIR + "/" + program;
-    while (!QFile::exists(patcherProgram))
-    {
-        QThread::currentThread()->msleep(100);
-        QCoreApplication::processEvents();
-    }
     QThread::currentThread()->msleep(350);
     const char* const prefix = "--";
     QStringList args({QString(prefix) + CommandLineParser::ARG_UPDATE,
@@ -182,12 +177,6 @@ void GameUpdater::launchApplication()
     QString program = info.fileName();
     QString workingDir = QCoreApplication::applicationDirPath() + "/../../";
     QString appPath = workingDir + program;
-
-    while (!QFile::exists(appPath))
-    {
-        QThread::currentThread()->msleep(100);
-        QCoreApplication::processEvents();
-    }
     QThread::currentThread()->msleep(350);
     CONSOLE_PRINT("Starting application " + appPath, Console::eDEBUG);
     QProcess process;
