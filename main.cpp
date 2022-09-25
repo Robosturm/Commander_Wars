@@ -92,11 +92,11 @@ int main(qint32 argc, char* argv[])
     static constexpr qint32 finalJsObjects = 0;
     if (oxygine::ref_counter::getAlloctedObjectCount() > finalObjects)
     {
-        CONSOLE_PRINT("c++ memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount(), Console::eWARNING);
+        CONSOLE_PRINT("c++ memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), Console::eWARNING);
     }
     else if (oxygine::ref_counter::getAlloctedJsObjectCount() > finalJsObjects)
     {
-        CONSOLE_PRINT("js memory leak detected. This happens due to not deleted qml-vectors in a mod. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount(), Console::eWARNING);
+        CONSOLE_PRINT("js memory leak detected. This happens due to not deleted qml-vectors in a mod. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), Console::eWARNING);
     }
     //end
     if (!slave)
