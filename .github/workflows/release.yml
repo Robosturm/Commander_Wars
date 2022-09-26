@@ -189,7 +189,7 @@ jobs:
         -DUPDATESUPPORT=ON \
         -DCOW_BUILD_TAG="${{github.ref}}" \
         -DCOW_UPDATETARGET="${{matrix.asset_name}}" \
-        -DCOW_INSTALLDIR="Commander_Wars_Release" \
+        -DCOW_INSTALL_DIR="Commander_Wars_Release" \
         ${{matrix.cmakeOptions}}
 
     - name: Configure android cmake
@@ -218,7 +218,7 @@ jobs:
         -DUPDATESUPPORT=OFF \
         -DCOW_BUILD_TAG="${{github.ref}}" \
         -DCOW_UPDATETARGET="${{matrix.asset_name}}" \
-        -DCOW_INSTALLDIR="Commander_Wars_Release" \
+        -DCOW_INSTALL_DIR="Commander_Wars_Release" \
         -DOPENSSL_ROOT_DIR="${{github.workspace}}/android_openssl" \
         -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include" \
         -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi"
