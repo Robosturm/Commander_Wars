@@ -4821,5 +4821,6 @@
         <file>resources/images/units/icons/hq.png</file>
         <file>resources/images/game/tagpower_background.png</file>
         <file>resources/images/units/icons/scripted.png</file>
+        <file>resources/ui/uitranslations.js</file>
     </qresource>
 </RCC>

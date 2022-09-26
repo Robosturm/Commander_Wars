@@ -914,14 +914,14 @@ if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         translation/lang_en.ts
         )
     # adds the translations and a target for it
+
+    FILE(GLOB_RECURSE scripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.js")
+    FILE(GLOB_RECURSE uiXmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/ui/*.xml")
     qt_create_translation(
         QM_FILES
         ${${PROJECT_NAME}_SRCS}
         ${scripts}
-        ${modScripts}
-        ${GameScripts}
-        ${CampaignScripts}
-        ${UiXmls}
+        ${uiXmls}
         ${TS_FILES}
         OPTIONS ${LUPDATE_OPTIONS})
     qt_add_translation(${PROJECT_NAME}_QM_FILES ${TS_FILES})

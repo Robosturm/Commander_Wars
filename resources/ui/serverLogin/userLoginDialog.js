@@ -1,5 +1,55 @@
 var UserLoginDialog =
 {
+    createAccountText : function()
+    {
+        return qsTr("Create account");
+    },
+    createAccountTooltipText : function()
+    {
+        return qsTr("Creates a new account on the server.");
+    },
+
+    loginText : function()
+    {
+        return qsTr("Login");
+    },
+    loginTooltipText : function()
+    {
+        return qsTr("Logs you onto the server with the given userdata.");
+    },
+    forgotPassword : function()
+    {
+        return qsTr("Forgot password");
+    },
+    forgotPasswordTooltip : function()
+    {
+        return qsTr("Allows you to reset your password.");
+    },
+    back : function()
+    {
+        return qsTr("Back");
+    },
+    backTooltip : function()
+    {
+        return qsTr("Goes back to the main menu.");
+    },
+    local : function()
+    {
+        return qsTr("Local");
+    },
+    localTooltip : function()
+    {
+        return qsTr("Play a game in your local network.");
+    },
+    changePassword : function()
+    {
+        return qsTr("Change password");
+    },
+    changePasswordTooltip : function()
+    {
+        return qsTr("Allows you to change your password.");
+    },
+
     primaryPassword : function(input)
     {
         var variables = userLogin.getVariables();

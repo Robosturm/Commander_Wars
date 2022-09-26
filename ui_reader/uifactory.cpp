@@ -1520,6 +1520,10 @@ QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx
         {
             value = erg.toString();
         }
+        else if (erg.isNumber())
+        {
+            value = QString::number(erg.toNumber());
+        }
         else
         {
             if (success != nullptr)

@@ -2,6 +2,853 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>ACTION_ACTIVATE_POWER_CO_0</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="26"/>
+        <source>Power of CO 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="54"/>
+        <source>Activates the Power of your first CO. Read the CO&apos;s power for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_ACTIVATE_POWER_CO_1</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="26"/>
+        <source>Power of CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="54"/>
+        <source>Activates the Power of your second CO. Read the CO&apos;s power for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_ACTIVATE_SUPERPOWER_CO_0</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="26"/>
+        <source>Superpower of CO 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="54"/>
+        <source>Activates the superpower of your first CO. Read the CO&apos;s superpower for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_ACTIVATE_SUPERPOWER_CO_1</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="26"/>
+        <source>Superpower of CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="53"/>
+        <source>Activates the superpower of your second CO. Read the CO&apos;s superpower for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_ACTIVATE_TAGPOWER</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="17"/>
+        <source>Tagpower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="44"/>
+        <source>Activates the superpower of both CO&apos;s. Read the CO&apos;s superpower for more information. This will also apply the Tagpower-Synergy. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="45"/>
+        <source>The synergy gives a hidden firepower boost and a luck boost based on the affinity of the co&apos;s.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_BLACKHOLEFACTORY_DOOR1</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="22"/>
+        <source>Build Door 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="121"/>
+        <source>Orders a Black Hole Factory to produce a unit at the first door. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="122"/>
+        <source>The unit is able to move immediatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_BLACKHOLEFACTORY_DOOR2</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="22"/>
+        <source>Build Door 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="122"/>
+        <source>Orders a Black Hole Factory to produce a unit at the second door. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="123"/>
+        <source>The unit is able to move immediatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_BLACKHOLEFACTORY_DOOR3</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="22"/>
+        <source>Build Door 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="122"/>
+        <source>Orders a Black Hole Factory to produce a unit at the third door. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="123"/>
+        <source>The unit is able to move immediatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_BUILD_TEMP_AIRPORT</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="28"/>
+        <source>Build Airport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="81"/>
+        <source>Orders an apc to build an airport on a plain which can be used to resupply air units. The airport will reduce the material of the apc by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_BUILD_TEMP_HARBOUR</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="28"/>
+        <source>Build Harbour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="82"/>
+        <source>Orders an apc to build a harbour on a beach which can be used to resupply sea units. The harbour will reduce the material of the apc by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_BUILD_UNITS</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_UNITS.js" line="25"/>
+        <source>Build</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_BUILD_WATERPLANE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="83"/>
+        <source>Orders an aircraft carrier to produce a waterplane which can be launched next turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_CANNON_FIRE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CANNON_FIRE.js" line="17"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CANNON_FIRE.js" line="88"/>
+        <source>Damage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CANNON_FIRE.js" line="125"/>
+        <source>Orders a minicannon or black cannon to attack a single unit to deal some damage to it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_CAPTURE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="59"/>
+        <source>Capture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="142"/>
+        <source>Orders a unit to capture a building. Once the resistant is reduced to 0 the building  will generate effects for your army based on the captured building.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_CO_UNIT_0</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="32"/>
+        <source>CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="50"/>
+        <source>Deploys your first co onto the given unit. All units inside the co range of this unit will get the buff of your first co.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_CO_UNIT_1</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="32"/>
+        <source>CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="50"/>
+        <source>Deploys your second co onto the given unit. All units inside the co range of this unit will get the buff of your second co.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_CRYSTALL_HEAL</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CRYSTALL_HEAL.js" line="17"/>
+        <source>Heal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CRYSTALL_HEAL.js" line="64"/>
+        <source>Orders a crystall or monolith to heal all own units around it and also refills their ammo and fuel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_DEATHRAY_FIRE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="17"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="81"/>
+        <source>Orders a death ray to attack all enemy units in front of it, dealing devastating damage to them. This order has a cooldown of 7 days.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_DELETE_UNIT</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_DELETE_UNIT.js" line="23"/>
+        <source>Delete Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_DISABLE_MINE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_DISABLE_MINE.js" line="56"/>
+        <source>Remove mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_DISABLE_MINE.js" line="91"/>
+        <source>Destroys a mine without it damaging another unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_EXITGAME</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_EXITGAME.js" line="9"/>
+        <source>Exit Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_EXPLODE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="25"/>
+        <source>Explode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="118"/>
+        <source>Destroys the current unit in a large explosion. The explosion will deal damage to all units around it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_FIRE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="86"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="493"/>
+        <source>Damage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="526"/>
+        <source>Dmg</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="526"/>
+        <source>Min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="526"/>
+        <source>Max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="898"/>
+        <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_FLARE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="23"/>
+        <source>Flare</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="133"/>
+        <source>Fires a flare rocket at the given location. The flare rocket will reveal all terrains in an area around the target during fog of war.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_HOELLIUM_WAIT</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="27"/>
+        <source>Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="54"/>
+        <source>Orders a oozium to wait at the current position and end all actions for this turn. Ooziums can wait on enemy units in doing so the enemy unit gets destroyed by the oozium.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_INFO</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="9"/>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="76"/>
+        <source>Victory Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="77"/>
+        <source>CO Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="78"/>
+        <source>Unit Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="79"/>
+        <source>Unit Statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="80"/>
+        <source>Game Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="81"/>
+        <source>Attack Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="82"/>
+        <source>Rules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="83"/>
+        <source>Wiki</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="84"/>
+        <source>Calculator</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_JOIN</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="35"/>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="111"/>
+        <source>Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp ad the highest rank of both units. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="112"/>
+        <source>Hp exceeding the maximum will be added in form of funds to your war funds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_LASER_FIRE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_LASER_FIRE.js" line="18"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_LASER_FIRE.js" line="124"/>
+        <source>Commands the laser to shot four laser rays. The laser rays deal damage to all units that get hit by one of the rays.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_LOAD</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="64"/>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="95"/>
+        <source>Loads a unit to a transporters. This makes the unit untargetable for most effects. However the units gets lost when the transporter gets destroyed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_LOADGAME</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_LOADGAME.js" line="9"/>
+        <source>Load Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_MISSILE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="35"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="140"/>
+        <source>Launches a missile from a silo at the target area. The missile deals massive damage to all units in the area of effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_MOVEMENTPLANNER</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_MOVEMENTPLANNER.js" line="9"/>
+        <source>Planner</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_NEST_FACTORY_DOOR</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NEST_FACTORY_DOOR.js" line="22"/>
+        <source>Build Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NEST_FACTORY_DOOR.js" line="116"/>
+        <source>Orders the Nest to produce a none naval unit. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NEST_FACTORY_DOOR.js" line="117"/>
+        <source>The unit is able to move immediatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_NEST_LASER</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NEST_LASER.js" line="18"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NEST_LASER.js" line="57"/>
+        <source>Commands the laser to shot a ray. The laser rays deal damage to all units that get hit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_NEST_MORTAR</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NEST_MORTAR.js" line="18"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NEST_MORTAR.js" line="89"/>
+        <source>Commands the mortar to fire at a 3x3 square and deals damage to all units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_NEXT_PLAYER</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="10"/>
+        <source>Next Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="26"/>
+        <source>Ends your turn and gives control to the next player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_NICKNAME_UNIT</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NICKNAME_UNIT.js" line="14"/>
+        <source>Nickname Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_OPTIONS</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="9"/>
+        <source>Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="49"/>
+        <source>Game Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="50"/>
+        <source>Music</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_PLACE_WATERMINE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="62"/>
+        <source>Place Mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="137"/>
+        <source>Places a stealthed Watermine at a given Position. The Mine automatically explodes at the start of a turn if an enemy is in explosion range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SAVEGAME</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SAVEGAME.js" line="9"/>
+        <source>Save Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SELL_UNIT</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SELL_UNIT.js" line="27"/>
+        <source>Sell Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SELL_UNIT.js" line="99"/>
+        <source>Sells a unit for a fraction of it&apos;s current value.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_STEALTH</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="25"/>
+        <source>Stealth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="68"/>
+        <source>Stealths a unit and makes it invisible to all enemies. A stealthed unit is only visible when a unit is nearby it. In addition only units of the same Unit Type </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="69"/>
+        <source> Ground, Naval or Air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="70"/>
+        <source> can attack it. In most cases stealthed units have a higher fuel consumption per turn, while beeing stealthed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SUPPORTALL_CLOAK</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_CLOAK.js" line="17"/>
+        <source>Cloak</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_CLOAK.js" line="92"/>
+        <source>Cloaks all own units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SUPPORTALL_RATION</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="59"/>
+        <source>Ration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="108"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="126"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="145"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="163"/>
+        <source>RATION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="176"/>
+        <source>Refills fuel and ammo to all units surrounding this unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SUPPORTALL_RATION_MONEY</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="59"/>
+        <source>Ration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="125"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="158"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="192"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="225"/>
+        <source>RATION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="241"/>
+        <source>Refills fuel and ammo to all units surrounding this unit and grants money based on the amount of resupply.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SUPPORTSINGLE_FREEREPAIR</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="26"/>
+        <source>Repair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="111"/>
+        <source>REPAIR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="124"/>
+        <source>Repairs and refills the target unit. The repair costs don&apos;t have to be paid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SUPPORTSINGLE_IRON_SHIELD</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="26"/>
+        <source>Iron Shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="109"/>
+        <source>DEFENSE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="122"/>
+        <source>Shields an allied unit. This highly increases the defense of the unit until the start of the next turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SUPPORTSINGLE_REPAIR</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="26"/>
+        <source>Repair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="111"/>
+        <source>REPAIR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="124"/>
+        <source>Repairs and refills the target unit. The player has to pay for the repair.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SUPPORTSINGLE_SUPPLY</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_SUPPLY.js" line="27"/>
+        <source>Ration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_SUPPLY.js" line="113"/>
+        <source>RATION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_SUPPLY.js" line="125"/>
+        <source>Refills the target unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SURRENDER</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SURRENDER.js" line="9"/>
+        <source>Surrender Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SWAP_COS</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SWAP_COS.js" line="10"/>
+        <source>Swap CO&apos;s</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_TALON_GUN</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="17"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="68"/>
+        <source>Fire with Talon Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_TRANSFER_UNIT</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_TRANSFER_UNIT.js" line="39"/>
+        <source>Transfer Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_TRANSFER_UNIT.js" line="85"/>
+        <source>Player </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_TRANSFER_UNIT.js" line="121"/>
+        <source>Transfers a unit to another allied player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_TRAP</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_TRAP.js" line="30"/>
+        <source>TRAP!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_TRAP.js" line="130"/>
+        <source>This action can&apos;t be disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_UNLOAD</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="103"/>
+        <source>Unload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="271"/>
+        <source>Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="351"/>
+        <source>Unloads loaded units. Units that have been loaded this turn can&apos;t move. Units that were loaded in previous turns can immediatly move after beeing unloaded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_UNSTEALTH</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="25"/>
+        <source>Unstealth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="68"/>
+        <source>Unstealths a unit and makes it visible to all enemies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_WAIT</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="25"/>
+        <source>Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="47"/>
+        <source>Orders a unit to wait at the current position and end all actions for this turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Achievementmenu</name>
     <message>
         <location filename="../menue/achievementmenu.cpp" line="52"/>
@@ -102,6 +949,19 @@
     <message>
         <location filename="../game/actionperformer.cpp" line="71"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BEACH</name>
+    <message>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="16"/>
+        <source>Beach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="206"/>
+        <source>Beachs over great landing places for landing ground troops.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -347,6 +1207,19 @@
     <message>
         <location filename="../menue/costylemenu.cpp" line="61"/>
         <source>Edit CO</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CREEPER</name>
+    <message>
+        <location filename="../resources/scripts/terrain/CREEPER.js" line="15"/>
+        <source>Creeper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/CREEPER.js" line="107"/>
+        <source>A virus infested tile which deals 1HP of damage to each unit standing on it at the beginning of each day.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -913,6 +1786,32 @@
     <message>
         <location filename="../objects/dialogs/customdialog.h" line="41"/>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DESERT</name>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT.js" line="15"/>
+        <source>Desert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT.js" line="101"/>
+        <source>Ground units move easily on this terrain, but it reduces the firepower of units by 20%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DESERT_TRY_RIVER</name>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="14"/>
+        <source>Dry River</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="60"/>
+        <source>Once a river. Now an empty riverbed that can be crossed by most units doesn&apos;t provide cover. It reduces the firepower of units by 20%.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2170,6 +3069,32 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
 </context>
 <context>
+    <name>FIRE</name>
+    <message>
+        <location filename="../resources/scripts/terrain/FIRE.js" line="14"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/FIRE.js" line="69"/>
+        <source>&lt;r&gt;In Fog of War, fire make a &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;5 square &lt;/div&gt;&lt;r&gt;area around them visible.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FOG</name>
+    <message>
+        <location filename="../resources/scripts/terrain/FOG.js" line="14"/>
+        <source>Fog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/FOG.js" line="102"/>
+        <source>&lt;r&gt;This heavy fog provides ideal hiding places&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; for naval units in Fog of War.&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FileDialog</name>
     <message>
         <location filename="../objects/dialogs/filedialog.h" line="32"/>
@@ -2202,6 +3127,2035 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../objects/dialogs/folderdialog.cpp" line="221"/>
         <source>Do you want to delete the folder </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GAME</name>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="825"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="474"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="163"/>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="104"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="125"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="826"/>
+        <source>Closes the map filter dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.xml" line="14"/>
+        <source>Login on Server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.xml" line="23"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="23"/>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="23"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="23"/>
+        <source>Username:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.xml" line="41"/>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="41"/>
+        <source>Password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.xml" line="50"/>
+        <source>Password of your account.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="69"/>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="105"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="105"/>
+        <source>Creates a new account on the server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/playermenu.xml" line="57"/>
+        <location filename="../resources/ui/menu/playermenu.xml" line="58"/>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="71"/>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="72"/>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="77"/>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="78"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="14"/>
+        <source>Reset Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="41"/>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="77"/>
+        <source>E-Mail:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="50"/>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="86"/>
+        <source>E-Mail-Adress for your account.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="59"/>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="95"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="95"/>
+        <source>Abort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="60"/>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="96"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="96"/>
+        <source>Aborts the new account creation on the server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="68"/>
+        <source>Reset password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="14"/>
+        <source>Create Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="50"/>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="68"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="68"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="86"/>
+        <source>Password of your account. Needs to contain 8 letters, one capital one small letter a number and a special char.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="59"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="77"/>
+        <source>Repeat password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="104"/>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="14"/>
+        <source>Change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="41"/>
+        <source>Old password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="50"/>
+        <source>You&apos;re old password or password received via mail.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="59"/>
+        <source>New Password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="104"/>
+        <source>Change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="14"/>
+        <source>Screen Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="23"/>
+        <source>Language:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="31"/>
+        <source>Selects the language for the game. Note: Not everything may be translated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="41"/>
+        <source>Screen Resolution:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="49"/>
+        <source>Selects the screen resolution for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="60"/>
+        <source>Screen Mode:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="68"/>
+        <source>Selects the screen mode for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="79"/>
+        <source>Brightness:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="87"/>
+        <source>Selects the brightness for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="99"/>
+        <source>Gamma:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="107"/>
+        <source>Selects the gamma factor for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="119"/>
+        <source>Small screen:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="126"/>
+        <source>If checked several UI elements are hidden and accessible with an additional button. Warning: disabling this on a smaller screen may lead to unplayable game experience.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="136"/>
+        <source>Use High DPI:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="143"/>
+        <source>If checked the game will use the high dpi option of the screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="152"/>
+        <source>Max FPS:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="160"/>
+        <source>Selects the maximum FPS, use it to reduce power consumption on smartphones.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="172"/>
+        <source>Automatic updates:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="179"/>
+        <source>If checked: The game tries to keep the game at the up to date by. Updating to the latest release if required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="14"/>
+        <source>Network Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="23"/>
+        <source>1. dedicated address:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="31"/>
+        <source>Provide the address to the multiplayer game server you want to connect to which is used for the first connection attempt.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="40"/>
+        <source>2. dedicated address:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="48"/>
+        <source>Provide the address to the multiplayer game server you want to connect used when the first address fails to connect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="57"/>
+        <source>Dedicated port:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="65"/>
+        <source>Selects the port dedicated server use for the lobby chat.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="77"/>
+        <source>Dedicated server:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="84"/>
+        <source>Enables this game as global server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="93"/>
+        <source>Game port:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="101"/>
+        <source>Selects the game port used to play on a dedicated server or through a direct connection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="14"/>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="37"/>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="38"/>
+        <source>Gameplay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="23"/>
+        <source>Overworld Animations:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="30"/>
+        <source>If active walk, capture, power animations, etc. will be shown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="39"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="501"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="568"/>
+        <source>Battle Animations:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="47"/>
+        <source>Select which in-game animations are played.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="57"/>
+        <source>Battle Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="75"/>
+        <source>Dialogs:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="83"/>
+        <source>Selects if dialogs are shown or not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="93"/>
+        <source>Capture animations:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="101"/>
+        <source>Selects if capture animations are shown or not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="111"/>
+        <source>Day 2 Day animations:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="119"/>
+        <source>Selects if the day to day screen gets skipped or not. Note: On fog of war maps the screen is still shown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="129"/>
+        <source>Movement animations:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="137"/>
+        <source>Selects if movement animations get shown or not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="147"/>
+        <source>Animation speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="155"/>
+        <source>Selects the speed at which basic animations are played.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="167"/>
+        <source>Walk animation speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="175"/>
+        <source>Selects the speed at which units walk across the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="187"/>
+        <source>Battle animation speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="195"/>
+        <source>Selects the speed at which battle animations are played.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="207"/>
+        <source>Capture animation speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="215"/>
+        <source>Selects the speed at which capture animations are played.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="227"/>
+        <source>Dialog animation Speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="235"/>
+        <source>Selects the speed at which dialog animations are played.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="247"/>
+        <source>Multi Turn Plantime:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="255"/>
+        <source>Selects the amount of turns you can preplan with a unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="267"/>
+        <source>Auto end turn:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="274"/>
+        <source>If enabled the game will automatically end your turn if you can&apos;t give any orders anymore.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="283"/>
+        <source>Detailed battle info:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="290"/>
+        <source>If enabled the game will show a detailed battle forecast info.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="300"/>
+        <source>Auto saving time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="308"/>
+        <source>Selects the time between auto saves in hours:minutes:seconds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="317"/>
+        <source>Auto saving cycle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="325"/>
+        <source>Selects the number of auto saves that are kept during games. A value of 0 disables this feature.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="337"/>
+        <source>Record games:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="344"/>
+        <source>If checked: games will be recorded and you can rewatch them in the replay section.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="353"/>
+        <source>Menu heigth:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="361"/>
+        <source>Amount of items per row for in-game menus before a new row is added.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="373"/>
+        <source>Menu width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="381"/>
+        <source>Amount of columns for in-game menus before a scrollable menu is shown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="393"/>
+        <source>Shown players:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="401"/>
+        <source>Selects the amount of players shown in-game on the sidebar.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="413"/>
+        <source>Supply warning:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="421"/>
+        <source>Selects when the supply warnings for ammo and fuel appear.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="433"/>
+        <source>Action delay:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="441"/>
+        <source>The delay after an action before an ai or replay action gets triggered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="453"/>
+        <source>Show pc cursor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="460"/>
+        <source>If active the Computer&apos;s cursor is hidden during a game, giving you a more Gameboy like feeling.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="469"/>
+        <source>Warp pc cursor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="476"/>
+        <source>If active the Computer&apos;s cursor is moved to the first entry when opening menus or similar actions. Only disable this feature if you intend to play using a mouse only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="485"/>
+        <source>Animated marked fields:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="492"/>
+        <source>If active the currently selectable fields get animated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="509"/>
+        <source>Flipping&apos; positions the info opposite the side of the screen where the cursor is located.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="519"/>
+        <source>Auto scrolling:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="526"/>
+        <source>If active: the map is scrolled automatically when the cursor is at the edge of the screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="536"/>
+        <source>Show coordinates:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="543"/>
+        <source>If active: map coordinates are shown during a game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="552"/>
+        <source>Auto camera:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="559"/>
+        <source>If active: the screen will center on every unit performing an action, except when not visible within Fog of War.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="576"/>
+        <source>Select where the screen starts during your player phase. This setting only applies while auto focusing is active.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="586"/>
+        <source>Center camera on fields:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="593"/>
+        <source>Selects if the camera centers on marked fields for an action or not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="602"/>
+        <source>Synchronize animations:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="609"/>
+        <source>If checked: units and building animations on the map are synchronized. Note: changing this doesn&apos;t have an immediate effect in-game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="618"/>
+        <source>Simple cancel:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="625"/>
+        <source>If active units and actions can be canceled by a long-press. This is only recommended for devices without a keyboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="635"/>
+        <source>Default rules:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="644"/>
+        <source>The relative path from the exe to the default ruleset.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="652"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="677"/>
+        <source>Select file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="660"/>
+        <source>Default bannlist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="669"/>
+        <source>The relative path from the exe to the default bannlist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="14"/>
+        <source>Inputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="23"/>
+        <source>Touch screen:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="30"/>
+        <source>If checked some ingame inputs require double clicks or other gestures. This is automatically detected and changing it isn&apos;t recommended.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="39"/>
+        <source>Touch Sensitivity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="47"/>
+        <source>Selects how long a touch is treated as the same point. Used for detecting long-press events.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="59"/>
+        <source>Gamepad:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="66"/>
+        <source>Enables Gamepad support for controllers. Note: This is an experimental feature and won&apos;t work 100% with all controllers. This feature isn&apos;t supported for Android, iOS, MacOS and Linux.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="75"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="76"/>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="85"/>
+        <source>Gamepad Sensitivity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="93"/>
+        <source>Selects how often events are sent by a gamepad. Lowering this value will increase cursor speed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="107"/>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="116"/>
+        <source>Key Up:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="123"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="130"/>
+        <source>Key for moving the cursor up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="139"/>
+        <source>Key Left:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="146"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="153"/>
+        <source>Key for moving the cursor left.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="162"/>
+        <source>Key Down:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="169"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="176"/>
+        <source>Key for moving the cursor down.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="185"/>
+        <source>Key Right:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="192"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="199"/>
+        <source>Key for moving the cursor right.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="208"/>
+        <source>Key Confirm:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="215"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="222"/>
+        <source>Key for confirming any action or input in the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="231"/>
+        <source>Key Cancel:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="238"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="245"/>
+        <source>Key for canceling any action or input in the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="254"/>
+        <source>Key Next:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="261"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="268"/>
+        <source>Key for moving the cursor to the next possible field unit etc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="277"/>
+        <source>Key Previous:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="284"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="291"/>
+        <source>Key for moving the cursor to the previous possible field unit etc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="300"/>
+        <source>Key Quicksave 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="307"/>
+        <source>Key for quick saving slot 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="316"/>
+        <source>Key Quickload 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="323"/>
+        <source>Key for quick loading slot 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="332"/>
+        <source>Key Quicksave 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="339"/>
+        <source>Key for quick saving slot 2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="348"/>
+        <source>Key Quickload 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="355"/>
+        <source>Key for quick loading slot 2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="364"/>
+        <source>Key Information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="371"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="378"/>
+        <source>Key to show information about the current field, action, unit at any time in the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="387"/>
+        <source>Key Move Map Up:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="394"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="401"/>
+        <source>Key to move the map a field up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="410"/>
+        <source>Key Move Map Left:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="417"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="424"/>
+        <source>Key to move the map a field left.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="433"/>
+        <source>Key Move Map Down:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="440"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="447"/>
+        <source>Key to move the map a field down.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="456"/>
+        <source>Key Move Map Right:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="463"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="470"/>
+        <source>Key to move the map a field right.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="479"/>
+        <source>Key Zoom In:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="486"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="493"/>
+        <source>Key to zoom into the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="502"/>
+        <source>Key Zoom Out:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="509"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="516"/>
+        <source>Key to zoom out of the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="525"/>
+        <source>Key Show Indirects:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="532"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="539"/>
+        <source>Key to show where all enemy indirect units can attack near the selected unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="548"/>
+        <source>Key Show all:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="555"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="562"/>
+        <source>Key to show where all enemy units can attack near the selected unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="571"/>
+        <source>Key Screenshot:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="578"/>
+        <source>Key for taking a screenshot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="587"/>
+        <source>Key Mapshot:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="594"/>
+        <source>Key for taking a mapshot. Saving the current map in an image.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="603"/>
+        <source>Key Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="612"/>
+        <source>Key Place Terrain:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="619"/>
+        <source>Key to select Place Terrain in the editor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="628"/>
+        <source>Key Place Unit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="635"/>
+        <source>Key to select Place Unit in the editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="644"/>
+        <source>Key Place Building:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="651"/>
+        <source>Key to select Place Building in the editor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="660"/>
+        <source>Key Next Team:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="667"/>
+        <source>Key to select the next player in the editor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="676"/>
+        <source>Key Previous Team:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="683"/>
+        <source>Key to select the previous player in the editor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="692"/>
+        <source>Key Next Item:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="699"/>
+        <source>Key to select the next editor item.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="708"/>
+        <source>Key Previous Item:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="715"/>
+        <source>Key to select the previous editor item.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="14"/>
+        <source>Audio Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="23"/>
+        <source>Muted:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="30"/>
+        <source>If checked: mutes all sounds and music.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="39"/>
+        <source>Audio Device:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="47"/>
+        <source>Selects the primary audio output device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="57"/>
+        <source>Master Volume:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="65"/>
+        <source>Selects the master volume for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="77"/>
+        <source>Music Volume:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="85"/>
+        <source>Selects the music volume for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="97"/>
+        <source>Sound Volume:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="105"/>
+        <source>Selects the sound volume for the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/playermenu.xml" line="17"/>
+        <location filename="../resources/ui/menu/playermenu.xml" line="18"/>
+        <source>Change username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/playermenu.xml" line="25"/>
+        <location filename="../resources/ui/menu/playermenu.xml" line="26"/>
+        <source>Shop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/playermenu.xml" line="33"/>
+        <location filename="../resources/ui/menu/playermenu.xml" line="34"/>
+        <source>CO Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/playermenu.xml" line="41"/>
+        <location filename="../resources/ui/menu/playermenu.xml" line="42"/>
+        <source>Achievements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/playermenu.xml" line="49"/>
+        <location filename="../resources/ui/menu/playermenu.xml" line="50"/>
+        <source>Replay Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="21"/>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="22"/>
+        <source>Tutorial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="30"/>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="31"/>
+        <source>New game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="38"/>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="39"/>
+        <source>Continue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="47"/>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="48"/>
+        <source>Load Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="55"/>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="56"/>
+        <source>New campaign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="63"/>
+        <location filename="../resources/ui/menu/mainsinglemenu.xml" line="64"/>
+        <source>Load Campaign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="21"/>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="22"/>
+        <source>Video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="29"/>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="30"/>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="45"/>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="46"/>
+        <source>Controls</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="53"/>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="54"/>
+        <source>Mods</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="61"/>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="62"/>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="69"/>
+        <location filename="../resources/ui/menu/mainoptionmenu.xml" line="70"/>
+        <source>Credits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="21"/>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="22"/>
+        <source>Singleplayer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="29"/>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="30"/>
+        <source>Multiplayer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="37"/>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="38"/>
+        <source>Map Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="45"/>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="46"/>
+        <source>Personal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="53"/>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="54"/>
+        <source>Wiki</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="61"/>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="62"/>
+        <source>Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="69"/>
+        <location filename="../resources/ui/menu/mainmenu.xml" line="70"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="14"/>
+        <source>Map Filter Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="23"/>
+        <source>Map name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="31"/>
+        <source>Name or part of the map name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="40"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="40"/>
+        <source>Author:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="48"/>
+        <source>Name or part of the author.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="57"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="100"/>
+        <source>Player:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="65"/>
+        <source>Minimum amount of players for the map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="77"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="117"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="157"/>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="85"/>
+        <source>Maximum amount of players for the map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="97"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="120"/>
+        <source>Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="105"/>
+        <source>Minimum width of the map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="125"/>
+        <source>Maximum width of the map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="137"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="140"/>
+        <source>Height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="145"/>
+        <source>Minimum height of the map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="165"/>
+        <source>Maximum height of the map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="177"/>
+        <source>Has to be placed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="187"/>
+        <source>Bases:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="194"/>
+        <source>If the map needs to have bases.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="203"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="235"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="267"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="299"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="331"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="363"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="405"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="437"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="469"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="501"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="533"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="565"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="597"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="639"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="671"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="712"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="744"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="776"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="808"/>
+        <source>Is Optional:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="210"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="242"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="274"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="306"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="338"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="370"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="412"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="444"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="476"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="508"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="540"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="572"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="604"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="646"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="678"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="719"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="751"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="783"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="815"/>
+        <source>If the flag is optional to find. If all active flags are optional at least one must but found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="219"/>
+        <source>Airports:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="226"/>
+        <source>If the map needs to have airports.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="251"/>
+        <source>Harbours:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="258"/>
+        <source>If the map needs to have harbours.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="283"/>
+        <source>Towers:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="290"/>
+        <source>If the map needs to have towers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="315"/>
+        <source>Teleport tiles:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="322"/>
+        <source>If the map needs to have teleport tiles.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="347"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="219"/>
+        <source>Predeployed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="354"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="428"/>
+        <source>If the map needs to be predeoployed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="379"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="235"/>
+        <source>Map layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="389"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="245"/>
+        <source>Mixed bases:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="396"/>
+        <source>If the map needs to have mixed bases.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="421"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="261"/>
+        <source>Symetric:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="453"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="277"/>
+        <source>PvP:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="460"/>
+        <source>If the map needs to be a player versus player map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="485"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="293"/>
+        <source>FTA:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="492"/>
+        <source>If the map needs to have a first turn advantage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="517"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="309"/>
+        <source>Versus AI:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="524"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="316"/>
+        <source>If the map is designed to be played against an ai.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="549"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="325"/>
+        <source>Team Play:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="556"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="332"/>
+        <source>If the map is designed to be played teams versus teams.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="581"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="341"/>
+        <source>Historical:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="588"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="348"/>
+        <source>If the map is designed as historical map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="613"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="357"/>
+        <source>Funds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="623"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="367"/>
+        <source>Low funds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="630"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="374"/>
+        <source>If the map is designed as low funds map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="655"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="383"/>
+        <source>High funds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="662"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="390"/>
+        <source>If the map is designed as high funds map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="687"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="399"/>
+        <source>Battle type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="696"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="409"/>
+        <source>Naval map:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="703"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="416"/>
+        <source>If the map is designed as naval map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="728"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="425"/>
+        <source>Ground map:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="735"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="432"/>
+        <source>If the map is designed as ground map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="760"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="441"/>
+        <source>Air map:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="767"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="448"/>
+        <source>If the map is designed as air map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="792"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="457"/>
+        <source>Scripted map:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="799"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="464"/>
+        <source>If the map is designed as scripted map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="14"/>
+        <source>Map Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="23"/>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="31"/>
+        <source>The name of the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="48"/>
+        <source>The author of the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="57"/>
+        <source>Description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="65"/>
+        <source>The description for the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="74"/>
+        <source>Script:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="83"/>
+        <source>The relative path from the exe to the script associated with this map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="91"/>
+        <source>Select File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="92"/>
+        <source>Shows the scriptfile select dialog </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="108"/>
+        <source>The amount of players for this map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="128"/>
+        <source>The width of the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="148"/>
+        <source>The heigth of the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="160"/>
+        <source>Score Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="169"/>
+        <source>Turn Limit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="177"/>
+        <source>The amount of turns in which the map needs to be finished to get a maximum score.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="189"/>
+        <source>Deploy Limit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="197"/>
+        <source>The amount of units allowed to be deploayed to get a maximum score.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="209"/>
+        <source>Map Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="226"/>
+        <source>If the map is predeoployed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="252"/>
+        <source>If the map is a mixed bases map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="268"/>
+        <source>If the map is symetric.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="284"/>
+        <source>If the map is a player versus player map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="300"/>
+        <source>If the map has a first turn advantage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="475"/>
+        <source>Closes the map dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="482"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapEditDialog.xml" line="483"/>
+        <source>Cancel the map dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="26"/>
+        <source>1) Previous unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="35"/>
+        <source>2) Left mouse button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="44"/>
+        <source>3) Move map cursor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="53"/>
+        <source>4) Left mouse button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="62"/>
+        <source>5) Scroll and Zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="71"/>
+        <source>6) Show info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="80"/>
+        <source>7) Show info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="89"/>
+        <source>8) Next unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="98"/>
+        <source>9) Right mouse button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="107"/>
+        <source>10) Show info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="116"/>
+        <source>11) Show info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="125"/>
+        <source>12) Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="134"/>
+        <source>13) Accept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="143"/>
+        <source>14) Move mouse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="152"/>
+        <source>15) Right mouse button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="164"/>
+        <source>Closes the gamepad dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="14"/>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="22"/>
+        <source>All Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="23"/>
+        <source>Changes all co&apos;s to random.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="32"/>
+        <source>CO 1 Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="33"/>
+        <source>Changes the first co of all players to random.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="41"/>
+        <source>CO 2 Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="42"/>
+        <source>Changes the second co of all players to random.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="51"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="97"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="161"/>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="52"/>
+        <source>Allows you to change several values for all players.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="61"/>
+        <source>CO&apos;s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="70"/>
+        <source>Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="79"/>
+        <source>Controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="88"/>
+        <source>Team</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="107"/>
+        <source>Ready</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="129"/>
+        <source>Select the color for this player&apos;s army.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="141"/>
+        <source>Select who controls this player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="151"/>
+        <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="162"/>
+        <source>Allows you to change several values for this player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="170"/>
+        <source>Shows which players are ready to start the game. All players need to be checked in order to start a game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="14"/>
+        <source>Edit all player data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="23"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="23"/>
+        <source>Start funds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="31"/>
+        <source>Select how much funds all player start the game with.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="44"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="45"/>
+        <source>Income modifier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="52"/>
+        <source>Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="66"/>
+        <source>Preset teams:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="74"/>
+        <source>Automatically changes the teams of all players so the teams are equally distributed, according to the team count. Teams are assigned in a way that the first turn advantage is the least relevant.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="88"/>
+        <source>All buildlists:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="96"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="98"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="116"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="97"/>
+        <source>Selects which units all players can build.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="105"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="126"/>
+        <source>Closes this dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="14"/>
+        <source>Edit player data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="31"/>
+        <source>Select how much funds this player starts the game with.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="53"/>
+        <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="68"/>
+        <source>Player army:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="77"/>
+        <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="90"/>
+        <source>CO Perks:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="99"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="117"/>
+        <source>Selects which units this players can build.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="108"/>
+        <source>Build List:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/example.xml" line="7"/>
+        <location filename="../resources/ui/example.xml" line="24"/>
+        <location filename="../resources/ui/example.xml" line="25"/>
+        <location filename="../resources/ui/example.xml" line="33"/>
+        <location filename="../resources/ui/example.xml" line="47"/>
+        <location filename="../resources/ui/example.xml" line="58"/>
+        <location filename="../resources/ui/example.xml" line="66"/>
+        <location filename="../resources/ui/example.xml" line="86"/>
+        <location filename="../resources/ui/example.xml" line="106"/>
+        <location filename="../resources/ui/example.xml" line="107"/>
+        <source>Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GAMERULE_REFILL_MATERIAL</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/rules/GAMERULE_REFILL_MATERIAL.js" line="5"/>
+        <source>If enabled material can be refilled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/rules/GAMERULE_REFILL_MATERIAL.js" line="9"/>
+        <source>Material Refill</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2682,6 +5636,19 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
 </context>
 <context>
+    <name>LAKE</name>
+    <message>
+        <location filename="../resources/scripts/terrain/LAKE.js" line="15"/>
+        <source>Lake</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/LAKE.js" line="128"/>
+        <source>A calm inland body of water. Naval and air forces have good mobility while hovercraft can freely move on and off.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LobbyMenu</name>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="66"/>
@@ -2774,6 +5741,19 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="163"/>
         <source>Locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>METEOR</name>
+    <message>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="16"/>
+        <source>Meteor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="161"/>
+        <source>&lt;r&gt;Meteor pieces which can be attacked and destroyed &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;to eliminate plasma.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3267,6 +6247,45 @@ Host mods: </source>
     </message>
 </context>
 <context>
+    <name>PLAINS_DESTROYED</name>
+    <message>
+        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="14"/>
+        <source>Plains</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="49"/>
+        <source>Ground units move easily on this terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PLAINS_PLASMA</name>
+    <message>
+        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="14"/>
+        <source>Plains</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="50"/>
+        <source>Ground units move easily on this terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PLASMA</name>
+    <message>
+        <location filename="../resources/scripts/terrain/PLASMA.js" line="15"/>
+        <source>Plasma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/PLASMA.js" line="55"/>
+        <source>&lt;r&gt;Electric charge us impassable but disappears if &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; meteor pieces&lt;/div&gt;&lt;r&gt; are destroyed.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PerkSelectionDialog</name>
     <message>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="37"/>
@@ -3302,6 +6321,74 @@ Host mods: </source>
     <message>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="247"/>
         <source>Perklist Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Player</name>
+    <message>
+        <location filename="../resources/scripts/general/Player.js" line="322"/>
+        <source>Orange Star</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Player.js" line="323"/>
+        <source>Blue Moon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Player.js" line="324"/>
+        <source>Green Earth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Player.js" line="325"/>
+        <source>Yellow Comet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Player.js" line="326"/>
+        <source>Black Hole</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Player.js" line="327"/>
+        <source>Bolt Guard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Player.js" line="328"/>
+        <source>Metal Army</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Player.js" line="329"/>
+        <source>Amber Corona</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Player.js" line="330"/>
+        <source>Brown Desert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Player.js" line="331"/>
+        <source>Golden Sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Player.js" line="332"/>
+        <source>Pink Frontier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Player.js" line="333"/>
+        <source>Teal Island</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Player.js" line="334"/>
+        <source>Dark Matter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3388,6 +6475,45 @@ Host mods: </source>
         <location filename="../mapsupport/randomMapGenerator.cpp" line="1142"/>
         <location filename="../mapsupport/randomMapGenerator.cpp" line="1184"/>
         <source>Generating </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>REAF</name>
+    <message>
+        <location filename="../resources/scripts/terrain/REAF.js" line="15"/>
+        <source>Reaf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/REAF.js" line="194"/>
+        <source>&lt;r&gt;This spiky reaf provides ideal &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places&lt;/div&gt;&lt;r&gt; for naval units in Fog of War.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RIVER</name>
+    <message>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="15"/>
+        <source>River</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="46"/>
+        <source>Most infantry and Hovercraft units are the only ground unit that can cross rivers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ROUGH_SEA</name>
+    <message>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="15"/>
+        <source>Rough Sea</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="84"/>
+        <source>Movement of naval units is impeded but air units are not affected.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4105,6 +7231,32 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="52"/>
         <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="94"/>
         <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SEA</name>
+    <message>
+        <location filename="../resources/scripts/terrain/SEA.js" line="15"/>
+        <source>Sea</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/SEA.js" line="109"/>
+        <source>Calm sea. Naval and air forces have good mobility.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SNOW</name>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW.js" line="14"/>
+        <source>Snow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW.js" line="68"/>
+        <source>Snowy terrain rough to cross.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5800,6 +8952,492 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
+    <name>TELEPORTTILE</name>
+    <message>
+        <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="15"/>
+        <source>Teleport Tile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="64"/>
+        <source>A mysterious tile that costs 0MP to move over.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Tagpower</name>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="4"/>
+        <source>Airlift</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="5"/>
+        <source>Power Wrench</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="6"/>
+        <source>Shaky Alliance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="7"/>
+        <source>Power of Orange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="8"/>
+        <source>Power of youth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="9"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="11"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="12"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="13"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="15"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="16"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="17"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="18"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="20"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="21"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="22"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="24"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="25"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="26"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="27"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="30"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="31"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="32"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="35"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="37"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="39"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="40"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="43"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="44"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="45"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="48"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="49"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="53"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="54"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="56"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="58"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="59"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="60"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="61"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="63"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="64"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="65"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="66"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="67"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="69"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="70"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="71"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="72"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="73"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="74"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="75"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="77"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="82"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="84"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="85"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="86"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="89"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="90"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="91"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="94"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="95"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="96"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="97"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="99"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="100"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="101"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="104"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="105"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="108"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="111"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="112"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="113"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="117"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="118"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="119"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="120"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="121"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="122"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="123"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="125"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="126"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="127"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="128"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="129"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="130"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="131"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="133"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="134"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="135"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="136"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="139"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="140"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="143"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="144"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="145"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="146"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="148"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="149"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="152"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="153"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="154"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="157"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="158"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="159"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="162"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="165"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="172"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="176"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="177"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="178"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="179"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="180"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="181"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="182"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="184"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="199"/>
+        <source>Tagpower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="10"/>
+        <source>Creepy Crawly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="14"/>
+        <source>Trust Fund</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="19"/>
+        <source>Stormwatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="23"/>
+        <source>Earth and Sky</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="28"/>
+        <source>Bruise Cruise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="29"/>
+        <source>Rolling Thunder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="33"/>
+        <source>Big Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="34"/>
+        <source>Snow Patrol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="36"/>
+        <source>Grizzled Vets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="38"/>
+        <source>Rebel Yell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="41"/>
+        <source>Orange Crush</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="42"/>
+        <source>Heavy Metal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="46"/>
+        <source>Green Flash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="47"/>
+        <source>Code of Honor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="50"/>
+        <source>Power Surge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="51"/>
+        <source>Fireworks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="52"/>
+        <source>Battle Standard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="55"/>
+        <source>Flash Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="57"/>
+        <source>Brainstorm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="62"/>
+        <source>Windfall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="68"/>
+        <source>Girl Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="76"/>
+        <source>Perception Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="78"/>
+        <source>Risky Business</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="79"/>
+        <source>Knights Errant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="80"/>
+        <source>Samurai Steel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="81"/>
+        <source>Break the Bank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="83"/>
+        <source>Overkill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="87"/>
+        <source>Show of Strength</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="88"/>
+        <source>Call of Duty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="92"/>
+        <source>Endless Storm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="93"/>
+        <source>A is for Average</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="98"/>
+        <source>Eruption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="102"/>
+        <source>Senior Strike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="103"/>
+        <source>Sky Tactics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="106"/>
+        <source>Brain and Brawn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="107"/>
+        <source>Robot Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="109"/>
+        <source>Pretty Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="110"/>
+        <source>Loving Granddaddy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="114"/>
+        <source>Rising Sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="115"/>
+        <source>Eastern Gale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="116"/>
+        <source>Sword and Shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="124"/>
+        <source>Earthly Delight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="132"/>
+        <source>Antagonistic Desire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="137"/>
+        <source>Iron Fist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="138"/>
+        <source>Perestroika</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="141"/>
+        <source>Trade Partners</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="142"/>
+        <source>Path of Blood</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="147"/>
+        <source>Whole Lotta Love</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="150"/>
+        <source>Cleaning House</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="151"/>
+        <source>Former Glory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="155"/>
+        <source>Firestarters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="156"/>
+        <source>Road Rage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="160"/>
+        <source>Confident Abilities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="161"/>
+        <source>Daredevil Business</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="163"/>
+        <source>Machine Invasion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="164"/>
+        <source>Beta-Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="166"/>
+        <source>Science Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="167"/>
+        <source>Evil Sisters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="168"/>
+        <source>Free Sea and Air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="169"/>
+        <source>Loyalty of Amber Corona</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="170"/>
+        <source>The helpers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="171"/>
+        <source>Friendship</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="173"/>
+        <source>Brother and Sister?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="174"/>
+        <source>New Leaders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="175"/>
+        <source>Noble Shot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="183"/>
+        <source>Unwavering Debt</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TerrainInfo</name>
     <message>
         <location filename="../wiki/terraininfo.cpp" line="48"/>
@@ -6041,6 +9679,45 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
+    <name>WALL</name>
+    <message>
+        <location filename="../resources/scripts/terrain/WALL.js" line="15"/>
+        <source>Wall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/WALL.js" line="51"/>
+        <source>Dark Matter Walls can&apos;t be crossed by most units. They can be destroyed at gates and weak wall parts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WASTE</name>
+    <message>
+        <location filename="../resources/scripts/terrain/WASTE.js" line="14"/>
+        <source>Waste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/WASTE.js" line="113"/>
+        <source>&lt;r&gt;Waste terrain with reduced defense but clear view. In Fog of War, unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WEAK_WALL</name>
+    <message>
+        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="16"/>
+        <source>Weak Wall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="95"/>
+        <source>Dark Matter Walls can&apos;t be crossed by most units. The wall can be destroyed here to produce a path through the wall.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WikiView</name>
     <message>
         <location filename="../wiki/wikiview.cpp" line="29"/>
@@ -6159,6 +9836,16897 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../coreengine/workerthread.cpp" line="128"/>
         <source>Loading Achievements...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_AT_CYCLE</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_AT_CYCLE.js" line="41"/>
+        <source>AT Cycle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_AT_CYCLE.js" line="60"/>
+        <source>&lt;r&gt;Infantry unit. High mobility. Able to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_AUTO_TANK</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_AUTO_TANK.js" line="50"/>
+        <source>Auto Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_AUTO_TANK.js" line="59"/>
+        <source>Light tank unit. Good mobility makes it useful on battlefield. Can attack a second time after performing an attack each turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_CHAPERON</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_CHAPERON.js" line="48"/>
+        <source>Chaperon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_CHAPERON.js" line="60"/>
+        <source>Specialised anti-air unit. Can negate one indirect attack per turn on own units. Damage negation is based on current units alive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_COMMANDO</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_COMMANDO.js" line="48"/>
+        <source>Commando</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_COMMANDO.js" line="57"/>
+        <source>&lt;r&gt;Attack power high. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains and gets cloaked in addition.&lt;/r&gt; Moving out of a mountain removes any cloaks from the Commando Unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_CRYSTAL_TANK</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_CRYSTAL_TANK.js" line="48"/>
+        <source>Crystal Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_CRYSTAL_TANK.js" line="57"/>
+        <source>Special heavy armored tank. The tank is healed by some fraction of the damage dealt.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_HOT_TANK</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_HOT_TANK.js" line="44"/>
+        <source>Hot Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_HOT_TANK.js" line="53"/>
+        <source>High mobility. Gains firepower based on the distance moved this turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_INTEL_TRUCK</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_INTEL_TRUCK.js" line="40"/>
+        <source>Intel Truck</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_INTEL_TRUCK.js" line="53"/>
+        <source>The intel truck is a defenseless unit that can create a cloak field that cloaks all owned units around it. Cloaked units are stealthed but can still be attack by other units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_IRON_SHIELD_GENERATOR</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_IRON_SHIELD_GENERATOR.js" line="41"/>
+        <source>Iron Shield Gen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_KIROV</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_KIROV.js" line="36"/>
+        <source>Kirov</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_KIROV.js" line="88"/>
+        <source>Kirov reporting. Special Air Unit with extrem high defense but low mobility and no fuel comsumtion at the start of a turn. Can attack ground and naval units. Exceptional power.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_LOGIC_TRUCK</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_LOGIC_TRUCK.js" line="40"/>
+        <source>Logistic Truck</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_LOGIC_TRUCK.js" line="52"/>
+        <source>The logistic truck is a defenseless unit that can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; supplies &lt;/div&gt;&lt;r&gt; units and gains funds based on the amount of resupply.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_MISSILE_SUB</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_MISSILE_SUB.js" line="58"/>
+        <source>Missile Submarine</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_NEOSPIDER_TANK</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_NEOSPIDER_TANK.js" line="48"/>
+        <source>Neo Spider Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_NEOSPIDER_TANK.js" line="56"/>
+        <source>Lash&apos;s signature spider tank. Her NeoSpider Tank uses revolutionary Black Hole design to allow the tank to mantain as much weight as possbile while still having the agility to navigate mountains.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_PARTISAN</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_PARTISAN.js" line="54"/>
+        <source>Partisan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_PARTISAN.js" line="63"/>
+        <source>&lt;r&gt;Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains. Leads to rebellions in nearby cities (3) making it harder to capture buildings.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_RANGER</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_RANGER.js" line="48"/>
+        <source>Ranger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_RANGER.js" line="57"/>
+        <source>An indirect support unit. Uses the attack of the best available indirect unit which is in range of the ranger to attack an enemy unit in range of the ranger. This either extends the range of the indirect unit or boost it&apos;s damage output.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_REPAIR_TANK</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_REPAIR_TANK.js" line="41"/>
+        <source>Repair Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_ROYAL_GUARD</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_ROYAL_GUARD.js" line="49"/>
+        <source>Royal Guard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_ROYAL_GUARD.js" line="58"/>
+        <source>Reinforced Tank that buffs allied units at the start of each turn. Attack and defence capabilities superior to standard tank.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_SIEGE_CANNON</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_SIEGE_CANNON.js" line="40"/>
+        <source>Siege Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_SIEGE_CANNON.js" line="54"/>
+        <source>Long range indirect attack unit with low movement. Attack cannot be launched after unit has moved. The siege cannon gets a fire power boost for not moving more than one turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_SMUGGLER</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_SMUGGLER.js" line="48"/>
+        <source>Smuggler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_SMUGGLER.js" line="57"/>
+        <source>High mobility. Can resupply another unit. Gets a free repair and resupply on any building.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_SMUGGLER.js" line="80"/>
+        <source>REPAIR</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_TANK_HUNTER</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_TANK_HUNTER.js" line="48"/>
+        <source>Tank Hunter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_TANK_HUNTER.js" line="57"/>
+        <source>Reinforced Tank his armor piercing cannon destroys fuel in addition to dealing damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>__BASEBRIDGE</name>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEBRIDGE.js" line="30"/>
+        <source>Bridge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEBRIDGE.js" line="116"/>
+        <source>Bridge over river and seas which allows ground units to cross. Bridges over sea also allows naval units to cross the field.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>__BASEDESTROYED_WELD</name>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="19"/>
+        <source>Waste Destroyed Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="23"/>
+        <source>Snowy Destroyed Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="27"/>
+        <source>Desert Destroyed Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="31"/>
+        <source>Destroyed Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="199"/>
+        <source>&lt;r&gt;Waste terrain with reduced defense but clear view. In Fog of War, unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="203"/>
+        <source>Snowy terrain reduces rough to cross.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="207"/>
+        <source>Ground units move easily on this terrain, but it reduces the firepower of units by 20%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="211"/>
+        <source>Ground units move easily on this terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>__BASEFOREST</name>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="19"/>
+        <source>Waste Forest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="23"/>
+        <source>Snowy Forest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="27"/>
+        <source>Desert Forest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="31"/>
+        <source>Forest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="187"/>
+        <source>&lt;r&gt;In Fog of War conditions, the snowy woods provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;&lt;r&gt; Waste terrain with reduced defense but clear view. In Fog of War, unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="191"/>
+        <source>&lt;r&gt;In Fog of War conditions, the snowy woods provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;&lt;r&gt; It&apos;s hard for ground units to cross this terrain.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="195"/>
+        <source>In Fog of War conditions, the woods provide ground unit hiding places.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="196"/>
+        <source> It reduces the firepower of units by 20%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="200"/>
+        <source>&lt;r&gt;In Fog of War conditions, the woods provide ground unit&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>__BASEMOUNTAIN</name>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="19"/>
+        <source>Waste Rock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="23"/>
+        <source>Snowy Mountain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="27"/>
+        <source>Rock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="31"/>
+        <source>Mountain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="164"/>
+        <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +4.&lt;/div&gt;&lt;r&gt; Extremly high movement costs for infantry units. Waste terrain with reduced defense but clear view. In Fog of War, other unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="168"/>
+        <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +3.&lt;/div&gt;&lt;r&gt; Extremly high movement costs for infantry units.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="172"/>
+        <source>Clear view. In Fog of War, Infantry unit&apos;s gain </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="173"/>
+        <source>vision +3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="174"/>
+        <source> It reduces the firepower of units by 20%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="178"/>
+        <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +3.&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>__BASEPIPELINE</name>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="19"/>
+        <source>Waste Pipeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="23"/>
+        <source>Snowy Pipeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="27"/>
+        <source>Desert Pipeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="31"/>
+        <source>Pipeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="169"/>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="181"/>
+        <source>Black Hole Pipeline which can&apos;t be crossed by most units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="173"/>
+        <source>Black Hole Pipeline which can&apos;t be crossed by most units and is also hard to cross for those who can.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="177"/>
+        <source>Black Hole Pipeline which can&apos;t be crossed by most units. It reduces the firepower of units by 20%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>__BASERUIN</name>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="19"/>
+        <source>Waste Ruin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="23"/>
+        <source>Snowy Ruin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="27"/>
+        <source>Desert Ruin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="31"/>
+        <source>Ruin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="145"/>
+        <source>&lt;r&gt;In Fog of War conditions, the ruins provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;&lt;r&gt; Snowy terrain rough to cross. Waste terrain with reduced defense but clear view. In Fog of War, unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="149"/>
+        <source>&lt;r&gt;In Fog of War conditions, the ruins provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;&lt;r&gt; Snowy terrain rough to cross.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="153"/>
+        <source>&lt;r&gt;In Fog of War conditions, the ruins provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;&lt;r&gt; It reduces the firepower of units by 20%.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="157"/>
+        <source>&lt;r&gt;In Fog of War conditions, the ruins provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>__BASESTREET</name>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="18"/>
+        <source>Waste Street</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="22"/>
+        <source>Snowy Street</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="26"/>
+        <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="30"/>
+        <source>Street</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="136"/>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="140"/>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="148"/>
+        <source>Well-surfaced roads provides optimum mobility but little cover.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="144"/>
+        <source>Kinda well-surfaced path through the desert provides optimum mobility but little cover. It reduces the firepower of units by 20%</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>__BASEWASTELAND</name>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="19"/>
+        <source>Waste Wasteland</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="23"/>
+        <source>Snowy Wasteland</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="27"/>
+        <source>Desert Wasteland</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="31"/>
+        <source>Wasteland</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="145"/>
+        <source>&lt;r&gt;Waste terrain with reduced defense but clear view. In Fog of War, unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;&lt;r&gt; Mobility is impaired on this rough terrain.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="149"/>
+        <source>Mobility is impaired on this rough terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="153"/>
+        <source>Infantry and Mech units aside, mobility is impaired on rough terrain. It reduces the firepower of units by 20%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="157"/>
+        <source>Infantry and Mech units aside, mobility is impaired on rough terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>__BASEWELD</name>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="19"/>
+        <source>Waste Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="23"/>
+        <source>Snowy Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="27"/>
+        <source>Desert Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="31"/>
+        <source>Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="205"/>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="209"/>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="217"/>
+        <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="213"/>
+        <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firepower of units by 20%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>__zblackhole_factorybase</name>
+    <message>
+        <location filename="../resources/scripts/building/__zblackhole_factorybase.js" line="23"/>
+        <source>Black Hole Factory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/__zblackhole_factorybase.js" line="49"/>
+        <source>Black Hole Factory that can build 3 units each turn which can immediatly move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>__zvolcanbase</name>
+    <message>
+        <location filename="../resources/scripts/building/__zvolcanbase.js" line="37"/>
+        <source>Volcan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/__zvolcanbase.js" line="130"/>
+        <source>Volcan that fires fireballs each day dealing 5 HP of damage at all units they hit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>achievement_build_unit</name>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="3"/>
+        <source>Saucy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="4"/>
+        <source>You da man!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="5"/>
+        <source>Shoot them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="6"/>
+        <source>Bully for you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="7"/>
+        <source>All tremble!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="8"/>
+        <source>Don&apos;t tread on me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="9"/>
+        <source>Good gravy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="10"/>
+        <source>You&apos;re the one!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="11"/>
+        <source>Big spenda&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="12"/>
+        <source>Right on!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="13"/>
+        <source>Rainin&apos; the hurt!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="14"/>
+        <source>Massive!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="15"/>
+        <source>Run, runner!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="16"/>
+        <source>That&apos;s a ton!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="17"/>
+        <source>Eye of the tiger!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="18"/>
+        <source>Make them pay!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="19"/>
+        <source>You&apos;re like an air ninja!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="20"/>
+        <source>You&apos;re the bomb!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="21"/>
+        <source>B cool!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="22"/>
+        <source>T-riffic!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="23"/>
+        <source>Ahoy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="24"/>
+        <source>Carry on!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="25"/>
+        <source>Time for a snak!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="26"/>
+        <source>Punish everyone!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="27"/>
+        <source>Impressive!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="28"/>
+        <source>Where&apos;s your tank now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="29"/>
+        <source>Floating cannon!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="30"/>
+        <source>Prepare for mines!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="31"/>
+        <source>I have a ship!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="32"/>
+        <source>Blobs of Blobs!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="33"/>
+        <source>This is a plan!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="34"/>
+        <source>This can cross the sea?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="35"/>
+        <source>Floating enemies ahead!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="36"/>
+        <source>It&apos;s a flak!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="37"/>
+        <source>Capture them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="38"/>
+        <source>Air over Sea!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="39"/>
+        <source>I carry this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="40"/>
+        <source>I can fix this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="41"/>
+        <source>Kirov reporting!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="42"/>
+        <source>A spider is here!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="43"/>
+        <source>Rockets from below!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="44"/>
+        <source>A healing rank!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="45"/>
+        <source>Better armor for me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="46"/>
+        <source>Protect the king!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="47"/>
+        <source>The hunt begins!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="48"/>
+        <source>Onto the mountains!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="49"/>
+        <source>For the rebellion!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="50"/>
+        <source>Money is all i need!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="51"/>
+        <source>No missile zone!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="63"/>
+        <source>Build a given amount of </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="65"/>
+        <source>Builded unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>achievement_captured_building</name>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="3"/>
+        <source>What&apos;s an airport?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="4"/>
+        <source>My factory now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="5"/>
+        <source>Onto the sea!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="6"/>
+        <source>Nice HQ you got!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="7"/>
+        <source>Blob spawnpoint!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="8"/>
+        <source>There&apos;s some gold!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="9"/>
+        <source>We found some oil!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="10"/>
+        <source>What&apos;s in those pipes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="11"/>
+        <source>I can see you now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="12"/>
+        <source>We have a good connection now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="13"/>
+        <source>We need you for money!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="14"/>
+        <source>All fear your name!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="25"/>
+        <source>Capture a given amount of </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="27"/>
+        <source>Captured building</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>achievement_kill_neutral_building</name>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="3"/>
+        <source>Nice!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="4"/>
+        <source>Smashing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="5"/>
+        <source>Beaming!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="6"/>
+        <source>Yeah!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="7"/>
+        <source>Oh, boy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="8"/>
+        <source>Aurora explodes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="9"/>
+        <source>No lasers!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="10"/>
+        <source>We can walk here!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="11"/>
+        <source>Why?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="12"/>
+        <source>We can pass here!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="13"/>
+        <source>Was that Sturm?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="23"/>
+        <source>Kill the given amount of </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="23"/>
+        <source>. Only battle kills count.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="25"/>
+        <source>Kill building</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>achievement_kill_unit</name>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="3"/>
+        <source>Go!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="4"/>
+        <source>Brutal!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="5"/>
+        <source>You shoot nothing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="6"/>
+        <source>Sweet!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="7"/>
+        <source>Cool!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="8"/>
+        <source>Tanks a lot!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="9"/>
+        <source>Boss!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="10"/>
+        <source>Neocool!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="11"/>
+        <source>w00t!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="12"/>
+        <source>Oof!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="13"/>
+        <source>Rockin&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="14"/>
+        <source>Aces!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="15"/>
+        <source>Ouch!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="16"/>
+        <source>Poor APC&apos;s!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="17"/>
+        <source>Huge!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="18"/>
+        <source>Fresh!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="19"/>
+        <source>Good eyes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="20"/>
+        <source>Sassy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="21"/>
+        <source>Great!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="22"/>
+        <source>Zing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="23"/>
+        <source>Hoo-ha!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="24"/>
+        <source>No mercy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="25"/>
+        <source>Pwn3d!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="26"/>
+        <source>Sink those stinkers!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="27"/>
+        <source>Wow!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="28"/>
+        <source>We have anti anti-tank-cannons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="29"/>
+        <source>Boom!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="30"/>
+        <source>Sinking feeling!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="31"/>
+        <source>Destroyed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="32"/>
+        <source>Squish!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="33"/>
+        <source>Into the dust!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="34"/>
+        <source>Now it can&apos;t!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="35"/>
+        <source>Was it a tank?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="36"/>
+        <source>Flak is dead!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="37"/>
+        <source>Capture them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="38"/>
+        <source>A poor landing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="39"/>
+        <source>Sea won!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="40"/>
+        <source>Got out damaged!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="41"/>
+        <source>For mother russia!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="42"/>
+        <source>I hate spiders!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="43"/>
+        <source>Did you have a sub!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="44"/>
+        <source>No healing for you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="45"/>
+        <source>You lost your armor!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="46"/>
+        <source>Was that the last guard?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="47"/>
+        <source>The hunt is over!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="48"/>
+        <source>Those bastards aren&apos;t hidding from me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="49"/>
+        <source>The Imperium won!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="50"/>
+        <source>What a waste of money!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="51"/>
+        <source>I can still hit you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="61"/>
+        <source>Kill the given amount of </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="61"/>
+        <source>. Only battle kills count.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="63"/>
+        <source>Kill unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>achievement_powers</name>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_powers.js" line="3"/>
+        <location filename="../resources/scripts/achievements/achievement_powers.js" line="19"/>
+        <source>Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_powers.js" line="3"/>
+        <source>Boo-ya!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_powers.js" line="4"/>
+        <source>Superpower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_powers.js" line="4"/>
+        <source>I got the power!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_powers.js" line="5"/>
+        <source>Tagpower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_powers.js" line="5"/>
+        <source>Whoa!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_powers.js" line="12"/>
+        <source>Use the given amount of %0.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>achievement_victory</name>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="3"/>
+        <source>I&apos;m good at math!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="4"/>
+        <source>Sidekick!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="5"/>
+        <source>Windy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="6"/>
+        <source>Blue Politics!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="7"/>
+        <source>I love crystals!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="8"/>
+        <source>Quantum + EMP!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="9"/>
+        <source>Party time!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="10"/>
+        <source>Robberies!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="11"/>
+        <source>Helped a lot!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="12"/>
+        <source>Roses are red!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="13"/>
+        <source>Mad doctor!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="14"/>
+        <source>Tons of Soldiers!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="15"/>
+        <source>Vision Battle!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="16"/>
+        <source>I&apos;m a pirat!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="17"/>
+        <source>Goggles in the air!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="18"/>
+        <source>Tested it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="19"/>
+        <source>Blast through!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="20"/>
+        <source>Noble war!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="21"/>
+        <source>Snipped them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="22"/>
+        <source>Novel reader!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="23"/>
+        <source>I&apos;m an admiral!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="24"/>
+        <source>Lightning grimm!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="25"/>
+        <source>Wild western!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="26"/>
+        <source>Sold out!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="27"/>
+        <source>I have my own plans!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="28"/>
+        <source>Direct artillery!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="29"/>
+        <source>For Will!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="30"/>
+        <source>Plains fighter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="31"/>
+        <source>Noble ritter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="32"/>
+        <source>Green Land!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="33"/>
+        <source>Fair play!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="34"/>
+        <source>Booting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="35"/>
+        <source>Propaganda mistress!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="36"/>
+        <source>Samurai!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="37"/>
+        <source>Urban fighter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="38"/>
+        <source>Not Adder!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="39"/>
+        <source>I&apos;m a crazy genius!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="40"/>
+        <source>Teaser!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="41"/>
+        <source>Bloody Mary!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="42"/>
+        <source>MAAAAAAAAAAAX!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="43"/>
+        <source>Veteran fighter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="44"/>
+        <source>Nature fighter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="45"/>
+        <source>Deceptively dangerous!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="46"/>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="62"/>
+        <source>Rice Cakes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="47"/>
+        <source>Splash damages!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="48"/>
+        <source>French war!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="49"/>
+        <source>Lucky star!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="50"/>
+        <source>Winter is coming!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="51"/>
+        <source>Grooving!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="52"/>
+        <source>Mr. Bear!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="53"/>
+        <source>General Peter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="54"/>
+        <source>Just a sister?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="55"/>
+        <source>Out numbered?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="56"/>
+        <source>Puppet master!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="57"/>
+        <source>I&apos;m the programmer now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="58"/>
+        <source>Field repairs!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="59"/>
+        <source>Infantry specalist!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="60"/>
+        <source>Noble trader!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="61"/>
+        <source>Dominatrix!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="63"/>
+        <source>Cranky Paratrooper!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="64"/>
+        <source>Yelled dominant!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="65"/>
+        <source>Sees all, knows all!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="66"/>
+        <source>Mail call!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="67"/>
+        <source>Evil invader!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="68"/>
+        <source>Extremly cruel!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="69"/>
+        <source>Revenge for John!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="70"/>
+        <source>Caviar and war!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="71"/>
+        <source>Immortal Evil!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="72"/>
+        <source>Long standing guardian!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="73"/>
+        <source>Flying over the skies!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="74"/>
+        <source>Joung and winning!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="75"/>
+        <source>Assasins!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="76"/>
+        <source>The ultimate evil!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="77"/>
+        <source>Sandy times!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="84"/>
+        <source>Win the given amount of games with %0.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="91"/>
+        <source>CO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="94"/>
+        <source>The best!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="94"/>
+        <source>Win the given amount of games.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="94"/>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="95"/>
+        <source>Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="95"/>
+        <source>Biggest Looser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="95"/>
+        <source>Loose the given amount of games.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action</name>
+    <message>
+        <location filename="../resources/scripts/general/action.js" line="17"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_activate_power_co_0</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_power_co_0.js" line="8"/>
+        <source>Activates the Power of your first CO. Read the CO&apos;s power for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_power_co_0.js" line="18"/>
+        <source>Power of CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_activate_power_co_1</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_power_co_1.js" line="8"/>
+        <source>Activates the Power of your second CO. Read the CO&apos;s power for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_power_co_1.js" line="18"/>
+        <source>Power of CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_activate_superpower_co_0</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_superpower_co_0.js" line="8"/>
+        <source>Activates the superpower of your first CO. Read the CO&apos;s superpower for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_superpower_co_0.js" line="18"/>
+        <source>Superpower of CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_activate_superpower_co_1</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_superpower_co_1.js" line="8"/>
+        <source>Activates the superpower of your second CO. Read the CO&apos;s superpower for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_superpower_co_1.js" line="18"/>
+        <source>Superpower of CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_activate_tagpower</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="8"/>
+        <source>Activates the superpower of both CO&apos;s. Read the CO&apos;s superpower for more information. This will also apply the Tagpower-Synergy. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="9"/>
+        <source>The synergy gives a hidden firepower boost and a luck boost based on the affinity of the co&apos;s.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="19"/>
+        <source>Tagpower</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_blackholefactory_door1</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="8"/>
+        <source>Orders a Black Hole Factory to produce a unit at the first door. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="9"/>
+        <source>The unit is able to move immediatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="19"/>
+        <source>Black Hole Factory Door 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_blackholefactory_door2</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="8"/>
+        <source>Orders a Black Hole Factory to produce a unit at the second door. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="9"/>
+        <source>The unit is able to move immediatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="19"/>
+        <source>Black Hole Factory Door 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_blackholefactory_door3</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="8"/>
+        <source>Orders a Black Hole Factory to produce a unit at the third door. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="9"/>
+        <source>The unit is able to move immediatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="19"/>
+        <source>Black Hole Factory Door 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_build_temp_airport</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_temp_airport.js" line="8"/>
+        <source>Orders an apc to build an airport on a plain which can be used to resupply air units. The airport will reduce the material of the apc by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_temp_airport.js" line="18"/>
+        <source>Build Airport</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_build_temp_harbour</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_temp_harbour.js" line="8"/>
+        <source>Orders an apc to build a harbour on a beach which can be used to resupply sea units. The harbour will reduce the material of the apc by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_temp_harbour.js" line="18"/>
+        <source>Build Harbour</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_build_waterplane</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_waterplane.js" line="8"/>
+        <source>Orders an aircraft carrier to produce a waterplane which can be launched next turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_waterplane.js" line="18"/>
+        <source>Build Waterplane</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_cannon_fire</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_cannon_fire.js" line="8"/>
+        <source>Orders a minicannon or black cannon to attack a single unit to deal some damage to it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_cannon_fire.js" line="18"/>
+        <source>Fire with Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_capture</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_capture.js" line="8"/>
+        <source>Orders a unit to capture a building. Once the resistant is reduced to 0 the building  will generate effects for your army based on the captured building.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_capture.js" line="18"/>
+        <source>Capture</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_co_unit_0</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_co_unit_0.js" line="8"/>
+        <source>Deploys your first co onto the given unit. All units inside the co range of this unit will get the buff of your first co.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_co_unit_0.js" line="18"/>
+        <source>CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_co_unit_1</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_co_unit_1.js" line="8"/>
+        <source>Deploys your second co onto the given unit. All units inside the co range of this unit will get the buff of your second co.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_co_unit_1.js" line="18"/>
+        <source>CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_crystall_heal</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_crystall_heal.js" line="8"/>
+        <source>Orders a crystall or monolith to heal all own units around it and also refills their ammo and fuel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_crystall_heal.js" line="18"/>
+        <source>Heal with Crystall</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_deathray_fire</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_deathray_fire.js" line="8"/>
+        <source>Orders a death ray to attack all enemy units in front of it, dealing devastating damage to them. This order has a cooldown of 7 days.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_deathray_fire.js" line="18"/>
+        <source>Fire with Death Ray</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_explode</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_explode.js" line="8"/>
+        <source>Destroys the current unit in a large explosion. The explosion will deal damage to all units around it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_explode.js" line="18"/>
+        <source>Explode</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_fire</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_fire.js" line="8"/>
+        <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_fire.js" line="18"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_flare</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_flare.js" line="8"/>
+        <source>Fires a flare rocket at the given location. The flare rocket will reveal all terrains in an area around the target during fog of war.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_flare.js" line="18"/>
+        <source>Flare</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_hoellium_wait</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_hoellium_wait.js" line="8"/>
+        <source>Orders a oozium to wait at the current position and end all actions for this turn. Ooziums can wait on enemy units in doing so the enemy unit gets destroyed by the oozium.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_hoellium_wait.js" line="18"/>
+        <source>Oozium Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_join</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_join.js" line="8"/>
+        <source>Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp ad the highest rank of both units. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_join.js" line="9"/>
+        <source>Hp exceeding the maximum will be added in form of funds to your war funds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_join.js" line="19"/>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_laser_fire</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_laser_fire.js" line="8"/>
+        <source>Commands the laser to shot four laser rays. The laser rays deal damage to all units that get hit by one of the rays.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_laser_fire.js" line="18"/>
+        <source>Fire with Laser</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_load</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_load.js" line="8"/>
+        <source>Loads a unit to a transporters. This makes the unit untargetable for most effects. However the units gets lost when the transporter gets destroyed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_load.js" line="18"/>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_missile</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_missile.js" line="8"/>
+        <source>Launches a missile from a silo at the target area. The missile deals massive damage to all units in the area of effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_missile.js" line="18"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_next_player</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_next_player.js" line="8"/>
+        <source>Ends your turn and gives control to the next player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_next_player.js" line="18"/>
+        <source>Next Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_place_watermine</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_place_watermine.js" line="8"/>
+        <source>Places a stealthed Watermine at a given Position. The Mine automatically explodes at the start of a turn if an enemy is in explosion range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_place_watermine.js" line="18"/>
+        <source>Place Watermine</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_stealth</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_stealth.js" line="8"/>
+        <source>Stealths a unit and makes it invisible to all enemies. A stealthed unit is only visible when a unit is nearby it. In addition only units of the same Unit Type </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_stealth.js" line="9"/>
+        <source> Ground, Naval or Air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_stealth.js" line="10"/>
+        <source> can attack it. In most cases stealthed units have a higher fuel consumption per turn, while beeing stealthed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_stealth.js" line="20"/>
+        <source>Stealth</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_supportall_ration</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_supportall_ration.js" line="8"/>
+        <source>Refills fuel and ammo to all units surrounding this unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_supportall_ration.js" line="18"/>
+        <source>Ration</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_supportsingle_freerepair</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_supportsingle_freerepair.js" line="8"/>
+        <source>Repairs and refills the target unit. The repair costs don&apos;t have to be paid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_supportsingle_freerepair.js" line="18"/>
+        <source>Repair</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_supportsingle_iron_shield</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_supportsingle_iron_shield.js" line="7"/>
+        <source>Shields an allied unit. This highly increases the defense of the unit until the start of the next turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_supportsingle_iron_shield.js" line="17"/>
+        <source>Iron Shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_supportsingle_repair</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_supportsingle_repair.js" line="7"/>
+        <source>Repairs and refills the target unit. The player has to pay for the repair.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_supportsingle_repair.js" line="17"/>
+        <source>Repair</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_talon_gun</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_talon_gun.js" line="7"/>
+        <source>Commands the talon gun to attack all enemy units around the talon gun dealing 5 Hp of damage to them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_talon_gun.js" line="17"/>
+        <source>Fire with Talon Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_unload</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_unload.js" line="7"/>
+        <source>Unloads loaded units. Units that have been loaded this turn can&apos;t move. Units that were loaded in previous turns can immediatly move after beeing unloaded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_unload.js" line="17"/>
+        <source>Unload</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_unstealth</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_unstealth.js" line="7"/>
+        <source>Unstealths a unit and makes it visible to all enemies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_unstealth.js" line="17"/>
+        <source>Unstealth</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_wait</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_wait.js" line="7"/>
+        <source>Orders a unit to wait at the current position and end all actions for this turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_wait.js" line="17"/>
+        <source>Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>aircraftcarrier</name>
+    <message>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="41"/>
+        <source>Aircraft Carrier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="108"/>
+        <source>Naval Unit. Can </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="109"/>
+        <source>carry X 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="110"/>
+        <source> air units and </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="111"/>
+        <source>produce </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="112"/>
+        <source>Waterplanes</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>airport</name>
+    <message>
+        <location filename="../resources/scripts/building/airport.js" line="25"/>
+        <source>Airport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/airport.js" line="52"/>
+        <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying&lt;/div&gt;&lt;r&gt; of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;air&lt;/div&gt;&lt;r&gt; units.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>antitankcannon</name>
+    <message>
+        <location filename="../resources/scripts/units/antitankcannon.js" line="47"/>
+        <source>Anti Tank Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/antitankcannon.js" line="52"/>
+        <source>&lt;r&gt;Indirect attack unit. When under direct enemy attack it can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;counter-attack&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>apc</name>
+    <message>
+        <location filename="../resources/scripts/units/apc.js" line="37"/>
+        <source>APC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/apc.js" line="65"/>
+        <source>&lt;div c=&apos;#00ff00&apos;&gt;Carries X 1&lt;/div&gt;&lt;r&gt; infantry unit, &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; supplies &lt;/div&gt;&lt;r&gt; units and &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;builds &lt;/div&gt;&lt;r&gt; Airports and Ports.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>artillery</name>
+    <message>
+        <location filename="../resources/scripts/units/artillery.js" line="45"/>
+        <source>Artillery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/artillery.js" line="50"/>
+        <source>Indirect attack unit. Attack cannot be launched after unit has moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>artillerycraft</name>
+    <message>
+        <location filename="../resources/scripts/units/artillerycraft.js" line="45"/>
+        <source>Artillerycraft</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/artillerycraft.js" line="50"/>
+        <source>Indirect attack unit. Attack cannot be launched after unit has moved. Can move over most terrains.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>basegamescript</name>
+    <message>
+        <location filename="../resources/scripts/general/basegamescript.js" line="11"/>
+        <source>No additional Victory Conditions are active.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>battleship</name>
+    <message>
+        <location filename="../resources/scripts/units/battleship.js" line="35"/>
+        <source>Battleship</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/battleship.js" line="94"/>
+        <source>&lt;r&gt;Naval Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;launch indirect attacks after moving&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>black_boat</name>
+    <message>
+        <location filename="../resources/scripts/units/black_boat.js" line="33"/>
+        <source>Black Boat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/black_boat.js" line="96"/>
+        <source>&lt;r&gt;Naval Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;repair other units.&lt;/div&gt;&lt;r&gt; Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;carry X 2&lt;/div&gt;&lt;r&gt; infantry units and capture buildings.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>black_bomb</name>
+    <message>
+        <location filename="../resources/scripts/units/black_bomb.js" line="36"/>
+        <source>Black Bomb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/black_bomb.js" line="105"/>
+        <source>&lt;r&gt;Air Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;explode&lt;/div&gt;&lt;r&gt; in a huge explosion damaging all units.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>blackhole</name>
+    <message>
+        <location filename="../resources/scripts/wiki/blackhole.js" line="7"/>
+        <source>Black Hole is an aggressive force that seeks to dominate Wars World. Its COs have evil intents and are highly destructive, not caring about how many units they lose, as long as they can achieve their goal. In the first two games, Black Hole occupies some small islands in Cosmo Land and Macro Land respectively as their base of operation, before being driven out by the Allied Nations. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/blackhole.js" line="17"/>
+        <source>Black Hole</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>bluemoon</name>
+    <message>
+        <location filename="../resources/scripts/wiki/bluemoon.js" line="7"/>
+        <source>Due to Clone Andy leading an invasion on their land, Blue Moon was at war with Orange Star at the beginning of the original Advance Wars, though later allied with them, co-finding the Allied Nations along with Green Earth and Yellow Comet to defend against the Black Hole invasion. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/bluemoon.js" line="17"/>
+        <source>Blue Moon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>boltguard</name>
+    <message>
+        <location filename="../resources/scripts/wiki/boltguard.js" line="7"/>
+        <source>Bolt Guard is a sub section of the Black Hole Army lead by Von Bolt. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/boltguard.js" line="8"/>
+        <source>The CO&apos;s of Bolt Guard only wishes to destroy the land to achieve their own goals.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/boltguard.js" line="18"/>
+        <source>Bolt Guard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>bomber</name>
+    <message>
+        <location filename="../resources/scripts/units/bomber.js" line="36"/>
+        <source>Bomber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/bomber.js" line="103"/>
+        <source>Air Unit. Can attack ground and naval units. Exceptional power.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>building</name>
+    <message>
+        <location filename="../resources/scripts/general/building.js" line="224"/>
+        <source>REPAIR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/building.js" line="228"/>
+        <source>DAMAGE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/building.js" line="232"/>
+        <source>RATION</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>cannonboat</name>
+    <message>
+        <location filename="../resources/scripts/units/cannonboat.js" line="35"/>
+        <source>Missile boat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/cannonboat.js" line="96"/>
+        <source>&lt;r&gt;Naval Unit. Attacks naval units. Can place &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Watermines&lt;/div&gt;&lt;r&gt; on sea tiles.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>changePasswordDialog</name>
+    <message>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.js" line="33"/>
+        <source>Invalid password entered. The password needs to contain 8 letters, one capital one small letter a number and a special char.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.js" line="37"/>
+        <source>Your passwords don&apos;t match.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.js" line="57"/>
+        <source>You&apos;re password was changed successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.js" line="65"/>
+        <source>Your old password isn&apos;t correct.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.js" line="70"/>
+        <source>No account with your username was found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.js" line="75"/>
+        <source>Unable to change password on the server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.js" line="80"/>
+        <source>Unknown error happened.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_adam</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="331"/>
+        <source>Previously a researcher, he was recruited as a commander for his high intelligence. Although a reclusive geek, he is slowly finding his place among the other commanders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="335"/>
+        <source>Vectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="339"/>
+        <source>Percent Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="343"/>
+        <source>Adam can take advantage of max luck rolls, but only if the enemy unit could be killed by one. However, his units lose more firepower than normal the more damaged they are.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="347"/>
+        <source>
+Global Effect: 
+Units lose more firepower than other CO&apos;s when they are damaged.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="348"/>
+        <source>
+
+CO Zone Effect: 
+An attacking unit instantly kills an enemy unit if a max luck roll would kill them. A unit gains a 1 turn defense boost by killing an enemy unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="352"/>
+        <source>All of Adam&apos;s units gains a firepower boost and movement range. Whenever Adam destroys a unit, the next unit gains bonus firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="356"/>
+        <source>Decimation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="360"/>
+        <source>Each time Adam destroys an enemy unit, the attacking unit can move again; however, each kill drastically reduces that units firepower. Conversely, after killing a unit, using a unit that has not been used for that turn will give it additional firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="364"/>
+        <source>Cartesian Cleanup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="368"/>
+        <source>Get a hobby? This IS my hobby!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="369"/>
+        <source>Woo! Watch out for shrapnel!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="370"/>
+        <source>Research pays off!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="371"/>
+        <source>As my troops approach their limit...you become insignificant!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="372"/>
+        <source>Prepare to have your strategy debunked!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="373"/>
+        <source>I&apos;ll blind you with science!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="377"/>
+        <source>Call it bad luck, if you must.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="378"/>
+        <source>Who said math had no applications in real life?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="379"/>
+        <source>Ha! And you thought nerds were weak!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="383"/>
+        <source>How were my calculations so off?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="384"/>
+        <source>Your stupidity rubbed off on me! Ugh!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="388"/>
+        <source>Adam</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_adder</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="201"/>
+        <source>A self-absorbed CO who believes his skills are matchless. Second to Hawke in rank.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="205"/>
+        <source>His own Face</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="209"/>
+        <source>Dirty Things</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="213"/>
+        <source>Adept at making quick command decisions. He stores up energy for his CO Power more rapidly than other CO&apos;s.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="217"/>
+        <source>
+Special Unit:
+Hot Tank
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="218"/>
+        <source>
+Global Effect: 
+None.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="219"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %0% firepower and defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="225"/>
+        <source>Movement range for all units is increased by one space.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="229"/>
+        <source>Sideslip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="233"/>
+        <source>Movement range for all units is increased by two spaces.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="237"/>
+        <source>Sidewinder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="241"/>
+        <source>The look of terror on your face... It&apos;s absolutely delicious!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="242"/>
+        <source>Heh heh heh... I&apos;m going to enjoy breaking you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="243"/>
+        <source>Heh heh heh... Can&apos;t a guy have a little fun!?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="244"/>
+        <source>Heh heh heh... It only hurts for a moment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="245"/>
+        <source>A battle with me is a greater honor than you deserve!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="246"/>
+        <source>Heh heh heh... Kneel before Adder!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="247"/>
+        <source>Hee hee. Your skills are laughable!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="248"/>
+        <source>It&apos;s already too late for you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="249"/>
+        <source>Let me hear your last words!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="250"/>
+        <source>Check out my new and improved powers!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="251"/>
+        <source>Wriggle worm... wriggle!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="252"/>
+        <source>My venom courses through your veins!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="256"/>
+        <source>Heh heh heh... What did you expect?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="257"/>
+        <source>My apologies. Should I have gone easier on you?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="258"/>
+        <source>Don&apos;t forget me now. That would be a shame.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="262"/>
+        <source>Hssss! Today was... unlucky. A bad day. Nothing more.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="263"/>
+        <source>It&apos;s the blasted weather! That was the problem! Hssss!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="267"/>
+        <source>Adder</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_aira</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="253"/>
+        <source>A reserved commander who is often found daydreaming. Likes to walk in the wind.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="257"/>
+        <source>Cool Breezes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="261"/>
+        <source>Surprises</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="265"/>
+        <source>Aira never felt a need to specialize, so all units are average.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="269"/>
+        <source>
+Global Effect: 
+No bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="270"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %0% firepower and defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="276"/>
+        <source>Enemies expend 6 times more fuel when they move for their next turn and the weather changes to sun.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="280"/>
+        <source>Gust Storm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="284"/>
+        <source>The cheapest enemy ground and sea units suffer 3 HP of damage while all enemy air units suffer 3 HP of damage. All enemy units have half of their movement range and the weather changes to sun.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="288"/>
+        <source>Hurricannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="292"/>
+        <source>Amazing what a little gust can do...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="293"/>
+        <source>Huh? Oh, wind&apos;s about to change.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="294"/>
+        <source>The only surpises I like are the ones that help me win.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="295"/>
+        <source>The winds will help me blow through this battle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="296"/>
+        <source>Wind is coming in from the southeast. And the north. And the west.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="297"/>
+        <source>You&apos;re about to see why my troops don&apos;t wear skirts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="301"/>
+        <source>...Huh? Oh, right. I won. Woohoo?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="302"/>
+        <source>I tore through you like a tornado.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="303"/>
+        <source>You could say... you were swept under the wind.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="307"/>
+        <source>You caught me by surprise. I hate that.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="308"/>
+        <source>The winds weren&apos;t with me today.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="312"/>
+        <source>Aira</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_alexander</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="195"/>
+        <source>A diligent politician who works only for the benefit of the citizens and the promotion of peace. Olaf&apos;s son and future ruler of Blue Moon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="199"/>
+        <source>Peace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="203"/>
+        <source>Cruelty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="207"/>
+        <source>Alexander is loved by his citizens so much that they have a tendency to resist being captured.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="211"/>
+        <source>
+Special Unit:
+Partisan
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="212"/>
+        <source>
+Global Effect: 
+Buildings that Alexander owns put up a fight when being captured by enemy soldiers. Each building recovers 1 capture point each day while under siege.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="213"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %0% firepower and defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="219"/>
+        <source>Alexander&apos;s charisma and brilliant speech wins over the people. Alexander&apos;s troops capture at a faster rate, while enemy captures are forced to restart entirely.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="223"/>
+        <source>Peace Riots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="227"/>
+        <source>Enemies receive no income for this turn, and half of their current funds are diverted to Alexander.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="231"/>
+        <source>Inevitable Revolution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="235"/>
+        <source>Comrades! I beg of you to come to your senses!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="236"/>
+        <source>There is more to war than bullets and explosions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="237"/>
+        <source>The people will rally under my cause!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="238"/>
+        <source>Now we shall see where their loyalties truly belong.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="239"/>
+        <source>Perhaps this will get you to consider a peaceful resolution!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="240"/>
+        <source>You can only win a war if your people support you, allow me to demonstrate!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="244"/>
+        <source>Your shortcomings stemmed from within your own ranks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="245"/>
+        <source>The citizens were on my side all along.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="246"/>
+        <source>Only through unrivaled support did I achieve success.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="250"/>
+        <source>I failed my people, but I will free them soon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="251"/>
+        <source>You have the support of your people....for now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="255"/>
+        <source>Alexander</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_alexis</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="392"/>
+        <source>A crystal-obsessed person. Blindly follows orders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="396"/>
+        <source>Crystals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="400"/>
+        <source>Experiments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="404"/>
+        <source>Units heal at half the normal rate on owned properties, but units still heal while standing next to them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="408"/>
+        <source>
+Special Unit:
+Repair Tank
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="409"/>
+        <source>
+Global Effect: 
+Units heal only 1 HP while on an owned property, however, units will still heal from any owned property within 1 space of a unit. This effect stacks with each additional nearby property.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="410"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %0% firepower and defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="416"/>
+        <source>Units within two spaces of any owned properties receive firepower bonuses and restore 3 HP per nearby property.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="420"/>
+        <source>Crystal Brace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="424"/>
+        <source>Units within two spaces of any owned properties receive firepower bonuses and restore 3 HP per nearby property. Enemies within one spaces of their own properties suffer 3 HP of damage per nearby property.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="428"/>
+        <source>Crystal Edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="432"/>
+        <source>You&apos;ll regret angering me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="433"/>
+        <source>It&apos;s time you learned the real power of the crystals!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="434"/>
+        <source>You were probably enjoying this battle... until now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="435"/>
+        <source>Witness the power of the black crystal!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="436"/>
+        <source>I hope you&apos;re ready for what&apos;s coming next!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="437"/>
+        <source>Now my army will really shine... like diamonds!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="441"/>
+        <source>I&apos;m the brightest crystal of all!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="442"/>
+        <source>Haha, you were shattered!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="443"/>
+        <source>I&apos;ll leave you to clean this up, &apos;kay?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="447"/>
+        <source>My crystals failed me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="448"/>
+        <source>My diamonds shattered?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="452"/>
+        <source>Alexis</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_amy</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="254"/>
+        <source>The Commander-in-Chief of Pink Frontier. A former physicist who was thrust into war. She is now a hardened naval commander.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="258"/>
+        <source>Quantum Theory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="262"/>
+        <source>Hawke</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="266"/>
+        <source>She can command hovercraft units at optimal level. Reefs pose no problem for Amy&apos;s units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="270"/>
+        <source>
+Global Effect: 
+Reef movement costs are equal to 1 for all of Amy&apos;s units and Hovercrafts have one extra movement.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="271"/>
+        <source>
+
+CO Zone Effect: 
+Hovercrafts gain %0% firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="277"/>
+        <source>All hovercraft units gain %0% firepower along with one extra movement. Hovercrafts also receive a %1% reduction in deployment costs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="283"/>
+        <source>Fluid Dynamics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="287"/>
+        <source>Her defense rises to an astonishing %0%. Additionally, she takes no counter-attack damage when attacking an enemy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="293"/>
+        <source>Photon Discharge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="297"/>
+        <source>Try all you might, my magnetic shields will prove to be impenetrable!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="298"/>
+        <source>Quantum physics... allow me to show you its true potential.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="299"/>
+        <source>I will show you exactly what splitting an atom feels like.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="300"/>
+        <source>Allow me to demonstrate the power of my hovercraft!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="301"/>
+        <source>Perhaps if you valued science more, you would not be in this predicament!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="302"/>
+        <source>Science has gotten me this far, let&apos;s see just how far it will take me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="306"/>
+        <source>That one was for you, Lara.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="307"/>
+        <source>Theoretically speaking, you never stood a chance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="308"/>
+        <source>For lack of a better word, you were fully atomized!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="312"/>
+        <source>How can this be?! All of my calculations were flawless!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="313"/>
+        <source>It seems I need to do more experimentations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="317"/>
+        <source>Amy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_andy</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="219"/>
+        <source>A whiz with a wrench, this mechanical boy wonder earned fame as the hero who saved Macro Land in the last great war.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="223"/>
+        <source>Mechanics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="227"/>
+        <source>Waking up too early</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="231"/>
+        <source>No real weaknesses. Proficient with air, sea and land units. Ready to fight wherever and whenever.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="235"/>
+        <source>
+Special Unit:
+Repair Tanks
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="236"/>
+        <source>
+Global Effect: 
+None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="237"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %0% firepower and defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="243"/>
+        <source>Restores two HP to all units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="247"/>
+        <source>Hyper Repair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="251"/>
+        <source>Restores five HP to all units. Firepower rises and unit movement increases by one space.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="255"/>
+        <source>Hyper Upgrade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="259"/>
+        <source>I&apos;ve got parts to spare!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="260"/>
+        <source>I&apos;m not giving up!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="261"/>
+        <source>Time to roll up my sleeves!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="262"/>
+        <source>I haven&apos;t even cranked the engine yet!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="263"/>
+        <source>Pass me my wrench!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="264"/>
+        <source>It&apos;s time for a tune-up!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="265"/>
+        <source>Never give up, and never lose! I&apos;m on my way!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="266"/>
+        <source>I&apos;m not worried! I can fix anything!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="270"/>
+        <source>We won! Wooooooohooo!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="271"/>
+        <source>I can fix anything!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="272"/>
+        <source>I did it! Did you see that!?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="276"/>
+        <source>Oh, come on!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="277"/>
+        <source>Next time I see you, you&apos;re in trouble!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="281"/>
+        <source>Andy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_beast</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="216"/>
+        <source>A bandit working for Caulder. Believes there is no law but The Beast&apos;s Law. Driven by rage and greed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="220"/>
+        <source>Looting, Robbing and Killing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="224"/>
+        <source>Duty and Honor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="228"/>
+        <source>His units have the potential for high firepower, but their reckless tendencies often get them hurt.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="232"/>
+        <source>
+Special Unit:
+AT Cycle
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="233"/>
+        <source>
+Global Effect: 
+None.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="234"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %0% firepower when attacking but also receive 1 HP of extra damage in recoil.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="240"/>
+        <source>Restores two HP to all units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="244"/>
+        <source>Steroids</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="248"/>
+        <source>Restores 3 HP to all units. Units movement is increases by one space.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="252"/>
+        <source>Beast&apos;s Law</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="256"/>
+        <source>The Beast will tear you to shreds!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="257"/>
+        <source>I need a place to aim!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="258"/>
+        <source>Leave their corpses where they fall!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="259"/>
+        <source>Graaahhhh!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="260"/>
+        <source>Kill anyone who stands in the way!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="264"/>
+        <source>Gwar har har har!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="265"/>
+        <source>You can&apos;t stand up to The Beast!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="266"/>
+        <source>There&apos;s no law like the Beast&apos;s law!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="270"/>
+        <source>You ain&apos;t seen the last of The Beast!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="271"/>
+        <source>Head for the hills, roaches! We&apos;re outmanned!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="275"/>
+        <source>Beast</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_brenner</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="204"/>
+        <source>He has faith in the goodness of humanity. Feels strong duty to help anyone who is in trouble.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="208"/>
+        <source>Helping Others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="212"/>
+        <source>Abandoning Others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="216"/>
+        <source>He specializes in defensive bonuses for his units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="220"/>
+        <source>
+Special Unit:
+Repair Tanks
+
+Global Effect: 
+None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="221"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %0% defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="227"/>
+        <source>Heals 3 hp to all of his units and increases their defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="231"/>
+        <source>Reinforce</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="235"/>
+        <source>Heals 5 hp to all of his units and increases their defence by %0%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="241"/>
+        <source>First Aid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="245"/>
+        <source>I want everyone to get out here alive! Move!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="246"/>
+        <source>It&apos;s time to go on the offensive!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="247"/>
+        <source>Never give up!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="248"/>
+        <source>Where there is life, there is hope!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="252"/>
+        <source>When will this senseless war end?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="253"/>
+        <source>Let&apos;s tend to the injured first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="257"/>
+        <source>We barely escaped, but at least we are alive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="258"/>
+        <source>At least we can recover from this...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="262"/>
+        <source>Brenner</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_cairn</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="378"/>
+        <source>A wilderness survival expert who excels at using natural terrain to her advantage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="382"/>
+        <source>Hiking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="386"/>
+        <source>Crowds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="390"/>
+        <source>Wilderness grant her units additional terrain stars. On-property firepower of her units is reduced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="395"/>
+        <source>
+Special Unit:
+Ranger
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="396"/>
+        <source>
+Global Effect: 
+None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="397"/>
+        <source>
+
+CO Zone Effect: 
+Wilderness grant her units additional %0 terrain stars. On-property firepower of her units is reduced by %1%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="404"/>
+        <source>Wilderness movement cost is reduced by 1.  Unit indirect range and vision are increased by 1 in wilderness.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="410"/>
+        <source>Call of the Wild</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="414"/>
+        <source>Each wilderness tile crossed restores 1 HP. Increases her firepower by %0% and lower enemy defense by %0% for each wilderness terrain star.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="420"/>
+        <source>Force of Nature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="424"/>
+        <source>The flow of battle favors this moment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="428"/>
+        <source>Nature enpowers the wise.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="429"/>
+        <source>Walk where others fail to tread.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="430"/>
+        <source>Follow the path that naturally leads to victory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="431"/>
+        <source>Tranquility restored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="432"/>
+        <source>All is well.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="436"/>
+        <source>A humbling journey to reflect on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="440"/>
+        <source>Cairn</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_cassidy</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="214"/>
+        <source>An extremely belligerent member of Teal Island that is notorious for her ruthlessness. She fights purely for the thrill of battle and is feared by both enemies and allies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="218"/>
+        <source>Roses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="222"/>
+        <source>Violets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="226"/>
+        <source>Cassidy&apos;s ruthlessness rubs off on her troops. Units show no mercy to enemy units equal to or below their own strength.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="230"/>
+        <source>
+Global Effect: 
+None.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="231"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %0% firepower when attacking units with equal or less health.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="238"/>
+        <source>All of Cassidy&apos;s units now gain %0% firepower for attacking units with equal or less health.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="244"/>
+        <source>Rampage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="248"/>
+        <source>All enemies suffer one HP of damage. Firepower is greatly increased by %0% when attacking a unit with equal or less health.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="254"/>
+        <source>Scorched Earth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="258"/>
+        <source>Take no prisoners!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="259"/>
+        <source>Ahahaha! I&apos;ll destroy you all!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="260"/>
+        <source>You won&apos;t like me when I am angry!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="261"/>
+        <source>I swear to make you rue this day!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="262"/>
+        <source>Burn everything! I don&apos;t want to see anything left untouched!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="263"/>
+        <source>I have fury!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="267"/>
+        <source>You better hope we do not meet again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="268"/>
+        <source>I love this job!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="269"/>
+        <source>I wished the battle had lasted a little longer. Oh well.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="273"/>
+        <source>You will regret this...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="274"/>
+        <source>Kill them... kill them all...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="278"/>
+        <source>Cassidy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_caulder</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="283"/>
+        <source>Head of IDS - the research department of Dark Matter. Conducts in inhuman experiments. All he wants is to be free to satisfy his curiosity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="287"/>
+        <source>Unrestricted experiments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="291"/>
+        <source>Ethics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="295"/>
+        <source>Caulder can reinforce his army while he is on the field.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="299"/>
+        <source>
+Special Unit:
+Crystal Tanks
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="300"/>
+        <source>
+Global Effect: 
+Units lose firepower and defense by %0% outside of his CO zone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="301"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %1% firepower and defense. They also heal %2HP each turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="307"/>
+        <source>All of his units gain 5 HP and have %0% increased firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="314"/>
+        <source>Mass Regeneration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="318"/>
+        <source>All his units heal to full while gaining %0% firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="324"/>
+        <source>Perfect Healing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="328"/>
+        <source>Your silly moral values have no place on the battlefield.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="329"/>
+        <source>You are a worthy specimen for further research.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="330"/>
+        <source>Your ethics make you weak. Allow me to demonstrate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="331"/>
+        <source>I am curious to see if you can survive this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="335"/>
+        <source>Interesting. Very interesting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="336"/>
+        <source>Quite satisfactory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="337"/>
+        <source>Fascinating...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="341"/>
+        <source>I may have to use the Great Owl after all.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="342"/>
+        <source>What useless clones. I will have to produce better ones.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="346"/>
+        <source>Caulder</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_colin</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="169"/>
+        <source>Blue Moon&apos;s rich boy CO and Sasha&apos;s little brother. A gifted CO with a sharp, if insecure, mind.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="173"/>
+        <source>Olaf and Grit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="177"/>
+        <source>Black Hole</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="181"/>
+        <source>The heir to a vast fortune who can purchase units at bargain-basement prices. Troops are low firepower stems from his lack of confidence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="185"/>
+        <source>
+Special Unit:
+Logistic Truck
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="186"/>
+        <source>
+Global Effect: 
+Units are %0% cheaper and have %1% less firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="187"/>
+        <source>
+
+CO Zone Effect: 
+Units have only %2% weaker firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="193"/>
+        <source>Increases current funds by 50 percent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="197"/>
+        <source>Gold Rush</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="201"/>
+        <source>Uses wealth to increase the strength of units. The more funds available, the more firepower his units receive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="205"/>
+        <source>Power of Money</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="209"/>
+        <source>Let me show you the power of money!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="210"/>
+        <source>This is not a drill... I won&apos;t give up so easily!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="211"/>
+        <source>People of Blue Moon!  I need your help!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="212"/>
+        <source>I&apos;ll give it everything I&apos;ve got!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="213"/>
+        <source>You&apos;re not getting away with this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="214"/>
+        <source>I&apos;ll show you what I can do!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="218"/>
+        <source>I w-won! Whew!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="219"/>
+        <source>I&apos;ll win if I try my best!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="220"/>
+        <source>Whew... I won! I really won!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="224"/>
+        <source>If only Commander Olaf were here...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="225"/>
+        <source>Wait till I tell my sis! Then you&apos;ll be sorry!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_colin.js" line="229"/>
+        <source>Colin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_conrad</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="257"/>
+        <source>A damage analyst from Teal Isles who favors precise tactics. Very intelligent, but inexperienced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="261"/>
+        <source>Precise Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="265"/>
+        <source>Unknown Variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="269"/>
+        <source>Conrad is so focused on being precise that it leaves no room for lucky strikes and units have weaker counter strength. However, units are good at assisting one another with information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="273"/>
+        <source>
+Special Unit:
+Intel truck
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="274"/>
+        <source>
+Global Effect: 
+Conrad&apos;s units gain firepower when attacking an enemy unit that is within vision range of Conrad&apos;s units, including enhanced vision from terrain. The more of Conrad&apos;s units that has sight on an enemy unit, the stronger the firepower. Counter attacks are slightly weaker and units are never lucky.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="275"/>
+        <source>
+
+CO Zone Effect: 
+Units gain even more firepower for each unit within vision range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="279"/>
+        <source>Unit vision is extended and all units get firepower bonuses for enemy units in vision range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="283"/>
+        <source>Calculated Strike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="287"/>
+        <source>Conrad&apos;s very first attack of the turn deals +%0% luck damage. For the entire turn, all percent damage that exceeds the enemy&apos;s current health is carried over to the next engagement.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="293"/>
+        <source>Precision Assault</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="297"/>
+        <source>You might be more experienced, but that doesn&apos;t mean I can&apos;t teach you a thing or two!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="298"/>
+        <source>I won&apos;t go down that easily! This battle isn&apos;t even close to being finished!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="299"/>
+        <source>You have a 0.001% chance of surviving this battle with me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="300"/>
+        <source>My attack plan is perfect! I don&apos;t need luck!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="301"/>
+        <source>Your strategy doesn&apos;t quite add up to par with mine!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="302"/>
+        <source>I have all the information I need to turn this battle around.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="306"/>
+        <source>Solid tactics get solid results!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="307"/>
+        <source>That was as easy as I expected it to be. Numbers don&apos;t lie.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="308"/>
+        <source>Either I&apos;m getting better, or you guys are getting worse!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="312"/>
+        <source>I obviously have more to learn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="313"/>
+        <source>Dis I miscalculate?... Impossible!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="317"/>
+        <source>Conrad</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_davis</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="287"/>
+        <source>He is a coward who always sides with the winning side.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="291"/>
+        <source>Side with the winning side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="295"/>
+        <source>Side with the lossing side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="299"/>
+        <source>Gains luck and mussfortune based on the amount of troops on the field.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="303"/>
+        <source>
+Special Unit:
+None
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="304"/>
+        <source>
+Global Effect: 
+None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="305"/>
+        <source>
+
+CO Zone Effect: 
+Units gain bonus luck based on the amount of troops Davis controls and gain missfortune based on the amount of troops all enemies control. The bonus/penalty depends of which unit count is higher.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="309"/>
+        <source>His luck is increased  based on the amount of troops Davis controls. However he also gains increased missfortune based  on the amount of troops all enemies control. The bonus/penalty depends of which unit count is higher.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="313"/>
+        <source>Survival Plans</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="317"/>
+        <source>His luck raises even more based on the amount of troops Davis controls. However the cap for missfortune raises as well. The bonus/penalty depends of which unit count is higher.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="321"/>
+        <source>The stronger Side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="325"/>
+        <source>We&apos;re going to win now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="326"/>
+        <source>I-I will win this, I have to!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="327"/>
+        <source>I&apos;ll survive this war!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="331"/>
+        <source>That&apos;s why i sided with them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="332"/>
+        <source>The stronger side always wins!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="333"/>
+        <source>I joined the correct side!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="337"/>
+        <source>I-I don&apos;t believe it... They were... stronger than me?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="338"/>
+        <source>I-I&apos;ll join you and do whatever you want!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_davis.js" line="342"/>
+        <source>Davis</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_drake</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="256"/>
+        <source>A bighearted former pirate who hates fighting. Also a great surfer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="260"/>
+        <source>The sea</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="264"/>
+        <source>High places</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="268"/>
+        <source>Naval units have superior firepower, but air units have reduced firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="272"/>
+        <source>
+Special Unit:
+Missile Submarine
+
+Global Effect: 
+Naval units have 1 more movement point and have increased firepower. Air units suffer from reduced firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="273"/>
+        <source>
+
+CO Zone Effect: 
+Naval units have ncreased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="277"/>
+        <source>Causes a tidal wave that does one HP of damage to all enemy units and halves their fuel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="281"/>
+        <source>Tsunami</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="285"/>
+        <source>Causes a giant tidal wave that does two HP of damage to all enemy units and halves their fuel and weather changes to rain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="289"/>
+        <source>Typhoon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="293"/>
+        <source>Panic is for landlubbers!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="294"/>
+        <source>Prepare to be washed away!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="295"/>
+        <source>Time to show you how we do things at sea!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="296"/>
+        <source>Wave good-bye to your troops!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="297"/>
+        <source>Can&apos;t you just feel the riptide washing you out to open sea?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="298"/>
+        <source>Drake is taking the helm!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="302"/>
+        <source>I&apos;m just glad I survived that...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="303"/>
+        <source>That was some rough sailing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="307"/>
+        <source>A job well done! You&apos;ve beaten me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="308"/>
+        <source>Curses! I&apos;ve been defeated. Time to hoist sail and flee!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="312"/>
+        <source>Drake</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_eagle</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="242"/>
+        <source>Green Earth&apos;s daring pilot hero. Joined the air force to honor his father&apos;s legacy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="246"/>
+        <source>Lucky goggles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="250"/>
+        <source>Swimming</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="254"/>
+        <source>Air units use less fuel and have superior firepower. Naval units have weaker firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="258"/>
+        <source>
+Special Unit:
+Kirov
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="259"/>
+        <source>
+Global Effect: 
+Air units are stronger and use less fuel, but Sea units are weaker in comparison.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="260"/>
+        <source>
+
+CO Zone Effect: 
+Air units have increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="264"/>
+        <source>All non-infantry units that have already carried out orders may move again, but their firepower is cut in half.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="268"/>
+        <source>Lightning Drive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="272"/>
+        <source>All non-infantry units that have already carried out orders may move again with no firepower penalty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="276"/>
+        <source>Lightning Strike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="280"/>
+        <source>Checkmate!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="281"/>
+        <source>All units, ready for attack! Don&apos;t even give them time for regret!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="282"/>
+        <source>Do you think you can keep up?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="283"/>
+        <source>The Eagle soars above you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="284"/>
+        <source>I have no interest in underlings. Begone!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="285"/>
+        <source>I&apos;ve caught you with your guard down!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="289"/>
+        <source>Hmph! As expected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="290"/>
+        <source>Where&apos;s the challenge in that?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="291"/>
+        <source>Another victory! Was there ever any doubt?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="295"/>
+        <source>This is what happens when you lose focus!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="296"/>
+        <source>Impossible! I&apos;m getting angrier by the moment!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_eagle.js" line="300"/>
+        <source>Eagle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_ac</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="55"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="59"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="79"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="83"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="67"/>
+        <source>A Blank CO for Amber Corona.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="87"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="91"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="95"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="99"/>
+        <source>Amber Corona</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_bd</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="56"/>
+        <source>A Blank CO for Brown Desert.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="60"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="64"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="68"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="72"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="76"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="80"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="84"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="88"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="92"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="96"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="100"/>
+        <source>Brown Desert</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_bg</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="56"/>
+        <source>A Blank CO for the Bolt Guard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="57"/>
+        <source>Bolt Guard is a sub section of the Black Hole Army lead by Von Bolt.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="58"/>
+        <source>The CO&apos;s of Bolt Guard only wishes to destroy the land to achieve their own goals.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="62"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="66"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="70"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="74"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="78"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="82"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="86"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="90"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="94"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="98"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="102"/>
+        <source>Bolt Guard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_bh</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="56"/>
+        <source>A Blank CO for Black Hole.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="57"/>
+        <source>Black Hole is an aggressive force that seeks to dominate Wars World. Its COs have evil intents and are highly destructive, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="58"/>
+        <source>not caring about how many units they lose, as long as they can achieve their goal. In the first two games, Black Hole occupies </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="59"/>
+        <source> some small islands in Cosmo Land and Macro Land respectively as their base of operation, before being driven out by the Allied Nations. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="79"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="83"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="87"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="91"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="95"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="99"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="103"/>
+        <source>Black Hole</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_bm</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="56"/>
+        <source>A Blank CO for Blue Moon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="57"/>
+        <source>Due to Clone Andy leading an invasion on their land, Blue Moon was at war with Orange Star at the beginning of the original Advance Wars, though </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="58"/>
+        <source>later allied with them, co-finding the Allied Nations along with Green Earth and Yellow Comet to defend against the Black Hole invasion. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="62"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="66"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="70"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="74"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="78"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="82"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="86"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="90"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="94"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="98"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="102"/>
+        <source>Blue Moon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_dm</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="56"/>
+        <source>A Blank CO for Dark Matter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="57"/>
+        <source>A military production company. Dark Matter originally supplied Black Hole with weapons in order to create a war to raise the income of the company. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="58"/>
+        <source>After three wars against the allied nations. The allied nations got some intel about the original creators of the war.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="59"/>
+        <source>The Intelligent Defense System section (IDS) is the research section of Dark Matter lead by Dr. Caulder. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="60"/>
+        <source>Dark Matter is lead by Yukio who lives to make money.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="64"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="68"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="72"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="76"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="80"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="84"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="88"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="92"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="96"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="100"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="104"/>
+        <source>Dark Matter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_ge</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="66"/>
+        <source>A Blank CO for Green Earth.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="67"/>
+        <source>Green Earth&apos;s forces are extremely organized. Eagle, the leader of Green Earth, specializes in aerial combat, with Jess dominating the ground, and </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="68"/>
+        <source>Drake the seas. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="72"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="76"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="80"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="84"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="88"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="92"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="96"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="100"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="104"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="108"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="112"/>
+        <source>Green Earth</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_gs</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="56"/>
+        <source>A Blank CO for Golden Sun.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="60"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="64"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="68"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="72"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="76"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="80"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="84"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="88"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="92"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="96"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="100"/>
+        <source>Golden Sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_ma</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="48"/>
+        <source>A Blank CO for Metal Army.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="49"/>
+        <source>The Metall Army is an army of robots. The robots were initially invented by Lash. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="50"/>
+        <source>The Robots AI developped its own behaviour instead of following Lash&apos;s or Dark Matters orders. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="51"/>
+        <source>The Metall Army defends it&apos;s own territory at all costs when it loses it&apos;s territory. The Army tries to reconquer it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="52"/>
+        <source>Besides this the Metall Army is very defensive orientated and doesn&apos;t attack anyone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="56"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="60"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="64"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="68"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="72"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="76"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="80"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="84"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="88"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="92"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="96"/>
+        <source>Metal Army</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_os</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="55"/>
+        <source>A Blank CO for Orange Star.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="56"/>
+        <source>The Orange Star army is lead by Nell and her Sister Rachel also  de-facto leads the Allied Nations. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="57"/>
+        <source>With the exception of Jake, the forces of Orange Star concentrates in direct warfare, excelling in frontal assaults. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="61"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="65"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="69"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="73"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="77"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="85"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="89"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="93"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="97"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="101"/>
+        <source>Orange Star</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_pf</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="55"/>
+        <source>A Blank CO for Pink Frontier.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="59"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="79"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="83"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="87"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="91"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="95"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="99"/>
+        <source>Pink Frontier</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_ti</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="56"/>
+        <source>A Blank CO for Teal Islands.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="60"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="64"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="68"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="72"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="76"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="80"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="84"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="88"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="92"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="96"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="100"/>
+        <source>Teal Islands</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_yc</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="55"/>
+        <source>A Blank CO for Yellow Comet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="56"/>
+        <source>Yellow Comet is on a group of islands on the far east. They&apos;re also the smallest nation of the Allied Nations, but their strong army deters any </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="57"/>
+        <source>outside forces from invading them. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="61"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="65"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="69"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="73"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="77"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="85"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="89"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="93"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="97"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="101"/>
+        <source>Yellow Comet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_epoch</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="261"/>
+        <source>The first prototype for the Robot Commanding Officer Series invented by Lash.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="265"/>
+        <source>Tests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="269"/>
+        <source>Upgrades</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="273"/>
+        <source>Epoch is blessed with simple programming so it has only basic command abilities. Powers charge at an unmatched speed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="277"/>
+        <source>
+Special Unit:
+Auto Tank
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="278"/>
+        <source>
+Global Effect: 
+No effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="279"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower and luck.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="283"/>
+        <source>Firepower is increased and unit HP is hidden from opponents.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="287"/>
+        <source>Short Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="291"/>
+        <source>Direct combat units gain one movement and indirect combat units recieve one extra range. Hides HP from opponents and firepower is increased.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="295"/>
+        <source>Shocker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="299"/>
+        <source>Error: Overcharged. Initiate safety mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="300"/>
+        <source>Power surge detected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="301"/>
+        <source>Overload! Release energy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="302"/>
+        <source>System Over. Overload equals very yes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="303"/>
+        <source>Blackout!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="304"/>
+        <source>Register your firmware for continued use!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="308"/>
+        <source>Epoch Succesful. Upgrade irrelevant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="309"/>
+        <source>Test Completed. Anaylsing battle log...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="310"/>
+        <source>Victory recorded in database and filed under category &apos;insulting&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="314"/>
+        <source>Noooo... No upgrade please.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="318"/>
+        <source>Epoch</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_flak</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="219"/>
+        <source>The strongman of the Black Hole army. Promoted form private by Hawke, who was impressed by his natural ability.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="223"/>
+        <source>Meat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="227"/>
+        <source>Vegetables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="231"/>
+        <source>High firepower, but he relies solely on strength. His shoddy technique sometimes reduces the damage his units deal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="235"/>
+        <source>
+Special Unit:
+AT Cycle
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="236"/>
+        <source>
+Global Effect: 
+Units have more luck and misfortune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="237"/>
+        <source>
+
+CO Zone Effect: 
+Units have even more luck and misfortune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="241"/>
+        <source>Firepower rises, but so does his chances of reduced firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="245"/>
+        <source>Brute Force</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="249"/>
+        <source>Firepower rises dramatically, but so does his chances of reduced power.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="253"/>
+        <source>Barbaric Blow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="257"/>
+        <source>Stay outta my way!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="258"/>
+        <source>Grrrrrraaaaaaa! I&apos;m outta control!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="259"/>
+        <source>You can&apos;t hide from me! I&apos;ll hunt you down like a dog!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="260"/>
+        <source>Nnnggrr! Braaaawrr! Smaarrrrgh!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="261"/>
+        <source>Grr! Now you&apos;ve really made me angry!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="262"/>
+        <source>You&apos;re gonna get pummeled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="266"/>
+        <source>What was that? A waste of my time!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="267"/>
+        <source>Graaa! Blaarrgggg! Smaaarrgggghhh!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="268"/>
+        <source>Enough weakling&apos;s footing around!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="272"/>
+        <source>I-I don&apos;t believe it... They were... stronger than me?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="273"/>
+        <source>Grrr... I wanna smash your face in!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_flak.js" line="277"/>
+        <source>Flak</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_forsythe</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="192"/>
+        <source>Brown Desert Commander who was called out of retirement to defend his nation. Wants Brown Desert to be free, to live in peace.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="196"/>
+        <source>Honor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="200"/>
+        <source>Killers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="204"/>
+        <source>He has a large CO-Zone which boosts both offensive and defensive bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="208"/>
+        <source>
+Special Unit:
+Chaperon
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="209"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="210"/>
+        <source>
+
+CO Zone Effect: 
+Units have 20% offensive and defensive bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="214"/>
+        <source>Increases offensive and defensive bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="218"/>
+        <source>Power of Honor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="222"/>
+        <source>Increases offensive and defensive bonus even more.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="226"/>
+        <source>Knights of the Desert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="237"/>
+        <source>I am a soldier not a killer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="231"/>
+        <source>We fight here to free our people.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="232"/>
+        <source>Even in war there are rules, which should not be broken...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="236"/>
+        <source>I have beaten you 20 years ago and I beaten you now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="238"/>
+        <source>Death before dishonour.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="242"/>
+        <source>We&apos;ll fought young man.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="243"/>
+        <source>Great fight. Take your victory with honor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="247"/>
+        <source>Forsythe</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_gage</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="261"/>
+        <source>Brown Desert Army soldier. A man of few words but a consummate professional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="265"/>
+        <source>Getting things done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="269"/>
+        <source>Talking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="273"/>
+        <source>Indirect-combat units and sea units cause more damage and have increased firerange.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="277"/>
+        <source>
+Special Unit:
+Siege Cannon
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="278"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="279"/>
+        <source>
+
+CO Zone Effect: 
+Indirect and Sea Units have 30% offensive and 20% defensive bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="283"/>
+        <source>Increases range of indirect units by two space. Firepower of sea and indirect units also rise.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="287"/>
+        <source>Longshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="291"/>
+        <source>Increases range of indirect units by three spaces. Firepower of sea and indirect units greatly rise.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="295"/>
+        <source>Snipershot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="299"/>
+        <source>Our business is war. We should no emotions let us distract from our task.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="300"/>
+        <source>At this distance it should be with&apos;n firerange...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="301"/>
+        <source>Prepare to open fire!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_gage.js" line="308"/>
+        <source>It is not my job to think about that.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="306"/>
+        <source>Now let us prepare for the next battle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="307"/>
+        <source>I have carried out my duties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="312"/>
+        <source>Missed shot!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="313"/>
+        <source>What i didn&apos;t hit you?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="317"/>
+        <source>Gage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_graves</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="211"/>
+        <source>A former assassin dissatisfied with where Wars World is headed. Secretly aids Hawke&apos;s cause and overtly aids Dark Matter. No one knows where his true loyalties lie.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="215"/>
+        <source>Mystery Novels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="219"/>
+        <source>Romance Novels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="223"/>
+        <source>Enemy units reduced to two or less HP by Graves&apos; units become paralyzed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="227"/>
+        <source>
+Global Effect: 
+Enemy units reduced to two or less HP by Graves&apos; units become paralyzed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="228"/>
+        <source>
+
+CO Zone Effect: 
+Units have more offensive and defensive bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="232"/>
+        <source>Enemy units suffer one HP of damage. Enemy units with three or less HP become paralyzed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="236"/>
+        <source>Plague</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="240"/>
+        <source>Enemy units suffer two HP of damage. Enemy units with four or less HP become paralyzed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="244"/>
+        <source>Perdition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="248"/>
+        <source>Fear is a valuble tool. I suggest you learn how to use it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="249"/>
+        <source>Do you desire death that greatly?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="250"/>
+        <source>You must give everything if you want to win.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="251"/>
+        <source>You are ill prepared to face me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="252"/>
+        <source>A valiant effort. But futile, nonetheless.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="253"/>
+        <source>Prepare yourself.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="257"/>
+        <source>That was it? ...I overestimated you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="258"/>
+        <source>Such a victory was... so rudely forced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="259"/>
+        <source>Lives could have been spared had you just accepted your fate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="263"/>
+        <source>Not planed but still not the end.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="264"/>
+        <source>It seems that i underestimate your strenght.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="268"/>
+        <source>Graves</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_greyfield</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="270"/>
+        <source>Wants to rule as the supreme global leader. Ambitious and power-hungry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="274"/>
+        <source>Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="278"/>
+        <source>Insubordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="282"/>
+        <source>Copter, seaplanes and sea units have higher firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="286"/>
+        <source>
+Special Unit:
+Missile Submarine
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="287"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="288"/>
+        <source>
+
+CO Zone Effect: 
+ Sea Units have 20% offensive and 50% defensive bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="292"/>
+        <source>All units get resupplied and his copter, seaplanes and sea units have higher firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="296"/>
+        <source>Supply Chain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="300"/>
+        <source>All units get resupplied and his copter, seaplanes and sea units have higher firepower and defense and increase movement range by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="304"/>
+        <source>Naval War</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="308"/>
+        <source>I will brook no opposition. The enemy will be eliminated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="309"/>
+        <source>Overwhelming forces need overwhelming supplies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="310"/>
+        <source>Supplies are here!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="311"/>
+        <source>Admiral Greyfield here. Attack and eleminate them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="315"/>
+        <source>Disloyalty will be punished with death.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="316"/>
+        <source>Anyone who opposes me will be crushed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="317"/>
+        <source>The Teal Isles Army will prevail.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="321"/>
+        <source>Nooo... this is not the end of Teal Isles!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="322"/>
+        <source>What? My army has been crushed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="326"/>
+        <source>Greyfield</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_grimm</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="194"/>
+        <source>A Yellow Comet commander with a dynamic personality. Could care less about the details. His nickname is Lighting Grimm.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="198"/>
+        <source>Donuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="202"/>
+        <source>Planning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="206"/>
+        <source>Firepower of all units is increased, thanks to his daredevil nature, but their defenses are reduced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="210"/>
+        <source>
+Special Unit:
+AT Cycle
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="211"/>
+        <source>
+Global Effect: 
+Units have reduced defense and increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="212"/>
+        <source>
+
+CO Zone Effect: 
+Units have high offensive bonus and a defensive malus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="216"/>
+        <source>Increases the attack of all units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="220"/>
+        <source>Knuckleduster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="224"/>
+        <source>Greatly increases the attack of all units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="228"/>
+        <source>Haymaker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="232"/>
+        <source>Things are lookin&apos; Grimm for you! Harrrrr!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="233"/>
+        <source>You&apos;re about to enter a world of pain!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="234"/>
+        <source>Outta the way! I got crushin&apos; to do!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="235"/>
+        <source>Oooh, yeah!!|Gwar har har!! Go cry like a little girl!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="236"/>
+        <source>What a pencil neck!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="240"/>
+        <source>Wanna throw down again? Oooh yeah!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="241"/>
+        <source>Gwar har har! Hit the road, slick!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="242"/>
+        <source>Fear the lightning!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="246"/>
+        <source>I&apos;m tellin&apos; you, this is awful!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="247"/>
+        <source>I&apos;ll get you next time! Oooh yeah!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grimm.js" line="251"/>
+        <source>Grimm</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_grit</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="272"/>
+        <source>A laid-back style masks his dependability. A peerless marksman. Works well with Olaf.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="276"/>
+        <source>Cats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="280"/>
+        <source>Rats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="284"/>
+        <source>Indirect-combat units cause more damage and have increased firerange. Weak in non-infantry direct combat.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="288"/>
+        <source>
+Special Unit:
+Siege Cannon
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="289"/>
+        <source>
+Global Effect: 
+Indirect units have 1 increased firerange and non-infantry direct units have reduced firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="290"/>
+        <source>
+
+CO Zone Effect: 
+Indirect units  have an offensive bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="294"/>
+        <source>Increases range of indirect units by one space. Firepower of these units also rise.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="298"/>
+        <source>Snipe Attack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="302"/>
+        <source>Increases range of indirect units by two spaces. Firepower of these units greatly rise.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="306"/>
+        <source>Super Snipe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="310"/>
+        <source>Once you&apos;re in my sights, there&apos;s no gettin&apos; away!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="311"/>
+        <source>Reckon it&apos;s time to take you down!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="312"/>
+        <source>Where&apos;s the fool who wants to help me with target practice?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="313"/>
+        <source>Y&apos;all can run, but you can&apos;t hide!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="314"/>
+        <source>Y&apos;all gimme no choice... Time to bring in the big guns!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="315"/>
+        <source>Aw, shucks. I was hopin&apos; it wouldn&apos;t come to this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="319"/>
+        <source>This ain&apos;t for show.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="320"/>
+        <source>Maybe now I can get some shut-eye.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="321"/>
+        <source>I hope this gets easier. That was harder&apos;n college!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="325"/>
+        <source>Aw, possum spit!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="326"/>
+        <source>Just as I reckoned... This ain&apos;t gonna be no Sunday stroll.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_grit.js" line="330"/>
+        <source>Grit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_hachi</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="150"/>
+        <source>Owner of the Battle Maps shop. Rumored to be Orange Star&apos;s former commander-in-chief.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="154"/>
+        <source>Tea</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="158"/>
+        <source>Medicine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="162"/>
+        <source>Uses secret trade routes to get slightly lower deployment costs for all units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="166"/>
+        <source>
+Special Unit:
+Smuggler
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="167"/>
+        <source>
+Global Effect: 
+Units are cheaper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="168"/>
+        <source>
+
+CO Zone Effect: 
+Units have more firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="172"/>
+        <source>Speaks with such authority that he obtains even lower deployment costs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="176"/>
+        <source>Barter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="180"/>
+        <source>Merchant pals gather from around the globe and help him deploy ground units from any allied city even cheaper.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="184"/>
+        <source>Merchant Union</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="188"/>
+        <source>This brings back memories!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="189"/>
+        <source>Runnin&apos; away won&apos;t prove anything! Stand your ground, soldier!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="190"/>
+        <source>No need to get all worked up!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="191"/>
+        <source>Hey, I&apos;m no retiree!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="192"/>
+        <source>I may be old, but I can still rumble!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="193"/>
+        <source>This is my best seller!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="197"/>
+        <source>Battles cost too much!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="198"/>
+        <source>Rematches are free!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="199"/>
+        <source>Thank you, come again!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="203"/>
+        <source>I&apos;m getting too old for this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="204"/>
+        <source>Shop&apos;s closing for today...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="208"/>
+        <source>Hachi</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_hawke</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="199"/>
+        <source>A commander of the Black Hole army who will stop at nothing to achieve his goals.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="203"/>
+        <source>Black Coffee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="207"/>
+        <source>Incompetence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="211"/>
+        <source>All units possess superior firepower. However, his CO power gauge is longer than it should be.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="215"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="216"/>
+        <source>
+
+CO Zone Effect: 
+Units have more firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="220"/>
+        <source>All enemy units suffer one HP of damage. In addition, all allied units recover one HP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="224"/>
+        <source>Black Wave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="228"/>
+        <source>All enemy units suffer two HP of damage. In addition, all allied units recover two HP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="232"/>
+        <source>Black Storm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="236"/>
+        <source>This is the end.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="237"/>
+        <source>Farewell.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="238"/>
+        <source>I give you credit for pushing me this far.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="239"/>
+        <source>You have inspired me to take action.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="240"/>
+        <source>To be defeated is to lose everything. Are you prepared for that outcome?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="241"/>
+        <source>You leave me no choice.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="245"/>
+        <source>Will you sacrifice all? Then perhaps you can win.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="246"/>
+        <source>Sad...you were no match for me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="247"/>
+        <source>There is no chance.  My victory was assured.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="251"/>
+        <source>That&apos;s it then. We shall withdraw.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="252"/>
+        <source>... This is one situation I never expected myself to be in.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="256"/>
+        <source>Hawke</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_ik_486_b7</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="266"/>
+        <source>One of Lash latest invented robots. He likes to stay at the same place and defend it against anything that comes to him.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="270"/>
+        <source>Fortresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="274"/>
+        <source>Conquering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="278"/>
+        <source>His direct units can do indirect attacks when they don&apos;t move. However they lose a fraction of firepower when doing so.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="282"/>
+        <source>
+Special Unit:
+Chaperon
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="283"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="284"/>
+        <source>
+
+CO Zone Effect: 
+Direct Units gain an additional firerange when they don&apos;t move. However firepower is reduced by doing so. Normal attacks are stronger.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="288"/>
+        <source>The defense of his direct units raises and the firerange is increased by 1 when they don&apos;t move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="292"/>
+        <source>Wall of Defense</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="296"/>
+        <source>The defense of his direct units raises extremly and the firerange is increased by 2 when they don&apos;t move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="300"/>
+        <source>Great Counterstrike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="304"/>
+        <source>Direct attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="305"/>
+        <source>Function attacking not found use function defending instead!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="306"/>
+        <source>My fortress is unbeatable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="307"/>
+        <source>Make ready to defend yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="308"/>
+        <source>You are to near to my defence position.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="309"/>
+        <source>Go to the shortage other their.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="313"/>
+        <source>Fools don&apos;t attack my fortress.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="314"/>
+        <source>Robots rule the world.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="315"/>
+        <source>Do function &apos;Be Happy&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="319"/>
+        <source>You have destroyed my fortress?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="320"/>
+        <source>Tilt! Tilt! Selfdestruction...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="324"/>
+        <source>IK-486-B7</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_isabella</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="217"/>
+        <source>Has no memory of her past. Rescued by Will, she has joined Amber Corona.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="221"/>
+        <source>Will</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="225"/>
+        <source>Amnesia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="229"/>
+        <source>Her units are slightly stronger.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="233"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="234"/>
+        <source>
+
+CO Zone Effect: 
+Units have 20% firepower and defense bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="238"/>
+        <source>Increases her movement range and firerange by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="242"/>
+        <source>Initial Strike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="246"/>
+        <source>Increases her movement range and firerange by 2, increases her firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="250"/>
+        <source>Deep Strike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="254"/>
+        <source>I must fight alongside the others.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="255"/>
+        <source>Launch Overlord.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="256"/>
+        <source>Doing this will lessen the casualties.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="257"/>
+        <source>I must try to optimize my fighting powers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="261"/>
+        <source>I am starting to remember...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="262"/>
+        <source>The enemy have been taken care of.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="266"/>
+        <source>Still no peace for me and Will.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="267"/>
+        <source>I can&apos;t remember anything</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="271"/>
+        <source>Isabella</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_jake</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="242"/>
+        <source>A young, energetic Orange Star CO who is a top-notch tank commander.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="246"/>
+        <source>Clubbin&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="250"/>
+        <source>Easy listening</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="254"/>
+        <source>Fights well in the open. Firepower of all units increased on plains.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="258"/>
+        <source>
+Special Unit:
+Tank Hunter
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="259"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="260"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased defense and firepower and high firepower on plains.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="264"/>
+        <source>Firepower is increased on plains. Firing range of indirect-combat units is increased by one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="268"/>
+        <source>Beat Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="272"/>
+        <source>Firepower is greatly increased on plains. Firing range of indirect units is increased by one, and movement of direct units by two</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="276"/>
+        <source>Block Rock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="280"/>
+        <source>Give it up, fool!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="281"/>
+        <source>Prepare to get served.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="282"/>
+        <source>Prepare for a subpoena of pain! Yeah, that&apos;s lawyer style!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="283"/>
+        <source>This is how I roll!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="284"/>
+        <source>Wassup now?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="285"/>
+        <source>Here...have a taste!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="289"/>
+        <source>Get the plates, &apos;cause you just got served!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="290"/>
+        <source>Owned!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="291"/>
+        <source>You got dropped like a phat beat!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="295"/>
+        <source>I got spanked out there! This combat is the real deal...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="296"/>
+        <source>Dude, we so don&apos;t have time for this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="300"/>
+        <source>Jake</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_javier</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="216"/>
+        <source>A Green Earth commander who values chivalry and honor above all else. Often orders his units to charge.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="220"/>
+        <source>Honor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="224"/>
+        <source>Retreating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="228"/>
+        <source>Units possess superior defenses vs. indirect attacks and Comtowers have a higher impact.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="232"/>
+        <source>
+Special Unit:
+Chaperon
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="233"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="234"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased defense against indirect units. Units gain additional firepower and defense per Comtower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="238"/>
+        <source>Improves defense vs. indirect attacks and firepower slightly rises the more Comtower he owns.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="242"/>
+        <source>Tower Shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="246"/>
+        <source>Units have even greater defenses vs. indirect attacks and firepower increases at a high rate the more Comtowers he owns.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="250"/>
+        <source>Tower of Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="254"/>
+        <source>Away put your weapons! You shall not be needing them where you are going!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="255"/>
+        <source>Charge into the toothy maw! For now is the time for a glorious hindspanking!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="256"/>
+        <source>Mighty spire of communication, imbue my blade with stabby might!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="257"/>
+        <source>Your maidenfolk shall soon howl great lamentations!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="258"/>
+        <source>This day shall be the greatest of days, unless tomorrow is even greater!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="259"/>
+        <source>Foe, you are mad if you seek to pierce my steely hide!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="263"/>
+        <source>No sharpness can penetrate my steely hide!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="264"/>
+        <source>Consider your hindquarters righteously spanked!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="265"/>
+        <source>You still live for. Javier is masterful but merciful!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="269"/>
+        <source>Well done! Your reputation is well deserved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="270"/>
+        <source>I am honored to have served with the noblest knights history has ever seen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_javier.js" line="274"/>
+        <source>Javier</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_jess</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="270"/>
+        <source>A gallant tank-driving commander who excels at analyzing information. Often argues with Eagle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="274"/>
+        <source>Dandelions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="278"/>
+        <source>Unfit COs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="282"/>
+        <source>Vehicular units have superior firepower. Air and naval units are comparatively weak.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="286"/>
+        <source>
+Special Unit:
+Tank Hunter
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="287"/>
+        <source>
+Global Effect: 
+Air and Sea Units are weaker and Ground Units have increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="288"/>
+        <source>
+
+CO Zone Effect: 
+Ground Units have increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="292"/>
+        <source>Movement range of vehicles increases by one space and their firepower increases. All units&apos; fuel and ammunition supplies are replenished.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="296"/>
+        <source>Turbo Charge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="300"/>
+        <source>Movement range of vehicles increases by two spaces and their firepower greatly increases. All units&apos; fuel and ammunition supplies are replenished.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="304"/>
+        <source>Overdrive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="308"/>
+        <source>Battle should never be taken lightly. I always give 100%! Always!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="309"/>
+        <source>I won&apos;t let this chance pass me by!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="310"/>
+        <source>Weakness has no place on the battlefield!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="311"/>
+        <source>Here&apos;s my chance...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="312"/>
+        <source>Time to turn the tables...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="313"/>
+        <source>I&apos;ve been waiting for this moment!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="317"/>
+        <source>This battle will advance my tactical research...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="318"/>
+        <source>Looks like I survived another day.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="319"/>
+        <source>We made it... I&apos;m glad that&apos;s done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="323"/>
+        <source>This is looking grim...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="324"/>
+        <source>It was inevitable under these conditions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jess.js" line="328"/>
+        <source>Jess</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_joey</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="270"/>
+        <source>Loves to live and fight on the edge. He prefers risks and gambles over safety.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="274"/>
+        <source>Disadvantages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="278"/>
+        <source>Cheaters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="282"/>
+        <source>Joey likes to live on the edge. Units are stronger when engaging stronger units, but firepower is reduced when engaging a weaker unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="286"/>
+        <source>
+Global Effect: 
+Units are stronger when engaging stronger units, but firepower is reduced by when engaging a weaker unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="287"/>
+        <source>
+
+CO Zone Effect: 
+Units are way stronger when engaging stronger units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="291"/>
+        <source>Units receive a large firepower boost when engaging a stronger unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="295"/>
+        <source>Eccentricity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="299"/>
+        <source>Deployment costs drop and units get first strike when engaging a stronger unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="303"/>
+        <source>Tempestous Technique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="307"/>
+        <source>I feel a bit dirty for doing this...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="308"/>
+        <source>I gave you a chance, but you didn&apos;t want it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="309"/>
+        <source>You gotta live life on the edge!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="310"/>
+        <source>You were never too good.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="311"/>
+        <source>You&apos;re going to be feeling edgy about this...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="312"/>
+        <source>C&apos;mon, give the little guys a chance!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="313"/>
+        <source>What&apos;s a little risk taking going to hurt?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="317"/>
+        <source>Heh, good game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="318"/>
+        <source>Power isn&apos;t everything y&apos;know...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="319"/>
+        <source>Big risk, big reward!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="323"/>
+        <source>This was to risky...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="324"/>
+        <source>I thought my risk was calculated but man i&apos;m bad at math!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_joey.js" line="328"/>
+        <source>Joey</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_jugger</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="218"/>
+        <source>A robot-like commander in the Bolt Guard army. No one knows his true identity!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="222"/>
+        <source>Energy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="226"/>
+        <source>Static electricity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="230"/>
+        <source>Units may suddenly deal more damage than expected, but their firepower is inherently low.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="234"/>
+        <source>
+Special Unit:
+Auto Tank
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="235"/>
+        <source>
+Global Effect: 
+Units have more Luck and Misfortune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="236"/>
+        <source>
+
+CO Zone Effect: 
+Units have even more Luck and Misfortune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="240"/>
+        <source>There is a chance he might get a stronger blow, but base firepower is slightly reduced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="244"/>
+        <source>Overclock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="248"/>
+        <source>There is a chance he might get a devestating blow, but firepower is reduced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="252"/>
+        <source>System Crash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="256"/>
+        <source>Enemy: Prepare for mega hurtz.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="257"/>
+        <source>Memory: upgraded. Shell: shined. Ready to uh...roll.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="258"/>
+        <source>Enemy system purge initiated...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="259"/>
+        <source>Blue screen of death!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="260"/>
+        <source>Crushware loaded...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="261"/>
+        <source>Approaching system meltdown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="265"/>
+        <source>Victory; downloading party hat.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="266"/>
+        <source>Victory dance initiated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="267"/>
+        <source>Jugger; superior. Enemy; lame.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="271"/>
+        <source>Critical Error: Does not compute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="272"/>
+        <source>Victory impossible! Units overwhelmed. Jugger must... Control-Alt-Delete.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="276"/>
+        <source>Jugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_julia</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="189"/>
+        <source>A devoted CO who embraces Dark Matter&apos;s ideals and wishes to unite the world. She excels at utilizing propaganda to demoralize her enemies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="193"/>
+        <source>The morning paper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="197"/>
+        <source>The comics section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="201"/>
+        <source>Units have reduced offensive power. However, firepower is unaffected by loss of HP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="205"/>
+        <source>
+Special Unit:
+Partisan
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="206"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="207"/>
+        <source>
+
+CO Zone Effect: 
+Units loose firepower but the firepower is unaffected by loss of HP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="211"/>
+        <source>Half of enemy units can&apos;t move next turn and all units are unaffected by loss of HP but get less firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="215"/>
+        <source>Rallying Cry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="219"/>
+        <source>All enemy units can&apos;t move next turn and all units are unaffected by loss of HP but get less firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="223"/>
+        <source>Media Mayhem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="227"/>
+        <source>Your defeat is tomorrow&apos;s headline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="228"/>
+        <source>Start the presses!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="229"/>
+        <source>I don&apos;t receive the news. I make the news.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="230"/>
+        <source>I am the only voice of the people.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="231"/>
+        <source>Let us see how devoted your people are to your cause.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="232"/>
+        <source>You will come to embrace our ideals.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="236"/>
+        <source>The proof of our might will forever be etched in your minds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="237"/>
+        <source>How foolish it was of you to try to defy us.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="238"/>
+        <source>This victory will be pleasing news to our citizens.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="242"/>
+        <source>The news will still call this a victory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="243"/>
+        <source>I will change the news...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="247"/>
+        <source>Julia</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_kanbei</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="214"/>
+        <source>The emperor of Yellow Comet. A skilled commander who has a soft spot for his daughter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="218"/>
+        <source>Sonja</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="222"/>
+        <source>Computers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="226"/>
+        <source>All units have high offensive and defensive capabilities, but are expensive to deploy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="230"/>
+        <source>
+Special Unit:
+Royal Guard
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="231"/>
+        <source>
+Global Effect: 
+Units have %0% stronger firepower and defense, but are %1% more expensive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="232"/>
+        <source>
+
+CO Zone Effect: 
+Units have %2% stronger firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="238"/>
+        <source>Increases firepower and defence of all units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="242"/>
+        <source>Morale Boost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="246"/>
+        <source>Greatly strengthens offensive and defensive abilities of all units. Counterattacks are stronger.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="250"/>
+        <source>Samurai Spirit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="254"/>
+        <source>Who shall taste my wrath?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="255"/>
+        <source>Observe the heart of a true Samurai.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="256"/>
+        <source>Your numbers mean nothing!  Nothing can stop me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="257"/>
+        <source>My mind is honed for battle.  That is the essence of a samurai!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="258"/>
+        <source>True Samurai don&apos;t know the meaning of retreat.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="259"/>
+        <source>I hope you thoroughly enjoy the taste of my sword!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="263"/>
+        <source>Kanbei is victorious! We shall meet again!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="264"/>
+        <source>Raise your voices in victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="265"/>
+        <source>No enemy can stand before Kanbei!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="269"/>
+        <source>Preposterous! So many of Kanbei&apos;s forces defeated in such a short time? Withdraw!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="270"/>
+        <source>Regardless of the odds, Kanbei should never lose this many units! Withdraw!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="274"/>
+        <source>Kanbei</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_kindle</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="276"/>
+        <source>Jugger and Koal&apos;s commanding officer. Has a blunt, queen-like personality.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="280"/>
+        <source>Anything chic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="284"/>
+        <source>Anything passe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="288"/>
+        <source>An upper-crust CO who excels at urban warfare. Firepower of all units increased on properties.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="292"/>
+        <source>
+Special Unit:
+Partisan
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="293"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="294"/>
+        <source>
+
+CO Zone Effect: 
+Units on buildings have increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="298"/>
+        <source>Inflicts three HP of damage to enemy units on properties and increases firepower of all units on a property.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="302"/>
+        <source>Urban Blight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="306"/>
+        <source>The more properties she controls, the more firepower she gains and greatly increases firepower of all units on a property.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="310"/>
+        <source>High Society</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="314"/>
+        <source>So, you want to see me get serious? Very well! You asked for it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="315"/>
+        <source>Even the prettiest rose has thorns!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="316"/>
+        <source>I am Kindle, Gorgeous AND Clever!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="317"/>
+        <source>Let us play a more dangerous game, shall we? I grow weary of this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="318"/>
+        <source>Aha ha ha! Beg for mercy, rat!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="319"/>
+        <source>Still putting up a fight? Unbelievable!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="323"/>
+        <source>Winning is almost as wonderful as I am. Aha ha ha!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="324"/>
+        <source>I won again? This is getting so boring.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="325"/>
+        <source>Aha ha ha! Pathetic.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="329"/>
+        <source>Losing to you corn-fed country folk is enough to give me frown lines.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="330"/>
+        <source>That was a bit of a disappointment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="334"/>
+        <source>Kindle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_koal</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="231"/>
+        <source>A commander of the Black Hole army who is always planning his next destructive act.Endless March</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="235"/>
+        <source>Proverbs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="239"/>
+        <source>Fondue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="243"/>
+        <source>A master of road-based battles. Firepower of all units increased on roads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="247"/>
+        <source>
+Special Unit:
+Hot Tank
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="248"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="249"/>
+        <source>
+
+CO Zone Effect: 
+Units gain increased firepower on street.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="253"/>
+        <source>Movement range for all units is increased by one space. Units have more firepower on roads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="257"/>
+        <source>Forced March</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="261"/>
+        <source>Movement range for all units is increased by two spaces. Greatly increases firepower of units on roads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="265"/>
+        <source>Trail of Woe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="269"/>
+        <source>I will crush your units, one by one!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="270"/>
+        <source>I am a warrior and a scholar. My victory is all but certain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="271"/>
+        <source>Heh heh heh. I&apos;ll not surrender! Bend your knees and beg for mercy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="272"/>
+        <source>Heh heh heh... None shall escape.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="273"/>
+        <source>My speed knows no equal!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="274"/>
+        <source>Heh heh heh... Fate has smiled on me this day!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="278"/>
+        <source>I have no equal on the field of war!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="279"/>
+        <source>Wallow in your shame, swine! Wallow, I say</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="280"/>
+        <source>Victory is no accident.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="284"/>
+        <source>He! He! He!...??? What?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="285"/>
+        <source>One time you win and another time you loose.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_koal.js" line="289"/>
+        <source>Koal</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_lash</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="228"/>
+        <source>The wunderkind of the Black Hole forces. She&apos;s small but fierce. Designed most of Black Hole&apos;s recent weaponry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="232"/>
+        <source>Getting her way</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="236"/>
+        <source>Not getting it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="240"/>
+        <source>Skilled at taking advantage of terrain features. Can turn terrain effects into firepower bonuses.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="244"/>
+        <source>
+Special Unit:
+Neo Spider Tank
+
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="245"/>
+        <source>
+
+CO Zone Effect: 
+Units gain increased firepower per defense star.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="249"/>
+        <source>All units&apos; movements are unhindered by terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="253"/>
+        <source>Terrain Tactics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="257"/>
+        <source>Terrain effects are doubled and used to increase firepower. Additionally, all units movements are unhindered by terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="261"/>
+        <source>Prime Tactics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="265"/>
+        <source>Ooh!  You&apos;re so annoying!  I&apos;m gonna have to get rid of you now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="266"/>
+        <source>You&apos;re no fun... I don&apos;t like you at all!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="267"/>
+        <source>I&apos;ve had enough!  I&apos;m bored now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="268"/>
+        <source>Oooo, you&apos;re driving me nuts!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="269"/>
+        <source>You want to match wits with me? You&apos;re so silly!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="270"/>
+        <source>Tee hee! C&apos;mon! Let&apos;s play!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="274"/>
+        <source>Hee hee hee... Hm? Broken already?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="275"/>
+        <source>Tee hee hee! You&apos;re a loser!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="276"/>
+        <source>Huh? That&apos;s all you got? Wow, you&apos;re no fun!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="280"/>
+        <source>Boo! Nothing&apos;s going right! That&apos;s enough. I&apos;m going home!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="281"/>
+        <source>Oh, well. I guess I&apos;ll have to find someplace new to play. Toodles!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lash.js" line="285"/>
+        <source>Lash</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_lin</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="249"/>
+        <source>In battle the clearest thinker wins. A calm commander of Amber Corona.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="253"/>
+        <source>Teasing Will</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="257"/>
+        <source>Flying</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="261"/>
+        <source>Her ground units are very strong. Other units have normal power.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="265"/>
+        <source>
+Special Unit:
+Intel truck
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="266"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="267"/>
+        <source>
+
+CO Zone Effect: 
+Ground Units gain 30% firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="271"/>
+        <source>Increases vision range by 1 and allows her to view into hidden places. Also increases the power of her ground units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="275"/>
+        <source>Enhanced Vision</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="279"/>
+        <source>Increases vision range by 2 and allows her to view into hidden places. Also increases the power of her ground units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="283"/>
+        <source>Night Vision</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="287"/>
+        <source>Begin search and destroy operations. Bring the fight to them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="288"/>
+        <source>It&apos;s not about firepower. The force with the most information wins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="289"/>
+        <source>I see enemies in the vicinity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="290"/>
+        <source>All units move out. Discipline must be maintain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="294"/>
+        <source>Now we have some breathing space...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="295"/>
+        <source>I predicted this outcome...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="299"/>
+        <source>We had not enough intel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="300"/>
+        <source>Next time I am better prepared.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_lin.js" line="304"/>
+        <source>Lin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_mary</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="329"/>
+        <source>A ruthless commander recruited into the Amber Corona army.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="333"/>
+        <source>Cocktails</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="337"/>
+        <source>Excuses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="341"/>
+        <source>Attacked units won&apos;t repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="345"/>
+        <source>
+Special Unit:
+AT Cycle
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="346"/>
+        <source>
+Global Effect: 
+Attacked units won&apos;t repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="347"/>
+        <source>
+
+CO Zone Effect: 
+Units gain firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="351"/>
+        <source>Deployment and repairs from properties are disabled and she gets an offensive bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="355"/>
+        <source>Highway of Pain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="359"/>
+        <source>Terrain stars now reduces the foe&apos;s defense and Mary&apos;s capture bonus is greatly increased. All units gain substantial firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="363"/>
+        <source>Bloody Mary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="367"/>
+        <source>Keep marching guys, the victory is close!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="368"/>
+        <source>No pain! NO GLORY!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="369"/>
+        <source>A drop of blood is a drop of effort...you must be proud of your troops.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="370"/>
+        <source>People call me Bloody Mary....and no, you can&apos;t drink me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="371"/>
+        <source>We will fight until your last soldier is dead!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="372"/>
+        <source>I am a soldier, I fight where I am told, and I win where I fight.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="376"/>
+        <source>Heh, looks like all my effort paid off in the end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="377"/>
+        <source>Let&apos;s go, people. Let&apos;s have a drink to celebrate this victory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="378"/>
+        <source>All right troops, now you can rest, your job here is done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="382"/>
+        <source>You were better.... This time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="383"/>
+        <source>That is impossible. I need a drink now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="387"/>
+        <source>Mary</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_max</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="264"/>
+        <source>A brave and loyal friend, not to mention a strong fighter. Max hates any kind of treachery, preferring a good, old-fashioned brawl.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="268"/>
+        <source>Weight Training</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="272"/>
+        <source>Studying</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="276"/>
+        <source>Non-infantry direct-combat units are tops.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="280"/>
+        <source>
+Special Unit:
+Tank Hunter
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="281"/>
+        <source>
+Global Effect: 
+Direct Units gain additional firepower and indirect Units loose firepower and 1 firerange.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="282"/>
+        <source>
+
+CO Zone Effect: 
+Direct Units gain additional firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="286"/>
+        <source>Firepower and movement of all non-infantry direct-combat units rises.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="290"/>
+        <source>Max Force</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="294"/>
+        <source>Firepower and movement of all non-infantry direct-combat units rises greatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="298"/>
+        <source>Max Blast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="302"/>
+        <source>Roll, tanks, roll!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="303"/>
+        <source>Now you&apos;re gonna get hurt!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="304"/>
+        <source>Hey!  Give up while you still can!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="305"/>
+        <source>Wanna test might?  I won&apos;t lose!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="306"/>
+        <source>That&apos;s enough!  Get outta the road!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="307"/>
+        <source>Alright, the gloves are comin&apos; off.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="311"/>
+        <source>That was a piece of cake!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="312"/>
+        <source>Ha! It&apos;ll take more than that to beat me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="313"/>
+        <source>I&apos;m on a roll!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="317"/>
+        <source>Ouch... I let my guard down.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="318"/>
+        <source>Oh, man! Not good! What are we supposed to do now!?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="322"/>
+        <source>Max</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_meiyo</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="288"/>
+        <source>The Supreme Commander of Golden Sun. A veteran of battles who relies on experienced troops.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="292"/>
+        <source>Veterans</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="296"/>
+        <source>Recruits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="300"/>
+        <source>Firepower rises the higher a rank of a unit is. However unexperienced units are weaker.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="304"/>
+        <source>
+Global Effect: 
+Unit Ranks are more effective. Units without a Rank loose firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="305"/>
+        <source>
+
+CO Zone Effect: 
+Unit Ranks are way more effective.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="309"/>
+        <source>Units with a higher rank have even higher defence and offense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="313"/>
+        <source>Training Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="317"/>
+        <source>Units with a higher rank have even higher defence and offense. All units gain two ranks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="321"/>
+        <source>War Training</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="325"/>
+        <source>Get those recruits out of my way!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="326"/>
+        <source>An army of veterans awaits you...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="327"/>
+        <source>I know how to train soldiers!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="328"/>
+        <source>An old soldier without wounds is the most dangerous.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="332"/>
+        <source>A knight needs to be strong and experienced!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="333"/>
+        <source>The better prepared knight wins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="334"/>
+        <source>Experience always wins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="338"/>
+        <source>You getting better recuit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="339"/>
+        <source>Tsss! Some recruits have one! A catastroph.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="343"/>
+        <source>Meiyo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_melanthe</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="277"/>
+        <source>A genius scientist that harbors a great hatred for humankind. Believes plants to be a superior life forms.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="281"/>
+        <source>Botany</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="285"/>
+        <source>Bovines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="289"/>
+        <source>Effects of natural terrain are increased by one star and firepower is increased on natural terrain. Units are repaired by 1 HP less on Buildings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="293"/>
+        <source>
+Special Unit:
+Neo Spider Tank
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="294"/>
+        <source>
+Global Effect: 
+No bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="295"/>
+        <source>
+
+CO Zone Effect: 
+Units gain an additional firepower on natural terrain and increased terrain defence stars.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="299"/>
+        <source>Units on natural terrain restore three HP of health. Effects of natural terrain are increased.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="303"/>
+        <source>Synthetic Seedlings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="307"/>
+        <source>Enemies on natural terrain suffer two HP of damage. In addition, allied units on natural terrain restore four HP of health. Effects of natural terrain are increased.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="311"/>
+        <source>Agent Dreadroot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="315"/>
+        <source>Biological warfare is overrated; botanical warfare is supreme.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="316"/>
+        <source>The power of nature is on my side!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="317"/>
+        <source>&apos;Blades of grass&apos; has a new meaning now, doesn&apos;t it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="318"/>
+        <source>Don&apos;t breathe in... heh heh heh.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="319"/>
+        <source>Ground up the enemy into fertilizer!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="320"/>
+        <source>Don&apos;t have allergies? You will now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="324"/>
+        <source>The seeds of success have been sown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="325"/>
+        <source>The enemy was a lawn, and I its mower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="326"/>
+        <source>Now that... that was fun.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="330"/>
+        <source>What? Humans have defeated the almighty Nature.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="331"/>
+        <source>Nobody destroys the Nature. Next time...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="335"/>
+        <source>Melanthe</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_mina</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="225"/>
+        <source>Mina is very protective of those around her, and willing to fight to keep them safe. Don&apos;t let her cute appearance deceive you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="229"/>
+        <source>Victory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="233"/>
+        <source>Uncertainty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="237"/>
+        <source>Mina&apos;s troops have no real strength or weakness.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="241"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="242"/>
+        <source>
+
+CO Zone Effect: 
+Units gain additional firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="246"/>
+        <source>Unit&apos;s defenses may unexpectedly rise.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="250"/>
+        <source>Potent of Misfortune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="254"/>
+        <source>Most expensive enemy units suffer five HP of damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="258"/>
+        <source>Dark Lightning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="262"/>
+        <source>Enemy is in range. Activating counter-measures...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="263"/>
+        <source>You&apos;re done hurting my troops!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="264"/>
+        <source>You shouldn&apos;t have ticked me off.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="265"/>
+        <source>Let me show you something I learned fighting Black Hole.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="266"/>
+        <source>You want to storm my defenses? I am the storm!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="267"/>
+        <source>I once let someone I loved get hurt. I&apos;m not making that mistake again!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="268"/>
+        <source>Let me show you why they call it girl power.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="272"/>
+        <source>You&apos;ll never hurt my friends again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="273"/>
+        <source>Well done girls. Let&apos;s go home.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="274"/>
+        <source>They paid the price for their aggression.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="278"/>
+        <source>I hate losing like this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="279"/>
+        <source>No, I need to be stronger than this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mina.js" line="283"/>
+        <source>Mina</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_minamoto</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="274"/>
+        <source>A skilled but arrogant CO and a master swordsman who grew up in the mountains of Golden Sun.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="278"/>
+        <source>Rice Cakes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="282"/>
+        <source>Mackerel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="286"/>
+        <source>Units near mountains have increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="290"/>
+        <source>
+Special Unit:
+Neo Spider Tank
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="291"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="292"/>
+        <source>
+
+CO Zone Effect: 
+Units near Mountains gain additional firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="296"/>
+        <source>Direct units can blow lighter enemies away when attacking.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="300"/>
+        <source>Wind Blade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="304"/>
+        <source>Unit movement is increased by two, and large direct units blow enemies away.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="308"/>
+        <source>Storm Blades</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="312"/>
+        <source>Clear a path! We shall not stop for any man!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="313"/>
+        <source>You fight skillfully... But I fight flawlessly!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="314"/>
+        <source>Are you familiar with the taste of steel? You shall be soon!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="315"/>
+        <source>Hm hm hm... Are you trying to mock me, or is this truly your best effort?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="316"/>
+        <source>Mountain winds, hone my blade... and scatter my enemies!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="317"/>
+        <source>Begone! I do not have time to waste on peons such as yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="321"/>
+        <source>Hm hm hm! Perhaps next time I should use a wooden sword?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="322"/>
+        <source>The battle has ended. Yield now, or suffer for this insolence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="323"/>
+        <source>Hm hm hm... I can&apos;t fault you for having tried!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="327"/>
+        <source>My Emperor... I have failed you...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="328"/>
+        <source>I underestimated your skill, nothing more!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="332"/>
+        <source>Minamoto</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_nana</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="301"/>
+        <source>The lovable, cute, and amazingly talented granddaughter of Hachi. Known to be incredibly scary when angry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="305"/>
+        <source>Artemis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="309"/>
+        <source>Ozzy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="313"/>
+        <source>Indirect attacks deal one HP of damage to all nearby units, no matter their allegiance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="317"/>
+        <source>
+Special Unit:
+Siege Cannon
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="318"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="319"/>
+        <source>
+
+CO Zone Effect: 
+Indirect attacks deal one HP of damage to all nearby units, no matter their allegiance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="323"/>
+        <source>Direct attacks deal one HP of damage to the nearest enemy unit. Nana&apos;s units are no longer affected by collateral damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="327"/>
+        <source>Chain Reaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="331"/>
+        <source>Indirect attacks deal two HP of damage to all units within a large blast radius. Nana&apos;s units are no longer affected by collateral damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="335"/>
+        <source>Explosive Tantrum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="339"/>
+        <source>Let&apos;s go, boys!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="340"/>
+        <source>You made me mad!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="341"/>
+        <source>Stop annoying me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="342"/>
+        <source>I&apos;m gonna kick your butt!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="343"/>
+        <source>A battle with me is a greater honor than you deserve!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="344"/>
+        <source>I want to end this fast!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="345"/>
+        <source>Don&apos;t be such a meanie!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="349"/>
+        <source>Aww, you put up a good fight though!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="350"/>
+        <source>Hehe! You&apos;re funny!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="351"/>
+        <source>You look so cute when you lose!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="355"/>
+        <source>Now I&apos;m mad...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="356"/>
+        <source>This should have been easy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nana.js" line="360"/>
+        <source>Nana</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_napoleon</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="254"/>
+        <source>The current second commander of the Metal Army. Believes Metal Army&apos;s ingenuity gives it a right to control the world.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="258"/>
+        <source>Sudoku</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="262"/>
+        <source>Horror Movies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="266"/>
+        <source>Units have high defensive capabilities.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="270"/>
+        <source>
+Special Unit:
+Iron Shield Generator
+
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="271"/>
+        <source>
+
+CO Zone Effect: 
+Defense is increased, even more against indirect units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="275"/>
+        <source>Units cannot take damage that is more than half of their current HP in a single attack.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="279"/>
+        <source>Blast Shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="283"/>
+        <source>Units fight as though they were four HP stronger and inflict extra damage relative to their terrain cover.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="287"/>
+        <source>Last Stand</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="291"/>
+        <source>Me and what army, you ask? I have many more soldiers than you think.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="292"/>
+        <source>Size does not matter in a battle of wills.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="293"/>
+        <source>I can take any attack. You would be wrong to test that statement.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="294"/>
+        <source>You can give up now and avoid further bloodshed.  Either way, though, my troops simply won&apos;t die.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="295"/>
+        <source>My casualties are not dead, but simply waiting to fight again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="296"/>
+        <source>I need not worry about attrition.  On the other hand, you do.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="300"/>
+        <source>The survival of the Metal Army is assured.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="301"/>
+        <source>My casualties are recovering. Yours are not so lucky.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="302"/>
+        <source>Why were you so confident? Success is earned, not granted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="306"/>
+        <source>Our losses are unacceptable. I will fix that.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="307"/>
+        <source>Stand aside; I will deal with them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="311"/>
+        <source>Napoleon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_nell</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="183"/>
+        <source>Rachel&apos;s older sister and supreme commander of the Orange Star army, Nell is an able commanding officer with a superb sense of fashion.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="187"/>
+        <source>Willful students</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="191"/>
+        <source>Downtime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="195"/>
+        <source>Sometimes strikes with slightly more force than expected. She&apos;s the first to tell you she was born lucky.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="199"/>
+        <source>
+Global Effect: 
+No Effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="200"/>
+        <source>
+
+CO Zone Effect: 
+Units have more luck.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="204"/>
+        <source>Has a chance to strike with more damage than expected. Lucky!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="208"/>
+        <source>Lucky Star</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="212"/>
+        <source>Improves her chance to strike with massive damage. Very lucky!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="216"/>
+        <source>Lady Luck</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="220"/>
+        <source>Luck IS a skill!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="221"/>
+        <source>Hmm... Time to get serious!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="222"/>
+        <source>I&apos;m just getting started!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="223"/>
+        <source>Don&apos;t hate me just because I&apos;m lucky!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="224"/>
+        <source>Everything will work out!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="225"/>
+        <source>I&apos;m feelin&apos; lucky!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="229"/>
+        <source>Did I go too far?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="230"/>
+        <source>Lady luck was with me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="231"/>
+        <source>...And that&apos;s how it&apos;s done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="235"/>
+        <source>Seems like I just wasn&apos;t lucky enough...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="236"/>
+        <source>Congratulations! You&apos;ve beaten me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="240"/>
+        <source>Nell</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_olaf</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="190"/>
+        <source>He may be a pompous braggart, but his tactical prowess has earned him the respect of his peers and the admiration of his people. Old Man Winter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="194"/>
+        <source>Warm boots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="198"/>
+        <source>Rain clouds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="202"/>
+        <source>Winter poses no problem for Olaf or his troops. Snow causes his firepower to rise, and his troops can move through it without any penalties.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="206"/>
+        <source>
+Global Effect: 
+Winter poses no problem for Olaf or his troops.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="207"/>
+        <source>
+
+CO Zone Effect: 
+Firepower is increased by during Snow.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="211"/>
+        <source>Causes snow to fall for one day, causing his firepower to rise.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="215"/>
+        <source>Blizzard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="219"/>
+        <source>A mighty blizzard causes two HP of damage to all enemy troops. The snow will also cause his firepower to rise for one day.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="223"/>
+        <source>Winter Fury</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="227"/>
+        <source>Oho ho ho.  Do you think your pitiful troops can stand the cold?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="228"/>
+        <source>Neither man nor machine can withstand the fury of nature!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="229"/>
+        <source>You&apos;re going to regret challenging me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="230"/>
+        <source>Let the winds of war bring snow!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="231"/>
+        <source>I&apos;ll bury you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="232"/>
+        <source>Your weapons are powerless before the might of nature!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="236"/>
+        <source>Olaf&apos;s troops know no match!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="237"/>
+        <source>I won! ...That is...we won!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="238"/>
+        <source>In the end, Olaf stands victorious!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="242"/>
+        <source>Unbelievable! We&apos;ve been forced to withdraw? What&apos;s going on?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="243"/>
+        <source>Next time, I will give them a display of true might! Mark my words!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="247"/>
+        <source>Olaf</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_ozzy</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="212"/>
+        <source>A psychoanalyst who specializes in defensive tactics when he&apos;s not playing his guitar. A habitual womanizer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="216"/>
+        <source>Mind Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="220"/>
+        <source>Waiting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="224"/>
+        <source>Ozzy&apos;s defensive tactics lowers the amount of damage his units take.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="228"/>
+        <source>
+Special Unit:
+Iron Shield Generator
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="229"/>
+        <source>
+Global Effect: 
+No Effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="230"/>
+        <source>
+
+CO Zone Effect: 
+Defense is increased.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="234"/>
+        <source>Units gain a modest defense boost. Enemy counterattacks are less effective.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="238"/>
+        <source>Hammer On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="242"/>
+        <source>Defense rises dramatically. Counterattack strength is doubled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="246"/>
+        <source>Grand Finale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="250"/>
+        <source>IT&apos;S BEEN A LONG TIME SINCE I ROCK &apos;N ROLLED, MMM-HMM!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="251"/>
+        <source>So when&apos;re you gunna start fighting?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="252"/>
+        <source>Time to unleash the MAGIC...the SPANISH CASTLE magic...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="253"/>
+        <source>Jet Black, Johnny B...Killer Queen...Dizzy Lizzy, &apos;n Major Tom...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="254"/>
+        <source>Let&apos;s crank up the gain a little bit, shall we?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="255"/>
+        <source>You&apos;re still there? Guess I&apos;d better start trying.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="259"/>
+        <source>Finally. Can I get back to my guitar now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="260"/>
+        <source>So nobody ever told you how it was gunna be, eh?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="261"/>
+        <source>I could say something cliche here, but I think I&apos;ve done enough already.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="265"/>
+        <source>That doesn&apos;t rock.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="266"/>
+        <source>That wasn&apos;t one of my best concerts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="270"/>
+        <source>Ozzy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_penny</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="190"/>
+        <source>Youngest child of Caulder. She is still too young to know right from wrong.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="194"/>
+        <source>Mr. Bear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="198"/>
+        <source>Broken &quot;Toys&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="202"/>
+        <source>Her troops are immune to all weather effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="206"/>
+        <source>
+Global Effect: 
+Her troops are immune to all weather effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="207"/>
+        <source>
+
+CO Zone Effect: 
+10% increased firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="211"/>
+        <source>Changes the weather to a random one for two days.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="215"/>
+        <source>Stormfront</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="219"/>
+        <source>Changes the weather to a random one for two days and she gets a firepower boost for this turn.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="220"/>
+        <source>During rain she gets additionally improved vision.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="221"/>
+        <source>During snow she gets additionally improved movement.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="222"/>
+        <source>During sandstorm she gets additionally improved firerange for her indirects.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="226"/>
+        <source>Weatherchaos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="238"/>
+        <source>Tee he he!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="231"/>
+        <source>Nice weather we&apos;re having</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="232"/>
+        <source>Giggle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="236"/>
+        <source>Daddy will be pleased!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="237"/>
+        <source>Wow! I&apos;m getting the hang of this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="242"/>
+        <source>Mr. Bear we lost our toys.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="243"/>
+        <source>You don&apos;t get Mr. Bear. He&apos;s mine!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="247"/>
+        <source>Penny</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk</name>
+    <message>
+        <location filename="../resources/scripts/general/co_perk.js" line="330"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_apc_guard</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_apc_guard.js" line="18"/>
+        <source>Increases the transporter defense by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_apc_guard.js" line="26"/>
+        <source>Defense +10%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_apc_guard.js" line="30"/>
+        <source>Defensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_apcboost</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_apcboost.js" line="17"/>
+        <source>Increases the movement range of all transporters by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_apcboost.js" line="25"/>
+        <source>Boost +1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_backstab</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_backstab.js" line="18"/>
+        <source>Increases the dive/hide attack by 15%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_backstab.js" line="26"/>
+        <source>Backstab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_backstab.js" line="30"/>
+        <source>Offensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_banshee</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_banshee.js" line="17"/>
+        <source>Dive/Hide fuel cost +2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_banshee.js" line="25"/>
+        <source>Banshee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_banshee.js" line="29"/>
+        <source>General Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_bruiser_5</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_bruiser_5.js" line="18"/>
+        <source>Increases the direct attack of units by 5%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_bruiser_5.js" line="26"/>
+        <source>Bruiser +5%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_bruiser_5.js" line="30"/>
+        <source>Offensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_bruiser_8</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_bruiser_8.js" line="18"/>
+        <source>Increases the direct attack of units by 8%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_bruiser_8.js" line="26"/>
+        <source>Bruiser +8%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_bruiser_8.js" line="30"/>
+        <source>Offensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_classic_apc</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_classic_apc.js" line="18"/>
+        <source>Decreases the transporter defense by 20%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_classic_apc.js" line="26"/>
+        <source>Classic APC -20%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_classic_apc.js" line="30"/>
+        <source>Defensive Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_climber</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_climber.js" line="31"/>
+        <source>Sets movement costs over mountains to 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_climber.js" line="39"/>
+        <source>Climber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_climber.js" line="43"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_com_attacker</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_com_attacker.js" line="16"/>
+        <source>Increases the attack boost per tower by 5%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_com_attacker.js" line="24"/>
+        <source>Com Attacker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_com_attacker.js" line="28"/>
+        <source>Offensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_com_defender</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_com_defender.js" line="16"/>
+        <source>Increases the defense boost per tower by 5%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_com_defender.js" line="24"/>
+        <source>Com Defender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_com_defender.js" line="28"/>
+        <source>Defensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_conquerer</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_conquerer.js" line="14"/>
+        <source>Increases the capture rate by 2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_conquerer.js" line="22"/>
+        <source>Conquerer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_country_hick</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_country_hick.js" line="25"/>
+        <source>Decreases the attack from buildings by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_country_hick.js" line="33"/>
+        <source>Country Hick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_country_hick.js" line="37"/>
+        <source>Terrain Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_cursed</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_cursed.js" line="14"/>
+        <source>Increases the missfortune of units by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_cursed.js" line="22"/>
+        <source>Cursed -10%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_cursed.js" line="26"/>
+        <source>Offensive Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_drunk_driver</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_drunk_driver.js" line="34"/>
+        <source>Decreases the attack from roads by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_drunk_driver.js" line="42"/>
+        <source>Drunk Driver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_drunk_driver.js" line="46"/>
+        <source>Terrain Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_duct_tape</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_duct_tape.js" line="14"/>
+        <source>Decreases the base repair by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_duct_tape.js" line="22"/>
+        <source>Duct Tape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_duct_tape.js" line="26"/>
+        <source>General Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_eagleeye</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_eagleeye.js" line="14"/>
+        <source>Increases the vision range of units by 2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_eagleeye.js" line="22"/>
+        <source>Eagle Eye</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_enflakenator</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_enflakenator.js" line="40"/>
+        <source>+15%/+10% Max/Min Luck Roll, 2x Effect during COP, 3x Effect during SCOP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_enflakenator.js" line="48"/>
+        <source>Enflakenator -10%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_enflakenator.js" line="52"/>
+        <source>Offensive Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_facestab</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_facestab.js" line="18"/>
+        <source>Decreases the dive/hide attack by 20%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_facestab.js" line="26"/>
+        <source>Facestab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_facestab.js" line="30"/>
+        <source>Offensive Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_flat_tires</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_flat_tires.js" line="17"/>
+        <source>Decreases the movement range of all transporters by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_flat_tires.js" line="25"/>
+        <source>Flat Tires -1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_flat_tires.js" line="29"/>
+        <source>General Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_flimsy</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_flimsy.js" line="23"/>
+        <source>Decreases the defence of units by 10% and increases the power charge speed by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_flimsy.js" line="31"/>
+        <source>Flimsy -10%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_flimsy.js" line="35"/>
+        <source>Defensive Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_frostbitten</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_frostbitten.js" line="21"/>
+        <source>Decreases the attack of units by 20% during snow.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_frostbitten.js" line="29"/>
+        <source>Frostbitten</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_frostbitten.js" line="33"/>
+        <source>Weather Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_gear_head</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_gear_head.js" line="14"/>
+        <source>Increases the base repair by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_gear_head.js" line="22"/>
+        <source>Mechanic</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_glass_eyes</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_glass_eyes.js" line="18"/>
+        <source>Decreases the indirect attack of units by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_glass_eyes.js" line="26"/>
+        <source>Glass Eyes -10%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_glass_eyes.js" line="30"/>
+        <source>Offensive Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_glass_jaw</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_glass_jaw.js" line="19"/>
+        <source>Decreases the direct-fire defense by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_glass_jaw.js" line="27"/>
+        <source>Glass Jaw -10%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_glass_jaw.js" line="31"/>
+        <source>Defensive Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_gold_rush</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_gold_rush.js" line="14"/>
+        <source>Increases the income from each building by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_gold_rush.js" line="22"/>
+        <source>Gold Rush</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_hachis_soul</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_hachis_soul.js" line="28"/>
+        <source>During your Superpower you can build units from cities.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_hachis_soul.js" line="36"/>
+        <source>Hachi&apos;s Soul</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_hachis_soul.js" line="40"/>
+        <source>Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_high_and_dry</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_high_and_dry.js" line="21"/>
+        <source>Increases the attack of units by 20% during rain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_high_and_dry.js" line="29"/>
+        <source>High and Dry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_high_and_dry.js" line="33"/>
+        <source>Weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_hippy</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_hippy.js" line="14"/>
+        <source>Decreases the capture rate by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_hippy.js" line="22"/>
+        <source>Hippy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_hippy.js" line="26"/>
+        <source>General Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_icebreaker</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_icebreaker.js" line="21"/>
+        <source>Increases the attack of units by 20% during snow.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_icebreaker.js" line="29"/>
+        <source>Icebreaker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_icebreaker.js" line="33"/>
+        <source>Weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_income_tax</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_income_tax.js" line="14"/>
+        <source>Decreases the income from each building by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_income_tax.js" line="22"/>
+        <source>Income Tax</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_income_tax.js" line="26"/>
+        <source>General Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_intel_leak</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_intel_leak.js" line="14"/>
+        <source> +1 Enemy Terrain Stars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_intel_leak.js" line="22"/>
+        <source>Intel Leak</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_intel_leak.js" line="26"/>
+        <source>General Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_invader</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_invader.js" line="14"/>
+        <source>Increases the capture rate by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_invader.js" line="22"/>
+        <source>Invader</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_leader</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_leader.js" line="14"/>
+        <source>Increases the CO-Zone of the CO by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_leader.js" line="22"/>
+        <source>Leader</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_light_mist</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_light_mist.js" line="14"/>
+        <source>Decreases the vision range of units by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_light_mist.js" line="22"/>
+        <source>Light Mist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_light_mist.js" line="26"/>
+        <source>General Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_luck_10</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_luck_10.js" line="14"/>
+        <source>Increases the luck of units by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_luck_10.js" line="22"/>
+        <source>Luck +10%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_luck_10.js" line="26"/>
+        <source>Offensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_luck_5</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_luck_5.js" line="14"/>
+        <source>Increases the luck of units by 5%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_luck_5.js" line="22"/>
+        <source>Luck +5%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_luck_5.js" line="26"/>
+        <source>Offensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_mechanic</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_mechanic.js" line="14"/>
+        <source>Increases the base repair by 2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_mechanic.js" line="22"/>
+        <source>Gear Head</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_mountaineer</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_mountaineer.js" line="29"/>
+        <source>Increases the attack from mountains by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_mountaineer.js" line="37"/>
+        <source>Mountaineer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_mountaineer.js" line="41"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_no_sherpa</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_no_sherpa.js" line="29"/>
+        <source>Decreases the attack from mountains by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_no_sherpa.js" line="37"/>
+        <source>No sherpa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_no_sherpa.js" line="41"/>
+        <source>Terrain Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_null_luck</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_null_luck.js" line="14"/>
+        <source>Decreases the maximum luck of units by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_null_luck.js" line="22"/>
+        <source>Null Luck -10%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_null_luck.js" line="26"/>
+        <source>Offensive Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_pacifist</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_pacifist.js" line="14"/>
+        <source>Decreases the capture rate by 2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_pacifist.js" line="22"/>
+        <source>Pacifist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_pacifist.js" line="26"/>
+        <source>General Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_pathfinder</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_pathfinder.js" line="36"/>
+        <source>Sets movement costs over woods to 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_pathfinder.js" line="44"/>
+        <source>Pathfinder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_pathfinder.js" line="48"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_prairie_dog</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_prairie_dog.js" line="27"/>
+        <source>Sets movement costs over plains to 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_prairie_dog.js" line="35"/>
+        <source>Prairie Dog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_prairie_dog.js" line="39"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_ranger</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_ranger.js" line="34"/>
+        <source>Increases the attack from woods by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_ranger.js" line="42"/>
+        <source>Ranger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_ranger.js" line="46"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_refiller</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_refiller.js" line="30"/>
+        <source>Refills ammo and fuel for all your units during Power and Superpower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_refiller.js" line="38"/>
+        <source>Refiller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_refiller.js" line="42"/>
+        <source>Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_reparations</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_reparations.js" line="19"/>
+        <source>2% of Damage is lost as funds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_reparations.js" line="27"/>
+        <source>Reparations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_reparations.js" line="31"/>
+        <source>General Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_roadrage</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_roadrage.js" line="34"/>
+        <source>Increases the attack from roads by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_roadrage.js" line="42"/>
+        <source>Road Rage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_roadrage.js" line="46"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_sale_price_5</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sale_price_5.js" line="14"/>
+        <source>Production cost -5%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sale_price_5.js" line="22"/>
+        <source>Sale Price -5%</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_sale_price_8</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sale_price_8.js" line="14"/>
+        <source>Production cost -8%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sale_price_8.js" line="22"/>
+        <source>Sale Price -8%</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_sand_scorpion</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sand_scorpion.js" line="21"/>
+        <source>Increases the attack of units by 20% during sandstorm.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sand_scorpion.js" line="29"/>
+        <source>Sand Scorpion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sand_scorpion.js" line="33"/>
+        <source>Weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_sandy_eyes</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sandy_eyes.js" line="21"/>
+        <source>Decreases the attack of units by 20% during sandstorm.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sandy_eyes.js" line="29"/>
+        <source>Sandy Eyes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sandy_eyes.js" line="33"/>
+        <source>Weather Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_scout</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_scout.js" line="14"/>
+        <source>Increases the vision range of units by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_scout.js" line="22"/>
+        <source>Scout</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_seamanship</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_seamanship.js" line="30"/>
+        <source>Increases the attack from sea by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_seamanship.js" line="38"/>
+        <source>Seamanship</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_seamanship.js" line="42"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_seasick</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_seasick.js" line="30"/>
+        <source>Decreases the attack from sea by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_seasick.js" line="38"/>
+        <source>Seasick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_seasick.js" line="42"/>
+        <source>Terrain Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_seawalker</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_seawalker.js" line="32"/>
+        <source>Sets movement costs on sea to 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_seawalker.js" line="40"/>
+        <source>Seawalker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_seawalker.js" line="44"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_sharpshooter_5</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sharpshooter_5.js" line="18"/>
+        <source>Increases the indirect attack of units by 5%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sharpshooter_5.js" line="26"/>
+        <source>Sharpshooter +5%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sharpshooter_5.js" line="30"/>
+        <source>Offensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_sharpshooter_8</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sharpshooter_8.js" line="18"/>
+        <source>Increases the indirect attack of units by 8%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sharpshooter_8.js" line="26"/>
+        <source>Sharpshooter +8%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sharpshooter_8.js" line="30"/>
+        <source>Offensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_sickly</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sickly.js" line="34"/>
+        <source>Decreases the attack from woods by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sickly.js" line="42"/>
+        <source>Sickly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sickly.js" line="46"/>
+        <source>Terrain Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_signal_loss</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_signal_loss.js" line="16"/>
+        <source>Decreases the attack boost per tower by 5%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_signal_loss.js" line="24"/>
+        <source>Signal Loss</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_signal_loss.js" line="28"/>
+        <source>Offensive Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_slam_guard_12</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_slam_guard_12.js" line="19"/>
+        <source>Increases the direct-fire defense by 12%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_slam_guard_12.js" line="27"/>
+        <source>Slam Guard +12%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_slam_guard_12.js" line="31"/>
+        <source>Defensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_slam_guard_8</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_slam_guard_8.js" line="19"/>
+        <source>Increases the direct-fire defense by 8%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_slam_guard_8.js" line="27"/>
+        <source>Slam Guard +8%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_slam_guard_8.js" line="31"/>
+        <source>Defensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_sneaky</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sneaky.js" line="17"/>
+        <source>Dive/Hide fuel cost -1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sneaky.js" line="25"/>
+        <source>Sneaky</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_snipe_guard_12</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_snipe_guard_12.js" line="19"/>
+        <source>Increases the indirect-fire defense by 12%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_snipe_guard_12.js" line="27"/>
+        <source>Snipe Guard +12%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_snipe_guard_12.js" line="31"/>
+        <source>Defensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_snipe_guard_8</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_snipe_guard_8.js" line="19"/>
+        <source>Increases the indirect-fire defense by 8%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_snipe_guard_8.js" line="27"/>
+        <source>Snipe Guard +8%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_snipe_guard_8.js" line="31"/>
+        <source>Defensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_softie</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_softie.js" line="18"/>
+        <source>Decreases the direct attack of units by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_softie.js" line="26"/>
+        <source>Softie -10%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_softie.js" line="30"/>
+        <source>Offensive Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_sopping_wet</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sopping_wet.js" line="21"/>
+        <source>Decreases the attack of units by 20% during rain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sopping_wet.js" line="29"/>
+        <source>Sopping Wet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_sopping_wet.js" line="33"/>
+        <source>Weather Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_star_drain</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_star_drain.js" line="14"/>
+        <source>Decreases the power charge speed by 20%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_star_drain.js" line="22"/>
+        <source>Star Drain -20%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_star_drain.js" line="26"/>
+        <source>Power Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_star_power</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_star_power.js" line="14"/>
+        <source>Power meter fills up more quickly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_star_power.js" line="22"/>
+        <source>Star Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_star_power.js" line="26"/>
+        <source>Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_stealthy</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_stealthy.js" line="17"/>
+        <source>Dive/Hide fuel cost -2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_stealthy.js" line="25"/>
+        <source>Stealthy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_stumbler</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_stumbler.js" line="22"/>
+        <source>Decreases the movement range of all units by 1 during power and by 2 during superpower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_stumbler.js" line="30"/>
+        <source>Stumbler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_stumbler.js" line="34"/>
+        <source>Power Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_surrender</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_surrender.js" line="14"/>
+        <source>Decreases the counter attack by 25%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_surrender.js" line="22"/>
+        <source>Surrender -25%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_surrender.js" line="26"/>
+        <source>Offensive Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_tax_hike</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_tax_hike.js" line="14"/>
+        <source>Production cost +10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_tax_hike.js" line="22"/>
+        <source>Tax Hike 10%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_tax_hike.js" line="26"/>
+        <source>General Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_underpowered</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_underpowered.js" line="23"/>
+        <source>Decreases the attack of units by 10% and increases the power charge speed by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_underpowered.js" line="31"/>
+        <source>Underpowered -10%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_underpowered.js" line="35"/>
+        <source>Offensive Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_unusual_hat</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_unusual_hat.js" line="19"/>
+        <source>Decreases the indirect-fire defense by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_unusual_hat.js" line="27"/>
+        <source>Unusual Hat -10%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_unusual_hat.js" line="31"/>
+        <source>Defensive Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_urban_fighter</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_urban_fighter.js" line="25"/>
+        <source>Increases the attack from buildings by 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_urban_fighter.js" line="33"/>
+        <source>Urban Fighter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_urban_fighter.js" line="37"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_peter</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="232"/>
+        <source>A veteran CO with over 30 years of experience, mostly from the plains of Cosmo Land. Cautious but decisive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="236"/>
+        <source>Electric razors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="240"/>
+        <source>Excuses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="244"/>
+        <source>Peter&apos;s units plow through enemy direct-combat units with ease. However, thicker terrain weakens his attacks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="248"/>
+        <source>
+Special Unit:
+Royal Guard
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="249"/>
+        <source>
+Global Effect: 
+Direct Units have increased firepower and loose additional firepower per terrain star.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="250"/>
+        <source>
+
+CO Zone Effect: 
+Direct Units have increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="255"/>
+        <source>Firepower is greatly increased against enemy direct-combat units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="259"/>
+        <source>General Offensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="263"/>
+        <source>Enemy units not on a property suffer 2 HP of damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="267"/>
+        <source>Bombing Run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="271"/>
+        <source>We&apos;re going in, boys. Wait for the signal, then strike!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="272"/>
+        <source>You won&apos;t even have time to take cover.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="273"/>
+        <source>It&apos;s time to tear through their tanks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="274"/>
+        <source>Bogged down? Me? Ha! You seriously overestimate yourself.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="275"/>
+        <source>I&apos;ve been down there with the grunts... I know what&apos;s feasible and what&apos;s not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="276"/>
+        <source>I may not be unbeatable, but you&apos;re obviously not either.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="280"/>
+        <source>Experience is the key to my success.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="281"/>
+        <source>I hope you learned something from this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="282"/>
+        <source>What did you think you were doing with those tanks?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="286"/>
+        <source>Your tanks were better than mine.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="287"/>
+        <source>You&apos;re never to old to learn some new moves.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="291"/>
+        <source>Peter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_rachel</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="219"/>
+        <source>Brings a breath of fresh air to her troops. Strives to follow in the footsteps of her older sister, Nell. Led the Allied Nations during the Omega war. Rocket Girl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="223"/>
+        <source>Hard Work</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="227"/>
+        <source>Excuses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="231"/>
+        <source>Her troops are quite hardworking, and they increase repairs by one on properties.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="235"/>
+        <source>
+Global Effect: 
+Units have increased repairs by one on properties.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="236"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="240"/>
+        <source>Has a chance to strike with more damage than expected. Lucky!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="244"/>
+        <source>Lucky Lass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="248"/>
+        <source>Launches three missiles from Orange Star HQ in Omega Land.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="252"/>
+        <source>Covering Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="256"/>
+        <source>I will protect this land to the end!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="257"/>
+        <source>This time, I&apos;m serious!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="258"/>
+        <source>You don&apos;t have a chance!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="259"/>
+        <source>I&apos;m going to send you packing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="260"/>
+        <source>Don&apos;t pick a fight with me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="261"/>
+        <source>Finally, some real competition!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="265"/>
+        <source>Another one down... Who&apos;s next?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="266"/>
+        <source>I never give up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="267"/>
+        <source>Don&apos;t take me lightly just because I&apos;m cute!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="271"/>
+        <source>You beat me! Hmmm... Not bad!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="272"/>
+        <source>You&apos;ve got to be kidding me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="276"/>
+        <source>Rachel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_random</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="16"/>
+        <source>A random CO will appear.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="20"/>
+        <source>Randomness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="24"/>
+        <source>Prediction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="28"/>
+        <source>Selects a random CO from all available CO&apos;s.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="32"/>
+        <location filename="../resources/scripts/cos/co_random.js" line="40"/>
+        <source>Random Effect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="36"/>
+        <source>Random Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="44"/>
+        <source>Random Super Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="48"/>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="60"/>
+        <source>Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_rattigan</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="273"/>
+        <source>A dutiful CO of the Yellow Comet army addled by a childhood phobia. Blames Sensei for Yellow Comet&apos;s lack of former glory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="277"/>
+        <source>Yellow Comet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="281"/>
+        <source>Infestations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="285"/>
+        <source>Rattigan&apos;s troops are trained to be extremely capable at dealing with large regiments of units, but are taken off guard by lone units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="289"/>
+        <source>
+Special Unit:
+Auto Tank
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="290"/>
+        <source>
+Global Effect: 
+Units have increased firepower against large regiments of units and reduced firepower against lone units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="291"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower against large regiments of units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="295"/>
+        <source>Receives a small offensive boost when attacking enemies in groups. Movement is increased by one space.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="299"/>
+        <source>Raid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="303"/>
+        <source>Receives a firepower and defense boost for engaging enemies in groups. Enemy units suffer one HP of damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="307"/>
+        <source>The Sweep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="311"/>
+        <source>All those enemy men... heh, perfect!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="312"/>
+        <source>G-gah! They&apos;re everywhere!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="313"/>
+        <source>Hrumph! This&apos;ll learn yeh!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="314"/>
+        <source>Heh, could Sensei do THIS?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="315"/>
+        <source>Who the heck taught you to fight?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="316"/>
+        <source>Stay on your toes! I&apos;m talking to you!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="320"/>
+        <source>With all of those troops, you&apos;d think they&apos;d last longer...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="321"/>
+        <source>A-aughk!! Uhm… I mean… congratulations, men.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="322"/>
+        <source>With Yellow Comet on the line, I can&apos;t lose.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="326"/>
+        <source>What? You had enough troops...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="327"/>
+        <source>Sensei that&apos;s you&apos;re fault!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="331"/>
+        <source>Rattigan</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_roboandy</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="241"/>
+        <source>Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers. So she fixed the problem by putting it in the original Robo-Andy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="245"/>
+        <source>Puppet Shows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="249"/>
+        <source>Housework</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="253"/>
+        <source>He gets firepower for his powermeter, but his firepower may also drop drastically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="257"/>
+        <source>
+Special Unit:
+AT Cycle
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="258"/>
+        <source>
+Global Effect: 
+Units gain firepower and misfortune per star.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="259"/>
+        <source>
+
+CO Zone Effect: 
+Units gain even more firepower and misfortune per star.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="263"/>
+        <source>His units heal 1 HP after any attack or counter-attack, and deal 1 HP damage to the offender if they are destroyed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="267"/>
+        <source>Cooldown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="271"/>
+        <source>His units heal 3 HP after any attack or counter-attack, and deal 3 HP damage to the offender if they are destroyed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="275"/>
+        <source>Critical Mass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="279"/>
+        <source>DADADA! ANNOYING PESTS DESERVE TO BE SWATTED!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="280"/>
+        <source>ERROR DETECTED. PREPARE TO BE ELIMINATED!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="281"/>
+        <source>YOU&apos;RE A RUDE ONE! EAT HEAVY METAL!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="282"/>
+        <source>KYAAA! SUCH A JERK! TIME TO DIE!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="283"/>
+        <source>WARNING! WARNING! EXECUTING EMERGENCY VENTING MODULE.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="284"/>
+        <source>YOU&apos;RE SO DISAPPOINTING. WITNESS MY POWER!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="288"/>
+        <source>USELESS CREATURE!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="289"/>
+        <source>THANK YOU FOR USING ROBO-ANDY, INFERIOR BEING!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="290"/>
+        <source>FOR MORE EXCITING PERFORMANCES PLEASE UPGRADE TO THE LATEST VERSION.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="294"/>
+        <source>HOW MAY I SERVE YOU, INFERIOR BEING?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="295"/>
+        <source>ALT+TAB! ALT+TAB! ALT+TAB!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="299"/>
+        <source>Robo-Andy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_robosturm</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="255"/>
+        <source>Black Hole was in need of new strong CO&apos;s so Lash invented a second Sturm. But he doesn&apos;t accept any orders and formed his own Army.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="259"/>
+        <source>Robots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="263"/>
+        <source>Livings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="267"/>
+        <source>His troops can move 1 point more, but they have weaker firepower and higher defense capabilities.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="271"/>
+        <source>
+Special Unit:
+Tank Hunter
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="272"/>
+        <source>
+Global Effect: 
+Units gain 1 additional movement point and have reduced firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="273"/>
+        <source>
+
+CO Zone Effect: 
+Units gain defense and have reduced firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="277"/>
+        <source>Enemy loses half of their ammo, his troops can move 1 point more and their defense rises.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="281"/>
+        <source>Mechanized Storm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="285"/>
+        <source>Enemy loses half of their ammo, take 2 HP damage, his troops can move 2 points more and their defense rises extremly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="289"/>
+        <source>Mechanized Destruction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="293"/>
+        <source>System Runtime. Error! No more enemies found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="294"/>
+        <source>...Sturm is coming...you have no chance...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="295"/>
+        <source>Order analyzed! Destroy enemies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="296"/>
+        <source>Nobody can kill a Robot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="297"/>
+        <source>This is a war of a new time!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="298"/>
+        <source>Humans beware the power of machines coming to your country.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="302"/>
+        <source>..........</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="303"/>
+        <source>...Enemy destroyed! Country conquered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="304"/>
+        <source>Robots are stronger than human beings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="308"/>
+        <source>No Program found for this Situation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="309"/>
+        <source>Inaccurate attack! This situation is impossible.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="313"/>
+        <source>Robo-Sturm</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_sabaki</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="211"/>
+        <source>A former Yellow Comet CO that started a rebellion, when she saw the state of Amber Corona. An expert at salvaging parts and field repairs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="215"/>
+        <source>Spare parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="219"/>
+        <source>Poverty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="223"/>
+        <source>Highly skilled at salvaging parts, Sabaki&apos;s units can drain HP from enemies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="227"/>
+        <source>
+Special Unit:
+Crystal Tanks
+
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="228"/>
+        <source>
+
+CO Zone Effect: 
+Units have lifesteal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="232"/>
+        <source>Units can drain even more HP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="236"/>
+        <source>Speed Salvage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="240"/>
+        <source>Units heal HP equal amount of damage they inflict.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="244"/>
+        <source>Rejuvination Raid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="248"/>
+        <source>Grab those parts! There&apos;s a tank that needs fixing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="249"/>
+        <source>Get those machines up and running! We need to push forward!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="250"/>
+        <source>Every machine has a weakness, you just have to know where to look.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="251"/>
+        <source>You may think I&apos;m nuts, but you&apos;re about to get screwed...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="252"/>
+        <source>Time to throw a wrench in their plans.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="253"/>
+        <source>Let&apos;s see how you react when the hammer falls...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="257"/>
+        <source>My army acts like a well-oiled machine.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="258"/>
+        <source>Nothing&apos;s more satisfying than killing an enemy with their own gun.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="259"/>
+        <source>Your army just fell apart out there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="263"/>
+        <source>The revolution isn&apos;t over.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="264"/>
+        <source>Even by healing my troops.. I couldn&apos;t win.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="268"/>
+        <source>Sabaki</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_sami</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="277"/>
+        <source>A strong-willed Orange Star special forces captain who loves long hair. Despite having short hair. Whatever, IS.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="281"/>
+        <source>Chocolate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="285"/>
+        <source>Cowards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="289"/>
+        <source>As an infantry specialist, her foot soldiers do more damage and capture faster. Non-infantry direct-combat units have weaker firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="293"/>
+        <source>
+Special Unit:
+Commando
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="294"/>
+        <source>
+Global Effect: 
+Transporter have 1 more movement point and infantries have increased capture rate. Non-infantry direct-combat units have weaker firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="295"/>
+        <source>
+
+CO Zone Effect: 
+Infantry Units have increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="299"/>
+        <source>Infantry units receive a movement bonus of one space. Their attack also increases. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="303"/>
+        <source>Double Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="307"/>
+        <source>All foot soldiers can capture buildings instantly. Their movement is increased by two spaces and their attack increases greatly. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="311"/>
+        <source>Victory March</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="315"/>
+        <source>You&apos;re not bad!  Now it&apos;s my turn!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="316"/>
+        <source>All right!  Time to end this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="317"/>
+        <source>Infantry... Assault!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="318"/>
+        <source>Ready or not, here I come!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="319"/>
+        <source>All right, it&apos;s make-or-break time!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="320"/>
+        <source>Move out, grunts!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="324"/>
+        <source>Mission accomplished! Awaiting orders!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="325"/>
+        <source>Commandos always complete their mission.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="326"/>
+        <source>Score one for the grunts!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="330"/>
+        <source>Things would be easier if we had more infantry units...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="331"/>
+        <source>Next time&apos;s for real. I won&apos;t lose focus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="335"/>
+        <source>Sami</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_sanjuro</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="374"/>
+        <source>A respected mercenary from Golden Sun. Once he accepts a job, he sees it through to the end no matter how difficult or dangerous it becomes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="378"/>
+        <source>Honest work</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="382"/>
+        <source>Shady business</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="386"/>
+        <source>A keen mind for his finances, he spends more for better equipment when there&apos;s a surplus and focuses on getting the best deal when he&apos;s pressed for money.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="390"/>
+        <source>
+Special Unit:
+Smuggler
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="391"/>
+        <source>
+Global Effect: 
+Unit costs are decreased when he has more income than funds and firepower is decreased.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="392"/>
+        <source>
+
+CO Zone Effect: 
+Global firepower effects are doubled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="397"/>
+        <source>When his units take combat damage, he receives a portion of the value damage in funds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="401"/>
+        <source>Heart of Gold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="405"/>
+        <source>When a unit is built, units of the same type recieve a firepower and defense boost, unhindered by terrain, and production costs reduced by half.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="409"/>
+        <source>Buying Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="413"/>
+        <source>My services are expensive, and worth every penny.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="414"/>
+        <source>Consider this a free sample!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="415"/>
+        <source>You&apos;re finished! Surrender now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="416"/>
+        <source>War is my livelihood. Can you handle my level of experience?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="417"/>
+        <source>I was born for battle. I have no limits!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="418"/>
+        <source>If you think this is strictly business, think again. The battlefield calls to me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="422"/>
+        <source>I have a reputation to keep, you know.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="423"/>
+        <source>Another job well done...where&apos;s the next fight?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="424"/>
+        <source>Did you expect anything less from a hardened mercenary?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="428"/>
+        <source>For this I get too less money</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="429"/>
+        <source>Now, I know how the Romans felt like.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="433"/>
+        <source>Sanjuro</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_sasha</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="196"/>
+        <source>Colin&apos;s older sister. Normally ladylike, but becomes daring when she gets angry. Dominatrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="200"/>
+        <source>Truffles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="204"/>
+        <source>Pork rinds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="208"/>
+        <source>Being the heir to a vast fortune, she gets an additional 10% funds from allied properties.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="212"/>
+        <source>
+Special Unit:
+Logistic Truck
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="213"/>
+        <source>
+Global Effect: 
+She gets additional funds from allied properties.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="214"/>
+        <source>
+
+CO Zone Effect: 
+Units gain additional firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="218"/>
+        <source>The more funds she has, the more she can decrease the enemy&apos;s CO power gauge.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="222"/>
+        <source>Market Crash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="226"/>
+        <source>Earns funds when she inflicts damage on a foe. The greater the damage, the more she earns.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="230"/>
+        <source>War Bonds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="234"/>
+        <source>Wealth is power.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="235"/>
+        <source>I won&apos;t go easy on you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="236"/>
+        <source>I&apos;ll keep fighting until peace is restored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="237"/>
+        <source>I will not back down.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="238"/>
+        <source>I&apos;ll show you my true strength.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="239"/>
+        <source>You&apos;ve made me very, very...upset.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="243"/>
+        <source>Even kittens have claws.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="244"/>
+        <source>Money is power.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="245"/>
+        <source>Bravo!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="249"/>
+        <source>This is like some horrible dream.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="250"/>
+        <source>This is such a nightmare.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="254"/>
+        <source>Sasha</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_sensei</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="233"/>
+        <source>A former paratrooper rumored to have been quite the commander in his day. Cranky Paratrooper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="237"/>
+        <source>Lazy, rainy days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="241"/>
+        <source>Busy malls</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="245"/>
+        <source>Copters have incredibly high firepower, but naval units are weaker. Foot soldiers have increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="249"/>
+        <source>
+Special Unit:
+Commando
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="250"/>
+        <source>
+Global Effect: 
+Copters have increased firepower and Naval Units are weaker.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="251"/>
+        <source>
+
+CO Zone Effect: 
+Copters have way more firepower and infantries higher firepower as well.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="255"/>
+        <source>Copter firepower increases. Infantry units with 9 HP appear in all his cities, ready to be moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="259"/>
+        <source>Copter Command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="263"/>
+        <source>Copter firepower increases. Mech units with 9 HP appear in all his cities, ready to be moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="267"/>
+        <source>Airborne Assault</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="271"/>
+        <source>Nothing good ever comes from war... when this is done, let&apos;s go home.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="272"/>
+        <source>I&apos;ve still got what it takes to defeat you youngsters!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="273"/>
+        <source>Paratroopers! Prepare to jump!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="274"/>
+        <source>Ha ha hah!  This will be a crushing victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="275"/>
+        <source>See what experience can do for you!?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="276"/>
+        <source>Ha ha! I didn&apos;t get old for nothing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="280"/>
+        <source>Hm hm hmmm... I&apos;ve still got what it takes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="281"/>
+        <source>Ah, time for a nap.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="282"/>
+        <source>Now we can take things nice and slow again...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="286"/>
+        <source>Hah ha! We were defeated fair and square. Score one for the young &apos;uns.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="287"/>
+        <source>Eh? The battle&apos;s over? When did that happen?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="291"/>
+        <source>Sensei</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_smitan</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="321"/>
+        <source>A violent old commander of the Green Earth army who hates limitations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="325"/>
+        <source>Dominance, yelling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="329"/>
+        <source>(Victory by) Surrender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="333"/>
+        <source>Direct units gain additional firepower against enemy units which may come under fire from indirect units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="337"/>
+        <source>
+Special Unit:
+Siege Cannon
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="338"/>
+        <source>
+Global Effect: 
+No Effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="339"/>
+        <source>
+
+CO Zone Effect: 
+Direct Units gain additional firepower for each indirect unit that can attack the defending unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="343"/>
+        <source>Increases the range of indirect units by one space. Indirect units can move after firing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="347"/>
+        <source>Scramble Tactics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="351"/>
+        <source>Increases the range of indirect units by two spaces. Indirect units can fire twice and move after firing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="355"/>
+        <source>Flare Drive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="359"/>
+        <source>Whites of their eyes? Pahaha!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="360"/>
+        <source>It&apos;s over! Get used to it!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="361"/>
+        <source>Fire, you idiots!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="362"/>
+        <source>What&apos;re you waiting for?! SHOOT them!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="363"/>
+        <source>&apos;Calm before the storm&apos;? ... Nonsense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="364"/>
+        <source>No more games! All units, full power!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="368"/>
+        <source>Wasn&apos;t even any dust to settle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="369"/>
+        <source>Grah hah hah. Ooh, that was FUN.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="373"/>
+        <source>Grah! Ha! Ha. Ooh! What i lost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="374"/>
+        <source>This and that! And what...i&apos;ve lost?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="378"/>
+        <source>Smitan</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_sonja</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="184"/>
+        <source>Kanbei&apos;s cool and collected daughter who likes to plan before acting. She excels in gathering information. Sees All, Knows All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="188"/>
+        <source>Computers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="192"/>
+        <source>Bugs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="196"/>
+        <source>Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. However, she suffers from chronic bad luck.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="200"/>
+        <source>
+Special Unit:
+Intel truck
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="201"/>
+        <source>
+Global Effect: 
+Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="202"/>
+        <source>
+
+CO Zone Effect: 
+Units gain firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="206"/>
+        <source>Reduces enemy terrain defensive cover by two. Allows all units to see into woods and reefs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="210"/>
+        <source>Enhanced Vision</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="214"/>
+        <source>Reduces enemy terrain defensive cover by three. Allows all units to see into woods and reefs. Units always strike first, even during counterattacks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="218"/>
+        <source>Counter Break</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="222"/>
+        <source>I see right through your plans!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="223"/>
+        <source>I&apos;ll show you there&apos;s more to combat than power alone!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="224"/>
+        <source>Number of enemy troops...location... Got it! This is so easy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="225"/>
+        <source>Get me some fresh intel, stat!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="226"/>
+        <source>You can&apos;t hide from me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="227"/>
+        <source>Just like I planned...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="231"/>
+        <source>My strategy was merely better... That is all.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="232"/>
+        <source>I must review my strategy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="233"/>
+        <source>Perfect planning wins the day!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="237"/>
+        <source>... I&apos;m sorry, Father... I&apos;ve broken my promise...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="238"/>
+        <source>I have learned much from this...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="242"/>
+        <source>Sonja</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_sophie</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="277"/>
+        <source>A skilled veteran that demands perfection from her soldiers. She is small but feisty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="281"/>
+        <source>Mail Call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="285"/>
+        <source>Mess Hall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="289"/>
+        <source>Enemy counterattacks deal less damage to Sophie&apos;s units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="293"/>
+        <source>
+Special Unit:
+Commando
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="294"/>
+        <source>
+Global Effect: 
+No Effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="295"/>
+        <source>
+
+CO Zone Effect: 
+Enemy counterattacks deal less damage. Units gain firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="299"/>
+        <source>Enemy counterattacks deal no damage to Sophie&apos;s units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="303"/>
+        <source>Sudden Strike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="307"/>
+        <source>Sophie&apos;s units strike twice when ordered to attack. However, firepower is reduced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="311"/>
+        <source>Total War</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="315"/>
+        <source>Get your butts in gear troops! The bad guys are not going to wait all day for us!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="316"/>
+        <source>Give&apos;em lead men!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="317"/>
+        <source>It&apos;s time to prove that we are made of the right stuff!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="318"/>
+        <source>War ain&apos;t no picnic soldier! You have to put in 110% if you want to survive!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="319"/>
+        <source>All right, move out and try not to get yourselves killed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="320"/>
+        <source>I expect nothing but the best!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="324"/>
+        <source>Hoorah! The day is done and the battle is won!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="325"/>
+        <source>That showed them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="326"/>
+        <source>We are the finest fighting force in the world!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="330"/>
+        <source>I thought my troops would be tougher.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="331"/>
+        <source>My Soldiers lost. I can&apos;t be proud of them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="335"/>
+        <source>Sophie</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_sturm</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="182"/>
+        <source>The original commander of the Black Hole army. A mysterious invader from another world. Mastermind of the Cosmo and Macro wars. Enigma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="186"/>
+        <source>Plotting invasions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="190"/>
+        <source>Peace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="194"/>
+        <source>His troops are not affected by terrain only snow can stop him.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="198"/>
+        <source>
+Global Effect: 
+His troops are not affected by terrain except snow.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="199"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="203"/>
+        <source>A small Meteor fall from space and deal 4 HP of damage to all affected units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="207"/>
+        <source>Meteor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="211"/>
+        <source>Pulls a giant meteor from space, which deals 8 HP of damage to all affected units. Firepower and defense is increased.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="215"/>
+        <source>Meteor Strike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="219"/>
+        <source>Prepare to embrace darkness!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="220"/>
+        <source>You will tremble before my power!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="221"/>
+        <source>Fear is all you have left...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="222"/>
+        <source>You shall not survive!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="223"/>
+        <source>Burning earth!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="224"/>
+        <source>Such power... I regret crushing it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="228"/>
+        <source>Who would have thought you could oppose me?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="229"/>
+        <source>My name is Sturm. Hear it and tremble.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="230"/>
+        <source>This is but a taste of my power!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="234"/>
+        <source>Gwaaaaaaaaaahhhh! I underestimated the strength of these worms!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="235"/>
+        <source>NOOOOOOOOOOOOOOOOOOO!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="239"/>
+        <source>Sturm</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_tabitha</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="150"/>
+        <source>Belongs to the private army of Dark Matter. Eldest daughter of Caulder. Extremely cruel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="154"/>
+        <source>Breakfast in bed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="158"/>
+        <source>Stupid weak people</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="162"/>
+        <source>Her co unit is strong, weak outside of that she gets no bonuses.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="166"/>
+        <source>
+Global Effect: 
+No Effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="167"/>
+        <source>
+
+CO Zone Effect: 
+Units have 60% increased firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="171"/>
+        <source>A small attack from the great owl that deals 4 HP of damage to all affected units. Also increases the firepower of all units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="175"/>
+        <source>Firestorm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="179"/>
+        <source>A giant attack from the great owl that deals 8 HP of damage to all affected units. Firepower and defense is increased.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="183"/>
+        <source>Apocalypse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="187"/>
+        <source>Input enemy&apos;s coordinates... And now let&apos;s enjoy the show!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="188"/>
+        <source>Isn&apos;t this so much fun?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="189"/>
+        <source>I hope you don&apos;t think i&apos;m picking on you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="190"/>
+        <source>Can you really be this weak? At least try to put up a fight.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="194"/>
+        <source>That was hardly worth the trouble.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="195"/>
+        <source>At least put up a fight!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="196"/>
+        <source>I pity the weak!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="200"/>
+        <source>I&apos;m not stronger?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="201"/>
+        <source>I had no breakfast that&apos;s the problem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="205"/>
+        <source>Tabitha</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_tasha</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="245"/>
+        <source>Brown Desert soldier. Burns with desire to avenge her late brother. Aims to make Teal Isles pay for what they did.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="249"/>
+        <source>Her brother John, Revenge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="253"/>
+        <source>Teal Isles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="257"/>
+        <source>Air units have higher firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="261"/>
+        <source>
+Special Unit:
+Kirov
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="262"/>
+        <source>
+Global Effect: 
+No Effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="263"/>
+        <source>
+
+CO Zone Effect: 
+Air Units have 50% increased firepower and 30% increased defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="267"/>
+        <source>Air units have higher firepower, defense and all units can move 1 space farther.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="271"/>
+        <source>Sonic Boom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="275"/>
+        <source>Air units have impressive firepower, higher defense and all units can move 2 space farther</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="279"/>
+        <source>Fox One</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="283"/>
+        <source>All units follow my lead.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="284"/>
+        <source>The time for revenge is at hand!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="285"/>
+        <source>I will fight on, even if it costs my life!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="292"/>
+        <source>I will have my revenge!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="290"/>
+        <source>It&apos;s not about tactics - it&apos;s about passion!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="291"/>
+        <source>Revenge will be mine!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="296"/>
+        <source>This is not the end. I will fight for John.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="297"/>
+        <source>Next time... Next time i will avenge you John...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="301"/>
+        <source>Tasha</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_varlot</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="258"/>
+        <source>This CO joined the military and rose through the ranks, not quickly enough. Currently is a sub-commander.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="262"/>
+        <source>Caviar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="266"/>
+        <source>Ethics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="270"/>
+        <source>Varlot reduces the income from a property he captures by an amount proportional to its Capture Points.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="274"/>
+        <source>
+Special Unit:
+Smuggler
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="275"/>
+        <source>
+Global Effect: 
+Income is reduced for buildings he captures.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="276"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="280"/>
+        <source>His troops get a capture bonus. Varlot also gains a fraction of the enemy income.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="284"/>
+        <source>Aquisition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="288"/>
+        <source>All units are healed for 4 HP, gaining firepower for each point over 10HP they&apos;d be healed. The enemy pays for these repairs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="292"/>
+        <source>Hostile Takeover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="296"/>
+        <source>Move out!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="297"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="298"/>
+        <source>Forward march!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="299"/>
+        <source>Onward to victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="300"/>
+        <source>Never surrender!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="301"/>
+        <source>Push forward!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="305"/>
+        <source>Mission complete.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="306"/>
+        <source>Another day, another battle won.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="307"/>
+        <source>Maybe I&apos;ll be up for promotion soon...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="311"/>
+        <source>I won&apos;t get demoted for this lost!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="312"/>
+        <source>Retreat!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="316"/>
+        <source>Varlot</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_von_bolt</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="174"/>
+        <source>Former commander-in-chief of the Black Hole forces. A mysterious old man who has been alive a very, very long time. Mastermind of the Omega war. Immortal Evil</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="178"/>
+        <source>Long life</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="182"/>
+        <source>Young &apos;uns!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="186"/>
+        <source>All units have superior firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="190"/>
+        <source>
+Special Unit:
+Crystal Tanks
+
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="191"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower and increased defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="195"/>
+        <source>Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="199"/>
+        <source>Shockwave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="203"/>
+        <source>Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer three HP of damage. Firepower and defense rises.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="207"/>
+        <source>Deus Ex Machina</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="211"/>
+        <source>No matter how powerful...hhh...you are, you&apos;re...hhh...still a worm on a hook...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="212"/>
+        <source>Well...hhh...let me have a taste...hhh...of your soul.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="213"/>
+        <source>Hheh heh heh... Stop panicking... it&apos;s...hhh...almost over...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="214"/>
+        <source>Hheh heh heh. The darkness rises...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="215"/>
+        <source>The sweet scent of destruction...hhh...it makes me...hhh...feel young!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="216"/>
+        <source>Hold still...hhh...I&apos;m going to...hhhhh...suck the marrow from your bones.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="220"/>
+        <source>Predator...prey...hhh... I hunt them all...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="221"/>
+        <source>Hehh hhh hhh... Pathetic.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="222"/>
+        <source>Even death...hhh...fears me...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="226"/>
+        <source>What? Why are you Youth so strong?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="227"/>
+        <source>Nooo...I want to live forever.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="231"/>
+        <source>Von Bolt</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_walter</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="318"/>
+        <source>Commander of the Capitol Guard of Teal Islands. He excels in survival and sheer tenacity. The Long Standing Guardian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="322"/>
+        <source>Tongue Twisters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="326"/>
+        <source>Colloquialisms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="330"/>
+        <source>Using Teal Isles intelligence division, Walter can view units&apos; HP more accurately than other COs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="334"/>
+        <source>
+Special Unit:
+Intel truck
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="335"/>
+        <source>
+Global Effect: 
+No bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="336"/>
+        <source>
+
+CO Zone Effect: 
+Units gain additional firepower and defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="340"/>
+        <source>Enemies take additional damage when they attack.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="344"/>
+        <source>Memento</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="348"/>
+        <source>Massively reduces the ammo from enemy units and deals minor damage to them. Hides his units HP from enemies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="352"/>
+        <source>Magnum Opus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="356"/>
+        <source>Greater opponents have burnt out against me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="357"/>
+        <source>For the Isles sake, I will endure you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="358"/>
+        <source>I am the most stalwart foe that you will ever face!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="359"/>
+        <source>Morale is the key to victory, but you seem rather....ill equipped.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="360"/>
+        <source>A battle does not determine who is right. It determines who is left. Me, of course.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="361"/>
+        <source>The spirit of Teal Isles will carry us for eternity!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="365"/>
+        <source>Another battle has been won. Teal Isles is safe for now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="366"/>
+        <source>You have been outwitted, outmatched and outmaneuvered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="367"/>
+        <source>Hah, yet again I have stood the test of time!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="371"/>
+        <source>That wasn&apos;t the best idea to take fight.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="372"/>
+        <source>I got detected too early..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="376"/>
+        <source>Walter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_waylon</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="227"/>
+        <source>A Teal Isle Commander. Destructive, egotistical and extremely vain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="231"/>
+        <source>Living the good life</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="235"/>
+        <source>Responsibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="239"/>
+        <source>Air units have higher firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="243"/>
+        <source>
+Special Unit:
+Kirov
+
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="244"/>
+        <source>
+
+CO Zone Effect: 
+Air Units have 30% increased firepower and 40% increased defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="256"/>
+        <source>Air units get increased firepower and highly increased defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="252"/>
+        <source>Bad Company</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="260"/>
+        <source>Wingman</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="264"/>
+        <source>I&apos;m over here! C&apos;mon give me your best shot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="265"/>
+        <source>You think you can get the better of me? You&apos;ve got a lot to learn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="272"/>
+        <source>Woo-hoo!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="267"/>
+        <source>All i want is total air supremacy! Then i&apos;ll pick off your forces.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="271"/>
+        <source>The end of the world? Fine by me...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="273"/>
+        <source>How&apos;d you like that?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="277"/>
+        <source>This is not the freedom I want!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="278"/>
+        <source>The eagle has landed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="282"/>
+        <source>Waylon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_will</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="235"/>
+        <source>Former Brown Desert cadet. Joined Amber Corona after being rescued by Brenner.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="239"/>
+        <source>Brenner, Isabella</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="243"/>
+        <source>The Beast, Greyfield, Caulder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="247"/>
+        <source>His direct ground units are slightly stronger.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="251"/>
+        <source>
+Special Unit:
+Hot Tank
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="252"/>
+        <source>
+Global Effect:
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="253"/>
+        <source>
+
+CO Zone Effect: 
+Direct Ground Units have 30% increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="257"/>
+        <source>Boost movement by 1 and increases the firepower of ground units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="261"/>
+        <source>Begin of an Era</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="265"/>
+        <source>Boost movement by 2 and firepower of ground units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="269"/>
+        <source>New Era</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="273"/>
+        <source>This is our chance to win. Prepare to move out.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="274"/>
+        <source>The captain saved my life. I need to take care of it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="281"/>
+        <source>I&apos;ll never give up...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="276"/>
+        <source>There&apos;s no time. Now or never...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="280"/>
+        <source>I did it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="282"/>
+        <source>Is everyone okay?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="286"/>
+        <source>Never give up hope.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="287"/>
+        <source>I can&apos;t remember anything</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="291"/>
+        <source>Will</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_xavier</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="264"/>
+        <source>Fulfills his duties without second thought or consideration of the after-effects of his actions. Wears a pair of fake claws.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="268"/>
+        <source>Uncertainty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="272"/>
+        <source>Definitives</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="276"/>
+        <source>When Xavier&apos;s units drop to %0 HP or less, they are able to strike for maximum luck damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="282"/>
+        <source>
+Global Effect: 
+Units with %0 HP or less deal maximum luck damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="283"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="289"/>
+        <source>Attacks inflict more damage than expected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="293"/>
+        <source>Phasing Charge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="297"/>
+        <source>Units gain firepower for each own unit nearby the attacked unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="301"/>
+        <source>Reality Minus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="305"/>
+        <source>You know, the laws of physics are made to be broken. Observe.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="306"/>
+        <source>You might say I&apos;m a rather.. twisted individual.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="307"/>
+        <source>Reality is only trivial. Watch and learn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="308"/>
+        <source>Allow me to reprimand, for your atrocious command.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="309"/>
+        <source>I&apos;m sure you&apos;ll get quite a scare out of this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="310"/>
+        <source>Are you sure of the truth in what you see?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="314"/>
+        <source>... I must return to my work now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="315"/>
+        <source>See, this is reality. You never stood a chance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="316"/>
+        <source>You are intellectually inferior to me. Simple as that.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="320"/>
+        <source>That&apos;s not my reality.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="321"/>
+        <source>You were supposed to be intellectually inferior to me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="325"/>
+        <source>Xavier</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_yukio</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="270"/>
+        <source>Dark founder of the Dark Matter Cooperation. He&apos;s the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn&apos;t care if people die.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="274"/>
+        <source>Astronomic gains</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="278"/>
+        <source>Any losses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="282"/>
+        <source>As the leader of dark matter his troops have special armor and armor piercing weapons.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="286"/>
+        <source>
+Special Unit:
+Logistic Truck
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="287"/>
+        <source>
+Global Effect: 
+None.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="288"/>
+        <source>
+
+CO Zone Effect: 
+Damage against his troops is reduced. Troops deal true damage if the base damage is at least %0%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="294"/>
+        <source>A small army spawns and fights for Yukio.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="298"/>
+        <source>Invasion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="302"/>
+        <source>An army spawns and fights for Yukio. In order to support the invasion a bombardment dealing 3 Hp to half of the enemy troops is launched.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="306"/>
+        <source>Ground-Air-Invasion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="310"/>
+        <source>I show you, what true power means.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="311"/>
+        <source>I&apos;m the evil that destroys you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="312"/>
+        <source>Your weapons are the rubbish of my factories.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="313"/>
+        <source>The victory is mine!  Alea iacta est!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="314"/>
+        <source>My troops are behind you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="315"/>
+        <source>I&apos;ll become the ruler of the world.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="319"/>
+        <source>Investment...Profits...great. Continue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="320"/>
+        <source>War is just another tool to make profit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="321"/>
+        <source>Give me all your money and your lifes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="325"/>
+        <source>Even with this loss I made profit...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="326"/>
+        <source>I lost but I got your money to build a new army.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="330"/>
+        <source>Yukio</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_zandra</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="212"/>
+        <source>A youthful Co that will protect her village at all costs. She is skilled in dealing with sandstorms.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="216"/>
+        <source>Coconuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="220"/>
+        <source>Seafood</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="224"/>
+        <source>Zandra&apos;s units are unaffected by sandstorms and are fighting better during them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="228"/>
+        <source>
+Global Effect: 
+Units are unaffected by sandstorms and have increased firepower during sandstorm.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="229"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower during sandstorm.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="233"/>
+        <source>Causes sandstorm to fall for one day. Increasing the firerange of indirects by 1 and increasing her firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="237"/>
+        <source>Sand Shift</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="241"/>
+        <source>Causes sandstorm to fall for one day. Increasing the firerange of indirects by 1 and increasing her firepower. Also deals two hp damage to enemies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="245"/>
+        <source>Desert Gale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="249"/>
+        <source>It&apos;s high time that you felt the wrath of the desert winds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="250"/>
+        <source>I feel the power coming in, on the far winds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="251"/>
+        <source>You&apos;ll regret challenging me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="252"/>
+        <source>Come, father of the four winds!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="253"/>
+        <source>Your eyes will fill with sand, as you scan this wasted land...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="254"/>
+        <source>Troops, attack now, before the winds halt their blessing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="258"/>
+        <source>Everyone, hurry back to the village. Our job here is done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="259"/>
+        <source>These sacred lands will be protected for as long as I stand.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="260"/>
+        <source>Thank you, Uncle, for giving me the strength I needed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="264"/>
+        <source>I only lost because of the Snow around here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="265"/>
+        <source>What? I can&apos;t lose. We have a Global Heating.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="269"/>
+        <source>Zandra</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>createAccountDialog</name>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="33"/>
+        <source>Invalid password entered. The password needs to contain 8 letters, one capital one small letter a number and a special char.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="37"/>
+        <source>Your passwords don&apos;t match.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="41"/>
+        <source>You entered an invalid email adress.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="61"/>
+        <source>Account successfully created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="66"/>
+        <source>An account with the current username exists already. Please change your username in the options menu.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="71"/>
+        <source>Unknown error happened while creating the new account. No account was created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>cruiser</name>
+    <message>
+        <location filename="../resources/scripts/units/cruiser.js" line="35"/>
+        <source>Cruiser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/cruiser.js" line="98"/>
+        <source>&lt;r&gt;Naval Unit. Strong against air units and submarines. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Transports X 2&lt;/div&gt;&lt;r&gt; Helis.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>darkmatter</name>
+    <message>
+        <location filename="../resources/scripts/wiki/darkmatter.js" line="7"/>
+        <source>A military production company. Dark Matter originally supplied Black Hole with weapons in order to create a war to raise the income of the company. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/darkmatter.js" line="8"/>
+        <source>After three wars against the allied nations. The allied nations got some intel about the original creators of the war.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/darkmatter.js" line="9"/>
+        <source>The Intelligent Defense System section (IDS) is the research section of Dark Matter lead by Dr. Caulder. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/darkmatter.js" line="10"/>
+        <source>Dark Matter is lead by Yukio who lives to make money.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/darkmatter.js" line="20"/>
+        <source>Dark Matter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>depot</name>
+    <message>
+        <location filename="../resources/scripts/building/depot.js" line="40"/>
+        <source>Depot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/depot.js" line="45"/>
+        <source>&lt;r&gt;A civilian cargo depot that provides adequate cover and &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply&lt;/div&gt;&lt;r&gt; half their supplies each turn.&lt;/r&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>destroyer</name>
+    <message>
+        <location filename="../resources/scripts/units/destroyer.js" line="37"/>
+        <source>Battlecruiser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/destroyer.js" line="96"/>
+        <source>Naval Unit. Strong against all sea units and has decent firepower against air units. Can also attack ground units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>duster</name>
+    <message>
+        <location filename="../resources/scripts/units/duster.js" line="32"/>
+        <source>Duster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/duster.js" line="103"/>
+        <source>Air Unit. Can attack ground and air units. Medium power.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>factory</name>
+    <message>
+        <location filename="../resources/scripts/building/factory.js" line="21"/>
+        <source>Base</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/factory.js" line="55"/>
+        <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>fighter</name>
+    <message>
+        <location filename="../resources/scripts/units/fighter.js" line="36"/>
+        <source>Fighter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/fighter.js" line="103"/>
+        <source>Air Unit. Can attack air units. Most mobile aircraft.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>flak</name>
+    <message>
+        <location filename="../resources/scripts/units/flak.js" line="44"/>
+        <source>Anti Air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/flak.js" line="53"/>
+        <source>Specialised anti-air and anti-infantry unit. Can also attack ground forces.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>flare</name>
+    <message>
+        <location filename="../resources/scripts/units/flare.js" line="44"/>
+        <source>Flare</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/flare.js" line="54"/>
+        <source>&lt;r&gt;In Fog of War, can fire &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;flare rocket&lt;/div&gt;&lt;r&gt;. Illuminates &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;2 square area&lt;/div&gt;&lt;r&gt; where it lands.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>forgotPasswordDialog</name>
+    <message>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.js" line="17"/>
+        <source>You entered an invalid email adress.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.js" line="29"/>
+        <source>An e-mail with a new password was sent to your e-mail account.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.js" line="34"/>
+        <source>Invalid e-mail adress which is linked to your account.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.js" line="39"/>
+        <source>Password has been reset, but the server failed to send a mail with the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.js" line="44"/>
+        <source>Unknown error happened.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gameanimationpower</name>
+    <message>
+        <location filename="../resources/scripts/general/gameanimationpower.js" line="35"/>
+        <source>Synergy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>greenearth</name>
+    <message>
+        <location filename="../resources/scripts/wiki/greenearth.js" line="7"/>
+        <source>Green Earth&apos;s forces are extremely organized. Eagle, the leader of Green Earth, specializes in aerial combat, with Jess dominating the ground, and Drake the seas. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/greenearth.js" line="17"/>
+        <source>Green Earth</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>harbour</name>
+    <message>
+        <location filename="../resources/scripts/building/harbour.js" line="25"/>
+        <source>Harbour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/harbour.js" line="51"/>
+        <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;naval &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>heavy_ai</name>
+    <message>
+        <location filename="../resources/aidata/heavy/heavy_ai.js" line="5"/>
+        <source>Heavy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>heavy_ai1</name>
+    <message>
+        <location filename="../resources/aidata/heavy/heavy_ai1.js" line="5"/>
+        <source>Heavy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>heavy_ai2</name>
+    <message>
+        <location filename="../resources/aidata/heavy/heavy_ai2.js" line="5"/>
+        <source>Heavy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>heavy_ai3</name>
+    <message>
+        <location filename="../resources/aidata/heavy/heavy_ai3.js" line="5"/>
+        <source>Heavy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>heavy_ai4</name>
+    <message>
+        <location filename="../resources/aidata/heavy/heavy_ai4.js" line="5"/>
+        <source>Heavy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>heavy_ai5</name>
+    <message>
+        <location filename="../resources/aidata/heavy/heavy_ai5.js" line="5"/>
+        <source>Heavy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>heavy_ai6</name>
+    <message>
+        <location filename="../resources/aidata/heavy/heavy_ai6.js" line="5"/>
+        <source>Heavy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>heavy_ai7</name>
+    <message>
+        <location filename="../resources/aidata/heavy/heavy_ai7.js" line="5"/>
+        <source>Heavy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>heavy_ai8</name>
+    <message>
+        <location filename="../resources/aidata/heavy/heavy_ai8.js" line="5"/>
+        <source>Heavy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>heavy_ai9</name>
+    <message>
+        <location filename="../resources/aidata/heavy/heavy_ai9.js" line="5"/>
+        <source>Heavy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>heavy_hovercraft</name>
+    <message>
+        <location filename="../resources/scripts/units/heavy_hovercraft.js" line="44"/>
+        <source>Heavy Hovercraft</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/heavy_hovercraft.js" line="53"/>
+        <source>Reinforced Tank. Attack and defence capabilities superior to standard hovercraft. Can move over most terrains.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>heavy_tank</name>
+    <message>
+        <location filename="../resources/scripts/units/heavy_tank.js" line="44"/>
+        <source>Heavy Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/heavy_tank.js" line="53"/>
+        <source>Reinforced Tank. Attack and defence capabilities superior to standard tank.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>hoellium</name>
+    <message>
+        <location filename="../resources/scripts/units/hoellium.js" line="37"/>
+        <source>Oozium</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/hoellium.js" line="56"/>
+        <source>Can move over all ground terrains and enemy units. Immediatly destroys units it moves over.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>hovercraft</name>
+    <message>
+        <location filename="../resources/scripts/units/hovercraft.js" line="44"/>
+        <source>Hovercraft</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/hovercraft.js" line="52"/>
+        <source>Hovercraft unit. Good mobility makes it useful on battlefield. Can move over most terrains.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>hoverflak</name>
+    <message>
+        <location filename="../resources/scripts/units/hoverflak.js" line="44"/>
+        <source>Hover Anti Air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/hoverflak.js" line="53"/>
+        <source>Specialised anti-air and anti-infantry unit. Can also attack ground forces. Can move over most terrains.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>hq</name>
+    <message>
+        <location filename="../resources/scripts/building/hq.js" line="37"/>
+        <source>HQ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/hq.js" line="102"/>
+        <source>&lt;div c=&apos;#00ff00&apos;&gt;Battle ends &lt;/div&gt;&lt;r&gt;when an army&apos;s last HQ is captured. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply.&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>infantry</name>
+    <message>
+        <location filename="../resources/scripts/units/infantry.js" line="69"/>
+        <source>Infantry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/infantry.js" line="78"/>
+        <source>&lt;r&gt;Cheapest unit. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt;bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt;when on mountains.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>k_heli</name>
+    <message>
+        <location filename="../resources/scripts/units/k_heli.js" line="36"/>
+        <source>Battle Copter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/k_heli.js" line="102"/>
+        <source>Air unit. Can attack ground and naval units, and other Helicopters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>labor</name>
+    <message>
+        <location filename="../resources/scripts/building/labor.js" line="25"/>
+        <source>Labor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/labor.js" line="36"/>
+        <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production&lt;/div&gt;&lt;r&gt; of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;oozium&lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>lander</name>
+    <message>
+        <location filename="../resources/scripts/units/lander.js" line="33"/>
+        <source>Lander</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/lander.js" line="105"/>
+        <source>&lt;r&gt;Naval unit. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;transport X 2 &lt;/div&gt;&lt;r&gt; ground units. No attack capability.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>light_tank</name>
+    <message>
+        <location filename="../resources/scripts/units/light_tank.js" line="44"/>
+        <source>Light Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/light_tank.js" line="52"/>
+        <source>Light Tank unit. Good mobility makes it useful on battlefield.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>mainmenu</name>
+    <message>
+        <location filename="../resources/ui/menu/mainmenu.js" line="57"/>
+        <source>Select Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>mech</name>
+    <message>
+        <location filename="../resources/scripts/units/mech.js" line="69"/>
+        <source>Mech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/mech.js" line="78"/>
+        <source>&lt;r&gt;Attack power high. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>megatank</name>
+    <message>
+        <location filename="../resources/scripts/units/megatank.js" line="44"/>
+        <source>Megatank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/megatank.js" line="52"/>
+        <source>Most powerful Tank. Boast superlative attack and defence capabilities.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>metallarmy</name>
+    <message>
+        <location filename="../resources/scripts/wiki/metallarmy.js" line="7"/>
+        <source>The Metall Army is an army of robots. The robots were initially invented by Lash. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/metallarmy.js" line="8"/>
+        <source>The Robots AI developped its own behaviour instead of following Lash&apos;s or Dark Matters orders. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/metallarmy.js" line="9"/>
+        <source>The Metall Army defends it&apos;s own territory at all costs when it loses it&apos;s territory. The Army tries to reconquer it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/metallarmy.js" line="10"/>
+        <source>Besides this the Metall Army is very defensive orientated and doesn&apos;t attack anyone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/metallarmy.js" line="20"/>
+        <source>Metall Army</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>mine</name>
+    <message>
+        <location filename="../resources/scripts/building/mine.js" line="25"/>
+        <source>Mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/mine.js" line="30"/>
+        <source>Ore mine. Once captured produces a lot of funds, but can&apos;t repair units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>missile</name>
+    <message>
+        <location filename="../resources/scripts/units/missile.js" line="44"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/missile.js" line="48"/>
+        <source>Indirect attack unit. Only capable of striking air targets.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>motorbike</name>
+    <message>
+        <location filename="../resources/scripts/units/motorbike.js" line="55"/>
+        <source>Motorbike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/motorbike.js" line="77"/>
+        <source>&lt;r&gt;Infantry unit. High mobility. Able to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_air</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_air.js" line="5"/>
+        <source>Air</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_boat</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_boat.js" line="5"/>
+        <source>Boat</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_crawler</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_crawler.js" line="5"/>
+        <source>Crawler</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_feet</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_feet.js" line="5"/>
+        <source>Feet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_hoellium</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_hoellium.js" line="5"/>
+        <source>Oozium</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_hovercraft</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_hovercraft.js" line="5"/>
+        <source>Hovercraft</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_mech</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_mech.js" line="5"/>
+        <source>Mech</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_piperunner</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_piperunner.js" line="5"/>
+        <source>Piperunner</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_ship</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_ship.js" line="5"/>
+        <source>Ship</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_tank</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_tank.js" line="5"/>
+        <source>Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_tire_a</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_tire_a.js" line="5"/>
+        <source>Tire A</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_tire_b</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_tire_b.js" line="5"/>
+        <source>Tire B</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>movementPlannerAddIn</name>
+    <message>
+        <location filename="../resources/scripts/general/movementPlannerAddIn.js" line="5"/>
+        <location filename="../resources/scripts/general/movementPlannerAddIn.js" line="9"/>
+        <location filename="../resources/scripts/general/movementPlannerAddIn.js" line="13"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>movementplanneraddin_activatepower</name>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="5"/>
+        <source>Activate power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="9"/>
+        <source>Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="13"/>
+        <source>Activates the power of one player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="118"/>
+        <source>CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="118"/>
+        <source>CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="122"/>
+        <source>Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="122"/>
+        <source>Superpower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="122"/>
+        <source>Tagpower</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>movementplanneraddin_deleteunit</name>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_deleteunit.js" line="5"/>
+        <source>Delete unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_deleteunit.js" line="9"/>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_deleteunit.js" line="13"/>
+        <source>Deletes units from the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>movementplanneraddin_modifyunit</name>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="5"/>
+        <source>Modify unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="9"/>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="13"/>
+        <source>Allows to modify a unit, e.g. it&apos;s health, fuel, ammo etc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>movementplanneraddin_reset</name>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_reset.js" line="5"/>
+        <source>Reset planner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_reset.js" line="9"/>
+        <source>Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_reset.js" line="13"/>
+        <source>Resets the planner to the current map state.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>movementplanneraddin_showmissiletargets</name>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.js" line="5"/>
+        <source>Show missile targets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.js" line="9"/>
+        <source>Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.js" line="13"/>
+        <source>Allows you to see where missiles and meteors are going to hit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.js" line="148"/>
+        <source>Funds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.js" line="148"/>
+        <source>HP low funds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_showmissiletargets.js" line="148"/>
+        <source>HP high funds</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>movementplanneraddin_spawnunit</name>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="5"/>
+        <source>Spawn unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="9"/>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="13"/>
+        <source>Allows to modify a unit, e.g. it&apos;s health, fuel, ammo etc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>movementplanneraddin_warpunit</name>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_warpunit.js" line="5"/>
+        <source>Warp unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_warpunit.js" line="9"/>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_warpunit.js" line="13"/>
+        <source>Warp units around the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>movementtable</name>
+    <message>
+        <location filename="../resources/scripts/general/movementtable.js" line="6"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>neotank</name>
+    <message>
+        <location filename="../resources/scripts/units/neotank.js" line="44"/>
+        <source>Neotank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/neotank.js" line="53"/>
+        <source>Reinforced Tank. Attack and defence capabilities superior to standard tank. Good mobility makes it useful on battlefield.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>oilrig</name>
+    <message>
+        <location filename="../resources/scripts/building/oilrig.js" line="34"/>
+        <source>Oil Rig</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/oilrig.js" line="39"/>
+        <source>Oil rig. Once captured produces a lot of funds, but can&apos;t repair units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>optionmenu</name>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="155"/>
+        <source>Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="155"/>
+        <source>Borderless</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="155"/>
+        <source>Fullscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="159"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="159"/>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="159"/>
+        <source>Own</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="159"/>
+        <source>Ally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="159"/>
+        <source>Enemy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
+        <source>Detailed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
+        <source>Overworld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
+        <source>Detailed Fullscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
+        <source>Detailed Transparent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
+        <source>Fullscreen Transparent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="167"/>
+        <source>Selects which battle animations are played when fighting an enemy.
+Detailed    - Normal battle animations
+Transparent - Colored background is semi-transparent
+Fullscreen  - Animations are upscaled based on the resolution
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="174"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="178"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="182"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="186"/>
+        <source>off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="174"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="178"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="182"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="186"/>
+        <source>on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="190"/>
+        <source>Flipping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="190"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="190"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="194"/>
+        <source>Last position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="194"/>
+        <source>Owned HQ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionmenu.js" line="198"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="207"/>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>orangestar</name>
+    <message>
+        <location filename="../resources/scripts/wiki/orangestar.js" line="7"/>
+        <source>The Orange Star army is lead by Nell and her Sister Rachel also  de-facto leads the Allied Nations. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/orangestar.js" line="8"/>
+        <source>With the exception of Jake, the forces of Orange Star concentrates in direct warfare, excelling in frontal assaults. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/orangestar.js" line="18"/>
+        <source>Orange Star</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>pinkfrontier</name>
+    <message>
+        <location filename="../resources/scripts/wiki/pinkfrontier.js" line="7"/>
+        <source>A matriarchal land, Pink Frontier is generally peaceful and focuses on cooperation rather than competition, with deeply spiritual roots. However, experience has taught them that they need to maintain a military to ensure that others respect their desire for peace.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/pinkfrontier.js" line="17"/>
+        <source>Pink Frontier</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>piperunner</name>
+    <message>
+        <location filename="../resources/scripts/units/piperunner.js" line="44"/>
+        <source>Piperunner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/piperunner.js" line="53"/>
+        <source>Indirect attack unit. Can attack all units. Can only move over pipelines. </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>pipestation</name>
+    <message>
+        <location filename="../resources/scripts/building/pipestation.js" line="31"/>
+        <source>Pipestation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/pipestation.js" line="35"/>
+        <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;pipe &lt;/div&gt;&lt;r&gt;units. Produces also more funds.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>plains</name>
+    <message>
+        <location filename="../resources/scripts/terrain/plains.js" line="14"/>
+        <source>Plains</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/plains.js" line="61"/>
+        <source>Ground units move easily on this terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>powerplant</name>
+    <message>
+        <location filename="../resources/scripts/building/powerplant.js" line="31"/>
+        <source>Power plant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/powerplant.js" line="39"/>
+        <source>A power plant that when captured increases how fast the powermeter charges.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>radar</name>
+    <message>
+        <location filename="../resources/scripts/building/radar.js" line="31"/>
+        <source>Radar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/radar.js" line="36"/>
+        <source>&lt;r&gt;In Fog of War, Radars make a &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;5 square &lt;/div&gt;&lt;r&gt;area around them visible.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>recon</name>
+    <message>
+        <location filename="../resources/scripts/units/recon.js" line="44"/>
+        <source>Recon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/recon.js" line="53"/>
+        <source>Reconnaissance unit. High mobility. Good range of vision.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>rocketthrower</name>
+    <message>
+        <location filename="../resources/scripts/units/rocketthrower.js" line="35"/>
+        <source>Rockets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/rocketthrower.js" line="53"/>
+        <source>Indirect attack unit. Powerful with a wide attack range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>shopitem_shop</name>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="15"/>
+        <source>Nell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="16"/>
+        <source>Hachi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="17"/>
+        <source>Alexander</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="18"/>
+        <source>Peter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="19"/>
+        <source>Smitan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="20"/>
+        <source>Rattigan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="21"/>
+        <source>Hawke</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="22"/>
+        <source>Sturm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="23"/>
+        <source>Von Bolt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="24"/>
+        <source>IK-486-B7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="25"/>
+        <source>Napoleon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="26"/>
+        <source>Robo-Sturm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="27"/>
+        <source>Sabaki</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="28"/>
+        <source>Sophie</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="29"/>
+        <source>Ozzy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="30"/>
+        <source>Mary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="31"/>
+        <source>Adam</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="32"/>
+        <source>Cairn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="33"/>
+        <source>Zandra</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="34"/>
+        <source>Minamoto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="35"/>
+        <source>Xavier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="36"/>
+        <source>Sanjuro</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="37"/>
+        <source>Meiyo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="38"/>
+        <source>Mina</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="39"/>
+        <source>Aira</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="40"/>
+        <source>Alexis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="41"/>
+        <source>Nana</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="42"/>
+        <source>Amy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="43"/>
+        <source>Walter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="44"/>
+        <source>Joey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="45"/>
+        <source>Cassidy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="46"/>
+        <source>Conrad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="47"/>
+        <source>Beast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="48"/>
+        <source>Melanthe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="49"/>
+        <source>Graves</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="50"/>
+        <source>Tabitha</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="51"/>
+        <source>Varlot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="52"/>
+        <source>Julia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="53"/>
+        <source>Caulder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="54"/>
+        <source>Yukio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="56"/>
+        <source>Andy&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="57"/>
+        <source>Max&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="58"/>
+        <source>Sami&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="59"/>
+        <source>Jake&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="60"/>
+        <source>Rachel&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="61"/>
+        <source>Nell&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="62"/>
+        <source>Hachi&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="63"/>
+        <source>Grit&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="64"/>
+        <source>Colin&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="65"/>
+        <source>Sasha&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="66"/>
+        <source>Olaf&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="67"/>
+        <source>Alexander&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="68"/>
+        <source>Drake&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="69"/>
+        <source>Eagle&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="70"/>
+        <source>Jess&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="71"/>
+        <source>Javier&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="72"/>
+        <source>Peter&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="73"/>
+        <source>Smitan&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="74"/>
+        <source>Sonja&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="75"/>
+        <source>Sensei&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="76"/>
+        <source>Grimm&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="77"/>
+        <source>Kanbei&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="78"/>
+        <source>Rattigan&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="79"/>
+        <source>Flak&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="80"/>
+        <source>Adder&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="81"/>
+        <source>Lash&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="82"/>
+        <source>Hawke&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="83"/>
+        <source>Sturm&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="84"/>
+        <source>Jugger&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="85"/>
+        <source>Koal&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="86"/>
+        <source>Kindle&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="87"/>
+        <source>Von Bolt&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="88"/>
+        <source>Epoch&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="89"/>
+        <source>Robo-Andy&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="90"/>
+        <source>IK-486-B7&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="91"/>
+        <source>Napoleon&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="92"/>
+        <source>Robo-Sturm&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="93"/>
+        <source>Sabaki&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="94"/>
+        <source>Sophie&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="95"/>
+        <source>Ozzy&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="96"/>
+        <source>Mary&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="97"/>
+        <source>Adam&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="98"/>
+        <source>Cairn&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="99"/>
+        <source>Zandra&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="100"/>
+        <source>Minamoto&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="101"/>
+        <source>Xavier&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="102"/>
+        <source>Sanjuro&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="103"/>
+        <source>Meiyo&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="104"/>
+        <source>Aira&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="105"/>
+        <source>Mina&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="106"/>
+        <source>Alexis&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="107"/>
+        <source>Nana&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="108"/>
+        <source>Amy&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="109"/>
+        <source>Conrad&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="110"/>
+        <source>Cassidy&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="111"/>
+        <source>Joey&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="112"/>
+        <source>Walter&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="113"/>
+        <source>Melanthe&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="114"/>
+        <source>Julia&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="115"/>
+        <source>Graves&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="116"/>
+        <source>Varlot&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="117"/>
+        <source>Yukio&apos;s Outfits</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>silo</name>
+    <message>
+        <location filename="../resources/scripts/building/silo.js" line="25"/>
+        <source>Silo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/silo.js" line="30"/>
+        <source>Empty missile silo which provides some defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>silo_rocket</name>
+    <message>
+        <location filename="../resources/scripts/building/silo_rocket.js" line="25"/>
+        <source>Silo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/silo_rocket.js" line="30"/>
+        <source>&lt;r&gt;Missile can be launched once, by Infantry unit. Damage across &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;13 square &lt;/div&gt;&lt;r&gt;area.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sniper</name>
+    <message>
+        <location filename="../resources/scripts/units/sniper.js" line="69"/>
+        <source>Sniper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/sniper.js" line="74"/>
+        <source>&lt;r&gt;Indirect infantry unit exceptionly strong against other infantry units. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>stealthbomber</name>
+    <message>
+        <location filename="../resources/scripts/units/stealthbomber.js" line="36"/>
+        <source>Stealthbomber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/stealthbomber.js" line="108"/>
+        <source>&lt;r&gt;Air unit. After &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding &lt;/div&gt;&lt;r&gt;, it remains hidden unless enemy units adjacent. Can attack any unit.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>submarine</name>
+    <message>
+        <location filename="../resources/scripts/units/submarine.js" line="35"/>
+        <source>Submarine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/submarine.js" line="99"/>
+        <source>&lt;r&gt;Naval unit. After &lt;/r&gt;&lt;div c=&apos;00ff00&apos;&gt;diving &lt;/div&gt;&lt;r&gt;, it remains hidden unless enemy units adjacent.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>t_heli</name>
+    <message>
+        <location filename="../resources/scripts/units/t_heli.js" line="36"/>
+        <source>Transport Copter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/t_heli.js" line="104"/>
+        <source>&lt;r&gt;Air unit. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Carries X 1 &lt;/div&gt;&lt;r&gt;Infantry units. No attack capability.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>temporary_airport</name>
+    <message>
+        <location filename="../resources/scripts/building/temporary_airport.js" line="27"/>
+        <source>Temporary Airport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/temporary_airport.js" line="61"/>
+        <source>&lt;r&gt;Airport made by APC. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;air &lt;/div&gt;&lt;r&gt;units is possible.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>temporary_harbour</name>
+    <message>
+        <location filename="../resources/scripts/building/temporary_harbour.js" line="26"/>
+        <source>Temporary Harbour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/temporary_harbour.js" line="58"/>
+        <source>&lt;r&gt;Harbour made by APC. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;naval &lt;/div&gt;&lt;r&gt;units is possible.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>terrain</name>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="22"/>
+        <source>Sea</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="23"/>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="24"/>
+        <source>Desert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="25"/>
+        <source>Snow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="26"/>
+        <source>Waste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="34"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>tower</name>
+    <message>
+        <location filename="../resources/scripts/building/tower.js" line="38"/>
+        <source>Tower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/tower.js" line="43"/>
+        <source>&lt;r&gt;Once captured the Tower boosts your &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;attack by %0% and defence by %1%&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>town</name>
+    <message>
+        <location filename="../resources/scripts/building/town.js" line="30"/>
+        <source>Town</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/town.js" line="35"/>
+        <source>&lt;r&gt;Populated city. Once captured &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>transportplane</name>
+    <message>
+        <location filename="../resources/scripts/units/transportplane.js" line="36"/>
+        <source>Transportplane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/transportplane.js" line="114"/>
+        <source>&lt;r&gt;Air unit. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Carries X 2 &lt;/div&gt;&lt;r&gt;ground units. No attack capability. Units can only be loaded and unloaded on roads or airports.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>unit</name>
+    <message>
+        <location filename="../resources/scripts/general/unit.js" line="266"/>
+        <source>Air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unit.js" line="268"/>
+        <source>Naval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unit.js" line="270"/>
+        <source>Ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unit.js" line="272"/>
+        <source>Infantry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unit.js" line="274"/>
+        <source>Hovercraft</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>unitrankingsystem</name>
+    <message>
+        <location filename="../resources/scripts/general/unitrankingsystem.js" line="12"/>
+        <source>Soldier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unitrankingsystem.js" line="12"/>
+        <source>Experienced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unitrankingsystem.js" line="12"/>
+        <source>Veteran</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unitrankingsystem.js" line="12"/>
+        <source>Elite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unitrankingsystem.js" line="57"/>
+        <source>CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unitrankingsystem.js" line="61"/>
+        <source>CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>userLoginDialog</name>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="5"/>
+        <source>Create account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="9"/>
+        <source>Creates a new account on the server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="14"/>
+        <source>Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="18"/>
+        <source>Logs you onto the server with the given userdata.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="22"/>
+        <source>Forgot password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="26"/>
+        <source>Allows you to reset your password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="30"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="34"/>
+        <source>Goes back to the main menu.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="38"/>
+        <source>Local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="42"/>
+        <source>Play a game in your local network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="46"/>
+        <source>Change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="50"/>
+        <source>Allows you to change your password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="74"/>
+        <source>Logged onto the server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="81"/>
+        <source>Your password isn&apos;t correct.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="87"/>
+        <source>No account with your username was found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="100"/>
+        <source>Unknown error happened.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>victoryrule_1nohq_town_replace</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_1nohq_town_replace.js" line="6"/>
+        <source>A player loses when he lost his last HQ. All buildings will be owned by the current player. A captured HQ and neutral HQ&apos;s will be converted into a town.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_1nohq_town_replace.js" line="10"/>
+        <source>No HQ Single HQ</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>victoryrule_buildinglimit</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="16"/>
+        <source>The player who reaches the number of buildings wins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="20"/>
+        <source>If checked the Team needs to capture the given number of buildings else a single player needs to capture them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="24"/>
+        <source>The team which reaches the number of buildings wins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="32"/>
+        <source>Capture Victory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="36"/>
+        <source>Team Counter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>victoryrule_counitlost</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_counitlost.js" line="5"/>
+        <source>A player loses if he lost the given amount of co units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_counitlost.js" line="9"/>
+        <source>Co Units lost</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>victoryrule_elimination</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="16"/>
+        <source>A player wins after killing the given amount of units by attacking or explosion damage from black bombs or Black Hole Buildings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="20"/>
+        <source>If checked the Team needs to kill the given number of units else a single player needs to kill them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="24"/>
+        <source>A team wins after killing the given amount of units by attacking or explosion damage from black bombs or Black Hole Buildings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="40"/>
+        <source>Elimination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="44"/>
+        <source>Team Counter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="48"/>
+        <source>Team elimination</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>victoryrule_nohq</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_nohq.js" line="5"/>
+        <source>A player loses when he loses his last HQ. All buildings will be owned by the current player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_nohq.js" line="9"/>
+        <source>No HQ&apos;s</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>victoryrule_nounits</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_nounits.js" line="5"/>
+        <source>A player loses when he loses his last unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_nounits.js" line="11"/>
+        <source>No Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_nounits.js" line="15"/>
+        <source>Ignore Watermines</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>victoryrule_turnlimit</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="10"/>
+        <source>Team %0 wins when the time is up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="16"/>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="23"/>
+        <source>All player lose when the time is up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="27"/>
+        <source>The Team winning the game if the time is up. Infinite for all player losing the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="35"/>
+        <source>Turn Limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="39"/>
+        <source>Winner Team</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>victoryrule_turnlimit_capture_race</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_capture_race.js" line="16"/>
+        <source>The player with the most captured buildings wins after the time is up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_capture_race.js" line="20"/>
+        <source>If checked the Team with the most captured buildings wins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_capture_race.js" line="24"/>
+        <source>The team with the most captured buildings wins after the time is up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_capture_race.js" line="40"/>
+        <source>Capture race</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_capture_race.js" line="44"/>
+        <source>Team Counter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_capture_race.js" line="48"/>
+        <source>Team capture race</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>victoryrule_turnlimit_score_race</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_score_race.js" line="16"/>
+        <source>The player with the highest combined tech and power score wins after the time is up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_score_race.js" line="20"/>
+        <source>If checked the Team with the highest average score wins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_score_race.js" line="24"/>
+        <source>The team with the highest combined tech and power score wins after the time is up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_score_race.js" line="31"/>
+        <source>Score race</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_score_race.js" line="35"/>
+        <source>Team Counter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>viewMapStats</name>
+    <message>
+        <location filename="../resources/ui/viewMapStats.js" line="10"/>
+        <source>Neutral</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/viewMapStats.js" line="14"/>
+        <source>Terrains</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/viewMapStats.js" line="18"/>
+        <source>Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/viewMapStats.js" line="22"/>
+        <source>Closes the map filter dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/viewMapStats.js" line="26"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/viewMapStats.js" line="30"/>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/viewMapStats.js" line="34"/>
+        <source>Buildings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/viewMapStats.js" line="38"/>
+        <source>Map statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>watermine</name>
+    <message>
+        <location filename="../resources/scripts/units/watermine.js" line="39"/>
+        <source>Watermine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/watermine.js" line="84"/>
+        <source>Naval Mine. Explodes when trapping a none air unit and dealing 5 damage to the trapped unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>waterplane</name>
+    <message>
+        <location filename="../resources/scripts/units/waterplane.js" line="36"/>
+        <source>Waterplane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/waterplane.js" line="102"/>
+        <source>Air unit. Can attack any unit. Can only produced at sea by Carries.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_a_air_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_a_air_gun.js" line="50"/>
+        <source>Anti Air Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_a_tank_cannon</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_a_tank_cannon.js" line="5"/>
+        <source>Anti Tank Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_air_to_air_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_air_to_air_missile.js" line="5"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_air_to_ground_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_air_to_ground_missile.js" line="5"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_airplane_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_airplane_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_anti_air_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_anti_air_missile.js" line="5"/>
+        <source>Anti Air Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_anti_ship_cannon</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_anti_ship_cannon.js" line="5"/>
+        <source>Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_anti_ship_cruiser_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_anti_ship_cruiser_missile.js" line="5"/>
+        <source>Ship Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_anti_ship_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_anti_ship_missile.js" line="5"/>
+        <source>Ship Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_battleship_cannon</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_battleship_cannon.js" line="5"/>
+        <source>Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_bazooka</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_bazooka.js" line="5"/>
+        <source>Bazooka</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_bike_bazooka</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_bike_bazooka.js" line="5"/>
+        <source>Bazooka</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_bomb</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_bomb.js" line="5"/>
+        <source>Bomb</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_cannon</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_cannon.js" line="5"/>
+        <source>Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_cargo</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_cargo.js" line="5"/>
+        <source>Cargo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_carrier_anti_air_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_carrier_anti_air_missile.js" line="5"/>
+        <source>Anti Air Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_designator</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_designator.js" line="5"/>
+        <source>Designator</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_destroyer_a_air_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_destroyer_a_air_gun.js" line="5"/>
+        <source>Anti Air Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_firebomb</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_firebomb.js" line="5"/>
+        <source>Firebomb</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_flare</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_flare.js" line="5"/>
+        <source>Flare</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_flare_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_flare_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_gatling</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_gatling.js" line="5"/>
+        <source>Gatling</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_heavy_hovercraft_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_heavy_hovercraft_gun.js" line="5"/>
+        <source>Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_heavy_hovercraft_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_heavy_hovercraft_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_heavy_tank_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_heavy_tank_gun.js" line="5"/>
+        <source>Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_heavy_tank_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_heavy_tank_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_hovercraft_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_hovercraft_gun.js" line="5"/>
+        <source>Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_hovercraft_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_hovercraft_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_hovervulcan_cannon</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_hovervulcan_cannon.js" line="5"/>
+        <source>Vulcan Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_infantry_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_infantry_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_k_heli_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_k_heli_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_light_tank_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_light_tank_gun.js" line="5"/>
+        <source>Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_light_tank_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_light_tank_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_mech_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_mech_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_megatank_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_megatank_gun.js" line="5"/>
+        <source>Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_megatank_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_megatank_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_motorbike_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_motorbike_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_neotank_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_neotank_gun.js" line="5"/>
+        <source>Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_neotank_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_neotank_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_piperunner_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_piperunner_missile.js" line="5"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_recon_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_recon_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_rocket_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_rocket_missile.js" line="5"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_sniper</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_sniper.js" line="5"/>
+        <source>Sniper Rifle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_stealthrocket</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_stealthrocket.js" line="5"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_tankhunter_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_tankhunter_gun.js" line="5"/>
+        <source>Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_torpedo</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_torpedo.js" line="5"/>
+        <source>Torpedo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_vulcan_cannon</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_vulcan_cannon.js" line="5"/>
+        <source>Vulcan Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_waterplane_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_waterplane_missile.js" line="5"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weather_1sun</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/weather/weather_1sun.js" line="6"/>
+        <source>Sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weather_mist</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/weather/weather_mist.js" line="6"/>
+        <source>Mist</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weather_rain</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/weather/weather_rain.js" line="6"/>
+        <source>Rain</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weather_sandstorm</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/weather/weather_sandstorm.js" line="6"/>
+        <source>Sandstorm</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weather_snow</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/weather/weather_snow.js" line="6"/>
+        <source>Snow</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>yellowcomet</name>
+    <message>
+        <location filename="../resources/scripts/wiki/yellowcomet.js" line="7"/>
+        <source>Yellow Comet is on a group of islands on the far east. They&apos;re also the smallest nation of the Allied Nations, but their strong army deters any outside forces from invading them. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/yellowcomet.js" line="17"/>
+        <source>Yellow Comet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblack_building_destroyed</name>
+    <message>
+        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="43"/>
+        <source>Ruins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="48"/>
+        <source>Destroyed Black Hole Building.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblackhole_cannon_E</name>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="26"/>
+        <source>Black Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="99"/>
+        <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblackhole_cannon_N</name>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="31"/>
+        <source>Black Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="100"/>
+        <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblackhole_cannon_S</name>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="30"/>
+        <source>Black Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="99"/>
+        <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblackhole_cannon_W</name>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="30"/>
+        <source>Black Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="99"/>
+        <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zcrystall</name>
+    <message>
+        <location filename="../resources/scripts/building/zcrystall.js" line="38"/>
+        <source>Crystall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zcrystall.js" line="70"/>
+        <source>Black Hole Crystal that can heal all own units for 2 HP in a 13 square area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zdeathray_E</name>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_E.js" line="38"/>
+        <source>Death Ray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_E.js" line="127"/>
+        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zdeathray_N</name>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_N.js" line="38"/>
+        <source>Death Ray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_N.js" line="127"/>
+        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zdeathray_S</name>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_S.js" line="38"/>
+        <source>Death Ray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_S.js" line="123"/>
+        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zdeathray_W</name>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_W.js" line="38"/>
+        <source>Death Ray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_W.js" line="126"/>
+        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zdesertweld_e_w</name>
+    <message>
+        <location filename="../resources/scripts/building/zdesertweld_e_w.js" line="24"/>
+        <source>Desert Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zdesertweld_e_w.js" line="48"/>
+        <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firerange of indirect units by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zdesertweld_n_s</name>
+    <message>
+        <location filename="../resources/scripts/building/zdesertweld_n_s.js" line="24"/>
+        <source>Desert Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zdesertweld_n_s.js" line="48"/>
+        <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firerange of indirect units by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zfortress</name>
+    <message>
+        <location filename="../resources/scripts/building/zfortress.js" line="32"/>
+        <source>Fortress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zfortress.js" line="54"/>
+        <source>Black Hole Fortress that defends a position has no other effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zgate_e_w</name>
+    <message>
+        <location filename="../resources/scripts/building/zgate_e_w.js" line="21"/>
+        <source>Gate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zgate_e_w.js" line="42"/>
+        <source>A gate through a wall can be crossed by all allied players. Can be destroyed by other players</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zgate_n_s</name>
+    <message>
+        <location filename="../resources/scripts/building/zgate_n_s.js" line="22"/>
+        <source>Gate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zgate_n_s.js" line="43"/>
+        <source>A gate through a wall can be crossed by all allied players. Can be destroyed by other players</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zlaser</name>
+    <message>
+        <location filename="../resources/scripts/building/zlaser.js" line="38"/>
+        <source>Laser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zlaser.js" line="72"/>
+        <source>Black Hole Laser that can deal 5 HP of damage to all units in 4 rays from the laser.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zminicannon_E</name>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_E.js" line="34"/>
+        <source>Mini Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_E.js" line="70"/>
+        <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zminicannon_N</name>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_N.js" line="38"/>
+        <source>Mini Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_N.js" line="69"/>
+        <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zminicannon_S</name>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_S.js" line="38"/>
+        <source>Mini Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_S.js" line="69"/>
+        <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zminicannon_W</name>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_W.js" line="38"/>
+        <source>Mini Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_W.js" line="69"/>
+        <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zmonolith</name>
+    <message>
+        <location filename="../resources/scripts/building/zmonolith.js" line="34"/>
+        <source>Black Obelisk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zmonolith.js" line="97"/>
+        <source>Black Hole Monolith that can heal all own units for 2 HP in a 3 square area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>znest_center</name>
+    <message>
+        <location filename="../resources/scripts/building/znest_center.js" line="25"/>
+        <source>Nest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/znest_center.js" line="29"/>
+        <source>Nest of Dark Matter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>znest_center_laser_left</name>
+    <message>
+        <location filename="../resources/scripts/building/znest_center_laser_left.js" line="26"/>
+        <source>Nest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/znest_center_laser_left.js" line="30"/>
+        <source>Nest of Dark Matter. Currently only a visual.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>znest_center_laser_left_destroyed</name>
+    <message>
+        <location filename="../resources/scripts/building/znest_center_laser_left_destroyed.js" line="26"/>
+        <source>Nest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/znest_center_laser_left_destroyed.js" line="30"/>
+        <source>Destroyed nest laser.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>znest_center_laser_middle</name>
+    <message>
+        <location filename="../resources/scripts/building/znest_center_laser_middle.js" line="26"/>
+        <source>Nest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/znest_center_laser_middle.js" line="30"/>
+        <source>Nest of Dark Matter. Currently only a visual.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>znest_center_laser_middle_destroyed</name>
+    <message>
+        <location filename="../resources/scripts/building/znest_center_laser_middle_destroyed.js" line="26"/>
+        <source>Nest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/znest_center_laser_middle_destroyed.js" line="30"/>
+        <source>Destroyed nest laser.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>znest_center_laser_right</name>
+    <message>
+        <location filename="../resources/scripts/building/znest_center_laser_right.js" line="26"/>
+        <source>Nest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/znest_center_laser_right.js" line="30"/>
+        <source>Nest of Dark Matter. Currently only a visual.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>znest_center_laser_right_destroyed</name>
+    <message>
+        <location filename="../resources/scripts/building/znest_center_laser_right_destroyed.js" line="26"/>
+        <source>Nest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/znest_center_laser_right_destroyed.js" line="30"/>
+        <source>Destroyed nest laser.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>znest_factory</name>
+    <message>
+        <location filename="../resources/scripts/building/znest_factory.js" line="25"/>
+        <source>Nest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/znest_factory.js" line="29"/>
+        <source>Nest factory door, which is able to produce a none naval unit each turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>znest_left_mortar</name>
+    <message>
+        <location filename="../resources/scripts/building/znest_left_mortar.js" line="25"/>
+        <source>Nest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/znest_left_mortar.js" line="29"/>
+        <source>Nest of Dark Matter. Currently only a visual.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>znest_nest_laser</name>
+    <message>
+        <location filename="../resources/scripts/building/znest_nest_laser.js" line="26"/>
+        <source>Nest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/znest_nest_laser.js" line="30"/>
+        <source>Nest of Dark Matter. Currently only a visual.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>znest_nest_laser_destroyed</name>
+    <message>
+        <location filename="../resources/scripts/building/znest_nest_laser_destroyed.js" line="26"/>
+        <source>Nest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/znest_nest_laser_destroyed.js" line="30"/>
+        <source>Destroyed nest laser.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>znest_right_mortar</name>
+    <message>
+        <location filename="../resources/scripts/building/znest_right_mortar.js" line="25"/>
+        <source>Nest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/znest_right_mortar.js" line="29"/>
+        <source>Nest of Dark Matter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zomega_base</name>
+    <message>
+        <location filename="../resources/scripts/building/zomega_base.js" line="32"/>
+        <source>Omega Base</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zomega_base.js" line="54"/>
+        <source>Black Hole Omega Base meant to launch a giant Rocket on the Earth to destroy it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zsnowweld_e_w</name>
+    <message>
+        <location filename="../resources/scripts/building/zsnowweld_e_w.js" line="24"/>
+        <source>Snowy Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zsnowweld_e_w.js" line="44"/>
+        <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zsnowweld_n_s</name>
+    <message>
+        <location filename="../resources/scripts/building/zsnowweld_n_s.js" line="24"/>
+        <source>Snowy Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zsnowweld_n_s.js" line="44"/>
+        <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ztalon_gun</name>
+    <message>
+        <location filename="../resources/scripts/building/ztalon_gun.js" line="41"/>
+        <source>Talon Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/ztalon_gun.js" line="90"/>
+        <source>Talon Gun of Dark Matter fires at all enemie units each turn dealing 5HP of damage in a 3 square area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ztalon_gun_destroyed</name>
+    <message>
+        <location filename="../resources/scripts/building/ztalon_gun_destroyed.js" line="42"/>
+        <source>Ruins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/ztalon_gun_destroyed.js" line="46"/>
+        <source>Destroyed Talon Gun of Dark Matter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zwasteweld_e_w</name>
+    <message>
+        <location filename="../resources/scripts/building/zwasteweld_e_w.js" line="24"/>
+        <source>Waste Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zwasteweld_e_w.js" line="44"/>
+        <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zwasteweld_n_s</name>
+    <message>
+        <location filename="../resources/scripts/building/zwasteweld_n_s.js" line="21"/>
+        <source>Waste Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zwasteweld_n_s.js" line="45"/>
+        <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zweld_e_w</name>
+    <message>
+        <location filename="../resources/scripts/building/zweld_e_w.js" line="24"/>
+        <source>Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zweld_e_w.js" line="44"/>
+        <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zweld_n_s</name>
+    <message>
+        <location filename="../resources/scripts/building/zweld_n_s.js" line="21"/>
+        <source>Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zweld_n_s.js" line="45"/>
+        <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
