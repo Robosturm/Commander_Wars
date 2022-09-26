@@ -166,7 +166,7 @@ void GameUpdater::launchPatcher()
     CONSOLE_PRINT("Starting patcher application " + patcherProgram, Console::eDEBUG);
     if (!QProcess::startDetached(patcherProgram, args))
     {
-        CONSOLE_PRINT("Failed to start patcher application", Console::eERROR);
+        CONSOLE_PRINT("Failed to start patcher application " + patcherProgram, Console::eERROR);
     }
 }
 

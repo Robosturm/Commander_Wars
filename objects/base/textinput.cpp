@@ -70,7 +70,14 @@ void TextInput::setCurrentText(const QString & text)
 {
     if (m_lineEdit != nullptr)
     {
-        emit sigSetText(text);
+        if (Mainapp::getInstance()->isMainThread())
+        {
+            m_lineEdit->setPlainText(text);
+        }
+        else
+        {
+            emit sigSetText(text);
+        }
     }
 }
 
