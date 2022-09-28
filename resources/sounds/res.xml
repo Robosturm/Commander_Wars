@@ -7,8 +7,8 @@
     <sound file="baazoka_fire.wav"              cachesize = "5"/>
     <sound file="black_canon_destroyed.wav"     cachesize = "2"/>
     <sound file="blackcanon_shot.wav"           cachesize = "2"/>
-    <sound file="button.wav"                    cachesize = "2"/>
-    <sound file="cancel.wav"                    cachesize = "2"/>
+    <sound file="button.wav"                    cachesize = "5"/>
+    <sound file="cancel.wav"                    cachesize = "5"/>
     <sound file="cannon_weapon_explode.wav"     cachesize = "5"/>
     <sound file="cannon_weapon_fire.wav"        cachesize = "5"/>
     <sound file="capture.wav"                   cachesize = "8"/>
@@ -16,7 +16,7 @@
     <sound file="capture_down.wav"              cachesize = "8"/>
     <sound file="capture_enemy.wav"             cachesize = "8"/>
     <sound file="capture_jump.wav"              cachesize = "8"/>
-    <sound file="checkbox.wav"                  cachesize = "2"/>
+    <sound file="checkbox.wav"                  cachesize = "5"/>
     <sound file="crystal_explode.wav"           cachesize = "2"/>
     <sound file="crystal_explode_2.wav"         cachesize = "2"/>
     <sound file="crystal_heal.wav"              cachesize = "10"/>
@@ -145,7 +145,7 @@
     <sound file="minimapOpen.wav"               cachesize = "2"/>
     <sound file="moveOut.wav"                   cachesize = "2"/>
     <sound file="player_turn.wav"               cachesize = "2"/>
-    <sound file="connect.wav"                   cachesize = "2"/>
-    <sound file="disconnect.wav"                cachesize = "2"/>
+    <sound file="connect.wav"                   cachesize = "5"/>
+    <sound file="disconnect.wav"                cachesize = "5"/>
 </sounds>
 

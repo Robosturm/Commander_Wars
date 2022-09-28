@@ -47,7 +47,14 @@ bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & sound
         CONSOLE_PRINT("Playing sound: " + file + " using cache sound " + QString::number(i), Console::eDEBUG);
 
         soundCache->sound[i]->setVolume(sound);
-        soundCache->sound[i]->setLoopCount(loops);
+        if (loops < 0)
+        {
+            soundCache->sound[i]->setLoopCount(QSoundEffect::Infinite);
+        }
+        else
+        {
+            soundCache->sound[i]->setLoopCount(loops);
+        }
         soundCache->sound[i]->setMuted(false);
         QObject::disconnect(soundCache->timer[i].get(), &QTimer::timeout, nullptr, nullptr);
         auto* pSoundCache = soundCache.get();

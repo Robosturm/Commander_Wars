@@ -139,7 +139,11 @@ var Constructor = function()
 
     this.getDescription = function(terrain)
     {
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return qsTr("<r>In Fog of War conditions, the ruins provide ground unit </r><div c='#00ff00'>hiding places.</div><r> Snowy terrain rough to cross. Waste terrain with reduced defense but clear view. In Fog of War, unit's gain </r><div c='#00ff00'>vision +1.</div>");

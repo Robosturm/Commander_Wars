@@ -47,7 +47,14 @@ bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & sound
         soundItem->setAudioDevice(m_audioDevice);
         soundItem->setSource(soundCache->cacheUrl);
         soundItem->setVolume(sound);
-        soundItem->setLoopCount(loops);
+        if (loops < 0)
+        {
+            soundItem->setLoopCount(QSoundEffect::Infinite);
+        }
+        else
+        {
+            soundItem->setLoopCount(loops);
+        }
         soundItem->setMuted(false);
         soundCache->sound[i] = soundItem;
         auto* pSoundCache = soundCache.get();
