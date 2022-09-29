@@ -92,7 +92,6 @@ var Constructor = function()
                     addIn.addSprite("marked+field", x, y, 0, 0, color);
                 }
             }
-            fields.remove();
         }
     };
     this.stopAddIn = function(addIn)

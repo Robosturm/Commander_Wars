@@ -58,7 +58,6 @@ var Constructor = function()
             }
             variableHqXs.writeDataListInt32(pointsX);
             variableHqYs.writeDataListInt32(pointsY);
-            buildings.remove();
         }
     };
     this.checkHQCount = function(rule, player, map)
@@ -75,7 +74,6 @@ var Constructor = function()
             terrain.loadBuilding("TOWN");
             terrain.getBuilding().setOwner(player);
         }
-        buildings.remove();
         var value = variable.readDataBool();
         if (value === false)
         {
@@ -100,7 +98,6 @@ var Constructor = function()
                 terrain.loadBuilding("TOWN");
             }
         }
-        buildings.remove();
     }
     // checks if the selected player is declared defeated by this rule
     this.checkDefeat = function(rule, player, map)

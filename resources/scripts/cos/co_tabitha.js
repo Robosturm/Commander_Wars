@@ -90,7 +90,6 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
         CO_TABITHA.postAnimationThrowMeteorTarget = null;
         CO_TABITHA.postAnimationThrowMeteorDamage = 0;
     };

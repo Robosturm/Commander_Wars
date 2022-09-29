@@ -58,7 +58,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -120,7 +119,6 @@ var Constructor = function()
                     animation.writeDataInt32(value);
                     animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
                 }
-                units.remove();
             }
         }
     };
@@ -238,7 +236,6 @@ var Constructor = function()
                     }
                 }
             }
-            fields.remove();
         }
         return count;
     };

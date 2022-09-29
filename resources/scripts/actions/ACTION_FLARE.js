@@ -77,7 +77,6 @@ var Constructor = function()
                 data.addPoint(Qt.point(x, y));
             }
         }
-        fields.remove();
     };
     this.postAnimationTargetX = -1;
     this.postAnimationTargetY = -1;
@@ -116,7 +115,6 @@ var Constructor = function()
                 ACTION_FLARE.postAnimationPlayer.addVisionField(x, y, 1, true);
             }
         }
-        fields.remove();
         ACTION_FLARE.postAnimationTargetX = -1;
         ACTION_FLARE.postAnimationTargetY = -1;
         ACTION_FLARE.postAnimationPlayer = null;

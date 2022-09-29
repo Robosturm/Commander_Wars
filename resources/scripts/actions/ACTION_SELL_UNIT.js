@@ -17,7 +17,6 @@ var Constructor = function()
                     break;
                 }
             }
-            units.remove();
         }
         return ret;
     };
@@ -88,7 +87,6 @@ var Constructor = function()
         }
         data.setShowZData(false);
         data.setColor("#C8FF0000");
-        units.remove();
     };
     this.getStepInputType = function(action, map)
     {

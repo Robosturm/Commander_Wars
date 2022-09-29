@@ -50,7 +50,6 @@ var Constructor = function()
                 }
             }
         }
-        targets.remove();
     };
     this.getDescription = function()
     {

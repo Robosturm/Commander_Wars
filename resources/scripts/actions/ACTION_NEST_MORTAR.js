@@ -43,7 +43,6 @@ var Constructor = function()
         var owner = building.getOwner();
         var fireArea = Global[building.getBuildingID()].getAbsoluteActionTargetFields(building);
         var mortarTarget = owner.getRockettarget(ACTION_NEST_MORTAR.radius, damage, 1.2, GameEnums.RocketTarget_Money, fireArea);
-        fireArea.remove();
         ACTION_NEST_MORTAR.postAnimationTargetX = mortarTarget.x;
         ACTION_NEST_MORTAR.postAnimationTargetY = mortarTarget.y;
 
@@ -78,7 +77,6 @@ var Constructor = function()
                 }
             }
         }
-        targets.remove();
         ACTION_NEST_MORTAR.postAnimationTargetX = -1;
         ACTION_NEST_MORTAR.postAnimationTargetY = -1;
         ACTION_NEST_MORTAR.postAnimationBuildingX = -1;

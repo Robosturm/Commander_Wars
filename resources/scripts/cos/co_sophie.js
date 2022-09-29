@@ -78,7 +78,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -126,7 +125,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     
@@ -178,7 +176,6 @@ var Constructor = function()
             // set attacked twice this turn to false
             variable.writeDataBool(false);
         }
-        units.remove();
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)

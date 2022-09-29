@@ -14,6 +14,7 @@
 #include "game/gamemap.h"
 #include "game/gamescript.h"
 
+
 bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
 {
     AI_CONSOLE_PRINT("moveFlares()", Console::eDEBUG);

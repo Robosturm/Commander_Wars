@@ -83,7 +83,6 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
     };
     this.offBonus = 15;
     this.defBonus = 10;

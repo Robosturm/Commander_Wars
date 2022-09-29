@@ -11,12 +11,11 @@ MarkedFieldData::MarkedFieldData()
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    oxygine::ref_counter::addInstanceCounter();
+    Interpreter::getInstance()->trackJsObject(this);
 }
 
 MarkedFieldData::~MarkedFieldData()
 {
-    oxygine::ref_counter::releaseInstanceCounter();
 }
 
 bool MarkedFieldData::getAllFields() const

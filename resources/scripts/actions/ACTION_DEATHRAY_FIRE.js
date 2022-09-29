@@ -70,7 +70,6 @@ var Constructor = function()
                 }
             }
         }
-        ACTION_DEATHRAY_FIRE.postAnimationFields.remove();
         ACTION_DEATHRAY_FIRE.postAnimationFields = null;
         ACTION_DEATHRAY_FIRE.postAnimationX = null;
         ACTION_DEATHRAY_FIRE.postAnimationY = null;

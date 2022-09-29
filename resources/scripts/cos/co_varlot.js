@@ -107,7 +107,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
 
         bonusUnitVariable.writeDataListInt32(bonusUnits);
         bonusOffVariable.writeDataListInt32(bonusOffs);

@@ -52,7 +52,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -104,7 +103,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.postAnimationRanking = function(postAnimation, map)

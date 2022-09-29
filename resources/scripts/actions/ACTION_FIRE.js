@@ -25,7 +25,6 @@ var Constructor = function()
                 {
                     fields.append(minFields.at(i))
                 }
-                minFields.remove();
             }
 
             // check all fields we can attack
@@ -77,7 +76,6 @@ var Constructor = function()
                     }
                 }
             }
-            fields.remove();
         }
         return ret;
     };
@@ -336,7 +334,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
         return ret;
     };
     this.doSupportDamageReduction = function(damage, attacker, attackerPosition, defender, defenderPosition)
@@ -359,7 +356,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
         return reduction;
     };
 
@@ -485,7 +481,6 @@ var Constructor = function()
             {
                 fields.append(minFields.at(i))
             }
-            minFields.remove();
         }
 
         data.setColor("#FFFF0000");
@@ -564,7 +559,6 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
     };
     this.isFinalStep = function(action, map)
     {

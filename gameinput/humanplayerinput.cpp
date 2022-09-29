@@ -69,6 +69,20 @@ HumanPlayerInput::~HumanPlayerInput()
 {
     m_pGameAction = nullptr;
     m_pUnitPathFindingSystem = nullptr;
+    if (m_ZInformationLabel.get() != nullptr)
+    {
+        m_ZInformationLabel->detach();
+        m_ZInformationLabel = nullptr;
+    }
+    if (m_CurrentMenu.get() != nullptr)
+    {
+        m_CurrentMenu->detach();
+        m_CurrentMenu = nullptr;
+    }
+    m_pMarkedFieldData = nullptr;
+    m_Fields.clear();
+    m_FieldPoints.clear();
+    m_InfoFields.clear();
 }
 
 void HumanPlayerInput::rightClickUp(qint32, qint32)

@@ -210,7 +210,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         {
 #ifdef UPDATESUPPORT
             GameUpdater::cleanUpOldArtifacts();
-            QString updateStep = Settings::getUpdateStep();            
+            QString updateStep = Settings::getUpdateStep();
             if (!getSlave())
             {
                 if ((!getGameVersion().endsWith("dev") && Settings::getAutomaticUpdates()) ||
@@ -479,15 +479,23 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
         }
         case Settings::ScreenModes::FullScreen:
         {
+            Settings::setFullscreen(true);
+            Settings::setBorderless(false);
+#ifdef ANDROID
+            showMaximized();
+            // set window info
+            Settings::setWidth(width() * getActiveDpiFactor());
+            Settings::setHeight(height() * getActiveDpiFactor());
+#else
             showFullScreen();
             QScreen* screen = QApplication::primaryScreen();
             QRect screenSize = screen->geometry();
             // set window info
-            Settings::setFullscreen(true);
-            Settings::setBorderless(false);
             Settings::setWidth(screenSize.width() * getActiveDpiFactor());
             Settings::setHeight(screenSize.height() * getActiveDpiFactor());
             setGeometry(screenSize);
+            setPosition(0, 0);
+#endif
             break;
         }
         default:
@@ -615,9 +623,9 @@ void Mainapp::keyReleaseEvent(QKeyEvent *event)
 
 bool Mainapp::event(QEvent *event)
 {
-    spFocusableObject pObj(FocusableObject::getFocusedObject());
+    FocusableObject* pObj(FocusableObject::getFocusedObject());
     bool handled = false;
-    if (pObj.get() != nullptr)
+    if (pObj != nullptr)
     {
         handled = FocusableObject::handleEvent(event);
     }

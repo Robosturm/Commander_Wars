@@ -12,12 +12,11 @@ QmlVectorPoint::QmlVectorPoint()
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    oxygine::ref_counter::addInstanceCounter();
+    Interpreter::getInstance()->trackJsObject(this);
 }
 
 QmlVectorPoint::~QmlVectorPoint()
 {
-    oxygine::ref_counter::releaseInstanceCounter();
 }
 
 QmlVectorUnit::QmlVectorUnit()
@@ -28,12 +27,11 @@ QmlVectorUnit::QmlVectorUnit()
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    oxygine::ref_counter::addInstanceCounter();
+    Interpreter::getInstance()->trackJsObject(this);
 }
 
 QmlVectorUnit::~QmlVectorUnit()
 {
-    oxygine::ref_counter::releaseInstanceCounter();
 }
 
 void QmlVectorUnit::randomize()
@@ -104,12 +102,11 @@ QmlVectorBuilding::QmlVectorBuilding()
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    oxygine::ref_counter::addInstanceCounter();
+    Interpreter::getInstance()->trackJsObject(this);
 }
 
 QmlVectorBuilding::~QmlVectorBuilding()
 {
-    oxygine::ref_counter::releaseInstanceCounter();
 }
 
 void QmlVectorBuilding::randomize()

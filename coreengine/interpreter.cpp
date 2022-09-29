@@ -161,7 +161,9 @@ QJSValue Interpreter::doString(const QString & task)
 #ifdef GAMEDEBUG
     OXY_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
 #endif
+    ++m_inJsCall;
     QJSValue value = evaluate(task, "GameCode");
+    exitJsCall();
     if (value.isError())
     {
         CONSOLE_PRINT(value.toString(), Console::eERROR);
@@ -291,5 +293,26 @@ void Interpreter::networkGameFinished(qint32 value, QString id)
         QJSValueList args({value,
                            id,});
         doFunction(obj, func, args);
+    }
+}
+
+void Interpreter::exitJsCall()
+{
+    if (--m_inJsCall <= 0)
+    {
+        m_jsObjects.clear();
+    }
+}
+
+bool Interpreter::getInJsCall() const
+{
+    return m_inJsCall > 0;
+}
+
+void Interpreter::trackJsObject(oxygine::ref_counter* pObj)
+{
+    if (m_inJsCall > 0)
+    {
+        m_jsObjects.append(oxygine::intrusive_ptr(pObj, true));
     }
 }

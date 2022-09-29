@@ -95,7 +95,6 @@ CO_SMITAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                     }
                 }
             }
-            units.remove();
         }
 
         switch (co.getPowerMode())

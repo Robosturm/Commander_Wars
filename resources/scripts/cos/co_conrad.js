@@ -71,8 +71,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
-
         var variables = co.getVariables();
         var dmgModVar = variables.createVariable("CONRAD_DMG_MOD");
         dmgModVar.writeDataFloat(CO_CONRAD.bonusLuckDamage);
@@ -135,7 +133,6 @@ var Constructor = function()
                 visionCount += 1;
             }
         }
-        units.remove();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:

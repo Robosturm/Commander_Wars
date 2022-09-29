@@ -80,7 +80,6 @@ var Constructor = function()
                     animation.writeDataInt32(unit.getY());
                     animation.setEndOfAnimationCall("CO_JULIA", "postAnimationStun");
                 }
-                units.remove();
             }
         }
     };

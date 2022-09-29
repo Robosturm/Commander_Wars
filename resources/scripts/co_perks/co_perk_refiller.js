@@ -20,8 +20,7 @@ var Constructor = function()
 			{
 				var unit = units.at(i);
 				unit.refill();
-			}
-			units.remove();
+            }
 		}
 	};
 	// Perk - Intel

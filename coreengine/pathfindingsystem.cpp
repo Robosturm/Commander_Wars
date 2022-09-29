@@ -41,7 +41,7 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
             m_movecosts[i][i2] = infinite;
         }
     }
-    oxygine::ref_counter::addInstanceCounter();
+    Interpreter::getInstance()->trackJsObject(this);
 }
 
 PathFindingSystem::~PathFindingSystem()
@@ -49,7 +49,6 @@ PathFindingSystem::~PathFindingSystem()
     delete[] m_costs;
     delete[] m_DirectionMap;
     delete[] m_movecosts;
-    oxygine::ref_counter::releaseInstanceCounter();
 }
 
 void PathFindingSystem::setStartPoint(qint32 startX, qint32 startY)

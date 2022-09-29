@@ -82,7 +82,6 @@ public slots:
      */
     void remove()
     {
-        delete this;
     }
 private:
     bool m_allFields{false};

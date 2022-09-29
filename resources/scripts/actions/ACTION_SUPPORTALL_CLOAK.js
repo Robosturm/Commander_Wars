@@ -85,7 +85,6 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
     };
     this.getDescription = function()
     {

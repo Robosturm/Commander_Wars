@@ -109,7 +109,6 @@ var Constructor = function()
                     }
                 }
             }
-            fields.remove();
             if (!valid)
             {
                 return -1;

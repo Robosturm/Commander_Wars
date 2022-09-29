@@ -86,8 +86,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
-
         var playerCounter = map.getPlayerCount();
         for (var i2 = 0; i2 < playerCounter; i2++)
         {
@@ -131,7 +129,6 @@ var Constructor = function()
                         }
                     }
                 }
-                units.remove();
             }
         }
     };

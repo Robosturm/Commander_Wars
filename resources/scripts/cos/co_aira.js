@@ -81,7 +81,6 @@ var Constructor = function()
                         }
                     }
                 }
-                units.remove();
             }
         }
     };
@@ -157,7 +156,6 @@ var Constructor = function()
                         animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
                     }
                 }
-                units.remove();
             }
         }
     };

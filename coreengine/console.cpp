@@ -418,12 +418,10 @@ void Console::extractResources()
 void Console::memoryUsage()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    CONSOLE_PRINT("Js-Objects=" + QString::number(oxygine::ref_counter::getAlloctedJsObjectCount()), Console::eINFO);
     CONSOLE_PRINT("C++-Objects=" + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), Console::eINFO);
     CONSOLE_PRINT("Textures=" + QString::number(oxygine::Texture::getHighestTextureCount()), Console::eINFO);
     CONSOLE_PRINT("Materials cached=" + QString::number(oxygine::MaterialCache::mc().getSize()), Console::eINFO);
     CONSOLE_PRINT("Sounds buffered=" + QString::number(pApp->getAudioThread()->getSoundsBuffered()), Console::eINFO);
-
 }
 
 void Console::createfunnymessage(qint32 message){

@@ -85,7 +85,6 @@ CO_CAULDER.startOfTurn = function(co, map)
                     animation.setVisible(false);
                 }
             }
-            units.remove();
         }
     }
 };

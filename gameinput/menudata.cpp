@@ -20,12 +20,11 @@ MenuData::MenuData(GameMap* pMap)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    oxygine::ref_counter::addInstanceCounter();
+    Interpreter::getInstance()->trackJsObject(this);
 }
 
 MenuData::~MenuData()
 {
-    oxygine::ref_counter::releaseInstanceCounter();
 }
 
 void MenuData::addData(QString text, QString actionID, QString icon, qint32 costs, bool enabled)

@@ -46,7 +46,6 @@ PLAYER.coop_ModDoStartOfTurnRepairing = function(player, map)
                         }
                     }
                 }
-                buildings.remove();
             }
         }
     }

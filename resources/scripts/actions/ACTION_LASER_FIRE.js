@@ -114,7 +114,6 @@ var Constructor = function()
                 }
             }
         }
-        ACTION_LASER_FIRE.postAnimationActionFields.remove();
         ACTION_LASER_FIRE.postAnimationActionFields = null;
         ACTION_LASER_FIRE.postAnimationActionX = -1;
         ACTION_LASER_FIRE.postAnimationActionY = -1;

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QQmlEngine>
+#include <QVector>
 
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
@@ -51,6 +52,8 @@ public:
      */
     static bool reloadInterpreter(const QString & runtime);
 
+    bool getInJsCall() const;
+
 signals:
     void sigNetworkGameFinished(qint32 value, QString id);
 public slots:
@@ -65,7 +68,9 @@ public slots:
         if (funcPointer.isCallable())
         {
 #endif
+            ++m_inJsCall;
             ret = funcPointer.call(args);
+            exitJsCall();
             if (ret.isError())
             {
                 QString error = ret.toString() + " in File: " +
@@ -97,7 +102,9 @@ public slots:
             if (funcPointer.isCallable())
             {
 #endif
+                ++m_inJsCall;
                 ret = funcPointer.call(args);
+                exitJsCall();
                 if (ret.isError())
                 {
                     QString error = ret.toString() + " in File: " +
@@ -179,6 +186,7 @@ public slots:
         }
         return false;
     }
+    void trackJsObject(oxygine::ref_counter* pObj);
 private slots:
     void networkGameFinished(qint32 value, QString id);
 private:
@@ -188,10 +196,12 @@ private:
      * @brief init
      */
     void init();
-
+    void exitJsCall();
 private:
     static QString m_runtimeData;
     static spInterpreter m_pInstance;
+    qint32 m_inJsCall{0};
+    QVector<oxygine::intrusive_ptr<oxygine::ref_counter>> m_jsObjects;
 };
 
 #endif // INTERPRETER_H

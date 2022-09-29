@@ -4,8 +4,7 @@ var Constructor = function()
     this.canBePerformed = function(action, map)
     {
 		var units = map.getCurrentPlayer().getUnits();
-		var ret = (units.size() > 0);
-		units.remove();
+        var ret = (units.size() > 0);
         return ret;
     };
     
@@ -52,7 +51,6 @@ var Constructor = function()
         }
         data.setShowZData(false);
         data.setColor("#C8FF0000");
-        units.remove();
     };
     this.getStepInputType = function(action, map)
     {

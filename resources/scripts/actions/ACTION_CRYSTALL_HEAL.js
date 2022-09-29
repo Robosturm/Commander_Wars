@@ -57,7 +57,6 @@ var Constructor = function()
             var sound = Global[building.getBuildingID()].getHealSound();
             animation.addSound(sound);
         }
-        fields.remove();
     };
     this.getDescription = function()
     {

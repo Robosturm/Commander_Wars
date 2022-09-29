@@ -102,7 +102,6 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
         CO_VON_BOLT.postAnimationLaserrayTarget = null;
         CO_VON_BOLT.postAnimationLaserrayDamage = 0;
         CO_VON_BOLT.postAnimationLaserrayRange = 0;

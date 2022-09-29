@@ -76,7 +76,6 @@ var Constructor = function()
                     targets.push(target);
                 }
             }
-            targetFields.remove();
             ZVOLCAN.volcanFire(building, targets, map);
         }
     };

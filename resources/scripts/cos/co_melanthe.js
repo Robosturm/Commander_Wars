@@ -91,7 +91,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
         if (damage > 0)
         {
             var playerCounter = map.getPlayerCount();
@@ -140,7 +139,6 @@ var Constructor = function()
                             }
                         }
                     }
-                    units.remove();
                 }
             }
         }

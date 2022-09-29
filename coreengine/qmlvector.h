@@ -46,7 +46,6 @@ public slots:
     }
     void remove()
     {
-        delete this;
     }
 private:
     std::vector<QPoint> m_Vector;
@@ -82,7 +81,6 @@ public slots:
     }
     void remove()
     {
-        delete this;
     }
     void removeAt(qint32 i)
     {
@@ -131,7 +129,6 @@ public slots:
     }
     void remove()
     {
-        delete this;
     }
     void removeAt(qint32 i)
     {

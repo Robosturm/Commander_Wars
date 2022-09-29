@@ -93,7 +93,6 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
     };
     this.getCOSpecificUnit = function(building)
     {

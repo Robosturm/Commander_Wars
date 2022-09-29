@@ -78,7 +78,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -149,7 +148,6 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
         CO_RACHEL.postAnimationThrowRocketTarget[index] = null;
         CO_RACHEL.postAnimationThrowRocketDamage[index] = 0;
     };

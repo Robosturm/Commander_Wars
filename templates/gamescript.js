@@ -52,8 +52,6 @@ var Constructor = function()
     //            ret =  true;
     //        }
     //    }
-    //    points.remove();
-    //    pfs.remove();
     //    return ret;
 }
 

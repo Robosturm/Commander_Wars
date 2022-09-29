@@ -152,9 +152,11 @@ public:
      */
     std::vector<QPoint> getAllNodePointsFast(qint32 maxRange = infinite);
 public slots:
+    /**
+     * @brief remove
+     */
     void remove()
     {
-        delete this;
     }
     /**
      * @brief getTarget

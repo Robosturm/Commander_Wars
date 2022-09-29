@@ -93,9 +93,7 @@ var Constructor = function()
                     animation.writeDataInt32(unit.getY());
                     animation.writeDataInt32(value);
                     animation.setEndOfAnimationCall("CO_DRAKE", "postAnimationDamage");
-
                 }
-                units.remove();
             }
         }
     };

@@ -108,7 +108,6 @@ var Constructor = function()
                     animation.setEndOfAnimationCall("CO_GRAVES", "postAnimationDamage");
 
                 }
-                units.remove();
             }
         }
     };
