@@ -88,7 +88,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 21;
+        return 22;
     }
 
 

@@ -3630,6 +3630,7 @@ void Unit::serializeObject(QDataStream& pStream) const
     pStream << m_maxRange;
     pStream << m_maxFuel;
     pStream << m_baseMovementPoints;
+    pStream << m_MovementType;
     size = m_customRangeInfo.size();
     pStream << size;
     for (qint32 i = 0; i < size; i++)
@@ -3911,6 +3912,10 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
             pStream >> m_maxRange;
             pStream >> m_maxFuel;
             pStream >> m_baseMovementPoints;
+            if (version > 21)
+            {
+                pStream >> m_MovementType;
+            }
         }
         else
         {
@@ -3925,6 +3930,10 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
             pStream >> dummy2;
             pStream >> dummy2;
             pStream >> dummy2;
+            if (version > 21)
+            {
+                pStream >> dummy;
+            }
         }
     }
     setAmmo1(bufAmmo1);
