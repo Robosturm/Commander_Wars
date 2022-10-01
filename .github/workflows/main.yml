@@ -2,7 +2,7 @@ name: Commnader_Wars
 on: [push]
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.3.1'
+  QT_Version: '6.4.0'
   NDK_Version: r22b
   # paths which are given with \ instead of / via windows crashing some command tools
   NDK_Root: 'C:/hostedtoolcache/windows/ndk/r22b/x64'

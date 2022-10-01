@@ -1585,6 +1585,10 @@ void Multiplayermenu::startGameOnServer()
 
 void Multiplayermenu::createChat()
 {
+    if (m_Chat.get() != nullptr)
+    {
+        m_Chat->detach();
+    }
     if (Settings::getSmallScreenDevice())
     {
         m_Chat = spChat::create(m_pNetworkInterface,

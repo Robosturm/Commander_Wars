@@ -39,10 +39,13 @@ TextInput::~TextInput()
 
 void TextInput::editFinished()
 {
-    if (onEditFinished())
+    if (getFocused())
     {
-        looseFocusInternal();
-        Tooltip::setEnabled(true);
+        if (onEditFinished())
+        {
+            looseFocusInternal();
+            Tooltip::setEnabled(true);
+        }
     }
 }
 

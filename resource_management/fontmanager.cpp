@@ -93,7 +93,7 @@ FontManager::FontManager()
                                         {
                                             font.font.setBold(false);
                                         }
-                                        if (element.hasAttribute("borderColor"))
+                                        if (element.hasAttribute("borderColor") && font.borderWidth != 0)
                                         {
                                             font.borderColor = QColor(element.attribute("borderColor"));
                                         }

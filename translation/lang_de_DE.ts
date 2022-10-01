@@ -5875,24 +5875,24 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="100"/>
+        <location filename="../menue/mainwindow.cpp" line="101"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="100"/>
+        <location filename="../menue/mainwindow.cpp" line="101"/>
         <source>Imports all data from an other Commander Wars release to the current release.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="254"/>
-        <location filename="../menue/mainwindow.cpp" line="264"/>
-        <location filename="../menue/mainwindow.cpp" line="301"/>
+        <location filename="../menue/mainwindow.cpp" line="255"/>
+        <location filename="../menue/mainwindow.cpp" line="265"/>
+        <location filename="../menue/mainwindow.cpp" line="302"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="413"/>
+        <location filename="../menue/mainwindow.cpp" line="414"/>
         <source>Do you want to enable all current items in the shop?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6027,7 +6027,7 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="85"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="99"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1707"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1711"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6149,7 +6149,7 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1703"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1707"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

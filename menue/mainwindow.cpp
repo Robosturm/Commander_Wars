@@ -83,6 +83,7 @@ Mainwindow::Mainwindow(const QString & initialView)
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
+    style.color = Qt::black;
     spLabel pTextfield = spLabel::create(300);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(Mainapp::getGameVersion());

@@ -348,7 +348,7 @@ bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, ox
         QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
         qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
         qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
-        QString text = translate(getAttribute(childs, attrText));
+        QString text = translate(getStringValue(getAttribute(childs, attrText), id, loopIdx, pMenu));
         QString fontColor = getStringValue(getAttribute(childs, attrFontColor), id, loopIdx, pMenu);
         auto hAlign = getHAlignment(getAttribute(childs, attrHAlign), id, loopIdx, pMenu);
         auto style = getStyle(getStringValue(getAttribute(childs, attrFont), id, loopIdx, pMenu),
@@ -386,8 +386,8 @@ bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygi
         {
             width = getIntValue(test, id, loopIdx, pMenu);
         }
-        QString text = translate(getAttribute(childs, attrText));
-        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString text = translate(getStringValue(getAttribute(childs, attrText), id, loopIdx, pMenu));
+        QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx, pMenu));
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
         test = getAttribute(childs, attrSprite);
@@ -425,7 +425,7 @@ bool UiFactory::createSelectKey(oxygine::spActor parent, QDomElement element, ox
         qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
         qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
         qint32 startValue = getIntValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
-        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx, pMenu));
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
         QString onEventLine = getAttribute(childs, attrOnEvent);
@@ -568,7 +568,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
         QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
         qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
         qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
-        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx, pMenu));
         QString onEventLine = getAttribute(childs, attrOnEvent);
         bool value = getBoolValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
@@ -607,7 +607,7 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
         float max = getFloatValue(getAttribute(childs,attrMax), id, loopIdx, pMenu);
         float infinite = getFloatValue(getAttribute(childs, attrInfinite), id, loopIdx, pMenu);
         float spinSpeed = getFloatValue(getAttribute(childs, attrSpinSpeed), id, loopIdx, pMenu, 1.0f);
-        QString tooltip = translate(getAttribute(childs,attrTooltip));
+        QString tooltip = translate(getStringValue(getAttribute(childs,attrTooltip), id, loopIdx, pMenu));
         QString onEventLine = getAttribute(childs,attrOnEvent);
         float value = getFloatValue(getAttribute(childs,attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
@@ -653,7 +653,7 @@ bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygi
         qint32 width = getIntValue(getAttribute(childs,attrWidth), id, loopIdx, pMenu);
         qint32 min = getIntValue(getAttribute(childs,attrMin), id, loopIdx, pMenu);
         qint32 max = getIntValue(getAttribute(childs,attrMax), id, loopIdx, pMenu);
-        QString tooltip = translate(getAttribute(childs,attrTooltip));
+        QString tooltip = translate(getStringValue(getAttribute(childs,attrTooltip), id, loopIdx, pMenu));
         QString onEventLine = getAttribute(childs,attrOnEvent);
         qint32 value = getIntValue(getAttribute(childs,attrStartValue), id, loopIdx, pMenu);
         QString unit = "%";
@@ -698,7 +698,7 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
         {
             height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu);
         }
-        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx, pMenu));
         QString onEventLine = getAttribute(childs, attrOnEvent);
         QString value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
@@ -732,7 +732,7 @@ bool UiFactory::createMultilineTextbox(oxygine::spActor parent, QDomElement elem
         qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
         qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
         qint32 height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu);
-        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx, pMenu));
         QString onEventLine = getAttribute(childs, attrOnEvent);
         QString value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
@@ -770,7 +770,7 @@ bool UiFactory::createPasswordbox(oxygine::spActor parent, QDomElement element, 
         {
             height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu);
         }
-        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx, pMenu));
         QString onEventLine = getAttribute(childs, attrOnEvent);
         QString value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
@@ -803,7 +803,7 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
         qint32 x = getIntValue(getAttribute(childs,attrX), id, loopIdx, pMenu);
         qint32 y = getIntValue(getAttribute(childs,attrY), id, loopIdx, pMenu);
         qint32 width = getIntValue(getAttribute(childs,attrWidth), id, loopIdx, pMenu);
-        QString tooltip = translate(getAttribute(childs,attrTooltip));
+        QString tooltip = translate(getStringValue(getAttribute(childs,attrTooltip), id, loopIdx, pMenu));
         QString onEventLine = getAttribute(childs,attrOnEvent);
         quint64 value = getUInt64Value(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
@@ -920,7 +920,7 @@ bool UiFactory::createDropDownMenu(oxygine::spActor parent, QDomElement element,
         qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
         qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
         qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
-        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx, pMenu));
         QString onEventLine = getAttribute(childs, attrOnEvent);
 
         QStringList items = getStringListValue(getAttribute(childs, attrItems), id, loopIdx, pMenu);
@@ -969,7 +969,7 @@ bool UiFactory::createDropDownMenuColor(oxygine::spActor parent, QDomElement ele
         qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
         qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
         qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
-        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx, pMenu));
         QString onEventLine = getAttribute(childs, attrOnEvent);
         QString value;
         if (hasChild(childs, attrStartValue))
@@ -1031,7 +1031,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
         qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
         qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
         qint32 spriteSize = getIntValue(getAttribute(childs, attrSpriteSize), id, loopIdx, pMenu);
-        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx, pMenu));
         QString onEventLine = getAttribute(childs, attrOnEvent);
         QStringList items = getStringListValue(getAttribute(childs, attrItems), id, loopIdx, pMenu);
         QString spriteCreator = getStringValue(getAttribute(childs, attrSpriteType), id, loopIdx, pMenu);
