@@ -69,7 +69,8 @@ namespace oxygine
             }
             for (qint32 i = 0; i < m_lines.size(); ++i)
             {
-                path.addText(rs.transform.x + (m_offsets[i].x() - style.font.borderWidth + style.font.offsetX) * rs.transform.a, rs.transform.y + (m_offsets[i].y() - style.font.borderWidth + style.font.offsetY) * rs.transform.d, font, m_lines[i]);
+                path.addText(static_cast<qint32>(rs.transform.x + (m_offsets[i].x() - style.font.borderWidth + style.font.offsetX) * rs.transform.a),
+                             static_cast<qint32>(rs.transform.y + (m_offsets[i].y() - style.font.borderWidth + style.font.offsetY) * rs.transform.d), font, m_lines[i]);
             }
             if (style.font.borderWidth != 0)
             {
