@@ -504,6 +504,10 @@ void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socke
                 reason = NetworkCommands::DisconnectReason::PasswordOutdated;
                 break;
             }
+            default:
+            {
+                reason = NetworkCommands::DisconnectReason::DatabaseAccessError;
+            }
         }
         CONSOLE_PRINT("Login error: " + QString::number(valid) + " reported reason: " + QString::number(reason), Console::eDEBUG);
         data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, reason);

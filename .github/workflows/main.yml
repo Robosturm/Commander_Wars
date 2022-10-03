@@ -3,9 +3,9 @@ on: [push]
 env:
   BUILD_TYPE: Release
   QT_Version: '6.4.0'
-  NDK_Version: r22b
+  NDK_Version: r23
   # paths which are given with \ instead of / via windows crashing some command tools
-  NDK_Root: 'C:/hostedtoolcache/windows/ndk/r22b/x64'
+  NDK_Root: 'C:/hostedtoolcache/windows/ndk/r23/x64'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
   javaVersion: '17'
   javaDistribution: 'microsoft'
