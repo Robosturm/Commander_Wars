@@ -5,9 +5,9 @@ var Constructor = function()
         return qsTr("Ship Missile");
     };
     this.damageTable = [["BATTLESHIP", 38],
-                        ["CANNONBOAT", 85],
+                        ["BATTLECRUISER", 25],
                         ["CRUISER", 55],
-                        ["DESTROYER", 25],
+                        ["DESTROYER", 85],
                         ["SUBMARINE", 95],
                         ["LANDER", 40],
                         ["BLACK_BOAT", 85],

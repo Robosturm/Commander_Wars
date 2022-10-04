@@ -2,20 +2,20 @@ var Constructor = function()
 {
     this.init = function(unit)
     {
-        unit.setAmmo1(9);
-        unit.setMaxAmmo1(9);
-        unit.setWeapon1ID("WEAPON_ANTI_SHIP_CANNON");
+        unit.setAmmo1(1);
+        unit.setMaxAmmo1(1);
+        unit.setWeapon1ID("WEAPON_ANTI_SHIP_MISSILE");
 
-        unit.setAmmo2(9);
-        unit.setMaxAmmo2(9);
-        unit.setWeapon2ID("WEAPON_DESTROYER_A_AIR_GUN");
+        unit.setAmmo2(3);
+        unit.setMaxAmmo2(3);
+        unit.setWeapon2ID("");
 
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(6);
         unit.setMinRange(1);
         unit.setMaxRange(1);
-        unit.setVision(1);
+		unit.setVision(2);
     };
     
     this.loadSprites = function(unit)
@@ -24,17 +24,15 @@ var Constructor = function()
     };
     this.getMovementType = function()
     {
-        return "MOVE_SHIP";
+        return "MOVE_BOAT";
     };
-
     this.getBaseCost = function()
     {
-        return 14000;
+        return 10000;
     };
-
     this.getName = function()
     {
-        return qsTr("Battlecruiser");
+        return qsTr("Missile boat");
     };
     this.startOfTurn = function(unit, map)
     {
@@ -48,6 +46,7 @@ var Constructor = function()
             }
             unit.setFuel(unit.getFuel() - fuelCosts);
         }
+        UNIT.transporterRefilling(unit, map);
     };
     this.createExplosionAnimation = function(x, y, unit, map)
     {
@@ -65,6 +64,7 @@ var Constructor = function()
         animation.setSound("moveship.wav", -2);
         return animation;
     };
+    this.actionList = ["ACTION_PLACE_WATERMINE", "ACTION_FIRE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
     this.canMoveAndFire = function()
     {
         return true;
@@ -93,9 +93,8 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Naval Unit. Strong against all sea units and has decent firepower against air units. Can also attack ground units.");
+        return qsTr("<r>Naval Unit. Attacks naval units. Can place </r><div c='#00ff00'>Watermines</div><r> on sea tiles.</r>");
     };
-
     this.getUnitType = function()
     {
         return GameEnums.UnitType_Naval;

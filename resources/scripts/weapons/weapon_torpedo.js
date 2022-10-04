@@ -5,10 +5,10 @@ var Constructor = function()
         return qsTr("Torpedo");
     };
     this.damageTable = [["BATTLESHIP", 80],
-                        ["CANNONBOAT", 120],
+                        ["DESTROYER", 120],
 
                         ["CRUISER", 25],
-                        ["DESTROYER", 95],
+                        ["BATTLECRUISER", 95],
                         ["SUBMARINE", 55],
 
                         ["LANDER", 120],

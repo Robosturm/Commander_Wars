@@ -149,14 +149,16 @@
         <image file="battlesprites/background/back_desertharbour.png" />
         <image file="battlesprites/background/back_wasteharbour.png" />
         <!-- river -->
-        <image file="battlesprites/background/back_river+0.png" />
-        <image file="battlesprites/background/back_river+1.png" />
-        <image file="battlesprites/background/back_rainriver+0.png" />
-        <image file="battlesprites/background/back_rainriver+1.png" />
-        <image file="battlesprites/background/back_desertriver+0.png" />
-        <image file="battlesprites/background/back_desertriver+1.png" />
-        <image file="battlesprites/background/back_snowriver+0.png" />
-        <image file="battlesprites/background/back_snowriver+1.png" />
+        <image file="battlesprites/background/back_river.png" />
+        <image file="battlesprites/background/back_river+boat.png" />
+        <image file="battlesprites/background/back_rainriver.png" />
+        <image file="battlesprites/background/back_rainriver+boat.png" />
+        <image file="battlesprites/background/back_desertriver.png" />
+        <image file="battlesprites/background/back_desertriver+boat.png" />
+        <image file="battlesprites/background/back_snowriver.png" />
+        <image file="battlesprites/background/back_snowriver+boat.png" />
+        <image file="battlesprites/background/back_wasteriver.png" />
+        <image file="battlesprites/background/back_wasteriver+boat.png" />
         <!-- street -->
         <image file="battlesprites/background/back_street.png" />
         <image file="battlesprites/background/back_street+forest.png" />

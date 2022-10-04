@@ -43,10 +43,10 @@ Constructor = function()
                         ["HOELLIUM", 5],
 
                         // ships
+                        ["BATTLECRUISER", 35],
                         ["BATTLESHIP", 45],
-                        ["CANNONBOAT", 100],
                         ["CRUISER", 35],
-                        ["DESTROYER", 35],
+                        ["DESTROYER", 100],
                         ["SUBMARINE", 35],
                         ["LANDER", 65],
                         ["BLACK_BOAT", 100],
