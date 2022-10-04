@@ -78,9 +78,24 @@
         <!-- cruiser -->
         <image file="cruiser+mask.png" cols = "4"  />
         <image file="cruiser+walk+mask.png" cols = "2"  rows = "4"  />
+        <!-- battlecruiser -->
+        <image file="battlecruiser+mask.png" cols = "4"  />
+        <image file="battlecruiser+walk+mask.png" cols = "2"  rows = "4"  />
         <!-- destroyer -->
         <image file="destroyer+mask.png" cols = "4"  />
         <image file="destroyer+walk+mask.png" cols = "2"  rows = "4"  />
+        <!-- frigate -->
+        <image file="frigate+mask.png" cols = "4"  />
+        <image file="frigate+walk+mask.png" cols = "2"  rows = "4"  />
+        <!-- gunboat -->
+        <image file="gunboat+mask.png" cols = "4"  />
+        <image file="gunboat+walk+mask.png" cols = "2"  rows = "4"  />
+        <!-- missileboat -->
+        <image file="missileboat+mask.png" cols = "4"  />
+        <image file="missileboat+walk+mask.png" cols = "2"  rows = "4"  />
+        <!-- torpedoboat -->
+        <image file="torpedoboat+mask.png" cols = "4"  />
+        <image file="torpedoboat+walk+mask.png" cols = "2"  rows = "4"  />
         <!-- fighter -->
         <image file="fighter+mask.png" cols = "4"  />
         <image file="fighter+walk+mask.png" cols = "3"  rows = "4"  />

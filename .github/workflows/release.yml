@@ -13,7 +13,7 @@ env:
   NDK_Root: 'C:/hostedtoolcache/windows/ndk/r23/x64'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
   javaVersion: '17'
-  javaDistribution: 'microsoft'
+  javaDistribution: 'adopt'
   
 jobs:
   create_release:
@@ -281,8 +281,7 @@ jobs:
         --android-platform android-31 \
         --gradle \
         --release \
-        --sign \
-        --verbose
+        --sign
       
 #----------------------------------------------------------------------------------------------------------------------------------------------
 # release creation and upload part

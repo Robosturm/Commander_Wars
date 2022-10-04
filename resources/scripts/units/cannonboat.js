@@ -20,7 +20,7 @@ var Constructor = function()
     
     this.loadSprites = function(unit)
     {
-        unit.loadSpriteV2("destroyer+mask", GameEnums.Recoloring_Matrix);
+        unit.loadSpriteV2("missileboat+mask", GameEnums.Recoloring_Matrix);
     };
     this.getMovementType = function()
     {
@@ -32,7 +32,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return qsTr("Destroyer");
+        return qsTr("Missile boat");
     };
     this.startOfTurn = function(unit, map)
     {
@@ -102,4 +102,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = UNIT;
-var DESTROYER = new Constructor();
+var CANNONBOAT = new Constructor();

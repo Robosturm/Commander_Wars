@@ -7,8 +7,8 @@ env:
   # paths which are given with \ instead of / via windows crashing some command tools
   NDK_Root: 'C:/hostedtoolcache/windows/ndk/r23/x64'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
-  javaVersion: '17'
-  javaDistribution: 'microsoft'
+  javaVersion: '11'
+  javaDistribution: 'adopt'
   
 jobs:
   install:
@@ -233,5 +233,4 @@ jobs:
         --android-platform android-31 \
         --gradle \
         --release \
-        --sign \
-        --verbose                
+        --sign              

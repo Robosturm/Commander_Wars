@@ -72,6 +72,8 @@
 		<image file="minicanon_north.png" cols = "8" />
 		<image file="minicanon_west.png" cols = "8" />
 		<image file="minicanon_south.png" cols = "8" />
+                <image file="nestlaser.png" cols = "9" />
+                <image file="nestlaser+center.png" cols = "9" />
 		
 		<image file="undive.png" cols = "6" />
 		<image file="dive.png" cols = "8" />

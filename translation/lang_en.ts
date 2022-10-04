@@ -6027,7 +6027,7 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="85"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="99"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1711"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1715"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6112,44 +6112,44 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="661"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="807"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="665"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="811"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1039"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1043"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1043"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1047"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1058"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1062"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1158"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1162"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1169"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1173"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1578"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1582"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1707"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1711"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12184,6 +12184,19 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/general/basegamescript.js" line="11"/>
         <source>No additional Victory Conditions are active.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>battlecruiser</name>
+    <message>
+        <location filename="../resources/scripts/units/battlecruiser.js" line="37"/>
+        <source>Battlecruiser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/battlecruiser.js" line="96"/>
+        <source>Naval Unit. Strong against all sea units and has decent firepower against air units. Can also attack ground units.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -23624,13 +23637,13 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>destroyer</name>
     <message>
-        <location filename="../resources/scripts/units/destroyer.js" line="37"/>
-        <source>Battlecruiser</source>
+        <location filename="../resources/scripts/units/destroyer.js" line="35"/>
+        <source>Destroyer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/destroyer.js" line="96"/>
-        <source>Naval Unit. Strong against all sea units and has decent firepower against air units. Can also attack ground units.</source>
+        <source>&lt;r&gt;Naval Unit. Attacks naval units. Can place &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Watermines&lt;/div&gt;&lt;r&gt; on sea tiles.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -25820,6 +25833,14 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
 </context>
 <context>
+    <name>weapon_battlecruiser_a_air_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_battlecruiser_a_air_gun.js" line="5"/>
+        <source>Anti Air Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>weapon_battleship_cannon</name>
     <message>
         <location filename="../resources/scripts/weapons/weapon_battleship_cannon.js" line="5"/>
@@ -25880,14 +25901,6 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/weapons/weapon_designator.js" line="5"/>
         <source>Designator</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>weapon_destroyer_a_air_gun</name>
-    <message>
-        <location filename="../resources/scripts/weapons/weapon_destroyer_a_air_gun.js" line="5"/>
-        <source>Anti Air Gun</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

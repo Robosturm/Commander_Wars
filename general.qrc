@@ -1972,7 +1972,6 @@
         <file>resources/scripts/weapons/weapon_carrier_anti_air_missile.js</file>
         <file>resources/scripts/weapons/weapon_csv_import.txt</file>
         <file>resources/scripts/weapons/weapon_designator.js</file>
-        <file>resources/scripts/weapons/weapon_destroyer_a_air_gun.js</file>
         <file>resources/scripts/weapons/weapon_firebomb.js</file>
         <file>resources/scripts/weapons/weapon_flare.js</file>
         <file>resources/scripts/weapons/weapon_flare_mg.js</file>
@@ -2094,5 +2093,8 @@
         <file>resources/aidata/normal/normalaioffensive.js</file>
         <file>resources/aidata/very_easy/veryeasyai.js</file>
         <file>mods/awdc_terrain/scripts/building/tower.js</file>
+        <file>resources/scripts/units/battlecruiser.js</file>
+        <file>resources/scripts/battleanimations/BATTLEANIMATION_BATTLECRUISER.js</file>
+        <file>resources/scripts/weapons/weapon_battlecruiser_a_air_gun.js</file>
     </qresource>
 </RCC>

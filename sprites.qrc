@@ -806,8 +806,6 @@
         <file>resources/images/units/black_bomb+walk+mask.png</file>
         <file>resources/images/units/bomber+mask.png</file>
         <file>resources/images/units/bomber+walk+mask.png</file>
-        <file>resources/images/units/cannonboat+mask.png</file>
-        <file>resources/images/units/cannonboat+walk+mask.png</file>
         <file>resources/images/units/chaperon+mask.png</file>
         <file>resources/images/units/chaperon+walk+mask.png</file>
         <file>resources/images/units/commando+mask.png</file>
@@ -1642,8 +1640,6 @@
         <file>resources/images/battleanimations/bomber/bomber+ma+mask.png</file>
         <file>resources/images/battleanimations/bomber/bomber+os+mask.png</file>
         <file>resources/images/battleanimations/bomber/bomber+yc+mask.png</file>
-        <file>resources/images/battleanimations/cannonboat/cannonboat+mask.png</file>
-        <file>resources/images/battleanimations/cannonboat/cannonboat.png</file>
         <file>resources/images/battleanimations/chaperon/chaperon+mask.png</file>
         <file>resources/images/battleanimations/commando/commando+mask.png</file>
         <file>resources/images/battleanimations/cruiser/cruiser+bh+mask.png</file>
@@ -2288,10 +2284,6 @@
         <file>resources/images/battleanimations/k_heli/k_heli+ge+mg+fire+mask.png</file>
         <file>resources/images/battleanimations/k_heli/k_heli+os+mg+fire+mask.png</file>
         <file>resources/images/battleanimations/k_heli/k_heli+yc+mg+fire+mask.png</file>
-        <file>resources/images/battleanimations/destroyer/destroyer+cannon+fire+mask.png</file>
-        <file>resources/images/battleanimations/destroyer/destroyer+cannon+mask.png</file>
-        <file>resources/images/battleanimations/destroyer/destroyer+flak+fire+mask.png</file>
-        <file>resources/images/battleanimations/destroyer/destroyer+flak+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+ac+dying+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+ac+fire+down+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+ac+fire+mask.png</file>
@@ -4822,5 +4814,42 @@
         <file>resources/images/game/tagpower_background.png</file>
         <file>resources/images/units/icons/scripted.png</file>
         <file>resources/ui/uitranslations.js</file>
+        <file>resources/images/battleanimations/battlecruiser/battlecruiser+cannon+fire+mask.png</file>
+        <file>resources/images/battleanimations/battlecruiser/battlecruiser+cannon+mask.png</file>
+        <file>resources/images/battleanimations/battlecruiser/battlecruiser+flak+fire+mask.png</file>
+        <file>resources/images/battleanimations/battlecruiser/battlecruiser+flak+mask.png</file>
+        <file>resources/images/battleanimations/battlecruiser/battlecruiser+mask.png</file>
+        <file>resources/images/battleanimations/battlecruiser/battlecruiser.png</file>
+        <file>resources/images/battleanimations/frigate/frigate+mask.png</file>
+        <file>resources/images/battleanimations/frigate/frigate.png</file>
+        <file>resources/images/battleanimations/gunboat/gunboat+gun+fire+mask.png</file>
+        <file>resources/images/battleanimations/gunboat/gunboat+gun+mask.png</file>
+        <file>resources/images/battleanimations/gunboat/gunboat+mask.png</file>
+        <file>resources/images/battleanimations/gunboat/gunboat.png</file>
+        <file>resources/images/battleanimations/missileboat/missileboat+mask.png</file>
+        <file>resources/images/battleanimations/missileboat/missileboat.png</file>
+        <file>resources/images/battleanimations/torpedoboat/torpedoboat+mask.png</file>
+        <file>resources/images/battleanimations/torpedoboat/torpedoboat.png</file>
+        <file>resources/images/animations/nestlaser.png</file>
+        <file>resources/images/animations/nestlaser+center.png</file>
+        <file>resources/images/units/battlecruiser+mask.png</file>
+        <file>resources/images/units/battlecruiser+walk+mask.png</file>
+        <file>resources/images/units/frigate+mask.png</file>
+        <file>resources/images/units/frigate+walk+mask.png</file>
+        <file>resources/images/units/gunboat+mask.png</file>
+        <file>resources/images/units/gunboat+walk+mask.png</file>
+        <file>resources/images/units/missileboat+mask.png</file>
+        <file>resources/images/units/missileboat+walk+mask.png</file>
+        <file>resources/images/units/torpedoboat+mask.png</file>
+        <file>resources/images/units/torpedoboat+walk+mask.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertriver.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertriver+boat.png</file>
+        <file>resources/images/game/battlesprites/background/back_rainriver.png</file>
+        <file>resources/images/game/battlesprites/background/back_rainriver+boat.png</file>
+        <file>resources/images/game/battlesprites/background/back_river.png</file>
+        <file>resources/images/game/battlesprites/background/back_river+boat.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowriver.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowriver+boat.png</file>
+        <file>resources/images/game/battlesprites/background/back_wasteriver+boat.png</file>
     </qresource>
 </RCC>
