@@ -12195,7 +12195,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/battlecruiser.js" line="96"/>
+        <location filename="../resources/scripts/units/battlecruiser.js" line="100"/>
         <source>Naval Unit. Strong against all sea units and has decent firepower against air units. Can also attack ground units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12208,7 +12208,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/battleship.js" line="94"/>
+        <location filename="../resources/scripts/units/battleship.js" line="98"/>
         <source>&lt;r&gt;Naval Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;launch indirect attacks after moving&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>

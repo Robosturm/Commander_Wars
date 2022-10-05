@@ -133,8 +133,11 @@ void FileDialog::showFolder(QString folder)
     {
         m_MainPanel->removeItem(m_Items[i]);
     }
-
     folder = folder.replace("\\", "/");
+    while (folder.contains("//"))
+    {
+        folder = folder.replace("//", "/");
+    }
     folder = QDir(folder).absolutePath();
     folder = GlobalUtils::makePathRelative(folder);
     m_Items.clear();

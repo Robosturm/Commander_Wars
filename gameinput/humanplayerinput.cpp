@@ -391,17 +391,17 @@ void HumanPlayerInput::clearMarkedFields()
 
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("humanplayer input leftClick() with X " + QString::number(x) + " Y " + QString::number(y), Console::eDEBUG);
     if (m_pMenu != nullptr &&
         GameAnimationFactory::getAnimationCount() == 0)
     {
+        CONSOLE_PRINT("humanplayer input leftClick() with X " + QString::number(x) + " Y " + QString::number(y), Console::eDEBUG);
         Cursor* pCursor = m_pMenu->getCursor();
         bool isViewPlayer = (m_pMap->getCurrentViewPlayer() == m_pPlayer);
         if (!m_pMap->onMap(x, y))
         {
             // do nothing
         }
-        else if (!m_pMenu->getFocused())
+        else if (!m_pMenu->getFocused() && isCurrentPlayer(m_pPlayer))
         {
             if (m_CurrentMenu.get() != nullptr && Settings::getSimpleDeselect())
             {

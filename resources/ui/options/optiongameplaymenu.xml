@@ -664,7 +664,7 @@
             <Textbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <Id>"RulesetTextbox"</Id>
+                <Id>"BannlistTextbox"</Id>
                 <width>settings.getWidth() - 90 - lastWidth - lastX - 170</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The relative path from the exe to the default bannlist.")</tooltip>
                 <startValue>settings.getDefaultBannlist()</startValue>

@@ -17,9 +17,9 @@ var MainMenu =
     },
     getButtonY : function(btnI)
     {
-        var buttonCount = 7;
-        var buttonHeigth = 50;
-        return settings.getHeight() / 2.0 - buttonCount  / 2 * buttonHeigth + buttonHeigth * btnI;
+        var buttonCount = 8;
+        var buttonHeigth = 40;
+        return settings.getHeight() / 2.0 - buttonCount * buttonHeigth * 0.5 + buttonHeigth * (btnI + 1);
     },
 
     loadPlayermenu : function(currentMenu)

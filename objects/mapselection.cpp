@@ -293,13 +293,17 @@ void MapSelection::changeFolder(QString folder)
     CONSOLE_PRINT("MapSelection::changeFolder " + folder, Console::eDEBUG);
     m_itemClicked = false;
     QString newFolder = folder;
-    if (folder == "")
+    if (newFolder == "")
     {
         newFolder = Settings::getUserPath() + "maps";
     }
-    if (folder == "..")
+    else if (newFolder == "..")
     {
         newFolder = m_currentFolder + "/..";
+    }
+    while (newFolder.contains("//"))
+    {
+        newFolder = newFolder.replace("//", "/");
     }
     QDir dir(newFolder);
     QDir virtDir(oxygine::Resource::RCC_PREFIX_PATH + newFolder);

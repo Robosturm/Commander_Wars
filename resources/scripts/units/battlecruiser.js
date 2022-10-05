@@ -13,8 +13,8 @@ var Constructor = function()
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(6);
-        unit.setMinRange(1);
-        unit.setMaxRange(1);
+        unit.setMinRange(2);
+        unit.setMaxRange(3);
         unit.setVision(1);
     };
     
@@ -69,6 +69,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.canCounterOnRangeAttacks = function(unit, defX, defY, attacker, atkX, atkY, pAction, luckMode, map)
+    {
+        return true;
+    };
     this.getTerrainAnimationBase = function(unit, terrain, defender, map)
     {
         var weatherModifier = TERRAIN.getWeatherModifier(map);
@@ -99,6 +103,14 @@ var Constructor = function()
     this.getUnitType = function()
     {
         return GameEnums.UnitType_Naval;
+    };
+    this.getTypeOfWeapon1 = function(unit, map)
+    {
+        return GameEnums.WeaponType_Indirect;
+    };
+    this.getTypeOfWeapon2 = function(unit, map)
+    {
+        return GameEnums.WeaponType_Direct;
     };
 }
 

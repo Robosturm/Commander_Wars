@@ -224,7 +224,10 @@ Settings::Settings()
 #ifdef USEAPPCONFIGPATH
     defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
 #endif
-
+    while (defaultPath.contains("//"))
+    {
+        defaultPath = defaultPath.replace("//", "/");
+    }
     auto devices = QInputDevice::devices();
     bool hasTouch = false;
     for (const auto & device: qAsConst(devices))
@@ -779,7 +782,19 @@ void Settings::setTouchScreen(bool newTouchScreen)
 
 QString Settings::getUserPath()
 {
-    return m_userPath;
+    if (m_userPath.isEmpty())
+    {
+        return m_userPath;
+    }
+    else
+    {
+        QString folder = m_userPath + "/";
+        while (folder.contains("//"))
+        {
+            folder = folder.replace("//", "/");
+        }
+        return folder;
+    }
 }
 
 void Settings::setUserPath(const QString &newUserPath)

@@ -89,6 +89,10 @@ void FolderDialog::showFolder(QString folder)
     }
 
     folder = folder.replace("\\", "/");
+    while (folder.contains("//"))
+    {
+        folder = folder.replace("//", "/");
+    }
     folder = QDir(folder).absolutePath();
     folder = GlobalUtils::makePathRelative(folder);
     m_Items.clear();

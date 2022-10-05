@@ -276,7 +276,6 @@ double CoreAI::getInitValue(QString name) const
 
 void CoreAI::nextAction()
 {
-    AI_CONSOLE_PRINT("CoreAI::nextAction", Console::eDEBUG);
     // check if it's our turn
     if (!m_processing)
     {
@@ -286,7 +285,7 @@ void CoreAI::nextAction()
             m_pPlayer == m_pMap->getCurrentPlayer() &&
             m_pMenu->getGameStarted())
         {
-
+            AI_CONSOLE_PRINT("CoreAI::nextAction", Console::eDEBUG);
             if (!processPredefinedAi())
             {
                 AI_CONSOLE_PRINT("Processing ai specific behaviour", Console::eDEBUG);

@@ -75,7 +75,16 @@ void GameUpdater::install()
             QString targetName = filePath;
             QString targetPath = QCoreApplication::applicationDirPath() + "/../../" + targetName.replace(path, "");
             QFile file(targetPath);
-            file.remove();
+            if (file.exists())
+            {
+                file.remove();
+            }
+            else
+            {
+                QFileInfo info(targetPath);
+                QDir dir(info.absoluteDir().absolutePath());
+                dir.mkpath(".");
+            }
             QFile::copy(filePath, targetPath);
             CONSOLE_PRINT("Copying " + filePath + " to " + targetPath, Console::eDEBUG);
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();

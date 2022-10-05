@@ -209,7 +209,7 @@ var OptionMenu =
     defaultDannlistSelected : function(currentMenu, filename)
     {
         settings.setDefaultBannlist(filename);
-        currentMenu.getObject("RulesetTextbox").setCurrentText(filename);
+        currentMenu.getObject("BannlistTextbox").setCurrentText(filename);
     },
     changeLanguage : function(currentMenu, item)
     {

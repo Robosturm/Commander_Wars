@@ -1901,19 +1901,19 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
         {
             if (cur == Settings::getKey_quicksave1())
             {
-                saveMap("savegames/quicksave1.sav");
+                saveMap(Settings::getUserPath() + "savegames/quicksave1.sav");
             }
             else if (cur == Settings::getKey_quicksave2())
             {
-                saveMap("savegames/quicksave2.sav");
+                saveMap(Settings::getUserPath() + "savegames/quicksave2.sav");
             }
             else if (cur == Settings::getKey_quickload1())
             {
-                emit sigLoadSaveGame("savegames/quicksave1.sav");
+                emit sigLoadSaveGame(Settings::getUserPath() + "savegames/quicksave1.sav");
             }
             else if (cur == Settings::getKey_quickload2())
             {
-                emit sigLoadSaveGame("savegames/quicksave2.sav");
+                emit sigLoadSaveGame(Settings::getUserPath() + "savegames/quicksave2.sav");
             }
             else
             {
