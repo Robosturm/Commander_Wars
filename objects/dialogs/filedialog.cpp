@@ -44,17 +44,25 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, QStri
     pSpriteBox->addChild(m_MainPanel);
     // file folder
     m_CurrentFile = spTextbox::create(Settings::getWidth() - 60 - 160);
-    m_CurrentFile->setPosition(30, m_MainPanel->getY() + m_MainPanel->getScaledHeight() + 10);
+    m_CurrentFile->setPosition(30, m_MainPanel->getY() + m_MainPanel->getScaledHeight() + 45);
     m_CurrentFile->setCurrentText(startFile);
     pSpriteBox->addChild(m_CurrentFile);
     // ok button
     m_OkButton = pObjectManager->createButton(acceptButtonName, 150);
     m_OkButton->setPosition(m_CurrentFile->getScaledWidth() + 30 + 10, m_CurrentFile->getY());
     pSpriteBox->addChild(m_OkButton);
+    // delete button
+    oxygine::spButton pDeleteButton = pObjectManager->createButton(tr("Delete"), 150);
+    pDeleteButton->setPosition(m_CurrentFile->getScaledWidth() + 30 + 10, m_CurrentFile->getY() - 40);
+    pDeleteButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    {
+        emit sigShowDeleteQuestion();
+    });
+    pSpriteBox->addChild(pDeleteButton);
     // drop down menu
     m_DropDownmenu = spDropDownmenu::create(m_CurrentFile->getScaledWidth(), wildcards);
     pSpriteBox->addChild(m_DropDownmenu);
-    m_DropDownmenu->setPosition(30, m_CurrentFile->getY() + m_CurrentFile->getScaledHeight() + 10);
+    m_DropDownmenu->setPosition(30, m_CurrentFile->getY() + m_CurrentFile->getScaledHeight());
     connect(m_DropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &FileDialog::filterChanged, Qt::QueuedConnection);
     // cancel button
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
@@ -101,6 +109,7 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, QStri
     connect(pApp, &Mainapp::sigKeyDown, this, &FileDialog::KeyInput, Qt::QueuedConnection);
     connect(this, &FileDialog::sigCancel, this, &FileDialog::remove, Qt::QueuedConnection);
     connect(this, &FileDialog::sigFinished, this, &FileDialog::remove, Qt::QueuedConnection);
+    connect(this, &FileDialog::sigShowDeleteQuestion, this, &FileDialog::showDeleteQuestion, Qt::QueuedConnection);
     pApp->continueRendering();
 }
 
@@ -280,10 +289,33 @@ void FileDialog::showFolder(QString folder)
     pApp->continueRendering();
 }
 
+void FileDialog::showDeleteQuestion()
+{
+    if (QFile::exists(m_CurrentFolder->getCurrentText() + "/" +
+                      m_CurrentFile->getCurrentText()))
+    {
+        m_focused = false;
+        spDialogMessageBox pDialogRemove = spDialogMessageBox::create(tr("Do you want to delete the item ") + m_CurrentFolder->getCurrentText() + "/" +
+                                                                      m_CurrentFile->getCurrentText() + "?", true);
+        connect(pDialogRemove.get(), &DialogMessageBox::sigOk, this, &FileDialog::deleteItem, Qt::QueuedConnection);
+        connect(pDialogRemove.get(), &DialogMessageBox::sigCancel, this, [this]()
+        {
+            m_focused = true;
+        });
+        addChild(pDialogRemove);
+    }
+}
+
 void FileDialog::deleteItem()
 {
-    QFile::remove(m_CurrentFolder->getCurrentText() + "/" +
-                  m_CurrentFile->getCurrentText());
+    if (QFile::exists(m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText()))
+    {
+        QFile::remove(m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText());
+    }
+    else if (QFile::exists(Settings::getUserPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText()))
+    {
+        QFile::remove(Settings::getUserPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText());
+    }
     showFolder(m_CurrentFolder->getCurrentText());
     m_focused = true;
 }
@@ -304,14 +336,14 @@ void FileDialog::KeyInput(oxygine::KeyEvent event)
                                   m_CurrentFile->getCurrentText()))
                 {
                     m_focused = false;
-                    spDialogMessageBox pSurrender = spDialogMessageBox::create(tr("Do you want to delete the item ") + m_CurrentFolder->getCurrentText() + "/" +
+                    spDialogMessageBox pDialogRemove = spDialogMessageBox::create(tr("Do you want to delete the item ") + m_CurrentFolder->getCurrentText() + "/" +
                                                                                m_CurrentFile->getCurrentText() + "?", true);
-                    connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &FileDialog::deleteItem, Qt::QueuedConnection);
-                    connect(pSurrender.get(), &DialogMessageBox::sigCancel, this, [this]()
+                    connect(pDialogRemove.get(), &DialogMessageBox::sigOk, this, &FileDialog::deleteItem, Qt::QueuedConnection);
+                    connect(pDialogRemove.get(), &DialogMessageBox::sigCancel, this, [this]()
                     {
                         m_focused = true;
                     });
-                    addChild(pSurrender);
+                    addChild(pDialogRemove);
                 }
                 break;
             }

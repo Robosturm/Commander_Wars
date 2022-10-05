@@ -40,11 +40,13 @@ signals:
     void sigCancel();
     void sigShowFolder(QString folder);
     void sigFinished();
+    void sigShowDeleteQuestion();
 public slots:
     void showFolder(QString folder);
     void filterChanged(qint32);
     void KeyInput(oxygine::KeyEvent event);
     void deleteItem();
+    void showDeleteQuestion();
     void remove();
 private:
     spTextbox m_CurrentFolder;

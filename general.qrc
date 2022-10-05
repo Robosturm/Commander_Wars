@@ -2096,5 +2096,6 @@
         <file>resources/scripts/units/battlecruiser.js</file>
         <file>resources/scripts/battleanimations/BATTLEANIMATION_BATTLECRUISER.js</file>
         <file>resources/scripts/weapons/weapon_battlecruiser_a_air_gun.js</file>
+        <file>mods/awdc_unit/scripts/movementtables/move_ship.js</file>
     </qresource>
 </RCC>

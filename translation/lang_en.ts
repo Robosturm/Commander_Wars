@@ -1439,7 +1439,7 @@
     </message>
     <message>
         <location filename="../menue/campaignmenu.cpp" line="78"/>
-        <location filename="../menue/campaignmenu.cpp" line="517"/>
+        <location filename="../menue/campaignmenu.cpp" line="521"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1980,9 +1980,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="285"/>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="303"/>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="312"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="289"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="307"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="316"/>
         <source>CO Style </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2433,7 +2433,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="474"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="478"/>
         <source>The percentage of buildings distributed between the players. Note buildings close to an Player HQ may be ignored.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2548,23 +2548,23 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="465"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="469"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="470"/>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="512"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="474"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="516"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="517"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="521"/>
         <source>The percent unit distribution between the players. Note units that can&apos;t be spawned still count to the distribution.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="524"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="528"/>
         <source>The percent distribution between the units that will be spawned. Note units that can&apos;t be spawned still count to the distribution.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2572,12 +2572,12 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>DialogRandomMap::DialogRandomMap</name>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="425"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="429"/>
         <source>The percentage of different terrain types distributed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="442"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="446"/>
         <source>The percentage of different buildings types distributed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3102,12 +3102,18 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/filedialog.cpp" line="60"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="55"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/filedialog.cpp" line="68"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/filedialog.cpp" line="299"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="298"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="339"/>
         <source>Do you want to delete the item </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3125,7 +3131,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/folderdialog.cpp" line="221"/>
+        <location filename="../objects/dialogs/folderdialog.cpp" line="229"/>
         <source>Do you want to delete the folder </source>
         <translation type="unfinished"></translation>
     </message>
@@ -5499,7 +5505,7 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>GameScript</name>
     <message>
-        <location filename="../game/gamescript.cpp" line="105"/>
+        <location filename="../game/gamescript.cpp" line="109"/>
         <source>This is a normal game with the following Victory Conditions.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8883,7 +8889,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="2007"/>
+        <location filename="../coreengine/settings.cpp" line="2022"/>
         <source>Default device</source>
         <translation type="unfinished"></translation>
     </message>
