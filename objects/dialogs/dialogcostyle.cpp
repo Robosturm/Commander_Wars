@@ -268,10 +268,14 @@ void DialogCOStyle::changeCOStyle(qint32 index)
 
 void DialogCOStyle::loadAltsForStyle()
 {
-    QFile file(Settings::getUserPath() + m_ResFilePath + "+table.png");
+    QFile file(m_ResFilePath + "+table.png");
     if (!file.exists())
     {
-        file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + m_ResFilePath + "+table.png");
+        file.setFileName(Settings::getUserPath() + m_ResFilePath + "+table.png");
+        if (!file.exists())
+        {
+            file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + m_ResFilePath + "+table.png");
+        }
     }
     QStringList items;
     if (file.exists())

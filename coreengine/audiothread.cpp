@@ -454,14 +454,15 @@ void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoin
     if (!m_noAudio)
     {
         QString currentPath = file;
-        if (!Settings::getUserPath().isEmpty())
-        {
-            currentPath = Settings::getUserPath() + "/" + file;
-        }
+        currentPath = file;
         if (!QFile::exists(currentPath))
         {
-            CONSOLE_PRINT("Unable to locate music file: " + currentPath + " using compiled path.", Console::eDEBUG);
-            currentPath = oxygine::Resource::RCC_PREFIX_PATH + file;
+            currentPath = Settings::getUserPath() + file;
+            if (!QFile::exists(currentPath))
+            {
+                CONSOLE_PRINT("Unable to locate music file: " + currentPath + " using compiled path.", Console::eDEBUG);
+                currentPath = oxygine::Resource::RCC_PREFIX_PATH + file;
+            }
         }
         if (QFile::exists(currentPath))
         {

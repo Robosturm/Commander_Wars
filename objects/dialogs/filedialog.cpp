@@ -133,6 +133,7 @@ void FileDialog::showFolder(QString folder)
     {
         m_MainPanel->removeItem(m_Items[i]);
     }
+    CONSOLE_PRINT("Showing folder: " + folder, Console::eDEBUG);
     folder = folder.replace("\\", "/");
     while (folder.contains("//"))
     {
@@ -143,10 +144,14 @@ void FileDialog::showFolder(QString folder)
     m_Items.clear();
     m_ResAnims.clear();
 
-    QDir dir(folder);
+    QDir dir(Settings::getUserPath() + folder);
     QDir virtDir(oxygine::Resource::RCC_PREFIX_PATH + folder);
     if (!dir.exists() && !virtDir.exists())
     {
+        if (!folder.isEmpty())
+        {
+            CONSOLE_PRINT("Using root cause given folder wasn't found: " + folder, Console::eINFO);
+        }
         folder = ROOT;
     }
     // we want the root folder

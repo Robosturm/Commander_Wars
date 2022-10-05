@@ -284,7 +284,11 @@ void ScriptDialogDialog::loadBackground(QString filename, qint32 index)
     if (!filename.isEmpty())
     {
         QImage image;
-        if (QFile::exists(Settings::getUserPath() + filename))
+        if (QFile::exists(filename))
+        {
+            image = QImage(filename);
+        }
+        else if (QFile::exists(Settings::getUserPath() + filename))
         {
             image = QImage(Settings::getUserPath() + filename);
         }

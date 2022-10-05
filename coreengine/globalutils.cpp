@@ -1,4 +1,4 @@
-
+#include <QCoreApplication>
 #include <QFileInfo>
 #include <QDirIterator>
 #include <QDateTime>
@@ -414,7 +414,7 @@ QString GlobalUtils::getNextAutosavePath(const QString & path, const QString & e
 
 QString GlobalUtils::makePathRelative(QString file, bool full)
 {
-    QDir dir ("");
+    QDir dir (QCoreApplication::applicationDirPath());
     QString path = dir.absolutePath();
     file = file.replace(path + "/", "");
     file = file.replace(path, "");

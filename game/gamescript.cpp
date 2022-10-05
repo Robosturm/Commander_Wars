@@ -62,7 +62,11 @@ void GameScript::init()
     if (!m_scriptFile.isEmpty())
     {
         QFile file;
-        if (QFile::exists(Settings::getUserPath() + m_scriptFile))
+        if (QFile::exists(m_scriptFile))
+        {
+            file.setFileName(m_scriptFile);
+        }
+        else if (QFile::exists(Settings::getUserPath() + m_scriptFile))
         {
             file.setFileName(Settings::getUserPath() + m_scriptFile);
         }

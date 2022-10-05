@@ -215,7 +215,11 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
     else
     {
         QImage img;
-        if (QFile::exists(Settings::getUserPath() + spriteID))
+        if (QFile::exists(spriteID))
+        {
+            img = QImage(spriteID);
+        }
+        else if (QFile::exists(Settings::getUserPath() + spriteID))
         {
             img = QImage(Settings::getUserPath() + spriteID);
         }

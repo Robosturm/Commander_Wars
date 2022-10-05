@@ -86,8 +86,8 @@ void FolderDialog::showFolder(QString folder)
     for (qint32 i = 0; i < m_Items.size(); i++)
     {
         m_MainPanel->removeItem(m_Items[i]);
-    }
-
+    }    
+    CONSOLE_PRINT("Showing folder: " + folder, Console::eDEBUG);
     folder = folder.replace("\\", "/");
     while (folder.contains("//"))
     {
@@ -96,10 +96,14 @@ void FolderDialog::showFolder(QString folder)
     folder = QDir(folder).absolutePath();
     folder = GlobalUtils::makePathRelative(folder);
     m_Items.clear();
-    QDir dir(folder);
+    QDir dir(Settings::getUserPath() + folder);
     QDir virtDir(oxygine::Resource::RCC_PREFIX_PATH + folder);
     if (!dir.exists() && !virtDir.exists())
     {
+        if (!folder.isEmpty())
+        {
+            CONSOLE_PRINT("Using root cause given folder wasn't found: " + folder, Console::eINFO);
+        }
         folder = ROOT;
     }
 

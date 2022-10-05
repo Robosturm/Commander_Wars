@@ -343,11 +343,15 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
     QString dir;
     if (index >= 0 && index < files.size())
     {
-        dir = Settings::getUserPath() + folder;
+        dir = folder;
         file = files[index];
         if (!QFile::exists(dir + "/" + file))
         {
-            dir = oxygine::Resource::RCC_PREFIX_PATH + folder;
+            dir = Settings::getUserPath() + folder;
+            if (!QFile::exists(dir + "/" + file))
+            {
+                dir = oxygine::Resource::RCC_PREFIX_PATH + folder;
+            }
         }
         QFileInfo info(dir, file);
         if (info != m_pMapSelectionView->getCurrentMapFile())
