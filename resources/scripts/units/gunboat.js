@@ -4,23 +4,19 @@ var Constructor = function()
     {
         unit.setAmmo1(3);
         unit.setMaxAmmo1(3);
-        unit.setWeapon1ID("WEAPON_ANTI_SHIP_MISSILE");
+        unit.setWeapon1ID("WEAPON_GUNBOAT_NAVAL_GUN");
 
-        unit.setAmmo2(3);
-        unit.setMaxAmmo2(3);
-        unit.setWeapon2ID("");
-
-        unit.setFuel(100);
-        unit.setMaxFuel(100);
+        unit.setFuel(60);
+        unit.setMaxFuel(60);
         unit.setBaseMovementPoints(7);
         unit.setMinRange(1);
         unit.setMaxRange(1);
-        unit.setVision(3);
+		unit.setVision(2);
     };
     
     this.loadSprites = function(unit)
     {
-        unit.loadSpriteV2("destroyer+mask", GameEnums.Recoloring_Matrix);
+        unit.loadSpriteV2("gunboat+mask", GameEnums.Recoloring_Matrix);
     };
     this.getMovementType = function()
     {
@@ -28,11 +24,11 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 10000;
+        return 4000;
     };
     this.getName = function()
     {
-        return qsTr("Destroyer");
+        return qsTr("Gun boat");
     };
     this.startOfTurn = function(unit, map)
     {
@@ -64,7 +60,7 @@ var Constructor = function()
         animation.setSound("moveship.wav", -2);
         return animation;
     };
-    this.actionList = ["ACTION_PLACE_WATERMINE", "ACTION_FIRE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
+    this.actionList = ["ACTION_CAPTURE", "ACTION_FIRE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
     this.canMoveAndFire = function()
     {
         return true;
@@ -93,7 +89,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Naval Unit. Attacks naval units. Can place </r><div c='#00ff00'>Watermines</div><r> on sea tiles.</r>");
+        return qsTr("<r>Naval Unit. Attacks naval units. Can </r><div c='#00ff00'>capture</div><r>.</r>");
     };
     this.getUnitType = function()
     {
@@ -102,4 +98,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = UNIT;
-var DESTROYER = new Constructor();
+var GUNBOAT = new Constructor();

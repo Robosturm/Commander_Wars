@@ -41,16 +41,19 @@ var Constructor = function()
                         ["MISSILE", 85],
                         ["ROCKETTHROWER", 85],
                         ["PIPERUNNER", 85],
-
                         // ships
+                        ["GUNBOAT", 105],
+                        ["CANNONBOAT", 105],
+                        ["BLACK_BOAT", 105],
+                        ["TORPEDOBOAT", 105],
+                        ["LANDER", 75],
+                        ["FRIGATE", 55],
+                        ["DESTROYER", 55],
+                        ["CRUISER", 55],
+                        ["SUBMARINE", 65],
                         ["BATTLECRUISER", 55],
                         ["BATTLESHIP", 55],
-                        ["CRUISER", 55],
-                        ["DESTROYER", 105],
-                        ["SUBMARINE", 65],
-                        ["LANDER", 75],
-                        ["BLACK_BOAT", 105],
-                        ["AIRCRAFTCARRIER", 55]];
+                        ["AIRCRAFTCARRIER", 55],];
 
     this.getBaseDamage = function(unit)
     {

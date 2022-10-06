@@ -6,30 +6,25 @@ var Constructor = function()
         if (building.getOwnerID() >= 0 && !neutral)
         {
             // none neutral player
-            building.loadSprite("harbour", false);
-            building.loadSpriteV2("harbour+mask", GameEnums.Recoloring_Matrix);
+            building.loadSprite("amphibiousfactory", false);
+            building.loadSpriteV2("amphibiousfactory+mask", GameEnums.Recoloring_Matrix);
         }
         else
         {
             // neutral player
-            building.loadSprite("harbour+neutral", false);
+            building.loadSprite("amphibiousfactory+neutral", false);
         }
-        building.loadSprite("harbour+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
-    };
-    this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
-    {
-        animation.addBuildingSprite("harbour+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Matrix);
     };
     this.getName = function()
     {
-        return qsTr("Harbour");
+        return qsTr("Amphibious factory");
     };
 
     this.actionList = ["ACTION_BUILD_UNITS"];
-    this.constructionList = ["GUNBOAT", "CANNONBOAT", "BLACK_BOAT", "LANDER", "TORPEDOBOAT", "FRIGATE", "DESTROYER", "CRUISER", "SUBMARINE", "BATTLECRUISER", "BATTLESHIP", "AIRCRAFTCARRIER"];
+    this.constructionList = ["HOVERCRAFT", "ARTILLERYCRAFT", "HOVERFLAK", "HEAVY_HOVERCRAFT"];
     this.getConstructionList = function(building)
     {
-        return HARBOUR.constructionList;
+        return AMPHIBIOUSFACTORY.constructionList;
     };
     this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
@@ -48,7 +43,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Once captured can be used for </r><div c='#00ff00'>production and resupplying </div><r>of </r><div c='#00ff00'>naval </div><r>units.</r>");
+        return qsTr("<r>Once captured can be used for </r><div c='#00ff00'>production and resupplying </div><r>of </r><div c='#00ff00'>hovercraft </div><r>units.</r>");
     };
 
     this.getVisionHide = function(building)
@@ -60,20 +55,12 @@ var Constructor = function()
     {
         return [GameEnums.UnitType_Hovercraft, GameEnums.UnitType_Naval];
     };
-	this.onWeatherChanged = function(building, weather, map)
-	{	
-		var weatherId = weather.getWeatherId();
-		if (weatherId === "WEATHER_SNOW")
-		{
-			building.loadWeatherOverlaySpriteV2("harbour+snow", false);
-		};
-	};
     this.baseTerrain = ["LAKE", "SEA", "PLAINS", "SNOW", "WASTE", "DESERT"];
     this.getBaseTerrain = function(building)
     {
-        return HARBOUR.baseTerrain;
+        return AMPHIBIOUSFACTORY.baseTerrain;
     };
 }
 
 Constructor.prototype = BUILDING;
-var HARBOUR = new Constructor();
+var AMPHIBIOUSFACTORY = new Constructor();

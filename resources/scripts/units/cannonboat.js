@@ -10,11 +10,11 @@ var Constructor = function()
         unit.setMaxAmmo2(3);
         unit.setWeapon2ID("");
 
-        unit.setFuel(100);
-        unit.setMaxFuel(100);
-        unit.setBaseMovementPoints(6);
+        unit.setFuel(60);
+        unit.setMaxFuel(60);
+        unit.setBaseMovementPoints(7);
         unit.setMinRange(1);
-        unit.setMaxRange(1);
+        unit.setMaxRange(2);
 		unit.setVision(2);
     };
     
@@ -28,7 +28,7 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 10000;
+        return 7000;
     };
     this.getName = function()
     {
@@ -64,7 +64,6 @@ var Constructor = function()
         animation.setSound("moveship.wav", -2);
         return animation;
     };
-    this.actionList = ["ACTION_PLACE_WATERMINE", "ACTION_FIRE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
     this.canMoveAndFire = function()
     {
         return true;
@@ -93,7 +92,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Naval Unit. Attacks naval units. Can place </r><div c='#00ff00'>Watermines</div><r> on sea tiles.</r>");
+        return qsTr("<r>Naval Unit. Attacks naval units.</r>");
     };
     this.getUnitType = function()
     {

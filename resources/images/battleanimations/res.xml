@@ -204,6 +204,7 @@
         <image file="battlecruiser/battlecruiser+mask.png" cols = "4" />
         <image file="battlecruiser/battlecruiser+cannon+mask.png" />
         <image file="battlecruiser/battlecruiser+flak+mask.png" />
+        <image file="battlecruiser/battlecruiser+flak+fire+mask.png" cols = "4" />
         <image file="battlecruiser/battlecruiser+mask.png" />
         <image file="battlecruiser/battlecruiser+cannon+fire+mask.png" cols = "5" />
         <!-- destroyer -->

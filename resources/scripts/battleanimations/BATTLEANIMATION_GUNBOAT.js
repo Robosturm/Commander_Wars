@@ -8,7 +8,7 @@ var Constructor = function()
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
-        BATTLEANIMATION_CANNONBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(-30, 0), 580, Qt.point(20, 20));
+        BATTLEANIMATION_GUNBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(-30, 0), 580, Qt.point(20, 20));
     };
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
@@ -18,21 +18,25 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_CANNONBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, Qt.point(-10, 20));
+        BATTLEANIMATION_GUNBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, Qt.point(-10, 20));
     };
 
-    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime, startPos)
+    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime, startPos, gunSprite = "+gun", gunStartFrame = 0, gunEndFrame = 0)
     {
-        sprite.loadMovingSprite("missileboat",  false,
-                                BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
-        sprite.loadMovingSpriteV2("missileboat+mask", GameEnums.Recoloring_Matrix,
-                                  BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+        sprite.loadMovingSprite("gunboat",  false,
+                                BATTLEANIMATION_GUNBOAT.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+        sprite.loadMovingSpriteV2("gunboat+mask", GameEnums.Recoloring_Matrix,
+                                  BATTLEANIMATION_GUNBOAT.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+        sprite.loadMovingSpriteV2("gunboat" + gunSprite + "+mask", GameEnums.Recoloring_Matrix,
+                                  BATTLEANIMATION_GUNBOAT.getMaxUnitCount(), Qt.point(startPos.x + 92, startPos.y + 40),
+                                  movement, moveTime, false, 1, 1, 0, 0,
+                                  false, 200, gunEndFrame, gunStartFrame);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.restoreBackgroundSpeed();
-        BATTLEANIMATION_CANNONBOAT.loadStandingAnimation(sprite, unit, defender, weapon, Qt.point(-38, 20));
+        BATTLEANIMATION_GUNBOAT.loadStandingAnimation(sprite, unit, defender, weapon, Qt.point(-38, 20));
         var offset = Qt.point(60, 65);
         var count = sprite.getUnitCount(5);
         for (var i = 0; i < count; i++)
@@ -99,10 +103,10 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_CANNONBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000, Qt.point(-38, 20));
+        BATTLEANIMATION_GUNBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000, Qt.point(-38, 20));
         sprite.loadSound("ship_dying_move.wav", -2);
     };
 };
 
 Constructor.prototype = BATTLEANIMATION;
-var BATTLEANIMATION_CANNONBOAT = new Constructor();
+var BATTLEANIMATION_GUNBOAT = new Constructor();

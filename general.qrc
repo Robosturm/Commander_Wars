@@ -2097,5 +2097,15 @@
         <file>resources/scripts/battleanimations/BATTLEANIMATION_BATTLECRUISER.js</file>
         <file>resources/scripts/weapons/weapon_battlecruiser_a_air_gun.js</file>
         <file>mods/awdc_unit/scripts/movementtables/move_ship.js</file>
+        <file>resources/scripts/units/frigate.js</file>
+        <file>resources/scripts/units/gunboat.js</file>
+        <file>resources/scripts/units/torpedoboat.js</file>
+        <file>resources/scripts/weapons/weapon_boat_torpedo.js</file>
+        <file>resources/scripts/weapons/weapon_frigate_naval_gun.js</file>
+        <file>resources/scripts/weapons/weapon_gunboat_naval_gun.js</file>
+        <file>resources/scripts/building/amphibiousfactory.js</file>
+        <file>resources/scripts/battleanimations/BATTLEANIMATION_FRIGATE.js</file>
+        <file>resources/scripts/battleanimations/BATTLEANIMATION_GUNBOAT.js</file>
+        <file>resources/scripts/battleanimations/BATTLEANIMATION_TORPEDOBOAT.js</file>
     </qresource>
 </RCC>

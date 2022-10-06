@@ -8,7 +8,7 @@ var Constructor = function()
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
-        BATTLEANIMATION_CANNONBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(-30, 0), 580, Qt.point(20, 20));
+        BATTLEANIMATION_TORPEDOBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(-30, 0), 580, Qt.point(20, 20));
     };
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
@@ -18,21 +18,21 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_CANNONBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, Qt.point(-10, 20));
+        BATTLEANIMATION_TORPEDOBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, Qt.point(-10, 20));
     };
 
     this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime, startPos)
     {
-        sprite.loadMovingSprite("missileboat",  false,
-                                BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
-        sprite.loadMovingSpriteV2("missileboat+mask", GameEnums.Recoloring_Matrix,
-                                  BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+        sprite.loadMovingSprite("torpedoboat",  false,
+                                BATTLEANIMATION_TORPEDOBOAT.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+        sprite.loadMovingSpriteV2("torpedoboat+mask", GameEnums.Recoloring_Matrix,
+                                  BATTLEANIMATION_TORPEDOBOAT.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.restoreBackgroundSpeed();
-        BATTLEANIMATION_CANNONBOAT.loadStandingAnimation(sprite, unit, defender, weapon, Qt.point(-38, 20));
+        BATTLEANIMATION_TORPEDOBOAT.loadStandingAnimation(sprite, unit, defender, weapon, Qt.point(-38, 20));
         var offset = Qt.point(60, 65);
         var count = sprite.getUnitCount(5);
         for (var i = 0; i < count; i++)
@@ -99,10 +99,10 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_CANNONBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000, Qt.point(-38, 20));
+        BATTLEANIMATION_TORPEDOBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000, Qt.point(-38, 20));
         sprite.loadSound("ship_dying_move.wav", -2);
     };
 };
 
 Constructor.prototype = BATTLEANIMATION;
-var BATTLEANIMATION_CANNONBOAT = new Constructor();
+var BATTLEANIMATION_TORPEDOBOAT = new Constructor();

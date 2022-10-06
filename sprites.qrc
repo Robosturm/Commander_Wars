@@ -4851,5 +4851,8 @@
         <file>resources/images/game/battlesprites/background/back_snowriver.png</file>
         <file>resources/images/game/battlesprites/background/back_snowriver+boat.png</file>
         <file>resources/images/game/battlesprites/background/back_wasteriver+boat.png</file>
+        <file>resources/images/building/amphibiousfactory.png</file>
+        <file>resources/images/building/amphibiousfactory+mask.png</file>
+        <file>resources/images/building/amphibiousfactory+neutral.png</file>
     </qresource>
 </RCC>

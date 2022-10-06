@@ -28,9 +28,8 @@ var Constructor = function()
     this.actionList = ["ACTION_BUILD_UNITS"];
 
     this.constructionList = ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
-                             "ARTILLERY", "LIGHT_TANK", "HOVERCRAFT", "FLAK", "ARTILLERYCRAFT", "HOVERFLAK",
-                             "ANTITANKCANNON", "HEAVY_TANK", "HEAVY_HOVERCRAFT", "NEOTANK",
-                             "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
+                             "ARTILLERY", "LIGHT_TANK", "FLAK", "ANTITANKCANNON", "HEAVY_TANK",
+                             "NEOTANK", "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
     this.getConstructionList = function(building)
     {
         return FACTORY.constructionList;

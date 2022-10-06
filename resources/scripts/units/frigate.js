@@ -2,25 +2,25 @@ var Constructor = function()
 {
     this.init = function(unit)
     {
-        unit.setAmmo1(3);
-        unit.setMaxAmmo1(3);
-        unit.setWeapon1ID("WEAPON_ANTI_SHIP_MISSILE");
+        unit.setAmmo1(6);
+        unit.setMaxAmmo1(6);
+        unit.setWeapon1ID("WEAPON_FRIGATE_NAVAL_GUN");
 
-        unit.setAmmo2(3);
-        unit.setMaxAmmo2(3);
+        unit.setAmmo2(0);
+        unit.setMaxAmmo2(0);
         unit.setWeapon2ID("");
 
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(7);
         unit.setMinRange(1);
-        unit.setMaxRange(1);
-        unit.setVision(3);
+        unit.setMaxRange(2);
+        unit.setVision(5);
     };
     
     this.loadSprites = function(unit)
     {
-        unit.loadSpriteV2("destroyer+mask", GameEnums.Recoloring_Matrix);
+        unit.loadSpriteV2("frigate+mask", GameEnums.Recoloring_Matrix);
     };
     this.getMovementType = function()
     {
@@ -28,11 +28,11 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 10000;
+        return 9000;
     };
     this.getName = function()
     {
-        return qsTr("Destroyer");
+        return qsTr("Frigate");
     };
     this.startOfTurn = function(unit, map)
     {
@@ -64,7 +64,6 @@ var Constructor = function()
         animation.setSound("moveship.wav", -2);
         return animation;
     };
-    this.actionList = ["ACTION_PLACE_WATERMINE", "ACTION_FIRE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
     this.canMoveAndFire = function()
     {
         return true;
@@ -93,7 +92,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Naval Unit. Attacks naval units. Can place </r><div c='#00ff00'>Watermines</div><r> on sea tiles.</r>");
+        return qsTr("<r>Naval Unit. Attacks naval units.</r>");
     };
     this.getUnitType = function()
     {
@@ -102,4 +101,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = UNIT;
-var DESTROYER = new Constructor();
+var FRIGATE = new Constructor();

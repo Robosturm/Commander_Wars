@@ -12134,6 +12134,19 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
+    <name>amphibiousfactory</name>
+    <message>
+        <location filename="../resources/scripts/building/amphibiousfactory.js" line="20"/>
+        <source>Amphibious factory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/amphibiousfactory.js" line="46"/>
+        <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hovercraft &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>antitankcannon</name>
     <message>
         <location filename="../resources/scripts/units/antitankcannon.js" line="47"/>
@@ -12228,7 +12241,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/black_boat.js" line="96"/>
-        <source>&lt;r&gt;Naval Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;repair other units.&lt;/div&gt;&lt;r&gt; Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;carry X 2&lt;/div&gt;&lt;r&gt; infantry units and capture buildings.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Naval Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;repair other units.&lt;/div&gt;&lt;r&gt; Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;carry X 2&lt;/div&gt;&lt;r&gt; infantry units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12328,8 +12341,8 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/cannonboat.js" line="96"/>
-        <source>&lt;r&gt;Naval Unit. Attacks naval units. Can place &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Watermines&lt;/div&gt;&lt;r&gt; on sea tiles.&lt;/r&gt;</source>
+        <location filename="../resources/scripts/units/cannonboat.js" line="95"/>
+        <source>&lt;r&gt;Naval Unit. Attacks naval units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -23674,7 +23687,7 @@ Units have increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/factory.js" line="55"/>
+        <location filename="../resources/scripts/building/factory.js" line="54"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23747,6 +23760,19 @@ Units have increased firepower during sandstorm.</source>
     </message>
 </context>
 <context>
+    <name>frigate</name>
+    <message>
+        <location filename="../resources/scripts/units/frigate.js" line="35"/>
+        <source>Frigate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/frigate.js" line="95"/>
+        <source>&lt;r&gt;Naval Unit. Attacks naval units.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gameanimationpower</name>
     <message>
         <location filename="../resources/scripts/general/gameanimationpower.js" line="35"/>
@@ -23764,6 +23790,19 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/wiki/greenearth.js" line="17"/>
         <source>Green Earth</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gunboat</name>
+    <message>
+        <location filename="../resources/scripts/units/gunboat.js" line="31"/>
+        <source>Gun boat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/gunboat.js" line="92"/>
+        <source>&lt;r&gt;Naval Unit. Attacks naval units. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -25307,6 +25346,19 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
 </context>
 <context>
+    <name>torpedoboat</name>
+    <message>
+        <location filename="../resources/scripts/units/torpedoboat.js" line="35"/>
+        <source>Torpedo boat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/torpedoboat.js" line="95"/>
+        <source>&lt;r&gt;Naval Unit. Attacks naval units.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>tower</name>
     <message>
         <location filename="../resources/scripts/building/tower.js" line="38"/>
@@ -25871,6 +25923,14 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
 </context>
 <context>
+    <name>weapon_boat_torpedo</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_boat_torpedo.js" line="5"/>
+        <source>Torpedo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>weapon_bomb</name>
     <message>
         <location filename="../resources/scripts/weapons/weapon_bomb.js" line="5"/>
@@ -25935,10 +25995,26 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
 </context>
 <context>
+    <name>weapon_frigate_naval_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_frigate_naval_gun.js" line="5"/>
+        <source>Naval gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>weapon_gatling</name>
     <message>
         <location filename="../resources/scripts/weapons/weapon_gatling.js" line="5"/>
         <source>Gatling</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_gunboat_naval_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_gunboat_naval_gun.js" line="5"/>
+        <source>Naval gun</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

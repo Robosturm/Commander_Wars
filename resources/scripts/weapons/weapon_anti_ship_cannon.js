@@ -4,14 +4,19 @@ var Constructor = function()
     {
         return qsTr("Cannon");
     };
-    this.damageTable = [["BATTLESHIP", 95],
-                        ["BATTLECRUISER", 55],
-                        ["CRUISER", 95],
-                        ["DESTROYER", 120],
-                        ["SUBMARINE", 25],
-                        ["LANDER", 120],
+    this.damageTable = [// ships
+                        ["GUNBOAT", 120],
+                        ["CANNONBOAT", 120],
                         ["BLACK_BOAT", 120],
-                        ["AIRCRAFTCARRIER", 120],
+                        ["TORPEDOBOAT", 120],
+                        ["LANDER", 120],
+                        ["FRIGATE", 120],
+                        ["DESTROYER", 120],
+                        ["CRUISER", 120],
+                        ["SUBMARINE", 25],
+                        ["BATTLECRUISER", 55],
+                        ["BATTLESHIP", 65],
+                        ["AIRCRAFTCARRIER", 75],
                         // destroyer can attack ground units
                         ["INFANTRY", 125],
                         ["MECH", 75],
