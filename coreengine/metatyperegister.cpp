@@ -9,6 +9,7 @@
 #include "coreengine/scriptvariables.h"
 #include "coreengine/scriptvariablefile.h"
 
+#include "ai/productionSystem/simpleproductionsystem.h"
 #include "ai/heavyai.h"
 #include "ai/normalai.h"
 #include "ai/influencefrontmap.h"
@@ -168,6 +169,7 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<Settings>("Settings", 1);
     qmlRegisterInterface<Wikipage>("Wikipage", 1);
     qmlRegisterInterface<HeavyAi>("HeavyAi", 1);
+    qmlRegisterInterface<SimpleProductionSystem>("SimpleProductionSystem", 1);
     qmlRegisterInterface<InfluenceFrontMap>("InfluenceFrontMap", 1);
     qmlRegisterInterface<InfluenceInfo>("InfluenceInfo", 1);
 
@@ -205,5 +207,5 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
     qmlRegisterInterface<BaseGamemenu>("BaseGamemenu", 1);
     qmlRegisterInterface<Basemenu>("Basemenu", 1);
-    qmlRegisterInterface<CustomDialog>("CustomDialog", 1);
+    qmlRegisterInterface<CustomDialog>("CustomDialog", 1);    
 }

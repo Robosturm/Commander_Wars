@@ -4,8 +4,9 @@
 #include "coreengine/console.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/qmlvector.h"
 
-SimpleProductionSystem::SimpleProductionSystem(CoreAI & owner)
+SimpleProductionSystem::SimpleProductionSystem(CoreAI * owner)
     : m_owner(owner)
 {
 #ifdef GRAPHICSUPPORT
@@ -20,17 +21,17 @@ void SimpleProductionSystem::initialize()
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({pInterpreter->newQObject(this),
-                           pInterpreter->newQObject(&m_owner),
-                           pInterpreter->newQObject(m_owner.getMap())});
+                           pInterpreter->newQObject(m_owner),
+                           pInterpreter->newQObject(m_owner->getMap())});
         QString function1 = "initializeSimpleProductionSystem";
         if (pInterpreter->exists(GameScript::m_scriptName, function1))
         {
             pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
             m_init = true;
         }
-        else if (pInterpreter->exists(m_owner.getAiName(), function1))
+        else if (pInterpreter->exists(m_owner->getAiName(), function1))
         {
-            pInterpreter->doFunction(m_owner.getAiName(), function1, args);
+            pInterpreter->doFunction(m_owner->getAiName(), function1, args);
             m_init = true;
         }
     }
@@ -44,12 +45,12 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorU
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "buildUnitSimpleProductionSystem";
         QJSValueList args({pInterpreter->newQObject(this),
-                           pInterpreter->newQObject(&m_owner),
+                           pInterpreter->newQObject(m_owner),
                            pInterpreter->newQObject(pBuildings),
                            pInterpreter->newQObject(pUnits),
                            pInterpreter->newQObject(pEnemyUnits),
                            pInterpreter->newQObject(pEnemyBuildings),
-                           pInterpreter->newQObject(m_owner.getMap())});
+                           pInterpreter->newQObject(m_owner->getMap())});
         QJSValue erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
         if (erg.isBool())
         {
@@ -81,6 +82,14 @@ void SimpleProductionSystem::addForcedProduction(const QString & unitId, qint32 
     item.x = x;
     item.y = y;
     m_forcedProduction.push_back(item);
+}
+
+void SimpleProductionSystem::addInitialProduction(const QString & unitId, qint32 count)
+{
+    InitialProduction item;
+    item.unitId = unitId;
+    item.count = count;
+    m_initialProduction.push_back(item);
 }
 
 void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, float distribution, qint32 buildMode, const QString & guardCondition)
@@ -133,7 +142,7 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, c
 bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode)
 {
     bool success = false;
-    GameMap* pMap = m_owner.getMap();
+    GameMap* pMap = m_owner->getMap();
     for (qint32 i = 0; i < m_initialProduction.size(); ++i)
     {
         success = buildUnit(pBuildings, m_initialProduction[i].unitId);
@@ -153,7 +162,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
         {
             if (pMap->onMap(forcedProduction.x, forcedProduction.y) &&
                 pMap->getTerrain(forcedProduction.x, forcedProduction.y)->getBuilding() != nullptr &&
-                pMap->getTerrain(forcedProduction.x, forcedProduction.y)->getBuilding()->getOwner() == m_owner.getPlayer())
+                pMap->getTerrain(forcedProduction.x, forcedProduction.y)->getBuilding()->getOwner() == m_owner->getPlayer())
             {
                 success = buildUnit(forcedProduction.x, forcedProduction.y, forcedProduction.unitId);
                 if (success)
@@ -266,7 +275,7 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString un
 
 bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId)
 {
-    spGameAction pAction = spGameAction::create(CoreAI::ACTION_BUILD_UNITS, m_owner.getMap());
+    spGameAction pAction = spGameAction::create(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());
     pAction->setTarget(QPoint(x, y));
     if (pAction->canBePerformed())
     {
@@ -277,13 +286,13 @@ bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId)
             auto indexOf = pData->getActionIDs().indexOf(unitId);
             if (indexOf >= 0 && pData->getEnabledList()[indexOf])
             {
-                m_owner.addMenuItemData(pAction, unitId, pData->getCostList()[indexOf]);
+                m_owner->addMenuItemData(pAction, unitId, pData->getCostList()[indexOf]);
                 // produce the unit
                 if (pAction->isFinalStep())
                 {
                     if (pAction->canBePerformed())
                     {
-                        emit m_owner.performAction(pAction);
+                        emit m_owner->performAction(pAction);
                         return true;
                     }
                 }

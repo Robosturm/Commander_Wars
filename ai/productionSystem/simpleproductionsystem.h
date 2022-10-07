@@ -1,10 +1,17 @@
 #pragma once
 
 #include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QVector>
+#include <vector>
+#include <map>
 #include "coreengine/fileserializable.h"
-#include "coreengine/qmlvector.h"
+#include "coreengine/scriptvariables.h"
 
 class CoreAI;
+class QmlVectorUnit;
+class QmlVectorBuilding;
 
 class SimpleProductionSystem final : public QObject, public FileSerializable
 {
@@ -37,7 +44,8 @@ public:
         BuildDistribution distribution;
     };
 
-    SimpleProductionSystem(CoreAI & owner);
+    explicit SimpleProductionSystem(CoreAI * owner);
+    ~SimpleProductionSystem() = default;
 
     /**
      * @brief serialize stores the object
@@ -74,13 +82,14 @@ public slots:
     void resetForcedProduction();
     void resetInitialProduction();
     bool buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode);
+    void addInitialProduction(const QString & unitId, qint32 count);
     void addForcedProduction(const QString & unitId, qint32 x = -1, qint32 y = -1);
     void addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, float distribution, qint32 buildMode, const QString & guardCondition = "");
 private:
     bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId);
     bool buildUnit(qint32 x, qint32 y, QString unitId);
 private:
-    CoreAI & m_owner;
+    CoreAI * m_owner{nullptr};
     bool m_init{false};
     bool m_enabled{true};
     std::vector<InitialProduction> m_initialProduction;
@@ -89,3 +98,4 @@ private:
     ScriptVariables m_Variables;
 };
 
+Q_DECLARE_INTERFACE(SimpleProductionSystem, "SimpleProductionSystem");

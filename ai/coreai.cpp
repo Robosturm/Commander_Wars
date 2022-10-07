@@ -60,7 +60,7 @@ const QString CoreAI::BUILDING_HQ = "HQ";
 CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
     : BaseGameInputIF(pMap, aiType),
       m_aiName(jsName),
-      m_productionSystem(*this)
+      m_productionSystem(this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("CoreAI");
