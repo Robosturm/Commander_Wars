@@ -245,7 +245,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="80"/>
+        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="79"/>
         <source>Orders a death ray to attack all enemy units in front of it, dealing devastating damage to them. This order has a cooldown of 7 days.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -430,7 +430,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_LASER_FIRE.js" line="123"/>
+        <location filename="../resources/scripts/actions/ACTION_LASER_FIRE.js" line="122"/>
         <source>Commands the laser to shot four laser rays. The laser rays deal damage to all units that get hit by one of the rays.</source>
         <translation type="unfinished"></translation>
     </message>

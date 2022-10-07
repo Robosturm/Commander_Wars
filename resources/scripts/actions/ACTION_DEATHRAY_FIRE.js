@@ -37,7 +37,6 @@ var Constructor = function()
 
         var animation = Global[building.getBuildingID()].createRayAnimation(building, x, y, fields, map);
         animation.setEndOfAnimationCall("ACTION_DEATHRAY_FIRE", "performPostAnimation");
-        ACTION_DEATHRAY_FIRE.postAnimationFields = fields;
         ACTION_DEATHRAY_FIRE.postAnimationX = x;
         ACTION_DEATHRAY_FIRE.postAnimationY = y;
         ACTION_DEATHRAY_FIRE.postAnimationBuilding = building;
@@ -51,10 +50,11 @@ var Constructor = function()
         var x = ACTION_DEATHRAY_FIRE.postAnimationX;
         var y = ACTION_DEATHRAY_FIRE.postAnimationY;
         var building = ACTION_DEATHRAY_FIRE.postAnimationBuilding;
-        var size = ACTION_DEATHRAY_FIRE.postAnimationFields.size();
+        var fields = Global[building.getBuildingID()].getActionTargetFields(building);
+        var size = fields.size();
         for (var i = 0; i < size; i++)
         {
-            var point = ACTION_DEATHRAY_FIRE.postAnimationFields.at(i);
+            var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))
             {
                 var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
@@ -70,7 +70,6 @@ var Constructor = function()
                 }
             }
         }
-        ACTION_DEATHRAY_FIRE.postAnimationFields = null;
         ACTION_DEATHRAY_FIRE.postAnimationX = null;
         ACTION_DEATHRAY_FIRE.postAnimationY = null;
         ACTION_DEATHRAY_FIRE.postAnimationBuilding = null;
