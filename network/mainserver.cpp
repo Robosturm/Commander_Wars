@@ -16,6 +16,8 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/commandlineparser.h"
 
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
+
 #include "game/gamemap.h"
 
 const char* const DRIVER = "QSQLITE";
@@ -545,8 +547,9 @@ bool MainServer::validHostRequest(QStringList mods)
     // make sure the server has the requested mods installed.
     for (auto & mod : mods)
     {
-        QFile file(mod + "/mod.txt");
-        if (!file.exists())
+        if (!QFile::exists(mod + "/mod.txt") &&
+            !QFile::exists(Settings::getUserPath() + mod + "/mod.txt") &&
+            !QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + mod + "/mod.txt"))
         {
             return false;
         }

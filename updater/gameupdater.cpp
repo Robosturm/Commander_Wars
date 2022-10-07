@@ -82,7 +82,7 @@ void GameUpdater::install()
             else
             {
                 QFileInfo info(targetPath);
-                QDir dir(info.absoluteDir().absolutePath());
+                QDir dir(info.absoluteDir().canonicalPath());
                 dir.mkpath(".");
             }
             QFile::copy(filePath, targetPath);

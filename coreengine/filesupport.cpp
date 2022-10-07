@@ -12,17 +12,18 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
     QStringList fullList;
 
     QString userPath = Settings::getUserPath();
-    if (!userPath.isEmpty())
-    {
-        userPath += "/";
-    }
     for (const auto & folder : qAsConst(folders))
     {
         fullList.append(oxygine::Resource::RCC_PREFIX_PATH + folder);
         fullList.append(userPath + folder);
+        if (!userPath.isEmpty())
+        {
+            fullList.append(folder);
+        }
     }
     for (const auto & folder : qAsConst(fullList))
     {
+        CONSOLE_PRINT("Adding files for folder: " + folder, Console::eDEBUG);
         addHash(myHash, folder, filter);
     }
     return myHash.result();
