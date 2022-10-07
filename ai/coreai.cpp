@@ -59,7 +59,8 @@ const QString CoreAI::BUILDING_HQ = "HQ";
 
 CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
     : BaseGameInputIF(pMap, aiType),
-      m_aiName(jsName)
+      m_aiName(jsName),
+      m_productionSystem(*this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("CoreAI");
@@ -2409,6 +2410,11 @@ bool CoreAI::isMoveableTile(Building* pBuilding) const
             !pBuilding->isProductionBuilding();
 }
 
+QString CoreAI::getAiName() const
+{
+    return m_aiName;
+}
+
 void CoreAI::serializeObject(QDataStream& stream) const
 {    
     AI_CONSOLE_PRINT("storing core ai", Console::eDEBUG);
@@ -2443,6 +2449,7 @@ void CoreAI::serializeObject(QDataStream& stream) const
         stream << *item.m_value;
     }
     m_Variables.serializeObject(stream);
+    m_productionSystem.serializeObject(stream);
 }
 
 void CoreAI::deserializeObject(QDataStream& stream)
@@ -2531,5 +2538,9 @@ void CoreAI::deserializeObjectVersion(QDataStream &stream, qint32 version)
     if (version > 8)
     {
         m_Variables.deserializeObject(stream);
+    }
+    if (version > 9)
+    {
+        m_productionSystem.deserializeObject(stream);
     }
 }

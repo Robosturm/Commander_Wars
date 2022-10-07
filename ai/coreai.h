@@ -12,6 +12,7 @@
 #include "ai/islandmap.h"
 #include "ai/targetedunitpathfindingsystem.h"
 #include "ai/decisiontree/decisiontree.h"
+#include "ai/productionSystem/simpleproductionsystem.h"
 
 #include "coreengine/qmlvector.h"
 #include "coreengine/LUPDATE_MACROS.h"
@@ -198,8 +199,10 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 9;
+        return 10;
     }
+    void addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost);
+
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -207,6 +210,7 @@ signals:
      */
     void performAction(spGameAction pAction);
 public slots:
+    QString getAiName() const;
     /**
      * @brief getVariables
      * @return
@@ -477,7 +481,7 @@ public slots:
     bool isMoveableTile(Building* pBuilding) const;
 protected:
     void sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
-    void addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost);
+
     void addSelectedFieldData(spGameAction & pGameAction, const QPoint & point);
     /**
      * @brief isAttackOnTerrainAllowed
@@ -678,6 +682,7 @@ protected:
     QVector<IniData> m_iniData;
     QString m_aiName{"CoreAI"};
     ScriptVariables m_Variables;
+    SimpleProductionSystem m_productionSystem;
 private:
     bool finish{false};
     struct FlareInfo

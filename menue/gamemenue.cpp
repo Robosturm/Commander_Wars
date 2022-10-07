@@ -1856,6 +1856,7 @@ void GameMenue::startGame()
             emit m_actionPerformer.sigActionPerformed();
         }
     }
+    updateQuickButtons();
     m_pMap->setVisible(true);
     m_gameStarted = true;
     sendGameStartedToServer();

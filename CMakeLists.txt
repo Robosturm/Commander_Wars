@@ -639,6 +639,8 @@ set(${PROJECT_NAME}_SRCS
     ai/heavyai/heavyaiproduction.cpp
     ai/heavyai/heavyaitraining.cpp
     ai/influencefrontmap.cpp ai/influencefrontmap.h
+    # production system
+    ai/productionSystem/simpleproductionsystem.h ai/productionSystem/simpleproductionsystem.cpp
 
     # neuralnetwork
     ai/neuralnetwork/neural/edge.cpp ai/neuralnetwork/neural/edge.h
@@ -976,6 +978,8 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/qwindows${LibNameEnd}
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_SQL_LIBS
         ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite${LibNameEnd}
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
@@ -999,6 +1003,9 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/../plugins/platforms/libqxcb.so
         ${QT_BIN_DIR}/../plugins/platforms/libqminimal.so
         ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
+        ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite.so
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_SQL_LIBS
         ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite.so
     )
 
@@ -1074,10 +1081,11 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         install(DIRECTORY data DESTINATION                  "/")
     endif()
     # install libs
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION            "/"             OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS} DESTINATION            "/"             OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION  "platforms"     OPTIONAL)
-    install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION "/"             OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS}            DESTINATION     "/"             OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS}            DESTINATION     "/"             OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION     "platforms"     OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_SQL_LIBS}        DESTINATION     "sqldrivers"    OPTIONAL)
+    install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION     "/"             OPTIONAL)
 
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)

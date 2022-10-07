@@ -97,7 +97,8 @@ protected:
      * @param pUnits
      * @return
      */
-    bool buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits);
+    bool buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits,
+                    spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief finishTurn
      */

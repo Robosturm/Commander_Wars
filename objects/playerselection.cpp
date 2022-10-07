@@ -374,68 +374,70 @@ void PlayerSelection::initializeMap()
         m_playerReadyFlags.append(false);
         m_playerSockets.append(0);
     }
-
-    bool allPlayer1 = true;
-    bool allHuman = true;
-    const bool isCampaign = getIsCampaign();
-    if (!isCampaign)
+    if (!m_saveGame)
     {
-        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        bool allPlayer1 = true;
+        bool allHuman = true;
+        const bool isCampaign = getIsCampaign();
+        if (!isCampaign)
         {
-            auto bannlist = Settings::getDefaultBannlist();
-            if (!bannlist.isEmpty())
+            for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
-                auto unitList = Filesupport::readList(bannlist, "");
-                if (unitList.items.size() > 0)
+                auto bannlist = Settings::getDefaultBannlist();
+                if (!bannlist.isEmpty())
                 {
-                    m_pMap->getPlayer(i)->setBuildList(unitList.items);
+                    auto unitList = Filesupport::readList(bannlist, "");
+                    if (unitList.items.size() > 0)
+                    {
+                        m_pMap->getPlayer(i)->setBuildList(unitList.items);
+                    }
+                }
+                Player* pPlayer = m_pMap->getPlayer(i);
+                if (pPlayer->getTeam() != 0)
+                {
+                    allPlayer1 = false;
+                }
+                if (pPlayer->getBaseGameInput() != nullptr)
+                {
+                    auto ai = pPlayer->getBaseGameInput()->getAiType();
+                    if (ai > GameEnums::AiTypes_Human)
+                    {
+                        allHuman = false;
+                    }
+                    pPlayer->setControlType(ai);
+                }
+                else
+                {
+                    pPlayer->setBaseGameInput(spHumanPlayerInput::create(m_pMap));
+                    pPlayer->setControlType(GameEnums::AiTypes_Human);
                 }
             }
-            Player* pPlayer = m_pMap->getPlayer(i);
-            if (pPlayer->getTeam() != 0)
-            {
-                allPlayer1 = false;
-            }
-            if (pPlayer->getBaseGameInput() != nullptr)
-            {
-                auto ai = pPlayer->getBaseGameInput()->getAiType();
-                if (ai > GameEnums::AiTypes_Human)
-                {
-                    allHuman = false;
-                }
-                pPlayer->setControlType(ai);
-            }
-            else
-            {
-                pPlayer->setBaseGameInput(spHumanPlayerInput::create(m_pMap));
-                pPlayer->setControlType(GameEnums::AiTypes_Human);
-            }
         }
-    }
-    else
-    {
-        allHuman = false;
-        allPlayer1 = false;
-    }
+        else
+        {
+            allHuman = false;
+            allPlayer1 = false;
+        }
 
-    // assume players had no real team assigned
-    // reassign each a unique team
-    if (allPlayer1)
-    {
-        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        // assume players had no real team assigned
+        // reassign each a unique team
+        if (allPlayer1)
         {
-            m_pMap->getPlayer(i)->setTeam(i);
-        }
-    }
-    if (allHuman)
-    {
-        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
-        {
-            if (i != 0)
+            for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
-                const auto ai = GameEnums::AiTypes_Normal;
-                m_pMap->getPlayer(i)->setControlType(ai);
-                m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, ai));
+                m_pMap->getPlayer(i)->setTeam(i);
+            }
+        }
+        if (allHuman)
+        {
+            for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+            {
+                if (i != 0)
+                {
+                    const auto ai = GameEnums::AiTypes_Normal;
+                    m_pMap->getPlayer(i)->setControlType(ai);
+                    m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, ai));
+                }
             }
         }
     }
@@ -499,12 +501,13 @@ void PlayerSelection::selectInitialAi(qint32 player, DropDownmenu* pPlayerAi, qi
         {
             if (m_saveGame)
             {
-                if (ai == GameEnums::AiTypes_ProxyAi)
+                if (ai == GameEnums::AiTypes_ProxyAi ||
+                    ai == GameEnums::AiTypes_Open)
                 {
-                    ai = aiList.size() - 1;
+                    ai = GameEnums::AiTypes_Open;
                     if (pPlayerAi != nullptr)
                     {
-                        pPlayerAi->setCurrentItem(ai);
+                        pPlayerAi->setCurrentItem(aiList.size() - 1);
                     }
                 }
                 else
@@ -1317,6 +1320,7 @@ void PlayerSelection::playerAccessDenied()
         !m_pNetworkInterface->getIsObserver() &&
         !hasHumanPlayer())
     {
+        CONSOLE_PRINT("No remaining human players found as client", Console::eDEBUG);
         QString message = tr("Connection failed.Reason: No more players available or user is already in the game.");
         spDialogMessageBox pDialog = spDialogMessageBox::create(message);
         oxygine::Stage::getStage()->addChild(pDialog);

@@ -55,6 +55,7 @@ VeryEasyAI::VeryEasyAI(GameMap* pMap)
         !m_pMap->getSavegame())
     {
         loadIni("very_easy/very_easy.ini");
+        m_productionSystem.initialize();
     }
 }
 
@@ -143,7 +144,7 @@ bool VeryEasyAI::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & 
         else if (m_aiStep <= AISteps::moveSupportUnits && moveSupport(AISteps::moveSupportUnits, pUnits, true)){}
         else if (m_aiStep <= AISteps::moveSupportUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, true)){}
         else if (m_aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}
-        else if (m_aiStep <= AISteps::buildUnits && buildUnits(pBuildings, pUnits)){}
+        else if (m_aiStep <= AISteps::buildUnits && buildUnits(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings)){}
         else
         {
             return false;
@@ -640,10 +641,20 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
     return false;
 }
 
-bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits)
+bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits,
+                            spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
     AI_CONSOLE_PRINT("VeryEasyAI::buildUnits()", Console::eDEBUG);
-    
+    if (m_aiStep < AISteps::buildUnits)
+    {
+        m_productionSystem.resetForcedProduction();
+    }
+    m_aiStep = AISteps::buildUnits;
+    bool executed = false;
+    if (m_productionSystem.buildUnit(pBuildings.get(), pUnits.get(), pEnemyUnits.get(), pEnemyBuildings.get(), executed))
+    {
+        return executed;
+    }
     if (m_pMap != nullptr)
     {
         std::vector<float> data;

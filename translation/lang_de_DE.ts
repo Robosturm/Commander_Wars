@@ -5482,22 +5482,22 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1978"/>
+        <location filename="../menue/gamemenue.cpp" line="1979"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2009"/>
+        <location filename="../menue/gamemenue.cpp" line="2010"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2035"/>
+        <location filename="../menue/gamemenue.cpp" line="2036"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2212"/>
+        <location filename="../menue/gamemenue.cpp" line="2213"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5766,22 +5766,22 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="242"/>
+        <location filename="../coreengine/mainapp.cpp" line="243"/>
         <source>Loading CO Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="249"/>
+        <location filename="../coreengine/mainapp.cpp" line="250"/>
         <source>Loading Animation Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="256"/>
+        <location filename="../coreengine/mainapp.cpp" line="257"/>
         <source>Loading Game Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="263"/>
+        <location filename="../coreengine/mainapp.cpp" line="264"/>
         <source>Loading Rule Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5791,83 +5791,83 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="233"/>
+        <location filename="../coreengine/mainapp.cpp" line="234"/>
         <source>Loading Building Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="272"/>
+        <location filename="../coreengine/mainapp.cpp" line="273"/>
         <source>Loading Terrain Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="279"/>
+        <location filename="../coreengine/mainapp.cpp" line="280"/>
         <source>Loading Units Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="286"/>
+        <location filename="../coreengine/mainapp.cpp" line="287"/>
         <source>Loading Battleanimation Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="293"/>
+        <location filename="../coreengine/mainapp.cpp" line="294"/>
         <source>Loading CO-Perk Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="300"/>
+        <location filename="../coreengine/mainapp.cpp" line="301"/>
         <source>Loading Wiki Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="307"/>
+        <location filename="../coreengine/mainapp.cpp" line="308"/>
         <source>Loading Userdata ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="314"/>
+        <location filename="../coreengine/mainapp.cpp" line="315"/>
         <source>Loading Achievement Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="321"/>
+        <location filename="../coreengine/mainapp.cpp" line="322"/>
         <source>Loading Shop Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="328"/>
+        <location filename="../coreengine/mainapp.cpp" line="329"/>
         <source>Loading Movement planner addin Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="335"/>
+        <location filename="../coreengine/mainapp.cpp" line="336"/>
         <source>Loading Ui Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="342"/>
+        <location filename="../coreengine/mainapp.cpp" line="343"/>
         <source>Loading sounds ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="352"/>
+        <location filename="../coreengine/mainapp.cpp" line="353"/>
         <source>Loading Scripts ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="683"/>
+        <location filename="../coreengine/mainapp.cpp" line="684"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="689"/>
+        <location filename="../coreengine/mainapp.cpp" line="690"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="691"/>
+        <location filename="../coreengine/mainapp.cpp" line="692"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
@@ -6033,7 +6033,7 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="85"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="99"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1715"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1733"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6140,22 +6140,27 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1162"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1066"/>
+        <source>Failed to join game due to unknown verification failure.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1166"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1173"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1177"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1582"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1600"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1711"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1729"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6410,51 +6415,51 @@ Host mods: </source>
     <name>PlayerSelection</name>
     <message>
         <location filename="../objects/playerselection.cpp" line="113"/>
-        <location filename="../objects/playerselection.cpp" line="1165"/>
+        <location filename="../objects/playerselection.cpp" line="1168"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1199"/>
+        <location filename="../objects/playerselection.cpp" line="1202"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1320"/>
+        <location filename="../objects/playerselection.cpp" line="1324"/>
         <source>Connection failed.Reason: No more players available or user is already in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1153"/>
-        <location filename="../objects/playerselection.cpp" line="1174"/>
-        <location filename="../objects/playerselection.cpp" line="1188"/>
+        <location filename="../objects/playerselection.cpp" line="1156"/>
+        <location filename="../objects/playerselection.cpp" line="1177"/>
+        <location filename="../objects/playerselection.cpp" line="1191"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1153"/>
+        <location filename="../objects/playerselection.cpp" line="1156"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1153"/>
+        <location filename="../objects/playerselection.cpp" line="1156"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1153"/>
+        <location filename="../objects/playerselection.cpp" line="1156"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1153"/>
+        <location filename="../objects/playerselection.cpp" line="1156"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1177"/>
-        <location filename="../objects/playerselection.cpp" line="1184"/>
-        <location filename="../objects/playerselection.cpp" line="1188"/>
+        <location filename="../objects/playerselection.cpp" line="1180"/>
+        <location filename="../objects/playerselection.cpp" line="1187"/>
+        <location filename="../objects/playerselection.cpp" line="1191"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>

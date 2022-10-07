@@ -1038,15 +1038,15 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, bool same
 {
     // quit game with wrong version
     spDialogMessageBox pDialogMessageBox;
-    if (differentHash && sameMods)
+    if (differentHash)
     {
         pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different version of a mod or the game resource folder has been modified by one of the games."));
     }
-    else  if (sameMods)
+    else  if (!sameVersion)
     {
         pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different game version. Leaving the game again."));
     }
-    else
+    else if (!sameMods)
     {
         QString hostMods;
         for (auto & mod : mods)
@@ -1059,7 +1059,11 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, bool same
         {
             myMods += Settings::getModName(mod) + "\n";
         }
-        pDialogMessageBox = spDialogMessageBox::create(tr("Host has  different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods:" + myMods);
+        pDialogMessageBox = spDialogMessageBox::create(tr("Host has  different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods: " + myMods);
+    }
+    else
+    {
+        pDialogMessageBox = spDialogMessageBox::create(tr("Failed to join game due to unknown verification failure."));
     }
     connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
     addChild(pDialogMessageBox);
@@ -1207,7 +1211,21 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     m_pPlayerSelection->setIsServerGame(true);
     loadMultiplayerMap();
     createChat();
-    m_pPlayerSelection->setPlayerAi(0, GameEnums::AiTypes::AiTypes_Open, "");
+    // open all players
+    if (m_saveGame)
+    {
+        for (qint32 i = 0; i < pMap->getPlayerCount(); ++i)
+        {
+            if (pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes::AiTypes_Human)
+            {
+                m_pPlayerSelection->setPlayerAi(i, GameEnums::AiTypes::AiTypes_Open, "");
+            }
+        }
+    }
+    else
+    {
+        m_pPlayerSelection->setPlayerAi(0, GameEnums::AiTypes::AiTypes_Open, "");
+    }
     sendSlaveReady();
     m_slaveGameReady = true;
 }

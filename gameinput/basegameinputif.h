@@ -80,6 +80,15 @@ public slots:
      * @return
      */
     qint32 getMoveCostMapValue(qint32 x, qint32 y);
+
+    Player* getPlayer()
+    {
+        return m_pPlayer;
+    }
+    GameMap* getMap()
+    {
+        return m_pMap;
+    }
 protected:
     Player* m_pPlayer{nullptr};
     GameEnums::AiTypes m_AiType{GameEnums::AiTypes_Human};

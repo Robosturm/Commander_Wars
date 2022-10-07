@@ -169,6 +169,7 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
         !m_pMap->getSavegame())
     {
         loadIni( "normal/" + configurationFile);
+        m_productionSystem.initialize();
     }
     m_BuildingChanceModifier.insert("MECH", 1.1f);
 }
@@ -2221,9 +2222,14 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     if (m_aiStep < AISteps::buildUnits)
     {
         m_productionData.clear();
+        m_productionSystem.resetForcedProduction();
     }
     m_aiStep = AISteps::buildUnits;
-    
+    bool executed = false;
+    if (m_productionSystem.buildUnit(pBuildings.get(), pUnits.get(), pEnemyUnits.get(), pEnemyBuildings.get(), executed))
+    {
+        return executed;
+    }
 
     qint32 enemeyCount = 0;
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)

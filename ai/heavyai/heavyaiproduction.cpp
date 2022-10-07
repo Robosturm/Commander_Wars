@@ -17,6 +17,16 @@
 bool HeavyAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits,
                          spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
+    if (m_aiStep < AISteps::buildUnits)
+    {
+        m_productionSystem.resetForcedProduction();
+    }
+    m_aiStep = AISteps::buildUnits;
+    bool executed = false;
+    if (m_productionSystem.buildUnit(pBuildings.get(), pUnits.get(), pEnemyUnits.get(), pEnemyBuildings.get(), executed))
+    {
+        return executed;
+    }
     scoreUnitBuildings(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings);
     double bestScore = std::numeric_limits<float>::lowest();
     qint32 index = -1;
