@@ -169,7 +169,6 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
         !m_pMap->getSavegame())
     {
         loadIni( "normal/" + configurationFile);
-        m_productionSystem.initialize();
     }
     m_BuildingChanceModifier.insert("MECH", 1.1f);
 }

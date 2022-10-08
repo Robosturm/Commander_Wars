@@ -79,7 +79,6 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorU
 
 void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings)
 {
-    resetForcedProduction();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "onNewBuildQueue";
     QJSValueList args({pInterpreter->newQObject(this),
@@ -99,6 +98,33 @@ void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlV
         if (pInterpreter->exists(m_owner->getAiName(), function1))
         {
             erg = pInterpreter->doFunction(m_owner->getAiName(), function1, args);
+        }
+    }
+    m_activeBuildDistribution = m_buildDistribution;
+    for (auto & distribution : m_activeBuildDistribution)
+    {
+        qint32 i = 0;
+        while (i < distribution.second.unitIds.size())
+        {
+            bool found = false;
+            for (auto & pBuilding : pBuildings->getVector())
+            {
+                if (pBuilding->isProductionBuilding() &&
+                    pBuilding->getConstructionList().contains(distribution.second.unitIds[i]))
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                distribution.second.unitIds.removeAt(i);
+                distribution.second.chance.removeAt(i);
+            }
+            else
+            {
+                ++i;
+            }
         }
     }
 }
@@ -227,7 +253,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
         for (auto & unit : pUnits->getVector())
         {
             auto unitId = unit->getUnitID();
-            for (const auto& [key, value] : m_buildDistribution)
+            for (const auto& [key, value] : m_activeBuildDistribution)
             {
                 if (value.unitIds.contains(unitId))
                 {
@@ -239,7 +265,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
         std::vector<CurrentBuildDistribution> buildDistribution;
         float totalUnitCount = pUnits->size();
         float totalDistributionCount = 0;
-        for (const auto& [key, value] : m_buildDistribution)
+        for (const auto& [key, value] : m_activeBuildDistribution)
         {
             if (minBuildMode <= value.buildMode && value.buildMode <= maxBuildMode)
             {
@@ -267,41 +293,45 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
         // try building the unit group which has the highest gap
         for (auto & item : buildDistribution)
         {
-            if (item.distribution.unitIds.length() == 1)
+            auto count = item.distribution.unitIds.length();
+            if (count > 0)
             {
-                success = buildUnit(pBuildings, item.distribution.unitIds[0]);
-            }
-            else
-            {
-                for (qint32 i = 0; i < item.distribution.unitIds.length() * 3; ++i)
+                if (count == 1)
                 {
-                    qint32 roll = GlobalUtils::randInt(0, item.distribution.totalChance);
-                    qint32 chance = 0;
-                    for (qint32 i2 = 0; i2 < item.distribution.unitIds.length(); ++i2)
+                    success = buildUnit(pBuildings, item.distribution.unitIds[0]);
+                }
+                else
+                {
+                    for (qint32 i = 0; i < item.distribution.unitIds.length() * 3; ++i)
                     {
-                        if (roll < chance + item.distribution.chance[i2])
+                        qint32 roll = GlobalUtils::randInt(0, item.distribution.totalChance);
+                        qint32 chance = 0;
+                        for (qint32 i2 = 0; i2 < item.distribution.unitIds.length(); ++i2)
                         {
-                            success = buildUnit(pBuildings, item.distribution.unitIds[i2]);
-                            break;
-                        }
-                        else
-                        {
-                            chance += item.distribution.chance[i2];
+                            if (roll < chance + item.distribution.chance[i2])
+                            {
+                                success = buildUnit(pBuildings, item.distribution.unitIds[i2]);
+                                break;
+                            }
+                            else
+                            {
+                                chance += item.distribution.chance[i2];
+                            }
+                            if (success)
+                            {
+                                break;
+                            }
                         }
                         if (success)
                         {
                             break;
                         }
                     }
-                    if (success)
-                    {
-                        break;
-                    }
                 }
-            }
-            if (success)
-            {
-                break;
+                if (success)
+                {
+                    break;
+                }
             }
         }
     }

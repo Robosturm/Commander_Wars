@@ -1797,6 +1797,11 @@ void GameMenue::startGame()
     {
         Player* pPlayer = m_pMap->getPlayer(i);
         pPlayer->setMenu(this);
+        auto* pInput = pPlayer->getBaseGameInput();
+        if (pInput != nullptr)
+        {
+            pInput->onGameStart();
+        }
         qint32 coCount = pPlayer->getMaxCoCount();
         for (qint32 co = 0; co < coCount; ++co)
         {

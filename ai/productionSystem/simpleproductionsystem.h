@@ -102,6 +102,7 @@ private:
     std::vector<InitialProduction> m_initialProduction;
     std::vector<ForcedProduction> m_forcedProduction;
     std::map<QString, BuildDistribution> m_buildDistribution;
+    std::map<QString, BuildDistribution> m_activeBuildDistribution;
     ScriptVariables m_Variables;
     spUnit m_dummy;
 };

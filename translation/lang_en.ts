@@ -133,7 +133,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="81"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="83"/>
         <source>Orders an apc to build an airport on a plain which can be used to resupply air units. The airport will reduce the material of the apc by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -146,7 +146,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="82"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="85"/>
         <source>Orders an apc to build a harbour on a beach which can be used to resupply sea units. The harbour will reduce the material of the apc by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5482,22 +5482,22 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1979"/>
+        <location filename="../menue/gamemenue.cpp" line="1984"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2010"/>
+        <location filename="../menue/gamemenue.cpp" line="2015"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2036"/>
+        <location filename="../menue/gamemenue.cpp" line="2041"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2213"/>
+        <location filename="../menue/gamemenue.cpp" line="2218"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>

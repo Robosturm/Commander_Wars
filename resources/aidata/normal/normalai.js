@@ -32,28 +32,14 @@ var NORMALAI =
 
     initializeSimpleProductionSystem : function(system, ai, map)
     {
-        system.addInitialProduction("INFANTRY", 6);
-        system.addItemToBuildDistribution(NORMALAI.infantryGroup[0],    // group name
-                                          NORMALAI.infantryGroup[1],    // units build by the group
-                                          NORMALAI.infantryGroup[2],    // chance of the unit in this group to be build
-                                          NORMALAI.infantryGroup[3],    // army distribution for this group
-                                          NORMALAI.infantryGroup[4],    // build mode used to detect if the group is enabled or not to the army distribution
-                                          NORMALAI.infantryGroup[5]);   // custom condition to enable/disable group removing it to the army distribution
-        system.addItemToBuildDistribution(NORMALAI.lightTankGroup[0],   // group name
-                                          NORMALAI.lightTankGroup[1],   // units build by the group
-                                          NORMALAI.lightTankGroup[2],   // chance of the unit in this group to be build
-                                          NORMALAI.lightTankGroup[3],   // army distribution for this group
-                                          NORMALAI.lightTankGroup[4],   // build mode used to detect if the group is enabled or not to the army distribution
-                                          NORMALAI.lightTankGroup[5]);  // custom condition to enable/disable group removing it to the army distribution
-
-        return true;
+        return COREAI.initializeSimpleProductionSystem(system, ai, map);
     },
     buildUnitSimpleProductionSystem : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
     {
-        // todo add force anti air production
-        // todo add force transporter production
-        // todo add apc production
-
-        return system.buildNextUnit(buildings, units, 0, 10);
-    }
+        return COREAI.buildUnitSimpleProductionSystem(system, ai, buildings, units, enemyUnits, enemyBuildings, map);
+    },
+    onNewBuildQueue : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
+    {
+        return COREAI.onNewBuildQueue(system, ai, buildings, units, enemyUnits, enemyBuildings, map);
+    },
 };

@@ -27,6 +27,11 @@ BaseGameInputIF::BaseGameInputIF(GameMap* pMap, GameEnums::AiTypes aiType)
     Interpreter::setCppOwnerShip(this);
 }
 
+void BaseGameInputIF::onGameStart()
+{
+
+}
+
 void BaseGameInputIF::setPlayer(Player* pPlayer)
 {
     m_pPlayer = pPlayer;

@@ -112,6 +112,11 @@ void CoreAI::init(GameMenue* pMenu)
     }
 }
 
+void CoreAI::onGameStart()
+{
+    m_productionSystem.initialize();
+}
+
 TargetedUnitPathFindingSystem* CoreAI::createTargetedPfs(Unit* pUnit, const QVector<QVector3D> & targets)
 {
     std::vector<QVector3D> stdTargets;

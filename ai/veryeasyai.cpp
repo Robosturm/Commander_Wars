@@ -55,7 +55,6 @@ VeryEasyAI::VeryEasyAI(GameMap* pMap)
         !m_pMap->getSavegame())
     {
         loadIni("very_easy/very_easy.ini");
-        m_productionSystem.initialize();
     }
 }
 

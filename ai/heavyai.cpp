@@ -75,7 +75,6 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
         !m_pMap->getSavegame())
     {
         loadIni("heavy/" + m_aiName.toLower() + ".ini");
-        m_productionSystem.initialize();
     }
     loadNeuralNetworks(aiType);
     if (NeuralNetworkNames.length() != NeuralNetworksMax)

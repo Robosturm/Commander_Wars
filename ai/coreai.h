@@ -170,6 +170,10 @@ public:
      */
     virtual void init(GameMenue* pMenu) override;
     /**
+     * @brief onGameStart
+     */
+    virtual void onGameStart() override;
+    /**
      * @brief contains
      * @param points
      * @param point
@@ -479,6 +483,19 @@ public slots:
      * @return
      */
     bool isMoveableTile(Building* pBuilding) const;
+    /**
+     * @brief getAiCoUnitMultiplier
+     * @param pCO
+     * @param pUnit
+     * @return
+     */
+    float getAiCoUnitMultiplier(CO* pCO, Unit* pUnit);
+    /**
+     * @brief getAiCoBuildRatioModifier
+     * @param pCO
+     * @return
+     */
+    float getAiCoBuildRatioModifier();
 protected:
     void sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
 
@@ -614,19 +631,6 @@ protected:
     {
         return m_missileTarget;
     }
-    /**
-     * @brief getAiCoUnitMultiplier
-     * @param pCO
-     * @param pUnit
-     * @return
-     */
-    float getAiCoUnitMultiplier(CO* pCO, Unit* pUnit);
-    /**
-     * @brief getAiCoBuildRatioModifier
-     * @param pCO
-     * @return
-     */
-    float getAiCoBuildRatioModifier();
     /**
      * @brief GetUnitCounts
      * @param pUnits

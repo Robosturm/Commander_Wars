@@ -51,16 +51,19 @@ var Constructor = function()
             captured = true;
             unit.setCapturePoints(0);
         }
-        var x = action.getActionTarget().x * map.getImageSize() - 10;
-        var y = action.getActionTarget().y * map.getImageSize() - 30;
-        var captureAnimation = GameAnimationFactory.createGameAnimationCapture(map, x , y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
-        captureAnimation.addBackgroundSprite("capture_background");
-        var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), ACTION_CAPTURE.armyData);
-        Global["TEMPORARY_HARBOUR"].addCaptureAnimationBuilding(captureAnimation, building, null, unit.getOwner());
-        captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , unit.getOwner(), GameEnums.Recoloring_Matrix);
-        captureAnimation.addSoldierSprite("soldier+" + armyName, unit.getOwner(), GameEnums.Recoloring_None);
-
-        animation.queueAnimation(captureAnimation);
+        var viewPlayer = map.getCurrentViewPlayer();
+        if (viewPlayer === unit.getOwner() || viewPlayer.getFieldVisible(actionTargetField.x, actionTargetField.y))
+        {
+            var x = action.getActionTarget().x * map.getImageSize() - 10;
+            var y = action.getActionTarget().y * map.getImageSize() - 30;
+            var captureAnimation = GameAnimationFactory.createGameAnimationCapture(map, x , y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
+            captureAnimation.addBackgroundSprite("capture_background");
+            var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), ACTION_CAPTURE.armyData);
+            Global["TEMPORARY_HARBOUR"].addCaptureAnimationBuilding(captureAnimation, building, null, unit.getOwner());
+            captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , unit.getOwner(), GameEnums.Recoloring_Matrix);
+            captureAnimation.addSoldierSprite("soldier+" + armyName, unit.getOwner(), GameEnums.Recoloring_None);
+            animation.queueAnimation(captureAnimation);
+        }
 
         if (captured)
         {
