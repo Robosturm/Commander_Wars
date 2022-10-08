@@ -257,11 +257,11 @@ jobs:
       with:
         path: "${{github.workspace}}/build/CMakeFiles"
         
-    - name: Make space 5
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/build/qrc_music.o"
+    # - name: Make space 5
+    #   if: matrix.target == 'android'
+    #   uses: JesseTG/rm@v1.0.3
+    #   with:
+    #     path: "${{github.workspace}}/build/qrc_music.o"
         
     # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace
     - name: Clean up unneed win dll

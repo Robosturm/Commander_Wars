@@ -24,15 +24,21 @@ void SimpleProductionSystem::initialize()
                            pInterpreter->newQObject(m_owner),
                            pInterpreter->newQObject(m_owner->getMap())});
         QString function1 = "initializeSimpleProductionSystem";
+        QJSValue erg(false);
         if (pInterpreter->exists(GameScript::m_scriptName, function1))
         {
-            pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
-            m_init = true;
+            erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
         }
-        else if (pInterpreter->exists(m_owner->getAiName(), function1))
+        if (erg.isBool() && !erg.toBool())
         {
-            pInterpreter->doFunction(m_owner->getAiName(), function1, args);
-            m_init = true;
+            if (pInterpreter->exists(m_owner->getAiName(), function1))
+            {
+                erg = pInterpreter->doFunction(m_owner->getAiName(), function1, args);
+            }
+        }
+        if (erg.isBool())
+        {
+            m_init = erg.toBool();
         }
     }
 }
@@ -40,7 +46,7 @@ void SimpleProductionSystem::initialize()
 bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings, bool & executed)
 {
     executed = false;
-    if (m_enabled)
+    if (m_enabled && m_init)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "buildUnitSimpleProductionSystem";
@@ -51,13 +57,50 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorU
                            pInterpreter->newQObject(pEnemyUnits),
                            pInterpreter->newQObject(pEnemyBuildings),
                            pInterpreter->newQObject(m_owner->getMap())});
-        QJSValue erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
+        QJSValue erg(false);
+        if (pInterpreter->exists(GameScript::m_scriptName, function1))
+        {
+            erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
+        }
+        if (erg.isBool() && !erg.toBool())
+        {
+            if (pInterpreter->exists(m_owner->getAiName(), function1))
+            {
+                erg = pInterpreter->doFunction(m_owner->getAiName(), function1, args);
+            }
+        }
         if (erg.isBool())
         {
             executed = erg.toBool();
         }
     }
     return m_init && m_enabled;
+}
+
+void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings)
+{
+    resetForcedProduction();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "onNewBuildQueue";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_owner),
+                       pInterpreter->newQObject(pBuildings),
+                       pInterpreter->newQObject(pUnits),
+                       pInterpreter->newQObject(pEnemyUnits),
+                       pInterpreter->newQObject(pEnemyBuildings),
+                       pInterpreter->newQObject(m_owner->getMap())});
+    QJSValue erg(false);
+    if (pInterpreter->exists(GameScript::m_scriptName, function1))
+    {
+        erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
+    }
+    if (erg.isBool() && !erg.toBool())
+    {
+        if (pInterpreter->exists(m_owner->getAiName(), function1))
+        {
+            erg = pInterpreter->doFunction(m_owner->getAiName(), function1, args);
+        }
+    }
 }
 
 void SimpleProductionSystem::resetInitialProduction()
@@ -126,6 +169,8 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, c
             item.chance = chance;
             m_buildDistribution[group] = item;
         }
+
+
         auto & item = m_buildDistribution[group];
         item.totalChance = 0;
         for (auto & itemChance : item.chance)
@@ -207,6 +252,10 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
                     {
                         item.currentValue = unitCounts[key] / totalUnitCount;
                     }
+                    else
+                    {
+                        item.currentValue = 0.0f;
+                    }
                     buildDistribution.push_back(item);
                 }
             }
@@ -230,7 +279,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
                     qint32 chance = 0;
                     for (qint32 i2 = 0; i2 < item.distribution.unitIds.length(); ++i2)
                     {
-                        if (chance < roll)
+                        if (roll < chance + item.distribution.chance[i2])
                         {
                             success = buildUnit(pBuildings, item.distribution.unitIds[i2]);
                             break;
@@ -275,25 +324,30 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString un
 
 bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId)
 {
-    spGameAction pAction = spGameAction::create(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());
-    pAction->setTarget(QPoint(x, y));
-    if (pAction->canBePerformed())
+    Building* pBuilding = m_owner->getMap()->getTerrain(x, y)->getBuilding();
+    if (pBuilding->isProductionBuilding() &&
+        pBuilding->getTerrain()->getUnit() == nullptr)
     {
-        // we're allowed to build units here
-        spMenuData pData = pAction->getMenuStepData();
-        if (pData->validData())
+        spGameAction pAction = spGameAction::create(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());
+        pAction->setTarget(QPoint(x, y));
+        if (pAction->canBePerformed())
         {
-            auto indexOf = pData->getActionIDs().indexOf(unitId);
-            if (indexOf >= 0 && pData->getEnabledList()[indexOf])
+            // we're allowed to build units here
+            spMenuData pData = pAction->getMenuStepData();
+            if (pData->validData())
             {
-                m_owner->addMenuItemData(pAction, unitId, pData->getCostList()[indexOf]);
-                // produce the unit
-                if (pAction->isFinalStep())
+                auto indexOf = pData->getActionIDs().indexOf(unitId);
+                if (indexOf >= 0 && pData->getEnabledList()[indexOf])
                 {
-                    if (pAction->canBePerformed())
+                    m_owner->addMenuItemData(pAction, unitId, pData->getCostList()[indexOf]);
+                    // produce the unit
+                    if (pAction->isFinalStep())
                     {
-                        emit m_owner->performAction(pAction);
-                        return true;
+                        if (pAction->canBePerformed())
+                        {
+                            emit m_owner->performAction(pAction);
+                            return true;
+                        }
                     }
                 }
             }
@@ -380,3 +434,8 @@ void SimpleProductionSystem::deserializeObject(QDataStream& pStream)
     m_Variables.deserializeObject(pStream);
 }
 
+Unit* SimpleProductionSystem::getDummyUnit(const QString & unitId)
+{
+    m_dummy = spUnit::create(unitId, m_owner->getPlayer(), false, nullptr);
+    return m_dummy.get();
+}

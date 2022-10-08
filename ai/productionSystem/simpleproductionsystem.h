@@ -8,6 +8,7 @@
 #include <map>
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
+#include "game/unit.h"
 
 class CoreAI;
 class QmlVectorUnit;
@@ -30,7 +31,6 @@ public:
     };
     struct BuildDistribution
     {
-        QString group;
         QStringList unitIds;
         QVector<qint32> chance;
         qint32 totalChance;
@@ -67,6 +67,7 @@ public:
     }
     void initialize();
     bool buildUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings, bool & executed);
+    void onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings);
 public slots:
     bool getEnabled() const;
     void setEnabled(bool newEnabled);
@@ -85,6 +86,12 @@ public slots:
     void addInitialProduction(const QString & unitId, qint32 count);
     void addForcedProduction(const QString & unitId, qint32 x = -1, qint32 y = -1);
     void addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, float distribution, qint32 buildMode, const QString & guardCondition = "");
+    /**
+     * @brief getDummyUnit creates a dummy unit to calculate values not only one dummy unit will be alive at all time.
+     * @param unitId
+     * @return
+     */
+    Unit* getDummyUnit(const QString & unitId);
 private:
     bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId);
     bool buildUnit(qint32 x, qint32 y, QString unitId);
@@ -96,6 +103,7 @@ private:
     std::vector<ForcedProduction> m_forcedProduction;
     std::map<QString, BuildDistribution> m_buildDistribution;
     ScriptVariables m_Variables;
+    spUnit m_dummy;
 };
 
 Q_DECLARE_INTERFACE(SimpleProductionSystem, "SimpleProductionSystem");

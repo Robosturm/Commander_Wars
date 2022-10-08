@@ -2222,7 +2222,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     if (m_aiStep < AISteps::buildUnits)
     {
         m_productionData.clear();
-        m_productionSystem.resetForcedProduction();
+        m_productionSystem.onNewBuildQueue(pBuildings.get(), pUnits.get(), pEnemyUnits.get(), pEnemyBuildings.get());
     }
     m_aiStep = AISteps::buildUnits;
     bool executed = false;

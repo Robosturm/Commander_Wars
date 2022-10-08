@@ -19,7 +19,7 @@ bool HeavyAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
 {
     if (m_aiStep < AISteps::buildUnits)
     {
-        m_productionSystem.resetForcedProduction();
+        m_productionSystem.onNewBuildQueue(pBuildings.get(), pUnits.get(), pEnemyUnits.get(), pEnemyBuildings.get());
     }
     m_aiStep = AISteps::buildUnits;
     bool executed = false;
