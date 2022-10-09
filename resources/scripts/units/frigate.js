@@ -68,6 +68,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.canCounterOnRangeAttacks = function(unit, defX, defY, attacker, atkX, atkY, pAction, luckMode, map)
+    {
+        return true;
+    };
     this.getTerrainAnimationBase = function(unit, terrain, defender, map)
     {
         var weatherModifier = TERRAIN.getWeatherModifier(map);

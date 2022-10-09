@@ -18,12 +18,26 @@ var COREAI =
     mediumAmphibiousGroup : ["MEDIUM_AMPHIBIOUS_GROUP", ["HEAVY_HOVERCRAFT",],
                                                         [100,],
                      20, 2, ""],
-    lightAirForce : ["LIGHT_AIR_GROUP", ["K_HELI", "DUSTER",],
+    lightAirGroup : ["LIGHT_AIR_GROUP", ["K_HELI", "DUSTER",],
                                         [90,       10,],
-                                        30, 1, ""],
-    heavyAirForce : ["HEAVY_AIR_GROUP", ["BOMBER", "FIGHTER", "ZCOUNIT_KIROV"],
-                                        [60,       10,        60],
-                                        10, 3, ""],
+                     30, 1, ""],
+    heavyAirGroup : ["HEAVY_AIR_GROUP", ["BOMBER", "ZCOUNIT_KIROV"],
+                                        [50,       50],
+                     10, 3, ""],
+
+    navalInfantryGroup : ["NAVAL_INFANTRY_GROUP", ["GUNBOAT"],
+                                                  [100],
+                     10, 0, ""],
+    lightNavalGroup : ["LIGHT_NAVAL_GROUP", ["CANNONBOAT", "TORPEDOBOAT"],
+                                            [50,           50],
+                     30, 1, ""],
+    mediumNavalGroup : ["MEDIUM_NAVAL_GROUP", ["FRIGATE", "DESTROYER", "CRUISER", "SUBMARINE"],
+                                              [30,        10,          30,        30],
+                     50, 2, ""],
+    heavyNavalGroup : ["HEAVY_NAVAL_GROUP", ["BATTLECRUISER", "BATTLESHIP", "AIRCRAFTCARRIER"],
+                                            [40,              40,           5],
+                     50, 3, ""],
+
     initializeSimpleProductionSystem : function(system, ai, map)
     {
         var directIndirectRatio = ai.getAiCoBuildRatioModifier();
@@ -31,21 +45,87 @@ var COREAI =
         var co1 = player.getCO(0);
         var co2 = player.getCO(1);
 
-        system.addInitialProduction("INFANTRY", 6);
+        system.addInitialProduction(["INFANTRY"], 6);
         system.addItemToBuildDistribution(COREAI.infantryGroup[0],  // group name
                                           COREAI.infantryGroup[1],  // units build by the group
                                           COREAI.infantryGroup[2],  // chance of the unit in this group to be build
                                           COREAI.infantryGroup[3],  // army distribution for this group
                                           COREAI.infantryGroup[4],  // build mode used to detect if the group is enabled or not to the army distribution
                                           COREAI.infantryGroup[5]); // custom condition to enable/disable group removing it to the army distribution
-        COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightTankGroup);
-        COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.mediumTankGroup);
-        COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyTankGroup);
+        var variables = system.getVariables();
+        var variableNavalBattle = variables.createVariable("NAVALBATTLE");
+        var naval = variableNavalBattle.readDataInt32();
+        var groundModifer = 1;
+        if (naval > 0)
+        {
+            groundModifer = 1 / naval;
+        }
+        COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightTankGroup, groundModifer);
+        COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.mediumTankGroup, groundModifer);
+        COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyTankGroup, groundModifer);
+        COREAI.initAirForceDistribution(system, ai, co1, co2, directIndirectRatio);
+        COREAI.initAmphibiousDistribution(system, ai, co1, co2, directIndirectRatio);
+        if (naval > 0)
+        {
+            COREAI.initNavalForceDistribution(system, ai, co1, co2, directIndirectRatio);
+        }
         return true;
     },
-    addItemToBuildDistribution : function(system, ai, co1, co2, directIndirectRatio, group)
+
+    initAirForceDistribution : function(system, ai, co1, co2, directIndirectRatio)
+    {
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightAirGroup, "K_HELI");
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyAirGroup, "BOMBER");
+    },
+
+    initNavalForceDistribution : function(system, ai, co1, co2, directIndirectRatio)
+    {
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.navalInfantryGroup, "GUNBOAT");
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightNavalGroup, "CANNONBOAT");
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.MEDIUM_NAVAL_GROUP, "FRIGATE");
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyNavalGroup, "BATTLECRUISER");
+    },
+
+    initAmphibiousDistribution : function(system, ai, co1, co2, directIndirectRatio)
+    {
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightAmphibiousGroup, "HOVERCRAFT");
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.mediumAmphibiousGroup, "HOVERCRAFT");
+    },
+
+    addModifiedDistribution : function(system, ai, co1, co2, directIndirectRatio, group, unitId)
+    {
+        var dummyUnit = system.getDummyUnit(unitId);
+        var mod = 0;
+        if (co1 !== null)
+        {
+            mod += ai.getAiCoUnitMultiplier(co1, dummyUnit);
+        }
+        if (co2 !== null)
+        {
+            mod += ai.getAiCoUnitMultiplier(co2, dummyUnit);
+        }
+        var multiplier = 1;
+        if (mod > 2)
+        {
+            multiplier = 3;
+        }
+        COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, group, multiplier);
+    },
+
+    addItemToBuildDistribution : function(system, ai, co1, co2, directIndirectRatio, group, distributionModifier)
     {
         var chances = [...group[2]];
+
+        var baseValue = 0;
+        if (co1 !== null)
+        {
+            baseValue += 5;
+        }
+        if (co2 !== null)
+        {
+            baseValue += 5;
+        }
+
         for (var i = 0; i < chances.length; ++i)
         {
             var dummyUnit = system.getDummyUnit(group[1][i]);
@@ -61,27 +141,62 @@ var COREAI =
                     unitRatioModifier = directIndirectRatio;
                 }
             }
-            chances[i] *= unitRatioModifier;
+            var coModifier = 1.0;
+            if (baseValue > 0)
+            {
+                var mod = 0;
+                if (co1 !== null)
+                {
+                    mod += ai.getAiCoUnitMultiplier(co1, dummyUnit);
+                }
+                if (co2 !== null)
+                {
+                    mod += ai.getAiCoUnitMultiplier(co2, dummyUnit);
+                }
+                coModifier += mod / baseValue;
+            }
+            chances[i] *= unitRatioModifier * coModifier;
         }
-        system.addItemToBuildDistribution(group[0],   // group name
-                                          group[1],      // units build by the group
-                                          chances,    // chance of the unit in this group to be build
-                                          group[3],   // army distribution for this group
-                                          group[4],   // build mode used to detect if the group is enabled or not to the army distribution
-                                          group[5]);  // custom condition to enable/disable group removing it to the army distribution
+        system.addItemToBuildDistribution(group[0],                         // group name
+                                          group[1],                         // units build by the group
+                                          chances,                          // chance of the unit in this group to be build
+                                          group[3] * distributionModifier,  // army distribution for this group
+                                          group[4],                         // build mode used to detect if the group is enabled or not to the army distribution
+                                          group[5]);                        // custom condition to enable/disable group removing it to the army distribution
 
     },
     onNewBuildQueue : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
     {
         system.resetForcedProduction();
-
-    },
-    buildUnitSimpleProductionSystem : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
-    {
         // todo add force anti air production
         // todo add force transporter production
         // todo add apc production
+    },
 
-        return system.buildNextUnit(buildings, units, 0, 1);
+    fundsModes : [[0,    0,  0, 0],
+                  [3, 9000,  0, 1],
+                  [3, 18000, 0, 2],
+                  [0, 22000, 0, 3],
+                  [6, 22000, 1, 3],
+                  [6, 30000, 2, 3],],
+
+    buildUnitSimpleProductionSystem : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
+    {
+        var turn = map.getCurrentDay();
+        var player = ai.getPlayer();
+        var funds = player.getFunds();
+        var minMode = 0;
+        var maxMode = 0;
+        for (var i = fundsModes.length - 1; i >= 0; --i)
+        {
+            if (turn >= COREAI.fundsModes[i][0] &&
+                funds >= COREAI.fundsModes[i][1])
+            {
+                minMode = COREAI.fundsModes[i][2];
+                maxMode = COREAI.fundsModes[i][2];
+                break;
+            }
+        }
+        return system.buildNextUnit(buildings, units, minMode, maxMode);
     },
 };

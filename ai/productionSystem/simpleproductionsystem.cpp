@@ -144,19 +144,19 @@ void SimpleProductionSystem::resetForcedProduction()
     m_forcedProduction.clear();
 }
 
-void SimpleProductionSystem::addForcedProduction(const QString & unitId, qint32 x, qint32 y)
+void SimpleProductionSystem::addForcedProduction(const QStringList & unitIds, qint32 x, qint32 y)
 {
     ForcedProduction item;
-    item.unitId = unitId;
+    item.unitIds = unitIds;
     item.x = x;
     item.y = y;
     m_forcedProduction.push_back(item);
 }
 
-void SimpleProductionSystem::addInitialProduction(const QString & unitId, qint32 count)
+void SimpleProductionSystem::addInitialProduction(const QStringList & unitIds, qint32 count)
 {
     InitialProduction item;
-    item.unitId = unitId;
+    item.unitIds = unitIds;
     item.count = count;
     m_initialProduction.push_back(item);
 }
@@ -216,14 +216,22 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
     GameMap* pMap = m_owner->getMap();
     for (qint32 i = 0; i < m_initialProduction.size(); ++i)
     {
-        success = buildUnit(pBuildings, m_initialProduction[i].unitId);
+        auto & item = m_initialProduction[i];
+        for (auto & unitId : item.unitIds)
+        {
+            success = buildUnit(pBuildings, unitId);
+            if (success)
+            {
+                --item.count;
+                if (item.count <= 0)
+                {
+                    m_initialProduction.erase(m_initialProduction.cbegin() + i);
+                }
+                break;
+            }
+        }
         if (success)
         {
-            --m_initialProduction[i].count;
-            if (m_initialProduction[i].count <= 0)
-            {
-                m_initialProduction.erase(m_initialProduction.cbegin() + i);
-            }
             break;
         }
     }
@@ -235,7 +243,14 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
                 pMap->getTerrain(forcedProduction.x, forcedProduction.y)->getBuilding() != nullptr &&
                 pMap->getTerrain(forcedProduction.x, forcedProduction.y)->getBuilding()->getOwner() == m_owner->getPlayer())
             {
-                success = buildUnit(forcedProduction.x, forcedProduction.y, forcedProduction.unitId);
+                for (auto & unitId : forcedProduction.unitIds)
+                {
+                    success = buildUnit(forcedProduction.x, forcedProduction.y, unitId);
+                    if (success)
+                    {
+                        break;
+                    }
+                }
                 if (success)
                 {
                     break;
@@ -243,7 +258,18 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
             }
             else
             {
-                success = buildUnit(pBuildings, forcedProduction.unitId);
+                for (auto & unitId : forcedProduction.unitIds)
+                {
+                    success = buildUnit(pBuildings, unitId);
+                    if (success)
+                    {
+                        break;
+                    }
+                }
+                if (success)
+                {
+                    break;
+                }
             }
         }
     }
@@ -267,7 +293,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
         float totalDistributionCount = 0;
         for (const auto& [key, value] : m_activeBuildDistribution)
         {
-            if (minBuildMode <= value.buildMode && value.buildMode <= maxBuildMode)
+            if (minBuildMode <= value.buildMode && value.buildMode <= maxBuildMode && value.unitIds.size() > 0)
             {
                 if (value.guardCondition.isEmpty() || pInterpreter->doFunction(value.guardCondition).toBool())
                 {
@@ -418,7 +444,11 @@ void SimpleProductionSystem::serializeObject(QDataStream& pStream) const
     pStream << static_cast<qint32>(m_initialProduction.size());
     for (const auto& item : m_initialProduction)
     {
-        pStream << item.unitId;
+        pStream << static_cast<qint32>(item.unitIds.size());
+        for (qint32 i2 = 0; i2 < item.unitIds.size(); ++i2)
+        {
+            pStream << item.unitIds[i2];
+        }
         pStream << item.count;
     }
     m_Variables.serializeObject(pStream);
@@ -457,7 +487,14 @@ void SimpleProductionSystem::deserializeObject(QDataStream& pStream)
     for (qint32 i = 0; i < size; ++i)
     {
         InitialProduction item;
-        pStream >> item.unitId;
+        qint32 size2 = 0;
+        pStream >> size2;
+        for (qint32 i2 = 0; i2 < size; ++i2)
+        {
+            QString id;
+            pStream >> id;
+            item.unitIds.append(id);
+        }
         pStream >> item.count;
         m_initialProduction.push_back(item);
     }
