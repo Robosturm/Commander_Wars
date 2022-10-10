@@ -109,6 +109,8 @@ void GameUpdater::onNewState(FileDownloader::State state)
         case FileDownloader::State::DownloadingFailed:
         {
             Console::print("Downloading new version failed.", Console::eINFO);
+            continueBooting();
+            break;
         }
         case FileDownloader::State::SameVersion:
         {
