@@ -401,7 +401,7 @@ var Constructor = function()
                         var defPos = defUnit.getPosition();
                         var defFirststrike = false;
                         var atkFirststrike = false;
-                        if (fastInaccurate !== false)
+                        if (fastInaccurate === false)
                         {
                             defFirststrike = defUnit.getFirstStrike(defPos, attacker, true, actionTargetField);
                             atkFirststrike = attacker.getFirstStrike(actionTargetField, defUnit, false, defPos);

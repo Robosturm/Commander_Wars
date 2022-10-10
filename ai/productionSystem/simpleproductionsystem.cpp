@@ -237,8 +237,9 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
     }
     if (!success)
     {
-        for (auto & forcedProduction : m_forcedProduction)
+        for (qint32 i = 0; i < m_forcedProduction.size(); ++i)
         {
+            auto & forcedProduction = m_forcedProduction[i];
             if (pMap->onMap(forcedProduction.x, forcedProduction.y) &&
                 pMap->getTerrain(forcedProduction.x, forcedProduction.y)->getBuilding() != nullptr &&
                 pMap->getTerrain(forcedProduction.x, forcedProduction.y)->getBuilding()->getOwner() == m_owner->getPlayer())
@@ -253,6 +254,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
                 }
                 if (success)
                 {
+                    m_forcedProduction.erase(m_forcedProduction.cbegin() + i);
                     break;
                 }
             }
@@ -268,6 +270,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
                 }
                 if (success)
                 {
+                    m_forcedProduction.erase(m_forcedProduction.cbegin() + i);
                     break;
                 }
             }

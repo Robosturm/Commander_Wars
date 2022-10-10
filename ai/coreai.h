@@ -496,6 +496,23 @@ public slots:
      * @return
      */
     float getAiCoBuildRatioModifier();
+    /**
+     * @brief getUnitCount
+     * @param pUnits
+     * @param unitIds
+     * @return
+     */
+    qint32 getUnitCount(QmlVectorUnit * pUnits, const QStringList & unitIds, float minHp = 0.0f);
+    /**
+     * @brief getEnemyUnitCountNearOwnUnits
+     * @param pUnits
+     * @param pEnemyUnits
+     * @param unitIds
+     * @param distance
+     * @param minHp
+     * @return
+     */
+    qint32 getEnemyUnitCountNearOwnUnits(QmlVectorUnit * pUnits, QmlVectorUnit * pEnemyUnits, const QStringList & unitIds, qint32 distance, float minHp = 0.0f);
 protected:
     void sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
 

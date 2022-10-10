@@ -2236,6 +2236,41 @@ float CoreAI::getAiCoBuildRatioModifier()
     return multiplier;
 }
 
+qint32 CoreAI::getUnitCount(QmlVectorUnit * pUnits, const QStringList & unitIds, float minHp)
+{
+    qint32 count = 0;
+    for (auto & pUnit : pUnits->getVector())
+    {
+        if (pUnit->getHp() >= minHp &&
+            unitIds.contains(pUnit->getUnitID()))
+        {
+            ++count;
+        }
+    }
+    return count;
+}
+
+qint32 CoreAI::getEnemyUnitCountNearOwnUnits(QmlVectorUnit * pUnits, QmlVectorUnit * pEnemyUnits, const QStringList & unitIds, qint32 distance, float minHp)
+{
+    qint32 count = 0;
+    for (auto & pUnit : pEnemyUnits->getVector())
+    {
+        if (pUnit->getHp() >= minHp &&
+            unitIds.contains(pUnit->getUnitID()))
+        {
+            for (auto & ownUnit : pUnits->getVector())
+            {
+                if (GlobalUtils::getDistance(ownUnit->getPosition(), pUnit->getPosition()) <= distance)
+                {
+                    ++count;
+                    break;
+                }
+            }
+        }
+    }
+    return count;
+}
+
 void CoreAI::GetOwnUnitCounts(std::vector<MoveUnitData> & units, spQmlVectorUnit & pOwnUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                               UnitCountData & countData)
 {

@@ -15,14 +15,14 @@ var COREAI =
     lightAmphibiousGroup : ["LIGHT_AMPHIBIOUS_GROUP", ["ARTILLERYCRAFT", "HOVERCRAFT", "HOVERFLAK"],
                                                       [15,               80,           10,],
                      40, 1, ""],
-    mediumAmphibiousGroup : ["MEDIUM_AMPHIBIOUS_GROUP", ["HEAVY_HOVERCRAFT",],
+    mediumAmphibiousGroup : ["MEDIUM_AMPHIBIOUS_GROUP", ["HEAVY_HOVERCRAFT"],
                                                         [100,],
                      20, 2, ""],
-    lightAirGroup : ["LIGHT_AIR_GROUP", ["K_HELI", "DUSTER",],
+    lightAirGroup : ["LIGHT_AIR_GROUP", ["K_HELI", "DUSTER"],
                                         [90,       10,],
                      30, 1, ""],
-    heavyAirGroup : ["HEAVY_AIR_GROUP", ["BOMBER", "ZCOUNIT_KIROV"],
-                                        [50,       50],
+    heavyAirGroup : ["HEAVY_AIR_GROUP", ["BOMBER", "STEALTHBOMBER", "ZCOUNIT_KIROV"],
+                                        [50,       25,              50],
                      10, 3, ""],
 
     navalInfantryGroup : ["NAVAL_INFANTRY_GROUP", ["GUNBOAT"],
@@ -168,9 +168,30 @@ var COREAI =
     onNewBuildQueue : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
     {
         system.resetForcedProduction();
-        // todo add force anti air production
+        COREAI.forceAntiAirProduction(system, ai, units, enemyUnits);
         // todo add force transporter production
         // todo add apc production
+    },
+
+    forceAntiAirProduction : function(system, ai, units, enemyUnits)
+    {
+        var antiAirUnits = ["FLAK", "FIGHTER", "MISSILE"];
+        var airUnits = ["K_HELI", "DUSTER", "BOMBER", "ZCOUNIT_KIROV", "FIGHTER", "STEALTHBOMBER", "WATERPLANE"];
+        var variables = system.getVariables();
+        var variableNavalBattle = variables.createVariable("NAVALBATTLE");
+        var naval = variableNavalBattle.readDataInt32();
+        if (naval > 1)
+        {
+            antiAirUnits.push("CRUISER");
+        }
+        var anitAirUnitCount = ai.getUnitCount(units, antiAirUnits, 5);
+        var enemyAirUnits = ai.getEnemyUnitCountNearOwnUnits(units, enemyUnits, airUnits, 24, 5);
+        if ((enemyAirUnits > 0 && anitAirUnitCount === 0) ||
+            (enemyAirUnits > 2 && anitAirUnitCount === 1) ||
+            (anitAirUnitCount > 0 && enemyAirUnits / anitAirUnitCount >= 3))
+        {
+            system.addForcedProduction(antiAirUnits);
+        }
     },
 
     fundsModes : [[0,    0,  0, 0],
@@ -187,7 +208,7 @@ var COREAI =
         var funds = player.getFunds();
         var minMode = 0;
         var maxMode = 0;
-        for (var i = fundsModes.length - 1; i >= 0; --i)
+        for (var i = COREAI.fundsModes.length - 1; i >= 0; --i)
         {
             if (turn >= COREAI.fundsModes[i][0] &&
                 funds >= COREAI.fundsModes[i][1])
