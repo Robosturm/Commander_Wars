@@ -109,6 +109,8 @@ void GameUpdater::onNewState(FileDownloader::State state)
         case FileDownloader::State::DownloadingFailed:
         {
             Console::print("Downloading new version failed.", Console::eINFO);
+            continueBooting();
+            break;
         }
         case FileDownloader::State::SameVersion:
         {
@@ -201,6 +203,7 @@ void GameUpdater::continueBooting()
     pLoadingScreen->setProgress(tr("Loading Object Textures ..."), 8);
     pApp->redrawUi();
     QCoreApplication::processEvents();
+    m_failed = true;
     emit pApp->sigNextStartUpStep(static_cast<Mainapp::StartupPhase>(static_cast<qint8>(pApp->getStartUpStep()) + 1));
 }
 
