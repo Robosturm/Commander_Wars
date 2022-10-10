@@ -25,7 +25,7 @@ FileDownloader::FileDownloader(const QString & targetFile,
 
 void FileDownloader::onResponseFinished(QNetworkReply* pReply)
 {
-    if (!m_downloading)
+    if (!m_downloading && !m_downloadFailed)
     {
         m_downloading = true;
         QUrl url = m_reply->url();
@@ -87,5 +87,6 @@ void FileDownloader::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 
 void FileDownloader::errorOccurred(QNetworkReply::NetworkError code)
 {
+    m_downloadFailed = true;
     emit sigNewState(State::DownloadingFailed);
 }
