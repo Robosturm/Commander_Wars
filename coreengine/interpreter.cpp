@@ -38,6 +38,7 @@ bool Interpreter::reloadInterpreter(const QString & runtime)
 
 Interpreter::~Interpreter()
 {
+    m_jsObjects.clear();
     // free memory
     collectGarbage();
 }
@@ -298,10 +299,8 @@ void Interpreter::networkGameFinished(qint32 value, QString id)
 
 void Interpreter::exitJsCall()
 {
-    if (--m_inJsCall <= 0)
-    {
-        m_jsObjects.clear();
-    }
+    --m_inJsCall;
+    Q_ASSERT(m_inJsCall >= 0);
 }
 
 bool Interpreter::getInJsCall() const
@@ -311,6 +310,10 @@ bool Interpreter::getInJsCall() const
 
 void Interpreter::trackJsObject(oxygine::ref_counter* pObj)
 {
+    if (m_inJsCall == 0)
+    {
+        m_jsObjects.clear();
+    }
     if (m_inJsCall > 0)
     {
         m_jsObjects.append(oxygine::intrusive_ptr(pObj, true));

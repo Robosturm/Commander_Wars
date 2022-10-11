@@ -34,6 +34,7 @@ var Constructor = function()
     {
         // we need to move the unit to the target position
         var building = action.getTargetBuilding();
+        building.setFireCount(0);
         var x = building.getX();
         var y = building.getY();
         ACTION_NEST_MORTAR.postAnimationBuildingX = x;

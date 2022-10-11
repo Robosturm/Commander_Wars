@@ -38,6 +38,11 @@ var COREAI =
                                             [40,              40,           5],
                      50, 3, ""],
 
+    minInfantryTransporterMapSize : 30 * 30,
+    minApcResupplyDay : 15,
+    minInfTransporterDay : 3,
+    transporterRatio : 0.04,
+
     initializeSimpleProductionSystem : function(system, ai, map)
     {
         var directIndirectRatio = ai.getAiCoBuildRatioModifier();
@@ -169,14 +174,58 @@ var COREAI =
     {
         system.resetForcedProduction();
         COREAI.forceAntiAirProduction(system, ai, units, enemyUnits);
-        // todo add force transporter production
-        // todo add apc production
+        COREAI.forceTransporterProduction(system, ai, units, enemyBuildings);
+        COREAI.forceApcProduction(system, ai, units);
+    },
+
+    forceTransporterProduction  : function(system, ai, units, enemyBuildings)
+    {
+        var map = ai.getMap();
+        var turn = map.getCurrentDay();
+        var transporterBuildings = ai.getBuildingCountsOnEnemyIslands(units, enemyBuildings);
+        var infantryTransporter = ["T_HELI", "BLACK_BOAT", "LANDER"];
+        var infantryTransporterCount = ai.getUnitCount(units, infantryTransporter);
+        if (infantryTransporterCount === 0 &&
+            turn >= COREAI.minInfTransporterDay &&
+            (COREAI.minInfantryTransporterMapSize <= map.getMapWidth() * map.getMapHeight() ||
+             transporterBuildings > 0))
+        {
+            if (transporterBuildings > 0)
+            {
+                system.addForcedProduction(infantryTransporter);
+            }
+            else
+            {
+                infantryTransporter.push("APC");
+                system.addForcedProduction(infantryTransporter);
+            }
+        }
+        var tankTransporter = ["LANDER", "TRANSPORTPLANE"];
+        var tankTransporterCount = ai.getUnitCount(units, tankTransporter);
+        // todo add force transporter production for tanks etc.
+    },
+
+    forceApcProduction  : function(system, ai, units)
+    {
+        var map = ai.getMap();
+        var turn = map.getCurrentDay();
+        var lowFuelUnitCount = ai.getUnitCount(units, [], 5, 30);
+        var apcCount = ai.getUnitCount(units, ["APC"]);
+        if (apcCount === 0 &&
+            turn >= COREAI.minApcResupplyDay &&
+            (lowFuelUnitCount > 2 ||
+             COREAI.minInfantryTransporterMapSize <= map.getMapWidth() * map.getMapHeight()))
+        {
+            system.addForcedProduction(["APC"]);
+        }
     },
 
     forceAntiAirProduction : function(system, ai, units, enemyUnits)
     {
         var antiAirUnits = ["FLAK", "FIGHTER", "MISSILE"];
-        var airUnits = ["K_HELI", "DUSTER", "BOMBER", "ZCOUNIT_KIROV", "FIGHTER", "STEALTHBOMBER", "WATERPLANE"];
+        var airUnits = ["K_HELI", "DUSTER", "BOMBER", "ZCOUNIT_KIROV", "FIGHTER", "WATERPLANE"];
+        var stealthAirUnits = ["STEALTHBOMBER"]
+        var antiAirAirUnits = ["FIGHTER", "STEALTHBOMBER", "DUSTER"];
         var variables = system.getVariables();
         var variableNavalBattle = variables.createVariable("NAVALBATTLE");
         var naval = variableNavalBattle.readDataInt32();
@@ -185,12 +234,20 @@ var COREAI =
             antiAirUnits.push("CRUISER");
         }
         var anitAirUnitCount = ai.getUnitCount(units, antiAirUnits, 5);
+        var anitAirAirUnitCount = ai.getUnitCount(units, antiAirAirUnits, 5);
+        var stealthBomberUnitCount = ai.getEnemyUnitCountNearOwnUnits(units, enemyUnits, stealthAirUnits, 24, 5);
         var enemyAirUnits = ai.getEnemyUnitCountNearOwnUnits(units, enemyUnits, airUnits, 24, 5);
         if ((enemyAirUnits > 0 && anitAirUnitCount === 0) ||
             (enemyAirUnits > 2 && anitAirUnitCount === 1) ||
             (anitAirUnitCount > 0 && enemyAirUnits / anitAirUnitCount >= 3))
         {
             system.addForcedProduction(antiAirUnits);
+        }
+        if ((stealthAirUnits > 0 && anitAirAirUnitCount === 0) ||
+            (stealthAirUnits > 2 && anitAirAirUnitCount === 1) ||
+            (anitAirAirUnitCount > 0 && stealthAirUnits / anitAirAirUnitCount >= 3))
+        {
+            system.addForcedProduction(antiAirAirUnits);
         }
     },
 

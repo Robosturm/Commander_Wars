@@ -384,7 +384,7 @@
                 <max>20</max>
                 <unit>""</unit>
                 <onEvent>settings.setMenuItemRowCount(input);</onEvent>
-            </Slider>
+            </Slider>            
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
@@ -498,7 +498,7 @@
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
                 <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Battle Animations:")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","CO info position:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -565,7 +565,7 @@
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
                 <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Battle Animations:")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","Camera center mode:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>

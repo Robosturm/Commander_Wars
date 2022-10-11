@@ -2236,15 +2236,26 @@ float CoreAI::getAiCoBuildRatioModifier()
     return multiplier;
 }
 
-qint32 CoreAI::getUnitCount(QmlVectorUnit * pUnits, const QStringList & unitIds, float minHp)
+qint32 CoreAI::getUnitCount(QmlVectorUnit * pUnits, const QStringList & unitIds, float minHp, qint32 minFuel)
 {
     qint32 count = 0;
     for (auto & pUnit : pUnits->getVector())
     {
         if (pUnit->getHp() >= minHp &&
-            unitIds.contains(pUnit->getUnitID()))
+            pUnit->getFuel() >= minFuel &&
+           (unitIds.length() == 0 || unitIds.contains(pUnit->getUnitID())))
         {
             ++count;
+        }
+        auto loadedUnits = pUnit->getLoadedUnits();
+        for (auto & loadedUnit : loadedUnits)
+        {
+            if (loadedUnit->getHp() >= minHp &&
+                loadedUnit->getFuel() >= minFuel &&
+               (unitIds.length() == 0 || unitIds.contains(loadedUnit->getUnitID())))
+            {
+                ++count;
+            }
         }
     }
     return count;
@@ -2266,6 +2277,31 @@ qint32 CoreAI::getEnemyUnitCountNearOwnUnits(QmlVectorUnit * pUnits, QmlVectorUn
                     break;
                 }
             }
+        }
+    }
+    return count;
+}
+
+qint32 CoreAI::getBuildingCountsOnEnemyIslands(QmlVectorUnit * pUnits, QmlVectorBuilding * pEnemyBuildings)
+{
+    qint32 count = 0;
+    for (auto & pBuilding : pEnemyBuildings->getVector())
+    {
+        qint32 x = pBuilding->getX();
+        qint32 y = pBuilding->getY();
+        bool reachable = false;
+        for (auto & pUnit : pUnits->getVector())
+        {
+            qint32 island = getIslandIndex(pUnit.get());
+            if (onSameIsland(island, pUnit->getX(), pUnit->getY(), x, y))
+            {
+                reachable = true;
+                break;
+            }
+        }
+        if (!reachable)
+        {
+            ++count;
         }
     }
     return count;

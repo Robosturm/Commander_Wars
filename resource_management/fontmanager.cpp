@@ -27,14 +27,14 @@ FontManager::FontManager()
 #ifdef GRAPHICSUPPORT
     setObjectName("FontManager");
     QStringList searchFolders;
-    searchFolders.append("resources/fonts/");
     searchFolders.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/fonts/");
+    searchFolders.append("resources/fonts/");
     QStringList mods = Settings::getMods();
     for (const auto & mod : qAsConst(mods))
     {
         searchFolders.append(mod + "/fonts/");
     }
-    for (qint32 i = searchFolders.size() - 1; i >= 0; --i)
+    for (qint32 i = 0; i < searchFolders.size(); ++i)
     {
         QString folder = searchFolders[i];
         if (QFile::exists(folder + "res.xml"))
@@ -62,9 +62,9 @@ FontManager::FontManager()
                         {
                             auto element = node.toElement();
                             QString file = element.attribute("file");
-                            if (QFile::exists(folder + file))
+                            if (QFile::exists(folder + "/" + file))
                             {
-                                qint32 res = QFontDatabase::addApplicationFont(folder + file);
+                                qint32 res = QFontDatabase::addApplicationFont(folder + "/" + file);
                                 if (res >= 0)
                                 {
                                     QStringList fonts = QFontDatabase::applicationFontFamilies(res);
@@ -124,12 +124,12 @@ FontManager::FontManager()
                                     }
                                     else
                                     {
-                                        CONSOLE_PRINT("Unable to load font file: " + folder + file, Console::eERROR)
+                                        CONSOLE_PRINT("Unable to load font file: " + folder + "/" + file, Console::eERROR)
                                     }
                                 }
                                 else
                                 {
-                                    CONSOLE_PRINT("Unable to load font file: " + folder + file, Console::eERROR)
+                                    CONSOLE_PRINT("Unable to load font file: " + folder + "/" + file, Console::eERROR)
                                 }
                             }
                         }

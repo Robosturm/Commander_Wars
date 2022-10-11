@@ -503,7 +503,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_NEST_LASER.js" line="56"/>
+        <location filename="../resources/scripts/actions/ACTION_NEST_LASER.js" line="94"/>
         <source>Commands the laser to shot a ray. The laser rays deal damage to all units that get hit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -516,7 +516,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_NEST_MORTAR.js" line="87"/>
+        <location filename="../resources/scripts/actions/ACTION_NEST_MORTAR.js" line="88"/>
         <source>Commands the mortar to fire at a 3x3 square and deals damage to all units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3447,8 +3447,6 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/options/optiongameplaymenu.xml" line="39"/>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="501"/>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="568"/>
         <source>Battle Animations:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3693,6 +3691,11 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="501"/>
+        <source>CO info position:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/ui/options/optiongameplaymenu.xml" line="509"/>
         <source>Flipping&apos; positions the info opposite the side of the screen where the cursor is located.</source>
         <translation type="unfinished"></translation>
@@ -3725,6 +3728,11 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../resources/ui/options/optiongameplaymenu.xml" line="559"/>
         <source>If active: the screen will center on every unit performing an action, except when not visible within Fog of War.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="568"/>
+        <source>Camera center mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -26677,12 +26685,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_nest_laser</name>
     <message>
-        <location filename="../resources/scripts/building/znest_nest_laser.js" line="26"/>
+        <location filename="../resources/scripts/building/znest_nest_laser.js" line="38"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_nest_laser.js" line="30"/>
+        <location filename="../resources/scripts/building/znest_nest_laser.js" line="42"/>
         <source>Nest of Dark Matter. Currently only a visual.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -502,7 +502,7 @@ public slots:
      * @param unitIds
      * @return
      */
-    qint32 getUnitCount(QmlVectorUnit * pUnits, const QStringList & unitIds, float minHp = 0.0f);
+    qint32 getUnitCount(QmlVectorUnit * pUnits, const QStringList & unitIds, float minHp = 0.0f, qint32 minFuel = 0);
     /**
      * @brief getEnemyUnitCountNearOwnUnits
      * @param pUnits
@@ -513,6 +513,13 @@ public slots:
      * @return
      */
     qint32 getEnemyUnitCountNearOwnUnits(QmlVectorUnit * pUnits, QmlVectorUnit * pEnemyUnits, const QStringList & unitIds, qint32 distance, float minHp = 0.0f);
+    /**
+     * @brief getBuildingCountsOnEnemyIslands
+     * @param pUnits
+     * @param pEnemyBuildings
+     * @return
+     */
+    qint32 getBuildingCountsOnEnemyIslands(QmlVectorUnit * pUnits, QmlVectorBuilding * pEnemyBuildings);
 protected:
     void sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
 
