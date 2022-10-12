@@ -67,7 +67,7 @@ var Constructor = function()
         return 2;
     };
 
-    this.transportList = ["ANTITANKCANNON", "APC", "ARTILLERY", "FLAK", "FLARE",
+    this.transportList = ["ANTITANKCANNON", "APC", "ARTILLERY", "ARTILLERYCRAFT", "FLAK", "FLARE",
                           "HEAVY_HOVERCRAFT", "HEAVY_TANK", "HOVERCRAFT", "HOVERFLAK",
                           "INFANTRY", "LIGHT_TANK", "MECH", "MEGATANK", "MISSILE",
                           "MOTORBIKE", "NEOTANK", "RECON", "ROCKETTHROWER", "SNIPER",
