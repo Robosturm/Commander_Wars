@@ -11,6 +11,7 @@
 
 namespace oxygine
 {
+
     class TweenOptions
     {
     public:
@@ -81,6 +82,7 @@ namespace oxygine
     class Actor: public EventDispatcher
     {
     public:
+        static constexpr float safetyArea = 10;
         explicit Actor();
         virtual ~Actor();
         using children = std::vector<spActor>;

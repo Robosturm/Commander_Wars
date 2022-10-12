@@ -2,6 +2,8 @@
 #include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 namespace oxygine
 {
@@ -67,10 +69,21 @@ namespace oxygine
             {
                 font.setPixelSize(font.pixelSize() * rs.transform.a);
             }
+            qint32 height = 0;
+            if (m_lines.size() > 2)
+            {
+                height = (m_offsets[1].y() - m_offsets[0].y()) * rs.transform.a;
+            }
+            float windowHeight = oxygine::Stage::getStage()->getScaledHeight() + oxygine::Actor::safetyArea;
             for (qint32 i = 0; i < m_lines.size(); ++i)
             {
-                path.addText(static_cast<qint32>(rs.transform.x + (m_offsets[i].x() - style.font.borderWidth + style.font.offsetX) * rs.transform.a),
-                             static_cast<qint32>(rs.transform.y + (m_offsets[i].y() - style.font.borderWidth + style.font.offsetY) * rs.transform.d), font, m_lines[i]);
+                qint32 x = static_cast<qint32>(rs.transform.x + (m_offsets[i].x() - style.font.borderWidth + style.font.offsetX) * rs.transform.a);
+                qint32 y = static_cast<qint32>(rs.transform.y + (m_offsets[i].y() - style.font.borderWidth + style.font.offsetY) * rs.transform.d);
+                if (y + height >= -oxygine::Actor::safetyArea &&
+                    y <= windowHeight)
+                {
+                    path.addText(x, y, font, m_lines[i]);
+                }
             }
             if (style.font.borderWidth != 0)
             {

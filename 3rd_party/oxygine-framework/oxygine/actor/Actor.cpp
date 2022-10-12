@@ -980,7 +980,6 @@ namespace oxygine
     bool Actor::onScreen(RenderState& rs)
     {
 #ifdef GRAPHICSUPPORT
-        constexpr float safetyArea = 10;
         float width = oxygine::Stage::getStage()->getScaledWidth() + safetyArea;
         float height = oxygine::Stage::getStage()->getScaledHeight() + safetyArea;
         auto scaledWidth = m_size.x * rs.transform.a;
