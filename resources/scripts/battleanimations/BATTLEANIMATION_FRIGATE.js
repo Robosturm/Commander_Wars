@@ -33,22 +33,12 @@ var Constructor = function()
     {
         sprite.restoreBackgroundSpeed();
         BATTLEANIMATION_FRIGATE.loadStandingAnimation(sprite, unit, defender, weapon, Qt.point(-38, 20));
-        var offset = Qt.point(60, 65);
-        var count = sprite.getUnitCount(5);
-        for (var i = 0; i < count; i++)
-        {
-            var offset2 = Qt.point(0, 0);
-            if (i % 2 === 1)
-            {
-                offset2 = Qt.point(10, 10);
-            }
-            sprite.loadSingleMovingSprite("rocket_up", false,
-                                          Qt.point(offset.x + offset2.x,
-                                                   offset.y + offset2.y),
-                                          Qt.point(80, 40), 400, false,
-                                          -1, 1.0, 5, 100 * i, false);
-            sprite.loadSound("rocket_launch.wav", 1, 100 * i);
-        }
+        var offset = Qt.point(100, 60);
+        sprite.loadSprite("flak_shot",  false, sprite.getMaxUnitCount(), offset,
+                          1, 1, 0, 100, false, true);
+        sprite.loadSound("anti_air_gun_fire.wav", 1, 0);
+        sprite.loadSound("anti_air_gun_fire.wav", 1, 200, 1, true);
+        sprite.loadSound("anti_air_gun_fire.wav", 1, 400, 1, true);
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
@@ -67,19 +57,15 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
-        var count = sprite.getUnitCount(5);
-        var i = 0;
-        sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 20),
-                          1, 1.0, 0, 400, true);
-        sprite.addSpriteScreenshake(8, 0.95, 800, 500);
-        sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 90),
-                                Qt.point(-127, -60), 400, true,
-                                -1, 1, 0, 0, true);
-        for (i = 0; i < count; i++)
+        var xOffset = 0;
+        var yOffset = 22;
+        if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
-            sprite.loadSound("rocket_flying.wav", 1, 0);
-            sprite.loadSound("impact_explosion.wav", 1, 300 + i * BATTLEANIMATION.defaultFrameDelay);
+            yOffset = 45;
         }
+        sprite.loadSprite("flak_hit",  false, 5, Qt.point(xOffset, yOffset),
+                          1, 1.0, 0, 0);
+        BATTLEANIMATION.playMgImpactSound(sprite, unit, defender, weapon, count);
     };
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)

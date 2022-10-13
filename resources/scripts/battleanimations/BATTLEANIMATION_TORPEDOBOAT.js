@@ -33,21 +33,22 @@ var Constructor = function()
     {
         sprite.restoreBackgroundSpeed();
         BATTLEANIMATION_TORPEDOBOAT.loadStandingAnimation(sprite, unit, defender, weapon, Qt.point(-38, 20));
-        var offset = Qt.point(60, 65);
         var count = sprite.getUnitCount(5);
         for (var i = 0; i < count; i++)
         {
-            var offset2 = Qt.point(0, 0);
-            if (i % 2 === 1)
+            if (globals.isEven(i))
             {
-                offset2 = Qt.point(10, 10);
+                sprite.loadSingleMovingSprite("torpedo", false, Qt.point(70, 10),
+                                              Qt.point(60, 0), 400, false,
+                                              1, 1, 2, i * 150);
             }
-            sprite.loadSingleMovingSprite("rocket_up", false,
-                                          Qt.point(offset.x + offset2.x,
-                                                   offset.y + offset2.y),
-                                          Qt.point(80, 40), 400, false,
-                                          -1, 1.0, 5, 100 * i, false);
-            sprite.loadSound("rocket_launch.wav", 1, 100 * i);
+            else
+            {
+                sprite.loadSingleMovingSprite("torpedo", false, Qt.point(90, 50),
+                                              Qt.point(60, 0), 400, false,
+                                              1, 0.5, -1, i * 150);
+            }
+            sprite.loadSound("torpedo_fire.wav", 1, i * 150);
         }
     };
 
@@ -68,17 +69,32 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(5);
-        var i = 0;
-        sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 20),
-                          1, 1.0, 0, 400, true);
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
-        sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 90),
-                                Qt.point(-127, -60), 400, true,
-                                -1, 1, 0, 0, true);
-        for (i = 0; i < count; i++)
+        for (var i = 0; i < count; i++)
         {
-            sprite.loadSound("rocket_flying.wav", 1, 0);
-            sprite.loadSound("impact_explosion.wav", 1, 300 + i * BATTLEANIMATION.defaultFrameDelay);
+            if (globals.isEven(i))
+            {
+                sprite.loadSingleMovingSprite("torpedo", false, Qt.point(127, 20),
+                                              Qt.point(-70, 0), 400, true,
+                                              1, 1, 2, i * 150, true);
+
+                sprite.loadSingleMovingSprite("water_hit",  false, Qt.point(45, 20),
+                                              Qt.point(0, 0), 0, false,
+                                              1, 1.0, 2, 400 + i * 150, true,
+                                              100, -1, 0, 0, 180);
+            }
+            else
+            {
+                sprite.loadSingleMovingSprite("torpedo", false, Qt.point(127, 50),
+                                              Qt.point(-60, 0), 400, true,
+                                              1, 0.5, -1, i * 150);
+                sprite.loadSingleMovingSprite("water_hit",  false, Qt.point(57, 50),
+                                              Qt.point(0, 0), 0, false,
+                                              1, 0.5, -1, 400 + i * 150, true,
+                                              100, -1, 0, 0, 180);
+            }
+            sprite.loadSound("torpedo_move.wav", 1);
+            sprite.loadSound("impact_explosion.wav", 1, 300 + i * 150);
         }
     };
 

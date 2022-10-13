@@ -46,7 +46,7 @@ var Constructor = function()
                                           Qt.point(offset.x + offset2.x,
                                                    offset.y + offset2.y),
                                           Qt.point(80, 40), 400, false,
-                                          -1, 1.0, 5, 100 * i, false);
+                                          -1, 1.0, -1, 100 * i, false);
             sprite.loadSound("rocket_launch.wav", 1, 100 * i);
         }
     };

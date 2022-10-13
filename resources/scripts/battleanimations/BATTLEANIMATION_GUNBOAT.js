@@ -36,22 +36,17 @@ var Constructor = function()
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.restoreBackgroundSpeed();
-        BATTLEANIMATION_GUNBOAT.loadStandingAnimation(sprite, unit, defender, weapon, Qt.point(-38, 20));
-        var offset = Qt.point(60, 65);
-        var count = sprite.getUnitCount(5);
-        for (var i = 0; i < count; i++)
+        BATTLEANIMATION_GUNBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, Qt.point(-10, 20), "+gun+fire", 0, 3);
+        for (var i = 0; i < 2; i++)
         {
-            var offset2 = Qt.point(0, 0);
+            var offset = Qt.point(106 - 10, 47 + 12);
             if (i % 2 === 1)
             {
-                offset2 = Qt.point(10, 10);
+                offset = Qt.point(110 - 10, 49 + 12);
             }
-            sprite.loadSingleMovingSprite("rocket_up", false,
-                                          Qt.point(offset.x + offset2.x,
-                                                   offset.y + offset2.y),
-                                          Qt.point(80, 40), 400, false,
-                                          -1, 1.0, 5, 100 * i, false);
-            sprite.loadSound("rocket_launch.wav", 1, 100 * i);
+            sprite.loadSprite("light_shot",  false, 1, offset,
+                                          1, 1, 0, 400 * i);
+            sprite.loadSound("tank_shot.wav", 1, 400 * i);
         }
     };
 
@@ -72,17 +67,15 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(5);
-        var i = 0;
-        sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 20),
-                          1, 1.0, 0, 400, true);
-        sprite.addSpriteScreenshake(8, 0.95, 800, 500);
-        sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 90),
-                                Qt.point(-127, -60), 400, true,
-                                -1, 1, 0, 0, true);
+        sprite.loadSprite("bullet_tank",  false, count, Qt.point(10, 30),
+                          1, 1.0, 0, 0, true, true, 50);
+        sprite.loadSprite("cannon_hit",  false, count, Qt.point(0, 20),
+                          1, 1.0, 0, 100, true);
+        sprite.addSpriteScreenshake(8, 0.98, 800, 300);
         for (i = 0; i < count; i++)
         {
-            sprite.loadSound("rocket_flying.wav", 1, 0);
-            sprite.loadSound("impact_explosion.wav", 1, 300 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("tank_hit.wav", 1, 50 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("impact_explosion.wav", 1, 100 + i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 
