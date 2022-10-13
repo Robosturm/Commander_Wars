@@ -35,6 +35,7 @@ public:
         QVector<qint32> chance;
         qint32 totalChance;
         float distribution;
+        float maxUnitDistribution;
         qint32 buildMode;
         QString guardCondition;
     };
@@ -85,7 +86,7 @@ public slots:
     bool buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode);
     void addInitialProduction(const QStringList & unitIds, qint32 count);
     void addForcedProduction(const QStringList & unitId, qint32 x = -1, qint32 y = -1);
-    void addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, float distribution, qint32 buildMode, const QString & guardCondition = "");
+    void addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, float distribution, qint32 buildMode, const QString & guardCondition = "", float maxUnitDistribution = 1.0f);
     /**
      * @brief getDummyUnit creates a dummy unit to calculate values not only one dummy unit will be alive at all time.
      * @param unitId

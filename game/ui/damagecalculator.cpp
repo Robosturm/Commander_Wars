@@ -23,6 +23,14 @@ DamageCalculator::DamageCalculator()
     pApp->pauseRendering();
     setPosition(Settings::getWidth() / 2 - getScaledWidth() / 2,
                 Settings::getHeight() / 2 - getScaledHeight() / 2);
+    if (getX() < 0)
+    {
+        setX(20);
+    }
+    if (getY() < 0)
+    {
+        setY(20);
+    }
     qint32 x = 10;
     qint32 y = 10;
     spLabel pLabel = spLabel::create(300);

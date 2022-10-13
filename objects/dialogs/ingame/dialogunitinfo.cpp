@@ -180,9 +180,10 @@ void DialogUnitInfo::remove()
 void DialogUnitInfo::moveToUnit(qint32 posX, qint32 posY)
 {    
     BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    if (pMenu != nullptr &&
+        pMenu->getMap() != nullptr)
     {
-        pMenu->MoveMap(posX, posY);
+        pMenu->getMap()->centerMap(posX, posY);
         pMenu->calcNewMousePosition(posX, posY);
     }
     emit sigFinished();

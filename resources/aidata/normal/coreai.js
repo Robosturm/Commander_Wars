@@ -2,45 +2,47 @@ var COREAI =
 {
     infantryGroup : ["INFANTRY_GROUP", ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE", "ZCOUNIT_PARTISAN", "ZCOUNIT_COMMANDO", "ZCOUNIT_RANGER", "ZCOUNIT_AT_CYCLE"],
                                        [70,         10,     20,       30,          10,                 30,                 10,               10],
-                     40, 0, ""],
+                     40, 0, "", 0.3],
     lightTankGroup : ["LIGHT_TANK_GROUP",   ["RECON", "FLARE", "LIGHT_TANK", "ARTILLERY", "ZCOUNIT_CHAPERON", "ZCOUNIT_HOT_TANK", "ZCOUNIT_SMUGGLER", "ZCOUNIT_AUTO_TANK"],
                                             [5,       5,       80,           15,          15,                 15,                 15,                 30],
-                     40, 1, ""],
+                     40, 1, "", 0.3],
     mediumTankGroup : ["MEDIUM_TANK_GROUP", ["ANTITANKCANNON", "HEAVY_TANK", "ROCKETTHROWER", "ZCOUNIT_CRYSTAL_TANK", "ZCOUNIT_NEOSPIDER_TANK", "ZCOUNIT_ROYAL_GUARD", "ZCOUNIT_TANK_HUNTER"],
                                             [30,               70,           10,              40,                     40,                       40,                    40],
-                     20, 2, ""],
+                     20, 2, "", 0.9],
     heavyTankGroup : ["HEAVY_TANK_GROUP", ["MEGATANK", "NEOTANK", "ZCOUNIT_SIEGE_CANNON"],
                                             [60,       30,        60,],
-                     10, 3, ""],
+                     10, 3, "", 0.9],
     lightAmphibiousGroup : ["LIGHT_AMPHIBIOUS_GROUP", ["ARTILLERYCRAFT", "HOVERCRAFT", "HOVERFLAK"],
                                                       [15,               80,           10,],
-                     40, 1, ""],
+                     40, 1, "", 0.3],
     mediumAmphibiousGroup : ["MEDIUM_AMPHIBIOUS_GROUP", ["HEAVY_HOVERCRAFT"],
                                                         [100,],
-                     20, 2, ""],
+                     20, 2, "", 0.3],
     lightAirGroup : ["LIGHT_AIR_GROUP", ["K_HELI", "DUSTER"],
                                         [90,       10,],
-                     30, 1, ""],
+                     30, 1, "", 0.3],
     heavyAirGroup : ["HEAVY_AIR_GROUP", ["BOMBER", "STEALTHBOMBER", "ZCOUNIT_KIROV"],
                                         [50,       25,              50],
-                     10, 3, ""],
+                     10, 3, "", 0.9],
 
     navalInfantryGroup : ["NAVAL_INFANTRY_GROUP", ["GUNBOAT"],
                                                   [100],
-                     10, 0, ""],
+                     10, 0, "", 0.05],
     lightNavalGroup : ["LIGHT_NAVAL_GROUP", ["CANNONBOAT", "TORPEDOBOAT"],
                                             [50,           50],
-                     30, 1, ""],
+                     30, 1, "", 0.2],
     mediumNavalGroup : ["MEDIUM_NAVAL_GROUP", ["FRIGATE", "DESTROYER", "CRUISER", "SUBMARINE"],
                                               [30,        10,          30,        30],
-                     50, 2, ""],
+                     50, 2, "", 0.9],
     heavyNavalGroup : ["HEAVY_NAVAL_GROUP", ["BATTLECRUISER", "BATTLESHIP", "AIRCRAFTCARRIER"],
                                             [40,              40,           5],
-                     50, 3, ""],
+                     50, 3, "", 0.9],
 
     minInfantryTransporterMapSize : 30 * 30,
     minApcResupplyDay : 15,
     minInfTransporterDay : 3,
+    minTankTransporterDay : 4,
+    tankTransporterDayDifference : 3,
     transporterRatio : 0.04,
 
     initializeSimpleProductionSystem : function(system, ai, map)
@@ -56,7 +58,8 @@ var COREAI =
                                           COREAI.infantryGroup[2],  // chance of the unit in this group to be build
                                           COREAI.infantryGroup[3],  // army distribution for this group
                                           COREAI.infantryGroup[4],  // build mode used to detect if the group is enabled or not to the army distribution
-                                          COREAI.infantryGroup[5]); // custom condition to enable/disable group removing it to the army distribution
+                                          COREAI.infantryGroup[5],  // custom condition to enable/disable group removing it to the army distribution
+                                          COREAI.infantryGroup[6]);
         var variables = system.getVariables();
         var variableNavalBattle = variables.createVariable("NAVALBATTLE");
         var naval = variableNavalBattle.readDataInt32();
@@ -65,6 +68,13 @@ var COREAI =
         {
             groundModifer = 1 / naval;
         }
+        var variableAirBattle = variables.createVariable("AIRBATTLE");
+        var air = variableAirBattle.readDataInt32();
+        if (air > 0)
+        {
+            groundModifer *= 1 / (air > 0);
+        }
+
         COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightTankGroup, groundModifer);
         COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.mediumTankGroup, groundModifer);
         COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyTankGroup, groundModifer);
@@ -87,7 +97,7 @@ var COREAI =
     {
         COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.navalInfantryGroup, "GUNBOAT");
         COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightNavalGroup, "CANNONBOAT");
-        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.MEDIUM_NAVAL_GROUP, "FRIGATE");
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.mediumNavalGroup, "FRIGATE");
         COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyNavalGroup, "BATTLECRUISER");
     },
 
@@ -167,42 +177,99 @@ var COREAI =
                                           chances,                          // chance of the unit in this group to be build
                                           group[3] * distributionModifier,  // army distribution for this group
                                           group[4],                         // build mode used to detect if the group is enabled or not to the army distribution
-                                          group[5]);                        // custom condition to enable/disable group removing it to the army distribution
+                                          group[5],                         // custom condition to enable/disable group removing it to the army distribution
+                                          group[6]);
 
     },
     onNewBuildQueue : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
     {
         system.resetForcedProduction();
         COREAI.forceAntiAirProduction(system, ai, units, enemyUnits);
-        COREAI.forceTransporterProduction(system, ai, units, enemyBuildings);
+        COREAI.forceTransporterProduction(system, ai, buildings, units, enemyUnits, enemyBuildings);
         COREAI.forceApcProduction(system, ai, units);
     },
 
-    forceTransporterProduction  : function(system, ai, units, enemyBuildings)
+    forceTransporterProduction  : function(system, ai, buildings, units, enemyUnits, enemyBuildings)
     {
         var map = ai.getMap();
         var turn = map.getCurrentDay();
-        var transporterBuildings = ai.getBuildingCountsOnEnemyIslands(units, enemyBuildings);
-        var infantryTransporter = ["T_HELI", "BLACK_BOAT", "LANDER"];
-        var infantryTransporterCount = ai.getUnitCount(units, infantryTransporter);
-        if (infantryTransporterCount === 0 &&
-            turn >= COREAI.minInfTransporterDay &&
-            (COREAI.minInfantryTransporterMapSize <= map.getMapWidth() * map.getMapHeight() ||
-             transporterBuildings > 0))
+        if (turn >= COREAI.minInfTransporterDay)
         {
-            if (transporterBuildings > 0)
+            var transporterBuildings = ai.getBuildingCountsOnEnemyIslands(units, enemyBuildings);
+            var infantryTransporter = ["T_HELI", "BLACK_BOAT"];
+            var infantryTransporterCount = ai.getUnitCount(units, infantryTransporter);
+            if (infantryTransporterCount === 0 &&
+                    (COREAI.minInfantryTransporterMapSize <= map.getMapWidth() * map.getMapHeight() ||
+                     transporterBuildings > 0))
             {
-                system.addForcedProduction(infantryTransporter);
-            }
-            else
-            {
-                infantryTransporter.push("APC");
-                system.addForcedProduction(infantryTransporter);
+                if (transporterBuildings > 0)
+                {
+                    system.addForcedProduction(infantryTransporter);
+                }
+                else
+                {
+                    infantryTransporter.push("APC");
+                    system.addForcedProduction(infantryTransporter);
+                }
             }
         }
-        var tankTransporter = ["LANDER", "TRANSPORTPLANE"];
-        var tankTransporterCount = ai.getUnitCount(units, tankTransporter);
-        // todo add force transporter production for tanks etc.
+        if (turn >= COREAI.minTankTransporterDay)
+        {
+            var tankTransporter = ["LANDER", "TRANSPORTPLANE"];
+            var tankTransporterCount = ai.getUnitCount(units, tankTransporter);
+            var idleUnitCount = ai.getIdleUnitCount(units, [], enemyUnits, enemyBuildings);
+            var unitCount = units.size();
+            var variables = system.getVariables();
+            var variableNavalBattle = variables.createVariable("NAVALBATTLE");
+            var naval = variableNavalBattle.readDataInt32();
+            var variableAirBattle = variables.createVariable("AIRBATTLE");
+            var air = variableAirBattle.readDataInt32();
+            var variableLastTransporterDay = variables.createVariable("LASTTRANSPORTERDAY");
+            var lastTransporterDay = variableLastTransporterDay.readDataInt32();
+            if (naval === 0 && air === 0 && idleUnitCount > 0)
+            {
+                var harbourCount = buildings.getBuildingCount("HARBOUR") + enemyBuildings.getBuildingCount("HARBOUR");
+                var airportCount = buildings.getBuildingCount("AIRPORT") + enemyBuildings.getBuildingCount("AIRPORT");
+                if (harbourCount > 0)
+                {
+                    naval += 1;
+                    if (airportCount === 0)
+                    {
+                        naval += 2;
+                    }
+                    variableNavalBattle.writeDataInt32(naval);
+                }
+                if (airportCount > 0)
+                {
+                    air += 1;
+                    if (harbourCount === 0)
+                    {
+                        air += 2;
+                    }
+                    variableAirBattle.writeDataInt32(air);
+                }
+                system.resetBuildDistribution();
+                COREAI.initializeSimpleProductionSystem(system, ai, map);
+            }
+            tankTransporter = [];
+            if (naval > 0)
+            {
+                tankTransporter.push("LANDER");
+            }
+            if (air > 0)
+            {
+                tankTransporter.push("TRANSPORTPLANE");
+            }
+            if (tankTransporter.length > 0 &&
+               (lastTransporterDay === 0 || turn >= COREAI.tankTransporterDayDifference + lastTransporterDay))
+            {
+                if (COREAI.transporterRatio * unitCount > tankTransporterCount)
+                {
+                    system.addForcedProduction(tankTransporter);
+                    variableLastTransporterDay.writeDataInt32(turn);
+                }
+            }
+        }
     },
 
     forceApcProduction  : function(system, ai, units)
@@ -252,6 +319,7 @@ var COREAI =
     },
 
     fundsModes : [[0,    0,  0, 0],
+                  [2, 12000, 0, 1],
                   [3, 9000,  0, 1],
                   [3, 18000, 0, 2],
                   [0, 22000, 0, 3],
@@ -271,7 +339,7 @@ var COREAI =
                 funds >= COREAI.fundsModes[i][1])
             {
                 minMode = COREAI.fundsModes[i][2];
-                maxMode = COREAI.fundsModes[i][2];
+                maxMode = COREAI.fundsModes[i][3];
                 break;
             }
         }

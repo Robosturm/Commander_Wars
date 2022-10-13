@@ -305,8 +305,7 @@ void BaseGamemenu::autoScroll(QPoint cursorPosition)
 }
 
 void BaseGamemenu::MoveMap(qint32 x, qint32 y)
-{
-    
+{    
     if (m_pMap.get() != nullptr)
     {
         m_pMap->moveMap(x, y);

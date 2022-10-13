@@ -1005,12 +1005,12 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
                     if (addCaptureTargets && canCapture)
                     {
                         // no targets found -> try to speed up those infis
-                        found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings,
+                        found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings.get(),
                                                  loadingIslandIdx, loadingIsland, onlyTrueIslands);
                     }
                     else if (!pLoadingUnit->getHasMoved())
                     {
-                        found = hasTargets(transporterMovement, pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+                        found = hasTargets(transporterMovement, pLoadingUnit, canCapture, pEnemyUnits.get(), pEnemyBuildings.get(),
                                            loadingIslandIdx, loadingIsland, onlyTrueIslands);
                     }
                     if (!found)
@@ -1074,7 +1074,26 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
     return transportUnits;
 }
 
-bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
+qint32 CoreAI::getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList & unitIds, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings)
+{
+    qint32 count = 0;
+    for (auto & pUnit : pUnits->getVector())
+    {
+        if (unitIds.size() == 0 ||
+            unitIds.contains(pUnit->getUnitID()))
+        {
+            qint32 loadingIslandIdx = getIslandIndex(pUnit.get());
+            qint32 loadingIsland = getIsland(pUnit.get());
+            if (!hasTargets(0, pUnit.get(), false, pEnemyUnits, pEnemyBuildings, loadingIslandIdx, loadingIsland, true, true))
+            {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
+bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings,
                         qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit, bool onlyTrueIslands)
 {
     bool found = false;
@@ -1087,8 +1106,7 @@ bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool can
     {
         qint32 x = pEnemy->Unit::getX();
         qint32 y = pEnemy->Unit::getY();
-        if (fastUnit || onlyTrueIslands || GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance
-            )
+        if (fastUnit || onlyTrueIslands || GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance)
         {
             if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland &&
                 pLoadingUnit->isAttackable(pEnemy.get(), true))
@@ -1107,7 +1125,7 @@ bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool can
     return found;
 }
 
-bool CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorBuilding & pEnemyBuildings,
+bool CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, QmlVectorBuilding * pEnemyBuildings,
                               qint32 loadingIslandIdx, qint32 loadingIsland, bool onlyTrueIslands)
 {
     bool found = false;
@@ -1353,7 +1371,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
                 // check captures on this island
                 qint32 transporterIslandIdx = getIslandIndex(pTransporterUnit.get());
                 qint32 transporterIsland = getIsland(pTransporterUnit.get());
-                if (!hasCaptureTarget(pUnit, true, pEnemyBuildings, transporterIslandIdx, transporterIsland))
+                if (!hasCaptureTarget(pUnit, true, pEnemyBuildings.get(), transporterIslandIdx, transporterIsland))
                 {
                     for (auto & pEnemyBuilding : pEnemyBuildings->getVector())
                     {

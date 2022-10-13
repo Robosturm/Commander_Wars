@@ -161,7 +161,7 @@ void SimpleProductionSystem::addInitialProduction(const QStringList & unitIds, q
     m_initialProduction.push_back(item);
 }
 
-void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, float distribution, qint32 buildMode, const QString & guardCondition)
+void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, float distribution, qint32 buildMode, const QString & guardCondition, float maxUnitDistribution)
 {
     if (unitIds.length() == chance.length())
     {
@@ -182,6 +182,7 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, c
                 }
             }
             item.distribution = distribution;
+            item.maxUnitDistribution = maxUnitDistribution;
             item.buildMode = buildMode;
             item.guardCondition = guardCondition;
         }
@@ -189,6 +190,7 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, c
         {
             BuildDistribution item;
             item.unitIds = unitIds;
+            item.maxUnitDistribution = maxUnitDistribution;
             item.distribution = distribution;
             item.buildMode = buildMode;
             item.guardCondition = guardCondition;
@@ -296,7 +298,11 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
         float totalDistributionCount = 0;
         for (const auto& [key, value] : m_activeBuildDistribution)
         {
-            if (minBuildMode <= value.buildMode && value.buildMode <= maxBuildMode && value.unitIds.size() > 0)
+            float distribution = unitCounts[key] / totalUnitCount;
+            if (minBuildMode <= value.buildMode &&
+                value.buildMode <= maxBuildMode &&
+                value.unitIds.size() > 0 &&
+                distribution <= value.maxUnitDistribution)
             {
                 if (value.guardCondition.isEmpty() || pInterpreter->doFunction(value.guardCondition).toBool())
                 {
@@ -305,7 +311,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
                     item.distribution = value;
                     if (unitCounts.contains(key))
                     {
-                        item.currentValue = unitCounts[key] / totalUnitCount;
+                        item.currentValue = distribution;
                     }
                     else
                     {
@@ -321,7 +327,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
         });
         // try building the unit group which has the highest gap
         for (auto & item : buildDistribution)
-        {
+        {            
             auto count = item.distribution.unitIds.length();
             if (count > 0)
             {
@@ -441,6 +447,7 @@ void SimpleProductionSystem::serializeObject(QDataStream& pStream) const
         }
         pStream << value.totalChance;
         pStream << value.distribution;
+        pStream << value.maxUnitDistribution;
         pStream << value.guardCondition;
         pStream << value.buildMode;
     }
@@ -483,6 +490,7 @@ void SimpleProductionSystem::deserializeObject(QDataStream& pStream)
         }
         pStream >> item.totalChance;
         pStream >> item.distribution;
+        pStream >> item.maxUnitDistribution;
         pStream >> item.guardCondition;
         pStream >> item.buildMode;
     }

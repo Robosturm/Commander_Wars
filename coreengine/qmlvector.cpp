@@ -15,10 +15,6 @@ QmlVectorPoint::QmlVectorPoint()
     Interpreter::getInstance()->trackJsObject(this);
 }
 
-QmlVectorPoint::~QmlVectorPoint()
-{
-}
-
 QmlVectorUnit::QmlVectorUnit()
 {
 #ifdef GRAPHICSUPPORT
@@ -28,10 +24,6 @@ QmlVectorUnit::QmlVectorUnit()
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     Interpreter::getInstance()->trackJsObject(this);
-}
-
-QmlVectorUnit::~QmlVectorUnit()
-{
 }
 
 void QmlVectorUnit::randomize()
@@ -94,6 +86,19 @@ void QmlVectorUnit::sortShortestMovementRange(bool infantriesLast)
     }
 }
 
+qint32 QmlVectorUnit::getUnitCount(const QString & unitId)
+{
+    qint32 count = 0;
+    for (auto & unit : m_Vector)
+    {
+        if (unit->getUnitID() == unitId)
+        {
+            ++count;
+        }
+    }
+    return count;
+}
+
 QmlVectorBuilding::QmlVectorBuilding()
 {
 #ifdef GRAPHICSUPPORT
@@ -103,10 +108,6 @@ QmlVectorBuilding::QmlVectorBuilding()
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     Interpreter::getInstance()->trackJsObject(this);
-}
-
-QmlVectorBuilding::~QmlVectorBuilding()
-{
 }
 
 void QmlVectorBuilding::randomize()
@@ -119,4 +120,17 @@ void QmlVectorBuilding::randomize()
     {
         return lhs->getSortValues()[0] > rhs->getSortValues()[0];
     });
+}
+
+qint32 QmlVectorBuilding::getBuildingCount(const QString & buildingId)
+{
+    qint32 count = 0;
+    for (auto & building : m_Vector)
+    {
+        if (building->getBuildingID() == buildingId)
+        {
+            ++count;
+        }
+    }
+    return count;
 }

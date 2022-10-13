@@ -850,7 +850,7 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
                 pUnit->getBaseMaxRange() >= minfireRange &&
                 pUnit->getBaseMaxRange() <= maxfireRange &&
                 pUnit->hasWeapons() && pUnit->getLoadedUnitCount() == 0 &&
-                (m_usedTransportSystem || (isUsingUnit(pUnit) && hasTargets(AVERAGE_TRANSPORTER_MOVEMENT, pUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+                (m_usedTransportSystem || (isUsingUnit(pUnit) && hasTargets(AVERAGE_TRANSPORTER_MOVEMENT, pUnit, canCapture, pEnemyUnits.get(), pEnemyBuildings.get(),
                                                                             loadingIslandIdx, loadingIsland, false))))
             {
                 std::vector<QVector3D> targets;
@@ -982,14 +982,21 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
                             appendUnloadTargetsForCapturing(pUnit, pEnemyBuildings, targets);
                             captureFound = true;
                         }
-                        if (!attackFound && actions.contains(ACTION_FIRE))
+                    }
+                    if (!captureFound)
+                    {
+                        for (auto & pLoaded : pUnit->getLoadedUnits())
                         {
-                            appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets, 1);
-                            attackFound = true;
-                        }
-                        if (attackFound && captureFound)
-                        {
-                            break;
+                            QStringList actions = pLoaded->getActionList();
+                            if (!attackFound && actions.contains(ACTION_FIRE))
+                            {
+                                appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets, 1);
+                                attackFound = true;
+                            }
+                            if (attackFound)
+                            {
+                                break;
+                            }
                         }
                     }
                     // if not find closest unloading field

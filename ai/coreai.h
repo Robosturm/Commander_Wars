@@ -37,16 +37,16 @@ public:
     ENUM_CLASS ThreadLevel
     {
         Normal,
-        High,
-        Hq,
-        Max,
+                High,
+                Hq,
+                Max,
     };
 
     ENUM_CLASS CircleReturns
     {
         Stop,
-        Fail,
-        Success,
+                Fail,
+                Success,
     };
 
     struct UnitCountData
@@ -94,13 +94,13 @@ public:
     ENUM_CLASS AISteps
     {
         moveUnits = 0,
-        moveToTargets,
-        moveIndirectsToTargets,
-        loadUnits,
-        moveTransporters,
-        moveSupportUnits,
-        moveAway,
-        buildUnits,
+                moveToTargets,
+                moveIndirectsToTargets,
+                loadUnits,
+                moveTransporters,
+                moveSupportUnits,
+                moveAway,
+                buildUnits,
     };
 
     struct MoveUnitData
@@ -520,6 +520,25 @@ public slots:
      * @return
      */
     qint32 getBuildingCountsOnEnemyIslands(QmlVectorUnit * pUnits, QmlVectorBuilding * pEnemyBuildings);
+    /**
+     * @brief hasTargets checks if a unit has anything to do on this island
+     * @param transporterMovement movement points of the transporting unit
+     * @param pLoadingUnit
+     * @param canCapture
+     * @param pEnemyUnits
+     * @param pEnemyBuildings
+     * @return
+     */
+    bool hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings,
+                    qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit = true, bool onlyTrueIslands = false);
+    /**
+     * @brief CoreAI::getIdleUnitCount
+     * @param pUnits
+     * @param pEnemyUnits
+     * @param pEnemyBuildings
+     * @return
+     */
+    qint32 getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList & unitIds, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings);
 protected:
     void sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
 
@@ -554,21 +573,10 @@ protected:
     void appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
                                          spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets);
     std::vector<Unit*> appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
-                                        spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                                        bool addCaptureTargets, bool virtualLoading, std::vector<QVector3D>& targets,
-                                        bool all = false, qint32 distanceModifier = 1, bool onlyTrueIslands = false);
+                                            spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
+                                            bool addCaptureTargets, bool virtualLoading, std::vector<QVector3D>& targets,
+                                            bool all = false, qint32 distanceModifier = 1, bool onlyTrueIslands = false);
     CircleReturns doExtendedCircleAction(qint32 x, qint32 y, qint32 min, qint32 max, std::function<CircleReturns(qint32, qint32)> functor);
-    /**
-     * @brief hasTargets checks if a unit has anything to do on this island
-     * @param transporterMovement movement points of the transporting unit
-     * @param pLoadingUnit
-     * @param canCapture
-     * @param pEnemyUnits
-     * @param pEnemyBuildings
-     * @return
-     */
-    bool hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                    qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit = true, bool onlyTrueIslands = false);
     /**
      * @brief hasCaptureTarget
      * @param pLoadingUnit
@@ -579,8 +587,8 @@ protected:
      * @param loadingIsland
      * @return
      */
-    bool hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorBuilding & pEnemyBuildings,
-                                  qint32 loadingIslandIdx, qint32 loadingIsland, bool onlyTrueIslands = false);
+    bool hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, QmlVectorBuilding * pEnemyBuildings,
+                          qint32 loadingIslandIdx, qint32 loadingIsland, bool onlyTrueIslands = false);
     /**
      * @brief appendNearestUnloadTargets searches for unload fields closest to our current position
      * @param pUnit
@@ -646,7 +654,7 @@ protected:
      * @brief createIslandMap
      * @param pUnits
      */
-    void rebuildIsland(spQmlVectorUnit & pUnits);    
+    void rebuildIsland(spQmlVectorUnit & pUnits);
     /**
      * @brief hasMissileTarget
      * @return

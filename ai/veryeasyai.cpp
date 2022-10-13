@@ -354,7 +354,7 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
         qint32 loadingIsland = getIsland(pUnit);
         // can we use the unit?
         if (pUnit->getAiMode() == GameEnums::GameAi_Normal &&
-            (m_usedTransportSystem || (!pUnit->getHasMoved() && hasTargets(AVERAGE_TRANSPORTER_MOVEMENT, pUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+            (m_usedTransportSystem || (!pUnit->getHasMoved() && hasTargets(AVERAGE_TRANSPORTER_MOVEMENT, pUnit, canCapture, pEnemyUnits.get(), pEnemyBuildings.get(),
                                                                            loadingIslandIdx, loadingIsland, false))))
         {
             std::vector<QVector3D> targets;
