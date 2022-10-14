@@ -2320,5 +2320,16 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         pStream >> type;
         m_controlType = static_cast<GameEnums::AiTypes>(type);
     }
+    else
+    {
+        if (m_pBaseGameInput.get() != nullptr)
+        {
+            m_controlType = m_pBaseGameInput->getAiType();
+        }
+        else
+        {
+            m_controlType = GameEnums::AiTypes_Human;
+        }
+    }
     CONSOLE_PRINT("Loaded player " + m_playerNameId, Console::eDEBUG);
 }
