@@ -463,7 +463,7 @@ void ActionPerformer::doTrapping(spGameAction & pGameAction)
                 {
                     trapPoint = point;
                     qint32 moveCost = pMoveUnit->getMovementCosts(point.x(), point.y(),
-                                                                  prevPoint.x(), prevPoint.y(), true);
+                                                                  prevPoint.x(), prevPoint.y());
                     trapPathCostNotEmptyTarget -= moveCost;
                     trapPathNotEmptyTarget.removeFirst();
                 }
