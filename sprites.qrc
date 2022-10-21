@@ -695,10 +695,6 @@
         <file>resources/images/terrain/ruin+1.png</file>
         <file>resources/images/terrain/ruin+2.png</file>
         <file>resources/images/terrain/sea.png</file>
-        <file>resources/images/terrain/sea+beach+E.png</file>
-        <file>resources/images/terrain/sea+beach+N.png</file>
-        <file>resources/images/terrain/sea+beach+S.png</file>
-        <file>resources/images/terrain/sea+beach+W.png</file>
         <file>resources/images/terrain/sea+E.png</file>
         <file>resources/images/terrain/sea+E+S.png</file>
         <file>resources/images/terrain/sea+E+S+W.png</file>
@@ -4854,5 +4850,29 @@
         <file>resources/images/building/amphibiousfactory.png</file>
         <file>resources/images/building/amphibiousfactory+mask.png</file>
         <file>resources/images/building/amphibiousfactory+neutral.png</file>
+        <file>resources/images/terrain/beach+E+land+NE.png</file>
+        <file>resources/images/terrain/beach+E+land+SE.png</file>
+        <file>resources/images/terrain/beach+E+S+land+SE.png</file>
+        <file>resources/images/terrain/beach+land+NE.png</file>
+        <file>resources/images/terrain/beach+land+NE+overlay.png</file>
+        <file>resources/images/terrain/beach+land+NW.png</file>
+        <file>resources/images/terrain/beach+land+NW+overlay.png</file>
+        <file>resources/images/terrain/beach+land+SE.png</file>
+        <file>resources/images/terrain/beach+land+SE+overlay.png</file>
+        <file>resources/images/terrain/beach+land+SW.png</file>
+        <file>resources/images/terrain/beach+land+SW+overlay.png</file>
+        <file>resources/images/terrain/beach+N+E+land+NE.png</file>
+        <file>resources/images/terrain/beach+N+land+NE.png</file>
+        <file>resources/images/terrain/beach+N+land+NW.png</file>
+        <file>resources/images/terrain/beach+N+W+land+NW.png</file>
+        <file>resources/images/terrain/beach+overlay+E.png</file>
+        <file>resources/images/terrain/beach+overlay+N.png</file>
+        <file>resources/images/terrain/beach+overlay+S.png</file>
+        <file>resources/images/terrain/beach+overlay+W.png</file>
+        <file>resources/images/terrain/beach+S+land+SE.png</file>
+        <file>resources/images/terrain/beach+S+land+SW.png</file>
+        <file>resources/images/terrain/beach+S+W+land+SW.png</file>
+        <file>resources/images/terrain/beach+W+land+NW.png</file>
+        <file>resources/images/terrain/beach+W+land+SW.png</file>
     </qresource>
 </RCC>

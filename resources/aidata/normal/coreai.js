@@ -45,14 +45,16 @@ var COREAI =
     tankTransporterDayDifference : 3,
     transporterRatio : 0.04,
 
-    initializeSimpleProductionSystem : function(system, ai, map)
+    initializeSimpleProductionSystem : function(system, ai, map, buildInitialInfantry = true)
     {
         var directIndirectRatio = ai.getAiCoBuildRatioModifier();
         var player = ai.getPlayer();
         var co1 = player.getCO(0);
         var co2 = player.getCO(1);
-
-        system.addInitialProduction(["INFANTRY"], 6);
+        if (buildInitialInfantry)
+        {
+            system.addInitialProduction(["INFANTRY"], 6);
+        }
         system.addItemToBuildDistribution(COREAI.infantryGroup[0],  // group name
                                           COREAI.infantryGroup[1],  // units build by the group
                                           COREAI.infantryGroup[2],  // chance of the unit in this group to be build
@@ -249,7 +251,7 @@ var COREAI =
                     variableAirBattle.writeDataInt32(air);
                 }
                 system.resetBuildDistribution();
-                COREAI.initializeSimpleProductionSystem(system, ai, map);
+                COREAI.initializeSimpleProductionSystem(system, ai, map, false);
             }
             tankTransporter = [];
             if (naval > 0)
