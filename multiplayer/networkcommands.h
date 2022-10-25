@@ -248,4 +248,12 @@ namespace NetworkCommands
      * @brief SERVERREQUESTGAMES
      */
     const char* const SERVERREQUESTGAMES = "SERVERREQUESTGAMES";
+    /**
+     * @brief SERVERRELAUNCHSLAVE
+     */
+    const char* const SERVERRELAUNCHSLAVE = "SERVERRELAUNCHSLAVE";
+    /**
+     * @brief SLAVEINFODESPAWNING
+     */
+    const char* const SLAVEINFODESPAWNING = "SLAVEINFODESPAWNING";
 }

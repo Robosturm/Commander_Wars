@@ -277,6 +277,10 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         {
             onSlaveGameStarted(socketID, objData);
         }
+        else if (messageType == NetworkCommands::SLAVEINFODESPAWNING)
+        {
+            // todo store slave info
+        }
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);

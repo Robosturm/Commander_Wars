@@ -350,7 +350,7 @@
         <image file="bm/co_grit+alt3+nrm.png" scale_factor = "1.2" />
         <image file="bm/co_grit+alt4+info.png" />
         <image file="bm/co_grit+alt4+mini.png" />
-        <image file="bm/co_grit+alt4+face.png" cols = "3" />
+        <image file="bm/co_grit+alt4+face.png" cols = "3" rows = "2" />
         <image file="bm/co_grit+alt4+nrm.png" scale_factor = "1.2" />
         <image file="bm/co_grit+alt5+info.png" />
         <image file="bm/co_grit+alt5+mini.png" />

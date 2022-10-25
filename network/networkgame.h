@@ -75,6 +75,9 @@ public:
      * @brief startCloseTimer
      */
     void startCloseTimer();
+    const QString &getSlaveRespawnFile() const;
+    void setSlaveRespawnFile(const QString &newSlaveRespawnFile);
+
 signals:
     void sigDataChanged();
     void sigClose(NetworkGame* pGame);
@@ -102,6 +105,7 @@ private:
     bool m_closing{false};
     NetworkGameData m_data;
     QString m_id;
+    QString m_slaveRespawnFile;
     QTimer m_closeTimer;
 };
 

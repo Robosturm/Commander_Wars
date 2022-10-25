@@ -33,6 +33,16 @@ void NetworkGame::closeTimerExpired()
     }
 }
 
+const QString &NetworkGame::getSlaveRespawnFile() const
+{
+    return m_slaveRespawnFile;
+}
+
+void NetworkGame::setSlaveRespawnFile(const QString &newSlaveRespawnFile)
+{
+    m_slaveRespawnFile = newSlaveRespawnFile;
+}
+
 void NetworkGame::slaveRunning(const QJsonObject & objData, spTCPServer & pGameServer)
 {
     if (!m_slaveRunning)
@@ -104,22 +114,35 @@ NetworkGameData & NetworkGame::getData()
 }
 
 void NetworkGame::onConnectToLocalServer(quint64 socketId, spTCPServer & pTcpServer)
-{
+{    
     CONSOLE_PRINT("onConnectToLocalServer reading game data", Console::eDEBUG);
-    m_data.setSlaveName(m_serverName);
-    QDataStream stream(&m_dataBuffer, QIODevice::ReadOnly);
-    QString messageType;
-    stream >> messageType;
-    QStringList mods;
-    mods = Filesupport::readVectorList<QString, QList>(stream);
-    m_data.setMods(mods);
-    GameMap::MapHeaderInfo headerInfo;
-    GameMap::readMapHeader(stream, headerInfo);
-    m_data.setMapName(headerInfo.m_mapName);
-    m_data.setMaxPlayers(headerInfo.m_playerCount);
-    emit pTcpServer->sig_sendData(socketId, m_dataBuffer, NetworkInterface::NetworkSerives::ServerHosting, false);
-    // free buffer after it has been send to the server
-    m_dataBuffer.clear();
+    if (m_slaveRespawnFile.isEmpty())
+    {
+        m_data.setSlaveName(m_serverName);
+        QDataStream stream(&m_dataBuffer, QIODevice::ReadOnly);
+        QString messageType;
+        stream >> messageType;
+        QStringList mods;
+        mods = Filesupport::readVectorList<QString, QList>(stream);
+        m_data.setMods(mods);
+        GameMap::MapHeaderInfo headerInfo;
+        GameMap::readMapHeader(stream, headerInfo);
+        m_data.setMapName(headerInfo.m_mapName);
+        m_data.setMaxPlayers(headerInfo.m_playerCount);
+        emit pTcpServer->sig_sendData(socketId, m_dataBuffer, NetworkInterface::NetworkSerives::ServerHosting, false);
+        // free buffer after it has been send to the server
+        m_dataBuffer.clear();
+    }
+    else
+    {
+        QString command = QString(NetworkCommands::SERVERRELAUNCHSLAVE);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_MAPNAME, m_slaveRespawnFile);
+        QJsonDocument doc(data);
+        emit pTcpServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHosting, false);
+    }
 }
 
 QString NetworkGame::getServerName() const

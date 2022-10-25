@@ -652,7 +652,17 @@ public slots:
      */
     void moveUnit(QVector<QPoint> & movePath);
     /**
-     * @brief moveUnitToField
+     * @brief createMoveVisionAction
+     * @param pAction
+     */
+    void createMoveVisionAction(GameAction* pAction);
+    /**
+     * @brief moveUnit moves the unit to the target path
+     * @param movePath
+     */
+    void createMoveVision(QVector<QPoint> & movePath);
+    /**
+     * @brief createMoveVision
      * @param x
      * @param y
      */

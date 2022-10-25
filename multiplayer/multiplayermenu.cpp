@@ -247,6 +247,21 @@ void Multiplayermenu::recieveServerData(quint64 socketID, QByteArray data, Netwo
             launchGameOnServer(stream);
         }
     }
+    else if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
+    {
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject objData = doc.object();
+        QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
+        CONSOLE_PRINT("Server Network Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
+        if (messageType == NetworkCommands::SLAVEADDRESSINFO)
+        {
+
+        }
+        else
+        {
+            CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
+        }
+    }
 }
 
 void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)

@@ -196,7 +196,7 @@ var Constructor = function()
                         var damageResult = ACTION_FIRE.calcBattleDamage2(map, action, attacker, Qt.point(attacker.getX(), attacker.getY()),
                                                                          defender.getX(), defender.getY(), GameEnums.LuckDamageMode_On);
                         // do another attack
-                        ACTION_FIRE.battle(attacker, damageResult.x, damageResult.y,
+                        ACTION_FIRE.battle(map, attacker, damageResult.x, damageResult.y,
                                            defender.getX(), defender.getY(), damageResult.width, damageResult.height,
                                            true);
                     }

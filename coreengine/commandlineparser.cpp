@@ -345,7 +345,6 @@ void CommandLineParser::startSlaveGame() const
         connect(pSlaveMasterConnection.get(), &TCPClient::sigConnected, pMenu.get(), &Multiplayermenu::onSlaveConnectedToMaster, Qt::QueuedConnection);
         connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, pMenu.get(), &Multiplayermenu::recieveServerData, Qt::QueuedConnection);
         emit pSlaveMasterConnection->sig_connect(masterAddress, masterPort, "");
-
     }
     else
     {

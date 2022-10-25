@@ -926,8 +926,41 @@ void GameMenue::despawnSlave()
     std::chrono::milliseconds ms = Settings::getSlaveDespawnTime();
     if (m_slaveDespawnElapseTimer.hasExpired(ms.count()))
     {
-        CONSOLE_PRINT("Closing slave cause a player has disconnected.", Console::eDEBUG);
-        QCoreApplication::exit(0);
+        if (m_saveAllowed)
+        {
+            saveMap("savegames/" +  Settings::getSlaveServerName() + ".msav");
+            spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
+            QString command = NetworkCommands::SLAVEINFODESPAWNING;
+            QJsonObject data;
+            data.insert(JsonKeys::JSONKEY_COMMAND, command);
+            data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+            QJsonArray usernames;
+            qint32 count = m_pMap->getPlayerCount();
+            for (qint32 i = 0; i < count; ++i)
+            {
+                Player* pPlayer = m_pMap->getPlayer(i);
+                if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
+                {
+                    CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), Console::eDEBUG);
+                    usernames.append(pPlayer->getPlayerNameId());
+                }
+                else
+                {
+                    CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), Console::eDEBUG);
+                }
+            }
+            data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
+            QJsonDocument doc(data);
+            CONSOLE_PRINT("Sending command " + command + " to server", Console::eDEBUG);
+            emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+            QThread::currentThread()->msleep(350);
+            CONSOLE_PRINT("Closing slave cause all players have disconnected.", Console::eDEBUG);
+            QCoreApplication::exit(0);
+        }
+        else
+        {
+            GameAnimationFactory::skipAllAnimations();
+        }
     }
 }
 

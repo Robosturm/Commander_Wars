@@ -44,6 +44,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function (terrain, map)
     {
+        var surroundingsLandDiagnonal = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_Diagnonal, false);
         var surroundingsLand = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_Direct, false);
         var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, GameEnums.Directions_Direct, false);
         if (surroundingsLand !== "")
@@ -70,7 +71,14 @@ var Constructor = function()
         {
             var x = terrain.getX();
             var y = terrain.getY();
-            if (x >= 0 && y >= 0)
+            if ((surroundingsLandDiagnonal === "+NE" && (surroundingsBeach === "+N" || surroundingsBeach === "+E" || surroundingsBeach === "+N+E" || surroundingsBeach === "")) ||
+                (surroundingsLandDiagnonal === "+NW" && (surroundingsBeach === "+N" || surroundingsBeach === "+W" || surroundingsBeach === "+N+W" || surroundingsBeach === "")) ||
+                (surroundingsLandDiagnonal === "+SE" && (surroundingsBeach === "+S" || surroundingsBeach === "+E" || surroundingsBeach === "+E+S" || surroundingsBeach === "")) ||
+                (surroundingsLandDiagnonal === "+SW" && (surroundingsBeach === "+S" || surroundingsBeach === "+W" || surroundingsBeach === "+S+W" || surroundingsBeach === "")))
+            {
+                terrain.loadBaseSprite("beach" + surroundingsBeach + "+land" + surroundingsLandDiagnonal);
+            }
+            else if (x >= 0 && y >= 0)
             {
                 if (!BEACH.isSeaTile(x, y - 2, map))
                 {

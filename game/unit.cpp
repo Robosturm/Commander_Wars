@@ -2788,7 +2788,16 @@ void Unit::moveUnitAction(GameAction* pAction)
 }
 
 void Unit::moveUnit(QVector<QPoint> & movePath)
-{    
+{
+    createMoveVision(movePath);
+    if (movePath.size() > 1)
+    {
+        moveUnitToField(movePath[0].x(), movePath[0].y());
+    }
+}
+
+void Unit::createMoveVision(QVector<QPoint> & movePath)
+{
     if (movePath.size() < 1)
     {
         movePath.append(QPoint(Unit::getX(), Unit::getY()));
@@ -2811,10 +2820,12 @@ void Unit::moveUnit(QVector<QPoint> & movePath)
             }
         }
     }
-    if (movePath.size() > 1)
-    {
-        moveUnitToField(movePath[0].x(), movePath[0].y());
-    }
+}
+
+void Unit::createMoveVisionAction(GameAction* pAction)
+{
+    auto path = pAction->getMovePath();
+    moveUnit(path);
 }
 
 QVector<QVector3D> Unit::getVisionFields(QPoint position)
