@@ -105,11 +105,11 @@ CreditsMenue::CreditsMenue()
     addChild(m_creditsActor);
     m_creditsActor->setY(Settings::getHeight());
     qint32 y = 0;
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::TextStyle headstyle = oxygine::TextStyle(FontManager::getMainFont48());
+    oxygine::TextStyle headstyle = oxygine::TextStyle(FontManager::getFont("mainBlack48"));
     headstyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headstyle.multiline = false;
 

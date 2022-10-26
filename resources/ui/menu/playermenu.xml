@@ -6,7 +6,7 @@
         <width>settings.getWidth() - 20</width>
         <height>60</height>
         <text>settings.getUsername()</text>
-        <font>"main"</font>
+        <font>"mainBlack"</font>
         <fontSize>48</fontSize>
         <hAlign>"Middle"</hAlign>
     </Label>

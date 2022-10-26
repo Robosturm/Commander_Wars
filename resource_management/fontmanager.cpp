@@ -76,7 +76,6 @@ FontManager::FontManager()
                                         font.font.setPixelSize(element.attribute("pixelSize").toInt());
                                         font.offsetX = element.attribute("offsetX").toInt();
                                         font.offsetY = element.attribute("offsetY").toInt();
-                                        font.borderWidth = element.attribute("borderWidth").toInt();
                                         if (element.hasAttribute("borderCapStyle"))
                                         {
                                             font.borderCapStyle = static_cast<Qt::PenCapStyle>(element.attribute("borderCapStyle").toInt());
@@ -92,11 +91,7 @@ FontManager::FontManager()
                                         else
                                         {
                                             font.font.setBold(false);
-                                        }
-                                        if (element.hasAttribute("borderColor") && font.borderWidth != 0)
-                                        {
-                                            font.borderColor = QColor(element.attribute("borderColor"));
-                                        }
+                                        }                                        
                                         if (element.hasAttribute("mainColor"))
                                         {
                                             font.mainColor = QColor(element.attribute("mainColor"));
@@ -112,14 +107,6 @@ FontManager::FontManager()
                                         else
                                         {
                                             font.antialiasing = false;
-                                        }
-                                        if (font.borderWidth != 0)
-                                        {
-                                            font.font.setStyleStrategy(QFont::ForceOutline);
-                                        }
-                                        else
-                                        {
-                                            font.font.setStyleStrategy(QFont::PreferDefault);
                                         }
                                     }
                                     else

@@ -17,7 +17,7 @@ namespace oxygine
 #endif
         {            
 #ifdef GRAPHICSUPPORT
-            m_lineSkip = m_metrics.height() - style.font.borderWidth / 2;
+            m_lineSkip = m_metrics.height();
             m_lineNodes.reserve(50);
 #endif
         }

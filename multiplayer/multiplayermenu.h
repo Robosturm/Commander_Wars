@@ -103,6 +103,12 @@ public slots:
      * @param socketID
      */
     void onSlaveConnectedToMaster(quint64 socketID);
+    /**
+     * @brief onServerRelaunchSlave
+     * @param socketID
+     * @param objData
+     */
+    void onServerRelaunchSlave(quint64 socketID, const QJsonObject & objData);
 
 protected slots:
     void countdown();

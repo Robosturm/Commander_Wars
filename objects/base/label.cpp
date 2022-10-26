@@ -4,17 +4,34 @@
 #include "coreengine/interpreter.h"
 
 #include "resource_management/fontmanager.h"
+#include "resource_management/objectmanager.h"
 
-Label::Label(qint32 width)
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+
+Label::Label(qint32 width, bool showBox)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Label");
 #endif
     Interpreter::setCppOwnerShip(this);
 
+    qint32 xOffset = 0;
+    qint32 yOffset = 0;
+    if (showBox)
+    {
+        ObjectManager* pObjectManager = ObjectManager::getInstance();
+        oxygine::ResAnim* pAnim = pObjectManager->getResAnim("dropdownmenu");
+        oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+        pBox->setResAnim(pAnim);
+        pBox->setSize(width, 40);
+        addChild(pBox);
+        xOffset = 5;
+        yOffset = 5;
+    }
     m_clipRect = oxygine::spClipRectActor::create();
     m_clipRect->setWidth(width);
     m_clipRect->setHeight(28);
+    m_clipRect->setPosition(xOffset, yOffset);
     m_textField = oxygine::spTextField::create();
     m_textField->setWidth(width);
     Label::setWidth(width);
@@ -50,11 +67,6 @@ void Label::setHtmlText(QString str)
 #ifdef GRAPHICSUPPORT
     m_textField->setHtmlText(str);
     qint32 height = getTextRect().getHeight();
-    qint32 fontHeight = m_textField->getStyle().font.borderWidth;
-    if (fontHeight < 0)
-    {
-        height += qAbs(fontHeight) * 2;
-    }
     m_clipRect->setHeight(height);
     oxygine::Sprite::setHeight(height);
     setTooltipText(str);    
@@ -66,11 +78,6 @@ void Label::setStyle(const oxygine::TextStyle& st)
 #ifdef GRAPHICSUPPORT
     m_textField->setStyle(st);
     qint32 height = getTextRect().getHeight();
-    qint32 fontHeight = m_textField->getStyle().font.borderWidth;
-    if (fontHeight < 0)
-    {
-        height += qAbs(fontHeight) * 2;
-    }
     m_clipRect->setHeight(height);
     oxygine::Sprite::setHeight(height);
 #endif

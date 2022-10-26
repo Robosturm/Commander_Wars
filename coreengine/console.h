@@ -217,11 +217,13 @@ private:
     static bool m_show;
     static bool m_toggled;
     static std::vector<QString> m_output;
+    static bool m_outputChanged;
     static qint32 m_outputSize;
     static QMutex m_datalocker;
     static bool m_developerMode;
     oxygine::spSprite m_pBackgroundsprite;
     oxygine::spTextField m_text;
+    oxygine::spTextField m_editTextfield;
 };
 
 #endif // CONSOLE_H

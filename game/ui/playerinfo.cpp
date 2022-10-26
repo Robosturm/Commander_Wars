@@ -258,8 +258,7 @@ void PlayerInfo::showTurnStartInfo(qint32 & yPos)
                 }
             }
 
-
-            oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16());
+            oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("nextDayInfo16"));
             oxygine::spTextField pText = oxygine::spTextField::create();
             pText->setStyle(style);
             QString number = QString::number(m_pMap->getCurrentDay() + 1);

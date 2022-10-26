@@ -24,7 +24,7 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
 
     qint32 y = 10;
     qint32 width = 150;
-    spLabel pTextfield = spLabel::create(width - 10);
+    spLabel pTextfield = spLabel::create(width - 10, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Search: "));
     pTextfield->setPosition(10, y);
@@ -44,7 +44,7 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
     connect(this, &WikiView::sigSearch, this, &WikiView::search, Qt::QueuedConnection);
     y += pTextfield->getScaledHeight() + 10;
 
-    pTextfield = spLabel::create(width - 10);
+    pTextfield = spLabel::create(width - 10, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Tags: "));
     pTextfield->setPosition(10, y);

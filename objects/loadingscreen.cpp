@@ -62,7 +62,7 @@ void LoadingScreen::show()
     m_LoadingBar->setColor(Qt::red);
     addChild(m_LoadingBar);
 
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
     m_workText = oxygine::spTextField::create();

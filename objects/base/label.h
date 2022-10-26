@@ -12,7 +12,7 @@ class Label final : public Tooltip
 {
     Q_OBJECT
 public:
-    explicit Label(qint32 width);
+    explicit Label(qint32 width, bool showBox = false);
     ~Label() = default;
     /**
      * @brief setText

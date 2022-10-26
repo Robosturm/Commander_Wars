@@ -63,7 +63,6 @@ namespace oxygine
         void TextNode::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
         {
 #ifdef GRAPHICSUPPORT
-            QPainterPath path;
             QFont font = style.font.font;
             if (rs.transform.a != 1)
             {
@@ -75,26 +74,18 @@ namespace oxygine
                 height = (m_offsets[1].y() - m_offsets[0].y()) * rs.transform.a;
             }
             float windowHeight = oxygine::Stage::getStage()->getScaledHeight() + oxygine::Actor::safetyArea;
+            painter.setPen(QPen(drawColor, 0, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
+            painter.setFont(font);
             for (qint32 i = 0; i < m_lines.size(); ++i)
             {
-                qint32 x = static_cast<qint32>(rs.transform.x + (m_offsets[i].x() - style.font.borderWidth + style.font.offsetX) * rs.transform.a);
-                qint32 y = static_cast<qint32>(rs.transform.y + (m_offsets[i].y() - style.font.borderWidth + style.font.offsetY) * rs.transform.d);
+                qint32 x = static_cast<qint32>(rs.transform.x + (m_offsets[i].x() + style.font.offsetX) * rs.transform.a);
+                qint32 y = static_cast<qint32>(rs.transform.y + (m_offsets[i].y() + style.font.offsetY) * rs.transform.d);
                 if (y + height >= -oxygine::Actor::safetyArea &&
                     y <= windowHeight)
                 {
-                    path.addText(x, y, font, m_lines[i]);
+                    painter.drawText(x, y, m_lines[i]);
                 }
             }
-            if (style.font.borderWidth != 0)
-            {
-                painter.setPen(QPen(style.font.borderColor, style.font.borderWidth, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
-            }
-            else
-            {
-                painter.setPen(QPen(drawColor, -1, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
-            }
-            painter.setBrush(QBrush(drawColor));
-            painter.drawPath(path);
             drawChildren(rs, style, drawColor, painter);
 #endif
         }
@@ -109,15 +100,6 @@ namespace oxygine
                 m_offsets.clear();
                 m_lines.reserve(50);
                 m_offsets.reserve(50);
-                qint32 borderWidth = rd.getStyle().font.borderWidth;
-                if (borderWidth < 0)
-                {
-                    borderWidth = qAbs(borderWidth);
-                }
-                else
-                {
-                    borderWidth = 0;
-                }
                 auto & metrics = rd.getMetrics();
                 bool checkWidth = (rd.getWidth() > 0);
                 for (auto & line : lines)
@@ -126,16 +108,16 @@ namespace oxygine
                     QStringList words = line.split(' ');
                     for (auto & word : words)
                     {
-                        if (checkWidth && metrics.horizontalAdvance(*currentLine + word) > rd.getWidth() - rd.getX() - borderWidth)
+                        if (checkWidth && metrics.horizontalAdvance(*currentLine + word) > rd.getWidth() - rd.getX())
                         {
                             if (rd.getStyle().multiline)
                             {
                                 currentLine = addNewLine(rd);
-                                *currentLine = metrics.elidedText(word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX() - borderWidth);
+                                *currentLine = metrics.elidedText(word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX());
                             }
                             else
                             {
-                                *currentLine = metrics.elidedText(*currentLine + word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX() - borderWidth);
+                                *currentLine = metrics.elidedText(*currentLine + word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX());
                                 break;
                             }
                         }

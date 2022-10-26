@@ -4874,5 +4874,6 @@
         <file>resources/images/terrain/beach+S+W+land+SW.png</file>
         <file>resources/images/terrain/beach+W+land+NW.png</file>
         <file>resources/images/terrain/beach+W+land+SW.png</file>
+        <file>resources/objects/label.png</file>
     </qresource>
 </RCC>

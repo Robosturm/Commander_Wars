@@ -43,11 +43,11 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     CONSOLE_PRINT("Entering Victory Menue", Console::eDEBUG);
     m_pMap->setMenu(nullptr); // remove outdated link
     
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont72());
+    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getFont("mainBlack72"));
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
@@ -296,6 +296,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         panel->setContentWidth(pButtonPlayerStatistic->getX() + pButtonPlayerStatistic->getScaledWidth() + 5);
     }
 
+    style = oxygine::TextStyle(FontManager::getMainFont24());
     m_Textfield = oxygine::spTextField::create();
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     m_Textfield->setStyle(headerStyle);

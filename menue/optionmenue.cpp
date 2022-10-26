@@ -270,7 +270,7 @@ void OptionMenue::showMods()
     m_pModDescription->addItem(m_modThumbnail);
     m_pModDescription->addItem(m_ModDescriptionText);
 
-    spLabel pLabel = spLabel::create(250);
+    spLabel pLabel = spLabel::create(260, true);
     style.multiline = false;
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Advance Wars Game:"));
@@ -287,7 +287,7 @@ void OptionMenue::showMods()
     m_ModSelector->addChild(m_pModSelection);
     updateModSelection();
     y += 50;
-    pLabel = spLabel::create(250);
+    pLabel = spLabel::create(260, true);
     style.multiline = false;
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Tag Filter:"));

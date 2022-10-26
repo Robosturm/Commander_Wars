@@ -264,12 +264,14 @@ void IngameInfoBar::updatePlayerInfo()
                 pTextfield->setPosition(x1, y);
                 m_pGameInfoBox->addChild(pTextfield);
 
+                constexpr qint32 yAdvance = 20;
+
                 pTextfield = spLabel::create(width);
                 pTextfield->setStyle(style);
                 pTextfield->setHtmlText(QString::number(m_pMap->getCurrentDay()));
                 pTextfield->setPosition(x2, y);
                 m_pGameInfoBox->addChild(pTextfield);
-                y += 25;
+                y += yAdvance;
 
                 Player* pViewPlayer = m_pMenu->getCurrentViewPlayer();
                 if (pViewPlayer != nullptr)
@@ -293,7 +295,7 @@ void IngameInfoBar::updatePlayerInfo()
                     }
                     pTextfield->setPosition(x2, y);
                     m_pGameInfoBox->addChild(pTextfield);
-                    y += 25;
+                    y += yAdvance;
 
                     count = pPlayer->getUnitCount();
                     pTextfield = spLabel::create(width);
@@ -316,7 +318,7 @@ void IngameInfoBar::updatePlayerInfo()
                     }
                     pTextfield->setPosition(x2, y);
                     m_pGameInfoBox->addChild(pTextfield);
-                    y += 25;
+                    y += yAdvance;
 
                     count = pPlayer->getFunds();
                     pTextfield = spLabel::create(width);
@@ -338,7 +340,7 @@ void IngameInfoBar::updatePlayerInfo()
                     }
                     pTextfield->setPosition(x2, y);
                     m_pGameInfoBox->addChild(pTextfield);
-                    y += 25;
+                    y += yAdvance;
                 }
 
                 count = pPlayer->getPlayerID();
@@ -352,7 +354,7 @@ void IngameInfoBar::updatePlayerInfo()
                 pTextfield->setHtmlText(QString::number(count + 1));
                 pTextfield->setPosition(x2, y);
                 m_pGameInfoBox->addChild(pTextfield);
-                y += 25;
+                y += yAdvance;
 
                 count = pPlayer->getTeam();
                 pTextfield = spLabel::create(width);
@@ -365,7 +367,7 @@ void IngameInfoBar::updatePlayerInfo()
                 pTextfield->setHtmlText(QString::number(count + 1));
                 pTextfield->setPosition(x2, y);
                 m_pGameInfoBox->addChild(pTextfield);
-                y += 25;
+                y += yAdvance;
             }
         }
     }
@@ -412,7 +414,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
 void IngameInfoBar::createMovementInfo(qint32 x, qint32 y)
 {
-    constexpr qint32 yAdvance = 22;
+    constexpr qint32 yAdvance = 20;
     oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getFont(FONT));
     smallStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     smallStyle.multiline = false;
@@ -705,8 +707,9 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         addColorbar(divider, posX + pAnim->getWidth() + 5, posY, QColor(0, 255, 0, 255));
         pTextfield->setPosition(posX + pAnim->getWidth() + 10, posY);
         m_pCursorInfoBox->addChild(pTextfield);
-        posY += 5 + pAnim->getHeight();
 
+        constexpr qint32 yAdvance = 2;
+        posY += yAdvance + pAnim->getHeight();
         pTextfield = spLabel::create(spriteWidth - 5);
         pTextfield->setPosition(posX, posY);
         pTextfield->setStyle(smallStyle);
@@ -717,7 +720,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         pTextfield->setStyle(smallStyle);
         pTextfield->setHtmlText(tr("Player ") + QString::number(pUnit->getOwner()->getPlayerID() + 1));
         m_pCursorInfoBox->addChild(pTextfield);
-        posY += 5 + pTextfield->getTextRect().getHeight();
+        posY += yAdvance + pTextfield->getTextRect().getHeight();
 
         if (!pUnit->getWeapon1ID().isEmpty())
         {
@@ -731,7 +734,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
             pTextfield->setStyle(smallStyle);
             pTextfield->setHtmlText(WeaponManager::getInstance()->getName(pUnit->getWeapon1ID()));
             m_pCursorInfoBox->addChild(pTextfield);
-            posY += 5 + pTextfield->getTextRect().getHeight();
+            posY += yAdvance + pTextfield->getTextRect().getHeight();
         }
         if (!pUnit->getWeapon2ID().isEmpty())
         {
@@ -745,7 +748,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
             pTextfield->setStyle(smallStyle);
             pTextfield->setHtmlText(WeaponManager::getInstance()->getName(pUnit->getWeapon2ID()));
             m_pCursorInfoBox->addChild(pTextfield);
-            posY += 5 + pTextfield->getTextRect().getHeight();
+            posY += yAdvance + pTextfield->getTextRect().getHeight();
         }
 
         pTextfield = spLabel::create(spriteWidth - 5);
@@ -758,7 +761,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         pTextfield->setStyle(smallStyle);
         pTextfield->setHtmlText(MovementTableManager::getInstance()->getName(pUnit->getMovementType()));
         m_pCursorInfoBox->addChild(pTextfield);
-        posY += 5 + pTextfield->getTextRect().getHeight();
+        posY += yAdvance + pTextfield->getTextRect().getHeight();
 
         pTextfield = spLabel::create(spriteWidth - 5);
         pTextfield->setPosition(posX, posY);
@@ -770,7 +773,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         pTextfield->setStyle(smallStyle);
         pTextfield->setHtmlText(QString::number(pUnit->getMovementpoints(QPoint(x, y))));
         m_pCursorInfoBox->addChild(pTextfield);
-        posY += 5 + pTextfield->getTextRect().getHeight();
+        posY += yAdvance + pTextfield->getTextRect().getHeight();
 
         pTextfield = spLabel::create(spriteWidth - 5);
         pTextfield->setPosition(posX, posY);
@@ -782,7 +785,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         pTextfield->setStyle(smallStyle);
         pTextfield->setHtmlText(QString::number(pUnit->getVision(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()))));
         m_pCursorInfoBox->addChild(pTextfield);
-        posY += 5 + pTextfield->getTextRect().getHeight();
+        posY += yAdvance + pTextfield->getTextRect().getHeight();
 
         qint32 loadingPlace = pUnit->getLoadingPlace();
         qint32 loadingCount = pUnit->getLoadedUnitCount();

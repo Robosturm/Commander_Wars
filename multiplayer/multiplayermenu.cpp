@@ -257,6 +257,10 @@ void Multiplayermenu::recieveServerData(quint64 socketID, QByteArray data, Netwo
         {
 
         }
+        else if (messageType == NetworkCommands::SERVERRELAUNCHSLAVE)
+        {
+            onServerRelaunchSlave(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
@@ -628,6 +632,22 @@ void Multiplayermenu::onSlaveConnectedToMaster(quint64 socketID)
     QJsonDocument doc(data);
     CONSOLE_PRINT("Sending command " + command + " for slave " + slavename, Console::eDEBUG);
     emit pSlaveMasterConnection->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void Multiplayermenu::onServerRelaunchSlave(quint64 socketID, const QJsonObject & objData)
+{
+    QString savefile = objData.value(JsonKeys::JSONKEY_MAPNAME).toString();
+    if (QFile::exists(savefile))
+    {
+        CONSOLE_PRINT("Relaunching slave with savefile " + savefile, Console::eERROR);
+
+        oxygine::Actor::detach();
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to relaunch slave with savefile " + savefile, Console::eERROR);
+        QCoreApplication::exit(0);
+    }
 }
 
 void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 socketID)

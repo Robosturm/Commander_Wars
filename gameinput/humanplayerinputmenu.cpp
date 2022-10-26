@@ -312,9 +312,9 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
         textField->setStyle(style);
         textField->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize));
         textField->setHtmlText(text);
-        pItemBox->addChild(textField);
         textField->setPosition(3 + GameMap::getImageSize(), 0);
-        textField->setSize(width - textField->getX(), GameMap::getImageSize() - 4);
+        textField->setSize(width - textField->getX(), GameMap::getImageSize());
+        pItemBox->addChild(textField);
         addChild(pItemBox);
         oxygine::Actor* pBox = pItemBox.get();
         oxygine::Sprite* pCursor = m_Cursor.get();

@@ -30,6 +30,7 @@ Console::eLogLevels Console::m_LogLevel = static_cast<Console::eLogLevels>(DEBUG
 bool Console::m_show = false;
 bool Console::m_toggled = false;
 bool Console::m_developerMode = false;
+bool Console::m_outputChanged = false;
 std::vector<QString> Console::m_output;
 spConsole Console::m_pConsole;
 qint32 Console::m_curlastmsgpos = 0;
@@ -87,6 +88,12 @@ Console::Console()
     style.multiline = true;
     m_text->setStyle(style);
     addChild(m_text);
+
+    m_editTextfield = oxygine::spTextField::create();
+    m_editTextfield->setPosition(1, 1);
+    m_editTextfield->setWidth(Settings::getWidth() - 2);
+    m_editTextfield->setStyle(style);
+    addChild(m_editTextfield);
 
     // we're hidden to begin with
     oxygine::Actor::setVisible(false);
@@ -243,6 +250,7 @@ void Console::print(const QString & message, eLogLevels logLevel)
         {
             m_output.erase(m_output.cbegin(), m_output.cbegin() + m_output.size() - m_outputSize);
         }
+        m_outputChanged = true;
     }
 }
 
@@ -272,10 +280,6 @@ void Console::update(const oxygine::UpdateState& us)
         auto font = FontManager::getFont("console16");
         QFontMetrics metrics(font.font);
         qint32 h = metrics.height();
-        if (font.borderWidth < 0)
-        {
-            h += qAbs(font.borderWidth) * 2;
-        }
         // pre calc message start
         qint32 num = screenheight / h - 4;
         m_outputSize = num + 2;
@@ -285,30 +289,29 @@ void Console::update(const oxygine::UpdateState& us)
         {
             start = 0;
         }
-        // create output text
-        QString drawText;
-        for(i = start; i < m_output.size();i++)
+        if (m_outputChanged)
         {
-            drawText += "> " + m_output[i] + "\n";
+            // create output text
+            QString drawText;
+            for(i = start; i < m_output.size();i++)
+            {
+                drawText += "> " + m_output[i] + "\n";
+            }
+            m_text->setHtmlText(drawText);
+            m_outputChanged = false;
         }
         if (m_focused)
         {
             // create blinking cursor position
-            QString curprintmsg = getDrawText(getCurrentText());
-            drawText += "> </r>" +  curprintmsg;
-            m_text->setHtmlText("<r>" + drawText);
-            qint32 height = m_text->getTextRect().size.y;
-            m_text->setHeight(height);
-            if (height > Settings::getHeight() - 50)
-            {
-                m_text->setY(Settings::getHeight() - 50 - height);
-            }
+            QString lineText = "> </r>" +  getDrawText(getCurrentText());
+            m_editTextfield->setHtmlText("<r>" + lineText);
         }
         else
         {
-            drawText += "> Click the console to regain focus";
-            m_text->setHtmlText(drawText);
+            QString lineText = "> Click the console to regain focus";
+            m_editTextfield->setHtmlText(lineText);
         }
+        m_editTextfield->setY(h * (num + 1));
 #endif
     }
     oxygine::Actor::update(us);
