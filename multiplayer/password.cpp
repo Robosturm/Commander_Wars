@@ -31,12 +31,14 @@ void Password::setPassword(QString password)
     if (password.isEmpty())
     {
         m_passwordHash = QByteArray();
+        m_isSet = false;
     }
     else
     {
         QCryptographicHash myHash(QCryptographicHash::Sha512);
         myHash.addData(password.toUtf8());
         m_passwordHash = myHash.result();
+        m_isSet = true;
     }
 }
 
@@ -60,4 +62,9 @@ bool Password::isValidPassword(QString password) const
 bool Password::areEqualPassword(const Password & password) const
 {
     return (m_passwordHash == password.m_passwordHash);
+}
+
+bool Password::getIsSet() const
+{
+    return m_isSet;
 }

@@ -282,10 +282,10 @@ void LobbyMenu::hostServer()
 
 void LobbyMenu::joinGame()
 {
-    if (m_currentGame.get() &&
-       (m_mode == GameViewMode::OwnGames || m_currentGame->hasOpenPlayers()))
+    if (m_currentGame.getUuid() != 0 &&
+       (m_mode == GameViewMode::OwnGames || m_currentGame.hasOpenPlayers()))
     {
-        if (m_currentGame->getLocked())
+        if (m_currentGame.getLocked())
         {
             spDialogPassword pDialogTextInput = spDialogPassword::create(tr("Enter Password"), true, "");
             addChild(pDialogTextInput);
@@ -302,11 +302,11 @@ void LobbyMenu::joinGame()
 void LobbyMenu::joinGamePassword(QString password)
 {
     bool exists = false;
-    if (m_currentGame.get() != nullptr)
+    if (m_currentGame.getUuid() != 0)
     {
         for (const auto & game : qAsConst(m_games))
         {
-            if (m_currentGame.get() == game.get())
+            if (m_currentGame.getUuid() == game.getUuid())
             {
                 exists = true;
                 break;
@@ -321,7 +321,7 @@ void LobbyMenu::joinGamePassword(QString password)
 
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
-        data.insert(JsonKeys::JSONKEY_SLAVENAME, m_currentGame->getSlaveName());
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, m_currentGame.getSlaveName());
         QJsonDocument doc(data);
         emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         m_password = password;
@@ -358,9 +358,9 @@ void LobbyMenu::observe(QString adress, QString password)
 
 void LobbyMenu::observeGame()
 {
-    if (m_currentGame.get())
+    if (m_currentGame.getUuid() != 0)
     {
-        if (m_currentGame->getLocked())
+        if (m_currentGame.getLocked())
         {
             spDialogPassword pDialogTextInput = spDialogPassword::create(tr("Enter Password"), true, "");
             addChild(pDialogTextInput);
@@ -377,11 +377,11 @@ void LobbyMenu::observeGame()
 void LobbyMenu::observeGamePassword(QString password)
 {
     bool exists = false;
-    if (m_currentGame.get() != nullptr)
+    if (m_currentGame.getUuid() != 0)
     {
         for (const auto & game : qAsConst(m_games))
         {
-            if (m_currentGame.get() == game.get())
+            if (m_currentGame.getUuid() == game.getUuid())
             {
                 exists = true;
                 break;
@@ -397,7 +397,7 @@ void LobbyMenu::observeGamePassword(QString password)
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
-        data.insert(JsonKeys::JSONKEY_SLAVENAME, m_currentGame->getSlaveName());
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, m_currentGame.getSlaveName());
         QJsonDocument doc(data);
         emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         oxygine::Actor::detach();
@@ -429,6 +429,12 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         else if (messageType == NetworkCommands::SLAVEADDRESSINFO)
         {
             joinSlaveGame(objData);
+        }
+        else if (messageType == NetworkCommands::SERVERNOGAMESLOTSAVAILABLE)
+        {
+            spDialogMessageBox pDialogMessageBox;
+            pDialogMessageBox = spDialogMessageBox::create(tr("Failed to relaunch game on server."));
+            addChild(pDialogMessageBox);
         }
         else if (messageType == NetworkCommands::SERVERGAMENOLONGERAVAILABLE)
         {
@@ -477,8 +483,8 @@ void LobbyMenu::updateGameData(const QJsonObject & objData)
     QJsonObject games = objData.value(JsonKeys::JSONKEY_GAMES).toObject();
     for (const auto & game : games)
     {
-        auto gameData = spNetworkGameData::create();
-        gameData->fromJson(game.toObject());
+        NetworkGameData gameData;
+        gameData.fromJson(game.toObject());
         m_games.append(gameData);
     }
     emit sigUpdateGamesView();
@@ -498,35 +504,30 @@ void LobbyMenu::updateGamesView()
 {
     const auto & widths = m_gamesview->getWidths();
     ComplexTableView::Items items;
-
-    bool hasGame = m_currentGame.get() != nullptr;
-    qint64 uuid = 0;
-    if (hasGame)
-    {
-        uuid = m_currentGame->getUuid();
-    }
+    qint64 uuid = m_currentGame.getUuid();
+    bool hasGame = (uuid != 0);
     qint32 itemCount = 0;
     qint32 currentItem = -1;
     for (auto & game : m_games)
     {
-        if (hasGame && game->getUuid() == uuid)
+        if (hasGame && game.getUuid() == uuid)
         {
             currentItem = itemCount;
             m_currentGame = game;
         }
         ComplexTableView::Item item;
-        item.pData = game.get();
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game->getMapName(), widths[0])));
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spXofYTableItem::create(game->getPlayers(), game->getMaxPlayers(), widths[1])));
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game->getDescription(), widths[2])));
-        QStringList mods = game->getMods();
+        item.pData = &game;
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game.getMapName(), widths[0])));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spXofYTableItem::create(game.getPlayers(), game.getMaxPlayers(), widths[1])));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game.getDescription(), widths[2])));
+        QStringList mods = game.getMods();
         QString modString;
         for (const auto & mod : mods)
         {
             modString.append(Settings::getModName(mod) + "; ");
         }
         item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(modString, widths[3])));
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spLockTableItem::create(game->getLocked(), widths[4])));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spLockTableItem::create(game.getLocked(), widths[4])));
         items.append(item);
         ++itemCount;
     }
@@ -537,7 +538,7 @@ void LobbyMenu::updateGamesView()
     }
     else
     {
-        m_currentGame = spNetworkGameData();
+        m_currentGame = NetworkGameData();
     }
 }
 
@@ -545,7 +546,7 @@ void LobbyMenu::selectGame()
 {
     if (m_gamesview->getCurrentItem() >= 0)
     {
-        m_currentGame = spNetworkGameData(m_gamesview->getDataItem<NetworkGameData>(m_gamesview->getCurrentItem()));
+        m_currentGame = *m_gamesview->getDataItem<NetworkGameData>(m_gamesview->getCurrentItem());
     }
 }
 

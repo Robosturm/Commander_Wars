@@ -732,6 +732,9 @@ public slots:
     static Qt::Key getKey_MapZoomIn();
     static void setKey_MapZoomIn(const Qt::Key &key_MapZoomIn);
 
+    static Qt::Key getKey_Escape();
+    static void setKey_Escape(const Qt::Key &key_Escape);
+
     static void getModInfos(QString mod, QString & name, QString & description, QString & version,
                             QStringList & compatibleMods, QStringList & incompatibleMods,
                             QStringList & requiredMods, bool & isCosmetic,

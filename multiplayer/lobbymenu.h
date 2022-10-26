@@ -85,8 +85,8 @@ private:
     void requestUserUpdateGames();
 private:
     spNetworkInterface m_pTCPClient{nullptr};
-    QVector<spNetworkGameData> m_games;
-    spNetworkGameData m_currentGame;
+    QVector<NetworkGameData> m_games;
+    NetworkGameData m_currentGame;
     oxygine::spButton m_pButtonHostOnServer;
     oxygine::spButton m_pButtonGameObserve;    
     oxygine::spButton m_pButtonGameJoin;

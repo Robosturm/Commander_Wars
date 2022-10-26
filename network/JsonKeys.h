@@ -4,6 +4,7 @@ namespace JsonKeys
 {
     const char* const JSONKEY_COMMAND = "command";
     const char* const JSONKEY_SLAVENAME = "slaveName";
+    const char* const JSONKEY_SAVEFILE = "saveFile";
     const char* const JSONKEY_GAMEDESCRIPTION = "gameDescription";
     const char* const JSONKEY_MAPNAME = "mapName";
     const char* const JSONKEY_HASPASSWORD = "hasPassword";

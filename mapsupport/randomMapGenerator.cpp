@@ -1041,7 +1041,6 @@ void RandomMapGenerator::randomMapPlaceBuildings(GameMap* pMap, qint32 width, qi
                 {
                     ownerBuildings[player]--;
                     pBuilding->setOwner(pMap->getPlayer(player));
-                    break;
                 }
                 pMap->getTerrain(mirrorPosition.x(), mirrorPosition.y())->setBuilding(pBuilding);
                 if (innerBase > 0)

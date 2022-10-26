@@ -4175,6 +4175,16 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="724"/>
+        <source>Quit game:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="731"/>
+        <source>Key for quiting a running match.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/ui/options/optionaudiomenu.xml" line="14"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
@@ -5423,89 +5433,89 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1093"/>
-        <location filename="../menue/gamemenue.cpp" line="1681"/>
-        <location filename="../menue/gamemenue.cpp" line="1718"/>
+        <location filename="../menue/gamemenue.cpp" line="1108"/>
+        <location filename="../menue/gamemenue.cpp" line="1696"/>
+        <location filename="../menue/gamemenue.cpp" line="1733"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1101"/>
+        <location filename="../menue/gamemenue.cpp" line="1116"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1136"/>
+        <location filename="../menue/gamemenue.cpp" line="1151"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1541"/>
+        <location filename="../menue/gamemenue.cpp" line="1556"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1542"/>
+        <location filename="../menue/gamemenue.cpp" line="1557"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1543"/>
+        <location filename="../menue/gamemenue.cpp" line="1558"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1544"/>
+        <location filename="../menue/gamemenue.cpp" line="1559"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1545"/>
+        <location filename="../menue/gamemenue.cpp" line="1560"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1546"/>
+        <location filename="../menue/gamemenue.cpp" line="1561"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1547"/>
+        <location filename="../menue/gamemenue.cpp" line="1562"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1548"/>
+        <location filename="../menue/gamemenue.cpp" line="1563"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1572"/>
+        <location filename="../menue/gamemenue.cpp" line="1587"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1582"/>
+        <location filename="../menue/gamemenue.cpp" line="1597"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2017"/>
+        <location filename="../menue/gamemenue.cpp" line="2032"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2048"/>
+        <location filename="../menue/gamemenue.cpp" line="2063"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2074"/>
+        <location filename="../menue/gamemenue.cpp" line="2089"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2251"/>
+        <location filename="../menue/gamemenue.cpp" line="2266"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5729,6 +5739,11 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="436"/>
+        <source>Failed to relaunch game on server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/lobbymenu.cpp" line="442"/>
         <source>Host game is no longer available.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6491,8 +6506,8 @@ Host mods: </source>
         <location filename="../mapsupport/randomMapGenerator.cpp" line="858"/>
         <location filename="../mapsupport/randomMapGenerator.cpp" line="943"/>
         <location filename="../mapsupport/randomMapGenerator.cpp" line="947"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="1142"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="1184"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="1141"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="1183"/>
         <source>Generating </source>
         <translation type="unfinished"></translation>
     </message>
@@ -8902,7 +8917,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="2022"/>
+        <location filename="../coreengine/settings.cpp" line="2032"/>
         <source>Default device</source>
         <translation type="unfinished"></translation>
     </message>

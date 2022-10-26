@@ -928,12 +928,27 @@ void GameMenue::despawnSlave()
     {
         if (m_saveAllowed)
         {
-            saveMap("savegames/" +  Settings::getSlaveServerName() + ".msav");
+            QString saveFile = "savegames/" +  Settings::getSlaveServerName() + ".msav";
+            saveMap(saveFile);
             spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
             QString command = NetworkCommands::SLAVEINFODESPAWNING;
             QJsonObject data;
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
+            data.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, 0);
+            data.insert(JsonKeys::JSONKEY_MAXPLAYERS, m_pMap->getPlayerCount());
+            data.insert(JsonKeys::JSONKEY_MAPNAME, m_pMap->getMapName());
+            data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, "");
             data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+            data.insert(JsonKeys::JSONKEY_HASPASSWORD, m_pMap->getGameRules()->getPassword().getIsSet());
+            data.insert(JsonKeys::JSONKEY_UUID, 0);
+            data.insert(JsonKeys::JSONKEY_SAVEFILE, saveFile);
+            auto activeMods = Settings::getActiveMods();
+            QJsonObject mods;
+            for (qint32 i = 0; i < activeMods.size(); ++i)
+            {
+                mods.insert(JsonKeys::JSONKEY_MOD + QString::number(i), activeMods[i]);
+            }
+            data.insert(JsonKeys::JSONKEY_USEDMODS, mods);
             QJsonArray usernames;
             qint32 count = m_pMap->getPlayerCount();
             for (qint32 i = 0; i < count; ++i)
@@ -1969,7 +1984,7 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
 
 void GameMenue::keyInputAll(Qt::Key cur)
 {
-    if (cur == Qt::Key_Escape)
+    if (cur == Settings::getKey_Escape())
     {
         emit sigShowExitGame();
     }

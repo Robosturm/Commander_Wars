@@ -39,6 +39,13 @@ class MainServer final : public QObject, public oxygine::ref_counter
         QString secondaryAddress;
         quint16 port;
     };
+    struct SuspendedSlaveInfo
+    {
+        bool relaunched{false};
+        QVector<quint64> pendingSockets;
+        QString savefile;
+        NetworkGameData game;
+    };
 
 public:
     static MainServer* getInstance();
@@ -156,11 +163,22 @@ private:
      */
     void spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data);
     /**
+     * @brief spawnSlave
+     * @param slaveInfo
+     */
+    void spawnSlave(quint64 socketID, SuspendedSlaveInfo & slaveInfo);
+    /**
      * @brief onSlaveReady called once a slave is in a state for receiving the data of the game that should be hosted
      * @param socketID
      * @param stream
      */
     void onSlaveReady(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief onSlaveInfoDespawning
+     * @param socketID
+     * @param objData
+     */
+    void onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief onGameRunningOnServer called once the game has loaded all data needed for hosting a game and players can join
      * @param socketID
@@ -300,11 +318,14 @@ private:
      * guard marking if new lobby data is available or not.
      */
     bool m_updateGameData{false};
-
     /**
      * @brief m_slaveAddressOptions address/port combination that can used for spawning a slave
      */
     QVector<AddressInfo> m_slaveAddressOptions;
+    /**
+     * @brief m_runningSlaves
+     */
+    QVector<SuspendedSlaveInfo> m_runningSlaves;
     /**
      * @brief m_lastUsedAddressIndex last used index in the m_slaveAddressOptions
      */

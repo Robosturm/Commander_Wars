@@ -857,10 +857,6 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
             {
                 switch (cur)
                 {
-                    case Qt::Key_Escape:
-                    {
-                        break;
-                    }
                     case Qt::Key_Y:
                     {
                         editorRedo();

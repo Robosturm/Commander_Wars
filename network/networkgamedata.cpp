@@ -33,7 +33,6 @@ void NetworkGameData::setSlavePort(quint16 newPort)
 QJsonObject NetworkGameData::toJson() const
 {
     QJsonObject obj;
-    obj.insert(JsonKeys::JSONKEY_VERSION, getVersion());
     obj.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, static_cast<qint64>(m_players));
     obj.insert(JsonKeys::JSONKEY_MAXPLAYERS, static_cast<qint64>(m_maxPlayers));
     obj.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, m_description);

@@ -1755,6 +1755,16 @@ void Settings::setStaticMarkedFields(bool StaticMarkedFields)
     m_StaticMarkedFields = StaticMarkedFields;
 }
 
+Qt::Key Settings::getKey_Escape()
+{
+    return m_key_escape;
+}
+
+void Settings::setKey_Escape(const Qt::Key &key_Escape)
+{
+    m_key_escape = key_Escape;
+}
+
 qint32 Settings::getMenuItemCount()
 {
     return m_MenuItemCount;

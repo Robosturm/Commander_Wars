@@ -42,12 +42,15 @@ public:
     {
         return m_passwordHash;
     }
+
 public slots:
     void setPassword(QString password);
     bool isValidPassword(QString password) const;
     bool areEqualPassword(const Password & password) const;
+    bool getIsSet() const;
 private:
     QByteArray m_passwordHash;
+    bool m_isSet{false};
 };
 
 #endif // PASSWORD_H
