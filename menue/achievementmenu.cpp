@@ -65,7 +65,7 @@ Achievementmenu::Achievementmenu()
 
     qint32 y = 10;
     qint32 width = 150;
-    spLabel pTextfield = spLabel::create(width - 10);
+    spLabel pTextfield = spLabel::create(width - 10, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Search: "));
     pTextfield->setPosition(10, y);
@@ -89,12 +89,12 @@ Achievementmenu::Achievementmenu()
     y += 50;
 
     qint32 x = 10;
-    pTextfield = spLabel::create(100);
+    pTextfield = spLabel::create(110, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Group: "));
     pTextfield->setPosition(x, y);
     addChild(pTextfield);
-    x += 10 + pTextfield->getScaledWidth();
+    x += pTextfield->getScaledWidth();
 
     QStringList groups{tr("All")};
     Userdata* pUserdata = Userdata::getInstance();
@@ -115,12 +115,12 @@ Achievementmenu::Achievementmenu()
     }, Qt::QueuedConnection);
     x += 10 + m_group->getScaledWidth();
 
-    pTextfield = spLabel::create(100);
+    pTextfield = spLabel::create(110, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Sort: "));
     pTextfield->setPosition(x, y);
     addChild(pTextfield);
-    x += 10 + pTextfield->getScaledWidth();
+    x += pTextfield->getScaledWidth();
     m_sort = spDropDownmenu::create(200, QStringList{tr("None"), tr("Ascending"), tr("Descending")});
     m_sort->setPosition(x, y);
     addChild(m_sort);
@@ -148,7 +148,7 @@ Achievementmenu::Achievementmenu()
             }
         }
     }
-    pTextfield = spLabel::create(singleWidth);
+    pTextfield = spLabel::create(singleWidth, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Achievement Progress: ") + QString::number(achieveCount) + " / " + QString::number(achievements->length()));
     pTextfield->setPosition(10, 100);

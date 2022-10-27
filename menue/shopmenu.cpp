@@ -79,7 +79,7 @@ Shopmenu::Shopmenu()
     addChild(m_pPanel);
 
     const qint32 width = 150;
-    spLabel pLabel = spLabel::create(width);
+    spLabel pLabel = spLabel::create(width, true);
     pLabel->setHtmlText(tr("Filter:"));
     pLabel->setPosition(10, 10);
     addChild(pLabel);
