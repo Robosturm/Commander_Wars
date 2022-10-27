@@ -640,7 +640,18 @@ void Multiplayermenu::onServerRelaunchSlave(quint64 socketID, const QJsonObject 
     if (QFile::exists(savefile))
     {
         CONSOLE_PRINT("Relaunching slave with savefile " + savefile, Console::eERROR);
-
+        spGameMap pMap = spGameMap::create(savefile, false, false, true);
+        spGameMenue pMenu = spGameMenue::create(pMap, true, m_pNetworkInterface, false, true);
+        oxygine::Stage::getStage()->addChild(pMenu);
+        QString command = NetworkCommands::SLAVERELAUNCHED;
+        QJsonObject data;
+        QString slavename = Settings::getSlaveServerName();
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, slavename);
+        QJsonDocument doc(data);
+        CONSOLE_PRINT("Sending command " + command + " for slave " + slavename, Console::eDEBUG);
+        spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
+        emit pSlaveMasterConnection->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         oxygine::Actor::detach();
     }
     else

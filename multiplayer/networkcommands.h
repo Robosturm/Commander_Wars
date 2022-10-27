@@ -213,6 +213,10 @@ namespace NetworkCommands
      */
     const char* const SLAVEREADY = "SLAVEREADY";
     /**
+     * @brief SLAVERELAUNCHED
+     */
+    const char* const SLAVERELAUNCHED = "SLAVERELAUNCHED";
+    /**
      * @brief SLAVEADDRESSINFO
      */
     const char* const SLAVEADDRESSINFO = "SLAVEADDRESSINFO";

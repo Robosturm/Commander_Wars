@@ -61,7 +61,7 @@
 
 #include "game/ui/damagecalculator.h"
 
-GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface, bool rejoin)
+GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface, bool rejoin, bool startDirectly)
     : BaseGamemenu(pMap),
       m_ReplayRecorder(m_pMap.get()),
       m_SaveGame(saveGame),
@@ -76,7 +76,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     m_pNetworkInterface = pNetworkInterface;
     loadGameMenue();
     loadUIButtons();
-    if (m_pNetworkInterface.get() != nullptr)
+    if (m_pNetworkInterface.get() != nullptr && !startDirectly)
     {
         
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -120,6 +120,11 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     else
     {
         startGame();
+        if (m_pNetworkInterface.get() != nullptr &&
+            Mainapp::getSlave())
+        {
+            startDespawnTimer();
+        }
     }
     if (Settings::getAutoSavingCycle() > 0)
     {
@@ -905,10 +910,7 @@ void GameMenue::disconnected(quint64 socketID)
                 }
                 if (Mainapp::getSlave())
                 {
-                    constexpr qint32 MS_PER_SECOND = 1000;
-                    m_slaveDespawnTimer.setSingleShot(true);
-                    m_slaveDespawnTimer.start(MS_PER_SECOND);
-                    m_slaveDespawnElapseTimer.start();
+                    startDespawnTimer();
                 }
                 else
                 {
@@ -919,6 +921,14 @@ void GameMenue::disconnected(quint64 socketID)
         }
         continueAfterSyncGame();
     }
+}
+
+void GameMenue::startDespawnTimer()
+{
+    constexpr qint32 MS_PER_SECOND = 1000;
+    m_slaveDespawnTimer.setSingleShot(true);
+    m_slaveDespawnTimer.start(MS_PER_SECOND);
+    m_slaveDespawnElapseTimer.start();
 }
 
 void GameMenue::despawnSlave()

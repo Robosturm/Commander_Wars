@@ -6061,7 +6061,7 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="85"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="99"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1768"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1779"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6146,49 +6146,49 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="700"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="846"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="711"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="857"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1078"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1089"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1082"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1093"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1097"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1108"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1101"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1112"/>
         <source>Failed to join game due to unknown verification failure.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1201"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1212"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1212"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1223"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1635"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1646"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1764"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1775"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

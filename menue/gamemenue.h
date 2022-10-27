@@ -33,7 +33,7 @@ class GameMenue : public BaseGamemenu
 {
     Q_OBJECT
 public:
-    explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface, bool rejoin = false);
+    explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface, bool rejoin = false, bool startDirectly = false);
     explicit GameMenue(QString map, bool saveGame);
     explicit GameMenue(spGameMap pMap);
     virtual ~GameMenue();
@@ -418,6 +418,10 @@ protected slots:
      */
     virtual void onEnter() override;
 protected:
+    /**
+     * @brief startDespawnTimer
+     */
+    void startDespawnTimer();
     void loadUIButtons();
     void loadGameMenue();
     void connectMap();
