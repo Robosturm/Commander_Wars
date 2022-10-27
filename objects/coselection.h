@@ -24,6 +24,8 @@ class COSelection final : public QObject, public oxygine::Actor
 public:
     explicit COSelection(QPoint Position, QSize maxSize, QStringList coids = {});
     ~COSelection() = default;
+    const QStringList &getCoids() const;
+
 signals:
     void armySelectedChange(QString army);
     void coSelected(QString coid);

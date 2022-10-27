@@ -333,6 +333,11 @@ void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QStrin
     m_CoIDs.append(coid);
 }
 
+const QStringList &COSelection::getCoids() const
+{
+    return m_Coids;
+}
+
 void COSelection::colorChanged(QColor color)
 {    
     QColor colorAlpha(color);

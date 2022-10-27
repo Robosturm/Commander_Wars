@@ -1200,12 +1200,17 @@
 <context>
     <name>COStyleMenu</name>
     <message>
-        <location filename="../menue/costylemenu.cpp" line="52"/>
+        <location filename="../menue/costylemenu.cpp" line="57"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/costylemenu.cpp" line="61"/>
+        <location filename="../menue/costylemenu.cpp" line="67"/>
+        <source>Show CO Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/costylemenu.cpp" line="77"/>
         <source>Edit CO</source>
         <translation type="unfinished"></translation>
     </message>
