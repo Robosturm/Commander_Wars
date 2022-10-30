@@ -93,7 +93,7 @@ LobbyMenu::LobbyMenu()
     connect(this, &LobbyMenu::sigHostServer, this, &LobbyMenu::hostServer, Qt::QueuedConnection);
     m_pButtonHostOnServer->setEnabled(false);
 
-    m_pButtonGameJoin = ObjectManager::createButton(tr("Join Game"));
+    m_pButtonGameJoin = ObjectManager::createButton(tr("Join Game"), 220);
     addChild(m_pButtonGameJoin);
     m_pButtonGameJoin->setPosition(Settings::getWidth() / 2 + 10,
                                    Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
@@ -104,7 +104,7 @@ LobbyMenu::LobbyMenu()
     connect(this, &LobbyMenu::sigJoinGame, this, &LobbyMenu::joinGame, Qt::QueuedConnection);
     m_pButtonGameJoin->setEnabled(false);
 
-    m_pButtonGameObserve = ObjectManager::createButton(tr("Observe Game"));
+    m_pButtonGameObserve = ObjectManager::createButton(tr("Observe Game"), 220);
     addChild(m_pButtonGameObserve);
     m_pButtonGameObserve->setPosition(Settings::getWidth() / 2 + 10, m_pButtonGameJoin->getY() - m_pButtonGameJoin->getScaledHeight());
     m_pButtonGameObserve->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
@@ -114,7 +114,7 @@ LobbyMenu::LobbyMenu()
     connect(this, &LobbyMenu::sigObserveGame, this, &LobbyMenu::observeGame, Qt::QueuedConnection);
     m_pButtonGameObserve->setEnabled(false);
 
-    oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Address"));
+    oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Address"), 220);
     addChild(pButtonJoinAdress);
     pButtonJoinAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getScaledWidth(),
                                    Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
@@ -124,7 +124,7 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigJoinAdress, this, &LobbyMenu::joinAdress, Qt::QueuedConnection);
 
-    oxygine::spButton pButtonObserveAdress = ObjectManager::createButton(tr("Observe Address"));
+    oxygine::spButton pButtonObserveAdress = ObjectManager::createButton(tr("Observe Address"), 220);
     addChild(pButtonObserveAdress);
     pButtonObserveAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getScaledWidth(),
                                       pButtonJoinAdress->getY() - pButtonJoinAdress->getScaledHeight());

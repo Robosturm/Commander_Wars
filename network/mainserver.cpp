@@ -277,6 +277,10 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         {
             onSlaveGameStarted(socketID, objData);
         }
+        else if (messageType == NetworkCommands::SLAVERELAUNCHED)
+        {
+            onSlaveRelaunched(socketID, objData);
+        }
         else if (messageType == NetworkCommands::SLAVEINFODESPAWNING)
         {
             onSlaveInfoDespawning(socketID, objData);
@@ -285,6 +289,42 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
         }
+    }
+}
+
+void MainServer::onSlaveRelaunched(quint64 socketID, const QJsonObject & objData)
+{
+    QString slaveName = objData.value(JsonKeys::JSONKEY_SLAVENAME).toString();
+    auto iter = m_games.find(slaveName);
+    if (iter != m_games.end())
+    {
+        const auto & game = iter.value();
+        // send data
+        QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_ADDRESS, game->game->getData().getSlaveAddress());
+        data.insert(JsonKeys::JSONKEY_SECONDARYADDRESS, game->game->getData().getSlaveSecondaryAddress());
+        data.insert(JsonKeys::JSONKEY_PORT, static_cast<qint64>(game->game->getData().getSlavePort()));
+        QJsonDocument doc(data);
+        for (qint32 i = 0; i < m_runningSlaves.size(); ++i)
+        {
+            auto & game = m_runningSlaves[i];
+            if (game.game.getSlaveName() == slaveName)
+            {
+                for (auto & socket : game.pendingSockets)
+                {
+                    emit m_pGameServer->sig_sendData(socket, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+                }
+                m_runningSlaves.removeAt(i);
+                break;
+            }
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to find slave game: " + slaveName + " running games: " + QString::number(m_games.size()), Console::eDEBUG);
     }
 }
 

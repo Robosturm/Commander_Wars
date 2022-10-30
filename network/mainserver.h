@@ -45,6 +45,7 @@ class MainServer final : public QObject, public oxygine::ref_counter
         QVector<quint64> pendingSockets;
         QString savefile;
         NetworkGameData game;
+        QDateTime despawnTime;
     };
 
 public:
@@ -179,6 +180,12 @@ private:
      * @param objData
      */
     void onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief onSlaveRelaunched
+     * @param socketID
+     * @param objData
+     */
+    void onSlaveRelaunched(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief onGameRunningOnServer called once the game has loaded all data needed for hosting a game and players can join
      * @param socketID

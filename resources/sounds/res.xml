@@ -147,5 +147,7 @@
     <sound file="player_turn.wav"               cachesize = "2"/>
     <sound file="connect.wav"                   cachesize = "5"/>
     <sound file="disconnect.wav"                cachesize = "5"/>
+    <sound file="co_power_letter.wav"           cachesize = "30"/>
+    <sound file="superpower_burst.wav"          cachesize = "5"/>
 </sounds>
 

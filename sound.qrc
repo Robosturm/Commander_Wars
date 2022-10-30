@@ -148,5 +148,7 @@
         <file>resources/sounds/vulcan_weapon_fire_1.wav</file>
         <file>resources/sounds/connect.wav</file>
         <file>resources/sounds/disconnect.wav</file>
+        <file>resources/sounds/co_power_letter.wav</file>
+        <file>resources/sounds/superpower_burst.wav</file>
     </qresource>
 </RCC>

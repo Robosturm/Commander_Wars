@@ -254,11 +254,6 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
                         break;
                     }
                 }
-                if (success)
-                {
-                    m_forcedProduction.erase(m_forcedProduction.cbegin() + i);
-                    break;
-                }
             }
             else
             {
@@ -270,11 +265,11 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
                         break;
                     }
                 }
-                if (success)
-                {
-                    m_forcedProduction.erase(m_forcedProduction.cbegin() + i);
-                    break;
-                }
+            }
+            if (success)
+            {
+                m_forcedProduction.erase(m_forcedProduction.cbegin() + i);
+                break;
             }
         }
     }

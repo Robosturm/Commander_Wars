@@ -5,9 +5,13 @@ var VERYEASYAI =
     // called when a unit has no predefined ai behaviour modify the action and return true for the ai to execute the defined action
     //},
 
+    groupDistribution : [1,      // infantry units
+                         1,      // light units
+                         1,      // medium units
+                         1,],    // heavy units
     initializeSimpleProductionSystem : function(system, ai, map)
     {
-        return COREAI.initializeSimpleProductionSystem(system, ai, map);
+        return COREAI.initializeSimpleProductionSystem(system, ai, map, VERYEASYAI.groupDistribution);
     },
     buildUnitSimpleProductionSystem : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
     {
@@ -15,6 +19,6 @@ var VERYEASYAI =
     },
     onNewBuildQueue : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
     {
-        return COREAI.onNewBuildQueue(system, ai, buildings, units, enemyUnits, enemyBuildings, map);
+        return COREAI.onNewBuildQueue(system, ai, buildings, units, enemyUnits, enemyBuildings, map, VERYEASYAI.groupDistribution);
     },
 };

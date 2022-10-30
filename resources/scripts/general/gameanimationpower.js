@@ -1,5 +1,5 @@
 var GAMEANIMATIONPOWER =
-{
+        {
     loadAnimation : function(animation, color, powerMode, co, map)
     {
         // load main background
@@ -17,7 +17,7 @@ var GAMEANIMATIONPOWER =
             animation.createRotatingBackground("power_background", color);
         }
         // load co activating the power
-        var frameTime = animation.getFrameTime();
+        var frameTime = 100;
         var coMovingDuration = 30;
         var offsetXMult = 1;
         GAMEANIMATIONPOWER.loadMovingCo(animation, co, offsetXMult, coMovingDuration, frameTime, false);
@@ -47,48 +47,94 @@ var GAMEANIMATIONPOWER =
             text = co.getPowerName();
             animation.createPowerDescription(co, powerMode, false);
         }
-        GAMEANIMATIONPOWER.loadMovingText(animation, frameTime, text)
+
+        // Short names throw the animation's timing off, so I added this bit as a temporary fix.
+        var textLength = text.length;
+        if (textLength < 15)
+        {
+            var extraSpaces = 15 - textLength;
+            for (var i = 0; i < extraSpaces; i++)
+            {
+                text = text + " ";
+            }
+        }
+
         var timeMs = text.length * frameTime * 4;
         if (timeMs < frameTime * coMovingDuration)
         {
             timeMs = frameTime * coMovingDuration;
         }
+        GAMEANIMATIONPOWER.loadMovingText(animation, frameTime, text, timeMs)
         animation.setDuration(timeMs);
         animation.addSound("power_activation.wav");
     },
 
-    loadMovingText : function(animation, frameTime, text)
+    randomDirections : function()
+    {
+        var width = settings.getWidth();
+        var height = settings.getHeight();
+        return [Qt.point(-100, -100), Qt.point(-100, height),
+                Qt.point(width, -100), Qt.point(width, height)]
+    },
+
+    loadMovingText : function(animation, frameTime, text, timeMs)
     {
         var screenHeight = settings.getHeight();
+        var screenWidth = settings.getWidth();
         var fontHeight = 72;
-        var font = "powerFont72";
+        var font = "main72";
         var totalWidth = animation.getFontWidth(font, text)
-        if (totalWidth > settings.getWidth() - 20)
+        if (totalWidth > screenWidth - 20)
         {
-            font = "powerFont48";
+            font = "main48";
             totalWidth = animation.getFontWidth(font, text)
             fontHeight = 48;
         }
         var length = text.length;
-        var xPos = 10;
+        var burstDelay = timeMs * 0.9;
+        var endX = 10;
         var endY = screenHeight / 2 - fontHeight / 2;
+        var randomDirections = GAMEANIMATIONPOWER.randomDirections(); // There's probably a better way to do this too...
         for (var i = 0; i < length; ++i)
         {
-            var startY = 0;
+            var startX = -40;
+            var startY = -40;
             if (globals.isEven(i))
             {
-                startY = screenHeight;
+                startX = endX;
+                if (i % 4 === 0)
+                {
+                    startY = screenHeight;
+                }
             }
-            var delay = frameTime * 2 * i + 1;
-            var duration = frameTime * 4;
+            else
+            {
+                startY = endY;
+                if (i % 4 === 3)
+                {
+                    startX = screenWidth;
+                }
+            }
+            var delay = (frameTime * 2 * i);
+            var duration = frameTime * 2;
             var subtext = text[i];
-            animation.createMovingText(font, subtext, delay, Qt.point(xPos, startY), Qt.point(xPos, endY), duration, GameEnums.QEasingCurve_OutQuad);
+            animation.createMovingText(font, subtext, delay, Qt.point(startX, startY), Qt.point(endX, endY), duration, GameEnums.QEasingCurve_Linear);
+            animation.addTweenWaitToLastQueue(burstDelay - delay, GameEnums.QEasingCurve_Linear);
+            animation.addTweenPositionToLastQueue(randomDirections[globals.randInt(0, 3)], frameTime * 4, GameEnums.QEasingCurve_OutQuad);
+            if (subtext !== " ")
+            {
+                animation.addSound("co_power_letter.wav", 1, delay + duration)
+            }
+            if (i === 0)
+            {
+                animation.addSound("superpower_burst.wav", 1, burstDelay);
+            }
             var letterWidth = animation.getFontWidth(font, subtext);
             if (letterWidth <= 0)
             {
-                letterWidth = (xPos - 10) / (i + 1);
+                letterWidth = (endX - 10) / (i + 1);
             }
-            xPos += letterWidth;
+            endX += letterWidth;
         }
     },
 
@@ -113,6 +159,5 @@ var GAMEANIMATIONPOWER =
         }
 
         animation.addMovingCoSprite(sprite, scale, startPos, Qt.point(startPos.x, settings.getHeight() / 2 - size.y * scale / 2), frameTime * coMovingDuration, 0, GameEnums.QEasingCurve_OutQuad);
-
     }
 };
