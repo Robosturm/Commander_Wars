@@ -175,7 +175,7 @@ LobbyMenu::LobbyMenu()
 
     height = m_pButtonHostOnServer->getY() - m_gamesview->getY() - m_gamesview->getScaledHeight() - 20;
 
-    spChat pChat = spChat::create(pInterface, QSize(Settings::getWidth() - 20, height), NetworkInterface::NetworkSerives::LobbyChat);
+    spChat pChat = spChat::create(pInterface, QSize(Settings::getWidth() - 20, height), NetworkInterface::NetworkSerives::LobbyChat, nullptr);
     pChat->setPosition(10, m_gamesview->getY() + m_gamesview->getScaledHeight() + 10);
     if (Settings::getSmallScreenDevice())
     {

@@ -26,6 +26,7 @@ using spGameAction = oxygine::intrusive_ptr<GameAction>;
 class GameMap;
 using spGameMap = oxygine::intrusive_ptr<GameMap>;
 
+class EditorMenue;
 class BaseGamemenu;
 using spBaseGamemenu = oxygine::intrusive_ptr<BaseGamemenu>;
 
@@ -278,7 +279,8 @@ public:
      * @brief setMenu
      * @param newMenu
      */
-    void setMenu(GameMenue *newMenu);
+    void setMenu(BaseGamemenu *newMenu);
+    BaseGamemenu *getMenu() const;
 
 signals:
     void signalExitGame();
@@ -753,7 +755,7 @@ public slots:
      * @brief importAWDSMap
      * @param file
      */
-    void importAWDSMap(QString file);
+    void importAWDSMap(QString file, EditorMenue* pMenu);
     /**
      * @brief exportAWDSMap
      * @param file
@@ -763,12 +765,12 @@ public slots:
      * @brief importAWDCMap
      * @param file
      */
-    void importAWDCMap(QString file);
+    void importAWDCMap(QString file, EditorMenue* pMenu);
     /**
      * @brief importAWByWebMap
      * @param file
      */
-    void importAWByWebMap(QString file);
+    void importAWByWebMap(QString file, EditorMenue* pMenu);
     /**
      * @brief exportAWDCMap
      * @param file
@@ -867,7 +869,7 @@ private:
     qint32 m_endLoopMs{-1};
     bool m_savegame{false};
     bool m_isHumanMatch{false};
-    GameMenue* m_pMenu{nullptr};
+    BaseGamemenu* m_pMenu{nullptr};
     static qint32 m_imagesize;
 };
 

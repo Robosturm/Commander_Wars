@@ -1601,7 +1601,7 @@ void EditorMenue::importAWDCAw4Map(QString filename)
         if (file.exists())
         {
             cleanTemp(-1);
-            m_pMap->importAWDCMap(filename);
+            m_pMap->importAWDCMap(filename, this);
             m_EditorSelection->createPlayerSelection();
         }
     }
@@ -1618,7 +1618,7 @@ void EditorMenue::importAWByWeb(QString filename)
         if (file.exists())
         {
             cleanTemp(-1);
-            m_pMap->importAWByWebMap(filename);
+            m_pMap->importAWByWebMap(filename, this);
             m_EditorSelection->createPlayerSelection();
         }
     }
@@ -1635,7 +1635,7 @@ void EditorMenue::importAWDSAwsMap(QString filename)
         if (file.exists())
         {
             cleanTemp(-1);
-            m_pMap->importAWDSMap(filename);
+            m_pMap->importAWDSMap(filename, this);
             m_EditorSelection->createPlayerSelection();
         }
     }
@@ -2026,7 +2026,6 @@ void EditorMenue::exitEditor()
     auto window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
-    deleteMenu();
 }
 
 void EditorMenue::autosave()

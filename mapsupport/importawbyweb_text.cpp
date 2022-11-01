@@ -14,7 +14,7 @@
 
 #include "objects/loadingscreen.h"
 
-void GameMap::importAWByWebMap(QString file)
+void GameMap::importAWByWebMap(QString file, EditorMenue* pMenu)
 {
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->show();
@@ -1039,7 +1039,7 @@ void GameMap::importAWByWebMap(QString file)
         m_headerInfo.m_mapDescription = "";
         m_headerInfo.m_mapAuthor = Settings::getUsername();
     }
-    dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance())->optimizePlayers();
+    pMenu->optimizePlayers();
     // update the whole fucking map
     pLoadingScreen->setProgress(tr("Loading Sprites"), 90);
     updateSprites();

@@ -22,6 +22,7 @@
 #include "updater/gameupdater.h"
 #endif
 
+class BaseGamemenu;
 class WorkerThread;
 using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
 class AudioThread;
@@ -255,10 +256,6 @@ public slots:
      * @brief doScreenshot
      */
     void doScreenshot();
-    /**
-     * @brief doMapshot
-     */
-    void doMapshot();
     void nextStartUpStep(Mainapp::StartupPhase step);
     /**
      * @brief inputMethodQuery dummy function to rerout qlineedit events
@@ -270,6 +267,7 @@ public slots:
      * @brief createLineEdit
      */
     void createLineEdit();
+    void doMapshot(BaseGamemenu* pMenu);
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -297,6 +295,7 @@ signals:
      */
     void cursorPositionChanged(int oldPos, int newPos);
     void cursorPositionChanged();
+    void sigDoMapshot(BaseGamemenu* pMenu);
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;

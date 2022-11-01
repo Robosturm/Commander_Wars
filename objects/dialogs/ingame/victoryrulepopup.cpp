@@ -18,10 +18,13 @@ VictoryRulePopup::VictoryRulePopup(GameMap* pMap, QString rule, qint32 width, qi
       m_rule(rule),
       m_pMap(pMap)
 {
-    GameMenue* pMenu = dynamic_cast<GameMenue*>(BaseGamemenu::getInstance());
-    if (pMenu != nullptr)
+    if (pMap != nullptr)
     {
-        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &VictoryRulePopup::updateInfo, Qt::QueuedConnection);
+        GameMenue* pMenu = dynamic_cast<GameMenue*>(pMap->getMenu());
+        if (pMenu != nullptr)
+        {
+            connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &VictoryRulePopup::updateInfo, Qt::QueuedConnection);
+        }
     }
     updateInfo();
     m_popUps.append(m_rule);

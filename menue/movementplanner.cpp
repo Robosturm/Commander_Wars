@@ -13,7 +13,7 @@
 #include "wiki/fieldinfo.h"
 
 MovementPlanner::MovementPlanner(GameMenue* pOwner, Player* pViewPlayer)
-    : GameMenue(spGameMap::create(1, 1, 2)),
+    : GameMenue(spGameMap::create(1, 1, 2), false),
       m_pOwner(pOwner),
       m_pViewPlayer(pViewPlayer)
 {
@@ -44,7 +44,7 @@ MovementPlanner::MovementPlanner(GameMenue* pOwner, Player* pViewPlayer)
     connect(this, &MovementPlanner::sigHide, pOwner, &GameMenue::hideMovementPlanner, Qt::QueuedConnection);
     connect(this, &MovementPlanner::sigLeftClick, this, &MovementPlanner::leftClick, Qt::QueuedConnection);
     connect(this, &MovementPlanner::sigRightClick, this, &MovementPlanner::rightClick, Qt::QueuedConnection);
-    connect(&m_actionPerformer, &ActionPerformer::actionPerformed, this, &MovementPlanner::updateUpdateAddIns, Qt::QueuedConnection);
+    connect(&m_actionPerformer, &ActionPerformer::sigActionPerformed, this, &MovementPlanner::updateUpdateAddIns, Qt::QueuedConnection);
 
     if (m_pPlayerinfo.get())
     {

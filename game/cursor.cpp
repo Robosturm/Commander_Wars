@@ -75,18 +75,21 @@ void Cursor::setMapPoint(qint32 x, qint32 y)
 
 void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
 {    
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (m_pMap != nullptr && pMenu != nullptr)
+    if (m_pMap != nullptr)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        // auto position = pMenu->getMapSlidingActor()->getPosition() + pMenu->getMapSliding()->getPosition() + m_pMap->getPosition();
-        // - position.x) * pApp->getActiveDpiFactor()
-        // - position.y) * pApp->getActiveDpiFactor()
-        // * m_pMap->getZoom())
-        // * m_pMap->getZoom())
-        qint32 x = mousePosX / GameMap::getImageSize();
-        qint32 y = mousePosY / GameMap::getImageSize();
-        setMapPoint(x, y);
+        auto* pMenu = m_pMap->getMenu();
+        if (pMenu != nullptr)
+        {
+            // Mainapp* pApp = Mainapp::getInstance();
+            // auto position = pMenu->getMapSlidingActor()->getPosition() + pMenu->getMapSliding()->getPosition() + m_pMap->getPosition();
+            // - position.x) * pApp->getActiveDpiFactor()
+            // - position.y) * pApp->getActiveDpiFactor()
+            // * m_pMap->getZoom())
+            // * m_pMap->getZoom())
+            qint32 x = mousePosX / GameMap::getImageSize();
+            qint32 y = mousePosY / GameMap::getImageSize();
+            setMapPoint(x, y);
+        }
     }
 }
 

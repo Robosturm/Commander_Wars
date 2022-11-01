@@ -21,12 +21,14 @@
 
 #include "ui_reader/uifactory.h"
 
-#include "game/gamerecording/gamemapimagesaver.h"
-
 #include "objects/loadingscreen.h"
 
 #include "network/mainserver.h"
 #include "network/tcpclient.h"
+
+#include "menue/basegamemenu.h"
+
+#include "game/gamerecording/gamemapimagesaver.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/buildingspritemanager.h"
@@ -83,6 +85,7 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
     connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
+    connect(this, &Mainapp::sigDoMapshot, this, &Mainapp::doMapshot, Qt::BlockingQueuedConnection);
 }
 
 void Mainapp::createLineEdit()
@@ -425,26 +428,6 @@ void Mainapp::doScreenshot()
 #endif
 }
 
-void Mainapp::doMapshot()
-{
-    if (beginRendering())
-    {
-        qint32 i = 0;
-        QDir dir("screenshots/");
-        dir.mkpath(".");
-        while (i < std::numeric_limits<qint32>::max())
-        {
-            QString filename = "screenshots/mapshot+" + QString::number(i) + ".png";
-            if (!QFile::exists(filename))
-            {
-                GamemapImageSaver::saveMapAsImage(filename);
-                break;
-            }
-            ++i;
-        }
-    }
-}
-
 void Mainapp::changeScreenMode(Settings::ScreenModes mode)
 {
 #ifdef GRAPHICSUPPORT
@@ -598,11 +581,7 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
         else if (cur == Settings::getKey_screenshot())
         {
             doScreenshot();
-        }
-        else if (cur == Settings::getKey_mapshot())
-        {
-            doMapshot();
-        }
+        }        
         else
         {
             CONSOLE_PRINT("keyPressEvent", Console::eDEBUG);
@@ -861,4 +840,24 @@ void Mainapp::setCreateSlaveLogs(bool create)
 void Mainapp::inputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
 {
     FocusableObject::handleInputMethodQuery(query, arg);
+}
+
+void Mainapp::doMapshot(BaseGamemenu* pMenu)
+{
+    if (beginRendering())
+    {
+        qint32 i = 0;
+        QDir dir("screenshots/");
+        dir.mkpath(".");
+        while (i < std::numeric_limits<qint32>::max())
+        {
+            QString filename = "screenshots/mapshot+" + QString::number(i) + ".png";
+            if (!QFile::exists(filename))
+            {
+                GamemapImageSaver::saveMapAsImage(filename, *pMenu);
+                break;
+            }
+            ++i;
+        }
+    }
 }

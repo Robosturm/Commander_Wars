@@ -17,6 +17,7 @@
 #include "resource_management/fontmanager.h"
 
 DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
+    : m_pPlayer(pPlayer)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogUnitInfo");
@@ -179,12 +180,15 @@ void DialogUnitInfo::remove()
 
 void DialogUnitInfo::moveToUnit(qint32 posX, qint32 posY)
 {    
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr &&
-        pMenu->getMap() != nullptr)
+    auto* pMap = m_pPlayer->getMap();
+    if (pMap != nullptr)
     {
-        pMenu->getMap()->centerMap(posX, posY);
-        pMenu->calcNewMousePosition(posX, posY);
+        BaseGamemenu* pMenu = pMap->getMenu();
+        if (pMenu != nullptr)
+        {
+            pMenu->getMap()->centerMap(posX, posY);
+            pMenu->calcNewMousePosition(posX, posY);
+        }
     }
     emit sigFinished();
     oxygine::Actor::detach();

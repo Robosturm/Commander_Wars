@@ -13,9 +13,7 @@
 
 #include "game/gamemap.h"
 
-spBaseGamemenu m_pInstance(nullptr);
-
-BaseGamemenu::BaseGamemenu(spGameMap pMap)
+BaseGamemenu::BaseGamemenu(spGameMap pMap, bool clearPlayerlist)
     : m_MapMoveThread(this),
       m_pMap(pMap)
 {
@@ -25,8 +23,10 @@ BaseGamemenu::BaseGamemenu(spGameMap pMap)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    pApp->getAudioThread()->clearPlayList();
-    m_pInstance = spBaseGamemenu(this, true);
+    if (clearPlayerlist)
+    {
+        pApp->getAudioThread()->clearPlayList();
+    }
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
@@ -41,7 +41,6 @@ BaseGamemenu::BaseGamemenu(qint32 width, qint32 heigth, QString map, bool savega
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     pApp->getAudioThread()->clearPlayList();
-    m_pInstance = spBaseGamemenu(this, true);
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
@@ -95,11 +94,6 @@ Player* BaseGamemenu::getCurrentViewPlayer()
     return nullptr;
 }
 
-BaseGamemenu* BaseGamemenu::getInstance()
-{
-    return m_pInstance.get();
-}
-
 void BaseGamemenu::loadBackground()
 {
     CONSOLE_PRINT("Entering In Game Menue", Console::eDEBUG);
@@ -123,14 +117,9 @@ void BaseGamemenu::changeBackground(QString background)
     }
 }
 
-void BaseGamemenu::deleteMenu()
-{
-    oxygine::Actor::detach();
-    m_pInstance = nullptr;
-}
-
 void BaseGamemenu::loadHandling()
 {
+    m_pMap->setMenu(this);
     if (!m_handlingLoaded)
     {
         m_handlingLoaded = true;
@@ -344,6 +333,10 @@ void BaseGamemenu::keyInput(oxygine::KeyEvent event)
         {
             emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
             m_lastMapPoint = mapPoint;
+        }
+        else if (cur == Settings::getKey_mapshot())
+        {
+            emit Mainapp::getInstance()->sigDoMapshot(this);
         }
         else
         {

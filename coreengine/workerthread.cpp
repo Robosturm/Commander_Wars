@@ -207,10 +207,6 @@ void WorkerThread::onQuit()
     {
         oxygine::Stage::getStage()->cleanup();
     }
-    if (BaseGamemenu::getInstance() != nullptr)
-    {
-        BaseGamemenu::getInstance()->deleteMenu();
-    }
     GameAnimationFactory::getInstance()->release();
     Interpreter::release();
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();

@@ -144,7 +144,7 @@ void GameAnimationPower::setDuration(qint32 timeMs)
     m_endTimer.setInterval(static_cast<qint32>(static_cast<float>(timeMs) / Settings::getAnimationSpeed()));
 }
 
-void GameAnimationPower::createRotatingBackground(const QString & resAnim, const QColor & color)
+void GameAnimationPower::createRotatingBackground(const QString & resAnim, const QColor & color, qint32 speedX)
 {
     oxygine::ResAnim* pAnimMask = GameManager::getInstance()->getResAnim(resAnim);    
     setSize(Settings::getWidth(), Settings::getHeight());
@@ -170,7 +170,7 @@ void GameAnimationPower::createRotatingBackground(const QString & resAnim, const
         spRotatingSprite rotSprite = spRotatingSprite::create();
         rotSprite->setSize(Settings::getWidth(), Settings::getHeight());
         rotSprite->setSprite(firstSpriteMask, secondSpriteMask);
-        rotSprite->setDirection(3);
+        rotSprite->setDirection(speedX);
         addChild(rotSprite);
     }
 }
@@ -245,10 +245,13 @@ void GameAnimationPower::start()
 
 void GameAnimationPower::restart()
 {
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    if (m_pMap != nullptr)
     {
-        pMenu->addChild(spGameAnimationPower(this));
-        m_endTimer.start();
+        auto* pMenu = m_pMap->getMenu();
+        if (pMenu != nullptr)
+        {
+            pMenu->addChild(spGameAnimationPower(this));
+            m_endTimer.start();
+        }
     }
 }

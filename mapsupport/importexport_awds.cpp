@@ -11,7 +11,7 @@
 
 #include "menue/editormenue.h"
 
-void GameMap::importAWDSMap(QString file)
+void GameMap::importAWDSMap(QString file, EditorMenue* pMenu)
 {
     quint8 sign = 0;
     if (QFile::exists(file))
@@ -1609,7 +1609,7 @@ void GameMap::importAWDSMap(QString file)
             m_headerInfo.m_mapDescription += static_cast<char>(sign);
         }
         m_headerInfo.m_mapDescription = m_headerInfo.m_mapDescription.replace("\n", " ");
-        dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance())->optimizePlayers();
+        pMenu->optimizePlayers();
         // update the whole fucking map
         updateSprites();
     }

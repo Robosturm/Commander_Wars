@@ -35,7 +35,7 @@ class GameMenue : public BaseGamemenu
 public:
     explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface, bool rejoin = false, bool startDirectly = false);
     explicit GameMenue(QString map, bool saveGame);
-    explicit GameMenue(spGameMap pMap);
+    explicit GameMenue(spGameMap pMap, bool clearPlayerlist);
     virtual ~GameMenue();
     /**
      * @brief attachInterface
@@ -417,6 +417,10 @@ protected slots:
      * @brief onEnter
      */
     virtual void onEnter() override;
+    /**
+     * @brief executeCommand
+     */
+    void executeCommand(QString command);
 protected:
     /**
      * @brief startDespawnTimer
@@ -470,6 +474,7 @@ protected:
     bool m_exitAfterSave{false};
     bool m_saveAllowed{false};
     bool m_isReplay{false};
+    bool m_terminated{false};
 
     ActionPerformer m_actionPerformer;
     spMovementPlanner m_pMovementPlanner;

@@ -170,26 +170,20 @@ void Console::extendMaskImages(QString folder, QString filter)
 
 void Console::dotask(QString message)
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
     print(message, Console::eINFO);
-    QString order = "GameConsole." + message;
-    // ignore console argument and evaluate the String on the Top-Level
-    spGameMenue pMenu = spGameMenue(dynamic_cast<GameMenue*>(GameMenue::getInstance()));
-    if (message.startsWith("game:") &&
-        pMenu.get() != nullptr &&
-        !pMenu->isNetworkGame() &&
-        getDeveloperMode())
+    if (message.startsWith("game:"))
     {
-        order = order.replace("GameConsole.game:", "");
-        pInterpreter->doString(order);
+        message = message.replace("game:", "");
+        emit Console::getInstance()->sigExecuteCommand(message);
     }
     else
     {
+        QString order = "GameConsole." + message;
         for (const auto& function : functions)
         {
             if (message.startsWith(function + "("))
             {
-                pInterpreter->doString(order);
+                Interpreter::getInstance()->doString(order);
                 break;
             }
         }

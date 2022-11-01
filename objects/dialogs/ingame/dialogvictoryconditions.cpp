@@ -147,11 +147,14 @@ void DialogVictoryConditions::remove()
 
 void DialogVictoryConditions::showPopup(QString rule)
 {
-    BaseGamemenu* pMenu = GameMenue::getInstance();
-    if (pMenu != nullptr && !VictoryRulePopup::exists(rule))
+    if (m_pMap != nullptr)
     {
-        spVictoryRulePopup pPopup = spVictoryRulePopup::create(m_pMap, rule, 180, 250);
-        pPopup->setY(Settings::getHeight() - pPopup->getScaledHeight());
-        pMenu->addChild(pPopup);
+        BaseGamemenu* pMenu = m_pMap->getMenu();
+        if (pMenu != nullptr && !VictoryRulePopup::exists(rule))
+        {
+            spVictoryRulePopup pPopup = spVictoryRulePopup::create(m_pMap, rule, 180, 250);
+            pPopup->setY(Settings::getHeight() - pPopup->getScaledHeight());
+            pMenu->addChild(pPopup);
+        }
     }
 }

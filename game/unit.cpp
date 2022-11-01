@@ -3352,7 +3352,7 @@ void Unit::setAiMode(const GameEnums::GameAi &AiMode)
     unloadIcon("patrol_loop");
     unloadIcon("hq");
     unloadIcon("scripted");
-    if (dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance()) != nullptr)
+    if (dynamic_cast<EditorMenue*>(m_pMap->getMenu()) != nullptr)
     {
         switch (m_AiMode)
         {

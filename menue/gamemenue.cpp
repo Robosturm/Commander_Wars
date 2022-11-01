@@ -62,7 +62,7 @@
 #include "game/ui/damagecalculator.h"
 
 GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface, bool rejoin, bool startDirectly)
-    : BaseGamemenu(pMap),
+    : BaseGamemenu(pMap, true),
       m_ReplayRecorder(m_pMap.get()),
       m_SaveGame(saveGame),
       m_actionPerformer(m_pMap.get(), this)
@@ -111,7 +111,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
             connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
         }
 
-        m_pChat = spChat::create(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100), NetworkInterface::NetworkSerives::GameChat);
+        m_pChat = spChat::create(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100), NetworkInterface::NetworkSerives::GameChat, this);
         m_pChat->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
         m_pChat->setVisible(false);
         addChild(m_pChat);
@@ -152,8 +152,8 @@ GameMenue::GameMenue(QString map, bool saveGame)
     }
 }
 
-GameMenue::GameMenue(spGameMap pMap)
-    : BaseGamemenu(pMap),
+GameMenue::GameMenue(spGameMap pMap, bool clearPlayerlist)
+    : BaseGamemenu(pMap, clearPlayerlist),
       m_ReplayRecorder(m_pMap.get()),
       m_actionPerformer(m_pMap.get(), this)
 {
@@ -1430,10 +1430,11 @@ void GameMenue::updateGameInfo()
 
 void GameMenue::victory(qint32 team)
 {
-    if (BaseGamemenu::getInstance() != nullptr)
+    if (!m_terminated)
     {
+        m_terminated = true;
         CONSOLE_PRINT("GameMenue::victory for team " + QString::number(team), Console::eDEBUG);
-        
+
         bool exit = true;
         bool humanWin = false;
         // create victorys
@@ -1482,7 +1483,7 @@ void GameMenue::victory(qint32 team)
             CONSOLE_PRINT("Leaving Game Menue", Console::eDEBUG);
             auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface);
             oxygine::Stage::getStage()->addChild(window);
-            deleteMenu();
+            oxygine::Actor::detach();
         }
     }
 }
@@ -1849,7 +1850,6 @@ void GameMenue::startGame()
     Mainapp* pApp = Mainapp::getInstance();
     GameAnimationFactory::clearAllAnimations();
     qint32 count = m_pMap->getPlayerCount();
-    m_pMap->setMenu(this);
     registerAtInterpreter();
     for (qint32 i = 0; i < count; ++i)
     {
@@ -1920,8 +1920,12 @@ void GameMenue::startGame()
         }
     }
     updateQuickButtons();
-    m_pMap->setVisible(true);
+    m_pMap->setVisible(true);    
     m_gameStarted = true;
+    if (!isNetworkGame() && !m_isReplay)
+    {
+        connect(Console::getInstance().get(), &Console::sigExecuteCommand, this, GameMenue::executeCommand, Qt::QueuedConnection);
+    }
     sendGameStartedToServer();
 }
 
@@ -2298,5 +2302,13 @@ void GameMenue::loadSaveGame(const QString savefile)
     else
     {
         setFocused(true);
+    }
+}
+
+void GameMenue::executeCommand(QString command)
+{
+    if (Console::getDeveloperMode())
+    {
+        Interpreter::getInstance()->doString(command);
     }
 }

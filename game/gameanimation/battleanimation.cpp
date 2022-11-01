@@ -634,11 +634,14 @@ QColor BattleAnimation::getHealthBarColor(float hp)
 
 void BattleAnimation::restart()
 {
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    if (m_pMap != nullptr)
     {
-        pMenu->addChild(spBattleAnimation(this));
-        m_battleTimer.start();
+        auto* pMenu = m_pMap->getMenu();
+        if (pMenu != nullptr)
+        {
+            pMenu->addChild(spBattleAnimation(this));
+            m_battleTimer.start();
+        }
     }
 }
 

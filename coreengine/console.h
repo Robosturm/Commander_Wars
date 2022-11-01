@@ -60,6 +60,7 @@ public:
     void release();
 signals:
     void sigToggleView();
+    void sigExecuteCommand(QString command);
     // use slots here since they're part of QMetaObject thus they get published to JSEngine.
 public slots:
     /**

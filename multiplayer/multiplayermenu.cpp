@@ -1661,7 +1661,7 @@ void Multiplayermenu::createChat()
     {
         m_Chat = spChat::create(m_pNetworkInterface,
                                 QSize(Settings::getWidth() - 60, Settings::getHeight() - 90),
-                                NetworkInterface::NetworkSerives::GameChat);
+                                NetworkInterface::NetworkSerives::GameChat, nullptr);
         m_Chat->setPosition(-m_Chat->getScaledWidth() + 1, 10);
         auto moveButton = spMoveInButton::create(m_Chat.get(), m_Chat->getScaledWidth(), 1, -1, 1.0f);
         m_Chat->addChild(moveButton);
@@ -1670,7 +1670,7 @@ void Multiplayermenu::createChat()
     {
         m_Chat = spChat::create(m_pNetworkInterface,
                                 QSize(Settings::getWidth() - 20, 300),
-                                NetworkInterface::NetworkSerives::GameChat);
+                                NetworkInterface::NetworkSerives::GameChat, nullptr);
         m_Chat->setPosition(10, Settings::getHeight() - 360);
     }
     addChild(m_Chat);    

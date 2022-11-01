@@ -22,7 +22,7 @@
 #include "ingamescriptsupport/genericbox.h"
 
 ReplayMenu::ReplayMenu(QString filename)
-    : GameMenue(spGameMap::create(1, 1, 2))
+    : GameMenue(spGameMap::create(1, 1, 2), true)
 {
     Interpreter::setCppOwnerShip(this);
 #ifdef GRAPHICSUPPORT
@@ -114,7 +114,7 @@ void ReplayMenu::exitReplay()
     CONSOLE_PRINT("Leaving Replay Menue", Console::eDEBUG);
     auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface, true);
     oxygine::Stage::getStage()->addChild(window);
-    deleteMenu();
+    oxygine::Actor::detach();
 }
 
 void ReplayMenu::nextReplayAction()

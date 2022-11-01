@@ -669,10 +669,9 @@ void GameMap::finishUpdateSprites(bool showLoadingScreen)
     {
         m_Rules->createWeatherSprites();
     }
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pMenu->updateSlidingActorSize();
+        m_pMenu->updateSlidingActorSize();
     }
     if (showLoadingScreen)
     {
@@ -1096,19 +1095,18 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
     if (onMap(x, y))
     {
         // draw point
-        BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-        if (pMenu != nullptr)
+        if (m_pMenu != nullptr)
         {
-            oxygine::spSlidingActorNoClipRect pMapSliding = pMenu->getMapSliding();
-            oxygine::spActor pMapSlidingActor = pMenu->getMapSlidingActor();
+            oxygine::spSlidingActorNoClipRect pMapSliding = m_pMenu->getMapSliding();
+            oxygine::spActor pMapSlidingActor = m_pMenu->getMapSlidingActor();
             if (pMapSliding.get() != nullptr &&
                 pMapSlidingActor.get() != nullptr)
             {
                 qint32 newX = pMapSliding->getScaledWidth() / 2.0f - x * getZoom() * m_imagesize - m_imagesize / 2.0f;
                 qint32 newY = pMapSliding->getScaledHeight() / 2.0f - y * getZoom() * m_imagesize - m_imagesize / 2.0f;
-                limitPosition(pMenu, newX, newY);
+                limitPosition(m_pMenu, newX, newY);
                 pMapSlidingActor->setPosition(newX, newY);
-                pMenu->getCursor()->setMapPoint(x, y);
+                m_pMenu->getCursor()->setMapPoint(x, y);
             }
         }
         if (updateMinimapPosition)
@@ -1120,13 +1118,12 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
 
 QPoint GameMap::getCenteredPosition()
 {
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     qint32 x = 0;
     qint32 y = 0;
-    if (pMenu != nullptr)
+    if (m_pMenu != nullptr)
     {
-        oxygine::spSlidingActorNoClipRect pMapSliding = pMenu->getMapSliding();
-        oxygine::spActor pMapSlidingActor = pMenu->getMapSlidingActor();
+        oxygine::spSlidingActorNoClipRect pMapSliding = m_pMenu->getMapSliding();
+        oxygine::spActor pMapSlidingActor = m_pMenu->getMapSlidingActor();
         x = -(pMapSlidingActor->getX() - pMapSliding->getScaledWidth() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
         y = -(pMapSlidingActor->getY() - pMapSliding->getScaledHeight() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
     }
@@ -1135,16 +1132,15 @@ QPoint GameMap::getCenteredPosition()
 
 void GameMap::moveMap(qint32 x, qint32 y)
 {
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    if (m_pMenu != nullptr)
     {
         // draw point
-        oxygine::spActor pActor = pMenu->getMapSlidingActor();
+        oxygine::spActor pActor = m_pMenu->getMapSlidingActor();
         if (pActor.get() != nullptr)
         {
             qint32 newX = pActor->getX() + x;
             qint32 newY = pActor->getY() + y;
-            limitPosition(pMenu, newX, newY);
+            limitPosition(m_pMenu, newX, newY);
             pActor->setPosition(newX, newY);
             emit sigMovedMap();
         }
@@ -1203,10 +1199,9 @@ void GameMap::setZoom(float zoom)
         // all fine
     }
     setScale(curZoom);
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pMenu->updateSlidingActorSize();
+        m_pMenu->updateSlidingActorSize();
     }
     emit sigZoomChanged(curZoom);
 }
@@ -1426,7 +1421,12 @@ void GameMap::updateMapFlags() const
     }
 }
 
-void GameMap::setMenu(GameMenue *newMenu)
+BaseGamemenu *GameMap::getMenu() const
+{
+    return m_pMenu;
+}
+
+void GameMap::setMenu(BaseGamemenu *newMenu)
 {
     m_pMenu = newMenu;
 }
@@ -2381,10 +2381,11 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         checkFuel(m_CurrentPlayer.get());
         m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
         m_Rules->initRoundTime();
-        if (m_pMenu != nullptr)
+        auto* pMenu = dynamic_cast<GameMenue*>(m_pMenu);
+        if (pMenu != nullptr)
         {
-            m_pMenu->updatePlayerinfo();
-            m_pMenu->updateMinimap();
+            pMenu->updatePlayerinfo();
+            pMenu->updateMinimap();
         }
         playMusic();
         if (baseGameInput->getAiType() == GameEnums::AiTypes_Human)

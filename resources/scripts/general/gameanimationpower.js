@@ -123,7 +123,7 @@ var GAMEANIMATIONPOWER =
             animation.addTweenPositionToLastQueue(randomDirections[globals.randInt(0, 3)], frameTime * 4, GameEnums.QEasingCurve_OutQuad);
             if (subtext !== " ")
             {
-                animation.addSound("co_power_letter.wav", 1, delay + duration)
+                animation.addSound("co_power_letter.wav", 1, delay + duration - frameTime)
             }
             if (i === 0)
             {
