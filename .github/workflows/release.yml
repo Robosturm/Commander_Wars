@@ -143,7 +143,7 @@ jobs:
 
     - name: Install host os qt
       if: matrix.target == 'android'
-      uses: jurplel/install-qt-action@v2.14.0
+      uses: jurplel/install-qt-action@v3
       with:      
           aqtversion: '==2.0.2'
           target: 'desktop'
@@ -153,7 +153,7 @@ jobs:
           install-deps: "true"
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v2.14.0
+      uses: jurplel/install-qt-action@v3
       with:      
           aqtversion: '==2.0.2'
           target: ${{matrix.target}}

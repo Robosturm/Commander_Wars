@@ -1924,7 +1924,7 @@ void GameMenue::startGame()
     m_gameStarted = true;
     if (!isNetworkGame() && !m_isReplay)
     {
-        connect(Console::getInstance().get(), &Console::sigExecuteCommand, this, GameMenue::executeCommand, Qt::QueuedConnection);
+        connect(Console::getInstance().get(), &Console::sigExecuteCommand, this, &GameMenue::executeCommand, Qt::QueuedConnection);
     }
     sendGameStartedToServer();
 }
