@@ -24,6 +24,34 @@ var Constructor = function()
     };
 
     this.actionList = ["ACTION_BLACKHOLEFACTORY_DOOR1", "ACTION_BLACKHOLEFACTORY_DOOR2", "ACTION_BLACKHOLEFACTORY_DOOR3"];
+    this.getConstructionList = function(building)
+    {
+        var xBuilding = building.getX();
+        var y = building.getY() + 1;
+        var map = building.getMap();
+        var units = map.getAllUnitIDs();
+        var buildlist = building.getOwner().getBuildList();
+        var unitIds = [];
+        var length = units.length;
+        for (var x = xBuilding - 2; x <= xBuilding; ++x)
+        {
+            var terrain = map.getTerrain(x, y);
+            for (var i = 0; i < length; i++)
+            {
+                if (unitIds.indexOf(units[i]) < 0)
+                {
+                    // check all units if they can move over this terrain
+                    if (buildlist.includes(units[i]) &&
+                        Global[Global[units[i]].getMovementType()].getMovementpoints(terrain, null, terrain, true, map) > 0 &&
+                        Global[units[i]].getCOSpecificUnit() === false)
+                    {
+                        unitIds.push(units[i]);
+                    }
+                }
+            }
+        }
+        return unitIds;
+    };
 
     this.getBuildingWidth = function()
     {

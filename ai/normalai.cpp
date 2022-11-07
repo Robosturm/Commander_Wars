@@ -188,21 +188,20 @@ void NormalAi::process()
     spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
     pBuildings->randomize();
     spQmlVectorUnit pUnits;
+    pUnits = m_pPlayer->getUnits();
     spQmlVectorUnit pEnemyUnits;
     spQmlVectorBuilding pEnemyBuildings;
     qint32 cost = 0;
     m_pPlayer->getSiloRockettarget(2, 3, cost);
     m_missileTarget = (cost >= m_minSiloDamage);
-    if (useBuilding(pBuildings)){}
+    if (useBuilding(pBuildings, pUnits)){}
     else
     {
         AI_CONSOLE_PRINT("NormalAi::creating unit arrays()", Console::eDEBUG);
-        pUnits = m_pPlayer->getUnits();
         pEnemyUnits = m_pPlayer->getEnemyUnits();
         pEnemyUnits->randomize();
         pEnemyBuildings = m_pPlayer->getEnemyBuildings();
         pEnemyBuildings->randomize();
-
         updateAllUnitData(pUnits);
         if (useCOPower(pUnits, pEnemyUnits))
         {
@@ -1649,11 +1648,10 @@ float NormalAi::getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy
             float minFundsDamage = -pUnitData.pUnit->getCoUnitValue() * m_minAttackFunds;
             if (GlobalUtils::getDistance(moveTarget, position) <= movepoints)
             {
-                spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
-                pAction->setTarget(QPoint(pUnitData.pUnit->Unit::getX(), pUnitData.pUnit->Unit::getY()));
                 std::vector<CoreAI::DamageData> ret;
-                std::vector<QVector3D> moveTargetFields;
-                CoreAI::getAttackTargets(pUnitData.pUnit.get(), pAction, pUnitData.pUnitPfs.get(), ret, moveTargetFields);
+                spQmlVectorPoint firerange;
+                firerange = GlobalUtils::getCircle(pUnitData.minFireRange, pUnitData.maxFireRange);
+                CoreAI::getAttackTargetsFast(pUnitData.pUnit.get(), *firerange.get(), pUnitData.pUnitPfs.get(), ret);
 
                 std::vector<Unit*> pUsedUnits;
                 float newFundsDamage = std::numeric_limits<float>::lowest();
@@ -2798,20 +2796,14 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
             enemyRange = (enemyMovepoints + enemyFirerange) * 0.5f;
         }
         float distance = GlobalUtils::getDistance(position, enemyPosition);
-        float dmg = dummy.getBaseDamage(pEnemyUnit);
+        float dmg = getBaseDamage(&dummy, pEnemyUnit).x();
         float counterDmg = 0.0f;
-        float baseCounterDmg = 0.0f;
-        if (pEnemyUnit->hasWeapons())
-        {
-            baseCounterDmg = pEnemyUnit->getBaseDamage(&dummy);
-        }
-
+        float baseCounterDmg = getBaseDamage(pEnemyUnit, &dummy).x();
         if ((baseCounterDmg < m_lowThreadDamage && dmg >= m_midDamage) ||
             dmg > pEnemyUnit->getHp() * Unit::MAX_UNIT_HP)
         {
             dmg = pEnemyUnit->getHp() * Unit::MAX_UNIT_HP;
         }
-
         counterDmg = baseCounterDmg * pEnemyUnit->getHp() / Unit::MAX_UNIT_HP;
 
         if (counterDmg > m_lowThreadDamage &&

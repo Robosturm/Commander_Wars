@@ -17,6 +17,7 @@
 #include "coreengine/globalutils.h"
 
 #include "resource_management/cospritemanager.h"
+#include "resource_management/weaponmanager.h"
 
 #include <QFile>
 #include <QSettings>
@@ -53,9 +54,14 @@ const QString CoreAI::ACTION_CO_UNIT_1 = "ACTION_CO_UNIT_1";
 const QString CoreAI::ACTION_EXPLODE = "ACTION_EXPLODE";
 const QString CoreAI::ACTION_FLARE = "ACTION_FLARE";
 const QString CoreAI::ACTION_TRAP = "ACTION_TRAP";
+const QString CoreAI::ACTION_BLACKHOLEFACTORY_DOOR1 = "ACTION_BLACKHOLEFACTORY_DOOR1";
+const QString CoreAI::ACTION_BLACKHOLEFACTORY_DOOR2 = "ACTION_BLACKHOLEFACTORY_DOOR2";
+const QString CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3 = "ACTION_BLACKHOLEFACTORY_DOOR3";
 
 const QString CoreAI::UNIT_INFANTRY = "INFANTRY";
 const QString CoreAI::BUILDING_HQ = "HQ";
+
+std::map<QString, float> CoreAI::m_baseDamageTable;
 
 CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
     : BaseGameInputIF(pMap, aiType),
@@ -639,8 +645,7 @@ void CoreAI::getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindi
 }
 
 void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction & pAction, std::vector<DamageData>& ret, std::vector<QVector3D>& moveTargetFields) const
-{
-    
+{    
     // much easier case
     // check if the action can be performed here
     if (pAction->canBePerformed())
@@ -2097,10 +2102,9 @@ void CoreAI::finishTurn()
     emit performAction(pAction);
 }
 
-bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
+bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits)
 {
     AI_CONSOLE_PRINT("CoreAI::useBuilding", Console::eDEBUG);
-    
     for (auto & pBuilding : pBuildings->getVector())
     {
         QStringList actions = pBuilding->getActionList();
@@ -2128,47 +2132,53 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
                                 if (stepType == GameAction::INPUTSTEP_FIELD)
                                 {
                                     QPoint target(0, 0);
-                                    qint32 maxValue = std::numeric_limits<qint32>::lowest();
                                     spMarkedFieldData pData = pAction->getMarkedFieldStepData();
-                                    if (pData->getAllFields())
+                                    if (!getBuildingTargetPointFromScript(pAction, pData, target))
                                     {
-                                        qint32 width = m_pMap->getMapWidth();
-                                        qint32 height = m_pMap->getMapHeight();
-                                        for (qint32 x = 0; x < width; ++x)
+                                        qint32 maxValue = std::numeric_limits<qint32>::lowest();
+                                        if (pData->getAllFields())
                                         {
-                                            for (qint32 y = 0; y < height; ++y)
+                                            qint32 width = m_pMap->getMapWidth();
+                                            qint32 height = m_pMap->getMapHeight();
+                                            for (qint32 x = 0; x < width; ++x)
                                             {
-                                                Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                                                for (qint32 y = 0; y < height; ++y)
+                                                {
+                                                    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                                                    if (pUnit != nullptr)
+                                                    {
+                                                        qint32 unitValue = pUnit->getCoUnitValue();
+                                                        if (unitValue > maxValue)
+                                                        {
+                                                            maxValue = unitValue;
+                                                            target = QPoint(x, y);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            QVector<QPoint> & points = *pData->getPoints();
+                                            qint32 index = -1;
+                                            for (qint32 i2 = 0; i2 < points.size(); ++i2)
+                                            {
+                                                Unit* pUnit = m_pMap->getTerrain(points[i2].x(), points[i2].y())->getUnit();
                                                 qint32 unitValue = pUnit->getCoUnitValue();
                                                 if (pUnit != nullptr && unitValue > maxValue)
                                                 {
                                                     maxValue = unitValue;
-                                                    target = QPoint(x, y);
+                                                    index = i2;
                                                 }
                                             }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        QVector<QPoint> & points = *pData->getPoints();
-                                        qint32 index = -1;
-                                        for (qint32 i2 = 0; i2 < points.size(); ++i2)
-                                        {
-                                            Unit* pUnit = m_pMap->getTerrain(points[i2].x(), points[i2].y())->getUnit();
-                                            qint32 unitValue = pUnit->getCoUnitValue();
-                                            if (pUnit != nullptr && unitValue > maxValue)
+                                            if (index < 0)
                                             {
-                                                maxValue = unitValue;
-                                                index = i2;
+                                                target = points.at(GlobalUtils::randIntBase(0, points.size() -1));
                                             }
-                                        }
-                                        if (index < 0)
-                                        {
-                                            target = points.at(GlobalUtils::randIntBase(0, points.size() -1));
-                                        }
-                                        else
-                                        {
-                                            target = points.at(index);
+                                            else
+                                            {
+                                                target = points.at(index);
+                                            }
                                         }
                                     }
                                     addSelectedFieldData(pAction, target);
@@ -2178,23 +2188,36 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
                                     spMenuData pData = pAction->getMenuStepData();
                                     if (pData->validData())
                                     {
-                                        QStringList items = pData->getActionIDs();
+                                        qint32 selection = -1;
                                         auto enable = pData->getEnabledList();
-                                        qint32 i = 0;
-                                        while (i < enable.size())
+                                        QStringList items = pData->getActionIDs();
+                                        auto costs = pData->getCostList();
+                                        if (!getBuildingMenuItemFromScript(pAction, pUnits, pBuildings, pData, selection))
                                         {
-                                            if (enable[i])
+                                            qint32 i = 0;
+                                            while (i < enable.size())
                                             {
-                                                i++;
+                                                if (enable[i])
+                                                {
+                                                    i++;
+                                                }
+                                                else
+                                                {
+                                                    items.removeAt(i);
+                                                    enable.removeAt(i);
+                                                }
                                             }
-                                            else
-                                            {
-                                                items.removeAt(i);
-                                                enable.removeAt(i);
-                                            }
+                                            selection = GlobalUtils::randIntBase(0, items.size() - 1);
                                         }
-                                        qint32 selection = GlobalUtils::randIntBase(0, items.size() - 1);
-                                        addMenuItemData(pAction, items[selection], pData->getCostList()[selection]);
+                                        if (selection >= 0 && selection < items.size() && enable[selection])
+                                        {
+                                            addMenuItemData(pAction, items[selection], costs[selection]);
+                                        }
+                                        else
+                                        {
+                                            CONSOLE_PRINT("Illegal menu selection skipping building action", Console::eERROR);
+                                            break;
+                                        }
                                     }
                                 }
                                 else
@@ -2218,6 +2241,109 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
         }
     }
     return false;
+}
+
+bool CoreAI::getBuildingTargetPointFromScript(spGameAction & pAction, const spMarkedFieldData & pData, QPoint & target)
+{
+    bool ret = false;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue erg(false);
+    QString function1 = "getBuildingTarget";
+    QVector<QPoint> & points = *pData->getPoints();
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pAction.get()),
+                       pInterpreter->toScriptValue(points),
+                       pData->getAllFields(),
+                       pInterpreter->newQObject(m_pPlayer),
+                       pInterpreter->newQObject(m_pMap)});
+    if (pInterpreter->exists(GameScript::m_scriptName, function1))
+    {
+        erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
+        if (erg.isVariant())
+        {
+            target = erg.toVariant().toPoint();
+        }
+    }
+    if (erg.isBool() && !erg.toBool())
+    {
+        if (pInterpreter->exists(m_aiName, function1))
+        {
+            erg = pInterpreter->doFunction(m_aiName, function1, args);
+            if (erg.isVariant())
+            {
+                target = erg.toVariant().toPoint();
+            }
+        }
+    }
+    if (m_pMap->onMap(target.x(), target.y()))
+    {
+        ret = true;
+    }
+    if (erg.isBool())
+    {
+        ret = erg.toBool();
+    }
+    if (ret && !points.contains(target))
+    {
+        CONSOLE_PRINT("Illegal target selection skipping building action target x=" + QString::number(target.x()) +  " target y=" + QString::number(target.y()) +
+                      " building x=" + QString::number(pAction->getTarget().x()) +  " building y=" + QString::number(pAction->getTarget().y()), Console::eERROR);
+        ret = false;
+    }
+    return ret;
+}
+
+bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, const spMenuData & pData, qint32 & index)
+{
+    bool ret = false;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    auto enable = pData->getEnabledList();
+    QStringList items = pData->getActionIDs();
+    auto costs = pData->getCostList();
+    QJSValue erg(false);
+    QString function1 = "getBuildingMenuItem";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pAction.get()),
+                       pInterpreter->toScriptValue(items),
+                       pInterpreter->toScriptValue(costs),
+                       pInterpreter->toScriptValue(enable),
+                       pInterpreter->newQObject(pUnits.get()),
+                       pInterpreter->newQObject(pBuildings.get()),
+                       pInterpreter->newQObject(m_pPlayer),
+                       pInterpreter->newQObject(m_pMap)});
+    if (pInterpreter->exists(GameScript::m_scriptName, function1))
+    {
+        erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
+        if (erg.isNumber())
+        {
+            index = erg.toInt();
+        }
+    }
+    if (erg.isBool() && !erg.toBool())
+    {
+        if (pInterpreter->exists(m_aiName, function1))
+        {
+            erg = pInterpreter->doFunction(m_aiName, function1, args);
+            if (erg.isNumber())
+            {
+                index = erg.toInt();
+            }
+        }
+    }
+    if (index >= 0 && index < enable.size())
+    {
+        ret = true;
+    }
+    if (erg.isBool())
+    {
+        ret = erg.toBool();
+    }
+    if (ret && !enable[index])
+    {
+        CONSOLE_PRINT("Illegal menu selection skipping building action target item index=" + QString::number(index) +
+                      " building x=" + QString::number(pAction->getTarget().x()) +  " building y=" + QString::number(pAction->getTarget().y()), Console::eERROR);
+        ret = false;
+    }
+    return ret;
 }
 
 float CoreAI::getAiCoUnitMultiplier(CO* pCO, Unit* pUnit)
@@ -2507,6 +2633,116 @@ bool CoreAI::isMoveableTile(Building* pBuilding) const
 QString CoreAI::getAiName() const
 {
     return m_aiName;
+}
+
+SimpleProductionSystem* CoreAI::getSimpleProductionSystem()
+{
+    return &m_productionSystem;
+}
+
+void CoreAI::getAttackTargetsFast(Unit* pUnit, QmlVectorPoint & firePoints, UnitPathFindingSystem* pPfs, std::vector<DamageData>& ret, qint32 maxDistance) const
+{
+    getAttacksFromFieldFast(pUnit, pUnit->getPosition(), firePoints, ret);
+    if (pUnit->canMoveAndFire(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())))
+    {
+        if (m_pMap != nullptr)
+        {
+            auto targets = pPfs->getAllNodePointsFast(maxDistance);
+            for (auto & target : targets)
+            {
+                Terrain* pTerrain = m_pMap->getTerrain(target.x(), target.y());
+                if (pTerrain->getUnit() == nullptr)
+                {
+                    getAttacksFromFieldFast(pUnit, target, firePoints, ret);
+                }
+            }
+        }
+    }
+}
+
+void CoreAI::getAttacksFromFieldFast(Unit* pUnit, QPoint position, QmlVectorPoint & firePoints, std::vector<DamageData>& ret) const
+{
+    for (auto & target : qAsConst(firePoints.getVector()))
+    {
+        QPoint finalPos = target + position;
+        if (m_pMap->onMap(finalPos.x(), finalPos.y()))
+        {
+            Terrain* pTerrain = m_pMap->getTerrain(finalPos.x(), finalPos.y());
+            Unit* pDef = pTerrain->getUnit();
+            if (pDef != nullptr)
+            {
+                QRectF damage = calcUnitDamageFast(pUnit, pDef);
+                QPointF dmg = calcFundsDamage(damage, pUnit, pDef);
+                DamageData data;
+                data.x = finalPos.x();
+                data.y = finalPos.y();
+                data.fundsDamage = dmg.y();
+                data.hpDamage = dmg.x();
+                ret.push_back(data);
+            }
+        }
+    }
+}
+
+QRectF CoreAI::calcUnitDamageFast(Unit* pAttacker, Unit* pDefender)
+{
+    QRectF ret;
+    QPointF atkDmg = getBaseDamage(pAttacker, pDefender);
+    QPointF defDmg = getBaseDamage(pAttacker, pDefender);
+    ret.setX(atkDmg.x());
+    ret.setY(atkDmg.y());
+    ret.setWidth(defDmg.x());
+    ret.setHeight(defDmg.y());
+    return ret;
+}
+
+QPointF CoreAI::getBaseDamage(Unit* pAttacker, Unit* pDefender)
+{
+    float damage1 = -1.0f;
+    QPointF ret;
+    if (pAttacker->hasAmmo1())
+    {
+        QString key = pAttacker->getWeapon1ID() + pDefender->getUnitID();
+        if (m_baseDamageTable.contains(key))
+        {
+            damage1 = m_baseDamageTable[key];
+        }
+        else
+        {
+            damage1 = getBaseDamage(pAttacker->getWeapon1ID(), pDefender);
+            m_baseDamageTable[key] = damage1;
+        }
+    }
+    float damage2 = -1.0f;
+    if (pAttacker->hasAmmo2())
+    {
+        QString key = pAttacker->getWeapon2ID() + pDefender->getUnitID();
+        if (m_baseDamageTable.contains(key))
+        {
+            damage2 = m_baseDamageTable[key];
+        }
+        else
+        {
+            damage2 = getBaseDamage(pAttacker->getWeapon2ID(), pDefender);
+            m_baseDamageTable[key] = damage2;
+        }
+    }
+    if (damage1 > damage2)
+    {
+        ret.setX(damage1);
+        ret.setY(0);
+    }
+    else
+    {
+        ret.setX(damage2);
+        ret.setY(0);
+    }
+    return ret;
+}
+
+float CoreAI::getBaseDamage(const QString & weaponID, Unit* pDefender)
+{
+    return WeaponManager::getInstance()->getBaseDamage(weaponID, pDefender);
 }
 
 void CoreAI::serializeObject(QDataStream& stream) const

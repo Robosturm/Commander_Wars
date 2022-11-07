@@ -1174,7 +1174,11 @@ bool Building::isMissile()
 
 bool Building::isProductionBuilding()
 {
-    if (getActionList().contains(CoreAI::ACTION_BUILD_UNITS))
+    auto actionList = getActionList();
+    if (actionList.contains(CoreAI::ACTION_BUILD_UNITS) ||
+        actionList.contains(CoreAI::ACTION_BLACKHOLEFACTORY_DOOR1) ||
+        actionList.contains(CoreAI::ACTION_BLACKHOLEFACTORY_DOOR2) ||
+        actionList.contains(CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3))
     {
         return true;
     }

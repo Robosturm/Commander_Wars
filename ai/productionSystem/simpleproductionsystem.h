@@ -69,7 +69,9 @@ public:
     void initialize();
     bool buildUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings, bool & executed);
     void onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings);
+
 public slots:
+    bool getInit() const;
     bool getEnabled() const;
     void setEnabled(bool newEnabled);
     /**
@@ -93,9 +95,12 @@ public slots:
      * @return
      */
     Unit* getDummyUnit(const QString & unitId);
+    qint32 getProductionFromList(const QStringList & unitIds, QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, qint32 minBuildMode, qint32 maxBuildMode, const QVector<bool> & enableList = QVector<bool>());
 private:
     bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId);
     bool buildUnit(qint32 x, qint32 y, QString unitId);
+    void getBuildDistribution(std::vector<CurrentBuildDistribution> & buildDistribution, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode);
+    void updateActiveProductionSystem(QmlVectorBuilding* pBuildings);
 private:
     CoreAI * m_owner{nullptr};
     bool m_init{false};

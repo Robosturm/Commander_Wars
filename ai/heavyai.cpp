@@ -175,7 +175,7 @@ void HeavyAi::process()
     FunctionType explodeType = FunctionType::Undefined;
     getFunctionType(CoreAI::ACTION_EXPLODE, explodeType, index);
 
-    if (useBuilding(m_pBuildings)){}
+    if (useBuilding(m_pBuildings, pUnits)){}
     else if (useCOPower(pUnits, pEnemyUnits))
     {
         m_usedPredefinedAi = false;

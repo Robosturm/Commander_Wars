@@ -100,6 +100,11 @@ void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlV
             erg = pInterpreter->doFunction(m_owner->getAiName(), function1, args);
         }
     }
+    updateActiveProductionSystem(pBuildings);
+}
+
+void SimpleProductionSystem::updateActiveProductionSystem(QmlVectorBuilding* pBuildings)
+{
     m_activeBuildDistribution = m_buildDistribution;
     for (auto & distribution : m_activeBuildDistribution)
     {
@@ -275,51 +280,8 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
     }
     if (!success)
     {
-        QMap<QString, float> unitCounts;
-        for (auto & unit : pUnits->getVector())
-        {
-            auto unitId = unit->getUnitID();
-            for (const auto& [key, value] : m_activeBuildDistribution)
-            {
-                if (value.unitIds.contains(unitId))
-                {
-                    ++unitCounts[key];
-                }
-            }
-        }
-        Interpreter* pInterpreter = Interpreter::getInstance();
         std::vector<CurrentBuildDistribution> buildDistribution;
-        float totalUnitCount = pUnits->size();
-        float totalDistributionCount = 0;
-        for (const auto& [key, value] : m_activeBuildDistribution)
-        {
-            float distribution = unitCounts[key] / totalUnitCount;
-            if (minBuildMode <= value.buildMode &&
-                value.buildMode <= maxBuildMode &&
-                value.unitIds.size() > 0 &&
-                distribution <= value.maxUnitDistribution)
-            {
-                if (value.guardCondition.isEmpty() || pInterpreter->doFunction(value.guardCondition).toBool())
-                {
-                    totalDistributionCount += value.distribution;
-                    CurrentBuildDistribution item;
-                    item.distribution = value;
-                    if (unitCounts.contains(key))
-                    {
-                        item.currentValue = distribution;
-                    }
-                    else
-                    {
-                        item.currentValue = 0.0f;
-                    }
-                    buildDistribution.push_back(item);
-                }
-            }
-        }
-        std::sort(buildDistribution.begin(), buildDistribution.end(), [totalDistributionCount](const CurrentBuildDistribution& lhs, const CurrentBuildDistribution& rhs)
-        {
-            return lhs.distribution.distribution / totalDistributionCount - lhs.currentValue > rhs.distribution.distribution / totalDistributionCount - rhs.currentValue;
-        });
+        getBuildDistribution(buildDistribution, pUnits, minBuildMode, maxBuildMode);
         // try building the unit group which has the highest gap
         for (auto & item : buildDistribution)
         {            
@@ -366,6 +328,121 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
         }
     }
     return success;
+}
+
+qint32 SimpleProductionSystem::getProductionFromList(const QStringList & unitIds, QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, qint32 minBuildMode, qint32 maxBuildMode, const QVector<bool> & enableList)
+{
+    if (m_activeBuildDistribution.size() == 0)
+    {
+        updateActiveProductionSystem(pBuildings);
+    }
+    std::vector<CurrentBuildDistribution> buildDistribution;
+    getBuildDistribution(buildDistribution, pUnits, minBuildMode, maxBuildMode);
+    qint32 index = -1;
+    for (auto & item : buildDistribution)
+    {
+        auto count = item.distribution.unitIds.length();
+        if (count > 0)
+        {
+            if (count == 1)
+            {
+                index = unitIds.indexOf(item.distribution.unitIds[0]);
+                if (index >= 0 && (enableList.size() == 0 || enableList[index]))
+                {
+                    break;
+                }
+            }
+            else
+            {
+                for (qint32 i = 0; i < item.distribution.unitIds.length() * 3; ++i)
+                {
+                    qint32 roll = GlobalUtils::randInt(0, item.distribution.totalChance);
+                    qint32 chance = 0;
+                    for (qint32 i2 = 0; i2 < item.distribution.unitIds.length(); ++i2)
+                    {
+                        if (roll < chance + item.distribution.chance[i2])
+                        {
+                            index = unitIds.indexOf(item.distribution.unitIds[i2]);
+                        }
+                        else
+                        {
+                            chance += item.distribution.chance[i2];
+                        }
+                        if (index >= 0 && (enableList.size() == 0 || enableList[index]))
+                        {
+                            break;
+                        }
+                    }
+                    if (index >= 0 && (enableList.size() == 0 || enableList[index]))
+                    {
+                        break;
+                    }
+                }
+            }
+            if (index >= 0 && (enableList.size() == 0 || enableList[index]))
+            {
+                break;
+            }
+        }
+    }
+    return index;
+}
+
+void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistribution> & buildDistribution, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode)
+{
+    QMap<QString, float> unitCounts;
+    for (auto & unit : pUnits->getVector())
+    {
+        auto unitId = unit->getUnitID();
+        for (const auto& [key, value] : m_activeBuildDistribution)
+        {
+            if (value.unitIds.contains(unitId))
+            {
+                ++unitCounts[key];
+            }
+        }
+    }
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    float totalUnitCount = pUnits->size();
+    float totalDistributionCount = 0;
+    for (const auto& [key, value] : m_activeBuildDistribution)
+    {
+        float distribution = 0.0f;
+        if (unitCounts.contains(key))
+        {
+            distribution = unitCounts[key] / totalUnitCount;
+        }
+        if (minBuildMode <= value.buildMode &&
+            value.buildMode <= maxBuildMode &&
+            value.unitIds.size() > 0 &&
+            distribution <= value.maxUnitDistribution)
+        {
+            if (value.guardCondition.isEmpty() || pInterpreter->doFunction(value.guardCondition).toBool())
+            {
+                totalDistributionCount += value.distribution;
+                CurrentBuildDistribution item;
+                item.distribution = value;
+                if (unitCounts.contains(key))
+                {
+                    item.currentValue = distribution;
+                }
+                else
+                {
+                    item.currentValue = 0.0f;
+                }
+                buildDistribution.push_back(item);
+            }
+        }
+    }
+    std::sort(buildDistribution.begin(), buildDistribution.end(), [totalDistributionCount](const CurrentBuildDistribution& lhs, const CurrentBuildDistribution& rhs)
+    {
+        return lhs.distribution.distribution / totalDistributionCount - lhs.currentValue > rhs.distribution.distribution / totalDistributionCount - rhs.currentValue;
+    });
+}
+
+bool SimpleProductionSystem::getInit() const
+{
+    return m_init;
 }
 
 bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString unitId)

@@ -65,7 +65,6 @@ void VeryEasyAI::process()
     pBuildings->randomize();
     spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
     pUnits->randomize();
-
     spQmlVectorUnit pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
     pEnemyUnits->randomize();
     spQmlVectorBuilding pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
@@ -91,7 +90,7 @@ void VeryEasyAI::process()
     else
     {
         turnMode = GameEnums::AiTurnMode_DuringDay;
-        if (useBuilding(pBuildings)){}
+        if (useBuilding(pBuildings, pUnits)){}
         else if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
         else
         {

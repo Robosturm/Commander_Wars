@@ -11,13 +11,20 @@
 
 float WeaponManager::getBaseDamage(const QString & weaponID, Unit* pDefender)
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = "getBaseDamage";
-    QJSValueList args({pInterpreter->newQObject(pDefender)});
-    QJSValue erg = pInterpreter->doFunction(weaponID, function1, args);
-    if (erg.isNumber())
+    if (!weaponID.isEmpty())
     {
-        return erg.toNumber();
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function1 = "getBaseDamage";
+        QJSValueList args({pInterpreter->newQObject(pDefender)});
+        QJSValue erg = pInterpreter->doFunction(weaponID, function1, args);
+        if (erg.isNumber())
+        {
+            return erg.toNumber();
+        }
+        else
+        {
+            return -1.0f;
+        }
     }
     else
     {

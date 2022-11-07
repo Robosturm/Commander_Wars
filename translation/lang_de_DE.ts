@@ -10475,7 +10475,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/__zblackhole_factorybase.js" line="49"/>
+        <location filename="../resources/scripts/building/__zblackhole_factorybase.js" line="77"/>
         <source>Black Hole Factory that can build 3 units each turn which can immediatly move.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26705,12 +26705,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_nest_laser</name>
     <message>
-        <location filename="../resources/scripts/building/znest_nest_laser.js" line="38"/>
+        <location filename="../resources/scripts/building/znest_nest_laser.js" line="45"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_nest_laser.js" line="42"/>
+        <location filename="../resources/scripts/building/znest_nest_laser.js" line="49"/>
         <source>Nest of Dark Matter. Currently only a visual.</source>
         <translation type="unfinished"></translation>
     </message>

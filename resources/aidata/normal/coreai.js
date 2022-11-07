@@ -351,4 +351,17 @@ var COREAI =
         }
         return system.buildNextUnit(buildings, units, minMode, maxMode);
     },
+
+    getFactoryMenuItem : function(ai, action, ids, costs, enabled, units, buildings, owner, map)
+    {
+        var system = ai.getSimpleProductionSystem();
+        if (system.getInit() && system.getEnabled())
+        {
+            return system.getProductionFromList(ids, units, buildings, 0, 20, enabled); // valid index of the ids array
+        }
+        else
+        {
+            return false;
+        }
+    },
 };

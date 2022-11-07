@@ -159,6 +159,9 @@ public:
     static const QString ACTION_EXPLODE;
     static const QString ACTION_FLARE;
     static const QString ACTION_TRAP;
+    static const QString ACTION_BLACKHOLEFACTORY_DOOR1;
+    static const QString ACTION_BLACKHOLEFACTORY_DOOR2;
+    static const QString ACTION_BLACKHOLEFACTORY_DOOR3;
 
     static const QString BUILDING_HQ;
     static const QString UNIT_INFANTRY;
@@ -214,6 +217,15 @@ signals:
      */
     void performAction(spGameAction pAction);
 public slots:
+    /**
+     * @brief getProductionSystem
+     * @return
+     */
+    SimpleProductionSystem* getSimpleProductionSystem();
+    /**
+     * @brief getAiName
+     * @return
+     */
     QString getAiName() const;
     /**
      * @brief getVariables
@@ -294,7 +306,7 @@ public slots:
      * @param pBuildings
      * @return
      */
-    bool useBuilding(spQmlVectorBuilding & pBuildings);
+    bool useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits);
     /**
      * @brief moveOoziums moves all those sweet nice ooziums :)
      * @param pUnits
@@ -688,11 +700,66 @@ protected:
      */
     bool canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
     /**
+     * @brief getBuildingPointFromScript
+     * @param pData
+     */
+    bool getBuildingTargetPointFromScript(spGameAction & pAction, const spMarkedFieldData & pData, QPoint & target);
+    /**
+     * @brief getBuildingMenuItemFromScript
+     * @param pAction
+     * @param pData
+     * @param index
+     * @return
+     */
+    bool getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, const spMenuData & pData, qint32 & index);
+    /**
      * @brief deserializeObjectVersion
      * @param stream
      * @param version
      */
     void deserializeObjectVersion(QDataStream &stream, qint32 version);
+    /**
+     * @brief getAttackTargetsFast
+     * @param pUnit
+     * @param minFirerange
+     * @param maxFirerange
+     * @param pPfs
+     * @param ret
+     * @param moveTargetFields
+     * @param maxDistance
+     */
+    void getAttackTargetsFast(Unit* pUnit, QmlVectorPoint & firePoints, UnitPathFindingSystem* pPfs, std::vector<DamageData>& ret, qint32 maxDistance = PathFindingSystem::infinite) const;
+    /**
+     * @brief getAttacksFromFieldFast
+     * @param pUnit
+     * @param minFirerange
+     * @param maxFirerange
+     * @param ret
+     * @param moveTargetFields
+     */
+    void getAttacksFromFieldFast(Unit* pUnit, QPoint position, QmlVectorPoint & firePoints, std::vector<DamageData>& ret) const;
+    /**
+     * @brief calcUnitDamageFast
+     * @param pAttacker
+     * @param pDefender
+     * @return
+     */
+    static QRectF calcUnitDamageFast(Unit* pAttacker, Unit* pDefender);
+    /**
+     * @brief getBaseDamage
+     * @param pAttacker
+     * @param pDefender
+     * @return
+     */
+    static QPointF getBaseDamage(Unit* pAttacker, Unit* pDefender);
+    /**
+     * @brief getBaseDamage
+     * @param weaponID
+     * @param pDefender
+     * @return
+     */
+    static float getBaseDamage(const QString & weaponID, Unit* pDefender);
+
 protected:
     std::vector<spIslandMap> m_IslandMaps;
     double m_buildingValue{1.0f};
@@ -719,6 +786,8 @@ protected:
     QString m_aiName{"CoreAI"};
     ScriptVariables m_Variables;
     SimpleProductionSystem m_productionSystem;
+    static std::map<QString, float> m_baseDamageTable;
+
 private:
     bool finish{false};
     struct FlareInfo

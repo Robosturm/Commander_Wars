@@ -7,8 +7,8 @@ var Constructor = function()
         var y = building.getY() + 1;
         var firecount = building.getFireCount();
         if ((firecount === 1 || firecount === 3 || firecount === 5 || firecount === 7) &&
-                map.onMap(x, y) && map.getTerrain(x, y).getUnit() === null &&
-                ACTION_BLACKHOLEFACTORY_DOOR1.canBuildUnit(action, map))
+             map.onMap(x, y) && map.getTerrain(x, y).getUnit() === null &&
+             ACTION_BLACKHOLEFACTORY_DOOR1.canBuildUnit(action, map))
         {
             return true;
         }
@@ -64,8 +64,8 @@ var Constructor = function()
             {
                 // check all units if they can move over this terrain
                 if (buildlist.includes(units[i]) &&
-                        Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y), true) > 0 &&
-                        Global[units[i]].getCOSpecificUnit() === false)
+                    Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y), true, map) > 0 &&
+                    Global[units[i]].getCOSpecificUnit() === false)
                 {
                     return true;
                 }

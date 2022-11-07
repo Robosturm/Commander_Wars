@@ -54,6 +54,24 @@ public:
 
     bool getInJsCall() const;
 
+    template<typename _TType, template<typename T> class _TVectorList>
+    QJSValue arraytoJSValue(const _TVectorList<_TType> & array)
+    {
+        QJSValue jsArray = newArray(array.size());
+        for (qint32 i = 0; i < array.size(); i++)
+        {
+            if constexpr (std::is_same<_TType, QPoint>::value)
+            {
+                jsArray.setProperty(i, toScriptValue(array[i]));
+            }
+            else
+            {
+                jsArray.setProperty(i, array[i]);
+            }
+        }
+        return jsArray;
+    }
+
 signals:
     void sigNetworkGameFinished(qint32 value, QString id);
 public slots:
@@ -187,6 +205,7 @@ public slots:
         return false;
     }
     void trackJsObject(oxygine::ref_counter* pObj);
+
 private slots:
     void networkGameFinished(qint32 value, QString id);
 private:

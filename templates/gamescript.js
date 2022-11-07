@@ -53,6 +53,35 @@ var Constructor = function()
     //        }
     //    }
     //    return ret;
+
+    //    getBuildingTarget : function(ai, action, points, wholeMap, owner, map)
+    //    {
+    //        return Qt.point(-1, -1); // return the target point the building should use for that action
+    //        return false; // in case the core implementation should take care of this
+    //    },
+
+    //    getBuildingMenuItem : function(ai, action, ids, costs, enabled, units, owner, map)
+    //    {
+    //        return -1; // valid index of the ids array
+    //        return false; // in case the core implementation should take care of this
+    //    },
+
+    //    groupDistribution : [1,      // infantry units
+    //                         1,      // light units
+    //                         1,      // medium units
+    //                         1,],    // heavy units
+    //    initializeSimpleProductionSystem : function(system, ai, map)
+    //    {
+    //        return COREAI.initializeSimpleProductionSystem(system, ai, map, gameScript.groupDistribution);
+    //    },
+    //    buildUnitSimpleProductionSystem : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
+    //    {
+    //        return COREAI.buildUnitSimpleProductionSystem(system, ai, buildings, units, enemyUnits, enemyBuildings, map);
+    //    },
+    //    onNewBuildQueue : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
+    //    {
+    //        return COREAI.onNewBuildQueue(system, ai, buildings, units, enemyUnits, enemyBuildings, map, gameScript.groupDistribution);
+    //    },
 }
 
 Constructor.prototype = BASEGAMESCRIPT;
