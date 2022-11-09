@@ -1578,7 +1578,8 @@ qint32 NormalAi::getBestAttackTarget(MoveUnitData & unitData, std::vector<CoreAI
         {
             float currentHp = pEnemy->getHp();
             float newHp = currentHp - static_cast<float>(ret[i].hpDamage);
-            fundsDamage = static_cast<qint32>(ret[i].fundsDamage * calculateCaptureBonus(pEnemy, newHp));
+            auto captureBonus = calculateCaptureBonus(pEnemy, newHp);
+            fundsDamage = static_cast<qint32>(ret[i].fundsDamage * captureBonus);
             if (fundsDamage > minFundsDamage && newHp > 0)
             {
                 pEnemy->setVirtualHpValue(newHp);

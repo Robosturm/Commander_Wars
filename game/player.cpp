@@ -1502,6 +1502,32 @@ qint32 Player::getEnemyBonusMisfortune(Unit* pUnit, QPoint position)
     return modifier;
 }
 
+float Player::getEnemyRepairCostModifier(Unit* pUnit)
+{
+    float modifier = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getEnemyRepairCostModifier(pUnit);
+        }
+    }
+    return modifier;
+}
+
+float Player::getRepairCostModifier(Unit* pUnit)
+{
+    float modifier = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getRepairCostModifier(pUnit);
+        }
+    }
+    return modifier;
+}
+
 qint32 Player::getWeatherMovementCostModifier(Unit* pUnit, QPoint position)
 {
     qint32 modifier = 0;

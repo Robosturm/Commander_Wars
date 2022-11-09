@@ -894,6 +894,11 @@ public slots:
      */
     qint32 getRepairBonus(QPoint position);
     /**
+     * @brief getRepairCostModifier
+     * @return
+     */
+    float getRepairCostModifier();
+    /**
      * @brief setUnitVisible
      * @param value
      */

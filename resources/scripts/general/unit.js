@@ -148,10 +148,11 @@ var UNIT =
             healingDone = 10 - hp;
         }
         var funds = unit.getOwner().getFunds();
+        var modifier = unit.getRepairCostModifier();
         // check if we can pay for all healing
         for (var i = healingDone; i >= 0; i--)
         {
-            if (i * costs / 10  <= funds)
+            if (i * costs / 10 * modifier  <= funds)
             {
                 healingDone = i;
                 break;
@@ -165,7 +166,7 @@ var UNIT =
         // heal unit
         unit.setHp(hp + healingDone);
         // pay for healing
-        unit.getOwner().addFunds(-healingDone / 10 * costs);
+        unit.getOwner().addFunds(-healingDone * costs / 10 * modifier);
     },
 
     getTerrainAnimationBase : function(unit, terrain, defender, map)

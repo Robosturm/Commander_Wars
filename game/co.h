@@ -246,6 +246,18 @@ public slots:
      */
     qint32 getEnemyBonusMisfortune(Unit* pUnit, QPoint position);
     /**
+     * @brief getEnemyRepairCostModifier
+     * @param pUnit
+     * @return
+     */
+    float getEnemyRepairCostModifier(Unit* pUnit);
+    /**
+     * @brief getRepairCostModifier
+     * @param pUnit
+     * @return
+     */
+    float getRepairCostModifier(Unit* pUnit);
+    /**
      * @brief getTerrainDefenseModifier the bonus defense of this co for a terrain
      * @param pUnit the unit we want to get the bonus points from
      * @return

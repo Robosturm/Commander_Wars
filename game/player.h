@@ -633,6 +633,18 @@ public slots:
     {
         return &m_Variables;
     }
+    /**
+     * @brief getEnemyRepairCostModifier
+     * @param pUnit
+     * @return
+     */
+    float getEnemyRepairCostModifier(Unit* pUnit);
+    /**
+     * @brief getBonusRepairCostModifier
+     * @param pUnit
+     * @return
+     */
+    float getRepairCostModifier(Unit* pUnit);
 private:
     /**
      * @brief loadTable

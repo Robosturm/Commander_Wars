@@ -19352,7 +19352,7 @@ CO Zone Effect:
 <context>
     <name>co_perk</name>
     <message>
-        <location filename="../resources/scripts/general/co_perk.js" line="330"/>
+        <location filename="../resources/scripts/general/co_perk.js" line="340"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25433,27 +25433,27 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>unit</name>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="266"/>
+        <location filename="../resources/scripts/general/unit.js" line="267"/>
         <source>Air</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="268"/>
+        <location filename="../resources/scripts/general/unit.js" line="269"/>
         <source>Naval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="270"/>
+        <location filename="../resources/scripts/general/unit.js" line="271"/>
         <source>Ground</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="272"/>
+        <location filename="../resources/scripts/general/unit.js" line="273"/>
         <source>Infantry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="274"/>
+        <location filename="../resources/scripts/general/unit.js" line="275"/>
         <source>Hovercraft</source>
         <translation type="unfinished"></translation>
     </message>

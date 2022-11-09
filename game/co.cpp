@@ -670,6 +670,50 @@ qint32 CO::getEnemyBonusMisfortune(Unit* pUnit, QPoint position)
     return ergValue;
 }
 
+float CO::getEnemyRepairCostModifier(Unit* pUnit)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getEnemyRepairCostModifier";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(m_pMap)});
+    float ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toNumber();
+            }
+        }
+    }
+    return ergValue;
+}
+
+float CO::getRepairCostModifier(Unit* pUnit)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getRepairCostModifier";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(m_pMap)});
+    float ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toNumber();
+            }
+        }
+    }
+    return ergValue;
+}
+
 QString CO::getAdditionalBuildingActions(Building* pBuilding)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

@@ -1794,6 +1794,31 @@ qint32 Unit::getRepairBonus(QPoint position)
     return bonus;
 }
 
+float Unit::getRepairCostModifier()
+{
+    float modifier = 1.0f;
+    if (m_pMap != nullptr)
+    {
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            if (pPlayer != nullptr)
+            {
+                if (pPlayer->isEnemy(m_pOwner))
+
+                {
+                    modifier += pPlayer->getEnemyRepairCostModifier(this);
+                }
+                else if ( m_pOwner == pPlayer)
+                {
+                    modifier += pPlayer->getRepairCostModifier(this);
+                }
+            }
+        }
+    }
+    return modifier;
+}
+
 void Unit::setUnitVisible(bool value, Player* pPlayer)
 {
     if (m_CORange.get() != nullptr)
