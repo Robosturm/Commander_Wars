@@ -404,7 +404,7 @@ void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistri
     }
     Interpreter* pInterpreter = Interpreter::getInstance();
     float totalUnitCount = pUnits->size();
-    float totalDistributionCount = 0;
+    float totalDistributionCount = 0.0f;
     for (const auto& [key, value] : m_activeBuildDistribution)
     {
         float distribution = 0.0f;
@@ -436,7 +436,18 @@ void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistri
     }
     std::sort(buildDistribution.begin(), buildDistribution.end(), [totalDistributionCount](const CurrentBuildDistribution& lhs, const CurrentBuildDistribution& rhs)
     {
-        return lhs.distribution.distribution / totalDistributionCount - lhs.currentValue > rhs.distribution.distribution / totalDistributionCount - rhs.currentValue;
+        if (lhs.currentValue <= 0.0f && rhs.currentValue > 0.0f)
+        {
+            return true;
+        }
+        else if (lhs.currentValue > 0.0f && rhs.currentValue <= 0.0f)
+        {
+            return false;
+        }
+        else
+        {
+            return lhs.distribution.distribution / totalDistributionCount - lhs.currentValue > rhs.distribution.distribution / totalDistributionCount - rhs.currentValue;
+        }
     });
 }
 

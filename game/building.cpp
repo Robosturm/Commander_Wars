@@ -1178,7 +1178,8 @@ bool Building::isProductionBuilding()
     if (actionList.contains(CoreAI::ACTION_BUILD_UNITS) ||
         actionList.contains(CoreAI::ACTION_BLACKHOLEFACTORY_DOOR1) ||
         actionList.contains(CoreAI::ACTION_BLACKHOLEFACTORY_DOOR2) ||
-        actionList.contains(CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3))
+        actionList.contains(CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3) ||
+        actionList.contains(CoreAI::ACTION_NEST_FACTORY_DOOR))
     {
         return true;
     }

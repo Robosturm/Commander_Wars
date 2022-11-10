@@ -162,6 +162,7 @@ public:
     static const QString ACTION_BLACKHOLEFACTORY_DOOR1;
     static const QString ACTION_BLACKHOLEFACTORY_DOOR2;
     static const QString ACTION_BLACKHOLEFACTORY_DOOR3;
+    static const QString ACTION_NEST_FACTORY_DOOR;
 
     static const QString BUILDING_HQ;
     static const QString UNIT_INFANTRY;

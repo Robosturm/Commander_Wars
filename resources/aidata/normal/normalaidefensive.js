@@ -14,7 +14,8 @@ var NORMALAIDEFENSIVE =
     buildingMenuFunctions : [["ZBLACKHOLE_FACTORY", COREAI.getFactoryMenuItem],
                              ["ZBLACKHOLE_FACTORYWASTE", COREAI.getFactoryMenuItem],
                              ["ZBLACKHOLE_FACTORYSNOW", COREAI.getFactoryMenuItem],
-                             ["ZBLACKHOLE_FACTORYDESERT", COREAI.getFactoryMenuItem],],
+                             ["ZBLACKHOLE_FACTORYDESERT", COREAI.getFactoryMenuItem],
+                             ["ZNEST_FACTORY", COREAI.getFactoryMenuItem],],
 
     getBuildingMenuItem : function(ai, action, ids, costs, enabled, units, buildings, owner, map)
     {
