@@ -326,7 +326,7 @@ Settings::Settings()
         new Value<QString>{"Game", "Username", &m_Username, "", "", "", true},
         new Value<bool>{"Game", "OverworldAnimations", &m_overworldAnimations, true, false, true},
         new Value<GameEnums::BattleAnimationMode>{"Game", "BattleAnimationMode", &m_battleAnimationsMode, GameEnums::BattleAnimationMode_All, GameEnums::BattleAnimationMode_None, GameEnums::BattleAnimationMode_Enemy},
-        new Value<GameEnums::BattleAnimationType>{"Game", "BattleAnimationType", &m_battleAnimationType, GameEnums::BattleAnimationType_Detail, GameEnums::BattleAnimationType_Detail, GameEnums::BattleAnimationType_Overworld},
+        new Value<GameEnums::BattleAnimationType>{"Game", "BattleAnimationType", &m_battleAnimationType, GameEnums::BattleAnimationType_Detail, GameEnums::BattleAnimationType_Detail, GameEnums::BattleAnimationType_FullscreenTransparent},
         new Value<quint32>{"Game", "AnimationSpeed", &m_animationSpeed, 1, 1, 100},
         new Value<quint32>{"Game", "BattleAnimationSpeed", &m_battleAnimationSpeed, 1, 1, 100},
         new Value<quint32>{"Game", "WalkAnimationSpeed", &m_walkAnimationSpeed, 20, 1, 100},
