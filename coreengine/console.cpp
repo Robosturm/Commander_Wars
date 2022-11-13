@@ -270,28 +270,25 @@ void Console::update(const oxygine::UpdateState& us)
     {
 #ifdef GRAPHICSUPPORT
         QMutexLocker locker(&m_datalocker);
-        qint32 screenheight = Settings::getHeight();
-        auto font = FontManager::getFont("console16");
-        QFontMetrics metrics(font.font);
-        qint32 h = metrics.height();
-        // pre calc message start
-        qint32 num = screenheight / h - 4;
-        m_outputSize = num + 2;
-        qint32 i = 0;
-        qint32 start = m_output.size() - num;
-        if (start < 0)
-        {
-            start = 0;
-        }
         if (m_outputChanged)
         {
+            qint32 screenheight = Settings::getHeight();
+            auto font = FontManager::getFont("console16");
+            QFontMetrics metrics(font.font);
+            qint32 lineHeight = metrics.height();
             // create output text
             QString drawText;
-            for(i = start; i < m_output.size();i++)
+            qint32 i = m_output.size() - 1;
+            qint32 currentHeight = 0;
+            qint32 width = m_text->getWidth();
+            while (i >= 0 && currentHeight < screenheight - lineHeight * 3)
             {
-                drawText += "> " + m_output[i] + "\n";
+                drawText.prepend("> " + m_output[i] + "\n");
+                currentHeight = metrics.boundingRect(0, 0, width, screenheight, 0, drawText).height();
+                --i;
             }
             m_text->setHtmlText(drawText);
+            m_editTextfield->setY(currentHeight + m_text->getY());
             m_outputChanged = false;
         }
         if (m_focused)
@@ -305,7 +302,6 @@ void Console::update(const oxygine::UpdateState& us)
             QString lineText = "> Click the console to regain focus";
             m_editTextfield->setHtmlText(lineText);
         }
-        m_editTextfield->setY(h * (num + 1));
 #endif
     }
     oxygine::Actor::update(us);
@@ -1511,15 +1507,18 @@ bool Console::doHandleEvent(QEvent *event)
 bool Console::onEditFinished()
 {
     QString message = getCurrentText();
-    dotask(message);
-    m_lastmsgs.push_back(message);
-    while (m_lastmsgs.size() > m_lastMsgSize)
+    if (!message.isEmpty())
     {
-        m_lastmsgs.erase(m_lastmsgs.cbegin());
+        dotask(message);
+        m_lastmsgs.push_back(message);
+        while (m_lastmsgs.size() > m_lastMsgSize)
+        {
+            m_lastmsgs.erase(m_lastmsgs.cbegin());
+        }
+        m_curlastmsgpos = m_lastmsgs.size();
+        setCurrentText("");
+        setCursorPosition(0);
     }
-    m_curlastmsgpos = m_lastmsgs.size();
-    setCurrentText("");
-    setCursorPosition(0);
     return false;
 }
 
