@@ -24,7 +24,7 @@ var Constructor = function()
     };
     this.getMovementType = function()
     {
-        return "MOVE_BOAT";
+        return "MOVE_SMALL_BOAT";
     };
     this.getBaseCost = function()
     {
@@ -70,8 +70,16 @@ var Constructor = function()
     };
     this.getTerrainAnimationBase = function(unit, terrain, defender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier(map);
-        return "base_" + weatherModifier + "air";
+        var terrainId = terrain.getID();
+        if (terrainId === "RIVER" || terrainId === "DESERT_TRY_RIVER")
+        {
+            return Global[terrainId].getTerrainAnimationBase(unit, terrain, defender, map);
+        }
+        else
+        {
+            var weatherModifier = TERRAIN.getWeatherModifier(map);
+            return "base_" + weatherModifier + "air";
+        }
     };
 
     this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
@@ -81,8 +89,16 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier(map);
-        return "back_" + weatherModifier +"sea";
+        var terrainId = terrain.getID();
+        if (terrainId === "RIVER" || terrainId === "DESERT_TRY_RIVER")
+        {
+            return Global[terrainId].getTerrainAnimationBackground(unit, terrain, defender, map);
+        }
+        else
+        {
+            var weatherModifier = TERRAIN.getWeatherModifier(map);
+            return "back_" + weatherModifier +"sea";
+        }
     };
 
     this.getTerrainAnimationMoveSpeed = function()

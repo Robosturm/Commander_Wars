@@ -12374,7 +12374,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/cannonboat.js" line="95"/>
+        <location filename="../resources/scripts/units/cannonboat.js" line="111"/>
         <source>&lt;r&gt;Naval Unit. Attacks naval units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23834,7 +23834,7 @@ Units have increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/gunboat.js" line="92"/>
+        <location filename="../resources/scripts/units/gunboat.js" line="108"/>
         <source>&lt;r&gt;Naval Unit. Attacks naval units. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25386,7 +25386,7 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/torpedoboat.js" line="95"/>
+        <location filename="../resources/scripts/units/torpedoboat.js" line="112"/>
         <source>&lt;r&gt;Naval Unit. Attacks naval units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
