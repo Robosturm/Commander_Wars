@@ -2109,5 +2109,7 @@
         <file>resources/scripts/battleanimations/BATTLEANIMATION_TORPEDOBOAT.js</file>
         <file>resources/aidata/normal/coreai.js</file>
         <file>resources/scripts/movementtables/move_small_boat.js</file>
+        <file>maps/commander_wars.camp/takeAndHold.js</file>
+        <file>maps/commander_wars.camp/takeAndHold.map</file>
     </qresource>
 </RCC>

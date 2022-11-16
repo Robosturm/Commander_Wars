@@ -24249,6 +24249,14 @@ Units have increased firepower during sandstorm.</source>
     </message>
 </context>
 <context>
+    <name>move_small_boat</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_small_boat.js" line="5"/>
+        <source>Small boat</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>move_tank</name>
     <message>
         <location filename="../resources/scripts/movementtables/move_tank.js" line="5"/>
