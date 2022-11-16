@@ -3,6 +3,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/globalutils.h"
 
 #include <QFile>
 #include <QFileInfo>

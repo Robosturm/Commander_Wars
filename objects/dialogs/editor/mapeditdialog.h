@@ -30,9 +30,8 @@ public:
     ~MapEditDialog();
 
 signals:
-    void editFinished(MapEditInfo info);
+    void editFinished(MapEditDialog::MapEditInfo info);
     void sigCanceled();
-    void sigFinished();
 public slots:
     void showSelectScript();
 

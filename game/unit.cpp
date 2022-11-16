@@ -3025,7 +3025,8 @@ void Unit::loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration,
 
     for (qint32 i = 0; i < m_pIconSprites.size(); i++)
     {
-        if (m_pIconSprites[i]->getResAnim()->getName() == iconID)
+        if (m_pIconSprites[i]->getResAnim() == nullptr ||
+            m_pIconSprites[i]->getResAnim()->getName() == iconID)
         {
             // already loaded icon
             return;

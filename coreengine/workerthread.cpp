@@ -60,6 +60,7 @@ void WorkerThread::start()
     // it will add itself to the current stage
     oxygine::Stage::getStage()->addChild(pConsole);
     Interpreter* pInterpreter = Interpreter::createInstance();
+    Settings::setLanguage(Settings::getLanguage());
     pConsole->init();
     UiFactory::getInstance();
     // load General-Base Scripts

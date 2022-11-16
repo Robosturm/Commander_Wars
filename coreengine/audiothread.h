@@ -13,22 +13,11 @@
 #include <QIODevice>
 #include <QTimer>
 
-#include "coreengine/globalutils.h"
-
 class AudioThread final : public QObject
 {
     Q_OBJECT
 private:
 #ifdef AUDIOSUPPORT
-    struct SoundData
-    {
-        static constexpr qint32 MAX_SAME_SOUNDS = 60;
-        static constexpr qint32 DEFAULT_CACHE_SIZE = 10;
-        QSoundEffect* sound[MAX_SAME_SOUNDS];
-        std::shared_ptr<QTimer> timer[MAX_SAME_SOUNDS];
-        qint32 nextSoundToUse = 0;
-        QUrl cacheUrl;
-    };
     struct Player
     {
         Player(QObject* parent)
@@ -41,6 +30,15 @@ private:
     };
 #endif
 public:
+    struct SoundData
+    {
+        static constexpr qint32 MAX_SAME_SOUNDS = 60;
+        static constexpr qint32 DEFAULT_CACHE_SIZE = 10;
+        QSoundEffect* sound[MAX_SAME_SOUNDS];
+        std::shared_ptr<QTimer> timer[MAX_SAME_SOUNDS];
+        qint32 nextSoundToUse = 0;
+        QUrl cacheUrl;
+    };
     explicit AudioThread(bool noAudio);
     ~AudioThread();
     qint32 getSoundsBuffered();
@@ -63,8 +61,8 @@ signals:
     void sigChangeAudioDevice(const QVariant& value);
     void sigLoadNextAudioFile();
 #ifdef AUDIOSUPPORT
-    void sigDeleteSound(SoundData* soundData, qint32 soundIndex);
-    void sigPlayDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound);
+    void sigDeleteSound(AudioThread::SoundData* soundData, qint32 soundIndex);
+    void sigPlayDelayedSound(AudioThread::SoundData* soundData, qint32 soundIndex, bool stopOldestSound);
 #endif
 public slots:
     /**

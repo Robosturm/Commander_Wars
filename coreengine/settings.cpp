@@ -1403,7 +1403,6 @@ void Settings::loadSettings()
     {
         setting->readValue(settings);
     }
-    setLanguage(m_language);
     setFramesPerSecond(m_framesPerSecond);
     setActiveMods(m_activeMods);
     Console::setLogLevel(m_defaultLogLevel);

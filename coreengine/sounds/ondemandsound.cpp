@@ -1,5 +1,6 @@
 #include "coreengine/audiothread.h"
-#include "coreengine/settings.h"
+#include "coreengine/console.h"
+#include "coreengine/globalutils.h"
 
 #ifdef AUDIOSUPPORT
 #include <QAudioDevice>

@@ -13,8 +13,6 @@
 
 #include "resource_management/gamemanager.h"
 
-#include "menue/movementplanner.h"
-
 BaseGameInputIF::BaseGameInputIF(GameMap* pMap, GameEnums::AiTypes aiType)
     : m_AiType(aiType),
       m_pMap(pMap)
