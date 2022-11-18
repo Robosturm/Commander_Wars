@@ -6,6 +6,7 @@
 #include <QThread>
 #include <QCoreApplication>
 #include <QMutex>
+#include <QProcess>
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
@@ -150,6 +151,10 @@ public:
     static WorkerThread* getWorker()
     {
         return m_Worker;
+    }
+    static QProcess & GetAiSubProcess()
+    {
+        return m_aiSubProcess;
     }
     /**
      * @brief qsTr
@@ -313,6 +318,7 @@ private:
     static QThread m_GameServerThread;
     static WorkerThread* m_Worker;
     static AudioThread* m_Audiothread;
+    static QProcess m_aiSubProcess;
     QThread* m_pMainThread{nullptr};
     static bool m_slave;
     static spTCPClient m_slaveClient;

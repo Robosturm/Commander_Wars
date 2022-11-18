@@ -1,8 +1,9 @@
 #ifndef H_SCROLLBAR_H
 #define H_SCROLLBAR_H
 
-#include "objects/base/tooltip.h"
 #include <QElapsedTimer>
+
+#include "objects/base/tooltip.h"
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"

@@ -6,6 +6,7 @@
 #include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
+#include "3rd_party/oxygine-framework/oxygine/Property.h"
 #include <QMutex>
 #include <vector>
 
@@ -442,19 +443,19 @@ namespace oxygine
         /*****************************************************************************************/
         // properties for tweens
         /*****************************************************************************************/
-        typedef Property2Args<float, Vector2, const Vector2&, Actor, &Actor::getPosition, &Actor::setPosition>  TweenPosition;
-        typedef Property<float, float, Actor, &Actor::getX, &Actor::setX>                                       TweenX;
-        typedef Property<float, float, Actor, &Actor::getY, &Actor::setY>                                       TweenY;
-        typedef Property<float, float, Actor, &Actor::getWidth, &Actor::setWidth>                               TweenWidth;
-        typedef Property<float, float, Actor, &Actor::getHeight, &Actor::setHeight>                             TweenHeight;
-        typedef Property2Args2<float, Vector2, const Vector2&, const Vector2&, Actor, &Actor::getSize, &Actor::setSize>TweenSize;
-        typedef Property<float, float, Actor, &Actor::getRotation, &Actor::setRotation>                         TweenRotation;
-        typedef Property<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>           TweenRotationDegrees;
-        typedef Property2Args1Arg<float, Vector2, const Vector2&, Actor, &Actor::getScale, &Actor::setScale>    TweenScale;
-        typedef Property2Args1Arg<float, Vector2, const Vector2&, Actor, &Actor::getAnchor, &Actor::setAnchor>  TweenAnchor;
-        typedef Property<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>                             TweenScaleX;
-        typedef Property<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>                             TweenScaleY;
-        typedef Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>               TweenAlpha;
+        using TweenPosition = Property2Args<float, Vector2, const Vector2&, Actor, &Actor::getPosition, &Actor::setPosition>;
+        using TweenX = Property<float, float, Actor, &Actor::getX, &Actor::setX>;
+        using TweenY = Property<float, float, Actor, &Actor::getY, &Actor::setY>;
+        using TweenWidth = Property<float, float, Actor, &Actor::getWidth, &Actor::setWidth>;
+        using TweenHeight = Property<float, float, Actor, &Actor::getHeight, &Actor::setHeight>;
+        using TweenSize = Property2Args2<float, Vector2, const Vector2&, const Vector2&, Actor, &Actor::getSize, &Actor::setSize>;
+        using TweenRotation = Property<float, float, Actor, &Actor::getRotation, &Actor::setRotation>;
+        using TweenRotationDegrees = Property<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>;
+        using TweenScale = Property2Args1Arg<float, Vector2, const Vector2&, Actor, &Actor::getScale, &Actor::setScale>;
+        using TweenAnchor = Property2Args1Arg<float, Vector2, const Vector2&, Actor, &Actor::getAnchor, &Actor::setAnchor>;
+        using TweenScaleX = Property<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>;
+        using TweenScaleY = Property<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>;
+        using TweenAlpha = Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>;
 #ifdef GRAPHICSUPPORT
         QMutex* getLocked();
 #endif

@@ -3,12 +3,9 @@
 #include "coreengine/console.h"
 
 #include "resource_management/gamemanager.h"
-#include "resource_management/buildingspritemanager.h"
-#include "resource_management/unitspritemanager.h"
 
 #include "game/gamemap.h"
 #include "game/unit.h"
-#include "game/player.h"
 #include "game/co.h"
 
 MenuData::MenuData(GameMap* pMap)

@@ -1,6 +1,5 @@
 #include "objects/base/label.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 #include "resource_management/fontmanager.h"

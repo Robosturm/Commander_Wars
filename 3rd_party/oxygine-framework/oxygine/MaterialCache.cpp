@@ -1,8 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
-#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 
-#include "QMutexLocker"
+#include <QMutexLocker>
 
 namespace oxygine
 {

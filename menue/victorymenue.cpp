@@ -14,7 +14,6 @@
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
-#include "resource_management/cospritemanager.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -24,7 +23,7 @@
 
 #include "objects/dialogs/dialogvaluecounter.h"
 #include "objects/base/moveinbutton.h"
-
+#include "objects/base/checkbox.h"
 
 VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface, bool isReplay)
     : m_ProgressTimer(this),

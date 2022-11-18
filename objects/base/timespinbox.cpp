@@ -1,7 +1,6 @@
 #include "objects/base/timespinbox.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
 #include "coreengine/interpreter.h"
 
 

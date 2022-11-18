@@ -1,13 +1,11 @@
-#include "actionlistdialog.h"
+#include "objects/dialogs//rules/actionlistdialog.h"
 
-#include "qdiriterator.h"
+#include <QDirIterator>
 
 #include "coreengine/filesupport.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
-
 #include "resource_management/gamemanager.h"
 
 #include "game/gamemap.h"

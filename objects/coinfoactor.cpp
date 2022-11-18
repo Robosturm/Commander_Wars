@@ -2,10 +2,7 @@
 
 #include "objects/coinfoactor.h"
 
-#include "coreengine/mainapp.h"
-
 #include "resource_management/cospritemanager.h"
-#include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
 #include "resource_management/unitspritemanager.h"

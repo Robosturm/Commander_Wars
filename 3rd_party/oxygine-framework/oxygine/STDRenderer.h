@@ -3,7 +3,6 @@
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
 #include <functional>
 #include <vector>
-#include <QPainter>
 
 namespace oxygine
 {
@@ -21,7 +20,7 @@ namespace oxygine
     };    
 
     class STDRenderer;
-    typedef oxygine::intrusive_ptr<STDRenderer> spSTDRenderer;
+    using spSTDRenderer = oxygine::intrusive_ptr<STDRenderer>;
     class STDRenderer final : public ShaderProgramChangedHook, public oxygine::ref_counter
     {
     public:

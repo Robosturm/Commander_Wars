@@ -2,9 +2,6 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/interpreter.h"
-
 const char* const FontManager::MAINFONT = "main";
 const char* const FontManager::LOGOFONT = "logo";
 const char* const FontManager::MENUFONT = "menu";

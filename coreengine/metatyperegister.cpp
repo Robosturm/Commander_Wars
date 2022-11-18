@@ -4,7 +4,6 @@
 
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
-#include "coreengine/audiothread.h"
 #include "coreengine/scriptvariable.h"
 #include "coreengine/scriptvariables.h"
 #include "coreengine/scriptvariablefile.h"
@@ -25,11 +24,12 @@
 #include "menue/achievementmenu.h"
 #include "menue/optionmenue.h"
 #include "menue/basemenu.h"
-#include "menue/replaymenu.h"
 #include "menue/movementplanner.h"
 
 #include "ui_reader/uifactory.h"
 #include "ui_reader/createdgui.h"
+
+#include "network/networkgame.h"
 
 #include "game/terrain.h"
 #include "game/player.h"
@@ -77,8 +77,6 @@
 
 #include "ingamescriptsupport/events/scriptevent.h"
 #include "ingamescriptsupport/conditions/scriptcondition.h"
-
-#include "network/mainserver.h"
 
 #include "resource_management/cospritemanager.h"
 #include "resource_management/terrainmanager.h"

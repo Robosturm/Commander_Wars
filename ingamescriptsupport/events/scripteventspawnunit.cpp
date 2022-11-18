@@ -6,10 +6,7 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/unitspritemanager.h"
 
-#include "coreengine/mainapp.h"
-
 #include "objects/base/spinbox.h"
-#include "objects/base/dropdownmenu.h"
 #include "objects/base/dropdownmenusprite.h"
 #include "objects/base/label.h"
 

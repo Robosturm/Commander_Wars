@@ -1,3 +1,5 @@
+#include "3rd_party/smtpClient/src/mimetext.h"
+
 #include "network/smtpmailsender.h"
 
 #include "coreengine/settings.h"

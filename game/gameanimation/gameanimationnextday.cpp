@@ -1,17 +1,16 @@
 #include "resource_management/gamemanager.h"
-#include "resource_management/cospritemanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "coreengine/mainapp.h"
 
 #include "game/gameanimation/gameanimationnextday.h"
 #include "game/co.h"
 #include "game/gamemap.h"
-#include "game/gameanimation/gameanimationfactory.h"
 
-#include "menue/basegamemenu.h"
-#include "menue/movementplanner.h"
+#include "menue/gamemenue.h"
 
 GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs)
     : GameAnimation(frameTime, pMap),

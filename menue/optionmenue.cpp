@@ -13,22 +13,13 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
-#include "coreengine/globalutils.h"
 #include "coreengine/audiothread.h"
-#include "coreengine/Gamepad.h"
-
-#include "game/gamemap.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "objects/base/slider.h"
-#include "objects/base/selectkey.h"
-#include "objects/base/spinbox.h"
-#include "objects/base/textbox.h"
 #include "objects/base/label.h"
-#include "objects/base/timespinbox.h"
 #include "objects/base/moveinbutton.h"
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/dialogs/gamepadinfo.h"

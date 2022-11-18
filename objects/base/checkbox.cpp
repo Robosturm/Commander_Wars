@@ -1,4 +1,4 @@
-#include "checkbox.h"
+#include "objects/base/checkbox.h"
 
 #include "resource_management/objectmanager.h"
 

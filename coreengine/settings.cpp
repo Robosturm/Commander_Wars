@@ -20,8 +20,7 @@
 #include "coreengine/userdata.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/Gamepad.h"
-
-#include "game/gamemap.h"
+#include "coreengine/interpreter.h"
 
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
@@ -182,6 +181,8 @@ QStringList Settings::m_activeModVersions;
 spSettings Settings::m_pInstance;
 QTranslator Settings::m_Translator;
 QString Settings::m_updateStep = "";
+bool Settings::m_spawnAiProcess = true;
+bool Settings::m_aiSlave = false;
 
 // logging
 bool Settings::m_LogActions = false;
@@ -389,6 +390,26 @@ Settings::Settings()
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
     };
+}
+
+bool Settings::getAiSlave()
+{
+    return m_aiSlave;
+}
+
+void Settings::setAiSlave(bool newAiSlave)
+{
+    m_aiSlave = newAiSlave;
+}
+
+bool Settings::getSpawnAiProcess()
+{
+    return m_spawnAiProcess;
+}
+
+void Settings::setSpawnAiProcess(bool newSpawnAiProcess)
+{
+    m_spawnAiProcess = newSpawnAiProcess;
 }
 
 bool Settings::getAutomaticUpdates()

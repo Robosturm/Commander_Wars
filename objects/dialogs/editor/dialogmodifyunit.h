@@ -5,7 +5,6 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
-#include "objects/base/checkbox.h"
 #include "objects/base/panel.h"
 
 class Unit;

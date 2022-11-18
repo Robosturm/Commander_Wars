@@ -9,7 +9,6 @@
 
 #include "game/unit.h"
 #include "game/building.h"
-#include "game/terrain.h"
 
 #include "coreengine/globalutils.h"
 

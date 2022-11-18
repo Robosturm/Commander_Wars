@@ -15,10 +15,10 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/commandlineparser.h"
+#include "coreengine/globalutils.h"
+#include "multiplayer/password.h"
 
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
-
-#include "game/gamemap.h"
 
 const char* const DRIVER = "QSQLITE";
 
@@ -562,7 +562,7 @@ void MainServer::spawnSlave(quint64 socketID, SuspendedSlaveInfo & slaveInfo)
         QString slaveName = "Commander_Wars_Slave_" + QString::number(m_slaveGameIterator);
         CONSOLE_PRINT("Launching slave game " + slaveName + " creating logs: " + (createLogs ? "true" : "false"), Console::eDEBUG);
         auto game = spInternNetworkGame::create();
-        QString program = QCoreApplication::applicationFilePath();
+        const QString program = QCoreApplication::applicationFilePath();
         game->process = std::make_shared<QProcess>();
         game->process->setObjectName(slaveName + "Slaveprocess");
         const char* const prefix = "--";
@@ -656,7 +656,8 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
                           QString(prefix) + CommandLineParser::ARG_MASTERPORT,
                           QString::number(Settings::getSlaveServerPort()),
                           QString(prefix) + CommandLineParser::ARG_INITSCRIPT,
-                          initScript});
+                          initScript,
+                          QString(prefix) + CommandLineParser::ARG_SPAWNAIPROCESS + "0",});
         if (createLogs)
         {
             args << QString(prefix) + CommandLineParser::ARG_CREATESLAVELOGS;

@@ -2,8 +2,6 @@
 
 #include "coreengine/mainapp.h"
 
-#include "menue/movementplanner.h"
-
 MoveplannerInput::MoveplannerInput(GameMap* pMap)
     : HumanPlayerInput(pMap)
 {

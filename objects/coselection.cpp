@@ -1,4 +1,4 @@
-#include "coselection.h"
+#include "objects/coselection.h"
 
 #include "coreengine/mainapp.h"
 

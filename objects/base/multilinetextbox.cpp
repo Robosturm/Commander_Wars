@@ -1,10 +1,8 @@
 #include "objects/base/multilinetextbox.h"
 
-#include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
 #include "coreengine/interpreter.h"
 
 MultilineTextbox::MultilineTextbox(qint32 width, qint32 heigth)

@@ -4,7 +4,6 @@
 #include "ingamescriptsupport/scriptdialogdialog.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
 
 #include "coreengine/mainapp.h"
@@ -12,6 +11,7 @@
 
 #include "objects/dialogs/filedialog.h"
 #include "objects/base/dropdownmenusprite.h"
+#include "objects/base/dropdownmenucolor.h"
 
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 

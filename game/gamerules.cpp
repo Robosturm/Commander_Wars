@@ -6,18 +6,13 @@
 #include "game/gamerules.h"
 #include "game/gamemap.h"
 #include "game/player.h"
-#include "game/co.h"
 #include "game/unit.h"
-#include "game/gameanimation/gameanimationfactory.h"
 
 #include "resource_management/cospritemanager.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/gamerulemanager.h"
 #include "resource_management/coperkmanager.h"
 #include "resource_management/gamemanager.h"
-
-#include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 GameRules::GameRules(GameMap* pMap)
     : m_RoundTimer(this),

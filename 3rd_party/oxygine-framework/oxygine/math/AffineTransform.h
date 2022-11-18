@@ -1,5 +1,4 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 
 namespace oxygine
@@ -9,8 +8,8 @@ namespace oxygine
     {
     public:
 
-        typedef VectorT2<T> vector2;
-        typedef AffineTransformT<T> affineTransform;
+        using vector2 = VectorT2<T>;
+        using affineTransform = AffineTransformT<T>;
 
         explicit AffineTransformT() = default;
         explicit AffineTransformT(T a_, T b_, T c_, T d_, T x_, T y_)

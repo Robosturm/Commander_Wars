@@ -1,7 +1,7 @@
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qdir.h>
-#include <qdiriterator.h>
+#include <QFile>
+#include <QTextStream>
+#include <QDir>
+#include <QDirIterator>
 
 #include "game/campaign.h"
 #include "game/gamemap.h"

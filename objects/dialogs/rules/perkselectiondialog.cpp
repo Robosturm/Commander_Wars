@@ -1,4 +1,4 @@
-#include "perkselectiondialog.h"
+#include "objects/dialogs/rules/perkselectiondialog.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"

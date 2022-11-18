@@ -1,9 +1,6 @@
 #include "ai/targetedunitpathfindingsystem.h"
 #include "ai/coreai.h"
-#include "coreengine/mainapp.h"
 #include "game/gamemap.h"
-
-#include "resource_management/movementtablemanager.h"
 
 TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, std::vector<QVector3D>& targets, std::vector<std::vector<std::tuple<qint32, bool>>>* pMoveCostMap)
     : UnitPathFindingSystem(pMap, pUnit),

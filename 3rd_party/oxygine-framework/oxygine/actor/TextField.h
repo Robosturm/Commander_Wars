@@ -2,7 +2,6 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
-#include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 
 namespace oxygine

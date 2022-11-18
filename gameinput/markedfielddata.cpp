@@ -14,10 +14,6 @@ MarkedFieldData::MarkedFieldData()
     Interpreter::getInstance()->trackJsObject(this);
 }
 
-MarkedFieldData::~MarkedFieldData()
-{
-}
-
 bool MarkedFieldData::getAllFields() const
 {
     return m_allFields;

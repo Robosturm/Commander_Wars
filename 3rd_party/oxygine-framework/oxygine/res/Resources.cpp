@@ -3,12 +3,9 @@
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
-#include "qfile.h"
-#include "qfileinfo.h"
-#include "qdir.h"
-#include "qtextstream.h"
-
 #include "coreengine/console.h"
+
+#include <QFile>
 
 namespace oxygine
 {

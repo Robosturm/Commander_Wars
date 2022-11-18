@@ -7,7 +7,6 @@
 
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
-#include "coreengine/globalutils.h"
 
 #include "spritingsupport/spritecreator.h"
 

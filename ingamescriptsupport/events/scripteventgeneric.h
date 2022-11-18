@@ -1,7 +1,7 @@
 #ifndef SCRIPTEVENTGENERIC_H
 #define SCRIPTEVENTGENERIC_H
 
-#include <qvector.h>
+#include <QVector>
 
 #include "ingamescriptsupport/events/scriptevent.h"
 

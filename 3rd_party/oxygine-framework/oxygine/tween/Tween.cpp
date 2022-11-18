@@ -1,6 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 #include "coreengine/console.h"
 
 #include <limits.h>

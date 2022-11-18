@@ -7,7 +7,6 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 
-#include "objects/base/panel.h"
 #include "objects/base/dropdownmenubase.h"
 
 class DropDownmenu;

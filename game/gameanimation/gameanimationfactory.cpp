@@ -13,8 +13,7 @@
 
 #include "resource_management/gamemanager.h"
 
-#include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
+#include "menue/basegamemenu.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"

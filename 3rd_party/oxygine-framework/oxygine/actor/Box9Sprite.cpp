@@ -3,7 +3,6 @@
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 #include "3rd_party/oxygine-framework/oxygine/math/ScalarMath.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
-#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 
 namespace oxygine
 {

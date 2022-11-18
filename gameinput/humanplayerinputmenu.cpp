@@ -2,17 +2,14 @@
 
 #include "game/gamemap.h"
 #include "game/unit.h"
-#include "game/cursor.h"
 
 #include "wiki/fieldinfo.h"
 #include "wiki/wikidatabase.h"
 
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
-#include "coreengine/globalutils.h"
 
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"

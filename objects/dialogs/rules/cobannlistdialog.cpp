@@ -1,16 +1,14 @@
-#include "cobannlistdialog.h"
+#include "objects/dialogs/rules/cobannlistdialog.h"
 
-#include "qdiriterator.h"
+#include <QDirIterator>
 
 #include "coreengine/filesupport.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
-
 #include "resource_management/cospritemanager.h"
 
-#include "game/gamemap.h"
+#include "game/co.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/label.h"

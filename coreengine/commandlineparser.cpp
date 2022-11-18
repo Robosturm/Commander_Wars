@@ -27,6 +27,8 @@ const char* const CommandLineParser::ARG_SLAVEPORT              = "slavePort";
 const char* const CommandLineParser::ARG_MASTERADDRESS          = "masterAdress";
 const char* const CommandLineParser::ARG_MASTERPORT             = "masterPort";
 const char* const CommandLineParser::ARG_UPDATE                 = "update";
+const char* const CommandLineParser::ARG_SPAWNAIPROCESS         = "spawnAiProcess";
+const char* const CommandLineParser::ARG_AISLAVE                = "aiSlave";
 
 // options required for hosting a dedicated server
 const char* const CommandLineParser::ARG_SERVER                     = "server";
@@ -47,7 +49,9 @@ const char* const CommandLineParser::ARG_MAILSERVERSENDADDRESS = "mailServerSend
 const char* const CommandLineParser::ARG_MAILSERVERAUTHMETHOD = "mailServerAuthMethod";
 
 CommandLineParser::CommandLineParser()
-    : m_mods(ARG_MODS, tr("mods that should be loaded. As a string list separated by ';'"), tr("mod list"), ""),
+    : m_aiSlave(ARG_AISLAVE, tr("Acts as ai slave process")),
+      m_spawnAiProcess(ARG_SPAWNAIPROCESS, tr("mode for starting the sub ai process. Off=0 Spawn=1"), tr("mode"), "1"),
+      m_mods(ARG_MODS, tr("mods that should be loaded. As a string list separated by ';'"), tr("mod list"), ""),
       m_update(ARG_UPDATE, tr("Only used internal to tell the game that an update is in progresss"), tr("update step"), ""),
       m_slave(ARG_SLAVE, tr("If the exe is started as a slave process.")),
       m_noUi(ARG_NOUI, tr("If the exe is started in headless mode")),
@@ -80,6 +84,8 @@ CommandLineParser::CommandLineParser()
     m_parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
     m_parser.addHelpOption();
     m_parser.addVersionOption();
+    m_parser.addOption(m_aiSlave);
+    m_parser.addOption(m_spawnAiProcess);
     m_parser.addOption(m_mods);
     m_parser.addOption(m_update);
     m_parser.addOption(m_slave);
@@ -126,6 +132,14 @@ void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
     if (m_parser.isSet(m_slave))
     {
         pApp->actAsSlave();
+    }
+    if (m_parser.isSet(m_spawnAiProcess))
+    {
+        Settings::setSpawnAiProcess(m_parser.value(m_spawnAiProcess) == "1");
+    }
+    if (m_parser.isSet(m_aiSlave) && !Settings::getSpawnAiProcess())
+    {
+        Settings::setAiSlave(true);
     }
     if (m_parser.isSet(m_update))
     {
@@ -193,7 +207,7 @@ void CommandLineParser::parseArgsPhaseTwo()
     if (m_parser.isSet(m_server))
     {
         Settings::setServer(m_parser.value(m_server) == "1");
-    }
+    }    
     if (m_parser.isSet(m_serverSlaveHostOptions))
     {
         Settings::setSlaveHostOptions(m_parser.value(m_serverSlaveHostOptions));

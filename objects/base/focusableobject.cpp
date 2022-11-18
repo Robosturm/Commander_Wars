@@ -8,7 +8,6 @@
 #include "objects/base/focusableobject.h"
 
 #include "coreengine/console.h"
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 FocusableObject* FocusableObject::m_focusedObject = nullptr;

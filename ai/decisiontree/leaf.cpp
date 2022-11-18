@@ -1,7 +1,6 @@
 #include "ai/decisiontree/leaf.h"
 #include "ai/decisiontree/decisiontree.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/interpreter.h"
 

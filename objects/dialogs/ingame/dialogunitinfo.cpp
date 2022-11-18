@@ -6,14 +6,13 @@
 
 #include "game/player.h"
 #include "game/gamemap.h"
-#include "gameinput/humanplayerinput.h"
+
+#include "menue/basegamemenu.h"
 
 #include "objects/base/panel.h"
-
-#include "menue/movementplanner.h"
+#include "objects/base/label.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 
 DialogUnitInfo::DialogUnitInfo(Player* pPlayer)

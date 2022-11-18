@@ -21,6 +21,8 @@ public:
     static const char* const ARG_MASTERADDRESS;
     static const char* const ARG_MASTERPORT;
     static const char* const ARG_UPDATE;
+    static const char* const ARG_SPAWNAIPROCESS;
+    static const char* const ARG_AISLAVE;
 
     static const char* const ARG_SERVER;
     static const char* const ARG_SERVERSLAVEHOSTOPTIONS;
@@ -48,6 +50,8 @@ public:
 private:
     void disableUi();
 private:
+    QCommandLineOption m_aiSlave;
+    QCommandLineOption m_spawnAiProcess;
     QCommandLineOption m_mods;
     QCommandLineOption m_update;
     QCommandLineOption m_slave;

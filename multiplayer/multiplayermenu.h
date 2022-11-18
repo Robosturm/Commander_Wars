@@ -1,7 +1,6 @@
 #ifndef MULTIPLAYERMENU_H
 #define MULTIPLAYERMENU_H
 
-#include "memory.h"
 #include <QObject>
 #include <QTimer>
 #include <QDir>

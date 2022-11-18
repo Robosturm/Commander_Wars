@@ -3,7 +3,6 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
-#include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
 DropDownmenu::DropDownmenu(qint32 width, const QStringList & items)

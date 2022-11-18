@@ -7,8 +7,6 @@
 
 #include "network/NetworkInterface.h"
 
-#include "gameinput/basegameinputif.h"
-
 #include "game/gamemap.h"
 #include "game/campaign.h"
 

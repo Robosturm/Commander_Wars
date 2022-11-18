@@ -1,7 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
-
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/buildingspritemanager.h"

@@ -3,21 +3,18 @@
 #include "objects/rotatingsprite.h"
 
 #include "resource_management/gamemanager.h"
-#include "resource_management/cospritemanager.h"
 #include "resource_management/fontmanager.h"
 
 #include "menue/basegamemenu.h"
-#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/globalutils.h"
 #include "coreengine/audiothread.h"
 
-#include "game/gameanimation/gameanimationfactory.h"
 #include "game/gameanimation/gameanimationpower.h"
-#include "game/player.h"
 #include "game/co.h"
 #include "game/gamemap.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 
 GameAnimationPower* GameAnimationPower::m_pGameAnimationPower = nullptr;
 

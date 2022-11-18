@@ -5,7 +5,6 @@
 #include "ingamescriptsupport/events/scripteventanimation.h"
 
 #include "coreengine/settings.h"
-#include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 
 #include "ingamescriptsupport/scripteditor.h"

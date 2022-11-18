@@ -1,6 +1,5 @@
 #include "coreengine/filesupport.h"
 #include "coreengine/settings.h"
-#include "coreengine/globalutils.h"
 #include "coreengine/console.h"
 
 #include <QDirIterator>

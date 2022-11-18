@@ -4,22 +4,17 @@
 #include "menue/mainwindow.h"
 #include "menue/gamemenue.h"
 #include "menue/campaignmenu.h"
-#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 #include "coreengine/audiothread.h"
 
 #include "resource_management/backgroundmanager.h"
-#include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
-#include "resource_management/buildingspritemanager.h"
-#include "resource_management/cospritemanager.h"
 
 #include "game/gamemap.h"
 #include "game/campaign.h"
 #include "game/player.h"
-#include "game/co.h"
 
 #include "mapsupport/randomMapGenerator.h"
 

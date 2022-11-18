@@ -8,7 +8,6 @@
 
 #include "coreengine/mainapp.h"
 
-#include "wiki/unitinfo.h"
 #include "wiki/wikidatabase.h"
 
 #include "game/player.h"

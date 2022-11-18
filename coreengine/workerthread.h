@@ -1,10 +1,7 @@
 #ifndef RENDERTHREAD_H
 #define RENDERTHREAD_H
 
-#include "qthread.h"
-#include "qtimer.h"
-
-#include "coreengine/interpreter.h"
+#include <QObject>
 
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 

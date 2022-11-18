@@ -10,7 +10,6 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 #include "objects/base/panel.h"
-#include "objects/base/checkbox.h"
 #include "objects/base/dropdownmenu.h"
 #include "objects/unitstatisticview.h"
 
@@ -21,7 +20,6 @@
 #include "coreengine/LUPDATE_MACROS.h"
 
 #include "menue/basemenu.h"
-#include "menue/wikimenu.h"
 
 class VictoryMenue;
 using spVictoryMenue = oxygine::intrusive_ptr<VictoryMenue>;

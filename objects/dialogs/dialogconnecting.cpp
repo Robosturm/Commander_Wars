@@ -1,9 +1,8 @@
-#include "dialogconnecting.h"
+#include "objects/dialogs/dialogconnecting.h"
 
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
 
 DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)

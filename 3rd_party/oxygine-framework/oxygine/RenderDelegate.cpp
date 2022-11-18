@@ -3,7 +3,6 @@
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
-#include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"

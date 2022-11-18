@@ -6,7 +6,6 @@
 #include <QTimer>
 #include <QProcess>
 
-#include "network/tcpclient.h"
 #include "network/tcpserver.h"
 #include "network/networkgamedata.h"
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"

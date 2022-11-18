@@ -6,7 +6,6 @@
 #include "objects/dialogs/filedialog.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 
 #include "ui_reader/uifactory.h"
 

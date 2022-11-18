@@ -9,7 +9,6 @@
 #include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 
 SelectKey::SelectKey(Qt::Key code)
 {

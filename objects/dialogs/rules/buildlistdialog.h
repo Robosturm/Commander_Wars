@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QVector>
 
-
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/checkbox.h"

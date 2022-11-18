@@ -14,7 +14,6 @@
 #include "game/gameanimation/gameanimation.h"
 
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 #include "resource_management/unitspritemanager.h"
 

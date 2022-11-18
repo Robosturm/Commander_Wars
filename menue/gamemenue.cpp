@@ -9,7 +9,6 @@
 
 #include "menue/gamemenue.h"
 #include "menue/victorymenue.h"
-#include "menue/optionmenue.h"
 #include "menue/movementplanner.h"
 
 #include "coreengine/console.h"
@@ -20,11 +19,9 @@
 
 #include "ai/proxyai.h"
 
-#include "gameinput/humanplayerinput.h"
 #include "game/player.h"
 #include "game/co.h"
 #include "game/gameanimation/gameanimationfactory.h"
-#include "game/unitpathfindingsystem.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"

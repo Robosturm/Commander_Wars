@@ -15,7 +15,6 @@
 #include "coreengine/sha256hash.h"
 
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 #include "menue/mainwindow.h"
 
 #include "network/tcpclient.h"
@@ -25,7 +24,6 @@
 
 #include "game/gamemap.h"
 #include "game/player.h"
-#include "game/co.h"
 
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
@@ -33,7 +31,6 @@
 
 #include "ingamescriptsupport/genericbox.h"
 
-#include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 

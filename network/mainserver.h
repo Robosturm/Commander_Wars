@@ -6,7 +6,6 @@
 #include <QProcess>
 
 #include "network/tcpserver.h"
-#include "network/tcpclient.h"
 #include "network/networkgamedata.h"
 #include "network/networkgame.h"
 #include "network/smtpmailsender.h"

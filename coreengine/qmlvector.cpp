@@ -1,6 +1,7 @@
 #include "coreengine/qmlvector.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/interpreter.h"
 
 #include "ai/coreai.h"
 

@@ -260,6 +260,12 @@ public:
     static const QString &getUpdateStep();
     static void setUpdateStep(const QString &newUpdateStep);
 
+    static bool getSpawnAiProcess();
+    static void setSpawnAiProcess(bool newSpawnAiProcess);
+
+    static bool getAiSlave();
+    static void setAiSlave(bool newAiSlave);
+
 public slots:
     static bool getAutomaticUpdates();
     static void setAutomaticUpdates(bool newAutomaticUpdates);
@@ -986,6 +992,8 @@ private:
     static QString m_userPath;
     static QTranslator m_Translator;
     static QString m_updateStep;
+    static bool m_spawnAiProcess;
+    static bool m_aiSlave;
 
     // logging
     static bool m_LogActions;

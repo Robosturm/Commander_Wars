@@ -3,8 +3,6 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 
-#include "texture.h"
-
 #include "spritingsupport/spritecreator.h"
 
 namespace oxygine

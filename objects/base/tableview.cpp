@@ -3,8 +3,6 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
-#include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
 
 TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> & data, const QStringList & header, bool selectable)

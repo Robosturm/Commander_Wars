@@ -19,8 +19,6 @@
 #include "updater/gameupdater.h"
 #endif
 
-#include "network/mainserver.h"
-
 int main(qint32 argc, char* argv[])
 {
     qInstallMessageHandler(Console::messageOutput);

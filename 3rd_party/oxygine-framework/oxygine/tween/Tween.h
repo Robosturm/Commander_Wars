@@ -2,9 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/Event.h"
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
-#include "3rd_party/oxygine-framework/oxygine/Property.h"
 #include "3rd_party/oxygine-framework/oxygine/UpdateState.h"
-#include "3rd_party/oxygine-framework/oxygine/core/closure.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include <limits>
 

@@ -55,6 +55,7 @@ Mainapp* Mainapp::m_pMainapp;
 QThread Mainapp::m_Workerthread;
 QThread Mainapp::m_Networkthread;
 QThread Mainapp::m_GameServerThread;
+QProcess Mainapp::m_aiSubProcess;
 WorkerThread* Mainapp::m_Worker = new WorkerThread();
 AudioThread* Mainapp::m_Audiothread = nullptr;
 spTCPClient Mainapp::m_slaveClient;
@@ -62,8 +63,6 @@ spTCPClient Mainapp::m_slaveClient;
 bool Mainapp::m_slave{false};
 QMutex Mainapp::m_crashMutex;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
-
-#include "network/rsacypherhandler.h"
 
 Mainapp::Mainapp()
 {
@@ -377,23 +376,44 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case StartupPhase::Finalizing:
         {
-            if (!m_slave)
+            if (Settings::getAiSlave())
             {
-                m_gamepad.init();
-            }
-            // only launch the server if the rest is ready for it ;)
-            if (Settings::getServer() && !m_slave)
-            {
-                MainServer::getInstance();
-                m_GameServerThread.start(QThread::Priority::NormalPriority);
-            }
-            if (m_slave && m_initScript.isEmpty())
-            {
-                emit m_Worker->sigStartSlaveGame();
+                CONSOLE_PRINT("Running as ai slave", Console::eDEBUG);
             }
             else
             {
-                emit m_Worker->sigShowMainwindow();
+                if (!m_slave)
+                {
+                    m_gamepad.init();
+                }
+                if (Settings::getSpawnAiProcess())
+                {
+                    const char* const prefix = "--";
+                    const QString program = QCoreApplication::applicationFilePath();
+                    QStringList args({QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
+                                      QString(prefix) + CommandLineParser::ARG_NOAUDIO,
+                                      QString(prefix) + CommandLineParser::ARG_MODS,
+                                      Settings::getConfigString(Settings::getActiveMods()),
+                                      QString(prefix) + CommandLineParser::ARG_SPAWNAIPROCESS,
+                                      "0",
+                                      QString(prefix) + CommandLineParser::ARG_AISLAVE,});
+                    m_aiSubProcess.setObjectName("AiSubprocess");
+                    m_aiSubProcess.start(program, args);
+                }
+                // only launch the server if the rest is ready for it ;)
+                if (Settings::getServer() && !m_slave)
+                {
+                    MainServer::getInstance();
+                    m_GameServerThread.start(QThread::Priority::NormalPriority);
+                }
+                if (m_slave && m_initScript.isEmpty())
+                {
+                    emit m_Worker->sigStartSlaveGame();
+                }
+                else
+                {
+                    emit m_Worker->sigShowMainwindow();
+                }
             }
             break;
         }
@@ -581,7 +601,7 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
         else if (cur == Settings::getKey_screenshot())
         {
             doScreenshot();
-        }        
+        }
         else
         {
             CONSOLE_PRINT("keyPressEvent", Console::eDEBUG);

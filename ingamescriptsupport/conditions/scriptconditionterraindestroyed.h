@@ -5,7 +5,7 @@
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionTerrainDestroyed;
-typedef oxygine::intrusive_ptr<ScriptConditionTerrainDestroyed> spScriptConditionTerrainDestroyed;
+using spScriptConditionTerrainDestroyed = oxygine::intrusive_ptr<ScriptConditionTerrainDestroyed>;
 
 class ScriptConditionTerrainDestroyed final : public ScriptCondition
 {

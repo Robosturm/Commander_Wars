@@ -1,7 +1,6 @@
 #include "ai/coreai.h"
 #include "ai/targetedunitpathfindingsystem.h"
 
-#include "game/gameanimation/gameanimationfactory.h"
 #include "game/gamemap.h"
 #include "game/unit.h"
 #include "game/gameaction.h"
@@ -10,7 +9,6 @@
 #include "game/co.h"
 
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"

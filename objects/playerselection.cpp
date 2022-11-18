@@ -11,8 +11,6 @@
 #include "game/player.h"
 #include "game/co.h"
 
-#include "resource_management/fontmanager.h"
-#include "resource_management/objectmanager.h"
 #include "resource_management/cospritemanager.h"
 #include "resource_management/gamemanager.h"
 

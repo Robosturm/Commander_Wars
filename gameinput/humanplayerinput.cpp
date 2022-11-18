@@ -21,8 +21,6 @@
 
 #include "ai/coreai.h"
 
-#include "menue/movementplanner.h"
-
 oxygine::spActor HumanPlayerInput::m_ZInformationLabel;
 spHumanPlayerInputMenu HumanPlayerInput::m_CurrentMenu;
 std::vector<oxygine::spActor> HumanPlayerInput::m_Fields;

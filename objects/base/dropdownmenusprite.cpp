@@ -3,9 +3,6 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
-#include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
-
 DropDownmenuSprite::DropDownmenuSprite(qint32 width, QStringList& items, std::function<oxygine::spActor(QString item)> creator, qint32 dropDownWidth, bool autoScale)
     : DropDownmenuBase(width, items.size()),
       m_Creator(creator),

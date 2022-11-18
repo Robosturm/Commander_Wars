@@ -8,7 +8,6 @@
 #include "network/NetworkInterface.h"
 
 #include "objects/base/chat.h"
-#include "objects/base/closeablepopup.h"
 #include "objects/base/label.h"
 
 #include "game/gamerecording/replayrecorder.h"

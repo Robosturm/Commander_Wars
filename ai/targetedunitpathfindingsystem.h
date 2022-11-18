@@ -4,7 +4,7 @@
 #include "game/unitpathfindingsystem.h"
 
 class TargetedUnitPathFindingSystem;
-typedef oxygine::intrusive_ptr<TargetedUnitPathFindingSystem> spTargetedUnitPathFindingSystem;
+using spTargetedUnitPathFindingSystem = oxygine::intrusive_ptr<TargetedUnitPathFindingSystem>;
 
 class TargetedUnitPathFindingSystem final : public UnitPathFindingSystem
 {

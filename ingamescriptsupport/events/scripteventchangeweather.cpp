@@ -5,8 +5,6 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
-
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 

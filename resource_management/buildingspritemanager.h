@@ -1,7 +1,6 @@
 #ifndef BUILDINGSPRITEMANAGER_H
 #define BUILDINGSPRITEMANAGER_H
 
-#include <qobject.h>
 #include "resource_management/ressourcemanagement.h"
 
 class BuildingSpriteManager final : public QObject, public RessourceManagement<BuildingSpriteManager>

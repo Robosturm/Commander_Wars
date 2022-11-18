@@ -7,7 +7,6 @@
 #include <QVector>
 #include <QVector3D>
 
-#include "coreengine/mainapp.h"
 #include "coreengine/qmlvector.h"
 #include "coreengine/fileserializable.h"
 

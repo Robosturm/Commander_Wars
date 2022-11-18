@@ -3,7 +3,6 @@
 
 #include <QElapsedTimer>
 
-
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 

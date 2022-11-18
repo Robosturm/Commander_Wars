@@ -1,20 +1,15 @@
-#include "dialogmodifyunit.h"
+#include "objects/dialogs/editor/dialogmodifyunit.h"
 
 #include "game/unit.h"
-
 #include "game/player.h"
-
 #include "game/co.h"
+#include "game/gamemap.h"
 
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
-
 #include "resource_management/unitspritemanager.h"
-
-#include "game/gamemap.h"
 
 #include "objects/base/slider.h"
 #include "objects/base/dropdownmenu.h"

@@ -1,7 +1,5 @@
 #include "menue/basemenu.h"
 
-#include "coreengine/interpreter.h"
-
 Basemenu::Basemenu()
     : m_onEnterTimer(this)
 {

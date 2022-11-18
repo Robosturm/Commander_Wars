@@ -1,17 +1,16 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/math/ScalarMath.h"
 
-#include <qmath.h>
+#include <QtMath>
 
 namespace oxygine
 {
     template <class T>
     class VectorT2 final
     {
-        typedef VectorT2<T> vector2;
+        using vector2 = VectorT2<T>;
     public:
-        typedef T type;
+        using type = T;
         explicit VectorT2() = default;
         explicit VectorT2(T, T);
 
@@ -79,8 +78,8 @@ namespace oxygine
         template<typename R>
         R cast() const
         {
-            typedef R vec2;
-            typedef typename R::type vec2type;
+            using vec2 = R;
+            using vec2type = typename R::type;
             return vec2(vec2type(x), vec2type(y));
         }
 
@@ -195,6 +194,6 @@ namespace oxygine
         out.y *= norm;
         return out;
     }
-    typedef VectorT2<float> Vector2;
-    typedef VectorT2<int> Point;
+    using Vector2 = VectorT2<float>;
+    using Point = VectorT2<int>;
 }

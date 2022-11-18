@@ -1,11 +1,9 @@
-#include "coselectiondialog.h"
+#include "objects/dialogs/rules/coselectiondialog.h"
 
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
-
 #include "resource_management/cospritemanager.h"
 
 #include "objects/dialogs/ingame/coinfodialog.h"

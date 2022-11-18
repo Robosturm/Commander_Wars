@@ -1,8 +1,8 @@
 #ifndef SCRIPTEVENTDIALOG_H
 #define SCRIPTEVENTDIALOG_H
 
-#include "QVector"
-#include "QColor"
+#include <QVector>
+#include <QColor>
 
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 

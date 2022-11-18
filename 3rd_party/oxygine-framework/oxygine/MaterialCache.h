@@ -3,7 +3,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include <QMultiMap>
-#include <qmutex.h>
+#include <QMutex>
 
 namespace oxygine
 {

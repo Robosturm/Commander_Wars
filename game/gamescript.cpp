@@ -1,5 +1,5 @@
-#include "qfile.h"
-#include "qtextstream.h"
+#include <QFile>
+#include <QTextStream>
 
 #include "game/gamescript.h"
 #include "game/gamemap.h"

@@ -11,7 +11,6 @@
 
 #include "resource_management/fontmanager.h"
 
-
 #include "game/gamemap.h"
 #include "game/gamerules.h"
 #include "game/victoryrule.h"

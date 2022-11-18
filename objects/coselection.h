@@ -6,7 +6,6 @@
 #include <QVector>
 #include <QColor>
 
-
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 

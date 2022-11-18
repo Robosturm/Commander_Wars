@@ -1,12 +1,11 @@
 #ifndef PATHFINDINGSYSTEM_H
 #define PATHFINDINGSYSTEM_H
 
-#include "QtGlobal"
+#include <QtGlobal>
 #include <QObject>
 #include <QVector>
 #include <QPoint>
-#include <qlist.h>
-#include "array"
+#include <QList>
 
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 

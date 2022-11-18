@@ -6,16 +6,9 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/mapselectionview.h"
-#include "objects/minimap.h"
-#include "objects/coselection.h"
 #include "objects/base/panel.h"
-#include "objects/base/spinbox.h"
-#include "objects/base/dropdownmenu.h"
-#include "objects/base/multislider.h"
 #include "objects/playerselection.h"
 #include "objects/ruleselection.h"
-
-#include "game/campaign.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
 #include "menue/basemenu.h"

@@ -11,7 +11,6 @@
 
 #include "ai/islandmap.h"
 #include "ai/targetedunitpathfindingsystem.h"
-#include "ai/decisiontree/decisiontree.h"
 #include "ai/productionSystem/simpleproductionsystem.h"
 
 #include "coreengine/qmlvector.h"

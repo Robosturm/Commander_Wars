@@ -5,7 +5,6 @@
 #include <QTimer>
 
 #include "game/gameanimation/gameanimation.h"
-#include "game/GameEnums.h"
 #include "game/gameanimation/battleanimationsprite.h"
 
 #include "coreengine/LUPDATE_MACROS.h"

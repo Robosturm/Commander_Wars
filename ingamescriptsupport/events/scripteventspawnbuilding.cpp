@@ -2,7 +2,6 @@
 
 #include "resource_management/buildingspritemanager.h"
 
-#include "game/terrain.h"
 #include "game/building.h"
 #include "game/gamemap.h"
 

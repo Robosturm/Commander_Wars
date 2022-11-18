@@ -908,7 +908,7 @@ qt_finalize_executable(${PROJECT_NAME})
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     # translation target isn't supported by qt 6 for android right now
     # create translation here :)
-    # set(LUPDATE_OPTIONS "-I ${CMAKE_CURRENT_SOURCE_DIR}")
+    set(LUPDATE_OPTIONS "-I ${CMAKE_CURRENT_SOURCE_DIR}")
     message ("Language Update Options: ${LUPDATE_OPTIONS}")
     # created translation files
     set(TS_FILES
@@ -925,7 +925,7 @@ if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         ${scripts}
         ${uiXmls}
         ${TS_FILES}
-        OPTIONS ${LUPDATE_OPTIONS})
+        OPTIONS "${LUPDATE_OPTIONS}")
     qt_add_translation(${PROJECT_NAME}_QM_FILES ${TS_FILES})
     add_custom_target(${PROJECT_NAME}_translations DEPENDS ${QM_FILES})
     add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_translations)

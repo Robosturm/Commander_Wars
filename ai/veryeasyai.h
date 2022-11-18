@@ -1,8 +1,6 @@
 #ifndef VERYEASYAI_H
 #define VERYEASYAI_H
 
-#include "qvector.h"
-
 #include "ai/coreai.h"
 #include "ai/decisiontree/decisiontree.h"
 

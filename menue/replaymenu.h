@@ -10,7 +10,6 @@
 
 #include "gameinput/humanplayerinput.h"
 #include "game/viewplayer.h"
-#include "game/GameEnums.h"
 #include "game/gameanimation/animationskipper.h"
 
 class ReplayMenu;

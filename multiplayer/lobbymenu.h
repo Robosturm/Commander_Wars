@@ -5,11 +5,10 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
-#include "objects/base/panel.h"
 #include "objects/tableView/complextableview.h"
 
-#include "network/tcpclient.h"
 #include "network/networkgamedata.h"
+#include "network/NetworkInterface.h"
 
 #include "multiplayer/networkcommands.h"
 #include "multiplayer/password.h"

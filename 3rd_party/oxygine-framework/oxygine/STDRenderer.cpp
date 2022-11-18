@@ -1,12 +1,9 @@
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
-#include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
-#include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
-#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
 #include <QFile>
 #include <QTextStream>

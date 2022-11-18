@@ -11,6 +11,8 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+
 class Unit;
 using spUnit = oxygine::intrusive_ptr<Unit>;
 class Terrain;
@@ -23,6 +25,7 @@ class GameMap;
 class GameMenue;
 class CO;
 using spCO = oxygine::intrusive_ptr<CO>;
+using spUnit = oxygine::intrusive_ptr<Unit>;
 
 class CO final : public QObject, public oxygine::Actor, public FileSerializable
 {
@@ -791,7 +794,7 @@ private:
     qint32 m_powerStars{0};
     qint32 m_superpowerStars{0};
     double m_powerFilled{0.0};
-    spUnit m_pCOUnit{nullptr};
+    spUnit m_pCOUnit;
     GameEnums::PowerMode m_PowerMode{GameEnums::PowerMode_Off};
     ScriptVariables m_Variables;
     qint32 m_powerUsed{0};

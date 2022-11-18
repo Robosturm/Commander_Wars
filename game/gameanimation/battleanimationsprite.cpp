@@ -1,4 +1,4 @@
-#include "QColor"
+#include <QColor>
 
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenshakey.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"

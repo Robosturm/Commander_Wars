@@ -9,7 +9,7 @@ namespace oxygine
     class SingleResAnim final : public ResAnim
     {
     public:
-        explicit SingleResAnim();
+        explicit SingleResAnim() = default;
         ~SingleResAnim();
         virtual void init(const QString & file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder) override;
         virtual void init(QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder,

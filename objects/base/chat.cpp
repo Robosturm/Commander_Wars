@@ -4,16 +4,13 @@
 
 #include "objects/base/chat.h"
 
+#include "menue/basegamemenu.h"
+
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
-
-#include "game/gamemap.h"
-
-#include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 #include "network/JsonKeys.h"
 

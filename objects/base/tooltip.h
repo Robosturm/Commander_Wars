@@ -7,7 +7,7 @@
 #include "objects/base/focusableobject.h"
 
 class Tooltip;
-typedef oxygine::intrusive_ptr<Tooltip> spTooltip;
+using spTooltip = oxygine::intrusive_ptr<Tooltip>;
 
 class Tooltip : public FocusableObject
 {

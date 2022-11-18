@@ -1,5 +1,4 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 #include <limits>
 
@@ -9,8 +8,8 @@ namespace oxygine
     class RectT final
     {
     public:
-        typedef typename point2::type T;
-        typedef point2 type;
+        using T = typename point2::type;
+        using type = point2;
 
         explicit RectT()
             : pos(0, 0),
@@ -291,8 +290,8 @@ namespace oxygine
         template<typename R>
         R cast() const
         {
-            typedef R rect;
-            typedef typename R::type rect2type;
+            using rect = R;
+            using rect2type = typename R::type;
             return rect(pos.template cast<rect2type>(), size.template cast<rect2type>());
         }
 

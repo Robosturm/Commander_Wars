@@ -4,10 +4,6 @@
 #include <QObject>
 #include <QJsonObject>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
-#include "coreengine/fileserializable.h"
-
 /**
  * @brief The NetworkGameData class Data describing this game
  */

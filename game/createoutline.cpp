@@ -1,5 +1,3 @@
-#include "coreengine/mainapp.h"
-
 #include "game/createoutline.h"
 #include "game/gamemap.h"
 

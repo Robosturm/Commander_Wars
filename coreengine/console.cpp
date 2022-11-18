@@ -7,6 +7,7 @@
 #include <QDateTime>
 #include <QFontMetrics>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 
 #include "coreengine/console.h"
@@ -16,11 +17,6 @@
 #include "coreengine/globalutils.h"
 
 #include "resource_management/fontmanager.h"
-
-#include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
-
-#include "network/NetworkInterface.h"
 
 #include "spritingsupport/spritecreator.h"
 
@@ -120,6 +116,7 @@ spConsole Console::getInstance()
 void Console::init()
 {
     // Print some Info
+    CONSOLE_PRINT("Started with: " + QCoreApplication::arguments().join(" "), Console::eINFO);
     CONSOLE_PRINT("Enter \"help()\" for console info.", Console::eLogLevels::eINFO);
     CONSOLE_PRINT("Starting Game...", Console::eLogLevels::eINFO);
     CONSOLE_PRINT("Prepare to Fight...", Console::eLogLevels::eINFO);
@@ -1530,6 +1527,11 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
     if (!file.isOpen())
     {
         Mainapp* pApp = Mainapp::getInstance();
+        if (Settings::getAiSlave())
+        {
+            file.setFileName(Settings::getUserPath() + "consoleAiSlave.log");
+            file.open(QIODevice::WriteOnly);
+        }
         if (pApp->getSlave() && pApp->getCreateSlaveLogs())
         {
             QString slaveName = Settings::getSlaveServerName();

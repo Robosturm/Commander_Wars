@@ -4,7 +4,6 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
 #include "coreengine/interpreter.h"
 
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"

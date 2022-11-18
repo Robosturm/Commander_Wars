@@ -909,32 +909,32 @@
 <context>
     <name>ActionListDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="40"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="38"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="51"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="49"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="59"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="57"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="69"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="67"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="106"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="104"/>
         <source>Action List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="214"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="212"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -942,12 +942,12 @@
 <context>
     <name>ActionPerformer</name>
     <message>
-        <location filename="../game/actionperformer.cpp" line="46"/>
+        <location filename="../game/actionperformer.cpp" line="45"/>
         <source>Waiting for Players/Observers to join...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/actionperformer.cpp" line="71"/>
+        <location filename="../game/actionperformer.cpp" line="70"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -968,72 +968,72 @@
 <context>
     <name>BuildListDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="42"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="40"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="53"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="51"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="62"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="60"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="72"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="70"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="114"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="112"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="282"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="280"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="290"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="288"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="291"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="289"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="292"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="290"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="293"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="291"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="294"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="292"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="314"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="312"/>
         <source>Do you want to make the saved build list the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="314"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="312"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="314"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="312"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1041,7 +1041,7 @@
 <context>
     <name>CO</name>
     <message>
-        <location filename="../game/co.cpp" line="376"/>
+        <location filename="../game/co.cpp" line="375"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1049,57 +1049,57 @@
 <context>
     <name>COBannListDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="41"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="39"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="52"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="50"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="61"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="59"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="71"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="69"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="114"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="112"/>
         <source>CO Bann List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="268"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="266"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="276"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="274"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="277"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="275"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="278"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="276"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="279"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="277"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="280"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="278"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1107,47 +1107,47 @@
 <context>
     <name>COInfoActor</name>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="38"/>
+        <location filename="../objects/coinfoactor.cpp" line="35"/>
         <source>CO Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="73"/>
+        <location filename="../objects/coinfoactor.cpp" line="70"/>
         <source>Hit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="92"/>
+        <location filename="../objects/coinfoactor.cpp" line="89"/>
         <source>Miss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="153"/>
+        <location filename="../objects/coinfoactor.cpp" line="150"/>
         <source>Synergy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="158"/>
+        <location filename="../objects/coinfoactor.cpp" line="155"/>
         <source>Active Perks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="169"/>
+        <location filename="../objects/coinfoactor.cpp" line="166"/>
         <source>Global Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="175"/>
+        <location filename="../objects/coinfoactor.cpp" line="172"/>
         <source>CO Zone Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="252"/>
+        <location filename="../objects/coinfoactor.cpp" line="249"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="277"/>
+        <location filename="../objects/coinfoactor.cpp" line="274"/>
         <source>Progress: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1155,17 +1155,17 @@
 <context>
     <name>COInfoDialog</name>
     <message>
-        <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="38"/>
+        <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="34"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="48"/>
+        <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="44"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="58"/>
+        <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="54"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1173,17 +1173,17 @@
 <context>
     <name>COSelectionDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="44"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="42"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="55"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="53"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="64"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="62"/>
         <source>Show CO Info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1191,8 +1191,8 @@
 <context>
     <name>COSpriteManager</name>
     <message>
-        <location filename="../resource_management/cospritemanager.cpp" line="264"/>
-        <location filename="../resource_management/cospritemanager.cpp" line="295"/>
+        <location filename="../resource_management/cospritemanager.cpp" line="261"/>
+        <location filename="../resource_management/cospritemanager.cpp" line="292"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1200,17 +1200,17 @@
 <context>
     <name>COStyleMenu</name>
     <message>
-        <location filename="../menue/costylemenu.cpp" line="57"/>
+        <location filename="../menue/costylemenu.cpp" line="56"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/costylemenu.cpp" line="67"/>
+        <location filename="../menue/costylemenu.cpp" line="66"/>
         <source>Show CO Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/costylemenu.cpp" line="77"/>
+        <location filename="../menue/costylemenu.cpp" line="76"/>
         <source>Edit CO</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1231,201 +1231,201 @@
 <context>
     <name>CampaignEditor</name>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="59"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="58"/>
         <source>Folder:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="63"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="62"/>
         <source>Folder containing the campaign maps. All maps for this campaign should be directly below this folder. The folder name must end with .camp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="68"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="67"/>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="79"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="78"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="83"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="82"/>
         <source>Name of the campaign shown in the map selection screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="91"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="90"/>
         <source>Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="95"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="94"/>
         <source>Name of the author shown in the map selection screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="103"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="102"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="107"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="106"/>
         <source>Description of the campaign shown in the map selection screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="119"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="118"/>
         <source>Add Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="128"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="206"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="127"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="205"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="138"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="196"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="137"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="195"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="148"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="147"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="170"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="169"/>
         <source>Do you want to exit the campaign editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="186"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="185"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="275"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="274"/>
         <source>Enable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="283"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="282"/>
         <source>Disable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="291"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="290"/>
         <source>Variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="299"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="298"/>
         <source>Remove Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="310"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="309"/>
         <source>Last Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="316"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="315"/>
         <source>All maps marked as last map need to be won in order to finish the campaign.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="761"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="760"/>
         <source>Number of maps that disable this map again. When they are one this map is made unplayable. Can be used to make a map no longer playable after a Victory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="970"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="969"/>
         <source>If checked and if the disable variable has been fullfiled this map can&apos;t be played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="687"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="686"/>
         <source>Enable Map Count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="691"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="690"/>
         <source>Number of maps that leads to this map and that need to be won in order to play this map. Can be smaller so multiple campaign paths lead to this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="713"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="712"/>
         <source>If checked this map leads to the selected map. Also see &quot;Enable Map Count&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="757"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="756"/>
         <source>Disable Map Count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="781"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="780"/>
         <source>If checked this map disables the selected map. Also see &quot;Disable Map Count&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="831"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="830"/>
         <source>Enable Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="840"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="916"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="839"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="915"/>
         <source>Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="844"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="920"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="843"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="919"/>
         <source>Name of the Variable that should be checked. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="857"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="933"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="856"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="932"/>
         <source>Compare: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="863"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="937"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="862"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="936"/>
         <source>The way how the variable gets compared with the constant. variable compare value </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="875"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="949"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="874"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="948"/>
         <source>Value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="879"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="953"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="878"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="952"/>
         <source>The value that the variable gets checked against.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="892"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="966"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="891"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="965"/>
         <source>Use Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="896"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="895"/>
         <source>If checked the enable variable needs to fullfil the condition to allow this map to be playable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="909"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="908"/>
         <source>Disable Variable</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1433,18 +1433,18 @@
 <context>
     <name>CampaignMenu</name>
     <message>
-        <location filename="../menue/campaignmenu.cpp" line="58"/>
+        <location filename="../menue/campaignmenu.cpp" line="54"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/campaignmenu.cpp" line="68"/>
+        <location filename="../menue/campaignmenu.cpp" line="64"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/campaignmenu.cpp" line="78"/>
-        <location filename="../menue/campaignmenu.cpp" line="521"/>
+        <location filename="../menue/campaignmenu.cpp" line="74"/>
+        <location filename="../menue/campaignmenu.cpp" line="517"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1452,41 +1452,41 @@
 <context>
     <name>Chat</name>
     <message>
-        <location filename="../objects/base/chat.cpp" line="52"/>
+        <location filename="../objects/base/chat.cpp" line="49"/>
         <source>Send</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/chat.cpp" line="85"/>
+        <location filename="../objects/base/chat.cpp" line="82"/>
         <source>Message to send via chat. Start a message with one of the following items to send a message to specific targets. 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/chat.cpp" line="87"/>
+        <location filename="../objects/base/chat.cpp" line="84"/>
         <source> send message to all your allies.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/chat.cpp" line="88"/>
+        <location filename="../objects/base/chat.cpp" line="85"/>
         <source> send message to all your enemies.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/chat.cpp" line="89"/>
+        <location filename="../objects/base/chat.cpp" line="86"/>
         <source> send message to the given team X.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/chat.cpp" line="90"/>
+        <location filename="../objects/base/chat.cpp" line="87"/>
         <source> send message to the given player X.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/chat.cpp" line="95"/>
+        <location filename="../objects/base/chat.cpp" line="92"/>
         <source>Message to send via chat.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1543,224 +1543,239 @@
 <context>
     <name>CommandLineParser</name>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="50"/>
-        <source>mods that should be loaded. As a string list separated by &apos;;&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="50"/>
-        <source>mod list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="51"/>
-        <source>Only used internal to tell the game that an update is in progresss</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="51"/>
-        <source>update step</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../coreengine/commandlineparser.cpp" line="52"/>
-        <source>If the exe is started as a slave process.</source>
+        <source>Acts as ai slave process</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="53"/>
-        <source>If the exe is started in headless mode</source>
+        <source>mode for starting the sub ai process. Off=0 Spawn=1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="53"/>
+        <source>mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="54"/>
-        <source>If the exe is started muted and sound can&apos;t be turned on</source>
+        <source>mods that should be loaded. As a string list separated by &apos;;&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="54"/>
+        <source>mod list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="55"/>
-        <source>Path to a js script that gets triggered by the game to automate or test things</source>
+        <source>Only used internal to tell the game that an update is in progresss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="55"/>
-        <source>script</source>
+        <source>update step</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="56"/>
-        <source>If the game should create logs for spawned slave processes</source>
+        <source>If the exe is started as a slave process.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="57"/>
-        <source>Address on which the game will listen for new clients</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="57"/>
-        <location filename="../coreengine/commandlineparser.cpp" line="58"/>
-        <source>ip-adress</source>
+        <source>If the exe is started in headless mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="58"/>
-        <source>Secondary address on which the game will listen for new clients</source>
+        <source>If the exe is started muted and sound can&apos;t be turned on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="59"/>
-        <source>Port on which the game will listen for new clients</source>
+        <source>Path to a js script that gets triggered by the game to automate or test things</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="59"/>
-        <location filename="../coreengine/commandlineparser.cpp" line="61"/>
-        <location filename="../coreengine/commandlineparser.cpp" line="67"/>
-        <location filename="../coreengine/commandlineparser.cpp" line="69"/>
-        <location filename="../coreengine/commandlineparser.cpp" line="72"/>
-        <source>port</source>
+        <source>script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="60"/>
-        <source>Address on which the game will connect to the hosting server to exchange data</source>
+        <source>If the game should create logs for spawned slave processes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="61"/>
+        <source>Address on which the game will listen for new clients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="61"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="62"/>
+        <source>ip-adress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="62"/>
+        <source>Secondary address on which the game will listen for new clients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="63"/>
+        <source>Port on which the game will listen for new clients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="63"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="65"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="71"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="73"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="76"/>
+        <source>port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="64"/>
+        <source>Address on which the game will connect to the hosting server to exchange data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="65"/>
         <source>Port on which the game will connect to the hosting server to exchange data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="62"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="66"/>
         <source>Unique name to identify the slave on the server side</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="62"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="66"/>
         <source>name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="63"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="67"/>
         <source>If set the game launches the dedicated server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="63"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="67"/>
         <source>server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="64"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="68"/>
         <source>Ip-Address and Port range separated by &apos;&amp;&apos; for the 3 parts and &apos;;&apos; for gaps or different addresses on which slave games will be spawned to listen. E.g. ::1&amp;10000&amp;20000;::1&amp;50000&amp;65535. Note the Ip-Address needs to be accessible by connecting clients.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="64"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="68"/>
         <source>options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="65"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="69"/>
         <source>The address on which the server will listen for clients. Empty for all addresses.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="65"/>
-        <location filename="../coreengine/commandlineparser.cpp" line="66"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="69"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="70"/>
         <source>ip-address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="66"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="70"/>
         <source>The secondary address on which the server will listen for clients. Empty for all addresses.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="67"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="71"/>
         <source>Port on which the server will initially listen for clients.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="68"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="72"/>
         <source>The address on which the server will listen for slave games. Empty for all addresses.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="69"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="73"/>
         <source>Port on which the server will listen for slave games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="70"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="74"/>
         <source>Time in seconds till a slave game with no connected clients get despawned in seconds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="70"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="74"/>
         <source>time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="71"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="75"/>
         <source>Mail server address for the server for sending mails to accounts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="71"/>
-        <location filename="../coreengine/commandlineparser.cpp" line="76"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="75"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="80"/>
         <source>address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="72"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="76"/>
         <source>Mail server port for the server for sending mails to accounts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="73"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="77"/>
         <source>Mail server connection type (TLS, TCP, SSL) for the server for sending mails to accounts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="73"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="77"/>
         <source>connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="74"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="78"/>
         <source>Username on the mail server for the server for sending mails to accounts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="74"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="78"/>
         <source>username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="75"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="79"/>
         <source>Password on the mail server for the server for sending mails to accounts. Must be set cause the password is never stored in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="75"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="79"/>
         <source>password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="76"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="80"/>
         <source>E-Mail address used on the mail server for the server for sending mails to accounts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="77"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="81"/>
         <source>Mail server authentication type (Plain, Login) for the server for sending mails to accounts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/commandlineparser.cpp" line="77"/>
+        <location filename="../coreengine/commandlineparser.cpp" line="81"/>
         <source>method</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1936,23 +1951,23 @@
 <context>
     <name>DialogAttackLog</name>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="45"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="43"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="117"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="115"/>
         <source>Day </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="182"/>
-        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="241"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="180"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="239"/>
         <source>Hp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="245"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="243"/>
         <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1995,7 +2010,7 @@
 <context>
     <name>DialogConnecting</name>
     <message>
-        <location filename="../objects/dialogs/dialogconnecting.cpp" line="40"/>
+        <location filename="../objects/dialogs/dialogconnecting.cpp" line="39"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2127,124 +2142,124 @@
 <context>
     <name>DialogModifyUnit</name>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="48"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="43"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="90"/>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="97"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="85"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="92"/>
         <source>Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="113"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="108"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="116"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="111"/>
         <source>HP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="130"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="125"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="133"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="128"/>
         <source>Fuel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="156"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="151"/>
         <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="159"/>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="185"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="154"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="180"/>
         <source>Ammo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="182"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="177"/>
         <source>Ammo 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="207"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="202"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="214"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="209"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="103"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="98"/>
         <source>Selects the custom name of the unit shown instead of the actual unit name. An empty name will display the default name for that unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="117"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="112"/>
         <source>Selects the HP of the current unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="134"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="129"/>
         <source>Selects the Fuel of the current unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="160"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="155"/>
         <source>Selects the Ammo 1 of the current unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="186"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="181"/>
         <source>Selects the Ammo 2 of the current unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="217"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="212"/>
         <source>Selects the Owner of the current unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="230"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="225"/>
         <source>AI-Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="233"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="228"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="234"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="229"/>
         <source>Offensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="235"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="230"/>
         <source>Defensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="236"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="231"/>
         <source>Hold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="240"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="235"/>
         <source>Scripted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="242"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="237"/>
         <source>Selects how the AI uses this unit
 Normal AI uses the unit like always.
 Offensive AI the ai moves the unit to the closest enemy and attacks
@@ -2258,62 +2273,62 @@ This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="277"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="272"/>
         <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rank. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="351"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="346"/>
         <source>Selects the unit loaded by the transporter. Enter &apos;-&apos; for no unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="265"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="260"/>
         <source>Unit Rank: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="237"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="232"/>
         <source>Patrol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="238"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="233"/>
         <source>Patrol Loop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="239"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="234"/>
         <source>Target Enemy HQ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="274"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="269"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="275"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="270"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="319"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="314"/>
         <source>Loaded Unit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="396"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="391"/>
         <source>Move Point: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="428"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="423"/>
         <source>Add Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="436"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="431"/>
         <source>Remove last Point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2603,12 +2618,12 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>DialogUnitInfo</name>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="42"/>
+        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="41"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="158"/>
+        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="157"/>
         <source>Go to Unit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2624,22 +2639,22 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>DialogVictoryConditions</name>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="40"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="39"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="68"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="67"/>
         <source>Victory Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="108"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="107"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="128"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="127"/>
         <source>Keep Track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2647,7 +2662,7 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>DropDownmenu</name>
     <message>
-        <location filename="../objects/base/dropdownmenu.cpp" line="40"/>
+        <location filename="../objects/base/dropdownmenu.cpp" line="39"/>
         <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5191,12 +5206,12 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>GameAnimationNextDay</name>
     <message>
-        <location filename="../game/gameanimation/gameanimationnextday.cpp" line="151"/>
+        <location filename="../game/gameanimation/gameanimationnextday.cpp" line="150"/>
         <source>Save and Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gameanimation/gameanimationnextday.cpp" line="160"/>
+        <location filename="../game/gameanimation/gameanimationnextday.cpp" line="159"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5221,9 +5236,9 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="60"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="77"/>
-        <location filename="../game/gamemap.cpp" line="570"/>
-        <location filename="../game/gamemap.cpp" line="693"/>
-        <location filename="../game/gamemap.cpp" line="1529"/>
+        <location filename="../game/gamemap.cpp" line="569"/>
+        <location filename="../game/gamemap.cpp" line="692"/>
+        <location filename="../game/gamemap.cpp" line="1528"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -5238,164 +5253,164 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="409"/>
+        <location filename="../game/gamemap.cpp" line="408"/>
         <source>Tags
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="412"/>
+        <location filename="../game/gamemap.cpp" line="411"/>
         <source>Bases
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="416"/>
+        <location filename="../game/gamemap.cpp" line="415"/>
         <source>Airports
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="420"/>
+        <location filename="../game/gamemap.cpp" line="419"/>
         <source>Harbours
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="424"/>
+        <location filename="../game/gamemap.cpp" line="423"/>
         <source>Towers
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="428"/>
+        <location filename="../game/gamemap.cpp" line="427"/>
         <source>Teleport
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="432"/>
+        <location filename="../game/gamemap.cpp" line="431"/>
         <source>Mixed bases
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="436"/>
+        <location filename="../game/gamemap.cpp" line="435"/>
         <source>Predeployed
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="440"/>
+        <location filename="../game/gamemap.cpp" line="439"/>
         <source>Symetric
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="444"/>
+        <location filename="../game/gamemap.cpp" line="443"/>
         <source>PvP
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="448"/>
+        <location filename="../game/gamemap.cpp" line="447"/>
         <source>FTA
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="452"/>
+        <location filename="../game/gamemap.cpp" line="451"/>
         <source>Vs AI
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="456"/>
+        <location filename="../game/gamemap.cpp" line="455"/>
         <source>Team play
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="460"/>
+        <location filename="../game/gamemap.cpp" line="459"/>
         <source>Historical
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="464"/>
+        <location filename="../game/gamemap.cpp" line="463"/>
         <source>Low funds
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="468"/>
+        <location filename="../game/gamemap.cpp" line="467"/>
         <source>High funds
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="472"/>
+        <location filename="../game/gamemap.cpp" line="471"/>
         <source>Naval
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="476"/>
+        <location filename="../game/gamemap.cpp" line="475"/>
         <source>Ground
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="480"/>
+        <location filename="../game/gamemap.cpp" line="479"/>
         <source>Air
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="484"/>
+        <location filename="../game/gamemap.cpp" line="483"/>
         <source>Scripted
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="570"/>
-        <location filename="../game/gamemap.cpp" line="1529"/>
+        <location filename="../game/gamemap.cpp" line="569"/>
+        <location filename="../game/gamemap.cpp" line="1528"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="666"/>
+        <location filename="../game/gamemap.cpp" line="665"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="693"/>
+        <location filename="../game/gamemap.cpp" line="692"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1497"/>
+        <location filename="../game/gamemap.cpp" line="1496"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1557"/>
+        <location filename="../game/gamemap.cpp" line="1556"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1567"/>
+        <location filename="../game/gamemap.cpp" line="1566"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1575"/>
+        <location filename="../game/gamemap.cpp" line="1574"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1587"/>
+        <location filename="../game/gamemap.cpp" line="1586"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5403,124 +5418,124 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="99"/>
+        <location filename="../menue/gamemenue.cpp" line="96"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="374"/>
+        <location filename="../menue/gamemenue.cpp" line="371"/>
         <source>Connection failed.Reason: Invalid login data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="375"/>
+        <location filename="../menue/gamemenue.cpp" line="372"/>
         <source>Connection failed.Reason: No more observers available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="376"/>
+        <location filename="../menue/gamemenue.cpp" line="373"/>
         <source>Connection failed.Reason: No valid player available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="377"/>
+        <location filename="../menue/gamemenue.cpp" line="374"/>
         <source>Connection failed.Reason: Invalid connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="896"/>
+        <location filename="../menue/gamemenue.cpp" line="893"/>
         <source>The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="917"/>
+        <location filename="../menue/gamemenue.cpp" line="914"/>
         <source>A client has disconnected from the game. The client may reconnect to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1118"/>
-        <location filename="../menue/gamemenue.cpp" line="1707"/>
-        <location filename="../menue/gamemenue.cpp" line="1744"/>
+        <location filename="../menue/gamemenue.cpp" line="1115"/>
+        <location filename="../menue/gamemenue.cpp" line="1704"/>
+        <location filename="../menue/gamemenue.cpp" line="1741"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1126"/>
+        <location filename="../menue/gamemenue.cpp" line="1123"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1161"/>
+        <location filename="../menue/gamemenue.cpp" line="1158"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1567"/>
+        <location filename="../menue/gamemenue.cpp" line="1564"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1568"/>
+        <location filename="../menue/gamemenue.cpp" line="1565"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1569"/>
+        <location filename="../menue/gamemenue.cpp" line="1566"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1570"/>
+        <location filename="../menue/gamemenue.cpp" line="1567"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1571"/>
+        <location filename="../menue/gamemenue.cpp" line="1568"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1572"/>
+        <location filename="../menue/gamemenue.cpp" line="1569"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1573"/>
+        <location filename="../menue/gamemenue.cpp" line="1570"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1574"/>
+        <location filename="../menue/gamemenue.cpp" line="1571"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1598"/>
+        <location filename="../menue/gamemenue.cpp" line="1595"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1608"/>
+        <location filename="../menue/gamemenue.cpp" line="1605"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2046"/>
+        <location filename="../menue/gamemenue.cpp" line="2043"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2077"/>
+        <location filename="../menue/gamemenue.cpp" line="2074"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2103"/>
+        <location filename="../menue/gamemenue.cpp" line="2100"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2280"/>
+        <location filename="../menue/gamemenue.cpp" line="2277"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5536,12 +5551,12 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>GenericBox</name>
     <message>
-        <location filename="../ingamescriptsupport/genericbox.cpp" line="30"/>
+        <location filename="../ingamescriptsupport/genericbox.cpp" line="29"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/genericbox.cpp" line="40"/>
+        <location filename="../ingamescriptsupport/genericbox.cpp" line="39"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5549,117 +5564,117 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>IngameInfoBar</name>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="263"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="262"/>
         <source>Day:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="281"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="280"/>
         <source>Buildings:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="303"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="302"/>
         <source>Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="326"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="325"/>
         <source>Funds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="349"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="348"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="362"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="361"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="640"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="646"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="650"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="901"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="639"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="645"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="649"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="900"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="662"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="661"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="668"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="667"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="681"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="680"/>
         <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="687"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="686"/>
         <source>Ammo 1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="699"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="698"/>
         <source>Ammo 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="704"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="703"/>
         <source>Ammo 2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="716"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="940"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="715"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="939"/>
         <source>Owner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="721"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="935"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="720"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="934"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="730"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="729"/>
         <source>Weapon 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="744"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="743"/>
         <source>Weapon 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="757"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="756"/>
         <source>Move:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="769"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="768"/>
         <source>Movepoints:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="781"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="780"/>
         <source>Vision:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="918"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="917"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="931"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="930"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5680,100 +5695,100 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>LobbyMenu</name>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="66"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="65"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="75"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="74"/>
         <source>Direct Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="85"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="84"/>
         <source>Server Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="96"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="95"/>
         <source>Join Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="107"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="106"/>
         <source>Observe Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="117"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="116"/>
         <source>Join Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="127"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="126"/>
         <source>Observe Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="137"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="245"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="136"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="244"/>
         <source>Show my games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="147"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="146"/>
         <source>Refresh games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="239"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="238"/>
         <source>Show open games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="290"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="365"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="289"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="364"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="333"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="347"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="332"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="346"/>
         <source>Enter Host Adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="436"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="435"/>
         <source>Failed to relaunch game on server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="442"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="441"/>
         <source>Host game is no longer available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="163"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="163"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="163"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="163"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="163"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5794,108 +5809,108 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="246"/>
+        <location filename="../coreengine/mainapp.cpp" line="245"/>
         <source>Loading CO Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="253"/>
+        <location filename="../coreengine/mainapp.cpp" line="252"/>
         <source>Loading Animation Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="260"/>
+        <location filename="../coreengine/mainapp.cpp" line="259"/>
         <source>Loading Game Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="267"/>
+        <location filename="../coreengine/mainapp.cpp" line="266"/>
         <source>Loading Rule Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="208"/>
+        <location filename="../coreengine/mainapp.cpp" line="207"/>
         <source>Checking for new version...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="237"/>
+        <location filename="../coreengine/mainapp.cpp" line="236"/>
         <source>Loading Building Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="276"/>
+        <location filename="../coreengine/mainapp.cpp" line="275"/>
         <source>Loading Terrain Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="283"/>
+        <location filename="../coreengine/mainapp.cpp" line="282"/>
         <source>Loading Units Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="290"/>
+        <location filename="../coreengine/mainapp.cpp" line="289"/>
         <source>Loading Battleanimation Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="297"/>
+        <location filename="../coreengine/mainapp.cpp" line="296"/>
         <source>Loading CO-Perk Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="304"/>
+        <location filename="../coreengine/mainapp.cpp" line="303"/>
         <source>Loading Wiki Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="311"/>
+        <location filename="../coreengine/mainapp.cpp" line="310"/>
         <source>Loading Userdata ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="318"/>
+        <location filename="../coreengine/mainapp.cpp" line="317"/>
         <source>Loading Achievement Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="325"/>
+        <location filename="../coreengine/mainapp.cpp" line="324"/>
         <source>Loading Shop Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="332"/>
+        <location filename="../coreengine/mainapp.cpp" line="331"/>
         <source>Loading Movement planner addin Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="339"/>
+        <location filename="../coreengine/mainapp.cpp" line="338"/>
         <source>Loading Ui Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="346"/>
+        <location filename="../coreengine/mainapp.cpp" line="345"/>
         <source>Loading sounds ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="356"/>
+        <location filename="../coreengine/mainapp.cpp" line="355"/>
         <source>Loading Scripts ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="663"/>
+        <location filename="../coreengine/mainapp.cpp" line="683"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="669"/>
+        <location filename="../coreengine/mainapp.cpp" line="689"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="671"/>
+        <location filename="../coreengine/mainapp.cpp" line="691"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
@@ -5904,29 +5919,29 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="78"/>
+        <location filename="../menue/mainwindow.cpp" line="75"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="101"/>
+        <location filename="../menue/mainwindow.cpp" line="98"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="101"/>
+        <location filename="../menue/mainwindow.cpp" line="98"/>
         <source>Imports all data from an other Commander Wars release to the current release.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="255"/>
-        <location filename="../menue/mainwindow.cpp" line="265"/>
-        <location filename="../menue/mainwindow.cpp" line="302"/>
+        <location filename="../menue/mainwindow.cpp" line="252"/>
+        <location filename="../menue/mainwindow.cpp" line="262"/>
+        <location filename="../menue/mainwindow.cpp" line="299"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="414"/>
+        <location filename="../menue/mainwindow.cpp" line="411"/>
         <source>Do you want to enable all current items in the shop?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5934,7 +5949,7 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>MapEditDialog</name>
     <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="191"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="190"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5942,60 +5957,60 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="71"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="66"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="80"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="75"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="90"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="85"/>
         <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="100"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="95"/>
         <source>Map filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="110"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="476"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="105"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="471"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="121"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="487"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="535"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="116"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="482"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="530"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="132"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="127"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="144"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="139"/>
         <source>Start Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
         <source>Do you want to make the saved ruleset the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6003,22 +6018,22 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>MapSelectionView</name>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="96"/>
+        <location filename="../objects/mapselectionview.cpp" line="95"/>
         <source>Name: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="107"/>
+        <location filename="../objects/mapselectionview.cpp" line="106"/>
         <source>Author: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="118"/>
+        <location filename="../objects/mapselectionview.cpp" line="117"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="129"/>
+        <location filename="../objects/mapselectionview.cpp" line="128"/>
         <source>Description </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6059,136 +6074,136 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="85"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="99"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1779"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="82"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="96"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1776"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="110"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="107"/>
         <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="122"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="119"/>
         <source>Load Savegame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="156"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="153"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="365"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="362"/>
         <source>Server doesn&apos;t have the given mods installed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="146"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="143"/>
         <source>Please use one of the following IP-Addresses to connect to this Host. Not all IP-Addresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="147"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="144"/>
         <source> may work for each client depending on their network settings. Please use CMD and the ping command to verify if an IP-Address will work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="372"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="369"/>
         <source>Server doesn&apos;t have any more slots for players.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="171"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="168"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="436"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="433"/>
         <source>Connection failed. Reason: Invalid username password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="437"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="434"/>
         <source>Connection failed. Reason: No more observers available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="438"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="435"/>
         <source>Connection failed. Reason: No more players available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="439"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="436"/>
         <source>Connection failed. Reason: Invalid connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="440"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="437"/>
         <source>Connection failed. Reason: Invalid username.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="441"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="438"/>
         <source>Connection failed. Reason: Password outdated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="442"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="439"/>
         <source>Connection failed. Reason: Server failed to access database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="443"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="440"/>
         <source>Connection failed. Reason: Player with same username already connected to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="711"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="857"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="708"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="854"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1089"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1086"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1093"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1090"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1108"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1105"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1112"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1109"/>
         <source>Failed to join game due to unknown verification failure.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1212"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1209"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1223"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1220"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1646"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1643"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1775"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1772"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6196,91 +6211,91 @@ Host mods: </source>
 <context>
     <name>OptionMenue</name>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="114"/>
+        <location filename="../menue/optionmenue.cpp" line="105"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="124"/>
+        <location filename="../menue/optionmenue.cpp" line="115"/>
         <source>Reset settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="279"/>
+        <location filename="../menue/optionmenue.cpp" line="270"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="284"/>
+        <location filename="../menue/optionmenue.cpp" line="275"/>
         <source>Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="377"/>
+        <location filename="../menue/optionmenue.cpp" line="368"/>
         <source>Filters mods by given tags.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="466"/>
+        <location filename="../menue/optionmenue.cpp" line="457"/>
         <source>The mod author designated this mod as &apos;Cosmetic&apos; and may be used during multiplayer matches based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="276"/>
+        <location filename="../menue/optionmenue.cpp" line="267"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="280"/>
+        <location filename="../menue/optionmenue.cpp" line="271"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="281"/>
+        <location filename="../menue/optionmenue.cpp" line="272"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="282"/>
+        <location filename="../menue/optionmenue.cpp" line="273"/>
         <source>Advance Wars DC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="293"/>
+        <location filename="../menue/optionmenue.cpp" line="284"/>
         <source>Tag Filter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="375"/>
+        <location filename="../menue/optionmenue.cpp" line="366"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="468"/>
+        <location filename="../menue/optionmenue.cpp" line="459"/>
         <source>Compatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="473"/>
+        <location filename="../menue/optionmenue.cpp" line="464"/>
         <source>Incompatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="478"/>
+        <location filename="../menue/optionmenue.cpp" line="469"/>
         <source>Required Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="483"/>
+        <location filename="../menue/optionmenue.cpp" line="474"/>
         <source>Tags:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="488"/>
+        <location filename="../menue/optionmenue.cpp" line="479"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6434,7 +6449,7 @@ Host mods: </source>
 <context>
     <name>PlayerInfo</name>
     <message>
-        <location filename="../game/ui/playerinfo.cpp" line="265"/>
+        <location filename="../game/ui/playerinfo.cpp" line="259"/>
         <source>Next day </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6442,52 +6457,52 @@ Host mods: </source>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="113"/>
-        <location filename="../objects/playerselection.cpp" line="1168"/>
+        <location filename="../objects/playerselection.cpp" line="111"/>
+        <location filename="../objects/playerselection.cpp" line="1166"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1202"/>
+        <location filename="../objects/playerselection.cpp" line="1200"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1324"/>
+        <location filename="../objects/playerselection.cpp" line="1322"/>
         <source>Connection failed.Reason: No more players available or user is already in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1156"/>
-        <location filename="../objects/playerselection.cpp" line="1177"/>
-        <location filename="../objects/playerselection.cpp" line="1191"/>
+        <location filename="../objects/playerselection.cpp" line="1154"/>
+        <location filename="../objects/playerselection.cpp" line="1175"/>
+        <location filename="../objects/playerselection.cpp" line="1189"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1156"/>
+        <location filename="../objects/playerselection.cpp" line="1154"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1156"/>
+        <location filename="../objects/playerselection.cpp" line="1154"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1156"/>
+        <location filename="../objects/playerselection.cpp" line="1154"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1156"/>
+        <location filename="../objects/playerselection.cpp" line="1154"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1180"/>
-        <location filename="../objects/playerselection.cpp" line="1187"/>
-        <location filename="../objects/playerselection.cpp" line="1191"/>
+        <location filename="../objects/playerselection.cpp" line="1178"/>
+        <location filename="../objects/playerselection.cpp" line="1185"/>
+        <location filename="../objects/playerselection.cpp" line="1189"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6503,16 +6518,16 @@ Host mods: </source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="117"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="182"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="633"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="113"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="178"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="629"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="702"/>
         <location filename="../mapsupport/randomMapGenerator.cpp" line="706"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="710"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="858"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="854"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="939"/>
         <location filename="../mapsupport/randomMapGenerator.cpp" line="943"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="947"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="1141"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="1183"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="1137"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="1179"/>
         <source>Generating </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6780,259 +6795,259 @@ Host mods: </source>
 <context>
     <name>RuleSelection</name>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="150"/>
+        <location filename="../objects/ruleselection.cpp" line="149"/>
         <source>Show Advanced: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="165"/>
+        <location filename="../objects/ruleselection.cpp" line="164"/>
         <source>Game Description: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="171"/>
-        <location filename="../objects/ruleselection.cpp" line="187"/>
+        <location filename="../objects/ruleselection.cpp" line="170"/>
+        <location filename="../objects/ruleselection.cpp" line="186"/>
         <source>Map description shown for players who want to join. Keep it short here.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="179"/>
+        <location filename="../objects/ruleselection.cpp" line="178"/>
         <source>Password: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="195"/>
+        <location filename="../objects/ruleselection.cpp" line="194"/>
         <source>Cosmetic Mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="209"/>
+        <location filename="../objects/ruleselection.cpp" line="208"/>
         <source>Observer: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="213"/>
+        <location filename="../objects/ruleselection.cpp" line="212"/>
         <source>The amount of observers allowed to watch the game. No players can join a fog/shroud of war match</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="226"/>
+        <location filename="../objects/ruleselection.cpp" line="225"/>
         <source>Environment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="241"/>
+        <location filename="../objects/ruleselection.cpp" line="240"/>
         <source>The chance each weather can appear if random weather is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="250"/>
+        <location filename="../objects/ruleselection.cpp" line="249"/>
         <source>Random Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="254"/>
+        <location filename="../objects/ruleselection.cpp" line="253"/>
         <source>If checked random weather appears during the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="264"/>
+        <location filename="../objects/ruleselection.cpp" line="263"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="269"/>
+        <location filename="../objects/ruleselection.cpp" line="268"/>
         <source>The weather at the start of the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="281"/>
+        <location filename="../objects/ruleselection.cpp" line="280"/>
         <source>Weather Forecast: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="285"/>
+        <location filename="../objects/ruleselection.cpp" line="284"/>
         <source>If checked you can see the weather for the next few turns for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="295"/>
+        <location filename="../objects/ruleselection.cpp" line="294"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="302"/>
+        <location filename="../objects/ruleselection.cpp" line="301"/>
         <source>Unit Ranking: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="306"/>
+        <location filename="../objects/ruleselection.cpp" line="305"/>
         <source>If checked units can gain ranks by killing other units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="316"/>
+        <location filename="../objects/ruleselection.cpp" line="315"/>
         <source>No CO Powers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="320"/>
+        <location filename="../objects/ruleselection.cpp" line="319"/>
         <source>If checked CO&apos;s can&apos;t use CO-Powers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="330"/>
+        <location filename="../objects/ruleselection.cpp" line="329"/>
         <source>Day to Day Abilities: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="347"/>
+        <location filename="../objects/ruleselection.cpp" line="346"/>
         <source>Single CO&apos;s: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="154"/>
+        <location filename="../objects/ruleselection.cpp" line="153"/>
         <source>Check this to see all game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="201"/>
+        <location filename="../objects/ruleselection.cpp" line="200"/>
         <source>If checked cosmetic mods can be different between host and players.
 Warning this may lead to desynced games or crashes if one of the mods is not a purely cosmetic mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="334"/>
+        <location filename="../objects/ruleselection.cpp" line="333"/>
         <source>If checked CO&apos;s have their day to day abilities, when unchecked CO&apos;s only have perks active. This has no impact on co powers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="351"/>
+        <location filename="../objects/ruleselection.cpp" line="350"/>
         <source>If checked players may only select a single CO.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="364"/>
+        <location filename="../objects/ruleselection.cpp" line="363"/>
         <source>CO Specific Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="368"/>
+        <location filename="../objects/ruleselection.cpp" line="367"/>
         <source>If unchecked specific CO-Units can&apos;t be produced.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="378"/>
+        <location filename="../objects/ruleselection.cpp" line="377"/>
         <source>CO Perks: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="382"/>
+        <location filename="../objects/ruleselection.cpp" line="381"/>
         <source>Selects the amount of CO Perks that can be assigned per CO.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="393"/>
+        <location filename="../objects/ruleselection.cpp" line="392"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="397"/>
+        <location filename="../objects/ruleselection.cpp" line="396"/>
         <source>The maximum amount of units a single player can own at any time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="411"/>
+        <location filename="../objects/ruleselection.cpp" line="410"/>
         <source>CO Powergain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="418"/>
+        <location filename="../objects/ruleselection.cpp" line="417"/>
         <source>CO Powergain zone: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="421"/>
+        <location filename="../objects/ruleselection.cpp" line="420"/>
         <source>Global</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="421"/>
+        <location filename="../objects/ruleselection.cpp" line="420"/>
         <source>Global and CO Zone Bonus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="421"/>
+        <location filename="../objects/ruleselection.cpp" line="420"/>
         <source>Only CO Zone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="423"/>
+        <location filename="../objects/ruleselection.cpp" line="422"/>
         <source>Defines where a player can gain power for his co powermeter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="437"/>
+        <location filename="../objects/ruleselection.cpp" line="436"/>
         <source>CO Powergain mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="440"/>
+        <location filename="../objects/ruleselection.cpp" line="439"/>
         <source>Money</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="440"/>
+        <location filename="../objects/ruleselection.cpp" line="439"/>
         <source>Money only attacker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="440"/>
+        <location filename="../objects/ruleselection.cpp" line="439"/>
         <source>HP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="440"/>
+        <location filename="../objects/ruleselection.cpp" line="439"/>
         <source>HP only attacker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="442"/>
+        <location filename="../objects/ruleselection.cpp" line="441"/>
         <source>Defines how the powermeter fills.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="455"/>
+        <location filename="../objects/ruleselection.cpp" line="454"/>
         <source>Powergain reduction: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="459"/>
+        <location filename="../objects/ruleselection.cpp" line="458"/>
         <source>The reduction in powergain for each time a co powers was used. Making each consecutive power more expensive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="471"/>
+        <location filename="../objects/ruleselection.cpp" line="470"/>
         <source>Powergain Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="475"/>
+        <location filename="../objects/ruleselection.cpp" line="474"/>
         <source>The speed at which the power bar fills up. This affects gains from HP damage or Funds damage based on the mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="487"/>
+        <location filename="../objects/ruleselection.cpp" line="486"/>
         <source>CO Power loss: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="491"/>
+        <location filename="../objects/ruleselection.cpp" line="490"/>
         <source>The percentage of the CO gauge lost when the CO unit gets destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="515"/>
+        <location filename="../objects/ruleselection.cpp" line="514"/>
         <source>Select the fog of war rule for the current game. 
  In Mist of War all units can be seen but not targeted without Vision. 
  In Fog of War all units cannot be seen without vision. 
@@ -7040,215 +7055,215 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="558"/>
+        <location filename="../objects/ruleselection.cpp" line="557"/>
         <source>If checked units can&apos;t see over certain terrains, reducing their vision range. Air units are unaffected by this effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="572"/>
+        <location filename="../objects/ruleselection.cpp" line="571"/>
         <source>If checked most buildings deny vision. This means you can hide a unit in a building similar to a forest.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="587"/>
+        <location filename="../objects/ruleselection.cpp" line="586"/>
         <source>If set to &apos;Permanent&apos; the New Day screen for Human players will remain on screen until dismissed. If set to &apos;Default&apos; this feature will be off except in Fog of War games. This setting only takes effect in games with more than 1 Human players on the Host&apos;s PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="677"/>
+        <location filename="../objects/ruleselection.cpp" line="676"/>
         <source>If checked: the impact of terrain defense stars is reduced the less hp a unit has.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="691"/>
+        <location filename="../objects/ruleselection.cpp" line="690"/>
         <source>If checked: ships and boats can move through bridges placed on sea tiles, like in Advance Wars Dark conflict.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="705"/>
+        <location filename="../objects/ruleselection.cpp" line="704"/>
         <source>If checked: units can move after getting unloaded if the unit had remained in their transporter for more than one turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="768"/>
+        <location filename="../objects/ruleselection.cpp" line="767"/>
         <source>If checked: CO&apos;s that are randomly selected are unique. Note: If not enough CO&apos;s are available this may select no CO for a player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="796"/>
+        <location filename="../objects/ruleselection.cpp" line="795"/>
         <source>The amount of funds you are refunded for selling a unit. Selling is only possible if the &apos;Sell&apos; action is active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="813"/>
+        <location filename="../objects/ruleselection.cpp" line="812"/>
         <source>If checked units of the same team face the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="1062"/>
+        <location filename="../objects/ruleselection.cpp" line="1061"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="503"/>
-        <location filename="../objects/ruleselection.cpp" line="513"/>
+        <location filename="../objects/ruleselection.cpp" line="502"/>
+        <location filename="../objects/ruleselection.cpp" line="512"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="510"/>
+        <location filename="../objects/ruleselection.cpp" line="509"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="513"/>
+        <location filename="../objects/ruleselection.cpp" line="512"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="513"/>
+        <location filename="../objects/ruleselection.cpp" line="512"/>
         <source>Mist of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="513"/>
+        <location filename="../objects/ruleselection.cpp" line="512"/>
         <source>Shroud of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="554"/>
+        <location filename="../objects/ruleselection.cpp" line="553"/>
         <source>Vision Block: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="568"/>
+        <location filename="../objects/ruleselection.cpp" line="567"/>
         <source>Building Hiding:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="582"/>
+        <location filename="../objects/ruleselection.cpp" line="581"/>
         <source>Day Screen: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="585"/>
+        <location filename="../objects/ruleselection.cpp" line="584"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="585"/>
+        <location filename="../objects/ruleselection.cpp" line="584"/>
         <source>Permanent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="602"/>
+        <location filename="../objects/ruleselection.cpp" line="601"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="609"/>
+        <location filename="../objects/ruleselection.cpp" line="608"/>
         <source>CO Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="612"/>
-        <location filename="../objects/ruleselection.cpp" line="628"/>
-        <location filename="../objects/ruleselection.cpp" line="644"/>
+        <location filename="../objects/ruleselection.cpp" line="611"/>
+        <location filename="../objects/ruleselection.cpp" line="627"/>
+        <location filename="../objects/ruleselection.cpp" line="643"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="625"/>
+        <location filename="../objects/ruleselection.cpp" line="624"/>
         <source>Perk Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="641"/>
+        <location filename="../objects/ruleselection.cpp" line="640"/>
         <source>Action Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="657"/>
+        <location filename="../objects/ruleselection.cpp" line="656"/>
         <source>Terrain Defense: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="661"/>
+        <location filename="../objects/ruleselection.cpp" line="660"/>
         <source>The defense each terrain star grants a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="673"/>
+        <location filename="../objects/ruleselection.cpp" line="672"/>
         <source>HP Defense Impact:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="687"/>
+        <location filename="../objects/ruleselection.cpp" line="686"/>
         <source>Ship bridges:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="701"/>
+        <location filename="../objects/ruleselection.cpp" line="700"/>
         <source>Transporter refresh: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="715"/>
+        <location filename="../objects/ruleselection.cpp" line="714"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="719"/>
+        <location filename="../objects/ruleselection.cpp" line="718"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="732"/>
+        <location filename="../objects/ruleselection.cpp" line="731"/>
         <source>Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="735"/>
+        <location filename="../objects/ruleselection.cpp" line="734"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="739"/>
+        <location filename="../objects/ruleselection.cpp" line="738"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="757"/>
+        <location filename="../objects/ruleselection.cpp" line="756"/>
         <source>Miscellaneous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="764"/>
+        <location filename="../objects/ruleselection.cpp" line="763"/>
         <source>Unique CO&apos;s: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="778"/>
+        <location filename="../objects/ruleselection.cpp" line="777"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="782"/>
+        <location filename="../objects/ruleselection.cpp" line="781"/>
         <source>If checked the AI attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="792"/>
+        <location filename="../objects/ruleselection.cpp" line="791"/>
         <source>Unit sell value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="809"/>
+        <location filename="../objects/ruleselection.cpp" line="808"/>
         <source>Team Facing :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="825"/>
+        <location filename="../objects/ruleselection.cpp" line="824"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7302,32 +7317,32 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>ScriptConditionBuildingCaptured</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="147"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="146"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="151"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="150"/>
         <source>X Location of the Building that has to be captured.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="163"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="162"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="167"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="166"/>
         <source>Y Location of the Building that has to be captured.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="179"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="178"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="183"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="182"/>
         <source>Player that has to capture the building.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7340,22 +7355,22 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>ScriptConditionBuildingDestroyed</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="109"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="108"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="113"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="112"/>
         <source>X Location of the Building that has to be destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="125"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="124"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="129"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="128"/>
         <source>Y Location of the Building that has to be destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7368,22 +7383,22 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>ScriptConditionBuildingsOwned</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="129"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="128"/>
         <source>Count: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="133"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="132"/>
         <source>Amount of Buildings that has to be owned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="145"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="144"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="149"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="148"/>
         <source>Player that has to own the given amount of buildings.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7396,42 +7411,42 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>ScriptConditionCheckVariable</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="115"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="114"/>
         <source>Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="119"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="118"/>
         <source>Name of the Variable that should be checked. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="131"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="130"/>
         <source>Compare: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="136"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="135"/>
         <source>The way how the variable gets compared with the constant. variable compare value </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="148"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="147"/>
         <source>Value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="152"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="151"/>
         <source>The value that the variable gets checked against.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="164"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="163"/>
         <source>Campaign Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="168"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="167"/>
         <source>If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7444,28 +7459,28 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>ScriptConditionEachDay</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="105"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="104"/>
         <source>Each Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="109"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="108"/>
         <source>Periodic cycle in which this condition is executing it&apos;s events.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="117"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="116"/>
         <source>Start Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="121"/>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="133"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="120"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="132"/>
         <source>The first day at which the events get executed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="129"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="128"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -7526,12 +7541,12 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>ScriptConditionPlayerDefeated</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="117"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="116"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="121"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="120"/>
         <source>The player that has to be defeated in order to executed the events.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7627,22 +7642,22 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>ScriptConditionStartOfTurn</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="99"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="98"/>
         <source>At Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="103"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="102"/>
         <source>Day at which the events get executed at the start of this turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="111"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="110"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="115"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="114"/>
         <source>Player at which the events get executed at the start of this turn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7660,22 +7675,22 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>ScriptConditionTerrainDestroyed</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="109"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="108"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="113"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="112"/>
         <source>X Location of the Terrain that has to be destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="125"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="124"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="129"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="128"/>
         <source>Y Location of the Terrain that has to be destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7688,22 +7703,22 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>ScriptConditionUnitDestroyed</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="130"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="129"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="134"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="133"/>
         <source>X Location of the unit at the start of the game that needs to be destroyed. The unit is allowed to move.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="146"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="145"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="150"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="149"/>
         <source>Y Location of the unit at the start of the game that needs to be destroyed. The unit is allowed to move.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7799,22 +7814,22 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>ScriptConditionUnitsDestroyed</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="129"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="128"/>
         <source>Count: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="133"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="132"/>
         <source>Amount of units that has to be killed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="145"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="144"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="146"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="145"/>
         <source>Player who has to kill the units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7832,12 +7847,12 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>ScriptConditionVictory</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="81"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="80"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="85"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="84"/>
         <source>Team that has to win the game to executed the events.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8002,22 +8017,22 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventAddFunds</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="71"/>
+        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="69"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="75"/>
+        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="73"/>
         <source>Player that earns the given amount of funds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="87"/>
+        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="85"/>
         <source>Funds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="91"/>
+        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="89"/>
         <source>The funds the given player will earn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8035,122 +8050,122 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventAnimation</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="85"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="84"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="89"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="88"/>
         <source>Field X on which the animation will be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="101"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="100"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="105"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="104"/>
         <source>Field Y on which the animation will be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="117"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="116"/>
         <source>Offset X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="122"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="121"/>
         <source>X-Offset of the animation. Moving it away from the center.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="134"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="133"/>
         <source>Offset Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="139"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="138"/>
         <source>Y-Offset of the animation. Moving it away from the center.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="151"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="150"/>
         <source>Color: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="156"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="155"/>
         <source>Recoloring color for the animation sprite.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="168"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="167"/>
         <source>Sleep after finish: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="173"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="172"/>
         <source>Time in ms the animation remains visible after all frames were played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="185"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="184"/>
         <source>Scale X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="190"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="189"/>
         <source>X-Scaling of the actual sprite.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="202"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="201"/>
         <source>Scale Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="207"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="206"/>
         <source>Y-Scaling of the actual sprite.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="219"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="218"/>
         <source>Delay: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="224"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="223"/>
         <source>Time in ms before the animation gets played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="236"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="235"/>
         <source>Sprite: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="240"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="239"/>
         <source>Current select animation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="248"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="247"/>
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="259"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="258"/>
         <source>Frames: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="264"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="263"/>
         <source>Amount of frames for the animation. Only has an effect on custom animations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="283"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="282"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8219,32 +8234,32 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventChangeBuildlist</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="86"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="84"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="90"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="88"/>
         <source>Player who&apos;s buildlist will be modified.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="102"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="100"/>
         <source>Unit ID: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="118"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="116"/>
         <source>The unit id that will be changed in the build list of the player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="130"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="128"/>
         <source>Remove: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="135"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="133"/>
         <source>If the checked the unit will be forbidden to be build, else it gets allowed to be build.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8257,32 +8272,32 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventChangeCOBar</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="90"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="88"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="94"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="92"/>
         <source>Player who earns CO-Power Stars.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="106"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="104"/>
         <source>CO: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="110"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="108"/>
         <source>CO who earns CO-Power Stars.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="123"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="121"/>
         <source>Stars: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="127"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="125"/>
         <source>The amount of Stars that will be changed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8409,22 +8424,22 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventChangeWeather</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="73"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="71"/>
         <source>Days: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="77"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="75"/>
         <source>The amount of days the new weather appears.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="89"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="87"/>
         <source>Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="102"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="100"/>
         <source>The new weather that appears.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8437,12 +8452,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventDefeatPlayer</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventdefeatplayer.cpp" line="55"/>
+        <location filename="../ingamescriptsupport/events/scripteventdefeatplayer.cpp" line="53"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventdefeatplayer.cpp" line="59"/>
+        <location filename="../ingamescriptsupport/events/scripteventdefeatplayer.cpp" line="57"/>
         <source>The player that gets defeated.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8463,8 +8478,8 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventGeneric</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="173"/>
-        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="214"/>
+        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="172"/>
+        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="213"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8578,42 +8593,42 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventModifyVariable</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="90"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="88"/>
         <source>Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="94"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="92"/>
         <source>Name of the Variable that should be changed. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="106"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="104"/>
         <source>Modifier: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="111"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="109"/>
         <source>The way how the variable gets modified.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="123"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="121"/>
         <source>Value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="127"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="125"/>
         <source>The value modifying the variable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="139"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="137"/>
         <source>Campaign Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="143"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="141"/>
         <source>If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8659,32 +8674,32 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventSpawnBuilding</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="18"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="17"/>
         <source>Building that gets spawned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="19"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="18"/>
         <source>Owner: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="42"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="41"/>
         <source>X Position of the Building</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="45"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="44"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="51"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="50"/>
         <source>Y Position of the Building</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="54"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="53"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -8692,52 +8707,52 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventSpawnUnit</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="114"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="111"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="118"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="115"/>
         <source>X Location at which the unit gets spawned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="126"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="123"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="130"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="127"/>
         <source>Y Location at which the unit gets spawned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="138"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="135"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="142"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="139"/>
         <source>Player for which the unit gets spawned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="154"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="151"/>
         <source>Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="177"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="174"/>
         <source>Unit which gets spawned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="189"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="186"/>
         <source>Spawn Radius: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="193"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="190"/>
         <source>Radius around the given location at which the unit gets tried to be spawned, if either the field is blocked or the unit can&apos;t move over the given field.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8750,7 +8765,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventVictoryInfo</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventvictoryinfo.cpp" line="60"/>
+        <location filename="../ingamescriptsupport/events/scripteventvictoryinfo.cpp" line="58"/>
         <source>Victory Info: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -8763,158 +8778,158 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>SelectKey</name>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="28"/>
+        <location filename="../objects/base/selectkey.cpp" line="27"/>
         <source>Press Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="78"/>
-        <location filename="../objects/base/selectkey.cpp" line="202"/>
+        <location filename="../objects/base/selectkey.cpp" line="77"/>
+        <location filename="../objects/base/selectkey.cpp" line="201"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="81"/>
+        <location filename="../objects/base/selectkey.cpp" line="80"/>
         <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="85"/>
+        <location filename="../objects/base/selectkey.cpp" line="84"/>
         <source>F2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="89"/>
+        <location filename="../objects/base/selectkey.cpp" line="88"/>
         <source>F3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="93"/>
+        <location filename="../objects/base/selectkey.cpp" line="92"/>
         <source>F4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="97"/>
+        <location filename="../objects/base/selectkey.cpp" line="96"/>
         <source>F5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="101"/>
+        <location filename="../objects/base/selectkey.cpp" line="100"/>
         <source>F6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="105"/>
+        <location filename="../objects/base/selectkey.cpp" line="104"/>
         <source>F7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="109"/>
+        <location filename="../objects/base/selectkey.cpp" line="108"/>
         <source>F8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="113"/>
+        <location filename="../objects/base/selectkey.cpp" line="112"/>
         <source>F9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="117"/>
+        <location filename="../objects/base/selectkey.cpp" line="116"/>
         <source>F10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="121"/>
+        <location filename="../objects/base/selectkey.cpp" line="120"/>
         <source>F11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="125"/>
+        <location filename="../objects/base/selectkey.cpp" line="124"/>
         <source>F12</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="129"/>
+        <location filename="../objects/base/selectkey.cpp" line="128"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="133"/>
+        <location filename="../objects/base/selectkey.cpp" line="132"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="137"/>
+        <location filename="../objects/base/selectkey.cpp" line="136"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="141"/>
+        <location filename="../objects/base/selectkey.cpp" line="140"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="145"/>
+        <location filename="../objects/base/selectkey.cpp" line="144"/>
         <source>Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="149"/>
+        <location filename="../objects/base/selectkey.cpp" line="148"/>
         <source>Enter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="153"/>
+        <location filename="../objects/base/selectkey.cpp" line="152"/>
         <source>Backspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="157"/>
+        <location filename="../objects/base/selectkey.cpp" line="156"/>
         <source>Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="161"/>
+        <location filename="../objects/base/selectkey.cpp" line="160"/>
         <source>Ctrl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="165"/>
+        <location filename="../objects/base/selectkey.cpp" line="164"/>
         <source>Alt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="169"/>
+        <location filename="../objects/base/selectkey.cpp" line="168"/>
         <source>AltGr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="173"/>
+        <location filename="../objects/base/selectkey.cpp" line="172"/>
         <source>+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="177"/>
+        <location filename="../objects/base/selectkey.cpp" line="176"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="181"/>
+        <location filename="../objects/base/selectkey.cpp" line="180"/>
         <source>*</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="185"/>
+        <location filename="../objects/base/selectkey.cpp" line="184"/>
         <source>/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="189"/>
+        <location filename="../objects/base/selectkey.cpp" line="188"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/selectkey.cpp" line="206"/>
+        <location filename="../objects/base/selectkey.cpp" line="205"/>
         <source>Key </source>
         <translation type="unfinished"></translation>
     </message>
@@ -8922,7 +8937,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="2031"/>
+        <location filename="../coreengine/settings.cpp" line="2052"/>
         <source>Default device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8930,62 +8945,62 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Shopmenu</name>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="57"/>
+        <location filename="../menue/shopmenu.cpp" line="56"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="83"/>
+        <location filename="../menue/shopmenu.cpp" line="82"/>
         <source>Filter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="86"/>
+        <location filename="../menue/shopmenu.cpp" line="85"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="86"/>
+        <location filename="../menue/shopmenu.cpp" line="85"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="86"/>
+        <location filename="../menue/shopmenu.cpp" line="85"/>
         <source>CO Skins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="86"/>
+        <location filename="../menue/shopmenu.cpp" line="85"/>
         <source>Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="86"/>
+        <location filename="../menue/shopmenu.cpp" line="85"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="86"/>
+        <location filename="../menue/shopmenu.cpp" line="85"/>
         <source>Perks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="93"/>
+        <location filename="../menue/shopmenu.cpp" line="92"/>
         <source>Buy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="105"/>
+        <location filename="../menue/shopmenu.cpp" line="104"/>
         <source>Points:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="116"/>
+        <location filename="../menue/shopmenu.cpp" line="115"/>
         <source>Total Price:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="169"/>
+        <location filename="../menue/shopmenu.cpp" line="168"/>
         <source>Check any items you&apos;d like to buy from the shop, then click &apos;Buy&apos; to confirm your purchase.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9608,22 +9623,22 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>UnitStatisticView</name>
     <message>
-        <location filename="../objects/unitstatisticview.cpp" line="29"/>
+        <location filename="../objects/unitstatisticview.cpp" line="28"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/unitstatisticview.cpp" line="30"/>
+        <location filename="../objects/unitstatisticview.cpp" line="29"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/unitstatisticview.cpp" line="31"/>
+        <location filename="../objects/unitstatisticview.cpp" line="30"/>
         <source>Destroyed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/unitstatisticview.cpp" line="114"/>
+        <location filename="../objects/unitstatisticview.cpp" line="113"/>
         <source>Summary</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9631,88 +9646,88 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>VictoryMenue</name>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="134"/>
+        <location filename="../menue/victorymenue.cpp" line="133"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="227"/>
-        <location filename="../menue/victorymenue.cpp" line="634"/>
+        <location filename="../menue/victorymenue.cpp" line="226"/>
+        <location filename="../menue/victorymenue.cpp" line="633"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="236"/>
-        <location filename="../menue/victorymenue.cpp" line="639"/>
+        <location filename="../menue/victorymenue.cpp" line="235"/>
+        <location filename="../menue/victorymenue.cpp" line="638"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="245"/>
-        <location filename="../menue/victorymenue.cpp" line="644"/>
+        <location filename="../menue/victorymenue.cpp" line="244"/>
+        <location filename="../menue/victorymenue.cpp" line="643"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="254"/>
-        <location filename="../menue/victorymenue.cpp" line="649"/>
+        <location filename="../menue/victorymenue.cpp" line="253"/>
+        <location filename="../menue/victorymenue.cpp" line="648"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="263"/>
-        <location filename="../menue/victorymenue.cpp" line="654"/>
+        <location filename="../menue/victorymenue.cpp" line="262"/>
+        <location filename="../menue/victorymenue.cpp" line="653"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="272"/>
-        <location filename="../menue/victorymenue.cpp" line="722"/>
+        <location filename="../menue/victorymenue.cpp" line="271"/>
+        <location filename="../menue/victorymenue.cpp" line="721"/>
         <source>Player Statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="283"/>
+        <location filename="../menue/victorymenue.cpp" line="282"/>
         <source>Ranking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="324"/>
+        <location filename="../menue/victorymenue.cpp" line="323"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="355"/>
+        <location filename="../menue/victorymenue.cpp" line="354"/>
         <source>Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="360"/>
+        <location filename="../menue/victorymenue.cpp" line="359"/>
         <source>Force</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="365"/>
+        <location filename="../menue/victorymenue.cpp" line="364"/>
         <source>Tech.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="370"/>
+        <location filename="../menue/victorymenue.cpp" line="369"/>
         <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="554"/>
+        <location filename="../menue/victorymenue.cpp" line="553"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="557"/>
+        <location filename="../menue/victorymenue.cpp" line="556"/>
         <source>Select which player&apos;s statistics you&apos;d like to see.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="710"/>
+        <location filename="../menue/victorymenue.cpp" line="709"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9787,7 +9802,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Wikimenu</name>
     <message>
-        <location filename="../menue/wikimenu.cpp" line="45"/>
+        <location filename="../menue/wikimenu.cpp" line="44"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9795,7 +9810,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Wikipage</name>
     <message>
-        <location filename="../wiki/wikipage.cpp" line="38"/>
+        <location filename="../wiki/wikipage.cpp" line="35"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9803,77 +9818,77 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WorkerThread</name>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="88"/>
+        <location filename="../coreengine/workerthread.cpp" line="87"/>
         <source>Loading Buildings...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="91"/>
+        <location filename="../coreengine/workerthread.cpp" line="90"/>
         <source>Loading COs...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="94"/>
+        <location filename="../coreengine/workerthread.cpp" line="93"/>
         <source>Loading Gamescripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="97"/>
+        <location filename="../coreengine/workerthread.cpp" line="96"/>
         <source>Loading Gamerules...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="100"/>
+        <location filename="../coreengine/workerthread.cpp" line="99"/>
         <source>Loading Movements...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="103"/>
+        <location filename="../coreengine/workerthread.cpp" line="102"/>
         <source>Loading Terrains...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="106"/>
+        <location filename="../coreengine/workerthread.cpp" line="105"/>
         <source>Loading Units...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="109"/>
+        <location filename="../coreengine/workerthread.cpp" line="108"/>
         <source>Loading Weapons...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="112"/>
+        <location filename="../coreengine/workerthread.cpp" line="111"/>
         <source>Loading Battleanimation scripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="115"/>
+        <location filename="../coreengine/workerthread.cpp" line="114"/>
         <source>Loading CO-Perks...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="118"/>
+        <location filename="../coreengine/workerthread.cpp" line="117"/>
         <source>Loading Wikiscripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="120"/>
+        <location filename="../coreengine/workerthread.cpp" line="119"/>
         <source>Loading Shop items...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="123"/>
+        <location filename="../coreengine/workerthread.cpp" line="122"/>
         <source>Loading Movement Planner addins...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="125"/>
+        <location filename="../coreengine/workerthread.cpp" line="124"/>
         <source>Loading Ui scripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="129"/>
+        <location filename="../coreengine/workerthread.cpp" line="128"/>
         <source>Loading Achievements...</source>
         <translation type="unfinished"></translation>
     </message>

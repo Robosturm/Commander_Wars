@@ -3,11 +3,8 @@
 
 #include "resource_management/cospritemanager.h"
 
-#include "coreengine/mainapp.h"
-
 #include "spritingsupport/spritecreator.h"
 
-#include "game/unit.h"
 #include "game/co.h"
 
 COSpriteManager::COSpriteManager()

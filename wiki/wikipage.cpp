@@ -8,9 +8,6 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/gamemanager.h"
-#include "resource_management/cospritemanager.h"
-#include "resource_management/unitspritemanager.h"
-#include "resource_management/coperkmanager.h"
 
 #include "game/player.h"
 

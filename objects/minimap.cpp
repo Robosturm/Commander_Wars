@@ -9,12 +9,10 @@
 #include "game/player.h"
 #include "game/unit.h"
 #include "game/building.h"
-#include "game/co.h"
 
 #include "resource_management/gamemanager.h"
 
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 Minimap::Minimap()
 {

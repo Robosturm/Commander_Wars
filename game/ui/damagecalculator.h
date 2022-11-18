@@ -8,7 +8,6 @@
 #include "game/gamemap.h"
 
 #include "objects/base/dropdownmenusprite.h"
-#include "objects/base/dropdownmenu.h"
 #include "objects/base/checkbox.h"
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"

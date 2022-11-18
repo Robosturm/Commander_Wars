@@ -2,10 +2,8 @@
 
 #include "game/gamemap.h"
 #include "game/player.h"
-#include "game/co.h"
 
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 #include <QMutexLocker>
 

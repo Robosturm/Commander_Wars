@@ -1,5 +1,4 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenshakey.h"
-#include "coreengine/globalutils.h"
 #include <QtMath>
 
 TweenShakeY::TweenShakeY(qint32 startIntensity, float start, float end)

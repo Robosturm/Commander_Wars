@@ -19,7 +19,6 @@
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 
 #include "objects/base/chat.h"
 #include "objects/dialogs/dialogmessagebox.h"

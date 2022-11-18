@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-#include "3rd_party/smtpClient/src/SmtpMime"
+#include "3rd_party/smtpClient/src/smtpclient.h"
 #include "multiplayer/networkcommands.h"
 
 class SmtpMailSender final : public QObject

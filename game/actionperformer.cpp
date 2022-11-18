@@ -3,7 +3,6 @@
 #include "ai/coreai.h"
 
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 #include "objects/dialogs/dialogconnecting.h"
 #include "objects/dialogs/dialogmessagebox.h"

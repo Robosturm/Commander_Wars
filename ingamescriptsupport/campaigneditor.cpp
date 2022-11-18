@@ -1,5 +1,4 @@
-#include "qdir.h"
-#include "qfile.h"
+#include <QDir>
 #include "objects/base/label.h"
 
 #include "ingamescriptsupport/campaigneditor.h"

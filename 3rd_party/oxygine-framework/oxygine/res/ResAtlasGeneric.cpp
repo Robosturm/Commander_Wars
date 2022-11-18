@@ -4,7 +4,6 @@
 
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
-#include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
 #include "spritingsupport/spritecreator.h"
 #include "coreengine/console.h"

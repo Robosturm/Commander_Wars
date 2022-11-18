@@ -8,10 +8,7 @@
 #include "game/campaign.h"
 #include "game/jsData/campaignmapdata.h"
 
-#include "objects/minimap.h"
-#include "objects/mapselection.h"
 #include "objects/mapselectionview.h"
-#include "objects/base/panel.h"
 
 #include "menue/basemenu.h"
 

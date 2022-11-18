@@ -3,8 +3,6 @@
 #include "network/networkgamedata.h"
 #include "network/JsonKeys.h"
 
-#include "coreengine/filesupport.h"
-
 bool NetworkGameData::hasOpenPlayers()
 {
     return (m_players < m_maxPlayers);

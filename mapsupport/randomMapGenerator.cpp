@@ -1,11 +1,7 @@
 #include <limits>
-#include "QRandomGenerator"
-#include "QVector"
-#include "QPoint"
 
 #include "mapsupport/randomMapGenerator.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/console.h"
 

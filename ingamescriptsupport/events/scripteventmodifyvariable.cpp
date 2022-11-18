@@ -5,8 +5,6 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
-
 #include "objects/base/textbox.h"
 #include "objects/base/spinbox.h"
 #include "objects/base/dropdownmenu.h"

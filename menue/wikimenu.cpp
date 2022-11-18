@@ -3,7 +3,6 @@
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"

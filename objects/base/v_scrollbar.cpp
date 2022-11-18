@@ -2,7 +2,6 @@
 
 #include "resource_management/objectmanager.h"
 
-#include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 

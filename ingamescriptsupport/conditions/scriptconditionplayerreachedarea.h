@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionPlayerReachedArea;
-typedef oxygine::intrusive_ptr<ScriptConditionPlayerReachedArea> spScriptConditionPlayerReachedArea;
+using spScriptConditionPlayerReachedArea = oxygine::intrusive_ptr<ScriptConditionPlayerReachedArea>;
 
 class ScriptConditionPlayerReachedArea final : public ScriptCondition
 {

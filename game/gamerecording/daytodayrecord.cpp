@@ -2,7 +2,6 @@
 
 #include "game/gamemap.h"
 #include "game/player.h"
-#include "game/co.h"
 
 DayToDayRecord::DayToDayRecord(GameMap* pMap)
     : m_pMap(pMap)

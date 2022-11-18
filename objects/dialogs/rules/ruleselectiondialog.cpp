@@ -1,4 +1,4 @@
-#include "ruleselectiondialog.h"
+#include "objects/dialogs/rules/ruleselectiondialog.h"
 
 #include "coreengine/mainapp.h"
 

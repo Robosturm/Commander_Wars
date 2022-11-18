@@ -1,10 +1,8 @@
 #ifndef SPRITECREATOR_H
 #define SPRITECREATOR_H
 
-#include "qobject.h"
-
-#include "qimage.h"
-
+#include <QObject>
+#include <QImage>
 
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 

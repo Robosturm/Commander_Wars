@@ -7,8 +7,6 @@
 #include "ai/targetedunitpathfindingsystem.h"
 #include "ai/neuralnetwork/neural/neuralnetwork.h"
 
-#include "game/unitpathfindingsystem.h"
-
 #include "coreengine/LUPDATE_MACROS.h"
 
 class GameMap;

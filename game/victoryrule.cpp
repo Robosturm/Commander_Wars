@@ -5,7 +5,6 @@
 #include "game/victoryrule.h"
 #include "game/gamemap.h"
 #include "game/player.h"
-#include "game/co.h"
 
 const QString VictoryRule::checkbox = "checkbox";
 const QString VictoryRule::spinbox = "spinbox";

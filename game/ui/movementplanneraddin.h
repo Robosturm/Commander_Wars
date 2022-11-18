@@ -6,7 +6,6 @@
 #include "ui_reader/createdgui.h"
 
 #include "coreengine/scriptvariables.h"
-#include "coreengine/mainapp.h"
 
 class MovementPlanner;
 class GameMap;

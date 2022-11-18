@@ -6,7 +6,6 @@
 #include "resource_management/cospritemanager.h"
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/buildingspritemanager.h"
-#include "resource_management/terrainmanager.h"
 #include "resource_management/gamemanager.h"
 
 #include "coreengine/mainapp.h"

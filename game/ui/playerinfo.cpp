@@ -1,18 +1,12 @@
-#include "game/ui/playerinfo.h"
-
-#include "game/gamemap.h"
-
 #include "resource_management/gamemanager.h"
-
 #include "resource_management/cospritemanager.h"
-
 #include "resource_management/fontmanager.h"
 
+#include "game/gamemap.h"
 #include "game/player.h"
-
 #include "game/co.h"
-
 #include "game/ui/copowermeter.h"
+#include "game/ui/playerinfo.h"
 
 PlayerInfo::PlayerInfo(GameMap* pMap)
     : m_pMap(pMap)

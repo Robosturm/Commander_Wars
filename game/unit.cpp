@@ -3,7 +3,6 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
 
 #include "resource_management/unitspritemanager.h"
-#include "resource_management/gamemanager.h"
 #include "resource_management/weaponmanager.h"
 #include "resource_management/movementtablemanager.h"
 

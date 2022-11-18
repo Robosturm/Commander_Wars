@@ -13,7 +13,6 @@
 #include "game/gamemap.h"
 #include "game/unitpathfindingsystem.h"
 
-#include "resource_management/cospritemanager.h"
 #include "resource_management/unitspritemanager.h"
 
 #include "coreengine/globalutils.h"

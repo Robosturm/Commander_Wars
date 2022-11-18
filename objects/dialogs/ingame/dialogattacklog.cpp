@@ -14,8 +14,6 @@
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "menue/movementplanner.h"
-
 DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
     : m_pPlayer(pPlayer),
       m_pMap(pMap)

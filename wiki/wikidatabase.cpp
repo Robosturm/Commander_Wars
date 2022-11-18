@@ -1,5 +1,4 @@
-#include "qfile.h"
-#include "qdiriterator.h"
+#include <QDirIterator>
 
 #include "wiki/wikidatabase.h"
 #include "wiki/fieldinfo.h"

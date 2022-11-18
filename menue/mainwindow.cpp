@@ -14,7 +14,6 @@
 #include "menue/replaymenu.h"
 #include "menue/achievementmenu.h"
 #include "menue/shopmenu.h"
-#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -24,8 +23,6 @@
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
-#include "resource_management/gamemanager.h"
-#include "resource_management/unitspritemanager.h"
 
 #include "game/campaign.h"
 
