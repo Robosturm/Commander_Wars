@@ -28,8 +28,6 @@ private:
         qint32 m_currentMedia{-1};
         qint32 m_nextMedia{-1};
     };
-#endif
-public:
     struct SoundData
     {
         static constexpr qint32 MAX_SAME_SOUNDS = 60;
@@ -39,6 +37,8 @@ public:
         qint32 nextSoundToUse = 0;
         QUrl cacheUrl;
     };
+#endif
+public:
     explicit AudioThread(bool noAudio);
     ~AudioThread();
     qint32 getSoundsBuffered();
