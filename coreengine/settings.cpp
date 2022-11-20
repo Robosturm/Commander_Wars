@@ -13,6 +13,7 @@
 #include <QFileInfoList>
 #include <QInputDevice>
 #include <QDirIterator>
+#include <QUuid>
 
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
@@ -183,6 +184,7 @@ QTranslator Settings::m_Translator;
 QString Settings::m_updateStep = "";
 bool Settings::m_spawnAiProcess = true;
 bool Settings::m_aiSlave = false;
+QString Settings::m_pipeUuid;
 
 // logging
 bool Settings::m_LogActions = false;
@@ -360,6 +362,8 @@ Settings::Settings()
         new Value<GameEnums::COInfoPosition>{"Game", "COInfoPosition", &m_coInfoPosition, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Right},
         new Value<GameEnums::AutoFocusing>{"Game", "AutoFocusing", &m_autoFocusing, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_Owned},
         new Value<qint32>{"Game", "PauseAfterAction", &m_pauseAfterAction, 0, 0, 100},
+        new Value<QString>{"Game", "AiPipeUuid", &m_pipeUuid, "", "", ""},
+        new Value<bool>{"Game", "UseAiProcess", &m_spawnAiProcess, true, false, true},
 
         // network
         new Value<quint16>{"Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()},
@@ -392,6 +396,16 @@ Settings::Settings()
     };
 }
 
+QString Settings::getPipeUuid()
+{
+    return m_pipeUuid;
+}
+
+void Settings::setPipeUuid(const QString & newPipeUuid)
+{
+    m_pipeUuid = newPipeUuid;
+}
+
 bool Settings::getAiSlave()
 {
     return m_aiSlave;
@@ -422,7 +436,7 @@ void Settings::setAutomaticUpdates(bool newAutomaticUpdates)
     m_automaticUpdates = newAutomaticUpdates;
 }
 
-const QString &Settings::getUpdateStep()
+QString Settings::getUpdateStep()
 {
     return m_updateStep;
 }
@@ -1433,6 +1447,11 @@ void Settings::loadSettings()
         m_simpleDeselect = true;
         m_showDetailedBattleForcast = false;
     }
+    if (getPipeUuid().isEmpty())
+    {
+        setPipeUuid(QUuid::createUuid().toString());
+        saveSettings();
+    }
     Userdata::getInstance()->setUniqueIdentifier(getUsername());
 }
 
@@ -1449,7 +1468,7 @@ void Settings::saveSettings()
 {
     CONSOLE_PRINT("Settings::saveSettings()", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
-    if (!pApp->getSlave() && m_updateStep.isEmpty())
+    if (!pApp->getSlave() && !Settings::getAiSlave() && m_updateStep.isEmpty())
     {
         QSettings settings(m_settingFile, QSettings::IniFormat);
         for (auto setting : m_SettingValues)

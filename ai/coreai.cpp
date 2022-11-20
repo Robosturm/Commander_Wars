@@ -1,5 +1,6 @@
 #include "ai/coreai.h"
 #include "ai/targetedunitpathfindingsystem.h"
+#include "ai/aiprocesspipe.h"
 
 #include "game/gamemap.h"
 #include "game/unit.h"
@@ -92,6 +93,7 @@ CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
     {
         m_flareInfo.unfogRange = erg.toNumber();
     }
+    AI_CONSOLE_PRINT("Creating core ai", Console::eDEBUG);
 }
 
 void CoreAI::init(GameMenue* pMenu)
@@ -100,8 +102,17 @@ void CoreAI::init(GameMenue* pMenu)
     {
         m_initDone = true;
         m_pMenu = pMenu;
-        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-        connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+        if (Settings::getAiSlave())
+        {
+            // connect to ai pipe
+            connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
+            connect(this, &CoreAI::performAction, &Mainapp::getAiProcessPipe(), &AiProcessPipe::sendActionToMaster, Qt::QueuedConnection);
+        }
+        else if (!Settings::getSpawnAiProcess())
+        {
+            connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
+            connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+        }
         if (m_pMap != nullptr)
         {
             qint32 heigth = m_pMap->getMapHeight();
@@ -297,7 +308,7 @@ void CoreAI::nextAction()
             m_pPlayer == m_pMap->getCurrentPlayer() &&
             m_pMenu->getGameStarted())
         {
-            AI_CONSOLE_PRINT("CoreAI::nextAction", Console::eDEBUG);
+            AI_CONSOLE_PRINT("CoreAI::nextAction for player " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()), Console::eDEBUG);
             if (!processPredefinedAi())
             {
                 AI_CONSOLE_PRINT("Processing ai specific behaviour", Console::eDEBUG);

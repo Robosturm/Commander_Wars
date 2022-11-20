@@ -40,6 +40,7 @@ public:
         ServerHosting,          /**< used for data when starting a game on the host or when communicating between slave and master. Packages are in Binary-Format */
         ServerSocketInfo,       /**< used inside the rx-task data is not emitted when recieving this data */
         CryptedMessage,
+        AiPipe,                 /**< internal pipe for computing what the ai does */
         Max,
     };
 
@@ -224,6 +225,45 @@ public slots:
                 break;
             case QAbstractSocket::SslInvalidUserDataError:
                 CONSOLE_PRINT("Ssl invalid user data errror.", Console::eDEBUG);
+                break;
+            default:
+                CONSOLE_PRINT("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
+        }
+    }
+    void displayLocalError(QLocalSocket::LocalSocketError socketError)
+    {
+        CONSOLE_PRINT("Error catched for " + QString::number(m_socketID), Console::eDEBUG);
+        switch (socketError)
+        {
+            case QLocalSocket::PeerClosedError:
+                CONSOLE_PRINT("The connection was closed by the peer.", Console::eDEBUG);
+                break;
+            case QLocalSocket::ServerNotFoundError:
+                CONSOLE_PRINT("The host was not found. Please check the host name and port settings.", Console::eERROR);
+                break;
+            case QLocalSocket::ConnectionRefusedError:
+                CONSOLE_PRINT("The connection was refused by the peer.", Console::eDEBUG);
+                break;
+            case QLocalSocket::SocketAccessError:
+                CONSOLE_PRINT("Socket connection access error.", Console::eDEBUG);
+                break;
+            case QLocalSocket::SocketResourceError:
+                CONSOLE_PRINT("Socket Connection resource error.", Console::eDEBUG);
+                break;
+            case QLocalSocket::SocketTimeoutError:
+                CONSOLE_PRINT("Socket timeout error.", Console::eDEBUG);
+                break;
+            case QLocalSocket::DatagramTooLargeError:
+                CONSOLE_PRINT("Datagram too large error.", Console::eDEBUG);
+                break;
+            case QLocalSocket::UnknownSocketError:
+                CONSOLE_PRINT("Unknown socket error.", Console::eDEBUG);
+                break;
+            case QLocalSocket::UnsupportedSocketOperationError:
+                CONSOLE_PRINT("Unsupported socket operation error.", Console::eDEBUG);
+                break;
+            case QLocalSocket::OperationError:
+                CONSOLE_PRINT("Socket operation error.", Console::eDEBUG);
                 break;
             default:
                 CONSOLE_PRINT("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);

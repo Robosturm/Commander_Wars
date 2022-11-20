@@ -56,6 +56,7 @@ QThread Mainapp::m_Workerthread;
 QThread Mainapp::m_Networkthread;
 QThread Mainapp::m_GameServerThread;
 QProcess Mainapp::m_aiSubProcess;
+AiProcessPipe Mainapp::m_aiProcessPipe;
 WorkerThread* Mainapp::m_Worker = new WorkerThread();
 AudioThread* Mainapp::m_Audiothread = nullptr;
 spTCPClient Mainapp::m_slaveClient;
@@ -194,6 +195,8 @@ void Mainapp::nextStartUpStep(StartupPhase step)
     {
         case StartupPhase::General:
         {
+            m_aiProcessPipe.moveToThread(&m_Workerthread);
+            emit m_aiProcessPipe.sigStartPipe();
             pLoadingScreen->moveToThread(&m_Workerthread);
             m_Audiothread = new AudioThread(m_noAudio);
             m_Audiothread->initAudio();
@@ -379,6 +382,8 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             if (Settings::getAiSlave())
             {
                 CONSOLE_PRINT("Running as ai slave", Console::eDEBUG);
+                Settings::setAutoSavingCycle(0);
+                emit m_aiProcessPipe.sigPipeReady();
             }
             else
             {
@@ -825,6 +830,11 @@ void Mainapp::onQuit()
         m_GameServerThread.wait();
     }
     QCoreApplication::processEvents();
+}
+
+AiProcessPipe & Mainapp::getAiProcessPipe()
+{
+    return m_aiProcessPipe;
 }
 
 Mainapp::StartupPhase Mainapp::getStartUpStep() const

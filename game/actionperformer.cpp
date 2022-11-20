@@ -37,7 +37,9 @@ void ActionPerformer::performAction(spGameAction pGameAction)
         CONSOLE_PRINT("Ignoring action request cause an action is currently performed", Console::eWARNING);
         return;
     }
+    CONSOLE_PRINT("Action running", Console::eDEBUG);
     m_actionRunning = true;
+    emit sigAiProcesseSendAction(pGameAction);
     m_pMenu->setSaveAllowed(false);
     if (m_multiplayerSyncData.m_waitingForSyncFinished && m_pMenu != nullptr)
     {
@@ -319,7 +321,7 @@ void ActionPerformer::finishActionPerformed()
 
 void ActionPerformer::actionPerformed()
 {
-    if (m_pMenu->getParent() != nullptr &&
+    if (m_pMenu != nullptr &&
         m_pMap != nullptr)
     {
         CONSOLE_PRINT("Action performed", Console::eDEBUG);
@@ -332,53 +334,65 @@ void ActionPerformer::actionPerformed()
         {
             m_pMenu->updateGameInfo();
         }
-        if (GameAnimationFactory::getAnimationCount() == 0 &&
-            !m_pMap->getGameRules()->getVictory())
+        if (GameAnimationFactory::getAnimationCount() == 0)
         {
-            m_actionRunning = false;
-            if (!m_pMap->anyPlayerAlive() &&
-                m_pMenu != nullptr)
+            if (!m_pMap->getGameRules()->getVictory())
             {
-                CONSOLE_PRINT("Forcing exiting the game cause no player is alive", Console::eDEBUG);
-                emit m_pMenu->sigExitGame();
-            }
-            else if (m_pMap->getCurrentPlayer()->getIsDefeated())
-            {
-                CONSOLE_PRINT("Triggering next player cause current player is defeated", Console::eDEBUG);
-                spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
-                performAction(pAction);
-            }
-            else if (m_pStoredAction.get() != nullptr)
-            {
-                performAction(m_pStoredAction);
-            }
-            else
-            {
-                GlobalUtils::setUseSeed(false);
-                if (m_pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
+                CONSOLE_PRINT("Action finished", Console::eDEBUG);
+                m_actionRunning = false;
+                if (!m_pMap->anyPlayerAlive() &&
+                    m_pMenu != nullptr)
                 {
-                    m_pMap->getGameRules()->resumeRoundTime();
+                    CONSOLE_PRINT("Forcing exiting the game cause no player is alive", Console::eDEBUG);
+                    emit m_pMenu->sigExitGame();
                 }
-                if (m_noTimeOut)
+                else if (m_pMap->getCurrentPlayer()->getIsDefeated())
                 {
+                    CONSOLE_PRINT("Triggering next player cause current player is defeated", Console::eDEBUG);
                     spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
                     performAction(pAction);
-                    m_noTimeOut = false;
+                }
+                else if (m_pStoredAction.get() != nullptr)
+                {
+                    performAction(m_pStoredAction);
                 }
                 else
                 {
-                    CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
-                    quint32 delay = Settings::getPauseAfterAction();
-                    if (delay == 0)
+                    GlobalUtils::setUseSeed(false);
+                    if (m_pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
                     {
-                        emit sigActionPerformed();
+                        m_pMap->getGameRules()->resumeRoundTime();
+                    }
+                    if (m_noTimeOut)
+                    {
+                        spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
+                        performAction(pAction);
+                        m_noTimeOut = false;
                     }
                     else
                     {
-                        m_delayedActionPerformedTimer.start(std::chrono::seconds(delay));
+                        CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
+                        quint32 delay = Settings::getPauseAfterAction();
+                        if (delay == 0)
+                        {
+                            emit sigActionPerformed();
+                        }
+                        else
+                        {
+                            m_delayedActionPerformedTimer.start(std::chrono::seconds(delay));
+                        }
                     }
                 }
             }
+            else
+            {
+                CONSOLE_PRINT("Game already won not finishing the action.", Console::eDEBUG);
+            }
+        }
+        else
+        {
+            CONSOLE_PRINT("Animation finish error. Cause following animations are still active", Console::eDEBUG);
+            GameAnimationFactory::printActiveAnimations();
         }
     }
     else

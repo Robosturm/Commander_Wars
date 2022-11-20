@@ -38,6 +38,7 @@ public:
 
 signals:
     void sigActionPerformed();
+    void sigAiProcesseSendAction(spGameAction pGameAction);
 
 public slots:
     /**

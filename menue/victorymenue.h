@@ -62,6 +62,7 @@ signals:
     void sigExitMenue();
     void sigShowGraph(VictoryMenue::GraphModes mode);
     void sigFinishCurrentGraph();
+    void sigQuitOnAiPipe();
 public slots:
     /**
      * @brief exitMenue
@@ -99,6 +100,10 @@ protected slots:
      * @brief despawn
      */
     void despawnSlave();
+    /**
+     * @brief quitOnAiPipe
+     */
+    void quitOnAiPipe();
 protected:
     /**
      * @brief drawGraphStep

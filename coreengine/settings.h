@@ -254,19 +254,23 @@ public:
     static void saveSettings();
     static void resetSettings();
 
-    static QString getLastSaveGame();
     static void setLastSaveGame(const QString &LastSaveGame);
 
-    static const QString &getUpdateStep();
     static void setUpdateStep(const QString &newUpdateStep);
 
-    static bool getSpawnAiProcess();
     static void setSpawnAiProcess(bool newSpawnAiProcess);
 
-    static bool getAiSlave();
     static void setAiSlave(bool newAiSlave);
 
+    static void setPipeUuid(const QString & newPipeUuid);
+
 public slots:
+    static QString getLastSaveGame();
+    static QString getUpdateStep();
+    static bool getSpawnAiProcess();
+    static bool getAiSlave();
+    static QString getPipeUuid();
+
     static bool getAutomaticUpdates();
     static void setAutomaticUpdates(bool newAutomaticUpdates);
 
@@ -992,6 +996,7 @@ private:
     static QString m_userPath;
     static QTranslator m_Translator;
     static QString m_updateStep;
+    static QString m_pipeUuid;
     static bool m_spawnAiProcess;
     static bool m_aiSlave;
 

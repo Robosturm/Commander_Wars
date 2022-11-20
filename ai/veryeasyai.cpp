@@ -55,6 +55,7 @@ VeryEasyAI::VeryEasyAI(GameMap* pMap)
     {
         loadIni("very_easy/very_easy.ini");
     }
+    AI_CONSOLE_PRINT("Creating very easy ai", Console::eDEBUG);
 }
 
 void VeryEasyAI::process()

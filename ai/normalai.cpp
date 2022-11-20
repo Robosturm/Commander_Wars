@@ -27,6 +27,7 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
 #ifdef GRAPHICSUPPORT
     setObjectName("NormalAi");
 #endif
+    AI_CONSOLE_PRINT("Creating normal ai", Console::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

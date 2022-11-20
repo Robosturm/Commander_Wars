@@ -1795,29 +1795,36 @@ void GameMenue::saveMapAndExit(QString filename)
 
 void GameMenue::doSaveMap()
 {
-    CONSOLE_PRINT("Saving map under " + m_saveFile, Console::eDEBUG);
-    if (m_saveAllowed)
+    if (Settings::getAiSlave())
     {
-        if (m_saveFile.endsWith(".sav") || m_saveFile.endsWith(".msav"))
-        {
-            QFile file(m_saveFile);
-            file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-            QDataStream stream(&file);
-            
-            m_pMap->serializeObject(stream);
-            file.close();
-            Settings::setLastSaveGame(m_saveFile);
-        }
-        m_saveMap = false;
-        m_saveFile = "";
-        if (m_exitAfterSave)
-        {
-            exitGame();
-        }
+        CONSOLE_PRINT("Ignoring saving request as ai slave", Console::eDEBUG);
     }
     else
     {
-        CONSOLE_PRINT("Save triggered while no saving is allowed. Game wasn't saved", Console::eERROR);
+        CONSOLE_PRINT("Saving map under " + m_saveFile, Console::eDEBUG);
+        if (m_saveAllowed)
+        {
+            if (m_saveFile.endsWith(".sav") || m_saveFile.endsWith(".msav"))
+            {
+                QFile file(m_saveFile);
+                file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+                QDataStream stream(&file);
+
+                m_pMap->serializeObject(stream);
+                file.close();
+                Settings::setLastSaveGame(m_saveFile);
+            }
+            m_saveMap = false;
+            m_saveFile = "";
+            if (m_exitAfterSave)
+            {
+                exitGame();
+            }
+        }
+        else
+        {
+            CONSOLE_PRINT("Save triggered while no saving is allowed. Game wasn't saved", Console::eERROR);
+        }
     }
 }
 
@@ -1923,6 +1930,7 @@ void GameMenue::startGame()
     {
         connect(Console::getInstance().get(), &Console::sigExecuteCommand, this, &GameMenue::executeCommand, Qt::QueuedConnection);
     }
+    Mainapp::getAiProcessPipe().onGameStarted(this);
     sendGameStartedToServer();
 }
 

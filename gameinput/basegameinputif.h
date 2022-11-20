@@ -22,8 +22,6 @@ class BaseGameInputIF : public QObject, public FileSerializable, public oxygine:
 {
     Q_OBJECT
 public:
-    explicit BaseGameInputIF(GameMap* pMap, GameEnums::AiTypes aiType);
-    virtual ~BaseGameInputIF() = default;
     void setPlayer(Player* pPlayer);
 
     virtual void init(GameMenue* pMenu) = 0;
@@ -89,6 +87,10 @@ public slots:
     {
         return m_pMap;
     }
+protected:
+    explicit BaseGameInputIF(GameMap* pMap, GameEnums::AiTypes aiType);
+    virtual ~BaseGameInputIF() = default;
+
 protected:
     Player* m_pPlayer{nullptr};
     GameEnums::AiTypes m_AiType{GameEnums::AiTypes_Human};

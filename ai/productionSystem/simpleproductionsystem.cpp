@@ -449,6 +449,7 @@ void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistri
             return lhs.distribution.distribution / totalDistributionCount - lhs.currentValue > rhs.distribution.distribution / totalDistributionCount - rhs.currentValue;
         }
     });
+    AI_CONSOLE_PRINT("Created builddsitribution minMode=" + QString::number(minBuildMode) + " maxMode=" + QString::number(maxBuildMode) + " found items=" + QString::number(buildDistribution.size()), Console::eDEBUG);
 }
 
 bool SimpleProductionSystem::getInit() const
@@ -466,6 +467,10 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString un
         {
             break;
         }
+    }
+    if (!success)
+    {
+        AI_CONSOLE_PRINT("Unable to build " + unitId, Console::eDEBUG);
     }
     return success;
 }
@@ -493,6 +498,7 @@ bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId)
                     {
                         if (pAction->canBePerformed())
                         {
+                            CONSOLE_PRINT("Building unit " + unitId + " at x=" + QString::number(x) + " y=" + QString::number(y), Console::eDEBUG);
                             emit m_owner->performAction(pAction);
                             return true;
                         }

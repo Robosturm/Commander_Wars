@@ -541,7 +541,9 @@ set(${PROJECT_NAME}_SRCS
     # network engine
     network/smtpmailsender.h network/smtpmailsender.cpp
     network/tcpclient.cpp network/tcpclient.h
-    network/tcpserver.cpp network/tcpserver.h
+    network/tcpserver.cpp network/tcpserver.h    
+    network/localserver.cpp network/localserver.h
+    network/localclient.cpp network/localclient.h
     network/txtask.cpp network/txtask.h
     network/rxtask.cpp network/rxtask.h
     network/NetworkInterface.h
@@ -639,6 +641,8 @@ set(${PROJECT_NAME}_SRCS
     ai/heavyai/heavyaiproduction.cpp
     ai/heavyai/heavyaitraining.cpp
     ai/influencefrontmap.cpp ai/influencefrontmap.h
+    ai/dummyai.h ai/dummyai.cpp
+    ai/aiprocesspipe.h ai/aiprocesspipe.cpp
     # production system
     ai/productionSystem/simpleproductionsystem.h ai/productionSystem/simpleproductionsystem.cpp
 

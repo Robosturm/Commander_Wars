@@ -501,8 +501,15 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     });
     connect(this, &VictoryMenue::sigFinishCurrentGraph, this, &VictoryMenue::finishGraph, Qt::QueuedConnection);
     pApp->continueRendering();
-    if (Mainapp::getSlave())
+    Mainapp::getAiProcessPipe().onQuitGame();
+    if (Settings::getAiSlave())
     {
+        connect(this, &VictoryMenue::sigQuitOnAiPipe, this, &VictoryMenue::quitOnAiPipe, Qt::QueuedConnection);
+        emit sigQuitOnAiPipe();
+    }
+    else if (Mainapp::getSlave())
+    {
+        CONSOLE_PRINT("Killing self on slave", Console::eDEBUG);
         connect(&m_despawnSlaveTimer, &QTimer::timeout, this, &VictoryMenue::despawnSlave, Qt::QueuedConnection);
         m_despawnSlaveTimer.start(20000);
     }
@@ -510,6 +517,13 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     {
         AddScoreToUserdata();
     }
+}
+
+void VictoryMenue::quitOnAiPipe()
+{
+    CONSOLE_PRINT("Killing vicotry menu on ai slave", Console::eDEBUG);
+    m_pMap->detach();
+    oxygine::Actor::detach();
 }
 
 void VictoryMenue::despawnSlave()

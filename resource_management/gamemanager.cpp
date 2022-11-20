@@ -27,12 +27,12 @@ void GameManager::loadAll()
     m_scriptPath = "scripts/actions/";
     RessourceManagement<GameManager>::loadAll(m_loadedRessources);
     m_raiseErrors = false;
+    m_scriptPath = "aidata/normal/";
+    RessourceManagement<GameManager>::loadAll(m_loadedNormalAis);
     m_scriptPath = "aidata/heavy/";    
     RessourceManagement<GameManager>::loadAll(m_loadedHeavyAis);
     m_scriptPath = "aidata/very_easy/";
     RessourceManagement<GameManager>::loadAll(m_loadedVeryEasyAis);
-    m_scriptPath = "aidata/normal/";
-    RessourceManagement<GameManager>::loadAll(m_loadedNormalAis);
     m_raiseErrors = true;
 }
 

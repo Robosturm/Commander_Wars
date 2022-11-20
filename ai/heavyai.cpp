@@ -81,6 +81,7 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
     {
         oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "Missing Enum name mapping");
     }
+    AI_CONSOLE_PRINT("Creating heavy ai", Console::eDEBUG);
 }
 
 void HeavyAi::loadNeuralNetworks(GameEnums::AiTypes aiType)

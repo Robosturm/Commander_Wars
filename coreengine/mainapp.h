@@ -17,6 +17,8 @@
 #include "coreengine/Gamepad.h"
 #include "coreengine/commandlineparser.h"
 
+#include "ai/aiprocesspipe.h"
+
 #include "network/rsacypherhandler.h"
 
 #ifdef UPDATESUPPORT
@@ -230,6 +232,11 @@ public:
         return m_rsaCypher;
     }
     StartupPhase getStartUpStep() const;
+    /**
+     * @brief getAiProcessPipe
+     * @return
+     */
+    static AiProcessPipe & getAiProcessPipe();
 
 public slots:
     /**
@@ -319,6 +326,7 @@ private:
     static WorkerThread* m_Worker;
     static AudioThread* m_Audiothread;
     static QProcess m_aiSubProcess;
+    static AiProcessPipe m_aiProcessPipe;
     QThread* m_pMainThread{nullptr};
     static bool m_slave;
     static spTCPClient m_slaveClient;
