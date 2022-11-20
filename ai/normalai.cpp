@@ -1917,6 +1917,10 @@ float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPos
     }
     float buildingCounterDamage = calculateCounteBuildingDamage(pUnit, newPosition, pBuildings, pEnemyBuildings);
     float influenceCounterDamage = getMapInfluenceModifier(pUnit, newPosition.x(), newPosition.y());
+    if (counterDamage <= 0 && buildingCounterDamage <= 0 && influenceCounterDamage > 0)
+    {
+        influenceCounterDamage = 0.0f;
+    }
     float totalCounterDamage = counterDamage + influenceCounterDamage + buildingCounterDamage;
     AI_CONSOLE_PRINT("NormalAi counter damage at x=" + QString::number(newPosition.x()) + " y=" + QString::number(newPosition.y()) +
                      " total score=" + QString::number(totalCounterDamage) +

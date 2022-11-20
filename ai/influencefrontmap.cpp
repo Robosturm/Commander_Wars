@@ -147,7 +147,7 @@ void InfluenceFrontMap::addBuildingInfluence()
     std::vector<QStringList> buildLists;
     std::map<QString, qint32> unitIdToIsland;
     
-    std::vector<qint32> income;
+    std::vector<float> income;
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
     {
         income.push_back(m_pMap->getPlayer(i)->calcIncome());
@@ -171,7 +171,7 @@ void InfluenceFrontMap::addBuildingInfluence()
             }
         }
     }
-    qint32 fullInfluenceRange = 6;
+    float fullInfluenceRange = 6;
     for (qint32 x = 0; x < width; x++)
     {
         for (qint32 y = 0; y < heigth; y++)
@@ -181,21 +181,24 @@ void InfluenceFrontMap::addBuildingInfluence()
             {
                 QCoreApplication::processEvents();
                 QPoint pos = buildingPositions[building];
+                float buildSize = static_cast<float>(buildLists[building].size());
+                qint32 owner = buildingOwners[building];
+                float singleInfluence = income[owner] / buildSize;
                 for (auto & unitId : buildLists[building])
                 {
                     qint32 island = getIslandFromUnitId(unitId, unitIdToIsland);
 
                     if (island >= 0 && m_islands[island]->sameIsland(x, y, pos.x(), pos.y()))
                     {
-                        qint32 dis = GlobalUtils::getDistance(curPos, pos);
+                        float dis = GlobalUtils::getDistance(curPos, pos);
                         if (dis > fullInfluenceRange)
                         {
-                            qint32 dayDivider = fullInfluenceRange / dis + 1;
-                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], income[buildingOwners[building]] / dayDivider / buildLists[building].size());
+                            float dayDivider = dis / fullInfluenceRange + 1.0f;
+                            m_InfluenceMap[x][y].increaseInfluence(owner, singleInfluence / (dayDivider));
                         }
                         else
                         {
-                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], income[buildingOwners[building]] / buildLists[building].size());
+                            m_InfluenceMap[x][y].increaseInfluence(owner, singleInfluence);
                         }
                     }
                 }
@@ -263,13 +266,13 @@ void InfluenceFrontMap::addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPf
         auto points = pPfs->getAllNodePointsFast();
         for (const auto & point : points)
         {
-            float multiplier = 1.0f;
-            qint32 fieldCost = pPfs->getTargetCosts(point.x(), point.y());
-            if (movePoints > 0 && fieldCost > 0 && fieldCost > movePoints)
+            float divider = 1.0f;
+            float fieldCost = pPfs->getTargetCosts(point.x(), point.y());
+            if (movePoints > 0.0f && fieldCost > 0.0f && fieldCost > movePoints)
             {                
-                multiplier = movePoints / fieldCost + 1;
+                divider = fieldCost / movePoints + 1.0f;
             }
-            m_InfluenceMap[point.x()][point.y()].increaseInfluence(owner, value * multiplier);
+            m_InfluenceMap[point.x()][point.y()].increaseInfluence(owner, value / divider);
         }
     }
 }
