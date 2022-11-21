@@ -214,6 +214,7 @@ jobs:
         -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" \
         -DOPENSSL_USE_STATIC_LIBS=ON \
         -DPRECOMPILEDOPENSSL=ON \
+        -DDEFAULTAIPIPE=OFF \
         -DUPDATESUPPORT=OFF \
         -DCOW_BUILD_TAG="${{github.ref}}" \
         -DCOW_UPDATETARGET="${{matrix.asset_name}}" \

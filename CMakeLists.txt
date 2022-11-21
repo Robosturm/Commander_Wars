@@ -30,6 +30,7 @@ option(PRECOMPILEDOPENSSL "if the openssl are precompiled libs or or package exi
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
 option(DEPLOY_RESOURCES_AS_FOLDER "if files should be compiled into the exe or deployed as folder" OFF)
 option(UPDATESUPPORT "Enables the automatic updater for the game which updates to the latest github version should be turned off for local builds not supported for android" OFF)
+option(DEFAULTAIPIPE "If the system should use a separate process for the ai as default variant. Disable it for system that can't launch the same exe twice e.g. android." ON)
 ###################################################################################
 # show configuration
 ###################################################################################
@@ -178,6 +179,17 @@ else()
     message("Building without user config path")
 endif()
 
+if (DEFAULTAIPIPE)
+    message("Using ai pipe as default")
+    add_definitions(
+        -DDEFAULTAIPIPE=true
+    )
+else()
+    message("Using no ai pipe as default")
+    add_definitions(
+        -DDEFAULTAIPIPE=false
+    )
+endif()
 ###################################################################################
 # General version information
 ###################################################################################

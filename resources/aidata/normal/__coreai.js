@@ -308,8 +308,8 @@ var COREAI =
         }
         var anitAirUnitCount = ai.getUnitCount(units, antiAirUnits, 5);
         var anitAirAirUnitCount = ai.getUnitCount(units, antiAirAirUnits, 5);
-        var stealthBomberUnitCount = ai.getEnemyUnitCountNearOwnUnits(units, enemyUnits, stealthAirUnits, 24, 5);
-        var enemyAirUnits = ai.getEnemyUnitCountNearOwnUnits(units, enemyUnits, airUnits, 24, 5);
+        var stealthBomberUnitCount = ai.getEnemyUnitCountNearOwnUnits(units, enemyUnits, stealthAirUnits, 18, 5);
+        var enemyAirUnits = ai.getEnemyUnitCountNearOwnUnits(units, enemyUnits, airUnits, 18, 5);
         if ((enemyAirUnits > 0 && anitAirUnitCount === 0) ||
                 (enemyAirUnits > 2 && anitAirUnitCount === 1) ||
                 (anitAirUnitCount > 0 && enemyAirUnits / anitAirUnitCount >= 3))
