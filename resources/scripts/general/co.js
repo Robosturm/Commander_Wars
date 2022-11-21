@@ -16,6 +16,26 @@ var CO =
         }
     },
 
+    getCoGroupModifier : function (co, system, unitIds, map)
+    {
+        var value = 1;
+        var length = unitIds.length;
+        if (length > 0)
+        {
+            value = 0;
+            for (var i = 0; i < length; ++i)
+            {
+                value += 1 + Global[co.getCoID()].getAiCoUnitBonus(co, system.getDummyUnit(unitIds[i]), map) * 0.2;
+            }
+            value /= length;
+        }
+        if (value <= 0)
+        {
+            value = 0.1;
+        }
+        return value;
+    },
+
     loadCOMusic : function(co, map)
     {
         // put the co music in here.

@@ -8,7 +8,6 @@
 #include "game/gamemap.h"
 #include "game/unit.h"
 #include "game/co.h"
-#include "game/gameanimation/gameanimationfactory.h"
 
 GameAnimationWalk::GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePath, GameMap* pMap)
     : GameAnimation(static_cast<quint32>(GameMap::frameTime), pMap),

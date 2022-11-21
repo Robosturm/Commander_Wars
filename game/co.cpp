@@ -3,6 +3,8 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/userdata.h"
 
+#include "ai/productionSystem/simpleproductionsystem.h"
+
 #include "game/player.h"
 #include "game/unit.h"
 #include "game/co.h"
@@ -114,6 +116,23 @@ void CO::setCOUnit(Unit* pUnit)
         }
     }
     m_pCOUnit = pUnit;
+}
+
+float CO::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getCoGroupModifier";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(system),
+                       pInterpreter->arraytoJSValue(unitIds),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
+    float ret = 1.0f;
+    if (erg.isNumber())
+    {
+        ret = erg.toNumber();
+    }
+    return ret;
 }
 
 QString CO::getCoID() const

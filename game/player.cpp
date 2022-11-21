@@ -1790,6 +1790,19 @@ qint32 Player::getCoCount() const
     return ret;
 }
 
+float Player::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system)
+{
+    float ret = 1.0f;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            ret += pCO->getCoGroupModifier(unitIds, system);
+        }
+    }
+    return ret;
+}
+
 QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
 {
     

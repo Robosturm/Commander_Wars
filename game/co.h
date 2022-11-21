@@ -13,6 +13,7 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
+class SimpleProductionSystem;
 class Unit;
 using spUnit = oxygine::intrusive_ptr<Unit>;
 class Terrain;
@@ -94,6 +95,12 @@ public:
     void setMenu(GameMenue *newMenu);
 
 public slots:
+    /**
+     * @brief getCoGroupModifier
+     * @param unitIds
+     * @return
+     */
+    float getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system);
     /**
      * @brief getGlobalCoZone
      * @return

@@ -5,7 +5,7 @@ var COREAI =
         40, 0, "", 0.5],
     lightTankGroup : ["LIGHT_TANK_GROUP",   ["RECON", "FLARE", "LIGHT_TANK", "ARTILLERY", "ZCOUNIT_CHAPERON", "ZCOUNIT_HOT_TANK", "ZCOUNIT_SMUGGLER", "ZCOUNIT_AUTO_TANK"],
         [5,       5,       80,           15,          15,                 15,                 15,                 30],
-        60, 1, "", 1.0],
+        50, 1, "", 1.0],
     mediumTankGroup : ["MEDIUM_TANK_GROUP", ["ANTITANKCANNON", "HEAVY_TANK", "ROCKETTHROWER", "ZCOUNIT_CRYSTAL_TANK", "ZCOUNIT_NEOSPIDER_TANK", "ZCOUNIT_ROYAL_GUARD", "ZCOUNIT_TANK_HUNTER"],
         [30,               70,           10,              40,                     40,                       40,                    40],
         20, 2, "", 1.0],
@@ -55,12 +55,12 @@ var COREAI =
         {
             system.addInitialProduction(["INFANTRY"], 6);
         }
-        system.addItemToBuildDistribution(COREAI.infantryGroup[0],                          // group name
-                                          COREAI.infantryGroup[1],                          // units build by the group
-                                          COREAI.infantryGroup[2],                          // chance of the unit in this group to be build
-                                          COREAI.infantryGroup[3] * groupDistribution[0],   // army distribution for this group
-                                          COREAI.infantryGroup[4],                          // build mode used to detect if the group is enabled or not to the army distribution
-                                          COREAI.infantryGroup[5],                          // custom condition to enable/disable group removing it to the army distribution
+        system.addItemToBuildDistribution(COREAI.infantryGroup[0],                                                       // group name
+                                          COREAI.infantryGroup[1],                                                       // units build by the group
+                                          COREAI.infantryGroup[2],                                                       // chance of the unit in this group to be build
+                                          COREAI.infantryGroup[3] * groupDistribution[0] * player.getCoGroupModifier(COREAI.infantryGroup[1], system),     // army distribution for this group
+                                          COREAI.infantryGroup[4],                                                       // build mode used to detect if the group is enabled or not to the army distribution
+                                          COREAI.infantryGroup[5],                                                       // custom condition to enable/disable group removing it to the army distribution
                                           COREAI.infantryGroup[6]);
         var variables = system.getVariables();
         var variableNavalBattle = variables.createVariable("NAVALBATTLE");
@@ -77,36 +77,36 @@ var COREAI =
             groundModifer *= 1 / (air > 0);
         }
 
-        COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightTankGroup, groundModifer * groupDistribution[1]);
-        COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.mediumTankGroup, groundModifer * groupDistribution[2]);
-        COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyTankGroup, groundModifer * groupDistribution[3]);
-        COREAI.initAirForceDistribution(system, ai, co1, co2, directIndirectRatio, groupDistribution);
-        COREAI.initAmphibiousDistribution(system, ai, co1, co2, directIndirectRatio, groupDistribution);
+        COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightTankGroup, groundModifer * groupDistribution[1] * player.getCoGroupModifier(COREAI.lightTankGroup[1], system));
+        COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.mediumTankGroup, groundModifer * groupDistribution[2] * player.getCoGroupModifier(COREAI.mediumTankGroup[1], system));
+        COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyTankGroup, groundModifer * groupDistribution[3] * player.getCoGroupModifier(COREAI.heavyTankGroup[1], system));
+        COREAI.initAirForceDistribution(system, ai, player, co1, co2, directIndirectRatio, groupDistribution);
+        COREAI.initAmphibiousDistribution(system, ai, player, co1, co2, directIndirectRatio, groupDistribution);
         if (naval > 0)
         {
-            COREAI.initNavalForceDistribution(system, ai, co1, co2, directIndirectRatio, groupDistribution);
+            COREAI.initNavalForceDistribution(system, ai, player, co1, co2, directIndirectRatio, groupDistribution);
         }
         return true;
     },
 
-    initAirForceDistribution : function(system, ai, co1, co2, directIndirectRatio, groupDistribution)
+    initAirForceDistribution : function(system, ai, player, co1, co2, directIndirectRatio, groupDistribution)
     {
-        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightAirGroup, "K_HELI", groupDistribution[1]);
-        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyAirGroup, "BOMBER", groupDistribution[3]);
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightAirGroup, "K_HELI", groupDistribution[1] * player.getCoGroupModifier(COREAI.lightAirGroup[1], system));
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyAirGroup, "BOMBER", groupDistribution[3] * player.getCoGroupModifier(COREAI.heavyAirGroup[1], system));
     },
 
-    initNavalForceDistribution : function(system, ai, co1, co2, directIndirectRatio, groupDistribution)
+    initNavalForceDistribution : function(system, ai, player, co1, co2, directIndirectRatio, groupDistribution)
     {
-        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.navalInfantryGroup, "GUNBOAT", groupDistribution[0]);
-        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightNavalGroup, "CANNONBOAT", groupDistribution[1]);
-        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.mediumNavalGroup, "FRIGATE", groupDistribution[2]);
-        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyNavalGroup, "BATTLECRUISER", groupDistribution[3]);
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.navalInfantryGroup, "GUNBOAT", groupDistribution[0] * player.getCoGroupModifier(COREAI.navalInfantryGroup[1], system));
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightNavalGroup, "CANNONBOAT", groupDistribution[1] * player.getCoGroupModifier(COREAI.lightNavalGroup[1], system));
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.mediumNavalGroup, "FRIGATE", groupDistribution[2] * player.getCoGroupModifier(COREAI.mediumNavalGroup[1], system));
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyNavalGroup, "BATTLECRUISER", groupDistribution[3] * player.getCoGroupModifier(COREAI.heavyNavalGroup[1], system));
     },
 
-    initAmphibiousDistribution : function(system, ai, co1, co2, directIndirectRatio, groupDistribution)
+    initAmphibiousDistribution : function(system, ai, player, co1, co2, directIndirectRatio, groupDistribution)
     {
-        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightAmphibiousGroup, "HOVERCRAFT", groupDistribution[1]);
-        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.mediumAmphibiousGroup, "HOVERCRAFT", groupDistribution[2]);
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightAmphibiousGroup, "HOVERCRAFT", groupDistribution[1] * player.getCoGroupModifier(COREAI.lightAmphibiousGroup[1], system));
+        COREAI.addModifiedDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.mediumAmphibiousGroup, "HOVERCRAFT", groupDistribution[2] * player.getCoGroupModifier(COREAI.mediumAmphibiousGroup[1], system));
     },
 
     addModifiedDistribution : function(system, ai, co1, co2, directIndirectRatio, group, unitId, groupDistribution)

@@ -436,7 +436,9 @@ void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistri
     }
     std::sort(buildDistribution.begin(), buildDistribution.end(), [totalDistributionCount](const CurrentBuildDistribution& lhs, const CurrentBuildDistribution& rhs)
     {
-        if (lhs.currentValue <= 0.0f && rhs.currentValue > 0.0f)
+        if (lhs.currentValue <= 0.0f &&
+            lhs.distribution.buildMode > 1 &&
+            rhs.currentValue > 0.0f)
         {
             return true;
         }

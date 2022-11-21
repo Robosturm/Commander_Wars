@@ -15,6 +15,7 @@
 
 #include "gameinput/basegameinputif.h"
 
+class SimpleProductionSystem;
 class GameMap;
 class Player;
 using spPlayer = oxygine::intrusive_ptr<Player>;
@@ -133,6 +134,12 @@ public:
     void setControlType(const GameEnums::AiTypes &newControlType);
 
 public slots:
+    /**
+     * @brief getCoGroupModifier
+     * @param unitIds
+     * @return
+     */
+    float getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system);
     /**
      * @brief getControlType
      * @return this is the ai type set during game creation this may differ to the instanciated ai type during multiplayer matches
