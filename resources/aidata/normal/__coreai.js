@@ -2,7 +2,7 @@ var COREAI =
         {
     infantryGroup : ["INFANTRY_GROUP", ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE", "ZCOUNIT_PARTISAN", "ZCOUNIT_COMMANDO", "ZCOUNIT_RANGER", "ZCOUNIT_AT_CYCLE"],
         [70,         10,     20,       30,          10,                 30,                 10,               10],
-        40, 0, "", 0.5],
+        40, 0, "", 0.65],
     lightTankGroup : ["LIGHT_TANK_GROUP",   ["RECON", "FLARE", "LIGHT_TANK", "ARTILLERY", "ZCOUNIT_CHAPERON", "ZCOUNIT_HOT_TANK", "ZCOUNIT_SMUGGLER", "ZCOUNIT_AUTO_TANK"],
         [5,       5,       80,           15,          15,                 15,                 15,                 30],
         50, 1, "", 1.0],
