@@ -29,6 +29,7 @@ public:
 
     void onGameStarted(GameMenue* pMenu);
     void onQuitGame();
+    void quit();
     PipeState getPipeState() const;
 
 

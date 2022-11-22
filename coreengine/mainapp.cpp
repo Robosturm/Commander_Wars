@@ -98,6 +98,7 @@ void Mainapp::createLineEdit()
 
 void Mainapp::shutdown()
 {
+    m_aiSubProcess.kill();
     if (BuildingSpriteManager::created())
     {
         BuildingSpriteManager::getInstance()->free();

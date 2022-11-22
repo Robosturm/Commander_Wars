@@ -935,6 +935,7 @@ void GameMenue::despawnSlave()
     {
         if (m_saveAllowed)
         {
+#if 0 // disabled cause code isn't finished for next release
             QString saveFile = "savegames/" +  Settings::getSlaveServerName() + ".msav";
             saveMap(saveFile);
             spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
@@ -977,6 +978,7 @@ void GameMenue::despawnSlave()
             emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
             QThread::currentThread()->msleep(350);
             CONSOLE_PRINT("Closing slave cause all players have disconnected.", Console::eDEBUG);
+#endif
             QCoreApplication::exit(0);
         }
         else

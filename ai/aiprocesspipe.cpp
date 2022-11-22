@@ -129,6 +129,14 @@ void AiProcessPipe::onQuitGame()
     }
 }
 
+void AiProcessPipe::quit()
+{
+    m_pActiveConnection->disconnectTCP();
+    m_pServer = nullptr;
+    m_pClient = nullptr;
+    m_pActiveConnection = nullptr;
+}
+
 void AiProcessPipe::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     if (service == NetworkInterface::NetworkSerives::AiPipe)

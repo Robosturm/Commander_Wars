@@ -213,6 +213,7 @@ void WorkerThread::onQuit()
     pLoadingScreen->hide();
     COSpriteManager::getInstance()->release();
     Player::releaseStaticData();
+    Mainapp::getAiProcessPipe().quit();
     Console::getInstance()->release();
 }
 
