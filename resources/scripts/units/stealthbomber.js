@@ -111,6 +111,10 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Air;
     };
+    this.buildedUnit = function(unit, player, map)
+    {
+        unit.setHidden(true);
+    };
 }
 
 Constructor.prototype = UNIT;

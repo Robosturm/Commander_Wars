@@ -25456,27 +25456,27 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>unit</name>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="267"/>
+        <location filename="../resources/scripts/general/unit.js" line="271"/>
         <source>Air</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="269"/>
+        <location filename="../resources/scripts/general/unit.js" line="273"/>
         <source>Naval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="271"/>
+        <location filename="../resources/scripts/general/unit.js" line="275"/>
         <source>Ground</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="273"/>
+        <location filename="../resources/scripts/general/unit.js" line="277"/>
         <source>Infantry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="275"/>
+        <location filename="../resources/scripts/general/unit.js" line="279"/>
         <source>Hovercraft</source>
         <translation type="unfinished"></translation>
     </message>

@@ -33,3 +33,6 @@ SUBMARINE.startOfTurn = function(unit, map)
     }
     unit.setFuel(unit.getFuel() - fuelCosts);
 };
+SUBMARINE.buildedUnit = function(unit, player, map)
+{
+};

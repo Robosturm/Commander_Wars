@@ -60,6 +60,10 @@ var UNIT =
         return -1;
     },
 
+    buildedUnit : function(unit, player, map)
+    {
+    },
+
     createExplosionAnimation : function(x, y, unit, map)
     {
         var animation = GameAnimationFactory.createAnimation(map, x, y);

@@ -1011,13 +1011,19 @@ void Player::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender
 
 void Player::buildedUnit(Unit* pUnit)
 {
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "buildedUnit";
+    QJSValueList args({pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(pUnit->getUnitID(), function1, args);
     for(auto & pCO : m_playerCOs)
     {
         if (pCO.get() != nullptr)
         {
             pCO->buildedUnit(pUnit);
         }
-    }
+    }    
 }
 
 bool Player::getWeatherImmune()
