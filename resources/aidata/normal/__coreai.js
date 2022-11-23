@@ -266,7 +266,7 @@ var COREAI =
                 {
                     tankTransporter.push("TRANSPORTPLANE");
                 }
-                if (tankTransporter.length > 0)
+                if (tankTransporter.length > 0 && idleUnitCount > 0)
                 {
                     if (COREAI.transporterRatio * unitCount > tankTransporterCount)
                     {
