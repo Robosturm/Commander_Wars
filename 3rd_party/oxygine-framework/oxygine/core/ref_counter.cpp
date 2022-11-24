@@ -1,5 +1,4 @@
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
-#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "coreengine/console.h"
 
 #include <QObject>

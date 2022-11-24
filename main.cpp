@@ -91,6 +91,10 @@ int main(qint32 argc, char* argv[])
     {
         CONSOLE_PRINT("c++ memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), Console::eWARNING);
     }
+    else if (oxygine::ref_counter::getAlloctedObjectCount() < 0)
+    {
+        CONSOLE_PRINT("c++ memory detector is bugged: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), Console::eWARNING);
+    }
     //end
     if (!slave)
     {
