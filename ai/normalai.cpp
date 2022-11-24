@@ -449,10 +449,9 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                     }
                     bool perform = false;
                     qint32 targetIndex = 0;
-                    bool productionBuilding = false;
                     if (captures.size() > 0)
                     {
-                        if (captures.size() == 0)
+                        if (captures.size() == 1)
                         {
                             // we have only one target go for it
                             targetIndex = 0;
@@ -460,6 +459,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                         }
                         else
                         {
+                            qint32 prio = -1;
                             // check if we have a building only we can capture and capture it
                             for (qint32 i2 = 0; i2 < captures.size(); i2++)
                             {
@@ -472,38 +472,41 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                                         captureCount++;
                                     }
                                 }
-                                bool isProductionBuilding = m_pMap->getTerrain(static_cast<qint32>(captures[i2].x()), static_cast<qint32>(captures[i2].y()))->getBuilding()->getActionList().contains(ACTION_BUILD_UNITS);
+                                bool isProductionBuilding = m_pMap->getTerrain(static_cast<qint32>(captures[i2].x()), static_cast<qint32>(captures[i2].y()))->getBuilding()->isProductionBuilding();
                                 if ((captureCount == 1 && perform == false) ||
-                                    (captureCount == 1 && productionBuilding == false && perform == true && isProductionBuilding))
+                                    (captureCount == 1 && perform == true && isProductionBuilding))
                                 {
-                                    productionBuilding = isProductionBuilding;
-                                    targetIndex = i2;
+                                    Building* pBuilding = m_pMap->getTerrain(static_cast<qint32>(captures[i2].x()), static_cast<qint32>(captures[i2].y()))->getBuilding();
+                                    qint32 testPrio = std::numeric_limits<qint32>::min();
+                                    if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ)
+                                    {
+                                        testPrio = std::numeric_limits<qint32>::max();
+                                    }
+                                    else if (pBuilding->isProductionBuilding())
+                                    {
+                                        testPrio = pBuilding->getConstructionList().size();
+                                    }
+                                    if (!perform)
+                                    {
+                                        prio = testPrio;
+                                        targetIndex = i2;
+                                    }
+                                    else
+                                    {
+                                        if (testPrio > prio)
+                                        {
+                                            targetIndex = i2;
+                                            prio = testPrio;
+                                        }
+                                    }
                                     perform = true;
                                 }
                             }
-                            // check if there unique captures open
-                            bool skipUnit = false;
-                            for (auto & buildingPos1 : captureBuildings)
-                            {
-                                qint32 captureCount = 0;
-                                for (auto & buildingPos2 : captureBuildings)
-                                {
-                                    if (static_cast<qint32>(buildingPos2.x()) == static_cast<qint32>(buildingPos1.x()) &&
-                                        static_cast<qint32>(buildingPos2.y()) == static_cast<qint32>(buildingPos1.y()))
-                                    {
-                                        captureCount++;
-                                    }
-                                }
-                                if (captureCount == 1)
-                                {
-                                    skipUnit = true;
-                                }
-                            }
                             // if not we can select a target from the list
-                            if (!skipUnit)
+                            if (!perform)
                             {
+                                prio = -1;
                                 targetIndex = 0;
-                                qint32 prio = -1;
                                 // priorities production buildings over over captures
                                 for (qint32 i2 = 0; i2 < captures.size(); i2++)
                                 {
@@ -513,7 +516,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                                     {
                                         testPrio = std::numeric_limits<qint32>::max();
                                     }
-                                    else if (pBuilding->getActionList().contains(ACTION_BUILD_UNITS))
+                                    else if (pBuilding->isProductionBuilding())
                                     {
                                         testPrio = pBuilding->getConstructionList().size();
                                     }

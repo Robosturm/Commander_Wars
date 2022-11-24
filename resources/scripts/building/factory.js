@@ -27,7 +27,7 @@ var Constructor = function()
 
     this.actionList = ["ACTION_BUILD_UNITS"];
 
-    this.constructionList = ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
+    this.constructionList = ["INFANTRY", "MOTORBIKE", "SNIPER", "MECH", "RECON", "APC", "FLARE",
                              "ARTILLERY", "LIGHT_TANK", "FLAK", "ANTITANKCANNON", "HEAVY_TANK",
                              "NEOTANK", "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
     this.getConstructionList = function(building)

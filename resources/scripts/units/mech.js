@@ -19,7 +19,7 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 2500;
+        return 3000;
     };
 
     this.armyData = [["os", "os"],

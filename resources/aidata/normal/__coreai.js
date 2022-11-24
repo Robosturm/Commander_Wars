@@ -226,7 +226,8 @@ var COREAI =
             {
                 var tankTransporter = ["LANDER", "TRANSPORTPLANE"];
                 var tankTransporterCount = ai.getUnitCount(units, tankTransporter);
-                var idleUnitCount = ai.getIdleUnitCount(units, [], enemyUnits, enemyBuildings);
+                var tanks = COREAI.lightTankGroup[1] + COREAI.mediumTankGroup[1] + COREAI.heavyTankGroup[1];
+                var idleUnitCount = ai.getIdleUnitCount(units, tanks, enemyUnits, enemyBuildings);
                 var unitCount = units.size();
                 var variableNavalBattle = variables.createVariable("NAVALBATTLE");
                 var naval = variableNavalBattle.readDataInt32();

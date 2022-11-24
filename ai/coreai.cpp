@@ -1100,7 +1100,8 @@ qint32 CoreAI::getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList & unitI
         {
             qint32 loadingIslandIdx = getIslandIndex(pUnit.get());
             qint32 loadingIsland = getIsland(pUnit.get());
-            if (!hasTargets(0, pUnit.get(), false, pEnemyUnits, pEnemyBuildings, loadingIslandIdx, loadingIsland, true, true))
+            if ((pUnit->hasAmmo1() || pUnit->hasAmmo2()) &&
+                !hasTargets(0, pUnit.get(), false, pEnemyUnits, pEnemyBuildings, loadingIslandIdx, loadingIsland, true, true))
             {
                 ++count;
             }
