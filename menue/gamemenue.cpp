@@ -188,7 +188,6 @@ void GameMenue::onEnter()
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
-
 }
 
 void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -1429,61 +1428,56 @@ void GameMenue::updateGameInfo()
 
 void GameMenue::victory(qint32 team)
 {
-    if (!m_terminated)
+    bool humanWin = false;
+    CONSOLE_PRINT("GameMenue::victory for team " + QString::number(team), Console::eDEBUG);
+    // create victorys
+    if (team >= 0)
     {
-        m_terminated = true;
-        CONSOLE_PRINT("GameMenue::victory for team " + QString::number(team), Console::eDEBUG);
-
-        bool exit = true;
-        bool humanWin = false;
-        // create victorys
-        if (team >= 0)
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+            Player* pPlayer = m_pMap->getPlayer(i);
+            if (pPlayer->getTeam() != team)
             {
-                Player* pPlayer = m_pMap->getPlayer(i);
-                if (pPlayer->getTeam() != team)
-                {
-                    CONSOLE_PRINT("Defeating player " + QString::number(i) + " cause team " + QString::number(team) + " is set to win the game", Console::eDEBUG);
-                    pPlayer->defeatPlayer(nullptr);
-                }
-                if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
-                {
-                    humanWin = true;
-                }
+                CONSOLE_PRINT("Defeating player " + QString::number(i) + " cause team " + QString::number(team) + " is set to win the game", Console::eDEBUG);
+                pPlayer->defeatPlayer(nullptr);
             }
+            if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+            {
+                humanWin = true;
+            }
+        }
+        if (m_terminated == 0)
+        {
             if (humanWin)
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("victory.wav");
             }
-            m_pMap->getGameScript()->victory(team);            
+            m_pMap->getGameScript()->victory(team);
         }
-        if (GameAnimationFactory::getAnimationCount() == 0)
+    }
+    if (m_terminated == 0)
+    {
+        m_terminated = 1;
+    }
+    bool exit = GameAnimationFactory::getAnimationCount() == 0;
+    if (exit && !m_isReplay && m_terminated == 1)
+    {
+        m_terminated = 2;
+        if (m_pNetworkInterface.get() != nullptr)
         {
-            exit = true;
+            m_pChat->detach();
+            m_pChat = nullptr;
         }
-        else
+        if (m_pMap->getCampaign() != nullptr)
         {
-            exit = false;
+            CONSOLE_PRINT("Informing campaign about game result. That human player game result is: " + QString::number(humanWin), Console::eDEBUG);
+            m_pMap->getCampaign()->mapFinished(m_pMap.get(), humanWin);
         }
-        if (exit && !m_isReplay)
-        {
-            if (m_pNetworkInterface.get() != nullptr)
-            {
-                m_pChat->detach();
-                m_pChat = nullptr;
-            }
-            if (m_pMap->getCampaign() != nullptr)
-            {
-                CONSOLE_PRINT("Informing campaign about game result. That human player game result is: " + QString::number(humanWin), Console::eDEBUG);
-                m_pMap->getCampaign()->mapFinished(m_pMap.get(), humanWin);
-            }
-            AchievementManager::getInstance()->onVictory(team, humanWin, m_pMap.get());
-            CONSOLE_PRINT("Leaving Game Menue", Console::eDEBUG);
-            auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface);
-            oxygine::Stage::getStage()->addChild(window);
-            oxygine::Actor::detach();
-        }
+        AchievementManager::getInstance()->onVictory(team, humanWin, m_pMap.get());
+        CONSOLE_PRINT("Leaving Game Menue", Console::eDEBUG);
+        auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface);
+        oxygine::Stage::getStage()->addChild(window);
+        oxygine::Actor::detach();
     }
 }
 
@@ -1830,6 +1824,16 @@ void GameMenue::doSaveMap()
     }
 }
 
+void GameMenue::exitGameDelayed()
+{
+    if (!m_exitDelayedTimer.isActive())
+    {
+        connect(&m_exitDelayedTimer, &QTimer::timeout, this, &GameMenue::exitGame, Qt::QueuedConnection);
+        m_exitDelayedTimer.setSingleShot(true);
+        m_exitDelayedTimer.start(2000);
+    }
+}
+
 void GameMenue::exitGame()
 {    
     CONSOLE_PRINT("Finishing running animations and exiting game", Console::eDEBUG);
@@ -1838,9 +1842,10 @@ void GameMenue::exitGame()
     {
         GameAnimationFactory::finishAllAnimations();
     }
-    auto * ai = m_pMap->getCurrentPlayer()->getBaseGameInput();
-    if (ai != nullptr &&
-        ai->getProcessing())
+    if (m_pMap.get() != nullptr &&
+        m_pMap->getCurrentPlayer() &&
+        m_pMap->getCurrentPlayer()->getBaseGameInput() != nullptr &&
+        m_pMap->getCurrentPlayer()->getBaseGameInput()->getProcessing())
     {
         m_actionPerformer.setExit(true);
     }

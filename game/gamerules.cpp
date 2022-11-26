@@ -219,6 +219,7 @@ void GameRules::checkVictory()
 {    
     if (m_pMap != nullptr)
     {
+        CONSOLE_PRINT("Checking for victory", Console::eDEBUG);
         for (qint32 i = 0; i < m_VictoryRules.size(); i++)
         {
             m_VictoryRules[i]->checkDefeat();
@@ -237,6 +238,7 @@ void GameRules::checkVictory()
         }
         if (teamsAlive.size() <= 1)
         {
+            CONSOLE_PRINT("Emitting victory game is finished", Console::eDEBUG);
             m_victory = true;
             // go to victory screen
             if (teamsAlive.size() == 1)

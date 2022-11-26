@@ -11,6 +11,7 @@ class GameMap;
 class GameMenue;
 class GameAction;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;
+using spGameMenue = oxygine::intrusive_ptr<GameMenue>;
 
 class AiProcessPipe final : public QObject
 {
@@ -61,7 +62,7 @@ private:
     QList<spGameAction> m_ActionBuffer;
     QMutex m_ActionMutex;
     GameMap* m_pMap{nullptr};
-    GameMenue* m_pMenu{nullptr};
+    spGameMenue m_pMenu;
 };
 
 #endif // AIPROCESSPIPE_H

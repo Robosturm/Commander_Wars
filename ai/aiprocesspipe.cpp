@@ -102,8 +102,8 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
         CONSOLE_PRINT("AI-Pipe waiting for ingame", Console::eDEBUG);
         while (m_pipeState != PipeState::Ingame)
         {
-            QCoreApplication::processEvents();
             QThread::msleep(10);
+            QCoreApplication::processEvents();
         }
         CONSOLE_PRINT("AI-Pipe continue starting the game", Console::eDEBUG);
     }
@@ -227,7 +227,7 @@ void AiProcessPipe::onNewAction(QDataStream & stream)
         spGameAction pAction = spGameAction::create(m_pMap);
         pAction->deserializeObject(stream);
         m_ActionBuffer.append(pAction);
-        if (m_pMenu != nullptr &&
+        if (m_pMenu.get() != nullptr &&
             !m_pMenu->getActionRunning())
         {
             spGameAction pAction = m_ActionBuffer.front();
@@ -264,7 +264,10 @@ void AiProcessPipe::quitGame()
 {
     QMutexLocker locker(&m_ActionMutex);
     m_pipeState = PipeState::Ready;
-    m_pMenu->exitGame();
+    if (m_pMenu.get() != nullptr)
+    {
+        m_pMenu->exitGame();
+    }
     m_pMenu = nullptr;
     m_pMap = nullptr;
     m_ActionBuffer.clear();
@@ -286,7 +289,7 @@ void AiProcessPipe::nextAction()
     if (m_pipeState == PipeState::Ingame)
     {
         QMutexLocker locker(&m_ActionMutex);
-        if (m_pMenu != nullptr &&
+        if (m_pMenu.get() != nullptr &&
             !m_pMenu->getActionRunning())
         {
             if (m_ActionBuffer.size() > 0)

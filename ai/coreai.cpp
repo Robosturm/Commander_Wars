@@ -1668,7 +1668,7 @@ void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, std::vector
     }
 }
 
-void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier)
+void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorUnit & ownUnits, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
@@ -1681,6 +1681,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
             capturUnits.push_back(pLoadedUnit.get());
         }
     }
+    QVector<qint32> usedIsland;
     if (capturUnits.size() > 0)
     {
         spQmlVectorPoint pUnloadArea = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
@@ -1690,7 +1691,9 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
         bool hasMoved = capturUnits[0]->getHasMoved();
         // simulate a not moved unit for checking if we can capture the building or fire a missile from it.
         capturUnits[0]->setHasMoved(false);
+        auto island = getIslandIndex(capturUnits[0]);
         bool missileTarget = hasMissileTarget();
+        constexpr qint32 usedIslandMalus = 3;
         for (auto & pBuilding : pEnemyBuildings->getVector())
         {
             QPoint point(pBuilding->Building::getX(), pBuilding->Building::getY());
@@ -1700,6 +1703,24 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
                 if (pBuilding->isCaptureOrMissileBuilding(missileTarget) &&
                     pBuilding->getTerrain()->getUnit() == nullptr)
                 {
+                    auto islandIdx = m_IslandMaps[island]->getIsland(point.x(), point.y());
+                    qint32 finalDistanceModifier = distanceModifier;
+                    if (usedIsland.contains(islandIdx))
+                    {
+                        finalDistanceModifier += usedIslandMalus;
+                    }
+                    else
+                    {
+                        for (auto & unit : ownUnits->getVector())
+                        {
+                            if (unit->canCapture() && onSameIsland(island, point.x(), point.y(), unit->getX(), unit->getY()))
+                            {
+                                finalDistanceModifier += usedIslandMalus;
+                                usedIsland.append(islandIdx);
+                                break;
+                            }
+                        }
+                    }
                     // check unload fields
                     for (auto & unloadPos : pUnloadArea->getVector())
                     {
@@ -1707,7 +1728,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
                         qint32 y = point.y() + unloadPos.y();
                         if (m_pMap->onMap(x, y) &&
                             m_pMap->getTerrain(x, y)->getUnit() == nullptr &&
-                            !GlobalUtils::contains(targets, QVector3D(x, y, distanceModifier)))
+                            !GlobalUtils::contains(targets, QVector3D(x, y, finalDistanceModifier)))
                         {
                             if (isUnloadTerrain(pUnit, m_pMap->getTerrain(x, y)))
                             {
@@ -1718,7 +1739,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
                                     {
                                         if (captureUnit->canMoveOver(x, y))
                                         {
-                                            targets.push_back(QVector3D(x, y, distanceModifier));
+                                            targets.push_back(QVector3D(x, y, finalDistanceModifier));
                                             break;
                                         }
                                     }

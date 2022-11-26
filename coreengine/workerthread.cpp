@@ -131,23 +131,24 @@ void WorkerThread::start()
     pAchievementManager->loadAll();
     Player::getNeutralTableAnim();
     pInterpreter->doFunction("Global", "finalizeLoading");
-
-    if (pApp->getSlave())
+    if(!Settings::getAiSlave())
     {
-        QString script = pApp->getInitScript();
-        if (!script.isEmpty())
+        if (pApp->getSlave())
         {
-            CONSOLE_PRINT("Remote script is present and will be loaded", Console::eDEBUG);
-            CONSOLE_PRINT("Remote Script=" + script, Console::eDEBUG);
-            pInterpreter->evaluate(script, "remoteInit.js");
+            QString script = pApp->getInitScript();
+            if (!script.isEmpty())
+            {
+                CONSOLE_PRINT("Remote script is present and will be loaded", Console::eDEBUG);
+                CONSOLE_PRINT("Remote Script=" + script, Console::eDEBUG);
+                pInterpreter->evaluate(script, "remoteInit.js");
+            }
+        }
+        else if (QFile::exists("init.js"))
+        {
+            CONSOLE_PRINT("Init script is present and will be loaded", Console::eDEBUG);
+            pInterpreter->openScript("init.js", true);
         }
     }
-    else if (QFile::exists("init.js"))
-    {
-        CONSOLE_PRINT("Init script is present and will be loaded", Console::eDEBUG);
-        pInterpreter->openScript("init.js", true);
-    }
-
     connect(pApp, &Mainapp::sigMousePressEvent, this, &WorkerThread::mousePressEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigMouseReleaseEvent, this, &WorkerThread::mouseReleaseEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerThread::wheelEvent, Qt::QueuedConnection);

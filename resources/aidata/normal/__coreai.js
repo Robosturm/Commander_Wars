@@ -38,7 +38,7 @@ var COREAI =
         [40,              40,           5],
         50, 3, "", 1.0],
 
-    minInfantryTransporterMapSize : 30 * 30,
+    minInfantryTransporterMapSize : 40 * 40,
     minApcResupplyDay : 15,
     minInfTransporterDay : 3,
     minTankTransporterDay : 4,
@@ -206,9 +206,11 @@ var COREAI =
                 var infantryTransporter = ["T_HELI", "BLACK_BOAT"];
                 var infantrySearchTransporter = ["T_HELI", "BLACK_BOAT", "APC"];
                 var infantryTransporterCount = ai.getUnitCount(units, infantrySearchTransporter);
-                if (infantryTransporterCount === 0 &&
-                        (COREAI.minInfantryTransporterMapSize <= map.getMapWidth() * map.getMapHeight() ||
-                         transporterBuildings > 0))
+                var infantryTransporterCount2 = ai.getUnitCount(units, infantryTransporter);
+                if ((infantryTransporterCount === 0 ||
+                    (infantryTransporterCount2 === 0 && transporterBuildings > 0)) &&
+                    (COREAI.minInfantryTransporterMapSize <= map.getMapWidth() * map.getMapHeight() ||
+                     transporterBuildings > 0))
                 {
                     if (transporterBuildings > 0)
                     {
@@ -286,9 +288,9 @@ var COREAI =
         var lowFuelUnitCount = ai.getUnitCount(units, [], 5, 30);
         var apcCount = ai.getUnitCount(units, ["APC"]);
         if (apcCount === 0 &&
-                turn >= COREAI.minApcResupplyDay &&
-                (lowFuelUnitCount > 2 ||
-                 COREAI.minInfantryTransporterMapSize <= map.getMapWidth() * map.getMapHeight()))
+            turn >= COREAI.minApcResupplyDay &&
+            (lowFuelUnitCount > 2 ||
+             COREAI.minInfantryTransporterMapSize <= map.getMapWidth() * map.getMapHeight()))
         {
             system.addForcedProduction(["APC"]);
         }

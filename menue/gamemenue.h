@@ -205,6 +205,10 @@ public slots:
      */
     void exitGame();
     /**
+     * @brief exitGameDelayed
+     */
+    void exitGameDelayed();
+    /**
      * @brief surrenderGame
      */
     void surrenderGame();
@@ -458,6 +462,7 @@ protected:
     QElapsedTimer m_slaveDespawnElapseTimer;
     QTimer m_slaveDespawnTimer{this};
     QTimer m_UpdateTimer{this};
+    QTimer m_exitDelayedTimer{this};
     struct Userdata
     {
         QString username;
@@ -473,7 +478,7 @@ protected:
     bool m_exitAfterSave{false};
     bool m_saveAllowed{false};
     bool m_isReplay{false};
-    bool m_terminated{false};
+    quint8 m_terminated{0};
 
     ActionPerformer m_actionPerformer;
     spMovementPlanner m_pMovementPlanner;

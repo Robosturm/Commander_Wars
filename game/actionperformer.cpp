@@ -336,7 +336,12 @@ void ActionPerformer::actionPerformed()
         }
         if (GameAnimationFactory::getAnimationCount() == 0)
         {
-            if (!m_pMap->getGameRules()->getVictory())
+            if (m_exit)
+            {
+                CONSOLE_PRINT("ActionPerformer state is exiting game. Emitting exit", Console::eDEBUG);
+                emit m_pMenu->sigVictory(-1);
+            }
+            else if (!m_pMap->getGameRules()->getVictory())
             {
                 CONSOLE_PRINT("Action finished", Console::eDEBUG);
                 m_actionRunning = false;
@@ -387,6 +392,7 @@ void ActionPerformer::actionPerformed()
             else
             {
                 CONSOLE_PRINT("Game already won not finishing the action.", Console::eDEBUG);
+                emit m_pMenu->sigVictory(-1);
             }
         }
         else

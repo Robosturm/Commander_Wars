@@ -982,7 +982,7 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
                         QStringList actions = pLoaded->getActionList();
                         if (!captureFound && actions.contains(ACTION_CAPTURE))
                         {
-                            appendUnloadTargetsForCapturing(pUnit, pEnemyBuildings, targets);
+                            appendUnloadTargetsForCapturing(pUnit, pUnits, pEnemyBuildings, targets);
                             captureFound = true;
                         }
                     }

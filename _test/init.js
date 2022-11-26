@@ -218,7 +218,7 @@ var Init =
             wikiView.showPage("MECH");
             wikiView.showPage("PLAINS");
             wikiView.showPage("HQ");
-            menu.exitGame();
+            menu.exitGameDelayed();
         }
     },
     onVictory = function(menu)

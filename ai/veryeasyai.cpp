@@ -430,7 +430,7 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
                     QStringList actions = pLoaded->getActionList();
                     if (!captureFound && actions.contains(ACTION_CAPTURE))
                     {
-                        appendUnloadTargetsForCapturing(pUnit, pEnemyBuildings, targets);
+                        appendUnloadTargetsForCapturing(pUnit, pUnits, pEnemyBuildings, targets);
                         captureFound = true;
                     }
                     if (!attackFound && actions.contains(ACTION_FIRE))

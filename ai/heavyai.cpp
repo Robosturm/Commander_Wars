@@ -1651,7 +1651,8 @@ void HeavyAi::addUnloadTargets(Unit* pUnit, std::vector<QVector3D>& targets)
             QStringList actions = pLoaded->getActionList();
             if (!captureFound && actions.contains(ACTION_CAPTURE))
             {
-                appendUnloadTargetsForCapturing(pUnit, m_pEnemyBuildings, targets, distanceModifier);
+                // todo
+                // appendUnloadTargetsForCapturing(pUnit, pUnits, m_pEnemyBuildings, targets, distanceModifier);
                 captureFound = true;
             }
             if (!attackFound && actions.contains(ACTION_FIRE))

@@ -613,7 +613,7 @@ protected:
      * @param pUnit
      * @param pEnemyBuildings
      */
-    void appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier = 1);
+    void appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorUnit & ownUnits, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier = 1);
     /**
      * @brief appendUnloadTargetsForAttacking
      * @param pUnit
