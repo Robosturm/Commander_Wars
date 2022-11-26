@@ -195,14 +195,14 @@ endif()
 ###################################################################################
 add_definitions(
     -DVERSION_MAJOR=0
-    -DVERSION_MINOR=25
-    -DVERSION_REVISION=2
-    -DVERSION_SUFFIX="dev"
+    -DVERSION_MINOR=26
+    -DVERSION_REVISION=0
+    -DVERSION_SUFFIX="main"
     -DCOW_BUILD_TAG="${COW_BUILD_TAG}"
     )
 
-set(COW_ANDROID_VERSION_NAME "0.25.2-dev")
-set(COW_ANDROID_VERSION_CODE "24")
+set(COW_ANDROID_VERSION_NAME "0.26.0-main")
+set(COW_ANDROID_VERSION_CODE "26")
 
 ###################################################################################
 # Set up some compiler and linking options
