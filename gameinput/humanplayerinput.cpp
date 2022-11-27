@@ -1966,7 +1966,8 @@ void HumanPlayerInput::autoEndTurn()
 {    
     if (m_pPlayer != nullptr &&
         m_pMap != nullptr &&
-        isCurrentPlayer(m_pPlayer))
+        isCurrentPlayer(m_pPlayer) &&
+        !Settings::getAiSlave())
     {
         CONSOLE_PRINT("HumanPlayerInput::autoEndTurn", Console::eDEBUG);
         CO* pCO0 = m_pPlayer->getCO(0);
