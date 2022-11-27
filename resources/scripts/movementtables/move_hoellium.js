@@ -24,6 +24,7 @@ var Constructor = function()
                                 ["AIRPORT", 1],
                                 ["FACTORY", 1],
                                 ["HARBOUR", 1],
+                                ["AMPHIBIOUSFACTORY", 1],
                                 ["HQ", 1],
                                 ["MINE", 1],
                                 ["PIPESTATION", 1],
