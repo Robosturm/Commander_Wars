@@ -942,12 +942,12 @@
 <context>
     <name>ActionPerformer</name>
     <message>
-        <location filename="../game/actionperformer.cpp" line="47"/>
+        <location filename="../game/actionperformer.cpp" line="46"/>
         <source>Waiting for Players/Observers to join...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/actionperformer.cpp" line="72"/>
+        <location filename="../game/actionperformer.cpp" line="71"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>

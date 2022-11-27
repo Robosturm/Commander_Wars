@@ -39,7 +39,6 @@ void ActionPerformer::performAction(spGameAction pGameAction)
     }
     CONSOLE_PRINT("Action running", Console::eDEBUG);
     m_actionRunning = true;
-    emit sigAiProcesseSendAction(pGameAction);
     m_pMenu->setSaveAllowed(false);
     if (m_multiplayerSyncData.m_waitingForSyncFinished && m_pMenu != nullptr)
     {
@@ -83,8 +82,9 @@ void ActionPerformer::performAction(spGameAction pGameAction)
             m_pStoredAction = nullptr;
             m_pMap->getGameRules()->pauseRoundTime();
             if (!pGameAction->getIsLocal() &&
-                (baseGameInput != nullptr &&
-                 baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi))
+                baseGameInput != nullptr &&
+                !Settings::getAiSlave() &&
+                baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi)
             {
                 pGameAction = doMultiTurnMovement(pGameAction);
             }
@@ -107,7 +107,10 @@ void ActionPerformer::performAction(spGameAction pGameAction)
             {
                 m_pMap->getGameRules()->getRoundTimer()->setInterval(pGameAction->getRoundTimerTime());
             }
-
+            if (!pGameAction->getIsLocal())
+            {
+                emit sigAiProcesseSendAction(pGameAction);
+            }
             // record action if required
             if (m_pMenu != nullptr)
             {
@@ -151,9 +154,9 @@ bool ActionPerformer::requiresForwarding(const spGameAction & pGameAction) const
     Player* pCurrentPlayer = m_pMap->getCurrentPlayer();
     auto* baseGameInput = pCurrentPlayer->getBaseGameInput();
     return m_pMenu != nullptr &&
-                      m_pMenu->getIsMultiplayer(pGameAction) &&
-                      baseGameInput != nullptr &&
-                                       baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi;
+           m_pMenu->getIsMultiplayer(pGameAction) &&
+           baseGameInput != nullptr &&
+           baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi;
 }
 
 bool ActionPerformer::getExit() const
@@ -168,8 +171,10 @@ void ActionPerformer::setExit(bool newExit)
 
 spGameAction ActionPerformer::doMultiTurnMovement(spGameAction pGameAction)
 {
+    CONSOLE_PRINT("doMultiTurnMovement for " + pGameAction->getActionID(), Console::eDEBUG);
     if (m_pMenu != nullptr &&
         m_pMenu->getGameStarted() &&
+        !Settings::getAiSlave() &&
         pGameAction.get() != nullptr &&
         (pGameAction->getActionID() == CoreAI::ACTION_NEXT_PLAYER ||
          pGameAction->getActionID() == CoreAI::ACTION_SWAP_COS))
