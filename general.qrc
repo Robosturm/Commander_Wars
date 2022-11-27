@@ -1085,7 +1085,6 @@
         <file>mods/awdc_unit/scripts/weapons/weapon_bomb.js</file>
         <file>mods/awdc_unit/scripts/weapons/weapon_cannon.js</file>
         <file>mods/awdc_unit/scripts/weapons/weapon_carrier_anti_air_missile.js</file>
-        <file>mods/awdc_unit/scripts/weapons/weapon_destroyer_a_air_gun.js</file>
         <file>mods/awdc_unit/scripts/weapons/weapon_flare_mg.js</file>
         <file>mods/awdc_unit/scripts/weapons/weapon_heavy_hovercraft_gun.js</file>
         <file>mods/awdc_unit/scripts/weapons/weapon_heavy_hovercraft_mg.js</file>
@@ -1269,7 +1268,6 @@
         <file>mods/awds_unit/scripts/weapons/weapon_bomb.js</file>
         <file>mods/awds_unit/scripts/weapons/weapon_cannon.js</file>
         <file>mods/awds_unit/scripts/weapons/weapon_carrier_anti_air_missile.js</file>
-        <file>mods/awds_unit/scripts/weapons/weapon_destroyer_a_air_gun.js</file>
         <file>mods/awds_unit/scripts/weapons/weapon_flare_mg.js</file>
         <file>mods/awds_unit/scripts/weapons/weapon_heavy_hovercraft_gun.js</file>
         <file>mods/awds_unit/scripts/weapons/weapon_heavy_hovercraft_mg.js</file>

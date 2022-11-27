@@ -6,7 +6,7 @@ DESTROYER.init = function(unit)
 
     unit.setAmmo2(-1);
     unit.setMaxAmmo2(-1);
-    unit.setWeapon2ID("WEAPON_DESTROYER_A_AIR_GUN");
+    unit.setWeapon2ID("");
 
     unit.setFuel(100);
     unit.setMaxFuel(100);
