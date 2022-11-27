@@ -348,6 +348,21 @@ void DamageCalculator::calculateDamage()
                                                     pAttacker.get(), 0.0f, atkPos, GameEnums::LuckDamageMode_Min,
                                                     pDefender.get(), 0.0f, defPos, GameEnums::LuckDamageMode_Max,
                                                     true, false);
+    if (minDamage.x() < 0)
+    {
+        if (pAttacker->hasDirectWeapon())
+        {
+            defPos = QPoint(1, 0);
+        }
+        pDefender->getTerrain()->setUnit(spUnit());
+        m_map.getTerrain(defPos.x(), defPos.y())->setUnit(pDefender);
+        spUnit pAttacker = m_map.getTerrain(atkPos.x(), atkPos.y())->getSpUnit();
+        spUnit pDefender = m_map.getTerrain(defPos.x(), defPos.y())->getSpUnit();
+        minDamage = CoreAI::calcVirtuelUnitDamage(&m_map,
+                                                  pAttacker.get(), 0.0f, atkPos, GameEnums::LuckDamageMode_Min,
+                                                  pDefender.get(), 0.0f, defPos, GameEnums::LuckDamageMode_Max,
+                                                  true, false);
+    }
     QRectF avgDamage = CoreAI::calcVirtuelUnitDamage(&m_map,
                                                     pAttacker.get(), 0.0f, atkPos, GameEnums::LuckDamageMode_Average,
                                                     pDefender.get(), 0.0f, defPos, GameEnums::LuckDamageMode_Average,
@@ -370,7 +385,7 @@ void DamageCalculator::calculateDamage()
                      maxPostDamage.width(), avgPostDamage.width(), minPostDamage.width());
 }
 
-void DamageCalculator::updateMapData(QPoint & defPos)
+void DamageCalculator::updateMapData(QPoint & defPos, bool forceDirect)
 {
     m_map.newMap(1, 1, 2);
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -421,6 +436,7 @@ void DamageCalculator::updateMapData(QPoint & defPos)
     qint32 minRange = pAttacker->getMinRange(QPoint(0, 0));
     m_map.changeMap(4 + minRange, 1 + maxBuildingCount, 2);
     defPos = QPoint(minRange, 0);
+
     if (buildingIds.contains(m_defUnit.m_Terrain->getCurrentItemText()))
     {
         m_map.replaceTerrain(GameMap::PLAINS, defPos.x(), defPos.y(), false, false, false);

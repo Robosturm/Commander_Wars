@@ -51,7 +51,7 @@ signals:
 private slots:
     void calculateDamage();
 private:
-    void updateMapData(QPoint & defPos);
+    void updateMapData(QPoint & defPos, bool forceDirect = false);
     void loadCoData(qint32 & x, qint32 & y, CosData & cosData, const QStringList & coIds);
     void loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
                       const QStringList & rankItems, const QStringList & unitIds,
