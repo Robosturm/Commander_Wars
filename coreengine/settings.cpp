@@ -363,7 +363,7 @@ Settings::Settings()
         new Value<GameEnums::AutoFocusing>{"Game", "AutoFocusing", &m_autoFocusing, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_Owned},
         new Value<qint32>{"Game", "PauseAfterAction", &m_pauseAfterAction, 0, 0, 100},
         new Value<QString>{"Game", "AiPipeUuid", &m_pipeUuid, "", "", ""},
-        new Value<bool>{"Game", "UseAiProcess", &m_spawnAiProcess, DEFAULTAIPIPE, false, true},
+        new Value<bool>{"Game", "UseAiProcess", &m_spawnAiProcess, false, false, true},
 
         // network
         new Value<quint16>{"Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()},

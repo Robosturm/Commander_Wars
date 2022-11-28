@@ -3457,362 +3457,372 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/options/optiongameplaymenu.xml" line="23"/>
-        <source>Overworld Animations:</source>
+        <source>Subprocess ai:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/options/optiongameplaymenu.xml" line="30"/>
-        <source>If active walk, capture, power animations, etc. will be shown.</source>
+        <source>If enabled the ai is calculated in a separate thread. This improves the game performance. If you encounter ai bugs disable this feature.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="39"/>
-        <source>Battle Animations:</source>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="40"/>
+        <source>Overworld Animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/options/optiongameplaymenu.xml" line="47"/>
+        <source>If active walk, capture, power animations, etc. will be shown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="56"/>
+        <source>Battle Animations:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="64"/>
         <source>Select which in-game animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="57"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="74"/>
         <source>Battle Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="75"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="92"/>
         <source>Dialogs:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="83"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="100"/>
         <source>Selects if dialogs are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="93"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="110"/>
         <source>Capture animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="101"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="118"/>
         <source>Selects if capture animations are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="111"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="128"/>
         <source>Day 2 Day animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="119"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="136"/>
         <source>Selects if the day to day screen gets skipped or not. Note: On fog of war maps the screen is still shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="129"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="146"/>
         <source>Movement animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="137"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="154"/>
         <source>Selects if movement animations get shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="147"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="164"/>
         <source>Animation speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="155"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="172"/>
         <source>Selects the speed at which basic animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="167"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="184"/>
         <source>Walk animation speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="175"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="192"/>
         <source>Selects the speed at which units walk across the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="187"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="204"/>
         <source>Battle animation speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="195"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="212"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="207"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="224"/>
         <source>Capture animation speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="215"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="232"/>
         <source>Selects the speed at which capture animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="227"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="244"/>
         <source>Dialog animation Speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="235"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="252"/>
         <source>Selects the speed at which dialog animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="247"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="264"/>
         <source>Multi Turn Plantime:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="255"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="272"/>
         <source>Selects the amount of turns you can preplan with a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="267"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="284"/>
         <source>Auto end turn:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="274"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="291"/>
         <source>If enabled the game will automatically end your turn if you can&apos;t give any orders anymore.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="283"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="300"/>
         <source>Detailed battle info:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="290"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="307"/>
         <source>If enabled the game will show a detailed battle forecast info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="300"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="317"/>
         <source>Auto saving time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="308"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="325"/>
         <source>Selects the time between auto saves in hours:minutes:seconds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="317"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="334"/>
         <source>Auto saving cycle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="325"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="342"/>
         <source>Selects the number of auto saves that are kept during games. A value of 0 disables this feature.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="337"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="354"/>
         <source>Record games:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="344"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="361"/>
         <source>If checked: games will be recorded and you can rewatch them in the replay section.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="353"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="370"/>
         <source>Menu heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="361"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="378"/>
         <source>Amount of items per row for in-game menus before a new row is added.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="373"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="390"/>
         <source>Menu width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="381"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="398"/>
         <source>Amount of columns for in-game menus before a scrollable menu is shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="393"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="410"/>
         <source>Shown players:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="401"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="418"/>
         <source>Selects the amount of players shown in-game on the sidebar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="413"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="430"/>
         <source>Supply warning:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="421"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="438"/>
         <source>Selects when the supply warnings for ammo and fuel appear.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="433"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="450"/>
         <source>Action delay:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="441"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="458"/>
         <source>The delay after an action before an ai or replay action gets triggered.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="453"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="470"/>
         <source>Show pc cursor:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="460"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="477"/>
         <source>If active the Computer&apos;s cursor is hidden during a game, giving you a more Gameboy like feeling.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="469"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="486"/>
         <source>Warp pc cursor:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="476"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="493"/>
         <source>If active the Computer&apos;s cursor is moved to the first entry when opening menus or similar actions. Only disable this feature if you intend to play using a mouse only.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="485"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="502"/>
         <source>Animated marked fields:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="492"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="509"/>
         <source>If active the currently selectable fields get animated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="501"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="518"/>
         <source>CO info position:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="509"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="526"/>
         <source>Flipping&apos; positions the info opposite the side of the screen where the cursor is located.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="519"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="536"/>
         <source>Auto scrolling:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="526"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="543"/>
         <source>If active: the map is scrolled automatically when the cursor is at the edge of the screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="536"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="553"/>
         <source>Show coordinates:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="543"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="560"/>
         <source>If active: map coordinates are shown during a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="552"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="569"/>
         <source>Auto camera:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="559"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="576"/>
         <source>If active: the screen will center on every unit performing an action, except when not visible within Fog of War.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="568"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="585"/>
         <source>Camera center mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="576"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="593"/>
         <source>Select where the screen starts during your player phase. This setting only applies while auto focusing is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="586"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="603"/>
         <source>Center camera on fields:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="593"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="610"/>
         <source>Selects if the camera centers on marked fields for an action or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="602"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="619"/>
         <source>Synchronize animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="609"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="626"/>
         <source>If checked: units and building animations on the map are synchronized. Note: changing this doesn&apos;t have an immediate effect in-game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="618"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="635"/>
         <source>Simple cancel:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="625"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="642"/>
         <source>If active units and actions can be canceled by a long-press. This is only recommended for devices without a keyboard.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="635"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="652"/>
         <source>Default rules:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="644"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="661"/>
         <source>The relative path from the exe to the default ruleset.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="652"/>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="677"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="669"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="694"/>
         <source>Select file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="660"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="677"/>
         <source>Default bannlist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="669"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="686"/>
         <source>The relative path from the exe to the default bannlist.</source>
         <translation type="unfinished"></translation>
     </message>

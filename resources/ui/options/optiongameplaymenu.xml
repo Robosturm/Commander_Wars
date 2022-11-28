@@ -20,6 +20,23 @@
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
                 <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Subprocess ai:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If enabled the ai is calculated in a separate thread. This improves the game performance. If you encounter ai bugs disable this feature.")</tooltip>
+                <enabled>!settings.getSmallScreenDevice()</enabled>
+                <startValue>settings.getSpawnAiProcess()</startValue>
+                <onEvent>settings.setSpawnAiProcess(input);currentMenu.markRestartNeeded();</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Overworld Animations:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

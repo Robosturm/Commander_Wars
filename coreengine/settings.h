@@ -258,7 +258,6 @@ public:
 
     static void setUpdateStep(const QString &newUpdateStep);
 
-    static void setSpawnAiProcess(bool newSpawnAiProcess);
 
     static void setAiSlave(bool newAiSlave);
 
@@ -267,9 +266,11 @@ public:
 public slots:
     static QString getLastSaveGame();
     static QString getUpdateStep();
-    static bool getSpawnAiProcess();
     static bool getAiSlave();
     static QString getPipeUuid();
+
+    static void setSpawnAiProcess(bool newSpawnAiProcess);
+    static bool getSpawnAiProcess();
 
     static bool getAutomaticUpdates();
     static void setAutomaticUpdates(bool newAutomaticUpdates);
