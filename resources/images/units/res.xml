@@ -72,15 +72,9 @@
         <!-- bomber -->
         <image file="bomber+mask.png" cols = "4"  />
         <image file="bomber+walk+mask.png" cols = "3" rows = "4"   />
-        <!-- cannonboat -->
-        <image file="cannonboat+mask.png" cols = "4"  />
-        <image file="cannonboat+walk+mask.png" cols = "2" rows = "4"   />
         <!-- cruiser -->
         <image file="cruiser+mask.png" cols = "4"  />
         <image file="cruiser+walk+mask.png" cols = "2"  rows = "4"  />
-        <!-- battlecruiser -->
-        <image file="battlecruiser+mask.png" cols = "4"  />
-        <image file="battlecruiser+walk+mask.png" cols = "2"  rows = "4"  />
         <!-- destroyer -->
         <image file="destroyer+mask.png" cols = "4"  />
         <image file="destroyer+walk+mask.png" cols = "2"  rows = "4"  />

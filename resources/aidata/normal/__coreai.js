@@ -41,7 +41,7 @@ var COREAI =
     minInfantryTransporterMapSize : 40 * 40,
     minApcResupplyDay : 15,
     minInfTransporterDay : 3,
-    minTankTransporterDay : 4,
+    minTankTransporterDay : 3,
     tankTransporterDayDifference : 3,
     transporterRatio : 0.04,
 
@@ -241,19 +241,23 @@ var COREAI =
                     var airportCount = buildings.getBuildingCount("AIRPORT") + enemyBuildings.getBuildingCount("AIRPORT");
                     if (harbourCount > 0)
                     {
-                        naval += 1;
+                        GameConsole.print("Detected naval map", 0);
+                        naval += 2;
                         if (airportCount === 0)
                         {
-                            naval += 2;
+                            GameConsole.print("Detected primary naval map", 0);
+                            naval += 3;
                         }
                         variableNavalBattle.writeDataInt32(naval);
                     }
                     if (airportCount > 0)
                     {
-                        air += 1;
+                        GameConsole.print("Detected air map", 0);
+                        air += 2;
                         if (harbourCount === 0)
                         {
-                            air += 2;
+                            GameConsole.print("Detected primary air map", 0);
+                            air += 3;
                         }
                         variableAirBattle.writeDataInt32(air);
                     }

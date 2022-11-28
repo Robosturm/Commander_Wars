@@ -198,12 +198,16 @@ void GameUpdater::launchApplication()
 
 void GameUpdater::continueBooting()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
-    pLoadingScreen->setProgress(tr("Loading Object Textures ..."), 8);
-    pApp->redrawUi();
-    QCoreApplication::processEvents();
-    emit pApp->sigNextStartUpStep(static_cast<Mainapp::StartupPhase>(static_cast<qint8>(pApp->getStartUpStep()) + 1));
+    if (!m_continued)
+    {
+        m_continued = true;
+        Mainapp* pApp = Mainapp::getInstance();
+        spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+        pLoadingScreen->setProgress(tr("Loading Object Textures ..."), 8);
+        pApp->redrawUi();
+        QCoreApplication::processEvents();
+        emit pApp->sigNextStartUpStep(static_cast<Mainapp::StartupPhase>(static_cast<qint8>(pApp->getStartUpStep()) + 1));
+    }
 }
 
 void GameUpdater::onNewProgress(qint64 bytesReceived, qint64 bytesTotal)

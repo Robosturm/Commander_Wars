@@ -1093,10 +1093,15 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
 qint32 CoreAI::getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList & unitIds, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings)
 {
     qint32 count = 0;
+    QStringList ids;
+    for (const auto & entry : unitIds)
+    {
+        ids.append(entry.split(","));
+    }
     for (auto & pUnit : pUnits->getVector())
     {
-        if (unitIds.size() == 0 ||
-            unitIds.contains(pUnit->getUnitID()))
+        if (ids.size() == 0 ||
+            ids.contains(pUnit->getUnitID()))
         {
             qint32 loadingIslandIdx = getIslandIndex(pUnit.get());
             qint32 loadingIsland = getIsland(pUnit.get());

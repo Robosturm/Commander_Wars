@@ -32,5 +32,6 @@ private:
     FileDownloader m_filedownloader;
     QFile m_downloadFile;
     QZipReader m_zipReader;
+    bool m_continued{false};
 };
 

@@ -1544,7 +1544,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         }
     }
     static QTextStream stream(&file);
-    QByteArray localMsg = msg.toLocal8Bit();
+    // QByteArray localMsg = msg.toLocal8Bit();
     switch (type)
     {
         case QtDebugMsg:
