@@ -62,7 +62,7 @@ var Constructor = function()
     this.createExplosionAnimation = function(x, y, unit, map)
     {
         var animation = GameAnimationFactory.createAnimation(map, x, y, 200);
-        animation.addSpriteAnimTable("hoellium_die+mask", 0, 0, unit.getOwner(), 0, 2, 2);
+        animation.addSpriteAnimTable("hoellium_die+mask", 0, 0, unit.getOwner(), 0, 2, 2, 0, 0, GameEnums.Recoloring_Matrix);
         animation.setSound("hoellium_explode.wav");
         return animation;
     };
