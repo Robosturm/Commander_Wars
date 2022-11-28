@@ -107,7 +107,8 @@ void ActionPerformer::performAction(spGameAction pGameAction)
             {
                 m_pMap->getGameRules()->getRoundTimer()->setInterval(pGameAction->getRoundTimerTime());
             }
-            if (!pGameAction->getIsLocal())
+            if (!pGameAction->getIsLocal() &&
+                Settings::getSpawnAiProcess())
             {
                 emit sigAiProcesseSendAction(pGameAction);
             }
@@ -156,7 +157,8 @@ bool ActionPerformer::requiresForwarding(const spGameAction & pGameAction) const
     return m_pMenu != nullptr &&
            m_pMenu->getIsMultiplayer(pGameAction) &&
            baseGameInput != nullptr &&
-           baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi;
+           baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi &&
+           !pGameAction->getIsLocal();
 }
 
 bool ActionPerformer::getExit() const
@@ -373,7 +375,8 @@ void ActionPerformer::actionPerformed()
                     {
                         m_pMap->getGameRules()->resumeRoundTime();
                     }
-                    if (m_noTimeOut)
+                    if (m_noTimeOut &&
+                        !Settings::getAiSlave())
                     {
                         spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
                         performAction(pAction);
@@ -424,7 +427,8 @@ void ActionPerformer::actionPerformed()
 void ActionPerformer::nextTurnPlayerTimeout()
 {
     auto* input = m_pMap->getCurrentPlayer()->getBaseGameInput();
-    if (input != nullptr)
+    if (input != nullptr &&
+        !Settings::getAiSlave())
     {
         if (input->getAiType() == GameEnums::AiTypes_Human)
         {
