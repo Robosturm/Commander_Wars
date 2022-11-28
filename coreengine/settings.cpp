@@ -180,7 +180,7 @@ QStringList Settings::m_activeMods;
 QStringList Settings::m_activeModVersions;
 // this Object
 spSettings Settings::m_pInstance;
-QTranslator Settings::m_Translator;
+QVector<std::shared_ptr<QTranslator>> Settings::m_translators;
 QString Settings::m_updateStep = "";
 bool Settings::m_spawnAiProcess = DEFAULTAIPIPE;
 bool Settings::m_aiSlave = false;
@@ -1378,43 +1378,6 @@ void Settings::setLogActions(bool LogActions)
     m_LogActions = LogActions;
 }
 
-QString Settings::getLanguage()
-{
-    return m_language;
-}
-
-void Settings::setLanguage(const QString &language)
-{
-    QCoreApplication::removeTranslator(&m_Translator);
-    m_language = language;
-    QString languageFile = "resources/translation/lang_" + m_language + ".qm";
-    if (!QFile::exists(languageFile))
-    {
-        languageFile = oxygine::Resource::RCC_PREFIX_PATH + languageFile;
-    }
-    // load language file and install it
-    if (m_Translator.load(QLocale(m_language), languageFile))
-    {
-         CONSOLE_PRINT("Loaded language " + language, Console::eDEBUG);
-    }
-    else if (m_language != "en")
-    {
-        QString error = "Error: Unknown Language " + m_language + " selected.";
-        CONSOLE_PRINT(error, Console::eERROR);
-        m_language = "en";
-        if (m_Translator.load(QLocale(m_language), QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/lang_" + m_language))
-        {
-            CONSOLE_PRINT("Loaded language " + language, Console::eDEBUG);
-        }
-    }
-    QCoreApplication::installTranslator(&m_Translator);
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    if (pInterpreter != nullptr)
-    {
-        pInterpreter->installExtensions(QJSEngine::Extension::AllExtensions);
-    }
-}
-
 QStringList Settings::getActiveModVersions()
 {
     return m_activeModVersions;
@@ -2169,11 +2132,64 @@ bool Settings::isGamepadSupported()
     return Gamepad::isSupported();
 }
 
+QString Settings::getLanguage()
+{
+    return m_language;
+}
+
+void Settings::setLanguage(const QString &language)
+{
+    for (auto & translator : m_translators)
+    {
+        QCoreApplication::removeTranslator(translator.get());
+    }
+    m_translators.clear();
+    m_language = language;
+
+    QStringList searchPaths;
+    const QString filename = "translation/lang_" + m_language + ".qm";
+    searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/" + filename);
+    searchPaths.append(Settings::getUserPath() + "resources/" + filename);
+    // make sure to overwrite existing js stuff
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
+    {
+        searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/" + filename);
+        searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/" + filename);
+    }
+    for (const auto & file : searchPaths)
+    {
+        if (QFile::exists(file))
+        {
+            std::shared_ptr<QTranslator> translator = std::make_shared<QTranslator>();
+            m_translators.append(translator);
+            if (translator->load(QLocale(m_language), file))
+            {
+                CONSOLE_PRINT("Loaded language file " + file + " for language " + m_language, Console::eDEBUG);
+                QCoreApplication::installTranslator(translator.get());
+            }
+            else
+            {
+                m_translators.removeLast();
+            }
+        }
+    }
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->installExtensions(QJSEngine::Extension::AllExtensions);
+    }
+}
+
 QStringList Settings::getLanguageNames()
 {
      QLocale english("en");
      QStringList items = {english.nativeLanguageName()};
      QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
+     for (qint32 i = 0; i < Settings::getMods().size(); i++)
+     {
+         paths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/translation");
+         paths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/translation");
+     }
      QStringList filter;
      filter << "*.qm";
      for (const QString & path : qAsConst(paths))

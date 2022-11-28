@@ -994,7 +994,7 @@ private:
     static QStringList m_activeMods;
     static QStringList m_activeModVersions;
     static QString m_userPath;
-    static QTranslator m_Translator;
+    static QVector<std::shared_ptr<QTranslator>> m_translators;
     static QString m_updateStep;
     static QString m_pipeUuid;
     static bool m_spawnAiProcess;
