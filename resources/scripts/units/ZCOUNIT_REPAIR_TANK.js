@@ -50,7 +50,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return "Unarmed unit that can repair units for 1Hp for free each turn.";
+        return qsTr("Unarmed unit that can repair units for 1Hp for free each turn.");
     };
     this.getUnitType = function()
     {

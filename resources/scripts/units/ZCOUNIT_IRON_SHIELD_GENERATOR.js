@@ -50,7 +50,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return "Unarmed unit that can give an allied unit a huge defense boost.";
+        return qsTr("Unarmed unit that can give an allied unit a huge defense boost.");
     };
     this.getUnitType = function()
     {

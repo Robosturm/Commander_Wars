@@ -37,15 +37,22 @@ var Constructor = function()
 
     this.getActionText = function(map)
     {
-        var unitID = "WATERPLANE";
-        var costs = Global[unitID].getBaseCost();
-        if (map !== null &&
-            map.getCurrentPlayer() !== null)
+        if (map &&
+            map !== null)
         {
-            costs = map.getCurrentPlayer().getCosts(unitID, Qt.point(-1, -1));
+            var unitID = "WATERPLANE";
+            var costs = Global[unitID].getBaseCost();
+            if (map.getCurrentPlayer() !== null)
+            {
+                costs = map.getCurrentPlayer().getCosts(unitID, Qt.point(-1, -1));
+            }
+            var name = Global[unitID].getName();
+            return name + " " + costs.toString();
         }
-        var name = Global[unitID].getName();
-        return name + " " + costs.toString();
+        else
+        {
+            return qsTr("Build waterplane")
+        }
     };
 
     this.getIcon = function(map)

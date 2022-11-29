@@ -374,7 +374,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
             y += GameMap::getImageSize() * 2 + 6;
         }
     }
-    y += 40;
+    y += 50;
 
     if (pUnit->getWeapon1ID() != "" && pWeaponManager->exists(pUnit->getWeapon1ID()))
     {
@@ -385,7 +385,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
         addChild(pLabel);
         y += 80;
         createWeaponTable(pUnit.get(), pUnit->getWeapon1ID(), y, width);
-        y += 40;
+        y += 50;
     }
     if (pUnit->getWeapon2ID() != "" && pWeaponManager->exists(pUnit->getWeapon2ID()))
     {

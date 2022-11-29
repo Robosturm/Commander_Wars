@@ -4,17 +4,17 @@
 <context>
     <name>ACTION_ACTIVATE_POWER_CO_0</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="22"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="23"/>
         <source>Power of %0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="26"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="27"/>
         <source>Power of CO 0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="54"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="55"/>
         <source>Activates the Power of your first CO. Read the CO&apos;s power for more information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22,17 +22,17 @@
 <context>
     <name>ACTION_ACTIVATE_POWER_CO_1</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="22"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="23"/>
         <source>Power of %0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="26"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="27"/>
         <source>Power of CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="54"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="55"/>
         <source>Activates the Power of your second CO. Read the CO&apos;s power for more information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -40,17 +40,17 @@
 <context>
     <name>ACTION_ACTIVATE_SUPERPOWER_CO_0</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="22"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="23"/>
         <source>Superpower of %0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="26"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="27"/>
         <source>Superpower of CO 0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="54"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="55"/>
         <source>Activates the superpower of your first CO. Read the CO&apos;s superpower for more information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -58,17 +58,17 @@
 <context>
     <name>ACTION_ACTIVATE_SUPERPOWER_CO_1</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="22"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="23"/>
         <source>Superpower of %0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="26"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="27"/>
         <source>Superpower of CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="53"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="54"/>
         <source>Activates the superpower of your second CO. Read the CO&apos;s superpower for more information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -182,7 +182,12 @@
 <context>
     <name>ACTION_BUILD_WATERPLANE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="83"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="54"/>
+        <source>Build waterplane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="90"/>
         <source>Orders an aircraft carrier to produce a waterplane which can be launched next turn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6016,12 +6021,7 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../coreengine/mainapp.cpp" line="695"/>
         <source>Please use the details or the crashlog to report a bug at 
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/mainapp.cpp" line="697"/>
-        <source>
+&lt;a href=&apos;https://github.com/Robosturm/Commander_Wars/issues&apos;&gt;https://github.com/Robosturm/Commander_Wars/issues&lt;/a&gt;
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10320,6 +10320,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <source>Iron Shield Gen.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_IRON_SHIELD_GENERATOR.js" line="53"/>
+        <source>Unarmed unit that can give an allied unit a huge defense boost.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ZCOUNIT_KIROV</name>
@@ -10352,6 +10357,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/ZCOUNIT_MISSILE_SUB.js" line="58"/>
         <source>Missile Submarine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_MISSILE_SUB.js" line="77"/>
+        <source>Submarine that can fire at range at enemy forces without taking a lot of risks.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10399,6 +10409,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/ZCOUNIT_REPAIR_TANK.js" line="41"/>
         <source>Repair Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_REPAIR_TANK.js" line="53"/>
+        <source>Unarmed unit that can repair units for 1Hp for free each turn.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

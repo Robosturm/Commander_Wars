@@ -108,7 +108,7 @@ CampaignEditor::CampaignEditor()
     m_Description->setCurrentText("");
     pSpriteBox->addChild(m_Description);
 
-    y += 40;
+    y += 50;
     QSize size(Settings::getWidth() - 80, Settings::getHeight() - 280);
     m_Panel = spPanel::create(true, size, size);
     m_Panel->setPosition(40, y);
@@ -116,7 +116,7 @@ CampaignEditor::CampaignEditor()
 
     // add campaign
     oxygine::spButton pAddCampaignButton = pObjectManager->createButton(tr("Add Map"), 200);
-    pAddCampaignButton->setPosition(30, Settings::getHeight() - 30 - pAddCampaignButton->getScaledHeight());
+    pAddCampaignButton->setPosition(30, Settings::getHeight() - 10 - pAddCampaignButton->getScaledHeight());
     pSpriteBox->addChild(pAddCampaignButton);
     pAddCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -126,7 +126,7 @@ CampaignEditor::CampaignEditor()
     // load campaign
     oxygine::spButton pLoadCampaignButton = pObjectManager->createButton(tr("Load"), 150);
     pLoadCampaignButton->setPosition(Settings::getWidth() / 2 - 10 - pLoadCampaignButton->getScaledWidth(),
-                                     Settings::getHeight() - 30 - pLoadCampaignButton->getScaledHeight());
+                                     Settings::getHeight() - 10 - pLoadCampaignButton->getScaledHeight());
     pSpriteBox->addChild(pLoadCampaignButton);
     pLoadCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {

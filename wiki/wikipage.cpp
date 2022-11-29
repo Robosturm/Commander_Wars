@@ -83,7 +83,7 @@ void Wikipage::loadText(QString text)
     pLabel->setWidth(m_pPanel->getContentWidth() - 80);
     pLabel->setPosition(10, m_y);
     m_pPanel->addItem(pLabel);
-    m_y += pLabel->getScaledHeight() + 10;
+    m_y += pLabel->getTextRect().getHeight() + 10;
 }
 
 void Wikipage::loadHeadline(QString text)
@@ -96,7 +96,7 @@ void Wikipage::loadHeadline(QString text)
     pLabel->setHtmlText(text);
     pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().getWidth() / 2, m_y);
     m_pPanel->addItem(pLabel);
-    m_y += pLabel->getScaledHeight() + 10;
+    m_y += pLabel->getTextRect().getHeight() + 10;
 }
 
 void Wikipage::showLink(QString pageID)

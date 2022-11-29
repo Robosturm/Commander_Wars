@@ -15,7 +15,8 @@ var Constructor = function()
     this.getActionText = function(map)
     {
         var text = "";
-        if (map !== null &&
+        if (map &&
+            map !== null &&
             map.getCurrentPlayer() !== null &&
             map.getCurrentPlayer().getCO(0) !== null)
         {
