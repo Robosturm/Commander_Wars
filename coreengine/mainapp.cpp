@@ -692,9 +692,7 @@ void Mainapp::showCrashReport(const QString & log)
         criticalBox.setIcon(QMessageBox::Critical);
         criticalBox.setWindowTitle(title);
         criticalBox.setTextFormat(Qt::RichText);
-        criticalBox.setText(tr("Please use the details or the crashlog to report a bug at \n") +
-                            "<a href='https://github.com/Robosturm/Commander_Wars/issues'>https://github.com/Robosturm/Commander_Wars/issues</a>" +
-                            tr("\n The game will be terminated sadly. :("));
+        criticalBox.setText(tr("Please use the details or the crashlog to report a bug at \n<a href='https://github.com/Robosturm/Commander_Wars/issues'>https://github.com/Robosturm/Commander_Wars/issues</a>\n The game will be terminated sadly. :("));
         criticalBox.setDetailedText(log);
         criticalBox.exec();
 

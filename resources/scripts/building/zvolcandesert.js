@@ -4,6 +4,10 @@ var Constructor = function()
     {
         building.loadSprite("volcan+desert", false);
     };
+    this.getName = function()
+    {
+        return qsTr("Desert volcan");
+    };
 };
 
 Constructor.prototype = __ZVOLCANBASE;

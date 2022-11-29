@@ -47,34 +47,34 @@ void WikiDatabase::load()
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
     {
-        m_Entries.append(PageData(pCOSpriteManager->getName(i), pCOSpriteManager->getID(i), {"CO"}));
+        m_Entries.append(PageData(pCOSpriteManager->getName(i), pCOSpriteManager->getID(i), {tr("CO")}));
     }
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
     for (const auto& terrainId : sortedTerrains)
     {
-        m_Entries.append(PageData(pTerrainManager->getName(terrainId), terrainId, {"Terrain"}));
+        m_Entries.append(PageData(pTerrainManager->getName(terrainId), terrainId, {tr("Terrain")}));
     }
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        m_Entries.append(PageData(pBuildingSpriteManager->getName(i), pBuildingSpriteManager->getID(i), {"Building"}));
+        m_Entries.append(PageData(pBuildingSpriteManager->getName(i), pBuildingSpriteManager->getID(i), {tr("Building")}));
     }
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     for (const auto& unitId : sortedUnits)
     {
-        m_Entries.append(PageData(pUnitSpriteManager->getName(unitId), unitId, {"Unit"}));
+        m_Entries.append(PageData(pUnitSpriteManager->getName(unitId), unitId, {tr("Unit")}));
     }
 
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
     QStringList perks = pCOPerkManager->getLoadedRessources();
     for (const auto& perk : perks)
     {
-        m_Entries.append(PageData(pCOPerkManager->getName(perk), perk, {"Perk"}));
+        m_Entries.append(PageData(pCOPerkManager->getName(perk), perk, {tr("Perk")}));
     }
 
-    m_Entries.append(PageData(DAMAGE_TABLE_NAME, DAMAGE_TABLE_NAME, {"Others"}));
+    m_Entries.append(PageData(tr("Damage Table"), DAMAGE_TABLE_NAME, {tr("Others")}));
 
     // load general wiki page
     QStringList searchPaths;

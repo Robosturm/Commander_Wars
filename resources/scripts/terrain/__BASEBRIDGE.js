@@ -25,10 +25,6 @@ var Constructor = function()
             return false;
         }
     };
-    this.getName = function()
-    {
-        return qsTr("Bridge");
-    };
     this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SEA")

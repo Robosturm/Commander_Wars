@@ -21,6 +21,10 @@ var Constructor = function()
     {
         return __BASEBRIDGE.canBePlacedBaseId(x, y, map, "BRIDGE");
     };
+    this.getName = function()
+    {
+        return qsTr("Ship bridge");
+    };
 };
 Constructor.prototype = __BASEBRIDGE;
 var BRIDGE = new Constructor();

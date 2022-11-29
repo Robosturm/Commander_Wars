@@ -32,10 +32,6 @@ var Constructor = function()
     {
         return GameEnums.BuildingTarget_All;
     };
-    this.getName = function()
-    {
-        return qsTr("Volcan");
-    };
     this.canBuildingBePlaced = function(terrain, building, map)
     {
         return BUILDING.canLargeBuildingPlaced(terrain, building, ZVOLCAN.getBuildingWidth(), ZVOLCAN.getBuildingHeigth(), map);

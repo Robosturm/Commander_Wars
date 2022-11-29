@@ -11,7 +11,7 @@ var Constructor = function()
 
     this.getTags = function()
     {
-        return ["Action"];
+        return [qsTr("Action")];
     };
 
     this.getName = function()

@@ -19,7 +19,7 @@ var Constructor = function()
             map.getCurrentPlayer() !== null &&
             map.getCurrentPlayer().getCO(1) !== null)
         {
-            text = replaceTextArgs("Power of %0", [map.getCurrentPlayer().getCO(1).getCOName()]);
+            text = replaceTextArgs(qsTr("Power of %0"), [map.getCurrentPlayer().getCO(1).getCOName()]);
         }
         else
         {

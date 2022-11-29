@@ -500,7 +500,7 @@ QString Unit::getUnitRangName(qint32 rang)
     {
         return ret.toString();
     }
-    return "Unknown";
+    return tr("Unknown");
 }
 
 void Unit::setUnitRank(const qint32 &UnitRank, bool force)

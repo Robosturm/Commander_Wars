@@ -6,7 +6,7 @@ var Constructor = function()
     };
     this.getActionText = function(map)
     {
-        return "unknown";
+        return qsTr("Unknown");
     };
     this.getIcon = function(map)
     {

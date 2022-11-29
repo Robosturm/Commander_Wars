@@ -4,6 +4,11 @@
 <context>
     <name>ACTION_ACTIVATE_POWER_CO_0</name>
     <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="22"/>
+        <source>Power of %0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="26"/>
         <source>Power of CO 0</source>
         <translation type="unfinished"></translation>
@@ -16,6 +21,11 @@
 </context>
 <context>
     <name>ACTION_ACTIVATE_POWER_CO_1</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="22"/>
+        <source>Power of %0</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="26"/>
         <source>Power of CO 1</source>
@@ -30,6 +40,11 @@
 <context>
     <name>ACTION_ACTIVATE_SUPERPOWER_CO_0</name>
     <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="22"/>
+        <source>Superpower of %0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="26"/>
         <source>Superpower of CO 0</source>
         <translation type="unfinished"></translation>
@@ -42,6 +57,11 @@
 </context>
 <context>
     <name>ACTION_ACTIVATE_SUPERPOWER_CO_1</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="22"/>
+        <source>Superpower of %0</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="26"/>
         <source>Superpower of CO 1</source>
@@ -543,6 +563,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_NICKNAME_UNIT_INTERNAL</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NICKNAME_UNIT_INTERNAL.js" line="10"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_OPTIONS</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="9"/>
@@ -749,6 +777,14 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_SURRENDER.js" line="9"/>
         <source>Surrender Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SURRENDER_INTERNAL</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SURRENDER_INTERNAL.js" line="9"/>
+        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -966,6 +1002,30 @@
     </message>
 </context>
 <context>
+    <name>BRIDGE</name>
+    <message>
+        <location filename="../resources/scripts/terrain/BRIDGE.js" line="26"/>
+        <source>Ship bridge</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BRIDGE1</name>
+    <message>
+        <location filename="../resources/scripts/terrain/BRIDGE1.js" line="25"/>
+        <source>Bridge</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BRIDGE2</name>
+    <message>
+        <location filename="../resources/scripts/terrain/BRIDGE2.js" line="25"/>
+        <source>Old bridge</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BuildListDialog</name>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="40"/>
@@ -1139,6 +1199,19 @@
     <message>
         <location filename="../objects/coinfoactor.cpp" line="172"/>
         <source>CO Zone Boosts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfoactor.cpp" line="197"/>
+        <location filename="../objects/coinfoactor.cpp" line="198"/>
+        <location filename="../objects/coinfoactor.cpp" line="199"/>
+        <location filename="../objects/coinfoactor.cpp" line="200"/>
+        <location filename="../objects/coinfoactor.cpp" line="201"/>
+        <location filename="../objects/coinfoactor.cpp" line="202"/>
+        <location filename="../objects/coinfoactor.cpp" line="203"/>
+        <location filename="../objects/coinfoactor.cpp" line="204"/>
+        <location filename="../objects/coinfoactor.cpp" line="205"/>
+        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2620,6 +2693,26 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="41"/>
         <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="58"/>
+        <source>HP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="65"/>
+        <source>Fuel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="71"/>
+        <source>Ammo 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="77"/>
+        <source>Ammo 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5584,6 +5677,13 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../game/ui/ingameinfobar.cpp" line="289"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="312"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="334"/>
+        <source>?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="302"/>
         <source>Units: </source>
         <translation type="unfinished"></translation>
@@ -7980,6 +8080,171 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="51"/>
+        <source>Start of turn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="52"/>
+        <source>Victory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="53"/>
+        <source>Each day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="54"/>
+        <source>Unit destroyed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="55"/>
+        <source>Building destroyed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="56"/>
+        <source>Terrain destroyed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="57"/>
+        <source>Building captured</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="58"/>
+        <source>Player defeated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="59"/>
+        <source>Units destroyed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="60"/>
+        <source>Buildings owned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="61"/>
+        <source>Player in area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="62"/>
+        <source>Unit in area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="63"/>
+        <source>Check variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="64"/>
+        <source>Is selected co</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="97"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="98"/>
+        <source>Spawn unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="99"/>
+        <source>Defeat player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="100"/>
+        <source>Change buildlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="101"/>
+        <source>Add funds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="102"/>
+        <source>Change weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="103"/>
+        <source>Change co bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="104"/>
+        <source>Modify terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="105"/>
+        <source>Modify unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="106"/>
+        <source>Animation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="107"/>
+        <source>Victory info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="108"/>
+        <source>Modify variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="109"/>
+        <source>Change unit ai</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="110"/>
+        <source>Change building owner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="111"/>
+        <source>Change unit owner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="112"/>
+        <source>Change player team</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="113"/>
+        <source>Spawn building</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="114"/>
+        <source>Center map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="115"/>
+        <source>Play sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="138"/>
         <source>If checked the game starts without being able to change rules, players or CO&apos;s.</source>
         <translation type="unfinished"></translation>
@@ -9535,6 +9800,22 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
+    <name>TerrainManager</name>
+    <message>
+        <location filename="../resource_management/terrainmanager.cpp" line="75"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Unit</name>
+    <message>
+        <location filename="../game/unit.cpp" line="503"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UnitInfo</name>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="50"/>
@@ -9778,6 +10059,44 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="95"/>
         <source>Dark Matter Walls can&apos;t be crossed by most units. The wall can be destroyed here to produce a path through the wall.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WikiDatabase</name>
+    <message>
+        <location filename="../wiki/wikidatabase.cpp" line="50"/>
+        <source>CO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/wikidatabase.cpp" line="56"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/wikidatabase.cpp" line="61"/>
+        <source>Building</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/wikidatabase.cpp" line="67"/>
+        <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/wikidatabase.cpp" line="74"/>
+        <source>Perk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/wikidatabase.cpp" line="77"/>
+        <source>Damage Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/wikidatabase.cpp" line="77"/>
+        <source>Others</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10143,12 +10462,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__BASEBRIDGE</name>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEBRIDGE.js" line="30"/>
-        <source>Bridge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/__BASEBRIDGE.js" line="116"/>
+        <location filename="../resources/scripts/terrain/__BASEBRIDGE.js" line="112"/>
         <source>Bridge over river and seas which allows ground units to cross. Bridges over sea also allows naval units to cross the field.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10230,16 +10544,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="195"/>
-        <source>In Fog of War conditions, the woods provide ground unit hiding places.</source>
+        <source>&lt;r&gt;In Fog of War conditions, the woods provide ground unit hiding places.&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; It reduces the firepower of units by 20%&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="196"/>
-        <source> It reduces the firepower of units by 20%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="200"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="199"/>
         <source>&lt;r&gt;In Fog of War conditions, the woods provide ground unit&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10495,12 +10804,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__zblackhole_factorybase</name>
     <message>
-        <location filename="../resources/scripts/building/__zblackhole_factorybase.js" line="23"/>
-        <source>Black Hole Factory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/__zblackhole_factorybase.js" line="77"/>
+        <location filename="../resources/scripts/building/__zblackhole_factorybase.js" line="73"/>
         <source>Black Hole Factory that can build 3 units each turn which can immediatly move.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10508,12 +10812,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__zvolcanbase</name>
     <message>
-        <location filename="../resources/scripts/building/__zvolcanbase.js" line="37"/>
-        <source>Volcan</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/__zvolcanbase.js" line="129"/>
+        <location filename="../resources/scripts/building/__zvolcanbase.js" line="125"/>
         <source>Volcan that fires fireballs each day dealing 5 HP of damage at all units they hit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11650,6 +11949,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_activate_power_co_0.js" line="13"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_activate_power_co_0.js" line="18"/>
         <source>Power of CO 1</source>
         <translation type="unfinished"></translation>
@@ -11660,6 +11964,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_activate_power_co_1.js" line="8"/>
         <source>Activates the Power of your second CO. Read the CO&apos;s power for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_power_co_1.js" line="13"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11676,6 +11985,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_activate_superpower_co_0.js" line="13"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_activate_superpower_co_0.js" line="18"/>
         <source>Superpower of CO 1</source>
         <translation type="unfinished"></translation>
@@ -11686,6 +12000,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_activate_superpower_co_1.js" line="8"/>
         <source>Activates the superpower of your second CO. Read the CO&apos;s superpower for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_superpower_co_1.js" line="13"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11707,6 +12026,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="14"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="19"/>
         <source>Tagpower</source>
         <translation type="unfinished"></translation>
@@ -11722,6 +12046,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="9"/>
         <source>The unit is able to move immediatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="14"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11743,6 +12072,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="14"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="19"/>
         <source>Black Hole Factory Door 2</source>
         <translation type="unfinished"></translation>
@@ -11761,6 +12095,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="14"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="19"/>
         <source>Black Hole Factory Door 3</source>
         <translation type="unfinished"></translation>
@@ -11771,6 +12110,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_build_temp_airport.js" line="8"/>
         <source>Orders an apc to build an airport on a plain which can be used to resupply air units. The airport will reduce the material of the apc by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_temp_airport.js" line="13"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11787,6 +12131,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_build_temp_harbour.js" line="13"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_build_temp_harbour.js" line="18"/>
         <source>Build Harbour</source>
         <translation type="unfinished"></translation>
@@ -11797,6 +12146,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_build_waterplane.js" line="8"/>
         <source>Orders an aircraft carrier to produce a waterplane which can be launched next turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_waterplane.js" line="13"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11813,6 +12167,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_cannon_fire.js" line="13"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_cannon_fire.js" line="18"/>
         <source>Fire with Cannon</source>
         <translation type="unfinished"></translation>
@@ -11823,6 +12182,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_capture.js" line="8"/>
         <source>Orders a unit to capture a building. Once the resistant is reduced to 0 the building  will generate effects for your army based on the captured building.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_capture.js" line="13"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11839,6 +12203,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_co_unit_0.js" line="13"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_co_unit_0.js" line="18"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
@@ -11849,6 +12218,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_co_unit_1.js" line="8"/>
         <source>Deploys your second co onto the given unit. All units inside the co range of this unit will get the buff of your second co.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_co_unit_1.js" line="13"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11865,6 +12239,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_crystall_heal.js" line="13"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_crystall_heal.js" line="18"/>
         <source>Heal with Crystall</source>
         <translation type="unfinished"></translation>
@@ -11875,6 +12254,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_deathray_fire.js" line="8"/>
         <source>Orders a death ray to attack all enemy units in front of it, dealing devastating damage to them. This order has a cooldown of 7 days.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_deathray_fire.js" line="13"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11891,6 +12275,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_explode.js" line="13"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_explode.js" line="18"/>
         <source>Explode</source>
         <translation type="unfinished"></translation>
@@ -11901,6 +12290,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_fire.js" line="8"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_fire.js" line="13"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11917,6 +12311,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_flare.js" line="13"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_flare.js" line="18"/>
         <source>Flare</source>
         <translation type="unfinished"></translation>
@@ -11927,6 +12326,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_hoellium_wait.js" line="8"/>
         <source>Orders a oozium to wait at the current position and end all actions for this turn. Ooziums can wait on enemy units in doing so the enemy unit gets destroyed by the oozium.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_hoellium_wait.js" line="13"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11948,6 +12352,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_join.js" line="14"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_join.js" line="19"/>
         <source>Join</source>
         <translation type="unfinished"></translation>
@@ -11958,6 +12367,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_laser_fire.js" line="8"/>
         <source>Commands the laser to shot four laser rays. The laser rays deal damage to all units that get hit by one of the rays.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_laser_fire.js" line="13"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11974,6 +12388,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_load.js" line="13"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_load.js" line="18"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
@@ -11984,6 +12403,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_missile.js" line="8"/>
         <source>Launches a missile from a silo at the target area. The missile deals massive damage to all units in the area of effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_missile.js" line="13"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12000,6 +12424,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_next_player.js" line="13"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_next_player.js" line="18"/>
         <source>Next Player</source>
         <translation type="unfinished"></translation>
@@ -12010,6 +12439,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_place_watermine.js" line="8"/>
         <source>Places a stealthed Watermine at a given Position. The Mine automatically explodes at the start of a turn if an enemy is in explosion range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_place_watermine.js" line="13"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12036,6 +12470,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_stealth.js" line="15"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_stealth.js" line="20"/>
         <source>Stealth</source>
         <translation type="unfinished"></translation>
@@ -12046,6 +12485,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_supportall_ration.js" line="8"/>
         <source>Refills fuel and ammo to all units surrounding this unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_supportall_ration.js" line="13"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12062,6 +12506,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_supportsingle_freerepair.js" line="13"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_supportsingle_freerepair.js" line="18"/>
         <source>Repair</source>
         <translation type="unfinished"></translation>
@@ -12072,6 +12521,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_supportsingle_iron_shield.js" line="7"/>
         <source>Shields an allied unit. This highly increases the defense of the unit until the start of the next turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_supportsingle_iron_shield.js" line="12"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12088,6 +12542,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_supportsingle_repair.js" line="12"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_supportsingle_repair.js" line="17"/>
         <source>Repair</source>
         <translation type="unfinished"></translation>
@@ -12098,6 +12557,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_talon_gun.js" line="7"/>
         <source>Commands the talon gun to attack all enemy units around the talon gun dealing 5 Hp of damage to them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_talon_gun.js" line="12"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12114,6 +12578,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_unload.js" line="12"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_unload.js" line="17"/>
         <source>Unload</source>
         <translation type="unfinished"></translation>
@@ -12127,6 +12596,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/action_unstealth.js" line="12"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/action_unstealth.js" line="17"/>
         <source>Unstealth</source>
         <translation type="unfinished"></translation>
@@ -12137,6 +12611,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_wait.js" line="7"/>
         <source>Orders a unit to wait at the current position and end all actions for this turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_wait.js" line="12"/>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12324,6 +12803,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/blackhole.js" line="12"/>
+        <source>Army</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/blackhole.js" line="17"/>
         <source>Black Hole</source>
         <translation type="unfinished"></translation>
@@ -12337,6 +12821,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/bluemoon.js" line="12"/>
+        <source>Army</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/bluemoon.js" line="17"/>
         <source>Blue Moon</source>
         <translation type="unfinished"></translation>
@@ -12346,16 +12835,16 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <name>boltguard</name>
     <message>
         <location filename="../resources/scripts/wiki/boltguard.js" line="7"/>
-        <source>Bolt Guard is a sub section of the Black Hole Army lead by Von Bolt. </source>
+        <source>Bolt Guard is a sub section of the Black Hole Army lead by Von Bolt. The CO&apos;s of Bolt Guard only wishes to destroy the land to achieve their own goals.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/wiki/boltguard.js" line="8"/>
-        <source>The CO&apos;s of Bolt Guard only wishes to destroy the land to achieve their own goals.</source>
+        <location filename="../resources/scripts/wiki/boltguard.js" line="12"/>
+        <source>Army</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/wiki/boltguard.js" line="18"/>
+        <location filename="../resources/scripts/wiki/boltguard.js" line="17"/>
         <source>Bolt Guard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23674,26 +24163,16 @@ Units have increased firepower during sandstorm.</source>
     <name>darkmatter</name>
     <message>
         <location filename="../resources/scripts/wiki/darkmatter.js" line="7"/>
-        <source>A military production company. Dark Matter originally supplied Black Hole with weapons in order to create a war to raise the income of the company. </source>
+        <source>A military production company. Dark Matter originally supplied Black Hole with weapons in order to create a war to raise the income of the company. After three wars against the allied nations. The allied nations got some intel about the original creators of the war. The Intelligent Defense System section (IDS) is the research section of Dark Matter lead by Dr. Caulder. Dark Matter is lead by Yukio who lives to make money.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/wiki/darkmatter.js" line="8"/>
-        <source>After three wars against the allied nations. The allied nations got some intel about the original creators of the war.</source>
+        <location filename="../resources/scripts/wiki/darkmatter.js" line="12"/>
+        <source>Army</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/wiki/darkmatter.js" line="9"/>
-        <source>The Intelligent Defense System section (IDS) is the research section of Dark Matter lead by Dr. Caulder. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/darkmatter.js" line="10"/>
-        <source>Dark Matter is lead by Yukio who lives to make money.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/darkmatter.js" line="20"/>
+        <location filename="../resources/scripts/wiki/darkmatter.js" line="17"/>
         <source>Dark Matter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23843,6 +24322,11 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/wiki/greenearth.js" line="7"/>
         <source>Green Earth&apos;s forces are extremely organized. Eagle, the leader of Green Earth, specializes in aerial combat, with Jess dominating the ground, and Drake the seas. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/greenearth.js" line="12"/>
+        <source>Army</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24138,26 +24622,16 @@ Units have increased firepower during sandstorm.</source>
     <name>metallarmy</name>
     <message>
         <location filename="../resources/scripts/wiki/metallarmy.js" line="7"/>
-        <source>The Metall Army is an army of robots. The robots were initially invented by Lash. </source>
+        <source>The Metall Army is an army of robots. The robots were initially invented by Lash. The Robots AI developped its own behaviour instead of following Lash&apos;s or Dark Matters orders. The Metall Army defends it&apos;s own territory at all costs when it loses it&apos;s territory. The Army tries to reconquer it. Besides this the Metall Army is very defensive orientated and doesn&apos;t attack anyone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/wiki/metallarmy.js" line="8"/>
-        <source>The Robots AI developped its own behaviour instead of following Lash&apos;s or Dark Matters orders. </source>
+        <location filename="../resources/scripts/wiki/metallarmy.js" line="12"/>
+        <source>Army</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/wiki/metallarmy.js" line="9"/>
-        <source>The Metall Army defends it&apos;s own territory at all costs when it loses it&apos;s territory. The Army tries to reconquer it.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/metallarmy.js" line="10"/>
-        <source>Besides this the Metall Army is very defensive orientated and doesn&apos;t attack anyone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/metallarmy.js" line="20"/>
+        <location filename="../resources/scripts/wiki/metallarmy.js" line="17"/>
         <source>Metall Army</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24643,16 +25117,16 @@ Fullscreen  - Animations are upscaled based on the resolution
     <name>orangestar</name>
     <message>
         <location filename="../resources/scripts/wiki/orangestar.js" line="7"/>
-        <source>The Orange Star army is lead by Nell and her Sister Rachel also  de-facto leads the Allied Nations. </source>
+        <source>The Orange Star army is lead by Nell and her Sister Rachel also  de-facto leads the Allied Nations. With the exception of Jake, the forces of Orange Star concentrates in direct warfare, excelling in frontal assaults. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/wiki/orangestar.js" line="8"/>
-        <source>With the exception of Jake, the forces of Orange Star concentrates in direct warfare, excelling in frontal assaults. </source>
+        <location filename="../resources/scripts/wiki/orangestar.js" line="12"/>
+        <source>Army</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/wiki/orangestar.js" line="18"/>
+        <location filename="../resources/scripts/wiki/orangestar.js" line="17"/>
         <source>Orange Star</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24662,6 +25136,11 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/wiki/pinkfrontier.js" line="7"/>
         <source>A matriarchal land, Pink Frontier is generally peaceful and focuses on cooperation rather than competition, with deeply spiritual roots. However, experience has taught them that they need to maintain a military to ensure that others respect their desire for peace.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/pinkfrontier.js" line="12"/>
+        <source>Army</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -26340,6 +26819,11 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/wiki/yellowcomet.js" line="12"/>
+        <source>Army</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/wiki/yellowcomet.js" line="17"/>
         <source>Yellow Comet</source>
         <translation type="unfinished"></translation>
@@ -26407,6 +26891,38 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="99"/>
         <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblackhole_factory</name>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_factory.js" line="19"/>
+        <source>Black Hole factory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblackhole_factorydesert</name>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_factorydesert.js" line="19"/>
+        <source>Black Hole desert factory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblackhole_factorysnow</name>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_factorysnow.js" line="19"/>
+        <source>Black Hole snowy factory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblackhole_factorywaste</name>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_factorywaste.js" line="19"/>
+        <source>Black Hole waste factory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -26836,6 +27352,38 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/building/ztalon_gun_destroyed.js" line="46"/>
         <source>Destroyed Talon Gun of Dark Matter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zvolcan</name>
+    <message>
+        <location filename="../resources/scripts/building/zvolcan.js" line="9"/>
+        <source>Volcan</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zvolcandesert</name>
+    <message>
+        <location filename="../resources/scripts/building/zvolcandesert.js" line="9"/>
+        <source>Desert volcan</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zvolcansnow</name>
+    <message>
+        <location filename="../resources/scripts/building/zvolcansnow.js" line="9"/>
+        <source>Snowy volcan</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zvolcanwaste</name>
+    <message>
+        <location filename="../resources/scripts/building/zvolcanwaste.js" line="9"/>
+        <source>Waste volcan</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

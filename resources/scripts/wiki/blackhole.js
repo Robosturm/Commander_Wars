@@ -9,7 +9,7 @@ var Constructor = function()
 
     this.getTags = function()
     {
-        return ["Army"];
+        return [qsTr("Army")];
     };
 
     this.getName = function()

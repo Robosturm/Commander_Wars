@@ -45,7 +45,7 @@ var Constructor = function()
             costs = map.getCurrentPlayer().getCosts(unitID, Qt.point(-1, -1));
         }
         var name = Global[unitID].getName();
-        return qsTr(name + " " + costs.toString());
+        return name + " " + costs.toString();
     };
 
     this.getIcon = function(map)

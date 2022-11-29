@@ -286,7 +286,7 @@ void IngameInfoBar::updatePlayerInfo()
                         m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
                         m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
                     {
-                        pTextfield->setHtmlText("?");
+                        pTextfield->setHtmlText(tr("?"));
                     }
                     else
                     {
@@ -309,7 +309,7 @@ void IngameInfoBar::updatePlayerInfo()
                         m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
                         m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
                     {
-                        pTextfield->setHtmlText("?");
+                        pTextfield->setHtmlText(tr("?"));
                     }
                     else
                     {
@@ -331,7 +331,7 @@ void IngameInfoBar::updatePlayerInfo()
                         m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
                         m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
                     {
-                        pTextfield->setHtmlText("?");
+                        pTextfield->setHtmlText(tr("?"));
                     }
                     else
                     {

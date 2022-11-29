@@ -194,15 +194,15 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_pCoPowermeter->setMap(m_pMap);
     m_pCurrentCO->setResAnim(pAnim);
 
-    QString coName = "Unknown";
-    QString coBio = "Unknown";
-    QString coHits = "Unknown";
-    QString coMiss = "Unknown";
-    QString coDesc = "Unknown";
-    QString coPower = "Unknown";
-    QString coPowerDesc = "Unknown";
-    QString coSuperpower = "Unknown";
-    QString coSuperpowerDesc = "Unknown";
+    QString coName = tr("Unknown");
+    QString coBio = tr("Unknown");
+    QString coHits = tr("Unknown");
+    QString coMiss = tr("Unknown");
+    QString coDesc = tr("Unknown");
+    QString coPower = tr("Unknown");
+    QString coPowerDesc = tr("Unknown");
+    QString coSuperpower = tr("Unknown");
+    QString coSuperpowerDesc = tr("Unknown");
     QString powerProgress = "-/-";
     qint32 corange = 0;
     if (pCO.get() != nullptr)

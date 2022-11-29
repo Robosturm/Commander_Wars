@@ -55,26 +55,26 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
 
     spLabel pText = spLabel::create(140);
     pText->setStyle(style);
-    pText->setHtmlText("HP");
+    pText->setHtmlText(tr("HP"));
     pText->setPosition(160 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
 
     pText = spLabel::create(140);
     pText->setStyle(style);
-    pText->setHtmlText("Fuel");
+    pText->setHtmlText(tr("Fuel"));
     pText->setPosition(310 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = spLabel::create(140);
     pText->setStyle(style);
-    pText->setHtmlText("Ammo 1");
+    pText->setHtmlText(tr("Ammo 1"));
     pText->setPosition(460 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = spLabel::create(140);
     pText->setStyle(style);
-    pText->setHtmlText("Ammo 2");
+    pText->setHtmlText(tr("Ammo 2"));
     pText->setPosition(610 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 

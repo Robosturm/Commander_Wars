@@ -4,13 +4,12 @@ var Constructor = function()
     {
         wikipage.loadHeadline(LOADEDWIKIPAGE.getName());
         wikipage.loadImage("icon_bg", 2);
-        wikipage.loadText(qsTr("Bolt Guard is a sub section of the Black Hole Army lead by Von Bolt. ") +
-		                  qsTr("The CO's of Bolt Guard only wishes to destroy the land to achieve their own goals."));
+        wikipage.loadText(qsTr("Bolt Guard is a sub section of the Black Hole Army lead by Von Bolt. The CO's of Bolt Guard only wishes to destroy the land to achieve their own goals."));
     };
 
     this.getTags = function()
     {
-        return ["Army"];
+        return [qsTr("Army")];
     };
 
     this.getName = function()

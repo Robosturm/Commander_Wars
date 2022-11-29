@@ -18,10 +18,6 @@ var Constructor = function()
     {
         return 0;
     };
-    this.getName = function()
-    {
-        return qsTr("Black Hole Factory");
-    };
 
     this.actionList = ["ACTION_BLACKHOLEFACTORY_DOOR1", "ACTION_BLACKHOLEFACTORY_DOOR2", "ACTION_BLACKHOLEFACTORY_DOOR3"];
     this.getConstructionList = function(building)
