@@ -843,6 +843,11 @@ void MainServer::handleCryptedMessage(qint64 socketId, const QJsonDocument & doc
             changeAccountPassword(socketId, decryptedDoc, action);
             break;
         }
+        case NetworkCommands::PublicKeyActions::DeleteAccount:
+        {
+            deleteAccount(socketId, decryptedDoc, action);
+            break;
+        }
         default:
         {
             CONSOLE_PRINT("Unknown crypted message action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
@@ -892,6 +897,47 @@ void MainServer::createAccount(qint64 socketId, const QJsonDocument & doc, Netwo
         CONSOLE_PRINT("Username is already existing." , Console::eDEBUG);
         result = GameEnums::LoginError_AccountExists;
     }
+    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+    CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
+    QJsonObject outData;
+    outData.insert(JsonKeys::JSONKEY_COMMAND, command);
+    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
+    QJsonDocument outDoc(outData);
+    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void MainServer::deleteAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject data = doc.object();
+    QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
+    QString mailAdress = data.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
+    QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
+    CONSOLE_PRINT("Deleting account with username " + username + " and email adress " + mailAdress, Console::eDEBUG);
+    bool success = false;
+    QSqlQuery query = getAccountInfo(m_serverData, username, success);
+    GameEnums::LoginError result = GameEnums::LoginError_None;
+    auto dbMailAdress = query.value(SQL_MAILADRESS);
+    if (dbMailAdress.toString() == mailAdress)
+    {
+        result = checkPassword(m_serverData, username, password);
+        if (result == GameEnums::LoginError_None)
+        {
+            QString command = QString("DELETE FROM ") + SQL_TABLE_PLAYERS + " WHERE " +
+                              SQL_USERNAME + " = '" + username + "';";
+            query = m_serverData.exec(command);
+            if (sqlQueryFailed(query))
+            {
+                result = GameEnums::LoginError_AccountDoesntExist;
+            }
+        }
+    }
+    else
+    {
+        result = GameEnums::LoginError_WrongEmailAdress;
+    }
+
     QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
     CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), Console::eDEBUG);
     QJsonObject outData;

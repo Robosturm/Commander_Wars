@@ -239,6 +239,13 @@ private:
      */
     void createAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
     /**
+     * @brief deleteAccount
+     * @param socketId
+     * @param doc
+     * @param action
+     */
+    void deleteAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
+    /**
      * @brief loginToAccount
      * @param socketId
      * @param doc

@@ -49,7 +49,14 @@ var UserLoginDialog =
     {
         return qsTr("Allows you to change your password.");
     },
-
+    deleteText : function()
+    {
+        return qsTr("Delete");
+    },
+    deleteTooltip : function()
+    {
+        return qsTr("Let's you delete your account on the servers.");
+    },
     primaryPassword : function(input)
     {
         var variables = userLogin.getVariables();
@@ -65,7 +72,7 @@ var UserLoginDialog =
         UserLoginDialog.changeEnableForItems(false);
         menu.loginToServerAccount(password);
         settings.setServerPassword(password);
-    },
+    },    
     onAccountMessage : function(errorCode)
     {
         var menu = userLogin.getBaseMenu();

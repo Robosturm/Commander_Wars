@@ -340,6 +340,7 @@ public:
         LoginError_PasswordOutdated,
         LoginError_DatabaseNotAccesible,
         LoginError_SendingMailFailed,
+        LoginError_WrongEmailAdress,
     };
     Q_ENUM(LoginError)
 

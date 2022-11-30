@@ -105,6 +105,15 @@
                 <tooltip>UserLoginDialog.changePasswordTooltip()</tooltip>
                 <onEvent>userLogin.createDialog("changePassword", "ui/serverLogin/changePasswordDialog.xml", userLogin.getBaseMenu())</onEvent>
             </Button>
+            <Button>
+                <Id>DeleteButton</Id>
+                <x>settings.getWidth() / 2 - 75</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>150</width>
+                <text>UserLoginDialog.deleteText()</text>
+                <tooltip>UserLoginDialog.deleteTooltip()</tooltip>
+                <onEvent>userLogin.createDialog("deleteAccount", "ui/serverLogin/deleteAccountDialog.xml", userLogin.getBaseMenu())</onEvent>
+            </Button>
         </childs>
     </Panel>
 </ui>

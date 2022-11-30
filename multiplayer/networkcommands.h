@@ -10,6 +10,7 @@ namespace NetworkCommands
         ResetPassword,
         ChangePassword,
         RequestLoginData,
+        DeleteAccount,
     };
 
     enum DisconnectReason

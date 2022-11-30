@@ -26081,22 +26081,32 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="74"/>
-        <source>Logged onto the server.</source>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="54"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="58"/>
+        <source>Let&apos;s you delete your account on the servers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="81"/>
+        <source>Logged onto the server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="88"/>
         <source>Your password isn&apos;t correct.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="87"/>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="94"/>
         <source>No account with your username was found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="100"/>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="107"/>
         <source>Unknown error happened.</source>
         <translation type="unfinished"></translation>
     </message>

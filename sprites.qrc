@@ -4875,5 +4875,7 @@
         <file>resources/images/terrain/beach+W+land+NW.png</file>
         <file>resources/images/terrain/beach+W+land+SW.png</file>
         <file>resources/objects/label.png</file>
+        <file>resources/ui/serverLogin/deleteAccountDialog.js</file>
+        <file>resources/ui/serverLogin/deleteAccountDialog.xml</file>
     </qresource>
 </RCC>

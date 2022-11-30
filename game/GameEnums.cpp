@@ -188,6 +188,7 @@ void GameEnums::registerEnums()
     value.setProperty("LoginError_PasswordOutdated", LoginError_PasswordOutdated);
     value.setProperty("LoginError_DatabaseNotAccesible", LoginError_DatabaseNotAccesible);
     value.setProperty("LoginError_SendingMailFailed", LoginError_SendingMailFailed);
+    value.setProperty("LoginError_WrongEmailAdress", LoginError_WrongEmailAdress);
 
     value.setProperty("QEasingCurve_Linear", QEasingCurve::Linear);
     value.setProperty("QEasingCurve_InQuad", QEasingCurve::InQuad);

@@ -64,6 +64,7 @@ public slots:
     bool isValidPassword(const QString & password);
     void leaveServer();
     void createServerAccount(const QString & password, const QString & emailAdress);
+    void deleteServerAccount(const QString & password, const QString & emailAdress);
     void loginToServerAccount(const QString & password);
     void resetPasswordOnServerAccount(const QString & emailAdress);
     void changePasswordOnServerAccount(const QString & oldEmailAdress, const QString & newEmailAdress);

@@ -588,17 +588,23 @@ void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject & objDa
     {
         const char * const jsScripts[] =
         {
+            "",
             "CreateAccountDialog",
             "UserLoginDialog",
             "ForgotPasswordDialog",
             "ChangePasswordDialog",
+            "",
+            "DeleteAccountDialog",
         };
-        QString object = jsScripts[action - static_cast<qint32>(NetworkCommands::PublicKeyActions::CreateAccount)];
-        CONSOLE_PRINT("Calling function " + object + ".onAccountMessage(" + QString::number(accountError) + ")", Console::eDEBUG);
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValueList args;
-        args.append(accountError);
-        pInterpreter->doFunction(object, "onAccountMessage", args);
+        QString object = jsScripts[action];
+        if (!object.isEmpty())
+        {
+            CONSOLE_PRINT("Calling function " + object + ".onAccountMessage(" + QString::number(accountError) + ")", Console::eDEBUG);
+            Interpreter* pInterpreter = Interpreter::getInstance();
+            QJSValueList args;
+            args.append(accountError);
+            pInterpreter->doFunction(object, "onAccountMessage", args);
+        }
     }
     else
     {
@@ -644,6 +650,15 @@ void LobbyMenu::createServerAccount(const QString & password, const QString & em
     Mainapp* pApp = Mainapp::getInstance();
     auto & cypher = pApp->getCypher();
     emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::CreateAccount), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::deleteServerAccount(const QString & password, const QString & emailAdress)
+{
+    m_serverPassword.setPassword(password);
+    m_serverEmailAdress = emailAdress;
+    Mainapp* pApp = Mainapp::getInstance();
+    auto & cypher = pApp->getCypher();
+    emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::DeleteAccount), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void LobbyMenu::onPublicKeyCreateAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
