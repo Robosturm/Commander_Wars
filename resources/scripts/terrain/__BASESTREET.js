@@ -3,7 +3,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
-        terrain.setTerrainName(__BASESTREET.getName(terrain));
+        terrain.setTerrainName(Global[terrain.getTerrainID()].getName(terrain));
     };
     this.baseTerrainId = "PLAINS";
     this.getName = function(terrain = null)

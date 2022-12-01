@@ -50,6 +50,12 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     addChild(pLabel);
     y += 60;
 
+    spTerrain pIconTerrain = Terrain::createTerrain(pTerrain->getTerrainID(), -1, -1, "", pTerrain->getMap());
+    pIconTerrain->loadSprites();
+    pIconTerrain->setPosition(width / 2 - pIconTerrain->getScaledWidth() / 2, y + 20);
+    addChild(pIconTerrain);
+    y += pIconTerrain->getScaledHeight() + 30;
+
     pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);

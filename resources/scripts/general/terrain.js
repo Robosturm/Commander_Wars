@@ -70,7 +70,7 @@ var TERRAIN =
 
     getName : function()
     {
-        return "";
+        return qsTr("Unknown");
     },
 
     // vision created by this field

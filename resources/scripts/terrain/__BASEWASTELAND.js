@@ -4,7 +4,7 @@ var Constructor = function()
     this.init = function (terrain)
     {
         terrain.setVisionHigh(1);
-        terrain.setTerrainName(__BASEWASTELAND.getName(terrain));
+        terrain.setTerrainName(Global[terrain.getTerrainID()].getName(terrain));
     };
     this.baseTerrainId = "PLAINS";
     this.getName = function(terrain = null)

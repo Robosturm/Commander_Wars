@@ -3,7 +3,7 @@ var Constructor = function()
     this.init = function (terrain)
     {
         terrain.setVisionHigh(2);
-        terrain.setTerrainName(__BASEWELD.getName(terrain));
+        terrain.setTerrainName(Global[terrain.getTerrainID()].getName(terrain));
         terrain.setHp(100);
     };
     this.baseTerrainId = "PLAINS";

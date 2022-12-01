@@ -35,16 +35,17 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     pLabel->setHtmlText(tr("CO Information"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     addChild(pLabel);
+
+    m_pCurrentCoFaction = oxygine::spSprite::create();
+    m_pCurrentCoFaction->setPosition(width * 0.5f - 36 * 0.5f, pLabel->getY() + pLabel->getTextRect().getHeight() + 5);
+    m_pCurrentCoFaction->setScale(2.0f);
+    addChild(m_pCurrentCoFaction);
+
     m_pCurrentCO = oxygine::spSprite::create();
     m_pCurrentCO->setScale((Settings::getHeight() - 200) / 352.0f);
     m_pCurrentCO->setSize(208, 352);
     m_pCurrentCO->setPosition(Settings::getWidth() - 120 - m_pCurrentCO->getScaledWidth(), 90);
     addChild(m_pCurrentCO);
-
-    m_pCurrentCoFaction = oxygine::spSprite::create();
-    m_pCurrentCoFaction->setPosition(Settings::getWidth() * 0.25f, 100);
-    m_pCurrentCoFaction->setScale(2.0f);
-    addChild(m_pCurrentCoFaction);
 
     m_COName = oxygine::spTextField::create();
     m_COName->setStyle(headerStyle);
@@ -221,6 +222,10 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         }
         auto* pResAnim = pGameManager->getResAnim("icon_" + pCO->getCOArmy().toLower(), oxygine::ep_ignore_error);
         m_pCurrentCoFaction->setResAnim(pResAnim);
+        if (pResAnim != nullptr)
+        {
+            m_pCurrentCoFaction->setScale(36 / pResAnim->getWidth());
+        }
     }
     m_COName->setHtmlText(coName);
     m_COName->setX((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_COName->getTextRect().getWidth());

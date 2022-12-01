@@ -1013,6 +1013,11 @@
         <source>Ship bridge</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/BRIDGE.js" line="30"/>
+        <source>Bridge over river and seas which allows ground units to cross. Bridges over sea also allows naval units to cross the field.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BRIDGE1</name>
@@ -1021,12 +1026,22 @@
         <source>Bridge</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/BRIDGE1.js" line="29"/>
+        <source>Bridge over river and seas which allows ground units to cross.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BRIDGE2</name>
     <message>
         <location filename="../resources/scripts/terrain/BRIDGE2.js" line="25"/>
         <source>Old bridge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/BRIDGE2.js" line="29"/>
+        <source>Bridge over river and seas which allows ground units to cross.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1177,37 +1192,36 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="70"/>
+        <location filename="../objects/coinfoactor.cpp" line="71"/>
         <source>Hit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="89"/>
+        <location filename="../objects/coinfoactor.cpp" line="90"/>
         <source>Miss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="150"/>
+        <location filename="../objects/coinfoactor.cpp" line="151"/>
         <source>Synergy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="155"/>
+        <location filename="../objects/coinfoactor.cpp" line="156"/>
         <source>Active Perks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="166"/>
+        <location filename="../objects/coinfoactor.cpp" line="167"/>
         <source>Global Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="172"/>
+        <location filename="../objects/coinfoactor.cpp" line="173"/>
         <source>CO Zone Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="197"/>
         <location filename="../objects/coinfoactor.cpp" line="198"/>
         <location filename="../objects/coinfoactor.cpp" line="199"/>
         <location filename="../objects/coinfoactor.cpp" line="200"/>
@@ -1216,16 +1230,17 @@
         <location filename="../objects/coinfoactor.cpp" line="203"/>
         <location filename="../objects/coinfoactor.cpp" line="204"/>
         <location filename="../objects/coinfoactor.cpp" line="205"/>
+        <location filename="../objects/coinfoactor.cpp" line="206"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="249"/>
+        <location filename="../objects/coinfoactor.cpp" line="254"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="274"/>
+        <location filename="../objects/coinfoactor.cpp" line="279"/>
         <source>Progress: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -9779,27 +9794,27 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="66"/>
+        <location filename="../wiki/terraininfo.cpp" line="72"/>
         <source>Defense:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="83"/>
+        <location filename="../wiki/terraininfo.cpp" line="89"/>
         <source>Income:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="101"/>
+        <location filename="../wiki/terraininfo.cpp" line="107"/>
         <source>Builds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="114"/>
+        <location filename="../wiki/terraininfo.cpp" line="120"/>
         <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="134"/>
+        <location filename="../wiki/terraininfo.cpp" line="140"/>
         <source>Movement Costs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10476,14 +10491,6 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/ZCOUNIT_TANK_HUNTER.js" line="57"/>
         <source>Reinforced Tank his armor piercing cannon destroys fuel in addition to dealing damage.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>__BASEBRIDGE</name>
-    <message>
-        <location filename="../resources/scripts/terrain/__BASEBRIDGE.js" line="112"/>
-        <source>Bridge over river and seas which allows ground units to cross. Bridges over sea also allows naval units to cross the field.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -25906,6 +25913,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="34"/>
+        <location filename="../resources/scripts/general/terrain.js" line="73"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
