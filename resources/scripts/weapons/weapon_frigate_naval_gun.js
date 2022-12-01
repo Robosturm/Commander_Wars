@@ -17,7 +17,11 @@ var Constructor = function()
                         ["BATTLECRUISER", 20],
                         ["BATTLESHIP", 20],
                         ["AIRCRAFTCARRIER", 20],
-
+                        // infantry
+                        ["INFANTRY", 65],
+                        ["MECH", 55],
+                        ["MOTORBIKE", 55],
+                        ["SNIPER", 55],
                         // supporter
                         ["APC", 45],
                         ["FLARE", 45],
