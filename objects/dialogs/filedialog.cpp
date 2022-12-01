@@ -6,15 +6,15 @@
 #include "coreengine/globalutils.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
 const char* const ROOT = "::::";
 
-FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, QString startFile, bool preview, QString acceptButtonName)
+FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile, bool preview, QString acceptButtonName)
     : m_preview(preview),
-      m_pathPrefix(Settings::getUserPath())
+      m_pathPrefix(Settings::getUserPath()),
+      m_isSaveDialog(isSaveDialog)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("FileDialog");
@@ -80,7 +80,7 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, QStri
         QString fileStart = m_pathPrefix + pCurrentFolder->getCurrentText();
         if (!fileStart.isEmpty())
         {
-             fileStart += "/";
+            fileStart += "/";
         }
         QString file = fileStart + pPtrCurrentFile->getCurrentText();
         QStringList items = pPtrDropDownmenu->getCurrentItemText().split((";"));
@@ -185,7 +185,7 @@ void FileDialog::showFolder(QString folder)
         else if (infoList[i].canonicalFilePath() != QCoreApplication::applicationDirPath() &&
                  infoList[i].canonicalFilePath() != QCoreApplication::applicationDirPath() + "/")
         {
-           myPath = GlobalUtils::makePathRelative(infoList[i].canonicalFilePath());
+            myPath = GlobalUtils::makePathRelative(infoList[i].canonicalFilePath());
         }
         else
         {
@@ -337,7 +337,7 @@ void FileDialog::KeyInput(oxygine::KeyEvent event)
                 {
                     m_focused = false;
                     spDialogMessageBox pDialogRemove = spDialogMessageBox::create(tr("Do you want to delete the item ") + m_CurrentFolder->getCurrentText() + "/" +
-                                                                               m_CurrentFile->getCurrentText() + "?", true);
+                                                                                  m_CurrentFile->getCurrentText() + "?", true);
                     connect(pDialogRemove.get(), &DialogMessageBox::sigOk, this, &FileDialog::deleteItem, Qt::QueuedConnection);
                     connect(pDialogRemove.get(), &DialogMessageBox::sigCancel, this, [this]()
                     {

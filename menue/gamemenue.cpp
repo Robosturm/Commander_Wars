@@ -1697,7 +1697,7 @@ void GameMenue::saveGame()
     QStringList wildcards;
     wildcards.append("*" + getSaveFileEnding());
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName(), false, tr("Save"));
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, [this](QString filename)
     {
@@ -1734,7 +1734,7 @@ void GameMenue::showSaveAndExitGame()
         wildcards.append("*.sav");
     }
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName(), false, tr("Save"));
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMapAndExit, Qt::QueuedConnection);
     setFocused(false);
@@ -2289,7 +2289,7 @@ void GameMenue::showLoadSaveGame()
     QStringList wildcards;
     wildcards.append("*.sav");
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::loadSaveGame, Qt::QueuedConnection);
     connect(saveDialog.get(), &FileDialog::sigCancel, this, [this]()

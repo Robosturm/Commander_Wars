@@ -2109,5 +2109,6 @@
         <file>maps/commander_wars.camp/takeAndHold.js</file>
         <file>maps/commander_wars.camp/takeAndHold.map</file>
         <file>resources/aidata/normal/__coreai.js</file>
+        <file>mods/map_creator/scripts/movementtables/move_small_boat.js</file>
     </qresource>
 </RCC>

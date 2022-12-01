@@ -447,7 +447,7 @@ void EditorMenue::showSaveMap()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName(), false, tr("Save"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -459,7 +459,7 @@ void EditorMenue::showLoadMap()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -566,7 +566,7 @@ void EditorMenue::showImportCoWTxTMap()
     QStringList wildcards;
     wildcards.append("*.txt");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Import"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importCoWTxTMap, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -578,7 +578,7 @@ void EditorMenue::showImportAwdsAws()
     QStringList wildcards;
     wildcards.append("*.aws");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Import"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDSAwsMap, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -590,7 +590,7 @@ void EditorMenue::showExportAwdsAws()
     QStringList wildcards;
     wildcards.append("*.aws");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Export"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Export"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::exportAWDSAwsMap, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -602,7 +602,7 @@ void EditorMenue::showImportAwdsAw4()
     QStringList wildcards;
     wildcards.append("*.aw4");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Import"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDCAw4Map, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -614,7 +614,7 @@ void EditorMenue::showImportAwByWeb()
     QStringList wildcards;
     wildcards.append("*.txt");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Import"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWByWeb, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);

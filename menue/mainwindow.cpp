@@ -249,7 +249,7 @@ void Mainwindow::enterLoadGame()
     QStringList wildcards;
     wildcards.append("*.sav");
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
 }
@@ -259,7 +259,7 @@ void Mainwindow::enterLoadCampaign()
     QStringList wildcards;
     wildcards.append("*.camp");
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadCampaign, Qt::QueuedConnection);
 }
@@ -296,7 +296,7 @@ void Mainwindow::enterReplayGame()
     QStringList wildcards;
     wildcards.append("*.rec");
     QString path = Settings::getUserPath() + "data/records";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::replayGame, Qt::QueuedConnection);
     Mainapp::getInstance()->continueRendering();
