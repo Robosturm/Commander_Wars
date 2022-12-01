@@ -37,7 +37,18 @@ var COREAI =
     heavyNavalGroup : ["HEAVY_NAVAL_GROUP", ["BATTLECRUISER", "BATTLESHIP", "AIRCRAFTCARRIER"],
         [40,              40,           5],
         50, 3, "", 1.0],
-
+    infantryTransporter : ["T_HELI", "BLACK_BOAT"],
+    infantrySameIslandTransporter : ["APC"],
+    infantrySearchTransporter : ["T_HELI", "BLACK_BOAT", "APC"],
+    tankTransporter : ["LANDER", "TRANSPORTPLANE"],
+    tankNavalTransporter : ["LANDER"],
+    tankAirTransporter : ["TRANSPORTPLANE"],
+    antiAirUnits : ["FLAK", "FIGHTER", "MISSILE"],
+    antiAirSeaUnits : ["CRUISER"],
+    airUnits : ["K_HELI", "DUSTER", "BOMBER", "ZCOUNIT_KIROV", "FIGHTER", "WATERPLANE"],
+    stealthAirUnits : ["STEALTHBOMBER"],
+    antiAirAirUnits : ["FIGHTER", "STEALTHBOMBER", "DUSTER"],
+    supplyUnits : ["APC"],
     minInfantryTransporterMapSize : 40 * 40,
     minApcResupplyDay : 15,
     minInfTransporterDay : 3,
@@ -203,10 +214,8 @@ var COREAI =
             if (turn >= COREAI.minInfTransporterDay)
             {
                 var transporterBuildings = ai.getBuildingCountsOnEnemyIslands(units, enemyBuildings);
-                var infantryTransporter = ["T_HELI", "BLACK_BOAT"];
-                var infantrySearchTransporter = ["T_HELI", "BLACK_BOAT", "APC"];
-                var infantryTransporterCount = ai.getUnitCount(units, infantrySearchTransporter);
-                var infantryTransporterCount2 = ai.getUnitCount(units, infantryTransporter);
+                var infantryTransporterCount = ai.getUnitCount(units, COREAI.infantrySearchTransporter);
+                var infantryTransporterCount2 = ai.getUnitCount(units, COREAI.infantryTransporter);
                 if ((infantryTransporterCount === 0 ||
                     (infantryTransporterCount2 === 0 && transporterBuildings > 0)) &&
                     (COREAI.minInfantryTransporterMapSize <= map.getMapWidth() * map.getMapHeight() ||
@@ -214,21 +223,19 @@ var COREAI =
                 {
                     if (transporterBuildings > 0)
                     {
-                        system.addForcedProduction(infantryTransporter);
+                        system.addForcedProduction(COREAI.infantryTransporter);
                     }
                     else
                     {
-                        infantryTransporter.push("APC");
-                        system.addForcedProduction(infantryTransporter);
+                        system.addForcedProduction(COREAI.infantryTransporter.concat(COREAI.infantrySameIslandTransporter));
                     }
                     variableLastTransporterDay.writeDataInt32(turn);
                 }
             }
             if (turn >= COREAI.minTankTransporterDay)
-            {
-                var tankTransporter = ["LANDER", "TRANSPORTPLANE"];
-                var tankTransporterCount = ai.getUnitCount(units, tankTransporter);
-                var tanks = COREAI.lightTankGroup[1] + COREAI.mediumTankGroup[1] + COREAI.heavyTankGroup[1];
+            {                
+                var tankTransporterCount = ai.getUnitCount(units, COREAI.tankTransporter);
+                var tanks = COREAI.lightTankGroup[1].concat(COREAI.mediumTankGroup[1], COREAI.heavyTankGroup[1]);
                 var idleUnitCount = ai.getIdleUnitCount(units, tanks, enemyUnits, enemyBuildings);
                 var unitCount = units.size();
                 var variableNavalBattle = variables.createVariable("NAVALBATTLE");
@@ -264,20 +271,20 @@ var COREAI =
                     system.resetBuildDistribution();
                     COREAI.initializeSimpleProductionSystem(system, ai, map, groupDistribution, false);
                 }
-                tankTransporter = [];
+                var buildTankTransporter = [];
                 if (naval > 0)
                 {
-                    tankTransporter.push("LANDER");
+                    buildTankTransporter = buildTankTransporter.concat(COREAI.tankNavalTransporter);
                 }
                 if (air > 0)
                 {
-                    tankTransporter.push("TRANSPORTPLANE");
+                    buildTankTransporter = buildTankTransporter.concat(COREAI.tankAirTransporter);
                 }
-                if (tankTransporter.length > 0 && idleUnitCount > 0)
+                if (buildTankTransporter.length > 0 && idleUnitCount > 0)
                 {
                     if (COREAI.transporterRatio * unitCount > tankTransporterCount)
                     {
-                        system.addForcedProduction(tankTransporter);
+                        system.addForcedProduction(buildTankTransporter);
                         variableLastTransporterDay.writeDataInt32(turn);
                     }
                 }
@@ -290,44 +297,41 @@ var COREAI =
         var map = ai.getMap();
         var turn = map.getCurrentDay();
         var lowFuelUnitCount = ai.getUnitCount(units, [], 5, 30);
-        var apcCount = ai.getUnitCount(units, ["APC"]);
+        var apcCount = ai.getUnitCount(units, );
         if (apcCount === 0 &&
             turn >= COREAI.minApcResupplyDay &&
             (lowFuelUnitCount > 2 ||
              COREAI.minInfantryTransporterMapSize <= map.getMapWidth() * map.getMapHeight()))
         {
-            system.addForcedProduction(["APC"]);
+            system.addForcedProduction(supplyUnits);
         }
     },
 
     forceAntiAirProduction : function(system, ai, units, enemyUnits)
     {
-        var antiAirUnits = ["FLAK", "FIGHTER", "MISSILE"];
-        var airUnits = ["K_HELI", "DUSTER", "BOMBER", "ZCOUNIT_KIROV", "FIGHTER", "WATERPLANE"];
-        var stealthAirUnits = ["STEALTHBOMBER"]
-        var antiAirAirUnits = ["FIGHTER", "STEALTHBOMBER", "DUSTER"];
+        var antiAirUnits = COREAI.antiAirUnits;
         var variables = system.getVariables();
         var variableNavalBattle = variables.createVariable("NAVALBATTLE");
         var naval = variableNavalBattle.readDataInt32();
         if (naval > 1)
         {
-            antiAirUnits.push("CRUISER");
+           antiAirUnits = antiAirUnits.concat(COREAI.antiAirSeaUnits);
         }
         var anitAirUnitCount = ai.getUnitCount(units, antiAirUnits, 5);
-        var anitAirAirUnitCount = ai.getUnitCount(units, antiAirAirUnits, 5);
-        var stealthBomberUnitCount = ai.getEnemyUnitCountNearOwnUnits(units, enemyUnits, stealthAirUnits, 18, 5);
-        var enemyAirUnits = ai.getEnemyUnitCountNearOwnUnits(units, enemyUnits, airUnits, 18, 5);
+        var anitAirAirUnitCount = ai.getUnitCount(units, COREAI.antiAirAirUnits, 5);
+        var stealthBomberUnitCount = ai.getEnemyUnitCountNearOwnUnits(units, enemyUnits, COREAI.stealthAirUnits, 18, 5);
+        var enemyAirUnits = ai.getEnemyUnitCountNearOwnUnits(units, enemyUnits, COREAI.airUnits, 18, 5);
         if ((enemyAirUnits > 0 && anitAirUnitCount === 0) ||
                 (enemyAirUnits > 2 && anitAirUnitCount === 1) ||
                 (anitAirUnitCount > 0 && enemyAirUnits / anitAirUnitCount >= 3))
         {
             system.addForcedProduction(antiAirUnits);
         }
-        if ((stealthAirUnits > 0 && anitAirAirUnitCount === 0) ||
-                (stealthAirUnits > 2 && anitAirAirUnitCount === 1) ||
-                (anitAirAirUnitCount > 0 && stealthAirUnits / anitAirAirUnitCount >= 3))
+        if ((stealthBomberUnitCount > 0 && anitAirAirUnitCount === 0) ||
+            (stealthBomberUnitCount > 2 && anitAirAirUnitCount === 1) ||
+            (anitAirAirUnitCount > 0 && stealthBomberUnitCount / anitAirAirUnitCount >= 3))
         {
-            system.addForcedProduction(antiAirAirUnits);
+            system.addForcedProduction(COREAI.antiAirAirUnits);
         }
     },
 
