@@ -41,6 +41,7 @@ signals:
     void sigShowFolder(QString folder);
     void sigFinished();
     void sigShowDeleteQuestion();
+    void sigShowOverwriteWarning();
 public slots:
     void showFolder(QString folder);
     void filterChanged(qint32);
@@ -48,6 +49,8 @@ public slots:
     void deleteItem();
     void showDeleteQuestion();
     void remove();
+    void onFileSelected();
+    void showOverwriteWarning();
 private:
     spTextbox m_CurrentFolder;
     spTextbox m_CurrentFile;

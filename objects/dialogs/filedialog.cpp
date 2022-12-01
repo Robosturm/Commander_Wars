@@ -72,38 +72,18 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
     {
         emit sigCancel();
     });
-    auto* pCurrentFolder = m_CurrentFolder.get();
-    auto* pPtrCurrentFile = m_CurrentFile.get();
-    auto* pPtrDropDownmenu = m_DropDownmenu.get();
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentFolder, pPtrCurrentFile, pPtrDropDownmenu](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
-        QString fileStart = m_pathPrefix + pCurrentFolder->getCurrentText();
-        if (!fileStart.isEmpty())
+        if (m_isSaveDialog)
         {
-            fileStart += "/";
+            emit sigShowOverwriteWarning();
         }
-        QString file = fileStart + pPtrCurrentFile->getCurrentText();
-        QStringList items = pPtrDropDownmenu->getCurrentItemText().split((";"));
-        for (qint32 i = 0; i < items.size(); i++)
+        else
         {
-            items[i] = items[i].replace("*", "");
+            onFileSelected();
         }
-        bool found = false;
-        for (qint32 i = 0; i < items.size(); i++)
-        {
-            if (file.endsWith(items[i]))
-            {
-                found = true;
-                break;
-            }
-        }
-        if (!found)
-        {
-            file += items[0];
-        }
-        emit sigFileSelected(file);
-        emit sigFinished();
     });
+    connect(this, &FileDialog::sigShowOverwriteWarning, this, &FileDialog::showOverwriteWarning, Qt::QueuedConnection);
     connect(this, &FileDialog::sigShowFolder, this, &FileDialog::showFolder, Qt::QueuedConnection);
     showFolder(startFolder);
     connect(pApp, &Mainapp::sigKeyDown, this, &FileDialog::KeyInput, Qt::QueuedConnection);
@@ -111,6 +91,52 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
     connect(this, &FileDialog::sigFinished, this, &FileDialog::remove, Qt::QueuedConnection);
     connect(this, &FileDialog::sigShowDeleteQuestion, this, &FileDialog::showDeleteQuestion, Qt::QueuedConnection);
     pApp->continueRendering();
+}
+
+void FileDialog::showOverwriteWarning()
+{
+    m_focused = false;
+    spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to overwrite the item ") + m_CurrentFolder->getCurrentText() + "/" +
+                                                                  m_CurrentFile->getCurrentText() + "?", true);
+    connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, &FileDialog::onFileSelected, Qt::QueuedConnection);
+    connect(pDialogOverwrite.get(), &DialogMessageBox::sigCancel, this, [this]()
+    {
+        m_focused = true;
+    });
+    addChild(pDialogOverwrite);
+}
+
+void FileDialog::onFileSelected()
+{
+    auto* pCurrentFolder = m_CurrentFolder.get();
+    auto* pPtrCurrentFile = m_CurrentFile.get();
+    auto* pPtrDropDownmenu = m_DropDownmenu.get();
+    QString fileStart = m_pathPrefix + pCurrentFolder->getCurrentText();
+    if (!fileStart.isEmpty())
+    {
+        fileStart += "/";
+    }
+    QString file = fileStart + pPtrCurrentFile->getCurrentText();
+    QStringList items = pPtrDropDownmenu->getCurrentItemText().split((";"));
+    for (qint32 i = 0; i < items.size(); i++)
+    {
+        items[i] = items[i].replace("*", "");
+    }
+    bool found = false;
+    for (qint32 i = 0; i < items.size(); i++)
+    {
+        if (file.endsWith(items[i]))
+        {
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+    {
+        file += items[0];
+    }
+    emit sigFileSelected(file);
+    emit sigFinished();
 }
 
 void FileDialog::remove()
