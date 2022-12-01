@@ -1544,53 +1544,56 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         }
     }
     static QTextStream stream(&file);
-    // QByteArray localMsg = msg.toLocal8Bit();
-    switch (type)
+    if (file.isOpen())
     {
-        case QtDebugMsg:
-            if (Console::m_LogLevel <= Console::eLogLevels::eDEBUG)
-            {
-                stream << "Debug: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
-                // fprintf(stdout, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-                stream.flush();
-                file.flush();
-            }
-            break;
-        case QtInfoMsg:
-            if (Console::m_LogLevel <= Console::eLogLevels::eINFO)
-            {
-                stream << "Info: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
-                // fprintf(stdout, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-                stream.flush();
-                file.flush();
-            }
-            break;
-        case QtWarningMsg:
-            if (Console::m_LogLevel <= Console::eLogLevels::eWARNING)
-            {
-                stream << "Warning: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
-                // fprintf(stdout, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-                stream.flush();
-                file.flush();
-            }
-            break;
-        case QtCriticalMsg:
-            if (Console::m_LogLevel <= Console::eLogLevels::eERROR)
-            {
-                stream << "Critical: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
-                // fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-                stream.flush();
-                file.flush();
-            }
-            break;
-        case QtFatalMsg:
-            if (Console::m_LogLevel <= Console::eLogLevels::eFATAL)
-            {
-                stream << "Fatal: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
-                // fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-                stream.flush();
-                file.flush();
-            }
-            break;
+        // QByteArray localMsg = msg.toLocal8Bit();
+        switch (type)
+        {
+            case QtDebugMsg:
+                if (Console::m_LogLevel <= Console::eLogLevels::eDEBUG)
+                {
+                    stream << "Debug: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
+                    // fprintf(stdout, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+                    stream.flush();
+                    file.flush();
+                }
+                break;
+            case QtInfoMsg:
+                if (Console::m_LogLevel <= Console::eLogLevels::eINFO)
+                {
+                    stream << "Info: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
+                    // fprintf(stdout, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+                    stream.flush();
+                    file.flush();
+                }
+                break;
+            case QtWarningMsg:
+                if (Console::m_LogLevel <= Console::eLogLevels::eWARNING)
+                {
+                    stream << "Warning: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
+                    // fprintf(stdout, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+                    stream.flush();
+                    file.flush();
+                }
+                break;
+            case QtCriticalMsg:
+                if (Console::m_LogLevel <= Console::eLogLevels::eERROR)
+                {
+                    stream << "Critical: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
+                    // fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+                    stream.flush();
+                    file.flush();
+                }
+                break;
+            case QtFatalMsg:
+                if (Console::m_LogLevel <= Console::eLogLevels::eFATAL)
+                {
+                    stream << "Fatal: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
+                    // fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+                    stream.flush();
+                    file.flush();
+                }
+                break;
+        }
     }
 }

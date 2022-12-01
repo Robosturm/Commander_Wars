@@ -2049,8 +2049,44 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="60"/>
+        <source>Attacker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="66"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="90"/>
+        <source>X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="72"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="96"/>
+        <source>Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="78"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="102"/>
+        <source>Dealt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="84"/>
+        <source>Defender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="115"/>
         <source>Day </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="159"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="173"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="219"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="232"/>
+        <source>?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6427,6 +6463,11 @@ Host mods: </source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="479"/>
         <source>Version: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="631"/>
+        <source>This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

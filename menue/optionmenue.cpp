@@ -268,9 +268,9 @@ void OptionMenue::showMods()
     m_ModSelector->addChild(pLabel);
     qint32 y = 0;
     QStringList versions = {tr("Unknown"),
-                                 tr("Commander Wars"),
-                                 tr("Advance Wars DS"),
-                                 tr("Advance Wars DC")};
+                            tr("Commander Wars"),
+                            tr("Advance Wars DS"),
+                            tr("Advance Wars DC")};
     m_pModSelection = spDropDownmenu::create(300, versions);
     m_pModSelection->setTooltipText(tr("Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game."));
     m_pModSelection->setX(260);
@@ -628,7 +628,7 @@ void OptionMenue::showGamepadInfo()
 
 void OptionMenue::showResetBox()
 {
-    spDialogMessageBox pMessage = spDialogMessageBox::create("This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu. ", true);
+    spDialogMessageBox pMessage = spDialogMessageBox::create(tr("This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu."), true);
     connect(pMessage.get(), &DialogMessageBox::sigOk, this, &OptionMenue::onReset, Qt::QueuedConnection);
     addChild(pMessage);
 }

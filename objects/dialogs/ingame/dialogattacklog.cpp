@@ -57,49 +57,49 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
     qint32 y = 30;
     spLabel pText = spLabel::create(130);
     pText->setStyle(style);
-    pText->setHtmlText("Attacker");
+    pText->setHtmlText(tr("Attacker"));
     pText->setPosition(10 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = spLabel::create(80);
     pText->setStyle(style);
-    pText->setHtmlText("X");
+    pText->setHtmlText(tr("X"));
     pText->setPosition(140 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = spLabel::create(80);
     pText->setStyle(style);
-    pText->setHtmlText("Y");
+    pText->setHtmlText(tr("Y"));
     pText->setPosition(240 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = spLabel::create(100);
     pText->setStyle(style);
-    pText->setHtmlText("Dealt");
+    pText->setHtmlText(tr("Dealt"));
     pText->setPosition(330 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = spLabel::create(130);
     pText->setStyle(style);
-    pText->setHtmlText("Defender");
+    pText->setHtmlText(tr("Defender"));
     pText->setPosition(440 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = spLabel::create(80);
     pText->setStyle(style);
-    pText->setHtmlText("X");
+    pText->setHtmlText(tr("X"));
     pText->setPosition(580 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = spLabel::create(80);
     pText->setStyle(style);
-    pText->setHtmlText("Y");
+    pText->setHtmlText(tr("Y"));
     pText->setPosition(670 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = spLabel::create(100);
     pText->setStyle(style);
-    pText->setHtmlText("Dealt");
+    pText->setHtmlText(tr("Dealt"));
     pText->setPosition(760 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
@@ -156,7 +156,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         }
         else
         {
-            pText->setHtmlText("?");
+            pText->setHtmlText(tr("?"));
         }
         pText->setPosition(130, y);
         pPanel->addItem(pText);
@@ -170,7 +170,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         }
         else
         {
-            pText->setHtmlText("?");
+            pText->setHtmlText(tr("?"));
         }
         pText->setPosition(230, y);
         pPanel->addItem(pText);
@@ -216,7 +216,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         }
         else
         {
-            pText->setHtmlText("?");
+            pText->setHtmlText(tr("?"));
         }
         pText->setPosition(570, y);
         pPanel->addItem(pText);
@@ -229,7 +229,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         }
         else
         {
-            pText->setHtmlText("?");
+            pText->setHtmlText(tr("?"));
         }
         pText->setPosition(660, y);
         pPanel->addItem(pText);
