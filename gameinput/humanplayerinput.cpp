@@ -124,8 +124,12 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             if (m_FieldPoints.size() == 0 && m_pGameAction.get() == nullptr)
             {
                 showAttackableFields(x, y);
+                if (m_FieldPoints.size() == 0)
+                {
+                    showVisionFields(x, y);
+                }
             }
-            else if (m_FieldPoints.size() > 0 && !m_showVisionFields)
+            else if (!m_showVisionFields)
             {
                 showVisionFields(x, y);
             }
