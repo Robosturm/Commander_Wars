@@ -132,7 +132,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     pBox->addItem(pText);
     QStringList items = {"===", "!==", "&gt;=", "&lt;="};
     spDropDownmenu dropDown = spDropDownmenu::create(150, items);
-    dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
+    dropDown->setTooltipText(tr("The way how the variable gets compared with the constant.\n=== equal\n!== unequal\n>= greater or equal\n<= smaller or equal"));
     dropDown->setPosition(width, 70);
     dropDown->setCurrentItemText(m_Compare);
     DropDownmenu* pDropDown = dropDown.get();

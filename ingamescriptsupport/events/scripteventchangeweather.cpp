@@ -98,7 +98,7 @@ void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)
 
     spDropDownmenu startWeather = spDropDownmenu::create(200, weatherStrings);
     startWeather->setTooltipText(tr("The new weather that appears."));
-    startWeather->setPosition(150, 70);
+    startWeather->setPosition(300, 70);
     startWeather->setCurrentItem(weatherID);
     connect(startWeather.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 item)
     {

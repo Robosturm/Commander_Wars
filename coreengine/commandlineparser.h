@@ -24,6 +24,7 @@ public:
     static const char* const ARG_SPAWNAIPROCESS;
     static const char* const ARG_AISLAVE;
     static const char* const ARG_USERPATH;
+    static const char* const ARG_DEBUGLEVEL;
 
     static const char* const ARG_SERVER;
     static const char* const ARG_SERVERSLAVEHOSTOPTIONS;
@@ -53,6 +54,7 @@ public:
 private:
     void disableUi();
 private:
+    QCommandLineOption m_debugLevel;
     QCommandLineOption m_userPath;
     QCommandLineOption m_aiSlave;
     QCommandLineOption m_spawnAiProcess;

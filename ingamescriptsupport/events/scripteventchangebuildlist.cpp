@@ -7,14 +7,16 @@
 #include "resource_management/unitspritemanager.h"
 
 #include "objects/base/spinbox.h"
-#include "objects/base/dropdownmenu.h"
+#include "objects/base/dropdownmenusprite.h"
 #include "objects/base/checkbox.h"
 #include "objects/base/label.h"
 
 ScriptEventChangeBuildlist::ScriptEventChangeBuildlist(GameMap* pMap)
-    : ScriptEvent(pMap, EventType::changeBuildlist)
+    : ScriptEvent(pMap, EventType::changeBuildlist),
+      m_pMap(pMap)
 {
-
+    m_dropDownPlayer = spPlayer::create(pMap);
+    m_dropDownPlayer->init();
 }
 
 QString ScriptEventChangeBuildlist::getUnitID() const
@@ -112,13 +114,19 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     {
         items.append(curUnitId);
     }
-    spDropDownmenu pMenu = spDropDownmenu::create(300, items);
-    pMenu->setTooltipText(tr("The unit id that will be changed in the build list of the player."));
+    Player* pPlayer = m_dropDownPlayer.get();
+    auto unitCreator = [this, pPlayer](QString id)
+    {
+        spUnit pSprite = spUnit::create(id, pPlayer, false, m_pMap);
+        return pSprite;
+    };
+    spDropDownmenuSprite pMenu = spDropDownmenuSprite::create(105, items, unitCreator, 30);
+    pMenu->setTooltipText(tr("The unit that will be changed in the build list of the player."));
     pMenu->setPosition(width, 70);
     pMenu->setCurrentItem(currentItem);
     pBox->addItem(pMenu);
-    DropDownmenu* pPtrMenu = pMenu.get();
-    connect(pMenu.get(), &DropDownmenu::sigItemChanged, this, [this, pPtrMenu](qint32)
+    DropDownmenuSprite* pPtrMenu = pMenu.get();
+    connect(pMenu.get(), &DropDownmenuSprite::sigItemChanged, this, [this, pPtrMenu](qint32)
     {
         unitID = pPtrMenu->getCurrentItemText();
     });

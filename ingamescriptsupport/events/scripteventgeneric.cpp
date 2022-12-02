@@ -18,9 +18,10 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
-ScriptEventGeneric::ScriptEventGeneric(GameMap* pMap, EventType type, QString eventIdentifier)
+ScriptEventGeneric::ScriptEventGeneric(GameMap* pMap, EventType type, QString eventIdentifier, const QString & description)
     : ScriptEvent(pMap, type),
-      m_eventIdentifier(eventIdentifier)
+      m_eventIdentifier(eventIdentifier),
+      m_description(description)
 {
     connect(this, &ScriptEventGeneric::sigShowSelectFile, this, &ScriptEventGeneric::showSelectFile, Qt::QueuedConnection);
 }

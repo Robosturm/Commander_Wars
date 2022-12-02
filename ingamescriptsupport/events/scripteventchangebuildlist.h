@@ -1,7 +1,7 @@
 #ifndef SCRIPTEVENTCHANGEBUILDLIST_H
 #define SCRIPTEVENTCHANGEBUILDLIST_H
 
-
+#include "game/player.h"
 #include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventChangeBuildlist;
@@ -73,9 +73,11 @@ public:
         return 0;
     }
 private:
+    GameMap* m_pMap{nullptr};
     qint32 player{0};
     QString unitID{"INFANTRY"};
     bool remove{false};
+    spPlayer m_dropDownPlayer;
 };
 
 #endif // SCRIPTEVENTCHANGEBUILDLIST_H

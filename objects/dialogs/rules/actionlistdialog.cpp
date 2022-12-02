@@ -34,59 +34,6 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
-    // ok button
-    m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
-                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
-    pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
-    {
-        emit editFinished(m_CurrentActionList);
-        emit sigFinished();
-    });
-
-    // cancel button
-    m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
-    pSpriteBox->addChild(m_ExitButton);
-    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
-    {
-        emit canceled();
-    });
-
-    oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-    pSave->setPosition(Settings::getWidth() / 2 - pSave->getScaledWidth() / 2,
-                       Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
-    pSave->addClickListener([this](oxygine::Event*)
-    {
-        emit sigShowSaveBannlist();
-    });
-    pSpriteBox->addChild(pSave);
-    connect(this, &ActionListDialog::sigShowSaveBannlist, this, &ActionListDialog::showSaveBannlist, Qt::QueuedConnection);
-
-    m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
-    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 ,
-                             Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
-    pSpriteBox->addChild(m_ToggleAll);
-    m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
-    {
-        m_toggle = !m_toggle;
-        for (qint32 i = 0; i < m_Checkboxes.size(); i++)
-        {
-            m_Checkboxes[i]->setChecked(m_toggle);
-            emit m_Checkboxes[i]->checkChanged(m_toggle);
-        }
-    });
-    auto items = getNameList();
-    m_PredefinedLists = spDropDownmenu::create(300, items);
-
-    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getScaledWidth(),
-                                   Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
-    pSpriteBox->addChild(m_PredefinedLists);
-    connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &ActionListDialog::setBuildlist, Qt::QueuedConnection);
-
-
-
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -174,6 +121,57 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     pPanel->setContentHeigth(y + 50);
     connect(this, &ActionListDialog::canceled, this, &ActionListDialog::remove, Qt::QueuedConnection);
     connect(this, &ActionListDialog::sigFinished, this, &ActionListDialog::remove, Qt::QueuedConnection);
+
+    // ok button
+    m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
+    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+    pSpriteBox->addChild(m_OkButton);
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    {
+        emit editFinished(m_CurrentActionList);
+        emit sigFinished();
+    });
+
+    // cancel button
+    m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
+    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
+    pSpriteBox->addChild(m_ExitButton);
+    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    {
+        emit canceled();
+    });
+
+    oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
+    pSave->setPosition(Settings::getWidth() / 2 - pSave->getScaledWidth() / 2,
+                       Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
+    pSave->addClickListener([this](oxygine::Event*)
+    {
+        emit sigShowSaveBannlist();
+    });
+    pSpriteBox->addChild(pSave);
+    connect(this, &ActionListDialog::sigShowSaveBannlist, this, &ActionListDialog::showSaveBannlist, Qt::QueuedConnection);
+
+    m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
+    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 ,
+                             Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
+    pSpriteBox->addChild(m_ToggleAll);
+    m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    {
+        m_toggle = !m_toggle;
+        for (qint32 i = 0; i < m_Checkboxes.size(); i++)
+        {
+            m_Checkboxes[i]->setChecked(m_toggle);
+            emit m_Checkboxes[i]->checkChanged(m_toggle);
+        }
+    });
+    auto items = getNameList();
+    m_PredefinedLists = spDropDownmenu::create(300, items);
+
+    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getScaledWidth(),
+                                   Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
+    pSpriteBox->addChild(m_PredefinedLists);
+    connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &ActionListDialog::setBuildlist, Qt::QueuedConnection);
 }
 
 void ActionListDialog::remove()

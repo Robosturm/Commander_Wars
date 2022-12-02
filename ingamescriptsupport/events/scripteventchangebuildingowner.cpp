@@ -1,7 +1,7 @@
 #include "ingamescriptsupport/events/scripteventchangebuildingowner.h"
 
 ScriptEventChangeBuildingOwner::ScriptEventChangeBuildingOwner(GameMap* pMap)
-    : ScriptEventGeneric(pMap, EventType::ChangeBuildingOwner, ScriptEvent::EventChangeBuildingOwner)
+    : ScriptEventGeneric(pMap, EventType::ChangeBuildingOwner, ScriptEvent::EventChangeBuildingOwner, tr("Change building owner"))
 {
     m_Items.append(ScriptEventGeneric::Data());
     m_Items.append(ScriptEventGeneric::Data());

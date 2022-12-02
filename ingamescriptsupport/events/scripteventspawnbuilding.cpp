@@ -6,7 +6,7 @@
 #include "game/gamemap.h"
 
 ScriptEventSpawnBuilding::ScriptEventSpawnBuilding(GameMap* pMap)
-    : ScriptEventGeneric(pMap, EventType::SpawnBuilding, ScriptEvent::EventSpawnBuilding)
+    : ScriptEventGeneric(pMap, EventType::SpawnBuilding, ScriptEvent::EventSpawnBuilding, tr("Spawn building"))
 {
     m_Items.append(ScriptEventGeneric::Data());
     m_Items.append(ScriptEventGeneric::Data());

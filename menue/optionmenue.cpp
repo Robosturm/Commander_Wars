@@ -156,7 +156,7 @@ void OptionMenue::exitMenue()
     Settings::saveSettings();
     if (m_restartNeeded)
     {
-        spDialogMessageBox pMessage = spDialogMessageBox::create("Some changes need a restart of the game. The game will restart. Press Ok to restart.", true);
+        spDialogMessageBox pMessage = spDialogMessageBox::create(tr("Some changes need a restart of the game. The game will restart. Press Ok to restart."), true);
         connect(pMessage.get(), &DialogMessageBox::sigOk, this, &OptionMenue::restart, Qt::QueuedConnection);
         addChild(pMessage);
     }
