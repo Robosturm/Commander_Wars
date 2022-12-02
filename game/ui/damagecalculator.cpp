@@ -192,11 +192,11 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
         oxygine::spSprite pRet = pTerrain;
         if (isBuilding)
         {
-            spBuilding building = spBuilding::create(id, &m_map);
-            building->setTooltipText(building->getName());
-            building->updateBuildingSprites(false);
-            building->addChild(pTerrain);
-            pRet = building;
+            spBuilding pBuilding = spBuilding::create(id, &m_map);
+            pBuilding->setTooltipText(pBuilding->getName());
+            pBuilding->updateBuildingSprites(false);
+            pBuilding->scaleAndShowOnSingleTile();
+            pRet = pBuilding;
         }
         return pRet;
     };
