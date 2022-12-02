@@ -33,8 +33,11 @@ DamageCalculator::DamageCalculator()
     }
     qint32 x = 10;
     qint32 y = 10;
-    spLabel pLabel = spLabel::create(300);
-    pLabel->setPosition(getScaledWidth() / 2 - pLabel->getScaledWidth() / 2, y);
+    spLabel pLabel = spLabel::create(getContentWidth());
+    pLabel->setPosition(0, y);
+    auto style = pLabel->getStyle();
+    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+    pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Damage calculator"));
     addItem(pLabel);
 
@@ -79,7 +82,7 @@ DamageCalculator::DamageCalculator()
     loadUnitData(x, y, m_defUnit, rankItems, unitIds, terrainIds, buildingIds);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spButton pCalculateButton = pObjectManager->createButton(tr("Calculate"), 150);
-    pCalculateButton->setPosition(getScaledWidth() / 2 - pCalculateButton->getScaledWidth() / 2, y + 5);
+    pCalculateButton->setPosition(getContentWidth() / 2 - pCalculateButton->getScaledWidth() / 2, y + 5);
 
     pCalculateButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -158,7 +161,7 @@ void DamageCalculator::loadCoData(qint32 & x, qint32 & y, CosData & cosData,
         coData.m_inCoRange->setTooltipText(tr("If the unit is in the co-zone of this co."));
         addItem(coData.m_inCoRange);
         x += coData.m_inCoRange->getScaledWidth() + xAdvance;
-        y += pLabel->getScaledHeight() + 5;
+        y += coData.m_co->getScaledHeight();
     }
 }
 
@@ -232,7 +235,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     unitData.m_unitRank->setPosition(x, y);
     addItem(unitData.m_unitRank);
     x = startX;
-    y += unitData.m_unitRank->getScaledHeight() + 5;
+    y += unitData.m_unitRank->getScaledHeight();
     spLabel pLabel = spLabel::create(150);
     pLabel->setPosition(x, y);
     pLabel->setHtmlText(tr("HP:"));
