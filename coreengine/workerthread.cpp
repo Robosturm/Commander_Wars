@@ -187,6 +187,7 @@ void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 
 void WorkerThread::showMainwindow()
 {
+    CONSOLE_PRINT("WorkerThread::showMainwindow", Console::eDEBUG);
     QCoreApplication::processEvents();
     QThread::msleep(5);
 

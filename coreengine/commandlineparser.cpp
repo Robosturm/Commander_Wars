@@ -29,6 +29,7 @@ const char* const CommandLineParser::ARG_MASTERPORT             = "masterPort";
 const char* const CommandLineParser::ARG_UPDATE                 = "update";
 const char* const CommandLineParser::ARG_SPAWNAIPROCESS         = "spawnAiProcess";
 const char* const CommandLineParser::ARG_AISLAVE                = "aiSlave";
+const char* const CommandLineParser::ARG_USERPATH               = "userPath";
 
 // options required for hosting a dedicated server
 const char* const CommandLineParser::ARG_SERVER                     = "server";
@@ -49,7 +50,8 @@ const char* const CommandLineParser::ARG_MAILSERVERSENDADDRESS = "mailServerSend
 const char* const CommandLineParser::ARG_MAILSERVERAUTHMETHOD = "mailServerAuthMethod";
 
 CommandLineParser::CommandLineParser()
-    : m_aiSlave(ARG_AISLAVE, tr("Acts as ai slave process")),
+    : m_userPath(ARG_USERPATH, tr("Userpath for the game to use for user files to be stored"), tr("path"), ""),
+      m_aiSlave(ARG_AISLAVE, tr("Acts as ai slave process")),
       m_spawnAiProcess(ARG_SPAWNAIPROCESS, tr("mode for starting the sub ai process. Off=0 Spawn=1"), tr("mode"), "1"),
       m_mods(ARG_MODS, tr("mods that should be loaded. As a string list separated by ';'"), tr("mod list"), ""),
       m_update(ARG_UPDATE, tr("Only used internal to tell the game that an update is in progresss"), tr("update step"), ""),
@@ -84,6 +86,7 @@ CommandLineParser::CommandLineParser()
     m_parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
     m_parser.addHelpOption();
     m_parser.addVersionOption();
+    m_parser.addOption(m_userPath);
     m_parser.addOption(m_aiSlave);
     m_parser.addOption(m_spawnAiProcess);
     m_parser.addOption(m_mods);
@@ -124,6 +127,10 @@ void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
     {
         pApp->setCreateSlaveLogs(true);
     }
+    if (m_parser.isSet(m_userPath))
+    {
+        Settings::setUserPath(m_parser.value(m_userPath));
+    }
     if (m_parser.isSet(m_slaveName))
     {
         QString value = m_parser.value(m_slaveName);
@@ -145,6 +152,19 @@ void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
     {
         QString value = m_parser.value(m_update);
         Settings::setUpdateStep(value);
+    }
+}
+
+bool CommandLineParser::getUserPath(QString & path)
+{
+    if (m_parser.isSet(m_userPath))
+    {
+        path = m_parser.value(m_userPath);
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 

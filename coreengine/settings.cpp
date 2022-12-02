@@ -227,6 +227,7 @@ Settings::Settings()
 #ifdef USEAPPCONFIGPATH
     defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
 #endif
+    Mainapp::getInstance()->getParser().getUserPath(defaultPath);
     while (defaultPath.contains("//"))
     {
         defaultPath = defaultPath.replace("//", "/");
@@ -1400,6 +1401,11 @@ void Settings::loadSettings()
     for (auto setting : m_SettingValues)
     {
         setting->readValue(settings);
+    }
+    QString userPath;
+    if (Mainapp::getInstance()->getParser().getUserPath(userPath))
+    {
+        setUserPath(userPath);
     }
     setFramesPerSecond(m_framesPerSecond);
     setActiveMods(m_activeMods);

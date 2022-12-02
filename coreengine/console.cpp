@@ -109,8 +109,14 @@ spConsole Console::getInstance()
     if (m_pConsole.get() == nullptr)
     {
         m_pConsole = spConsole::create();
+        CONSOLE_PRINT("Console created", Console::eDEBUG);
     }
     return m_pConsole;
+}
+
+bool Console::hasInstance()
+{
+    return m_pConsole.get() != nullptr;
 }
 
 void Console::init()

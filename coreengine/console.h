@@ -52,6 +52,7 @@ public:
     };
     ~Console() = default;
     static spConsole getInstance();
+    static bool hasInstance();
     static void dotask(QString message);
     static void draw();
     static void messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);

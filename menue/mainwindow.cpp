@@ -68,10 +68,18 @@ Mainwindow::Mainwindow(const QString & initialView)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue obj = pInterpreter->newQObject(this);
     pInterpreter->setGlobal("currentMenu", obj);
-    UiFactory::getInstance().createUi("ui/mainmenu.xml", this);
+    if (initialView.isEmpty())
+    {
+        UiFactory::getInstance().createUi("ui/mainmenu.xml", this);
+    }
+    else
+    {
+        UiFactory::getInstance().createUi(initialView, this);
+    }
 
     if (Settings::getUsername().isEmpty())
     {
+        CONSOLE_PRINT("Showing initial username selection", Console::eDEBUG);
         spDialogTextInput pDialogTextInput = spDialogTextInput::create(tr("Select Username"), false, "");
         addChild(pDialogTextInput);
         connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, this, &Mainwindow::changeUsername, Qt::QueuedConnection);
@@ -104,8 +112,6 @@ Mainwindow::Mainwindow(const QString & initialView)
         });
         connect(this, &Mainwindow::sigImport, this, &Mainwindow::import, Qt::QueuedConnection);
     }
-
-    UiFactory::getInstance().createUi(initialView, this);
 
     m_cheatTimeout.setSingleShot(true);
     connect(&m_cheatTimeout, &QTimer::timeout, this, &Mainwindow::cheatTimeout, Qt::QueuedConnection);

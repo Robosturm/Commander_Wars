@@ -159,48 +159,54 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
         {
             QDomDocument document;
             QFile file(uiFile);
-            file.open(QIODevice::ReadOnly);
-            QString error;
-            qint32 line;
-            qint32 column;
-            bool loaded = document.setContent(&file, &error, &line, &column);
-            if (loaded)
+            if (file.open(QIODevice::ReadOnly))
             {
-                oxygine::spActor root = oxygine::spActor::create();
-                bool success = true;
-                auto rootElement = document.documentElement();
-                auto node = rootElement.firstChild();
-                while (!node.isNull())
+                QString error;
+                qint32 line;
+                qint32 column;
+                bool loaded = document.setContent(&file, &error, &line, &column);
+                if (loaded)
                 {
-                    while (node.isComment())
+                    oxygine::spActor root = oxygine::spActor::create();
+                    bool success = true;
+                    auto rootElement = document.documentElement();
+                    auto node = rootElement.firstChild();
+                    while (!node.isNull())
                     {
+                        while (node.isComment())
+                        {
+                            node = node.nextSibling();
+                        }
+                        if (!node.isNull())
+                        {
+                            oxygine::spActor item;
+                            success = createItem(root, node.toElement(), item, pMenu);
+                            if (!success)
+                            {
+                                CONSOLE_PRINT("Unknown item: " + node.toElement().nodeName() + " found. UI creation failed.", Console::eERROR);
+                            }
+                        }
                         node = node.nextSibling();
                     }
-                    if (!node.isNull())
+                    if (success)
                     {
-                        oxygine::spActor item;
-                        success = createItem(root, node.toElement(), item, pMenu);
-                        if (!success)
-                        {
-                            CONSOLE_PRINT("Unknown item: " + node.toElement().nodeName() + " found. UI creation failed.", Console::eERROR);
-                        }
+                        pMenu->addFactoryUiItem(root);
+                        break;
                     }
-                    node = node.nextSibling();
-                }
-                if (success)
-                {
-                    pMenu->addFactoryUiItem(root);
-                    break;
+                    else
+                    {
+                        CONSOLE_PRINT("Unable to load: " + uiFile, Console::eERROR);
+                    }
                 }
                 else
                 {
                     CONSOLE_PRINT("Unable to load: " + uiFile, Console::eERROR);
+                    CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
                 }
             }
             else
             {
-                CONSOLE_PRINT("Unable to load: " + uiFile, Console::eERROR);
-                CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
+                CONSOLE_PRINT("Unable to open existing file: " + uiFile, Console::eERROR);
             }
         }
     }

@@ -34,6 +34,7 @@ LoadingScreen::~LoadingScreen()
 
 void LoadingScreen::show()
 {    
+    CONSOLE_PRINT("LoadingScreen::show", Console::eDEBUG);
     oxygine::Stage::getStage()->addChild(spLoadingScreen(this));
     removeChildren();
     oxygine::ResAnim* pBackground;

@@ -90,7 +90,11 @@ Mainapp::Mainapp()
 
 void Mainapp::createLineEdit()
 {
-#ifdef GRAPHICSUPPORT    
+#ifdef GRAPHICSUPPORT
+    if (Console::hasInstance())
+    {
+        CONSOLE_PRINT("Mainapp::createLineEdit", Console::eDEBUG);
+    }
     m_pLineEdit = new EventTextEdit();
     m_pLineEdit->setVisible(false);
 #endif
@@ -380,6 +384,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case StartupPhase::Finalizing:
         {
+            CONSOLE_PRINT("Finalizing boot", Console::eDEBUG);
             if (Settings::getAiSlave())
             {
                 CONSOLE_PRINT("Running as ai slave", Console::eDEBUG);
