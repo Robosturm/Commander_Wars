@@ -375,7 +375,7 @@ void GameMenue::showDisconnectReason(quint64 socketID, const QJsonObject & objDa
     NetworkCommands::DisconnectReason type = static_cast<NetworkCommands::DisconnectReason>(objData.value(JsonKeys::JSONKEY_DISCONNECTREASON).toInt());
     spDialogMessageBox pDialog = spDialogMessageBox::create(reasons[type]);
     addChild(pDialog);
-    emit m_pNetworkInterface->sigDisconnectClient(0);
+    emit m_pNetworkInterface->sigDisconnectClient(socketID);
 }
 
 void GameMenue::sendUsername(quint64 socketID, const QJsonObject & objData)
@@ -542,7 +542,7 @@ void GameMenue::joinAsObserver(QDataStream & stream, quint64 socketID)
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
             data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::NoMoreObservers);
             QJsonDocument doc(data);
-            emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+            emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         }
     }
     else
@@ -553,7 +553,7 @@ void GameMenue::joinAsObserver(QDataStream & stream, quint64 socketID)
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::InvalidConnection);
         QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -602,7 +602,7 @@ void GameMenue::joinAsPlayer(QDataStream & stream, quint64 socketID)
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::InvalidConnection);
         QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 

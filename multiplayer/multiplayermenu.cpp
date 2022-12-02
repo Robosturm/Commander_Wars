@@ -447,7 +447,7 @@ void Multiplayermenu::showDisconnectReason(quint64 socketID, const QJsonObject &
         m_pDialogConnecting->detach();
         m_pDialogConnecting = nullptr;
     }
-    emit m_pNetworkInterface->sigDisconnectClient(0);
+    emit m_pNetworkInterface->sigDisconnectClient(socketID);
     buttonBack();
 }
 
@@ -528,7 +528,7 @@ void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socke
         CONSOLE_PRINT("Login error: " + QString::number(valid) + " reported reason: " + QString::number(reason), Console::eDEBUG);
         data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, reason);
         QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 

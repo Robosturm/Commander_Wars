@@ -4,7 +4,6 @@
 #include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 

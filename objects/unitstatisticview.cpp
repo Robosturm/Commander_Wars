@@ -54,7 +54,7 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
     headlineLabel->setHtmlText(headline);
     headlineLabel->setPosition(x, y);
     pPanel->addItem(headlineLabel);
-    y += 70;
+    y += 80;
 
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     auto sortedList = pUnitSpriteManager->getUnitsSorted();
@@ -104,7 +104,7 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
             y += 40;
         }
     }
-    y += 40;
+    y += 50;
     if (summary)
     {
         x = 10;
@@ -139,6 +139,6 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
                 }
             }
         }
-        y += 40;
+        y += 50;
     }
 }

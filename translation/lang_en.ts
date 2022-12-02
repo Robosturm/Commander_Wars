@@ -1951,112 +1951,112 @@
 <context>
     <name>DamageCalculator</name>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="38"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="41"/>
         <source>Damage calculator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="81"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="84"/>
         <source>Calculate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="142"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="145"/>
         <source>CO for the player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="147"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="150"/>
         <source>Power level of the co.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="153"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="156"/>
         <source>Zone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="158"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="161"/>
         <source>If the unit is in the co-zone of this co.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="177"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="180"/>
         <source>Unit to be used.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="204"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="207"/>
         <source>Terrain the unit is currently sitting on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="230"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="233"/>
         <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="238"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="241"/>
         <source>HP:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="242"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="245"/>
         <source>HP of the unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="248"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="251"/>
         <source>Towers:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="252"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="255"/>
         <source>Amount of towers owned by the player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="258"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="261"/>
         <source>Towns:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="262"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="265"/>
         <source>Amount of towns owned by the player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="268"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="271"/>
         <source>Funds:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="272"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="275"/>
         <source>Amount of funds owned by the player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="282"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="285"/>
         <source>Battle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="288"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="291"/>
         <source>Min:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="292"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="295"/>
         <source>Avg:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="296"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="299"/>
         <source>Max:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="317"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="320"/>
         <source>Post battle</source>
         <translation type="unfinished"></translation>
     </message>
