@@ -1642,7 +1642,7 @@
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="54"/>
-        <source>debug level as number</source>
+        <source>level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

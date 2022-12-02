@@ -51,7 +51,7 @@ const char* const CommandLineParser::ARG_MAILSERVERSENDADDRESS = "mailServerSend
 const char* const CommandLineParser::ARG_MAILSERVERAUTHMETHOD = "mailServerAuthMethod";
 
 CommandLineParser::CommandLineParser()
-    : m_debugLevel(ARG_DEBUGLEVEL, tr("Debug level for the next sessions", (tr("debug level as number"), "1"))),
+    : m_debugLevel(ARG_DEBUGLEVEL, tr("Debug level for the next sessions"), tr("level"), "1"),
       m_userPath(ARG_USERPATH, tr("Userpath for the game to use for user files to be stored"), tr("path"), ""),
       m_aiSlave(ARG_AISLAVE, tr("Acts as ai slave process")),
       m_spawnAiProcess(ARG_SPAWNAIPROCESS, tr("mode for starting the sub ai process. Off=0 Spawn=1"), tr("mode"), "1"),
@@ -322,7 +322,8 @@ void CommandLineParser::parseArgsPhaseTwo()
     }
     if (m_parser.isSet(m_debugLevel))
     {
-        Console::setLogLevel(static_cast<Console::eLogLevels>(m_parser.value(m_debugLevel).toInt()));
+        QString level = m_parser.value(m_debugLevel);
+        Console::setLogLevel(static_cast<Console::eLogLevels>(level.toInt()));
     }
 }
 
