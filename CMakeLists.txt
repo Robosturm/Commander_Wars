@@ -1005,6 +1005,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
     )
+
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     set(LibNameStart "../lib/libQt6")
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
@@ -1102,6 +1103,9 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION     "platforms"     OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_SQL_LIBS}        DESTINATION     "sqldrivers"    OPTIONAL)
     install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION     "/"             OPTIONAL)
+
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
+    install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION     "Commander_Wars.app/Contents/PlugIns"             OPTIONAL)
 
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
