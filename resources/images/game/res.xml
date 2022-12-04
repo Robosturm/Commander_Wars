@@ -18,6 +18,8 @@
         <!-- battle sprite fore -->
         <image file="battlesprites/foreground/fore_factory+0.png" />
         <image file="battlesprites/foreground/fore_factory+1.png" />
+        <image file="battlesprites/foreground/fore_gate+0.png" />
+        <image file="battlesprites/foreground/fore_gate+1.png" />
         <image file="battlesprites/foreground/fore_pipeline.png" />
         <!-- sun -->
         <image file="battlesprites/foreground/fore_plains+0.png" />

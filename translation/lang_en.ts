@@ -692,15 +692,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="125"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="158"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="192"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="225"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="111"/>
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="241"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="161"/>
         <source>Refills fuel and ammo to all units surrounding this unit and grants money based on the amount of resupply.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -809,7 +806,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="67"/>
+        <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="74"/>
         <source>Fire with Talon Gun</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9374,11 +9371,6 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="185"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/base/selectkey.cpp" line="202"/>
-        <source>Key </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -50,17 +50,24 @@ var Constructor = function()
                     (owner.isEnemyUnit(unit)))
                 {
                     var damage = Global[building.getBuildingID()].getDamage(building, unit);
-                    unit.setHp(unit.getHpRounded() - damage);
                     animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     animation.addSprite("talon+gun+hit", -map.getImageSize() * 1.1, -map.getImageSize() * 1.5, 0, 1.33);
                     talonGunAnimation.queueAnimation(animation);
-                    if (unit.getHp() <= 0)
-                    {
-                        unit.killUnit();
-                    }
+                    animation.writeDataInt32(x + point.x);
+                    animation.writeDataInt32(y + point.y);
+                    animation.writeDataInt32(damage);
+                    animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamageKill");
                 }
             }
         }
+        var talonGunInAnimation = GameAnimationFactory.createAnimation(map, x, y);
+        talonGunInAnimation.addSprite("talon+gun+in", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, 0, 1.33);
+        talonGunInAnimation.addSpriteAnimTable("talon+gun+in+mask", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, owner, 0, 1.33, 1.33, 0, 0, GameEnums.Recoloring_Matrix);
+        talonGunAnimation.queueAnimation(talonGunInAnimation);
+    };
+    this.performPostAnimation = function(postAnimation, map)
+    {
+
     };
     this.getDescription = function()
     {

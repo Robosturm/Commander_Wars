@@ -199,7 +199,7 @@ void SelectKey::setKeycode(Qt::Key code)
     {
         m_currentCode = code;
         Label* pText = dynamic_cast<Label*>(m_Button->getFirstChild().get());
-        pText->setHtmlText((tr("Key ") + codeText));
+        pText->setHtmlText(codeText);
         pText->setX(m_Button->getScaledWidth() / 2 - pText->getTextRect().getWidth() / 2);
         if (pText->getX() < 5)
         {

@@ -41,6 +41,33 @@ var Constructor = function()
     {
         return qsTr("A gate through a wall can be crossed by all allied players. Can be destroyed by other players");
     };
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
+    {
+        var variables = terrain.getVariables();
+        var variable = variables.getVariable("FOREGROUND_ID");
+        var rand = 0;
+        if (variable === null)
+        {
+            rand = globals.randInt(0, 1);
+            variable = variables.createVariable("FOREGROUND_ID");
+            variable.writeDataInt32(rand);
+        }
+        else
+        {
+            rand = variable.readDataInt32();
+            if (rand > 1)
+            {
+                rand = globals.randInt(0, 1);
+                variable = variables.createVariable("FOREGROUND_ID");
+                variable.writeDataInt32(rand);
+            }
+        }
+        return "fore_gate+" + rand.toString();
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
+    {
+        return Global[terrain.getTerrainID()].getTerrainAnimationBackground(unit, terrain, defender, map);
+    };
 }
 
 Constructor.prototype = BUILDING;
