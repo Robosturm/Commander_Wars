@@ -279,7 +279,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Enemy loses half of their ammo, take 2 HP damage, his troops can move 2 points more and their defense rises extremly.");
+        return qsTr("Enemy loses half of their ammo, take 2 HP damage, his troops can move 2 points more and their defense rises extremely.");
     };
     this.getSuperPowerName = function(co)
     {

@@ -38,7 +38,7 @@ var CreateAccountDialog =
         }
         else if (menu.isValidEmailAdress(email) === false)
         {
-            createAccount.showMessageBox(qsTr("You entered an invalid email adress."));
+            createAccount.showMessageBox(qsTr("You entered an invalid email address."));
         }
         else
         {

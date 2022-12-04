@@ -191,7 +191,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.");
+        return qsTr("Fires shock waves that disables electrical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.");
     };
     this.getPowerName = function(co)
     {
@@ -199,7 +199,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer three HP of damage. Firepower and defense rises.");
+        return qsTr("Fires shock waves that disables electrical systems and all forces in range become paralyzed. Affected units suffer three HP of damage. Firepower and defense rises.");
     };
     this.getSuperPowerName = function(co)
     {

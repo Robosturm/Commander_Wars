@@ -328,7 +328,7 @@ void LobbyMenu::joinGamePassword(QString password)
 
 void LobbyMenu::joinAdress()
 {
-    spDialogPasswordAndAdress pDialogTextInput = spDialogPasswordAndAdress::create(tr("Enter Host Adress"));
+    spDialogPasswordAndAdress pDialogTextInput = spDialogPasswordAndAdress::create(tr("Enter Host address"));
     addChild(pDialogTextInput);
     connect(pDialogTextInput.get(), &DialogPasswordAndAdress::sigTextChanged, this, &LobbyMenu::join, Qt::QueuedConnection);
 }
@@ -342,7 +342,7 @@ void LobbyMenu::join(QString adress, QString password)
 
 void LobbyMenu::observeAdress()
 {
-    spDialogPasswordAndAdress pDialogTextInput = spDialogPasswordAndAdress::create(tr("Enter Host Adress"));
+    spDialogPasswordAndAdress pDialogTextInput = spDialogPasswordAndAdress::create(tr("Enter Host address"));
     addChild(pDialogTextInput);
     connect(pDialogTextInput.get(), &DialogPasswordAndAdress::sigTextChanged, this, &LobbyMenu::observe, Qt::QueuedConnection);
 }

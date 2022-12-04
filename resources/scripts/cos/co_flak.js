@@ -263,7 +263,7 @@ var Constructor = function()
     {
         return [qsTr("What was that? A waste of my time!"),
                 qsTr("Graaa! Blaarrgggg! Smaaarrgggghhh!!"),
-                qsTr("Enough weakling's footing around!")];
+                qsTr("Enough weaklings footing around!")];
     };
     this.getDefeatSentences = function(co)
     {

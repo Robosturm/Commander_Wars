@@ -298,7 +298,7 @@ var Constructor = function()
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Tempestous Technique");
+        return qsTr("Tempestuous Technique");
     };
     this.getPowerSentences = function(co)
     {

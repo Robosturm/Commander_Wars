@@ -251,7 +251,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A bighearted former pirate who hates fighting. Also a great surfer.");
+        return qsTr("A big hearted former pirate who hates fighting. Also a great surfer.");
     };
     this.getHits = function(co)
     {
@@ -268,7 +268,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nMissile Submarine\n\nGlobal Effect: \nNaval units have 1 more movement point and have increased firepower. Air units suffer from reduced firepower.") +
-               qsTr("\n\nCO Zone Effect: \nNaval units have ncreased firepower.");
+               qsTr("\n\nCO Zone Effect: \nNaval units have increased firepower.");
     };
     this.getPowerDescription = function(co)
     {

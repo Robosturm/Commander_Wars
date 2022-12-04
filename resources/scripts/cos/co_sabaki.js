@@ -239,7 +239,7 @@ var Constructor = function()
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Rejuvination Raid");
+        return qsTr("Rejuvenation Raid");
     };
     this.getPowerSentences = function(co)
     {

@@ -3401,7 +3401,7 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="50"/>
         <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="86"/>
-        <source>E-Mail-Adress for your account.</source>
+        <source>E-Mail-Address for your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3453,7 +3453,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="86"/>
-        <source>E-Mail-Adress of your account.</source>
+        <source>E-Mail-Address of your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13338,7 +13338,7 @@ Units gain %0% firepower and defence.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_adder.js" line="249"/>
-        <source>Wriggle worm... wriggle!</source>
+        <source>wiggle worm... wiggle!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13446,7 +13446,7 @@ Units gain %0% firepower and defence.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_aira.js" line="292"/>
-        <source>The only surpises I like are the ones that help me win.</source>
+        <source>The only surprises I like are the ones that help me win.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -291,7 +291,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("The defense of his direct units raises extremly and the firerange is increased by 2 when they don't move.");
+        return qsTr("The defense of his direct units raises extremely and the firerange is increased by 2 when they don't move.");
     };
     this.getSuperPowerName = function(co)
     {
@@ -303,7 +303,7 @@ var Constructor = function()
                 qsTr("Function attacking not found use function defending instead!"),
                 qsTr("My fortress is unbeatable."),
                 qsTr("Make ready to defend yourself!"),
-                qsTr("You are to near to my defence position."),
+                qsTr("You are too near to my defence position."),
                 qsTr("Go to the shortage other their.")];
     };
     this.getVictorySentences = function(co)

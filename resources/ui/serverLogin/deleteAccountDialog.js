@@ -38,7 +38,7 @@ var DeleteAccountDialog =
         }
         else if (menu.isValidEmailAdress(email) === false)
         {
-            deleteAccount.showMessageBox(qsTr("You entered an invalid email adress."));
+            deleteAccount.showMessageBox(qsTr("You entered an invalid email address."));
         }
         else
         {
@@ -68,7 +68,7 @@ var DeleteAccountDialog =
         }
         else if (errorCode === GameEnums.LoginError_WrongEmailAdress)
         {
-            deleteAccount.showMessageBox(qsTr("E-mail adress is incorrect didn't delete account."));
+            deleteAccount.showMessageBox(qsTr("E-mail address is incorrect didn't delete account."));
             deleteAccount.changeEnableForItems(true);
         }
         else if (errorCode === GameEnums.LoginError_AccountDoesntExist)

@@ -280,7 +280,7 @@ var Constructor = function()
     };
     this.getPowerName = function(co)
     {
-        return qsTr("Aquisition");
+        return qsTr("Acquisition");
     };
     this.getSuperPowerDescription = function(co)
     {

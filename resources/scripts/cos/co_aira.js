@@ -289,7 +289,7 @@ var Constructor = function()
     {
         return [qsTr("Amazing what a little gust can do..."),
                 qsTr("Huh? Oh, wind's about to change."),
-                qsTr("The only surpises I like are the ones that help me win."),
+                qsTr("The only surprises I like are the ones that help me win."),
                 qsTr("The winds will help me blow through this battle."),
                 qsTr("Wind is coming in from the southeast. And the north. And the west."),
                 qsTr("You're about to see why my troops don't wear skirts.")];

@@ -321,7 +321,7 @@ var Constructor = function()
     this.getDefeatSentences = function(co)
     {
         return [qsTr("What? You had enough troops..."),
-                qsTr("Sensei that's you're fault!")];
+                qsTr("Sensei that's your fault!")];
     };
     this.getName = function()
     {

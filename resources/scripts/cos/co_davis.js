@@ -290,7 +290,7 @@ var Constructor = function()
     };
     this.getMiss = function(co)
     {
-        return qsTr("Side with the lossing side");
+        return qsTr("Side with the losing side");
     };
     this.getCODescription = function(co)
     {

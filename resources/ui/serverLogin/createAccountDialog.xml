@@ -83,7 +83,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>400</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","E-Mail-Adress for your account.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","E-Mail-Address for your account.")</tooltip>
                 <startValue>""</startValue>
                 <onEvent>CreateAccountDialog.emailAdress(input);</onEvent>
             </Textbox>
