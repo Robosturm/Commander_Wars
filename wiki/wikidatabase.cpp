@@ -160,6 +160,10 @@ QStringList WikiDatabase::getTags()
             }
         }
     }
+    std::sort(ret.begin(), ret.end(), [](const QString& lhs, const QString& rhs)
+    {
+        return lhs < rhs;
+    });
     return ret;
 }
 

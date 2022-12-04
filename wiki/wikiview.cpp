@@ -78,6 +78,11 @@ void WikiView::search(bool onlyTag)
     CONSOLE_PRINT("WikiView::searchChanged ", GameConsole::eDEBUG);
     m_MainPanel->clearContent();
     QVector<WikiDatabase::PageData> items = WikiDatabase::getInstance()->getEntries(m_SearchString->getCurrentText(), onlyTag);
+    std::sort(items.begin(), items.end(), [](const WikiDatabase::PageData& lhs, const WikiDatabase::PageData& rhs)
+    {
+        return lhs.m_name < rhs.m_name;
+    });
+
     qint32 itemCount = 0;
     for (auto & wikiItem : items)
     {
