@@ -6,7 +6,7 @@
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 namespace oxygine
 {
@@ -21,7 +21,7 @@ namespace oxygine
     {
         m_pDeviceFunctions = m_pWindow->vulkanInstance()->deviceFunctions(m_pWindow->device());
         // init oxygine engine
-        CONSOLE_PRINT("initialize oxygine", Console::eDEBUG);
+        CONSOLE_PRINT("initialize oxygine", GameConsole::eDEBUG);
         VideoDriver::instance = spVideoDriver::create();
         VideoDriver::instance->setDefaultSettings();
         rsCache().setDriver(VideoDriver::instance.get());
@@ -66,7 +66,7 @@ namespace oxygine
         // check for termination
         if (m_pWindow->m_quit)
         {
-            CONSOLE_PRINT("Quiting game normally", Console::eDEBUG);
+            CONSOLE_PRINT("Quiting game normally", GameConsole::eDEBUG);
             QCoreApplication::exit();
         }
         m_pWindow->frameReady();

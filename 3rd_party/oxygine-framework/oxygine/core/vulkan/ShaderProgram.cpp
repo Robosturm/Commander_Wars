@@ -3,7 +3,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 namespace oxygine
 {
@@ -18,7 +18,7 @@ namespace oxygine
         QFile file(name);
         if (!file.open(QIODevice::ReadOnly))
         {
-            CONSOLE_PRINT("Unable to load shader: " + name, Console::eFATAL);
+            CONSOLE_PRINT("Unable to load shader: " + name, GameConsole::eFATAL);
             return VK_NULL_HANDLE;
         }
 
@@ -33,7 +33,7 @@ namespace oxygine
         VkShaderModule shaderModule;
         VkResult err = m_devFuncs->vkCreateShaderModule(m_window->device(), &shaderInfo, nullptr, &shaderModule);
         if (err != VK_SUCCESS) {
-            CONSOLE_PRINT("Failed to create shader module: " + QString::number(err), Console::eFATAL);
+            CONSOLE_PRINT("Failed to create shader module: " + QString::number(err), GameConsole::eFATAL);
             return VK_NULL_HANDLE;
         }
         return shaderModule;

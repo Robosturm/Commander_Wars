@@ -5974,7 +5974,7 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="331"/>
         <location filename="../multiplayer/lobbymenu.cpp" line="345"/>
-        <source>Enter Host Adress</source>
+        <source>Enter Host address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12020,7 +12020,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/achievements/achievement_victory.js" line="68"/>
-        <source>Extremly cruel!</source>
+        <source>Extremely  cruel!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14834,7 +14834,7 @@ Units gain even more firepower for each unit within vision range.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_davis.js" line="293"/>
-        <source>Side with the lossing side</source>
+        <source>Side with the losing side</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14934,11 +14934,6 @@ Units gain bonus luck based on the amount of troops Davis controls and gain miss
 <context>
     <name>co_drake</name>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="254"/>
-        <source>A bighearted former pirate who hates fighting. Also a great surfer.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_drake.js" line="258"/>
         <source>The sea</source>
         <translation type="unfinished"></translation>
@@ -14964,11 +14959,16 @@ Naval units have 1 more movement point and have increased firepower. Air units s
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_drake.js" line="254"/>
+        <source>A big hearted former pirate who hates fighting. Also a great surfer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_drake.js" line="271"/>
         <source>
 
 CO Zone Effect: 
-Naval units have ncreased firepower.</source>
+Naval units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -15842,7 +15842,7 @@ Units have increased firepower and luck.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_epoch.js" line="289"/>
-        <source>Direct combat units gain one movement and indirect combat units recieve one extra range. Hides HP from opponents and firepower is increased.</source>
+        <source>Direct combat units gain one movement and indirect combat units receive one extra range. Hides HP from opponents and firepower is increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -16013,7 +16013,7 @@ Units have even more luck and misfortune</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_flak.js" line="266"/>
-        <source>Enough weakling&apos;s footing around!</source>
+        <source>Enough weaklings footing around!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -16310,7 +16310,17 @@ Units have more offensive and defensive bonus.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_graves.js" line="247"/>
-        <source>Fear is a valuble tool. I suggest you learn how to use it.</source>
+        <source>Fear is a valuable tool. I suggest you learn how to use it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="262"/>
+        <source>Not planned but still not the end.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_graves.js" line="263"/>
+        <source>It seems that i underestimate your strength.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -16351,16 +16361,6 @@ Units have more offensive and defensive bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_graves.js" line="258"/>
         <source>Lives could have been spared had you just accepted your fate.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_graves.js" line="262"/>
-        <source>Not planed but still not the end.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_graves.js" line="263"/>
-        <source>It seems that i underestimate your strenght.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -16451,7 +16451,7 @@ CO Zone Effect:
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_greyfield.js" line="309"/>
-        <source>Admiral Greyfield here. Attack and eleminate them.</source>
+        <source>Admiral Greyfield here. Attack and eliminate them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -16849,7 +16849,7 @@ Units have more firepower and defense.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_hachi.js" line="204"/>
-        <source>Shop&apos;s closing for today...</source>
+        <source>Shop is closing for today...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -17033,7 +17033,12 @@ Direct Units gain an additional firerange when they don&apos;t move. However fir
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="294"/>
-        <source>The defense of his direct units raises extremly and the firerange is increased by 2 when they don&apos;t move.</source>
+        <source>The defense of his direct units raises extremely and the firerange is increased by 2 when they don&apos;t move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="306"/>
+        <source>You are too near to my defence position.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -17059,11 +17064,6 @@ Direct Units gain an additional firerange when they don&apos;t move. However fir
     <message>
         <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="305"/>
         <source>Make ready to defend yourself!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="306"/>
-        <source>You are to near to my defence position.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -17637,7 +17637,7 @@ Units are way stronger when engaging stronger units</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_joey.js" line="301"/>
-        <source>Tempestous Technique</source>
+        <source>Tempestuous Technique</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -17763,7 +17763,7 @@ Units have even more Luck and Misfortune</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_jugger.js" line="246"/>
-        <source>There is a chance he might get a devestating blow, but firepower is reduced.</source>
+        <source>There is a chance he might get a devastating blow, but firepower is reduced.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18914,12 +18914,12 @@ Unit Ranks are way more effective.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_meiyo.js" line="336"/>
-        <source>You getting better recuit.</source>
+        <source>You getting better recruit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_meiyo.js" line="337"/>
-        <source>Tsss! Some recruits have one! A catastroph.</source>
+        <source>Tsss! Some recruits have one! A catastrophe.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18932,7 +18932,7 @@ Unit Ranks are way more effective.</source>
     <name>co_melanthe</name>
     <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="275"/>
-        <source>A genius scientist that harbors a great hatred for humankind. Believes plants to be a superior life forms.</source>
+        <source>A genius scientist that harbors a great hatred for mankind. Believes plants to be a superior life forms.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -21738,7 +21738,7 @@ Units have increased firepower against large regiments of units.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_rattigan.js" line="324"/>
-        <source>Sensei that&apos;s you&apos;re fault!</source>
+        <source>Sensei that&apos;s your fault!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -21930,7 +21930,7 @@ Units gain defense and have reduced firepower.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="282"/>
-        <source>Enemy loses half of their ammo, take 2 HP damage, his troops can move 2 points more and their defense rises extremly.</source>
+        <source>Enemy loses half of their ammo, take 2 HP damage, his troops can move 2 points more and their defense rises extremely.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -22056,7 +22056,7 @@ Units have lifesteal.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sabaki.js" line="242"/>
-        <source>Rejuvination Raid</source>
+        <source>Rejuvenation Raid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -22303,7 +22303,7 @@ Global firepower effects are doubled.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sanjuro.js" line="403"/>
-        <source>When a unit is built, units of the same type recieve a firepower and defense boost, unhindered by terrain, and production costs reduced by half.</source>
+        <source>When a unit is built, units of the same type receive a firepower and defense boost, unhindered by terrain, and production costs reduced by half.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -23387,7 +23387,7 @@ Units have increased firepower and defense.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_varlot.js" line="283"/>
-        <source>Aquisition</source>
+        <source>Acquisition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -23502,18 +23502,18 @@ Units have increased firepower and increased defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="194"/>
-        <source>Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_von_bolt.js" line="198"/>
         <source>Shockwave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="194"/>
+        <source>Fires shock waves that disables electrical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_von_bolt.js" line="202"/>
-        <source>Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer three HP of damage. Firepower and defense rises.</source>
+        <source>Fires shock waves that disables electrical systems and all forces in range become paralyzed. Affected units suffer three HP of damage. Firepower and defense rises.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24299,7 +24299,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="41"/>
-        <source>You entered an invalid email adress.</source>
+        <source>You entered an invalid email address.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24363,7 +24363,12 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/ui/serverLogin/deleteAccountDialog.js" line="41"/>
-        <source>You entered an invalid email adress.</source>
+        <source>You entered an invalid email address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.js" line="71"/>
+        <source>E-mail address is incorrect didn&apos;t delete account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24374,11 +24379,6 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/ui/serverLogin/deleteAccountDialog.js" line="66"/>
         <source>Password is incorrect didn&apos;t delete account.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.js" line="71"/>
-        <source>E-mail adress is incorrect didn&apos;t delete account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24486,18 +24486,18 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>forgotPasswordDialog</name>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.js" line="17"/>
-        <source>You entered an invalid email adress.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/ui/serverLogin/forgotPasswordDialog.js" line="29"/>
         <source>An e-mail with a new password was sent to your e-mail account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.js" line="17"/>
+        <source>You entered an invalid email address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/ui/serverLogin/forgotPasswordDialog.js" line="34"/>
-        <source>Invalid e-mail adress which is linked to your account.</source>
+        <source>Invalid e-mail address which is linked to your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -96,7 +96,7 @@ int main(qint32 argc, char* argv[])
         if (returncode == 1)
         {
 #ifdef Q_OS_ANDROID
-            CONSOLE_PRINT("No automatic restart on android", Console::eDEBUG);
+            CONSOLE_PRINT("No automatic restart on android", GameConsole::eDEBUG);
 #else
             CONSOLE_PRINT("Restarting application", GameConsole::eDEBUG);
             QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList());
@@ -106,7 +106,7 @@ int main(qint32 argc, char* argv[])
         else if (returncode == 2)
         {
 #ifdef Q_OS_ANDROID
-            CONSOLE_PRINT("No update support on android", Console::eDEBUG);
+            CONSOLE_PRINT("No update support on android", GameConsole::eDEBUG);
 #else
             GameUpdater::launchPatcher();
 #endif
@@ -114,7 +114,7 @@ int main(qint32 argc, char* argv[])
         else if (returncode == 3)
         {
 #ifdef Q_OS_ANDROID
-            CONSOLE_PRINT("No update support on android", Console::eDEBUG);
+            CONSOLE_PRINT("No update support on android", GameConsole::eDEBUG);
 #else
             GameUpdater::launchApplication();
 #endif

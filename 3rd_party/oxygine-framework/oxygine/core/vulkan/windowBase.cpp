@@ -5,7 +5,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 namespace oxygine
 {
@@ -22,7 +22,7 @@ namespace oxygine
         m_vulkanInstance.setLayers({ "VK_LAYER_KHRONOS_validation" });
         if (!m_vulkanInstance.create())
         {
-            CONSOLE_PRINT("Failed to create Vulkan instance: " + QString::number(m_vulkanInstance.errorCode()), Console::eFATAL);
+            CONSOLE_PRINT("Failed to create Vulkan instance: " + QString::number(m_vulkanInstance.errorCode()), GameConsole::eFATAL);
         }
     }
 
@@ -50,12 +50,10 @@ namespace oxygine
         if (ready)
         {
             rsCache().reset();
-            VideoDriver::m_stats.start = Clock::getTimeMS();
-            rsCache().reset();
         }
         else
         {
-            CONSOLE_PRINT("!ready", Console::eDEBUG);
+            CONSOLE_PRINT("!ready", GameConsole::eDEBUG);
         }
 
         return ready;
