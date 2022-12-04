@@ -1,6 +1,6 @@
 #include "coreengine/filesupport.h"
 #include "coreengine/settings.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include <QDirIterator>
 #include <QCoreApplication>
@@ -22,7 +22,7 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
     }
     for (const auto & folder : qAsConst(fullList))
     {
-        CONSOLE_PRINT("Adding files for folder: " + folder, Console::eDEBUG);
+        CONSOLE_PRINT("Adding files for folder: " + folder, GameConsole::eDEBUG);
         addHash(myHash, folder, filter);
     }
     return myHash.result();
@@ -35,7 +35,7 @@ void Filesupport::addHash(Sha256Hash & hash, const QString & folder, const QStri
     for (auto & item : list)
     {
         QString filePath = item.filePath();
-        CONSOLE_PRINT("Adding file: " + filePath + " to hash", Console::eDEBUG);
+        CONSOLE_PRINT("Adding file: " + filePath + " to hash", GameConsole::eDEBUG);
         QFile file(filePath);
         file.open(QIODevice::ReadOnly);
         while (!file.atEnd())
@@ -132,7 +132,7 @@ Filesupport::StringList Filesupport::readList(const QString & file)
     }
     else
     {
-        CONSOLE_PRINT("Unable to open file: " + file + " using empty list", Console::eWARNING);
+        CONSOLE_PRINT("Unable to open file: " + file + " using empty list", GameConsole::eWARNING);
     }
     return ret;
 }

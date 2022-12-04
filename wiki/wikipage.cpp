@@ -16,8 +16,6 @@ Wikipage::Wikipage()
 #ifdef GRAPHICSUPPORT
     setObjectName("Wikipage");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
@@ -46,6 +44,7 @@ Wikipage::Wikipage()
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
 
+    Mainapp* pApp = Mainapp::getInstance();
     connect(pApp, &Mainapp::sigKeyDown, this, &Wikipage::keyInput, Qt::QueuedConnection);
     connect(this, &Wikipage::sigShowLink, this, &Wikipage::showLink, Qt::QueuedConnection);
     connect(this, &Wikipage::sigFinished, this, &Wikipage::remove, Qt::QueuedConnection);

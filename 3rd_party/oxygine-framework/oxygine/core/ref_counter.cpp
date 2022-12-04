@@ -1,5 +1,4 @@
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
-#include "coreengine/console.h"
 
 #include <QObject>
 #include <QThread>
@@ -18,7 +17,7 @@ namespace oxygine
 #ifdef MEMORYTRACING
             if (0 > m_ref_counter)
             {
-                CONSOLE_PRINT("Memory corruption error", Console::eERROR);
+                Q_ASSERT(false);
             }
 #endif
             freeObject();

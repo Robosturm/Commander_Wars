@@ -21,9 +21,8 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogAttackLog");
 #endif
+    Interpreter::setCppOwnerShip(this);
     m_Log = m_pMap->getGameRecorder()->getAttackLog(pPlayer->getPlayerID());
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();

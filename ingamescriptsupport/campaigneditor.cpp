@@ -7,7 +7,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 
 #include "game/gamemap.h"
@@ -18,18 +18,18 @@
 #include "objects/base/spinbox.h"
 #include "objects/dialogs/dialogmessagebox.h"
 
-const QString CampaignEditor::campaign = "campaign";
-const QString CampaignEditor::campaignName = "campaignName";
-const QString CampaignEditor::campaignDescription = "campaignDescription";
-const QString CampaignEditor::campaignAuthor = "campaignAuthor";
-const QString CampaignEditor::campaignMaps = "campaignMaps";
-const QString CampaignEditor::campaignMapsFolder = "campaignMapsFolder";
-const QString CampaignEditor::campaignMapNames = "campaignMapNames";
-const QString CampaignEditor::campaignMapEnabled = "campaignMapEnabled";
-const QString CampaignEditor::campaignMapDisabled = "campaignMapDisabled";
-const QString CampaignEditor::campaignMapAdd = "campaignMapAdd";
-const QString CampaignEditor::campaignMapFinished = "campaignMapFinished";
-const QString CampaignEditor::campaignFinished = "campaignFinished";
+const char* const CampaignEditor::campaign = "campaign";
+const char* const CampaignEditor::campaignName = "campaignName";
+const char* const CampaignEditor::campaignDescription = "campaignDescription";
+const char* const CampaignEditor::campaignAuthor = "campaignAuthor";
+const char* const CampaignEditor::campaignMaps = "campaignMaps";
+const char* const CampaignEditor::campaignMapsFolder = "campaignMapsFolder";
+const char* const CampaignEditor::campaignMapNames = "campaignMapNames";
+const char* const CampaignEditor::campaignMapEnabled = "campaignMapEnabled";
+const char* const CampaignEditor::campaignMapDisabled = "campaignMapDisabled";
+const char* const CampaignEditor::campaignMapAdd = "campaignMapAdd";
+const char* const CampaignEditor::campaignMapFinished = "campaignMapFinished";
+const char* const CampaignEditor::campaignFinished = "campaignFinished";
 
 CampaignEditor::CampaignEditor()
 {
@@ -37,8 +37,6 @@ CampaignEditor::CampaignEditor()
     setObjectName("CampaignEditor");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
@@ -387,7 +385,7 @@ void CampaignEditor::loadCampaign(QString filename)
                             {
                                 QStringList items = line.replace("var map", "")
                                                         .replace("Won = variables.createVariable(\"", ",")
-                                                        .replace("\"); // " + campaignMapNames, "")
+                                                        .replace("\"); // " + QString(campaignMapNames), "")
                                                         .split(",");
                                 if (items.size() >= 2)
                                 {
@@ -417,14 +415,14 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
         }
         if (line.endsWith(campaignMapsFolder))
         {
-            m_CampaignFolder->setCurrentText(line.replace("var ret = [\"", "").replace("\"]; // " + campaignMapsFolder, ""));
+            m_CampaignFolder->setCurrentText(line.replace("var ret = [\"", "").replace("\"]; // " + QString(campaignMapsFolder), ""));
         }
         if (line.endsWith(campaignMapNames))
         {
             mapDatas.append(MapData());
             QStringList items = line.replace("var map", "")
                                     .replace("Won = variables.createVariable(\"", ",")
-                                    .replace("\"); // " + campaignMapNames, "")
+                                    .replace("\"); // " + QString(campaignMapNames), "")
                                     .split(",");
             if (items.size() >= 2)
             {
@@ -433,7 +431,7 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
         }
         if (line.endsWith(campaignMapEnabled))
         {
-            qint32 mapDataIndex = line.replace("var map", "").replace("EnableCount = 0; // " + campaignMapEnabled, "").toInt();
+            qint32 mapDataIndex = line.replace("var map", "").replace("EnableCount = 0; // " + QString(campaignMapEnabled), "").toInt();
             while (!stream.atEnd())
             {
                 line = stream.readLine().simplified();
@@ -452,7 +450,7 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
         }
         if (line.endsWith(campaignMapDisabled))
         {
-            qint32 mapDataIndex = line.replace("var map", "").replace("DisableCount = 0; // " + campaignMapDisabled, "").toInt();
+            qint32 mapDataIndex = line.replace("var map", "").replace("DisableCount = 0; // " + QString(campaignMapDisabled), "").toInt();
             while (!stream.atEnd())
             {
                 line = stream.readLine().simplified();
@@ -477,7 +475,7 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
                                     .replace(" && ", ",")
                                     .replace("EnableCount >= ", ",")
                                     .replace(") {ret.push(\"", ",")
-                                    .replace("\");} // " + campaignMapAdd, "")
+                                    .replace("\");} // " + QString(campaignMapAdd), "")
                                     .split(",");
             if (items.size() >= 5)
             {

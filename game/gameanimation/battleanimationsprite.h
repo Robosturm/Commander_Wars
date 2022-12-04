@@ -18,14 +18,14 @@ class BattleAnimationSprite final : public QObject, public oxygine::Sprite
 {
     Q_OBJECT
 public:
-    static const QString standingAnimation;
-    static const QString impactUnitOverlayAnimation;
-    static const QString impactAnimation;
-    static const QString fireAnimation;
-    static const QString moveInAnimation;
-    static const QString standingFiredAnimation;
-    static const QString dyingAnimation;
-    static const QString stopAnimation;
+    static const char* const standingAnimation;
+    static const char* const impactUnitOverlayAnimation;
+    static const char* const impactAnimation;
+    static const char* const fireAnimation;
+    static const char* const moveInAnimation;
+    static const char* const standingFiredAnimation;
+    static const char* const dyingAnimation;
+    static const char* const stopAnimation;
 
     explicit BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1, bool playSound = true);
     ~BattleAnimationSprite();

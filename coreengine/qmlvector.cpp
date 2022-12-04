@@ -1,5 +1,4 @@
 #include "coreengine/qmlvector.h"
-#include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/interpreter.h"
 
@@ -10,8 +9,6 @@ QmlVectorPoint::QmlVectorPoint()
 #ifdef GRAPHICSUPPORT
     setObjectName("QmlVectorPoint");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     Interpreter::getInstance()->trackJsObject(this);
 }
@@ -21,8 +18,6 @@ QmlVectorUnit::QmlVectorUnit()
 #ifdef GRAPHICSUPPORT
     setObjectName("QmlVectorUnit");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     Interpreter::getInstance()->trackJsObject(this);
 }
@@ -105,8 +100,6 @@ QmlVectorBuilding::QmlVectorBuilding()
 #ifdef GRAPHICSUPPORT
     setObjectName("QmlVectorBuilding");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     Interpreter::getInstance()->trackJsObject(this);
 }

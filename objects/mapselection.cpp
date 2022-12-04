@@ -6,7 +6,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/userdata.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -22,8 +22,6 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
     setObjectName("MapSelection");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     m_itemChangedTimer.setSingleShot(true);
     m_itemChangedTimer.setInterval(350);
     connect(&m_itemChangedTimer, &QTimer::timeout, this, &MapSelection::itemChangeTimerExpired, Qt::QueuedConnection);
@@ -268,7 +266,7 @@ void MapSelection::createItemContainer(qint32 y, qint32 width, qint32 height)
 
 void MapSelection::setSelection(QString folder, QStringList files)
 {    
-    CONSOLE_PRINT("MapSelection::setSelection", Console::eDEBUG);
+    CONSOLE_PRINT("MapSelection::setSelection", GameConsole::eDEBUG);
     m_itemClicked = false;
     m_currentFolder = folder;
     m_Files = files;
@@ -290,7 +288,7 @@ void MapSelection::setCurrentItem(QString item)
 
 void MapSelection::changeFolder(QString folder)
 {    
-    CONSOLE_PRINT("MapSelection::changeFolder " + folder, Console::eDEBUG);
+    CONSOLE_PRINT("MapSelection::changeFolder " + folder, GameConsole::eDEBUG);
     m_itemClicked = false;
     QString newFolder = folder;
     if (newFolder == "")
@@ -311,7 +309,7 @@ void MapSelection::changeFolder(QString folder)
     {
         QFileInfo newFolderInfo(newFolder);
         newFolder = GlobalUtils::makePathRelative(newFolderInfo.canonicalFilePath());
-        CONSOLE_PRINT("MapSelection::changeFolder. Relative Path: " + newFolder, Console::eDEBUG);
+        CONSOLE_PRINT("MapSelection::changeFolder. Relative Path: " + newFolder, GameConsole::eDEBUG);
         m_Files.clear();
         if (newFolder != "maps")
         {
@@ -434,7 +432,7 @@ void MapSelection::updateSelection(qint32 startIndex)
             {
                 // it's a map
                 QString fullFilename = m_Files[m_currentStartIndex + i];
-                CONSOLE_PRINT("MapSelection::updateSelection Loading: " + fullFilename, Console::eDEBUG);
+                CONSOLE_PRINT("MapSelection::updateSelection Loading: " + fullFilename, GameConsole::eDEBUG);
                 QFile file(fullFilename);
                 file.open(QIODevice::ReadOnly);
                 QDataStream pStream(&file);

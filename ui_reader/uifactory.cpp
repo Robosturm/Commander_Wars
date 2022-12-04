@@ -92,13 +92,11 @@ static const char* const attrShowUnitPreview = "showUnitPreview";
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
 
-UiFactory* UiFactory::m_pUiFactory;
+UiFactory* UiFactory::m_pUiFactory{nullptr};
 
 UiFactory::UiFactory()
 {
     setObjectName("UiFactory");
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     m_factoryItems.append({QString(itemLabel), std::bind(&UiFactory::createLabel, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemCheckbox), std::bind(&UiFactory::createCheckbox, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemSpinbox), std::bind(&UiFactory::createSpinbox, this, _1, _2, _3, _4, _5)});
@@ -138,7 +136,7 @@ void UiFactory::shutdown()
 
 void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
 {
-    CONSOLE_PRINT("Loading ui " + uiXml, Console::eDEBUG);
+    CONSOLE_PRINT("Loading ui " + uiXml, GameConsole::eDEBUG);
     if (m_dropDownPlayer.get() == nullptr)
     {
         m_dropDownPlayer = spPlayer::create(nullptr);
@@ -183,7 +181,7 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                             success = createItem(root, node.toElement(), item, pMenu);
                             if (!success)
                             {
-                                CONSOLE_PRINT("Unknown item: " + node.toElement().nodeName() + " found. UI creation failed.", Console::eERROR);
+                                CONSOLE_PRINT("Unknown item: " + node.toElement().nodeName() + " found. UI creation failed.", GameConsole::eERROR);
                             }
                         }
                         node = node.nextSibling();
@@ -195,18 +193,18 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                     }
                     else
                     {
-                        CONSOLE_PRINT("Unable to load: " + uiFile, Console::eERROR);
+                        CONSOLE_PRINT("Unable to load: " + uiFile, GameConsole::eERROR);
                     }
                 }
                 else
                 {
-                    CONSOLE_PRINT("Unable to load: " + uiFile, Console::eERROR);
-                    CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
+                    CONSOLE_PRINT("Unable to load: " + uiFile, GameConsole::eERROR);
+                    CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), GameConsole::eERROR);
                 }
             }
             else
             {
-                CONSOLE_PRINT("Unable to open existing file: " + uiFile, Console::eERROR);
+                CONSOLE_PRINT("Unable to open existing file: " + uiFile, GameConsole::eERROR);
             }
         }
     }
@@ -284,7 +282,7 @@ bool UiFactory::createItem(oxygine::spActor parent, QDomElement element, oxygine
     }
     if (!success)
     {
-        CONSOLE_PRINT("Unable to create item: " + name + ".", Console::eERROR);
+        CONSOLE_PRINT("Unable to create item: " + name + ".", GameConsole::eERROR);
     }
     else
     {
@@ -1237,7 +1235,7 @@ bool UiFactory::checkElements(const QDomNodeList & childs, const QStringList & a
             }
             else if (i == childCount - 1)
             {
-                CONSOLE_PRINT("Missing attribute: " + attr, Console::eERROR);
+                CONSOLE_PRINT("Missing attribute: " + attr, GameConsole::eERROR);
                 ret = false;
             }
         }
@@ -1294,7 +1292,7 @@ qint32 UiFactory::getIntValue(QString line, QString objectId, qint32 loopIdx, Cr
             }
             else
             {
-                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", GameConsole::eERROR);
             }
         }
         else
@@ -1305,7 +1303,7 @@ qint32 UiFactory::getIntValue(QString line, QString objectId, qint32 loopIdx, Cr
             }
             else
             {
-                CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
+                CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, GameConsole::eERROR);
             }
         }
     }
@@ -1354,7 +1352,7 @@ quint64 UiFactory::getUInt64Value(QString line, QString objectId, qint32 loopIdx
             }
             else
             {
-                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", GameConsole::eERROR);
             }
         }
         else
@@ -1365,7 +1363,7 @@ quint64 UiFactory::getUInt64Value(QString line, QString objectId, qint32 loopIdx
             }
             else
             {
-                CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
+                CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, GameConsole::eERROR);
             }
         }
     }
@@ -1414,7 +1412,7 @@ float UiFactory::getFloatValue(QString line, QString objectId, qint32 loopIdx, C
             }
             else
             {
-                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", GameConsole::eERROR);
             }
         }
         else
@@ -1425,7 +1423,7 @@ float UiFactory::getFloatValue(QString line, QString objectId, qint32 loopIdx, C
             }
             else
             {
-                CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
+                CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, GameConsole::eERROR);
             }
         }
     }
@@ -1470,7 +1468,7 @@ bool UiFactory::getBoolValue(QString line, QString objectId, qint32 loopIdx, Cre
             }
             else
             {
-                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", GameConsole::eERROR);
             }
         }
         else
@@ -1481,7 +1479,7 @@ bool UiFactory::getBoolValue(QString line, QString objectId, qint32 loopIdx, Cre
             }
             else
             {
-                CONSOLE_PRINT("Unable to determine a bool value while interpreting. Line: " + line, Console::eERROR);
+                CONSOLE_PRINT("Unable to determine a bool value while interpreting. Line: " + line, GameConsole::eERROR);
             }
         }
     }
@@ -1518,7 +1516,7 @@ QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx
             }
             else
             {
-                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ". Using \"" + value + "\" as value.", Console::eDEBUG);
+                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ". Using \"" + value + "\" as value.", GameConsole::eDEBUG);
             }
         }
         else if (erg.isString())
@@ -1537,7 +1535,7 @@ QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx
             }
             else
             {
-                CONSOLE_PRINT("Unable to determine a string value while interpreting. Line: " + line + " using line as value", Console::eDEBUG);
+                CONSOLE_PRINT("Unable to determine a string value while interpreting. Line: " + line + " using line as value", GameConsole::eDEBUG);
             }
         }
     }
@@ -1570,7 +1568,7 @@ Player* UiFactory::getPlayerValue(QString line, QString objectId, qint32 loopIdx
             }
             else
             {
-                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", GameConsole::eERROR);
             }
         }
         else
@@ -1605,7 +1603,7 @@ QStringList UiFactory::getStringListValue(QString line, QString objectId, qint32
         QJSValue erg = pInterpreter->evaluate(line);
         if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", GameConsole::eERROR);
             if (success != nullptr)
             {
                 *success = false;
@@ -1689,6 +1687,6 @@ void UiFactory::doEvent(QString command, QString objectId, qint32 loopIdx, Creat
     QJSValue erg = pInterpreter->evaluate(args);
     if (erg.isError())
     {
-        CONSOLE_PRINT("Error while parsing " + command + " Error: " + erg.toString() + ".", Console::eERROR);
+        CONSOLE_PRINT("Error while parsing " + command + " Error: " + erg.toString() + ".", GameConsole::eERROR);
     }
 }

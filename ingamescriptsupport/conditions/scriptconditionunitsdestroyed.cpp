@@ -6,7 +6,7 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -39,7 +39,7 @@ void ScriptConditionUnitsDestroyed::setCount(const qint32 &count)
 
 void ScriptConditionUnitsDestroyed::readCondition(QTextStream& rStream, QString line)
 {
-    CONSOLE_PRINT("Reading ConditionUnitsDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionUnitsDestroyed", GameConsole::eDEBUG);
     line = line.simplified();
     QStringList items = line.replace("if (map.getGameRecorder().getDestroyedUnits(", "")
                             .replace(") >= ", ",")
@@ -75,7 +75,7 @@ void ScriptConditionUnitsDestroyed::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionUnitsDestroyed::writeCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Writing ConditionUnitsDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionUnitsDestroyed", GameConsole::eDEBUG);
     rStream << "        if (map.getGameRecorder().getDestroyedUnits(" << QString::number(m_player) << ") >= " << QString::number(m_count)
             << " && " << m_executed << ".readDataBool() === false) {"
             << "// " << QString::number(getVersion()) << " " << ConditionUnitsDestroyed << "\n";
@@ -100,7 +100,7 @@ void ScriptConditionUnitsDestroyed::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + ConditionUnitsDestroyed + " End\n";
+    rStream << "        } // " + QString(ConditionUnitsDestroyed) + " End\n";
 }
 
 void ScriptConditionUnitsDestroyed::writePostCondition(QTextStream& rStream)

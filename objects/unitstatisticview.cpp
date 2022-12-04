@@ -6,7 +6,6 @@
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
 
 #include "wiki/wikidatabase.h"
 
@@ -18,8 +17,6 @@ UnitStatisticView::UnitStatisticView(const GameRecorder::PlayerData & data, qint
 #ifdef GRAPHICSUPPORT
     setObjectName("UnitStatisticView");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     QSize size(width, heigth);
     spPanel pPanel = spPanel::create(true, size, size);

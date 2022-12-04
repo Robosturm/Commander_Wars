@@ -2,8 +2,7 @@
 #include "game/gamemap.h"
 
 #include "coreengine/interpreter.h"
-#include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
 TerrainFindingSystem::TerrainFindingSystem(GameMap* pMap, QString terrainID, qint32 startX, qint32 startY)
@@ -17,8 +16,6 @@ TerrainFindingSystem::TerrainFindingSystem(GameMap* pMap, QString terrainID, qin
 #ifdef GRAPHICSUPPORT
     setObjectName("TerrainFindingSystem");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -33,8 +30,6 @@ TerrainFindingSystem::TerrainFindingSystem(GameMap* pMap, QStringList terrainIDs
 #ifdef GRAPHICSUPPORT
     setObjectName("TerrainFindingSystem");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -78,7 +73,7 @@ void TerrainFindingSystem::killTerrainFindingSystem()
 TerrainFlowData* TerrainFindingSystem::getFlowData()
 {
     CONSOLE_PRINT("getFlowData() starting at X=" + QString::number(m_StartPoint.x()) +
-                  " Y=" + QString::number(m_StartPoint.y()), Console::eDEBUG);
+                  " Y=" + QString::number(m_StartPoint.y()), GameConsole::eDEBUG);
     spQmlVectorPoint circle(GlobalUtils::getCircle(1, 1));
     const qint32 size = circle->size();
     QVector<PositionFlowData> flowList;

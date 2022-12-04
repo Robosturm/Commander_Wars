@@ -1,7 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -34,7 +34,7 @@ namespace oxygine
         }
         else
         {
-            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eERROR);
+            CONSOLE_PRINT("Unable to find frac shader: " + filepath, GameConsole::eERROR);
         }
         filepath = "system/vertex_shader.glsl";
         if (!QFile::exists(filepath))
@@ -50,7 +50,7 @@ namespace oxygine
         }
         else
         {
-            CONSOLE_PRINT("Unable to find vertex shader: " + filepath, Console::eERROR);
+            CONSOLE_PRINT("Unable to find vertex shader: " + filepath, GameConsole::eERROR);
         }
         filepath = "system/frac_table_shader.glsl";
         if (!QFile::exists(filepath))
@@ -66,7 +66,7 @@ namespace oxygine
         }
         else
         {
-            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eERROR);
+            CONSOLE_PRINT("Unable to find frac shader: " + filepath, GameConsole::eERROR);
         }
         filepath = "system/frac_matrix_shader.glsl";
         if (!QFile::exists(filepath))
@@ -82,7 +82,7 @@ namespace oxygine
         }
         else
         {
-            CONSOLE_PRINT("Unable to find frac shader: " + filepath, Console::eERROR);
+            CONSOLE_PRINT("Unable to find frac shader: " + filepath, GameConsole::eERROR);
         }
         m_fracShader = fracShaderBody;
         m_vertexShader = vertexShaderBody;

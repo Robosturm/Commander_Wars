@@ -1,4 +1,3 @@
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 #include "gameinput/humanplayerinput.h"
@@ -21,8 +20,6 @@ BaseGameInputIF::BaseGameInputIF(GameMap* pMap, GameEnums::AiTypes aiType)
 #ifdef GRAPHICSUPPORT
     setObjectName("BaseGameInputIF");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -56,7 +53,7 @@ void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* 
     else
     {
         auto type = input->getAiType();
-        CONSOLE_PRINT("Serializing ai " + QString::number(type), Console::eDEBUG);
+        CONSOLE_PRINT("Serializing ai " + QString::number(type), GameConsole::eDEBUG);
         pStream << static_cast<qint32>(type);
         input->serializeObject(pStream);
     }
@@ -64,7 +61,7 @@ void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* 
 
 spBaseGameInputIF BaseGameInputIF::deserializeInterface(GameMap* pMap, QDataStream& pStream, qint32 version)
 {
-    CONSOLE_PRINT("reading ai", Console::eDEBUG);
+    CONSOLE_PRINT("reading ai", GameConsole::eDEBUG);
     spBaseGameInputIF ret;
     if (version > 7)
     {
@@ -91,7 +88,7 @@ spBaseGameInputIF BaseGameInputIF::deserializeInterface(GameMap* pMap, QDataStre
 
 spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes type)
 {
-    CONSOLE_PRINT("Creating AI " + QString::number(type), Console::eDEBUG);
+    CONSOLE_PRINT("Creating AI " + QString::number(type), GameConsole::eDEBUG);
     spBaseGameInputIF ret;
     switch (type)
     {

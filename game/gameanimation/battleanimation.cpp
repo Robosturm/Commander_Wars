@@ -6,8 +6,9 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenchangenumbertext.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
+
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 
@@ -40,8 +41,6 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
 #ifdef GRAPHICSUPPORT
     setObjectName("BattleAnimation");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
@@ -98,7 +97,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     m_battleTimer.setSingleShot(false);
     connect(&m_battleTimer, &QTimer::timeout, this, &BattleAnimation::nextAnimatinStep, Qt::QueuedConnection);
     nextAnimatinStep();
-    CONSOLE_PRINT("BattleAnimation::BattleAnimation()", Console::eDEBUG);
+    CONSOLE_PRINT("BattleAnimation::BattleAnimation()", GameConsole::eDEBUG);
 }
 
 void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
@@ -671,7 +670,7 @@ void BattleAnimation::stopSound(bool forceStop)
 void BattleAnimation::nextAnimatinStep()
 {
     Mainapp::getInstance()->pauseRendering();
-    CONSOLE_PRINT("BattleAnimation::nextAnimatinStep " + QString::number(static_cast<qint32>(m_currentState)), Console::eDEBUG);
+    CONSOLE_PRINT("BattleAnimation::nextAnimatinStep " + QString::number(static_cast<qint32>(m_currentState)), GameConsole::eDEBUG);
     switch (m_currentState)
     {
         case AnimationProgress::MoveIn:
@@ -956,7 +955,7 @@ void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite & pSprit
 
 void BattleAnimation::startBattleTimer(qint32 duration)
 {
-    CONSOLE_PRINT("Starting battle timer with base duration: " + QString::number(duration), Console::eDEBUG);
+    CONSOLE_PRINT("Starting battle timer with base duration: " + QString::number(duration), GameConsole::eDEBUG);
     m_battleTimer.start(duration / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 

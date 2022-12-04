@@ -7,7 +7,6 @@
 
 namespace oxygine
 {
-    AnimationFrame ResAnim::m_emptyFrame;
     ResAnim::ResAnim(Resource* atlas)
         : m_columns(1),
           m_atlas(atlas),
@@ -143,7 +142,12 @@ namespace oxygine
         {
             return m_frames[index];
         }
-        return m_emptyFrame;
+        static QScopedPointer<AnimationFrame> emptyFrame;
+        if (emptyFrame.isNull())
+        {
+            emptyFrame.reset(new AnimationFrame());
+        }
+        return *emptyFrame.get();
     }
 
     void ResAnim::setFrame(qint32 col, qint32 row, const AnimationFrame& frame)

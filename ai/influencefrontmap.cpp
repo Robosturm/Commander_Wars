@@ -2,9 +2,8 @@
 
 #include "ai/influencefrontmap.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "ai/coreai.h"
 
 #include "game/gamemap.h"
@@ -133,15 +132,13 @@ InfluenceFrontMap::InfluenceFrontMap(GameMap* pMap, const std::vector<spIslandMa
 #ifdef GRAPHICSUPPORT
     setObjectName("InfluenceFrontMap");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     reset();
 }
 
 void InfluenceFrontMap::addBuildingInfluence()
 {
-    AI_CONSOLE_PRINT("InfluenceFrontMap::addBuildingInfluence()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("InfluenceFrontMap::addBuildingInfluence()", GameConsole::eDEBUG);
     std::vector<QPoint> buildingPositions;
     std::vector<qint32> buildingOwners;
     std::vector<QStringList> buildLists;
@@ -234,7 +231,7 @@ qint32 InfluenceFrontMap::getIslandFromUnitId(const QString & unitId, std::map<Q
 
 void InfluenceFrontMap::reset()
 {
-    AI_CONSOLE_PRINT("InfluenceFrontMap::reset()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("InfluenceFrontMap::reset()", GameConsole::eDEBUG);
     hide();
     if (m_InfluenceMap.size() == 0)
     {
@@ -396,7 +393,7 @@ void InfluenceFrontMap::hide()
 
 void InfluenceFrontMap::calculateGlobalData()
 {
-    AI_CONSOLE_PRINT("InfluenceFrontMap::calculateGlobalData()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("InfluenceFrontMap::calculateGlobalData()", GameConsole::eDEBUG);
     findFrontLineTiles();
     createFrontLine();
     updateHighestInfluence();
@@ -404,7 +401,7 @@ void InfluenceFrontMap::calculateGlobalData()
 
 void InfluenceFrontMap::findFrontLineTiles()
 {
-    AI_CONSOLE_PRINT("InfluenceFrontMap::findFrontLineTiles()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("InfluenceFrontMap::findFrontLineTiles()", GameConsole::eDEBUG);
     spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
     
     qint32 width = m_pMap->getMapWidth();
@@ -476,7 +473,7 @@ void InfluenceFrontMap::addFrontLineMoveTypes(InfluenceInfo & info, qint32 x1, q
 
 void InfluenceFrontMap::createFrontLine()
 {
-    AI_CONSOLE_PRINT("InfluenceFrontMap::createFrontLine()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("InfluenceFrontMap::createFrontLine()", GameConsole::eDEBUG);
     spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
     
     qint32 width = m_pMap->getMapWidth();
@@ -522,7 +519,7 @@ void InfluenceFrontMap::searchFrontLine(QmlVectorPoint* neighbours, InfluenceInf
 
 void InfluenceFrontMap::updateHighestInfluence()
 {
-    AI_CONSOLE_PRINT("InfluenceFrontMap::updateHighestInfluence()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("InfluenceFrontMap::updateHighestInfluence()", GameConsole::eDEBUG);
     spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));    
     qint32 width = m_pMap->getMapWidth();
     qint32 heigth = m_pMap->getMapHeight();

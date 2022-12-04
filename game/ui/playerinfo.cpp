@@ -15,8 +15,6 @@ PlayerInfo::PlayerInfo(GameMap* pMap)
     setObjectName("PlayerInfo");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     setScale(1.0f);
 }
 

@@ -1,6 +1,6 @@
 #include "objects/dialogs/dialogconnecting.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -14,8 +14,7 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogConnecting");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");

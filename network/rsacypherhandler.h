@@ -75,5 +75,6 @@ private:
     EVP_PKEY* m_publicKey;
     QString m_publicKeyStr;
     bool m_ready{false};
+    const EVP_CIPHER* CYPHER;
 };
 

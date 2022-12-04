@@ -15,10 +15,10 @@
 
 #include "menue/basegamemenu.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 
-spGameAnimationFactory GameAnimationFactory::m_pInstance;
+spGameAnimationFactory GameAnimationFactory::m_pInstance{nullptr};
 QVector<spGameAnimation> GameAnimationFactory::m_Animations;
 
 GameAnimationFactory::GameAnimationFactory()
@@ -26,8 +26,6 @@ GameAnimationFactory::GameAnimationFactory()
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationFactory");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -73,7 +71,7 @@ void GameAnimationFactory::release()
 
 GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime, bool mapPosition)
 {    
-    CONSOLE_PRINT("Creating new animation", Console::eDEBUG);
+    CONSOLE_PRINT("Creating new animation", GameConsole::eDEBUG);
     spGameAnimation animation = spGameAnimation::create(frameTime, pMap);
     if (mapPosition)
     {
@@ -99,7 +97,7 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(GameMap* pMap, U
 
 GameAnimationWalk* GameAnimationFactory::createWalkingAnimationV2(GameMap* pMap, Unit* pUnit, const QVector<QPoint> & movePath)
 {
-    CONSOLE_PRINT("Creating new walking animation", Console::eDEBUG);
+    CONSOLE_PRINT("Creating new walking animation", GameConsole::eDEBUG);
     spGameAnimationWalk pGameAnimationWalk = spGameAnimationWalk::create(pUnit, movePath, pMap);
     pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     if (pMap != nullptr)
@@ -112,7 +110,7 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimationV2(GameMap* pMap,
 
 GameAnimationPower* GameAnimationFactory::createAnimationPower(GameMap* pMap, QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime)
 {    
-    CONSOLE_PRINT("Creating new power animation", Console::eDEBUG);
+    CONSOLE_PRINT("Creating new power animation", GameConsole::eDEBUG);
     spGameAnimationPower pGameAnimationPower = GameAnimationPower::createGameAnimationPower(frameTime, color, powerMode, pCO, pMap);
     pGameAnimationPower->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     if (pMap != nullptr)
@@ -129,7 +127,7 @@ GameAnimationPower* GameAnimationFactory::createAnimationPower(GameMap* pMap, QC
 
 GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(GameMap* pMap, const QString & text, const QString & coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
 {
-    CONSOLE_PRINT("Creating new dialog animation", Console::eDEBUG);
+    CONSOLE_PRINT("Creating new dialog animation", GameConsole::eDEBUG);
     spGameAnimationDialog pGameAnimationDialog = spGameAnimationDialog::create(frameTime, pMap);
     pGameAnimationDialog->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     pGameAnimationDialog->setDialog(text);
@@ -142,7 +140,7 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(GameMap* pM
 
 GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime, quint32 uptimeMs)
 {
-    CONSOLE_PRINT("Creating new next day animation", Console::eDEBUG);
+    CONSOLE_PRINT("Creating new next day animation", GameConsole::eDEBUG);
     if (pMap != nullptr)
     {
         auto* pMenu = pMap->getMenu();
@@ -159,7 +157,7 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(GameMap* 
 
 GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(GameMap* pMap, qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints)
 {
-    CONSOLE_PRINT("Creating new capture animation", Console::eDEBUG);
+    CONSOLE_PRINT("Creating new capture animation", GameConsole::eDEBUG);
     spGameAnimationCapture pGameAnimationCapture = spGameAnimationCapture::create(startPoints, endPoints, maxPoints, pMap);
     pGameAnimationCapture->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     pGameAnimationCapture->setPosition(x, y);
@@ -172,7 +170,7 @@ GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(GameMap* 
 GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                                            Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
 {    
-    CONSOLE_PRINT("Creating new battle animation", Console::eDEBUG);
+    CONSOLE_PRINT("Creating new battle animation", GameConsole::eDEBUG);
     spGameAnimation pRet;    
     if (pDefUnit != nullptr && pMap != nullptr)
     {
@@ -287,7 +285,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
 GameAnimation* GameAnimationFactory::createOverworldBattleAnimation(GameMap* pMap, Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                                                     Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
 {
-    CONSOLE_PRINT("Creating new overworld battle animation", Console::eDEBUG);
+    CONSOLE_PRINT("Creating new overworld battle animation", GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(pAtkTerrain),
                        pInterpreter->newQObject(pAtkUnit),
@@ -353,14 +351,14 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipp
     }
     if (m_Animations.size() == 0 && !skipping)
     {
-        CONSOLE_PRINT("GameAnimationFactory -> emitting animationsFinished()", Console::eDEBUG);
+        CONSOLE_PRINT("GameAnimationFactory -> emitting animationsFinished()", GameConsole::eDEBUG);
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
 }
 
 void GameAnimationFactory::clearAllAnimations()
 {
-    CONSOLE_PRINT("GameAnimationFactory -> clearAllAnimations()", Console::eDEBUG);
+    CONSOLE_PRINT("GameAnimationFactory -> clearAllAnimations()", GameConsole::eDEBUG);
     for (qint32 i = 0; i < m_Animations.size(); i++)
     {
         m_Animations[i]->detach();
@@ -371,7 +369,7 @@ void GameAnimationFactory::clearAllAnimations()
 
 void GameAnimationFactory::finishAllAnimations()
 {
-    CONSOLE_PRINT("GameAnimationFactory::finishAllAnimations()", Console::eDEBUG);
+    CONSOLE_PRINT("GameAnimationFactory::finishAllAnimations()", GameConsole::eDEBUG);
     qint32 i = 0;
     while (i < m_Animations.size())
     {
@@ -387,14 +385,14 @@ void GameAnimationFactory::finishAllAnimationsWithEmitFinished()
     GameAnimationFactory::finishAllAnimations();
     if (m_Animations.size() == 0)
     {
-        CONSOLE_PRINT("GameAnimationFactory -> emitting animationsFinished()", Console::eDEBUG);
+        CONSOLE_PRINT("GameAnimationFactory -> emitting animationsFinished()", GameConsole::eDEBUG);
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
 }
 
 void GameAnimationFactory::skipAllAnimations()
 {
-    CONSOLE_PRINT("skipAllAnimations()", Console::eDEBUG);
+    CONSOLE_PRINT("skipAllAnimations()", GameConsole::eDEBUG);
     qint32 i = 0;
     while (i < GameAnimationFactory::getAnimationCount())
     {
@@ -430,17 +428,17 @@ void GameAnimationFactory::skipAllAnimations()
             i++;
         }
     }
-    CONSOLE_PRINT("skipAllAnimations remaining Animations=" + QString::number(GameAnimationFactory::getAnimationCount()), Console::eDEBUG);
+    CONSOLE_PRINT("skipAllAnimations remaining Animations=" + QString::number(GameAnimationFactory::getAnimationCount()), GameConsole::eDEBUG);
     GameAnimationFactory::printActiveAnimations();
 }
 
 void GameAnimationFactory::printActiveAnimations()
 {
-    if (Console::getInstance()->getLogLevel() <= Console::eDEBUG )
+    if (GameConsole::getLogLevel() <= GameConsole::eDEBUG )
     {
         for (auto & animation : m_Animations)
         {
-            CONSOLE_PRINT("Currently running animation: " + animation->objectName(), Console::eDEBUG);
+            CONSOLE_PRINT("Currently running animation: " + animation->objectName(), GameConsole::eDEBUG);
         }
     }
 }

@@ -6,8 +6,8 @@
 #include "menue/campaignmenu.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/gameconsole.h"
+#include "coreengine/audiomanager.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
@@ -38,9 +38,8 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    CONSOLE_PRINT("Entering Map Selection Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Map Selection Menue", GameConsole::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
     oxygine::spSprite sprite = oxygine::spSprite::create();
@@ -178,7 +177,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
 
 void MapSelectionMapsMenue::buttonBack()
 {    
-    CONSOLE_PRINT("slotButtonBack()", Console::eDEBUG);
+    CONSOLE_PRINT("slotButtonBack()", GameConsole::eDEBUG);
     Mainapp::getInstance()->pauseRendering();
     switch (m_MapSelectionStep)
     {
@@ -204,7 +203,7 @@ void MapSelectionMapsMenue::buttonBack()
             }
             else
             {
-                CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+                CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
                 if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                 {
                     oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), true));
@@ -223,7 +222,7 @@ void MapSelectionMapsMenue::buttonBack()
 
 void MapSelectionMapsMenue::buttonNext()
 {    
-    CONSOLE_PRINT("slotButtonNext()", Console::eDEBUG);
+    CONSOLE_PRINT("slotButtonNext()", GameConsole::eDEBUG);
     Mainapp::getInstance()->pauseRendering();
     switch (m_MapSelectionStep)
     {
@@ -262,7 +261,7 @@ void MapSelectionMapsMenue::buttonNext()
                     if (file.endsWith(".jsm") &&
                         m_pMapSelectionView->getCurrentLoadedCampaign().get() != nullptr)
                     {
-                        CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+                        CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
                         if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                         {
                             oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentLoadedCampaign(), true));
@@ -294,7 +293,7 @@ void MapSelectionMapsMenue::buttonNext()
 
 void MapSelectionMapsMenue::exitMenu()
 {
-    CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
     spMainwindow window = spMainwindow::create("ui/menu/mainsinglemenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
@@ -319,7 +318,7 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
     }
     else
     {
-        CONSOLE_PRINT("Ignoring map selection change", Console::eDEBUG);
+        CONSOLE_PRINT("Ignoring map selection change", GameConsole::eDEBUG);
     }
 }
 
@@ -389,7 +388,7 @@ void MapSelectionMapsMenue::hidePlayerSelection()
 
 void MapSelectionMapsMenue::startGame()
 {    
-    CONSOLE_PRINT("Start game", Console::eDEBUG);
+    CONSOLE_PRINT("Start game", GameConsole::eDEBUG);
     defeatClosedPlayers();
 
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
@@ -399,7 +398,7 @@ void MapSelectionMapsMenue::startGame()
     pMap->getGameScript()->gameStart();
     pMap->updateSprites(-1, -1, false, true);
     // start game
-    CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
     auto window = spGameMenue::create(pMap, false, spNetworkInterface(), false);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
@@ -415,7 +414,7 @@ void MapSelectionMapsMenue::defeatClosedPlayers()
             GameEnums::AiTypes aiType =  m_pPlayerSelection->getPlayerAiType(i);
             if (aiType == GameEnums::AiTypes::AiTypes_Closed)
             {
-                CONSOLE_PRINT("Defeating player " + QString::number(i) + " cause he's selected as closed player.", Console::eDEBUG);
+                CONSOLE_PRINT("Defeating player " + QString::number(i) + " cause he's selected as closed player.", GameConsole::eDEBUG);
                 pMap->getPlayer(i)->setIsDefeated(true);
             }
         }
@@ -576,7 +575,7 @@ void MapSelectionMapsMenue::onEnter()
     QString func = "mapsSelection";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }

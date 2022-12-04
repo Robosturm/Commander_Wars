@@ -17,8 +17,8 @@ class GameRule final : public QObject, public FileSerializable, public oxygine::
 {
     Q_OBJECT
 public:
-    static const QString checkbox;
-    static const QString spinbox;
+    static const char* const checkbox;
+    static const char* const spinbox;
 
     explicit GameRule();
     explicit GameRule(QString ruleID);

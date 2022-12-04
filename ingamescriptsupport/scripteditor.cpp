@@ -3,7 +3,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
@@ -21,8 +21,6 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     setObjectName("ScriptEditor");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");

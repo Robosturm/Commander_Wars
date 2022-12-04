@@ -1,6 +1,6 @@
 #include "objects/coselection.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/cospritemanager.h"
@@ -15,8 +15,7 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
 #ifdef GRAPHICSUPPORT
     setObjectName("COSelection");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     setPosition(position.x(), position.y());
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();

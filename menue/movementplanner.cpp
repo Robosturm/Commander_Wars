@@ -2,7 +2,7 @@
 #include "game/gamemap.h"
 
 #include "coreengine/interpreter.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "ui_reader/uifactory.h"
 
@@ -176,7 +176,7 @@ void MovementPlanner::reloadMap()
 
 void MovementPlanner::clickedTopbar(QString itemID)
 {
-    CONSOLE_PRINT("clickedTopbar(" + itemID + ")", Console::eDEBUG);
+    CONSOLE_PRINT("clickedTopbar(" + itemID + ")", GameConsole::eDEBUG);
     struct MenuItem
     {
         MenuItem(const char* const id, void (MovementPlanner::*func)())
@@ -289,7 +289,7 @@ void MovementPlanner::execute()
                        pInterpreter->newQObject(this)});
     if (readyToExecute())
     {
-        CONSOLE_PRINT("Executing active addin " + m_activeAddIn->getAddIn(), Console::eDEBUG);
+        CONSOLE_PRINT("Executing active addin " + m_activeAddIn->getAddIn(), GameConsole::eDEBUG);
         QJSValue erg = pInterpreter->doFunction(m_activeAddIn->getAddIn(), "execute", args);
         updateUpdateAddIns();
         if ((erg.isBool() && erg.toBool()) ||

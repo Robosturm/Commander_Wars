@@ -5,9 +5,9 @@
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
@@ -20,8 +20,7 @@ Wikimenu::Wikimenu()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
-    moveToThread(pApp->getWorkerthread());
-    CONSOLE_PRINT("Entering Wiki Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Wiki Menue", GameConsole::eDEBUG);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
@@ -62,7 +61,7 @@ void Wikimenu::onEnter()
     QString func = "wikiMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -70,7 +69,7 @@ void Wikimenu::onEnter()
 
 void Wikimenu::exitMenue()
 {
-    CONSOLE_PRINT("Leaving Wiki Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Wiki Menue", GameConsole::eDEBUG);
     auto window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    

@@ -1,7 +1,7 @@
 #include <QSettings>
 
 #include "coreengine/qmlvector.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
 #include "ai/heavyai.h"
@@ -15,7 +15,7 @@
 const qint32 HeavyAi::minSiloDamage = 7000;
 const char* const HeavyAi::NeuralNetworkFileEnding = ".net";
 const char* const HeavyAi::NeuralNetworkPath = "aidata/heavy/";
-const QStringList HeavyAi::NeuralNetworkNames = {"Production",
+const char* const HeavyAi::NeuralNetworkNames[] = {"Production",
                                                  "ACTION_FIRE",
                                                  "ACTION_CAPTURE",
                                                  "ACTION_UNLOADING",
@@ -77,11 +77,7 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
         loadIni("heavy/" + m_aiName.toLower() + ".ini");
     }
     loadNeuralNetworks(aiType);
-    if (NeuralNetworkNames.length() != NeuralNetworksMax)
-    {
-        oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "Missing Enum name mapping");
-    }
-    AI_CONSOLE_PRINT("Creating heavy ai", Console::eDEBUG);
+    AI_CONSOLE_PRINT("Creating heavy ai", GameConsole::eDEBUG);
 }
 
 void HeavyAi::loadNeuralNetworks(GameEnums::AiTypes aiType)
@@ -237,7 +233,7 @@ void HeavyAi::endTurn()
 
 bool HeavyAi::selectActionToPerform()
 {
-    AI_CONSOLE_PRINT("HeavyAi selecting action to be performed", Console::eDEBUG);
+    AI_CONSOLE_PRINT("HeavyAi selecting action to be performed", GameConsole::eDEBUG);
     float bestScore = std::numeric_limits<float>::lowest();
     qint32 index = -1;
     qint32 pos = 0;
@@ -261,7 +257,7 @@ bool HeavyAi::selectActionToPerform()
     {
         auto & unit = m_ownUnits[index];
         QPoint target = unit.m_action->getTarget();
-        AI_CONSOLE_PRINT("HeavyAi selected action " + unit.m_action->getActionID() + " to be performed with score " + QString::number(bestScore), Console::eDEBUG);
+        AI_CONSOLE_PRINT("HeavyAi selected action " + unit.m_action->getActionID() + " to be performed with score " + QString::number(bestScore), GameConsole::eDEBUG);
         m_updatePoints.push_back(target);
         m_updatePoints.push_back(unit.m_action->getActionTarget());
         if (target != unit.pUnit->Unit::getPosition())
@@ -303,7 +299,7 @@ void HeavyAi::setupTurn(const spQmlVectorBuilding & buildings)
     }
     if (startOfTurn)
     {
-        AI_CONSOLE_PRINT("HeavyAi initial start of turn calculation", Console::eDEBUG);
+        AI_CONSOLE_PRINT("HeavyAi initial start of turn calculation", GameConsole::eDEBUG);
         createIslandMaps();
 
         // create influence map at the start of the turn
@@ -320,9 +316,9 @@ void HeavyAi::setupTurn(const spQmlVectorBuilding & buildings)
         }
         m_InfluenceFrontMap.updateOwners();
         m_InfluenceFrontMap.calculateGlobalData();
-        AI_CONSOLE_PRINT("HeavyAi front lines created", Console::eDEBUG);
+        AI_CONSOLE_PRINT("HeavyAi front lines created", GameConsole::eDEBUG);
         findHqThreads(buildings);
-        AI_CONSOLE_PRINT("HeavyAi initial scoring actions for units", Console::eDEBUG);
+        AI_CONSOLE_PRINT("HeavyAi initial scoring actions for units", GameConsole::eDEBUG);
         for (auto & unit : m_ownUnits)
         {
             scoreActions(unit);
@@ -499,7 +495,7 @@ void HeavyAi::updateCaptureBuildings(MoveUnitData & unitData)
 
 void HeavyAi::findHqThreads(const spQmlVectorBuilding & buildings)
 {
-    AI_CONSOLE_PRINT("Searching for HQ Threads", Console::eDEBUG);
+    AI_CONSOLE_PRINT("Searching for HQ Threads", GameConsole::eDEBUG);
     std::vector<QVector3D> hqPositions;
     for (auto & pBuilding : buildings->getVector())
     {
@@ -562,7 +558,7 @@ bool HeavyAi::isCaptureTransporterOrCanCapture(Unit* pUnit)
 
 void HeavyAi::scoreActions(MoveUnitData & unit)
 {
-    AI_CONSOLE_PRINT("HeavyAi::scoreActions", Console::eDEBUG);
+    AI_CONSOLE_PRINT("HeavyAi::scoreActions", GameConsole::eDEBUG);
     if (!unit.pUnit->getHasMoved() &&
         isUsingUnit(unit.pUnit.get()) &&
         unit.pUnit->getAiMode() == GameEnums::GameAi_Normal)
@@ -638,7 +634,7 @@ void HeavyAi::mutateActionForFields(MoveUnitData & unitData, const std::vector<Q
                                     QString action, FunctionType type, qint32 index,
                                     float & bestScore, std::vector<ScoreData> & scoreInfos)
 {
-    AI_CONSOLE_PRINT("HeavyAi::mutateActionForFields " + action, Console::eDEBUG);
+    AI_CONSOLE_PRINT("HeavyAi::mutateActionForFields " + action, GameConsole::eDEBUG);
     for (const auto & target : moveTargets)
     {
         auto path = unitData.pUnitPfs->getPathFast(target.x(), target.y());
@@ -731,7 +727,7 @@ bool HeavyAi::mutateAction(ScoreData & data, MoveUnitData & unitData, std::vecto
             }
             case FunctionType::Undefined:
             {
-                CONSOLE_PRINT("Undefined function type", Console::eDEBUG);
+                CONSOLE_PRINT("Undefined function type", GameConsole::eDEBUG);
                 break;
             }
             default:
@@ -814,7 +810,7 @@ bool HeavyAi::mutateAction(ScoreData & data, MoveUnitData & unitData, std::vecto
         }
         else
         {
-            CONSOLE_PRINT("Uknown action step type: " + stepType, Console::eERROR);
+            CONSOLE_PRINT("Uknown action step type: " + stepType, GameConsole::eERROR);
         }
     }    
     return ret;
@@ -1297,7 +1293,7 @@ qint32 HeavyAi::getNumberOfTargetsOnIsland(const std::vector<QPoint> & ignoreLis
 
 void HeavyAi::scoreMoveToTargets()
 {
-    AI_CONSOLE_PRINT("HeavyAi scoring wait actions if needed", Console::eDEBUG);
+    AI_CONSOLE_PRINT("HeavyAi scoring wait actions if needed", GameConsole::eDEBUG);
     for (auto & unit : m_ownUnits)
     {
         if (!unit.pUnit->getHasMoved() &&
@@ -1456,12 +1452,12 @@ void HeavyAi::addCustomTarget(qint32 x, qint32 y, qint32 priority)
         }
         else
         {
-            CONSOLE_PRINT("Position in addCustomTarget x: " + QString::number(x) + " y: " + QString::number(y) + " isn't  on the map", Console::eERROR);
+            CONSOLE_PRINT("Position in addCustomTarget x: " + QString::number(x) + " y: " + QString::number(y) + " isn't  on the map", GameConsole::eERROR);
         }
     }
     else
     {
-        CONSOLE_PRINT("Priority: " + QString::number(priority) + " in addCustomTarget is not greater than 1", Console::eERROR);
+        CONSOLE_PRINT("Priority: " + QString::number(priority) + " in addCustomTarget is not greater than 1", GameConsole::eERROR);
     }
 }
 

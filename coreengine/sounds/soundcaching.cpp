@@ -1,4 +1,4 @@
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/console.h"
 #include "coreengine/globalutils.h"
 
@@ -8,7 +8,7 @@
 
 // code precaches sounds for faster replay but may be incompatible with certain os's
 
-void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
+void AudioManager::fillSoundCache(qint32 count, QString folder, QString file)
 {
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
@@ -37,7 +37,7 @@ void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
 }
 
 #ifdef AUDIOSUPPORT
-bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soundCache, qint32 i,
+bool AudioManager::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soundCache, qint32 i,
                                               QString & file, qint32 loops, qint32 delay, qreal sound, bool stopOldestSound)
 {
     bool started = false;
@@ -88,7 +88,7 @@ bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & sound
 #endif
 
 #ifdef AUDIOSUPPORT
-void AudioThread::stopSound(SoundData* soundData, qint32 soundIndex)
+void AudioManager::stopSound(SoundData* soundData, qint32 soundIndex)
 {
     if (soundData->sound[soundIndex] != nullptr)
     {
@@ -98,12 +98,12 @@ void AudioThread::stopSound(SoundData* soundData, qint32 soundIndex)
     }
 }
 
-void AudioThread::deleteSound(SoundData* soundData, qint32 soundIndex)
+void AudioManager::deleteSound(SoundData* soundData, qint32 soundIndex)
 {
 }
 
 
-void AudioThread::playDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound)
+void AudioManager::playDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound)
 {
 }
 

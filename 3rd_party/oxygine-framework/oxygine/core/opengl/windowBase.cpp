@@ -6,7 +6,7 @@
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 namespace oxygine
 {
@@ -15,14 +15,14 @@ namespace oxygine
         initializeOpenGLFunctions();
         if (!hasOpenGLFeature(QOpenGLFunctions::Shaders))
         {
-            CONSOLE_PRINT("Shaders are not supported by open gl. This may result in a black screen.", Console::eWARNING);
+            CONSOLE_PRINT("Shaders are not supported by open gl. This may result in a black screen.", GameConsole::eWARNING);
         }
         if (!hasOpenGLFeature(QOpenGLFunctions::Multitexture))
         {
-            CONSOLE_PRINT("Multitextures are not supported by open gl. This may result in a black screen.", Console::eWARNING);
+            CONSOLE_PRINT("Multitextures are not supported by open gl. This may result in a black screen.", GameConsole::eWARNING);
         }
         // init oxygine engine
-        CONSOLE_PRINT("initialize oxygine", Console::eDEBUG);
+        CONSOLE_PRINT("initialize oxygine", GameConsole::eDEBUG);
         VideoDriver::instance = spVideoDriver::create();
         VideoDriver::instance->setDefaultSettings();
         rsCache().setDriver(VideoDriver::instance.get());
@@ -53,15 +53,14 @@ namespace oxygine
     }
     void WindowBase::resizeGL(qint32 w, qint32 h)
     {
-        CONSOLE_PRINT("core::restore()", Console::eDEBUG);
+        CONSOLE_PRINT("core::restore()", GameConsole::eDEBUG);
         VideoDriver::instance->restore();
         STDRenderer::restore();
-        CONSOLE_PRINT("core::restore() done", Console::eDEBUG);
+        CONSOLE_PRINT("core::restore() done", GameConsole::eDEBUG);
     }
 
     void WindowBase::swapDisplayBuffers()
     {
-        VideoDriver::m_stats.duration = Clock::getTimeMS() - VideoDriver::m_stats.start;
     }
 
     bool WindowBase::beginRendering()
@@ -75,12 +74,10 @@ namespace oxygine
         if (ready)
         {
             rsCache().reset();
-            VideoDriver::m_stats.start = Clock::getTimeMS();
-            rsCache().reset();
         }
         else
         {
-            CONSOLE_PRINT("!ready", Console::eDEBUG);
+            CONSOLE_PRINT("!ready", GameConsole::eDEBUG);
         }
 
         return ready;
@@ -118,7 +115,7 @@ namespace oxygine
         // check for termination
         if (m_quit)
         {
-            CONSOLE_PRINT("Quiting game normally", Console::eDEBUG);
+            CONSOLE_PRINT("Quiting game normally", GameConsole::eDEBUG);
             QCoreApplication::exit();
         }
     }

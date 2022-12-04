@@ -8,8 +8,8 @@
 
 #include "menue/gamemenue.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/audiomanager.h"
 
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
@@ -26,10 +26,8 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
 #ifdef GRAPHICSUPPORT
     setObjectName("HumanPlayerInputMenu");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInputMenu::keyInput, Qt::QueuedConnection);
+    connect(Mainapp::getInstance(), &Mainapp::sigKeyDown, this, &HumanPlayerInputMenu::keyInput, Qt::QueuedConnection);
     qint32 width = 0;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMenuFont32());
     style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;

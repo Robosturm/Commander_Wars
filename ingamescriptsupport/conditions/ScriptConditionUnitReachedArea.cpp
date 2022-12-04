@@ -5,7 +5,7 @@
 #include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/fontmanager.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -81,7 +81,7 @@ void ScriptConditionUnitReachedArea::setHeigth(const qint32 &heigth)
 
 void ScriptConditionUnitReachedArea::readCondition(QTextStream& rStream, QString line)
 {
-    CONSOLE_PRINT("Reading ConditionUnitReachedArea", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionUnitReachedArea", GameConsole::eDEBUG);
     line = line.simplified();
     QStringList list = line.split("//");
     if (list.size() >= 2)
@@ -133,7 +133,7 @@ void ScriptConditionUnitReachedArea::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionUnitReachedArea::writeCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Writing ConditionUnitReachedArea", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionUnitReachedArea", GameConsole::eDEBUG);
     rStream << "        if (map.isUnitInArea(Qt.rect(" << QString::number(m_x) << ", " << QString::number(m_y) << ", "
             << QString::number(m_width) << ", " << QString::number(m_heigth) << "), "
             << m_unitID << "Value) && " << m_executed << ".readDataBool() === false) {"
@@ -159,7 +159,7 @@ void ScriptConditionUnitReachedArea::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + ConditionUnitReachedArea + " End\n";
+    rStream << "        } // " + QString(ConditionUnitReachedArea) + " End\n";
 }
 
 void ScriptConditionUnitReachedArea::writePostCondition(QTextStream& rStream)

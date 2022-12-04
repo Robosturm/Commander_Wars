@@ -15,8 +15,6 @@ MovementPlannerAddIn::MovementPlannerAddIn(QString addIn, GameMap* pMap, Movemen
       m_pMap(pMap),
       m_pPlanner(pPlanner)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
 #ifdef GRAPHICSUPPORT
     setObjectName("MovementPlannerAddIn");
 #endif

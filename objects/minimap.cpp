@@ -20,8 +20,6 @@ Minimap::Minimap()
     setObjectName("Minimap");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
@@ -32,10 +30,6 @@ Minimap::Minimap()
             emit clicked(static_cast<qint32>(x), static_cast<qint32>(y), false);
         }
     });
-}
-
-Minimap::~Minimap()
-{
 }
 
 void Minimap::clear()
@@ -56,7 +50,7 @@ void Minimap::updateMinimap(GameMap* pMap, bool useVision)
      // load minimap
     if (pMap != nullptr)
     {
-        CONSOLE_PRINT("Minimap::updateMinimap", Console::eDEBUG);
+        CONSOLE_PRINT("Minimap::updateMinimap", GameConsole::eDEBUG);
         qint32 width = static_cast<qint32>(pMap->getMapWidth());
         qint32 heigth = static_cast<qint32>(pMap->getMapHeight());
         qint32 size = width * heigth;

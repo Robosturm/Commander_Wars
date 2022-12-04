@@ -3,7 +3,6 @@
 #include "3rd_party/oxygine-framework/oxygine/Draggable.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
 namespace oxygine
 {

@@ -16,8 +16,8 @@
 #include "menue/shopmenu.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/gameconsole.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
 
 #include "resource_management/backgroundmanager.h"
@@ -45,8 +45,7 @@ Mainwindow::Mainwindow(const QString & initialView)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
-    moveToThread(pApp->getWorkerthread());
-    CONSOLE_PRINT("Entering Main Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Main Menue", GameConsole::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
     oxygine::spSprite sprite = oxygine::spSprite::create();
@@ -79,7 +78,7 @@ Mainwindow::Mainwindow(const QString & initialView)
 
     if (Settings::getUsername().isEmpty())
     {
-        CONSOLE_PRINT("Showing initial username selection", Console::eDEBUG);
+        CONSOLE_PRINT("Showing initial username selection", GameConsole::eDEBUG);
         spDialogTextInput pDialogTextInput = spDialogTextInput::create(tr("Select Username"), false, "");
         addChild(pDialogTextInput);
         connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, this, &Mainwindow::changeUsername, Qt::QueuedConnection);
@@ -287,7 +286,7 @@ void Mainwindow::loadCampaign(QString filename)
         }
         else
         {
-            CONSOLE_PRINT("Mainwindow::loadCampaign not existing savefile was selected", Console::eDEBUG);
+            CONSOLE_PRINT("Mainwindow::loadCampaign not existing savefile was selected", GameConsole::eDEBUG);
         }
     }
     else
@@ -345,7 +344,7 @@ void Mainwindow::replayGame(QString filename)
         QFile file(filename);
         if (file.exists())
         {
-            CONSOLE_PRINT("Leaving Main Menue", Console::eDEBUG);
+            CONSOLE_PRINT("Leaving Main Menue", GameConsole::eDEBUG);
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->clearPlayList();
             spReplayMenu pMenu = spReplayMenu::create(filename);
@@ -369,7 +368,7 @@ void Mainwindow::replayGame(QString filename)
 
 void Mainwindow::leaveMenue()
 {    
-    CONSOLE_PRINT("Leaving Main Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Main Menue", GameConsole::eDEBUG);
     oxygine::Actor::detach();
 }
 
@@ -395,7 +394,7 @@ void Mainwindow::onEnter()
     QString func = "main";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -408,7 +407,7 @@ void Mainwindow::cheatTimeout()
 
 void Mainwindow::versionClicked()
 {
-    CONSOLE_PRINT("Mainwindow::versionClicked", Console::eDEBUG);
+    CONSOLE_PRINT("Mainwindow::versionClicked", GameConsole::eDEBUG);
     ++m_cheatCounter;
     m_cheatTimeout.stop();
     if (m_cheatCounter >= 10)

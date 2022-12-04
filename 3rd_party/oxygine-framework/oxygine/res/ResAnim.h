@@ -85,6 +85,6 @@ namespace oxygine
         QString m_resPath;
 
     private:
-        static AnimationFrame m_emptyFrame;
+
     };
 }

@@ -25,8 +25,6 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     setObjectName("EditorSelection");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setWidth(width);

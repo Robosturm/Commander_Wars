@@ -68,18 +68,6 @@ namespace oxygine
             blend_inverse               = ((BT_ONE_MINUS_DST_COLOR << 16) | BT_ZERO),
         };
 
-        class Stats final
-        {
-        public:
-            explicit Stats() : batches(0), start(0), duration(0) { memset(elements, 0, sizeof(elements)); }
-             ~Stats() = default;
-            qint32 batches;
-            qint32 elements[PT_COUNT];
-            timeMS start;
-            timeMS duration;
-        };
-        static Stats m_stats;
-
         struct Uniform3f
         {
             explicit Uniform3f()
@@ -147,7 +135,7 @@ namespace oxygine
         void _begin(const Rect& viewport, const QColor* clearColor);
     protected:
         spTexture m_rt;
-        static VertexDeclaration m_VertexDeclaration;
+        VertexDeclaration m_VertexDeclaration;
         qint32 m_programID{0};
         ShaderProgram* m_pShaderProgram{nullptr};
     };

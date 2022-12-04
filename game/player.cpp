@@ -1,6 +1,5 @@
-#include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 
 #include "gameinput/basegameinputif.h"
 #include "gameinput/humanplayerinput.h"
@@ -31,8 +30,6 @@ Player::Player(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("Player");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_pBaseGameInput = nullptr;
     // for older versions we allow all loaded units to be buildable
@@ -94,7 +91,7 @@ float Player::getUnitBuildValue(const QString & unitID)
 
 void Player::loadVisionFields()
 {
-    CONSOLE_PRINT("Player::loadVisionFields()", Console::eDEBUG);
+    CONSOLE_PRINT("Player::loadVisionFields()", GameConsole::eDEBUG);
     
     qint32 width = m_pMap->getMapWidth();
     qint32 heigth = m_pMap->getMapHeight();
@@ -169,7 +166,7 @@ void Player::swapCOs()
 
 void Player::setColor(QColor color, qint32 table)
 {
-    CONSOLE_PRINT("Setting player color", Console::eDEBUG);
+    CONSOLE_PRINT("Setting player color", GameConsole::eDEBUG);
     m_Color = color;
     bool loaded = false;
     if (table >= 0)
@@ -192,7 +189,7 @@ void Player::setColor(QColor color, qint32 table)
 
 bool Player::loadTable(qint32 table)
 {
-    CONSOLE_PRINT("Player::loadTable", Console::eDEBUG);
+    CONSOLE_PRINT("Player::loadTable", GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({table,
                       pInterpreter->newQObject(m_pMap)});
@@ -209,7 +206,7 @@ bool Player::loadTable(qint32 table)
 
 bool Player::loadTableFromFile(const QString & tablename)
 {
-    CONSOLE_PRINT("Player::loadTableFromFile " + tablename, Console::eDEBUG);
+    CONSOLE_PRINT("Player::loadTableFromFile " + tablename, GameConsole::eDEBUG);
     bool found = false;
     QStringList searchPaths;
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
@@ -240,7 +237,7 @@ bool Player::loadTableFromFile(const QString & tablename)
 
 bool Player::colorToTable(QColor baseColor)
 {
-    CONSOLE_PRINT("Player::colorToTable", Console::eDEBUG);
+    CONSOLE_PRINT("Player::colorToTable", GameConsole::eDEBUG);
     bool found = colorToTableInTable(baseColor);
     if (!found)
     {
@@ -380,7 +377,7 @@ bool Player::colorToTable(QColor baseColor)
 
 bool Player::colorToTableInTable(QColor baseColor)
 {
-    CONSOLE_PRINT("Player::colorToTableInTable", Console::eDEBUG);
+    CONSOLE_PRINT("Player::colorToTableInTable", GameConsole::eDEBUG);
     bool found = false;
     QStringList searchPaths;
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
@@ -405,7 +402,7 @@ bool Player::colorToTableInTable(QColor baseColor)
                 img.height() > 255 &&
                 QColor(img.pixel(255, 255)) == baseColor)
             {
-                CONSOLE_PRINT("load table " + path, Console::eDEBUG);
+                CONSOLE_PRINT("load table " + path, GameConsole::eDEBUG);
 #ifdef GRAPHICSUPPORT
                 m_colorTable.load(path);
                 if (m_colorTable.height() > 0)
@@ -432,7 +429,7 @@ bool Player::colorToTableInTable(QColor baseColor)
 void Player::createTable(QColor baseColor)
 {
 #ifdef GRAPHICSUPPORT
-    CONSOLE_PRINT("Player::createTable " + baseColor.name(), Console::eDEBUG);
+    CONSOLE_PRINT("Player::createTable " + baseColor.name(), GameConsole::eDEBUG);
     constexpr qint32 imageSize = 256;
     m_colorTable = QImage(imageSize, imageSize, QImage::Format_RGBA8888);
     m_colorTable.fill(QColor(0, 0, 0, 0));
@@ -2111,7 +2108,7 @@ void Player::setMenu(GameMenue *newMenu)
 
 void Player::serializeObject(QDataStream& pStream) const
 {
-    CONSOLE_PRINT("storing player", Console::eDEBUG);
+    CONSOLE_PRINT("storing player", GameConsole::eDEBUG);
     pStream << getVersion();
     quint32 color = m_Color.rgb();
     pStream << color;
@@ -2166,7 +2163,7 @@ void Player::deserializeObject(QDataStream& pStream)
 
 void Player::deserializer(QDataStream& pStream, bool fast)
 {
-    CONSOLE_PRINT("reading player", Console::eDEBUG);
+    CONSOLE_PRINT("reading player", GameConsole::eDEBUG);
     qint32 version = 0;
     pStream >> version;
     quint32 color;
@@ -2223,7 +2220,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             qint32 heigth = 0;
             pStream >> width;
             pStream >> heigth;
-            CONSOLE_PRINT("Loading player vision width " + QString::number(width) + " height " + QString::number(heigth), Console::eDEBUG);
+            CONSOLE_PRINT("Loading player vision width " + QString::number(width) + " height " + QString::number(heigth), GameConsole::eDEBUG);
             m_FogVisionFields.reserve(width);
             for (qint32 x = 0; x < width; x++)
             {
@@ -2329,7 +2326,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         if (!fast)
         {
 #ifdef GRAPHICSUPPORT
-            CONSOLE_PRINT("Loading colortable", Console::eDEBUG);
+            CONSOLE_PRINT("Loading colortable", GameConsole::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
 #endif
@@ -2344,7 +2341,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         if (!fast)
         {
 #ifdef GRAPHICSUPPORT
-            CONSOLE_PRINT("Loading colortable", Console::eDEBUG);
+            CONSOLE_PRINT("Loading colortable", GameConsole::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
 #endif
@@ -2375,5 +2372,5 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             m_controlType = GameEnums::AiTypes_Human;
         }
     }
-    CONSOLE_PRINT("Loaded player " + m_playerNameId, Console::eDEBUG);
+    CONSOLE_PRINT("Loaded player " + m_playerNameId, GameConsole::eDEBUG);
 }

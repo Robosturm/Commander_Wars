@@ -114,7 +114,7 @@ void MetaTypeRegister::registerInterfaceData()
     qRegisterMetaType<GameEnums::PowerGainZone>("GameEnums::PowerGainZone");
     qRegisterMetaType<GameEnums::PowerGainMode>("GameEnums::PowerGainMode");
     qRegisterMetaType<QEasingCurve::Type>("QEasingCurve::Type");
-    qRegisterMetaType<Console::eLogLevels>("Console::eLogLevels");
+    qRegisterMetaType<GameConsole::eLogLevels>("Console::eLogLevels");
     qRegisterMetaType<Mainapp::StartupPhase>("Mainapp::StartupPhase");
     qRegisterMetaType<std::shared_ptr<QTcpSocket>>("std::shared_ptr<QTcpSocket>");
     qRegisterMetaType<spScriptEvent>("spScriptEvent");

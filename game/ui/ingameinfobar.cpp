@@ -2,7 +2,7 @@
 
 #include "game/ui/ingameinfobar.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/cospritemanager.h"
@@ -31,8 +31,6 @@ IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
     setObjectName("IngameInfoBar");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
 
     qint32 width = 300;
     qint32 cursorInfoHeigth = 330;

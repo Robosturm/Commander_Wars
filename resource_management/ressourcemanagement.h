@@ -101,7 +101,7 @@ private:
 };
 
 template<class TClass>
-TClass* RessourceManagement<TClass>::m_pInstance = nullptr;
+TClass* RessourceManagement<TClass>::m_pInstance{nullptr};
 
 template<class TClass>
 TClass* RessourceManagement<TClass>::getInstance()
@@ -281,7 +281,7 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
                 {
                     if (m_raiseErrors && !pInterpreter->exists(id))
                     {
-                        CONSOLE_PRINT("File: " + dirIter.fileInfo().filePath() + " didn't add an object named " + id + " to the game", Console::eERROR);
+                        CONSOLE_PRINT("File: " + dirIter.fileInfo().filePath() + " didn't add an object named " + id + " to the game", GameConsole::eERROR);
                     }
                     else
                     {

@@ -3,12 +3,12 @@
 #include "objects/loadingscreen.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/fontmanager.h"
 
-spLoadingScreen LoadingScreen::m_pLoadingScreen;
+spLoadingScreen LoadingScreen::m_pLoadingScreen{nullptr};
 
 spLoadingScreen LoadingScreen::getInstance()
 {
@@ -29,12 +29,12 @@ LoadingScreen::LoadingScreen()
 }
 LoadingScreen::~LoadingScreen()
 {
-    CONSOLE_PRINT("LoadingScreen::deleted", Console::eDEBUG);
+    CONSOLE_PRINT("LoadingScreen::deleted", GameConsole::eDEBUG);
 }
 
 void LoadingScreen::show()
 {    
-    CONSOLE_PRINT("LoadingScreen::show", Console::eDEBUG);
+    CONSOLE_PRINT("LoadingScreen::show", GameConsole::eDEBUG);
     oxygine::Stage::getStage()->addChild(spLoadingScreen(this));
     removeChildren();
     oxygine::ResAnim* pBackground;
@@ -84,7 +84,7 @@ void LoadingScreen::show()
 
 void LoadingScreen::setProgress(QString workText, qint32 value)
 {
-    CONSOLE_PRINT("LoadingScreen::setProgress " + workText + " " + QString::number(value), Console::eDEBUG);
+    CONSOLE_PRINT("LoadingScreen::setProgress " + workText + " " + QString::number(value), GameConsole::eDEBUG);
     m_workText->setHtmlText(workText);
     m_loadingProgress->setHtmlText(QString::number(value) + " %");
     m_LoadingBar->setWidth(value * Settings::getWidth() / 100);
@@ -101,7 +101,7 @@ void LoadingScreen::setWorktext(QString workText)
 
 void LoadingScreen::hide()
 {
-    CONSOLE_PRINT("LoadingScreen::hide", Console::eDEBUG);
+    CONSOLE_PRINT("LoadingScreen::hide", GameConsole::eDEBUG);
     m_pLoadingScreen->detach();
     m_pLoadingScreen = nullptr;
 }

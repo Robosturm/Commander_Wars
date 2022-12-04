@@ -11,8 +11,6 @@ CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
     setObjectName("CloseablePopUp");
 #endif
     setSize(width, heigth);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");

@@ -5,7 +5,6 @@
 #include "objects/base/selectkey.h"
 #include "objects/base/label.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
@@ -15,8 +14,6 @@ SelectKey::SelectKey(Qt::Key code)
 #ifdef GRAPHICSUPPORT
     setObjectName("SelectKey");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setSize(180, 40);
     m_Button = ObjectManager::createButton("", getWidth());
@@ -35,8 +32,8 @@ SelectKey::SelectKey(Qt::Key code)
         emit sigFocused();
     });
     addChild(m_Button);
-    setKeycode(code);
-    connect(pApp, &Mainapp::sigKeyDown, this, &SelectKey::keyInput, Qt::QueuedConnection);
+    setKeycode(code);    
+    connect(Mainapp::getInstance(), &Mainapp::sigKeyDown, this, &SelectKey::keyInput, Qt::QueuedConnection);
 }
 
 void SelectKey::focusedLost()

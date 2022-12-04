@@ -1,7 +1,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/mainapp.h"
 #include "objects/base/label.h"
 

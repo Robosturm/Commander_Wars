@@ -1,7 +1,7 @@
 #include "ai/productionSystem/simpleproductionsystem.h"
 #include "ai/coreai.h"
 #include "game/gamemap.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/qmlvector.h"
@@ -213,7 +213,7 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, c
     }
     else
     {
-        CONSOLE_PRINT("Invalid call to SimpleProductionSystem::addItemToBuildDistribution unitIds and chances have different lengths", Console::eERROR);
+        CONSOLE_PRINT("Invalid call to SimpleProductionSystem::addItemToBuildDistribution unitIds and chances have different lengths", GameConsole::eERROR);
     }
 }
 
@@ -451,7 +451,7 @@ void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistri
             return lhs.distribution.distribution / totalDistributionCount - lhs.currentValue > rhs.distribution.distribution / totalDistributionCount - rhs.currentValue;
         }
     });
-    AI_CONSOLE_PRINT("Created builddsitribution minMode=" + QString::number(minBuildMode) + " maxMode=" + QString::number(maxBuildMode) + " found items=" + QString::number(buildDistribution.size()), Console::eDEBUG);
+    CONSOLE_PRINT("Created builddsitribution minMode=" + QString::number(minBuildMode) + " maxMode=" + QString::number(maxBuildMode) + " found items=" + QString::number(buildDistribution.size()), GameConsole::eDEBUG);
 }
 
 bool SimpleProductionSystem::getInit() const
@@ -472,7 +472,7 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString un
     }
     if (!success)
     {
-        AI_CONSOLE_PRINT("Unable to build " + unitId, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to build " + unitId, GameConsole::eDEBUG);
     }
     return success;
 }
@@ -500,7 +500,7 @@ bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId)
                     {
                         if (pAction->canBePerformed())
                         {
-                            CONSOLE_PRINT("Building unit " + unitId + " at x=" + QString::number(x) + " y=" + QString::number(y), Console::eDEBUG);
+                            CONSOLE_PRINT("Building unit " + unitId + " at x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
                             emit m_owner->performAction(pAction);
                             return true;
                         }

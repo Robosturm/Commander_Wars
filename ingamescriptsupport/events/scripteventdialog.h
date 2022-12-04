@@ -31,9 +31,9 @@ class ScriptEventDialog final : public ScriptEvent
 {
     Q_OBJECT
 public:
-    static const QString ScriptEventDialogItem;
-    static const QString m_CurrentPlayerCO0;
-    static const QString m_CurrentPlayerCO1;
+    static const char* const ScriptEventDialogItem;
+    static const char* const m_CurrentPlayerCO0;
+    static const char* const m_CurrentPlayerCO1;
 
     explicit ScriptEventDialog(GameMap* pMap);
     /**

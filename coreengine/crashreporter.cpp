@@ -1,5 +1,5 @@
 #include "coreengine/crashreporter.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include <QCoreApplication>
 #include <QDateTime>
@@ -9,25 +9,22 @@
 #include <QTextStream>
 #include <QStandardPaths>
 
-QString CrashReporter::sCrashReportDirPath;
-QString CrashReporter::sProgramName;
-CrashReporter::logWrittenCallback CrashReporter::sLogWrittenCallback = nullptr;
-QProcess* CrashReporter::sProcess = nullptr;
+QScopedPointer<CrashReporter> CrashReporter::m_instance;
 
 void CrashReporter::_writeLog( const QString &inSignal)
 {
     const QStringList cReportHeader
     {
-        QStringLiteral("%1 v%2 Builddate: %3 %4").arg(QCoreApplication::applicationName(), QCoreApplication::applicationVersion(), Console::compileDate,  Console::compileTime ),
+        QStringLiteral("%1 v%2 Builddate: %3 %4").arg(QCoreApplication::applicationName(), QCoreApplication::applicationVersion(), GameConsole::compileDate,  GameConsole::compileTime ),
                 QDateTime::currentDateTime().toString("dd MMM yyyy @ HH:mm:ss"),
                 QString(),
                 inSignal,
                 QString(),
     };
 
-    QDir().mkpath( sCrashReportDirPath );
+    QDir().mkpath(m_instance->sCrashReportDirPath);
 
-    const QString  cFileName = QStringLiteral("%1/%2 %3 Crash.log").arg(sCrashReportDirPath,
+    const QString  cFileName = QStringLiteral("%1/%2 %3 Crash.log").arg(m_instance->sCrashReportDirPath,
                                                                         QDateTime::currentDateTime().toString( "yyyyMMdd-HHmmss" ),
                                                                         QCoreApplication::applicationName() );
     QFile file(cFileName);
@@ -46,7 +43,7 @@ void CrashReporter::_writeLog( const QString &inSignal)
         stream.flush();
         stream << "\nConsole log\n";
         stream.flush();
-        std::vector<QString> consoleOutput = Console::getInstance()->getConsoleLog();
+        std::vector<QString> consoleOutput = GameConsole::getInstance()->getConsoleLog();
         for (auto & item : consoleOutput)
         {
             stream << item << Qt::endl;
@@ -57,24 +54,25 @@ void CrashReporter::_writeLog( const QString &inSignal)
         file.close();
     }
 
-    if ( sLogWrittenCallback != nullptr )
+    if (m_instance->sLogWrittenCallback != nullptr )
     {
-        (*sLogWrittenCallback)(ret);
+        (*m_instance->sLogWrittenCallback)(ret);
     }
 }
 
 void CrashReporter::setSignalHandler(logWrittenCallback inLogWrittenCallback )
 {
-    sProgramName = QCoreApplication::arguments().at(0);
-    sCrashReportDirPath = QCoreApplication::applicationDirPath() + "/logs";
-    sLogWrittenCallback = inLogWrittenCallback;
-    if ( sProcess == nullptr )
+    m_instance.reset(new CrashReporter);
+    m_instance->sProgramName = QCoreApplication::arguments().at(0);
+    m_instance->sCrashReportDirPath = QCoreApplication::applicationDirPath() + "/logs";
+    m_instance->sLogWrittenCallback = inLogWrittenCallback;
+    if (m_instance->sProcess == nullptr)
     {
-        sProcess = new QProcess();
+        m_instance->sProcess = new QProcess();
 #ifdef GRAPHICSUPPORT
-        sProcess->setObjectName("CrashreporterProcess");
+        m_instance->sProcess->setObjectName("CrashreporterProcess");
 #endif
-        sProcess->setProcessChannelMode( QProcess::MergedChannels );
+        m_instance->sProcess->setProcessChannelMode( QProcess::MergedChannels );
     }
     setOsSignalHandler();
 }

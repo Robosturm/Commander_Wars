@@ -5,7 +5,8 @@
 #include "game/unit.h"
 #include "game/co.h"
 
-#include "coreengine/console.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/qmlvector.h"
 
 #include "resource_management/buildingspritemanager.h"
@@ -21,8 +22,6 @@ Building::Building(QString BuildingID, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("Building");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setSize(GameMap::getImageSize(),
             GameMap::getImageSize());
@@ -275,7 +274,7 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
     }
     else
     {
-        CONSOLE_PRINT("Unable to load building sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load building sprite: " + spriteID, GameConsole::eDEBUG);
     }
 }
 
@@ -363,7 +362,7 @@ void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::R
     }
     else
     {
-        CONSOLE_PRINT("Unable to load weather overlay sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load weather overlay sprite: " + spriteID, GameConsole::eDEBUG);
     }
 }
 

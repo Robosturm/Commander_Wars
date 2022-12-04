@@ -21,8 +21,6 @@ GameRules::GameRules(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameRules");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     if (getWeatherCount() != pGameRuleManager->getWeatherCount())
@@ -219,7 +217,7 @@ void GameRules::checkVictory()
 {    
     if (m_pMap != nullptr)
     {
-        CONSOLE_PRINT("Checking for victory", Console::eDEBUG);
+        CONSOLE_PRINT("Checking for victory", GameConsole::eDEBUG);
         for (qint32 i = 0; i < m_VictoryRules.size(); i++)
         {
             m_VictoryRules[i]->checkDefeat();
@@ -238,7 +236,7 @@ void GameRules::checkVictory()
         }
         if (teamsAlive.size() <= 1)
         {
-            CONSOLE_PRINT("Emitting victory game is finished", Console::eDEBUG);
+            CONSOLE_PRINT("Emitting victory game is finished", GameConsole::eDEBUG);
             m_victory = true;
             // go to victory screen
             if (teamsAlive.size() == 1)
@@ -362,7 +360,7 @@ void GameRules::startOfTurn(bool newDay)
     if (newDay && m_WeatherDays.size() > 0)
     {
         m_WeatherDays.removeAt(0);
-        CONSOLE_PRINT("New Day removing current weather. Currently predicting for " + QString::number(m_WeatherDays.size()), Console::eDEBUG);
+        CONSOLE_PRINT("New Day removing current weather. Currently predicting for " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
     }
     const qint32 predictionSize = 4;
 
@@ -382,7 +380,7 @@ void GameRules::startOfTurn(bool newDay)
         // increase weather prediction till enough data is avaiable
         while(m_WeatherDays.size() < predictionSize)
         {
-            CONSOLE_PRINT("Adding weather for weather prediction.", Console::eDEBUG);
+            CONSOLE_PRINT("Adding weather for weather prediction.", GameConsole::eDEBUG);
             if (m_randomWeather)
             {
                 qint32 totalWeatherChances = 0;
@@ -535,7 +533,7 @@ void GameRules::onWeatherChanged()
 
 void GameRules::createWeatherSprites()
 {    
-    CONSOLE_PRINT("creating weather Sprites", Console::eDEBUG);
+    CONSOLE_PRINT("creating weather Sprites", GameConsole::eDEBUG);
     if ((m_CurrentWeather < 0) && (m_CurrentWeather < m_Weathers.size()))
     {
         m_CurrentWeather = 0;
@@ -639,7 +637,7 @@ void GameRules::setFogMode(const GameEnums::Fog &FogMode)
 
 void GameRules::createFogVision()
 {
-    CONSOLE_PRINT("Creating fog vision. Pausing Rendering", Console::eDEBUG);
+    CONSOLE_PRINT("Creating fog vision. Pausing Rendering", GameConsole::eDEBUG);
     Mainapp::getInstance()->pauseRendering();
     QColor fogOfWarColor = QColor(70, 70, 70, 100);
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -704,7 +702,7 @@ void GameRules::createFogVision()
             }
         }
     }
-    CONSOLE_PRINT("Fog vision created. Continue Rendering", Console::eDEBUG);
+    CONSOLE_PRINT("Fog vision created. Continue Rendering", GameConsole::eDEBUG);
     Mainapp::getInstance()->continueRendering();
 }
 
@@ -1261,7 +1259,7 @@ void GameRules::setAiAttackTerrain(bool AiAttackTerrain)
 
 void GameRules::serializeObject(QDataStream& pStream) const
 {
-    CONSOLE_PRINT("storing game rules", Console::eDEBUG);
+    CONSOLE_PRINT("storing game rules", GameConsole::eDEBUG);
     pStream << getVersion();
     pStream << static_cast<qint32>(m_VictoryRules.size());
     for (auto & rule : m_VictoryRules)
@@ -1354,7 +1352,7 @@ void GameRules::deserializeObject(QDataStream& pStream)
 
 void GameRules::deserializer(QDataStream& pStream, bool)
 {
-    CONSOLE_PRINT("reading game rules", Console::eDEBUG);
+    CONSOLE_PRINT("reading game rules", GameConsole::eDEBUG);
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     m_VictoryRules.clear();
     qint32 version = 0;

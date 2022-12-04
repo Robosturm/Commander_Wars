@@ -7,8 +7,8 @@
 
 #include "menue/basegamemenu.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/audiomanager.h"
 
 #include "game/gameanimation/gameanimationpower.h"
 #include "game/co.h"
@@ -16,7 +16,7 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 
-GameAnimationPower* GameAnimationPower::m_pGameAnimationPower = nullptr;
+GameAnimationPower* GameAnimationPower::m_pGameAnimationPower{nullptr};
 
 spGameAnimationPower GameAnimationPower::createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO, GameMap * pMap)
 {
@@ -50,8 +50,6 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, CO* pCO, GameMap * pMa
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationPower");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_endTimer.setSingleShot(true);
     connect(&m_endTimer, &QTimer::timeout, this, [this]()
@@ -77,7 +75,7 @@ GameAnimationPower::~GameAnimationPower()
 {
     if (!m_started)
     {
-        AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioThread();
         pAudioThread->clearPlayList();
         m_pCO->loadCOMusic();
         pAudioThread->playRandom();
@@ -231,7 +229,7 @@ void GameAnimationPower::start()
 {
     if (!m_started)
     {
-        AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioThread();
         pAudioThread->clearPlayList();
         m_pCO->loadCOMusic();
         pAudioThread->playRandom();

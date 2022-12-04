@@ -3,9 +3,6 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
-#include "objects/base/label.h"
-
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values)
@@ -13,8 +10,6 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
 #ifdef GRAPHICSUPPORT
     setObjectName("Multislider");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     qint32 textWidth = 0;

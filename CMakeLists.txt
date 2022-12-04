@@ -531,8 +531,8 @@ set(${PROJECT_NAME}_SRCS
     coreengine/mainapp.cpp coreengine/mainapp.h
     coreengine/settings.cpp coreengine/settings.h
     coreengine/interpreter.cpp coreengine/interpreter.h
-    coreengine/console.cpp coreengine/console.h
-    coreengine/audiothread.cpp coreengine/audiothread.h
+    coreengine/gameconsole.cpp coreengine/gameconsole.h
+    coreengine/audiomanager.cpp coreengine/audiomanager.h
     coreengine/pathfindingsystem.cpp coreengine/pathfindingsystem.h
     coreengine/qmlvector.cpp coreengine/qmlvector.h
     coreengine/scriptvariables.cpp coreengine/scriptvariables.h

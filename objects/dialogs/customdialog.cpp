@@ -1,6 +1,5 @@
 #include "objects/dialogs/customdialog.h"
 
-#include "coreengine/mainapp.h"
 #include "resource_management/objectmanager.h"
 #include "objects/dialogs/dialogmessagebox.h"
 
@@ -13,8 +12,6 @@ CustomDialog::CustomDialog(const QString & jsName, const QString & uiXml, Baseme
 #ifdef GRAPHICSUPPORT
     setObjectName("CustomDialog");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();

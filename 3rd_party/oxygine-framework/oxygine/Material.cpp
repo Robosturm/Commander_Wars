@@ -6,8 +6,8 @@
 
 namespace oxygine
 {
-    spMaterial Material::current;
-    spMaterial Material::null;
+    spMaterial Material::current{nullptr};
+    spMaterial Material::null{nullptr};
 
     bool Material::compare(const Material* matA, const Material* matB)
     {
@@ -15,7 +15,6 @@ namespace oxygine
             matA->m_table      != matB->m_table ||
             matA->m_blend      != matB->m_blend ||
             matA->m_fracShader      != matB->m_fracShader ||
-            matA->m_uberShader != matB->m_uberShader ||
             matA->m_addColor   != matB->m_addColor)
         {
             return false;
@@ -28,7 +27,6 @@ namespace oxygine
         m_addColor = QColor(0, 0, 0, 0);
         m_blend = VideoDriver::blend_alpha;
         m_fracShader = UberShaderProgram::ColorMode::COLOR_DEFAULT;
-        m_uberShader = &STDRenderer::uberShader;
     }
 
     void Material::rehash(size_t& hash) const
@@ -37,7 +35,6 @@ namespace oxygine
         hash_combine(hash, m_table.get());
         hash_combine(hash, static_cast<qint32>(m_blend));
         hash_combine(hash, m_fracShader);
-        hash_combine(hash, m_uberShader);
         hash_combine(hash, qRgba(m_addColor));
     }
 
@@ -56,7 +53,6 @@ namespace oxygine
     void Material::xapply()
     {
         STDRenderer* r = STDRenderer::getCurrent();
-        r->setUberShaderProgram(m_uberShader);
         if (m_table.get() != nullptr && m_fracShader == UberShaderProgram::ColorMode::COLOR_DEFAULT)
         {
             r->setFracShader(UberShaderProgram::ColorMode::COLOR_TABLE);

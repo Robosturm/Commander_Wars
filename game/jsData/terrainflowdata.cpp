@@ -1,8 +1,7 @@
 #include "game/jsData/terrainflowdata.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/qmlvector.h"
 #include "coreengine/globalutils.h"
 
@@ -14,8 +13,6 @@ TerrainFlowData::TerrainFlowData(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("TerrainFlowData");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -178,13 +175,13 @@ QStringList TerrainFlowData::getAlternateFlowString(GameEnums::FlowDirections fl
 
 void TerrainFlowData::print()
 {
-    CONSOLE_PRINT("River length = " + QString::number(m_positions.size()), Console::eDEBUG);
+    CONSOLE_PRINT("River length = " + QString::number(m_positions.size()), GameConsole::eDEBUG);
 
     for (qint32 i = 0; i < m_flowDirections.size(); ++i)
     {
         CONSOLE_PRINT("X=" + QString::number(m_positions[i].x()) +
                       " Y=" + QString::number(m_positions[i].y()) +
-                      " Direction=" + getFlowString(i), Console::eDEBUG);
+                      " Direction=" + getFlowString(i), GameConsole::eDEBUG);
     }
 }
 

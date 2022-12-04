@@ -6,7 +6,7 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -19,7 +19,7 @@ ScriptConditionBuildingDestroyed::ScriptConditionBuildingDestroyed(GameMap* pMap
 
 void ScriptConditionBuildingDestroyed::readCondition(QTextStream& rStream, QString line)
 {
-    CONSOLE_PRINT("Reading ConditionBuildingDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionBuildingDestroyed", GameConsole::eDEBUG);
     line = line.simplified();
     QStringList items = line.replace("if ((map.getTerrain(", "")
                             .replace(", ", ",")
@@ -56,7 +56,7 @@ void ScriptConditionBuildingDestroyed::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionBuildingDestroyed::writeCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Writing ConditionBuildingDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionBuildingDestroyed", GameConsole::eDEBUG);
     rStream << "        if ((map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding() === null || "
             << "map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding().getHp() <= 0) && " << m_executed << ".readDataBool() === false) {"
             << "// " << QString::number(getVersion()) << " " << ConditionBuildingDestroyed << "\n";
@@ -81,7 +81,7 @@ void ScriptConditionBuildingDestroyed::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + ConditionBuildingDestroyed + " End\n";
+    rStream << "        } // " + QString(ConditionBuildingDestroyed) + " End\n";
 }
 
 void ScriptConditionBuildingDestroyed::writePostCondition(QTextStream& rStream)

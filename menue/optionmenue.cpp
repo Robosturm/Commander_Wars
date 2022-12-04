@@ -11,9 +11,9 @@
 #include "menue/mainwindow.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
@@ -26,54 +26,53 @@
 
 #include "ui_reader/uifactory.h"
 
-QVector<OptionMenue::GamemodeMods> OptionMenue::m_gamemodeMods =
-{
-    // enabled                                // disabled
-    OptionMenue::GamemodeMods(QStringList(), {"mods/aw_unloading",
-                                              "mods/aw2_damage_formula",
-                                              "mods/awds_unit",
-                                              "mods/awds_co",
-                                              "mods/awds_weather",
-                                              "mods/awdc_co",
-                                              "mods/awdc_unit",
-                                              "mods/awdc_powergain",
-                                              "mods/awdc_weather",
-                                              "mods/awdc_terrain",
-                                              "mods/awdc_flare",
-                                              "map_creator",
-                                              "coop_mod"}),
-    OptionMenue::GamemodeMods(
-    {"mods/aw_unloading",
-     "mods/aw2_damage_formula",
-     "mods/awds_unit",
-     "mods/awds_co",
-     "mods/awds_weather"},
-    {"mods/awdc_co",
-     "mods/awdc_unit",
-     "mods/awdc_powergain",
-     "mods/awdc_weather",
-     "mods/awdc_terrain",
-     "mods/awdc_flare",
-     "map_creator",
-     "coop_mod"}),
-    OptionMenue::GamemodeMods(
-    {"mods/aw_unloading",
-     "mods/awdc_co",
-     "mods/awdc_unit",
-     "mods/awdc_powergain",
-     "mods/awdc_weather",
-     "mods/awdc_terrain",
-     "mods/awdc_flare"},
-    {"mods/aw2_damage_formula",
-     "mods/awds_unit",
-     "mods/awds_co",
-     "mods/awds_weather",
-     "map_creator",
-     "coop_mod"})
-};
-
 OptionMenue::OptionMenue(const QString & xmlFile)
-    : m_xmlFile(xmlFile)
+    : m_xmlFile(xmlFile),
+      m_gamemodeMods(
+{
+          // enabled                                // disabled
+          OptionMenue::GamemodeMods(QStringList(), {"mods/aw_unloading",
+                                                    "mods/aw2_damage_formula",
+                                                    "mods/awds_unit",
+                                                    "mods/awds_co",
+                                                    "mods/awds_weather",
+                                                    "mods/awdc_co",
+                                                    "mods/awdc_unit",
+                                                    "mods/awdc_powergain",
+                                                    "mods/awdc_weather",
+                                                    "mods/awdc_terrain",
+                                                    "mods/awdc_flare",
+                                                    "map_creator",
+                                                    "coop_mod"}),
+          OptionMenue::GamemodeMods(
+              {"mods/aw_unloading",
+               "mods/aw2_damage_formula",
+               "mods/awds_unit",
+               "mods/awds_co",
+               "mods/awds_weather"},
+              {"mods/awdc_co",
+               "mods/awdc_unit",
+               "mods/awdc_powergain",
+               "mods/awdc_weather",
+               "mods/awdc_terrain",
+               "mods/awdc_flare",
+               "map_creator",
+               "coop_mod"}),
+          OptionMenue::GamemodeMods(
+              {"mods/aw_unloading",
+               "mods/awdc_co",
+               "mods/awdc_unit",
+               "mods/awdc_powergain",
+               "mods/awdc_weather",
+               "mods/awdc_terrain",
+               "mods/awdc_flare"},
+              {"mods/aw2_damage_formula",
+               "mods/awds_unit",
+               "mods/awds_co",
+               "mods/awds_weather",
+               "map_creator",
+               "coop_mod"})
+          })
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("OptionMenue");
@@ -81,8 +80,7 @@ OptionMenue::OptionMenue(const QString & xmlFile)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
-    moveToThread(pApp->getWorkerthread());
-    CONSOLE_PRINT("Entering Option Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Option Menue", GameConsole::eDEBUG);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
@@ -144,7 +142,7 @@ void OptionMenue::onEnter()
     QString func = "optionMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -162,7 +160,7 @@ void OptionMenue::exitMenue()
     }
     else
     {
-        CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
+        CONSOLE_PRINT("Leaving Option Menue", GameConsole::eDEBUG);
         auto window = spMainwindow::create("ui/menu/mainoptionmenu.xml");
         oxygine::Stage::getStage()->addChild(window);
         oxygine::Actor::detach();
@@ -171,7 +169,7 @@ void OptionMenue::exitMenue()
 
 void OptionMenue::reloadSettings()
 {    
-    CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Option Menue", GameConsole::eDEBUG);
     spOptionMenue newMenu = spOptionMenue::create(m_xmlFile);
     // carry over restart flag
     newMenu->m_restartNeeded = m_restartNeeded;
@@ -498,7 +496,7 @@ void OptionMenue::selectMods(qint32 item)
         {
             Settings::addMod(addMod);
         }
-        CONSOLE_PRINT("Marking restart cause mods changed.", Console::eDEBUG);
+        CONSOLE_PRINT("Marking restart cause mods changed.", GameConsole::eDEBUG);
         m_restartNeeded = true;
         showMods();
     }
@@ -614,7 +612,7 @@ void OptionMenue::updateModFilter(QString tag)
 
 void OptionMenue::restart()
 {
-    CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", Console::eDEBUG);
+    CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", GameConsole::eDEBUG);
     removeChildren();
     detach();
     emit Mainapp::getInstance()->sigQuit(1);

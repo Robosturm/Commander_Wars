@@ -25,7 +25,6 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     {
         m_permanent = false;
     }
-    moveToThread(pApp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);
     setSize(Settings::getWidth(), Settings::getHeight());
     oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("nextday");

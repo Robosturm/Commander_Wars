@@ -8,13 +8,13 @@
 #include "objects/base/tooltip.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
-oxygine::spActor Tooltip::m_Tooltip = oxygine::spActor();
+oxygine::spActor Tooltip::m_Tooltip{nullptr};
 
 Tooltip::Tooltip()
 #ifdef GRAPHICSUPPORT
@@ -22,8 +22,6 @@ Tooltip::Tooltip()
       m_TooltipPauseTimer(this)
 #endif
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
 #ifdef GRAPHICSUPPORT
@@ -155,7 +153,7 @@ void Tooltip::showTooltip()
             !m_tooltipText.isEmpty())
         {
             hideTooltip();
-            CONSOLE_PRINT("Showing tooltip", Console::eDEBUG);
+            CONSOLE_PRINT("Showing tooltip", GameConsole::eDEBUG);
             QPoint curPos = pApp->mapPosFromGlobal(pApp->cursor().pos());
             m_Tooltip = oxygine::spActor::create();
             m_Tooltip->setPriority(static_cast<qint32>(Mainapp::ZOrder::Tooltip));

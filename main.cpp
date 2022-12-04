@@ -10,10 +10,10 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/userdata.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
-#include "coreengine/crashreporter.h"
 #include "coreengine/metatyperegister.h"
+#include "coreengine/globalutils.h"
 
 #ifdef UPDATESUPPORT
 #include "updater/gameupdater.h"
@@ -21,15 +21,12 @@
 
 int main(qint32 argc, char* argv[])
 {
-    qInstallMessageHandler(Console::messageOutput);
-    srand(static_cast<unsigned>(time(nullptr)));
-    QThread::currentThread()->setPriority(QThread::NormalPriority);
 #ifdef GRAPHICSUPPORT
-    QThread::currentThread()->setObjectName("RenderThread");
     QApplication app(argc, argv);
 #else
     QCoreApplication app(argc, argv);
 #endif
+    GlobalUtils::setup();
     app.setApplicationName("Commander Wars");
     app.setApplicationVersion(Mainapp::getGameVersion());
 
@@ -43,7 +40,6 @@ int main(qint32 argc, char* argv[])
     window.createBaseDirs();
 
     // start crash report handler
-    CrashReporter::setSignalHandler(&Mainapp::showCrashReport);
     MetaTypeRegister::registerInterfaceData();
     /*************************************************************************************************/
     // show window according to window mode
@@ -60,7 +56,7 @@ int main(qint32 argc, char* argv[])
     if (window.getScreenMode() != Settings::ScreenModes::Window)
     {
         window.setPosition(Settings::getX(), Settings::getY());
-    }    
+    }
 #ifdef GRAPHICSUPPORT
     if (window.getNoUi())
     {
@@ -75,25 +71,24 @@ int main(qint32 argc, char* argv[])
     bool slave = window.getSlave();
     Settings::setX(window.x());
     Settings::setY(window.y());
-    CrashReporter::setSignalHandler(nullptr);
     window.setShuttingDown(true);
     Userdata::getInstance()->release();
-    Settings::shutdown();
-    CONSOLE_PRINT("Shutting down main window", Console::eDEBUG);
-    window.shutdown();
-    CONSOLE_PRINT("Saving settings", Console::eDEBUG);
+    CONSOLE_PRINT("Saving settings", GameConsole::eDEBUG);
     Settings::saveSettings();
+    Settings::shutdown();
+    CONSOLE_PRINT("Shutting down main window", GameConsole::eDEBUG);
+    window.shutdown();
     // give os time to save the settings
     QThread::currentThread()->msleep(350);
-    CONSOLE_PRINT("Checking for memory leak during runtime", Console::eDEBUG);
-    static constexpr qint32 finalObjects = 2;
+    CONSOLE_PRINT("Checking for memory leak during runtime", GameConsole::eDEBUG);
+    static constexpr qint32 finalObjects = 20;
     if (oxygine::ref_counter::getAlloctedObjectCount() > finalObjects)
     {
-        CONSOLE_PRINT("c++ memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), Console::eWARNING);
+        CONSOLE_PRINT("c++ memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), GameConsole::eWARNING);
     }
     else if (oxygine::ref_counter::getAlloctedObjectCount() < 0)
     {
-        CONSOLE_PRINT("c++ memory detector is bugged: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), Console::eWARNING);
+        CONSOLE_PRINT("c++ memory detector is bugged: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), GameConsole::eWARNING);
     }
     //end
     if (!slave)
@@ -103,7 +98,7 @@ int main(qint32 argc, char* argv[])
 #ifdef Q_OS_ANDROID
             CONSOLE_PRINT("No automatic restart on android", Console::eDEBUG);
 #else
-            CONSOLE_PRINT("Restarting application", Console::eDEBUG);
+            CONSOLE_PRINT("Restarting application", GameConsole::eDEBUG);
             QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList());
 #endif
         }

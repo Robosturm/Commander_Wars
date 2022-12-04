@@ -34,10 +34,10 @@ void ActionPerformer::performAction(spGameAction pGameAction)
     }
     else if (m_actionRunning)
     {
-        CONSOLE_PRINT("Ignoring action request cause an action is currently performed", Console::eWARNING);
+        CONSOLE_PRINT("Ignoring action request cause an action is currently performed", GameConsole::eWARNING);
         return;
     }
-    CONSOLE_PRINT("Action running", Console::eDEBUG);
+    CONSOLE_PRINT("Action running", GameConsole::eDEBUG);
     m_actionRunning = true;
     m_pMenu->setSaveAllowed(false);
     if (m_multiplayerSyncData.m_waitingForSyncFinished && m_pMenu != nullptr)
@@ -51,7 +51,7 @@ void ActionPerformer::performAction(spGameAction pGameAction)
     else if (pGameAction.get() != nullptr)
     {
         CONSOLE_PRINT("GameMenue::performAction " + pGameAction->getActionID() + " at X: " + QString::number(pGameAction->getTarget().x())
-                      + " at Y: " + QString::number(pGameAction->getTarget().y()), Console::eDEBUG);
+                      + " at Y: " + QString::number(pGameAction->getTarget().y()), GameConsole::eDEBUG);
 
         Mainapp::getInstance()->pauseRendering();
         bool multiplayer = false;
@@ -93,7 +93,7 @@ void ActionPerformer::performAction(spGameAction pGameAction)
             // send action to other players if needed
             if (requiresForwarding(pGameAction))
             {
-                CONSOLE_PRINT("Sending action to other players", Console::eDEBUG);
+                CONSOLE_PRINT("Sending action to other players", GameConsole::eDEBUG);
                 m_syncCounter++;
                 pGameAction->setSyncCounter(m_syncCounter);
                 pGameAction->setRoundTimerTime(m_pMap->getGameRules()->getRoundTimer()->remainingTime());
@@ -173,7 +173,7 @@ void ActionPerformer::setExit(bool newExit)
 
 spGameAction ActionPerformer::doMultiTurnMovement(spGameAction pGameAction)
 {
-    CONSOLE_PRINT("doMultiTurnMovement for " + pGameAction->getActionID(), Console::eDEBUG);
+    CONSOLE_PRINT("doMultiTurnMovement for " + pGameAction->getActionID(), GameConsole::eDEBUG);
     if (m_pMenu != nullptr &&
         m_pMenu->getGameStarted() &&
         !Settings::getAiSlave() &&
@@ -181,7 +181,7 @@ spGameAction ActionPerformer::doMultiTurnMovement(spGameAction pGameAction)
         (pGameAction->getActionID() == CoreAI::ACTION_NEXT_PLAYER ||
          pGameAction->getActionID() == CoreAI::ACTION_SWAP_COS))
     {
-        CONSOLE_PRINT("Check and update multiTurnMovement", Console::eDEBUG);
+        CONSOLE_PRINT("Check and update multiTurnMovement", GameConsole::eDEBUG);
 
         // check for units that have a multi turn available
         qint32 heigth = m_pMap->getMapHeight();
@@ -256,7 +256,7 @@ void ActionPerformer::centerMapOnAction(GameAction* pGameAction)
 {
     if (m_pMenu != nullptr)
     {
-        CONSOLE_PRINT("centerMapOnAction()", Console::eDEBUG);
+        CONSOLE_PRINT("centerMapOnAction()", GameConsole::eDEBUG);
         Unit* pUnit = pGameAction->getTargetUnit();
         Player* pPlayer = m_pMenu->getCurrentViewPlayer();
 
@@ -287,7 +287,7 @@ void ActionPerformer::centerMapOnAction(GameAction* pGameAction)
 
 void ActionPerformer::skipAnimations(bool postAnimation)
 {
-    CONSOLE_PRINT("skipping Animations", Console::eDEBUG);
+    CONSOLE_PRINT("skipping Animations", GameConsole::eDEBUG);
     Mainapp::getInstance()->pauseRendering();
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
@@ -295,7 +295,7 @@ void ActionPerformer::skipAnimations(bool postAnimation)
     }
     if (GameAnimationFactory::getAnimationCount() == 0 && !postAnimation)
     {
-        CONSOLE_PRINT("GameMenue -> emitting animationsFinished()", Console::eDEBUG);
+        CONSOLE_PRINT("GameMenue -> emitting animationsFinished()", GameConsole::eDEBUG);
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
     Mainapp::getInstance()->continueRendering();
@@ -303,7 +303,7 @@ void ActionPerformer::skipAnimations(bool postAnimation)
 
 void ActionPerformer::finishActionPerformed()
 {
-    CONSOLE_PRINT("Doing post action update", Console::eDEBUG);
+    CONSOLE_PRINT("Doing post action update", GameConsole::eDEBUG);
 
     if (m_pCurrentAction.get() != nullptr)
     {
@@ -331,7 +331,7 @@ void ActionPerformer::actionPerformed()
     if (m_pMenu != nullptr &&
         m_pMap != nullptr)
     {
-        CONSOLE_PRINT("Action performed", Console::eDEBUG);
+        CONSOLE_PRINT("Action performed", GameConsole::eDEBUG);
         finishActionPerformed();
         if (Settings::getSyncAnimations())
         {
@@ -345,22 +345,22 @@ void ActionPerformer::actionPerformed()
         {
             if (m_exit)
             {
-                CONSOLE_PRINT("ActionPerformer state is exiting game. Emitting exit", Console::eDEBUG);
+                CONSOLE_PRINT("ActionPerformer state is exiting game. Emitting exit", GameConsole::eDEBUG);
                 emit m_pMenu->sigVictory(-1);
             }
             else if (!m_pMap->getGameRules()->getVictory())
             {
-                CONSOLE_PRINT("Action finished", Console::eDEBUG);
+                CONSOLE_PRINT("Action finished", GameConsole::eDEBUG);
                 m_actionRunning = false;
                 if (!m_pMap->anyPlayerAlive() &&
                     m_pMenu != nullptr)
                 {
-                    CONSOLE_PRINT("Forcing exiting the game cause no player is alive", Console::eDEBUG);
+                    CONSOLE_PRINT("Forcing exiting the game cause no player is alive", GameConsole::eDEBUG);
                     emit m_pMenu->sigExitGame();
                 }
                 else if (m_pMap->getCurrentPlayer()->getIsDefeated())
                 {
-                    CONSOLE_PRINT("Triggering next player cause current player is defeated", Console::eDEBUG);
+                    CONSOLE_PRINT("Triggering next player cause current player is defeated", GameConsole::eDEBUG);
                     spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
                     performAction(pAction);
                 }
@@ -384,7 +384,7 @@ void ActionPerformer::actionPerformed()
                     }
                     else
                     {
-                        CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
+                        CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
                         quint32 delay = Settings::getPauseAfterAction();
                         if (delay == 0)
                         {
@@ -399,19 +399,19 @@ void ActionPerformer::actionPerformed()
             }
             else
             {
-                CONSOLE_PRINT("Game already won not finishing the action.", Console::eDEBUG);
+                CONSOLE_PRINT("Game already won not finishing the action.", GameConsole::eDEBUG);
                 emit m_pMenu->sigVictory(-1);
             }
         }
         else
         {
-            CONSOLE_PRINT("Animation finish error. Cause following animations are still active", Console::eDEBUG);
+            CONSOLE_PRINT("Animation finish error. Cause following animations are still active", GameConsole::eDEBUG);
             GameAnimationFactory::printActiveAnimations();
         }
     }
     else
     {
-        CONSOLE_PRINT("Skipping action performed", Console::eDEBUG);
+        CONSOLE_PRINT("Skipping action performed", GameConsole::eDEBUG);
     }
 
     if (m_pMenu != nullptr)
@@ -458,7 +458,7 @@ qint64 ActionPerformer::getSyncCounter() const
 
 void ActionPerformer::doTrapping(spGameAction & pGameAction)
 {
-    CONSOLE_PRINT("GameMenue::doTrapping", Console::eDEBUG);
+    CONSOLE_PRINT("GameMenue::doTrapping", GameConsole::eDEBUG);
     QVector<QPoint> path = pGameAction->getMovePath();
 
     Unit * pMoveUnit = pGameAction->getTargetUnit();

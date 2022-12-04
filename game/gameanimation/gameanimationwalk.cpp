@@ -1,7 +1,8 @@
 #include "resource_management/unitspritemanager.h"
 
-#include "coreengine/console.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/gameconsole.h"
+#include "coreengine/audiomanager.h"
 
 #include "game/player.h"
 #include "game/gameanimation/gameanimationwalk.h"
@@ -17,8 +18,6 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePa
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationWalk");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_pUnit->setUnitVisible(false, nullptr);
     m_frameTime = static_cast<quint32>(GameMap::frameTime / Settings::getWalkAnimationSpeed());
@@ -40,7 +39,7 @@ void GameAnimationWalk::start()
         }
         m_previousAnimation = nullptr;
         doPreAnimationCall();
-        AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioThread();
         for (auto & data : m_SoundData)
         {
             pAudioThread->playSound(data.soundFile, data.loops, data.delayMs / Settings::getWalkAnimationSpeed(), data.volume);
@@ -243,7 +242,7 @@ void GameAnimationWalk::loadSpriteV2(const QString & spriteID, GameEnums::Recolo
     }
     else
     {
-        CONSOLE_PRINT("Unable to load unit walk sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load unit walk sprite: " + spriteID, GameConsole::eDEBUG);
         emitFinished();
     }
 }

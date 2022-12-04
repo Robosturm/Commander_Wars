@@ -100,7 +100,7 @@ namespace oxygine
     private:
         void updateHittestdata();
     private:
-        spTexture m_texture;
+        spTexture m_texture{nullptr};
         RectF m_srcRect{0, 0, 1, 1};
         RectF m_destRect{0, 0, 1, 1};
         Vector2 m_frameSize;

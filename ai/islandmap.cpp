@@ -2,7 +2,7 @@
 
 #include "ai/islandmap.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "game/gamemap.h"
 #include "game/player.h"
@@ -18,8 +18,6 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
 #ifdef GRAPHICSUPPORT
     setObjectName("IslandMap");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     
     if (m_pMap != nullptr)

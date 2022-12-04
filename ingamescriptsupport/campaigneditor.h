@@ -17,18 +17,18 @@ class CampaignEditor final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    static const QString campaign;
-    static const QString campaignName;
-    static const QString campaignDescription;
-    static const QString campaignAuthor;
-    static const QString campaignMaps;
-    static const QString campaignMapsFolder;
-    static const QString campaignMapNames;
-    static const QString campaignMapEnabled;
-    static const QString campaignMapDisabled;
-    static const QString campaignMapAdd;
-    static const QString campaignMapFinished;
-    static const QString campaignFinished;
+    static const char* const campaign;
+    static const char* const campaignName;
+    static const char* const campaignDescription;
+    static const char* const campaignAuthor;
+    static const char* const campaignMaps;
+    static const char* const campaignMapsFolder;
+    static const char* const campaignMapNames;
+    static const char* const campaignMapEnabled;
+    static const char* const campaignMapDisabled;
+    static const char* const campaignMapAdd;
+    static const char* const campaignMapFinished;
+    static const char* const campaignFinished;
 
     struct MapData
     {

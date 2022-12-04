@@ -1,6 +1,6 @@
 #include "objects/base/textinput.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
@@ -129,7 +129,7 @@ bool TextInput::doHandleEvent(QEvent *event)
             }
             default:
             {
-                CONSOLE_PRINT("Ignoring event: " + QString::number(event->type()), Console::eDEBUG);
+                CONSOLE_PRINT("Ignoring event: " + QString::number(event->type()), GameConsole::eDEBUG);
                 break;
             }
         }

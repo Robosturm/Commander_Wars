@@ -6,7 +6,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/cospritemanager.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 
 #include "objects/dialogs/filedialog.h"
@@ -18,8 +18,6 @@
 ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     : m_Event(scriptEventDialog)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");

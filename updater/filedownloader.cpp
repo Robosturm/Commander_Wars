@@ -1,6 +1,6 @@
 #include "updater/filedownloader.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 FileDownloader::FileDownloader(const QString & targetFile,
                                const QString & baseUrl,
@@ -31,11 +31,11 @@ void FileDownloader::onResponseFinished(QNetworkReply* pReply)
         QUrl url = m_reply->url();
         QString latestTag = url.toString();
         latestTag = latestTag.replace(m_baseUrl + "tag/", "");
-        Console::print("Current " + m_currentTag + " latest version tag " + latestTag, Console::eDEBUG);
+        GameConsole::print("Current " + m_currentTag + " latest version tag " + latestTag, GameConsole::eDEBUG);
         if (latestTag != m_currentTag)
         {
             QString targetFile = m_baseUrl + "download/" + latestTag + "/" + m_targetFile;
-            Console::print("Starting download of " + targetFile, Console::eINFO);
+            GameConsole::print("Starting download of " + targetFile, GameConsole::eINFO);
             QUrl targetUrl(targetFile);
             downloadFile(targetUrl);
             emit sigNewState(State::DownloadingNewVersion);

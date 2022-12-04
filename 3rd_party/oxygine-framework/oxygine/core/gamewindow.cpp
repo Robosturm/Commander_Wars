@@ -20,12 +20,12 @@
 #endif
 #include <limits>
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
 
 namespace oxygine
 {
-    GameWindow* GameWindow::m_window = nullptr;
+    GameWindow* GameWindow::m_window(nullptr);
 
     GameWindow::GameWindow()
     {
@@ -58,7 +58,7 @@ namespace oxygine
         VideoDriver::instance = nullptr;
         Material::null = spMaterial();
         Material::current = spMaterial();
-        Input::instance.cleanup();
+        Input::getInstance().cleanup();
         Stage::setStage(spStage());
         Resources::unregisterResourceType("atlas");
         m_window = nullptr;
@@ -66,9 +66,6 @@ namespace oxygine
 
     void GameWindow::updateData()
     {
-        timeMS duration = VideoDriver::m_stats.duration;
-        VideoDriver::m_stats = VideoDriver::Stats();
-        VideoDriver::m_stats.duration = duration;
         if (isActive() && FocusableObject::getFocusedObject() == nullptr)
         {
             showKeyboard(false);
@@ -402,14 +399,14 @@ namespace oxygine
         {
             if (visible)
             {
-                CONSOLE_PRINT("Show virtual keyboard", Console::eDEBUG);
+                CONSOLE_PRINT("Show virtual keyboard", GameConsole::eDEBUG);
                 virtualKeyboard->show();
             }
             else
             {
                 if (virtualKeyboard->isVisible())
                 {
-                    CONSOLE_PRINT("Hide virtual keyboard", Console::eDEBUG);
+                    CONSOLE_PRINT("Hide virtual keyboard", GameConsole::eDEBUG);
                     virtualKeyboard->hide();
                 }
             }

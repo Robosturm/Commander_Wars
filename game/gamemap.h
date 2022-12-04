@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "game/terrain.h"
-#include "game/cursor.h"
 #include "game/GameEnums.h"
 #include "game/gamerules.h"
 #include "game/gamerecording/gamerecorder.h"
@@ -861,7 +860,7 @@ private:
     spCampaign m_Campaign;
     spGameRecorder m_Recorder{spGameRecorder::create(this)};
     spGameScript m_GameScript{spGameScript::create(this)};
-    static const QString m_GameAnimationFactory;
+    static const char* const m_GameAnimationFactory;
     bool m_loaded{false};
     QString m_mapMusic;
     QString m_loadedMapMusic;

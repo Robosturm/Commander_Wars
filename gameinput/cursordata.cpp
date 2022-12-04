@@ -1,15 +1,12 @@
 #include "gameinput/cursordata.h"
 
 #include "coreengine/interpreter.h"
-#include "coreengine/mainapp.h"
 
 CursorData::CursorData()
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("CursorData");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

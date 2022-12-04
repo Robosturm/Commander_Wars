@@ -10,7 +10,7 @@
 
 namespace oxygine
 {
-    spStage Stage::instance;
+    spStage Stage::instance{nullptr};
 
     Stage::Stage()
         : m_statUpdate(0)

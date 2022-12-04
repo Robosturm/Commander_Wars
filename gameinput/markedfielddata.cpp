@@ -1,15 +1,12 @@
 #include "gameinput/markedfielddata.h"
 
 #include "coreengine/interpreter.h"
-#include "coreengine/mainapp.h"
 
 MarkedFieldData::MarkedFieldData()
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("MarkedFieldData");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     Interpreter::getInstance()->trackJsObject(this);
 }

@@ -1,5 +1,4 @@
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
-#include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
@@ -14,17 +13,21 @@ using spSTDRenderer = oxygine::intrusive_ptr<STDRenderer>;
 namespace oxygine
 {
     bool STDRenderer::m_restored = false;
-    spSTDRenderer STDRenderer::instance;
-    spSTDRenderer STDRenderer::current;
-    spTexture STDRenderer::white;
+    spSTDRenderer STDRenderer::instance{nullptr};
+    spSTDRenderer STDRenderer::current{nullptr};
+    spTexture STDRenderer::white{nullptr};
     std::vector<unsigned short> STDRenderer::indices16;
     size_t STDRenderer::maxVertices = 0;
-    UberShaderProgram STDRenderer::uberShader;
+    QScopedPointer<UberShaderProgram> STDRenderer::m_uberShader;
 
     RenderStateCache& rsCache()
     {
-        static RenderStateCache r;
-        return r;
+        static QScopedPointer<RenderStateCache> r;
+        if (r.isNull())
+        {
+            r.reset(new RenderStateCache());
+        }
+        return *r.get();
     }
 
     RenderStateCache::RenderStateCache()
@@ -131,7 +134,8 @@ namespace oxygine
             indices16.push_back(i + 3u);
         }
         maxVertices = indices16.size() * 2u / 3u;
-        uberShader.init();
+        m_uberShader.reset(new UberShaderProgram());
+        m_uberShader->init();
 
         restore();
     }
@@ -139,7 +143,8 @@ namespace oxygine
     void STDRenderer::release()
     {
         indices16.clear();
-        uberShader.release();
+        m_uberShader->release();
+        m_uberShader.reset(nullptr);
         if (white)
         {
             white->release();
@@ -157,7 +162,8 @@ namespace oxygine
             white->release();
         }
         white = nullptr;
-        uberShader.release();
+        m_uberShader->release();
+        m_uberShader.reset(nullptr);
     }
 
     bool STDRenderer::isReady()
@@ -278,7 +284,6 @@ namespace oxygine
         m_driver = driver;
         m_vp.setToIdentity();
         m_vdecl = m_driver->getVertexDeclaration();
-        m_uberShader = &uberShader;
         m_sphookFirst = this;
         m_sphookLast  = this;
 
@@ -324,14 +329,5 @@ namespace oxygine
                       &m_verticesData.front(),
                       &STDRenderer::indices16.front(), count);
         m_verticesData.clear();
-    }
-
-    void STDRenderer::setUberShaderProgram(UberShaderProgram* pr)
-    {
-        if (m_uberShader == pr)
-        {
-            return;
-        }
-        m_uberShader = pr;
     }
 }

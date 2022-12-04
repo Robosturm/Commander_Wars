@@ -1,6 +1,5 @@
 #include "objects/base/tableview.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 #include "resource_management/fontmanager.h"
@@ -14,8 +13,7 @@ TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> 
 #ifdef GRAPHICSUPPORT
     setObjectName("TableView");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     qint32 width = 5;
     for (qint32 i = 0; i < m_widths.size(); i++)

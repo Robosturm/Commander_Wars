@@ -9,5 +9,5 @@ DummyAi::DummyAi(GameMap* pMap, GameEnums::AiTypes type)
     setObjectName("DummyAi");
 #endif
     Interpreter::setCppOwnerShip(this);
-    AI_CONSOLE_PRINT("Creating dummy ai", Console::eDEBUG);
+    CONSOLE_PRINT("Creating dummy ai", GameConsole::eDEBUG);
 }

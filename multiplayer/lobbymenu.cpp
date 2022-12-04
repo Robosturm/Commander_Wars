@@ -11,9 +11,9 @@
 #include "multiplayer/multiplayermenu.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 
 #include "menue/mainwindow.h"
 
@@ -33,8 +33,7 @@
 LobbyMenu::LobbyMenu()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
-    CONSOLE_PRINT("Entering Lobby Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Lobby Menue", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
     if (!Settings::getServer())
@@ -255,7 +254,7 @@ void LobbyMenu::leaveServer()
 
 void LobbyMenu::exitMenue()
 {    
-    CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Lobby Menue", GameConsole::eDEBUG);
     auto window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
@@ -263,7 +262,7 @@ void LobbyMenu::exitMenue()
 
 void LobbyMenu::hostLocal()
 {    
-    CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Lobby Menue", GameConsole::eDEBUG);
     oxygine::Stage::getStage()->addChild(spMultiplayermenu::create("", "", Settings::getGamePort(), "", Multiplayermenu::NetworkMode::Host));
     oxygine::Actor::detach();
 }
@@ -273,7 +272,7 @@ void LobbyMenu::hostServer()
     if (m_pTCPClient.get() != nullptr &&
         m_pTCPClient->getIsConnected())
     {
-        CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
+        CONSOLE_PRINT("Leaving Lobby Menue", GameConsole::eDEBUG);
         oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, "",  Multiplayermenu::NetworkMode::Host));
         oxygine::Actor::detach();
     }
@@ -314,9 +313,9 @@ void LobbyMenu::joinGamePassword(QString password)
     }
     if (exists)
     {
-        CONSOLE_PRINT("Leaving Lobby Menue to join server game", Console::eDEBUG);
+        CONSOLE_PRINT("Leaving Lobby Menue to join server game", GameConsole::eDEBUG);
         QString command = QString(NetworkCommands::SERVERJOINGAME);
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
 
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
@@ -336,7 +335,7 @@ void LobbyMenu::joinAdress()
 
 void LobbyMenu::join(QString adress, QString password)
 {    
-    CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", GameConsole::eDEBUG);
     oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), "", Settings::getGamePort(), password, Multiplayermenu::NetworkMode::Client));
     oxygine::Actor::detach();
 }
@@ -350,7 +349,7 @@ void LobbyMenu::observeAdress()
 
 void LobbyMenu::observe(QString adress, QString password)
 {
-    CONSOLE_PRINT("Leaving Lobby Menue to observe game by adress", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Lobby Menue to observe game by adress", GameConsole::eDEBUG);
     oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), "", Settings::getGamePort(), password, Multiplayermenu::NetworkMode::Observer));
     oxygine::Actor::detach();
 }
@@ -389,11 +388,11 @@ void LobbyMenu::observeGamePassword(QString password)
     }
     if (exists)
     {
-        CONSOLE_PRINT("Leaving Lobby Menue to observe server game", Console::eDEBUG);
+        CONSOLE_PRINT("Leaving Lobby Menue to observe server game", GameConsole::eDEBUG);
         m_pTCPClient->setIsObserver(true);
         oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, password, Multiplayermenu::NetworkMode::Observer));
         QString command = QString(NetworkCommands::SERVERJOINGAME);
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_SLAVENAME, m_currentGame.getSlaveName());
@@ -410,7 +409,7 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         QJsonDocument doc = QJsonDocument::fromJson(data);
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
-        CONSOLE_PRINT("LobbyMenu Command received: " + messageType, Console::eDEBUG);
+        CONSOLE_PRINT("LobbyMenu Command received: " + messageType, GameConsole::eDEBUG);
         if (messageType == NetworkCommands::SERVERGAMEDATA)
         {
             if (m_loggedIn && m_mode == GameViewMode::OpenGames)
@@ -462,7 +461,7 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             }
             else
             {
-                CONSOLE_PRINT("Unknown public key action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
+                CONSOLE_PRINT("Unknown public key action " + QString::number(static_cast<qint32>(action)) + " received", GameConsole::eDEBUG);
             }
         }
         else if (messageType == NetworkCommands::SERVERACCOUNTMESSAGE)
@@ -471,7 +470,7 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         }
         else
         {
-            CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
+            CONSOLE_PRINT("Unknown command " + messageType + " received", GameConsole::eDEBUG);
         }
     }
 }
@@ -494,7 +493,7 @@ void LobbyMenu::joinSlaveGame(const QJsonObject & objData)
     QString slaveAddress = objData.value(JsonKeys::JSONKEY_ADDRESS).toString();
     QString secondarySlaveAddress = objData.value(JsonKeys::JSONKEY_SECONDARYADDRESS).toString();
     quint16 slavePort = objData.value(JsonKeys::JSONKEY_PORT).toInteger();
-    CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", GameConsole::eDEBUG);
     oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(slaveAddress.trimmed(), secondarySlaveAddress.trimmed(), slavePort, m_password, Multiplayermenu::NetworkMode::Client));
     oxygine::Actor::detach();
 }
@@ -573,7 +572,7 @@ void LobbyMenu::onEnter()
     QString func = "lobbyMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -599,7 +598,7 @@ void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject & objDa
         QString object = jsScripts[action];
         if (!object.isEmpty())
         {
-            CONSOLE_PRINT("Calling function " + object + ".onAccountMessage(" + QString::number(accountError) + ")", Console::eDEBUG);
+            CONSOLE_PRINT("Calling function " + object + ".onAccountMessage(" + QString::number(accountError) + ")", GameConsole::eDEBUG);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QJSValueList args;
             args.append(accountError);
@@ -608,7 +607,7 @@ void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject & objDa
     }
     else
     {
-        CONSOLE_PRINT("Unknown account message " + QString::number(action) + " received", Console::eDEBUG);
+        CONSOLE_PRINT("Unknown account message " + QString::number(action) + " received", GameConsole::eDEBUG);
     }
 }
 

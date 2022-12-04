@@ -17,8 +17,6 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
 #ifdef GRAPHICSUPPORT
     setObjectName("ColorSelector");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     // font style

@@ -14,7 +14,7 @@ SmtpMailSender::SmtpMailSender(QObject *parent)
 bool SmtpMailSender::connectToServer(SmtpClient & client)
 {
     bool success = false;
-    CONSOLE_PRINT("Start connecting to mail server.", Console::eDEBUG);
+    CONSOLE_PRINT("Start connecting to mail server.", GameConsole::eDEBUG);
     client.connectToHost();
     if (client.waitForReadyConnected())
     {
@@ -22,16 +22,16 @@ bool SmtpMailSender::connectToServer(SmtpClient & client)
         if (client.waitForAuthenticated())
         {
             success = true;
-            CONSOLE_PRINT("Connect to mail server.", Console::eDEBUG);
+            CONSOLE_PRINT("Connect to mail server.", GameConsole::eDEBUG);
         }
         else
         {
-            CONSOLE_PRINT("Unable to login to mail server account.", Console::eWARNING);
+            CONSOLE_PRINT("Unable to login to mail server account.", GameConsole::eWARNING);
         }
     }
     else
     {
-        CONSOLE_PRINT("Unable to connect to mail server.", Console::eWARNING);
+        CONSOLE_PRINT("Unable to connect to mail server.", GameConsole::eWARNING);
     }
     return success;
 }
@@ -42,7 +42,7 @@ void SmtpMailSender::sendMail(quint64 socketId, const QString & subject, const Q
     bool result = false;
     if (connectToServer(client))
     {
-        CONSOLE_PRINT("Sending mail to " + receiverAddress , Console::eDEBUG);
+        CONSOLE_PRINT("Sending mail to " + receiverAddress , GameConsole::eDEBUG);
         MimeMessage message;
         EmailAddress sender(Settings::getMailServerSendAddress(), "Commander Wars Server Crew");
         message.setSender(sender);
@@ -57,8 +57,8 @@ void SmtpMailSender::sendMail(quint64 socketId, const QString & subject, const Q
     }
     else
     {
-        CONSOLE_PRINT("Sending mail to " + receiverAddress + " failed.", Console::eDEBUG);
+        CONSOLE_PRINT("Sending mail to " + receiverAddress + " failed.", GameConsole::eDEBUG);
     }
-    CONSOLE_PRINT("Emitting mail send result", Console::eDEBUG);
+    CONSOLE_PRINT("Emitting mail send result", GameConsole::eDEBUG);
     emit sigMailResult(socketId, receiverAddress, username, result, action);
 }

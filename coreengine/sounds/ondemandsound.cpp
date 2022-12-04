@@ -1,5 +1,5 @@
-#include "coreengine/audiothread.h"
-#include "coreengine/console.h"
+#include "coreengine/audiomanager.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
 #ifdef AUDIOSUPPORT
@@ -10,7 +10,7 @@
 // which create a sound pipe during the sound effect creation which only allow
 // a limited amount of parallel open sound pipes.
 
-void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
+void AudioManager::fillSoundCache(qint32 count, QString folder, QString file)
 {
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
@@ -22,7 +22,7 @@ void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
         QUrl cacheUrl = GlobalUtils::getUrlForFile(folder + file);
         std::shared_ptr<SoundData> cache = std::make_shared<SoundData>();
         cache->cacheUrl = cacheUrl;
-        CONSOLE_PRINT("Caching sound " + folder + file + " with amount " + QString::number(count), Console::eDEBUG);
+        CONSOLE_PRINT("Caching sound " + folder + file + " with amount " + QString::number(count), GameConsole::eDEBUG);
         for (qint32 i = 0; i < count; ++i)
         {
             cache->timer[i] = std::make_shared<QTimer>(this);
@@ -35,14 +35,14 @@ void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
 }
 
 #ifdef AUDIOSUPPORT
-bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soundCache, qint32 i,
+bool AudioManager::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soundCache, qint32 i,
                                               QString & file, qint32 loops, qint32 delay, qreal sound, bool stopOldestSound)
 {
     bool started = false;
     if (soundCache->sound[i] == nullptr &&
         !soundCache->timer[i]->isActive())
     {
-        CONSOLE_PRINT("Playing sound: " + file + " using cache sound " + QString::number(i), Console::eDEBUG);
+        CONSOLE_PRINT("Playing sound: " + file + " using cache sound " + QString::number(i), GameConsole::eDEBUG);
         auto* soundItem = new QSoundEffect(this);
         soundItem->setObjectName(file + QString::number(i));
         soundItem->setAudioDevice(m_audioDevice);
@@ -72,7 +72,7 @@ bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & sound
         {
             if (stopOldestSound)
             {
-                AudioThread::stopOldestSound(pSoundCache);
+                AudioManager::stopOldestSound(pSoundCache);
             }
             soundItem->play();
         }
@@ -88,9 +88,9 @@ bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & sound
 #endif
 
 #ifdef AUDIOSUPPORT
-void AudioThread::stopSound(SoundData* soundData, qint32 soundIndex)
+void AudioManager::stopSound(SoundData* soundData, qint32 soundIndex)
 {
-    CONSOLE_PRINT("Stopping sound at index " + QString::number(soundIndex), Console::eDEBUG);
+    CONSOLE_PRINT("Stopping sound at index " + QString::number(soundIndex), GameConsole::eDEBUG);
     if (soundData->sound[soundIndex] != nullptr)
     {
         soundData->sound[soundIndex]->stop();
@@ -99,12 +99,12 @@ void AudioThread::stopSound(SoundData* soundData, qint32 soundIndex)
     }
 }
 
-void AudioThread::playDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound)
+void AudioManager::playDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound)
 {
-    CONSOLE_PRINT("Starting delayed sound", Console::eDEBUG);
+    CONSOLE_PRINT("Starting delayed sound", GameConsole::eDEBUG);
     if (stopOldestSound)
     {
-        AudioThread::stopOldestSound(soundData);
+        AudioManager::stopOldestSound(soundData);
     }
     if (soundData->sound[soundIndex] != nullptr)
     {
@@ -112,12 +112,12 @@ void AudioThread::playDelayedSound(SoundData* soundData, qint32 soundIndex, bool
     }
 }
 
-void AudioThread::deleteSound(SoundData* soundData, qint32 soundIndex)
+void AudioManager::deleteSound(SoundData* soundData, qint32 soundIndex)
 {
     if (soundData->sound[soundIndex] != nullptr &&
         !soundData->sound[soundIndex]->isPlaying())
     {
-        CONSOLE_PRINT("Stopping sound on playing changed.", Console::eDEBUG);
+        CONSOLE_PRINT("Stopping sound on playing changed.", GameConsole::eDEBUG);
         soundData->sound[soundIndex]->stop();
         soundData->sound[soundIndex]->deleteLater();
         soundData->sound[soundIndex] = nullptr;

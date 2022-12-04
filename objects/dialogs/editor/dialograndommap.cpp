@@ -1,7 +1,7 @@
 #include "objects/dialogs/editor/dialograndommap.h"
 #include "objects/dialogs/filedialog.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 
 #include "resource_management/objectmanager.h"
@@ -14,8 +14,7 @@ DialogRandomMap::DialogRandomMap()
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogRandomMap");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");

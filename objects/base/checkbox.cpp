@@ -2,17 +2,14 @@
 
 #include "resource_management/objectmanager.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 
 Checkbox::Checkbox()
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Checkbox");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("checkbox");

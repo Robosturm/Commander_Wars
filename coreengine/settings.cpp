@@ -19,178 +19,16 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/userdata.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/Gamepad.h"
 #include "coreengine/interpreter.h"
 
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
-#ifdef USEAPPCONFIGPATH
-    const QString Settings::m_settingFile = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + "/Commander_Wars.ini";
-#else
-    const QString Settings::m_settingFile = "Commander_Wars.ini";
-#endif
-
 const char* const Settings::DEFAULT_AUDIODEVICE = "@@default@@";
 
-float Settings::m_mouseSensitivity   = -0.75f;
-qint32 Settings::m_x                 = 0;
-qint32 Settings::m_y                 = 0;
-qint32 Settings::m_width             = 1024;
-qint32 Settings::m_height            = 800;
-bool Settings::m_borderless         = true;
-bool Settings::m_fullscreen         = false;
-float Settings::m_brightness        = 0.0f;
-float Settings::m_gamma             = 1.0f;
-bool Settings::m_smallScreenDevice  = false;
-bool Settings::m_touchScreen = false;
-bool Settings::m_gamepadEnabled = false;
-float Settings::m_gamepadSensitivity = 1.0f;
-bool Settings::m_useHighDpi = true;
-bool Settings::m_automaticUpdates = true;
-qint32 Settings::m_framesPerSecond = 60;
-qint32 Settings::m_touchPointSensitivity = 15;
-Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
-Qt::Key Settings::m_key_console                     = Qt::Key_F1;
-Qt::Key Settings::m_key_screenshot                  = Qt::Key_F5;
-Qt::Key Settings::m_key_mapshot                     = Qt::Key_F6;
-Qt::Key Settings::m_key_up                          = Qt::Key_W;
-Qt::Key Settings::m_key_down                        = Qt::Key_S;
-Qt::Key Settings::m_key_right                       = Qt::Key_D;
-Qt::Key Settings::m_key_left                        = Qt::Key_A;
-Qt::Key Settings::m_key_confirm                     = Qt::Key_Space;
-Qt::Key Settings::m_key_cancel                      = Qt::Key_B;
-Qt::Key Settings::m_key_next                        = Qt::Key_E;
-Qt::Key Settings::m_key_previous                    = Qt::Key_Q;
-Qt::Key Settings::m_key_quicksave1                  = Qt::Key_F9;
-Qt::Key Settings::m_key_quicksave2                  = Qt::Key_F11;
-Qt::Key Settings::m_key_quickload1                  = Qt::Key_F10;
-Qt::Key Settings::m_key_quickload2                  = Qt::Key_F12;
-Qt::Key Settings::m_key_information                 = Qt::Key_I;
-Qt::Key Settings::m_key_moveMapUp                   = Qt::Key_Up;
-Qt::Key Settings::m_key_moveMapDown                 = Qt::Key_Down;
-Qt::Key Settings::m_key_moveMapRight                = Qt::Key_Right;
-Qt::Key Settings::m_key_moveMapLeft                 = Qt::Key_Left;
-Qt::Key Settings::m_key_MapZoomOut                  = Qt::Key_Minus;
-Qt::Key Settings::m_key_MapZoomIn                   = Qt::Key_Plus;
-Qt::Key Settings::m_key_ShowAttackFields            = Qt::Key_2;
-Qt::Key Settings::m_key_ShowIndirectAttackFields    = Qt::Key_1;
-Qt::Key Settings::m_key_up2                         = Qt::Key(0);
-Qt::Key Settings::m_key_down2                       = Qt::Key(0);
-Qt::Key Settings::m_key_right2                      = Qt::Key(0);
-Qt::Key Settings::m_key_left2                       = Qt::Key(0);
-Qt::Key Settings::m_key_confirm2                    = Qt::Key_Return;
-Qt::Key Settings::m_key_cancel2                     = Qt::Key_Backspace;
-Qt::Key Settings::m_key_next2                       = Qt::Key_Tab;
-Qt::Key Settings::m_key_previous2                   = Qt::Key(0);
-Qt::Key Settings::m_key_information2                = Qt::Key(0);
-Qt::Key Settings::m_key_moveMapUp2                  = Qt::Key(0);
-Qt::Key Settings::m_key_moveMapDown2                = Qt::Key(0);
-Qt::Key Settings::m_key_moveMapRight2               = Qt::Key(0);
-Qt::Key Settings::m_key_moveMapLeft2                = Qt::Key(0);
-Qt::Key Settings::m_key_MapZoomOut2                 = Qt::Key(0);
-Qt::Key Settings::m_key_MapZoomIn2                  = Qt::Key(0);
-Qt::Key Settings::m_key_ShowAttackFields2           = Qt::Key(0);
-Qt::Key Settings::m_key_ShowIndirectAttackFields2   = Qt::Key(0);
-
-Qt::Key Settings::m_key_EditorPlaceTerrain          = Qt::Key_1;
-Qt::Key Settings::m_key_EditorPlaceBuilding         = Qt::Key_2;
-Qt::Key Settings::m_key_EditorPlaceUnit             = Qt::Key_3;
-Qt::Key Settings::m_key_EditorNextTeam              = Qt::Key_Tab;
-Qt::Key Settings::m_key_EditorPreviousTeam          = Qt::Key_Asterisk;
-Qt::Key Settings::m_key_EditorSelectionRight        = Qt::Key_T;
-Qt::Key Settings::m_key_EditorSelectionLeft         = Qt::Key_R;
-
-QString Settings::m_language      = "en";
-// Sound
-qint32 Settings::m_TotalVolume       = 100;
-qint32 Settings::m_MusicVolume       = 80;
-qint32 Settings::m_SoundVolume       = 100;
-QVariant Settings::m_audioOutput = QVariant();
-bool Settings::m_muted = false;
-// Network
-quint16 Settings::m_GamePort                        = 9001;
-quint16 Settings::m_ServerPort                      = 9002;
-quint16 Settings::m_slaveServerPort                 = 9003;
-QString Settings::m_ServerAdress                    = "192.46.216.113";
-QString Settings::m_secondaryServerAdress           = "2600:3c00::f03c:93ff:fe86:009e";
-QString Settings::m_slaveServerName                 = "";
-QString Settings::m_slaveHostOptions                = "::1&&10000&20000;::1&&50000&65535";
-QString Settings::m_serverListenAdress              = "";
-QString Settings::m_serverSecondaryListenAdress     = "";
-QString Settings::m_slaveListenAdress               = "::1";
-bool Settings::m_Server                             = false;
-bool Settings::m_record                             = true;
-std::chrono::seconds Settings::m_slaveDespawnTime   = std::chrono::minutes(0);
-QString Settings::m_serverPassword                  = "";
-
-// mailing
-QString Settings::m_mailServerAddress = "";
-quint16 Settings::m_mailServerPort = 0;
-qint32 Settings::m_mailServerConnectionType = 2;
-QString Settings::m_mailServerUsername = "";
-QString Settings::m_mailServerPassword = "";
-qint32 Settings::m_mailServerAuthMethod = 1;
-QString Settings::m_mailServerSendAddress = "";
-// auto saving
-std::chrono::seconds Settings::m_autoSavingCylceTime = std::chrono::minutes(0);
-qint32 Settings::m_autoSavingCycle = 0;
-
-// ingame options
-bool Settings::m_overworldAnimations = true;
-GameEnums::BattleAnimationMode Settings::m_battleAnimationsMode = GameEnums::BattleAnimationMode_All;
-GameEnums::BattleAnimationType Settings::m_battleAnimationType = GameEnums::BattleAnimationType_Detail;
-quint32 Settings::m_animationSpeed = 1;
-quint32 Settings::m_battleAnimationSpeed = 1;
-quint32 Settings::m_walkAnimationSpeed = 20;
-quint32 Settings::m_dialogAnimationSpeed = 20;
-quint32 Settings::m_captureAnimationSpeed = 1;
-bool Settings::m_useCoMinis = true;
-bool Settings::m_dialogAnimation = true;
-bool Settings::m_captureAnimation = true;
-quint32 Settings::multiTurnCounter = 4;
-QString Settings::m_LastSaveGame = "";
-QString Settings::m_defaultRuleset = "";
-QString Settings::m_defaultBannlist = "";
-QString Settings::m_Username = "";
-bool Settings::m_ShowCursor = true;
-bool Settings::m_AutoEndTurn = false;
-qint32 Settings::m_MenuItemCount = 13;
-qint32 Settings::m_MenuItemRowCount = 2;
-bool Settings::m_StaticMarkedFields = false;
-qint32 Settings::m_showCoCount = 0;
-GameEnums::COInfoPosition Settings::m_coInfoPosition = GameEnums::COInfoPosition_Flipping;
-bool Settings::m_autoScrolling = true;
-bool Settings::m_autoCamera = true;
-bool Settings::m_showIngameCoordinates  = true;
-GameEnums::AutoFocusing Settings::m_autoFocusing = GameEnums::AutoFocusing_LastPos;
-bool Settings::m_centerOnMarkedField = false;
-bool Settings::m_syncAnimations = false;
-bool Settings::m_simpleDeselect = false;
-bool Settings::m_showDetailedBattleForcast = true;
-bool Settings::m_autoMoveCursor = false;
-QString Settings::m_userPath = "";
-float Settings::m_supplyWarning = 0.33f;
-qint32 Settings::m_pauseAfterAction = 0;
-bool Settings::m_day2dayScreen = true;
-bool Settings::m_movementAnimations = true;
-
-// add mod path
-QStringList Settings::m_activeMods;
-QStringList Settings::m_activeModVersions;
 // this Object
-spSettings Settings::m_pInstance;
-QVector<std::shared_ptr<QTranslator>> Settings::m_translators;
-QString Settings::m_updateStep = "";
-bool Settings::m_spawnAiProcess = DEFAULTAIPIPE;
-bool Settings::m_aiSlave = false;
-QString Settings::m_pipeUuid;
-
-// logging
-bool Settings::m_LogActions = false;
-Console::eLogLevels Settings::m_defaultLogLevel = static_cast<Console::eLogLevels>(DEBUG_LEVEL);
-
-QVector<Settings::ValueBase*> Settings::m_SettingValues;
+spSettings Settings::m_pInstance{nullptr};
 
 Settings* Settings::getInstance()
 {
@@ -286,10 +124,10 @@ Settings::Settings()
         new Value<Qt::Key>{"Keys", "key_quickload1", &m_key_quickload1, Qt::Key_F10, static_cast<Qt::Key>(0), Qt::Key_unknown},
         new Value<Qt::Key>{"Keys", "key_quickload2", &m_key_quickload2, Qt::Key_F12, static_cast<Qt::Key>(0), Qt::Key_unknown},
         new Value<Qt::Key>{"Keys", "key_information", &m_key_information, Qt::Key_I, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_moveMapUp", &m_key_moveMapUp, Qt::Key_Up, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_moveMapDown", &m_key_moveMapDown, Qt::Key_Down, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_moveMapRight", &m_key_moveMapRight, Qt::Key_Right, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_moveMapLeft", &m_key_moveMapLeft, Qt::Key_Left, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_moveMapUp", &m_key_moveMapUp, Qt::Key_Down, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_moveMapDown", &m_key_moveMapDown, Qt::Key_Up, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_moveMapRight", &m_key_moveMapRight, Qt::Key_Left, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_moveMapLeft", &m_key_moveMapLeft, Qt::Key_Right, static_cast<Qt::Key>(0), Qt::Key_unknown},
         new Value<Qt::Key>{"Keys", "key_MapZoomOut", &m_key_MapZoomOut, Qt::Key_Minus, static_cast<Qt::Key>(0), Qt::Key_unknown},
         new Value<Qt::Key>{"Keys", "key_MapZoomIn", &m_key_MapZoomIn, Qt::Key_Plus, static_cast<Qt::Key>(0), Qt::Key_unknown},
         new Value<Qt::Key>{"Keys", "key_ShowAttackFields", &m_key_ShowAttackFields, Qt::Key_2, static_cast<Qt::Key>(0), Qt::Key_unknown},
@@ -393,354 +231,354 @@ Settings::Settings()
         new Value<QStringList>{"Mods", "Mods", &m_activeMods, QStringList(), QStringList(), QStringList()},
         // logging
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
-        new Value<Console::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<Console::eLogLevels>(DEBUG_LEVEL), Console::eLogLevels::eOFF, Console::eLogLevels::eFATAL},
+        new Value<GameConsole::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL), GameConsole::eLogLevels::eOFF, GameConsole::eLogLevels::eFATAL},
     };
 }
 
 QString Settings::getPipeUuid()
 {
-    return m_pipeUuid;
+    return m_pInstance->m_pipeUuid;
 }
 
 void Settings::setPipeUuid(const QString & newPipeUuid)
 {
-    m_pipeUuid = newPipeUuid;
+    m_pInstance->m_pipeUuid = newPipeUuid;
 }
 
 bool Settings::getAiSlave()
 {
-    return m_aiSlave;
+    return m_pInstance->m_aiSlave;
 }
 
 void Settings::setAiSlave(bool newAiSlave)
 {
-    m_aiSlave = newAiSlave;
+    m_pInstance->m_aiSlave = newAiSlave;
 }
 
 bool Settings::getSpawnAiProcess()
 {
-    return m_spawnAiProcess;
+    return m_pInstance->m_spawnAiProcess;
 }
 
 void Settings::setSpawnAiProcess(bool newSpawnAiProcess)
 {
-    m_spawnAiProcess = newSpawnAiProcess;
+    m_pInstance->m_spawnAiProcess = newSpawnAiProcess;
 }
 
 bool Settings::getAutomaticUpdates()
 {
-    return m_automaticUpdates;
+    return m_pInstance->m_automaticUpdates;
 }
 
 void Settings::setAutomaticUpdates(bool newAutomaticUpdates)
 {
-    m_automaticUpdates = newAutomaticUpdates;
+    m_pInstance->m_automaticUpdates = newAutomaticUpdates;
 }
 
 QString Settings::getUpdateStep()
 {
-    return m_updateStep;
+    return m_pInstance->m_updateStep;
 }
 
 void Settings::setUpdateStep(const QString &newUpdateStep)
 {
-    m_updateStep = newUpdateStep;
+    m_pInstance->m_updateStep = newUpdateStep;
 }
 
 QString Settings::getSecondaryServerAdress()
 {
-    return m_secondaryServerAdress;
+    return m_pInstance->m_secondaryServerAdress;
 }
 
 void Settings::setSecondaryServerAdress(const QString &newSecondaryServerAdress)
 {
-    m_secondaryServerAdress = newSecondaryServerAdress;
+    m_pInstance->m_secondaryServerAdress = newSecondaryServerAdress;
 }
 
-const QString &Settings::getServerSecondaryListenAdress()
+QString Settings::getServerSecondaryListenAdress()
 {
-    return m_serverSecondaryListenAdress;
+    return m_pInstance->m_serverSecondaryListenAdress;
 }
 
 void Settings::setServerSecondaryListenAdress(const QString &newServerSecondaryListenAdress)
 {
-    m_serverSecondaryListenAdress = newServerSecondaryListenAdress;
+    m_pInstance->m_serverSecondaryListenAdress = newServerSecondaryListenAdress;
 }
 
-const QString &Settings::getServerPassword()
+QString Settings::getServerPassword()
 {
-    return m_serverPassword;
+    return m_pInstance->m_serverPassword;
 }
 
 void Settings::setServerPassword(const QString &newServerPassword)
 {
-    CONSOLE_PRINT("Changed buffered server login password", Console::eDEBUG);
-    m_serverPassword = newServerPassword;
+    CONSOLE_PRINT("Changed buffered server login password", GameConsole::eDEBUG);
+    m_pInstance->m_serverPassword = newServerPassword;
 }
 
-const QString &Settings::getMailServerSendAddress()
+QString Settings::getMailServerSendAddress()
 {
-    return m_mailServerSendAddress;
+    return m_pInstance->m_mailServerSendAddress;
 }
 
 void Settings::setMailServerSendAddress(const QString &newMailServerSendAddress)
 {
-    m_mailServerSendAddress = newMailServerSendAddress;
+    m_pInstance->m_mailServerSendAddress = newMailServerSendAddress;
 }
 
 qint32 Settings::getMailServerAuthMethod()
 {
-    return m_mailServerAuthMethod;
+    return m_pInstance->m_mailServerAuthMethod;
 }
 
 void Settings::setMailServerAuthMethod(qint32 newMailServerAuthMethod)
 {
-    m_mailServerAuthMethod = newMailServerAuthMethod;
+    m_pInstance->m_mailServerAuthMethod = newMailServerAuthMethod;
 }
 
 QString Settings::getMailServerPassword()
 {
-    return m_mailServerPassword;
+    return m_pInstance->m_mailServerPassword;
 }
 
 void Settings::setMailServerPassword(QString newMailServerPassword)
 {
-    m_mailServerPassword = newMailServerPassword;
+    m_pInstance->m_mailServerPassword = newMailServerPassword;
 }
 
 QString Settings::getMailServerUsername()
 {
-    return m_mailServerUsername;
+    return m_pInstance->m_mailServerUsername;
 }
 
 void Settings::setMailServerUsername(QString newMailServerUsername)
 {
-    m_mailServerUsername = newMailServerUsername;
+    m_pInstance->m_mailServerUsername = newMailServerUsername;
 }
 
 qint32 Settings::getMailServerConnectionType()
 {
-    return m_mailServerConnectionType;
+    return m_pInstance->m_mailServerConnectionType;
 }
 
 void Settings::setMailServerConnectionType(qint32 newMailServerConnectionType)
 {
-    m_mailServerConnectionType = newMailServerConnectionType;
+    m_pInstance->m_mailServerConnectionType = newMailServerConnectionType;
 }
 
 quint16 Settings::getMailServerPort()
 {
-    return m_mailServerPort;
+    return m_pInstance->m_mailServerPort;
 }
 
 void Settings::setMailServerPort(quint16 newMailServerPort)
 {
-    m_mailServerPort = newMailServerPort;
+    m_pInstance->m_mailServerPort = newMailServerPort;
 }
 
-const QString &Settings::getMailServerAddress()
+QString Settings::getMailServerAddress()
 {
-    return m_mailServerAddress;
+    return m_pInstance->m_mailServerAddress;
 }
 
 void Settings::setMailServerAddress(const QString &newMailServerAddress)
 {
-    m_mailServerAddress = newMailServerAddress;
+    m_pInstance->m_mailServerAddress = newMailServerAddress;
 }
 
 const std::chrono::seconds &Settings::getSlaveDespawnTime()
 {
-    return m_slaveDespawnTime;
+    return m_pInstance->m_slaveDespawnTime;
 }
 
 void Settings::setSlaveDespawnTime(const std::chrono::seconds &newSlaveDespawnTime)
 {
-    m_slaveDespawnTime = newSlaveDespawnTime;
+    m_pInstance->m_slaveDespawnTime = newSlaveDespawnTime;
 }
 
 QString Settings::getDefaultBannlist()
 {
-    return m_defaultBannlist;
+    return m_pInstance->m_defaultBannlist;
 }
 
 void Settings::setDefaultBannlist(const QString &newDefaultBannlist)
 {
-    m_defaultBannlist = newDefaultBannlist;
+    m_pInstance->m_defaultBannlist = newDefaultBannlist;
 }
 
 bool Settings::getUseHighDpi()
 {
-    return m_useHighDpi;
+    return m_pInstance->m_useHighDpi;
 }
 
 void Settings::setUseHighDpi(bool newUseHighDpi)
 {
-    m_useHighDpi = newUseHighDpi;
+    m_pInstance->m_useHighDpi = newUseHighDpi;
 }
 
 bool Settings::getMovementAnimations()
 {
-    return m_movementAnimations;
+    return m_pInstance->m_movementAnimations;
 }
 
 void Settings::setMovementAnimations(bool newMovementAnimations)
 {
-    m_movementAnimations = newMovementAnimations;
+    m_pInstance->m_movementAnimations = newMovementAnimations;
 }
 
 bool Settings::getDay2dayScreen()
 {
-    return m_day2dayScreen;
+    return m_pInstance->m_day2dayScreen;
 }
 
 void Settings::setDay2dayScreen(bool newDay2dayScreen)
 {
-    m_day2dayScreen = newDay2dayScreen;
+    m_pInstance->m_day2dayScreen = newDay2dayScreen;
 }
 
 bool Settings::getCaptureAnimation()
 {
-    return m_captureAnimation;
+    return m_pInstance->m_captureAnimation;
 }
 
 void Settings::setCaptureAnimation(bool newCaptureAnimation)
 {
-    m_captureAnimation = newCaptureAnimation;
+    m_pInstance->m_captureAnimation = newCaptureAnimation;
 }
 
-const QString &Settings::getSlaveListenAdress()
+QString Settings::getSlaveListenAdress()
 {
-    return m_slaveListenAdress;
+    return m_pInstance->m_slaveListenAdress;
 }
 
 void Settings::setSlaveListenAdress(const QString &newSlaveListenAdress)
 {
-    m_slaveListenAdress = newSlaveListenAdress;
+    m_pInstance->m_slaveListenAdress = newSlaveListenAdress;
 }
 
-const QString &Settings::getServerListenAdress()
+QString Settings::getServerListenAdress()
 {
-    return m_serverListenAdress;
+    return m_pInstance->m_serverListenAdress;
 }
 
 void Settings::setServerListenAdress(const QString &newServerListenAdress)
 {
-    m_serverListenAdress = newServerListenAdress;
+    m_pInstance->m_serverListenAdress = newServerListenAdress;
 }
 
 qint32 Settings::getPauseAfterAction()
 {
-    return m_pauseAfterAction;
+    return m_pInstance->m_pauseAfterAction;
 }
 
 void Settings::setPauseAfterAction(qint32 newPauseAfterAction)
 {
-    m_pauseAfterAction = newPauseAfterAction;
+    m_pInstance->m_pauseAfterAction = newPauseAfterAction;
 }
 
 QString Settings::getSlaveHostOptions()
 {
-    return m_slaveHostOptions;
+    return m_pInstance->m_slaveHostOptions;
 }
 
 void Settings::setSlaveHostOptions(const QString &newSlaveHostOptions)
 {
-    m_slaveHostOptions = newSlaveHostOptions;
+    m_pInstance->m_slaveHostOptions = newSlaveHostOptions;
 }
 
 quint16 Settings::getSlaveServerPort()
 {
-    return m_slaveServerPort;
+    return m_pInstance->m_slaveServerPort;
 }
 
 void Settings::setSlaveServerPort(quint16 newSlaveServerPort)
 {
-    m_slaveServerPort = newSlaveServerPort;
+    m_pInstance->m_slaveServerPort = newSlaveServerPort;
 }
 
 void Settings::setKey_mapshot(Qt::Key newKey_mapshot)
 {
-    m_key_mapshot = newKey_mapshot;
+    m_pInstance->m_key_mapshot = newKey_mapshot;
 }
 
 Qt::Key Settings::getKey_mapshot()
 {
-    return m_key_mapshot;
+    return m_pInstance->m_key_mapshot;
 }
 
 qint32 Settings::getFramesPerSecond()
 {
-    return m_framesPerSecond;
+    return m_pInstance->m_framesPerSecond;
 }
 
 void Settings::setFramesPerSecond(qint32 newFramesPerSecond)
 {
     constexpr qint32 msPerSec = 1000;
-    m_framesPerSecond = newFramesPerSecond;
-    if (m_framesPerSecond >= msPerSec)
+    m_pInstance->m_framesPerSecond = newFramesPerSecond;
+    if (m_pInstance->m_framesPerSecond >= msPerSec)
     {
-        m_framesPerSecond = msPerSec;
+        m_pInstance->m_framesPerSecond = msPerSec;
     }
-    else if (m_framesPerSecond < 30)
+    else if (m_pInstance->m_framesPerSecond < 30)
     {
-        m_framesPerSecond = 30;
+        m_pInstance->m_framesPerSecond = 30;
     }
     Mainapp* pApp = Mainapp::getInstance();
     if (pApp != nullptr)
     {
-        pApp->setTimerCycle(msPerSec / m_framesPerSecond);
+        pApp->setTimerCycle(msPerSec / m_pInstance->m_framesPerSecond);
     }
 }
 
 bool Settings::getMuted()
 {
-    return m_muted;
+    return m_pInstance->m_muted;
 }
 
 void Settings::setMuted(bool newMuted)
 {
-    m_muted = newMuted;
+    m_pInstance->m_muted = newMuted;
 }
 
 float Settings::getSupplyWarning()
 {
-    return m_supplyWarning;
+    return m_pInstance->m_supplyWarning;
 }
 
 void Settings::setSupplyWarning(float newSupplyWarning)
 {
-    m_supplyWarning = newSupplyWarning;
+    m_pInstance->m_supplyWarning = newSupplyWarning;
 }
 
 QString Settings::getDefaultRuleset()
 {
-    return m_defaultRuleset;
+    return m_pInstance->m_defaultRuleset;
 }
 
 void Settings::setDefaultRuleset(const QString &newDefaultRuleset)
 {
-    m_defaultRuleset = newDefaultRuleset;
+    m_pInstance->m_defaultRuleset = newDefaultRuleset;
 }
 
 float Settings::getGamepadSensitivity()
 {
-    return m_gamepadSensitivity;
+    return m_pInstance->m_gamepadSensitivity;
 }
 
 void Settings::setGamepadSensitivity(float newGamepadSensitivity)
 {
-    m_gamepadSensitivity = newGamepadSensitivity;
+    m_pInstance->m_gamepadSensitivity = newGamepadSensitivity;
 }
 
 bool Settings::getGamepadEnabled()
 {
-    return m_gamepadEnabled;
+    return m_pInstance->m_gamepadEnabled;
 }
 
 void Settings::setGamepadEnabled(bool newGamepadEnabled)
 {
-    m_gamepadEnabled = newGamepadEnabled;
-    if (m_gamepadEnabled)
+    m_pInstance->m_gamepadEnabled = newGamepadEnabled;
+    if (m_pInstance->m_gamepadEnabled)
     {
         Mainapp::getInstance()->getGamepad().init();
     }
@@ -748,83 +586,83 @@ void Settings::setGamepadEnabled(bool newGamepadEnabled)
 
 bool Settings::getUseCoMinis()
 {
-    return m_useCoMinis;
+    return m_pInstance->m_useCoMinis;
 }
 
 void Settings::setUseCoMinis(bool newUseCoMinis)
 {
-    m_useCoMinis = newUseCoMinis;
+    m_pInstance->m_useCoMinis = newUseCoMinis;
 }
 
 bool Settings::getOverworldAnimations()
 {
-    return m_overworldAnimations;
+    return m_pInstance->m_overworldAnimations;
 }
 
 void Settings::setOverworldAnimations(bool newOverworldAnimations)
 {
-    m_overworldAnimations = newOverworldAnimations;
+    m_pInstance->m_overworldAnimations = newOverworldAnimations;
 }
 
 qint32 Settings::getTouchPointSensitivity()
 {
-    return m_touchPointSensitivity;
+    return m_pInstance->m_touchPointSensitivity;
 }
 
 void Settings::setTouchPointSensitivity(qint32 newTouchPointSensitivity)
 {
-    m_touchPointSensitivity = newTouchPointSensitivity;
+    m_pInstance->m_touchPointSensitivity = newTouchPointSensitivity;
 }
 
 const QVariant &Settings::getAudioOutput()
 {
-    return m_audioOutput;
+    return m_pInstance->m_audioOutput;
 }
 
 void Settings::setAudioOutput(const QVariant &newAudioOutput)
 {
-    m_audioOutput = newAudioOutput;
+    m_pInstance->m_audioOutput = newAudioOutput;
 }
 
 bool Settings::getAutoMoveCursor()
 {
-    return m_autoMoveCursor;
+    return m_pInstance->m_autoMoveCursor;
 }
 
 void Settings::setAutoMoveCursor(bool newAutoMoveCursor)
 {
-    m_autoMoveCursor = newAutoMoveCursor;
+    m_pInstance->m_autoMoveCursor = newAutoMoveCursor;
 }
 
 bool Settings::getShowDetailedBattleForcast()
 {
-    return m_showDetailedBattleForcast;
+    return m_pInstance->m_showDetailedBattleForcast;
 }
 
 void Settings::setShowDetailedBattleForcast(bool newShowDetailedBattleForcast)
 {
-    m_showDetailedBattleForcast = newShowDetailedBattleForcast;
+    m_pInstance->m_showDetailedBattleForcast = newShowDetailedBattleForcast;
 }
 
 bool Settings::getTouchScreen()
 {
-    return m_touchScreen;
+    return m_pInstance->m_touchScreen;
 }
 
 void Settings::setTouchScreen(bool newTouchScreen)
 {
-    m_touchScreen = newTouchScreen;
+    m_pInstance->m_touchScreen = newTouchScreen;
 }
 
 QString Settings::getUserPath()
 {
-    if (m_userPath.isEmpty())
+    if (m_pInstance->m_userPath.isEmpty())
     {
-        return m_userPath;
+        return m_pInstance->m_userPath;
     }
     else
     {
-        QString folder = m_userPath + "/";
+        QString folder = m_pInstance->m_userPath + "/";
         while (folder.contains("//"))
         {
             folder = folder.replace("//", "/");
@@ -835,426 +673,426 @@ QString Settings::getUserPath()
 
 void Settings::setUserPath(const QString &newUserPath)
 {
-    m_userPath = newUserPath;
+    m_pInstance->m_userPath = newUserPath;
 }
 
 bool Settings::getSmallScreenDevice()
 {
-    return m_smallScreenDevice;
+    return m_pInstance->m_smallScreenDevice;
 }
 
 void Settings::setSmallScreenDevice(bool newSmallScreenDevice)
 {
-    m_smallScreenDevice = newSmallScreenDevice;
+    m_pInstance->m_smallScreenDevice = newSmallScreenDevice;
 }
 
 qint32 Settings::getMenuItemRowCount()
 {
-    return m_MenuItemRowCount;
+    return m_pInstance->m_MenuItemRowCount;
 }
 
 void Settings::setMenuItemRowCount(qint32 newMenuItemRowCount)
 {
-    m_MenuItemRowCount = newMenuItemRowCount;
+    m_pInstance->m_MenuItemRowCount = newMenuItemRowCount;
 }
 
 bool Settings::getSimpleDeselect()
 {
-    return m_simpleDeselect;
+    return m_pInstance->m_simpleDeselect;
 }
 
 void Settings::setSimpleDeselect(bool newSimpleDeselect)
 {
-    m_simpleDeselect = newSimpleDeselect;
+    m_pInstance->m_simpleDeselect = newSimpleDeselect;
 }
 
 bool Settings::getSyncAnimations()
 {
-    return m_syncAnimations;
+    return m_pInstance->m_syncAnimations;
 }
 
 void Settings::setSyncAnimations(bool syncAnimations)
 {
-    m_syncAnimations = syncAnimations;
+    m_pInstance->m_syncAnimations = syncAnimations;
 }
 
 bool Settings::getCenterOnMarkedField()
 {
-    return m_centerOnMarkedField;
+    return m_pInstance->m_centerOnMarkedField;
 }
 
 void Settings::setCenterOnMarkedField(bool centerOnMarkedField)
 {
-    m_centerOnMarkedField = centerOnMarkedField;
+    m_pInstance->m_centerOnMarkedField = centerOnMarkedField;
 }
 
 bool Settings::getDialogAnimation()
 {
-    return m_dialogAnimation;
+    return m_pInstance->m_dialogAnimation;
 }
 
 void Settings::setDialogAnimation(bool dialogAnimation)
 {
-    m_dialogAnimation = dialogAnimation;
+    m_pInstance->m_dialogAnimation = dialogAnimation;
 }
 
 float Settings::getGamma()
 {
-    return m_gamma;
+    return m_pInstance->m_gamma;
 }
 
 void Settings::setGamma(float gamma)
 {
-    m_gamma = gamma;
+    m_pInstance->m_gamma = gamma;
 }
 
 float Settings::getBrightness()
 {
-    return m_brightness;
+    return m_pInstance->m_brightness;
 }
 
 void Settings::setBrightness(float brightness)
 {
-    m_brightness = brightness;
+    m_pInstance->m_brightness = brightness;
 }
 
 Qt::Key Settings::getKey_screenshot()
 {
-    return m_key_screenshot;
+    return m_pInstance->m_key_screenshot;
 }
 
 void Settings::setKey_screenshot(const Qt::Key &key_screenshot)
 {
-    m_key_screenshot = key_screenshot;
+    m_pInstance->m_key_screenshot = key_screenshot;
 }
 
 GameEnums::AutoFocusing Settings::getAutoFocusing()
 {
-    return m_autoFocusing;
+    return m_pInstance->m_autoFocusing;
 }
 
 void Settings::setAutoFocusing(const GameEnums::AutoFocusing &autoFocusing)
 {
-    m_autoFocusing = autoFocusing;
+    m_pInstance->m_autoFocusing = autoFocusing;
 }
 
 Qt::Key Settings::getKey_EditorSelectionLeft()
 {
-    return m_key_EditorSelectionLeft;
+    return m_pInstance->m_key_EditorSelectionLeft;
 }
 
 void Settings::setKey_EditorSelectionLeft(const Qt::Key &key_EditorSelectionLeft)
 {
-    m_key_EditorSelectionLeft = key_EditorSelectionLeft;
+    m_pInstance->m_key_EditorSelectionLeft = key_EditorSelectionLeft;
 }
 
 Qt::Key Settings::getKey_EditorSelectionRight()
 {
-    return m_key_EditorSelectionRight;
+    return m_pInstance->m_key_EditorSelectionRight;
 }
 
 void Settings::setKey_EditorSelectionRight(const Qt::Key &key_EditorSelectionRight)
 {
-    m_key_EditorSelectionRight = key_EditorSelectionRight;
+    m_pInstance->m_key_EditorSelectionRight = key_EditorSelectionRight;
 }
 
 Qt::Key Settings::getKey_EditorPreviousTeam()
 {
-    return m_key_EditorPreviousTeam;
+    return m_pInstance->m_key_EditorPreviousTeam;
 }
 
 void Settings::setKey_EditorPreviousTeam(const Qt::Key &key_EditorPreviousTeam)
 {
-    m_key_EditorPreviousTeam = key_EditorPreviousTeam;
+    m_pInstance->m_key_EditorPreviousTeam = key_EditorPreviousTeam;
 }
 
 Qt::Key Settings::getKey_EditorNextTeam()
 {
-    return m_key_EditorNextTeam;
+    return m_pInstance->m_key_EditorNextTeam;
 }
 
 void Settings::setKey_EditorNextTeam(const Qt::Key &key_EditorNextTeam)
 {
-    m_key_EditorNextTeam = key_EditorNextTeam;
+    m_pInstance->m_key_EditorNextTeam = key_EditorNextTeam;
 }
 
 Qt::Key Settings::getKey_EditorPlaceUnit()
 {
-    return m_key_EditorPlaceUnit;
+    return m_pInstance->m_key_EditorPlaceUnit;
 }
 
 void Settings::setKey_EditorPlaceUnit(const Qt::Key &key_EditorPlaceUnit)
 {
-    m_key_EditorPlaceUnit = key_EditorPlaceUnit;
+    m_pInstance->m_key_EditorPlaceUnit = key_EditorPlaceUnit;
 }
 
 Qt::Key Settings::getKey_EditorPlaceBuilding()
 {
-    return m_key_EditorPlaceBuilding;
+    return m_pInstance->m_key_EditorPlaceBuilding;
 }
 
 void Settings::setKey_EditorPlaceBuilding(const Qt::Key &key_EditorPlaceBuilding)
 {
-    m_key_EditorPlaceBuilding = key_EditorPlaceBuilding;
+    m_pInstance->m_key_EditorPlaceBuilding = key_EditorPlaceBuilding;
 }
 
 Qt::Key Settings::getKey_EditorPlaceTerrain()
 {
-    return m_key_EditorPlaceTerrain;
+    return m_pInstance->m_key_EditorPlaceTerrain;
 }
 
 void Settings::setKey_EditorPlaceTerrain(const Qt::Key &key_EditorPlaceTerrain)
 {
-    m_key_EditorPlaceTerrain = key_EditorPlaceTerrain;
+    m_pInstance->m_key_EditorPlaceTerrain = key_EditorPlaceTerrain;
 }
 
 Qt::Key Settings::getKey_ShowIndirectAttackFields2()
 {
-    return m_key_ShowIndirectAttackFields2;
+    return m_pInstance->m_key_ShowIndirectAttackFields2;
 }
 
 void Settings::setKey_ShowIndirectAttackFields2(const Qt::Key &key_ShowIndirectAttackFields2)
 {
-    m_key_ShowIndirectAttackFields2 = key_ShowIndirectAttackFields2;
+    m_pInstance->m_key_ShowIndirectAttackFields2 = key_ShowIndirectAttackFields2;
 }
 
 Qt::Key Settings::getKey_ShowAttackFields2()
 {
-    return m_key_ShowAttackFields2;
+    return m_pInstance->m_key_ShowAttackFields2;
 }
 
 void Settings::setKey_ShowAttackFields2(const Qt::Key &key_ShowAttackFields2)
 {
-    m_key_ShowAttackFields2 = key_ShowAttackFields2;
+    m_pInstance->m_key_ShowAttackFields2 = key_ShowAttackFields2;
 }
 
 Qt::Key Settings::getKey_MapZoomIn2()
 {
-    return m_key_MapZoomIn2;
+    return m_pInstance->m_key_MapZoomIn2;
 }
 
 void Settings::setKey_MapZoomIn2(const Qt::Key &key_MapZoomIn2)
 {
-    m_key_MapZoomIn2 = key_MapZoomIn2;
+    m_pInstance->m_key_MapZoomIn2 = key_MapZoomIn2;
 }
 
 Qt::Key Settings::getKey_MapZoomOut2()
 {
-    return m_key_MapZoomOut2;
+    return m_pInstance->m_key_MapZoomOut2;
 }
 
 void Settings::setKey_MapZoomOut2(const Qt::Key &key_MapZoomOut2)
 {
-    m_key_MapZoomOut2 = key_MapZoomOut2;
+    m_pInstance->m_key_MapZoomOut2 = key_MapZoomOut2;
 }
 
 Qt::Key Settings::getKey_moveMapLeft2()
 {
-    return m_key_moveMapLeft2;
+    return m_pInstance->m_key_moveMapLeft2;
 }
 
 void Settings::setKey_moveMapLeft2(const Qt::Key &key_moveMapLeft2)
 {
-    m_key_moveMapLeft2 = key_moveMapLeft2;
+    m_pInstance->m_key_moveMapLeft2 = key_moveMapLeft2;
 }
 
 Qt::Key Settings::getKey_moveMapRight2()
 {
-    return m_key_moveMapRight2;
+    return m_pInstance->m_key_moveMapRight2;
 }
 
 void Settings::setKey_moveMapRight2(const Qt::Key &key_moveMapRight2)
 {
-    m_key_moveMapRight2 = key_moveMapRight2;
+    m_pInstance->m_key_moveMapRight2 = key_moveMapRight2;
 }
 
 Qt::Key Settings::getKey_moveMapDown2()
 {
-    return m_key_moveMapDown2;
+    return m_pInstance->m_key_moveMapDown2;
 }
 
 void Settings::setKey_moveMapDown2(const Qt::Key &key_moveMapDown2)
 {
-    m_key_moveMapDown2 = key_moveMapDown2;
+    m_pInstance->m_key_moveMapDown2 = key_moveMapDown2;
 }
 
 Qt::Key Settings::getKey_moveMapUp2()
 {
-    return m_key_moveMapUp2;
+    return m_pInstance->m_key_moveMapUp2;
 }
 
 void Settings::setKey_moveMapUp2(const Qt::Key &key_moveMapUp2)
 {
-    m_key_moveMapUp2 = key_moveMapUp2;
+    m_pInstance->m_key_moveMapUp2 = key_moveMapUp2;
 }
 
 Qt::Key Settings::getKey_information2()
 {
-    return m_key_information2;
+    return m_pInstance->m_key_information2;
 }
 
 void Settings::setKey_information2(const Qt::Key &key_information2)
 {
-    m_key_information2 = key_information2;
+    m_pInstance->m_key_information2 = key_information2;
 }
 
 Qt::Key Settings::getKey_previous2()
 {
-    return m_key_previous2;
+    return m_pInstance->m_key_previous2;
 }
 
 void Settings::setKey_previous2(const Qt::Key &key_previous2)
 {
-    m_key_previous2 = key_previous2;
+    m_pInstance->m_key_previous2 = key_previous2;
 }
 
 Qt::Key Settings::getKey_next2()
 {
-    return m_key_next2;
+    return m_pInstance->m_key_next2;
 }
 
 void Settings::setKey_next2(const Qt::Key &key_next2)
 {
-    m_key_next2 = key_next2;
+    m_pInstance->m_key_next2 = key_next2;
 }
 
 Qt::Key Settings::getKey_cancel2()
 {
-    return m_key_cancel2;
+    return m_pInstance->m_key_cancel2;
 }
 
 void Settings::setKey_cancel2(const Qt::Key &key_cancel2)
 {
-    m_key_cancel2 = key_cancel2;
+    m_pInstance->m_key_cancel2 = key_cancel2;
 }
 
 Qt::Key Settings::getKey_confirm2()
 {
-    return m_key_confirm2;
+    return m_pInstance->m_key_confirm2;
 }
 
 void Settings::setKey_confirm2(const Qt::Key &key_confirm2)
 {
-    m_key_confirm2 = key_confirm2;
+    m_pInstance->m_key_confirm2 = key_confirm2;
 }
 
 Qt::Key Settings::getKey_left2()
 {
-    return m_key_left2;
+    return m_pInstance->m_key_left2;
 }
 
 void Settings::setKey_left2(const Qt::Key &key_left2)
 {
-    m_key_left2 = key_left2;
+    m_pInstance->m_key_left2 = key_left2;
 }
 
 Qt::Key Settings::getKey_right2()
 {
-    return m_key_right2;
+    return m_pInstance->m_key_right2;
 }
 
 void Settings::setKey_right2(const Qt::Key &key_right2)
 {
-    m_key_right2 = key_right2;
+    m_pInstance->m_key_right2 = key_right2;
 }
 
 Qt::Key Settings::getKey_down2()
 {
-    return m_key_down2;
+    return m_pInstance->m_key_down2;
 }
 
 void Settings::setKey_down2(const Qt::Key &key_down2)
 {
-    m_key_down2 = key_down2;
+    m_pInstance->m_key_down2 = key_down2;
 }
 
 Qt::Key Settings::getKey_up2()
 {
-    return m_key_up2;
+    return m_pInstance->m_key_up2;
 }
 
 void Settings::setKey_up2(const Qt::Key &key_up2)
 {
-    m_key_up2 = key_up2;
+    m_pInstance->m_key_up2 = key_up2;
 }
 
 bool Settings::getAutoCamera()
 {
-    return m_autoCamera;
+    return m_pInstance->m_autoCamera;
 }
 
 void Settings::setAutoCamera(bool autoCamera)
 {
-    m_autoCamera = autoCamera;
+    m_pInstance->m_autoCamera = autoCamera;
 }
 
 bool Settings::getAutoScrolling()
 {
-    return m_autoScrolling;
+    return m_pInstance->m_autoScrolling;
 }
 
 void Settings::setAutoScrolling(bool autoScrolling)
 {
-    m_autoScrolling = autoScrolling;
+    m_pInstance->m_autoScrolling = autoScrolling;
 }
 
 GameEnums::COInfoPosition Settings::getCoInfoPosition()
 {
-    return m_coInfoPosition;
+    return m_pInstance->m_coInfoPosition;
 }
 
 void Settings::setCoInfoPosition(const GameEnums::COInfoPosition &value)
 {
-    m_coInfoPosition = value;
+    m_pInstance->m_coInfoPosition = value;
 }
 
 void Settings::setY(const qint32 &y)
 {
-    m_y = y;
+    m_pInstance->m_y = y;
 }
 
 void Settings::setX(const qint32 &x)
 {
-    m_x = x;
+    m_pInstance->m_x = x;
 }
 
 void Settings::setSlaveServerName(const QString &slaveServerName)
 {
-    m_slaveServerName = slaveServerName;
+    m_pInstance->m_slaveServerName = slaveServerName;
 }
 
 QString Settings::getSlaveServerName()
 {
-    return m_slaveServerName;
+    return m_pInstance->m_slaveServerName;
 }
 
 QStringList Settings::getActiveMods()
 {
-    return m_activeMods;
+    return m_pInstance->m_activeMods;
 }
 
 void Settings::setActiveMods(const QStringList &activeMods)
 {
-    m_activeMods = activeMods;
+    m_pInstance->m_activeMods = activeMods;
     qint32 i = 0;
-    while (i < m_activeMods.size())
+    while (i < m_pInstance->m_activeMods.size())
     {
-        QDir dir(getUserPath() + m_activeMods[i]);
-        QDir dir2( oxygine::Resource::RCC_PREFIX_PATH + m_activeMods[i]);
+        QDir dir(getUserPath() + m_pInstance->m_activeMods[i]);
+        QDir dir2( oxygine::Resource::RCC_PREFIX_PATH + m_pInstance->m_activeMods[i]);
         if (!dir.exists() && !dir2.exists())
         {
-            CONSOLE_PRINT("Removing mod from active list: " + m_activeMods[i] + " cause it wasn't found.", Console::eWARNING);
-            m_activeMods.removeAt(i);
+            CONSOLE_PRINT("Removing mod from active list: " + m_pInstance->m_activeMods[i] + " cause it wasn't found.", GameConsole::eWARNING);
+            m_pInstance->m_activeMods.removeAt(i);
         }
         else
         {
             ++i;
         }
     }
-    m_activeMods.sort();
-    for (const auto & mod : qAsConst(m_activeMods))
+    m_pInstance->m_activeMods.sort();
+    for (const auto & mod : qAsConst(m_pInstance->m_activeMods))
     {
-        CONSOLE_PRINT("Loaded mod: " + mod, Console::eDEBUG);
+        CONSOLE_PRINT("Loaded mod: " + mod, GameConsole::eDEBUG);
         bool found = false;
         QFile file(mod + "/mod.txt");
         if (file.exists())
@@ -1266,7 +1104,7 @@ void Settings::setActiveMods(const QStringList &activeMods)
                 QString line = stream.readLine();
                 if (line.startsWith("version="))
                 {
-                    m_activeModVersions.append(line.split("=")[1]);
+                    m_pInstance->m_activeModVersions.append(line.split("=")[1]);
                     found = true;
                     break;
                 }
@@ -1274,69 +1112,69 @@ void Settings::setActiveMods(const QStringList &activeMods)
         }
         if (!found)
         {
-            m_activeModVersions.append("1.0.0");
+            m_pInstance->m_activeModVersions.append("1.0.0");
         }
     }
 }
 
 bool Settings::getShowIngameCoordinates()
 {
-    return m_showIngameCoordinates;
+    return m_pInstance->m_showIngameCoordinates;
 }
 
 void Settings::setShowIngameCoordinates(bool showIngameCoordinates)
 {
-    m_showIngameCoordinates = showIngameCoordinates;
+    m_pInstance->m_showIngameCoordinates = showIngameCoordinates;
 }
 
 quint32 Settings::getWalkAnimationSpeedValue()
 {
-    return m_walkAnimationSpeed;
+    return m_pInstance->m_walkAnimationSpeed;
 }
 
 void Settings::setWalkAnimationSpeed(const quint32 &value)
 {
-    m_walkAnimationSpeed = value;
+    m_pInstance->m_walkAnimationSpeed = value;
 }
 
 
 float Settings::getWalkAnimationSpeed()
 {
-    if (m_walkAnimationSpeed <= 100)
+    if (m_pInstance->m_walkAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - static_cast<float>(m_walkAnimationSpeed));
+        return 100.0f / (101.0f - static_cast<float>(m_pInstance->m_walkAnimationSpeed));
     }
     return 100;
 }
 
 qint32 Settings::getShowCoCount()
 {
-    return m_showCoCount;
+    return m_pInstance->m_showCoCount;
 }
 
 void Settings::setShowCoCount(const qint32 &showCoCount)
 {
-    m_showCoCount = showCoCount;
+    m_pInstance->m_showCoCount = showCoCount;
 }
 
 qint32 Settings::getAutoSavingCycle()
 {
-    return m_autoSavingCycle;
+    return m_pInstance->m_autoSavingCycle;
 }
 
 void Settings::setAutoSavingCycle(const qint32 &value)
 {
-    m_autoSavingCycle = value;
+    m_pInstance->m_autoSavingCycle = value;
 }
 
 std::chrono::seconds Settings::getAutoSavingCylceTime()
 {
-    return m_autoSavingCylceTime;
+    return m_pInstance->m_autoSavingCylceTime;
 }
 
 void Settings::setAutoSavingCylceTime(const std::chrono::seconds &value)
 {
-    m_autoSavingCylceTime = value;
+    m_pInstance->m_autoSavingCylceTime = value;
 }
 
 quint64 Settings::getAutoSavingCylceTimeRaw()
@@ -1351,54 +1189,54 @@ void Settings::setAutoSavingCylceTimeRaw(quint64 &value)
 
 Qt::Key Settings::getKey_ShowAttackFields()
 {
-    return m_key_ShowAttackFields;
+    return m_pInstance->m_key_ShowAttackFields;
 }
 
 void Settings::setKey_ShowAttackFields(const Qt::Key &key_ShowAttackFields)
 {
-    m_key_ShowAttackFields = key_ShowAttackFields;
+    m_pInstance->m_key_ShowAttackFields = key_ShowAttackFields;
 }
 
 Qt::Key Settings::getKey_ShowIndirectAttackFields()
 {
-    return m_key_ShowIndirectAttackFields;
+    return m_pInstance->m_key_ShowIndirectAttackFields;
 }
 
 void Settings::setKey_ShowIndirectAttackFields(const Qt::Key &key_ShowIndirectAttackFields)
 {
-    m_key_ShowIndirectAttackFields = key_ShowIndirectAttackFields;
+    m_pInstance->m_key_ShowIndirectAttackFields = key_ShowIndirectAttackFields;
 }
 
 bool Settings::getLogActions()
 {
-    return m_LogActions;
+    return m_pInstance->m_LogActions;
 }
 
 void Settings::setLogActions(bool LogActions)
 {
-    m_LogActions = LogActions;
+    m_pInstance->m_LogActions = LogActions;
 }
 
 QStringList Settings::getActiveModVersions()
 {
-    return m_activeModVersions;
+    return m_pInstance->m_activeModVersions;
 }
 
 bool Settings::getRecord()
 {
-    return m_record;
+    return m_pInstance->m_record;
 }
 
 void Settings::setRecord(bool record)
 {
-    m_record = record;
+    m_pInstance->m_record = record;
 }
 
 void Settings::loadSettings()
 {
     bool ok = false;
-    QSettings settings(m_settingFile, QSettings::IniFormat);
-    for (auto setting : m_SettingValues)
+    QSettings settings(m_pInstance->m_settingFile, QSettings::IniFormat);
+    for (auto setting : m_pInstance->m_SettingValues)
     {
         setting->readValue(settings);
     }
@@ -1407,14 +1245,14 @@ void Settings::loadSettings()
     {
         setUserPath(userPath);
     }
-    setFramesPerSecond(m_framesPerSecond);
-    setActiveMods(m_activeMods);
-    Console::setLogLevel(m_defaultLogLevel);
+    setFramesPerSecond(m_pInstance->m_framesPerSecond);
+    setActiveMods(m_pInstance->m_activeMods);
+    GameConsole::setLogLevel(m_pInstance->m_defaultLogLevel);
     if (Settings::hasSmallScreen())
     {
-        m_autoScrolling = false;
-        m_simpleDeselect = true;
-        m_showDetailedBattleForcast = false;
+        m_pInstance->m_autoScrolling = false;
+        m_pInstance->m_simpleDeselect = true;
+        m_pInstance->m_showDetailedBattleForcast = false;
     }
     if (getPipeUuid().isEmpty())
     {
@@ -1426,7 +1264,7 @@ void Settings::loadSettings()
 
 void Settings::resetSettings()
 {
-    for (auto setting : m_SettingValues)
+    for (auto setting : m_pInstance->m_SettingValues)
     {
         setting->resetValue();
     }
@@ -1435,12 +1273,12 @@ void Settings::resetSettings()
 
 void Settings::saveSettings()
 {
-    CONSOLE_PRINT("Settings::saveSettings()", Console::eDEBUG);
+    CONSOLE_PRINT("Settings::saveSettings()", GameConsole::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
-    if (!pApp->getSlave() && !Settings::getAiSlave() && m_updateStep.isEmpty())
+    if (!pApp->getSlave() && !Settings::getAiSlave() && m_pInstance->m_updateStep.isEmpty())
     {
-        QSettings settings(m_settingFile, QSettings::IniFormat);
-        for (auto setting : m_SettingValues)
+        QSettings settings(m_pInstance->m_settingFile, QSettings::IniFormat);
+        for (auto setting : m_pInstance->m_SettingValues)
         {
             setting->saveValue(settings);
         }
@@ -1449,7 +1287,7 @@ void Settings::saveSettings()
 
 QString Settings::getModString()
 {
-    return getConfigString(m_activeMods);
+    return getConfigString(m_pInstance->m_activeMods);
 }
 
 
@@ -1489,424 +1327,424 @@ QString Settings::getConfigString(QStringList list)
 
 float Settings::getMouseSensitivity()
 {
-    return m_mouseSensitivity;
+    return m_pInstance->m_mouseSensitivity;
 }
 
 void Settings::setMouseSensitivity(float value)
 {
-    m_mouseSensitivity = value;
+    m_pInstance->m_mouseSensitivity = value;
 }
 
 GameEnums::BattleAnimationMode Settings::getBattleAnimationMode()
 {
-    return m_battleAnimationsMode;
+    return m_pInstance->m_battleAnimationsMode;
 }
 
 void Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode value)
 {
-    m_battleAnimationsMode = value;
+    m_pInstance->m_battleAnimationsMode = value;
 }
 
 void Settings::setFullscreen(bool fullscreen)
 {
-    m_fullscreen = fullscreen;
+    m_pInstance->m_fullscreen = fullscreen;
 }
 
 void Settings::setBorderless(bool borderless)
 {
-    m_borderless = borderless;
+    m_pInstance->m_borderless = borderless;
 }
 
 void Settings::setWidth(const qint32 &width)
 {
-    m_width = width;
+    m_pInstance->m_width = width;
 }
 
 void Settings::setHeight(const qint32 &height)
 {
-    m_height = height;
+    m_pInstance->m_height = height;
 }
 
 float Settings::getAnimationSpeedValue()
 {
-    return m_animationSpeed;
+    return m_pInstance->m_animationSpeed;
 }
 
 float Settings::getAnimationSpeed()
 {
-    if (m_animationSpeed <= 100)
+    if (m_pInstance->m_animationSpeed <= 100)
     {
-        return 100.0f / (101.0f - static_cast<float>(m_animationSpeed));
+        return 100.0f / (101.0f - static_cast<float>(m_pInstance->m_animationSpeed));
     }
     return 100;
 }
 
 void Settings::setAnimationSpeed(const quint32 &value)
 {
-    m_animationSpeed = value;
+    m_pInstance->m_animationSpeed = value;
 }
 
 float Settings::getBattleAnimationSpeedValue()
 {
-    return m_battleAnimationSpeed;
+    return m_pInstance->m_battleAnimationSpeed;
 }
 
 float Settings::getBattleAnimationSpeed()
 {
-    if (m_battleAnimationSpeed <= 100)
+    if (m_pInstance->m_battleAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - static_cast<float>(m_battleAnimationSpeed));
+        return 100.0f / (101.0f - static_cast<float>(m_pInstance->m_battleAnimationSpeed));
     }
     return 100;
 }
 
 void Settings::setBattleAnimationSpeed(const quint32 &value)
 {
-    m_battleAnimationSpeed = value;
+    m_pInstance->m_battleAnimationSpeed = value;
 }
 
 float Settings::getDialogAnimationSpeedValue()
 {
-    return m_dialogAnimationSpeed;
+    return m_pInstance->m_dialogAnimationSpeed;
 }
 
 float Settings::getDialogAnimationSpeed()
 {
-    if (m_dialogAnimationSpeed <= 100)
+    if (m_pInstance->m_dialogAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - static_cast<float>(m_dialogAnimationSpeed));
+        return 100.0f / (101.0f - static_cast<float>(m_pInstance->m_dialogAnimationSpeed));
     }
     return 100;
 }
 
 void Settings::setDialogAnimationSpeed(const quint32 &value)
 {
-    m_dialogAnimationSpeed = value;
+    m_pInstance->m_dialogAnimationSpeed = value;
 }
 
 float Settings::getCaptureAnimationSpeedValue()
 {
-    return m_captureAnimationSpeed;
+    return m_pInstance->m_captureAnimationSpeed;
 }
 
 float Settings::getCaptureAnimationSpeed()
 {
-    if (m_captureAnimationSpeed <= 100)
+    if (m_pInstance->m_captureAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - static_cast<float>(m_captureAnimationSpeed));
+        return 100.0f / (101.0f - static_cast<float>(m_pInstance->m_captureAnimationSpeed));
     }
     return 100;
 }
 
 void Settings::setCaptureAnimationSpeed(const quint32 &value)
 {
-    m_captureAnimationSpeed = value;
+    m_pInstance->m_captureAnimationSpeed = value;
 }
 
 Qt::Key Settings::getKey_up()
 {
-    return m_key_up;
+    return m_pInstance->m_key_up;
 }
 
 void Settings::setKey_up(const Qt::Key &key_up)
 {
-    m_key_up = key_up;
+    m_pInstance->m_key_up = key_up;
 }
 
 Qt::Key Settings::getKey_down()
 {
-    return m_key_down;
+    return m_pInstance->m_key_down;
 }
 
 void Settings::setKey_down(const Qt::Key &key_down)
 {
-    m_key_down = key_down;
+    m_pInstance->m_key_down = key_down;
 }
 
 Qt::Key Settings::getKey_right()
 {
-    return m_key_right;
+    return m_pInstance->m_key_right;
 }
 
 void Settings::setKey_right(const Qt::Key &key_right)
 {
-    m_key_right = key_right;
+    m_pInstance->m_key_right = key_right;
 }
 
 Qt::Key Settings::getKey_left()
 {
-    return m_key_left;
+    return m_pInstance->m_key_left;
 }
 
 void Settings::setKey_left(const Qt::Key &key_left)
 {
-    m_key_left = key_left;
+    m_pInstance->m_key_left = key_left;
 }
 
 Qt::Key Settings::getKey_confirm()
 {
-    return m_key_confirm;
+    return m_pInstance->m_key_confirm;
 }
 
 void Settings::setKey_confirm(const Qt::Key &key_confirm)
 {
-    m_key_confirm = key_confirm;
+    m_pInstance->m_key_confirm = key_confirm;
 }
 
 Qt::Key Settings::getKey_cancel()
 {
-    return m_key_cancel;
+    return m_pInstance->m_key_cancel;
 }
 
 void Settings::setKey_cancel(const Qt::Key &key_cancel)
 {
-    m_key_cancel = key_cancel;
+    m_pInstance->m_key_cancel = key_cancel;
 }
 
 Qt::Key Settings::getKey_next()
 {
-    return m_key_next;
+    return m_pInstance->m_key_next;
 }
 
 void Settings::setKey_next(const Qt::Key &key_next)
 {
-    m_key_next = key_next;
+    m_pInstance->m_key_next = key_next;
 }
 
 Qt::Key Settings::getKey_previous()
 {
-    return m_key_previous;
+    return m_pInstance->m_key_previous;
 }
 
 void Settings::setKey_previous(const Qt::Key &key_previous)
 {
-    m_key_previous = key_previous;
+    m_pInstance->m_key_previous = key_previous;
 }
 
 Qt::Key Settings::getKey_quicksave1()
 {
-    return m_key_quicksave1;
+    return m_pInstance->m_key_quicksave1;
 }
 
 void Settings::setKey_quicksave1(const Qt::Key &key_quicksave1)
 {
-    m_key_quicksave1 = key_quicksave1;
+    m_pInstance->m_key_quicksave1 = key_quicksave1;
 }
 
 Qt::Key Settings::getKey_quicksave2()
 {
-    return m_key_quicksave2;
+    return m_pInstance->m_key_quicksave2;
 }
 
 void Settings::setKey_quicksave2(const Qt::Key &key_quicksave2)
 {
-    m_key_quicksave2 = key_quicksave2;
+    m_pInstance->m_key_quicksave2 = key_quicksave2;
 }
 
 Qt::Key Settings::getKey_quickload1()
 {
-    return m_key_quickload1;
+    return m_pInstance->m_key_quickload1;
 }
 
 void Settings::setKey_quickload1(const Qt::Key &key_quickload1)
 {
-    m_key_quickload1 = key_quickload1;
+    m_pInstance->m_key_quickload1 = key_quickload1;
 }
 
 Qt::Key Settings::getKey_quickload2()
 {
-    return m_key_quickload2;
+    return m_pInstance->m_key_quickload2;
 }
 
 void Settings::setKey_quickload2(const Qt::Key &key_quickload2)
 {
-    m_key_quickload2 = key_quickload2;
+    m_pInstance->m_key_quickload2 = key_quickload2;
 }
 
 Qt::Key Settings::getKey_information()
 {
-    return m_key_information;
+    return m_pInstance->m_key_information;
 }
 
 void Settings::setKey_information(const Qt::Key &key_information)
 {
-    m_key_information = key_information;
+    m_pInstance->m_key_information = key_information;
 }
 
 Qt::Key Settings::getKey_MapZoomIn()
 {
-    return m_key_MapZoomIn;
+    return m_pInstance->m_key_MapZoomIn;
 }
 
 void Settings::setKey_MapZoomIn(const Qt::Key &key_MapZoomIn)
 {
-    m_key_MapZoomIn = key_MapZoomIn;
+    m_pInstance->m_key_MapZoomIn = key_MapZoomIn;
 }
 
 Qt::Key Settings::getKey_MapZoomOut()
 {
-    return m_key_MapZoomOut;
+    return m_pInstance->m_key_MapZoomOut;
 }
 
 void Settings::setKey_MapZoomOut(const Qt::Key &key_MapZoomOut)
 {
-    m_key_MapZoomOut = key_MapZoomOut;
+    m_pInstance->m_key_MapZoomOut = key_MapZoomOut;
 }
 
 bool Settings::getStaticMarkedFields()
 {
-    return m_StaticMarkedFields;
+    return m_pInstance->m_StaticMarkedFields;
 }
 
 void Settings::setStaticMarkedFields(bool StaticMarkedFields)
 {
-    m_StaticMarkedFields = StaticMarkedFields;
+    m_pInstance->m_StaticMarkedFields = StaticMarkedFields;
 }
 
 Qt::Key Settings::getKey_Escape()
 {
-    return m_key_escape;
+    return m_pInstance->m_key_escape;
 }
 
 void Settings::setKey_Escape(const Qt::Key &key_Escape)
 {
-    m_key_escape = key_Escape;
+    m_pInstance->m_key_escape = key_Escape;
 }
 
 qint32 Settings::getMenuItemCount()
 {
-    return m_MenuItemCount;
+    return m_pInstance->m_MenuItemCount;
 }
 
 void Settings::setMenuItemCount(const qint32 &MenuItemCount)
 {
-    m_MenuItemCount = MenuItemCount;
+    m_pInstance->m_MenuItemCount = MenuItemCount;
 }
 
 quint32 Settings::getMultiTurnCounter()
 {
-    return multiTurnCounter;
+    return m_pInstance->multiTurnCounter;
 }
 
 void Settings::setMultiTurnCounter(const quint32 &value)
 {
-    multiTurnCounter = value;
+    m_pInstance->multiTurnCounter = value;
 }
 
 GameEnums::BattleAnimationType Settings::getBattleAnimationType()
 {
-    return m_battleAnimationType;
+    return m_pInstance->m_battleAnimationType;
 }
 
 void Settings::setBattleAnimationType(const GameEnums::BattleAnimationType &value)
 {
-    m_battleAnimationType = value;
+    m_pInstance->m_battleAnimationType = value;
 }
 
 Qt::Key Settings::getKey_moveMapLeft()
 {
-    return m_key_moveMapLeft;
+    return m_pInstance->m_key_moveMapLeft;
 }
 
 void Settings::setKey_moveMapLeft(const Qt::Key &key_moveMapLeft)
 {
-    m_key_moveMapLeft = key_moveMapLeft;
+    m_pInstance->m_key_moveMapLeft = key_moveMapLeft;
 }
 
 Qt::Key Settings::getKey_moveMapRight()
 {
-    return m_key_moveMapRight;
+    return m_pInstance->m_key_moveMapRight;
 }
 
 void Settings::setKey_moveMapRight(const Qt::Key &key_moveMapRight)
 {
-    m_key_moveMapRight = key_moveMapRight;
+    m_pInstance->m_key_moveMapRight = key_moveMapRight;
 }
 
 Qt::Key Settings::getKey_moveMapDown()
 {
-    return m_key_moveMapDown;
+    return m_pInstance->m_key_moveMapDown;
 }
 
 void Settings::setKey_moveMapDown(const Qt::Key &key_moveMapDown)
 {
-    m_key_moveMapDown = key_moveMapDown;
+    m_pInstance->m_key_moveMapDown = key_moveMapDown;
 }
 
 Qt::Key Settings::getKey_moveMapUp()
 {
-    return m_key_moveMapUp;
+    return m_pInstance->m_key_moveMapUp;
 }
 
 void Settings::setKey_moveMapUp(const Qt::Key &key_moveMapUp)
 {
-    m_key_moveMapUp = key_moveMapUp;
+    m_pInstance->m_key_moveMapUp = key_moveMapUp;
 }
 
 bool Settings::getAutoEndTurn()
 {
-    return m_AutoEndTurn;
+    return m_pInstance->m_AutoEndTurn;
 }
 
 void Settings::setAutoEndTurn(bool AutoEndTurn)
 {
-    m_AutoEndTurn = AutoEndTurn;
+    m_pInstance->m_AutoEndTurn = AutoEndTurn;
 }
 
 bool Settings::getShowCursor()
 {
-    return m_ShowCursor;
+    return m_pInstance->m_ShowCursor;
 }
 
 void Settings::setShowCursor(bool ShowCursor)
 {
-    m_ShowCursor = ShowCursor;
+    m_pInstance->m_ShowCursor = ShowCursor;
 }
 
 QString Settings::getUsername()
 {
-    return m_Username;
+    return m_pInstance->m_Username;
 }
 
 void Settings::setUsername(const QString &Username)
 {
-    m_Username = Username;
+    m_pInstance->m_Username = Username;
     Userdata::getInstance()->setUniqueIdentifier(getUsername());
 }
 
 QString Settings::getLastSaveGame()
 {
-    return m_LastSaveGame;
+    return m_pInstance->m_LastSaveGame;
 }
 
 void Settings::setLastSaveGame(const QString &LastSaveGame)
 {
-    m_LastSaveGame = LastSaveGame;
+    m_pInstance->m_LastSaveGame = LastSaveGame;
 }
 
 void Settings::setServer(bool Server)
 {
-    m_Server = Server;
+    m_pInstance->m_Server = Server;
 }
 
 void Settings::setServerAdress(const QString &ServerAdress)
 {
-    m_ServerAdress = ServerAdress;
+    m_pInstance->m_ServerAdress = ServerAdress;
 }
 
 QString Settings::getServerAdress()
 {
-    return m_ServerAdress;
+    return m_pInstance->m_ServerAdress;
 }
 
 quint16 Settings::getServerPort()
 {
-    return m_ServerPort;
+    return m_pInstance->m_ServerPort;
 }
 
 void Settings::setServerPort(const quint16 &ServerPort)
 {
-    m_ServerPort = ServerPort;
+    m_pInstance->m_ServerPort = ServerPort;
 }
 
 QString Settings::getModName(QString mod)
@@ -2069,7 +1907,7 @@ qint32 Settings::getCurrentDevice()
 void Settings::setAudioDevice(qint32 value)
 {
 #ifdef AUDIOSUPPORT
-    AudioThread* pAudio = Mainapp::getInstance()->getAudioThread();
+    AudioManager* pAudio = Mainapp::getInstance()->getAudioThread();
     if (value == 0)
     {
         auto item = QVariant::fromValue(QMediaDevices::defaultAudioOutput());
@@ -2140,20 +1978,20 @@ bool Settings::isGamepadSupported()
 
 QString Settings::getLanguage()
 {
-    return m_language;
+    return m_pInstance->m_language;
 }
 
 void Settings::setLanguage(const QString &language)
 {
-    for (auto & translator : m_translators)
+    for (auto & translator : m_pInstance->m_translators)
     {
         QCoreApplication::removeTranslator(translator.get());
     }
-    m_translators.clear();
-    m_language = language;
+    m_pInstance->m_translators.clear();
+    m_pInstance->m_language = language;
 
     QStringList searchPaths;
-    const QString filename = "translation/lang_" + m_language + ".qm";
+    const QString filename = "translation/lang_" + m_pInstance->m_language + ".qm";
     searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/" + filename);
     searchPaths.append(Settings::getUserPath() + "resources/" + filename);
     // make sure to overwrite existing js stuff
@@ -2167,15 +2005,15 @@ void Settings::setLanguage(const QString &language)
         if (QFile::exists(file))
         {
             std::shared_ptr<QTranslator> translator = std::make_shared<QTranslator>();
-            m_translators.append(translator);
-            if (translator->load(QLocale(m_language), file))
+            m_pInstance->m_translators.append(translator);
+            if (translator->load(QLocale(m_pInstance->m_language), file))
             {
-                CONSOLE_PRINT("Loaded language file " + file + " for language " + m_language, Console::eDEBUG);
+                CONSOLE_PRINT("Loaded language file " + file + " for language " + m_pInstance->m_language, GameConsole::eDEBUG);
                 QCoreApplication::installTranslator(translator.get());
             }
             else
             {
-                m_translators.removeLast();
+                m_pInstance->m_translators.removeLast();
             }
         }
     }

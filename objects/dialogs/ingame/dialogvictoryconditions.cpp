@@ -15,7 +15,6 @@
 #include "game/gamerules.h"
 #include "game/victoryrule.h"
 #include "game/player.h"
-#include "game/co.h"
 
 DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     : m_pMap(pMap)
@@ -23,8 +22,6 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogVictoryConditions");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");

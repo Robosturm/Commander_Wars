@@ -5,7 +5,7 @@
 
 namespace oxygine
 {
-    MaterialCache MaterialCache::mcache;
+    QScopedPointer<MaterialCache> MaterialCache::mcache;
 
     spMaterial MaterialCache::clone_(const Material& other)
     {
@@ -66,6 +66,10 @@ namespace oxygine
 
     MaterialCache& MaterialCache::mc()
     {
-        return mcache;
+        if (mcache.isNull())
+        {
+            mcache.reset(new MaterialCache());
+        }
+        return *mcache.get();
     }
 }

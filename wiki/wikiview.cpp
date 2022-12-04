@@ -1,7 +1,7 @@
 #include "wiki/wikiview.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -75,7 +75,7 @@ void WikiView::search(bool onlyTag)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    CONSOLE_PRINT("WikiView::searchChanged ", Console::eDEBUG);
+    CONSOLE_PRINT("WikiView::searchChanged ", GameConsole::eDEBUG);
     m_MainPanel->clearContent();
     QVector<WikiDatabase::PageData> items = WikiDatabase::getInstance()->getEntries(m_SearchString->getCurrentText(), onlyTag);
     qint32 itemCount = 0;

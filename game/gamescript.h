@@ -20,7 +20,7 @@ class GameScript final : public QObject, public FileSerializable, public oxygine
 {
     Q_OBJECT
 public:
-    static const QString m_scriptName;
+    static const char* const m_scriptName;
 
     explicit GameScript(GameMap* pMap);
     ~GameScript();

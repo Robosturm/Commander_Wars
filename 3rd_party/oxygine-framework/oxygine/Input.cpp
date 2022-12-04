@@ -3,7 +3,7 @@
 
 namespace oxygine
 {
-    Input Input::instance;
+    QScopedPointer<Input> Input::m_instance;
 
     Input::Input()
     {
@@ -18,7 +18,12 @@ namespace oxygine
 
     const PointerState* TouchEvent::getPointer() const
     {
-        return Input::instance.getTouchByIndex(index);
+        return Input::getInstance().getTouchByIndex(index);
+    }
+
+    PointerState* Input::getPointerMouse()
+    {
+        return &m_pointerMouse;
     }
 
     void Input::sendPointerButtonEvent(spStage & stage, MouseButton button, float x, float y, float pressure, qint32 type, PointerState* ps)

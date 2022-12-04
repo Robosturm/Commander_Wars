@@ -42,7 +42,6 @@ namespace oxygine
 
         /**White 4x4 Texture*/
         static spTexture white;
-        static UberShaderProgram uberShader;
         static std::vector<quint16> indices16;
         static size_t maxVertices;
 
@@ -63,7 +62,6 @@ namespace oxygine
         void setFracShader(UberShaderProgram::ColorMode fracShader);
         void setViewProj(const QMatrix4x4& viewProj);
         void setVertexDeclaration(const VertexDeclaration* decl);
-        void setUberShaderProgram(UberShaderProgram* pr);
         void setBaseShaderFlags(quint32 fl);
         /**Sets World transformation.*/
         void setTransform(const AffineTransform& world);
@@ -144,10 +142,10 @@ namespace oxygine
         ShaderProgramChangedHook* m_sphookFirst;
         ShaderProgramChangedHook* m_sphookLast;
 
-        UberShaderProgram* m_uberShader{nullptr};
         spTexture m_prevRT;
     private:
         static bool m_restored;
+        static QScopedPointer<UberShaderProgram> m_uberShader;
     };
 
     class RenderStateCache

@@ -14,23 +14,15 @@ class QMutex;
 class QKeyEvent;
 class Interpreter;
 
-class Console;
-using spConsole = oxygine::intrusive_ptr<Console>;
+class GameConsole;
+using spConsole = oxygine::intrusive_ptr<GameConsole>;
 
-#define CONSOLE_PRINT(text, logLevel) if (logLevel >= Console::getLogLevel() ) {Console::print(text, logLevel);}
-
-#ifdef GAMEDEBUG
-#define AI_CONSOLE_PRINT(text, logLevel) CONSOLE_PRINT(text, logLevel)
-#else
-#define AI_CONSOLE_PRINT(text, logLevel)
-#endif
-
-class Console final : public TextInput
+class GameConsole final : public TextInput
 {
     Q_OBJECT
 public:
 
-    static const QString functions[];
+    static const char* const functions[];
     static const char* const compileTime;
     static const char* const compileDate;
 
@@ -50,8 +42,8 @@ public:
         BLINKFREQG = 250,
         MAXLASTMSG = 20
     };
-    ~Console() = default;
-    static spConsole getInstance();
+    ~GameConsole() = default;
+    static GameConsole* getInstance();
     static bool hasInstance();
     static void dotask(QString message);
     static void draw();
@@ -84,13 +76,13 @@ public slots:
      * @param message
      * @param debugMessage false for Errors or Setup Messages. True for Ingame Actions used for Debugging. But unneeded in release build
      */
-    static void print(const QString & message, Console::eLogLevels logLevel);
+    static void print(const QString & message, GameConsole::eLogLevels logLevel);
     /**
      * @brief printObject
      * @param message
      * @param LogLevel
      */
-    static void printObjectDetails(QObject* obj, Console::eLogLevels logLevel);
+    static void printObjectDetails(QObject* obj, GameConsole::eLogLevels logLevel);
     /**
      * @brief createfunnymessage
      * @param message
@@ -105,12 +97,12 @@ public slots:
      * @brief setLogLevel
      * @param newLogLevel
      */
-    static void setLogLevel(Console::eLogLevels newLogLevel);
+    static void setLogLevel(GameConsole::eLogLevels newLogLevel);
     /**
      * @brief getLogLevel
      * @return
      */
-    static Console::eLogLevels getLogLevel()
+    static GameConsole::eLogLevels getLogLevel()
     {
         return m_LogLevel;
     }
@@ -206,25 +198,46 @@ protected slots:
 protected:
     virtual bool onEditFinished() override;
 private:
-    friend class oxygine::intrusive_ptr<Console>;
-    explicit Console();
+    friend class oxygine::intrusive_ptr<GameConsole>;
+    explicit GameConsole();
 
 private:
+    static const qint32 m_lastMsgSize{10};
+    static spConsole m_pConsole;
     static eLogLevels m_LogLevel;
     static std::vector<QString> m_lastmsgs;
-    static const qint32 m_lastMsgSize{10};
     static qint32 m_curlastmsgpos;
-    static spConsole m_pConsole;
     static bool m_show;
     static bool m_toggled;
     static std::vector<QString> m_output;
     static bool m_outputChanged;
     static qint32 m_outputSize;
-    static QMutex m_datalocker;
     static bool m_developerMode;
+    static QMutex m_datalocker;
+    static QMutex messageOutputMutex;
     oxygine::spSprite m_pBackgroundsprite;
     oxygine::spTextField m_text;
     oxygine::spTextField m_editTextfield;
 };
+
+static inline void CONSOLE_PRINT(const QString & message, GameConsole::eLogLevels logLevel)
+{
+    if (logLevel >= GameConsole::getLogLevel())
+    {
+        GameConsole::print(message, logLevel);
+    }
+}
+
+#ifdef GAMEDEBUG
+static inline void AI_CONSOLE_PRINT(const QString & message, GameConsole::eLogLevels logLevel)
+{
+    if (logLevel >= GameConsole::getLogLevel())
+    {
+        GameConsole::print(message, logLevel);
+    }
+}
+#else
+#define AI_CONSOLE_PRINT(text, logLevel)
+#endif
 
 #endif // CONSOLE_H

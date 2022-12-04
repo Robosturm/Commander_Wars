@@ -15,8 +15,6 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
     setObjectName("RuleSelectionDialog");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");

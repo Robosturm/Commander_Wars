@@ -3,7 +3,6 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
@@ -13,8 +12,6 @@ Textbox::Textbox(qint32 width, qint32 heigth)
 #ifdef GRAPHICSUPPORT
     setObjectName("Textbox");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

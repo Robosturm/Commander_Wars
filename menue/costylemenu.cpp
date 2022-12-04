@@ -3,8 +3,8 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/gameconsole.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/userdata.h"
 #include "coreengine/userdata.h"
 
@@ -28,13 +28,12 @@ COStyleMenu::COStyleMenu()
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     m_pPlayer = spPlayer::create(nullptr);
     m_pPlayer->init();
 
-    CONSOLE_PRINT("Entering Co Style Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Co Style Menue", GameConsole::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
     oxygine::spSprite sprite = oxygine::spSprite::create();
@@ -104,7 +103,7 @@ void COStyleMenu::onEnter()
     QString func = "coStyleMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -112,7 +111,7 @@ void COStyleMenu::onEnter()
 
 void COStyleMenu::exitMenue()
 {    
-    CONSOLE_PRINT("Leaving CO Style Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving CO Style Menue", GameConsole::eDEBUG);
     auto window = spMainwindow::create("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
@@ -120,7 +119,7 @@ void COStyleMenu::exitMenue()
 
 void COStyleMenu::reloadMenue()
 {
-    CONSOLE_PRINT("Leaving CO Style Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving CO Style Menue", GameConsole::eDEBUG);
     auto window = spCOStyleMenu::create();
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();

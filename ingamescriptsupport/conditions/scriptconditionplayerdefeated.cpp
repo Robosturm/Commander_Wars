@@ -6,7 +6,7 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -29,7 +29,7 @@ void ScriptConditionPlayerDefeated::setPlayer(const qint32 &player)
 
 void ScriptConditionPlayerDefeated::readCondition(QTextStream& rStream, QString line)
 {
-    CONSOLE_PRINT("Reading ConditionPlayerDefeated", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionPlayerDefeated", GameConsole::eDEBUG);
     line = line.simplified();
     QStringList items = line.replace("if (map.getPlayer(", "")
                             .replace(").getIsDefeated() === true", ",").split(",");
@@ -53,7 +53,7 @@ void ScriptConditionPlayerDefeated::readCondition(QTextStream& rStream, QString 
 
 void ScriptConditionPlayerDefeated::writePreCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Writing ConditionPlayerDefeated", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionPlayerDefeated", GameConsole::eDEBUG);
     m_executed = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
     if (subCondition.get() != nullptr)
@@ -88,7 +88,7 @@ void ScriptConditionPlayerDefeated::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + ConditionPlayerDefeated + " End\n";
+    rStream << "        } // " + QString(ConditionPlayerDefeated) + " End\n";
 }
 
 void ScriptConditionPlayerDefeated::writePostCondition(QTextStream& rStream)

@@ -18,7 +18,7 @@ LocalClient::~LocalClient()
 {
     disconnect();
     LocalClient::disconnectTCP();
-    CONSOLE_PRINT("Client is closed", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client is closed", GameConsole::eLogLevels::eDEBUG);
 }
 
 void LocalClient::connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress)
@@ -37,12 +37,12 @@ void LocalClient::connectTCP(QString primaryAdress, quint16 port, QString second
     // start TX-Task
     m_pTXTask = spTxTask::create(m_pSocket, 0, this, true);
     connect(this, &LocalClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
-    CONSOLE_PRINT("Local Client is running to " + primaryAdress, Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Local Client is running to " + primaryAdress, GameConsole::eLogLevels::eDEBUG);
     do
     {
         m_pSocket->connectToServer(primaryAdress);
     } while (!m_pSocket->waitForConnected(10000));
-    CONSOLE_PRINT("Local Client is connected to " + primaryAdress, Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Local Client is connected to " + primaryAdress, GameConsole::eLogLevels::eDEBUG);
 }
 
 void LocalClient::disconnectTCP()
@@ -55,7 +55,7 @@ void LocalClient::disconnectTCP()
         m_pSocket->close();
         m_pSocket = nullptr;
     }
-    CONSOLE_PRINT("Local Client disconnected.", Console::eDEBUG);
+    CONSOLE_PRINT("Local Client disconnected.", GameConsole::eDEBUG);
     emit sigDisconnected(0);
 }
 
@@ -73,7 +73,7 @@ void LocalClient::changeThread(quint64, QThread* pThread)
 
 void LocalClient::connected()
 {
-    CONSOLE_PRINT("Client is connected", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client is connected", GameConsole::eLogLevels::eDEBUG);
     m_isConnected = true;
     emit sigConnected(0);
 }

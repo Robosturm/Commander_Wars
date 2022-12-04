@@ -6,7 +6,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 #include "coreengine/interpreter.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "game/player.h"
 
@@ -247,7 +247,7 @@ private:
         QJSValue erg = pInterpreter->evaluate(args + line);
         if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", GameConsole::eERROR);
         }
     }
 
@@ -279,7 +279,7 @@ private:
         QJSValue erg = pInterpreter->evaluate(args + line);
         if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", GameConsole::eERROR);
         }
     }
 
@@ -305,11 +305,11 @@ private:
         }
         else
         {
-            CONSOLE_PRINT("Unable to determine a return value while interpreting. Line: " + line, Console::eERROR);
+            CONSOLE_PRINT("Unable to determine a return value while interpreting. Line: " + line, GameConsole::eERROR);
         }
         if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", GameConsole::eERROR);
         }
         return ret;
     }

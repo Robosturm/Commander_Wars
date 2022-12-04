@@ -2,7 +2,7 @@
 
 #include "objects/dialogs/ingame/dialogunitinfo.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "game/player.h"
 #include "game/gamemap.h"
@@ -21,8 +21,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogUnitInfo");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");

@@ -6,7 +6,7 @@
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 
 #include "spritingsupport/spritecreator.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
 
 namespace oxygine
@@ -60,7 +60,7 @@ namespace oxygine
             }
             if (found)
             {
-                CONSOLE_PRINT("Duplicate entry found. " + walker.getPath("file"), Console::eERROR);
+                CONSOLE_PRINT("Duplicate entry found. " + walker.getPath("file"), GameConsole::eERROR);
                 continue;
             }
             qint32 columns = 0;
@@ -76,14 +76,14 @@ namespace oxygine
             }
             else
             {
-                CONSOLE_PRINT("Invalid item found. " + walker.getPath("file"), Console::eERROR);
+                CONSOLE_PRINT("Invalid item found. " + walker.getPath("file"), GameConsole::eERROR);
                 continue;
             }
             QString path = walker.getPath("file");
-            CONSOLE_PRINT("Loading sprite: " + path, Console::eDEBUG);
+            CONSOLE_PRINT("Loading sprite: " + path, GameConsole::eDEBUG);
             if (img.width() == 0 || img.height() == 0)
             {
-                CONSOLE_PRINT("Image is not valid " + walker.getPath("file"), Console::eWARNING);
+                CONSOLE_PRINT("Image is not valid " + walker.getPath("file"), GameConsole::eWARNING);
                 continue;
             }
             rows = child_node.attribute("rows").toInt();
@@ -146,7 +146,7 @@ namespace oxygine
                 }
                 if (QFile::exists(overlayPath))
                 {
-                    CONSOLE_PRINT("SpriteCreator::preProcessMask for file " + path, Console::eDEBUG);
+                    CONSOLE_PRINT("SpriteCreator::preProcessMask for file " + path, GameConsole::eDEBUG);
                     QImage overlay(overlayPath);
                     SpriteCreator::preProcessMask(img, overlay, columns, rows);
                 }

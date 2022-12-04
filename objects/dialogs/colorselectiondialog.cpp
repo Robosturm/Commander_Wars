@@ -1,6 +1,6 @@
 #include "objects/dialogs/colorselectiondialog.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -11,8 +11,7 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color, bool showUnitPreview)
 #ifdef GRAPHICSUPPORT
     setObjectName("ColorSelectionDialog");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");

@@ -20,8 +20,6 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
     setObjectName("PerkSelectionDialog");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();

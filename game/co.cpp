@@ -1,5 +1,5 @@
-#include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/userdata.h"
 
@@ -27,8 +27,6 @@ CO::CO(QString coID, Player* owner, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("CO");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_perkList.append(coID);
     m_perkList.append("TAGPOWER");
@@ -203,7 +201,7 @@ void CO::setPowerFilled(const double &value)
         {
             limitPowerbar(currentValue);
         }
-        CONSOLE_PRINT("Powerbar changed by: " + QString::number(value - currentValue) + " for co " + m_coID + " of player " + QString::number(m_pOwner->getPlayerID()), Console::eDEBUG);
+        CONSOLE_PRINT("Powerbar changed by: " + QString::number(value - currentValue) + " for co " + m_coID + " of player " + QString::number(m_pOwner->getPlayerID()), GameConsole::eDEBUG);
     }
     if (m_pMenu != nullptr)
     {
@@ -1998,7 +1996,7 @@ void CO::getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info)
 
 void CO::serializeObject(QDataStream& pStream) const
 {
-    CONSOLE_PRINT("storing co", Console::eDEBUG);
+    CONSOLE_PRINT("storing co", GameConsole::eDEBUG);
     pStream << getVersion();
     pStream << m_coID;
     pStream << m_powerStars;
@@ -2023,7 +2021,7 @@ void CO::deserializeObject(QDataStream& pStream)
 
 void CO::deserializer(QDataStream& pStream, bool fast)
 {
-    CONSOLE_PRINT("reading game co", Console::eDEBUG);
+    CONSOLE_PRINT("reading game co", GameConsole::eDEBUG);
     qint32 version = 0;
     pStream >> version;
     pStream >> m_coID;
@@ -2109,7 +2107,7 @@ void CO::readCoStyleFromStream(QDataStream& pStream)
 {
     qint32 size = 0;
     pStream >> size;
-    CONSOLE_PRINT("reading co styles " + QString::number(size), Console::eDEBUG);
+    CONSOLE_PRINT("reading co styles " + QString::number(size), GameConsole::eDEBUG);
     m_customCOStyles.clear();
     for (qint32 i = 0; i < size; i++)
     {
@@ -2198,7 +2196,7 @@ QString CO::getActiveCoStyle()
 
 void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)
 {
-    CONSOLE_PRINT("Loading sprites for CO " + coid, Console::eDEBUG);
+    CONSOLE_PRINT("Loading sprites for CO " + coid, GameConsole::eDEBUG);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     colorTable.convertTo(QImage::Format_ARGB32);
     maskTable.convertTo(QImage::Format_ARGB32);

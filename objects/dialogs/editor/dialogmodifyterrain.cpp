@@ -1,4 +1,4 @@
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 
 #include "resource_management/objectmanager.h"
@@ -20,8 +20,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogModifyTerrain");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");

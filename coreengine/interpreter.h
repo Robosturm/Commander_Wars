@@ -5,7 +5,7 @@
 #include <QQmlEngine>
 #include <QVector>
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/mainapp.h"
 
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
@@ -45,12 +45,12 @@ public:
      * @brief getRuntimeData
      * @return
      */
-    static QString getRuntimeData();
+    QString getRuntimeData();
     /**
      * @brief reloadInterpreter
      * @param runtime
      */
-    static bool reloadInterpreter(const QString & runtime);
+    static bool reloadInterpreter(QString runtime);
 
     bool getInJsCall() const;
 
@@ -94,14 +94,14 @@ public slots:
                 QString error = ret.toString() + " in File: " +
                                 ret.property("fileName").toString() + " at Line: " +
                                 ret.property("lineNumber").toString();
-                CONSOLE_PRINT(error, Console::eERROR);
+                CONSOLE_PRINT(error, GameConsole::eERROR);
             }
 #ifdef GAMEDEBUG
         }
         else
         {
             QString error = "Error: attemp to call a non function value. Call:" + func;
-            CONSOLE_PRINT(error, Console::eERROR);
+            CONSOLE_PRINT(error, GameConsole::eERROR);
         }
 #endif
         return ret;
@@ -128,20 +128,20 @@ public slots:
                     QString error = ret.toString() + " in File: " +
                                     ret.property("fileName").toString() + " at Line: " +
                                     ret.property("lineNumber").toString();
-                    CONSOLE_PRINT(error, Console::eERROR);
+                    CONSOLE_PRINT(error, GameConsole::eERROR);
                 }
 #ifdef GAMEDEBUG
             }
             else
             {
                 QString error = "Error: attemp to call a non function value. Call:" + obj + "." + func;
-                CONSOLE_PRINT(error, Console::eERROR);
+                CONSOLE_PRINT(error, GameConsole::eERROR);
             }
         }
         else
         {
             QString error = "Error: attemp to call a non object value in order to call a function. Call:" + obj + "." + func;
-            CONSOLE_PRINT(error, Console::eERROR);
+            CONSOLE_PRINT(error, GameConsole::eERROR);
         }
 #endif
         return ret;
@@ -217,8 +217,8 @@ private:
     void init();
     void exitJsCall();
 private:
-    static QString m_runtimeData;
     static spInterpreter m_pInstance;
+    QString m_runtimeData;
     qint32 m_inJsCall{0};
     QVector<oxygine::intrusive_ptr<oxygine::ref_counter>> m_jsObjects;
 };

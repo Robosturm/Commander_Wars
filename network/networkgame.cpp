@@ -56,7 +56,7 @@ void NetworkGame::slaveRunning(const QJsonObject & objData, spTCPServer & pGameS
         {
             // send data
             QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
-            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
             QJsonObject data;
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
             data.insert(JsonKeys::JSONKEY_ADDRESS, m_data.getSlaveAddress());
@@ -78,12 +78,12 @@ void NetworkGame::slaveGameStarted(const QJsonObject & objData)
     m_data.setLaunched(true);
     QStringList playerNames;
     QJsonArray usernames = objData.value(JsonKeys::JSONKEY_USERNAMES).toArray();
-    CONSOLE_PRINT("Adding players to slavegame " + m_serverName, Console::eDEBUG);
+    CONSOLE_PRINT("Adding players to slavegame " + m_serverName, GameConsole::eDEBUG);
     for (const auto & username : usernames)
     {
         QString user = username.toString();
         playerNames.append(user);
-        CONSOLE_PRINT("user: " + user, Console::eDEBUG);
+        CONSOLE_PRINT("user: " + user, GameConsole::eDEBUG);
     }
     m_data.setPlayerNames(playerNames);
 }
@@ -115,7 +115,7 @@ NetworkGameData & NetworkGame::getData()
 
 void NetworkGame::onConnectToLocalServer(quint64 socketId, spTCPServer & pTcpServer)
 {    
-    CONSOLE_PRINT("onConnectToLocalServer reading game data", Console::eDEBUG);
+    CONSOLE_PRINT("onConnectToLocalServer reading game data", GameConsole::eDEBUG);
     if (m_slaveRespawnFile.isEmpty())
     {
         m_data.setSlaveName(m_serverName);
@@ -136,7 +136,7 @@ void NetworkGame::onConnectToLocalServer(quint64 socketId, spTCPServer & pTcpSer
     else
     {
         QString command = QString(NetworkCommands::SERVERRELAUNCHSLAVE);
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_MAPNAME, m_slaveRespawnFile);
@@ -167,7 +167,7 @@ void NetworkGame::setDataBuffer(const QByteArray &dataBuffer)
 
 void NetworkGame::processFinished(int value, QProcess::ExitStatus)
 {
-    CONSOLE_PRINT("Networkgame Closing game cause slave game has been terminated with code " + QString::number(value), Console::eDEBUG);
+    CONSOLE_PRINT("Networkgame Closing game cause slave game has been terminated with code " + QString::number(value), GameConsole::eDEBUG);
     closeGame();
     Interpreter* pInterpreter = Interpreter::getInstance();
     emit pInterpreter->sigNetworkGameFinished(value - 1, m_id);

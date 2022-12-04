@@ -4,6 +4,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -21,7 +22,7 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
@@ -168,7 +169,7 @@ void FileDialog::showFolder(QString folder)
     {
         m_MainPanel->removeItem(m_Items[i]);
     }
-    CONSOLE_PRINT("Showing folder: " + folder, Console::eDEBUG);
+    CONSOLE_PRINT("Showing folder: " + folder, GameConsole::eDEBUG);
     folder = folder.replace("\\", "/");
     while (folder.contains("//"))
     {
@@ -185,7 +186,7 @@ void FileDialog::showFolder(QString folder)
     {
         if (!folder.isEmpty())
         {
-            CONSOLE_PRINT("Using root cause given folder wasn't found: " + folder, Console::eINFO);
+            CONSOLE_PRINT("Using root cause given folder wasn't found: " + folder, GameConsole::eINFO);
         }
         folder = ROOT;
     }

@@ -5,9 +5,9 @@
 #include "menue/gamemenue.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
 
 #include "game/gamemap.h"
@@ -30,8 +30,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    moveToThread(pApp->getWorkerthread());
-    CONSOLE_PRINT("Entering Campaign Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Campaign Menue", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
@@ -426,7 +425,7 @@ void CampaignMenu::createMapSelection(spCampaign & campaign)
 void CampaignMenu::exitMenue()
 {
     QStringList filter = {".jsm"};
-    CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Option Menue", GameConsole::eDEBUG);
     auto mapSelectionView = spMapSelectionView::create(filter);
     auto window = spMapSelectionMapsMenue::create(mapSelectionView);
     oxygine::Stage::getStage()->addChild(window);
@@ -440,7 +439,7 @@ void CampaignMenu::onEnter()
     QString func = "campaignMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -491,7 +490,7 @@ void CampaignMenu::slotButtonNext()
             pMap->getGameScript()->gameStart();
             pMap->updateSprites();
             // start game
-            CONSOLE_PRINT("Leaving Campaign Menue", Console::eDEBUG);
+            CONSOLE_PRINT("Leaving Campaign Menue", GameConsole::eDEBUG);
             auto window = spGameMenue::create(pMap, false, spNetworkInterface(), false);
             oxygine::Stage::getStage()->addChild(window);
             oxygine::Actor::detach();
@@ -535,7 +534,7 @@ void CampaignMenu::autosave()
 {
     if (Settings::getAutoSavingCycle() > 0)
     {
-        CONSOLE_PRINT("CampaignMenu::autosave()", Console::eDEBUG);
+        CONSOLE_PRINT("CampaignMenu::autosave()", GameConsole::eDEBUG);
         QString path = GlobalUtils::getNextAutosavePath(Settings::getUserPath() + "savegames/" + m_pMapSelectionView->getCurrentCampaign()->getName() + "_autosave_", ".camp", Settings::getAutoSavingCycle());
         saveCampaign(path);
     }

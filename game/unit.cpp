@@ -8,7 +8,7 @@
 
 #include "ai/coreai.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
 #include "game/gamemap.h"
@@ -28,8 +28,6 @@ Unit::Unit(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("Unit");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setHeight(GameMap::getImageSize());
     setWidth(GameMap::getImageSize());
@@ -46,8 +44,6 @@ Unit::Unit(const QString & unitID, Player* pOwner, bool aquireId, GameMap* pMap)
 #endif
     setHeight(GameMap::getImageSize());
     setWidth(GameMap::getImageSize());
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     if (!m_UnitID.isEmpty())
     {
@@ -290,7 +286,7 @@ void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bo
     }
     else
     {
-        CONSOLE_PRINT("Unable to load unit sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load unit sprite: " + spriteID, GameConsole::eDEBUG);
     }
 }
 
@@ -1179,7 +1175,7 @@ void Unit::loadUnit(Unit* pUnit, qint32 index)
 
 void Unit::loadSpawnedUnit(const QString & unitId)
 {
-    CONSOLE_PRINT("Unit::loadSpawnedUnit " + unitId, Console::eDEBUG);
+    CONSOLE_PRINT("Unit::loadSpawnedUnit " + unitId, GameConsole::eDEBUG);
     spUnit pUnit = spUnit::create(unitId, m_pOwner, true, m_pMap);
     if (canTransportUnit(pUnit.get()))
     {
@@ -1189,7 +1185,7 @@ void Unit::loadSpawnedUnit(const QString & unitId)
 
 Unit* Unit::spawnUnit(const QString & unitID)
 {
-    CONSOLE_PRINT("Unit::spawnUnit " + unitID, Console::eDEBUG);
+    CONSOLE_PRINT("Unit::spawnUnit " + unitID, GameConsole::eDEBUG);
 
     if (m_pMap != nullptr)
     {
@@ -1847,7 +1843,7 @@ void Unit::setUnitVisible(bool value, Player* pPlayer)
 
 void Unit::makeCOUnit(quint8 co, bool force)
 {
-    CONSOLE_PRINT("Unit::makeCOUnit for " + QString::number(co) + " force=" + QString::number(force), Console::eDEBUG);
+    CONSOLE_PRINT("Unit::makeCOUnit for " + QString::number(co) + " force=" + QString::number(force), GameConsole::eDEBUG);
     CO* pCO = m_pOwner->getCO(co);
     if (pCO != nullptr &&
         (pCO->getCOUnit() == nullptr || force))

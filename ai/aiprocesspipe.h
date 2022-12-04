@@ -8,12 +8,14 @@
 #include "game/gameanimation/animationskipper.h"
 
 class GameMap;
-class GameMenue;
 class GameAction;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;
+class GameMenue;
 using spGameMenue = oxygine::intrusive_ptr<GameMenue>;
+class AiProcessPipe;
+using spAiProcessPipe = oxygine::intrusive_ptr<AiProcessPipe>;
 
-class AiProcessPipe final : public QObject
+class AiProcessPipe final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -55,8 +57,8 @@ private:
     void quitGame();
 private:
     NetworkInterface * m_pActiveConnection{nullptr};
-    spLocalServer m_pServer;
-    spLocalClient m_pClient;
+    spLocalServer m_pServer{nullptr};
+    spLocalClient m_pClient{nullptr};
     PipeState m_pipeState{PipeState::Disconnected};
     AnimationSkipper m_animationSkipper;
     QList<spGameAction> m_ActionBuffer;

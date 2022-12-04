@@ -23,8 +23,6 @@ PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool bannin
 #endif
     Interpreter::setCppOwnerShip(this);
     setWidth(width);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     connect(this, &PerkSelection::sigUpdatePerkCount, this, &PerkSelection::updatePerkCount, Qt::QueuedConnection);
     updatePerksView(pCO);
 }

@@ -14,7 +14,7 @@ LocalServer::~LocalServer()
 {
     disconnect();
     LocalServer::disconnectTCP();
-    CONSOLE_PRINT("Server is closed", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Server is closed", GameConsole::eLogLevels::eDEBUG);
 }
 
 void LocalServer::connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress)
@@ -26,7 +26,7 @@ void LocalServer::connectTCP(QString primaryAdress, quint16 port, QString second
     connect(this, &LocalServer::sigForwardData, this, &LocalServer::forwardData, Qt::QueuedConnection);
     connect(this, &LocalServer::sigContinueListening, this, &LocalServer::continueListening, Qt::QueuedConnection);
     connect(this, &LocalServer::sigPauseListening, this, &LocalServer::pauseListening, Qt::QueuedConnection);
-    CONSOLE_PRINT("Local Server is running. " + primaryAdress, Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Local Server is running. " + primaryAdress, GameConsole::eLogLevels::eDEBUG);
 }
 
 void LocalServer::disconnectTCP()
@@ -38,7 +38,7 @@ void LocalServer::disconnectTCP()
             // realize correct deletion
             m_pTCPSockets[0]->disconnect();
             m_pTCPSockets[0]->close();
-            CONSOLE_PRINT("Client disconnected.", Console::eLogLevels::eDEBUG);
+            CONSOLE_PRINT("Client disconnected.", GameConsole::eLogLevels::eDEBUG);
         }
         m_pRXTasks.removeAt(0);
         m_pTXTasks.removeAt(0);
@@ -57,7 +57,7 @@ void LocalServer::disconnectClient(quint64 socketID)
     {
         if (m_SocketIDs[i] == socketID)
         {
-            CONSOLE_PRINT("Local Server Client disconnected.", Console::eLogLevels::eDEBUG);
+            CONSOLE_PRINT("Local Server Client disconnected.", GameConsole::eLogLevels::eDEBUG);
             if (m_pTCPSockets[i]->isOpen())
             {
                 // realize correct deletion
@@ -96,14 +96,14 @@ void LocalServer::onConnect()
         {
             emit sigDisconnectClient(socket);
         });
-        CONSOLE_PRINT("New Client connection.", Console::eLogLevels::eDEBUG);
+        CONSOLE_PRINT("New Client connection.", GameConsole::eLogLevels::eDEBUG);
         emit sigConnected(m_idCounter);
     }
 }
 
 void LocalServer::forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
-    CONSOLE_PRINT("Forwarding data from local server to all clients except " + QString::number(socketID), Console::eDEBUG);
+    CONSOLE_PRINT("Forwarding data from local server to all clients except " + QString::number(socketID), GameConsole::eDEBUG);
     for (qint32 i = 0; i < m_SocketIDs.size(); i++)
     {
         if (m_SocketIDs[i] != socketID)
@@ -131,17 +131,17 @@ QVector<quint64> LocalServer::getConnectedSockets()
 
 void LocalServer::changeThread(quint64 socketID, QThread*)
 {
-    CONSOLE_PRINT("Unsupported call to change thread on local server for socekt " + QString::number(socketID), Console::eFATAL);
+    CONSOLE_PRINT("Unsupported call to change thread on local server for socekt " + QString::number(socketID), GameConsole::eFATAL);
 }
 
 void LocalServer::addSocket(quint64 socket)
 {
-    CONSOLE_PRINT("Local Server added socket " + QString::number(socket), Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Local Server added socket " + QString::number(socket), GameConsole::eLogLevels::eDEBUG);
     m_SocketIDs.append(socket);
 }
 
 void LocalServer::removeSocket(quint64 socket)
 {
-    CONSOLE_PRINT("Local Server removed socket " + QString::number(socket), Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Local Server removed socket " + QString::number(socket), GameConsole::eLogLevels::eDEBUG);
     m_SocketIDs.removeAll(socket);
 }

@@ -3,7 +3,7 @@
 #include "ai/coreai.h"
 #include "ai/targetedunitpathfindingsystem.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
 #include "game/unitpathfindingsystem.h"
@@ -17,7 +17,7 @@
 
 bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
 {
-    AI_CONSOLE_PRINT("moveFlares()", Console::eDEBUG);
+    CONSOLE_PRINT("moveFlares()", GameConsole::eDEBUG);
     for (auto & spUnit : pUnits->getVector())
     {
         Unit* pUnit = spUnit.get();
@@ -53,7 +53,7 @@ bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
 
 bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
 {
-    AI_CONSOLE_PRINT("moveOoziums()", Console::eDEBUG);
+    CONSOLE_PRINT("moveOoziums()", GameConsole::eDEBUG);
     std::vector<QVector3D> targets;
     for (auto & pUnit : pEnemyUnits->getVector())
     {
@@ -93,7 +93,7 @@ bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits
 
 bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
 {
-    AI_CONSOLE_PRINT("moveBlackBombs()", Console::eDEBUG);
+    CONSOLE_PRINT("moveBlackBombs()", GameConsole::eDEBUG);
     
     if (m_pMap != nullptr)
     {
@@ -184,7 +184,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
 
 bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTransporters)
 {
-    AI_CONSOLE_PRINT("CoreAI::moveSupport", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::moveSupport", GameConsole::eDEBUG);
     m_aiStep = step;
     
     if (m_pMap != nullptr)
@@ -278,7 +278,7 @@ bool CoreAI::processPredefinedAi()
 {
     if (!m_usedPredefinedAi)
     {
-        AI_CONSOLE_PRINT("processPredefinedAi()", Console::eDEBUG);
+        CONSOLE_PRINT("processPredefinedAi()", GameConsole::eDEBUG);
         spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
         pUnits->randomize();
         spQmlVectorUnit pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
@@ -436,7 +436,7 @@ bool CoreAI::processPredefinedMapScripted(Unit* pUnit, spQmlVectorUnit & pEnemyU
 
 bool CoreAI::processPredefinedAiHold(Unit* pUnit)
 {
-    AI_CONSOLE_PRINT("CoreAI::processPredefinedAiHold", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::processPredefinedAiHold", GameConsole::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
     std::vector<QVector3D> ret;
@@ -472,7 +472,7 @@ bool CoreAI::processPredefinedAiHold(Unit* pUnit)
 
 bool CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 {
-    AI_CONSOLE_PRINT("CoreAI::processPredefinedAiDefensive", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::processPredefinedAiDefensive", GameConsole::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
     UnitPathFindingSystem pfs(m_pMap, pUnit);
@@ -522,7 +522,7 @@ bool CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 
 bool CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyUnits)
 {
-    AI_CONSOLE_PRINT("CoreAI::processPredefinedAiOffensive", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::processPredefinedAiOffensive", GameConsole::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
     UnitPathFindingSystem pfs(m_pMap, pUnit);
     pfs.explore();
@@ -557,7 +557,7 @@ bool CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyU
 
 bool CoreAI::processPredefinedAiAttack(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem & pfs)
 {
-    AI_CONSOLE_PRINT("CoreAI::processPredefinedAiAttack", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::processPredefinedAiAttack", GameConsole::eDEBUG);
     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
     pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())), 0);
 
@@ -594,7 +594,7 @@ bool CoreAI::processPredefinedAiAttack(Unit* pUnit, spGameAction & pAction, Unit
 
 bool CoreAI::processPredefinedAiPatrol(Unit* pUnit)
 {
-    AI_CONSOLE_PRINT("CoreAI::processPredefinedAiPatrol", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::processPredefinedAiPatrol", GameConsole::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
     UnitPathFindingSystem pfs(m_pMap, pUnit);
     pfs.explore();
@@ -645,7 +645,7 @@ bool CoreAI::processPredefinedAiPatrol(Unit* pUnit)
 
 bool CoreAI::processPredefinedAiTargetEnemyHq(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings)
 {
-    AI_CONSOLE_PRINT("CoreAI::processPredefinedAiOffensive", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::processPredefinedAiOffensive", GameConsole::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
     UnitPathFindingSystem pfs(m_pMap, pUnit);
     pfs.explore();

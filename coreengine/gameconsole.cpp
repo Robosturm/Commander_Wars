@@ -10,10 +10,10 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/settings.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
 
 #include "resource_management/fontmanager.h"
@@ -21,53 +21,51 @@
 #include "spritingsupport/spritecreator.h"
 
 // values which differ from release to debug build
-Console::eLogLevels Console::m_LogLevel = static_cast<Console::eLogLevels>(DEBUG_LEVEL);
+GameConsole::eLogLevels GameConsole::m_LogLevel = static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL);
 
-bool Console::m_show = false;
-bool Console::m_toggled = false;
-bool Console::m_developerMode = false;
-bool Console::m_outputChanged = false;
-std::vector<QString> Console::m_output;
-spConsole Console::m_pConsole;
-qint32 Console::m_curlastmsgpos = 0;
-std::vector<QString> Console::m_lastmsgs;
-qint32 Console::m_outputSize = 100;
-QMutex Console::m_datalocker;
-
+bool GameConsole::m_show = false;
+bool GameConsole::m_toggled = false;
+bool GameConsole::m_developerMode = false;
+bool GameConsole::m_outputChanged = false;
+std::vector<QString> GameConsole::m_output;
+spConsole GameConsole::m_pConsole{nullptr};
+qint32 GameConsole::m_curlastmsgpos = 0;
+std::vector<QString> GameConsole::m_lastmsgs;
+qint32 GameConsole::m_outputSize = 100;
+QMutex GameConsole::m_datalocker;
+QMutex GameConsole::messageOutputMutex;
 // Console Libary
-const QString Console::functions[] =
+const char* const GameConsole::functions[] =
 {
-    QString("createfunnymessage"),
-    QString("setVolume"),
-    QString("setLogLevel"),
-    QString("connectToServer"),
-    QString("getServerAdresse"),
-    QString("createSprites"),
-    QString("createColorTableSprites"),
-    QString("applyImagesTable"),
-    QString("updateMaskImages"),
-    QString("inversImagesFrames"),
-    QString("extendMaskImages"),
-    QString("help"),
-    QString("logActions"),
-    QString("version"),
-    QString("setDeveloperMode"),
-    QString("extractResources"),
-    QString("memoryUsage"),
-    QString("printObjectDetails"),
-    QString("")
+    "createfunnymessage",
+    "setVolume",
+    "setLogLevel",
+    "connectToServer",
+    "getServerAdresse",
+    "createSprites",
+    "createColorTableSprites",
+    "applyImagesTable",
+    "updateMaskImages",
+    "inversImagesFrames",
+    "extendMaskImages",
+    "help",
+    "logActions",
+    "version",
+    "setDeveloperMode",
+    "extractResources",
+    "memoryUsage",
+    "printObjectDetails",
+    ""
 };
-const char* const Console::compileTime = __TIME__;
-const char* const Console::compileDate = __DATE__;
+const char* const GameConsole::compileTime = __TIME__;
+const char* const GameConsole::compileDate = __DATE__;
 
-Console::Console()
+GameConsole::GameConsole()
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Console");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     // move console to top
     oxygine::Actor::setPriority(static_cast<qint32>(Mainapp::ZOrder::Console));
     m_pBackgroundsprite = oxygine::spColorRectSprite::create();
@@ -93,7 +91,7 @@ Console::Console()
 
     // we're hidden to begin with
     oxygine::Actor::setVisible(false);
-    connect(this, &Console::sigToggleView, this, &Console::toggleView, Qt::QueuedConnection);
+    connect(this, &GameConsole::sigToggleView, this, &GameConsole::toggleView, Qt::QueuedConnection);
     addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* event)
     {
         event->stopPropagation();
@@ -104,87 +102,87 @@ Console::Console()
     m_lastmsgs.reserve(m_lastMsgSize);
 }
 
-spConsole Console::getInstance()
+GameConsole* GameConsole::getInstance()
 {
     if (m_pConsole.get() == nullptr)
     {
         m_pConsole = spConsole::create();
-        CONSOLE_PRINT("Console created", Console::eDEBUG);
+        qInstallMessageHandler(GameConsole::messageOutput);
+        CONSOLE_PRINT("Console created", GameConsole::eDEBUG);
     }
-    return m_pConsole;
+    return m_pConsole.get();
 }
 
-bool Console::hasInstance()
+bool GameConsole::hasInstance()
 {
     return m_pConsole.get() != nullptr;
 }
 
-void Console::init()
+void GameConsole::init()
 {
     // Print some Info
-    CONSOLE_PRINT("Started with: " + QCoreApplication::arguments().join(" "), Console::eINFO);
-    CONSOLE_PRINT("Enter \"help()\" for console info.", Console::eLogLevels::eINFO);
-    CONSOLE_PRINT("Starting Game...", Console::eLogLevels::eINFO);
-    CONSOLE_PRINT("Prepare to Fight...", Console::eLogLevels::eINFO);
-    CONSOLE_PRINT("Read this message while waiting...", Console::eLogLevels::eINFO);
-    CONSOLE_PRINT("", Console::eLogLevels::eINFO);
-    Console::createfunnymessage();
-    CONSOLE_PRINT("", Console::eLogLevels::eINFO);
+    CONSOLE_PRINT("Started with: " + QCoreApplication::arguments().join(" "), GameConsole::eINFO);
+    CONSOLE_PRINT("Enter \"help()\" for console info.", GameConsole::eLogLevels::eINFO);
+    CONSOLE_PRINT("Starting Game...", GameConsole::eLogLevels::eINFO);
+    CONSOLE_PRINT("Prepare to Fight...", GameConsole::eLogLevels::eINFO);
+    CONSOLE_PRINT("Read this message while waiting...", GameConsole::eLogLevels::eINFO);
+    CONSOLE_PRINT("", GameConsole::eLogLevels::eINFO);
+    GameConsole::createfunnymessage();
+    CONSOLE_PRINT("", GameConsole::eLogLevels::eINFO);
 }
 
-void Console::release()
+void GameConsole::release()
 {
     m_pBackgroundsprite->detach();
     m_pBackgroundsprite = oxygine::spSprite();
     m_text->detach();
     m_text = oxygine::spTextField();
-    m_pConsole = spConsole();
 }
 
-void Console::createSprites(QString input, QString colorTable, QString maskTable)
+void GameConsole::createSprites(QString input, QString colorTable, QString maskTable)
 {
     SpriteCreator::createSprites(input, colorTable, maskTable);
 }
 
-void Console::createColorTableSprites(QString folder, QString filter, qint32 startIndex, qint32 maxColors)
+void GameConsole::createColorTableSprites(QString folder, QString filter, qint32 startIndex, qint32 maxColors)
 {
     SpriteCreator::createColorTableSprites(folder, filter, startIndex, maxColors);
 }
 
-void Console::updateMaskImages(QString folder, QString filter, qint32 min)
+void GameConsole::updateMaskImages(QString folder, QString filter, qint32 min)
 {
     SpriteCreator::updateMaskImages(folder, filter, min);
 }
 
-void Console::inversImagesFrames(QString folder, QString filter, qint32 frames)
+void GameConsole::inversImagesFrames(QString folder, QString filter, qint32 frames)
 {
     SpriteCreator::inversImagesFrames(folder, filter, frames);
 }
 
-void Console::applyImagesTable(QString input, QString inTable, QString outTable, QColor eraseColor)
+void GameConsole::applyImagesTable(QString input, QString inTable, QString outTable, QColor eraseColor)
 {
     SpriteCreator::applyImagesTable(input, inTable, outTable, eraseColor);
 }
 
-void Console::extendMaskImages(QString folder, QString filter)
+void GameConsole::extendMaskImages(QString folder, QString filter)
 {
     SpriteCreator::extendMaskImages(folder, filter);
 }
 
-void Console::dotask(QString message)
+void GameConsole::dotask(QString message)
 {
-    print(message, Console::eINFO);
+    print(message, GameConsole::eINFO);
     if (message.startsWith("game:"))
     {
         message = message.replace("game:", "");
-        emit Console::getInstance()->sigExecuteCommand(message);
+        emit getInstance()->sigExecuteCommand(message);
     }
     else
     {
         QString order = "GameConsole." + message;
         for (const auto& function : functions)
         {
-            if (message.startsWith(function + "("))
+            if (message.startsWith(QString(function) + "("))
             {
                 Interpreter::getInstance()->doString(order);
                 break;
@@ -193,16 +191,16 @@ void Console::dotask(QString message)
     }
 }
 
-void Console::print(const QString & message, qint8 logLevel)
+void GameConsole::print(const QString & message, qint8 logLevel)
 {
     print(message, static_cast<eLogLevels>(logLevel));
 }
 
-void Console::print(const QString & message, eLogLevels logLevel)
+void GameConsole::print(const QString & message, eLogLevels logLevel)
 {
     QMutexLocker locker(&m_datalocker);
 
-    if (logLevel >= Console::m_LogLevel)
+    if (logLevel >= GameConsole::m_LogLevel)
     {
         QString msg = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + ": " + message;
         QString prefix = "";
@@ -251,7 +249,7 @@ void Console::print(const QString & message, eLogLevels logLevel)
     }
 }
 
-void Console::printObjectDetails(QObject* obj, Console::eLogLevels logLevel)
+void GameConsole::printObjectDetails(QObject* obj, GameConsole::eLogLevels logLevel)
 {
     print("Object Info of :" + obj->objectName(), logLevel);
     const auto * metaObject = obj->metaObject();
@@ -266,7 +264,7 @@ void Console::printObjectDetails(QObject* obj, Console::eLogLevels logLevel)
     }
 }
 
-void Console::update(const oxygine::UpdateState& us)
+void GameConsole::update(const oxygine::UpdateState& us)
 {
     // no need to calculate more than we need if we're invisible
     if(m_show)
@@ -310,7 +308,7 @@ void Console::update(const oxygine::UpdateState& us)
     oxygine::Actor::update(us);
 }
 
-void Console::toggleView()
+void GameConsole::toggleView()
 {
     m_show = !m_show;
     oxygine::Actor::setVisible(m_show);
@@ -326,65 +324,65 @@ void Console::toggleView()
     m_toggled = true;
 }
 
-bool Console::getDeveloperMode()
+bool GameConsole::getDeveloperMode()
 {
     if (m_developerMode)
     {
-        print("Developer Mode enabled! And used for changing some data.", Console::eINFO);
+        print("Developer Mode enabled! And used for changing some data.", GameConsole::eINFO);
     }
     return m_developerMode;
 }
 
-void Console::setDeveloperMode(bool developerMode)
+void GameConsole::setDeveloperMode(bool developerMode)
 {
     m_developerMode = developerMode;
     if (m_developerMode)
     {
-        print("Developer Mode enabled! Note this may lead to crashes or weird behaviour.", Console::eWARNING);
+        print("Developer Mode enabled! Note this may lead to crashes or weird behaviour.", GameConsole::eWARNING);
         setLogLevel(eLogLevels::eDEBUG);
     }
 }
 
-void Console::setVolume(qint32 volume)
+void GameConsole::setVolume(qint32 volume)
 {
     Mainapp::getInstance()->getAudioThread()->setVolume(volume);
 }
 
-void Console::setLogLevel(eLogLevels newLogLevel)
+void GameConsole::setLogLevel(eLogLevels newLogLevel)
 {
-    Console::m_LogLevel = newLogLevel;
+    GameConsole::m_LogLevel = newLogLevel;
 }
 
-void Console::help(qint32 start, qint32 end)
+void GameConsole::help(qint32 start, qint32 end)
 {
     qint32 index = 0;
-    while (functions[index] != "" && ((end >= 0 && index <= end) ||  end < 0))
+    while (QString(functions[index]) != "" && ((end >= 0 && index <= end) ||  end < 0))
     {
         if (index >= start && (index <= end || end < 0))
         {
-            CONSOLE_PRINT(functions[index], Console::eINFO);
+            CONSOLE_PRINT(functions[index], GameConsole::eINFO);
         }
         index++;
     }
 }
 
-void Console::version()
+void GameConsole::version()
 {
-    print(QCoreApplication::applicationVersion() + " Builddate: " + compileDate + " " + compileTime, Console::eINFO);
+    print(QCoreApplication::applicationVersion() + " Builddate: " + compileDate + " " + compileTime, GameConsole::eINFO);
 }
 
-void Console::logActions(bool log)
+void GameConsole::logActions(bool log)
 {
     Settings::setLogActions(log);
 }
 
-void Console::extractResources()
+void GameConsole::extractResources()
 {
     QString targetDir = "extractedResources/";
     QDir target(targetDir);
     if (target.exists())
     {
-        CONSOLE_PRINT("Deleting old extracted files.", Console::eINFO);
+        CONSOLE_PRINT("Deleting old extracted files.", GameConsole::eINFO);
         target.removeRecursively();
     }
     QStringList filter;
@@ -405,22 +403,22 @@ void Console::extractResources()
         permission.setPermissions(QFileDevice::ReadOther | QFileDevice::WriteOther);
         if (count % 40 == 0)
         {
-            CONSOLE_PRINT("Extracted files " + QString::number(count) + "...", Console::eINFO);
+            CONSOLE_PRINT("Extracted files " + QString::number(count) + "...", GameConsole::eINFO);
         }
     }
-    CONSOLE_PRINT("Extracting files done. Extracted: " + QString::number(count) + " files", Console::eINFO);
+    CONSOLE_PRINT("Extracting files done. Extracted: " + QString::number(count) + " files", GameConsole::eINFO);
 }
 
-void Console::memoryUsage()
+void GameConsole::memoryUsage()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    CONSOLE_PRINT("C++-Objects=" + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), Console::eINFO);
-    CONSOLE_PRINT("Textures=" + QString::number(oxygine::Texture::getHighestTextureCount()), Console::eINFO);
-    CONSOLE_PRINT("Materials cached=" + QString::number(oxygine::MaterialCache::mc().getSize()), Console::eINFO);
-    CONSOLE_PRINT("Sounds buffered=" + QString::number(pApp->getAudioThread()->getSoundsBuffered()), Console::eINFO);
+    CONSOLE_PRINT("C++-Objects=" + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), GameConsole::eINFO);
+    CONSOLE_PRINT("Textures=" + QString::number(oxygine::Texture::getHighestTextureCount()), GameConsole::eINFO);
+    CONSOLE_PRINT("Materials cached=" + QString::number(oxygine::MaterialCache::mc().getSize()), GameConsole::eINFO);
+    CONSOLE_PRINT("Sounds buffered=" + QString::number(pApp->getAudioThread()->getSoundsBuffered()), GameConsole::eINFO);
 }
 
-void Console::createfunnymessage(qint32 message){
+void GameConsole::createfunnymessage(qint32 message){
     if (message < 0)
     {
         message = GlobalUtils::randIntBase(0,337);
@@ -1439,10 +1437,10 @@ void Console::createfunnymessage(qint32 message){
             printmessage = "No more funny Messages found. Delete your Harddisk instead";
             break;
     }
-    print(printmessage, Console::eINFO);
+    print(printmessage, GameConsole::eINFO);
 }
 
-bool Console::doHandleEvent(QEvent *event)
+bool GameConsole::doHandleEvent(QEvent *event)
 {
     bool ret = false;
     // for debugging
@@ -1507,7 +1505,7 @@ bool Console::doHandleEvent(QEvent *event)
     return ret;
 }
 
-bool Console::onEditFinished()
+bool GameConsole::onEditFinished()
 {
     QString message = getCurrentText();
     if (!message.isEmpty())
@@ -1525,19 +1523,20 @@ bool Console::onEditFinished()
     return false;
 }
 
-void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    static QMutex messageOutputMutex;
+    static QFile file;
+    static QTextStream stream(&file);
     QMutexLocker lock(&messageOutputMutex);
-    static QFile file(Settings::getUserPath() + "console" + Settings::getUpdateStep()+ ".log");
     if (!file.isOpen())
     {
-        Mainapp* pApp = Mainapp::getInstance();
+        file.setFileName((Settings::getUserPath() + "console" + Settings::getUpdateStep()+ ".log"));
         if (Settings::getAiSlave())
         {
             file.setFileName(Settings::getUserPath() + "consoleAiSlave.log");
             file.open(QIODevice::WriteOnly);
         }
+        Mainapp* pApp = Mainapp::getInstance();
         if (pApp->getSlave() && pApp->getCreateSlaveLogs())
         {
             QString slaveName = Settings::getSlaveServerName();
@@ -1549,14 +1548,13 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
             file.open(QIODevice::WriteOnly);
         }
     }
-    static QTextStream stream(&file);
     if (file.isOpen())
     {
         // QByteArray localMsg = msg.toLocal8Bit();
         switch (type)
         {
             case QtDebugMsg:
-                if (Console::m_LogLevel <= Console::eLogLevels::eDEBUG)
+                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eDEBUG)
                 {
                     stream << "Debug: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     // fprintf(stdout, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
@@ -1565,7 +1563,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
                 }
                 break;
             case QtInfoMsg:
-                if (Console::m_LogLevel <= Console::eLogLevels::eINFO)
+                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eINFO)
                 {
                     stream << "Info: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     // fprintf(stdout, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
@@ -1574,7 +1572,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
                 }
                 break;
             case QtWarningMsg:
-                if (Console::m_LogLevel <= Console::eLogLevels::eWARNING)
+                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eWARNING)
                 {
                     stream << "Warning: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     // fprintf(stdout, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
@@ -1583,7 +1581,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
                 }
                 break;
             case QtCriticalMsg:
-                if (Console::m_LogLevel <= Console::eLogLevels::eERROR)
+                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eERROR)
                 {
                     stream << "Critical: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     // fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
@@ -1592,7 +1590,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
                 }
                 break;
             case QtFatalMsg:
-                if (Console::m_LogLevel <= Console::eLogLevels::eFATAL)
+                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eFATAL)
                 {
                     stream << "Fatal: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     // fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);

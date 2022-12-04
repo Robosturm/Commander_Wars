@@ -17,8 +17,6 @@
 #include "coreengine/Gamepad.h"
 #include "coreengine/commandlineparser.h"
 
-#include "ai/aiprocesspipe.h"
-
 #include "network/rsacypherhandler.h"
 
 #ifdef UPDATESUPPORT
@@ -28,11 +26,12 @@
 class BaseGamemenu;
 class WorkerThread;
 using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
-class AudioThread;
-using spAudioThread = oxygine::intrusive_ptr<AudioThread>;
-
+class AudioManager;
+using spAudioThread = oxygine::intrusive_ptr<AudioManager>;
 class TCPClient;
 using spTCPClient = oxygine::intrusive_ptr<TCPClient>;
+class AiProcessPipe;
+using spAiProcessPipe = oxygine::intrusive_ptr<AiProcessPipe>;
 
 class Mainapp final : public oxygine::GameWindow
 {
@@ -98,26 +97,26 @@ public:
     };
 
     explicit Mainapp();
-    ~Mainapp() = default;
+    ~Mainapp();
     virtual void shutdown() override;
     static inline Mainapp* getInstance()
     {
         return m_pMainapp;
     }
 
-    inline AudioThread* getAudioThread()
+    inline AudioManager* getAudioThread()
     {
-        return m_Audiothread;
+        return getInstance()->m_Audiothread.get();
     }
 
     inline static QThread* getWorkerthread()
     {
-        return &m_Workerthread;
+        return getInstance()->m_Workerthread.get();
     }
 
     inline static QThread* getNetworkThread()
     {
-        return &m_Networkthread;
+        return getInstance()->m_Networkthread.get();
     }
     /**
      * @brief loadRessources
@@ -152,11 +151,11 @@ public:
      */
     static WorkerThread* getWorker()
     {
-        return m_Worker;
+        return getInstance()->m_Worker.get();
     }
     static QProcess & GetAiSubProcess()
     {
-        return m_aiSubProcess;
+        return *(getInstance()->m_aiSubProcess.get());
     }
     /**
      * @brief qsTr
@@ -300,13 +299,6 @@ signals:
 
     void sigNextStartUpStep(Mainapp::StartupPhase step);
     void sigCreateLineEdit();
-    /**
-     * @brief cursorPositionChanged dummy function to rerout qlineedit events
-     * @param oldPos
-     * @param newPos
-     */
-    void cursorPositionChanged(int oldPos, int newPos);
-    void cursorPositionChanged();
     void sigDoMapshot(BaseGamemenu* pMenu);
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
@@ -319,17 +311,17 @@ private:
     EventTextEdit* m_pLineEdit{nullptr};
 
     static Mainapp* m_pMainapp;
-    static QMutex m_crashMutex;
-    static QThread m_Workerthread;
-    static QThread m_Networkthread;
-    static QThread m_GameServerThread;
-    static WorkerThread* m_Worker;
-    static AudioThread* m_Audiothread;
-    static QProcess m_aiSubProcess;
-    static AiProcessPipe m_aiProcessPipe;
-    QThread* m_pMainThread{nullptr};
     static bool m_slave;
-    static spTCPClient m_slaveClient;
+    QMutex m_crashMutex;
+    QScopedPointer<QThread> m_Workerthread;
+    QScopedPointer<QThread> m_Networkthread;
+    QScopedPointer<QThread> m_GameServerThread;
+    QScopedPointer<QProcess> m_aiSubProcess;
+    QScopedPointer<WorkerThread> m_Worker;
+    QScopedPointer<AudioManager> m_Audiothread;
+    spAiProcessPipe m_aiProcessPipe;
+    QThread* m_pMainThread{nullptr};
+    spTCPClient m_slaveClient;
     QString m_initScript;
     bool m_createSlaveLogs{false};
     Gamepad m_gamepad{0};

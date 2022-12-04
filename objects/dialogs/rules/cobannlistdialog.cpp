@@ -1,5 +1,3 @@
-#include "objects/dialogs/rules/cobannlistdialog.h"
-
 #include <QDirIterator>
 
 #include "coreengine/filesupport.h"
@@ -14,6 +12,7 @@
 #include "objects/base/label.h"
 
 #include "objects/dialogs/dialogtextinput.h"
+#include "objects/dialogs/rules/cobannlistdialog.h"
 
 COBannListDialog::COBannListDialog(QStringList cobannlist)
     : m_CurrentCOBannList(cobannlist)
@@ -22,8 +21,6 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     setObjectName("COBannListDialog");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();

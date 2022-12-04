@@ -13,7 +13,7 @@
 #include <QIODevice>
 #include <QTimer>
 
-class AudioThread final : public QObject
+class AudioManager final : public QObject
 {
     Q_OBJECT
 private:
@@ -39,8 +39,8 @@ private:
     };
 #endif
 public:
-    explicit AudioThread(bool noAudio);
-    ~AudioThread();
+    explicit AudioManager(bool noAudio);
+    ~AudioManager();
     qint32 getSoundsBuffered();
     /**
      * @brief createSoundCache
@@ -61,8 +61,8 @@ signals:
     void sigChangeAudioDevice(const QVariant& value);
     void sigLoadNextAudioFile();
 #ifdef AUDIOSUPPORT
-    void sigDeleteSound(AudioThread::SoundData* soundData, qint32 soundIndex);
-    void sigPlayDelayedSound(AudioThread::SoundData* soundData, qint32 soundIndex, bool stopOldestSound);
+    void sigDeleteSound(AudioManager::SoundData* soundData, qint32 soundIndex);
+    void sigPlayDelayedSound(AudioManager::SoundData* soundData, qint32 soundIndex, bool stopOldestSound);
 #endif
 public slots:
     /**

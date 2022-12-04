@@ -6,7 +6,7 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -39,7 +39,7 @@ void ScriptConditionBuildingsOwned::setPlayer(const qint32 &player)
 
 void ScriptConditionBuildingsOwned::readCondition(QTextStream& rStream, QString line)
 {
-    CONSOLE_PRINT("Reading ConditionBuildingsOwned", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionBuildingsOwned", GameConsole::eDEBUG);
     line = line.simplified();
     QStringList items = line.replace("if (map.getPlayer(", "")
                             .replace(").getBuildingCount() >= ", ",")
@@ -65,7 +65,7 @@ void ScriptConditionBuildingsOwned::readCondition(QTextStream& rStream, QString 
 
 void ScriptConditionBuildingsOwned::writePreCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Writing ConditionBuildingsOwned", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionBuildingsOwned", GameConsole::eDEBUG);
     m_executed = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
     if (subCondition.get() != nullptr)
@@ -100,7 +100,7 @@ void ScriptConditionBuildingsOwned::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + ConditionBuildingsOwned + " End\n";
+    rStream << "        } // " + QString(ConditionBuildingsOwned) + " End\n";
 }
 
 void ScriptConditionBuildingsOwned::writePostCondition(QTextStream& rStream)

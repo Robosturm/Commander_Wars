@@ -5,7 +5,8 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/userdata.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -22,7 +23,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     m_pSpriteBox = oxygine::spBox9Sprite::create();
@@ -216,7 +217,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         QString style = m_Styles[m_CurrentIndex];
         filePath = filePath.replace("+nrm.png", "");
         m_ResFilePath = filePath + style;
-        CONSOLE_PRINT("Using res file path: " + m_ResFilePath, Console::eDEBUG);
+        CONSOLE_PRINT("Using res file path: " + m_ResFilePath, GameConsole::eDEBUG);
         loadAltsForStyle();
         if (!Settings::getSmallScreenDevice())
         {

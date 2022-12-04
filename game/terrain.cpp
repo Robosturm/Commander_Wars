@@ -3,8 +3,8 @@
 
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
-#include "coreengine/console.h"
-#include "coreengine/mainapp.h"
+#include "coreengine/gameconsole.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/terrainmanager.h"
 #include "resource_management/gameanimationmanager.h"
@@ -40,7 +40,7 @@ spTerrain Terrain::createTerrain(const QString & terrainID, qint32 x, qint32 y, 
         }
         else
         {
-            CONSOLE_PRINT("Unable to load Terrain " + terrainID, Console::eERROR);
+            CONSOLE_PRINT("Unable to load Terrain " + terrainID, GameConsole::eERROR);
         }
     }
     return pTerrain;
@@ -56,8 +56,6 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("Terrain");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setPriority(getMapTerrainDrawPriority());
     setSize(GameMap::getImageSize(),
@@ -518,7 +516,7 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
     }
     else
     {
-        CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, GameConsole::eDEBUG);
     }
 }
 
@@ -806,7 +804,7 @@ void Terrain::loadOverlaySprite(const QString & spriteID, qint32 startFrame, qin
     }
     else
     {
-        CONSOLE_PRINT("Unable to load overlay sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load overlay sprite: " + spriteID, GameConsole::eDEBUG);
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
     pSprite->setPriority(static_cast<qint32>(DrawPriority::TerrainOverlay));

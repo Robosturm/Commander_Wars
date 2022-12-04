@@ -145,7 +145,7 @@ void CreatedGui::createSubUi(const QString & uiXml, CreatedGui* pBaseUi)
 
 void CreatedGui::restart()
 {
-    CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", Console::eDEBUG);
+    CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", GameConsole::eDEBUG);
     removeChildren();
     detach();
     emit Mainapp::getInstance()->sigQuit(1);

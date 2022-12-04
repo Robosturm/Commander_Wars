@@ -3,7 +3,7 @@
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include <QFile>
 
@@ -107,7 +107,7 @@ namespace oxygine
 
         if (!file.exists() || file.size() == 0)
         {
-            CONSOLE_PRINT("can't load xml file: '" + xmlFile + "'", Console::eDEBUG);
+            CONSOLE_PRINT("can't load xml file: '" + xmlFile + "'", GameConsole::eDEBUG);
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Resources::loadXML can't find xml file");
             return false;
         }
@@ -122,7 +122,7 @@ namespace oxygine
         if (loaded)
         {
             QDomElement resources = doc.documentElement();
-            CONSOLE_PRINT("loading xml resources", Console::eDEBUG);
+            CONSOLE_PRINT("loading xml resources", GameConsole::eDEBUG);
             XmlWalker walker("", 1.0f, resources);
             while (true)
             {
@@ -138,7 +138,7 @@ namespace oxygine
                 registeredResources::iterator i = std::lower_bound(m_registeredResources.begin(), m_registeredResources.end(), type);
                 if (i == m_registeredResources.end() || (i->id != type))
                 {
-                    CONSOLE_PRINT("unknown resource. type: " + type + " id: " + Resource::extractID(context.m_walker.getNode(), "", ""), Console::eERROR);
+                    CONSOLE_PRINT("unknown resource. type: " + type + " id: " + Resource::extractID(context.m_walker.getNode(), "", ""), GameConsole::eERROR);
                     oxygine::handleErrorPolicy(oxygine::ep_show_error, "Resources::loadXML unable to determine ressource type");
                     continue;
                 }
@@ -149,7 +149,7 @@ namespace oxygine
                 context.m_xml_name = xmlFile;
                 context.m_resources = this;
 
-                CONSOLE_PRINT("resource: " + context.m_xml_name, Console::eDEBUG);
+                CONSOLE_PRINT("resource: " + context.m_xml_name, GameConsole::eDEBUG);
                 spResource res = r.cb(context);
                 if (res.get() == nullptr)
                 {
@@ -162,11 +162,11 @@ namespace oxygine
                     m_resources.push_back(res);
                 }
             }
-            CONSOLE_PRINT("xml loaded", Console::eDEBUG);
+            CONSOLE_PRINT("xml loaded", GameConsole::eDEBUG);
         }
         else
         {
-            CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
+            CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), GameConsole::eERROR);
         }
 #endif
         return true;

@@ -9,7 +9,6 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 #include "network/JsonKeys.h"
@@ -29,8 +28,6 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
 #ifdef GRAPHICSUPPORT
     setObjectName("Chat");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
@@ -99,7 +96,7 @@ void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSeriv
 {
     if (service == m_serviceMode)
     {
-        CONSOLE_PRINT("Receiving chat message", Console::eDEBUG);
+        CONSOLE_PRINT("Receiving chat message", GameConsole::eDEBUG);
         QJsonDocument message = QJsonDocument::fromJson(data);
 
         addMessage(message.object());
@@ -230,7 +227,7 @@ void Chat::sendData(QString message)
         }
         if (m_pInterface.get() != nullptr)
         {
-            CONSOLE_PRINT("Sending chat message", Console::eDEBUG);
+            CONSOLE_PRINT("Sending chat message", GameConsole::eDEBUG);
             QJsonDocument doc(data);
             emit m_pInterface->sig_sendData(0, doc.toJson(), m_serviceMode, true);
         }

@@ -12,7 +12,7 @@
 #include "menue/gamemenue.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
 #include "resource_management/cospritemanager.h"
@@ -22,45 +22,45 @@
 #include <QSettings>
 #include <map>
 
-const QString CoreAI::ACTION_WAIT = "ACTION_WAIT";
-const QString CoreAI::ACTION_HOELLIUM_WAIT = "ACTION_HOELLIUM_WAIT";
-const QString CoreAI::ACTION_SUPPORTSINGLE = "ACTION_SUPPORTSINGLE";
-const QString CoreAI::ACTION_SUPPORTSINGLE_REPAIR = "ACTION_SUPPORTSINGLE_REPAIR";
-const QString CoreAI::ACTION_SUPPORTSINGLE_FREEREPAIR = "ACTION_SUPPORTSINGLE_FREEREPAIR";
-const QString CoreAI::ACTION_SUPPORTSINGLE_SUPPLY = "ACTION_SUPPORTSINGLE_SUPPLY";
-const QString CoreAI::ACTION_SUPPORTALL = "ACTION_SUPPORTALL";
-const QString CoreAI::ACTION_SUPPORTALL_RATION = "ACTION_SUPPORTALL_RATION";
-const QString CoreAI::ACTION_SUPPORTALL_RATION_MONEY = "ACTION_SUPPORTALL_RATION_MONEY";
-const QString CoreAI::ACTION_UNSTEALTH = "ACTION_UNSTEALTH";
-const QString CoreAI::ACTION_STEALTH = "ACTION_STEALTH";
-const QString CoreAI::ACTION_BUILD_UNITS = "ACTION_BUILD_UNITS";
-const QString CoreAI::ACTION_CAPTURE = "ACTION_CAPTURE";
-const QString CoreAI::ACTION_MISSILE = "ACTION_MISSILE";
-const QString CoreAI::ACTION_PLACE = "ACTION_PLACE";
-const QString CoreAI::ACTION_FIRE = "ACTION_FIRE";
-const QString CoreAI::ACTION_JOIN = "ACTION_JOIN";
-const QString CoreAI::ACTION_UNLOAD = "ACTION_UNLOAD";
-const QString CoreAI::ACTION_LOAD = "ACTION_LOAD";
-const QString CoreAI::ACTION_NEXT_PLAYER = "ACTION_NEXT_PLAYER";
-const QString CoreAI::ACTION_SWAP_COS = "ACTION_SWAP_COS";
-const QString CoreAI::ACTION_ACTIVATE_TAGPOWER = "ACTION_ACTIVATE_TAGPOWER";
-const QString CoreAI::ACTION_ACTIVATE_POWER_CO_0 = "ACTION_ACTIVATE_POWER_CO_0";
-const QString CoreAI::ACTION_ACTIVATE_POWER_CO_1 = "ACTION_ACTIVATE_POWER_CO_1";
-const QString CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_0 = "ACTION_ACTIVATE_SUPERPOWER_CO_0";
-const QString CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_1 = "ACTION_ACTIVATE_SUPERPOWER_CO_1";
-const QString CoreAI::ACTION_CO_UNIT_0 = "ACTION_CO_UNIT_0";
-const QString CoreAI::ACTION_CO_UNIT_1 = "ACTION_CO_UNIT_1";
-const QString CoreAI::ACTION_EXPLODE = "ACTION_EXPLODE";
-const QString CoreAI::ACTION_FLARE = "ACTION_FLARE";
-const QString CoreAI::ACTION_TRAP = "ACTION_TRAP";
-const QString CoreAI::ACTION_BLACKHOLEFACTORY_DOOR1 = "ACTION_BLACKHOLEFACTORY_DOOR1";
-const QString CoreAI::ACTION_BLACKHOLEFACTORY_DOOR2 = "ACTION_BLACKHOLEFACTORY_DOOR2";
-const QString CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3 = "ACTION_BLACKHOLEFACTORY_DOOR3";
-const QString CoreAI::ACTION_NEST_FACTORY_DOOR = "ACTION_NEST_FACTORY_DOOR";
+const char* const CoreAI::ACTION_WAIT = "ACTION_WAIT";
+const char* const CoreAI::ACTION_HOELLIUM_WAIT = "ACTION_HOELLIUM_WAIT";
+const char* const CoreAI::ACTION_SUPPORTSINGLE = "ACTION_SUPPORTSINGLE";
+const char* const CoreAI::ACTION_SUPPORTSINGLE_REPAIR = "ACTION_SUPPORTSINGLE_REPAIR";
+const char* const CoreAI::ACTION_SUPPORTSINGLE_FREEREPAIR = "ACTION_SUPPORTSINGLE_FREEREPAIR";
+const char* const CoreAI::ACTION_SUPPORTSINGLE_SUPPLY = "ACTION_SUPPORTSINGLE_SUPPLY";
+const char* const CoreAI::ACTION_SUPPORTALL = "ACTION_SUPPORTALL";
+const char* const CoreAI::ACTION_SUPPORTALL_RATION = "ACTION_SUPPORTALL_RATION";
+const char* const CoreAI::ACTION_SUPPORTALL_RATION_MONEY = "ACTION_SUPPORTALL_RATION_MONEY";
+const char* const CoreAI::ACTION_UNSTEALTH = "ACTION_UNSTEALTH";
+const char* const CoreAI::ACTION_STEALTH = "ACTION_STEALTH";
+const char* const CoreAI::ACTION_BUILD_UNITS = "ACTION_BUILD_UNITS";
+const char* const CoreAI::ACTION_CAPTURE = "ACTION_CAPTURE";
+const char* const CoreAI::ACTION_MISSILE = "ACTION_MISSILE";
+const char* const CoreAI::ACTION_PLACE = "ACTION_PLACE";
+const char* const CoreAI::ACTION_FIRE = "ACTION_FIRE";
+const char* const CoreAI::ACTION_JOIN = "ACTION_JOIN";
+const char* const CoreAI::ACTION_UNLOAD = "ACTION_UNLOAD";
+const char* const CoreAI::ACTION_LOAD = "ACTION_LOAD";
+const char* const CoreAI::ACTION_NEXT_PLAYER = "ACTION_NEXT_PLAYER";
+const char* const CoreAI::ACTION_SWAP_COS = "ACTION_SWAP_COS";
+const char* const CoreAI::ACTION_ACTIVATE_TAGPOWER = "ACTION_ACTIVATE_TAGPOWER";
+const char* const CoreAI::ACTION_ACTIVATE_POWER_CO_0 = "ACTION_ACTIVATE_POWER_CO_0";
+const char* const CoreAI::ACTION_ACTIVATE_POWER_CO_1 = "ACTION_ACTIVATE_POWER_CO_1";
+const char* const CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_0 = "ACTION_ACTIVATE_SUPERPOWER_CO_0";
+const char* const CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_1 = "ACTION_ACTIVATE_SUPERPOWER_CO_1";
+const char* const CoreAI::ACTION_CO_UNIT_0 = "ACTION_CO_UNIT_0";
+const char* const CoreAI::ACTION_CO_UNIT_1 = "ACTION_CO_UNIT_1";
+const char* const CoreAI::ACTION_EXPLODE = "ACTION_EXPLODE";
+const char* const CoreAI::ACTION_FLARE = "ACTION_FLARE";
+const char* const CoreAI::ACTION_TRAP = "ACTION_TRAP";
+const char* const CoreAI::ACTION_BLACKHOLEFACTORY_DOOR1 = "ACTION_BLACKHOLEFACTORY_DOOR1";
+const char* const CoreAI::ACTION_BLACKHOLEFACTORY_DOOR2 = "ACTION_BLACKHOLEFACTORY_DOOR2";
+const char* const CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3 = "ACTION_BLACKHOLEFACTORY_DOOR3";
+const char* const CoreAI::ACTION_NEST_FACTORY_DOOR = "ACTION_NEST_FACTORY_DOOR";
 
 
-const QString CoreAI::UNIT_INFANTRY = "INFANTRY";
-const QString CoreAI::BUILDING_HQ = "HQ";
+const char* const CoreAI::UNIT_INFANTRY = "INFANTRY";
+const char* const CoreAI::BUILDING_HQ = "HQ";
 
 std::map<QString, float> CoreAI::m_baseDamageTable;
 
@@ -73,8 +73,6 @@ CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
     setObjectName("CoreAI");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
 
     // load static information from scripts to improve performance
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -93,7 +91,7 @@ CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
     {
         m_flareInfo.unfogRange = erg.toNumber();
     }
-    AI_CONSOLE_PRINT("Creating core ai", Console::eDEBUG);
+    AI_CONSOLE_PRINT("Creating core ai", GameConsole::eDEBUG);
 }
 
 void CoreAI::init(GameMenue* pMenu)
@@ -150,7 +148,7 @@ TargetedUnitPathFindingSystem* CoreAI::createTargetedPfs(Unit* pUnit, const QVec
 
 void CoreAI::loadIni(QString file)
 {
-        AI_CONSOLE_PRINT("CoreAI::loadIni " + file, Console::eDEBUG);
+        AI_CONSOLE_PRINT("CoreAI::loadIni " + file, GameConsole::eDEBUG);
         m_iniFiles.append(file);
         QStringList searchFiles;
         if (!file.isEmpty())
@@ -178,7 +176,7 @@ void CoreAI::readIni(QString name)
     if (QFile::exists(name))
     {
         QSettings settings(name, QSettings::IniFormat);
-        AI_CONSOLE_PRINT("NormalAi::readIni status=" + QString::number(settings.status()), Console::eDEBUG);
+        AI_CONSOLE_PRINT("NormalAi::readIni status=" + QString::number(settings.status()), GameConsole::eDEBUG);
         QString lastGroup = "";
         for (auto & entry : m_iniData)
         {
@@ -208,7 +206,7 @@ void CoreAI::readIni(QString name)
 void CoreAI::saveIni(QString name) const
 {
     QSettings settings(name, QSettings::IniFormat);
-    AI_CONSOLE_PRINT("NormalAi::saveIni status=" + QString::number(settings.status()), Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::saveIni status=" + QString::number(settings.status()), GameConsole::eDEBUG);
     QString lastGroup = "";
     for (auto & entry : m_iniData)
     {
@@ -308,10 +306,10 @@ void CoreAI::nextAction()
             m_pPlayer == m_pMap->getCurrentPlayer() &&
             m_pMenu->getGameStarted())
         {
-            AI_CONSOLE_PRINT("CoreAI::nextAction for player " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()), Console::eDEBUG);
+            AI_CONSOLE_PRINT("CoreAI::nextAction for player " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()), GameConsole::eDEBUG);
             if (!processPredefinedAi())
             {
-                AI_CONSOLE_PRINT("Processing ai specific behaviour", Console::eDEBUG);
+                AI_CONSOLE_PRINT("Processing ai specific behaviour", GameConsole::eDEBUG);
                 // if so execute next action
                 process();
             }
@@ -320,7 +318,7 @@ void CoreAI::nextAction()
     }
     else
     {
-        AI_CONSOLE_PRINT("Unexpected nextAction call", Console::eDEBUG);
+        AI_CONSOLE_PRINT("Unexpected nextAction call", GameConsole::eDEBUG);
     }
 }
 
@@ -352,7 +350,7 @@ qint32 CoreAI::index(std::vector<QVector3D>& points, const QPoint & point)
 
 bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
 {
-    AI_CONSOLE_PRINT("CoreAI::useCOPower()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::useCOPower()", GameConsole::eDEBUG);
     std::vector<float> data;
     data.push_back(-1);
     data.push_back(0);
@@ -482,7 +480,7 @@ float CoreAI::calcBuildingDamage(Unit* pUnit, const QPoint & newPosition, Buildi
 
 void CoreAI::createMovementMap(spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
-    AI_CONSOLE_PRINT("CoreAI::createMovementMap", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::createMovementMap", GameConsole::eDEBUG);
     
     if (m_pMap != nullptr)
     {
@@ -783,7 +781,7 @@ QRectF CoreAI::calcVirtuelUnitDamage(GameMap* pMap,
 
 bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
 {
-    AI_CONSOLE_PRINT("CoreAI::moveAwayFromProduction", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::moveAwayFromProduction", GameConsole::eDEBUG);
     m_aiStep = AISteps::moveAway;
     
     for (auto & pUnit : pUnits->getVector())
@@ -841,7 +839,7 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
 
 void CoreAI::addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost)
 {
-    AI_CONSOLE_PRINT("CoreAI::addMenuItemData()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::addMenuItemData()", GameConsole::eDEBUG);
     pGameAction->writeDataString(itemID);
     // increase costs and input step
     pGameAction->setCosts(pGameAction->getCosts() + cost);
@@ -850,7 +848,7 @@ void CoreAI::addMenuItemData(spGameAction & pGameAction, const QString & itemID,
 
 void CoreAI::addSelectedFieldData(spGameAction & pGameAction, const QPoint & point)
 {
-    AI_CONSOLE_PRINT("CoreAI::addSelectedFieldData()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::addSelectedFieldData()", GameConsole::eDEBUG);
     pGameAction->writeDataInt32(point.x());
     pGameAction->writeDataInt32(point.y());
     pGameAction->setInputStep(pGameAction->getInputStep() + 1);
@@ -1419,7 +1417,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
 
 void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
-    AI_CONSOLE_PRINT("CoreAI::appendNearestUnloadTargets", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::appendNearestUnloadTargets", GameConsole::eDEBUG);
     std::map<QString, std::vector<qint32>> checkedIslands;
     std::vector<qint32> loadedUnitIslandIdx;
 
@@ -1563,7 +1561,7 @@ void CoreAI::getBestFlareTarget(Unit* pUnit, spGameAction & pAction, UnitPathFin
     }
     if (score > 0)
     {
-        AI_CONSOLE_PRINT("Found flare target with score: " + QString::number(score), Console::eDEBUG);
+        AI_CONSOLE_PRINT("Found flare target with score: " + QString::number(score), GameConsole::eDEBUG);
     }
     pAction->setMovepath(QVector<QPoint>(), 0);
 }
@@ -1911,7 +1909,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding
 
 void CoreAI::rebuildIsland(spQmlVectorUnit & pUnits)
 {
-    AI_CONSOLE_PRINT("CoreAI::rebuildIsland", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::rebuildIsland", GameConsole::eDEBUG);
     // and create one
     for (auto & pUnit : pUnits->getVector())
     {
@@ -2098,7 +2096,7 @@ qint32 CoreAI::getIslandIndex(Unit* pUnit) const
 
 void CoreAI::finishTurn()
 {
-    AI_CONSOLE_PRINT("CoreAI::finishTurn(()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::finishTurn(()", GameConsole::eDEBUG);
     m_usedTransportSystem = false;
     m_usedPredefinedAi = false;
     spGameAction pAction = spGameAction::create(ACTION_NEXT_PLAYER, m_pMap);
@@ -2137,7 +2135,7 @@ void CoreAI::finishTurn()
 
 bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits)
 {
-    AI_CONSOLE_PRINT("CoreAI::useBuilding", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::useBuilding", GameConsole::eDEBUG);
     for (auto & pBuilding : pBuildings->getVector())
     {
         QStringList actions = pBuilding->getActionList();
@@ -2248,14 +2246,14 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
                                         }
                                         else
                                         {
-                                            CONSOLE_PRINT("Illegal menu selection skipping building action", Console::eERROR);
+                                            CONSOLE_PRINT("Illegal menu selection skipping building action", GameConsole::eERROR);
                                             break;
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    CONSOLE_PRINT("Uknown action step type: " + stepType, Console::eERROR);
+                                    CONSOLE_PRINT("Uknown action step type: " + stepType, GameConsole::eERROR);
                                     break;
                                 }
                             }
@@ -2319,7 +2317,7 @@ bool CoreAI::getBuildingTargetPointFromScript(spGameAction & pAction, const spMa
     if (ret && !points.contains(target))
     {
         CONSOLE_PRINT("Illegal target selection skipping building action target x=" + QString::number(target.x()) +  " target y=" + QString::number(target.y()) +
-                      " building x=" + QString::number(pAction->getTarget().x()) +  " building y=" + QString::number(pAction->getTarget().y()), Console::eERROR);
+                      " building x=" + QString::number(pAction->getTarget().x()) +  " building y=" + QString::number(pAction->getTarget().y()), GameConsole::eERROR);
         ret = false;
     }
     return ret;
@@ -2373,7 +2371,7 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
     if (ret && !enable[index])
     {
         CONSOLE_PRINT("Illegal menu selection skipping building action target item index=" + QString::number(index) +
-                      " building x=" + QString::number(pAction->getTarget().x()) +  " building y=" + QString::number(pAction->getTarget().y()), Console::eERROR);
+                      " building x=" + QString::number(pAction->getTarget().x()) +  " building y=" + QString::number(pAction->getTarget().y()), GameConsole::eERROR);
         ret = false;
     }
     return ret;
@@ -2528,7 +2526,7 @@ void CoreAI::GetOwnUnitCounts(std::vector<MoveUnitData> & units, spQmlVectorUnit
 
 bool CoreAI::buildCOUnit(spQmlVectorUnit & pUnits)
 {
-    AI_CONSOLE_PRINT("CoreAI::buildCOUnit", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::buildCOUnit", GameConsole::eDEBUG);
     spGameAction pAction = spGameAction::create(m_pMap);
     for (quint8 i2 = 0; i2 < 2; i2++)
     {
@@ -2780,7 +2778,7 @@ float CoreAI::getBaseDamage(const QString & weaponID, Unit* pDefender)
 
 void CoreAI::serializeObject(QDataStream& stream) const
 {    
-    AI_CONSOLE_PRINT("storing core ai", Console::eDEBUG);
+    AI_CONSOLE_PRINT("storing core ai", GameConsole::eDEBUG);
     stream << getVersion();
     stream << m_enableNeutralTerrainAttack;
     stream << static_cast<qint32>(m_BuildingChanceModifier.size());
@@ -2817,7 +2815,7 @@ void CoreAI::serializeObject(QDataStream& stream) const
 
 void CoreAI::deserializeObject(QDataStream& stream)
 {
-    AI_CONSOLE_PRINT("reading core ai", Console::eDEBUG);
+    AI_CONSOLE_PRINT("reading core ai", GameConsole::eDEBUG);
     qint32 version;
     stream >> version;
     deserializeObjectVersion(stream, version);

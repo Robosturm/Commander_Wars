@@ -2,7 +2,6 @@
 
 #include "resource_management/objectmanager.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
@@ -12,8 +11,6 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
 #ifdef GRAPHICSUPPORT
     setObjectName("V_Scrollbar");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     m_ScrollTimer.start();

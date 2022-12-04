@@ -7,11 +7,11 @@
 
 #include "objects/base/focusableobject.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 
-FocusableObject* FocusableObject::m_focusedObject = nullptr;
-bool FocusableObject::m_registeredAtStage = false;
+FocusableObject* FocusableObject::m_focusedObject{nullptr};
+bool FocusableObject::m_registeredAtStage{false};
 
 FocusableObject::FocusableObject()
 {
@@ -23,7 +23,8 @@ FocusableObject::FocusableObject()
     connect(this, &FocusableObject::sigFocused, this, &FocusableObject::focusedInternal);
     connect(this, &FocusableObject::sigFocusedLost, this, &FocusableObject::focusedLost);
     connect(this, &FocusableObject::sigLooseFocusInternal, this, &FocusableObject::looseFocusInternal);
-    if (!m_registeredAtStage)
+    if (!m_registeredAtStage &&
+         oxygine::Stage::getStage().get() != nullptr)
     {
         m_registeredAtStage = true;
         oxygine::Stage::getStage()->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event* event)
@@ -85,7 +86,7 @@ void FocusableObject::looseFocus()
 {
     if (m_focusedObject != nullptr)
     {
-        CONSOLE_PRINT("Focus lost for object", Console::eDEBUG);
+        CONSOLE_PRINT("Focus lost for object", GameConsole::eDEBUG);
         m_focusedObject->m_focused = false;
         emit m_focusedObject->sigFocusedLost();
         m_focusedObject = nullptr;
@@ -103,7 +104,7 @@ void FocusableObject::looseFocusInternal()
 {
     if (m_focusedObject != nullptr)
     {
-        CONSOLE_PRINT("Loosing focus forced by object", Console::eDEBUG);
+        CONSOLE_PRINT("Loosing focus forced by object", GameConsole::eDEBUG);
         m_focusedObject->m_focused = false;
         m_focusedObject = nullptr;
 #ifdef GRAPHICSUPPORT
@@ -120,7 +121,7 @@ void FocusableObject::focusedInternal()
 {
     if (m_focusedObject != this && !m_subComponent)
     {
-        CONSOLE_PRINT("Focused object changed", Console::eDEBUG);
+        CONSOLE_PRINT("Focused object changed", GameConsole::eDEBUG);
         looseFocus();
         m_focusedObject = this;
         m_focusedObject->m_focused = true;

@@ -5,7 +5,7 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/textbox.h"
@@ -20,7 +20,7 @@ ScriptConditionCheckVariable::ScriptConditionCheckVariable(GameMap* pMap)
 
 void ScriptConditionCheckVariable::readCondition(QTextStream& rStream, QString line)
 {
-    CONSOLE_PRINT("Reading ConditionCheckVariable", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionCheckVariable", GameConsole::eDEBUG);
     line = line.simplified();
     line = line.replace("if (", "");
     if (line.startsWith(ScriptData::variables))
@@ -58,7 +58,7 @@ void ScriptConditionCheckVariable::readCondition(QTextStream& rStream, QString l
 
 void ScriptConditionCheckVariable::writePreCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Writing ConditionCheckVariable", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionCheckVariable", GameConsole::eDEBUG);
     m_executed = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
     if (subCondition.get() != nullptr)
@@ -77,7 +77,7 @@ void ScriptConditionCheckVariable::writeCondition(QTextStream& rStream)
     QString compare = m_Compare;
     compare = compare.replace("&gt;", ">").replace("&lt;", "<");
     rStream << "        if (" + variableName + ".createVariable(\"" + m_Variable + "\").readDataInt32() " + compare + " " + QString::number(m_value) + ") { // "
-            << QString::number(getVersion()) << " " << ConditionCheckVariable + "\n";
+            << QString::number(getVersion()) << " " << QString(ConditionCheckVariable) + "\n";
     for (qint32 i = 0; i < events.size(); i++)
     {
         events[i]->writeEvent(rStream);
@@ -86,7 +86,7 @@ void ScriptConditionCheckVariable::writeCondition(QTextStream& rStream)
     {
         subCondition->writeCondition(rStream);
     }
-    rStream << "        } // " + ConditionCheckVariable + " End\n";
+    rStream << "        } // " + QString(ConditionCheckVariable) + " End\n";
 }
 
 void ScriptConditionCheckVariable::writePostCondition(QTextStream& rStream)

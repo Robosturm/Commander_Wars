@@ -1,6 +1,6 @@
 #include "gameinput/menudata.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "resource_management/gamemanager.h"
 
@@ -14,8 +14,6 @@ MenuData::MenuData(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("MenuData");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     Interpreter::getInstance()->trackJsObject(this);
 }
@@ -68,7 +66,7 @@ bool MenuData::validData()
     {
         return true;
     }
-    CONSOLE_PRINT("Menu data is inconsistent and considered broken. Game gets stucked now. This may stop the ai from working.", Console::eERROR);
+    CONSOLE_PRINT("Menu data is inconsistent and considered broken. Game gets stucked now. This may stop the ai from working.", GameConsole::eERROR);
     return false;
 }
 

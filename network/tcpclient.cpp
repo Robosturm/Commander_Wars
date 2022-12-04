@@ -30,7 +30,7 @@ TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, QTcpS
 
 TCPClient::~TCPClient()
 {
-    CONSOLE_PRINT("Client gets closed", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client gets closed", GameConsole::eLogLevels::eDEBUG);
     disconnect();
     if (!m_onServer)
     {
@@ -59,22 +59,22 @@ void TCPClient::connectTCP(QString address, quint16 port, QString secondaryAdres
     // start TX-Task
     m_pTXTask = spTxTask::create(m_pSocket.get(), 0, this, false);
     connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
-    CONSOLE_PRINT("Client is running and connecting to \"" + address + "\" and port " + QString::number(port), Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client is running and connecting to \"" + address + "\" and port " + QString::number(port), GameConsole::eLogLevels::eDEBUG);
 }
 
 void TCPClient::disconnectTCP()
 {
     if (!m_testedSecondaryAddress && !m_secondaryAdress.isEmpty())
     {
-        CONSOLE_PRINT("Unable to connect to primary address testing secondary", Console::eDEBUG);
+        CONSOLE_PRINT("Unable to connect to primary address testing secondary", GameConsole::eDEBUG);
         m_pSocket->close();
         m_pSocket->connectToHost(m_secondaryAdress, m_port);
         m_testedSecondaryAddress = true;
-        CONSOLE_PRINT("Client is running and connecting to \"" + m_secondaryAdress + "\" and port " + QString::number(m_port), Console::eLogLevels::eDEBUG);
+        CONSOLE_PRINT("Client is running and connecting to \"" + m_secondaryAdress + "\" and port " + QString::number(m_port), GameConsole::eLogLevels::eDEBUG);
     }
     else
     {
-        CONSOLE_PRINT("TCP Client " + QString::number(m_socketID) + " disconnected.", Console::eLogLevels::eDEBUG);
+        CONSOLE_PRINT("TCP Client " + QString::number(m_socketID) + " disconnected.", GameConsole::eLogLevels::eDEBUG);
         if (m_pSocket != nullptr)
         {
             m_pRXTask = nullptr;
@@ -110,7 +110,7 @@ void TCPClient::changeThread(quint64, QThread* pThread)
 
 void TCPClient::connected()
 {
-    CONSOLE_PRINT("Client is connected", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client is connected", GameConsole::eLogLevels::eDEBUG);
     m_isConnected = true;
     m_testedSecondaryAddress = true; // no need to test the secondary address
     emit sigConnected(0);
@@ -137,6 +137,6 @@ void TCPClient::sslErrors(const QList<QSslError> &errors)
 {
     for (const auto & error : qAsConst(errors))
     {
-        CONSOLE_PRINT(error.errorString(), Console::eLogLevels::eDEBUG);
+        CONSOLE_PRINT(error.errorString(), GameConsole::eLogLevels::eDEBUG);
     }
 }

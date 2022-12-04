@@ -1,5 +1,5 @@
-#include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/audiomanager.h"
 
 #include "game/gamemap.h"
 #include "game/cursor.h"
@@ -16,8 +16,6 @@ Cursor::Cursor(GameMap* pMap)
     setObjectName("Cursor");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     changeCursor("cursor+default");
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Cursor));
     m_cursorRangeOutline = oxygine::spActor::create();

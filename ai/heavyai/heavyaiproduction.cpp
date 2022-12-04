@@ -1,7 +1,7 @@
 #include "ai/heavyai.h"
 
 #include "coreengine/qmlvector.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
 #include "game/player.h"
@@ -42,7 +42,7 @@ bool HeavyAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
     if (index >= 0)
     {
         auto & item = m_BuildingData[index];
-        AI_CONSOLE_PRINT("HeavyAi::buildUnits " + item.buildingDataInput[item.m_selectedData].unitId + " with scored value " + QString::number(bestScore), Console::eDEBUG);
+        CONSOLE_PRINT("HeavyAi::buildUnits " + item.buildingDataInput[item.m_selectedData].unitId + " with scored value " + QString::number(bestScore), GameConsole::eDEBUG);
         m_updatePoints.push_back(item.m_action->getTarget());
         emit performAction(item.m_action);
         item.m_action = nullptr;
@@ -57,7 +57,7 @@ bool HeavyAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
     }
     else
     {
-        AI_CONSOLE_PRINT("HeavyAi::buildUnits build no units highest value was: " + QString::number(bestScore), Console::eDEBUG);
+        CONSOLE_PRINT("HeavyAi::buildUnits build no units highest value was: " + QString::number(bestScore), GameConsole::eDEBUG);
     }
     return false;
 }

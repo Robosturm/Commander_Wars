@@ -17,14 +17,14 @@ TCPServer::~TCPServer()
 {
     disconnect();
     TCPServer::disconnectTCP();
-    CONSOLE_PRINT("Server is closed", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Server is closed", GameConsole::eLogLevels::eDEBUG);
 }
 
 void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress)
 {
     if (secondaryAdress == primaryAdress && !primaryAdress.isEmpty())
     {
-        CONSOLE_PRINT("TCP Server launched ignored on primary adress \"" + primaryAdress + "\" and secondary adress \""+ secondaryAdress + "\" and port " + QString::number(port) + " cause the primary adress is equal to the secondary.", Console::eLogLevels::eERROR);
+        CONSOLE_PRINT("TCP Server launched ignored on primary adress \"" + primaryAdress + "\" and secondary adress \""+ secondaryAdress + "\" and port " + QString::number(port) + " cause the primary adress is equal to the secondary.", GameConsole::eLogLevels::eERROR);
     }
     else if (m_pTCPServer[0].get() == nullptr)
     {        
@@ -49,11 +49,11 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
         connect(this, &TCPServer::sigContinueListening, this, &TCPServer::continueListening, Qt::QueuedConnection);
         connect(this, &TCPServer::sigPauseListening, this, &TCPServer::pauseListening, Qt::QueuedConnection);
 
-        CONSOLE_PRINT("TCP Server is running on primary adress \"" + primaryAdress + "\" and secondary adress \""+ secondaryAdress + "\" and port " + QString::number(port), Console::eLogLevels::eDEBUG);
+        CONSOLE_PRINT("TCP Server is running on primary adress \"" + primaryAdress + "\" and secondary adress \""+ secondaryAdress + "\" and port " + QString::number(port), GameConsole::eLogLevels::eDEBUG);
     }
     else
     {
-        CONSOLE_PRINT("TCP Server launched ignored on primary adress \"" + primaryAdress + "\" and secondary adress \""+ secondaryAdress + "\" and port " + QString::number(port) + " cause the server is already running.", Console::eLogLevels::eERROR);
+        CONSOLE_PRINT("TCP Server launched ignored on primary adress \"" + primaryAdress + "\" and secondary adress \""+ secondaryAdress + "\" and port " + QString::number(port) + " cause the server is already running.", GameConsole::eLogLevels::eERROR);
     }
 }
 
@@ -86,7 +86,7 @@ void TCPServer::disconnectClient(quint64 socketID)
     auto iter = m_pClients.find(socketID);
     if (iter != m_pClients.end())
     {
-        CONSOLE_PRINT("Client " + QString::number(socketID) + " disconnected.", Console::eLogLevels::eDEBUG);
+        CONSOLE_PRINT("Client " + QString::number(socketID) + " disconnected.", GameConsole::eLogLevels::eDEBUG);
         auto client = iter.value();
         emit client->sigDisconnected(client->getSocketID());
         client->disconnectTCP();
@@ -128,7 +128,7 @@ void TCPServer::onConnect()
                 });
                 pClient->setIsServer(true);
                 m_pClients.insert(m_idCounter, pClient);
-                CONSOLE_PRINT("New Client connection. Socket: " + QString::number(m_idCounter), Console::eLogLevels::eDEBUG);
+                CONSOLE_PRINT("New Client connection. Socket: " + QString::number(m_idCounter), GameConsole::eLogLevels::eDEBUG);
                 QByteArray data;
                 pTXTask->send(m_idCounter, data, NetworkSerives::ServerSocketInfo, false);
                 emit sigConnected(m_idCounter);

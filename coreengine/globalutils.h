@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDir>
 #include <QRandomGenerator>
+#include <QScopedPointer>
 
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
@@ -14,11 +15,12 @@ class GlobalUtils final : public QObject
 {
     Q_OBJECT
 public:
+    ~GlobalUtils() = default;
     static GlobalUtils* getInstance()
     {
-        return &m_pInstace;
+        return m_pInstace.get();
     }
-    ~GlobalUtils() = default;
+    static void setup();
     static bool getUseSeed();
     static void setUseSeed(bool useSeed);
     static qint32 randIntBase(qint32 low, qint32 high);
@@ -148,11 +150,12 @@ public slots:
      */
     static QString getNextAutosavePath(const QString & path, const QString & ending, qint32 max);
 private:
-    explicit GlobalUtils();
-    static GlobalUtils m_pInstace;
-    static QRandomGenerator m_randGenerator;
-    static bool m_useSeed;
-    static quint32 m_seed;
+    explicit GlobalUtils() = default;
+private:
+    static QScopedPointer<GlobalUtils> m_pInstace;
+    QRandomGenerator m_randGenerator;
+    bool m_useSeed;
+    quint32 m_seed;
 };
 
 #endif // GLOBALUTILS_H

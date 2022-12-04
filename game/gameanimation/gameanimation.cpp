@@ -9,11 +9,10 @@
 #include "resource_management/gameanimationmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/console.h"
-#include "coreengine/mainapp.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/settings.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 
 GameAnimation::GameAnimation(quint32 frameTime, GameMap* pMap)
     : m_frameTime(frameTime / Settings::getAnimationSpeed()),
@@ -22,8 +21,6 @@ GameAnimation::GameAnimation(quint32 frameTime, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAnimation");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     if (m_frameTime <= 0)
     {
@@ -58,7 +55,7 @@ void GameAnimation::start()
         setVisible(true);
         m_previousAnimation = nullptr;
         doPreAnimationCall();
-        AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioThread();
         for (auto & data : m_SoundData)
         {
             pAudioThread->playSound(data.soundFile, data.loops, static_cast<float>(data.delayMs) / Settings::getAnimationSpeed(), data.volume, data.stopOldestSound);
@@ -70,7 +67,7 @@ void GameAnimation::doPreAnimationCall()
 {
     if ((!m_jsPreActionObject.isEmpty()) && (!m_jsPreActionObject.isEmpty()))
     {
-        CONSOLE_PRINT("Calling post Animation function " + m_jsPreActionObject + "." + m_jsPreActionFunction, Console::eDEBUG);
+        CONSOLE_PRINT("Calling post Animation function " + m_jsPreActionObject + "." + m_jsPreActionFunction, GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({pInterpreter->newQObject(this),
                            pInterpreter->newQObject(m_pMap)});
@@ -200,7 +197,7 @@ void GameAnimation::addSpriteAnimTable(QString spriteID, float offsetX, float of
     }
     else
     {
-        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG);
     }
 }
 
@@ -229,7 +226,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
         }
         else
         {
-            CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, Console::eDEBUG);
+            CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG);
             return;
         }
         oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
@@ -415,7 +412,7 @@ bool GameAnimation::onFinished(bool skipping)
         m_QueuedAnimations.clear();
         if ((!m_jsPostActionObject.isEmpty()) && (!m_jsPostActionObject.isEmpty()))
         {
-            CONSOLE_PRINT("Calling post Animation function " + m_jsPostActionObject + "." + m_jsPostActionFunction, Console::eDEBUG);
+            CONSOLE_PRINT("Calling post Animation function " + m_jsPostActionObject + "." + m_jsPostActionFunction, GameConsole::eDEBUG);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QJSValueList args({pInterpreter->newQObject(this),
                                pInterpreter->newQObject(m_pMap)});

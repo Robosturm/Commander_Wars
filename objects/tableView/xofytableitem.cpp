@@ -1,7 +1,6 @@
 #include "objects/tableView/xofytableitem.h"
 #include "objects/base/label.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 XofYTableItem::XofYTableItem(qint32 currentValue, qint32 maxValue, qint32 itemWidth, QObject *parent)
@@ -13,9 +12,6 @@ XofYTableItem::XofYTableItem(qint32 currentValue, qint32 maxValue, qint32 itemWi
 #ifdef GRAPHICSUPPORT
     setObjectName("XofYTableItem");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
-
     spLabel pTextfield = spLabel::create(itemWidth);
     QString text = QString::number(m_currentValue) + " / " + QString::number(m_maxValue);
     pTextfield->setText(text);

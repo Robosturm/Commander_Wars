@@ -7,19 +7,16 @@
 #include "game/gamemap.h"
 #include "game/jsData/campaignmapdata.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/console.h"
-#include "coreengine/globalutils.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/gameconsole.h"
 
-const QString Campaign::scriptName = "campaignScript";
+const char* const Campaign::scriptName = "campaignScript";
 
 Campaign::Campaign(QString file)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Campaign");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_scriptFile = file;
     init();
@@ -30,8 +27,6 @@ Campaign::Campaign()
 #ifdef GRAPHICSUPPORT
     setObjectName("Campaign");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -84,11 +79,11 @@ Campaign::CampaignMapInfo Campaign::getCampaignMaps()
             if (QFile::exists(Settings::getUserPath() + folder + files[i]))
             {
                 files[i] = Settings::getUserPath() + folder + files[i];
-                CONSOLE_PRINT("adding campaign map: " + Settings::getUserPath() + folder + files[i], Console::eDEBUG);
+                CONSOLE_PRINT("adding campaign map: " + Settings::getUserPath() + folder + files[i], GameConsole::eDEBUG);
             }
             else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + folder + files[i]))
             {
-                CONSOLE_PRINT("adding campaign map: " + QString(oxygine::Resource::RCC_PREFIX_PATH) + folder + files[i], Console::eDEBUG);
+                CONSOLE_PRINT("adding campaign map: " + QString(oxygine::Resource::RCC_PREFIX_PATH) + folder + files[i], GameConsole::eDEBUG);
                 files[i] = oxygine::Resource::RCC_PREFIX_PATH + folder + files[i];
             }
         }
@@ -100,7 +95,7 @@ Campaign::CampaignMapInfo Campaign::getCampaignMaps()
 
 void Campaign::addDeveloperMaps(QString prefix, QString folder, QStringList & files)
 {
-    if (Console::getDeveloperMode())
+    if (GameConsole::getDeveloperMode())
     {
         QStringList filter;
         filter << "*.map";
@@ -111,7 +106,7 @@ void Campaign::addDeveloperMaps(QString prefix, QString folder, QStringList & fi
             QString file = dirIter.fileName();
             if (!files.contains(file))
             {
-                CONSOLE_PRINT("adding campaign folder map: " + prefix + folder + file, Console::eDEBUG);
+                CONSOLE_PRINT("adding campaign folder map: " + prefix + folder + file, GameConsole::eDEBUG);
                 files.append(prefix + folder + file);
             }
         }
@@ -121,7 +116,7 @@ void Campaign::addDeveloperMaps(QString prefix, QString folder, QStringList & fi
 QStringList Campaign::getSelectableCOs(GameMap* pMap, qint32 player, quint8 coIdx)
 {
     QStringList ret;
-    if (!Console::getDeveloperMode())
+    if (!GameConsole::getDeveloperMode())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({pInterpreter->newQObject(this),
@@ -236,7 +231,7 @@ void Campaign::getCampaignMapData(CampaignMapData & pCampaignMapData)
 
 void Campaign::serializeObject(QDataStream& pStream) const
 {
-    CONSOLE_PRINT("storing campaign", Console::eDEBUG);
+    CONSOLE_PRINT("storing campaign", GameConsole::eDEBUG);
     pStream << getVersion();
     pStream << m_script;
     pStream << m_scriptFile;
@@ -245,7 +240,7 @@ void Campaign::serializeObject(QDataStream& pStream) const
 
 void Campaign::deserializeObject(QDataStream& pStream)
 {
-    CONSOLE_PRINT("reading campaign", Console::eDEBUG);
+    CONSOLE_PRINT("reading campaign", GameConsole::eDEBUG);
     qint32 version = 0;
     pStream >> version;
     pStream >> m_script;

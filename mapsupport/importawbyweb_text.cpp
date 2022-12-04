@@ -2,7 +2,7 @@
 #include <QFile>
 #include "QVector"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "game/gamemap.h"
 #include "game/player.h"
@@ -1028,7 +1028,7 @@ void GameMap::importAWByWebMap(QString file, EditorMenue* pMenu)
                         break;
                     }
                     default:
-                        CONSOLE_PRINT("Unable terrain id: " + QString::number(mapIDs[y][x]), Console::eERROR);
+                        CONSOLE_PRINT("Unable terrain id: " + QString::number(mapIDs[y][x]), GameConsole::eERROR);
                         break;
                 }
             }

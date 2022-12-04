@@ -214,12 +214,12 @@ void CommandLineParser::parseArgsPhaseTwo()
                     ++i;
                 }
             }
-            CONSOLE_PRINT("Using injected mod list: " + mods, Console::eDEBUG);
+            CONSOLE_PRINT("Using injected mod list: " + mods, GameConsole::eDEBUG);
             Settings::setActiveMods(modList);
         }
         else
         {
-            CONSOLE_PRINT("Using no mods", Console::eDEBUG);
+            CONSOLE_PRINT("Using no mods", GameConsole::eDEBUG);
             Settings::setActiveMods(QStringList());
         }
     }
@@ -251,20 +251,20 @@ void CommandLineParser::parseArgsPhaseTwo()
     if (m_parser.isSet(m_serverSlaveListenAddress))
     {
         QString value = m_parser.value(m_serverSlaveListenAddress);
-        CONSOLE_PRINT("Using slave listen adress " + value, Console::eDEBUG);
+        CONSOLE_PRINT("Using slave listen adress " + value, GameConsole::eDEBUG);
         Settings::setSlaveListenAdress(value);
     }
     if (m_parser.isSet(m_serverSlaveListenPort))
     {
         QString value = m_parser.value(m_serverSlaveListenPort);
-        CONSOLE_PRINT("Using slave listen port " + value, Console::eDEBUG);
+        CONSOLE_PRINT("Using slave listen port " + value, GameConsole::eDEBUG);
         bool ok = false;
         Settings::setSlaveServerPort(value.toInt(&ok));
     }
     if (m_parser.isSet(m_serverSlaveDespawnTime))
     {
         QString value = m_parser.value(m_serverSlaveDespawnTime);
-        CONSOLE_PRINT("Using slave despawn time adress " + value, Console::eDEBUG);
+        CONSOLE_PRINT("Using slave despawn time adress " + value, GameConsole::eDEBUG);
         Settings::setSlaveDespawnTime(std::chrono::seconds(value.toInt()));
     }
     if (m_parser.isSet(m_mailServerAddress))
@@ -323,13 +323,13 @@ void CommandLineParser::parseArgsPhaseTwo()
     if (m_parser.isSet(m_debugLevel))
     {
         QString level = m_parser.value(m_debugLevel);
-        Console::setLogLevel(static_cast<Console::eLogLevels>(level.toInt()));
+        GameConsole::setLogLevel(static_cast<GameConsole::eLogLevels>(level.toInt()));
     }
 }
 
 void CommandLineParser::disableUi()
 {
-    CONSOLE_PRINT("Running without ui", Console::eDEBUG);
+    CONSOLE_PRINT("Running without ui", GameConsole::eDEBUG);
     AnimationSkipper::disableAllAnimations();
     Mainapp* pApp = Mainapp::getInstance();
     pApp->setNoUi();
@@ -371,7 +371,7 @@ void CommandLineParser::startSlaveGame() const
         }
     }
     CONSOLE_PRINT("Slave address " + slaveAddress + " port " + QString::number(slavePort) + " secondary slave address " + secondarySlaveAddress +
-                  " master address " + masterAddress + " port " + QString::number(masterPort), Console::eDEBUG);
+                  " master address " + masterAddress + " port " + QString::number(masterPort), GameConsole::eDEBUG);
     if (!slaveAddress.isEmpty() && masterPort > 0 && slavePort > 0 && !masterAddress.isEmpty())
     {
         MainServer::initDatabase();
@@ -390,7 +390,7 @@ void CommandLineParser::startSlaveGame() const
     }
     else
     {
-        CONSOLE_PRINT("Despawning game cause slave game configuration is invalid", Console::eDEBUG);
+        CONSOLE_PRINT("Despawning game cause slave game configuration is invalid", GameConsole::eDEBUG);
         QCoreApplication::exit(-3);
     }
 }

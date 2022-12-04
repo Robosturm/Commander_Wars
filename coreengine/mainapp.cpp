@@ -15,9 +15,11 @@
 #include "coreengine/userdata.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/workerthread.h"
 #include "coreengine/globalutils.h"
+
+#include "ai/aiprocesspipe.h"
 
 #include "ui_reader/uifactory.h"
 
@@ -51,34 +53,33 @@
 
 #include "wiki/wikidatabase.h"
 
-Mainapp* Mainapp::m_pMainapp;
-QThread Mainapp::m_Workerthread;
-QThread Mainapp::m_Networkthread;
-QThread Mainapp::m_GameServerThread;
-QProcess Mainapp::m_aiSubProcess;
-AiProcessPipe Mainapp::m_aiProcessPipe;
-WorkerThread* Mainapp::m_Worker = new WorkerThread();
-AudioThread* Mainapp::m_Audiothread = nullptr;
-spTCPClient Mainapp::m_slaveClient;
+#include "coreengine/crashreporter.h"
+
+Mainapp* Mainapp::m_pMainapp{nullptr};
 
 bool Mainapp::m_slave{false};
-QMutex Mainapp::m_crashMutex;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
 
 Mainapp::Mainapp()
+    : m_aiProcessPipe(spAiProcessPipe::create())
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Mainapp");
 #endif
+    Interpreter::setCppOwnerShip(this);
     m_pMainThread = QThread::currentThread();
     m_pMainapp = this;
-    Interpreter::setCppOwnerShip(this);
+    m_Workerthread.reset(new QThread());
+    m_Networkthread.reset(new QThread());
+    m_GameServerThread.reset(new QThread());
+    m_aiSubProcess.reset(new QProcess());
 #ifdef GRAPHICSUPPORT
     m_pMainThread->setObjectName("Mainthread");
-    m_Workerthread.setObjectName("Workerthread");
-    m_Networkthread.setObjectName("Networkthread");
-    m_GameServerThread.setObjectName("GameServerThread");
+    m_Workerthread->setObjectName("Workerthread");
+    m_Networkthread->setObjectName("Networkthread");
+    m_GameServerThread->setObjectName("GameServerThread");
 #endif
+    m_Worker.reset(new WorkerThread());
 
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
@@ -86,14 +87,20 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
     connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
     connect(this, &Mainapp::sigDoMapshot, this, &Mainapp::doMapshot, Qt::BlockingQueuedConnection);
+    CrashReporter::setSignalHandler(&Mainapp::showCrashReport);
+}
+
+Mainapp::~Mainapp()
+{
+    CrashReporter::setSignalHandler(nullptr);
 }
 
 void Mainapp::createLineEdit()
 {
 #ifdef GRAPHICSUPPORT
-    if (Console::hasInstance())
+    if (GameConsole::hasInstance())
     {
-        CONSOLE_PRINT("Mainapp::createLineEdit", Console::eDEBUG);
+        CONSOLE_PRINT("Mainapp::createLineEdit", GameConsole::eDEBUG);
     }
     m_pLineEdit = new EventTextEdit();
     m_pLineEdit->setVisible(false);
@@ -102,7 +109,7 @@ void Mainapp::createLineEdit()
 
 void Mainapp::shutdown()
 {
-    m_aiSubProcess.kill();
+    m_aiSubProcess->kill();
     if (BuildingSpriteManager::created())
     {
         BuildingSpriteManager::getInstance()->free();
@@ -174,7 +181,7 @@ void Mainapp::shutdown()
 
 bool Mainapp::isWorker()
 {
-    return QThread::currentThread() == &m_Workerthread ||
+    return QThread::currentThread() == m_Workerthread.get() ||
             (QThread::currentThread() == m_pMainThread &&
              (m_shuttingDown || !m_Worker->getStarted()));
 }
@@ -192,7 +199,7 @@ void Mainapp::loadRessources()
 
 void Mainapp::nextStartUpStep(StartupPhase step)
 {
-    Console::print("Loading startup phase: " + QString::number(step), Console::eDEBUG);
+    GameConsole::print("Loading startup phase: " + QString::number(step), GameConsole::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     m_startUpStep = step;
     bool automaticNextStep = true;
@@ -200,10 +207,10 @@ void Mainapp::nextStartUpStep(StartupPhase step)
     {
         case StartupPhase::General:
         {
-            m_aiProcessPipe.moveToThread(&m_Workerthread);
-            emit m_aiProcessPipe.sigStartPipe();
-            pLoadingScreen->moveToThread(&m_Workerthread);
-            m_Audiothread = new AudioThread(m_noAudio);
+            m_aiProcessPipe->moveToThread(m_Workerthread.get());
+            emit m_aiProcessPipe->sigStartPipe();
+            pLoadingScreen->moveToThread(m_Workerthread.get());
+            m_Audiothread.reset(new AudioManager(m_noAudio));
             m_Audiothread->initAudio();
             m_Audiothread->clearPlayList();
             m_Audiothread->loadFolder("resources/music/hauptmenue");
@@ -367,12 +374,11 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         {
             // start after ressource loading
 #ifdef GRAPHICSUPPORT
-            m_Networkthread.setObjectName("NetworkThread");
-            m_Workerthread.setObjectName("WorkerThread");
+            m_Networkthread->setObjectName("NetworkThread");
+            m_Workerthread->setObjectName("WorkerThread");
 #endif
-            m_Networkthread.start(QThread::Priority::NormalPriority);
-            m_Workerthread.start(QThread::Priority::NormalPriority);
-            emit m_Worker->sigStart();
+            m_Networkthread->start(QThread::Priority::NormalPriority);
+            m_Workerthread->start(QThread::Priority::NormalPriority);
             redrawUi();
             if (!m_noUi)
             {
@@ -380,16 +386,17 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                 Settings::setFramesPerSecond(Settings::getFramesPerSecond());
                 m_Timer.start(m_timerCycle, this);
             }
+            emit m_Worker->sigStart();
             break;
         }
         case StartupPhase::Finalizing:
         {
-            CONSOLE_PRINT("Finalizing boot", Console::eDEBUG);
+            CONSOLE_PRINT("Finalizing boot", GameConsole::eDEBUG);
             if (Settings::getAiSlave())
             {
-                CONSOLE_PRINT("Running as ai slave", Console::eDEBUG);
+                CONSOLE_PRINT("Running as ai slave", GameConsole::eDEBUG);
                 Settings::setAutoSavingCycle(0);
-                emit m_aiProcessPipe.sigPipeReady();
+                emit m_aiProcessPipe->sigPipeReady();
             }
             else
             {
@@ -408,14 +415,14 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                                       QString(prefix) + CommandLineParser::ARG_SPAWNAIPROCESS,
                                       "0",
                                       QString(prefix) + CommandLineParser::ARG_AISLAVE,});
-                    m_aiSubProcess.setObjectName("AiSubprocess");
-                    m_aiSubProcess.start(program, args);
+                    m_aiSubProcess->setObjectName("AiSubprocess");
+                    m_aiSubProcess->start(program, args);
                 }
                 // only launch the server if the rest is ready for it ;)
                 if (Settings::getServer() && !m_slave)
                 {
                     MainServer::getInstance();
-                    m_GameServerThread.start(QThread::Priority::NormalPriority);
+                    m_GameServerThread->start(QThread::Priority::NormalPriority);
                 }
                 if (m_slave && m_initScript.isEmpty())
                 {
@@ -466,7 +473,7 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
     {
         return;
     }
-    CONSOLE_PRINT("Changing screen mode to " + QString::number(static_cast<qint32>(mode)), Console::eDEBUG);
+    CONSOLE_PRINT("Changing screen mode to " + QString::number(static_cast<qint32>(mode)), GameConsole::eDEBUG);
     hide();
     switch (mode)
     {
@@ -546,7 +553,7 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
     {
         return;
     }
-    CONSOLE_PRINT("Changing screen size to width: " + QString::number(width) + " height: " + QString::number(heigth), Console::eDEBUG);
+    CONSOLE_PRINT("Changing screen size to width: " + QString::number(width) + " height: " + QString::number(heigth), GameConsole::eDEBUG);
     auto ratio = getActiveDpiFactor();
     resize(width / ratio, heigth / ratio);
     setMinimumSize(QSize(width / ratio, heigth / ratio));
@@ -607,7 +614,7 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
         Qt::Key cur = static_cast<Qt::Key>(event->key());
         if (cur == Settings::getKeyConsole())
         {
-            emit Console::getInstance()->sigToggleView();
+            emit GameConsole::getInstance()->sigToggleView();
         }
         else if (cur == Settings::getKey_screenshot())
         {
@@ -615,7 +622,7 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
         }
         else
         {
-            CONSOLE_PRINT("keyPressEvent", Console::eDEBUG);
+            CONSOLE_PRINT("keyPressEvent", GameConsole::eDEBUG);
             emit sigKeyDown(oxygine::KeyEvent(event));
         }
     }
@@ -672,7 +679,7 @@ bool Mainapp::getNoUi() const
 
 QThread* Mainapp::getGameServerThread()
 {
-    return &m_GameServerThread;
+    return getInstance()->m_GameServerThread.get();
 }
 
 bool Mainapp::getSlave()
@@ -705,18 +712,18 @@ void Mainapp::showCrashReport(const QString & log)
         {
             // unlock crashed process
             counter--;
-            m_crashMutex.unlock();
+            m_pMainapp->m_crashMutex.unlock();
         }
     }
     else
     {
         // swap to gui thread
         counter++;
-        m_crashMutex.lock();
-        emit Mainapp::getInstance()->sigShowCrashReport(log);
+        m_pMainapp->m_crashMutex.lock();
+        emit getInstance()->sigShowCrashReport(log);
         // lock crash thread
-        m_crashMutex.lock();
-        m_crashMutex.unlock();
+        m_pMainapp->m_crashMutex.lock();
+        m_pMainapp->m_crashMutex.unlock();
     }
 }
 
@@ -737,8 +744,8 @@ void Mainapp::actAsSlave()
     Settings::setServer(false);
     Settings::setUsername("Server");
     m_slaveClient = spTCPClient::create(nullptr);
-    m_slaveClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    CONSOLE_PRINT("Running as slave with name : " + Settings::getSlaveServerName(), Console::eDEBUG);
+    m_slaveClient->moveToThread(getInstance()->getNetworkThread());
+    CONSOLE_PRINT("Running as slave with name : " + Settings::getSlaveServerName(), GameConsole::eDEBUG);
 }
 
 void Mainapp::onActiveChanged()
@@ -762,7 +769,7 @@ QString Mainapp::qsTr(const char* const text)
 void Mainapp::createBaseDirs()
 {
     QString userPath = Settings::getUserPath();
-    CONSOLE_PRINT("Creating base dirs in " + userPath, Console::eDEBUG);
+    CONSOLE_PRINT("Creating base dirs in " + userPath, GameConsole::eDEBUG);
     if (!userPath.isEmpty())
     {
         QDir newDir(userPath);
@@ -807,38 +814,41 @@ void Mainapp::createBaseDirs()
 void Mainapp::onQuit()
 {
     QCoreApplication::processEvents();
-    if (m_Workerthread.isRunning())
+    if (m_Workerthread->isRunning())
     {
-        m_Worker->deleteLater();
-        m_Workerthread.quit();
-        m_Workerthread.wait();
+        m_Workerthread->quit();
+        m_Workerthread->wait();
+    }
+    if (!m_Worker.isNull())
+    {
+        m_Worker->moveToThread(QThread::currentThread());
+        m_Worker.reset(nullptr);
     }
     QCoreApplication::processEvents();
-    m_Audiothread->deleteLater();
-    m_Audiothread = nullptr;
+    m_Audiothread.reset(nullptr);
     QCoreApplication::processEvents();
-    if (m_Networkthread.isRunning())
+    if (m_Networkthread->isRunning())
     {
-        m_Networkthread.quit();
-        m_Networkthread.wait();
+        m_Networkthread->quit();
+        m_Networkthread->wait();
     }
     QCoreApplication::processEvents();
-    CONSOLE_PRINT("Shutting down game server", Console::eDEBUG);
-    if (m_GameServerThread.isRunning())
+    CONSOLE_PRINT("Shutting down game server", GameConsole::eDEBUG);
+    if (m_GameServerThread->isRunning())
     {
         if (MainServer::exists())
         {
             MainServer::getInstance()->release();
         }
-        m_GameServerThread.quit();
-        m_GameServerThread.wait();
+        m_GameServerThread->quit();
+        m_GameServerThread->wait();
     }
     QCoreApplication::processEvents();
 }
 
 AiProcessPipe & Mainapp::getAiProcessPipe()
 {
-    return m_aiProcessPipe;
+    return *(getInstance()->m_aiProcessPipe.get());
 }
 
 Mainapp::StartupPhase Mainapp::getStartUpStep() const
@@ -853,7 +863,7 @@ void Mainapp::setInitScript(const QString &newInitScript)
 
 spTCPClient Mainapp::getSlaveClient()
 {
-    return m_slaveClient;
+    return getInstance()->m_slaveClient;
 }
 
 const QString &Mainapp::getInitScript() const

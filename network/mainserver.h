@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSqlDatabase>
 #include <QProcess>
+#include <QScopedPointer>
 
 #include "network/tcpserver.h"
 #include "network/networkgamedata.h"
@@ -358,11 +359,7 @@ private:
     /**
      * @brief m_serverData
      */
-    static QSqlDatabase m_serverData;
-    /**
-     * @brief m_dataBaseLaunched
-     */
-    static bool m_dataBaseLaunched;
+    static QScopedPointer<QSqlDatabase> m_serverData;
     /**
      * @brief m_mailSender
      */

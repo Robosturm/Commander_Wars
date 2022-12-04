@@ -12,7 +12,7 @@
 
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/LUPDATE_MACROS.h"
 
 class Serializable;
@@ -178,122 +178,122 @@ public slots:
     virtual void changeThread(quint64 socketID, QThread* pThread) = 0;
     void displayTCPError(QAbstractSocket::SocketError socketError)
     {
-        CONSOLE_PRINT("Error catched for " + QString::number(m_socketID), Console::eDEBUG);
+        CONSOLE_PRINT("Error catched for " + QString::number(m_socketID), GameConsole::eDEBUG);
         switch (socketError)
         {
             case QAbstractSocket::RemoteHostClosedError:
-                CONSOLE_PRINT("The connection was closed by the peer.", Console::eDEBUG);
+                CONSOLE_PRINT("The connection was closed by the peer.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::HostNotFoundError:
-                CONSOLE_PRINT("The host was not found. Please check the host name and port settings.", Console::eERROR);
+                CONSOLE_PRINT("The host was not found. Please check the host name and port settings.", GameConsole::eERROR);
                 break;
             case QAbstractSocket::ConnectionRefusedError:
-                CONSOLE_PRINT("The connection was refused by the peer.", Console::eDEBUG);
+                CONSOLE_PRINT("The connection was refused by the peer.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::SocketAccessError:
-                CONSOLE_PRINT("Socket connection access error.", Console::eDEBUG);
+                CONSOLE_PRINT("Socket connection access error.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::SocketResourceError:
-                CONSOLE_PRINT("Socket Connection resource error.", Console::eDEBUG);
+                CONSOLE_PRINT("Socket Connection resource error.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::SocketTimeoutError:
-                CONSOLE_PRINT("Socket timeout error.", Console::eDEBUG);
+                CONSOLE_PRINT("Socket timeout error.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::DatagramTooLargeError:
-                CONSOLE_PRINT("Datagram too large error.", Console::eDEBUG);
+                CONSOLE_PRINT("Datagram too large error.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::NetworkError:
-                CONSOLE_PRINT("Network error.", Console::eDEBUG);
+                CONSOLE_PRINT("Network error.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::AddressInUseError:
-                CONSOLE_PRINT("Address in user error.", Console::eDEBUG);
+                CONSOLE_PRINT("Address in user error.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::SocketAddressNotAvailableError:
-                CONSOLE_PRINT("Socket Address not available error.", Console::eDEBUG);
+                CONSOLE_PRINT("Socket Address not available error.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::UnsupportedSocketOperationError:
-                CONSOLE_PRINT("Unsupported socket operation error.", Console::eDEBUG);
+                CONSOLE_PRINT("Unsupported socket operation error.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::UnfinishedSocketOperationError:
-                CONSOLE_PRINT("Unfinished socket operation error.", Console::eDEBUG);
+                CONSOLE_PRINT("Unfinished socket operation error.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::SslHandshakeFailedError:
-                CONSOLE_PRINT("Ssl Handshake failed.", Console::eDEBUG);
+                CONSOLE_PRINT("Ssl Handshake failed.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::SslInternalError:
-                CONSOLE_PRINT("Ssl internal error.", Console::eDEBUG);
+                CONSOLE_PRINT("Ssl internal error.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::SslInvalidUserDataError:
-                CONSOLE_PRINT("Ssl invalid user data errror.", Console::eDEBUG);
+                CONSOLE_PRINT("Ssl invalid user data errror.", GameConsole::eDEBUG);
                 break;
             default:
-                CONSOLE_PRINT("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
+                CONSOLE_PRINT("Error inside the Socket happened. Error: " + QString::number(socketError), GameConsole::eERROR);
         }
     }
     void displayLocalError(QLocalSocket::LocalSocketError socketError)
     {
-        CONSOLE_PRINT("Error catched for " + QString::number(m_socketID), Console::eDEBUG);
+        CONSOLE_PRINT("Error catched for " + QString::number(m_socketID), GameConsole::eDEBUG);
         switch (socketError)
         {
             case QLocalSocket::PeerClosedError:
-                CONSOLE_PRINT("The connection was closed by the peer.", Console::eDEBUG);
+                CONSOLE_PRINT("The connection was closed by the peer.", GameConsole::eDEBUG);
                 break;
             case QLocalSocket::ServerNotFoundError:
-                CONSOLE_PRINT("The host was not found. Please check the host name and port settings.", Console::eERROR);
+                CONSOLE_PRINT("The host was not found. Please check the host name and port settings.", GameConsole::eERROR);
                 break;
             case QLocalSocket::ConnectionRefusedError:
-                CONSOLE_PRINT("The connection was refused by the peer.", Console::eDEBUG);
+                CONSOLE_PRINT("The connection was refused by the peer.", GameConsole::eDEBUG);
                 break;
             case QLocalSocket::SocketAccessError:
-                CONSOLE_PRINT("Socket connection access error.", Console::eDEBUG);
+                CONSOLE_PRINT("Socket connection access error.", GameConsole::eDEBUG);
                 break;
             case QLocalSocket::SocketResourceError:
-                CONSOLE_PRINT("Socket Connection resource error.", Console::eDEBUG);
+                CONSOLE_PRINT("Socket Connection resource error.", GameConsole::eDEBUG);
                 break;
             case QLocalSocket::SocketTimeoutError:
-                CONSOLE_PRINT("Socket timeout error.", Console::eDEBUG);
+                CONSOLE_PRINT("Socket timeout error.", GameConsole::eDEBUG);
                 break;
             case QLocalSocket::DatagramTooLargeError:
-                CONSOLE_PRINT("Datagram too large error.", Console::eDEBUG);
+                CONSOLE_PRINT("Datagram too large error.", GameConsole::eDEBUG);
                 break;
             case QLocalSocket::UnknownSocketError:
-                CONSOLE_PRINT("Unknown socket error.", Console::eDEBUG);
+                CONSOLE_PRINT("Unknown socket error.", GameConsole::eDEBUG);
                 break;
             case QLocalSocket::UnsupportedSocketOperationError:
-                CONSOLE_PRINT("Unsupported socket operation error.", Console::eDEBUG);
+                CONSOLE_PRINT("Unsupported socket operation error.", GameConsole::eDEBUG);
                 break;
             case QLocalSocket::OperationError:
-                CONSOLE_PRINT("Socket operation error.", Console::eDEBUG);
+                CONSOLE_PRINT("Socket operation error.", GameConsole::eDEBUG);
                 break;
             default:
-                CONSOLE_PRINT("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
+                CONSOLE_PRINT("Error inside the Socket happened. Error: " + QString::number(socketError), GameConsole::eERROR);
         }
     }
     void displayStateChange(QAbstractSocket::SocketState socketState)
     {
-        CONSOLE_PRINT("State changed for " + QString::number(m_socketID), Console::eDEBUG);
+        CONSOLE_PRINT("State changed for " + QString::number(m_socketID), GameConsole::eDEBUG);
         switch (socketState)
         {
             case QAbstractSocket::UnconnectedState:
-                CONSOLE_PRINT("State is now Unconnected.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Unconnected.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::HostLookupState:
-                CONSOLE_PRINT("State is now Lookup.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Lookup.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::ConnectingState:
-                CONSOLE_PRINT("State is now Connecting.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Connecting.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::ConnectedState:
-                CONSOLE_PRINT("State is now Connected.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Connected.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::BoundState:
-                CONSOLE_PRINT("State is now Bound.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Bound.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::ListeningState:
-                CONSOLE_PRINT("State is now Listening.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Listening.", GameConsole::eDEBUG);
                 break;
             case QAbstractSocket::ClosingState:
-                CONSOLE_PRINT("State is now Closing.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Closing.", GameConsole::eDEBUG);
                 break;
         }
     }

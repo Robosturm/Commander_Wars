@@ -1,6 +1,6 @@
 #include "objects/dialogs/editor/mapeditdialog.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 
 #include "objects/dialogs/filedialog.h"
@@ -17,8 +17,6 @@ MapEditDialog::MapEditDialog(MapEditInfo info)
 #ifdef GRAPHICSUPPORT
     setObjectName("MapEditDialog");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();

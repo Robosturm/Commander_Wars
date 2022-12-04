@@ -5,7 +5,7 @@
 #include "game/co.h"
 #include "game/gamemap.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -25,8 +25,7 @@ DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogModifyUnit");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     m_dropDownPlayer = spPlayer::create(m_pMap);
     m_dropDownPlayer->init();
     ObjectManager* pObjectManager = ObjectManager::getInstance();

@@ -7,10 +7,10 @@
 #include "menue/mainwindow.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/pathfindingsystem.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/sha256hash.h"
 
 #include "resource_management/movementtablemanager.h"
@@ -77,7 +77,6 @@ EditorMenue::EditorMenue()
     m_mapSliding->setLocked(true);
     loadHandling();
     changeBackground("editormenu");
-    moveToThread(pApp->getWorkerthread());
 
     m_EditorSelection = spEditorSelection::create(selectionWidth, smallScreen, m_pMap.get());
     addChild(m_EditorSelection);
@@ -212,7 +211,7 @@ void EditorMenue::onEnter()
     QString func = "mapEditorMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -251,7 +250,7 @@ void EditorMenue::cleanTemp(qint32 step)
 
 void EditorMenue::createTempFile(bool cleanUp)
 {
-    CONSOLE_PRINT(QString("createTempFile(") + (cleanUp ? "true" : "false") + ")", Console::eDEBUG);
+    CONSOLE_PRINT(QString("createTempFile(") + (cleanUp ? "true" : "false") + ")", GameConsole::eDEBUG);
     if (cleanUp)
     {
         cleanTemp(m_tempCounter);
@@ -295,7 +294,7 @@ void EditorMenue::createTempFile(bool cleanUp)
 
 void EditorMenue::editorUndo()
 {
-    CONSOLE_PRINT("EditorMenue::editorUndo", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::editorUndo", GameConsole::eDEBUG);
     m_tempCounter--;
     if (m_tempCounter >= 0)
     {
@@ -324,7 +323,7 @@ void EditorMenue::editorUndo()
 
 void EditorMenue::editorRedo()
 {
-    CONSOLE_PRINT("EditorMenue::editorRedo", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::editorRedo", GameConsole::eDEBUG);
     m_tempCounter++;
     QFile file("temp/temp" + QString::number(m_tempCounter) + ".tmp");
     if (file.exists())
@@ -343,7 +342,7 @@ void EditorMenue::editorRedo()
 
 void EditorMenue::clickedTopbar(QString itemID)
 {    
-    CONSOLE_PRINT("clickedTopbar(" + itemID + ")", Console::eDEBUG);
+    CONSOLE_PRINT("clickedTopbar(" + itemID + ")", GameConsole::eDEBUG);
     struct MenuItem
     {
         MenuItem(const char* const id, void (EditorMenue::*func)())
@@ -468,7 +467,7 @@ void EditorMenue::showLoadMap()
 
 void EditorMenue::showResizeMap()
 {
-    CONSOLE_PRINT("showResizeMap()", Console::eDEBUG);
+    CONSOLE_PRINT("showResizeMap()", GameConsole::eDEBUG);
     
     spGenericBox pBox = spGenericBox::create(true);
 
@@ -748,7 +747,7 @@ void EditorMenue::copy()
 
 void EditorMenue::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
 {    
-    CONSOLE_PRINT("EditorMenue::resizeMap", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::resizeMap", GameConsole::eDEBUG);
     m_pMap->resizeMap(left, top, right, bottom);    
     updateGrids();
 }
@@ -767,7 +766,7 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
                                   bool unitsDistributed,
                                   bool mirrored)
 {
-    CONSOLE_PRINT("EditorMenue::createRandomMap", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::createRandomMap", GameConsole::eDEBUG);
     cleanTemp(-1);
     RandomMapGenerator::randomMap(m_pMap.get(), width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize, startBaseSize / 100.0f,
@@ -786,7 +785,7 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
 
 void EditorMenue::playersChanged()
 {    
-    CONSOLE_PRINT("EditorMenue::playersChanged", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::playersChanged", GameConsole::eDEBUG);
     m_EditorSelection->createPlayerSelection();
     
     Mainapp::getInstance()->pauseRendering();
@@ -797,13 +796,13 @@ void EditorMenue::playersChanged()
 
 void EditorMenue::rulesChanged()
 {
-    CONSOLE_PRINT("EditorMenue::rulesChanged", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::rulesChanged", GameConsole::eDEBUG);
     setFocused(true);
 }
 
 void EditorMenue::optimizePlayers()
 {
-    CONSOLE_PRINT("EditorMenue::optimizePlayers", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::optimizePlayers", GameConsole::eDEBUG);
     createTempFile();
     
     QVector<bool> foundPlayers(m_pMap->getPlayerCount(), false);
@@ -1066,7 +1065,7 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::onMapClickedRight", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::onMapClickedRight", GameConsole::eDEBUG);
     // resolve click
     
     switch (m_EditorMode)
@@ -1117,7 +1116,7 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::onMapClickedLeftDown", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::onMapClickedLeftDown", GameConsole::eDEBUG);
     // resolve click
     switch (m_EditorMode)
     {
@@ -1148,7 +1147,7 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::onMapClickedLeftUp", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::onMapClickedLeftUp", GameConsole::eDEBUG);
     // resolve click
     switch (m_EditorMode)
     {
@@ -1179,7 +1178,7 @@ void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::onMapClickedLeft", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::onMapClickedLeft", GameConsole::eDEBUG);
     // resolve click
     switch (m_EditorMode)
     {
@@ -1271,13 +1270,13 @@ void EditorMenue::editFinishedCanceled()
 
 void EditorMenue::scriptFinished()
 {
-    CONSOLE_PRINT("EditorMenue::scriptFinished", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::scriptFinished", GameConsole::eDEBUG);
     setFocused(true);
 }
 
 void EditorMenue::campaignFinished()
 {
-    CONSOLE_PRINT("EditorMenue::campaignFinished", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::campaignFinished", GameConsole::eDEBUG);
     setFocused(true);
 }
 
@@ -1343,7 +1342,7 @@ void EditorMenue::getSquareTiles(QVector<QPoint> & points, QPoint start, QPoint 
 
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::placeTerrain", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::placeTerrain", GameConsole::eDEBUG);
     QVector<QPoint> points;
     
     switch (m_EditorSelection->getSizeMode())
@@ -1409,7 +1408,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
 
 void EditorMenue::placeBuilding(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::placeBuilding", Console::eDEBUG);    
+    CONSOLE_PRINT("EditorMenue::placeBuilding", GameConsole::eDEBUG);    
     
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
@@ -1494,7 +1493,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
 
 void EditorMenue::placeUnit(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::placeUnit", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::placeUnit", GameConsole::eDEBUG);
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -1549,7 +1548,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
 
 void EditorMenue::saveMap(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::saveMap " + filename, Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::saveMap " + filename, GameConsole::eDEBUG);
     if (filename.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
     {
         filename.replace(oxygine::Resource::RCC_PREFIX_PATH, Settings::getUserPath());
@@ -1568,7 +1567,7 @@ void EditorMenue::saveMap(QString filename)
 
 void EditorMenue::loadMap(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::loadMap " + filename, Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::loadMap " + filename, GameConsole::eDEBUG);
     if (filename.endsWith(".map"))
     {
         QFile file(filename);
@@ -1594,7 +1593,7 @@ void EditorMenue::loadMap(QString filename)
 
 void EditorMenue::importAWDCAw4Map(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::importAWDCAw4Map " + filename, Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::importAWDCAw4Map " + filename, GameConsole::eDEBUG);
     if (filename.endsWith(".aw4"))
     {
         QFile file(filename);
@@ -1611,7 +1610,7 @@ void EditorMenue::importAWDCAw4Map(QString filename)
 
 void EditorMenue::importAWByWeb(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::importAWByWeb " + filename, Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::importAWByWeb " + filename, GameConsole::eDEBUG);
     if (filename.endsWith(".txt"))
     {
         QFile file(filename);
@@ -1628,7 +1627,7 @@ void EditorMenue::importAWByWeb(QString filename)
 
 void EditorMenue::importAWDSAwsMap(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::importAWDSAwsMap " + filename, Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::importAWDSAwsMap " + filename, GameConsole::eDEBUG);
     if (filename.endsWith(".aws"))
     {
         QFile file(filename);
@@ -1645,7 +1644,7 @@ void EditorMenue::importAWDSAwsMap(QString filename)
 
 void EditorMenue::exportAWDSAwsMap(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::exportAWDSAwsMap", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::exportAWDSAwsMap", GameConsole::eDEBUG);
     if (filename.endsWith(".aws"))
     {
         m_pMap->exportAWDSMap(filename);
@@ -1655,7 +1654,7 @@ void EditorMenue::exportAWDSAwsMap(QString filename)
 
 void EditorMenue::importCoWTxTMap(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::importCoWTxTMap", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::importCoWTxTMap", GameConsole::eDEBUG);
     if (filename.endsWith(".txt"))
     {
         QFile file(filename);
@@ -1672,7 +1671,7 @@ void EditorMenue::importCoWTxTMap(QString filename)
 
 void EditorMenue::newMap(MapEditDialog::MapEditInfo info)
 {
-    CONSOLE_PRINT("EditorMenue::newMap", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::newMap", GameConsole::eDEBUG);
     cleanTemp(-1);
     
     m_pMap->setMapName(info.mapName);
@@ -1690,7 +1689,7 @@ void EditorMenue::newMap(MapEditDialog::MapEditInfo info)
 
 void EditorMenue::changeMap(MapEditDialog::MapEditInfo info)
 {    
-    CONSOLE_PRINT("EditorMenue::changeMap", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::changeMap", GameConsole::eDEBUG);
     createTempFile();
     
     m_pMap->setMapName(info.mapName);
@@ -1708,7 +1707,7 @@ void EditorMenue::changeMap(MapEditDialog::MapEditInfo info)
 
 void EditorMenue::selectionChanged()
 {
-    CONSOLE_PRINT("EditorMenue::selectionChanged", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::selectionChanged", GameConsole::eDEBUG);
     if (m_EditorMode == EditorModes::PlaceEditorSelection)
     {
         m_mapSliding->setLocked(true);
@@ -1762,7 +1761,7 @@ void EditorMenue::selectionChanged()
 
 void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2, CursorModes mode, QColor color)
 {
-    CONSOLE_PRINT("EditorMenue::createMarkedArea", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::createMarkedArea", GameConsole::eDEBUG);
     pActor->removeChildren();
     switch (mode)
     {
@@ -1893,7 +1892,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
 
 void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection::EditorMode selection)
 {
-    CONSOLE_PRINT("EditorMenue::pasteSelection", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::pasteSelection", GameConsole::eDEBUG);
     
     if (m_pMap->onMap(x, y))
     {
@@ -2022,7 +2021,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
 
 void EditorMenue::exitEditor()
 {    
-    CONSOLE_PRINT("Leaving Editor Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Editor Menue", GameConsole::eDEBUG);
     auto window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
@@ -2030,7 +2029,7 @@ void EditorMenue::exitEditor()
 
 void EditorMenue::autosave()
 {
-    CONSOLE_PRINT("EditorMenue::autosave", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::autosave", GameConsole::eDEBUG);
     QString filename = "maps/autosave.map";
     if (filename.endsWith(".map"))
     {
