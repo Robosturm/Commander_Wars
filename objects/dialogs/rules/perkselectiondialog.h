@@ -52,10 +52,13 @@ signals:
     void sigSelectRandomPerks();
 private:
     QStringList getNameList(QString path);
+    void updatePredefinedList();
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_CancelButton;
     oxygine::spButton m_ToggleAll;
+    oxygine::spButton m_pSave;
+    oxygine::spBox9Sprite m_pSpriteBox;
     spDropDownmenu m_PredefinedLists;
     spCheckbox m_randomFillCheckbox;
     bool m_toggle{true};

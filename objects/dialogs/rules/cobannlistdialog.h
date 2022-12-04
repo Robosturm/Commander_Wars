@@ -37,10 +37,12 @@ private slots:
     void remove();
 private:
     QStringList getNameList();
+    void updatePredefinedList();
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ToggleAll;
     oxygine::spButton m_ExitButton;
+    oxygine::spBox9Sprite m_pSpriteBox;
     spDropDownmenu m_PredefinedLists;
     QVector<spCheckbox> m_Checkboxes;
     QStringList m_COIDs;

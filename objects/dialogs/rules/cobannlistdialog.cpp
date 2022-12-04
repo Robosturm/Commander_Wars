@@ -23,77 +23,23 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    m_pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
-    pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
-    addChild(pSpriteBox);
-    pSpriteBox->setPosition(0, 0);
-    pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    m_pSpriteBox->setResAnim(pAnim);
+    m_pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    addChild(m_pSpriteBox);
+    m_pSpriteBox->setPosition(0, 0);
+    m_pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
-
-    // ok button
-    m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
-                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
-    pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
-    {
-        emit editFinished(m_CurrentCOBannList);
-        emit sigFinished();
-    });
-
-    // cancel button
-    m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30,
-                              Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
-    pSpriteBox->addChild(m_ExitButton);
-    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
-    {
-        emit canceled();
-    });
-
-    oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-    pSave->setPosition(Settings::getWidth() / 2 - pSave->getScaledWidth() / 2,
-                       Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
-    pSave->addClickListener([this](oxygine::Event*)
-    {
-        emit sigShowSaveBannlist();
-    });
-    pSpriteBox->addChild(pSave);
-    connect(this, &COBannListDialog::sigShowSaveBannlist, this, &COBannListDialog::showSaveBannlist, Qt::QueuedConnection);
-
-    m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
-    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 ,
-                             Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
-    pSpriteBox->addChild(m_ToggleAll);
-    m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
-    {
-        m_toggle = !m_toggle;
-        for (qint32 i = 0; i < m_Checkboxes.size(); i++)
-        {
-            m_Checkboxes[i]->setChecked(m_toggle);
-            emit m_Checkboxes[i]->checkChanged(m_toggle);
-        }
-    });
-    auto items = getNameList();
-    m_PredefinedLists = spDropDownmenu::create(260, items);
-    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getScaledWidth(),
-                                   Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
-    pSpriteBox->addChild(m_PredefinedLists);
-    connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &COBannListDialog::setCOBannlist, Qt::QueuedConnection);
-
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-
     // no the fun begins create checkboxes and stuff and a panel down here
     spPanel pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150),
-                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 150));
-    pPanel->setPosition(30, 30);
-    pSpriteBox->addChild(pPanel);
+                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 150));    pPanel->setPosition(30, 30);
+    m_pSpriteBox->addChild(pPanel);
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -178,8 +124,54 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         y += 50;
     }
     pPanel->setContentHeigth(y + 50);
+
+    // ok button
+    m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
+    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
+                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+    m_pSpriteBox->addChild(m_OkButton);
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    {
+        emit editFinished(m_CurrentCOBannList);
+        emit sigFinished();
+    });
+
+    // cancel button
+    m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
+    m_ExitButton->setPosition(30,
+                              Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
+    m_pSpriteBox->addChild(m_ExitButton);
+    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    {
+        emit canceled();
+    });
+
+    oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
+    pSave->setPosition(Settings::getWidth() / 2 - pSave->getScaledWidth() / 2,
+                       Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
+    pSave->addClickListener([this](oxygine::Event*)
+    {
+        emit sigShowSaveBannlist();
+    });
+    m_pSpriteBox->addChild(pSave);
+    connect(this, &COBannListDialog::sigShowSaveBannlist, this, &COBannListDialog::showSaveBannlist, Qt::QueuedConnection);
+
+    m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
+    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 ,
+                             Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
+    m_pSpriteBox->addChild(m_ToggleAll);
+    m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    {
+        m_toggle = !m_toggle;
+        for (qint32 i = 0; i < m_Checkboxes.size(); i++)
+        {
+            m_Checkboxes[i]->setChecked(m_toggle);
+            emit m_Checkboxes[i]->checkChanged(m_toggle);
+        }
+    });
     connect(this, &COBannListDialog::canceled, this, &COBannListDialog::remove, Qt::QueuedConnection);
     connect(this, &COBannListDialog::sigFinished, this, &COBannListDialog::remove, Qt::QueuedConnection);
+    updatePredefinedList();
 }
 
 
@@ -258,12 +250,10 @@ void COBannListDialog::setCOBannlist(qint32 item)
 }
 
 void COBannListDialog::showSaveBannlist()
-{
-    
+{    
     spDialogTextInput pSaveInput = spDialogTextInput::create(tr("Banlist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &COBannListDialog::saveBannlist, Qt::QueuedConnection);
-    addChild(pSaveInput);
-    
+    addChild(pSaveInput);    
 }
 
 QStringList COBannListDialog::getNameList()
@@ -289,6 +279,20 @@ QStringList COBannListDialog::getNameList()
 void COBannListDialog::saveBannlist(QString filename)
 {    
     Filesupport::storeList(filename, m_CurrentCOBannList, "data/cobannlist/");
+    updatePredefinedList();
+}
+
+void COBannListDialog::updatePredefinedList()
+{
+    if (m_PredefinedLists.get() != nullptr)
+    {
+        m_PredefinedLists->detach();
+    }
+
     auto items = getNameList();
-    m_PredefinedLists->changeList(items);
+    m_PredefinedLists = spDropDownmenu::create(260, items);
+    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getScaledWidth(),
+                                   Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
+    m_pSpriteBox->addChild(m_PredefinedLists);
+    connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &COBannListDialog::setCOBannlist, Qt::QueuedConnection);
 }

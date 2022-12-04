@@ -1104,9 +1104,6 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_SQL_LIBS}        DESTINATION     "sqldrivers"    OPTIONAL)
     install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION     "/"             OPTIONAL)
 
-elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
-    install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION     "Commander_Wars.app/Contents/PlugIns"             OPTIONAL)
-
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
     set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -1163,6 +1160,8 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
             -always-overwrite
         COMMENT "Running macdeployqt..."
     )
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${QT_BIN_DIR}/../plugins/multimedia/libdarwinmediaplugin.dylib "${CMAKE_INSTALL_PREFIX}/Commander_Wars.app/Contents/PlugIns/multimedia/libdarwinmediaplugin.dylib")
 endif()
 
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
