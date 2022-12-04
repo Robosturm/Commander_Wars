@@ -461,15 +461,7 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     qint32 defBonus = 0;
     qint32 firerangeBonus = 0;
     qint32 movementBonus = 0;
-    // not sure which one is better for ingame data
-    //        if (m_Ingame)
-    //        {
-    //            offBonus = pUnit->getBonusOffensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
-    //            defBonus = pUnit->getBonusDefensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
-    //            firerangeBonus = pUnit->getBonusMaxRange(QPoint(-1, -1));
-    //            movementBonus = pUnit->getBonusMovementpoints(QPoint(-1, -1));
-    //        }
-    //        else
+
     if (pCO.get() != nullptr)
     {
         offBonus = pCO->getOffensiveBonus(nullptr, pUnit.get(), pUnit->getPosition(), nullptr, pUnit->getPosition(), false, GameEnums::LuckDamageMode_Off);
