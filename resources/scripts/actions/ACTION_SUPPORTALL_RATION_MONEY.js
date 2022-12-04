@@ -118,7 +118,7 @@ var Constructor = function()
                 }
             }
         }
-        return {suppliedFuel, suppliedAmmo, queueAnimation};
+        return {suppliedFuel, suppliedAmmo};
     };
 
     this.giveRation = function(unit, map)
@@ -131,8 +131,6 @@ var Constructor = function()
         {
             queueAnimation = GameAnimationFactory.getAnimation(animationCount - 1);
         }
-        var fuel = 0;
-        var ammo = 0;
         var suppliedFuel = 0;
         var suppliedAmmo = 0;
         var x = unit.getX() + 1;
@@ -141,18 +139,18 @@ var Constructor = function()
         suppliedFuel += ret.suppliedFuel;
         suppliedAmmo += ret.suppliedAmmo;
         x = unit.getX() - 1;
-        ret =  ACTION_SUPPORTALL_RATION_MONEY.refill(unit, x, y, refillMaterial, ret.queueAnimation, map);
-        suppliedFuel += fuel;
-        suppliedAmmo += ammo;
+        ret =  ACTION_SUPPORTALL_RATION_MONEY.refill(unit, x, y, refillMaterial, queueAnimation, map);
+        suppliedFuel += ret.suppliedFuel;
+        suppliedAmmo += ret.suppliedAmmo;
         x = unit.getX();
         y = unit.getY() + 1;
-        ret =  ACTION_SUPPORTALL_RATION_MONEY.refill(unit, x, y, refillMaterial, ret.queueAnimation, map);
-        suppliedFuel += fuel;
-        suppliedAmmo += ammo;
+        ret =  ACTION_SUPPORTALL_RATION_MONEY.refill(unit, x, y, refillMaterial, queueAnimation, map);
+        suppliedFuel += ret.suppliedFuel;
+        suppliedAmmo += ret.suppliedAmmo;
         y = unit.getY() - 1;
-        ret =  ACTION_SUPPORTALL_RATION_MONEY.refill(unit, x, y, refillMaterial, ret.queueAnimation, map);
-        suppliedFuel += fuel;
-        suppliedAmmo += ammo;
+        ret =  ACTION_SUPPORTALL_RATION_MONEY.refill(unit, x, y, refillMaterial, queueAnimation, map);
+        suppliedFuel += ret.suppliedFuel;
+        suppliedAmmo += ret.suppliedAmmo;
         var owner = unit.getOwner();
         owner.addFunds((20 * suppliedFuel + 100 * suppliedAmmo) * owner.getFundsModifier())
 	};

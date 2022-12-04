@@ -697,7 +697,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="161"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="159"/>
         <source>Refills fuel and ammo to all units surrounding this unit and grants money based on the amount of resupply.</source>
         <translation type="unfinished"></translation>
     </message>
