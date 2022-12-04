@@ -272,7 +272,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A genius scientist that harbors a great hatred for humankind. Believes plants to be a superior life forms.");
+        return qsTr("A genius scientist that harbors a great hatred for mankind. Believes plants to be a superior life forms.");
     };
     this.getHits = function(co)
     {
