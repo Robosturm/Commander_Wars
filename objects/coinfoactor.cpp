@@ -41,16 +41,19 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_pCurrentCoFaction->setScale(2.0f);
     addChild(m_pCurrentCoFaction);
 
-    m_pCurrentCO = oxygine::spSprite::create();
-    m_pCurrentCO->setScale((Settings::getHeight() - 200) / 352.0f);
-    m_pCurrentCO->setSize(208, 352);
-    m_pCurrentCO->setPosition(Settings::getWidth() - 120 - m_pCurrentCO->getScaledWidth(), 90);
-    addChild(m_pCurrentCO);
-
     m_COName = oxygine::spTextField::create();
+    m_COName->setWidth(width);
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     m_COName->setStyle(headerStyle);
     m_COName->setY(m_pCurrentCoFaction->getY() + 40);
     addChild(m_COName);
+
+    m_pCurrentCO = oxygine::spSprite::create();
+    m_pCurrentCO->setScale((Settings::getHeight() - 200) / 352.0f);
+    m_pCurrentCO->setSize(208, 352);
+    m_pCurrentCO->setPosition(Settings::getWidth() - 120 - m_pCurrentCO->getScaledWidth(), m_COName->getY() + 60);
+    addChild(m_pCurrentCO);
+
 
     style.multiline = true;
     m_COBio = oxygine::spTextField::create();
@@ -228,7 +231,6 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         }
     }
     m_COName->setHtmlText(coName);
-    m_COName->setX((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_COName->getTextRect().getWidth());
     if (pCO.get() != nullptr)
     {
         coBio = pCO->getBio();
@@ -375,6 +377,11 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         m_UnitDataActors[i]->detach();
     }
     m_UnitDataActors.clear();
+
+    if (y < m_pCurrentCO->getY() + m_pCurrentCO->getHeight() + 10)
+    {
+        y = m_pCurrentCO->getY() + m_pCurrentCO->getHeight() + 10;
+    }
 
     qint32 x = 10;
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();

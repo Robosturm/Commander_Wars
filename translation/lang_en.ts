@@ -1189,55 +1189,55 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="71"/>
+        <location filename="../objects/coinfoactor.cpp" line="74"/>
         <source>Hit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="90"/>
+        <location filename="../objects/coinfoactor.cpp" line="93"/>
         <source>Miss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="151"/>
+        <location filename="../objects/coinfoactor.cpp" line="154"/>
         <source>Synergy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="156"/>
+        <location filename="../objects/coinfoactor.cpp" line="159"/>
         <source>Active Perks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="167"/>
+        <location filename="../objects/coinfoactor.cpp" line="170"/>
         <source>Global Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="173"/>
+        <location filename="../objects/coinfoactor.cpp" line="176"/>
         <source>CO Zone Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="198"/>
-        <location filename="../objects/coinfoactor.cpp" line="199"/>
-        <location filename="../objects/coinfoactor.cpp" line="200"/>
         <location filename="../objects/coinfoactor.cpp" line="201"/>
         <location filename="../objects/coinfoactor.cpp" line="202"/>
         <location filename="../objects/coinfoactor.cpp" line="203"/>
         <location filename="../objects/coinfoactor.cpp" line="204"/>
         <location filename="../objects/coinfoactor.cpp" line="205"/>
         <location filename="../objects/coinfoactor.cpp" line="206"/>
+        <location filename="../objects/coinfoactor.cpp" line="207"/>
+        <location filename="../objects/coinfoactor.cpp" line="208"/>
+        <location filename="../objects/coinfoactor.cpp" line="209"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="254"/>
+        <location filename="../objects/coinfoactor.cpp" line="256"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="279"/>
+        <location filename="../objects/coinfoactor.cpp" line="281"/>
         <source>Progress: </source>
         <translation type="unfinished"></translation>
     </message>
