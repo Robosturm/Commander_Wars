@@ -29,8 +29,12 @@ var Constructor = function()
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = building.getX();
         var y = building.getY();
-        map.replaceTerrainOnly("PLAINS_DESTROYED", x, y);
-        map.getTerrain(x, y).loadSprites();
+        var player = building.getOwner();
+        map.replaceTerrainOnly("PLAINS", x, y);
+        var terrain = map.getTerrain(x, y);
+        terrain.loadSprites();
+        terrain.loadBuilding("ZDESTROYED_GATE_E_W");
+        terrain.getBuilding().setOwner(player);
         var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.addScreenshake(30, 0.95, 1000, 200);

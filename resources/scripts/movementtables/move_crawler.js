@@ -41,6 +41,8 @@ var Constructor = function()
 								["TEMPORARY_AIRPORT_DESERT", 1],
 								["TEMPORARY_AIRPORT_SNOW", 1],
                                 ["TEMPORARY_HARBOUR", 1],
+                                ["ZDESTROYED_GATE_E_W", 1],
+                                ["ZDESTROYED_GATE_N_S", 1],
                                 ["MOUNTAIN", 2],
                                 ["RIVER", 2],
                                 ["DESERT", 1],

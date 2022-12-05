@@ -42,7 +42,7 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
         }
     }
     textField->setWidth(width - 10);
-    textField->setPosition(width / 2 - textField->getTextRect().getWidth() / 2, 5);
+    textField->setPosition(width / 2 - textField->getTextRect().getWidth() / 2, 2);
     if (textField->getX() < 5)
     {
         textField->setX(5);

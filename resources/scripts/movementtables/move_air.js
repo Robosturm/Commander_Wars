@@ -34,6 +34,8 @@ var Constructor = function()
                                 ["TEMPORARY_AIRPORT", 1],
                                 ["TEMPORARY_HARBOUR", 1],
                                 ["OILRIG", 1],
+                                ["ZDESTROYED_GATE_E_W", 1],
+                                ["ZDESTROYED_GATE_N_S", 1],
                                 ["FOREST", 1],
                                 ["FOREST1", 1],
                                 ["FOREST2", 1],

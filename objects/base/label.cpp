@@ -68,7 +68,7 @@ void Label::setHtmlText(QString str)
     qint32 height = getTextRect().getHeight();
     m_clipRect->setHeight(height);
     oxygine::Sprite::setHeight(height);
-    setTooltipText(str);    
+    setTooltipText(str);
 #endif
 }
 
@@ -76,6 +76,9 @@ void Label::setStyle(const oxygine::TextStyle& st)
 {    
 #ifdef GRAPHICSUPPORT
     m_textField->setStyle(st);
+    m_clipRect->setPosition(m_clipRect->getPosition() + oxygine::Vector2(0, -m_clipOffset));
+    m_clipOffset = st.font.offsetY;
+    m_clipRect->setPosition(m_clipRect->getPosition() + oxygine::Vector2(0, m_clipOffset));
     qint32 height = getTextRect().getHeight();
     m_clipRect->setHeight(height);
     oxygine::Sprite::setHeight(height);

@@ -2110,5 +2110,7 @@
         <file>maps/commander_wars.camp/takeAndHold.map</file>
         <file>resources/aidata/normal/__coreai.js</file>
         <file>mods/map_creator/scripts/movementtables/move_small_boat.js</file>
+        <file>resources/scripts/building/zdestroyed_gate_e_w.js</file>
+        <file>resources/scripts/building/zdestroyed_gate_n_s.js</file>
     </qresource>
 </RCC>

@@ -4881,5 +4881,9 @@
         <file>resources/images/game/battlesprites/foreground/fore_gate+1.png</file>
         <file>resources/images/animations/talon+gun+in.png</file>
         <file>resources/images/animations/talon+gun+in+mask.png</file>
+        <file>resources/images/building/destroyed_gate+e+w.png</file>
+        <file>resources/images/building/destroyed_gate+e+w+mask.png</file>
+        <file>resources/images/building/destroyed_gate+n+s.png</file>
+        <file>resources/images/building/destroyed_gate+n+s+mask.png</file>
     </qresource>
 </RCC>

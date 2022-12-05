@@ -58,6 +58,7 @@ public slots:
 protected:
     oxygine::spTextField m_textField;
     oxygine::spClipRectActor m_clipRect;
+    qint32 m_clipOffset{0};
 };
 
 #endif // LABEL_H

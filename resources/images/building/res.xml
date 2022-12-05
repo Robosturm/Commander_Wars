@@ -149,6 +149,11 @@
         <image file="gate+n+s+shadow+plains.png" />
         <image file="gate+n+s+shadow+waste.png" />
         
+        <image file="destroyed_gate+n+s.png" />
+        <image file="destroyed_gate+n+s+mask.png" />
+        <image file="destroyed_gate+e+w.png" />
+        <image file="destroyed_gate+e+w+mask.png" />
+        
         <!-- weld -->
         <image file="weld+E+W.png" />
         <image file="weld+E+W+mask.png" />

@@ -36,6 +36,8 @@ var Constructor = function()
                                 ["SILO_ROCKET", 1],
                                 ["TEMPORARY_AIRPORT", 1],
                                 ["TEMPORARY_HARBOUR", 1],
+                                ["ZDESTROYED_GATE_E_W", 1],
+                                ["ZDESTROYED_GATE_N_S", 1],
                                 ["LABOR", 1],
                                 ["DESERT", 1],
                                 ["DESERT_DESTROYEDWELD", 1],
