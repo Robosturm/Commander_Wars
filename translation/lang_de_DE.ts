@@ -14697,27 +14697,27 @@ Units have only %2% weaker firepower.</source>
 <context>
     <name>co_conrad</name>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="255"/>
         <source>A damage analyst from Teal Isles who favors precise tactics. Very intelligent, but inexperienced.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="259"/>
         <source>Precise Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="263"/>
         <source>Unknown Variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="267"/>
         <source>Conrad is so focused on being precise that it leaves no room for lucky strikes and units have weaker counter strength. However, units are good at assisting one another with information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="271"/>
         <source>
 Special Unit:
 Intel truck
@@ -14725,14 +14725,14 @@ Intel truck
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="272"/>
         <source>
 Global Effect: 
 Conrad&apos;s units gain firepower when attacking an enemy unit that is within vision range of Conrad&apos;s units, including enhanced vision from terrain. The more of Conrad&apos;s units that has sight on an enemy unit, the stronger the firepower. Counter attacks are slightly weaker and units are never lucky.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="273"/>
         <source>
 
 CO Zone Effect: 
@@ -14740,82 +14740,82 @@ Units gain even more firepower for each unit within vision range.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="277"/>
         <source>Unit vision is extended and all units get firepower bonuses for enemy units in vision range.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="281"/>
         <source>Calculated Strike</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="284"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="285"/>
         <source>Conrad&apos;s very first attack of the turn deals +%0% luck damage. For the entire turn, all percent damage that exceeds the enemy&apos;s current health is carried over to the next engagement.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="290"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="291"/>
         <source>Precision Assault</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="294"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="295"/>
         <source>You might be more experienced, but that doesn&apos;t mean I can&apos;t teach you a thing or two!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="296"/>
         <source>I won&apos;t go down that easily! This battle isn&apos;t even close to being finished!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="296"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="297"/>
         <source>You have a 0.001% chance of surviving this battle with me.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="297"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="298"/>
         <source>My attack plan is perfect! I don&apos;t need luck!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="298"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="299"/>
         <source>Your strategy doesn&apos;t quite add up to par with mine!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="299"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="300"/>
         <source>I have all the information I need to turn this battle around.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="303"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="304"/>
         <source>Solid tactics get solid results!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="304"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="305"/>
         <source>That was as easy as I expected it to be. Numbers don&apos;t lie.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="305"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="306"/>
         <source>Either I&apos;m getting better, or you guys are getting worse!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="310"/>
         <source>I obviously have more to learn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="311"/>
         <source>Dis I miscalculate?... Impossible!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="314"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="315"/>
         <source>Conrad</source>
         <translation type="unfinished"></translation>
     </message>
