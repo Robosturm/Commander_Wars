@@ -117,9 +117,6 @@
         <file>resources/sounds/switchfield.wav</file>
         <file>resources/sounds/switchmenu.wav</file>
         <file>resources/sounds/talongunhit.wav</file>
-        <file>resources/sounds/talongunin.wav</file>
-        <file>resources/sounds/talongunout.wav</file>
-        <file>resources/sounds/talongunspin.wav</file>
         <file>resources/sounds/tank_explode.wav</file>
         <file>resources/sounds/tank_move.wav</file>
         <file>resources/sounds/tank_shot.wav</file>
@@ -150,8 +147,6 @@
         <file>resources/sounds/disconnect.wav</file>
         <file>resources/sounds/co_power_letter.wav</file>
         <file>resources/sounds/superpower_burst.wav</file>
-        <file>resources/sounds/crystal_healing.wav</file>
-        <file>resources/sounds/monolith_healing.wav</file>
         <file>resources/sounds/deathray_fire.wav</file>
         <file>resources/sounds/nestlasercharge.wav</file>
         <file>resources/sounds/nestlaserfire.wav</file>

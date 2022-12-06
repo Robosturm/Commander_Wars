@@ -117,7 +117,6 @@
     <sound file="superpowerready.wav"           cachesize = "5"/>
     <sound file="switchfield.wav"               cachesize = "15"/>
     <sound file="switchmenu.wav"                cachesize = "15"/>
-    <sound file="talongunhit.wav"               cachesize = "10"/>
     <sound file="tank_explode.wav"              cachesize = "5"/>
     <sound file="tank_move.wav"                 cachesize = "5"/>
     <sound file="tank_shot.wav"                 cachesize = "5"/>
@@ -154,5 +153,6 @@
     <sound file="nestmortarlaunch.wav"          cachesize = "2"/>
     <sound file="talongunattack.wav"            cachesize = "2"/>
     <sound file="talonguntargeting.wav"         cachesize = "2"/>
+    <sound file="talongunhit.wav"               cachesize = "10"/>
 </sounds>
 

@@ -80,6 +80,13 @@ bool AudioManager::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soun
         {
             emit sigDeleteSound(pSoundCache, i);
         }, Qt::QueuedConnection);
+        connect(soundCache->sound[i], &QSoundEffect::statusChanged, this, [pSoundCache, i]()
+        {
+            if (pSoundCache->sound[i]->status() == QSoundEffect::Error)
+            {
+                CONSOLE_PRINT("Error: Occured when playing sound: " + pSoundCache->cacheUrl.toString(), GameConsole::eDEBUG);
+            }
+        }, Qt::QueuedConnection);
         started = true;
         soundCache->nextSoundToUse = i + 1;
     }
