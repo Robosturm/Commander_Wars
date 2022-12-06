@@ -23,7 +23,7 @@ var Constructor = function()
     
     this.getActionText = function(map)
     {
-        return qsTr("Sell Unit");
+        return qsTr("Sell unit");
     };
     this.getIcon = function(map)
     {
@@ -91,6 +91,10 @@ var Constructor = function()
     this.getStepInputType = function(action, map)
     {
         return "FIELD";
+    };
+    this.getName = function(map)
+    {
+        return qsTr("Sell unit");
     };
     this.getDescription = function()
 	{

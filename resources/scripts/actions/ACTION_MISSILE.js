@@ -134,6 +134,10 @@ var Constructor = function()
         ACTION_MISSILE.postAnimationTargetY = -1;
         ACTION_MISSILE.postAnimationUnit = null;
     };
+    this.getName = function()
+    {
+        return qsTr("Missile");
+    };
     this.getDescription = function()
     {
         return qsTr("Launches a missile from a silo at the target area. The missile deals massive damage to all units in the area of effect.");

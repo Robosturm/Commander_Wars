@@ -887,6 +887,10 @@ var Constructor = function()
         ACTION_FIRE.postBuildingAnimationTerrain = null;
         ACTION_FIRE.postAnimationAction = null;
     };
+    this.getName = function()
+    {
+        return qsTr("Fire");
+    };
     this.getDescription = function()
     {
         return qsTr("Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.");

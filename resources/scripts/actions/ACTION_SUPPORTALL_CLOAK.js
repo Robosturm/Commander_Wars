@@ -86,9 +86,13 @@ var Constructor = function()
             }
         }
     };
+    this.getName = function()
+    {
+        return qsTr("Cloak");
+    };
     this.getDescription = function()
     {
-        return qsTr("Cloaks all own units.");
+        return qsTr("Cloaks all own units in a 2x2 square. A cloaked unit is only visible when a unit is nearby it, but can be attacked normally.");
     };
 }
 

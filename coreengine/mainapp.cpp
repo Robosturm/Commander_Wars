@@ -67,14 +67,12 @@ Mainapp::Mainapp()
     setObjectName("Mainapp");
 #endif
     Interpreter::setCppOwnerShip(this);
-    m_pMainThread = QThread::currentThread();
     m_pMainapp = this;
     m_Workerthread.reset(new QThread());
     m_Networkthread.reset(new QThread());
     m_GameServerThread.reset(new QThread());
     m_aiSubProcess.reset(new QProcess());
 #ifdef GRAPHICSUPPORT
-    m_pMainThread->setObjectName("Mainthread");
     m_Workerthread->setObjectName("Workerthread");
     m_Networkthread->setObjectName("Networkthread");
     m_GameServerThread->setObjectName("GameServerThread");
@@ -182,7 +180,7 @@ void Mainapp::shutdown()
 bool Mainapp::isWorker()
 {
     return QThread::currentThread() == m_Workerthread.get() ||
-            (QThread::currentThread() == m_pMainThread &&
+            ((QThread::currentThread() == m_pMainThread || m_pMainThread == nullptr) &&
              (m_shuttingDown || !m_Worker->getStarted()));
 }
 
@@ -199,6 +197,13 @@ void Mainapp::loadRessources()
 
 void Mainapp::nextStartUpStep(StartupPhase step)
 {
+    if (m_pMainThread == nullptr)
+    {
+        m_pMainThread = QThread::currentThread();
+#ifdef GRAPHICSUPPORT
+        m_pMainThread->setObjectName("Mainthread");
+#endif
+    }
     GameConsole::print("Loading startup phase: " + QString::number(step), GameConsole::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     m_startUpStep = step;
@@ -210,10 +215,10 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_aiProcessPipe->moveToThread(m_Workerthread.get());
             emit m_aiProcessPipe->sigStartPipe();
             pLoadingScreen->moveToThread(m_Workerthread.get());
-            m_Audiothread.reset(new AudioManager(m_noAudio));
-            m_Audiothread->initAudio();
-            m_Audiothread->clearPlayList();
-            m_Audiothread->loadFolder("resources/music/hauptmenue");
+            m_AudioManager.reset(new AudioManager(m_noAudio));
+            m_AudioManager->initAudio();
+            m_AudioManager->clearPlayList();
+            m_AudioManager->loadFolder("resources/music/hauptmenue");
             FontManager::getInstance();
             // load ressources by creating the singletons
             BackgroundManager::getInstance();
@@ -254,7 +259,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case StartupPhase::Building:
         {
-            m_Audiothread->playRandom();
+            m_AudioManager->playRandom();
             redrawUi();
             BuildingSpriteManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading CO Textures..."), step  * stepProgress);
@@ -365,7 +370,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             redrawUi();
             if (!m_noAudio)
             {
-                m_Audiothread->createSoundCache();
+                m_AudioManager->createSoundCache();
             }
             pLoadingScreen->setProgress(tr("Loading Scripts ..."), SCRIPT_PROCESS);
             break;
@@ -825,7 +830,7 @@ void Mainapp::onQuit()
         m_Worker.reset(nullptr);
     }
     QCoreApplication::processEvents();
-    m_Audiothread.reset(nullptr);
+    m_AudioManager.reset(nullptr);
     QCoreApplication::processEvents();
     if (m_Networkthread->isRunning())
     {

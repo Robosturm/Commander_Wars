@@ -49,6 +49,14 @@ var Constructor = function()
         data.addData(qsTr("Game Options"), "OPTIONS", "options");
         data.addData(qsTr("Music"), "SOUND", "music");;
     };
+    this.getName = function(map)
+    {
+        return qsTr("Options");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Allows you to modify several options of the game.");
+    };
 }
 
 

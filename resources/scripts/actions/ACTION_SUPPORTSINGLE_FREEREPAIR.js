@@ -119,6 +119,10 @@ var Constructor = function()
         ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX = -1;
         ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY = -1;
     };
+    this.getName = function()
+    {
+        return qsTr("Free repair");
+    };
     this.getDescription = function()
     {
         return qsTr("Repairs and refills the target unit. The repair costs don't have to be paid.");

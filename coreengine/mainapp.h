@@ -104,9 +104,9 @@ public:
         return m_pMainapp;
     }
 
-    inline AudioManager* getAudioThread()
+    inline AudioManager* getAudioManager()
     {
-        return getInstance()->m_Audiothread.get();
+        return getInstance()->m_AudioManager.get();
     }
 
     inline static QThread* getWorkerthread()
@@ -318,9 +318,8 @@ private:
     QScopedPointer<QThread> m_GameServerThread;
     QScopedPointer<QProcess> m_aiSubProcess;
     QScopedPointer<WorkerThread> m_Worker;
-    QScopedPointer<AudioManager> m_Audiothread;
+    QScopedPointer<AudioManager> m_AudioManager;
     spAiProcessPipe m_aiProcessPipe;
-    QThread* m_pMainThread{nullptr};
     spTCPClient m_slaveClient;
     QString m_initScript;
     bool m_createSlaveLogs{false};

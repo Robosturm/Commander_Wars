@@ -37,6 +37,7 @@ var Constructor = function()
 
         var animation = Global[building.getBuildingID()].createRayAnimation(building, x, y, fields, map);
         animation.setEndOfAnimationCall("ACTION_DEATHRAY_FIRE", "performPostAnimation");
+        animation.addSound("deathray_fire.wav");
         ACTION_DEATHRAY_FIRE.postAnimationX = x;
         ACTION_DEATHRAY_FIRE.postAnimationY = y;
         ACTION_DEATHRAY_FIRE.postAnimationBuilding = building;
@@ -73,6 +74,10 @@ var Constructor = function()
         ACTION_DEATHRAY_FIRE.postAnimationX = null;
         ACTION_DEATHRAY_FIRE.postAnimationY = null;
         ACTION_DEATHRAY_FIRE.postAnimationBuilding = null;
+    };
+    this.getName = function()
+    {
+        return qsTr("Fire with death ray");
     };
     this.getDescription = function()
     {

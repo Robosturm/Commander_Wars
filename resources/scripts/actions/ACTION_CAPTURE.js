@@ -137,6 +137,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.getName = function()
+    {
+        return qsTr("Capture");
+    };
     this.getDescription = function()
     {
         return qsTr("Orders a unit to capture a building. Once the resistant is reduced to 0 the building  will generate effects for your army based on the captured building.");

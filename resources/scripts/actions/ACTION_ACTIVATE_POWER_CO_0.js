@@ -50,6 +50,12 @@ var Constructor = function()
     {
         return true;
     };
+
+    this.getName = function()
+    {
+        return qsTr("Power of CO 1");
+    };
+
     this.getDescription = function()
     {
         return qsTr("Activates the Power of your first CO. Read the CO's power for more information.");

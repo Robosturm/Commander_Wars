@@ -46,9 +46,9 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
         sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/mapselection");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/mapselection");
+    pApp->getAudioManager()->playRandom();
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
@@ -183,7 +183,7 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
             });
             pSprite->addTween(tween);
             m_pMapBackground->addChild(pSprite);
-            Mainapp::getInstance()->getAudioThread()->playSound("firework.wav");
+            Mainapp::getInstance()->getAudioManager()->playSound("firework.wav");
             eventQueueEmpty = false;
         }
     }
@@ -223,7 +223,7 @@ void CampaignMenu::playNextEvent(qint32 event)
     {
         GameManager* pGameManager = GameManager::getInstance();
         oxygine::ResAnim* pAnim = pGameManager->getResAnim("campaignFlagAppear");
-        Mainapp::getInstance()->getAudioThread()->playSound("flagAppear.wav");
+        Mainapp::getInstance()->getAudioManager()->playSound("flagAppear.wav");
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         qint32 width = m_pMapBackground->getScaledWidth();
         qint32 height = m_pMapBackground->getScaledHeight();
@@ -292,7 +292,7 @@ void CampaignMenu::showMinimap()
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     if (pMap.get() != nullptr)
     {
-        Mainapp::getInstance()->getAudioThread()->playSound("minimapOpen.wav");
+        Mainapp::getInstance()->getAudioManager()->playSound("minimapOpen.wav");
         qint32 x = m_currentMapFlagPosition.x();
         qint32 y = m_currentMapFlagPosition.y();
         GameManager* pGameManager = GameManager::getInstance();
@@ -323,7 +323,7 @@ void CampaignMenu::hideMinimap()
 {
     if (m_pMapSelectionView->getMinimapPanel()->getParent() == m_pMapBackground.get())
     {
-        Mainapp::getInstance()->getAudioThread()->playSound("minimapOpen.wav");
+        Mainapp::getInstance()->getAudioManager()->playSound("minimapOpen.wav");
         m_pMapSelectionView->getMinimapPanel()->detach();
     }
 }
@@ -478,7 +478,7 @@ void CampaignMenu::mapSelectionItemChanged(QString item)
 
 void CampaignMenu::slotButtonNext()
 {
-    Mainapp::getInstance()->getAudioThread()->playSound("moveOut.wav");
+    Mainapp::getInstance()->getAudioManager()->playSound("moveOut.wav");
     m_pMapSelectionView->loadCurrentMap();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     if (pMap.get() != nullptr)

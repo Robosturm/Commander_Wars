@@ -27,7 +27,10 @@ GameScript::~GameScript()
     {
         CONSOLE_PRINT("Deleting gameScript", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->deleteObject(m_scriptName);
+        if (pInterpreter != nullptr)
+        {
+            pInterpreter->deleteObject(m_scriptName);
+        }
     }
 }
 

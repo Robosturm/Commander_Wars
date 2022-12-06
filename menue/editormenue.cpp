@@ -83,9 +83,9 @@ EditorMenue::EditorMenue()
 
     m_Topbar = spTopbar::create(0, Settings::getWidth());
 
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/mapeditor");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/mapeditor");
+    pApp->getAudioManager()->playRandom();
 
     m_Topbar->addGroup(tr("Menu"));
     m_Topbar->addItem(tr("View Map Stats"),     "VIEWMAPSTATS", 0, tr("Shows the general information about the map."));

@@ -135,7 +135,7 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
         {
             dummyTween->setDoneCallback([=](oxygine::Event *)
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("capture_down.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("capture_down.wav");
             });
             m_audioCbDownAdded = true;
         }
@@ -159,11 +159,11 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
                     pSrite->setResAnim(m_captureBuildingResAnim.get());
                     if (m_pMap->getCurrentViewPlayer()->isEnemy(capturedPlayer))
                     {
-                        Mainapp::getInstance()->getAudioThread()->playSound("capture_enemy.wav");
+                        Mainapp::getInstance()->getAudioManager()->playSound("capture_enemy.wav");
                     }
                     else
                     {
-                        Mainapp::getInstance()->getAudioThread()->playSound("capture_ally.wav");
+                        Mainapp::getInstance()->getAudioManager()->playSound("capture_ally.wav");
                     }
                 });
             }

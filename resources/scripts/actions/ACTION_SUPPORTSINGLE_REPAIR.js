@@ -119,6 +119,10 @@ var Constructor = function()
         ACTION_SUPPORTSINGLE_REPAIR.postAnimationTargetX = -1;
         ACTION_SUPPORTSINGLE_REPAIR.postAnimationTargetY = -1;
     };
+    this.getName = function()
+    {
+        return qsTr("Repair");
+    };
     this.getDescription = function()
     {
         return qsTr("Repairs and refills the target unit. The player has to pay for the repair.");

@@ -196,7 +196,7 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
             else
             {
                 Mainapp* pApp = Mainapp::getInstance();
-                pApp->getAudioThread()->playSound("speaking.wav");
+                pApp->getAudioManager()->playSound("speaking.wav");
             }
             updateShownText();
         }

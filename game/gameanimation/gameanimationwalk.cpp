@@ -39,7 +39,7 @@ void GameAnimationWalk::start()
         }
         m_previousAnimation = nullptr;
         doPreAnimationCall();
-        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         for (auto & data : m_SoundData)
         {
             pAudioThread->playSound(data.soundFile, data.loops, data.delayMs / Settings::getWalkAnimationSpeed(), data.volume);
@@ -51,7 +51,7 @@ bool GameAnimationWalk::onFinished(bool skipping)
 {    
     
     Player* pPlayer = m_pMap->getCurrentViewPlayer();
-    Mainapp::getInstance()->getAudioThread()->stopAllSounds();
+    Mainapp::getInstance()->getAudioManager()->stopAllSounds();
     if (!m_pUnit->isStealthed(pPlayer))
     {
         m_pUnit->setUnitVisible(true, pPlayer);

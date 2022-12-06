@@ -42,13 +42,12 @@ Player::Player(GameMap* pMap)
 
 void Player::init()
 {
+    m_team = getPlayerID();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "loadDefaultPlayerColor";
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(m_pMap)});
     pInterpreter->doFunction("PLAYER", function, args);
-    m_team = getPlayerID();
-    setColor(m_Color, m_team);
 }
 
 BaseGameInputIF* Player::getBaseGameInput()
@@ -141,7 +140,7 @@ void Player::loadCOMusic()
     {
         Mainapp* pApp = Mainapp::getInstance();
         qint32 count = GlobalUtils::randIntBase(0, 1);
-        pApp->getAudioThread()->addMusic("resources/music/cos/no_co" + QString::number(count) + ".mp3", 4726, 58364);
+        pApp->getAudioManager()->addMusic("resources/music/cos/no_co" + QString::number(count) + ".mp3", 4726, 58364);
     }
 }
 

@@ -40,7 +40,10 @@ void DialogViewMapStats::init()
 DialogViewMapStats::~DialogViewMapStats()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(ViewMapStats);
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->deleteObject(ViewMapStats);
+    }
 }
 
 GameMap* DialogViewMapStats::getMap()

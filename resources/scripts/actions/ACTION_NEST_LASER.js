@@ -66,6 +66,7 @@ var Constructor = function()
 
                     animation.addSprite("nestlaser+center", -map.getImageSize() * (2 + scaleModifierX), -map.getImageSize() * (1.76 + scaleModifierY), 0, scale);
                     animation.setRotation(90 + rotation);
+                    animation.addSound("nestlaserfire.wav");
                 }
                 else
                 {
@@ -76,6 +77,7 @@ var Constructor = function()
                     var animation = GameAnimationFactory.createAnimation(map, x + point.x + offsetX, y + point.y);
                     animation.addSprite("nestlaser", -map.getImageSize() * 0.4 , -map.getImageSize() * 1.45, 0, scale);
                     animation.setRotation(90 + rotation);
+                    animation.addSound("nestlaserfire.wav");
                 }
                 var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
                 if ((unit !== null))
@@ -88,6 +90,10 @@ var Constructor = function()
                 }
             }
         }
+    };
+    this.getName = function()
+    {
+        return qsTr("Fire with nest laser");
     };
     this.getDescription = function()
     {

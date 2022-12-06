@@ -121,6 +121,14 @@ var Constructor = function()
         ACTION_DISABLE_MINE.postAnimationTargetX = -1;
         ACTION_DISABLE_MINE.postAnimationTargetY = -1;
     };
+    this.getName = function(map)
+    {
+        return qsTr("Remove mine");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Removes an enemy mine from the map.");
+    };
 }
 
 Constructor.prototype = ACTION;

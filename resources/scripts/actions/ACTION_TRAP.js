@@ -125,9 +125,17 @@ var Constructor = function()
         }
     }
 
+    this.getIcon = function(map)
+    {
+        return "help";
+    };
+    this.getName = function(map)
+    {
+        return qsTr("Trap");
+    };
     this.getDescription = function()
     {
-        return qsTr("This action can't be disabled.");
+        return qsTr("This action can't be disabled and traps a unit if you try to move over a hidden unit.");
     };
     this.isTrap = function(action, moveUnit, targetFieldUnit, targetX, targetY, previousX, previousY, moveCost, map)
     {

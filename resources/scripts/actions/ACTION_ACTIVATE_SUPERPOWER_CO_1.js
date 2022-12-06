@@ -49,6 +49,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.getName = function()
+    {
+        return qsTr("Superpower of CO 2");
+    };
     this.getDescription = function()
     {
         return qsTr("Activates the superpower of your second CO. Read the CO's superpower for more information.");

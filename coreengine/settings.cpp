@@ -1907,7 +1907,7 @@ qint32 Settings::getCurrentDevice()
 void Settings::setAudioDevice(qint32 value)
 {
 #ifdef AUDIOSUPPORT
-    AudioManager* pAudio = Mainapp::getInstance()->getAudioThread();
+    AudioManager* pAudio = Mainapp::getInstance()->getAudioManager();
     if (value == 0)
     {
         auto item = QVariant::fromValue(QMediaDevices::defaultAudioOutput());

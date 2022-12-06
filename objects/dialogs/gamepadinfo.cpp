@@ -34,7 +34,10 @@ GamepadInfo::GamepadInfo()
 GamepadInfo::~GamepadInfo()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(GamepadInfoItem);
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->deleteObject(GamepadInfoItem);
+    }
 }
 
 void GamepadInfo::remove()

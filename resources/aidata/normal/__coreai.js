@@ -297,7 +297,7 @@ var COREAI =
         var map = ai.getMap();
         var turn = map.getCurrentDay();
         var lowFuelUnitCount = ai.getUnitCount(units, [], 5, 30);
-        var apcCount = ai.getUnitCount(units, );
+        var apcCount = ai.getUnitCount(units, COREAI.supplyUnits);
         if (apcCount === 0 &&
             turn >= COREAI.minApcResupplyDay &&
             (lowFuelUnitCount > 2 ||

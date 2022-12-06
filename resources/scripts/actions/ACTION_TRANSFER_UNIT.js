@@ -35,7 +35,7 @@ var Constructor = function()
     
     this.getActionText = function(map)
     {
-        return qsTr("Transfer Unit");
+        return qsTr("Transfer unit");
     };
     this.getIcon = function(map)
     {
@@ -113,6 +113,10 @@ var Constructor = function()
 		{
 			return "FIELD";			
 		}
+    };
+    this.getName = function()
+    {
+        return qsTr("Transfer unit");
     };
 	this.getDescription = function()
 	{

@@ -10,7 +10,7 @@ var Constructor = function()
     
     this.getActionText = function(map)
     {
-        return qsTr("Nickname Unit");
+        return qsTr("Nickname unit");
     };
     this.getIcon = function(map)
     {
@@ -55,6 +55,14 @@ var Constructor = function()
     this.getStepInputType = function(action, map)
     {
         return "FIELD";
+    };
+    this.getName = function(map)
+    {
+        return qsTr("Nickname unit");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Allows you to give a unit a special nickname.");
     };
 }
 

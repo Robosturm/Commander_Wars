@@ -2384,7 +2384,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         if (baseGameInput->getAiType() == GameEnums::AiTypes_Human)
         {
             Mainapp* pApp = Mainapp::getInstance();
-            pApp->getAudioThread()->playSound("player_turn.wav");
+            pApp->getAudioManager()->playSound("player_turn.wav");
         }
     }
 }
@@ -2394,17 +2394,17 @@ void GameMap::playMusic()
     if (m_mapMusic.isEmpty())
     {
         Mainapp* pApp = Mainapp::getInstance();
-        pApp->getAudioThread()->clearPlayList();
+        pApp->getAudioManager()->clearPlayList();
         m_CurrentPlayer->loadCOMusic();
-        pApp->getAudioThread()->playRandom();
+        pApp->getAudioManager()->playRandom();
     }
     else if (m_loadedMapMusic != m_mapMusic)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        pApp->getAudioThread()->clearPlayList();
-        pApp->getAudioThread()->addMusic(m_mapMusic, m_startLoopMs, m_endLoopMs);
+        pApp->getAudioManager()->clearPlayList();
+        pApp->getAudioManager()->addMusic(m_mapMusic, m_startLoopMs, m_endLoopMs);
         m_loadedMapMusic = m_mapMusic;
-        pApp->getAudioThread()->playRandom();
+        pApp->getAudioManager()->playRandom();
     }
 }
 

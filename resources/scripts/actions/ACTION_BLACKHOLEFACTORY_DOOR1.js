@@ -116,10 +116,13 @@ var Constructor = function()
             ACHIEVEMENT_BUILD_UNIT.unitProduced(unitID);
         }
     };
+    this.getName = function()
+    {
+        return qsTr("Black Hole Factory Door 1");
+    };
     this.getDescription = function()
     {
-        return qsTr("Orders a Black Hole Factory to produce a unit at the first door. ") +
-               qsTr("The unit is able to move immediatly.");
+        return qsTr("Orders a Black Hole Factory to produce a unit at the first door. The unit is able to move immediatly.");
     };
 }
 

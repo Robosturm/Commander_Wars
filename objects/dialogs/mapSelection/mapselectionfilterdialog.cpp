@@ -35,7 +35,10 @@ MapSelectionFilterDialog::MapSelectionFilterDialog(MapFilter* filter)
 MapSelectionFilterDialog::~MapSelectionFilterDialog()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(MapSelectionFilter);
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->deleteObject(MapSelectionFilter);
+    }
 }
 
 void MapSelectionFilterDialog::exit()

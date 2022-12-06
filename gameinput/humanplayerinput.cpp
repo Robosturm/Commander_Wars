@@ -100,7 +100,7 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
         }
         else if (m_pGameAction.get() != nullptr)
         {
-            Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
+            Mainapp::getInstance()->getAudioManager()->playSound("cancel.wav");
             if ((m_pGameAction->getInputStep() > 0) ||
                 (m_pGameAction->getActionID() != ""))
             {
@@ -182,7 +182,7 @@ void HumanPlayerInput::showVisionFields(qint32 x, qint32 y)
         (!pUnit->isStealthed(m_pPlayer)))
     {
         m_showVisionFields = true;
-        Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+        Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
         auto points = pUnit->getVisionFields(pUnit->Unit::getPosition());
         for (auto & point : qAsConst(points))
         {
@@ -275,7 +275,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             qint32 maxRange = pUnit->getMaxRange(pUnit->getPosition());
             qint32 minRange = pUnit->getMinRange(pUnit->getPosition());
             spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(minRange, maxRange));
-            Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+            Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
             UnitPathFindingSystem pfs(m_pMap, m_pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
             pfs.explore();
             auto points = pfs.getAllNodePointsFast();
@@ -307,7 +307,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             QPoint buildingPos(pBuilding->Building::getX(), pBuilding->Building::getY());
             if (pPoints.get() != nullptr && pPoints->size() > 0)
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
                 for (auto & point : pPoints->getVector())
                 {
                     createMarkedField(buildingPos + targetOffset + point, QColor(255, 0, 0));
@@ -404,7 +404,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         {
             if (m_CurrentMenu.get() != nullptr && Settings::getSimpleDeselect())
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("cancel.wav");
                 cancelActionInput();
             }
         }
@@ -478,7 +478,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                     }
                     if (possibleActions.size() > 0)
                     {
-                        Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+                        Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
                         if ((possibleActions.size() == 1) &&
                             (!m_pGameAction->isFinalStep(possibleActions[0])))
                         {
@@ -511,7 +511,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                             }
                             if (possibleActions.size() > 0)
                             {
-                                Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+                                Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
                                 createActionMenu(possibleActions, x, y);
                             }
                             else
@@ -578,7 +578,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 }
                 else
                 {
-                    Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
+                    Mainapp::getInstance()->getAudioManager()->playSound("cancel.wav");
                     cleanUpInput();
                 }
             }
@@ -628,7 +628,7 @@ void HumanPlayerInput::showInfoMenu(qint32 x, qint32 y)
     }
     if (possibleActions.size() > 0)
     {
-        Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+        Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
         createActionMenu(possibleActions, x, y);
     }
 
@@ -837,7 +837,7 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
 void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("Selecting unit", GameConsole::eDEBUG);
-    Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+    Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
     
     Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
     m_pUnitPathFindingSystem = spUnitPathFindingSystem::create(m_pMap, pUnit, m_pPlayer);
@@ -1532,7 +1532,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
         }
         else
         {
-            Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+            Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
             for (auto & fields : m_Fields)
             {
                 fields->setVisible(false);

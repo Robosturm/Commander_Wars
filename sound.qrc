@@ -150,5 +150,15 @@
         <file>resources/sounds/disconnect.wav</file>
         <file>resources/sounds/co_power_letter.wav</file>
         <file>resources/sounds/superpower_burst.wav</file>
+        <file>resources/sounds/crystal_healing.wav</file>
+        <file>resources/sounds/monolith_healing.wav</file>
+        <file>resources/sounds/deathray_fire.wav</file>
+        <file>resources/sounds/nestlasercharge.wav</file>
+        <file>resources/sounds/nestlaserfire.wav</file>
+        <file>resources/sounds/nestlaserrotate.wav</file>
+        <file>resources/sounds/nestmortardetonation.wav</file>
+        <file>resources/sounds/nestmortarlaunch.wav</file>
+        <file>resources/sounds/talongunattack.wav</file>
+        <file>resources/sounds/talonguntargeting.wav</file>
     </qresource>
 </RCC>

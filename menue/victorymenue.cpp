@@ -65,9 +65,9 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
 
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/victorymenue");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/victorymenue");
+    pApp->getAudioManager()->playRandom();
 
     GameManager* pGameManager = GameManager::getInstance();
     m_pGraphBackground = oxygine::spBox9Sprite::create();

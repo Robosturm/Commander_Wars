@@ -42,6 +42,10 @@ var Constructor = function()
         // disable unit commandments for this turn
         unit.setHasMoved(true);
     };
+    this.getName = function()
+    {
+        return qsTr("Wait");
+    };
     this.getDescription = function()
     {
         return qsTr("Orders a unit to wait at the current position and end all actions for this turn.");

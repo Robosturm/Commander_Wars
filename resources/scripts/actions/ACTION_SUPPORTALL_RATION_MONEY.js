@@ -154,6 +154,10 @@ var Constructor = function()
         var owner = unit.getOwner();
         owner.addFunds((20 * suppliedFuel + 100 * suppliedAmmo) * owner.getFundsModifier())
 	};
+    this.getName = function()
+    {
+        return qsTr("Ration + Money");
+    };
     this.getDescription = function()
     {
         return qsTr("Refills fuel and ammo to all units surrounding this unit and grants money based on the amount of resupply.");

@@ -53,7 +53,7 @@ Checkbox::Checkbox()
             {
                 setAnimFrame(pAnim, 1);
             }
-            Mainapp::getInstance()->getAudioThread()->playSound("checkbox.wav");
+            Mainapp::getInstance()->getAudioManager()->playSound("checkbox.wav");
             emit checkChanged(m_Checked);
         });
         setSize(pAnim->getWidth(), pAnim->getHeight());

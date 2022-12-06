@@ -85,6 +85,10 @@ var Constructor = function()
             ACHIEVEMENT_BUILD_UNIT.unitProduced(unitID);
         }
     };    
+    this.getName = function()
+    {
+        return qsTr("Build Waterplane");
+    };
     this.getDescription = function()
     {
         return qsTr("Orders an aircraft carrier to produce a waterplane which can be launched next turn.");

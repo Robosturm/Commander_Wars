@@ -55,7 +55,7 @@ void GameAnimation::start()
         setVisible(true);
         m_previousAnimation = nullptr;
         doPreAnimationCall();
-        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         for (auto & data : m_SoundData)
         {
             pAudioThread->playSound(data.soundFile, data.loops, static_cast<float>(data.delayMs) / Settings::getAnimationSpeed(), data.volume, data.stopOldestSound);
@@ -400,7 +400,7 @@ bool GameAnimation::onFinished(bool skipping)
             {
                 if (m_stopSoundAtAnimationEnd || skipping || data.loops < 0)
                 {
-                    Mainapp::getInstance()->getAudioThread()->stopSound(data.soundFile);
+                    Mainapp::getInstance()->getAudioManager()->stopSound(data.soundFile);
                 }
             }
         }

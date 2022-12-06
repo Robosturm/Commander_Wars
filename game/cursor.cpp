@@ -60,7 +60,7 @@ void Cursor::setMapPoint(qint32 x, qint32 y)
             if ((x != m_MapPointX) ||
                 (y != m_MapPointY))
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchfield.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("switchfield.wav");
             }
             m_MapPointX = x;
             m_MapPointY = y;

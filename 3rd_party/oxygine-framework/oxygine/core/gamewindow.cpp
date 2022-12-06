@@ -37,7 +37,6 @@ namespace oxygine
         setFormat(newFormat);
 #endif
         m_window = this;
-        m_mainHandle = QThread::currentThreadId();
         QObject::connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
         QObject::connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
         QObject::connect(this, &GameWindow::sigQuit, this, &GameWindow::quit, Qt::QueuedConnection);

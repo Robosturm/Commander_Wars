@@ -14,7 +14,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="55"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="56"/>
+        <source>Power of CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="61"/>
         <source>Activates the Power of your first CO. Read the CO&apos;s power for more information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -33,6 +38,11 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="55"/>
+        <source>Power of CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="60"/>
         <source>Activates the Power of your second CO. Read the CO&apos;s power for more information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -51,6 +61,11 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="55"/>
+        <source>Superpower of CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="60"/>
         <source>Activates the superpower of your first CO. Read the CO&apos;s superpower for more information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -69,6 +84,11 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="54"/>
+        <source>Superpower of CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="58"/>
         <source>Activates the superpower of your second CO. Read the CO&apos;s superpower for more information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -77,17 +97,13 @@
     <name>ACTION_ACTIVATE_TAGPOWER</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="17"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="44"/>
         <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="44"/>
-        <source>Activates the superpower of both CO&apos;s. Read the CO&apos;s superpower for more information. This will also apply the Tagpower-Synergy. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="45"/>
-        <source>The synergy gives a hidden firepower boost and a luck boost based on the affinity of the co&apos;s.</source>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="48"/>
+        <source>Activates the superpower of both CO&apos;s. Read the CO&apos;s superpower for more information. This will also apply the Tagpower-Synergy. The synergy gives a hidden firepower boost and a luck boost based on the affinity of the co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -100,12 +116,12 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="121"/>
-        <source>Orders a Black Hole Factory to produce a unit at the first door. </source>
+        <source>Black Hole Factory Door 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="122"/>
-        <source>The unit is able to move immediatly.</source>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="125"/>
+        <source>Orders a Black Hole Factory to produce a unit at the first door. The unit is able to move immediatly.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -118,12 +134,12 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="122"/>
-        <source>Orders a Black Hole Factory to produce a unit at the second door. </source>
+        <source>Black Hole Factory Door 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="123"/>
-        <source>The unit is able to move immediatly.</source>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="126"/>
+        <source>Orders a Black Hole Factory to produce a unit at the second door. The unit is able to move immediatly.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -136,12 +152,12 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="122"/>
-        <source>Orders a Black Hole Factory to produce a unit at the third door. </source>
+        <source>Black Hole Factory Door 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="123"/>
-        <source>The unit is able to move immediatly.</source>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="126"/>
+        <source>Orders a Black Hole Factory to produce a unit at the third door. The unit is able to move immediatly.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -149,11 +165,12 @@
     <name>ACTION_BUILD_TEMP_AIRPORT</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="28"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="83"/>
         <source>Build Airport</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="83"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="87"/>
         <source>Orders an apc to build an airport on a plain which can be used to resupply air units. The airport will reduce the material of the apc by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -162,11 +179,12 @@
     <name>ACTION_BUILD_TEMP_HARBOUR</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="28"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="85"/>
         <source>Build Harbour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="85"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="89"/>
         <source>Orders an apc to build a harbour on a beach which can be used to resupply sea units. The harbour will reduce the material of the apc by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -176,6 +194,16 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_UNITS.js" line="25"/>
         <source>Build</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_UNITS.js" line="129"/>
+        <source>Build unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_UNITS.js" line="133"/>
+        <source>Allows you to build a unit on this building.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -188,6 +216,11 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="90"/>
+        <source>Build Waterplane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="94"/>
         <source>Orders an aircraft carrier to produce a waterplane which can be launched next turn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -206,6 +239,11 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CANNON_FIRE.js" line="124"/>
+        <source>Fire with Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CANNON_FIRE.js" line="128"/>
         <source>Orders a minicannon or black cannon to attack a single unit to deal some damage to it.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -214,11 +252,12 @@
     <name>ACTION_CAPTURE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="59"/>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="142"/>
         <source>Capture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="142"/>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="146"/>
         <source>Orders a unit to capture a building. Once the resistant is reduced to 0 the building  will generate effects for your army based on the captured building.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -227,11 +266,12 @@
     <name>ACTION_CO_UNIT_0</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="32"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="50"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="50"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="54"/>
         <source>Deploys your first co onto the given unit. All units inside the co range of this unit will get the buff of your first co.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -240,11 +280,12 @@
     <name>ACTION_CO_UNIT_1</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="32"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="50"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="50"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="54"/>
         <source>Deploys your second co onto the given unit. All units inside the co range of this unit will get the buff of your second co.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -258,6 +299,11 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CRYSTALL_HEAL.js" line="63"/>
+        <source>Heal with Crystall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CRYSTALL_HEAL.js" line="67"/>
         <source>Orders a crystall or monolith to heal all own units around it and also refills their ammo and fuel.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -270,7 +316,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="79"/>
+        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="80"/>
+        <source>Fire with death ray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="84"/>
         <source>Orders a death ray to attack all enemy units in front of it, dealing devastating damage to them. This order has a cooldown of 7 days.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -279,7 +330,13 @@
     <name>ACTION_DELETE_UNIT</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_DELETE_UNIT.js" line="22"/>
+        <location filename="../resources/scripts/actions/ACTION_DELETE_UNIT.js" line="79"/>
         <source>Delete Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_DELETE_UNIT.js" line="83"/>
+        <source>Allows you to delete one of your own units that hasn&apos;t moved this turn.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -287,6 +344,7 @@
     <name>ACTION_DISABLE_MINE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_DISABLE_MINE.js" line="56"/>
+        <location filename="../resources/scripts/actions/ACTION_DISABLE_MINE.js" line="126"/>
         <source>Remove mine</source>
         <translation type="unfinished"></translation>
     </message>
@@ -295,12 +353,23 @@
         <source>Destroys a mine without it damaging another unit.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_DISABLE_MINE.js" line="130"/>
+        <source>Removes an enemy mine from the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_EXITGAME</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_EXITGAME.js" line="9"/>
+        <location filename="../resources/scripts/actions/ACTION_EXITGAME.js" line="26"/>
         <source>Exit Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_EXITGAME.js" line="30"/>
+        <source>Exits the current game.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -308,11 +377,12 @@
     <name>ACTION_EXPLODE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="25"/>
+        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="117"/>
         <source>Explode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="117"/>
+        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="121"/>
         <source>Destroys the current unit in a large explosion. The explosion will deal damage to all units around it.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -321,6 +391,7 @@
     <name>ACTION_FIRE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="84"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="892"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -345,7 +416,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="892"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="896"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -354,11 +425,12 @@
     <name>ACTION_FLARE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="23"/>
+        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="131"/>
         <source>Flare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="131"/>
+        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="135"/>
         <source>Fires a flare rocket at the given location. The flare rocket will reveal all terrains in an area around the target during fog of war.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -372,6 +444,11 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="54"/>
+        <source>Oozium Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="58"/>
         <source>Orders a oozium to wait at the current position and end all actions for this turn. Ooziums can wait on enemy units in doing so the enemy unit gets destroyed by the oozium.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -380,6 +457,7 @@
     <name>ACTION_INFO</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_INFO.js" line="9"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="89"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -428,22 +506,23 @@
         <source>Calculator</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="93"/>
+        <source>Allows you to get useful information about the current match.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_JOIN</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="35"/>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="111"/>
         <source>Join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="111"/>
-        <source>Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp ad the highest rank of both units. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="112"/>
-        <source>Hp exceeding the maximum will be added in form of funds to your war funds.</source>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="115"/>
+        <source>Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp ad the highest rank of both units. Hp exceeding the maximum will be added in form of funds to your war funds.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -456,6 +535,11 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_LASER_FIRE.js" line="122"/>
+        <source>Fire with laser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_LASER_FIRE.js" line="126"/>
         <source>Commands the laser to shot four laser rays. The laser rays deal damage to all units that get hit by one of the rays.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -464,11 +548,12 @@
     <name>ACTION_LOAD</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="64"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="97"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="97"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="101"/>
         <source>Loads a unit to a transporters. This makes the unit untargetable for most effects. However the units gets lost when the transporter gets destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -477,7 +562,13 @@
     <name>ACTION_LOADGAME</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_LOADGAME.js" line="9"/>
-        <source>Load Game</source>
+        <location filename="../resources/scripts/actions/ACTION_LOADGAME.js" line="26"/>
+        <source>Load game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_LOADGAME.js" line="30"/>
+        <source>Allows you to load a save game.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -485,11 +576,12 @@
     <name>ACTION_MISSILE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="35"/>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="139"/>
         <source>Missile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="139"/>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="143"/>
         <source>Launches a missile from a silo at the target area. The missile deals massive damage to all units in the area of effect.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -499,6 +591,16 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_MOVEMENTPLANNER.js" line="9"/>
         <source>Planner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_MOVEMENTPLANNER.js" line="30"/>
+        <source>Movement planner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_MOVEMENTPLANNER.js" line="34"/>
+        <source>Shows a tool allowing you to plan your moves and see if certain strategies work or not without affecting the current game state.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -511,12 +613,12 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_NEST_FACTORY_DOOR.js" line="116"/>
-        <source>Orders the Nest to produce a none naval unit. </source>
+        <source>Build unit with nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_NEST_FACTORY_DOOR.js" line="117"/>
-        <source>The unit is able to move immediatly.</source>
+        <location filename="../resources/scripts/actions/ACTION_NEST_FACTORY_DOOR.js" line="120"/>
+        <source>Orders the Nest to produce a none naval unit.  The unit is able to move immediatly.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -528,7 +630,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_NEST_LASER.js" line="94"/>
+        <location filename="../resources/scripts/actions/ACTION_NEST_LASER.js" line="96"/>
+        <source>Fire with nest laser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NEST_LASER.js" line="100"/>
         <source>Commands the laser to shot a ray. The laser rays deal damage to all units that get hit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -542,6 +649,11 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_NEST_MORTAR.js" line="88"/>
+        <source>Fire with nest mortar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NEST_MORTAR.js" line="92"/>
         <source>Commands the mortar to fire at a 3x3 square and deals damage to all units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -550,11 +662,12 @@
     <name>ACTION_NEXT_PLAYER</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="10"/>
-        <source>Next Player</source>
+        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="26"/>
+        <source>Next player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="26"/>
+        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="30"/>
         <source>Ends your turn and gives control to the next player.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -563,7 +676,13 @@
     <name>ACTION_NICKNAME_UNIT</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_NICKNAME_UNIT.js" line="13"/>
-        <source>Nickname Unit</source>
+        <location filename="../resources/scripts/actions/ACTION_NICKNAME_UNIT.js" line="61"/>
+        <source>Nickname unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NICKNAME_UNIT.js" line="65"/>
+        <source>Allows you to give a unit a special nickname.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -574,11 +693,22 @@
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NICKNAME_UNIT_INTERNAL.js" line="32"/>
+        <source>Game: Nickname unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NICKNAME_UNIT_INTERNAL.js" line="36"/>
+        <source>Allows you to give a unit a special nickname.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_OPTIONS</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="9"/>
+        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="54"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
@@ -592,6 +722,11 @@
         <source>Music</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="58"/>
+        <source>Allows you to modify several options of the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_PLACE_WATERMINE</name>
@@ -602,6 +737,11 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="137"/>
+        <source>Place Watermine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="141"/>
         <source>Places a stealthed Watermine at a given Position. The Mine automatically explodes at the start of a turn if an enemy is in explosion range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -610,7 +750,13 @@
     <name>ACTION_SAVEGAME</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SAVEGAME.js" line="9"/>
-        <source>Save Game</source>
+        <location filename="../resources/scripts/actions/ACTION_SAVEGAME.js" line="26"/>
+        <source>Save game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SAVEGAME.js" line="30"/>
+        <source>Allows you to save the game.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -618,11 +764,12 @@
     <name>ACTION_SELL_UNIT</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SELL_UNIT.js" line="26"/>
-        <source>Sell Unit</source>
+        <location filename="../resources/scripts/actions/ACTION_SELL_UNIT.js" line="97"/>
+        <source>Sell unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SELL_UNIT.js" line="97"/>
+        <location filename="../resources/scripts/actions/ACTION_SELL_UNIT.js" line="101"/>
         <source>Sells a unit for a fraction of it&apos;s current value.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -631,22 +778,13 @@
     <name>ACTION_STEALTH</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="25"/>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="68"/>
         <source>Stealth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="68"/>
-        <source>Stealths a unit and makes it invisible to all enemies. A stealthed unit is only visible when a unit is nearby it. In addition only units of the same Unit Type </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="69"/>
-        <source> Ground, Naval or Air</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="70"/>
-        <source> can attack it. In most cases stealthed units have a higher fuel consumption per turn, while beeing stealthed.</source>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="72"/>
+        <source>&lt;r&gt;Stealths a unit and makes it invisible to all enemies. A stealthed unit is only visible when a unit is nearby it. In addition only units of the same Unit Type &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; Ground, Naval or Air&lt;/div&gt;&lt;r&gt; can attack it. In most cases stealthed units have a higher fuel consumption per turn, while beeing stealthed.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -654,12 +792,13 @@
     <name>ACTION_SUPPORTALL_CLOAK</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_CLOAK.js" line="17"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_CLOAK.js" line="91"/>
         <source>Cloak</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_CLOAK.js" line="91"/>
-        <source>Cloaks all own units.</source>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_CLOAK.js" line="95"/>
+        <source>Cloaks all own units in a 2x2 square. A cloaked unit is only visible when a unit is nearby it, but can be attacked normally.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -667,6 +806,7 @@
     <name>ACTION_SUPPORTALL_RATION</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="59"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="176"/>
         <source>Ration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -679,7 +819,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="176"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="180"/>
         <source>Refills fuel and ammo to all units surrounding this unit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -698,6 +838,11 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="159"/>
+        <source>Ration + Money</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="163"/>
         <source>Refills fuel and ammo to all units surrounding this unit and grants money based on the amount of resupply.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -716,6 +861,11 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="124"/>
+        <source>Free repair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="128"/>
         <source>Repairs and refills the target unit. The repair costs don&apos;t have to be paid.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -734,6 +884,11 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="122"/>
+        <source>Iron shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="126"/>
         <source>Shields an allied unit. This highly increases the defense of the unit until the start of the next turn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -742,6 +897,7 @@
     <name>ACTION_SUPPORTSINGLE_REPAIR</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="26"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="124"/>
         <source>Repair</source>
         <translation type="unfinished"></translation>
     </message>
@@ -751,7 +907,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="124"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="128"/>
         <source>Repairs and refills the target unit. The player has to pay for the repair.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -770,7 +926,12 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_SUPPLY.js" line="125"/>
-        <source>Refills the target unit.</source>
+        <source>Supply one unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_SUPPLY.js" line="129"/>
+        <source>Refills the target unit ammo and fuel.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -781,6 +942,16 @@
         <source>Surrender Game</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SURRENDER.js" line="26"/>
+        <source>Surrender game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SURRENDER.js" line="30"/>
+        <source>You loose the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_SURRENDER_INTERNAL</name>
@@ -789,12 +960,28 @@
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SURRENDER_INTERNAL.js" line="26"/>
+        <source>Game: surrender game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SURRENDER_INTERNAL.js" line="30"/>
+        <source>You loose the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_SWAP_COS</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SWAP_COS.js" line="10"/>
+        <location filename="../resources/scripts/actions/ACTION_SWAP_COS.js" line="42"/>
         <source>Swap CO&apos;s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SWAP_COS.js" line="46"/>
+        <source>Swaps the position of co 1 and 2 and ends your turn.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -806,8 +993,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="74"/>
-        <source>Fire with Talon Gun</source>
+        <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="71"/>
+        <source>Fire with talon gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="75"/>
+        <source>Commands the talon gun to attack all enemy units around the talon gun dealing 5 Hp of damage to them.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -815,7 +1007,8 @@
     <name>ACTION_TRANSFER_UNIT</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_TRANSFER_UNIT.js" line="38"/>
-        <source>Transfer Unit</source>
+        <location filename="../resources/scripts/actions/ACTION_TRANSFER_UNIT.js" line="119"/>
+        <source>Transfer unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -824,7 +1017,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_TRANSFER_UNIT.js" line="119"/>
+        <location filename="../resources/scripts/actions/ACTION_TRANSFER_UNIT.js" line="123"/>
         <source>Transfers a unit to another allied player.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -837,8 +1030,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_TRAP.js" line="130"/>
-        <source>This action can&apos;t be disabled.</source>
+        <location filename="../resources/scripts/actions/ACTION_TRAP.js" line="134"/>
+        <source>Trap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_TRAP.js" line="138"/>
+        <source>This action can&apos;t be disabled and traps a unit if you try to move over a hidden unit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -846,6 +1044,7 @@
     <name>ACTION_UNLOAD</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="103"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="351"/>
         <source>Unload</source>
         <translation type="unfinished"></translation>
     </message>
@@ -855,7 +1054,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="351"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="355"/>
         <source>Unloads loaded units. Units that have been loaded this turn can&apos;t move. Units that were loaded in previous turns can immediatly move after beeing unloaded.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -864,11 +1063,12 @@
     <name>ACTION_UNSTEALTH</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="25"/>
+        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="68"/>
         <source>Unstealth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="68"/>
+        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="72"/>
         <source>Unstealths a unit and makes it visible to all enemies.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -877,11 +1077,12 @@
     <name>ACTION_WAIT</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="25"/>
+        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="47"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="47"/>
+        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="51"/>
         <source>Orders a unit to wait at the current position and end all actions for this turn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5756,7 +5957,7 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>GameScript</name>
     <message>
-        <location filename="../game/gamescript.cpp" line="107"/>
+        <location filename="../game/gamescript.cpp" line="110"/>
         <source>This is a normal game with the following Victory Conditions.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6029,102 +6230,102 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="260"/>
+        <location filename="../coreengine/mainapp.cpp" line="265"/>
         <source>Loading CO Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="267"/>
+        <location filename="../coreengine/mainapp.cpp" line="272"/>
         <source>Loading Animation Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="274"/>
+        <location filename="../coreengine/mainapp.cpp" line="279"/>
         <source>Loading Game Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="281"/>
+        <location filename="../coreengine/mainapp.cpp" line="286"/>
         <source>Loading Rule Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="222"/>
+        <location filename="../coreengine/mainapp.cpp" line="227"/>
         <source>Checking for new version...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="251"/>
+        <location filename="../coreengine/mainapp.cpp" line="256"/>
         <source>Loading Building Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="290"/>
+        <location filename="../coreengine/mainapp.cpp" line="295"/>
         <source>Loading Terrain Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="297"/>
+        <location filename="../coreengine/mainapp.cpp" line="302"/>
         <source>Loading Units Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="304"/>
+        <location filename="../coreengine/mainapp.cpp" line="309"/>
         <source>Loading Battleanimation Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="311"/>
+        <location filename="../coreengine/mainapp.cpp" line="316"/>
         <source>Loading CO-Perk Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="318"/>
+        <location filename="../coreengine/mainapp.cpp" line="323"/>
         <source>Loading Wiki Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="325"/>
+        <location filename="../coreengine/mainapp.cpp" line="330"/>
         <source>Loading Userdata ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="332"/>
+        <location filename="../coreengine/mainapp.cpp" line="337"/>
         <source>Loading Achievement Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="339"/>
+        <location filename="../coreengine/mainapp.cpp" line="344"/>
         <source>Loading Shop Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="346"/>
+        <location filename="../coreengine/mainapp.cpp" line="351"/>
         <source>Loading Movement planner addin Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="353"/>
+        <location filename="../coreengine/mainapp.cpp" line="358"/>
         <source>Loading Ui Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="360"/>
+        <location filename="../coreengine/mainapp.cpp" line="365"/>
         <source>Loading sounds ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="370"/>
+        <location filename="../coreengine/mainapp.cpp" line="375"/>
         <source>Loading Scripts ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="701"/>
+        <location filename="../coreengine/mainapp.cpp" line="706"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="707"/>
+        <location filename="../coreengine/mainapp.cpp" line="712"/>
         <source>Please use the details or the crashlog to report a bug at 
 &lt;a href=&apos;https://github.com/Robosturm/Commander_Wars/issues&apos;&gt;https://github.com/Robosturm/Commander_Wars/issues&lt;/a&gt;
  The game will be terminated sadly. :(</source>
@@ -6164,7 +6365,7 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>MapEditDialog</name>
     <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="188"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="191"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10230,37 +10431,42 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WikiDatabase</name>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="50"/>
+        <location filename="../wiki/wikidatabase.cpp" line="51"/>
         <source>CO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="56"/>
+        <location filename="../wiki/wikidatabase.cpp" line="57"/>
         <source>Terrain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="61"/>
+        <location filename="../wiki/wikidatabase.cpp" line="62"/>
         <source>Building</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="67"/>
+        <location filename="../wiki/wikidatabase.cpp" line="68"/>
         <source>Unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="74"/>
+        <location filename="../wiki/wikidatabase.cpp" line="75"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/wikidatabase.cpp" line="82"/>
         <source>Perk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="77"/>
+        <location filename="../wiki/wikidatabase.cpp" line="85"/>
         <source>Damage Table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="77"/>
+        <location filename="../wiki/wikidatabase.cpp" line="85"/>
         <source>Others</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10304,7 +10510,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Wikipage</name>
     <message>
-        <location filename="../wiki/wikipage.cpp" line="33"/>
+        <location filename="../wiki/wikipage.cpp" line="32"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12110,689 +12316,6 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/general/action.js" line="17"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_activate_power_co_0</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_power_co_0.js" line="8"/>
-        <source>Activates the Power of your first CO. Read the CO&apos;s power for more information.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_power_co_0.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_power_co_0.js" line="18"/>
-        <source>Power of CO 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_activate_power_co_1</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_power_co_1.js" line="8"/>
-        <source>Activates the Power of your second CO. Read the CO&apos;s power for more information.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_power_co_1.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_power_co_1.js" line="18"/>
-        <source>Power of CO 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_activate_superpower_co_0</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_superpower_co_0.js" line="8"/>
-        <source>Activates the superpower of your first CO. Read the CO&apos;s superpower for more information.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_superpower_co_0.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_superpower_co_0.js" line="18"/>
-        <source>Superpower of CO 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_activate_superpower_co_1</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_superpower_co_1.js" line="8"/>
-        <source>Activates the superpower of your second CO. Read the CO&apos;s superpower for more information.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_superpower_co_1.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_superpower_co_1.js" line="18"/>
-        <source>Superpower of CO 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_activate_tagpower</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="8"/>
-        <source>Activates the superpower of both CO&apos;s. Read the CO&apos;s superpower for more information. This will also apply the Tagpower-Synergy. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="9"/>
-        <source>The synergy gives a hidden firepower boost and a luck boost based on the affinity of the co&apos;s.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="14"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="19"/>
-        <source>Tagpower</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_blackholefactory_door1</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="8"/>
-        <source>Orders a Black Hole Factory to produce a unit at the first door. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="9"/>
-        <source>The unit is able to move immediatly.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="14"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="19"/>
-        <source>Black Hole Factory Door 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_blackholefactory_door2</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="8"/>
-        <source>Orders a Black Hole Factory to produce a unit at the second door. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="9"/>
-        <source>The unit is able to move immediatly.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="14"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="19"/>
-        <source>Black Hole Factory Door 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_blackholefactory_door3</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="8"/>
-        <source>Orders a Black Hole Factory to produce a unit at the third door. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="9"/>
-        <source>The unit is able to move immediatly.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="14"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="19"/>
-        <source>Black Hole Factory Door 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_build_temp_airport</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_build_temp_airport.js" line="8"/>
-        <source>Orders an apc to build an airport on a plain which can be used to resupply air units. The airport will reduce the material of the apc by 1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_build_temp_airport.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_build_temp_airport.js" line="18"/>
-        <source>Build Airport</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_build_temp_harbour</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_build_temp_harbour.js" line="8"/>
-        <source>Orders an apc to build a harbour on a beach which can be used to resupply sea units. The harbour will reduce the material of the apc by 1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_build_temp_harbour.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_build_temp_harbour.js" line="18"/>
-        <source>Build Harbour</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_build_waterplane</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_build_waterplane.js" line="8"/>
-        <source>Orders an aircraft carrier to produce a waterplane which can be launched next turn.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_build_waterplane.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_build_waterplane.js" line="18"/>
-        <source>Build Waterplane</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_cannon_fire</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_cannon_fire.js" line="8"/>
-        <source>Orders a minicannon or black cannon to attack a single unit to deal some damage to it.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_cannon_fire.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_cannon_fire.js" line="18"/>
-        <source>Fire with Cannon</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_capture</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_capture.js" line="8"/>
-        <source>Orders a unit to capture a building. Once the resistant is reduced to 0 the building  will generate effects for your army based on the captured building.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_capture.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_capture.js" line="18"/>
-        <source>Capture</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_co_unit_0</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_co_unit_0.js" line="8"/>
-        <source>Deploys your first co onto the given unit. All units inside the co range of this unit will get the buff of your first co.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_co_unit_0.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_co_unit_0.js" line="18"/>
-        <source>CO 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_co_unit_1</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_co_unit_1.js" line="8"/>
-        <source>Deploys your second co onto the given unit. All units inside the co range of this unit will get the buff of your second co.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_co_unit_1.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_co_unit_1.js" line="18"/>
-        <source>CO 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_crystall_heal</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_crystall_heal.js" line="8"/>
-        <source>Orders a crystall or monolith to heal all own units around it and also refills their ammo and fuel.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_crystall_heal.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_crystall_heal.js" line="18"/>
-        <source>Heal with Crystall</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_deathray_fire</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_deathray_fire.js" line="8"/>
-        <source>Orders a death ray to attack all enemy units in front of it, dealing devastating damage to them. This order has a cooldown of 7 days.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_deathray_fire.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_deathray_fire.js" line="18"/>
-        <source>Fire with Death Ray</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_explode</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_explode.js" line="8"/>
-        <source>Destroys the current unit in a large explosion. The explosion will deal damage to all units around it.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_explode.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_explode.js" line="18"/>
-        <source>Explode</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_fire</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_fire.js" line="8"/>
-        <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_fire.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_fire.js" line="18"/>
-        <source>Fire</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_flare</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_flare.js" line="8"/>
-        <source>Fires a flare rocket at the given location. The flare rocket will reveal all terrains in an area around the target during fog of war.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_flare.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_flare.js" line="18"/>
-        <source>Flare</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_hoellium_wait</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_hoellium_wait.js" line="8"/>
-        <source>Orders a oozium to wait at the current position and end all actions for this turn. Ooziums can wait on enemy units in doing so the enemy unit gets destroyed by the oozium.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_hoellium_wait.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_hoellium_wait.js" line="18"/>
-        <source>Oozium Wait</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_join</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_join.js" line="8"/>
-        <source>Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp ad the highest rank of both units. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_join.js" line="9"/>
-        <source>Hp exceeding the maximum will be added in form of funds to your war funds.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_join.js" line="14"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_join.js" line="19"/>
-        <source>Join</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_laser_fire</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_laser_fire.js" line="8"/>
-        <source>Commands the laser to shot four laser rays. The laser rays deal damage to all units that get hit by one of the rays.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_laser_fire.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_laser_fire.js" line="18"/>
-        <source>Fire with Laser</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_load</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_load.js" line="8"/>
-        <source>Loads a unit to a transporters. This makes the unit untargetable for most effects. However the units gets lost when the transporter gets destroyed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_load.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_load.js" line="18"/>
-        <source>Load</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_missile</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_missile.js" line="8"/>
-        <source>Launches a missile from a silo at the target area. The missile deals massive damage to all units in the area of effect.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_missile.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_missile.js" line="18"/>
-        <source>Missile</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_next_player</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_next_player.js" line="8"/>
-        <source>Ends your turn and gives control to the next player.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_next_player.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_next_player.js" line="18"/>
-        <source>Next Player</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_place_watermine</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_place_watermine.js" line="8"/>
-        <source>Places a stealthed Watermine at a given Position. The Mine automatically explodes at the start of a turn if an enemy is in explosion range.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_place_watermine.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_place_watermine.js" line="18"/>
-        <source>Place Watermine</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_stealth</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_stealth.js" line="8"/>
-        <source>Stealths a unit and makes it invisible to all enemies. A stealthed unit is only visible when a unit is nearby it. In addition only units of the same Unit Type </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_stealth.js" line="9"/>
-        <source> Ground, Naval or Air</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_stealth.js" line="10"/>
-        <source> can attack it. In most cases stealthed units have a higher fuel consumption per turn, while beeing stealthed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_stealth.js" line="15"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_stealth.js" line="20"/>
-        <source>Stealth</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_supportall_ration</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_supportall_ration.js" line="8"/>
-        <source>Refills fuel and ammo to all units surrounding this unit.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_supportall_ration.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_supportall_ration.js" line="18"/>
-        <source>Ration</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_supportsingle_freerepair</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_supportsingle_freerepair.js" line="8"/>
-        <source>Repairs and refills the target unit. The repair costs don&apos;t have to be paid.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_supportsingle_freerepair.js" line="13"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_supportsingle_freerepair.js" line="18"/>
-        <source>Repair</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_supportsingle_iron_shield</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_supportsingle_iron_shield.js" line="7"/>
-        <source>Shields an allied unit. This highly increases the defense of the unit until the start of the next turn.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_supportsingle_iron_shield.js" line="12"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_supportsingle_iron_shield.js" line="17"/>
-        <source>Iron Shield</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_supportsingle_repair</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_supportsingle_repair.js" line="7"/>
-        <source>Repairs and refills the target unit. The player has to pay for the repair.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_supportsingle_repair.js" line="12"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_supportsingle_repair.js" line="17"/>
-        <source>Repair</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_talon_gun</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_talon_gun.js" line="7"/>
-        <source>Commands the talon gun to attack all enemy units around the talon gun dealing 5 Hp of damage to them.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_talon_gun.js" line="12"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_talon_gun.js" line="17"/>
-        <source>Fire with Talon Gun</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_unload</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_unload.js" line="7"/>
-        <source>Unloads loaded units. Units that have been loaded this turn can&apos;t move. Units that were loaded in previous turns can immediatly move after beeing unloaded.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_unload.js" line="12"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_unload.js" line="17"/>
-        <source>Unload</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_unstealth</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_unstealth.js" line="7"/>
-        <source>Unstealths a unit and makes it visible to all enemies.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_unstealth.js" line="12"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_unstealth.js" line="17"/>
-        <source>Unstealth</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>action_wait</name>
-    <message>
-        <location filename="../resources/scripts/wiki/action_wait.js" line="7"/>
-        <source>Orders a unit to wait at the current position and end all actions for this turn.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_wait.js" line="12"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/wiki/action_wait.js" line="17"/>
-        <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -27244,6 +26767,32 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
 </context>
 <context>
+    <name>zdestroyed_gate_e_w</name>
+    <message>
+        <location filename="../resources/scripts/building/zdestroyed_gate_e_w.js" line="19"/>
+        <source>Destroyed gate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zdestroyed_gate_e_w.js" line="27"/>
+        <source>A destroyed gate through a wall can be crossed by all players.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zdestroyed_gate_n_s</name>
+    <message>
+        <location filename="../resources/scripts/building/zdestroyed_gate_n_s.js" line="20"/>
+        <source>Destroyed gate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zdestroyed_gate_n_s.js" line="28"/>
+        <source>A destroyed gate through a wall can be crossed by players.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>zfortress</name>
     <message>
         <location filename="../resources/scripts/building/zfortress.js" line="32"/>
@@ -27480,12 +27029,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_nest_laser</name>
     <message>
-        <location filename="../resources/scripts/building/znest_nest_laser.js" line="45"/>
+        <location filename="../resources/scripts/building/znest_nest_laser.js" line="50"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_nest_laser.js" line="49"/>
+        <location filename="../resources/scripts/building/znest_nest_laser.js" line="54"/>
         <source>Nest of Dark Matter. Currently only a visual.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -123,6 +123,15 @@ var Constructor = function()
             data.addData(name + " " + unitData[i][0].toString(), unitData[i][1], unitData[i][1], unitData[i][0], enabled);
         }
     };
+
+    this.getName = function()
+    {
+        return qsTr("Build unit");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Allows you to build a unit on this building.");
+    };
 }
 
 Constructor.prototype = ACTION;

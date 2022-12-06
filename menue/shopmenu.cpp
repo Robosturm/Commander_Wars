@@ -40,9 +40,9 @@ Shopmenu::Shopmenu()
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
 
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/shop");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/shop");
+    pApp->getAudioManager()->playRandom();
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");

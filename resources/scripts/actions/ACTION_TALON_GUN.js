@@ -33,10 +33,11 @@ var Constructor = function()
         var y = building.getY() + offset.y;
         building.setFireCount(building.getFireCount() - 1);
 
-        var owner = building.getOwner();
+        var owner = building.getOwner();        
         var talonGunAnimation = GameAnimationFactory.createAnimation(map, x, y);
         talonGunAnimation.addSprite("talon+gun+fire", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, 0, 1.33);
         talonGunAnimation.addSpriteAnimTable("talon+gun+fire+mask", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, owner, 0, 1.33, 1.33, 0, 0, GameEnums.Recoloring_Matrix);
+        talonGunAnimation.addSound("talongunattack.wav");
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var animation = null;
         var size = fields.size();
@@ -65,13 +66,13 @@ var Constructor = function()
         talonGunInAnimation.addSpriteAnimTable("talon+gun+in+mask", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, owner, 0, 1.33, 1.33, 0, 0, GameEnums.Recoloring_Matrix);
         talonGunAnimation.queueAnimation(talonGunInAnimation);
     };
-    this.performPostAnimation = function(postAnimation, map)
+    this.getName = function()
     {
-
+        return qsTr("Fire with talon gun");
     };
     this.getDescription = function()
     {
-        return qsTr("Fire with Talon Gun");
+        return qsTr("Commands the talon gun to attack all enemy units around the talon gun dealing 5 Hp of damage to them.");
     };
 }
 

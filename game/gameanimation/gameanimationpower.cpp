@@ -75,7 +75,7 @@ GameAnimationPower::~GameAnimationPower()
 {
     if (!m_started)
     {
-        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         pAudioThread->clearPlayList();
         m_pCO->loadCOMusic();
         pAudioThread->playRandom();
@@ -229,7 +229,7 @@ void GameAnimationPower::start()
 {
     if (!m_started)
     {
-        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         pAudioThread->clearPlayList();
         m_pCO->loadCOMusic();
         pAudioThread->playRandom();

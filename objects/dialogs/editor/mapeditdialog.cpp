@@ -39,7 +39,10 @@ MapEditDialog::MapEditDialog(MapEditInfo info)
 MapEditDialog::~MapEditDialog()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(MapEdit);
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->deleteObject(MapEdit);
+    }
 }
 
 void MapEditDialog::cancel()

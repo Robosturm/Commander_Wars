@@ -4,6 +4,7 @@
 #include "wiki/fieldinfo.h"
 #include "wiki/defaultwikipage.h"
 #include "wiki/damagetablepage.h"
+#include "wiki/actionwikipage.h"
 
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/unitspritemanager.h"
@@ -65,6 +66,13 @@ void WikiDatabase::load()
     for (const auto& unitId : sortedUnits)
     {
         m_Entries.append(PageData(pUnitSpriteManager->getName(unitId), unitId, {tr("Unit")}));
+    }
+
+    GameManager* pGameManager = GameManager::getInstance();
+    QStringList  actions = pGameManager->getLoadedRessources();
+    for (const auto& action : actions)
+    {
+        m_Entries.append(PageData(pGameManager->getName(action), action, {tr("Action")}));
     }
 
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
@@ -216,6 +224,7 @@ spWikipage WikiDatabase::getPage(PageData data)
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    GameManager* pGameManager = GameManager::getInstance();
     // select page loader and create wiki page
     if (pCOSpriteManager->exists(id))
     {
@@ -251,6 +260,10 @@ spWikipage WikiDatabase::getPage(PageData data)
     {
         ret = spDamageTablePage::create();
     }
+    else if (pGameManager->exists(id))
+    {
+        ret = spActionWikipage::create(id);
+    }
     else if (QFile::exists(id))
     {
         // default loader
@@ -264,7 +277,7 @@ spWikipage WikiDatabase::getPage(PageData data)
     {
         ret = spDefaultWikipage::create(id);
     }
-    ret->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    ret->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     return ret;
 }
 

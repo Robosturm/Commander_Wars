@@ -21,6 +21,14 @@ var Constructor = function()
     {
         return true;
     };
+    this.getName = function(map)
+    {
+        return qsTr("Game: surrender game");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("You loose the game.");
+    };
 }
 
 Constructor.prototype = ACTION;

@@ -735,6 +735,7 @@ set(${PROJECT_NAME}_SRCS
     wiki/defaultwikipage.cpp wiki/defaultwikipage.h
     wiki/wikiview.cpp wiki/wikiview.h
     wiki/damagetablepage.cpp wiki/damagetablepage.h
+    wiki/actionwikipage.cpp wiki/actionwikipage.h
 
     # table view
     objects/tableView/basetableitem.h objects/tableView/basetableitem.cpp

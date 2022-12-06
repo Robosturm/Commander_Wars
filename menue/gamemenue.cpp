@@ -805,7 +805,7 @@ void GameMenue::continueAfterSyncGame()
         multiplayerSyncData.m_waitingForSyncFinished)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        pApp->getAudioThread()->playSound("connect.wav");
+        pApp->getAudioManager()->playSound("connect.wav");
         multiplayerSyncData.m_waitingForSyncFinished = false;
         if (m_pNetworkInterface->getIsServer())
         {
@@ -869,7 +869,7 @@ void GameMenue::disconnected(quint64 socketID)
         else
         {
             Mainapp* pApp = Mainapp::getInstance();
-            pApp->getAudioThread()->playSound("disconnect.wav");
+            pApp->getAudioManager()->playSound("disconnect.wav");
             if (!m_pNetworkInterface->getIsServer())
             {
                 for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -1449,7 +1449,7 @@ void GameMenue::victory(qint32 team)
         {
             if (humanWin)
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("victory.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("victory.wav");
             }
             m_pMap->getGameScript()->victory(team);
         }
@@ -1914,11 +1914,11 @@ void GameMenue::startGame()
     else
     {
         CONSOLE_PRINT("Launching game as save game", GameConsole::eDEBUG);
-        pApp->getAudioThread()->clearPlayList();
+        pApp->getAudioManager()->clearPlayList();
         m_pMap->playMusic();
         m_pMap->updateUnitIcons();
         m_pMap->getGameRules()->createFogVision();
-        pApp->getAudioThread()->playRandom();
+        pApp->getAudioManager()->playRandom();
         updatePlayerinfo();
         m_ReplayRecorder.startRecording();
         if ((m_pNetworkInterface.get() == nullptr ||
@@ -2305,7 +2305,7 @@ void GameMenue::loadSaveGame(const QString savefile)
         Mainapp* pApp = Mainapp::getInstance();
         spGameMenue pMenue = spGameMenue::create(savefile, true);
         oxygine::Stage::getStage()->addChild(pMenue);
-        pApp->getAudioThread()->clearPlayList();
+        pApp->getAudioManager()->clearPlayList();
         pMenue->startGame();
         CONSOLE_PRINT("Leaving Game Menue", GameConsole::eDEBUG);
         oxygine::Actor::detach();

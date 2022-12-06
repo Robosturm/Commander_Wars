@@ -345,7 +345,7 @@ void GameConsole::setDeveloperMode(bool developerMode)
 
 void GameConsole::setVolume(qint32 volume)
 {
-    Mainapp::getInstance()->getAudioThread()->setVolume(volume);
+    Mainapp::getInstance()->getAudioManager()->setVolume(volume);
 }
 
 void GameConsole::setLogLevel(eLogLevels newLogLevel)
@@ -415,7 +415,7 @@ void GameConsole::memoryUsage()
     CONSOLE_PRINT("C++-Objects=" + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), GameConsole::eINFO);
     CONSOLE_PRINT("Textures=" + QString::number(oxygine::Texture::getHighestTextureCount()), GameConsole::eINFO);
     CONSOLE_PRINT("Materials cached=" + QString::number(oxygine::MaterialCache::mc().getSize()), GameConsole::eINFO);
-    CONSOLE_PRINT("Sounds buffered=" + QString::number(pApp->getAudioThread()->getSoundsBuffered()), GameConsole::eINFO);
+    CONSOLE_PRINT("Sounds buffered=" + QString::number(pApp->getAudioManager()->getSoundsBuffered()), GameConsole::eINFO);
 }
 
 void GameConsole::createfunnymessage(qint32 message){

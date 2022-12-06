@@ -63,7 +63,7 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
     });
     pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        Mainapp::getInstance()->getAudioThread()->playSound("button.wav");
+        Mainapp::getInstance()->getAudioManager()->playSound("button.wav");
     });
     return pButton;
 }
@@ -96,7 +96,7 @@ oxygine::spButton ObjectManager::createIconButton(QString icon, qint32 size)
     });
     pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        Mainapp::getInstance()->getAudioThread()->playSound("button.wav");
+        Mainapp::getInstance()->getAudioManager()->playSound("button.wav");
     });
     return pButton;
 }
@@ -123,7 +123,7 @@ oxygine::spButton ObjectManager::createIconButton(oxygine::spSprite pSprite, qin
     });
     pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        Mainapp::getInstance()->getAudioThread()->playSound("button.wav");
+        Mainapp::getInstance()->getAudioManager()->playSound("button.wav");
     });
     return pButton;
 }

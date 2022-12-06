@@ -22,8 +22,7 @@ namespace oxygine
 #endif
             freeObject();
             QObject* pObj = dynamic_cast<QObject*>(this);
-            if (pObj == nullptr ||
-                pObj->thread() == QThread::currentThread())
+            if (pObj == nullptr)
             {
                 delete this;
             }

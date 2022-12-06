@@ -36,9 +36,9 @@ Wikimenu::Wikimenu()
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
 
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/hauptmenue");
+    pApp->getAudioManager()->playRandom();
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);

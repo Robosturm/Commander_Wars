@@ -315,7 +315,7 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
         oxygine::Sprite* pCursor = m_Cursor.get();
         pItemBox->addEventListener(oxygine::TouchEvent::OVER, [this, pCursor, pBox, width, item](oxygine::Event *pEvent)->void
         {
-            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+            Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
             pEvent->stopPropagation();
             pCursor->setY(pBox->getY() + GameMap::getImageSize() / 2 - pCursor->getScaledHeight() / 2);
             pCursor->setX(pBox->getX() + width);
@@ -331,7 +331,7 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
                     pEvent->stopPropagation();
                     if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
                     {
-                        Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
+                        Mainapp::getInstance()->getAudioManager()->playSound("okay.wav");
                         emit sigItemSelected(action, costs);
                     }
                     else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
@@ -433,7 +433,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             if (cur == Settings::getKey_up() ||
                 cur == Settings::getKey_up2())
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
                 if (m_currentAction > m_startItem)
                 {
                     m_currentAction--;
@@ -458,7 +458,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_down() ||
                      cur == Settings::getKey_down2())
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
                 if (m_currentAction < endItemCount - 1)
                 {
                     m_currentAction++;
@@ -483,7 +483,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             if (cur == Settings::getKey_left() ||
                 cur == Settings::getKey_left2())
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
                 if (m_currentAction - m_rowCount >= m_startItem)
                 {
                     m_currentAction -= m_rowCount;
@@ -500,7 +500,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_right() ||
                      cur == Settings::getKey_right2())
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
                 if (m_currentAction + m_rowCount < endItemCount)
                 {
                     m_currentAction += m_rowCount;
@@ -520,7 +520,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                         if ((m_EnabledList.size() > 0 && m_EnabledList[m_currentAction]) ||
                             (m_EnabledList.size() == 0))
                         {
-                            Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
+                            Mainapp::getInstance()->getAudioManager()->playSound("okay.wav");
                             if (m_CostList.size() == m_ActionIDs.size())
                             {
                                 emit sigItemSelected(m_ActionIDs[m_currentAction], m_CostList[m_currentAction]);

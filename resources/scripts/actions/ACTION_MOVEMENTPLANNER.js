@@ -25,6 +25,14 @@ var Constructor = function()
     {
         return "MENU";
     };
+    this.getName = function()
+    {
+        return qsTr("Movement planner");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Shows a tool allowing you to plan your moves and see if certain strategies work or not without affecting the current game state.");
+    };
 }
 
 

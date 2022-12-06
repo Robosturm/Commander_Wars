@@ -120,9 +120,13 @@ var Constructor = function()
         ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetX = -1;
         ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetY = -1;
     };
+    this.getName = function()
+    {
+        return qsTr("Supply one unit");
+    };
     this.getDescription = function()
     {
-        return qsTr("Refills the target unit.");
+        return qsTr("Refills the target unit ammo and fuel.");
     };
 }
 

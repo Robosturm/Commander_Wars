@@ -25,7 +25,7 @@ BaseGamemenu::BaseGamemenu(spGameMap pMap, bool clearPlayerlist)
     Interpreter::setCppOwnerShip(this);
     if (clearPlayerlist)
     {
-        pApp->getAudioThread()->clearPlayList();
+        pApp->getAudioManager()->clearPlayList();
     }
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
@@ -39,7 +39,7 @@ BaseGamemenu::BaseGamemenu(qint32 width, qint32 heigth, QString map, bool savega
 {
     Mainapp* pApp = Mainapp::getInstance();
     Interpreter::setCppOwnerShip(this);
-    pApp->getAudioThread()->clearPlayList();
+    pApp->getAudioManager()->clearPlayList();
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
@@ -71,7 +71,10 @@ BaseGamemenu::~BaseGamemenu()
     if (!m_jsName.isEmpty())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->deleteObject(m_jsName);
+        if (pInterpreter != nullptr)
+        {
+            pInterpreter->deleteObject(m_jsName);
+        }
     }
     if (m_MapMoveThread.isRunning())
     {

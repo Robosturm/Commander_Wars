@@ -84,6 +84,14 @@ var Constructor = function()
         data.addData(qsTr("Calculator"), "CALCULATOR", "calculator");
 
     };
+    this.getName = function()
+    {
+        return qsTr("Info");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Allows you to get useful information about the current match.");
+    };
 }
 
 

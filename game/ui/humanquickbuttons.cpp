@@ -23,5 +23,8 @@ HumanQuickButtons::HumanQuickButtons(GameMenue* pMenu)
 HumanQuickButtons::~HumanQuickButtons()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(quickButtonsMenu);
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->deleteObject(quickButtonsMenu);
+    }
 }

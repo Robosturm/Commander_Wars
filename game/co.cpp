@@ -223,11 +223,11 @@ void CO::limitPowerbar(float previousValue)
         Mainapp* pApp = Mainapp::getInstance();
         if (previousValue < m_powerStars && m_powerFilled >= m_powerStars)
         {
-            pApp->getAudioThread()->playSound("powerready.wav");
+            pApp->getAudioManager()->playSound("powerready.wav");
         }
         else if (previousValue < m_powerStars + m_superpowerStars && m_powerFilled >= m_powerStars + m_superpowerStars)
         {
-            pApp->getAudioThread()->playSound("superpowerready.wav");
+            pApp->getAudioManager()->playSound("superpowerready.wav");
         }
     }
 }

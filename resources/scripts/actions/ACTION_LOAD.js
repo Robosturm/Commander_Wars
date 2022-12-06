@@ -92,6 +92,10 @@ var Constructor = function ()
         ACTION_LOAD.postAnimationTargetUnit = null;
         ACTION_LOAD.postAnimationUnit = null;
     };
+    this.getName = function()
+    {
+        return qsTr("Load");
+    };
     this.getDescription = function()
     {
         return qsTr("Loads a unit to a transporters. This makes the unit untargetable for most effects. However the units gets lost when the transporter gets destroyed.");

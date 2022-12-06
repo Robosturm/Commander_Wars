@@ -96,9 +96,9 @@ OptionMenue::OptionMenue(const QString & xmlFile)
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
 
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/credits_options");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/credits_options");
+    pApp->getAudioManager()->playRandom();
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"), 200);
     addChild(pButtonExit);

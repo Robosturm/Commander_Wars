@@ -873,7 +873,7 @@ void BattleAnimationSprite::loadSound(QString file, qint32 loops, qint32 delay, 
     if (m_playSound)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        AudioManager* pAudio = pApp->getAudioThread();
+        AudioManager* pAudio = pApp->getAudioManager();
         SoundData data;
         data.sound = file;
         data.loops = loops;
@@ -885,7 +885,7 @@ void BattleAnimationSprite::loadSound(QString file, qint32 loops, qint32 delay, 
 void BattleAnimationSprite::stopSound(bool forceStop)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    AudioManager* pAudio = pApp->getAudioThread();
+    AudioManager* pAudio = pApp->getAudioManager();
     qint32 i = 0;
     while (i < m_Sounds.size())
     {

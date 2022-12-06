@@ -81,7 +81,10 @@ void MovementPlannerAddIn::onMenuInputDone()
 void MovementPlannerAddIn::hide()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(AddIn);
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->deleteObject(AddIn);
+    }
     resetUi();
     detach();
     m_pPlanner->setFocused(true);

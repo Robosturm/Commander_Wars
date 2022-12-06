@@ -49,7 +49,7 @@ var Constructor = function()
 
         var animation = GameAnimationFactory.createAnimation(map, ACTION_NEST_MORTAR.postAnimationTargetX - ACTION_NEST_MORTAR.radius, ACTION_NEST_MORTAR.postAnimationTargetY - ACTION_NEST_MORTAR.radius - 1);
         animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 2, 0);
-        animation.setSound("missle_explosion.wav");
+        animation.setSound("nestmortardetonation.wav");
         animation.setEndOfAnimationCall("ACTION_NEST_MORTAR", "performPostAnimation");
     };
     this.performPostAnimation = function(postAnimation, map)
@@ -82,6 +82,10 @@ var Constructor = function()
         ACTION_NEST_MORTAR.postAnimationTargetY = -1;
         ACTION_NEST_MORTAR.postAnimationBuildingX = -1;
         ACTION_NEST_MORTAR.postAnimationBuildingY = -1;
+    };
+    this.getName = function()
+    {
+        return qsTr("Fire with nest mortar");
     };
     this.getDescription = function()
     {

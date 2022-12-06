@@ -2001,42 +2001,6 @@
         <file>resources/scripts/weapons/weapon_vulcan_cannon.js</file>
         <file>resources/scripts/weapons/weapon_waterplane_missile.js</file>
         <file>resources/scripts/weapons/weapontable.csv</file>
-        <file>resources/scripts/wiki/action_activate_power_co_0.js</file>
-        <file>resources/scripts/wiki/action_activate_power_co_1.js</file>
-        <file>resources/scripts/wiki/action_activate_superpower_co_0.js</file>
-        <file>resources/scripts/wiki/action_activate_superpower_co_1.js</file>
-        <file>resources/scripts/wiki/action_activate_tagpower.js</file>
-        <file>resources/scripts/wiki/action_blackholefactory_door1.js</file>
-        <file>resources/scripts/wiki/action_blackholefactory_door2.js</file>
-        <file>resources/scripts/wiki/action_blackholefactory_door3.js</file>
-        <file>resources/scripts/wiki/action_build_temp_airport.js</file>
-        <file>resources/scripts/wiki/action_build_temp_harbour.js</file>
-        <file>resources/scripts/wiki/action_build_waterplane.js</file>
-        <file>resources/scripts/wiki/action_cannon_fire.js</file>
-        <file>resources/scripts/wiki/action_capture.js</file>
-        <file>resources/scripts/wiki/action_co_unit_0.js</file>
-        <file>resources/scripts/wiki/action_co_unit_1.js</file>
-        <file>resources/scripts/wiki/action_crystall_heal.js</file>
-        <file>resources/scripts/wiki/action_deathray_fire.js</file>
-        <file>resources/scripts/wiki/action_explode.js</file>
-        <file>resources/scripts/wiki/action_fire.js</file>
-        <file>resources/scripts/wiki/action_flare.js</file>
-        <file>resources/scripts/wiki/action_hoellium_wait.js</file>
-        <file>resources/scripts/wiki/action_join.js</file>
-        <file>resources/scripts/wiki/action_laser_fire.js</file>
-        <file>resources/scripts/wiki/action_load.js</file>
-        <file>resources/scripts/wiki/action_missile.js</file>
-        <file>resources/scripts/wiki/action_next_player.js</file>
-        <file>resources/scripts/wiki/action_place_watermine.js</file>
-        <file>resources/scripts/wiki/action_stealth.js</file>
-        <file>resources/scripts/wiki/action_supportall_ration.js</file>
-        <file>resources/scripts/wiki/action_supportsingle_freerepair.js</file>
-        <file>resources/scripts/wiki/action_supportsingle_iron_shield.js</file>
-        <file>resources/scripts/wiki/action_supportsingle_repair.js</file>
-        <file>resources/scripts/wiki/action_talon_gun.js</file>
-        <file>resources/scripts/wiki/action_unload.js</file>
-        <file>resources/scripts/wiki/action_unstealth.js</file>
-        <file>resources/scripts/wiki/action_wait.js</file>
         <file>resources/scripts/wiki/blackhole.js</file>
         <file>resources/scripts/wiki/bluemoon.js</file>
         <file>resources/scripts/wiki/boltguard.js</file>

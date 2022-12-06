@@ -119,6 +119,10 @@ var Constructor = function()
         postAnimationUnit = null;
         postAnimationBuilding = null;
     };
+    this.getName = function()
+    {
+        return qsTr("Fire with Cannon");
+    };
     this.getDescription = function()
     {
         return qsTr("Orders a minicannon or black cannon to attack a single unit to deal some damage to it.");

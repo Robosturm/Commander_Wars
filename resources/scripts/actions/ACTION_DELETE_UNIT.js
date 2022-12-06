@@ -74,6 +74,14 @@ var Constructor = function()
     {
         return "FIELD";
     };
+    this.getName = function(map)
+    {
+        return qsTr("Delete Unit");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Allows you to delete one of your own units that hasn't moved this turn.");
+    };
 }
 
 Constructor.prototype = ACTION;

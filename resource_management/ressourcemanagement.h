@@ -188,9 +188,12 @@ template<class TClass>
 void RessourceManagement<TClass>::reset(QStringList& list)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    for (qint32 i = 0; i < list.size(); i++)
+    if (pInterpreter != nullptr)
     {
-        pInterpreter->deleteObject(list[i]);
+        for (qint32 i = 0; i < list.size(); i++)
+        {
+            pInterpreter->deleteObject(list[i]);
+        }
     }
     list.clear();
 }

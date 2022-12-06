@@ -171,6 +171,10 @@ var Constructor = function()
             }
         }
 	};
+    this.getName = function()
+    {
+        return qsTr("Ration");
+    };
     this.getDescription = function()
     {
         return qsTr("Refills fuel and ammo to all units surrounding this unit.");

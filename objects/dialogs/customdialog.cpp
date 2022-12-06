@@ -54,7 +54,10 @@ CustomDialog::~CustomDialog()
     if (!m_jsName.isEmpty())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->deleteObject(m_jsName);
+        if (pInterpreter != nullptr)
+        {
+            pInterpreter->deleteObject(m_jsName);
+        }
     }
 }
 

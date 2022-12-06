@@ -126,6 +126,10 @@ var Constructor = function()
         cursorData.setYOffset(- map.getImageSize() * 2);
         cursorData.setScale(2);
     };
+    this.getName = function()
+    {
+        return qsTr("Flare");
+    };
     this.getDescription = function()
     {
         return qsTr("Fires a flare rocket at the given location. The flare rocket will reveal all terrains in an area around the target during fog of war.");

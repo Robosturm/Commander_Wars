@@ -60,9 +60,9 @@ Mainwindow::Mainwindow(const QString & initialView)
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
 
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/hauptmenue");
+    pApp->getAudioManager()->playRandom();
 
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue obj = pInterpreter->newQObject(this);
@@ -322,7 +322,7 @@ void Mainwindow::loadGame(QString filename)
             spGameMenue pMenu = spGameMenue::create(filename, true);
             oxygine::Stage::getStage()->addChild(pMenu);
             Mainapp* pApp = Mainapp::getInstance();
-            pApp->getAudioThread()->clearPlayList();
+            pApp->getAudioManager()->clearPlayList();
             pMenu->startGame();
             leaveMenue();
         }
@@ -346,7 +346,7 @@ void Mainwindow::replayGame(QString filename)
         {
             CONSOLE_PRINT("Leaving Main Menue", GameConsole::eDEBUG);
             Mainapp* pApp = Mainapp::getInstance();
-            pApp->getAudioThread()->clearPlayList();
+            pApp->getAudioManager()->clearPlayList();
             spReplayMenu pMenu = spReplayMenu::create(filename);
             oxygine::Stage::getStage()->addChild(pMenu);
             if (!pMenu->getValid())

@@ -39,10 +39,13 @@ var Constructor = function()
     {
         return true;
     };
+    this.getName = function()
+    {
+        return qsTr("Tagpower");
+    };
     this.getDescription = function()
     {
-        return qsTr("Activates the superpower of both CO's. Read the CO's superpower for more information. This will also apply the Tagpower-Synergy. ") +
-               qsTr("The synergy gives a hidden firepower boost and a luck boost based on the affinity of the co's.");
+        return qsTr("Activates the superpower of both CO's. Read the CO's superpower for more information. This will also apply the Tagpower-Synergy. The synergy gives a hidden firepower boost and a luck boost based on the affinity of the co's.");
     };
 }
 

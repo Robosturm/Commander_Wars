@@ -145,9 +145,17 @@
     <sound file="minimapOpen.wav"               cachesize = "2"/>
     <sound file="moveOut.wav"                   cachesize = "2"/>
     <sound file="player_turn.wav"               cachesize = "2"/>
+    <sound file="deathray_fire.wav"             cachesize = "2"/>
     <sound file="connect.wav"                   cachesize = "5"/>
     <sound file="disconnect.wav"                cachesize = "5"/>
     <sound file="co_power_letter.wav"           cachesize = "30"/>
-    <sound file="superpower_burst.wav"          cachesize = "5"/>
+    <sound file="superpower_burst.wav"          cachesize = "5"/>    
+    <sound file="nestlasercharge.wav"           cachesize = "2"/>
+    <sound file="nestlaserfire.wav"             cachesize = "2"/>
+    <sound file="nestlaserrotate.wav"           cachesize = "2"/>
+    <sound file="nestmortardetonation.wav"      cachesize = "2"/>
+    <sound file="nestmortarlaunch.wav"          cachesize = "2"/>
+    <sound file="talongunattack.wav"            cachesize = "2"/>
+    <sound file="talonguntargeting.wav"         cachesize = "2"/>
 </sounds>
 

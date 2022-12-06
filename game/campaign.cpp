@@ -35,7 +35,10 @@ Campaign::~Campaign()
     if (!m_script.isEmpty())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->deleteObject(scriptName);
+        if (pInterpreter != nullptr)
+        {
+            pInterpreter->deleteObject(scriptName);
+        }
     }
 }
 

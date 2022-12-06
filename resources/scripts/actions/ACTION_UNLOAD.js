@@ -346,6 +346,10 @@ var Constructor = function()
         ACTION_UNLOAD.postAnimationTransportUnitsPosX = [];
         ACTION_UNLOAD.postAnimationTransportUnitsPosY = [];
     };
+    this.getName = function()
+    {
+        return qsTr("Unload");
+    };
     this.getDescription = function()
     {
         return qsTr("Unloads loaded units. Units that have been loaded this turn can't move. Units that were loaded in previous turns can immediatly move after beeing unloaded.");
