@@ -993,12 +993,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="71"/>
+        <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="77"/>
         <source>Fire with talon gun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="75"/>
+        <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="81"/>
         <source>Commands the talon gun to attack all enemy units around the talon gun dealing 5 Hp of damage to them.</source>
         <translation type="unfinished"></translation>
     </message>

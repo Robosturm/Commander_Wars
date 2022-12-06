@@ -41,6 +41,7 @@ var Constructor = function()
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var animation = null;
         var size = fields.size();
+        var soundAdded = false;
         for (var i = 0; i < size; i++)
         {
             var point = fields.at(i);
@@ -53,6 +54,11 @@ var Constructor = function()
                     var damage = Global[building.getBuildingID()].getDamage(building, unit);
                     animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     animation.addSprite("talon+gun+hit", -map.getImageSize() * 1.1, -map.getImageSize() * 1.5, 0, 1.33);
+                    if (!soundAdded)
+                    {
+                        soundAdded = true;
+                        animation.addSound("talongunhit.wav");
+                    }
                     talonGunAnimation.queueAnimation(animation);
                     animation.writeDataInt32(x + point.x);
                     animation.writeDataInt32(y + point.y);

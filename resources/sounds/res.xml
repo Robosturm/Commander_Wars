@@ -118,9 +118,6 @@
     <sound file="switchfield.wav"               cachesize = "15"/>
     <sound file="switchmenu.wav"                cachesize = "15"/>
     <sound file="talongunhit.wav"               cachesize = "10"/>
-    <sound file="talongunin.wav"                cachesize = "5"/>
-    <sound file="talongunout.wav"               cachesize = "5"/>
-    <sound file="talongunspin.wav"              cachesize = "5"/>
     <sound file="tank_explode.wav"              cachesize = "5"/>
     <sound file="tank_move.wav"                 cachesize = "5"/>
     <sound file="tank_shot.wav"                 cachesize = "5"/>
@@ -149,7 +146,7 @@
     <sound file="connect.wav"                   cachesize = "5"/>
     <sound file="disconnect.wav"                cachesize = "5"/>
     <sound file="co_power_letter.wav"           cachesize = "30"/>
-    <sound file="superpower_burst.wav"          cachesize = "5"/>    
+    <sound file="superpower_burst.wav"          cachesize = "5"/>
     <sound file="nestlasercharge.wav"           cachesize = "2"/>
     <sound file="nestlaserfire.wav"             cachesize = "2"/>
     <sound file="nestlaserrotate.wav"           cachesize = "2"/>
