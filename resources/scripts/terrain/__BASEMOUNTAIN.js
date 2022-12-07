@@ -161,11 +161,11 @@ var Constructor = function()
         }
         if (baseTerrainId === "WASTE")
         {
-            return qsTr("<r>Clear view. In Fog of War, Infantry unit's gain </r><div c='#00ff00'>vision +4.</div><r> Extremly high movement costs for infantry units. Waste terrain with reduced defense but clear view. In Fog of War, other unit's gain </r><div c='#00ff00'>vision +1.</div>");
+            return qsTr("<r>Clear view. In Fog of War, Infantry unit's gain </r><div c='#00ff00'>vision +4.</div><r> Extremely high movement costs for infantry units. Waste terrain with reduced defense but clear view. In Fog of War, other unit's gain </r><div c='#00ff00'>vision +1.</div>");
         }
         else if (baseTerrainId === "SNOW")
         {
-            return qsTr("<r>Clear view. In Fog of War, Infantry unit's gain </r><div c='#00ff00'>vision +3.</div><r> Extremly high movement costs for infantry units.</r>");
+            return qsTr("<r>Clear view. In Fog of War, Infantry unit's gain </r><div c='#00ff00'>vision +3.</div><r> Extremely high movement costs for infantry units.</r>");
         }
         else if (baseTerrainId === "DESERT")
         {

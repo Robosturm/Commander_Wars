@@ -246,7 +246,7 @@ var Constructor = function()
                 qsTr("It's already too late for you!"),
                 qsTr("Let me hear your last words!"),
                 qsTr("Check out my new and improved powers!"),
-                qsTr("wiggle worm... wiggle!"),
+                qsTr("Wiggle worm... wiggle!"),
                 qsTr("My venom courses through your veins!")];
     };
     this.getVictorySentences = function(co)

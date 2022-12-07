@@ -1925,7 +1925,6 @@
     </message>
     <message>
         <location filename="../coreengine/commandlineparser.cpp" line="65"/>
-        <location filename="../coreengine/commandlineparser.cpp" line="66"/>
         <source>ip-adress</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1994,6 +1993,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../coreengine/commandlineparser.cpp" line="66"/>
         <location filename="../coreengine/commandlineparser.cpp" line="73"/>
         <location filename="../coreengine/commandlineparser.cpp" line="74"/>
         <source>ip-address</source>
@@ -10960,12 +10960,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="164"/>
-        <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +4.&lt;/div&gt;&lt;r&gt; Extremly high movement costs for infantry units. Waste terrain with reduced defense but clear view. In Fog of War, other unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
+        <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +4.&lt;/div&gt;&lt;r&gt; Extremely high movement costs for infantry units. Waste terrain with reduced defense but clear view. In Fog of War, other unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="168"/>
-        <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +3.&lt;/div&gt;&lt;r&gt; Extremly high movement costs for infantry units.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +3.&lt;/div&gt;&lt;r&gt; Extremely high movement costs for infantry units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12231,7 +12231,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/achievements/achievement_victory.js" line="68"/>
-        <source>Extremely  cruel!</source>
+        <source>Extremely cruel!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12866,7 +12866,7 @@ Units gain %0% firepower and defence.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_adder.js" line="249"/>
-        <source>wiggle worm... wiggle!</source>
+        <source>Wiggle worm... wiggle!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -15086,23 +15086,23 @@ Air units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="49"/>
-        <source>The Metall Army is an army of robots. The robots were initially invented by Lash. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_empty_ma.js" line="50"/>
         <source>The Robots AI developped its own behaviour instead of following Lash&apos;s or Dark Matters orders. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="49"/>
+        <source>The Metal Army is an army of robots. The robots were initially invented by Lash. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_empty_ma.js" line="51"/>
-        <source>The Metall Army defends it&apos;s own territory at all costs when it loses it&apos;s territory. The Army tries to reconquer it.</source>
+        <source>The Metal Army defends it&apos;s own territory at all costs when it loses it&apos;s territory. The Army tries to reconquer it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_empty_ma.js" line="52"/>
-        <source>Besides this the Metall Army is very defensive orientated and doesn&apos;t attack anyone.</source>
+        <source>Besides this the Metal Army is very defensive orientated and doesn&apos;t attack anyone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24365,7 +24365,7 @@ Units have increased firepower during sandstorm.</source>
     <name>metallarmy</name>
     <message>
         <location filename="../resources/scripts/wiki/metallarmy.js" line="7"/>
-        <source>The Metall Army is an army of robots. The robots were initially invented by Lash. The Robots AI developped its own behaviour instead of following Lash&apos;s or Dark Matters orders. The Metall Army defends it&apos;s own territory at all costs when it loses it&apos;s territory. The Army tries to reconquer it. Besides this the Metall Army is very defensive orientated and doesn&apos;t attack anyone.</source>
+        <source>The Metal Army is an army of robots. The robots were initially invented by Lash. The Robots AI developped its own behaviour instead of following Lash&apos;s or Dark Matters orders. The Metal Army defends it&apos;s own territory at all costs when it loses it&apos;s territory. The Army tries to reconquer it. Besides this the Metal Army is very defensive orientated and doesn&apos;t attack anyone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24375,7 +24375,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/metallarmy.js" line="17"/>
-        <source>Metall Army</source>
+        <source>Metal Army</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
