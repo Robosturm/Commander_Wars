@@ -74,4 +74,24 @@ var ACTION =
     {
         return false;
     },
+    getSubWikiInfoCount : function()
+    {
+        return 0;
+    },
+    getSubWikiInfoIcon : function(item)
+    {
+        return "";
+    },
+    getSubWikiInfoName : function(item)
+    {
+        return "";
+    },
+    getSubWikiInfoDescription = function(item)
+    {
+        return "";
+    },
+    getSubWikiInfoId : function(item)
+    {
+        return "";
+    },
 };

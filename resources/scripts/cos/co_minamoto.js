@@ -122,8 +122,7 @@ var Constructor = function()
     {
         return "GS";
     };
-    this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
+    this.getNearMountain = function(map, atkPosX, atkPosY)
     {
         var nearMountains = false;
         if (map !== null)
@@ -136,7 +135,15 @@ var Constructor = function()
                 var y = fields.at(i).y + atkPosY;
                 if (map.onMap(x, y))
                 {
-                    if (map.getTerrain(x, y).getID() === "MOUNTAIN")
+                    var id = map.getTerrain(x, y).getID();
+                    if (id === "MOUNTAIN" ||
+                        id === "SNOW_MOUNTAIN" ||
+                        id === "WASTE_MOUNTAIN" ||
+                        id === "DESERT_ROCK" ||
+                        id === "ZVOLCAN" ||
+                        id === "ZVOLCANDESERT" ||
+                        id === "ZVOLCANSNOW" ||
+                        id === "ZVOLCANWASTE")
                     {
                         nearMountains = true;
                         break;
@@ -144,6 +151,13 @@ var Constructor = function()
                 }
             }
         }
+        return nearMountains;
+    }
+
+    this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
+    {
+        var nearMountains = CO_MINAMOTO.getNearMountain(map, atkPosX, atkPosY);
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:

@@ -46,7 +46,6 @@ namespace oxygine
         void apply();
         void flush();
         void render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest);
-        void render(const QColor& c, const RectF& src, const RectF& dest);
         void setMatrixMode(bool set);
     private:
         void xapply();

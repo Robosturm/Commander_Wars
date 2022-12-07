@@ -457,57 +457,102 @@
     <name>ACTION_INFO</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_INFO.js" line="9"/>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="89"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="121"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="76"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="17"/>
         <source>Victory Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="77"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="17"/>
+        <source>Shows the current victory info.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="18"/>
         <source>CO Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="78"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="18"/>
+        <source>Shows the infos about the co&apos;s of the current game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="19"/>
         <source>Unit Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="79"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="19"/>
+        <source>Shows information about your current units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="20"/>
         <source>Unit Statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="80"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="20"/>
+        <source>Shows which units have been build and destroyed by all players.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="21"/>
         <source>Game Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="81"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="21"/>
+        <source>Shows the information about the current game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="22"/>
         <source>Attack Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="82"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="22"/>
+        <source>Shows which unit where attacked and has been attacked.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="23"/>
         <source>Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="83"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="23"/>
+        <source>Shows the current active rules for this game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="24"/>
         <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="84"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="24"/>
+        <source>Allows you to search in the wiki of the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="25"/>
         <source>Calculator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="93"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="25"/>
+        <source>Allows you to calculate damage between different units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="125"/>
         <source>Allows you to get useful information about the current match.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -708,22 +753,32 @@
     <name>ACTION_OPTIONS</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="9"/>
-        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="54"/>
+        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="61"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="49"/>
+        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="70"/>
         <source>Game Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="50"/>
+        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="70"/>
+        <source>Allows you to modify the game settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="71"/>
         <source>Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="58"/>
+        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="71"/>
+        <source>Allows you to modify the audio settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="65"/>
         <source>Allows you to modify several options of the game.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10456,22 +10511,23 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="75"/>
+        <location filename="../wiki/wikidatabase.cpp" line="76"/>
+        <location filename="../wiki/wikidatabase.cpp" line="87"/>
         <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="82"/>
+        <location filename="../wiki/wikidatabase.cpp" line="98"/>
         <source>Perk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="85"/>
+        <location filename="../wiki/wikidatabase.cpp" line="101"/>
         <source>Damage Table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="85"/>
+        <location filename="../wiki/wikidatabase.cpp" line="101"/>
         <source>Others</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18708,27 +18764,27 @@ Units gain additional firepower and defense.</source>
 <context>
     <name>co_minamoto</name>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="285"/>
         <source>A skilled but arrogant CO and a master swordsman who grew up in the mountains of Golden Sun.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="289"/>
         <source>Rice Cakes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="293"/>
         <source>Mackerel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="297"/>
         <source>Units near mountains have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="301"/>
         <source>
 Special Unit:
 Neo Spider Tank
@@ -18736,14 +18792,14 @@ Neo Spider Tank
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="288"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="302"/>
         <source>
 Global Effect: 
 No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="289"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="303"/>
         <source>
 
 CO Zone Effect: 
@@ -18751,82 +18807,82 @@ Units near Mountains gain additional firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="293"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="307"/>
         <source>Direct units can blow lighter enemies away when attacking.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="297"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="311"/>
         <source>Wind Blade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="315"/>
         <source>Unit movement is increased by two, and large direct units blow enemies away.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="305"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="319"/>
         <source>Storm Blades</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="323"/>
         <source>Clear a path! We shall not stop for any man!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="324"/>
         <source>You fight skillfully... But I fight flawlessly!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="311"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="325"/>
         <source>Are you familiar with the taste of steel? You shall be soon!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="312"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="326"/>
         <source>Hm hm hm... Are you trying to mock me, or is this truly your best effort?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="313"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="327"/>
         <source>Mountain winds, hone my blade... and scatter my enemies!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="314"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="328"/>
         <source>Begone! I do not have time to waste on peons such as yourself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="318"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="332"/>
         <source>Hm hm hm! Perhaps next time I should use a wooden sword?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="319"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="333"/>
         <source>The battle has ended. Yield now, or suffer for this insolence.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="320"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="334"/>
         <source>Hm hm hm... I can&apos;t fault you for having tried!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="324"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="338"/>
         <source>My Emperor... I have failed you...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="325"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="339"/>
         <source>I underestimated your skill, nothing more!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_minamoto.js" line="329"/>
+        <location filename="../resources/scripts/cos/co_minamoto.js" line="343"/>
         <source>Minamoto</source>
         <translation type="unfinished"></translation>
     </message>

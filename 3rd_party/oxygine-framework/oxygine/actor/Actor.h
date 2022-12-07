@@ -237,10 +237,6 @@ namespace oxygine
         unsigned char getAlpha() const;
         const spClock& getClock() const;
         virtual RectF getDestRect() const;
-        /**returns touch id if actor is pressed down*/
-        pointer_index getPressed(MouseButton b = MouseButton_Touch) const;
-        /**returns touch id if actor is moused overred*/
-        pointer_index getOvered() const;
 
 #ifdef GRAPHICSUPPORT
         /**return local actor transformation*/

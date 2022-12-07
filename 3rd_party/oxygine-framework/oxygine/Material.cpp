@@ -85,11 +85,6 @@ namespace oxygine
         STDRenderer::getCurrent()->addQuad(c, src, dest);
     }
 
-    void Material::render(const QColor& c, const RectF& src, const RectF& dest)
-    {
-        STDRenderer::getCurrent()->addQuad(c, src, dest);
-    }
-
     void Material::apply()
     {
         if (current != this)

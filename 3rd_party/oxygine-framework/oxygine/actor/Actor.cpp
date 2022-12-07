@@ -124,16 +124,6 @@ namespace oxygine
 #endif
     }
 
-    pointer_index Actor::getPressed(MouseButton b) const
-    {
-        return m_pressedButton[b];
-    }
-
-    pointer_index Actor::getOvered() const
-    {
-        return m_overred;
-    }
-
     void Actor::setNotPressed(MouseButton b)
     {
 #ifdef GRAPHICSUPPORT
