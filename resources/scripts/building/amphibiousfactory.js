@@ -53,7 +53,7 @@ var Constructor = function()
 
     this.getRepairTypes = function(building)
     {
-        return [GameEnums.UnitType_Hovercraft, GameEnums.UnitType_Naval];
+        return [GameEnums.UnitType_Hovercraft];
     };
     this.baseTerrain = ["LAKE", "SEA", "PLAINS", "SNOW", "WASTE", "DESERT"];
     this.getBaseTerrain = function(building)
