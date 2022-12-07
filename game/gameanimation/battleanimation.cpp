@@ -196,6 +196,7 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
         else
         {
             m_AtkCO0.coSprite->setPosition(getWidth() - 28, -13);
+            m_AtkCO0.coSprite->setFlippedX(true);
         }
         m_AtkCO0.coSprite->setPriority(priorityCO);
         m_AtkCO0.coSprite->setScale(coScale);
@@ -238,6 +239,7 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
         else
         {
             m_AtkCO1.coSprite->setPosition(getWidth() - 28, getHeight() - 28);
+            m_AtkCO1.coSprite->setFlippedX(true);
         }
         m_AtkCO1.coSprite->setPriority(priorityCO);
         m_AtkCO1.coSprite->setScale(coScale);
@@ -281,6 +283,7 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
         else
         {
             m_DefCO0.coSprite->setPosition(getWidth() - 28, -13);
+            m_DefCO0.coSprite->setFlippedX(true);
         }
         m_DefCO0.coSprite->setPriority(priorityCO);
         m_DefCO0.coSprite->setScale(coScale);
@@ -323,6 +326,7 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
         else
         {
             m_DefCO1.coSprite->setPosition(getWidth() - 28, getHeight() - 28);
+            m_DefCO1.coSprite->setFlippedX(true);
         }
         m_DefCO1.coSprite->setPriority(priorityCO);
         m_DefCO1.coSprite->setScale(coScale);
@@ -433,7 +437,7 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
         m_HealthBar0->setPosition(162, 25);
         m_HealthBar0->setFlippedX(true);
     }
-    m_hpInfo0->setPosition(m_HealthBar0->getPosition() + oxygine::Vector2(spriteWidth / 2 - 16, -18));
+    m_hpInfo0->setPosition(m_HealthBar0->getPosition() + oxygine::Vector2(spriteWidth / 2 - 16, -19));
     m_HealthBar0->setColor(getHealthBarColor(atkStartHp));
     m_hpInfo0->setText(QString::number(GlobalUtils::roundUp(atkStartHp)));
     addChild(m_HealthBar0);
@@ -452,7 +456,7 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
         m_HealthBar1->setPosition(162, 25);
         m_HealthBar1->setFlippedX(true);
     }
-    m_hpInfo1->setPosition(m_HealthBar1->getPosition() + oxygine::Vector2(spriteWidth / 2 - 16, -18));
+    m_hpInfo1->setPosition(m_HealthBar1->getPosition() + oxygine::Vector2(spriteWidth / 2 - 16, -19));
     m_HealthBar1->setColor(getHealthBarColor(defStartHp));
     m_hpInfo1->setText(QString::number(GlobalUtils::roundUp(defStartHp)));
     addChild(m_HealthBar1);
