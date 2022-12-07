@@ -9416,6 +9416,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ingamescriptsupport/events/scripteventvictoryinfo.cpp" line="65"/>
+        <source>Additional info text shown in the victory info screen. Replaces the last set text with this one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../ingamescriptsupport/events/scripteventvictoryinfo.h" line="41"/>
         <source>Victory Info</source>
         <translation type="unfinished"></translation>

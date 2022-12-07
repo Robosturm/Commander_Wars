@@ -25,7 +25,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("A destroyed gate through a wall can be crossed by players.");
+        return qsTr("A destroyed gate through which all players can pass.");
     };
     this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {

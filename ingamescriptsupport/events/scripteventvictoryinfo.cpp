@@ -62,7 +62,7 @@ void ScriptEventVictoryInfo::showEditEvent(spScriptEditor pScriptEditor)
     spTextbox pTextBox = spTextbox::create(Settings::getWidth() - width - 40, Settings::getHeight() - 100);
     pTextBox->setCurrentText(info);
     pTextBox->setPosition(width, 30);
-    pTextBox->setTooltipText("Additional info text shown in the victory info screen. Replaces the last set text with this one.");
+    pTextBox->setTooltipText(tr("Additional info text shown in the victory info screen. Replaces the last set text with this one."));
     connect(pTextBox.get(), &Textbox::sigTextChanged, this, [this](QString value)
     {
         setInfo(value);

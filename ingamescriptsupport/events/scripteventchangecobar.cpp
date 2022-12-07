@@ -128,7 +128,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this](qreal value)
     {
-        setStars(static_cast<qint32>(value));
+        setStars(value);
     });
     pBox->addItem(spinBox);
 
