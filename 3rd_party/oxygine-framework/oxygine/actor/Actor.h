@@ -109,38 +109,6 @@ namespace oxygine
         }
 #endif
 
-        const Vector2& getAnchor() const
-        {
-#ifdef GRAPHICSUPPORT
-            return m_anchor;
-#else
-            return m_dummyVector;
-#endif
-        }
-        float getAnchorX() const
-        {
-#ifdef GRAPHICSUPPORT
-            return m_anchor.x;
-#else
-            return 0.0f;
-#endif
-        }
-        float getAnchorY() const
-        {
-#ifdef GRAPHICSUPPORT
-            return m_anchor.y;
-#else
-            return 0.0f;
-#endif
-        }
-        bool getIsAnchorInPixels()
-        {
-#ifdef GRAPHICSUPPORT
-            return (m_flags & flag_anchorInPixels) != 0;
-#else
-            return true;
-#endif
-        }
         const Vector2& getPosition() const
         {
 #ifdef GRAPHICSUPPORT
@@ -284,20 +252,11 @@ namespace oxygine
         /**computes actor Bounds rectangle. Iterates children*/
         RectF computeBounds(const AffineTransform& transform = AffineTransform()) const;
 
-        /**Sets Anchor. Anchor also called Pivot point. It is "center" for rotation/scale/position. Anchor could be set in Pixels or in Percents (/100).
-        Default value is (0,0) - top left corner of Actor
-        */
-        void setAnchor(const Vector2& anchor);
-        void setAnchor(float ax, float ay);
-        void setAnchorInPixels(const Vector2& anchor);
-        void setAnchorInPixels(float x, float y);
-        void setAnchorX(float x);
-        void setAnchorY(float y);
-
         void setPosition(const Vector2& pos);
         void setPosition(float x, float y);
         void setX(float x);
         void setY(float y);
+        void setAnchor(float ax, float ay);
 
         /**Overwrites transformation matrix. position/scale/rotation would be ignored until you change them*/
         void setTransform(const AffineTransform& tr);
@@ -318,8 +277,6 @@ namespace oxygine
         void setSize(float w, float h);
         virtual void setWidth(float w);
         virtual void setHeight(float h);
-        /**Extends actor's clickable area from each side. Affects only to Actor::isOn. Max value is 127, Min Value is -128*/
-        void setExtendedClickArea(char add) {m_extendedIsOn = add;}
 
         void setClock(spClock & clock);
 
@@ -334,17 +291,7 @@ namespace oxygine
             }
 #endif
         }
-        /**Enable/Disable culling this actor outside of clip area (use it in pair with ClipRectActor)*/
-        void setCull(bool enable)
-        {
-#ifdef GRAPHICSUPPORT
-            m_flags &= ~flag_cull;
-            if (enable)
-            {
-                m_flags |= flag_cull;
-            }
-#endif
-        }
+
         /**Sets transparency. if alpha is 0 actor and children are completely invisible. Invisible Actor doesn't receive Touch events.*/
         void setAlpha(unsigned char alpha);
 
@@ -452,7 +399,6 @@ namespace oxygine
         using TweenRotation = Property<float, float, Actor, &Actor::getRotation, &Actor::setRotation>;
         using TweenRotationDegrees = Property<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>;
         using TweenScale = Property2Args1Arg<float, Vector2, const Vector2&, Actor, &Actor::getScale, &Actor::setScale>;
-        using TweenAnchor = Property2Args1Arg<float, Vector2, const Vector2&, Actor, &Actor::getAnchor, &Actor::setAnchor>;
         using TweenScaleX = Property<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>;
         using TweenScaleY = Property<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>;
         using TweenAlpha = Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>;
@@ -488,13 +434,10 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         enum flags
         {
-            flag_anchorInPixels         = 1,
             flag_visible                = 1 << 1,
             flag_transformDirty         = 1 << 2,
             flag_transformInvertDirty   = 1 << 3,
-            flag_cull                   = 1 << 4,
             flag_fastTransform          = 1 << 5,
-            flag_boundsNoChildren       = 1 << 6,
             flag_actorHasBounds         = 1 << 7,
             flag_clickableWithZeroAlpha = 1 << 8,
             flag_reserved               = 1 << 9,
@@ -522,14 +465,13 @@ namespace oxygine
             };
             int32_t m_pressedOvered;
         };
-        char    m_extendedIsOn{0};
     private:
 #ifdef GRAPHICSUPPORT
         unsigned char   m_alpha{255};
         Vector2 m_pos;
-        Vector2 m_anchor;
         Vector2 m_scale{1.0f, 1.0f};
         Vector2 m_size;
+        Vector2 m_anchor;
         float  m_rotation{0};
         qint32 m_zOrder{0};
         qint32 m_onGlobalTouchUpEvent{-1};

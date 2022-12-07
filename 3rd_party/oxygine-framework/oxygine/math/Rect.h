@@ -111,10 +111,6 @@ namespace oxygine
             unite(r);
         }
 
-        point2 getCenter() const
-        {
-            return pos + size / 2;
-        }
         point2 getSize() const
         {
             return size;
@@ -240,10 +236,7 @@ namespace oxygine
             pos -= v1;
             size += v1 + v2;
         }
-        void expand2(const point2& v)
-        {
-            expand(v, v);
-        }
+
         template<class R>
         RectT operator * (const VectorT2<R>& v) const
         {

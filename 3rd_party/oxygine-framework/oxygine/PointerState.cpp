@@ -11,7 +11,8 @@ namespace oxygine
     {
         m_index = index;
         m_pressed = 0;
-        m_position.setZero();
+        m_position.x = 0.0f;
+        m_position.y = 0.0f;
     }
 
     bool PointerState::isPressed(MouseButton mb) const

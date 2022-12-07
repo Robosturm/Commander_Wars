@@ -22,58 +22,10 @@ namespace oxygine
         {
         }
 
-        void identity()
-        {
-            a = T(1);
-            b = T(0);
-            c = T(0);
-            d = T(1);
-            x = T(0);
-            y = T(0);
-        }
-
         void translate(const vector2& v)
         {
             x += a * v.x + c * v.y;
             y += b * v.x + d * v.y;
-        }
-
-        affineTransform translated(const vector2& v) const
-        {
-            affineTransform t = *this;
-            t.translate(v);
-            return t;
-        }
-
-        void scale(const vector2& v)
-        {
-            a *= v.x;
-            b *= v.x;
-            c *= v.y;
-            d *= v.y;
-        }
-
-        affineTransform scaled(const vector2& v) const
-        {
-            affineTransform t = *this;
-            t.scale(v);
-            return t;
-        }
-
-        void rotate(T v)
-        {
-            T sin_ = qSin(v);
-            T cos_ = qCos(v);
-
-            affineTransform rot(cos_, sin_, -sin_, cos_, 0, 0);
-            *this = *this * rot;
-        }
-
-        affineTransform rotated(T v) const
-        {
-            affineTransform t = *this;
-            t.rotate(v);
-            return t;
         }
 
         void invert()
@@ -88,13 +40,6 @@ namespace oxygine
             d = det * t.a;
             x = det * (t.c * t.y - t.d * t.x);
             y = det * (t.b * t.x - t.a * t.y);
-        }
-
-        affineTransform inverted() const
-        {
-            affineTransform t = *this;
-            t.invert();
-            return t;
         }
 
         static affineTransform& multiply(affineTransform& out, const affineTransform& t1, const affineTransform& t2)

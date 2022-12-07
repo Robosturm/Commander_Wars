@@ -25,9 +25,7 @@ namespace oxygine
     bool TextField::isOn(const Vector2& localPosition, float)
     {
 #ifdef GRAPHICSUPPORT
-        Rect r = getTextRect();
-        r.expand(Point(m_extendedIsOn, m_extendedIsOn), Point(m_extendedIsOn, m_extendedIsOn));
-        return r.pointIn(Point((int)localPosition.x, (int)localPosition.y));
+        return getTextRect().pointIn(Point((int)localPosition.x, (int)localPosition.y));
 #else
         return false;
 #endif

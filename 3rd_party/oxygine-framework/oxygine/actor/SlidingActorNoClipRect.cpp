@@ -277,7 +277,7 @@ namespace oxygine
 
                             Vector2 ns = (dr * 1000.0f) / v.count();
 
-                            if (m_speed.dot(ns) < 0)
+                            if (m_speed.x *ns.x + m_speed.y * ns.y < 0)
                             {
                                 m_speed = ns;
                             }
@@ -307,7 +307,7 @@ namespace oxygine
                     if (te->index == m_finger)
                     {
                         Vector2 offset = m_downPos - te->localPosition;
-                        float d = offset.dot(offset);
+                        float d = offset.x * offset.x + offset.y * offset.y;
                         if (m_holded && (d >= m_rad * m_rad))
                         {
                             spActor act = safeSpCast<Actor>(m_holded);

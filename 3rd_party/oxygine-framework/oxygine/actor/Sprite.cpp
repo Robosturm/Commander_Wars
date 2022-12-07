@@ -46,10 +46,6 @@ namespace oxygine
         {
             return false;
         }
-        if (m_extendedIsOn)
-        {
-            return true;
-        }
         ResAnim* pAnim = m_frame.getResAnim();
         if (pAnim == nullptr)
         {

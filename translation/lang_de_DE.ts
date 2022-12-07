@@ -9148,7 +9148,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.h" line="42"/>
-        <source>Modify Unit</source>
+        <source>Modify terrain</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -26780,7 +26780,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/zdestroyed_gate_e_w.js" line="27"/>
-        <source>A destroyed gate through a wall can be crossed by all players.</source>
+        <source>A destroyed gate through which all players can pass.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -26793,7 +26793,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/zdestroyed_gate_n_s.js" line="28"/>
-        <source>A destroyed gate through a wall can be crossed by players.</source>
+        <source>A destroyed gate through which all players can pass.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
